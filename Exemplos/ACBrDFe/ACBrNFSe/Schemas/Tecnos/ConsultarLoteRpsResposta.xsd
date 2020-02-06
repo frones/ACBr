@@ -16,7 +16,7 @@
                           <xsd:element name="InfNfse">
                             <xsd:complexType>
                               <xsd:sequence>
-                                <xsd:element name="Numero" type="xsd:unsignedShort" />
+                                <xsd:element name="Numero" type="xsd:unsignedLong" />
                                 <xsd:element name="CodigoVerificacao" type="xsd:string" />
                                 <xsd:element name="DataEmissao" type="xsd:dateTime" />
                                 <xsd:element name="NfseSubstituida" />
@@ -74,7 +74,7 @@
                                                   <xsd:element name="IdentificacaoRps">
                                                     <xsd:complexType>
                                                       <xsd:sequence>
-                                                        <xsd:element name="Numero" type="xsd:unsignedByte" />
+                                                        <xsd:element name="Numero" type="xsd:unsignedLong" />
                                                         <xsd:element name="Serie" type="xsd:string" />
                                                         <xsd:element name="Tipo" type="xsd:unsignedByte" />
                                                       </xsd:sequence>

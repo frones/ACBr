@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/02/2020
+-- Diversos -- 
+[*] Acrescentandos novos campos para o provedor Tecnos
+   Por: Italo Jurisato Junior
 -- pnfsNFSeW_Agili -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56145-provedor-agili-cidade-juina-mt/
    Por: PlenusTech

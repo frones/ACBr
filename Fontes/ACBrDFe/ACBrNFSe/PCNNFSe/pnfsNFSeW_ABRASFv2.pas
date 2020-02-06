@@ -917,6 +917,15 @@ begin
     Gerador.wCampoNFSe(tcStr, '#7', 'NaturezaOperacao      ', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), DSC_INDNATOP);
     Gerador.wCampoNFSe(tcStr, '#8', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN);
     Gerador.wCampoNFSe(tcStr, '#9', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCENTIVO);
+
+    Gerador.wCampoNFSe(tcDe2, '#9', 'PercentualCargaTributaria', 01, 05, 1, NFSe.PercentualCargaTributaria, '');
+    Gerador.wCampoNFSe(tcDe2, '#9', 'ValorCargaTributaria     ', 01, 15, 1, NFSe.ValorCargaTributaria, '');
+
+    Gerador.wCampoNFSe(tcDe2, '#9', 'PercentualCargaTributariaMunicipal', 01, 05, 1, NFSe.PercentualCargaTributariaMunicipal, '');
+    Gerador.wCampoNFSe(tcDe2, '#9', 'ValorCargaTributariaMunicipal     ', 01, 15, 1, NFSe.ValorCargaTributariaMunicipal, '');
+
+    Gerador.wCampoNFSe(tcDe2, '#9', 'PercentualCargaTributariaEstadual', 01, 05, 1, NFSe.PercentualCargaTributariaEstadual, '');
+    Gerador.wCampoNFSe(tcDe2, '#9', 'ValorCargaTributariaEstadual     ', 01, 15, 1, NFSe.ValorCargaTributariaEstadual, '');
   end;
 
   if not (FProvedor in [{proCenti, } proGoiania, proTecnos, proSigep, proiiBrasilv2, proMegaSoft]) then

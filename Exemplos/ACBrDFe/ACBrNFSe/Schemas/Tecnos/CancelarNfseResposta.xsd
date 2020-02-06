@@ -36,7 +36,7 @@
                                       <xsd:element name="IdentificacaoNfse">
                                         <xsd:complexType>
                                           <xsd:sequence>
-                                            <xsd:element name="Numero" type="xsd:unsignedShort" />
+                                            <xsd:element name="Numero" type="xsd:unsignedLong" />
                                             <xsd:element name="CpfCnpj">
                                               <xsd:complexType>
                                                 <xsd:sequence>

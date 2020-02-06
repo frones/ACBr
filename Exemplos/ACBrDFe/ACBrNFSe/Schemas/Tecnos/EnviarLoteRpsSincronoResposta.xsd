@@ -3,7 +3,7 @@
   <xs:element name="EnviarLoteRpsSincronoResposta">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="NumeroLote" type="xs:unsignedInt" />
+        <xs:element name="NumeroLote" type="xs:unsignedLong" />
         <xs:element name="DataRecebimento" type="xs:dateTime" />
         <xs:element name="Protocolo" type="xs:unsignedLong" />
         <xs:element name="ListaMensagemAlertaRetorno">
@@ -14,7 +14,7 @@
                   <xs:sequence>
                     <xs:element name="Codigo" type="xs:string" />
                     <xs:element name="Mensagem" type="xs:string" />
-                    <xs:element name="Correcao" />
+                    <xs:element name="Correcao" type="xs:string" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

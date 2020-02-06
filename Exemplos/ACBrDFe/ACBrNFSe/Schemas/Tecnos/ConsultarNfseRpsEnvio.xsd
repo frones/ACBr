@@ -6,7 +6,7 @@
         <xsd:element name="IdentificacaoRps">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="Numero" type="xsd:unsignedShort" />
+              <xsd:element name="Numero" type="xsd:unsignedLong" />
               <xsd:element name="Serie" type="xsd:string" />
               <xsd:element name="Tipo" type="xsd:unsignedByte" />
             </xsd:sequence>
@@ -23,7 +23,7 @@
                 </xsd:complexType>
               </xsd:element>
               <xsd:element name="RazaoSocial" type="xsd:string" />
-              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedInt" />
+              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedLong" />
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

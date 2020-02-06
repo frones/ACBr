@@ -13,15 +13,15 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="InscricaoMunicipal" type="xs:unsignedInt" />
+              <xs:element name="InscricaoMunicipal" type="xs:unsignedLong" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
         <xs:element name="Faixa">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="NumeroNfseInicial" type="xs:unsignedInt" />
-              <xs:element name="NumeroNfseFinal" type="xs:unsignedInt" />
+              <xs:element name="NumeroNfseInicial" type="xs:unsignedLong" />
+              <xs:element name="NumeroNfseFinal" type="xs:unsignedLong" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -814,6 +814,12 @@ type
     FInformacoesComplementares: String;
 
     FAssinaComChaveParams: TAssinaComChaveParamsCollection;
+    FPercentualCargaTributaria: Double;
+    FValorCargaTributaria: Double;
+    FPercentualCargaTributariaMunicipal: Double;
+    FValorCargaTributariaMunicipal: Double;
+    FPercentualCargaTributariaEstadual: Double;
+    FValorCargaTributariaEstadual: Double;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: String);
@@ -894,6 +900,13 @@ type
     property Assinatura: String read FAssinatura write FAssinatura;
     property RegRec: TnfseRegRec read FRegRec write FRegRec; //Governa
     property FrmRec: TnfseFrmRec read FFrmRec write FFrmRec; //Governa
+    // Provedor Techos
+    property PercentualCargaTributaria: Double read FPercentualCargaTributaria write FPercentualCargaTributaria;
+    property ValorCargaTributaria: Double read FValorCargaTributaria write FValorCargaTributaria;
+    property PercentualCargaTributariaMunicipal: Double read FPercentualCargaTributariaMunicipal write FPercentualCargaTributariaMunicipal;
+    property ValorCargaTributariaMunicipal: Double read FValorCargaTributariaMunicipal write FValorCargaTributariaMunicipal;
+    property PercentualCargaTributariaEstadual: Double read FPercentualCargaTributariaEstadual write FPercentualCargaTributariaEstadual;
+    property ValorCargaTributariaEstadual: Double read FValorCargaTributariaEstadual write FValorCargaTributariaEstadual;
   end;
 
  TLoteRps = class(TObject)

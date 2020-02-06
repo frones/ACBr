@@ -404,6 +404,13 @@ begin
 
       // TnfseSimNao = ( snSim, snNao );
       IncentivadorCultural := snNao;
+      // Provedor Tecnos
+      PercentualCargaTributaria := 0;
+      ValorCargaTributaria := 0;
+      PercentualCargaTributariaMunicipal := 0;
+      ValorCargaTributariaMunicipal := 0;
+      PercentualCargaTributariaEstadual := 0;
+      ValorCargaTributariaEstadual := 0;
 
       // TnfseSimNao = ( snSim, snNao );
       // snSim = Ambiente de Produção

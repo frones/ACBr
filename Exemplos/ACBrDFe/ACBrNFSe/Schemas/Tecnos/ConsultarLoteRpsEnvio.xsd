@@ -14,11 +14,11 @@
                 </xs:complexType>
               </xs:element>
               <xs:element name="RazaoSocial" type="xs:string" />
-              <xs:element name="InscricaoMunicipal" type="xs:unsignedInt" />
+              <xs:element name="InscricaoMunicipal" type="xs:unsignedLong" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Protocolo" type="xs:integer" />
+        <xs:element name="Protocolo" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

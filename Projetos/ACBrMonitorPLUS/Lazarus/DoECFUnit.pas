@@ -1400,54 +1400,54 @@ public
   procedure Executar; override;
 end;
 
-{ TMetodoValidarBlocoXEstoque }
+{ TMetodoValidarBlocoXEstoque }     //Desativado
 
-TMetodoValidarBlocoXEstoque = class(TACBrMetodo)
+{TMetodoValidarBlocoXEstoque = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end;   }
 
-{ TMetodoValidarBlocoXReducaoZ }
+{ TMetodoValidarBlocoXReducaoZ }    //Desativado
 
-TMetodoValidarBlocoXReducaoZ = class(TACBrMetodo)
+{TMetodoValidarBlocoXReducaoZ = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end;  }
 
-{ TMetodoValidarBlocoX }
+{ TMetodoValidarBlocoX }      //Desativado
 
-TMetodoValidarBlocoX = class(TACBrMetodo)
+{TMetodoValidarBlocoX = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end; }
 
 { TMetodoEnviarBlocoXEstoque }
 
-TMetodoEnviarBlocoXEstoque = class(TACBrMetodo)
+{TMetodoEnviarBlocoXEstoque = class(TACBrMetodo)      //Desativado
 public
   procedure Executar; override;
-end;
+end;                            }
 
-{ TMetodoEnviarBlocoXReducaoZ }
+{ TMetodoEnviarBlocoXReducaoZ }     //Desativado
 
-TMetodoEnviarBlocoXReducaoZ = class(TACBrMetodo)
+{TMetodoEnviarBlocoXReducaoZ = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end; }
 
-{ TMetodoEnviarBlocoX }
+{ TMetodoEnviarBlocoX }     //Desativado
 
-TMetodoEnviarBlocoX = class(TACBrMetodo)
+{TMetodoEnviarBlocoX = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end;}
 
-{ TMetodoConsultarBlocoX }
+{ TMetodoConsultarBlocoX }    //Desativado
 
-TMetodoConsultarBlocoX = class(TACBrMetodo)
+{TMetodoConsultarBlocoX = class(TACBrMetodo)
 public
   procedure Executar; override;
-end;
+end;}
 
 { TMetodoEnviaComando }
 
@@ -1894,11 +1894,11 @@ begin
   end;
 end;
 
-{ TMetodoConsultarBlocoX }
+{ TMetodoConsultarBlocoX }        //Desativado
 
 { Params=  cRecibo: numero do Recibo
 }
-procedure TMetodoConsultarBlocoX.Executar;
+{procedure TMetodoConsultarBlocoX.Executar;
 var
   cRecibo: String;
 begin
@@ -1910,13 +1910,13 @@ begin
     ACBrBlocoX.WebServices.ConsultarBlocoX.Executar;
     fpCmd.Resposta := ACBrBlocoX.WebServices.ConsultarBlocoX.RetWS;
   end;
-end;
+end;}
 
-{ TMetodoEnviarBlocoX }
+{ TMetodoEnviarBlocoX }            //Desativado
 
 { Params=  cPath: Path do XML
 }
-procedure TMetodoEnviarBlocoX.Executar;
+{procedure TMetodoEnviarBlocoX.Executar;
 var
   cPath: String;
   FXMLOriginal: TStringList;
@@ -1941,45 +1941,13 @@ begin
     ACBrBlocoX.WebServices.EnviarBlocoX.Executar;
     fpCmd.Resposta := ACBrBlocoX.WebServices.EnviarBlocoX.RetWS;
   end;
-end;
+end;}
 
-{ TMetodoEnviarBlocoXReducaoZ }
-
-{ Params=  cPath: Path do XML
-}
-procedure TMetodoEnviarBlocoXReducaoZ.Executar;
-var
-  cPath: String;
-  FXMLOriginal: TStringList;
-begin
-  cPath  := fpCmd.Params(0);
-
-  with TACBrObjetoECF(fpObjetoDono) do
-  begin
-    if FileExists(cPath) then
-    begin
-      FXMLOriginal := TStringList.Create;
-      try
-        FXMLOriginal.LoadFromFile(cPath);
-        ACBrBlocoX.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
-      finally
-        FXMLOriginal.Free;
-      end;
-    end
-    else
-      ACBrBlocoX.WebServices.EnviarBlocoX.XML := cPath;
-
-    ACBrBlocoX.WebServices.EnviarBlocoX.Executar;
-    fpCmd.Resposta := ACBrBlocoX.WebServices.EnviarBlocoX.RetWS;
-  end;
-
-end;
-
-{ TMetodoEnviarBlocoXEstoque }
+{ TMetodoEnviarBlocoXReducaoZ }       //Desativado
 
 { Params=  cPath: Path do XML
 }
-procedure TMetodoEnviarBlocoXEstoque.Executar;
+{procedure TMetodoEnviarBlocoXReducaoZ.Executar;
 var
   cPath: String;
   FXMLOriginal: TStringList;
@@ -2005,13 +1973,45 @@ begin
     fpCmd.Resposta := ACBrBlocoX.WebServices.EnviarBlocoX.RetWS;
   end;
 
-end;
+end; }
 
-{ TMetodoValidarBlocoX }
+{ TMetodoEnviarBlocoXEstoque }      //Desativado
 
 { Params=  cPath: Path do XML
 }
-procedure TMetodoValidarBlocoX.Executar;
+{procedure TMetodoEnviarBlocoXEstoque.Executar;
+var
+  cPath: String;
+  FXMLOriginal: TStringList;
+begin
+  cPath  := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    if FileExists(cPath) then
+    begin
+      FXMLOriginal := TStringList.Create;
+      try
+        FXMLOriginal.LoadFromFile(cPath);
+        ACBrBlocoX.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
+      finally
+        FXMLOriginal.Free;
+      end;
+    end
+    else
+      ACBrBlocoX.WebServices.EnviarBlocoX.XML := cPath;
+
+    ACBrBlocoX.WebServices.EnviarBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.EnviarBlocoX.RetWS;
+  end;
+
+end; }
+
+{ TMetodoValidarBlocoX }       //Desativado
+
+{ Params=  cPath: Path do XML
+}
+{procedure TMetodoValidarBlocoX.Executar;
 var
   cPath: String;
   FXMLOriginal: TStringList;
@@ -2036,13 +2036,13 @@ begin
     ACBrBlocoX.WebServices.ValidarBlocoX.Executar;
     fpCmd.Resposta := ACBrBlocoX.WebServices.ValidarBlocoX.RetWS;
   end;
-end;
+end; }
 
-{ TMetodoValidarBlocoXReducaoZ }
+{ TMetodoValidarBlocoXReducaoZ }       //Desativado
 
 { Params=  cPath: Path do XML
 }
-procedure TMetodoValidarBlocoXReducaoZ.Executar;
+{procedure TMetodoValidarBlocoXReducaoZ.Executar;
 var
   cPath: String;
   FXMLOriginal: TStringList;
@@ -2069,13 +2069,13 @@ begin
     fpCmd.Resposta := ACBrBlocoX.WebServices.ValidarBlocoX.RetWS;
   end;
 
-end;
+end; }
 
-{ TMetodoValidarBlocoXEstoque }
+{ TMetodoValidarBlocoXEstoque }       //Desativado
 
 { Params=  cPath: Path do XML
 }
-procedure TMetodoValidarBlocoXEstoque.Executar;
+{procedure TMetodoValidarBlocoXEstoque.Executar;
 var
   cPath: String;
   FXMLOriginal: TStringList;
@@ -2102,7 +2102,7 @@ begin
     fpCmd.Resposta := ACBrBlocoX.WebServices.ValidarBlocoX.RetWS;
   end;
 
-end;
+end;   }
 
 { TMetodoAssinarBlocoX }
 
@@ -5281,13 +5281,6 @@ begin
   ListaDeMetodos.Add( CMetodoECFassinarblocoxestoque );
   ListaDeMetodos.Add( CMetodoECFassinarblocoxreducaoz );
   ListaDeMetodos.Add( CMetodoECFassinarblocox );
-  ListaDeMetodos.Add( CMetodoECFvalidarblocoxestoque );
-  ListaDeMetodos.Add( CMetodoECFvalidarblocoxreducaoz );
-  ListaDeMetodos.Add( CMetodoECFvalidarblocox );
-  ListaDeMetodos.Add( CMetodoECFenviarblocoxestoque );
-  ListaDeMetodos.Add( CMetodoECFenviarblocoxreducaoz );
-  ListaDeMetodos.Add( CMetodoECFenviarblocox );
-  ListaDeMetodos.Add( CMetodoECFconsultarblocox );
   ListaDeMetodos.Add( CMetodoECFenviacomando );
   ListaDeMetodos.Add( CMetodoECFassinaarquivo );
   ListaDeMetodos.Add( CMetodoECFconfigbarras );
@@ -5513,31 +5506,24 @@ begin
     189  : AMetodoClass := TMetodoassinarblocoxestoque;
     190  : AMetodoClass := TMetodoassinarblocoxreducaoz;
     191  : AMetodoClass := TMetodoassinarblocox;
-    192  : AMetodoClass := TMetodovalidarblocoxestoque;
-    193  : AMetodoClass := TMetodovalidarblocoxreducaoz;
-    194  : AMetodoClass := TMetodovalidarblocox;
-    195  : AMetodoClass := TMetodoenviarblocoxestoque;
-    196  : AMetodoClass := TMetodoenviarblocoxreducaoz;
-    197  : AMetodoClass := TMetodoenviarblocox;
-    198  : AMetodoClass := TMetodoconsultarblocox;
-    199  : AMetodoClass := TMetodoenviacomando;
-    200  : AMetodoClass := TMetodoassinaarquivo;
-    201  : AMetodoClass := TMetodoconfigbarras;
-    202  : AMetodoClass := TMetodopafmf_arqmf_binario;
-    203  : AMetodoClass := TMetodopafmf_arqmf_binario; //Utiliza mesmo método
-    204  : AMetodoClass := TMetodopafmf_arqmf_binario; //Utiliza mesmo método
-    205  : AMetodoClass := TMetodopafmf_arqmfd_binario;
-    206  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
-    207  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
-    208  : AMetodoClass := TMetodoTransmitirArquivo;
-    209  : AMetodoClass := TMetodoConsultarProcessamentoArquivo;
-    210  : AMetodoClass := TMetodoCancelarArquivo;
-    211  : AMetodoClass := TMetodoConsultarHistoricoArq;
-    212  : AMetodoClass := TMetodoConsultarPendenciasContrib;
-    213  : AMetodoClass := TMetodoConsultarPendenciasDevPafEcf;
-    214  : AMetodoClass := TMetodoDownloadArquivo;
-    215  : AMetodoClass := TMetodoListarArquivos;
-    216  : AMetodoClass := TMetodoReprocessarArquivo;
+    192  : AMetodoClass := TMetodoenviacomando;
+    193  : AMetodoClass := TMetodoassinaarquivo;
+    194  : AMetodoClass := TMetodoconfigbarras;
+    195  : AMetodoClass := TMetodopafmf_arqmf_binario;
+    196  : AMetodoClass := TMetodopafmf_arqmf_binario; //Utiliza mesmo método
+    197  : AMetodoClass := TMetodopafmf_arqmf_binario; //Utiliza mesmo método
+    198  : AMetodoClass := TMetodopafmf_arqmfd_binario;
+    199  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
+    200  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
+    201  : AMetodoClass := TMetodoTransmitirArquivo;
+    202  : AMetodoClass := TMetodoConsultarProcessamentoArquivo;
+    203  : AMetodoClass := TMetodoCancelarArquivo;
+    204  : AMetodoClass := TMetodoConsultarHistoricoArq;
+    205  : AMetodoClass := TMetodoConsultarPendenciasContrib;
+    206  : AMetodoClass := TMetodoConsultarPendenciasDevPafEcf;
+    207  : AMetodoClass := TMetodoDownloadArquivo;
+    208  : AMetodoClass := TMetodoListarArquivos;
+    209  : AMetodoClass := TMetodoReprocessarArquivo;
 
     else
       DoACbr(ACmd);

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2020
+[*] DoECFUnit
+Removido Métodos WebService desativados: EnvioBlocoX, ConsultaBlocoX, ValidaBlocoX
+
 04/02/2020
 [+] DoACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado o campo "Espaco Entre Produtos" para impressão NFe

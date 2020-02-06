@@ -46,23 +46,31 @@
 Unit ACBrBase ;
 
 interface
-uses Classes, SysUtils, Contnrs, syncobjs,
-     {$IFDEF COMPILER6_UP}
-        Types
-     {$ELSE}
-        Windows, ACBrD5
-     {$ENDIF}
-     {$IFNDEF NOGUI}
-        {$IF DEFINED(VisualCLX)}
-          ,QDialogs
-        {$ELSEIF DEFINED(FMX)}
-          ,FMX.Dialogs, System.UITypes
-        {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-          ,Vcl.Dialogs, System.UITypes
-        {$ELSE}
-          ,Dialogs
-       {$IFEND}
-     {$ENDIF};
+uses
+  Classes, SysUtils, syncobjs,
+  {$IFDEF COMPILER6_UP}
+   Types,
+  {$ELSE}
+   Windows, ACBrD5,
+  {$ENDIF}
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs
+  {$Else}
+   Contnrs
+  {$IfEnd}
+  {$IFNDEF NOGUI}
+   {$IF DEFINED(VisualCLX)}
+    ,QDialogs
+   {$ELSEIF DEFINED(FMX)}
+    ,FMX.Dialogs, System.UITypes
+   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+    ,Vcl.Dialogs, System.UITypes
+   {$ELSE}
+    ,Dialogs
+   {$IFEND}
+  {$ENDIF};
 
 {$IFDEF DELPHIXE2_UP}
 const
@@ -122,13 +130,14 @@ type
     ULONG_PTR = SizeUInt;
    {$EndIf}
 
-  // Compatibilização de Tipos inexistentes em Delphi Linux (POSIX)
-//  {$IFDEF POSIX}
-//    AnsiString = UTF8String;
-//    AnsiChar = UTF8Char;
-//    PAnsiChar = PUTF8Char;
-//    PPAnsiChar = ^PUTF8Char;
-//  {$ENDIF}
+  // Compatibilização de Tipos inexistentes em compiladores NEXTGEN
+  {$IfDef NEXTGEN}
+    AnsiString = RawByteString;
+    AnsiChar = UTF8Char;
+    PAnsiChar = PUTF8Char;
+    PPAnsiChar = ^PUTF8Char;
+    WideString = String;
+  {$EndIf}
 {$EndIf}
 
 type
@@ -151,15 +160,20 @@ TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of obje
 
 { TACBrObjectList }
 
-TACBrObjectList = class(TObjectList)
+TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
   protected
     fIsSorted: Boolean;
   public
-    constructor Create(FreeObjects: boolean);
+    constructor Create(FreeObjects: boolean = True);
 
     Function Add(AObject: TObject): Integer;
     Procedure Insert(Index: Integer; AObject: TObject);
-    procedure Sort(Compare: TListSortCompare);
+    {$IfDef NEXTGEN}
+     procedure Sort(const AComparer: IComparer<TObject>);
+     procedure Assign(ObjectListSource: TObjectList<TObject>);
+    {$Else}
+     procedure Sort(Compare: TListSortCompare);
+    {$EndIf}
 
     function FindObject(Item: Pointer; Compare: TListSortCompare; Nearest: Boolean = False): Integer;
   end;
@@ -230,7 +244,7 @@ de campos quando necessário}
 
   { TACBrInformacoes }
 
-  TACBrInformacoes = class(TObjectList)
+  TACBrInformacoes = class(TObjectList{$IfDef NEXTGEN}<TACBrInformacao>{$EndIf})
   private
     function GetItem(Index: Integer): TACBrInformacao;
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
@@ -310,11 +324,30 @@ begin
   fIsSorted := False;
 end;
 
-procedure TACBrObjectList.Sort(Compare: TListSortCompare);
-begin
-  inherited Sort(Compare);
-  fIsSorted := True;
-end;
+{$IfDef NEXTGEN}
+ procedure TACBrObjectList.Sort(const AComparer: IComparer<TObject>);
+ begin
+   inherited Sort(AComparer);
+   fIsSorted := True;
+ end;
+
+ procedure TACBrObjectList.Assign(ObjectListSource: TObjectList<TObject>);
+ var
+   I: Integer;
+ begin
+   Clear;
+   Capacity := ObjectListSource.Capacity;
+   for I := 0 to ObjectListSource.Count - 1 do
+     Add(ObjectListSource[I]);
+ end;
+
+{$Else}
+ procedure TACBrObjectList.Sort(Compare: TListSortCompare);
+ begin
+   inherited Sort(Compare);
+   fIsSorted := True;
+ end;
+{$EndIf}
 
 { Inspirado de http://www.avdf.com/mar97/delf_sortlist.html }
 
@@ -702,7 +735,7 @@ end;
 procedure TACBrInformacoes.SetItem(Index: Integer;
   const Value: TACBrInformacao);
 begin
-  Put(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 end.

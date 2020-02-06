@@ -62,6 +62,10 @@ uses
 type
   TCompressType = ( ctUnknown, ctZLib, ctGZip, ctZipFile );
 
+{$IfDef NEXTGEN}
+  AnsiString = RawByteString;
+{$EndIf}
+
 {$IfDef FPC}
   TACBrUnZipper = class(TUnZipper)
   private

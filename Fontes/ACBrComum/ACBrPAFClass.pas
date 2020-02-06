@@ -37,7 +37,15 @@ unit ACBrPAFClass;
 
 interface
 
-uses SysUtils, Classes, Contnrs;
+uses
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs
+  {$Else}
+   Contnrs
+  {$IfEnd};
 
 type
   TACBrPAFTipoFuncionamento = (tpfStandAlone, tpfEmRede, tpfParametrizavel);
@@ -69,7 +77,7 @@ type
 
   { TACBrAACECFs }
 
-  TACBrAACECFs = class(TObjectList)
+  TACBrAACECFs = class(TObjectList{$IfDef NEXTGEN}<TACBrAACECF>{$EndIf})
   private
     procedure SetObject(Index: Integer; Item: TACBrAACECF);
     function GetObject(Index: Integer): TACBrAACECF;
@@ -129,7 +137,7 @@ type
 
   { TACBrECFArquivos }
 
-  TACBrECFArquivos = class(TObjectList)
+  TACBrECFArquivos = class(TObjectList{$IfDef NEXTGEN}<TACBrECFArquivo>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFArquivo);
     function GetObject (Index: Integer): TACBrECFArquivo;
@@ -301,7 +309,7 @@ type
   end;
 
   { Lista de Objetos do tipo TACBrECFDAV }
-  TACBrECFDAVs = class(TObjectList)
+  TACBrECFDAVs = class(TObjectList{$IfDef NEXTGEN}<TACBrECFDAV>{$EndIf})
   private
     procedure SetObject (Index: Integer; Item: TACBrECFDAV);
     function GetObject (Index: Integer): TACBrECFDAV;
@@ -374,7 +382,7 @@ end ;
 
 function TACBrECFArquivos.GetObject(Index: Integer): TACBrECFArquivo;
 begin
-  Result := inherited GetItem(Index) as TACBrECFArquivo ;
+  Result := TACBrECFArquivo(inherited Items[Index]);
 end;
 
 procedure TACBrECFArquivos.Insert(Index: Integer; Obj: TACBrECFArquivo);
@@ -390,7 +398,7 @@ end;
 
 procedure TACBrECFArquivos.SetObject(Index: Integer; Item: TACBrECFArquivo);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 { TACBrECFInfoPaf }
@@ -483,7 +491,7 @@ end;
 
 function TACBrAACECFs.GetObject( Index: Integer): TACBrAACECF;
 begin
-  Result := inherited GetItem(Index) as TACBrAACECF;
+  Result := TACBrAACECF(inherited Items[Index]);
 end;
 
 procedure TACBrAACECFs.Insert(Index: Integer; Obj: TACBrAACECF);
@@ -499,14 +507,14 @@ end;
 
 procedure TACBrAACECFs.SetObject(Index: Integer; Item: TACBrAACECF);
 begin
-  inherited SetItem(Index, Item);
+  inherited Items[Index] := Item;
 end;
 
 { ---------------------------- TACBrECFDAVs -------------------------- }
 
 { TACBrECFDAV }
 
-function OrdenarDAVs(const ADav1, ADav2: Pointer): Integer;
+function OrdenarDAVs(const ADav1, ADav2: {$IfDef NEXTGEN}TACBrECFDAV{$Else}Pointer{$EndIf}): Integer;
 var
   Str1, Str2 : String ;
 begin
@@ -551,7 +559,7 @@ end;
 
 function TACBrECFDAVs.GetObject(Index: Integer): TACBrECFDAV;
 begin
-  Result := inherited GetItem(Index) as TACBrECFDAV ;
+  Result := TACBrECFDAV(inherited Items[Index]);
 end;
 
 procedure TACBrECFDAVs.Insert(Index: Integer; Obj: TACBrECFDAV);
@@ -567,7 +575,11 @@ end;
 
 procedure TACBrECFDAVs.Ordenar;
 begin
+  {$IfDef NEXTGEN}
+  Self.Sort( TComparer<TACBrECFDAV>.Construct( OrdenarDAVs ) );
+  {$Else}
   Self.Sort(@OrdenarDAVs);
+  {$EndIf}
 end;
 
 function TACBrECFDAVs.ValorTotalAcumulado: Double;
@@ -581,7 +593,7 @@ end;
 
 procedure TACBrECFDAVs.SetObject(Index: Integer; Item: TACBrECFDAV);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 

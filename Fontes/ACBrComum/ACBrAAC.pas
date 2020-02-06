@@ -845,7 +845,7 @@ begin
   fsNomeCompleto := fsNomeArquivoAux;
   // Tem Path no Nome do Arquivo ?
   if (fsNomeCompleto <> '') and (pos(PathDelim, fsNomeCompleto) = 0) then
-     fsNomeCompleto := ExtractFilePath( ParamStr(0) ) + fsNomeCompleto;
+     fsNomeCompleto := ApplicationPath + fsNomeCompleto;
 end ;
 
 procedure TACBrAAC.SetParams(const AValue : TStringList) ;

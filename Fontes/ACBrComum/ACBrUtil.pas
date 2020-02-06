@@ -59,11 +59,14 @@ Uses
     ,Windows, ShellAPI
   {$Else}
     {$IfNDef FPC}
-      {$IFDEF  POSIX}
+      {$IfDef ANDROID}
+      ,System.IOUtils
+      {$EndIf}
+      {$IfDef  POSIX}
       ,Posix.Stdlib
       ,Posix.Unistd
       ,Posix.Fcntl
-      {$ELSE}
+      {$Else}
       ,Libc
       {$EndIf}
     {$Else}
@@ -2811,7 +2814,11 @@ end ;
 -----------------------------------------------------------------------------}
 function ApplicationPath: String;
 begin
+  {$IfDef ANDROID}
+  Result := PathWithDelim(TPath.GetHomePath);
+  {$Else}
   Result := PathWithDelim(ExtractFilePath(ParamStr(0)));
+  {$EndIf}
 end;
 
 {-----------------------------------------------------------------------------
@@ -3226,7 +3233,7 @@ end ;
    hDrive: THandle;
    AFileName: String;
  begin
-   AFileName := '\\.\' + ExtractFileDrive( sFile )[1] + ':';
+   AFileName := '\\.\' + copy(ExtractFileDrive(sFile),1,1) + ':';
 
    //NOTE: this may only work for the SYSTEM user
    hDrive := Windows.CreateFileW( PWideChar(WideString(AFileName)),
@@ -3489,7 +3496,7 @@ begin
                IfThen( AppendIfExists and ArquivoExiste,
                        Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
   try
-     FS.Seek(0, {$IFDEF COMPILER23_UP}soEnd{$ELSE}soFromEnd{$ENDIF});  // vai para EOF
+     FS.Seek(0, soEnd);  // vai para EOF
      FS.Write(Pointer(ABinaryString)^,Length(ABinaryString));
 
      if AddLineBreak then

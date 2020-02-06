@@ -56,6 +56,9 @@ uses
    {$Else}
     ,Graphics
    {$EndIf}
+  {$EndIf}
+  {$IfDef NEXTGEN}
+   ,ACBrBase
   {$EndIf};
 
 const

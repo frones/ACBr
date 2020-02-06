@@ -140,7 +140,6 @@
   {$ENDIF}
 {$ENDIF}
 
-
 {$IFNDEF MSWINDOWS}   // Linux, apenas OpenSSL, sem Capicom
   {$DEFINE DFE_SEM_CAPICOM}
   {$DEFINE DFE_SEM_MSXML}
@@ -153,9 +152,6 @@
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
 
-{$IFDEF POSIX}
- {$UNDEF USE_DELAYED}
-{$ENDIF}
 {$IFNDEF SUPPORTS_DELAYED_LOADING}
  {$UNDEF USE_DELAYED}
 {$ENDIF}
@@ -172,6 +168,9 @@
 {$IFDEF DELPHI15_UP}
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}
+{$ENDIF}
+{$IfDEF DELPHIXE_UP}
+  {$DEFINE HAS_BLUETOOTH}
 {$ENDIF}
 
 // Definições multi-plataforma
@@ -190,6 +189,15 @@
     {$UNDEF VCL}
     {$DEFINE DFE_SEM_CAPICOM}
     {$DEFINE DFE_SEM_MSXML}
+    {$UNDEF USE_DELAYED}
+    {$UNDEF HAS_BLUETOOTH}
+    {$LEGACYIFEND ON}
+  {$ENDIF}
+
+  {$IFDEF NEXTGEN}
+    {$LEGACYIFEND ON}
+    //http://riversoftavg.com/blogs/index.php/2015/01/17/zerobasedstrings-just-dont/
+    {$ZEROBASEDSTRINGS OFF}
   {$ENDIF}
 
   {$IFDEF CLX}
@@ -276,9 +284,6 @@
 // Ative a diretiva abaixo, para usar a Libxml2, libxslt, libxmlsec compilada
 // com MinGw ftp://ftp.zlatkovic.com/libxml/64bit/
 //{$DEFINE USE_MINGW}
-{$IfNDef MSWINDOWS}
-  {$DEFINE USE_MINGW}
-{$EndIf}
 
 // ZLib em D7 contem muitos bugs e não suporta GZip de forma correta
 {$IfNDef FPC}        
@@ -288,4 +293,3 @@
 {$Else}
  {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
 {$EndIf}
-

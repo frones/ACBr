@@ -143,8 +143,6 @@ begin
   inherited Clear;
 
   FPStatus := stCIOTIdle;
-
-  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 function TCIOTWebService.ExtrairModeloChaveAcesso(AChaveCIOT: String): String;

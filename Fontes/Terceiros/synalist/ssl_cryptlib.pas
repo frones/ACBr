@@ -79,6 +79,10 @@ and @link(TCustomSSL.password). You can use special SSH channels too, see
 {$ENDIF}
 {$H+}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit ssl_cryptlib;
 
 interface
@@ -286,8 +290,6 @@ var
   keysetobj: CRYPT_KEYSET;
   cryptContext: CRYPT_CONTEXT;
   x: integer;
-  aUserName : AnsiString;
-  aPassword: AnsiString;
 begin
   Result := False;
   FLastErrorDesc := '';
@@ -338,8 +340,6 @@ begin
 
   if FUsername <> '' then
   begin
-    aUserName := fUserName;
-    aPassword := fPassword;
     cryptSetAttributeString(FcryptSession, CRYPT_SESSINFO_USERNAME,
       Pointer(FUsername), Length(FUsername));
     cryptSetAttributeString(FcryptSession, CRYPT_SESSINFO_PASSWORD,

@@ -57,6 +57,10 @@
   {$WARN SUSPICIOUS_TYPECAST OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit synaip;
 
 interface
@@ -77,7 +81,7 @@ function IsIP(const Value: string): Boolean;
 function IsIP6(const Value: string): Boolean;
 
 {:Returns a string with the "Host" ip address converted to binary form.}
-function IPToID(Host: string): Ansistring;
+function IPToID(Host: string): string;
 
 {:Convert IPv6 address from their string form to binary byte array.}
 function StrToIp6(value: string): TIp6Bytes;
@@ -92,13 +96,13 @@ function StrToIp(value: string): integer;
 function IpToStr(value: integer): string;
 
 {:Convert IPv4 address to reverse form.}
-function ReverseIP(Value: AnsiString): AnsiString;
+function ReverseIP(Value: String): String;
 
 {:Convert IPv6 address to reverse form.}
-function ReverseIP6(Value: AnsiString): AnsiString;
+function ReverseIP6(Value: String): String;
 
 {:Expand short form of IPv6 address to long form.}
-function ExpandIP6(Value: AnsiString): AnsiString;
+function ExpandIP6(Value: String): String;
 
 
 implementation
@@ -118,7 +122,7 @@ var
     // i.e. "$80"
     if Result then
       for n := 1 to length(Value) do
-        if not (AnsiChar(Value[n]) in ['0'..'9']) then
+        if not (CharInSet(Value[n],['0'..'9'])) then
         begin
           Result := False;
           Break;
@@ -189,7 +193,7 @@ begin
 end;
 
 {==============================================================================}
-function IPToID(Host: string): Ansistring;
+function IPToID(Host: string): String;
 var
   s: string;
   i, x: Integer;
@@ -199,7 +203,7 @@ begin
   begin
     s := Fetch(Host, '.');
     i := StrToIntDef(s, 0);
-    Result := Result + AnsiChar(i);
+    Result := Result + Char(i);
   end;
 end;
 
@@ -239,10 +243,10 @@ end;
 
 {==============================================================================}
 
-function ExpandIP6(Value: AnsiString): AnsiString;
+function ExpandIP6(Value: String): String;
 var
  n: integer;
- s: ansistring;
+ s: String;
  x: integer;
 begin
   Result := '';
@@ -384,7 +388,7 @@ begin
 end;
 
 {==============================================================================}
-function ReverseIP(Value: AnsiString): AnsiString;
+function ReverseIP(Value: String): String;
 var
   x: Integer;
 begin
@@ -400,7 +404,7 @@ begin
 end;
 
 {==============================================================================}
-function ReverseIP6(Value: AnsiString): AnsiString;
+function ReverseIP6(Value: String): String;
 var
   ip6: TIp6bytes;
   n: integer;

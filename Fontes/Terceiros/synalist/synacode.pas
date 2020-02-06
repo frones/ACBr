@@ -65,12 +65,19 @@
   {$WARN SUSPICIOUS_TYPECAST OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit synacode;
 
 interface
 
 uses
-  SysUtils;
+  SysUtils
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 type
   TSpecials = set of AnsiChar;

@@ -84,6 +84,15 @@ case with my USB modem):
   {$ENDIF}
 {$ENDIF}
 
+{$IFDEF UNIX}
+  {$DEFINE USE_LINUX_LOCK}
+{$ENDIF}
+
+{$IFDEF ANDROID}
+  {$DEFINE UNIX}
+  {$UNDEF USE_LINUX_LOCK}
+{$ENDIF}
+
 {$IFDEF FPC}
   {$MODE DELPHI}
   {$IFDEF MSWINDOWS}
@@ -92,6 +101,17 @@ case with my USB modem):
   {define working mode w/o LIBC for fpc}
   {$DEFINE NO_LIBC}
 {$ENDIF}
+
+{$IFDEF POSIX}
+  {$WARN UNIT_PLATFORM OFF}
+  {$WARN SYMBOL_PLATFORM OFF}
+{$ENDIF}
+
+{$IFDEF NEXTGEN}
+  {$LEGACYIFEND ON}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 {$Q-}
 {$H+}
 {$M+}
@@ -266,6 +286,13 @@ const // From fcntl.h
   O_SYNC = $0080;  { synchronous writes }
 {$ENDIF}
 
+{$IFDEF ANDROID}
+const
+  TIOCMSET = $5418;
+  TIOCMGET = $5415;
+  TCSBRK   = $5409;
+{$ENDIF}
+
 const
   sOK = 0;
   sErr = integer(-1);
@@ -356,9 +383,11 @@ type
     procedure GetComNr(Value: string); virtual;
     function PreTestFailing: boolean; virtual;{HGJ}
     function TestCtrlLine: Boolean; virtual;
-{$IFDEF UNIX}    
+{$IFNDEF MSWINDOWS}
     procedure DcbToTermios(const dcb: TDCB; var term: termios); virtual;
     procedure TermiosToDcb(const term: termios; var dcb: TDCB); virtual;
+{$ENDIF}
+{$IFDEF USE_LINUX_LOCK}
     function ReadLockfile: integer; virtual;
     function LockfileName: String; virtual;
     procedure CreateLockfile(PidNr: integer); virtual;
@@ -369,7 +398,7 @@ type
     {: data Control Block with communication parameters. Usable only when you
      need to call API directly.}
     DCB: Tdcb;
-{$IFDEF UNIX}
+{$IFNDEF MSWINDOWS}
     TermiosStruc: termios;
 {$ENDIF}
     {:Object constructor.}
@@ -647,7 +676,7 @@ type
 
     {:Raise Synaser error with ErrNumber code. Usually used by internal routines.}
     procedure RaiseSynaError(ErrNumber: integer); virtual;
-{$IFDEF UNIX}
+{$IFDEF USE_LINUX_LOCK}
     function  cpomComportAccessible: boolean; virtual;{HGJ}
     procedure cpomReleaseComport; virtual; {HGJ}
 {$ENDIF}
@@ -822,7 +851,7 @@ begin
   end;
   if InstanceActive then
   begin
-    {$IFDEF UNIX}
+    {$IFDEF USE_LINUX_LOCK}
     if FLinuxLock then
       cpomReleaseComport;
     {$ENDIF}
@@ -961,13 +990,16 @@ begin
 {$IFNDEF MSWINDOWS}
   if FComNr <> PortIsClosed then
     FDevice := '/dev/ttyS' + IntToStr(FComNr);
-  // Comport already owned by another process?          {HGJ}
-  if FLinuxLock then
-    if not cpomComportAccessible then
-    begin
-      RaiseSynaError(ErrAlreadyOwned);
-      Exit;
-    end;
+  {$IFDEF USE_LINUX_LOCK}
+    // Comport already owned by another process?          {HGJ}
+    if FLinuxLock then
+      if not cpomComportAccessible then
+      begin
+        RaiseSynaError(ErrAlreadyOwned);
+        Exit;
+      end;
+  {$ENDIF}
+
   {$IFNDEF FPC}
     {$IFDEF POSIX}
       FHandle := open(MarshaledAString(AnsiString(FDevice)), O_RDWR or O_SYNC);
@@ -981,7 +1013,7 @@ begin
     SerialCheck(-1)
   else
     SerialCheck(0);
-  {$IFDEF UNIX}
+  {$IFDEF USE_LINUX_LOCK}
   if FLastError <> sOK then
     if FLinuxLock then
       cpomReleaseComport;
@@ -1018,7 +1050,7 @@ begin
   begin
     SetSynaError(ErrNoDeviceAnswer);
     FileClose(FHandle);         {HGJ}
-    {$IFDEF UNIX}
+    {$IFDEF USE_LINUX_LOCK}
     if FLinuxLock then
       cpomReleaseComport;                {HGJ}
     {$ENDIF}                             {HGJ}
@@ -1963,7 +1995,11 @@ end;
 procedure TBlockSerial.Flush;
 begin
 {$IFNDEF MSWINDOWS}
-  SerialCheck(tcdrain(FHandle));
+  {$IFDEF ANDROID}
+    ioctl(FHandle, TCSBRK, 1);
+  {$ELSE}
+    SerialCheck(tcdrain(FHandle));
+  {$ENDIF}
 {$ELSE}
   SetSynaError(sOK);
   if not Flushfilebuffers(FHandle) then
@@ -2218,7 +2254,7 @@ end;
   Ownership Manager.
 }
 
-{$IFDEF UNIX}
+{$IFDEF USE_LINUX_LOCK}
 
 function TBlockSerial.LockfileName: String;
 var

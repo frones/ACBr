@@ -74,7 +74,7 @@ unit synsock;
        {$ENDIF OS2}
       {$ELSE}
         {$IFDEF POSIX}
-          {$I ssposix.inc} // not complete yet!
+          {$I ssposix.inc} //experimental!
         {$ELSE}
           {$I sslinux.inc}
         {$ENDIF}

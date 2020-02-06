@@ -59,13 +59,20 @@ Used RFC: RFC-1869, RFC-1870, RFC-1893, RFC-2034, RFC-2104, RFC-2195, RFC-2487,
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit smtpsend;
 
 interface
 
 uses
   SysUtils, Classes,
-  blcksock, synautil, synacode;
+  blcksock, synautil, synacode
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 const
   cSmtpProtocol = '25';

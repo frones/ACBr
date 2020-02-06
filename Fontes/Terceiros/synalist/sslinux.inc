@@ -159,9 +159,9 @@ type
       0: (sin_family: u_short;
           sin_port: u_short;
           sin_addr: TInAddr;
-          sin_zero: array[0..7] of Char);
+          sin_zero: array[0..7] of byte);
       1: (sa_family: u_short;
-          sa_data: array[0..13] of Char)
+          sa_data: array[0..13] of byte)
   end;
 
   TIP_mreq =  record
@@ -613,7 +613,7 @@ type
         case sin_family: u_short of
           AF_INET: (sin_port: u_short;
                     sin_addr: TInAddr;
-                    sin_zero: array[0..7] of Char);
+                    sin_zero: array[0..7] of byte);
           AF_INET6: (sin6_port:     u_short;
                 		sin6_flowinfo: u_long;
       	    	      sin6_addr:     TInAddr6;
@@ -770,9 +770,9 @@ function SizeOfVarSin(sin: TVarSin): integer;
 begin
   case sin.sin_family of
     AF_INET:
-            Result := SizeOf(TSockAddrIn);
+      Result := SizeOf(TSockAddrIn);
     AF_INET6:
-            Result := SizeOf(TSockAddrIn6);
+      Result := SizeOf(TSockAddrIn6);
   else
     Result := 0;
   end;

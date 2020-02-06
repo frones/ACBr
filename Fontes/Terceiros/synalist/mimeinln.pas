@@ -58,13 +58,20 @@ Used RFC: RFC-2047, RFC-2231
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit mimeinln;
 
 interface
 
 uses
   SysUtils, Classes,
-  synachar, synacode, synautil;
+  synachar, synacode, synautil
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 {:Decodes mime inline encoding (i.e. in headers) uses target characterset "CP".}
 function InlineDecode(const Value: string; CP: TMimeChar): string;

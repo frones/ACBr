@@ -62,6 +62,10 @@
   {$WARN SYMBOL_DEPRECATED OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit synautil;
 
 interface
@@ -378,6 +382,10 @@ function  MatchLastBoundary               (ABOL,AETX:PANSIChar; const ABoundary:
  position into ANSIString.}
 function  BuildStringFromBuffer           (AStx,AEtx:PANSIChar): ANSIString;
 {/pf}
+
+{$IfNDef DELPHI2009_UP}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+{$EndIf}
 
 var
   {:can be used for your own months strings for @link(getmonthnumber)}
@@ -1819,47 +1827,53 @@ end;
 
 {==============================================================================}
 
-{$IFDEF POSIX}
-function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cdecl;
-  external libc name _PU + 'tempnam';
+{$IFNDEF FPC}
+ {$IFNDEF CIL}
+  {$IFNDEF MSWINDOWS}
+   function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cdecl;
+     external libc name _PU + 'tempnam';
+  {$ENDIF}
+ {$ENDIF}
 {$ENDIF}
 
 function GetTempFile(const Dir, prefix: String): String;
 {$IFNDEF FPC}
-{$IFDEF MSWINDOWS}
-var
-  Path: String;
-  x: integer;
-{$ENDIF}
+ {$IFNDEF CIL}
+  {$IFDEF MSWINDOWS}
+   var
+    Path: String;
+    x: integer;
+  {$ENDIF}
+ {$ENDIF}
 {$ENDIF}
 begin
-{$IFDEF FPC}
-  Result := GetTempFileName(Dir, Prefix);
-{$ELSE}
-  {$IFNDEF MSWINDOWS}
-    Result := tempnam(Pointer(Dir), Pointer(prefix));
+  {$IFDEF FPC}
+   Result := GetTempFileName(Dir, Prefix);
   {$ELSE}
-    {$IFDEF CIL}
-  Result := System.IO.Path.GetTempFileName;
+   {$IFDEF CIL}
+    Result := System.IO.Path.GetTempFileName;
+   {$ELSE}
+    {$IFDEF MSWINDOWS}
+     if Dir = '' then
+     begin
+       Path := StringOfChar(#0, MAX_PATH);
+       x := GetTempPath(Length(Path), PChar(Path));
+       Path := PChar(Path);
+     end
+     else
+       Path := Dir;
+     x := Length(Path);
+     if Path[x] <> '\' then
+       Path := Path + '\';
+     Result := StringOfChar(#0, MAX_PATH);
+     GetTempFileName(PChar(Path), PChar(Prefix), 0, PChar(Result));
+     Result := PChar(Result);
+     SetFileattributes(PChar(Result), GetFileAttributes(PChar(Result)) or FILE_ATTRIBUTE_TEMPORARY);
     {$ELSE}
-  if Dir = '' then
-  begin
-    Path := StringOfChar(#0, MAX_PATH);
-	  x := GetTempPath(Length(Path), PChar(Path));
-    Path := PChar(Path);
-  end
-  else
-    Path := Dir;
-  x := Length(Path);
-  if Path[x] <> '\' then
-    Path := Path + '\';
-  Result := StringOfChar(#0, MAX_PATH);
-  GetTempFileName(PChar(Path), PChar(Prefix), 0, PChar(Result));
-  Result := PChar(Result);
-  SetFileattributes(PChar(Result), GetFileAttributes(PChar(Result)) or FILE_ATTRIBUTE_TEMPORARY);
+     Result := String( tempnam(PAnsiChar(Dir), PAnsiChar(prefix) )) ;
     {$ENDIF}
+   {$ENDIF}
   {$ENDIF}
-{$ENDIF}
 end;
 
 {==============================================================================}
@@ -2023,12 +2037,12 @@ begin
   // Moving Aptr position forward until boundary will be reached
   while (APtr<AEtx) do
     begin
-      if strlcomp(APtr,#13#10'--',4)=0 then
+      if SynaFpc.StrLComp(APtr,#13#10'--',4)=0 then
         begin
           eob  := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 4;
         end
-      else if strlcomp(APtr,'--',2)=0 then
+      else if SynaFpc.StrLComp(APtr,'--',2)=0 then
         begin
           eob  := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 2;
@@ -2111,6 +2125,12 @@ begin
 end;
 {/pf}
 
+{$IfNDef DELPHI2009_UP}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+begin
+  result := C in CharSet;     
+end;
+{$EndIf}
 
 
 

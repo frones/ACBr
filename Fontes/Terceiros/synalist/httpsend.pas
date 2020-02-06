@@ -64,13 +64,20 @@ Used RFC: RFC-1867, RFC-1947, RFC-2388, RFC-2616
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit httpsend;
 
 interface
 
 uses
   SysUtils, Classes,
-  blcksock, synautil, synaip, synacode, synsock;
+  blcksock, synautil, synaip, synacode, synsock
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 const
   cHttpProtocol = '80';

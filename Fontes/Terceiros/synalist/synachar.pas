@@ -73,6 +73,11 @@ Internal routines knows all major charsets for Europe or America. For East-Asian
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$LEGACYIFEND ON}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit synachar;
 
 interface
@@ -88,7 +93,10 @@ uses
   Windows,
 {$ENDIF}
   SysUtils,
-  synautil, synacode, synaicnv;
+  synautil, synacode, synaicnv
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 type
   {:Type with all supported charsets.}

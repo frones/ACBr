@@ -82,9 +82,13 @@ accepting of new connections!
 {$ENDIF}
 {$H+}
 
-{$IFDEF UNICODE}
+{$IFDEF POSIX}
   {$WARN IMPLICIT_STRING_CAST OFF}
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
+{$ENDIF}
+
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
 {$ENDIF}
 
 unit ssl_openssl;
@@ -93,10 +97,10 @@ interface
 
 uses
   SysUtils, Classes,
-  blcksock, synsock, synautil,
-{$IFDEF CIL}
+  blcksock, synsock, synautil, synafpc,
+{$IfDef CIL}
   System.Text,
-{$ENDIF}
+{$EndIf}
   ssl_openssl_lib;
 
 type
@@ -177,7 +181,7 @@ begin
   if Length(Password) > (Size - 1) then
     SetLength(Password, Size - 1);
   Result := Length(Password);
-  StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
+  synafpc.StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
 end;
 {$ENDIF}
 
@@ -839,6 +843,7 @@ begin
   Result := sb.ToString;
 {$ELSE}
   setlength(Result, EVP_MAX_MD_SIZE);
+  x := 0;
   X509Digest(cert, EvpGetDigestByName('MD5'), Result, x);
   SetLength(Result, x);
 {$ENDIF}
@@ -908,6 +913,7 @@ function TSSLOpenSSL.GetCipherBits: integer;
 var
   x: integer;
 begin
+  x := 0;
   if not assigned(FSsl) then
     Result := 0
   else
@@ -933,7 +939,7 @@ end;
 {==============================================================================}
 
 initialization
-  if InitSSLInterface then
+  //if InitSSLInterface then  // Commented.. It will uses Dynamic loading, and allow inform "SSLLibPath"
     SSLImplementation := TSSLOpenSSL;
 
 end.

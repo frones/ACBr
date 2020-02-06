@@ -366,7 +366,7 @@ type
         case sin_family: sa_family_t of
           AF_INET: (sin_port: word;
                     sin_addr: TInAddr;
-                    sin_zero: array[0..7] of Char);
+                    sin_zero: array[0..7] of byte);
           AF_INET6: (sin6_port:     word;
                 		sin6_flowinfo: longword;
       	    	      sin6_addr:     TInAddr6;
@@ -515,9 +515,9 @@ function SizeOfVarSin(sin: TVarSin): integer;
 begin
   case sin.sin_family of
     AF_INET:
-            Result := SizeOf(TSockAddrIn);
+      Result := SizeOf(TSockAddrIn);
     AF_INET6:
-            Result := SizeOf(TSockAddrIn6);
+      Result := SizeOf(TSockAddrIn6);
   else
     Result := 0;
   end;

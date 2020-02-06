@@ -54,13 +54,20 @@ Classes for easy handling with e-mail message.
 {$H+}
 {$M+}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit mimemess;
 
 interface
 
 uses
   Classes, SysUtils,
-  mimepart, synachar, synautil, mimeinln;
+  mimepart, synachar, synautil, mimeinln
+  {$IFDEF NEXTGEN}
+   ,synafpc
+  {$ENDIF};
 
 type
 

@@ -97,6 +97,10 @@ Core with implementation basic socket classes.
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
+{$IFDEF NEXTGEN}
+  {$ZEROBASEDSTRINGS OFF}
+{$ENDIF}
+
 unit blcksock;
 
 interface
@@ -105,6 +109,9 @@ uses
   SysUtils, Classes,
   synafpc,
   synsock, synautil, synacode, synaip
+  {$IFDEF NEXTGEN}
+    ,System.Generics.Collections, System.Generics.Defaults
+  {$ENDIF}
   {$IfDef CIL}
     ,System.Net
     ,System.Net.Sockets
@@ -276,6 +283,16 @@ type
   TCustomSSL = class;
   TSSLClass = class of TCustomSSL;
 
+  TBlockSocket = class;
+
+{$IFDEF NEXTGEN}
+  TOptionList = TList<TSynaOption>;
+  TSocketList = TList<TBlockSocket>;
+{$ELSE}
+  TOptionList = TList;
+  TSocketList = TList;
+{$ENDIF}
+
   {:@abstract(Basic IP object.)
    This is parent class for other class with protocol implementations. Do not
    use this class directly! Use @link(TICMPBlockSocket), @link(TRAWBlockSocket),
@@ -306,7 +323,7 @@ type
     FFamilySave: TSocketFamily;
     FIP6used: Boolean;
     FPreferIP4: Boolean;
-    FDelayedOptions: TList;
+    FDelayedOptions: TOptionList;
     FInterPacketTimeout: Boolean;
     {$IFNDEF CIL}
     FFDSet: TFDSet;
@@ -396,7 +413,7 @@ type
 
      Warning: when you call : Bind('0.0.0.0','0'); then is nothing done! In this
      case is used implicit system bind instead.}
-    procedure Bind(IP, Port: string);
+    procedure Bind(const IP, Port: string);
 
     {:Connects socket to remote IP address and PORT. The same rules as with
      @link(BIND) method are valid. The only exception is that PORT with 0 value
@@ -424,7 +441,7 @@ type
 
     {:Sends data of LENGTH from BUFFER address via connected socket. System
      automatically splits data to packets.}
-    function SendBuffer(Buffer: Tmemory; Length: Integer): Integer; virtual;
+    function SendBuffer(const Buffer: Tmemory; Length: Integer): Integer; virtual;
 
     {:One data BYTE is sent via connected socket.}
     procedure SendByte(Data: Byte); virtual;
@@ -665,7 +682,7 @@ type
     {:Same as @link(SendBuffer), but send datagram to address from
      @link(RemoteSin). Usefull for sending reply to datagram received by
      function @link(RecvBufferFrom).}
-    function SendBufferTo(Buffer: TMemory; Length: Integer): Integer; virtual;
+    function SendBufferTo(const Buffer: TMemory; Length: Integer): Integer; virtual;
 
     {:Note: This is low-lever receive function. You must be sure if data is
      waiting for read before call this function for avoid deadlock!
@@ -685,8 +702,8 @@ type
     continue. If value in Timeout is -1, run is breaked and waiting for read
     data maybe forever. If is returned @TRUE, CanReadList TList is filled by all
     TBlockSocket objects what waiting for read.}
-    function GroupCanRead(const SocketList: TList; Timeout: Integer;
-      const CanReadList: TList): Boolean;
+    function GroupCanRead(const SocketList: TSocketList; Timeout: Integer;
+      const CanReadList: TSocketList): Boolean;
 {$ENDIF}
     {:By this method you may turn address reuse mode for local @link(bind). It
      is good specially for UDP protocol. Using this with TCP protocol is
@@ -1041,7 +1058,7 @@ type
     function GetRemoteSinPort: Integer; override;
 
     {:See @link(TBlockSocket.SendBuffer)}
-    function SendBuffer(Buffer: TMemory; Length: Integer): Integer; override;
+    function SendBuffer(const Buffer: TMemory; Length: Integer): Integer; override;
 
     {:See @link(TBlockSocket.RecvBuffer)}
     function RecvBuffer(Buffer: TMemory; Len: Integer): Integer; override;
@@ -1099,7 +1116,7 @@ type
     procedure Connect(IP, Port: string); override;
 
     {:Silently redirected to @link(TBlockSocket.SendBufferTo).}
-    function SendBuffer(Buffer: TMemory; Length: Integer): Integer; override;
+    function SendBuffer(const Buffer: TMemory; Length: Integer): Integer; override;
 
     {:Silently redirected to @link(TBlockSocket.RecvBufferFrom).}
     function RecvBuffer(Buffer: TMemory; Length: Integer): Integer; override;
@@ -1128,7 +1145,7 @@ type
     procedure EnableBroadcast(Value: Boolean);
 
     {:See @link(TBlockSocket.SendBufferTo)}
-    function SendBufferTo(Buffer: TMemory; Length: Integer): Integer; override;
+    function SendBufferTo(const Buffer: TMemory; Length: Integer): Integer; override;
 
     {:See @link(TBlockSocket.RecvBufferFrom)}
     function RecvBufferFrom(Buffer: TMemory; Length: Integer): Integer; override;
@@ -1528,7 +1545,7 @@ var
 {$ENDIF}
 begin
   inherited Create;
-  FDelayedOptions := TList.Create;
+  FDelayedOptions := TOptionList.Create;
   FRaiseExcept := False;
 {$IFDEF RAISEEXCEPT}
   FRaiseExcept := True;
@@ -1898,7 +1915,7 @@ begin
   DoStatus(HR_SocketClose, '');
 end;
 
-procedure TBlockSocket.Bind(IP, Port: string);
+procedure TBlockSocket.Bind(const IP, Port: string);
 var
   Sin: TVarSin;
 begin
@@ -2034,7 +2051,7 @@ begin
 end;
 
 
-function TBlockSocket.SendBuffer(Buffer: TMemory; Length: Integer): Integer;
+function TBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
 {$IFNDEF CIL}
 var
   x, y: integer;
@@ -2872,7 +2889,7 @@ begin
     Result := CanRead(Timeout);
 end;
 
-function TBlockSocket.SendBufferTo(Buffer: TMemory; Length: Integer): Integer;
+function TBlockSocket.SendBufferTo(const Buffer: TMemory; Length: Integer): Integer;
 begin
   Result := 0;
   if TestStopFlag then
@@ -2997,8 +3014,8 @@ begin
 end;
 
 {$IFNDEF CIL}
-function TBlockSocket.GroupCanRead(const SocketList: TList; Timeout: Integer;
-  const CanReadList: TList): boolean;
+function TBlockSocket.GroupCanRead(const SocketList: TSocketList; Timeout: Integer;
+  const CanReadList: TSocketList): boolean;
 var
   FDSet: TFDSet;
   TimeVal: PTimeVal;
@@ -3556,7 +3573,7 @@ begin
   Result := RecvBufferFrom(Buffer, Length);
 end;
 
-function TDgramBlockSocket.SendBuffer(Buffer: TMemory; Length: Integer): Integer;
+function TDgramBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
 begin
   Result := SendBufferTo(Buffer, Length);
 end;
@@ -3616,7 +3633,7 @@ begin
   end;
 end;
 
-function TUDPBlockSocket.SendBufferTo(Buffer: TMemory; Length: Integer): Integer;
+function TUDPBlockSocket.SendBufferTo(const Buffer: TMemory; Length: Integer): Integer;
 var
   SIp: string;
   SPort: integer;
@@ -4022,7 +4039,7 @@ begin
     Result := inherited RecvBuffer(Buffer, Len);
 end;
 
-function TTCPBlockSocket.SendBuffer(Buffer: TMemory; Length: Integer): Integer;
+function TTCPBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
 var
   x, y: integer;
   l, r: integer;

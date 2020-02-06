@@ -67,7 +67,10 @@ interface
 
 uses
   SysUtils, Classes,
-  blcksock, synautil, synaip, synsock;
+  blcksock, synautil, synaip, synsock
+  {$IfDef NEXTGEN}
+   ,synafpc
+  {$EndIf};
 
 const
   cFtpProtocol = '21';

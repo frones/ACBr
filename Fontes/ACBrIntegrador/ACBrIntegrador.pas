@@ -240,7 +240,7 @@ begin
 
     WriteToTXT(
       PastaBackupIntegrador + ChangeFileExt(ExtractFileName(ANomeArquivo),'.xml'),
-      AXML,
+      AnsiString(AXML),
       False,
       False,
       True
@@ -260,7 +260,7 @@ var
   begin
     NomeArquivoTmp := ChangeFileExt(NomeArquivo, '.tmp');
     FOwner.DoLog('Criando arquivo: ' + NomeArquivoTmp);
-    WriteToFile(NomeArquivoTmp, Comando);
+    WriteToFile(NomeArquivoTmp, AnsiString(Comando));
 
     if not FileExists(NomeArquivoTmp) then
       DoException('Erro ao criar o arquivo: '+NomeArquivoTmp);
@@ -479,7 +479,7 @@ begin
     FOnGravarLog( AString, Tratado );
 
   if not Tratado then
-    GravaLog( AString );
+    GravaLog( AnsiString(AString) );
 end;
 
 function TACBrIntegrador.GetErroTimeout: Boolean;

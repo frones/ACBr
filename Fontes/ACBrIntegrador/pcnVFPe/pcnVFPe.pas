@@ -45,8 +45,11 @@ uses
   SysUtils, Classes, ACBrIntegradorResposta;
 
 type
+  {$IfDef NEXTGEN}
+    AnsiString = RawByteString;
+  {$EndIf}
 
-{$M+}
+  {$M+}
   { TEnviarPagamento }
   TEnviarPagamento = class
   private

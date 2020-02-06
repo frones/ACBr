@@ -553,7 +553,7 @@ procedure TACBrEAD.GerarChaves(var AChavePublica : AnsiString ;
     if FindFirst(TmpDir + '\*', faReadOnly and faHidden and faSysFile and faArchive, TmpFile) = 0 then
        Result := TmpFile.Name
     else
-       if FindFirst(ExtractFileDir(ParamStr(0)) + '*', faReadOnly and faHidden and faSysFile and faArchive, TmpFile) = 0 then
+       if FindFirst(ApplicationPath + '*', faReadOnly and faHidden and faSysFile and faArchive, TmpFile) = 0 then
           Result := TmpFile.Name ;
 
     FindClose(TmpFile);
@@ -1106,9 +1106,8 @@ begin
 
       outHexa:
         begin
-          BinToHex( md_value_bin, md_value_hex, md_len);
-          md_value_hex[2 * md_len] := #0;
-          Result := AnsiString(StrPas(md_value_hex));
+          SetString( ABinStr, md_value_bin, md_len);
+          Result := AsciiToHex(ABinStr);
         end;
 
       outBinary:
@@ -1204,7 +1203,7 @@ begin
 
      // Verificando se já existe LF no final do arquivo //
      Buffer := #0;
-     FS.Seek(-1, soFromEnd);  // vai para EOF - 1
+     FS.Seek(-1, soEnd);  // vai para EOF - 1
      FS.Read(Buffer, 1);
      if Buffer <> LF then
      begin
@@ -1218,7 +1217,7 @@ begin
 
      if Result <> '' then
      begin
-       FS.Seek(0,soFromEnd);
+       FS.Seek(0,soEnd);
        FS.Write(Pointer(Result)^,Length(Result));
      end ;
   finally
@@ -1271,20 +1270,20 @@ begin
 
   // Verificando se tem CRLF no final da linha do EAD //
   Buffer := #0;
-  AStream.Seek(-1, soFromEnd);  // vai para EOF - 1
+  AStream.Seek(-1, soEnd);  // vai para EOF - 1
   AStream.Read(Buffer, 1);
   while (Buffer[0] in [CR, LF]) do
   begin
      Result := Buffer[0] + Result;
 
      Buffer := #0;
-     AStream.Seek(-2, soFromCurrent);  // Volta 2 bytes
+     AStream.Seek(-2, soCurrent);  // Volta 2 bytes
      AStream.Read(Buffer, 1);
   end ;
 
   // Procurando por ultimo EAD //
   Buffer[0] := #0;
-  AStream.Seek(-259,soFromCurrent);     // 259 = Tamanho da Linha EAD
+  AStream.Seek(-259,soCurrent);     // 259 = Tamanho da Linha EAD
   AStream.Read(Buffer, 259 );
   Result := UpperCase( Trim( String( Buffer ) ) ) + Result;
 
@@ -1355,6 +1354,7 @@ Var
   StreamSize, PosStream, BytesToEnd: Int64;
   EADAnsi : AnsiString;
   RsaKey: pRSA;
+  ABinStr: AnsiString;
 begin
   EAD := Trim(EAD);
 
@@ -1379,7 +1379,10 @@ begin
   md_len := trunc(Length(EAD) / 2);
   if md_len <> 128 then
      raise EACBrEADException.Create('EAD deve conter 256 caracteres');
-  HexToBin( PAnsiChar(AnsiString(EAD)), EAD_crypt, md_len );
+
+  //HexToBin( PAnsiChar(AnsiString(EAD)), EAD_crypt, md_len );
+  ABinStr := HexToAscii(EAD);
+  Move(ABinStr[1], EAD_crypt[0], md_len);
 
   LerChavePublica;
   PosStream := 0;

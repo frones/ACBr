@@ -157,7 +157,7 @@ var
    cuchar = cuint8;
    pcuchar = ^cuchar;
 
-  // Compatibilização de Tipos inexistentes em compiladores NEXTGEN
+  // NEXTGEN legacy compatibility
   {$IfDef NEXTGEN}
     AnsiString = RawByteString;
     AnsiChar = UTF8Char;
@@ -1116,6 +1116,7 @@ const
   ECDH_R_KDF_FAILED = 102;
 
 var
+  SSLLibPath: String = '';
   SSLLibHandle: TLibHandle = 0;
   SSLUtilHandle: TLibHandle = 0;
   SSLLibFile: String = '';
@@ -1555,6 +1556,12 @@ var
   OpenSSL_unavailable_functions: string;
 
 implementation
+
+uses
+  strutils
+  {$IfDef ANDROID}
+  ,System.IOUtils
+  {$EndIf} ;
 
 {
   Compatibility functions
@@ -5012,10 +5019,16 @@ end;
 
 function LoadLib(const Value: String): HModule;
 begin
+ if (SSLLibPath <> '') then
+ begin
+   if (RightStr(SSLLibPath, Length(PathDelim)) <> PathDelim) then
+     SSLLibPath := SSLLibPath + PathDelim;
+ end;
+
  {$IfDef FPC}
-  Result := dynlibs.LoadLibrary(Value) ;
+  Result := dynlibs.LoadLibrary(SSLLibPath + Value) ;
  {$Else}
-  Result := LoadLibrary(PChar(Value));
+  Result := LoadLibrary(PChar(SSLLibPath + Value));
  {$ENDIF}
 end;
 
@@ -5836,10 +5849,6 @@ var
    s: String;
   {$EndIf}
 begin
-  {$IFNDEF COMPILER25_UP}
-   Result := False;
-  {$ENDIF}
-
   for i := low(DLLUtilNames) to high(DLLUtilNames) do
   begin
     SSLUtilHandle := LoadLib(DLLUtilNames[i]);
@@ -5890,7 +5899,20 @@ begin
     if SSLloaded then
       Exit;
 
+    {$IfDef ANDROID}
+    if (SSLLibPath = '') then     // Try to load from "./assets/internal/" first
+      SSLLibPath := TPath.GetDocumentsPath;
+
     Result := LoadLibraries;
+    if (not Result) then         // Try System Default Lib
+    begin
+      SSLLibPath := '';
+      Result := LoadLibraries;
+    end;
+    {$Else}
+    Result := LoadLibraries;
+    {$EndIf}
+
     if Not Result then
     begin
       UnloadLibraries;
@@ -5947,9 +5969,11 @@ end;
 
 initialization
   SSLCS := TCriticalSection.Create;
+  SSLLibPath := '';
 
 finalization
   DestroySSLInterface;
   SSLCS.Free;
 
 end.
+

@@ -30,6 +30,12 @@ type
 
   T2DBooleanArray = array of array of Boolean;
 
+  {$IfDef NEXTGEN}
+    AnsiString = RawByteString;
+    WideString = String;
+    AnsiChar = Char;
+  {$EndIf}
+
   { TDelphiZXingQRCode }
 
   TDelphiZXingQRCode = class
@@ -63,7 +69,14 @@ type
 implementation
 
 uses
-  contnrs, Math, Classes;
+ {$IF DEFINED(NEXTGEN)}
+  System.Generics.Collections,
+ {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+  System.Contnrs,
+ {$Else}
+  Contnrs,
+ {$IfEnd}
+ Math, Classes;
 
 type
   TByteArray = array of Byte;
@@ -451,7 +464,7 @@ type
   TReedSolomonEncoder = class
   private
     FField: TGenericGF;
-    FCachedGenerators: TObjectList;
+    FCachedGenerators: TObjectList{$IfDef NEXTGEN}<TGenericGFPoly>{$EndIf};
   public
     constructor Create(AField: TGenericGF);
     destructor Destroy; override;
@@ -1370,7 +1383,7 @@ var
   DataBytesOffset: Integer;
   MaxNumDataBytes: Integer;
   MaxNumECBytes: Integer;
-  Blocks: TObjectList;
+  Blocks: TObjectList{$IfDef NEXTGEN}<TBlockPair>{$EndIf};
   NumDataBytesInBlock: TIntegerArray;
   NumECBytesInBlock: TIntegerArray;
   Size: Integer;
@@ -1395,7 +1408,7 @@ begin
   MaxNumEcBytes := 0;
 
   // Since, we know the number of reedsolmon blocks, we can initialize the vector with the number.
-  Blocks := TObjectList.Create(True);
+  Blocks := TObjectList{$IfDef NEXTGEN}<TBlockPair>{$EndIf}.Create(True);
   try
     Blocks.Capacity := NumRSBlocks;
 
@@ -3041,7 +3054,7 @@ begin
   FField := AField;
 
   // Contents of FCachedGenerators will be freed by FGenericGF.Destroy
-  FCachedGenerators := TObjectList.Create(False);
+  FCachedGenerators := TObjectList{$IfDef NEXTGEN}<TGenericGFPoly>{$EndIf}.Create(False);
 
   SetLength(IntArray, 1);
   IntArray[0] := 1;

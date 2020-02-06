@@ -31,6 +31,9 @@ unit StrUtilsEx;
   {$IF CompilerVersion < 24}
    {$Define FPC_OR_LEGACY24}
   {$IfEnd}
+  {$IFDef NEXTGEN}
+   {$ZEROBASEDSTRINGS OFF}
+  {$EndIf}
 {$EndIf}
 
 interface

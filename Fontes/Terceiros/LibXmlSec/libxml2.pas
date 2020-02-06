@@ -37,6 +37,14 @@ type
         {$ENDIF}
         PSizeInt = ^SizeInt;
         TLibHandle = THandle;
+
+        // Compatibilização de Tipos inexistentes em compiladores NEXTGEN
+        {$IfDef NEXTGEN}
+          AnsiString = RawByteString;
+          AnsiChar = UTF8Char;
+          PAnsiChar = PUTF8Char;
+          PPAnsiChar = ^PUTF8Char;
+        {$EndIf}
       {$ENDIF}
 
       PFILE = Pointer;

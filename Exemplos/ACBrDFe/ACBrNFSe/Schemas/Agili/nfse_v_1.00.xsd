@@ -33,6 +33,13 @@
       <xsd:whiteSpace value="collapse" />
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="tsItemLei116AtividadeEconomica">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="140" />
+      <xsd:minLength value="1" />
+      <xsd:whiteSpace value="collapse" />
+    </xsd:restriction>
+  </xsd:simpleType>
   <xsd:simpleType name="tsBairro">
     <xsd:restriction base="xsd:string">
       <xsd:maxLength value="120" />
@@ -433,7 +440,8 @@
       <xsd:element name="OptanteMEISimei" type="tsOptanteMEISimei" minOccurs="1" maxOccurs="1" />
       <xsd:element name="ISSQNRetido" type="tsISSQNRetido" minOccurs="1" maxOccurs="1" />
       <xsd:element name="ResponsavelISSQN" type="tcResponsavelISSQN" minOccurs="0" maxOccurs="1" />
-      <xsd:element name="CodigoAtividadeEconomica" type="tsAtividadeEconomica" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="CodigoAtividadeEconomica" type="tsAtividadeEconomica" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="ItemLei116AtividadeEconomica" type="tsItemLei116AtividadeEconomica" minOccurs="0" maxOccurs="1" />
       <xsd:element name="ExigibilidadeISSQN" type="tcExigibilidadeISSQN" minOccurs="1" maxOccurs="1" />
       <xsd:element name="BeneficioProcesso" type="tsBeneficioProcesso" minOccurs="0" maxOccurs="1" />
       <xsd:element name="MunicipioIncidencia" type="tcIdentificacaoMunicipioIncidencia" minOccurs="0" maxOccurs="1" />

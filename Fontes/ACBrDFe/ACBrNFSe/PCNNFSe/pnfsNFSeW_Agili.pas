@@ -394,16 +394,28 @@ begin
 
     if VersaoNFSe = ve100 then
     begin
-      if NFSe.PrestadorServico.Endereco.CodigoMunicipio <> '5104526' then // Ipiranga do Norte - MT
-        Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, FormatarCnae(NFSe.Servico.CodigoCnae), '');
-
-      Gerador.wCampoNFSe(tcStr, '#29', 'ItemLei116   ', 01, 140, 1, codLCServ, '');
-      Gerador.wCampoNFSe(tcDe4, '#13', 'Quantidade   ', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+      case StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0) of
+        // Ipiranga do Norte - MT
+        5104526:
+          begin
+            Gerador.wCampoNFSe(tcStr, '#29', 'ItemLei116', 01, 140, 1, codLCServ, '');
+            Gerador.wCampoNFSe(tcDe4, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+          end;
+        // Juina - MT
+        5105150:
+          Gerador.wCampoNFSe(tcDe4, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+      else
+        begin
+          Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, FormatarCnae(NFSe.Servico.CodigoCnae), '');
+          Gerador.wCampoNFSe(tcStr, '#29', 'ItemLei116', 01, 140, 1, codLCServ, '');
+          Gerador.wCampoNFSe(tcDe4, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+        end;
+      end;
     end
     else
     begin
-      Gerador.wCampoNFSe(tcStr, '#29', 'ItemLei116   ', 01, 015, 0, codLCServ, '');
-      Gerador.wCampoNFSe(tcDe2, '#13', 'Quantidade   ', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+      Gerador.wCampoNFSe(tcStr, '#29', 'ItemLei116', 01, 015, 0, codLCServ, '');
+      Gerador.wCampoNFSe(tcDe2, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
     end;
 
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServico ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorUnitario, '');
@@ -523,6 +535,7 @@ begin
 
   case StrToInt(NFSe.PrestadorServico.Endereco.CodigoMunicipio) of
     5104526: LTagAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
+    5105150,
     5107305: LTagAtividadeEconomica := 'ItemLei116AtividadeEconomica';
   else
     LTagAtividadeEconomica := 'CodigoAtividadeEconomica';

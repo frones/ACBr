@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2020
+-- pnfsNFSeW_Agili -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56145-provedor-agili-cidade-juina-mt/
+   Por: PlenusTech
+
 04/02/2020
 -- pnfsEnvLoteRpsResposta -- 
 [*] Retorno fazendo uso de variável que não foi regenerada o valor, corrigido.

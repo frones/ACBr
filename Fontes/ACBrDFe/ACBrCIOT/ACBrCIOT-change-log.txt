@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2020
+-- ACBrCIOTWebServices --
+[*] Incluida uma condição que verifica a configuração do componente,
+    se este estiver configurado para não usar o certificado será realizado
+    automaticamente a troca do https por http das URLs dos serviços do
+    webservice do eFrete.
+   Por: Italo Jurisato Junior
+
 06/02/2020
 -- ACBrCIOTWebServices --
 [*] Removido a linha que forçava o uso de certificado digital

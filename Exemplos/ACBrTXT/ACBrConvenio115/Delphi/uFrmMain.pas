@@ -102,7 +102,7 @@ begin
       OMestre.Destinatario.UF := 'MG';
       OMestre.Destinatario.Telefone := '3537430000';
       OMestre.Destinatario.CodigoConsumidor := '1001'; // Código do Cliente
-      OMestre.TipoAssinante := tac111ResidencialPessoaFisica;
+      OMestre.TipoAssinante := tac11182PessoaFisicaResidencial;
       OMestre.TipoUtilizacao := pc112ProvimentoAcessoInternet;
       OMestre.DataEmissao := StrToDate('01/01/2013');
       OMestre.Modelo := 21;
@@ -182,7 +182,7 @@ begin
           OMestre.Destinatario.UF := 'MG';
           OMestre.Destinatario.Telefone := '3537430000';
           OMestre.Destinatario.CodigoConsumidor := '1001'; // Código do Cliente
-          OMestre.TipoAssinante := tac111ResidencialPessoaFisica;
+          OMestre.TipoAssinante := tac11182PessoaFisicaResidencial;
           OMestre.TipoUtilizacao := pc112ProvimentoAcessoInternet;
           OMestre.DataEmissao := StrToDate('01/01/2013');
           OMestre.Modelo := 21;

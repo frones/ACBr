@@ -590,7 +590,7 @@ end;
 procedure TFrmACBrConvenio115_PRN.RLMemo2BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal(false);
+  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal;
 end;
 
 procedure TFrmACBrConvenio115_PRN.rlmEnderecoBeforePrint(Sender: TObject;

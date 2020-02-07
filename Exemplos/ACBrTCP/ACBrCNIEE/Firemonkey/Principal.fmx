@@ -1,0 +1,434 @@
+object frPrincipal: TfrPrincipal
+  Left = 370
+  Top = 168
+  Caption = 'Conversor da Tabela Nacional de ECFs '
+  ClientHeight = 504
+  ClientWidth = 708
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Left = 370
+  Top = 168
+  DesignerMasterStyle = 0
+  object GroupBox1: TGroupBox
+    Align = Top
+    Size.Width = 708.000000000000000000
+    Size.Height = 121.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Arquivo Tabela_CNIEE.bin'
+    TabOrder = 0
+    object Label1: TLabel
+      AutoSize = True
+      Position.X = 12.000000000000000000
+      Position.Y = 64.000000000000000000
+      Size.Width = 146.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Nome do Arquivo em disco'
+    end
+    object sbArquivo: TSpeedButton
+      Anchors = [akTop, akRight]
+      Position.X = 545.000000000000000000
+      Position.Y = 78.000000000000000000
+      Size.Width = 32.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'searchtoolbutton'
+      OnClick = sbArquivoClick
+    end
+    object Label2: TLabel
+      AutoSize = True
+      Position.X = 12.000000000000000000
+      Position.Y = 21.000000000000000000
+      Size.Width = 106.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'URL para Download'
+    end
+    object lVersao: TLabel
+      AutoSize = True
+      Position.X = 456.000000000000000000
+      Position.Y = 102.000000000000000000
+      Size.Width = 38.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Vers'#227'o:'
+    end
+    object edArquivo: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 2
+      ReadOnly = True
+      Text = 'Tabela_CNIEE.bin'
+      Position.X = 12.000000000000000000
+      Position.Y = 80.000000000000000000
+      Size.Width = 527.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edURLDownload: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 0
+      Text = 'http://www.fazenda.mg.gov.br/empresas/ecf/files/Tabela_CNIEE.bin'
+      Position.X = 12.000000000000000000
+      Position.Y = 37.000000000000000000
+      Size.Width = 565.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object btAbrir: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 583.000000000000000000
+      Position.Y = 78.000000000000000000
+      Size.Width = 99.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Abrir'
+      OnClick = btAbrirClick
+    end
+    object btDownload: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 583.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 99.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Download'
+      OnClick = btDownloadClick
+    end
+  end
+  object Panel1: TPanel
+    Align = Bottom
+    Position.Y = 470.000000000000000000
+    Size.Width = 708.000000000000000000
+    Size.Height = 34.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    object DBNavigator1: TBindNavigator
+      Align = Left
+      Size.Width = 160.000000000000000000
+      Size.Height = 34.000000000000000000
+      Size.PlatformDefault = False
+      DataSource = BindSourceDB_dtsCadastro
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+      xRadius = 4.000000000000000000
+      yRadius = 4.000000000000000000
+    end
+    object btExportar: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 445.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Exportar'
+      OnClick = btExportarClick
+    end
+    object btSair: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 617.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'Sair'
+      OnClick = btSairClick
+    end
+    object btListar: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 531.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Listar'
+      OnClick = btListarClick
+    end
+    object btProxy: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 359.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Proxy'
+      OnClick = btProxyClick
+    end
+  end
+  object DBGrid1: TStringGrid
+    Align = Client
+    CanFocus = True
+    ClipChildren = True
+    Size.Width = 708.000000000000000000
+    Size.Height = 242.000000000000000000
+    Size.PlatformDefault = False
+    Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    Viewport.Width = 688.000000000000000000
+    Viewport.Height = 201.000000000000000000
+  end
+  object rgTipoExportacao: TPanel
+    Align = Bottom
+    Position.Y = 431.000000000000000000
+    Size.Width = 708.000000000000000000
+    Size.Height = 39.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object rbCSV: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 8.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Text = 'CSV'
+    end
+    object rbDSV: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 72.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'DSV'
+    end
+    object rbXML: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 136.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'XML'
+    end
+    object rbHTML: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 200.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'HTML'
+    end
+    object rbTXT: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 272.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'TXT'
+    end
+    object rbDelimitado: TRadioButton
+      GroupName = 'rbExp'
+      Position.X = 336.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Delimitado'
+    end
+  end
+  object GroupBox2: TGroupBox
+    Align = Bottom
+    Position.Y = 363.000000000000000000
+    Size.Width = 708.000000000000000000
+    Size.Height = 68.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Pesquisar no componente'
+    TabOrder = 2
+    object Label3: TLabel
+      AutoSize = True
+      Position.X = 12.000000000000000000
+      Position.Y = 19.000000000000000000
+      Size.Width = 33.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Marca'
+    end
+    object Label4: TLabel
+      AutoSize = True
+      Position.X = 192.000000000000000000
+      Position.Y = 19.000000000000000000
+      Size.Width = 42.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Modelo'
+    end
+    object Label5: TLabel
+      AutoSize = True
+      Position.X = 372.000000000000000000
+      Position.Y = 19.000000000000000000
+      Size.Width = 52.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Vers'#227'o SB'
+    end
+    object edMarca: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 0
+      Text = 'edMarca'
+      Position.X = 12.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 174.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edModelo: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 1
+      Text = 'Edit1'
+      Position.X = 192.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 174.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object btnPesquisar: TButton
+      Position.X = 528.000000000000000000
+      Position.Y = 33.000000000000000000
+      Size.Width = 99.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Pesquisar...'
+      TextSettings.WordWrap = True
+      OnClick = btnPesquisarClick
+    end
+    object edVersaoSB: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 3
+      Text = 'edVersaoSB'
+      Position.X = 372.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 150.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
+    Left = 127
+    Top = 190
+  end
+  object OpenDialog1: TOpenDialog
+    FileName = 'Tabela_CNIEE.bin'
+    Filter = 'Tabela Nacional de ECFs|Tabela_CNIEE.bin'
+    Left = 203
+    Top = 190
+  end
+  object dtsCadastro: TDataSource
+    DataSet = tmpCadastro
+    Left = 59
+    Top = 204
+  end
+  object tmpCadastro: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 45
+    Top = 190
+    object tmpCadastroMarca: TStringField
+      FieldName = 'Marca'
+      Size = 2
+    end
+    object tmpCadastroModelo: TStringField
+      FieldName = 'Modelo'
+      Size = 2
+    end
+    object tmpCadastroVersao: TStringField
+      FieldName = 'Versao'
+      Size = 2
+    end
+    object tmpCadastroTipo: TStringField
+      FieldName = 'Tipo'
+      Size = 10
+    end
+    object tmpCadastroMarcaDescr: TStringField
+      FieldName = 'MarcaDescr'
+      Size = 30
+    end
+    object tmpCadastroModeloDescr: TStringField
+      FieldName = 'ModeloDescr'
+      Size = 30
+    end
+    object tmpCadastroVersaoSB: TStringField
+      FieldName = 'VersaoSB'
+    end
+    object tmpCadastroQtLacreSL: TIntegerField
+      FieldName = 'QtLacreSL'
+    end
+    object tmpCadastroQTLacreFab: TIntegerField
+      FieldName = 'QtLacreFab'
+    end
+    object tmpCadastroMFD: TStringField
+      FieldName = 'MFD'
+      Size = 1
+    end
+    object tmpCadastroLacreMFD: TStringField
+      FieldName = 'LacreMFD'
+      Size = 1
+    end
+    object tmpCadastroAtoAprovacao: TStringField
+      FieldName = 'AtoAprovacao'
+      Size = 25
+    end
+    object tmpCadastroAtoRegistroMG: TStringField
+      FieldName = 'AtoRegistroMG'
+      Size = 25
+    end
+    object tmpCadastroFormatoNumero: TStringField
+      FieldName = 'FormatoNumero'
+    end
+  end
+  object ACBrCNIEE1: TACBrCNIEE
+    ProxyPort = '8080'
+    URLDownload = 'http://www.fazenda.mg.gov.br/empresas/ecf/files/Tabela_CNIEE.bin'
+    Left = 275
+    Top = 190
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 500
+    Top = 264
+    object LinkGridToDataSourceDBGrid1BindSourceDB_dtsCadastro: TLinkGridToDataSource
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB_dtsCadastro
+      GridControl = DBGrid1
+      Columns = <>
+    end
+  end
+  object BindScopeDB_dtsCadastro: TBindScopeDB
+    DataSource = dtsCadastro
+    ScopeMappings = <>
+    Left = 398
+    Top = 266
+  end
+  object BindSourceDB_dtsCadastro: TBindSourceDB
+    DataSource = dtsCadastro
+    ScopeMappings = <>
+    Left = 286
+    Top = 274
+  end
+end

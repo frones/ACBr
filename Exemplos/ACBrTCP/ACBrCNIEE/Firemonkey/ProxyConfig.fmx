@@ -1,0 +1,135 @@
+object frProxyConfig: TfrProxyConfig
+  Left = 492
+  Top = 296
+  BorderIcons = [biSystemMenu]
+  Caption = 'Configura'#231#227'o do Servidor Proxy'
+  ClientHeight = 218
+  ClientWidth = 320
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnShow = FormShow
+  Left = 492
+  Top = 296
+  DesignerMasterStyle = 0
+  object lUser: TLabel
+    AutoSize = True
+    Position.X = 46.000000000000000000
+    Position.Y = 84.000000000000000000
+    Size.Width = 43.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Usu'#225'rio:'
+  end
+  object lSenha: TLabel
+    AutoSize = True
+    Position.X = 46.000000000000000000
+    Position.Y = 127.000000000000000000
+    Size.Width = 35.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Senha:'
+  end
+  object lUser1: TLabel
+    AutoSize = True
+    Position.X = 26.000000000000000000
+    Position.Y = 12.000000000000000000
+    Size.Width = 47.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Servidor:'
+  end
+  object lSenha1: TLabel
+    AutoSize = True
+    Position.X = 246.000000000000000000
+    Position.Y = 12.000000000000000000
+    Size.Width = 31.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Porta:'
+  end
+  object Panel2: TPanel
+    Align = Bottom
+    Position.Y = 184.000000000000000000
+    Size.Width = 320.000000000000000000
+    Size.Height = 34.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object bOk: TButton
+      Hint = 'Iniciar Pesquisa'
+      ModalResult = 1
+      Position.X = 111.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'OK'
+    end
+    object bCancelar: TButton
+      Cancel = True
+      Hint = 'ESC = Cancelar'
+      ModalResult = 2
+      Position.X = 217.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Cancelar'
+    end
+  end
+  object edUser: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Position.X = 46.000000000000000000
+    Position.Y = 100.000000000000000000
+    Enabled = False
+    Size.Width = 172.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object edSenha: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    Password = True
+    Position.X = 46.000000000000000000
+    Position.Y = 143.000000000000000000
+    Enabled = False
+    Size.Width = 172.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object edServidor: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Position.X = 26.000000000000000000
+    Position.Y = 28.000000000000000000
+    Size.Width = 214.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object edPorta: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 1
+    Position.X = 246.000000000000000000
+    Position.Y = 28.000000000000000000
+    Size.Width = 48.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object cbAutenticacao: TCheckBox
+    Position.X = 26.000000000000000000
+    Position.Y = 59.000000000000000000
+    Size.Width = 183.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'O Servidor requer autentica'#231#227'o'
+  end
+end

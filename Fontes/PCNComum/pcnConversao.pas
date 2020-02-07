@@ -788,10 +788,10 @@ end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '45', '50', '51', '60',
+  result := StrToEnumerado(ok, s, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51', '60',
                                    '70', '80', '81', '90', '91', 'SN',
                                    '10part', '90part', '41rep', '60rep'],
-                                  [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60,
+                                  [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60,
                                    cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
                                    cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
@@ -805,7 +805,8 @@ end;
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
 begin
   result := EnumeradoToStr(t,
-   ['00 - TRIBUTAÇÃO NORMAL DO ICMS',
+   ['VAZIO',
+    '00 - TRIBUTAÇÃO NORMAL DO ICMS',
     '10 - TRIBUTAÇÃO COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
     '20 - TRIBUTAÇÃO COM REDUÇÃO DE BC DO ICMS',
     '30 - TRIBUTAÇÃO ISENTA E COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
@@ -826,7 +827,7 @@ begin
     '41 - NÃO TRIBUTADO - REPASSE',
     '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE'
     ],
-    [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70,
+    [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70,
     cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN, cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
 

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2020
+-- pcnConversao --
+[*] Incluido o enumerador cstVazio nas funções: StrToCSTICMS e
+    CSTICMSToStrTagPosText.
+  Por: Italo Jurisato Junior
+
 22/01/2020
 -- pcnConversao --
 [+] Incluido os códigos dos eventos: teAutorizadoSubstituicao, 

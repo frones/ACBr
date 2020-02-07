@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 07/02/2020
+-- ACBrSPEDFiscal --
+[-] Inclusão do registro 9900 pra totalizar as ocorrências do registro C597. (Juliana Tamizou)
+
 Data 05/02/2020
 -- ACBrSPEDFiscal --
 [-] Inclusão do registro 9900 pra totalizar as ocorrências do registro H030. (Ezequiel Brandalise)

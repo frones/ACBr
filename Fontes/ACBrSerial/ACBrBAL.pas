@@ -30,9 +30,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -71,7 +70,7 @@ TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2090, balToledo218
                   balRinnert, balMuller, balSaturno, balAFTS, balGenerica, balLibratek,
                   balMicheletti, balAlfa, balToledo9091_8530_8540, balWeightechWT1000,
                   balMarelCG62XL, balWeightechWT3000_ABS, balToledo2090N, balToledoBCS21,
-                  balPrecision, balDigitron_UL);
+                  balPrecision, balDigitron_UL, balLibratekWT3000IR);
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { Componente ACBrBAL }
@@ -154,12 +153,12 @@ implementation
 uses
   ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert,
   ACBrBALMuller, ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna,
-  ACBrBALDigitron,ACBrBALMagellan, ACBrBALUranoPOP, ACBrBALLider,
+  ACBrBALDigitron, ACBrBALMagellan, ACBrBALUranoPOP, ACBrBALLider,
   ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS, ACBrBALLibratek,
   ACBrBALMicheletti, ACBrBALAlfa, ACBrBALToledo9091_8530_8540,
   ACBrBALWeightechWT1000, ACBrBALMarelCG62XL, ACBrBALWeightechWT3000_ABS,
   ACBrBALToledo2090N, ACBrBALToledoBCS21, ACBrBALPrecision,
-  ACBrBALDigitron_UL,
+  ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 
 { TACBrBAL }
@@ -260,6 +259,7 @@ begin
      balMarelCG62XL          : fsBAL := TACBrBALMarelCG62XL.Create(Self);
      balWeightechWT3000_ABS  : fsBAL := TACBrBALWeightechWT3000_ABS.Create(Self);
      balDigitron_UL          : fsBAL := TACBrBALDigitron_UL.Create(Self);
+     balLibratekWT3000IR     : fsBAL := TACBrBALLibratekWT3000IR.Create(Self);
   else
      fsBAL := TACBrBALClass.Create(Self);
   end;

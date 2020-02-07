@@ -49,6 +49,8 @@ Símbolo : Significado
 
 07/02/2020
 -- pnfsConversao --
+[+] https://www.projetoacbr.com.br/forum/topic/56178-enum-publica/
+   Por: Marcelo Fagundes
 [+] Implementado o provedor SJC - São José dos Campos/SP
    Por: Italo Jurisato Junior
 

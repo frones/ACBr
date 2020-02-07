@@ -76,14 +76,6 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label10: TLabel;
-    Label11: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
     Label7: TLabel;
     btnInstalarACBr: TSpeedButton;
     btnVisualizarLogCompilacao: TSpeedButton;
@@ -109,6 +101,16 @@ type
     ckbUsarArquivoConfig: TCheckBox;
     ckbCopiarTodasDll: TCheckBox;
     rdgDLL: TRadioGroup;
+    btnMarcarTodas: TButton;
+    btnDesmarcarTodas: TButton;
+    Label1: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    procedure btnDesmarcarTodasClick(Sender: TObject);
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -120,6 +122,7 @@ type
     procedure wizPgConfiguracaoNextButtonClick(Sender: TObject;
       var Stop: Boolean);
     procedure btnInstalarACBrClick(Sender: TObject);
+    procedure btnMarcarTodasClick(Sender: TObject);
     procedure wizPgInstalacaoNextButtonClick(Sender: TObject;
       var Stop: Boolean);
     procedure btnVisualizarLogCompilacaoClick(Sender: TObject);
@@ -391,6 +394,11 @@ begin
   ShellExecute(Handle, 'open', PWideChar(FUltimoArquivoLog), '', '', 1);
 end;
 
+procedure TfrmPrincipal.btnDesmarcarTodasClick(Sender: TObject);
+begin
+  clbDelphiVersion.CheckAll(cbUnchecked, True, False);
+end;
+
 procedure TfrmPrincipal.IncrementaBarraProgresso;
 begin
   pgbInstalacao.Position := pgbInstalacao.Position + 1;
@@ -417,6 +425,11 @@ begin
     wizPgInstalacao.EnableButton(bkNext, Instalou);
     wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), True);
   end;
+end;
+
+procedure TfrmPrincipal.btnMarcarTodasClick(Sender: TObject);
+begin
+  clbDelphiVersion.CheckAll(cbChecked, True, False);
 end;
 
 // chama a caixa de dialogo para selecionar o diretório de instalação

@@ -86,26 +86,42 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Alignment = iaCenter
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
+      object Label20: TLabel
+        Left = 15
+        Top = 321
+        Width = 467
+        Height = 32
+        Caption = 
+          'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
+          #245'es visite o site:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
       object Label6: TLabel
         Left = 25
-        Top = 34
-        Width = 229
-        Height = 65
+        Top = 131
+        Width = 504
+        Height = 56
         Caption = 
           'Este assistente o guiar'#225' no processo de instala'#231#227'o do Projeto AC' +
           'Br em seu computador.'#13#10#13#10#201' recomend'#225'vel fechar todos os outros a' +
           'plicativos antes de continuar.'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
+        Font.Color = clBlack
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
         WordWrap = True
       end
       object imgLogomarca: TImage
-        Left = 273
-        Top = 20
+        Left = 15
+        Top = 3
         Width = 254
         Height = 110
         AutoSize = True
@@ -913,45 +929,45 @@ object frmPrincipal: TfrmPrincipal
           2806F00D31A412CA3F017E399E13B16624070000000049454E44AE426082}
       end
       object lblUrlACBrSac1: TLabel
-        Left = 93
-        Top = 200
-        Width = 244
-        Height = 13
+        Left = 107
+        Top = 355
+        Width = 281
+        Height = 14
         Cursor = crHandPoint
         Caption = 'http://www.projetoacbr.com.br/forum/SAC/sobre/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
         ParentFont = False
         OnClick = URLClick
       end
       object lblUrlForum1: TLabel
-        Left = 93
-        Top = 317
-        Width = 189
-        Height = 13
+        Left = 322
+        Top = 253
+        Width = 219
+        Height = 14
         Cursor = crHandPoint
         Caption = 'http://www.projetoacbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
         ParentFont = False
         OnClick = URLClick
       end
       object lblUrlACBr1: TLabel
-        Left = 93
-        Top = 259
-        Width = 157
-        Height = 13
+        Left = 322
+        Top = 203
+        Width = 182
+        Height = 14
         Cursor = crHandPoint
         Caption = 'http://www.projetoacbr.com.br/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
         ParentFont = False
@@ -959,88 +975,46 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label19: TLabel
         Left = 25
-        Top = 243
-        Width = 259
-        Height = 13
+        Top = 203
+        Width = 291
+        Height = 14
         Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
-        ParentFont = False
-      end
-      object Label20: TLabel
-        Left = 25
-        Top = 184
-        Width = 472
-        Height = 13
-        Caption = 
-          'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
-          #245'es visite o site:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
         ParentFont = False
       end
       object Label21: TLabel
         Left = 25
-        Top = 301
-        Width = 241
-        Height = 13
+        Top = 253
+        Width = 266
+        Height = 14
         Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label11: TLabel
-        Left = 93
-        Top = 374
-        Width = 137
-        Height = 13
-        Cursor = crHandPoint
-        Caption = 'http://tortoisesvn.tigris.org/'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsUnderline]
-        ParentFont = False
-        OnClick = URLClick
-      end
-      object Label12: TLabel
-        Left = 25
-        Top = 358
-        Width = 250
-        Height = 13
-        Caption = 'Para baixar o cliente de SVN TORTOISE visite o site:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
       object Label7: TLabel
         Left = 15
-        Top = 440
-        Width = 518
-        Height = 13
+        Top = 392
+        Width = 522
+        Height = 32
         Alignment = taCenter
         Caption = 
           'Este instalador foi desenvolvido gra'#231'as aos investimentos feitos' +
           ' pelos usu'#225'rios do ACBrSAC.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clMaroon
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
+        WordWrap = True
       end
     end
     object wizPgSelectIDEs: TJvWizardInteriorPage
@@ -1054,7 +1028,9 @@ object frmPrincipal: TfrmPrincipal
       Header.Title.Font.Name = 'Tahoma'
       Header.Title.Font.Style = [fsBold]
       Header.Subtitle.Color = clNone
-      Header.Subtitle.Text = 'Escolha todas as IDEs em que o ACBr deve ser instalado.'
+      Header.Subtitle.Text = 
+        'Marque todas as IDEs e plataformas em que o ACBr deve ser instal' +
+        'ado.'
       Header.Subtitle.Anchors = [akLeft, akTop, akRight, akBottom]
       Header.Subtitle.Font.Charset = DEFAULT_CHARSET
       Header.Subtitle.Font.Color = clWindowText
@@ -1066,9 +1042,9 @@ object frmPrincipal: TfrmPrincipal
       OnNextButtonClick = wizPgSelectIDEsNextButtonClick
       object clbDelphiVersion: TCheckListBox
         Left = 6
-        Top = 72
+        Top = 104
         Width = 539
-        Height = 417
+        Height = 385
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1079,6 +1055,24 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         TabOrder = 0
         OnClick = clbDelphiVersionClick
+      end
+      object btnMarcarTodas: TButton
+        Left = 6
+        Top = 73
+        Width = 99
+        Height = 25
+        Caption = 'Marcar Todas'
+        TabOrder = 1
+        OnClick = btnMarcarTodasClick
+      end
+      object btnDesmarcarTodas: TButton
+        Left = 118
+        Top = 73
+        Width = 99
+        Height = 25
+        Caption = 'Desmarcar Todas'
+        TabOrder = 2
+        OnClick = btnDesmarcarTodasClick
       end
     end
     object wizPgConfiguracao: TJvWizardInteriorPage
@@ -1229,7 +1223,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 16
           Width = 248
           Height = 26
-          Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
+          Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clRed
           Font.Height = -11
@@ -1243,6 +1237,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 15
           Width = 267
           Height = 17
+          Hint = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder.'
           Caption = 'Generate all C++Builder files (including package libs) '
           TabOrder = 0
         end
@@ -1251,7 +1246,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 45
           Width = 350
           Height = 17
-          Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
+          Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi'
           TabOrder = 1
         end
         object ckbRemoverArquivosAntigos: TCheckBox
@@ -1459,7 +1454,7 @@ object frmPrincipal: TfrmPrincipal
       object Label3: TLabel
         Left = 39
         Top = 58
-        Width = 334
+        Width = 394
         Height = 38
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
@@ -1470,92 +1465,109 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         WordWrap = True
       end
+      object Label1: TLabel
+        Left = 25
+        Top = 139
+        Width = 291
+        Height = 14
+        Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label4: TLabel
+        Left = 322
+        Top = 139
+        Width = 182
+        Height = 14
+        Cursor = crHandPoint
+        Caption = 'http://www.projetoacbr.com.br/'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsUnderline]
+        ParentFont = False
+        OnClick = URLClick
+      end
+      object Label5: TLabel
+        Left = 25
+        Top = 189
+        Width = 266
+        Height = 14
+        Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label11: TLabel
+        Left = 322
+        Top = 189
+        Width = 219
+        Height = 14
+        Cursor = crHandPoint
+        Caption = 'http://www.projetoacbr.com.br/forum/'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsUnderline]
+        ParentFont = False
+        OnClick = URLClick
+      end
+      object Label12: TLabel
+        Left = 15
+        Top = 257
+        Width = 465
+        Height = 32
+        Caption = 
+          'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
+          #245'es visite o site:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
       object Label13: TLabel
-        Left = 113
-        Top = 269
-        Width = 244
-        Height = 13
+        Left = 107
+        Top = 291
+        Width = 281
+        Height = 14
         Cursor = crHandPoint
         Caption = 'http://www.projetoacbr.com.br/forum/SAC/sobre/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
         ParentFont = False
         OnClick = URLClick
       end
       object Label14: TLabel
-        Left = 113
-        Top = 202
-        Width = 189
-        Height = 13
-        Cursor = crHandPoint
-        Caption = 'http://www.projetoacbr.com.br/forum/'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsUnderline]
-        ParentFont = False
-        OnClick = URLClick
-      end
-      object Label15: TLabel
-        Left = 113
-        Top = 139
-        Width = 157
-        Height = 13
-        Cursor = crHandPoint
-        Caption = 'http://www.projetoacbr.com.br/'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsUnderline]
-        ParentFont = False
-        OnClick = URLClick
-      end
-      object Label16: TLabel
-        Left = 45
-        Top = 123
-        Width = 259
-        Height = 13
-        Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label17: TLabel
-        Left = 45
-        Top = 253
-        Width = 406
-        Height = 13
+        Left = 15
+        Top = 368
+        Width = 518
+        Height = 32
+        Alignment = taCenter
         Caption = 
-          'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
-          #245'es visite o site:'
+          'Este instalador foi desenvolvido gra'#231'as aos investimentos feitos' +
+          ' pelos usu'#225'rios do ACBrSAC.'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
+        Font.Color = clMaroon
+        Font.Height = -13
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         WordWrap = True
-      end
-      object Label18: TLabel
-        Left = 45
-        Top = 186
-        Width = 241
-        Height = 13
-        Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
       end
     end
     object wizMapa: TJvWizardRouteMapNodes
@@ -1611,6 +1623,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

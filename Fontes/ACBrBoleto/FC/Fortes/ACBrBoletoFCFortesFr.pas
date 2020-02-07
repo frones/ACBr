@@ -1059,6 +1059,14 @@ begin
         RLLayout.ShowProgress := MostrarProgresso;
         RLLayout.Title        := TituloRelatorio;
 
+        if TituloPreview <> '' then
+        begin
+          RLLayout.PreviewOptions.Defaults := pdIgnoreDefaults;
+          RLLayout.PreviewOptions.Caption  := TituloPreview;
+        end
+        else
+          RLLayout.PreviewOptions.Defaults := pdUseDefaults;
+
         if PrinterName <> '' then
            RLPrinter.PrinterName := PrinterName;
 

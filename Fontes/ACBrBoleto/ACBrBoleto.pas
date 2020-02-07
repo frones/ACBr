@@ -1454,19 +1454,20 @@ type
   {$ENDIF RTL230_UP}
  TACBrBoletoFCClass = class(TACBrComponent)
   private
-    fDirLogo        : String;
-    fFiltro: TACBrBoletoFCFiltro;
-    fLayOut         : TACBrBolLayOut;
-    fMostrarPreview : Boolean;
+    fDirLogo         : String;
+    fFiltro          : TACBrBoletoFCFiltro;
+    fLayOut          : TACBrBolLayOut;
+    fMostrarPreview  : Boolean;
     fMostrarProgresso: Boolean;
-    fMostrarSetup: Boolean;
-    fNomeArquivo    : String;
-    fPathNomeArquivo: String;
-    fNumCopias      : Integer;
-    fPrinterName    : String;
-    fOnObterLogo : TACBrBoletoFCOnObterLogo ;
-    fSoftwareHouse  : String;
-    FPdfSenha: string;
+    fMostrarSetup    : Boolean;
+    fNomeArquivo     : String;
+    fPathNomeArquivo : String;
+    fNumCopias       : Integer;
+    fPrinterName     : String;
+    fOnObterLogo     : TACBrBoletoFCOnObterLogo ;
+    fSoftwareHouse   : String;
+    FPdfSenha        : string;
+    FTituloPreview   : string;
     FAlterarEscalaPadrao: Boolean;
     FNovaEscala: Integer;
     function ComponentStateDesigning: Boolean;
@@ -1477,6 +1478,7 @@ type
     procedure SetDirLogo(const AValue: String);
     procedure SetNomeArquivo(const AValue: String);
     procedure SetPdfSenha(const Value: string);
+    procedure SetTituloPreview(const Value: string);
   protected
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
@@ -1510,7 +1512,7 @@ type
     property PdfSenha        : string          read FPdfSenha         write SetPdfSenha;
     property AlterarEscalaPadrao: Boolean      read FAlterarEscalaPadrao write FAlterarEscalaPadrao default False;
     property NovaEscala      : Integer         read FNovaEscala       write FNovaEscala        default 96;
-
+    property TituloPreview   : string          read FTituloPreview    write SetTituloPreview;
   end;
 
 
@@ -3649,6 +3651,12 @@ end;
 procedure TACBrBoletoFCClass.SetPdfSenha(const Value: string);
 begin
   FPdfSenha := Value;
+end;
+
+procedure TACBrBoletoFCClass.SetTituloPreview(const Value: string);
+begin
+  if Value <> FTituloPreview then
+    FTituloPreview := Value;
 end;
 
 procedure TACBrBoletoFCClass.Imprimir;

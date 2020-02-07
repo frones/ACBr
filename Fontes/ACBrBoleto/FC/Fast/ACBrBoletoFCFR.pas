@@ -56,7 +56,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils,
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage, frxExportBaseDialog;
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -323,6 +323,8 @@ begin
       begin
         frxReport.PrintOptions.ShowDialog := (MostrarSetup) and (not FModoThread);
         frxReport.PrintOptions.Copies := NumCopias;
+        if TituloPreview <> '' then
+          frxReport.ReportOptions.Name := TituloPreview;
 
         if Length(Impressora) > 0 then
           frxReport.PrintOptions.Printer := Impressora;

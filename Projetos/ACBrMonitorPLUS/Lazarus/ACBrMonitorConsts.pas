@@ -1073,7 +1073,14 @@ const
   CKeySATSalvarEnvio =                      'SalvarEnvio';
   CKeySATSepararPorCNPJ =                   'SepararPorCNPJ';
   CKeySATSepararPorMES =                    'SepararPorMES';
+  CKeySATSepararPorANO =                    'SepararPorANO';
+  CKeySATSepararPorDIA =                    'SepararPorDIA';
+  CKeySATSepararPorModelo =                 'SepararPorModelo';
   CKeySATValidarNumeroSessaoResposta =      'ValidarNumeroSessaoResposta';
+  CKeySATPathCFeCanc =                      'PathCFeCanc';
+  CKeySATPathCFeEnvio =                     'PathCFeEnvio';
+  CKeySATPrefixoArqCFe =                    'PrefixoArqCFe';
+  CKeySATPrefixoArqCFeCanc =                'PrefixoArqCFeCanc';
 
   CSecSATExtrato =                          'SATExtrato';
   CKeySATExtParamsString =                  'ParamsString';

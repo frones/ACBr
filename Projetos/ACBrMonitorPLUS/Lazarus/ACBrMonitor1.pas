@@ -1,5 +1,5 @@
 {*******************************************************************************}
-{ Projeto: ACBrMonitor                                                         }
+{ Projeto: ACBrMonitor                                                          }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
@@ -264,12 +264,27 @@ type
     cbxExibeResumo: TCheckBox;
     cbxExpandirDadosAdicionaisAuto: TCheckBox;
     cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox;
+    cbxSATSalvarCFe: TCheckBox;
+    cbxSATSalvarCFeCanc: TCheckBox;
+    cbxSATSalvarEnvio: TCheckBox;
+    cbxSATSepararPorCNPJ: TCheckBox;
+    cbxSATSepararPorANO: TCheckBox;
+    cbxSATSepararPorModelo: TCheckBox;
+    cbxSATSepararPorMES: TCheckBox;
+    cbxSATSepararPorDIA: TCheckBox;
     cbxValidarNumeroSessaoResposta: TCheckBox;
     cbxImprimirLogoLateralNFCe: TCheckBox;
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
     cbFormatoDecimais: TComboBox;
     cbTipoResposta: TComboBox;
+    edSATPathArqs: TEdit;
+    edSATPathArqsCanc: TEdit;
+    edSATPathArqsEnvio: TEdit;
+    edSATPrefixoCFe: TEdit;
+    Label247: TLabel;
+    Label248: TLabel;
+    edSATPrefixoCFeCanc: TEdit;
     edtMsgResumoCanhoto: TEdit;
     edtSATCasasMaskQtd: TEdit;
     edtSATMaskVUnit: TEdit;
@@ -279,6 +294,8 @@ type
     edtNumCopiaNFCe: TSpinEdit;
     edtPathDownload: TEdit;
     edtPathSchemasDFe: TEdit;
+    grbConfigArqs: TGroupBox;
+    Label154: TLabel;
     Label240: TLabel;
     Label244: TLabel;
     grbPathSchemas: TGroupBox;
@@ -402,17 +419,12 @@ type
     cbxRegTributario: TComboBox;
     cbxSalvaPathEvento: TCheckBox;
     cbxSalvarArqs: TCheckBox;
-    cbxSATSalvarCFe: TCheckBox;
-    cbxSATSalvarCFeCanc: TCheckBox;
-    cbxSATSalvarEnvio: TCheckBox;
     cbxSalvarNFesProcessadas: TCheckBox;
     cbxSedexAvisoReceb: TComboBox;
     cbxSedexFormato: TComboBox;
     cbxSedexMaoPropria: TComboBox;
     cbxSedexServico: TComboBox;
     cbxSepararPorCNPJ: TCheckBox;
-    cbxSATSepararPorCNPJ: TCheckBox;
-    cbxSATSepararPorMES: TCheckBox;
     cbxSepararporModelo: TCheckBox;
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
@@ -541,6 +553,8 @@ type
     Label241: TLabel;
     Label242: TLabel;
     Label243: TLabel;
+    Label245: TLabel;
+    Label246: TLabel;
     lbTipoResp: TLabel;
     lblMsgCanhoto: TLabel;
     Label26: TLabel;
@@ -597,6 +611,9 @@ type
     rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgLayoutCanhoto: TRadioGroup;
     rgTipoFonte: TRadioGroup;
+    SbArqLog2: TSpeedButton;
+    SbArqLog3: TSpeedButton;
+    SbArqLog4: TSpeedButton;
     sbArquivoCert: TSpeedButton;
     sbSchemaDFe: TSpeedButton;
     sbArquivoWebServicesReinf: TSpeedButton;
@@ -734,7 +751,6 @@ type
     edRedeSSID: TEdit;
     edRedeUsuario: TEdit;
     edSATLog: TEdit;
-    edSATPathArqs: TEdit;
     edLogComp: TEdit;
     edtCodigoAtivacao: TEdit;
     edtCodUF: TEdit;
@@ -885,7 +901,6 @@ type
     Label135: TLabel;
     Label136: TLabel;
     Label137: TLabel;
-    Label154: TLabel;
     lbBuffer: TLabel;
     lbColunas: TLabel;
     lbEspacosLinhas: TLabel;
@@ -1102,7 +1117,6 @@ type
     rgModoImpressaoEvento: TRadioGroup;
     rgTipoDanfe: TRadioGroup;
     SbArqLog: TSpeedButton;
-    SbArqLog2: TSpeedButton;
     sbBALSerial: TSpeedButton;
     sbBALLog: TSpeedButton;
     sbCHQBemafiINI: TSpeedButton;
@@ -1367,6 +1381,9 @@ type
     procedure cbxSATSalvarCFeCancChange(Sender: TObject);
     procedure cbxSATSalvarCFeChange(Sender: TObject);
     procedure cbxSATSalvarEnvioChange(Sender: TObject);
+    procedure cbxSATSepararPorANOChange(Sender: TObject);
+    procedure cbxSATSepararPorDIAChange(Sender: TObject);
+    procedure cbxSATSepararPorModeloChange(Sender: TObject);
     procedure cbxSedexAvisoRecebChange(Sender: TObject);
     procedure cbxSedexFormatoChange(Sender: TObject);
     procedure cbxSedexMaoPropriaChange(Sender: TObject);
@@ -1410,6 +1427,8 @@ type
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
+    procedure SbArqLog3Click(Sender: TObject);
+    procedure SbArqLog4Click(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
     procedure sbArquivoWebServicesCTeClick(Sender: TObject);
@@ -3856,6 +3875,21 @@ begin
   ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
 end;
 
+procedure TFrmACBrMonitor.cbxSATSepararPorANOChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorAno := cbxSATSepararPorANO.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbxSATSepararPorDIAChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorDia := cbxSATSepararPorDIA.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbxSATSepararPorModeloChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorModelo := cbxSATSepararPorModelo.Checked;
+end;
+
 procedure TFrmACBrMonitor.cbxSedexAvisoRecebChange(Sender: TObject);
 begin
   ACBrSedex1.AvisoRecebimento := (cbxSedexAvisoReceb.ItemIndex = 0);
@@ -5104,7 +5138,14 @@ begin
     cbxSATSalvarEnvio.Checked          := SalvarEnvio;
     cbxSATSepararPorCNPJ.Checked       := SepararPorCNPJ;
     cbxSATSepararPorMES.Checked        := SepararPorMES;
+    cbxSATSepararPorANO.Checked        := SepararPorANO;
+    cbxSATSepararPorDIA.Checked        := SepararPorDIA;
+    cbxSATSepararporModelo.Checked     := SepararPorModelo;
     cbxValidarNumeroSessaoResposta.Checked:= ValidarNumeroSessaoResposta;
+    edSATPathArqsCanc.Text             := ifthen((PathCFeCanc = '') and (PathCFe <> ''), PathCFe, PathCFeCanc);
+    edSATPathArqsEnvio.Text            := ifthen((PathCFeEnvio = '') and (PathCFe <> ''), PathCFe, PathCFeEnvio);
+    edSATPrefixoCFe.Text               := PrefixoArqCFe;
+    edSATPrefixoCFeCanc.Text           := PrefixoArqCFeCanc;
 
     with SATImpressao.SATExtrato do
     begin
@@ -6156,7 +6197,14 @@ begin
       SalvarEnvio                      := cbxSATSalvarEnvio.Checked;
       SepararPorCNPJ                   := cbxSATSepararPorCNPJ.Checked;
       SepararPorMES                    := cbxSATSepararPorMES.Checked;
+      SepararPorANO                    := cbxSATSepararPorANO.Checked;
+      SepararPorDIA                    := cbxSATSepararPorDIA.Checked;
+      SepararPorModelo                 := cbxSATSepararPorModelo.Checked;
       ValidarNumeroSessaoResposta      := cbxValidarNumeroSessaoResposta.Checked;
+      PathCFeCanc                      := edSATPathArqsCanc.Text;
+      PathCFeEnvio                     := edSATPathArqsEnvio.Text;
+      PrefixoArqCFe                    := edSATPrefixoCFe.Text;
+      PrefixoArqCFeCanc                := edSATPrefixoCFeCanc.Text;
 
       with SATImpressao.SATExtrato do
       begin
@@ -7186,6 +7234,16 @@ end;
 procedure TFrmACBrMonitor.SbArqLog2Click(Sender: TObject);
 begin
   PathClick(edSATPathArqs);
+end;
+
+procedure TFrmACBrMonitor.SbArqLog3Click(Sender: TObject);
+begin
+  PathClick(edSATPathArqsCanc);
+end;
+
+procedure TFrmACBrMonitor.SbArqLog4Click(Sender: TObject);
+begin
+  PathClick(edSATPathArqsEnvio);
 end;
 
 procedure TFrmACBrMonitor.SbArqLogClick(Sender: TObject);
@@ -8565,13 +8623,18 @@ begin
     ValidarNumeroSessaoResposta := cbxValidarNumeroSessaoResposta.Checked;
 
     ConfigArquivos.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
-    ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
-    ConfigArquivos.PastaEnvio:= PathWithDelim(edSATPathArqs.Text)+'Enviados';
+    ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqsCanc.Text)+'Cancelamentos';
+    ConfigArquivos.PastaEnvio:= PathWithDelim(edSATPathArqsEnvio.Text)+'Enviados';
     ConfigArquivos.SalvarCFe := cbxSATSalvarCFe.Checked;
     ConfigArquivos.SalvarCFeCanc := cbxSATSalvarCFeCanc.Checked;
     ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSATSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSATSepararPorMES.Checked;
+    ConfigArquivos.SepararPorAno := cbxSATSepararPorANO.Checked;
+    ConfigArquivos.SepararPorDia := cbxSATSepararPorDIA.Checked;
+    ConfigArquivos.SepararPorModelo := cbxSATSepararPorModelo.Checked;
+    ConfigArquivos.PrefixoArqCFe := edSATPrefixoCFe.Text;
+    ConfigArquivos.PrefixoArqCFeCanc := edSATPrefixoCFeCanc.Text;
 
   end;
 

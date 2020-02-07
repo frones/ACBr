@@ -527,11 +527,18 @@ type
     SalvarEnvio                  : Boolean;
     SepararPorCNPJ               : Boolean;
     SepararPorMES                : Boolean;
+    SepararPorANO                : Boolean;
+    SepararPorDIA                : Boolean;
+    SepararPorModelo             : Boolean;
     ValidarNumeroSessaoResposta  : Boolean;
     SATImpressao                 : TSATImpressao;
     SATRede                      : TSATRede;
     SATSWH                       : TSATSwH;
     SATEmail                     : TSATEmail;
+    PathCFeCanc                  : String;
+    PathCFeEnvio                 : String;
+    PrefixoArqCFe                : String;
+    PrefixoArqCFeCanc            : String;
 
   end;
 
@@ -1178,7 +1185,14 @@ begin
       ini.WriteBool(    CSecSAT, CKeySATSalvarEnvio    , SalvarEnvio    );
       ini.WriteBool(    CSecSAT, CKeySATSepararPorCNPJ , SepararPorCNPJ );
       ini.WriteBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
+      ini.WriteBool(    CSecSAT, CKeySATSepararPorANO  , SepararPorANO  );
+      ini.WriteBool(    CSecSAT, CKeySATSepararPorDIA  , SepararPorDIA  );
+      ini.WriteBool(    CSecSAT, CKeySATSepararPorModelo, SepararPorModelo  );
       ini.WriteBool(    CSecSAT, CKeySATValidarNumeroSessaoResposta, ValidarNumeroSessaoResposta );
+      ini.WriteString(  CSecSAT, CKeySATPathCFeCanc    , PathCFeCanc    );
+      ini.WriteString(  CSecSAT, CKeySATPathCFeEnvio   , PathCFeEnvio   );
+      ini.WriteString(  CSecSAT, CKeySATPrefixoArqCFe  , PrefixoArqCFe  );
+      ini.WriteString(  CSecSAT, CKeySATPrefixoArqCFeCanc  , PrefixoArqCFeCanc  );
     end;
 
     with SAT.SATImpressao.SATExtrato do
@@ -1860,7 +1874,14 @@ begin
       SalvarEnvio               := ini.ReadBool(    CSecSAT, CKeySATSalvarEnvio    , SalvarEnvio    );
       SepararPorCNPJ            := ini.ReadBool(    CSecSAT, CKeySATSepararPorCNPJ , SepararPorCNPJ );
       SepararPorMES             := ini.ReadBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
+      SepararPorANO             := ini.ReadBool(    CSecSAT, CKeySATSepararPorANO  , SepararPorANO  );
+      SepararPorDIA             := ini.ReadBool(    CSecSAT, CKeySATSepararPorDIA  , SepararPorDIA  );
+      SepararPorModelo          := ini.ReadBool(    CSecSAT, CKeySATSepararPorModelo  , SepararPorModelo  );
       ValidarNumeroSessaoResposta := ini.ReadBool(CSecSAT, CKeySATValidarNumeroSessaoResposta, ValidarNumeroSessaoResposta );
+      PathCFeCanc               := ini.ReadString(  CSecSAT, CKeySATPathCFeCanc    , PathCFeCanc    );
+      PathCFeEnvio              := ini.ReadString(  CSecSAT, CKeySATPathCFeEnvio   , PathCFeEnvio   );
+      PrefixoArqCFe             := ini.ReadString(  CSecSAT, CKeySATPrefixoArqCFe  , PrefixoArqCFe  );
+      PrefixoArqCFeCanc         := ini.ReadString(  CSecSAT, CKeySATPrefixoArqCFeCanc  , PrefixoArqCFeCanc   );
     end;
 
     with SAT.SATImpressao.SATExtrato do
@@ -2512,7 +2533,14 @@ begin
     SalvarEnvio               := True;
     SepararPorCNPJ            := True;
     SepararPorMES             := True;
+    SepararPorDIA             := False;
+    SepararPorANO             := False;
+    SepararPorModelo          := False;
     ValidarNumeroSessaoResposta:= True;
+    PathCFeCanc               := AcertaPath('Arqs'+PathDelim+'SAT');
+    PathCFeEnvio              := AcertaPath('Arqs'+PathDelim+'SAT');
+    PrefixoArqCFe             := '';
+    PrefixoArqCFeCanc         := '';
   end;
 
   with SAT.SATImpressao.SATExtrato do

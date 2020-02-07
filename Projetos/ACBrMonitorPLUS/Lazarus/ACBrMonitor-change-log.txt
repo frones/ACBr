@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2020
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado novas configurações referente ao componente SAT: Configurações de diretórios, Prefixo de CFe e Configurações de estrutura de diretórios
+
 06/02/2020
 [*] DoECFUnit
 Removido Métodos WebService desativados: EnvioBlocoX, ConsultaBlocoX, ValidaBlocoX

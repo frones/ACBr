@@ -12084,11 +12084,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1015
-            ActivePage = tsDadosSwHouse
+            ActivePage = tsDadosSAT
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               HelpType = htKeyword
@@ -12323,7 +12323,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnChange = cbxModeloSATChange
                 ParentFont = False
                 Style = csDropDownList
-                TabOrder = 11
+                TabOrder = 10
               end
               object btAtivarsat: TButton
                 Left = 128
@@ -12334,29 +12334,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Height = -13
                 OnClick = btAtivarsatClick
                 ParentFont = False
-                TabOrder = 19
-              end
-              object edSATPathArqs: TEdit
-                Cursor = crIBeam
-                Left = 385
-                Height = 25
-                Top = 123
-                Width = 558
-                Anchors = [akTop, akLeft, akRight]
-                Font.Height = -13
-                ParentFont = False
-                TabOrder = 10
-              end
-              object SbArqLog2: TSpeedButton
-                Left = 945
-                Height = 22
-                Top = 126
-                Width = 24
-                Anchors = [akTop, akRight]
-                Caption = '...'
-                Font.Height = -13
-                OnClick = SbArqLog2Click
-                ParentFont = False
+                TabOrder = 13
               end
               object btConsultarStatusOPSAT: TButton
                 Left = 17
@@ -12367,7 +12345,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Height = -13
                 OnClick = btConsultarStatusOPSATClick
                 ParentFont = False
-                TabOrder = 18
+                TabOrder = 12
               end
               object bInicializar: TButton
                 AnchorSideLeft.Side = asrCenter
@@ -12379,94 +12357,265 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Height = -13
                 OnClick = bInicializarClick
                 ParentFont = False
-                TabOrder = 17
-              end
-              object cbxSATSalvarCFe: TCheckBox
-                Left = 467
-                Height = 21
-                Top = 168
-                Width = 80
-                Caption = 'Salvar CFe'
-                Checked = True
-                Font.Height = -13
-                OnChange = cbxSATSalvarCFeChange
-                ParentFont = False
-                State = cbChecked
-                TabOrder = 12
-              end
-              object cbxSATSalvarCFeCanc: TCheckBox
-                Left = 467
-                Height = 21
-                Top = 193
-                Width = 108
-                Caption = 'Salvar CFeCanc'
-                Checked = True
-                Font.Height = -13
-                OnChange = cbxSATSalvarCFeCancChange
-                ParentFont = False
-                State = cbChecked
-                TabOrder = 13
-              end
-              object cbxSATSalvarEnvio: TCheckBox
-                Left = 467
-                Height = 21
-                Top = 218
-                Width = 90
-                Caption = 'Salvar Envio'
-                Checked = True
-                Font.Height = -13
-                OnChange = cbxSATSalvarEnvioChange
-                ParentFont = False
-                State = cbChecked
-                TabOrder = 14
-              end
-              object cbxSATSepararPorMES: TCheckBox
-                Left = 324
-                Height = 21
-                Top = 216
-                Width = 121
-                Caption = 'Separar por MES'
-                Checked = True
-                Font.Height = -13
-                OnChange = cbxSATSepararPorMESChange
-                ParentFont = False
-                State = cbChecked
-                TabOrder = 16
-              end
-              object cbxSATSepararPorCNPJ: TCheckBox
-                Left = 324
-                Height = 21
-                Top = 193
-                Width = 125
-                Caption = 'Separar por CNPJ'
-                Checked = True
-                Font.Height = -13
-                OnChange = cbxSATSepararPorCNPJChange
-                ParentFont = False
-                State = cbChecked
-                TabOrder = 15
-              end
-              object Label154: TLabel
-                Left = 385
-                Height = 17
-                Top = 106
-                Width = 118
-                Caption = 'Path Salvar arquivos'
-                Font.Height = -13
-                ParentColor = False
-                ParentFont = False
+                TabOrder = 11
               end
               object cbxValidarNumeroSessaoResposta: TCheckBox
-                Left = 608
+                Left = 16
                 Height = 21
-                Top = 168
+                Top = 272
                 Width = 235
                 Caption = 'Validar Número de Sessão Resposta'
                 Checked = True
                 Font.Height = -13
                 ParentFont = False
                 State = cbChecked
-                TabOrder = 20
+                TabOrder = 14
+              end
+              object grbConfigArqs: TGroupBox
+                Left = 384
+                Height = 243
+                Top = 101
+                Width = 584
+                Caption = 'Configuração Arquivos'
+                ClientHeight = 221
+                ClientWidth = 580
+                TabOrder = 15
+                object cbxSATSalvarCFe: TCheckBox
+                  Left = 16
+                  Height = 21
+                  Top = 112
+                  Width = 80
+                  Caption = 'Salvar CFe'
+                  Checked = True
+                  Font.Height = -13
+                  OnChange = cbxSATSalvarCFeChange
+                  ParentFont = False
+                  State = cbChecked
+                  TabOrder = 0
+                end
+                object cbxSATSalvarCFeCanc: TCheckBox
+                  Left = 16
+                  Height = 21
+                  Top = 132
+                  Width = 108
+                  Caption = 'Salvar CFeCanc'
+                  Checked = True
+                  Font.Height = -13
+                  OnChange = cbxSATSalvarCFeCancChange
+                  ParentFont = False
+                  State = cbChecked
+                  TabOrder = 1
+                end
+                object cbxSATSalvarEnvio: TCheckBox
+                  Left = 16
+                  Height = 21
+                  Top = 152
+                  Width = 90
+                  Caption = 'Salvar Envio'
+                  Checked = True
+                  Font.Height = -13
+                  OnChange = cbxSATSalvarEnvioChange
+                  ParentFont = False
+                  State = cbChecked
+                  TabOrder = 2
+                end
+                object cbxSATSepararPorCNPJ: TCheckBox
+                  Left = 136
+                  Height = 21
+                  Top = 112
+                  Width = 125
+                  Caption = 'Separar por CNPJ'
+                  Checked = True
+                  Font.Height = -13
+                  OnChange = cbxSATSepararPorCNPJChange
+                  ParentFont = False
+                  State = cbChecked
+                  TabOrder = 3
+                end
+                object cbxSATSepararPorMES: TCheckBox
+                  Left = 136
+                  Height = 21
+                  Top = 152
+                  Width = 121
+                  Caption = 'Separar por MES'
+                  Checked = True
+                  Font.Height = -13
+                  OnChange = cbxSATSepararPorMESChange
+                  ParentFont = False
+                  State = cbChecked
+                  TabOrder = 4
+                end
+                object edSATPathArqs: TEdit
+                  Cursor = crIBeam
+                  Left = 88
+                  Height = 25
+                  Top = 8
+                  Width = 448
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 5
+                end
+                object Label154: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 16
+                  Width = 74
+                  Caption = 'Path Vendas:'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object SbArqLog2: TSpeedButton
+                  Left = 544
+                  Height = 22
+                  Top = 11
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Caption = '...'
+                  Font.Height = -13
+                  OnClick = SbArqLog2Click
+                  ParentFont = False
+                end
+                object edSATPathArqsCanc: TEdit
+                  Cursor = crIBeam
+                  Left = 88
+                  Height = 25
+                  Top = 40
+                  Width = 448
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 6
+                end
+                object edSATPathArqsEnvio: TEdit
+                  Cursor = crIBeam
+                  Left = 88
+                  Height = 25
+                  Top = 72
+                  Width = 448
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 7
+                end
+                object Label245: TLabel
+                  Left = 16
+                  Height = 17
+                  Top = 48
+                  Width = 63
+                  Caption = 'Path Canc.:'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object Label246: TLabel
+                  Left = 16
+                  Height = 17
+                  Top = 80
+                  Width = 63
+                  Caption = 'Path Envio:'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object SbArqLog3: TSpeedButton
+                  Left = 544
+                  Height = 22
+                  Top = 43
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Caption = '...'
+                  Font.Height = -13
+                  OnClick = SbArqLog3Click
+                  ParentFont = False
+                end
+                object SbArqLog4: TSpeedButton
+                  Left = 544
+                  Height = 22
+                  Top = 72
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Caption = '...'
+                  Font.Height = -13
+                  OnClick = SbArqLog4Click
+                  ParentFont = False
+                end
+                object edSATPrefixoCFe: TEdit
+                  Cursor = crIBeam
+                  Left = 380
+                  Height = 25
+                  Top = 104
+                  Width = 156
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 8
+                end
+                object edSATPrefixoCFeCanc: TEdit
+                  Cursor = crIBeam
+                  Left = 380
+                  Height = 25
+                  Top = 132
+                  Width = 156
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 9
+                end
+                object Label247: TLabel
+                  Left = 304
+                  Height = 17
+                  Top = 112
+                  Width = 68
+                  Caption = 'Prefixo CFe:'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object Label248: TLabel
+                  Left = 296
+                  Height = 17
+                  Top = 136
+                  Width = 78
+                  Caption = 'Prefixo Canc.:'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object cbxSATSepararPorDIA: TCheckBox
+                  Left = 136
+                  Height = 21
+                  Top = 173
+                  Width = 115
+                  Caption = 'Separar por DIA'
+                  Font.Height = -13
+                  OnChange = cbxSATSepararPorDIAChange
+                  ParentFont = False
+                  TabOrder = 10
+                end
+                object cbxSATSepararPorModelo: TCheckBox
+                  Left = 136
+                  Height = 21
+                  Top = 194
+                  Width = 141
+                  Caption = 'Separar por Modelo'
+                  Font.Height = -13
+                  OnChange = cbxSATSepararPorModeloChange
+                  ParentFont = False
+                  TabOrder = 11
+                end
+                object cbxSATSepararPorANO: TCheckBox
+                  Left = 136
+                  Height = 21
+                  Top = 132
+                  Width = 123
+                  Caption = 'Separar por ANO'
+                  Font.Height = -13
+                  OnChange = cbxSATSepararPorANOChange
+                  ParentFont = False
+                  TabOrder = 12
+                end
               end
             end
             object tsDadosEmit: TTabSheet
@@ -16383,6 +16532,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0

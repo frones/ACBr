@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 306
   Top = 296
-  Width = 563
-  Height = 327
+  Width = 570
+  Height = 337
   HorzScrollBar.Range = 505
   VertScrollBar.Range = 241
   ActiveControl = mProdutos
@@ -344,6 +344,7 @@ object Form1: TForm1
   object ACBrLCB1: TACBrLCB
     Porta = 'COM2'
     Sufixo = '#13'
+    Intervalo = 300
     OnLeCodigo = ACBrLCB1LeCodigo
     OnLeFila = ACBrLCB1LeFila
     Left = 48

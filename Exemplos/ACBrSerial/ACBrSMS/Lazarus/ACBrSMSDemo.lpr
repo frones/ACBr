@@ -13,6 +13,7 @@ uses
 {$R *.res}
 
 begin
+  Application.Scaled := True;
   Application.Initialize;
   Application.Title := 'Demo ACBrSMS';
   Application.CreateForm(TfrmPrincipal, frmPrincipal);

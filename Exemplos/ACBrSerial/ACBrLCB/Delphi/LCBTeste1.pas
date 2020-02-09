@@ -71,7 +71,8 @@ var
 
 implementation
 
-Uses ACBrUtil ;
+Uses
+  ACBrUtil, ACBrDeviceSerial ;
 
 {$R *.dfm}
 

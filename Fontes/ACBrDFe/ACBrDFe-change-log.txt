@@ -44,6 +44,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2020
+-- ACBrDFe --
+[*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,
+    Android e Linux
+
+-- ACBrDFeOpenSSL --
+[*] Ajuestes para mensagens de erros fiquem em Resourcestring.
+[*] Método TDFeOpenSSL.Versao modificado para sinalizar erro na carga das Libs,
+    quando houver
+
+-- ACBrLibXml2 --
+[+] Nova Unit de Bind da biblioteca libxml2, substituindo o uso da Unit "libxml2.pas"
+    Permitindo a Carga dinâmica da Biblioteca, e compatibilização com Android FMX
+
+-- ACBrDFeXsLibXml2 --
+[*] Modificado para usar a nova Unit de Bind "ACBrLibXml2.pas"
+
+-- ACBrDFeXsXmlSec --
+[*] Unit depreciada. Ajustada para continuar usando a antiga "libxml2.pas"
+    (por: DSA)
+
 23/01/2020
 -- ACBrDFeSSL --
 [+] Classe TDFeSSLCryptClass, Adicionado o método: "function Versao: String;"

@@ -42,6 +42,15 @@ uses
   {$IfDef MSWINDOWS}ACBrDFeWinCrypt, ACBr_WinCrypt,{$EndIf}
   OpenSSLExt;
 
+resourcestring
+  sErrCarregarOpenSSL = 'Erro ao carregar bibliotecas do OpenSSL';
+  sErrUtilizePFX = 'Utilize "ArquivoPFX" ou "DadosPFX"';
+  sErrCertNaoInformado = 'Certificado não informado.' ;
+  sErrCertNaoSuportado = 'TDFeOpenSSL não suporta Leitura de Certificado pelo Número de Série.';
+  sErrCertNaoEncontrado = 'Arquivo: %s não encontrado, e DadosPFX não informado';
+  sErrCertCarregar =  'Erro ao Carregar Certificado';
+  sErrCertSenhaErrada = 'Erro ao ler informações do Certificado.'+sLineBreak+
+                        'Provavelmente a senha está errada'; 
 
 type
   { TDFeOpenSSL }
@@ -333,7 +342,10 @@ end;
 
 function TDFeOpenSSL.Versao: String;
 begin
-  Result := OpenSSLVersion;
+  if not InitSSLInterface then
+    Result := sErrCarregarOpenSSL 
+  else
+    Result := OpenSSLVersion;
 end;
 
 procedure TDFeOpenSSL.DestroyKey;
@@ -392,7 +404,7 @@ var
 begin
   DescarregarCertificado;
   if not InitSSLInterface then
-    raise EACBrDFeException.Create('Erro ao carregar bibliotecas do OpenSSL');
+    raise EACBrDFeException.Create(sErrCarregarOpenSSL);
 
   with FpDFeSSL do
   begin
@@ -400,19 +412,16 @@ begin
     if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
     begin
       if not EstaVazio(NumeroSerie) then
-        raise EACBrDFeException.Create(
-          'TDFeOpenSSL não suporta carga de Certificado pelo número de série.' +
-          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
+        raise EACBrDFeException.Create(sErrCertNaoSuportado + sLineBreak + sErrUtilizePFX)
       else
-        raise EACBrDFeException.Create('Certificado não informado.' +
-          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
+        raise EACBrDFeException.Create(sErrCertNaoInformado + sLineBreak + sErrUtilizePFX);
     end;
 
     LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
     LoadFromData := (not EstaVazio(DadosPFX));
 
     if not (LoadFromFile or LoadFromData) then
-      raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
+      raise EACBrDFeException.CreateFmt(ACBrStr(sErrCertNaoEncontrado), [ArquivoPFX]);
 
     if LoadFromFile then
     begin
@@ -425,11 +434,10 @@ begin
     end;
 
     if EstaVazio(DadosPFX) then
-      raise EACBrDFeException.Create('Erro ao Carregar Certificado');
+      raise EACBrDFeException.Create(sErrCertCarregar);
 
     if not LerPFXInfo(DadosPFX) then
-      raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
-                                     'Provavelmente a senha está errada' );
+      raise EACBrDFeException.Create(sErrCertSenhaErrada);
   end;
 
   FpCertificadoLido := True;

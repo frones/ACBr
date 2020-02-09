@@ -44,7 +44,8 @@ unit ACBrXmlDocument;
 interface
 
 uses
-  Classes, SysUtils, libxml2;
+  Classes, SysUtils,
+  ACBrLibXml2;
 
 type
   TSaveOption = (xmlNone = 0, xmlFormat = 1, xmlNoDecl = 2, xmlNoEmpty = 4,
@@ -63,6 +64,8 @@ type
   TACBrXMLAttributeListEnumerator = class;
   TACBrXmlDocument = class;
   TACBrXmlNodeArray = array of TACBrXmlNode;
+
+  { TACBrXmlNode }
 
   TACBrXmlNode = class
   private
@@ -307,7 +310,7 @@ type
 implementation
 
 uses
-  TypInfo, ACBrUtil, ACBrLibXml2, synautil;
+  TypInfo, ACBrUtil, synautil;
 
 { XmlNode }
 constructor TACBrXmlNode.Create(xmlDoc: TACBrXmlDocument; xmlNode: xmlNodePtr);
@@ -935,7 +938,8 @@ constructor TACBrXmlDocument.Create(AName: string; ANamespace: string; APrefixNa
 var
   xmlNode: xmlNodePtr;
 begin
-  LibXmlInit;
+  InitLibXml2Interface;
+
   FSaveOptions := [xmlFormat, xmlAsXml];
   xmlDocInternal := xmlNewDoc(PAnsichar(ansistring('1.0')));
 
@@ -1037,7 +1041,7 @@ begin
   try
     ret := xmlSaveDoc(xmlSaveCtx, xmlDocInternal);
     if ret = -1 then
-      raise EACBrXmlException.Create(__xmlLastError()^.message);
+      raise EACBrXmlException.Create(xmlGetLastError()^.message);
   finally
     xmlSaveClose(xmlSaveCtx);
   end;
@@ -1067,10 +1071,10 @@ begin
       xmlRootElement := TACBrXmlNode.Create(Self, loadedRoot);
     end
     else
-      raise EACBrXmlException.Create(__xmlLastError()^.message);
+      raise EACBrXmlException.Create(xmlGetLastError()^.message);
   end
   else
-    raise EACBrXmlException.Create(__xmlLastError()^.message);
+    raise EACBrXmlException.Create(xmlGetLastError()^.message);
 end;
 
 procedure TACBrXmlDocument.LoadFromXml(AXmlDocument: string);
@@ -1092,10 +1096,10 @@ begin
       xmlRootElement := TACBrXmlNode.Create(Self, loadedRoot);
     end
     else
-      raise EACBrXmlException.Create(__xmlLastError()^.message);
+      raise EACBrXmlException.Create(xmlGetLastError()^.message);
   end
   else
-    raise EACBrXmlException.Create(__xmlLastError()^.message);
+    raise EACBrXmlException.Create(xmlGetLastError()^.message);
 end;
 
 procedure TACBrXmlDocument.LoadFromStream(AStream: TStream);

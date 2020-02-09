@@ -37,8 +37,9 @@ unit ACBrDFeSSL;
 interface
 
 uses
-  Classes, SysUtils, Contnrs,
-  blcksock, syncobjs;
+  Classes, SysUtils,
+  blcksock, syncobjs,
+  ACBrBase;
 
 Const
   CBufferSize = 32768;
@@ -101,7 +102,7 @@ type
 
   { TListaCertificados }
 
-  TListaCertificados = class(TObjectList)
+  TListaCertificados = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TDadosCertificado);
     function GetObject (Index: Integer): TDadosCertificado;
@@ -640,12 +641,12 @@ end;
 
 procedure TListaCertificados.SetObject(Index: Integer; Item: TDadosCertificado);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TListaCertificados.GetObject(Index: Integer): TDadosCertificado;
 begin
-  Result := inherited GetItem(Index) as TDadosCertificado ;
+  Result := TDadosCertificado(inherited Items[Index]);
 end;
 
 procedure TListaCertificados.Insert(Index: Integer; Obj: TDadosCertificado);

@@ -56,7 +56,7 @@ uses
 {$ENDIF}
 {$ENDIF}
   Classes, SysUtils,
-  ACBrDFeSSL, ACBrDFeException, ACBrDFeXsLibXml2,
+  ACBrDFeSSL, ACBrDFeException,
   libxmlsec, libxml2;
 
 const
@@ -88,14 +88,20 @@ const
   cErrXmlSecLoadCriptoLib = 'Falha ao carregar biblioteca de Criptografia do XMLSec [%s]';
   cErrXmlSecInitCriptoLib = 'Falha ao inicializar a Biblioteca de Criptografia do XMLSec [%s]';
 
+  cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
+  cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
+  cErrElementsNotFound = 'Nenhum elemento encontrado';
+
 type
 
   { TDFeSSLXmlSignXmlSec }
 
-  TDFeSSLXmlSignXmlSec = class(TDFeSSLXmlSignLibXml2)
+  TDFeSSLXmlSignXmlSec = class(TDFeSSLXmlSignClass)
   private
     FdsigCtx: xmlSecDSigCtxPtr;
 
+    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String;
+      docElement: String): xmlNodePtr;
     function InserirDTD(const AXml: String; const DTD: String): String;
 {$IFDEF USE_MSCRYPO}
     function UseMSCrypto: Boolean;
@@ -104,12 +110,19 @@ type
     procedure InitXmlSec;
     procedure CreateCtx;
     procedure DestroyCtx;
+
+    function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
+      const SignatureNode: String; const SelectionNamespaces: String;
+      infElement: String): xmlNodePtr;
+    function LibXmlLookUpNode(ParentNode: xmlNodePtr; const NodeName: String;
+      const NameSpace: String = ''): xmlNodePtr;
+    function LibXmlNodeWasFound(ANode: xmlNodePtr; const NodeName: String;
+      const NameSpace: String): boolean;
     function XmlSecSign(aDoc: xmlDocPtr;
       const SignatureNode, SelectionNamespaces: string;
       const InfElement, URI, IdSignature, docElement: String): String;
-  protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
-      var SelectionNamespaces: String); override;
+      var SelectionNamespaces: String);
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
@@ -165,7 +178,7 @@ Uses
   strutils, math,
   ACBrUtil, ACBrConsts,
   synautil, synacode,
-  ACBrDFeUtil, ACBrLibXML2;
+  ACBrDFeUtil;
 
 var
   XMLSecLoaded: String;
@@ -176,7 +189,7 @@ begin
     Exit;
 
   { Init libxml and libxslt libraries }
-  LibXmlInit;
+  libxml2.Init;
 
 {$IFDEF USE_MSCRYPO}
   if XMLSecCryptoLib = cCryptLibMSCrypto then
@@ -252,7 +265,7 @@ begin
   xmlSecShutdown();
 
   { Shutdown libxslt/libxml }
-  LibXmlShutDown();
+  //LibXmlShutDown();
 
   XMLSecLoaded := '';
 
@@ -744,6 +757,189 @@ begin
   Result := Copy(AXml, 1, IfThen(I > 0, I + 1, I)) + DTD +
     Copy(AXml, IfThen(I > 0, I + 2, I), Length(AXml));
 end;
+
+function TDFeSSLXmlSignXmlSec.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
+  const SignatureNode: String; const SelectionNamespaces: String; infElement: String
+  ): xmlNodePtr;
+var
+  rootNode, infNode, infNodeParent, SignNode: xmlNodePtr;
+  vSignatureNode, vSelectionNamespaces, vinfElement: String;
+begin
+  Result := nil;
+
+  { Encontra o elemento Raiz }
+  rootNode := xmlDocGetRootElement(aDoc);
+  if (rootNode = nil) then
+    Exit;
+
+  vSignatureNode       := SignatureNode;
+  vSelectionNamespaces := SelectionNamespaces;
+  VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
+  infNode := nil;
+  infNodeParent := nil;
+  SignNode := nil;
+
+  { Se infElement possui prefixo o mesmo tem que ser removido }
+  vinfElement := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
+
+  { Se tem vinfElement, procura pelo mesmo. Isso permitirá acharmos o nó de
+    assinatura, relacionado a ele (mesmo pai) }
+  if (vinfElement <> '') then
+  begin
+    { Procura vinfElement em todos os nós, filhos de Raiz, usando LibXml }
+    infNode := LibXmlLookUpNode(rootNode, vinfElement);
+
+    if (infNode <> nil) then
+    begin
+      { Vamos achar o pai desse Elemento, pois com ele encontraremos a assinatura no final }
+      if (infNode^.Name = vinfElement) and
+         Assigned(infNode^.parent) and
+         (infNode^.parent^.Name <> '') then
+      begin
+        infNodeParent := infNode^.parent;
+      end;
+    end;
+  end
+
+  { Procurando pelo nó de assinatura...}
+
+  { Primeiro vamos verificar manualmente se é o último nó do Parent do infNode atual };
+  if (infNodeParent <> nil) then
+  begin
+    SignNode := infNodeParent^.last;
+    while (SignNode <> nil) and (SignNode <> infNode) and
+      (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
+    begin
+      SignNode := SignNode^.prev;
+    end;
+
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+      SignNode := nil;
+  end;
+
+  { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
+  if (SignNode = nil) and (infNode <> nil) then
+  begin
+    SignNode := infNode^.next;
+    while (SignNode <> nil)  and
+      (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
+    begin
+      SignNode := SignNode^.next;
+    end;
+
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+      SignNode := nil;
+  end;
+
+  { Se ainda não achamos, vamos procurar novamente a partir do elemento Raiz }
+  if (SignNode = nil) then
+  begin
+    SignNode := rootNode^.last;
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+    begin
+      SignNode := rootNode^.next;
+      while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
+      begin
+        SignNode := SignNode^.next;
+      end;
+    end;
+  end;
+
+  Result := SignNode;
+end;
+
+function TDFeSSLXmlSignXmlSec.LibXmlNodeWasFound(ANode: xmlNodePtr;
+  const NodeName: String; const NameSpace: String): boolean;
+begin
+  Result := (ANode <> nil) and (ANode^.Name = NodeName) and
+    ((NameSpace = '') or (ANode^.ns^.href = NameSpace));
+end;
+
+function TDFeSSLXmlSignXmlSec.LibXmlLookUpNode(ParentNode: xmlNodePtr;
+  const NodeName: String; const NameSpace: String): xmlNodePtr;
+
+  function _LibXmlLookUpNode(ParentNode: xmlNodePtr; NodeName: String;
+    NameSpace: String): xmlNodePtr;
+  var
+    NextNode, ChildNode, FoundNode: xmlNodePtr;
+  begin
+    Result := ParentNode;
+    if (ParentNode = nil) then
+      Exit;
+
+    FoundNode := ParentNode;
+
+    while (FoundNode <> nil) and
+      (not LibXmlNodeWasFound(FoundNode, NodeName, NameSpace)) do
+    begin
+      ChildNode := FoundNode^.children;
+      NextNode := FoundNode^.Next;
+
+      { Faz Chamada recursiva para o novo Filho }
+      FoundNode := _LibXmlLookUpNode(ChildNode, NodeName, NameSpace);
+
+      if FoundNode = nil then
+        FoundNode := NextNode;
+    end;
+
+    Result := FoundNode;
+  end;
+
+begin
+  Result := ParentNode;
+  if (ParentNode = nil) or (Trim(NodeName) = '') then
+    Exit;
+
+  { Primeiro vamos ver se o nó Raiz já não é o que precisamos }
+  if LibXmlNodeWasFound(ParentNode, NodeName, NameSpace) then
+    Exit;
+
+  { Chama função auxiliar, que usa busca recursiva em todos os nós filhos }
+  Result := _LibXmlLookUpNode(ParentNode^.children, NodeName, NameSpace);
+end;
+
+function TDFeSSLXmlSignXmlSec.AdicionarNode(var aDoc: xmlDocPtr;
+  const ConteudoXML: String; docElement: String): xmlNodePtr;
+Var
+  NewNode, DocNode: xmlNodePtr;
+  memDoc: xmlDocPtr;
+  NewNodeXml, vdocElement: String;
+begin
+{$IFNDEF COMPILER23_UP}
+  Result := nil;
+{$ENDIF}
+  NewNode := nil;
+  memDoc := nil;
+  try
+    NewNodeXml := '<a>' + ConteudoXML + '</a>';
+    memDoc := xmlReadMemory(PAnsiChar(AnsiString(NewNodeXml)), Length(NewNodeXml), nil, nil, 0);
+    NewNode := xmlDocCopyNode(xmlDocGetRootElement(memDoc), aDoc.doc, 1);
+    DocNode := xmlDocGetRootElement(aDoc);
+
+    { Se docElement possui prefixo o mesmo tem que ser removido }
+    vdocElement := copy(docElement, Pos(':', docElement) + 1, Length(docElement));
+
+    if (vdocElement <> '') then
+      DocNode := LibXmlLookUpNode(DocNode, vdocElement);
+
+    if (DocNode = nil) then
+      raise EACBrDFeException.Create(cErrElementsNotFound);
+
+    Result := xmlAddChildList(DocNode, NewNode.children);
+  finally
+    if NewNode <> nil then
+    begin
+      NewNode.children := nil;
+      NewNode.last := nil;
+      xmlFreeNode(NewNode);
+    end;
+
+    if (memDoc <> nil) then
+      xmlFreeDoc(memDoc);
+  end;
+end;
+
+
 
 {$IFDEF USE_MSCRYPO}
 

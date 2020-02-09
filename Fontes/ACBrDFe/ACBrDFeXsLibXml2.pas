@@ -38,9 +38,10 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeSSL, libxml2;
+  ACBrDFeSSL, ACBrLibXml2;
 
 resourcestring
+  cErrLibInit = 'Erro ao inicializar a Biblioteca LibXML2';
   cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
   cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
   cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
@@ -71,10 +72,13 @@ type
 
   TDFeSSLXmlSignLibXml2 = class(TDFeSSLXmlSignClass)
   private
+    FLibXml2Inicializada: Boolean;
     function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring; overload;
     function CanonC14n(const aDoc: xmlDocPtr; const ANode: xmlNodePtr): Ansistring; overload;
 
   protected
+    procedure InitLibXML2;
+
     function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String; docElement: String = ''): xmlNodePtr;
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); virtual;
@@ -87,6 +91,8 @@ type
       const NameSpace: String): boolean;
 
   public
+    constructor Create(ADFeSSL: TDFeSSL); override;
+
     function Assinar(const ConteudoXML, docElement, infElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
       const IdSignature: String = ''; const IdAttr: String = ''): String; override;
@@ -102,8 +108,31 @@ implementation
 
 uses
   synacode,
-  ACBrLibXml2, ACBrUtil, ACBrDFeUtil, 
+  ACBrUtil, ACBrDFeUtil,
   ACBrConsts, ACBrDFeException;
+
+constructor TDFeSSLXmlSignLibXml2.Create(ADFeSSL: TDFeSSL);
+begin
+  inherited Create(ADFeSSL);
+  FLibXml2Inicializada := False;
+end;
+
+procedure TDFeSSLXmlSignLibXml2.InitLibXML2;
+begin
+  if FLibXml2Inicializada then
+    Exit;
+
+  if not InitLibXml2Interface then
+    raise EACBrDFeException.Create(cErrLibInit);
+
+  { Configurações }
+  xmlSubstituteEntitiesDefault(1);
+  xmlLoadExtDtdDefaultValue(XML_DETECT_IDS or XML_COMPLETE_ATTRS);
+  xmlIndentTreeOutput(1);
+  xmlSaveNoEmptyTags(1);
+
+  FLibXml2Inicializada := True;
+end;
 
 function TDFeSSLXmlSignLibXml2.Assinar(const ConteudoXML, docElement,
   infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
@@ -117,7 +146,7 @@ var
   TemDeclaracao: Boolean;
   XmlLength: Integer;
 begin
-  LibXmlInit;
+  InitLibXML2;
 
   XmlAss := '';
   // Verificando se possui a Declaração do XML, se não possuir,
@@ -245,7 +274,7 @@ begin
     { Procura InfElement em todos os nós, filhos de Raiz, usando LibXml }
     ANode := LibXmlLookUpNode(RootNode, ElementName);
     if (ANode = nil) then
-        raise EACBrDFeException.Create(cErrFindSignNode);
+      raise EACBrDFeException.Create(cErrFindSignNode);
   end;
 
   Result := CanonC14n(aDoc, ANode);
@@ -340,7 +369,7 @@ var
   valid_ctxt: xmlSchemaValidCtxtPtr;
   schemError: xmlErrorPtr;
 begin
-  LibXmlInit;
+  InitLibXML2;
 
   Result := False;
   MsgErro := '';
@@ -420,7 +449,8 @@ var
   DigestAlg: TSSLDgst;
   rootNode, SignNode: xmlNodePtr;
 begin
-  LibXmlInit;
+  InitLibXML2;
+
   Result := False;
   signBuffer := nil;
   aDoc := nil;

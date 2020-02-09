@@ -57,6 +57,10 @@ uses
   synautil;
 
 type
+  {$IfDef NEXTGEN}
+    AnsiString = RawByteString;
+  {$EndIf}
+
   TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);
 
   { TTimeZoneConf }
@@ -215,7 +219,7 @@ begin
   if RetirarAcentos then
      aTexto := TiraAcentos(aTexto);
 
-  aTexto := ParseText(aTexto, False );
+  aTexto := ParseText(AnsiString(aTexto), False );
 
   if RetirarEspacos then
   begin
@@ -293,8 +297,8 @@ begin
       vStr:=StringReplace(vHex,'&#x','',[rfReplaceAll]);
       vStr:=StringReplace(vStr,';','',[rfReplaceAll]);
       if not TryHexToAscii(vStr, vStrResult) then
-        vStrResult := vStr;
-      aTexto:=StringReplace(aTexto,vHex,vStrResult,[rfReplaceAll]);
+        vStrResult := AnsiString(vStr);
+      aTexto:=StringReplace(aTexto,vHex,String(vStrResult),[rfReplaceAll]);
       p1:=Pos('&#x',aTexto);
     end;
   end;

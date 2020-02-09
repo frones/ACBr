@@ -50,8 +50,9 @@ unit pcnRetDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, {pcnConversaoNFe, }pcnLeitor, synacode;
+  SysUtils, Classes,
+  pcnConversao, pcnLeitor, synacode,
+  ACBrBase;
 
 type
   TresDFe               = class;
@@ -89,7 +90,7 @@ type
     property xNome: String read FxNome write FxNome;
   end;
 
-  TitensAverbadosCollection = class(TObjectList)
+  TitensAverbadosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TitensAverbadosCollectionItem;
     procedure SetItem(Index: Integer; Value: TitensAverbadosCollectionItem);
@@ -273,7 +274,7 @@ type
     property RetinfEvento: TprocEvento_RetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
-  TdocZipCollection = class(TObjectList)
+  TdocZipCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TdocZipCollectionItem;
     procedure SetItem(Index: Integer; Value: TdocZipCollectionItem);
@@ -358,7 +359,7 @@ uses
 function TitensAverbadosCollection.GetItem(
   Index: Integer): TitensAverbadosCollectionItem;
 begin
-  Result := TitensAverbadosCollectionItem(inherited GetItem(Index));
+  Result := TitensAverbadosCollectionItem(inherited Items[Index]);
 end;
 
 function TitensAverbadosCollection.New: TitensAverbadosCollectionItem;
@@ -370,7 +371,7 @@ end;
 procedure TitensAverbadosCollection.SetItem(Index: Integer;
   Value: TitensAverbadosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TprocEvento_DetEvento }
@@ -420,13 +421,13 @@ end;
 
 function TdocZipCollection.GetItem(Index: Integer): TdocZipCollectionItem;
 begin
-  Result := TdocZipCollectionItem(inherited GetItem(Index));
+  Result := TdocZipCollectionItem(inherited Items[Index]);
 end;
 
 procedure TdocZipCollection.SetItem(Index: Integer;
   Value: TdocZipCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TdocZipCollection.New: TdocZipCollectionItem;

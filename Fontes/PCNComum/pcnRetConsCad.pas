@@ -50,7 +50,8 @@ unit pcnRetConsCad;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor;
+  SysUtils, Classes, pcnConversao, pcnLeitor,
+  ACBrBase;
 
 type
 
@@ -91,7 +92,7 @@ type
     property InfCad: TInfCadCollection read FInfCad   write SetInfCad;
   end;
 
-  TInfCadCollection = class(TObjectList)
+  TInfCadCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfCadCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfCadCollectionItem);
@@ -183,12 +184,12 @@ end;
 
 function TInfCadCollection.GetItem(Index: Integer): TInfCadCollectionItem;
 begin
-  Result := TInfCadCollectionItem(inherited GetItem(Index));
+  Result := TInfCadCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfCadCollection.SetItem(Index: Integer; Value: TInfCadCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetConsCad.LerXML: Boolean;

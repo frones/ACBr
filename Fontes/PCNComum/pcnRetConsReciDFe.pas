@@ -50,7 +50,8 @@ unit pcnRetConsReciDFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor;
+  SysUtils, Classes, pcnConversao, pcnLeitor,
+  ACBrBase;
 
 type
 
@@ -90,7 +91,7 @@ type
     property ProtDFe: TProtDFeCollection read FProtDFe  write SetProtDFe;
   end;
 
-  TProtDFeCollection = class(TObjectList)
+  TProtDFeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TProtDFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TProtDFeCollectionItem);
@@ -159,12 +160,12 @@ end;
 
 function TProtDFeCollection.GetItem(Index: Integer): TProtDFeCollectionItem;
 begin
-  Result := TProtDFeCollectionItem(inherited GetItem(Index));
+  Result := TProtDFeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TProtDFeCollection.SetItem(Index: Integer; Value: TProtDFeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetConsReciDFe.LerXML: Boolean;

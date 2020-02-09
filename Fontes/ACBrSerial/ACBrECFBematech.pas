@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -24,11 +24,10 @@
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -36,8 +35,12 @@
 unit ACBrECFBematech ;
 
 interface
-uses Classes,
-   ACBrECFClass, ACBrDevice, ACBrCHQClass;
+uses
+  Classes,
+  {$IFDEF NEXTGEN}
+   ACBrBase,
+  {$ENDIF}
+  ACBrECFClass, ACBrDevice, ACBrDeviceSerial, ACBrCHQClass;
 
 const ErrosST1 : array[0..7] of string =
       ('Número de parâmetros de CMD inválido',
@@ -683,6 +686,7 @@ Uses
    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, IniFiles, math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
+   {$IfDef  POSIX}Posix.Unistd, {$Endif}
    ACBrConsts, ACBrECF, ACBrECFEscECF, ACBrUtil;
 
 function BematechTraduzirTag(const ATag : AnsiString) : AnsiString ;
@@ -1231,7 +1235,7 @@ begin
   result := '' ;
   if cmd = '' then exit ;
 
-  if not CharInSet(cmd[1], [ESC, FS]) then
+  if not CharInSet(Char(cmd[1]), [ESC, FS]) then
   begin
     if fs25MFD then
        cmd := FS + cmd

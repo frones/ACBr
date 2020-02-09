@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -43,10 +42,14 @@
 unit ACBrCHQClass;
 
 interface
-uses ACBrDevice, ACBrECF,
-     Classes,
-     {$IFDEF COMPILER6_UP} Types, {$ELSE} ACBrD5, Windows, {$ENDIF}
-     Contnrs;
+uses
+  ACBrDevice, ACBrECF, ACBrBase,
+  Classes
+  {$IFDEF COMPILER6_UP}
+   ,Types
+  {$ELSE}
+   ,ACBrD5, Windows
+  {$ENDIF};
 
 { Classe para Modelo de Cheque, com definicao para o posicionamento dos campos}
 type
@@ -93,7 +96,7 @@ end;
   um arquivo no formato do Arquivo INI usado pela Bematech. Caso nenhum arquivo
   seja especificado, ou o arquivo nao exista, os valores Defaults serao
   utilizados (Mais explicações no Implementação da CarregaBemaFiINI abaixo) }
-TACBrCHQModelos = class(TObjectList)
+TACBrCHQModelos = class(TACBrObjectList)
   private
     fsArquivoBemaFiINI: String;
     procedure SetArquivoBemaFiINI(const Value: String);
@@ -421,7 +424,7 @@ begin
      end ;
 
      if fsArquivoBemaFiINI = '' then
-        ArqTemp := ExtractFilePath( ParamStr(0) )+'BemaFi32.ini'
+        ArqTemp := ApplicationPath+'BemaFi32.ini'
      else
         ArqTemp := fsArquivoBemaFiINI ;
 
@@ -685,7 +688,7 @@ end;
 
 function TACBrCHQModelos.GetObject(Index: Integer): TACBrCHQModelo;
 begin
-  Result := inherited GetItem(Index) as TACBrCHQModelo ;
+  Result := TACBrCHQModelo(inherited Items[Index]);
 end;
 
 procedure TACBrCHQModelos.Insert(Index: Integer; Obj: TACBrCHQModelo);
@@ -695,7 +698,7 @@ end;
 
 procedure TACBrCHQModelos.SetObject(Index: Integer; Item: TACBrCHQModelo);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 end.

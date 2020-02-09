@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Maicon da Silva Evangelista                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -48,16 +44,25 @@
 unit ACBrRFD;
 
 interface
-uses ACBrBase, ACBrConsts,
-     SysUtils , Classes, Contnrs, ACBrEAD
-     {$IFDEF LINUX}
-       {$IFNDEF FPC}
-         ,Libc
-       {$else}
-         ,BaseUnix
-       {$endif}
-     {$ENDIF}
-     {$IFNDEF COMPILER6_UP} ,ACBrD5 {$ENDIF};
+uses
+  ACBrBase, ACBrConsts,
+  SysUtils , Classes, ACBrEAD
+  {$IfDef LINUX}
+    {$IfNDef FPC}
+      {$IfDef  POSIX}
+      ,Posix.Stdlib
+      ,Posix.Unistd
+      ,Posix.Fcntl
+      {$Else}
+      ,Libc
+      {$EndIf}
+    {$Else}
+      ,BaseUnix
+    {$EndIf}
+  {$endif}
+  {$IFNDEF COMPILER6_UP}
+   ,ACBrD5
+  {$ENDIF};
 
 const
    cRFDAtoCotepe  = 'PC5207 01.00.00' ;
@@ -140,8 +145,8 @@ TACBrRFDCupom = class
     fsNomeConsumidor: String;
     fsDoctoConsumidor: String;
 
-    fsItens: TObjectList;
-    fsPagamentos: TObjectList;
+    fsItens: TACBrObjectList;
+    fsPagamentos: TACBrObjectList;
     fsNomeArq: String;
 
     procedure SetOrdemDA(const AValue: Char);
@@ -175,8 +180,8 @@ TACBrRFDCupom = class
     property NomeConsumidor : String read fsNomeConsumidor  write fsNomeConsumidor ;
     property DoctoConsumidor: String read fsDoctoConsumidor write SetDoctoConsumidor ;
 
-    property Itens      : TObjectList read fsItens ;
-    property Pagamentos : TObjectList read fsPagamentos ;
+    property Itens      : TACBrObjectList read fsItens ;
+    property Pagamentos : TACBrObjectList read fsPagamentos ;
 
     Procedure Descarrega ;
     Procedure VendeItem( const Codigo, Descricao: String;
@@ -415,8 +420,8 @@ constructor TACBrRFDCupom.create( AOwner : TObject) ;
 begin
   fsOwner := AOwner ;
   
-  fsItens      := TObjectList.create( true ) ;
-  fsPagamentos := TObjectList.create( true ) ;
+  fsItens      := TACBrObjectList.create( true ) ;
+  fsPagamentos := TACBrObjectList.create( true ) ;
 
   ZeraCupom ;
 end;
@@ -1226,7 +1231,7 @@ function TACBrRFD.GetDirRFD: String;
 begin
   if fsDirRFD = '' then
      if not (csDesigning in Self.ComponentState) then
-        fsDirRFD := ExtractFilePath( ParamStr(0) ) + 'RFD' ;
+        fsDirRFD := ApplicationPath + 'RFD' ;
 
   Result := fsDirRFD ;
 end;

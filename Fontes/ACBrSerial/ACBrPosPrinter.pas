@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -45,9 +45,9 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDevice, ACBrBase, ACBrEscPosHook
+  ACBrDevice, ACBrBase
   {$IfDef MSWINDOWS}
-   ,ACBrWinUSBDevice
+   ,ACBrEscPosHook, ACBrWinUSBDevice
   {$EndIf};
 
 type
@@ -356,7 +356,9 @@ type
 
   protected
     FPosPrinterClass: TACBrPosPrinterClass;
-    FHook: TACBrPosPrinterHook;
+    {$IfDef MSWINDOWS}
+     FHook: TACBrPosPrinterHook;
+    {$EndIf}
 
     procedure EnviarStringDevice(AString: AnsiString);
     procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
@@ -366,18 +368,22 @@ type
     procedure AtivarPorta;
     procedure DesativarPorta;
 
+    {$IfDef MSWINDOWS}
     procedure DetectarECriarHook;
     procedure LiberarHook;
     procedure PosPrinterHookAtivar(const APort: String; Params: String);
     procedure PosPrinterHookDesativar(const APort: String);
     procedure PosPrinterHookEnviaString(const cmd: AnsiString);
     procedure PosPrinterHookLeString(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString);
+    {$EndIf}
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     property PosPrinter: TACBrPosPrinterClass read FPosPrinterClass;
-    property Hook: TACBrPosPrinterHook read FHook;
+    {$IfDef MSWINDOWS}
+     property Hook: TACBrPosPrinterHook read FHook;
+    {$EndIf}
 
     procedure Ativar;
     procedure Desativar;
@@ -487,8 +493,10 @@ uses
   synacode,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,
-  ACBrEscZJiang, ACBrEscGPrinter,
-  ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
+  ACBrEscZJiang, ACBrEscGPrinter
+  {$IfDef MSWINDOWS}
+  ,ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL
+  {$EndIf};
 
 { TACBrConfigModoPagina }
 
@@ -844,11 +852,11 @@ begin
   {$ENDIF}
   {$IfDef MSWINDOWS}
   FDevice.WinUSB.HardwareType := htPOSPrinter;
+  FHook := Nil;
   {$EndIf}
 
   FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   FModelo := ppTexto;
-  FHook := Nil;
 
   FTipoAlinhamento := alEsquerda;
   FFonteStatus := [ftNormal];
@@ -1050,7 +1058,9 @@ end;
 
 destructor TACBrPosPrinter.Destroy;
 begin
+  {$IfDef MSWINDOWS}
   LiberarHook;
+  {$EndIf}
   FPosPrinterClass.Free;
   FBuffer.Free;
   FTagProcessor.Free;
@@ -1099,8 +1109,8 @@ begin
             False, False);
   {*)}
 
-  DetectarECriarHook;
   {$IfDef MSWINDOWS}
+   DetectarECriarHook;
    ProtocoloACBr := 0;
    TipoHardware := htPOSPrinter;
    FDevice.DetectarTipoEProtocoloDispositivoUSB(TipoHardware, ProtocoloACBr);
@@ -1687,6 +1697,7 @@ begin
   end;
 end;
 
+{$IfDef MSWINDOWS}
 procedure TACBrPosPrinter.DetectarECriarHook;
 var
   uPorta, uMarca: String;
@@ -1795,6 +1806,7 @@ begin
   if Assigned(FHook) then
      Retorno := FHook.ReadData(NumBytes, ATimeOut);
 end;
+{$EndIf}
 
 procedure TACBrPosPrinter.EnviarStringDevice(AString: AnsiString);
 var
@@ -2142,7 +2154,7 @@ end;
 
 function TACBrPosPrinter.PodeLerDaPorta: Boolean;
 begin
-   Result := (FDevice.DeviceType in [dtSerial, dtTCP, dtHook, dtUSB] )
+   Result := (FDevice.DeviceType in [dtSerial, dtTCP, dtHook, dtUSB, dtBlueTooth] )
 end;
 
 procedure TACBrPosPrinter.SetAtivo(AValue: Boolean);

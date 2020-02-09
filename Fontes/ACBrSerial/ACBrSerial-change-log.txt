@@ -38,6 +38,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/02/2020
+-- ACBrSerial --
+[*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,
+    Android e Linux
+
+-- ACBrDevice --
+[*] Aplicado amplo refactoring, separando em Units os diferentes Tipos de Porta
+    suportados
+[+] Adicionado suporte a Portas BlueTooth. Ex: Porta := "BTH:Nome Dispositivo",
+    Disponível apenas para Windows, DelphiXE ou Superior, e Android
+[+] Adicionado os métodos:
+    procedure AcharPortasRAW(const AStringList: TStrings);
+    procedure AcharPortasUSB(const AStringList: TStrings);
+    procedure AcharPortasBlueTooth(const AStringList: TStrings);
+    (por: DSA)
+
 Data: 23/12/2019
 -- ACBrDevice, ACBrPosPrinter, ACBrETQ --
 [+] Adicionada a detectação de Tipo de Hardware, Porta e Protocolo, para

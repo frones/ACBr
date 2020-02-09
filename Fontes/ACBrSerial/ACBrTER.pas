@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004   Gabriel Rodrigo Frones               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:            Daniel Simões de Almeida            }
+{ Colaboradores nesse arquivo:   Gabriel Rodrigo Frones                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -50,102 +46,115 @@ Unit ACBrTER;
 
 Interface
 
-Uses ACBrBase, ACBrDevice, ACBrTERClass,  {Units da ACBr}
-     SysUtils,
-     {$IFDEF VisualCLX} QExtCtrls {$ELSE} ExtCtrls {$ENDIF},
-     {$IFDEF COMPILER6_UP} Types {$ELSE} Windows {$ENDIF},
-      Classes;
+Uses
+  ACBrBase, ACBrDevice, ACBrTERClass,  {Units da ACBr}
+  SysUtils,
+  {$IFNDEF NOGUI}
+    {$IF DEFINED(VisualCLX)}
+      QExtCtrls,
+    {$ELSEIF DEFINED(FMX)}
+      FMX.Types,
+    {$ELSE}
+      ExtCtrls,
+    {$IfEnd}
+  {$ENDIF}
+  {$IFDEF COMPILER6_UP}
+    Types,
+  {$ELSE}
+    Windows, ACBrD5,
+  {$ENDIF}
+  Classes;
 
 Type
-    TACBrTERModelo = ( terNenhum, terWilbor );
-    TACBrTERRecebeChar = Procedure( Terminal : Word; Char : Char ) Of Object;
+  TACBrTERModelo = ( terNenhum, terWilbor );
+  TACBrTERRecebeChar = Procedure( Terminal : Word; Char : Char ) Of Object;
 
-    TACBrRotacao = Class( TPersistent )
-        Private
-            fsOwner : TComponent;
-            fsAtivo : Boolean;
-            fsPasso : Cardinal;
+  TACBrRotacao = Class( TPersistent )
+  Private
+    fsOwner : TComponent;
+    fsAtivo : Boolean;
+    fsPasso : Cardinal;
 
-            Procedure SetAtivo( Const Value : Boolean );
-            Procedure SetPasso( Const Value : Cardinal );
-        Public
-            Constructor Create( AOwner : TComponent );
-            Procedure Ativar;
-            Procedure Desativar;
-        Published
-            Property Ativo : Boolean Read fsAtivo Write SetAtivo;
-            Property Passo : Cardinal Read fsPasso Write SetPasso;
-        End;
+    Procedure SetAtivo( Const Value : Boolean );
+    Procedure SetPasso( Const Value : Cardinal );
+  Public
+    Constructor Create( AOwner : TComponent );
+    Procedure Ativar;
+    Procedure Desativar;
+  Published
+    Property Ativo : Boolean Read fsAtivo Write SetAtivo;
+    Property Passo : Cardinal Read fsPasso Write SetPasso;
+  End;
 
-    { Componente ACBrTER }
+  { Componente ACBrTER }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-    TACBrTER = Class( TACBrComponent )
-        Private
-            fsDevice : TACBrDevice; { SubComponente ACBrDevice }
-            fsTimer : TTimer;
+  TACBrTER = Class( TACBrComponent )
+  Private
+    fsDevice : TACBrDevice; { SubComponente ACBrDevice }
+    fsTimer : TTimer;
 
-            { Propriedades do Componente ACBrTER }
-            fsAtivo : Boolean;
-            fsComutadora : Boolean;
-            fsIntervalo : Integer;
-            fsModelo : TACBrTERModelo;
-            fsTER : TACBrTERClass;
-            fsOnRecebeChar : TACBrTERRecebeChar;
+    { Propriedades do Componente ACBrTER }
+    fsAtivo : Boolean;
+    fsComutadora : Boolean;
+    fsIntervalo : Integer;
+    fsModelo : TACBrTERModelo;
+    fsTER : TACBrTERClass;
+    fsOnRecebeChar : TACBrTERRecebeChar;
 
-            { Propriedades para Controle da Rotação do Texto nos Terminais}
-            fsRotacao : TACBrRotacao;
-            fsTRotacao : TTimer;
-            fsListaRotacao : TStringList; //Cada Linha é Definida na forma [L][TT][...]
-                                          //Onde [L] é o número da Linha do Terminal ['1', '2'];
-                                          //[TT] é o número do Terminal ['00'..'99'];
-                                          //[...] é a String que ainda falta para girar.
+    { Propriedades para Controle da Rotação do Texto nos Terminais}
+    fsRotacao : TACBrRotacao;
+    fsTRotacao : TTimer;
+    fsListaRotacao : TStringList; //Cada Linha é Definida na forma [L][TT][...]
+                                  //Onde [L] é o número da Linha do Terminal ['1', '2'];
+                                  //[TT] é o número do Terminal ['00'..'99'];
+                                  //[...] é a String que ainda falta para girar.
 
-            function GetDuplaConfirmacao: Boolean;
-            Procedure SetModelo( Const Value : TACBrTERModelo );
-            Procedure SetPorta( Const Value : String );
-            Procedure SetAtivo( Const Value : Boolean );
-            Procedure LeSerial( Sender : TObject );
-            Procedure Passo( Sender : TObject );
+    function GetDuplaConfirmacao: Boolean;
+    Procedure SetModelo( Const Value : TACBrTERModelo );
+    Procedure SetPorta( Const Value : String );
+    Procedure SetAtivo( Const Value : Boolean );
+    Procedure LeSerial( Sender : TObject );
+    Procedure Passo( Sender : TObject );
 
-            Function GetPorta : String;
-            Function GetModeloStrClass : String;
-            Procedure SetIntervalo( Const Value : Integer );
-            Procedure SetDuplaConfirmacao( Const Value: Boolean);
-        Public
-            Constructor Create( AOwner: TComponent ); Override;
-            Destructor Destroy; Override;
+    Function GetPorta : String;
+    Function GetModeloStrClass : String;
+    Procedure SetIntervalo( Const Value : Integer );
+    Procedure SetDuplaConfirmacao( Const Value: Boolean);
+  Public
+    Constructor Create( AOwner: TComponent ); Override;
+    Destructor Destroy; Override;
 
-            Procedure Ativar;
-            Procedure Desativar;
-            Procedure DoRecebeChar( Terminal : Word; Char : Char );
+    Procedure Ativar;
+    Procedure Desativar;
+    Procedure DoRecebeChar( Terminal : Word; Char : Char );
 
-            {Métodos do fsTER}
+    {Métodos do fsTER}
 
-            Procedure LeBalanca( Terminal : Word = 0  );
+    Procedure LeBalanca( Terminal : Word = 0  );
 
-            Procedure EnviaString( const Texto : String; Terminal : Word = 0 );
-            Procedure EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 );
-            Procedure LimpaTela( Terminal : Word = 0 );
-            Procedure PosicionaCursor( Linha, Coluna : Word; Terminal : Word = 0 );
-            Procedure BackSpace( Terminal : Word = 0 );
+    Procedure EnviaString( const Texto : String; Terminal : Word = 0 );
+    Procedure EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 );
+    Procedure LimpaTela( Terminal : Word = 0 );
+    Procedure PosicionaCursor( Linha, Coluna : Word; Terminal : Word = 0 );
+    Procedure BackSpace( Terminal : Word = 0 );
 
-            Property ListaRotacao : TStringList Read fsListaRotacao;
-            Property Ativo : Boolean Read fsAtivo Write SetAtivo;
-            Property Ter : TACBrTERClass Read fsTER;
-            Property ModeloStr : String Read GetModeloStrClass;
-        Published
-            Property Modelo : TACBrTERModelo Read fsModelo Write SetModelo Default terNenhum;
-            Property Porta : String Read GetPorta Write SetPorta;
-            Property Intervalo : Integer Read fsIntervalo Write SetIntervalo Default 200;
-            Property Comutadora : Boolean Read fsComutadora Write fsComutadora Default False; //Possui Comutadora gerenciando vários Terminais?
-            Property Rotacao : TACBrRotacao Read fsRotacao;
-            Property DuplaConfirmacao : Boolean Read GetDuplaConfirmacao Write SetDuplaConfirmacao;
-            { Instancia do Componente ACBrDevice, será passada para fsTER.create }
-            Property Device : TACBrDevice Read fsDevice;
-            Property OnRecebeChar : TACBrTERRecebeChar Read fsOnRecebeChar Write fsOnRecebeChar;
-        End;
+    Property ListaRotacao : TStringList Read fsListaRotacao;
+    Property Ativo : Boolean Read fsAtivo Write SetAtivo;
+    Property Ter : TACBrTERClass Read fsTER;
+    Property ModeloStr : String Read GetModeloStrClass;
+  Published
+    Property Modelo : TACBrTERModelo Read fsModelo Write SetModelo Default terNenhum;
+    Property Porta : String Read GetPorta Write SetPorta;
+    Property Intervalo : Integer Read fsIntervalo Write SetIntervalo Default 200;
+    Property Comutadora : Boolean Read fsComutadora Write fsComutadora Default False; //Possui Comutadora gerenciando vários Terminais?
+    Property Rotacao : TACBrRotacao Read fsRotacao;
+    Property DuplaConfirmacao : Boolean Read GetDuplaConfirmacao Write SetDuplaConfirmacao;
+    { Instancia do Componente ACBrDevice, será passada para fsTER.create }
+    Property Device : TACBrDevice Read fsDevice;
+    Property OnRecebeChar : TACBrTERRecebeChar Read fsOnRecebeChar Write fsOnRecebeChar;
+  End;
 
 Implementation
 

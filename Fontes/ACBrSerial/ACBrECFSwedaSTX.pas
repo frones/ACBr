@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -24,11 +24,10 @@
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -36,8 +35,9 @@
 unit ACBrECFSwedaSTX ;
 
 interface
-uses Classes, Contnrs,
-     ACBrECFClass, ACBrDevice ;
+uses
+  Classes,
+  ACBrBase, ACBrECFClass, ACBrDevice, ACBrDeviceSerial;
 
 const
    CFALHAS = 3 ;
@@ -61,7 +61,7 @@ TACBrECFSwedaInfo34 = class
 end ;
 
 { Lista de Objetos do tipo TACBrECFSwedaCache }
-TACBrECFSwedaCache = class(TObjectList)
+TACBrECFSwedaCache = class(TACBrObjectList)
 protected
   procedure SetObject (Index: Integer; Item: TACBrECFSwedaInfo34);
   function GetObject (Index: Integer): TACBrECFSwedaInfo34;
@@ -338,7 +338,7 @@ end;
 
 function TACBrECFSwedaCache.GetObject(Index: Integer): TACBrECFSwedaInfo34;
 begin
-  Result := inherited GetItem(Index) as TACBrECFSwedaInfo34 ;
+  Result := TACBrECFSwedaInfo34(inherited Items[Index]);
 end;
 
 procedure TACBrECFSwedaCache.Insert(Index: Integer;
@@ -350,7 +350,7 @@ end;
 procedure TACBrECFSwedaCache.SetObject(Index: Integer;
   Item: TACBrECFSwedaInfo34);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 
@@ -398,7 +398,7 @@ begin
 
   fsVerProtocolo    := '' ;
   fsSubModelo       := '' ;
-  fsApplicationPath := ExtractFilePath( ParamStr(0) );
+  fsApplicationPath := ApplicationPath;
   fsCache34.Clear ;
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;

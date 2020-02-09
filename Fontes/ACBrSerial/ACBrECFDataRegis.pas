@@ -3,10 +3,10 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2005 Airton Stodulski                       }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:          Anderson Rogerio Bejatto               }
-{                                       Daniel Simoes de Almeida               }
+{ Colaboradores nesse arquivo:   Airton Stodulski                              }
+{                                Anderson Rogerio Bejatto                      }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -25,11 +25,10 @@
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -93,8 +92,12 @@
 unit ACBrECFDataRegis ;
 
 interface
-uses Classes,
-     ACBrECFClass, ACBrDevice;
+uses
+  Classes,
+  {$IFDEF NEXTGEN}
+   ACBrBase,
+  {$ENDIF}
+  ACBrECFClass, ACBrDevice, ACBrDeviceSerial;
 
       //CONFORME MANUAL PARA VERSOES X.03
 const
@@ -161,7 +164,6 @@ TACBrECFDataRegis = class( TACBrECFClass )
     fsNumECF    : String ;
 
     fsMensagem  : String ;
-    fsEXEName : String ;
 
     fsSEQ       : Integer ;
     fsACK       : Byte ;
@@ -348,7 +350,6 @@ begin
   fsNumSerie  := '' ;
   fsNumECF    := '' ;
   fsArqINI    := '' ;
-  fsEXEName   := ParamStr(0) ;
 
   {Coloquei espaco para fsMensagem para que caso a primeira mensagem seja um
    espaco em branco ocorra a programacao da impressora (Anderson) }
@@ -403,8 +404,7 @@ begin
      if NomeArqINI <> '' then
         fsArqINI := NomeArqINI
      else
-        fsArqINI := ExtractFilePath( fsEXEName )+'ACBrECFDataRegis'+
-                                     Poem_Zeros( NumECF, 3 )+'.ini';
+        fsArqINI := ApplicationPath+'ACBrECFDataRegis'+Poem_Zeros( NumECF, 3 )+'.ini';
 
      LeArqINI ;
 
@@ -1839,7 +1839,7 @@ begin
   end ;
 
   if fsArqPrgBcoTXT = '' then
-     ArqTemp := ExtractFilePath( fsEXEName )+'prgbco.txt'
+     ArqTemp := ApplicationPath+'prgbco.txt'
   else
      ArqTemp := fsArqPrgBcoTXT ;
 

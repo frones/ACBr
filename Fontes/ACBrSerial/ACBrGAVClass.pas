@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -43,12 +42,21 @@
 unit ACBrGAVClass;
 
 interface
-uses ACBrDevice, ACBrECF,
-     Classes
-     {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QForms {$ENDIF}
-       {$IFDEF VCL}, Forms {$ENDIF}
-     {$ENDIF} ;
+uses
+  Classes,
+  {$IFNDEF NOGUI}
+    {$IF DEFINED(VisualCLX)}
+      QForms,
+    {$ELSEIF DEFINED(FMX)}
+      FMX.Forms,
+    {$ELSE}
+      Forms,
+    {$IfEnd}
+  {$ENDIF}
+  ACBrDevice, ACBrECF
+  {$IFDEF NEXTGEN}
+   ,ACBrBase
+  {$ENDIF};
 
 const
 cAberturaIntervalo = 300 ;

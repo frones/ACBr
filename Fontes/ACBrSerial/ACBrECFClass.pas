@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -37,26 +36,33 @@ Unit ACBrECFClass ;
 
 interface
 uses
-     SysUtils, Classes, Contnrs,
-     ACBrDevice, ACBrConsts, ACBrBase
-     {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX},
-         {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
-          QControls, QForms, QGraphics, QDialogs, QExtCtrls
-       {$ENDIF}
-       {$IF DEFINED(FMX)}
-          , FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ExtCtrls
-          , System.UITypes, System.Character, System.Types, FMX.Types, FMX.TextLayout, FMX.Objects, System.UIConsts
-       {$ELSEIF DEFINED(VCL)}
-          , Controls, Forms, Graphics, Dialogs, ExtCtrls
-          {$IFDEF DELPHIXE2_UP}
-           , System.UITypes
-          {$ENDIF}
-       {$IFEND}
-       {$IFDEF MSWINDOWS}
-         , Windows, messages
-       {$ENDIF}
-     {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrDevice, ACBrConsts, ACBrBase
+  {$IF DEFINED(NEXTGEN)}
+   ,System.Generics.Collections, System.Generics.Defaults
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   ,System.Contnrs
+  {$Else}
+   ,Contnrs
+  {$IfEnd}
+  {$IFNDEF NOGUI}
+   {$IFDEF VisualCLX},
+     {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
+      QControls, QForms, QGraphics, QDialogs, QExtCtrls
+   {$ENDIF}
+   {$IF DEFINED(FMX)}
+      , FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ExtCtrls
+      , System.UITypes, System.Character, System.Types, FMX.Types, FMX.TextLayout, FMX.Objects, System.UIConsts
+   {$ELSEIF DEFINED(VCL)}
+      , Controls, Forms, Graphics, Dialogs, ExtCtrls
+      {$IFDEF DELPHIXE2_UP}
+       , System.UITypes
+      {$ENDIF}
+   {$IFEND}
+   {$IFDEF MSWINDOWS}
+     , Windows, messages
+   {$ENDIF}
+  {$ENDIF} ;
 
 type
 
@@ -93,7 +99,7 @@ type
 
   { TACBRAbastecimentos }
 
-  TACBRRodapeAbastecimentos = class(TObjectList)
+  TACBRRodapeAbastecimentos = class(TObjectList{$IfDef NEXTGEN}<TACBRRodapeAbastecimento>{$EndIf})
   private
     fsImprimir: Boolean;
     procedure SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
@@ -231,7 +237,7 @@ end;
 
 { Lista de Objetos do tipo TACBrECFAliquota }
 
-TACBrECFAliquotas = class(TObjectList)
+TACBrECFAliquotas = class(TObjectList{$IfDef NEXTGEN}<TACBrECFAliquota>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFAliquota);
     function GetObject (Index: Integer): TACBrECFAliquota;
@@ -268,7 +274,7 @@ end;
 
 { TACBrECFTotalizadoresNaoTributados }
 
-TACBrECFTotalizadoresNaoTributados = class(TObjectList)
+TACBrECFTotalizadoresNaoTributados = class(TObjectList{$IfDef NEXTGEN}<TACBrECFTotalizadorNaoTributado>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFTotalizadorNaoTributado);
     function GetObject (Index: Integer): TACBrECFTotalizadorNaoTributado;
@@ -310,7 +316,7 @@ TACBrECFFormaPagamento = class
 end;
 
 { Lista de Objetos do tipo TACBrECFFormaPagamento }
-TACBrECFFormasPagamento = class(TObjectList)
+TACBrECFFormasPagamento = class(TObjectList{$IfDef NEXTGEN}<TACBrECFFormaPagamento>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFFormaPagamento);
     function GetObject (Index: Integer): TACBrECFFormaPagamento;
@@ -335,7 +341,7 @@ TACBrECFUnidadeMedida = class
 end;
 
 { Lista de Objetos do tipo TACBrECFunidadeMedida }
-TACBrECFUnidadesMedida = class(TObjectList)
+TACBrECFUnidadesMedida = class(TObjectList{$IfDef NEXTGEN}<TACBrECFUnidadeMedida>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFUnidadeMedida);
     function GetObject (Index: Integer): TACBrECFUnidadeMedida;
@@ -369,7 +375,7 @@ TACBrECFRelatorioGerencial = class
  end;
 
 { Lista de Objetos do tipo TACBrECFRelatoriosGerencial }
-TACBrECFRelatoriosGerenciais = class(TObjectList)
+TACBrECFRelatoriosGerenciais = class(TObjectList{$IfDef NEXTGEN}<TACBrECFRelatorioGerencial>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFRelatorioGerencial);
     function GetObject (Index: Integer): TACBrECFRelatorioGerencial;
@@ -433,7 +439,7 @@ TACBrECFConsumidor = class
 end ;
 
 { Lista de Objetos do tipo TACBrECFComprovanteNaoFiscal }
-TACBrECFComprovantesNaoFiscais = class(TObjectList)
+TACBrECFComprovantesNaoFiscais = class(TObjectList{$IfDef NEXTGEN}<TACBrECFComprovanteNaoFiscal>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFComprovanteNaoFiscal);
     function GetObject (Index: Integer): TACBrECFComprovanteNaoFiscal;
@@ -1404,13 +1410,13 @@ end;
 procedure TACBrECFTotalizadoresNaoTributados.SetObject(Index: Integer;
   Item: TACBrECFTotalizadorNaoTributado);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrECFTotalizadoresNaoTributados.GetObject(Index: Integer
   ): TACBrECFTotalizadorNaoTributado;
 begin
-  Result := inherited GetItem(Index) as TACBrECFTotalizadorNaoTributado ;
+  Result := TACBrECFTotalizadorNaoTributado(inherited Items[Index]);
 end;
 
 procedure TACBrECFTotalizadoresNaoTributados.Insert(Index: Integer;
@@ -1503,7 +1509,7 @@ end;
 
 function TACBrECFAliquotas.GetObject(Index: Integer): TACBrECFAliquota;
 begin
-  Result := inherited GetItem(Index) as TACBrECFAliquota ;
+  Result := TACBrECFAliquota(inherited Items[Index]);
 end;
 
 procedure TACBrECFAliquotas.Insert(Index: Integer; Obj: TACBrECFAliquota);
@@ -1519,13 +1525,13 @@ end;
 
 procedure TACBrECFAliquotas.SetObject(Index: Integer; Item: TACBrECFAliquota);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 { --------------------------- TACBrECFFormasPagamento ---------------------- }
 
 // método de comparação utilizado para ordenar a lista por data
-function CompararCamposOrdenacao(FormaPagto1,
+function CompararCamposOrdenacao(const FormaPagto1,
   FormaPagto2: TACBrECFFormaPagamento): Integer;
 var
   sCampo1, sCampo2: String;
@@ -1595,7 +1601,7 @@ end;
 function TACBrECFFormasPagamento.GetObject( Index: Integer):
    TACBrECFFormaPagamento;
 begin
-  Result := inherited GetItem(Index) as TACBrECFFormaPagamento ;
+  Result := TACBrECFFormaPagamento(inherited Items[Index]);
 end;
 
 procedure TACBrECFFormasPagamento.Insert(Index: Integer;
@@ -1612,13 +1618,17 @@ end;
 
 procedure TACBrECFFormasPagamento.Ordenar;
 begin
+  {$IfDef NEXTGEN}
+  Self.Sort( TComparer<TACBrECFFormaPagamento>.Construct( CompararCamposOrdenacao ) );
+  {$Else}
   Self.Sort(@CompararCamposOrdenacao);
+  {$EndIf}
 end;
 
 procedure TACBrECFFormasPagamento.SetObject(Index: Integer;
   Item: TACBrECFFormaPagamento);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 { ----------------------------- TACBrECFConsumidor -------------------------- }
@@ -1717,7 +1727,7 @@ end;
 function TACBrECFRelatoriosGerenciais.GetObject(
   Index: Integer): TACBrECFRelatorioGerencial;
 begin
-  Result := inherited GetItem(Index) as TACBrECFRelatorioGerencial ;
+  Result := TACBrECFRelatorioGerencial(inherited Items[Index]);
 end;
 
 procedure TACBrECFRelatoriosGerenciais.Insert(Index: Integer;
@@ -1729,7 +1739,7 @@ end;
 procedure TACBrECFRelatoriosGerenciais.SetObject(Index: Integer;
   Item: TACBrECFRelatorioGerencial);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 
@@ -1797,7 +1807,7 @@ end;
 function TACBrECFComprovantesNaoFiscais.GetObject(
   Index: Integer): TACBrECFComprovanteNaoFiscal;
 begin
-  Result := inherited GetItem(Index) as TACBrECFComprovanteNaoFiscal ;
+  Result := TACBrECFComprovanteNaoFiscal(inherited Items[Index]);
 end;
 
 procedure TACBrECFComprovantesNaoFiscais.Insert(Index: Integer;
@@ -1809,7 +1819,7 @@ end;
 procedure TACBrECFComprovantesNaoFiscais.SetObject(Index: Integer;
   Item: TACBrECFComprovanteNaoFiscal);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 {-------------------------- TACBrECFUnidadesMedida ---------------------------}
@@ -1827,7 +1837,7 @@ end;
 function TACBrECFUnidadesMedida.GetObject(
   Index: Integer): TACBrECFUnidadeMedida;
 begin
-  Result := inherited GetItem(Index) as TACBrECFUnidadeMedida ;
+  Result := TACBrECFUnidadeMedida(inherited Items[Index]);
 end;
 
 procedure TACBrECFUnidadesMedida.Insert(Index: Integer;
@@ -1839,7 +1849,7 @@ end;
 procedure TACBrECFUnidadesMedida.SetObject(Index: Integer;
   Item: TACBrECFUnidadeMedida);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 { ---------------------------- TACBrECFClass ------------------------------ }
@@ -5454,7 +5464,7 @@ end;
 
 function TACBRRodapeAbastecimentos.GetObject(Index: Integer): TACBRRodapeAbastecimento;
 begin
-  Result := inherited GetItem(Index) as TACBRRodapeAbastecimento;
+  Result := TACBRRodapeAbastecimento(inherited Items[Index]);
 end;
 
 procedure TACBRRodapeAbastecimentos.Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
@@ -5470,7 +5480,7 @@ end;
 
 procedure TACBRRodapeAbastecimentos.SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
 begin
-  inherited SetItem(Index, Item);
+  inherited Items[Index] := Item;
 end;
 
 end.

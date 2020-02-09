@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -24,11 +24,10 @@
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -41,8 +40,12 @@ unit ACBrECFVirtual ;
 
 interface
 uses
-  Classes, Contnrs, Math, SysUtils, IniFiles,
-  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+  Classes, Math, SysUtils, IniFiles,
+  {$IFDEF COMPILER6_UP}
+    DateUtils, StrUtils
+  {$ELSE}
+    ACBrD5, Windows
+  {$ENDIF},
   ACBrBase, ACBrECFClass, ACBrDevice;
 
 type
@@ -90,7 +93,7 @@ end;
 
 { TACBrECFVirtualClassItensCupom }
 
-TACBrECFVirtualClassItensCupom = class(TObjectList)
+TACBrECFVirtualClassItensCupom = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassItemCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassItemCupom;
@@ -121,7 +124,7 @@ end;
 
 { TACBrECFVirtualClassPagamentosCupom }
 
-TACBrECFVirtualClassPagamentosCupom = class(TObjectList)
+TACBrECFVirtualClassPagamentosCupom = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassPagamentoCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassPagamentoCupom;
@@ -154,7 +157,7 @@ end;
 
 { TACBrECFVirtualClassCNFsCupom }
 
-TACBrECFVirtualClassCNFsCupom = class(TObjectList)
+TACBrECFVirtualClassCNFsCupom = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassCNFCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassCNFCupom;
@@ -192,7 +195,7 @@ end;
 
 { TACBrECFVirtualClassAliquotasCupom }
 
-TACBrECFVirtualClassAliquotasCupom = class(TObjectList)
+TACBrECFVirtualClassAliquotasCupom = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassAliquotaCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassAliquotaCupom;
@@ -397,7 +400,6 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpGrandeTotal: Double;
     fpVendaBruta : Double;
     fpNumCCF     : Integer;
-    fpEXEName    : String;
 
     fpTotalDescontosICMS  : Double;
     fpTotalAcrescimosICMS : Double;
@@ -681,13 +683,13 @@ end;
 procedure TACBrECFVirtualClassItensCupom.SetObject(Index: Integer;
   Item: TACBrECFVirtualClassItemCupom);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrECFVirtualClassItensCupom.GetObject(Index: Integer
   ): TACBrECFVirtualClassItemCupom;
 begin
-  Result := inherited GetItem(Index) as TACBrECFVirtualClassItemCupom ;
+  Result := TACBrECFVirtualClassItemCupom(inherited Items[Index]);
 end;
 
 function TACBrECFVirtualClassItensCupom.New(
@@ -743,13 +745,13 @@ end;
 procedure TACBrECFVirtualClassPagamentosCupom.SetObject(Index: Integer;
   Item: TACBrECFVirtualClassPagamentoCupom);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrECFVirtualClassPagamentosCupom.GetObject(Index: Integer
   ): TACBrECFVirtualClassPagamentoCupom;
 begin
-  Result := inherited GetItem(Index) as TACBrECFVirtualClassPagamentoCupom ;
+  Result := TACBrECFVirtualClassPagamentoCupom(inherited Items[Index]);
 end;
 
 function TACBrECFVirtualClassPagamentosCupom.New: TACBrECFVirtualClassPagamentoCupom;
@@ -804,13 +806,13 @@ end;
 procedure TACBrECFVirtualClassCNFsCupom.SetObject(Index: Integer;
   Item: TACBrECFVirtualClassCNFCupom);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrECFVirtualClassCNFsCupom.GetObject(Index: Integer
   ): TACBrECFVirtualClassCNFCupom;
 begin
-  Result := inherited GetItem(Index) as TACBrECFVirtualClassCNFCupom ;
+  Result := TACBrECFVirtualClassCNFCupom(inherited Items[Index]);
 end;
 
 function TACBrECFVirtualClassCNFsCupom.New: TACBrECFVirtualClassCNFCupom;
@@ -877,13 +879,13 @@ end;
 procedure TACBrECFVirtualClassAliquotasCupom.SetObject(Index: Integer;
   Item: TACBrECFVirtualClassAliquotaCupom);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrECFVirtualClassAliquotasCupom.GetObject(Index: Integer
   ): TACBrECFVirtualClassAliquotaCupom;
 begin
-  Result := inherited GetItem(Index) as TACBrECFVirtualClassAliquotaCupom ;
+  Result := TACBrECFVirtualClassAliquotaCupom(inherited Items[Index]);
 end;
 
 function TACBrECFVirtualClassAliquotasCupom.New: TACBrECFVirtualClassAliquotaCupom;
@@ -1630,7 +1632,6 @@ begin
   Operador     := '' ;
   fpIM         := '1234-0' ;
   fpModeloStr  := 'ECFVirtual' ;
-  fpEXEName    := ParamStr(0) ;
   fpVerao      := false ;
   fpDia        := now ;
   fpNumCRO     := 1 ;
@@ -3571,7 +3572,7 @@ end;
 
 function TACBrECFVirtualClass.CalculaNomeArqINI : String ;
 begin
-  Result := ExtractFilePath(fpEXEName)+'acbrecf'+GetNumECF+'.ini';
+  Result := ApplicationPath+'acbrecf'+GetNumECF+'.ini';
 end;
 
 procedure TACBrECFVirtualClass.SetNumECF(AValue: Integer);

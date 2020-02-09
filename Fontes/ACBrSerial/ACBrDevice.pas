@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -43,63 +43,27 @@
 
 {$I ACBr.inc}
 
-//{$DEFINE ThreadEnviaLPT}  { Use // no inicio dessa linha para desabilitar a Thread}
-
-{$IFDEF LINUX}
-   { Thread TACBrThreadEnviaLPT nao funciona muito bem no Linux }
-   { infelizmente, Strings grandes nao funcionam bem no LINUX usando a Thread}
-  {$UNDEF ThreadEnviaLPT}
-{$ENDIF}
-
-{$IFDEF FPC}
- {$DEFINE Device_Stream}
-{$ENDIF}
-
 unit ACBrDevice ;
 
 interface
 
 uses
-  Classes, SysUtils, math, contnrs,
+  Classes, SysUtils,
   synaser, blcksock,
-  {$IfDef MSWINDOWS}
-    ACBrWinUSBDevice,
-  {$EndIf}
   {$IfDef COMPILER6_UP}
-    {$IfDef MSWINDOWS}
-      Windows,
-    {$EndIf}
-    DateUtils, Types, StrUtils,
+   Types,
   {$Else}
-     Windows, ACBrD5,
+   Windows, ACBrD5,
   {$EndIf}
-  {$IfNDef NOGUI}
-    {$If defined(VisualCLX)}
-       QForms,
-    {$ElseIf defined(FMX)}
-       FMX.Forms,
-    {$Else}
-       Forms,
-    {$IfEnd}
+  ACBrDeviceClass, ACBrDeviceSerial, ACBrDeviceTCP, ACBrDeviceLPT,
+  ACBrDeviceHook, ACBrDeviceRaw,
+  {$IfDef MSWINDOWS}
+   ACBrDeviceWinUSB, ACBrWinUSBDevice,
   {$EndIf}
-  {$If defined(VisualCLX)}
-     QPrinters,
-  {$ElseIf defined(FMX)}
-     FMX.Printer,
-     {$IfDef MSWINDOWS}
-        Winapi.WinSpool,
-     {$EndIf}
-  {$ElseIf defined(FPC)}
-     Printers,
-     {$IfNDef NOGUI}
-      OSPrinters,
-     {$EndIf}
-  {$ELSEIF DEFINED(POSIX)}
-    Posix.Unistd,
-  {$Else}
-     Printers, WinSpool,
-  {$IfEnd}
-  ACBrConsts;
+  {$IfDef HAS_BLUETOOTH}
+   ACBrDeviceBlueTooth, System.Bluetooth.Components,
+  {$EndIf}
+  ACBrBase;
 
 type
 
@@ -170,18 +134,9 @@ TACBrECFTipoDocumento = ( docRZ, docLX, docCF, docCFBP, docCupomAdicional,
                           docEstornoPagto, docRG, docLMF, docTodos, docNenhum);
 TACBrECFTipoDocumentoSet = set of TACBrECFTipoDocumento;
 
-TACBrSerialParity = (pNone, pOdd, pEven, pMark, pSpace) ;
-TACBrSerialStop   = (s1, s1eMeio, s2) ;
-TACBrHandShake    = (hsNenhum, hsXON_XOFF, hsRTS_CTS, hsDTR_DSR) ;
-
 TACBrAlinhamento = (alDireita, alEsquerda, alCentro);
 
 TACBrECFCHQEstado = (chqIdle, chqPosicione, chqImprimindo, chqFimImpressao, chqRetire, chqAutenticacao);
-
-TACBrDeviceHookAtivar = procedure(const APort: String; Params: String) of object;
-TACBrDeviceHookDesativar = procedure(const APort: String) of object;
-TACBrDeviceHookEnviaString = procedure(const cmd: AnsiString) of object;
-TACBrDeviceHookLeString = procedure(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString) of object;
 
 { ACBrDevice é um componente apenas para usarmos o recurso de AutoExpand do
   ObjectInspector para SubComponentes, poderia ser uma Classe }
@@ -224,7 +179,7 @@ end;
 
 { TACBrTags }
 
-TACBrTags = class(TObjectList)
+TACBrTags = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrTag);
     function GetObject (Index: Integer): TACBrTag;
@@ -277,95 +232,96 @@ TACBrTagProcessor = class
 
 end;
 
-TACBrDeviceType = (dtNenhum, dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook, dtUSB);
+TACBrDeviceType = (dtNenhum, dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook, dtUSB, dtBlueTooth);
 
 { TACBrDevice }
 
 TACBrDevice = class( TComponent )
   private
-    fsSerial : TBlockSerial ;
-    fsSocket : TBlockSocket ;
+    fsDeviceAtivo: TACBrDeviceClass;
+    fsDeviceNenhum: TACBrDeviceClass;
+    fsDeviceSerial: TACBrDeviceSerial;
+    fsDeviceTCP: TACBrDeviceTCP;
+    fsDeviceLPT: TACBrDeviceLPT;
+    fsDeviceHook: TACBrDeviceHook;
+    fsDeviceRaw: TACBrDeviceRaw;
     {$IfDef MSWINDOWS}
-     fsWinUSB: TACBrUSBWinDeviceAPI;
+     fsDeviceWinUSB: TACBrDeviceWinUSB;
+    {$EndIf}
+    {$IfDef HAS_BLUETOOTH}
+     fsDeviceBlueTooth: TACBrDeviceBlueTooth;
     {$EndIf}
 
     fsPosImp: TPoint;
-    fsHardFlow: Boolean;
-    fsHookAtivar: TACBrDeviceHookAtivar;
-    fsHookDesativar: TACBrDeviceHookDesativar;
-    fsHookEnviaString: TACBrDeviceHookEnviaString;
-    fsHookLeString: TACBrDeviceHookLeString;
-    fsSoftFlow: Boolean;
-    fsParity: Char ;
-    fsData : Integer;
-    fsBaud: Integer;
-    fsStop: Integer ;
     fsPorta: String;
     fsNomeDocumento: String;
     fsDeviceType: TACBrDeviceType;
-    fsTimeOut: Integer ;
+    fsTimeOutMilissegundos: Integer ;
     fsAtivo: Boolean;
 
-    fsHandShake: TACBrHandShake;
     fsSendBytesCount: Integer;
     fsSendBytesInterval: Integer;
     fProcessMessages: Boolean;
-
-    fTCPIP: String;
-    fTCPPort: String;
     fsArqLOG: String;
 
-    procedure ConfiguraSerial ;
-    procedure EnviaStringSerial(const AString: AnsiString) ;
-    procedure EnviaStringArquivo(const AString: AnsiString) ;
-    procedure EnviaStringTCP(const AString: AnsiString);
+    function GetBaud: Integer;
+    function GetData: Integer;
+    function GetDeviceTCP: TBlockSocket;
+
     {$IfDef MSWINDOWS}
-    procedure EnviaStringWinUSB(const AString: AnsiString);
+     function GetDeviceWinUSB: TACBrUSBWinDeviceAPI;
     {$EndIf}
-    procedure EnviaStringRaw(const AString: AnsiString);
-    procedure EnviaStringHook(const AString: AnsiString);
+    {$IfDef HAS_BLUETOOTH}
+     function GetDeviceBlueTooth: TBluetooth;
+    {$EndIf}
+    function GetHandShake: TACBrHandShake;
+    function GetHardFlow: Boolean;
+    function GetHookAtivar: TACBrDeviceHookAtivar;
+    function GetHookDesativar: TACBrDeviceHookDesativar;
+    function GetHookEnviaString: TACBrDeviceHookEnviaString;
+    function GetHookLeString: TACBrDeviceHookLeString;
     function GetNomeDocumento: String;
     function GetParamsString: String;
-    function GetPrinterRawIndex: Integer;
-    function GetPrinterFileName: String;
+    function GetDeviceSerial: TBlockSerial;
+    function GetSoftFlow: Boolean;
+    function GetTimeOut: Integer;
     function GetTimeOutMilissegundos: Integer;
     procedure SetArqLOG(AValue: String);
 
-    {$IFDEF ThreadEnviaLPT}
-    procedure EnviaStringThread( AString : AnsiString ) ;
-    {$ENDIF}
-
-    {$If DEFINED(FMX)}
-    function GetLabelPrinterIndex(APrinterName: String): Integer;
-    {$IfEnd}
-
-    procedure SetBaud(const Value: Integer);
-    procedure SetData(const Value: Integer);
+    procedure SetBaud(const AValue: Integer);
+    procedure SetData(const AValue: Integer);
     procedure SetDeviceType(AValue: TACBrDeviceType);
+    procedure SetHookAtivar(AValue: TACBrDeviceHookAtivar);
+    procedure SetHookDesativar(AValue: TACBrDeviceHookDesativar);
+    procedure SetHookEnviaString(AValue: TACBrDeviceHookEnviaString);
+    procedure SetHookLeString(AValue: TACBrDeviceHookLeString);
     procedure SetNomeDocumento(const AValue: String);
-    procedure SetHardFlow(const Value: Boolean);
+    procedure SetHardFlow(const AValue: Boolean);
     function GetParity: TACBrSerialParity;
-    procedure SetParity(const Value: TACBrSerialParity);
-    procedure SetSoftFlow(const Value: Boolean);
+    procedure SetParity(const AValue: TACBrSerialParity);
+    procedure SetSoftFlow(const AValue: Boolean);
     function GetStop: TACBrSerialStop;
-    procedure SetStop(const Value: TACBrSerialStop);
-    procedure SetPorta(const Value: String);
-    procedure SetTimeOut(const Value: Integer);
-    procedure SetOnStatus(const Value: THookSerialStatus);
+    procedure SetStop(const AValue: TACBrSerialStop);
+    procedure SetPorta(const AValue: String);
+    procedure SetTimeOut(const AValue: Integer);
+    procedure SetOnStatus(const AValue: THookSerialStatus);
     function GetOnStatus: THookSerialStatus;
     procedure SetAtivo(const Value: Boolean);
-    procedure SetHandShake(const Value: TACBrHandShake);
-    procedure SetParamsString(const Value: String);
+    procedure SetHandShake(const AValue: TACBrHandShake);
+    procedure SetParamsString(const AValue: String);
     function GetMaxBandwidth: Integer;
-    procedure SetMaxBandwidth(const Value: Integer);
+    procedure SetMaxBandwidth(const AValue: Integer);
     procedure SetTimeOutMilissegundos(AValue: Integer);
-    procedure TryCloseSocket;
   public
-    property Serial: TBlockSerial read fsSerial;
-    property Socket: TBlockSocket read fsSocket;
+    property Serial: TBlockSerial read GetDeviceSerial;
+    property Socket: TBlockSocket read GetDeviceTCP;
     {$IfDef MSWINDOWS}
-     property WinUSB: TACBrUSBWinDeviceAPI read fsWinUSB;
+     property WinUSB: TACBrUSBWinDeviceAPI read GetDeviceWinUSB;
     {$EndIf}
+    {$IfDef HAS_BLUETOOTH}
+     property BlueTooth: TBluetooth read GetDeviceBlueTooth;
+    {$EndIf}
+
     property PosImp: TPoint read fsPosImp;
 
     procedure Assign(Source: TPersistent); override;
@@ -374,11 +330,11 @@ TACBrDevice = class( TComponent )
 
     property Porta: String  read fsPorta write SetPorta ;
     property DeviceType: TACBrDeviceType read fsDeviceType write SetDeviceType;
-    property TimeOut : Integer read fsTimeOut write SetTimeOut ;
+    property TimeOut : Integer read GetTimeOut write SetTimeOut ;
     property TimeOutMilissegundos: Integer read GetTimeOutMilissegundos
       write SetTimeOutMilissegundos;
 
-    Function EmLinha( lTimeOut : Integer = 1) : Boolean  ;
+    Function EmLinha(const ATimeOutSegundos : Integer = 1) : Boolean  ;
     function DeduzirTipoPorta(const APorta: String): TACBrDeviceType;
 
     property ParamsString : String read GetParamsString write SetParamsString ;
@@ -390,8 +346,9 @@ TACBrDevice = class( TComponent )
     procedure Desativar ;
     Procedure EnviaString( const AString : AnsiString ) ;
     Procedure EnviaByte( const AByte : Byte ) ;
-    Function LeString( ATimeOut: Integer=0; NumBytes: Integer=0; const Terminador: AnsiString = '' ): String;
-    Function LeByte( ATimeOut: Integer=0 ): Byte;
+    Function LeString(const ATimeOutMilissegundos: Integer=0; NumBytes: Integer=0;
+      const Terminador: AnsiString = '' ): AnsiString;
+    Function LeByte(const ATimeOutMilissegundos: Integer=0 ): Byte;
     procedure Limpar ;
     Function BytesParaLer: Integer;
 
@@ -408,11 +365,15 @@ TACBrDevice = class( TComponent )
     Function IsTCPPort: Boolean;
     Function IsRawPort: Boolean;
 
-    procedure AcharPortasSeriais( const AStringList : TStrings;
-       UltimaPorta : Integer = 64 ) ;
+    procedure AcharPortasSeriais(const AStringList: TStrings; UltimaPorta: Integer = 64 );
+    procedure AcharPortasRAW(const AStringList: TStrings);
     {$IfDef MSWINDOWS}
+    procedure AcharPortasUSB(const AStringList: TStrings);
     procedure DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType;
        var ProtocoloACBr: Integer);
+    {$EndIf}
+    {$IfDef HAS_BLUETOOTH}
+    procedure AcharPortasBlueTooth(const AStringList: TStrings);
     {$EndIf}
     function DeviceToString(OnlyException: Boolean): String;
 
@@ -421,24 +382,17 @@ TACBrDevice = class( TComponent )
 
     procedure DoException(E: Exception);
   published
-     property Baud     : Integer read fsBaud write SetBaud default 9600 ;
-     property Data     : Integer read fsData write SetData default 8 ;
-     property Parity   : TACBrSerialParity read GetParity write SetParity
-                         default pNone ;
-     property Stop     : TACBrSerialStop read GetStop write SetStop
-                         default s1 ;
-     property MaxBandwidth : Integer read  GetMaxBandwidth
-                                     write SetMaxBandwidth default 0 ;
-     property SendBytesCount : Integer read  fsSendBytesCount
-                                       write fsSendBytesCount  default 0 ;
-     property SendBytesInterval : Integer read  fsSendBytesInterval
-                                       write fsSendBytesInterval  default 0 ;
-     property HandShake : TACBrHandShake read fsHandShake write SetHandShake
-                         default hsNenhum ;
-     property SoftFlow : Boolean read fsSoftFlow write SetSoftFlow
-                         default false ;
-     property HardFlow : Boolean read fsHardFlow write SetHardFlow
-                         default false ;
+     property Baud: Integer read GetBaud write SetBaud default 9600 ;
+     property Data: Integer read GetData write SetData default 8 ;
+     property Parity: TACBrSerialParity read GetParity write SetParity default pNone ;
+     property Stop: TACBrSerialStop read GetStop write SetStop default s1 ;
+     property HandShake: TACBrHandShake read GetHandShake write SetHandShake default hsNenhum ;
+     property SoftFlow: Boolean read GetSoftFlow write SetSoftFlow default false ;
+     property HardFlow: Boolean read GetHardFlow write SetHardFlow default false ;
+
+     property MaxBandwidth: Integer read  GetMaxBandwidth write SetMaxBandwidth default 0 ;
+     property SendBytesCount: Integer read  fsSendBytesCount write fsSendBytesCount  default 0 ;
+     property SendBytesInterval: Integer read  fsSendBytesInterval write fsSendBytesInterval  default 0 ;
 
      property NomeDocumento : String read GetNomeDocumento write SetNomeDocumento;
 
@@ -447,42 +401,22 @@ TACBrDevice = class( TComponent )
         write fProcessMessages default True ;
 
      property OnStatus : THookSerialStatus read GetOnStatus write SetOnStatus ;
-     property HookAtivar : TACBrDeviceHookAtivar read fsHookAtivar
-        write fsHookAtivar;
-     property HookDesativar : TACBrDeviceHookDesativar read fsHookDesativar
-        write fsHookDesativar;
-     property HookEnviaString : TACBrDeviceHookEnviaString read fsHookEnviaString
-        write fsHookEnviaString;
-     property HookLeString : TACBrDeviceHookLeString read fsHookLeString
-        write fsHookLeString;
+     property HookAtivar : TACBrDeviceHookAtivar read GetHookAtivar write SetHookAtivar;
+     property HookDesativar : TACBrDeviceHookDesativar read GetHookDesativar write SetHookDesativar;
+     property HookEnviaString : TACBrDeviceHookEnviaString read GetHookEnviaString write SetHookEnviaString;
+     property HookLeString : TACBrDeviceHookLeString read GetHookLeString write SetHookLeString;
 
      property ArqLOG : String read fsArqLOG write SetArqLOG ;
 end ;
 
-{ Essa classe é usada pela função EnviaStringThread para detectar se os Dados
-  estao sendo "gravados" com sucesso na porta paralela ou arquivo. }
-TACBrThreadEnviaLPT = class(TThread)
-  private
-    { Private declarations }
-    fsTextoAEnviar : String ;
-    fsBytesSent    : Integer;
-    fsOwner        : TObject ;
-  protected
-    procedure Execute ; override;
-  public
-    constructor Create(AOwner : TObject; const AString : String) ;
-    property BytesSent : Integer read fsBytesSent ;
-  end;
-
 const
   estCupomAberto = [estVenda, estPagamento];
-  CFailCount = 10;
 
 implementation
 
 Uses
-  typinfo,
-  ACBrUtil ;
+  typinfo, Math, StrUtils,
+  ACBrUtil, ACBrConsts;
 
 { TACBrTag }
 
@@ -517,13 +451,12 @@ end;
 
 procedure TACBrTags.SetObject(Index: Integer; Item: TACBrTag);
 begin
-  inherited SetItem (Index, Item) ;
+   inherited Items[Index] := Item;
 end;
 
 function TACBrTags.GetObject(Index: Integer): TACBrTag;
 begin
-  //Result := inherited GetItem(Index) as TACBrTag;
-  Result := TACBrTag(Get(Index));
+  Result := TACBrTag(inherited Items[Index]);
 end;
 
 procedure TACBrTags.Insert(Index: Integer; Obj: TACBrTag);
@@ -596,7 +529,7 @@ begin
   Tag1    := '';
   PosTag1 := 0;
 
-  AcharProximaTag( Result, 1, Tag1, PosTag1);
+  AcharProximaTag( String(Result), 1, Tag1, PosTag1);
   while Tag1 <> '' do
   begin
     LenTag1  := Length( Tag1 );
@@ -608,7 +541,7 @@ begin
       if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
       begin
         Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
-        PosTag2 := PosEx(Tag2, LowerCase(Result), PosTag1+LenTag1 );
+        PosTag2 := PosEx(Tag2, LowerCase(String(Result)), PosTag1+LenTag1 );
 
         if PosTag2 = 0 then             // Não achou Tag de Fechamento
         begin
@@ -717,36 +650,30 @@ constructor TACBrDevice.Create(AOwner: TComponent);
 begin
   inherited Create( AOwner ) ;
 
-  { Classe SynaSer para acesso direto a Serial }
-  fsSerial := TBlockSerial.Create ;
-  fsSerial.RaiseExcept := True ;
-
-  { Classe Synapse para envio por TCP }
-  fsSocket := TTCPBlockSocket.Create;
-  fsSocket.RaiseExcept := True;
-
-  { Classe para envio por USB em Windows, usando a WinUSB}
+  fsDeviceNenhum := TACBrDeviceClass.Create(Self);
+  fsDeviceSerial := TACBrDeviceSerial.Create(Self);
+  fsDeviceTCP := TACBrDeviceTCP.Create(Self);
+  fsDeviceLPT := TACBrDeviceLPT.Create(Self);
+  fsDeviceHook := TACBrDeviceHook.Create(Self);
+  fsDeviceRaw := TACBrDeviceRaw.Create(Self);
   {$IfDef MSWINDOWS}
-   fsWinUSB := TACBrUSBWinDeviceAPI.Create;
-   fsWinUSB.LogFile := fsArqLOG;
+   fsDeviceWinUSB := TACBrDeviceWinUSB.Create(Self);
+  {$EndIf}
+  {$IfDef HAS_BLUETOOTH}
+   fsDeviceBlueTooth := TACBrDeviceBlueTooth.Create(Self);
   {$EndIf}
 
   { Variaveis Internas }
   fsPorta   := '' ;
-  fsTimeOut := cTimeout ;
+  fsTimeOutMilissegundos := cTimeout*1000;
 
-  fsSendBytesCount    := 0 ;
+  fsSendBytesCount := 0 ;
   fsSendBytesInterval := 0 ;
-
   fProcessMessages := True ;
-
-  fsDeviceType      := dtNenhum;
-  fsHookAtivar      := nil;
-  fsHookDesativar   := nil;
-  fsHookEnviaString := nil;
-  fsHookLeString    := nil;
-  fsNomeDocumento   := '';
-  fsArqLOG          := '';
+  fsDeviceType := dtNenhum;
+  fsDeviceAtivo := fsDeviceNenhum;
+  fsNomeDocumento := '';
+  fsArqLOG := '';
 
   SetDefaultValues ;
 end;
@@ -754,13 +681,17 @@ end;
 destructor TACBrDevice.Destroy;
 begin
   GravaLog('Destroy');
-  fsSerial.Free ;
-  IOResult ;
-
-  fsSocket.Free;
-
+  fsDeviceNenhum.Free;
+  fsDeviceSerial.Free ;
+  fsDeviceTCP.Free;
+  fsDeviceLPT.Free;
+  fsDeviceHook.Free;
+  fsDeviceRaw.Free;
   {$IfDef MSWINDOWS}
-   fsWinUSB.Free;
+   fsDeviceWinUSB.Free;
+  {$EndIf}
+  {$IfDef HAS_BLUETOOTH}
+   fsDeviceBlueTooth.Free;
   {$EndIf}
 
   inherited Destroy ;
@@ -769,14 +700,7 @@ end;
 procedure TACBrDevice.SetDefaultValues;
 begin
   GravaLog('SetDefaultValues');
-  fsHardFlow := false ;
-  fsSoftFlow := false ;
-  fsHandShake:= hsNenhum ;
-  fsParity   := 'N' ;
-  fsData     := 8 ;
-  fsBaud     := 9600 ;
-  fsStop     := 0 ;
-
+  fsDeviceSerial.ValoresPadroes;
   fsPosImp.X := 0 ;
   fsPosImp.Y := 0 ;
 end;
@@ -791,9 +715,6 @@ begin
 end;
 
 procedure TACBrDevice.Ativar;
-var
-  ip, NomeArq, ErrorMsg: String;
-  p: Integer;
 begin
   if fsAtivo then
     Exit;
@@ -803,136 +724,9 @@ begin
   if (fsPorta = '') or (fsDeviceType = dtNenhum) then
     DoException( Exception.Create(ACBrStr(cACBrDeviceAtivarPortaException)) );
 
-  case fsDeviceType of
-    dtHook:
-      if Assigned(fsHookAtivar) then
-        fsHookAtivar( fsPorta, DeviceToString(False));
-
-    dtTCP:
-      begin
-        ip := copy(Porta,5 , 255);  //     "TCP:ip_maquina:porta"
-        p := pos(':', ip);
-        if p = 0 then
-          p := Length(ip)+1;
-
-        fTCPPort := copy(ip, p + 1, 5);
-        if fTCPPort = '' then
-          fTCPPort := '9100';
-
-        fTCPIP := copy(ip, 1, p - 1);
-
-        TryCloseSocket;
-
-        GravaLog('  Socket.Connect('+fTCPIP+', '+fTCPPort+')');
-        fsSocket.ConnectionTimeout := (TimeOut * 1000) ;
-        fsSocket.Connect(fTCPIP, fTCPPort);
-        fsSocket.Purge;
-      end;
-
-    dtSerial:
-      begin
-        try
-          TryCloseSocket;  { Fecha se ficou algo aberto }
-
-          GravaLog('  Serial.Connect('+fsPorta+')');
-          fsSerial.DeadlockTimeout := (TimeOut * 1000) ;
-          fsSerial.Connect( fsPorta ) ;
-          ConfiguraSerial ;
-
-          fsSerial.Purge ;  { Limpa Buffer de envio e recepção }
-        except
-          on E: ESynaSerError do
-          begin
-            if (fsSerial.LastError = 2) then
-              ErrorMsg := Format(ACBrStr(cACBrDeviceAtivarPortaNaoEncontrada), [fsPorta])
-            else
-              ErrorMsg := E.Message;
-
-            TryCloseSocket;
-
-            DoException( ESynapseError.Create(ErrorMsg) );
-          end;
-
-          On E: Exception do
-            DoException( Exception.Create(E.ClassName+': '+E.Message) );
-        end ;
-      end;
-
-    {$IfDef MSWINDOWS}
-    dtUSB:
-      begin
-        TryCloseSocket;
-
-        GravaLog('  WinUSB.Connect('+fsPorta+')');
-        fsWinUSB.Connect( fsPorta );
-      end;
-    {$EndIf}
-
-    dtRawPrinter:
-      GetPrinterRawIndex;
-
-    dtFile, dtParallel:
-      begin
-        NomeArq := GetPrinterFileName;
-        GravaLog('  NomeArq: '+NomeArq);
-
-        { Tenta Abrir Arquivo/Porta para ver se existe e está disponivel}
-        if IsTXTFilePort and FileExists(NomeArq) then
-        begin
-          GravaLog('  DeleteFile('+NomeArq+')');
-          SysUtils.DeleteFile(NomeArq);
-        end;
-
-        try
-          EnviaStringArquivo( '' );
-        except
-          on E: EFOpenError do
-          begin
-            ErrorMsg := '';
-            if (fsDeviceType = dtParallel) then
-            begin
-              {$IfNDef MSWINDOWS}
-              if not FileExists(fsPorta) then
-                ErrorMsg := Format(ACBrStr(cACBrDeviceAtivarPortaNaoEncontrada), [fsPorta])
-              else
-              {$EndIf}
-                ErrorMsg := Format(ACBrStr(cACBrDeviceAtivarPortaNaoAcessivel), [fsPorta]);
-            end;
-
-            if (ErrorMsg = '') then
-              ErrorMsg := E.Message;
-
-            DoException( EStreamError.Create(ErrorMsg) );
-          end;
-
-          On E: Exception do
-            DoException( Exception.Create(E.ClassName+': '+E.Message) );
-        end;
-      end ;
-  end;
-
+  fsDeviceAtivo.Conectar(fsPorta, fsTimeOutMilissegundos);
   fsAtivo := true ;
 end;
-
-procedure TACBrDevice.ConfiguraSerial ;
-begin
-  if not fsSerial.InstanceActive then
-    Exit;
-
-  GravaLog('ConfiguraSerial');
-  fsSerial.Config( fsBaud, fsData, fsParity, fsStop, fsSoftFlow, fsHardFlow);
-
-  if HandShake = hsRTS_CTS then
-  begin
-     GravaLog('  Serial.RTS');
-     fsSerial.RTS := True;
-  end
-  else if HandShake = hsDTR_DSR then
-  begin
-     GravaLog('  Serial.DTR');
-     fsSerial.DTR := True;
-  end;
-end ;
 
 procedure TACBrDevice.Desativar;
 begin
@@ -940,52 +734,29 @@ begin
     Exit;
 
   GravaLog('Desativar');
-
-  if (fsDeviceType = dtHook) then
-  begin
-    if Assigned(fsHookDesativar) then
-      fsHookDesativar(fsPorta);
-  end
-  else
-    TryCloseSocket;
+  fsDeviceAtivo.Desconectar();
 
   fsAtivo := false ;
 end;
 
 function TACBrDevice.GetOnStatus: THookSerialStatus;
 begin
-  Result := fsSerial.OnStatus;
+  Result := fsDeviceSerial.OnStatus;
 end;
 
-procedure TACBrDevice.SetOnStatus(const Value: THookSerialStatus);
+procedure TACBrDevice.SetOnStatus(const AValue: THookSerialStatus);
 begin
-  fsSerial.OnStatus := Value;
+  fsDeviceSerial.OnStatus := AValue;
 end;
 
-procedure TACBrDevice.SetBaud(const Value: Integer);
+procedure TACBrDevice.SetBaud(const AValue: Integer);
 begin
-  if fsBaud = Value then exit ;
-
-  GravaLog('SetBaud('+IntToStr(Value)+')');
-
-  if (Value < 50) or (Value > 4000000) then
-     DoException( Exception.Create( ACBrStr(cACBrDeviceSetBaudException)));
-
-  fsBaud := Value ;
-  ConfiguraSerial ;
+  fsDeviceSerial.Baud := AValue;
 end;
 
-procedure TACBrDevice.SetData(const Value: Integer);
+procedure TACBrDevice.SetData(const AValue: Integer);
 begin
-  if fsData = Value then exit ;
-
-  GravaLog('SetData('+IntToStr(Value)+')');
-
-  if (Value < 5) or (Value > 8) then
-     DoException( Exception.Create( ACBrStr(cACBrDeviceSetDataException)));
-
-   fsData := Value ;
-   ConfiguraSerial ;
+  fsDeviceSerial.Data := AValue;
 end;
 
 procedure TACBrDevice.SetDeviceType(AValue: TACBrDeviceType);
@@ -995,7 +766,7 @@ begin
   if TemArqLog then
     GravaLog('SetDeviceType('+GetEnumName(TypeInfo(TACBrDeviceType), integer(AValue))+')');
 
-  if (AValue in [dtTCP, dtRawPrinter, dtHook, dtUSB]) then
+  if (AValue in [dtTCP, dtRawPrinter, dtHook, dtUSB, dtBlueTooth]) then
   begin
     if (DeduzirTipoPorta(fsPorta) <> AValue) then
       DoException( Exception.Create( ACBrStr(cACBrDeviceSetTypeException)));
@@ -1003,11 +774,54 @@ begin
 
   else if (AValue in [dtFile, dtSerial]) then
   begin
-    if (DeduzirTipoPorta(fsPorta) in [dtFile, dtSerial]) then
+    if not (DeduzirTipoPorta(fsPorta) in [dtFile, dtSerial]) then
       DoException( Exception.Create( ACBrStr(cACBrDeviceSetTypeException)));
   end;
 
   fsDeviceType := AValue;
+  case fsDeviceType of
+    dtTCP:
+      fsDeviceAtivo := fsDeviceTCP;
+    dtSerial:
+      fsDeviceAtivo := fsDeviceSerial;
+    dtHook:
+      fsDeviceAtivo := fsDeviceHook;
+    dtRawPrinter:
+      fsDeviceAtivo := fsDeviceRaw;
+    dtFile, dtParallel:
+      fsDeviceAtivo := fsDeviceLPT;
+    {$IfDef MSWINDOWS}
+    dtUSB:
+      fsDeviceAtivo := fsDeviceWinUSB;
+    {$EndIf}
+    {$IfDef HAS_BLUETOOTH}
+    dtBlueTooth:
+      fsDeviceAtivo := fsDeviceBlueTooth;
+    {$EndIf}
+    else
+      fsDeviceAtivo := fsDeviceNenhum;
+  end;
+
+end;
+
+procedure TACBrDevice.SetHookAtivar(AValue: TACBrDeviceHookAtivar);
+begin
+   fsDeviceHook.HookAtivar := AValue;
+end;
+
+procedure TACBrDevice.SetHookDesativar(AValue: TACBrDeviceHookDesativar);
+begin
+  fsDeviceHook.HookDesativar := AValue;
+end;
+
+procedure TACBrDevice.SetHookEnviaString(AValue: TACBrDeviceHookEnviaString);
+begin
+  fsDeviceHook.HookEnviaString := AValue;
+end;
+
+procedure TACBrDevice.SetHookLeString(AValue: TACBrDeviceHookLeString);
+begin
+  fsDeviceHook.HookLeString := AValue;
 end;
 
 procedure TACBrDevice.SetNomeDocumento(const AValue: String);
@@ -1018,118 +832,33 @@ end;
 
 function TACBrDevice.GetParity: TACBrSerialParity;
 begin
-  case fsParity of
-     'O' : result := pOdd   ;
-     'E' : result := pEven  ;
-     'M' : result := pMark  ;
-     'S' : result := pSpace ;
-  else
-     result := pNone ;
-  end;
+  Result := fsDeviceSerial.Parity;
 end;
 
-procedure TACBrDevice.SetParity(const Value: TACBrSerialParity);
+procedure TACBrDevice.SetParity(const AValue: TACBrSerialParity);
 begin
-  if Parity = Value then exit ;
-
-  if TemArqLog then
-    GravaLog('SetParity('+GetEnumName(TypeInfo(TACBrSerialParity), integer(Value))+')');
-
-  case Value of
-     pOdd   : fsParity := 'O' ;
-     pEven  : fsParity := 'E' ;
-     pMark  : fsParity := 'M' ;
-     pSpace : fsParity := 'S' ;
-  else
-     fsParity := 'N' ;
-  end;
-  ConfiguraSerial ;
+  fsDeviceSerial.Parity := AValue;
 end;
 
 function TACBrDevice.GetStop: TACBrSerialStop;
 begin
-  case fsStop of
-     1 : result := s1eMeio ;
-     2 : result := s2      ;
-  else
-     result := s1 ;
-  end;
+  Result := fsDeviceSerial.Stop;
 end;
 
-procedure TACBrDevice.SetStop(const Value: TACBrSerialStop );
+procedure TACBrDevice.SetStop(const AValue: TACBrSerialStop );
 begin
-  if Stop = Value then exit ;
-
-  if TemArqLog then
-    GravaLog('SetStop('+GetEnumName(TypeInfo(TACBrSerialStop), integer(Value))+')');
-
-  case Value of
-     s1eMeio : fsStop := 1 ;
-     s2      : fsStop := 2 ;
-  else
-     fsStop  := 0 ;
-  end;
-  ConfiguraSerial ;
+  fsDeviceSerial.Stop := AValue;
 end;
 
 function TACBrDevice.GetMaxBandwidth: Integer;
 begin
-  case fsDeviceType of
-    dtTCP: Result := fsSocket.MaxSendBandwidth;
-    dtSerial: Result := fsSerial.MaxSendBandwidth;
-  else
-    Result := 0;
-  end;
+  Result := fsDeviceAtivo.MaxSendBandwidth;
 end;
 
-procedure TACBrDevice.SetMaxBandwidth(const Value: Integer);
+procedure TACBrDevice.SetMaxBandwidth(const AValue: Integer);
 begin
-  GravaLog('SetMaxBandwidth('+IntToStr(Value)+')');
-
-  case fsDeviceType of
-    dtTCP: fsSocket.MaxSendBandwidth := Value;
-    dtSerial: fsSerial.MaxSendBandwidth := Value;
-  end;
-end;
-
-procedure TACBrDevice.TryCloseSocket;
-begin
-  case fsDeviceType of
-    dtTCP:
-      begin
-        GravaLog('TryCloseSocket - TCP');
-        try
-          fsSocket.RaiseExcept := False;
-          fsSocket.CloseSocket;
-        finally
-          fsSocket.RaiseExcept := True;
-        end;
-      end;
-
-    dtSerial:
-      begin
-        GravaLog('TryCloseSocket - Serial');
-        try
-          fsSerial.RaiseExcept := False;
-          GravaLog('  Serial.InstanceActive');
-          if fsSerial.InstanceActive then
-          begin
-            GravaLog('  Serial.CloseSocket');
-            fsSerial.CloseSocket ;
-          end;
-        finally
-          fsSerial.RaiseExcept := True;
-        end ;
-      end ;
-
-    {$IfDef MSWINDOWS}
-    dtUSB:
-      begin
-        GravaLog('TryCloseSocket - WinUSB');
-        fsWinUSB.Close;
-      end;
-    {$EndIf}
-  end;
+  GravaLog('SetMaxBandwidth('+IntToStr(AValue)+')');
+  fsDeviceAtivo.MaxSendBandwidth := AValue;
 end;
 
 procedure TACBrDevice.Assign(Source: TPersistent);
@@ -1152,75 +881,44 @@ begin
      OnStatus          := TACBrDevice(Source).OnStatus ;
      HookEnviaString   := TACBrDevice(Source).HookEnviaString ;
      HookLeString      := TACBrDevice(Source).HookLeString ;
+     HookAtivar        := TACBrDevice(Source).HookAtivar;
+     HookDesativar     := TACBrDevice(Source).HookDesativar;
   end;
 end;
 
-procedure TACBrDevice.SetHardFlow(const Value: Boolean);
+procedure TACBrDevice.SetHardFlow(const AValue: Boolean);
 begin
-  GravaLog('SetHardFlow('+BoolToStr(Value, True)+')');
-
-  if Value then
-     HandShake := hsRTS_CTS
-  else
-     if HandShake = hsRTS_CTS then
-        HandShake := hsNenhum ;
+  fsDeviceSerial.HardFlow := AValue;
 end;
 
-procedure TACBrDevice.SetSoftFlow(const Value: Boolean);
+procedure TACBrDevice.SetSoftFlow(const AValue: Boolean);
 begin
-  GravaLog('SetSoftFlow('+BoolToStr(Value, True)+')');
-
-  if Value then
-     HandShake := hsXON_XOFF
-  else
-     if HandShake = hsXON_XOFF then
-        HandShake := hsNenhum ;
+  fsDeviceSerial.SoftFlow := AValue;
 end;
 
-procedure TACBrDevice.SetHandShake(const Value: TACBrHandShake);
+procedure TACBrDevice.SetHandShake(const AValue: TACBrHandShake);
 begin
-  if TemArqLog then
-    GravaLog('SetHandShake('+GetEnumName(TypeInfo(TACBrHandShake), integer(Value))+')');
-
-  fsHardFlow  := (Value = hsRTS_CTS);
-  fsSoftFlow  := (Value = hsXON_XOFF);
-
-  fsHandShake := Value;
-  ConfiguraSerial ;
+  fsDeviceSerial.HandShake := AValue;
 end;
 
-procedure TACBrDevice.SetPorta(const Value: String);
+procedure TACBrDevice.SetPorta(const AValue: String);
 Var
-  StrTemp : String ;
+  PortaUp: String ;
 begin
-  if fsPorta = Value then exit ;
+  if fsPorta = AValue then
+    Exit;
 
-  GravaLog('SetPorta('+Value+')');
-
+  GravaLog('SetPorta('+AValue+')');
   if Ativo then
     DoException( Exception.Create( ACBrStr(cACBrDeviceSetPortaException)));
 
-  StrTemp := UpperCase( Value ) ;
-  if (pos('LPT',StrTemp) = 1) or (pos('COM',StrTemp) = 1) then
-     fsPorta := StrTemp
-  else
-     fsPorta := Value;
+  fsPorta := Trim(AValue);
+  PortaUp := UpperCase(fsPorta) ;
+  if (pos('LPT',PortaUp) = 1) or (pos('COM',PortaUp) = 1) then
+    fsPorta := PortaUp;
 
-  fsDeviceType := DeduzirTipoPorta(fsPorta);
+  DeviceType := DeduzirTipoPorta(fsPorta);
 end;
-
-{$IfDef FMX}
-function TACBrDevice.GetLabelPrinterIndex(APrinterName: String): Integer;
-var
-  i: Integer;
-begin
-  for i := 0 to Printer.Count - 1 do
-    if AnsiContainsText(Printer.Printers[i].Title, APrinterName) then
-      Exit(i);
-
-  Result := -1;
-end;
-{$EndIf}
 
 function TACBrDevice.DeduzirTipoPorta(const APorta: String): TACBrDeviceType;
 var
@@ -1236,23 +934,29 @@ begin
     Result := dtTCP
   else if (copy(UPorta, 1, 4) = 'RAW:') then
     Result := dtRawPrinter
+  else if (copy(UPorta, 1, 4) = 'BTH:') then
+    Result := dtBlueTooth
   else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
     Result := dtFile
-  else if {$IFDEF LINUX}((pos('/dev/', APorta) = 1) and (Pos('/lp', APorta) > 4)){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
+  else if {$IFDEF LINUX}
+           ((pos('/dev/', APorta) = 1) and (Pos('/lp', APorta) > 4))
+          {$ELSE}
+           (Pos('LPT', UPorta) = 1)
+          {$ENDIF} then
     Result := dtParallel
   else if (copy(UPorta, 1, 3) = 'COM') or
-       {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
+          {$IFDEF MSWINDOWS}
+           (copy(APorta,1,4) = '\\.\')
+          {$ELSE}
+           (pos('/dev/', APorta) = 1)
+          {$ENDIF} then
     Result := dtSerial
   else if (copy(UPorta, 1, 3) = 'DLL') then
     Result := dtHook
   else if (copy(UPorta, 1, 3) = 'USB') or
        (LowerCase(copy(APorta,1,7)) = '\\?\usb') then
     Result := dtUSB
-  {$IfDef FMX}
-  else if (GetLabelPrinterIndex(Aporta) > 0) then
-  {$Else}
-  else if (Printer.Printers.IndexOf(APorta) >= 0) then
-  {$EndIf}
+  else if (fsDeviceRaw.GetLabelPrinterIndex(APorta) > 0) then
     Result := dtRawPrinter
   else
   begin
@@ -1267,106 +971,39 @@ begin
 end;
 
 {$IfDef MSWINDOWS}
+procedure TACBrDevice.AcharPortasUSB(const AStringList: TStrings);
+begin
+  fsDeviceWinUSB.AcharPortasUSB(AStringList);
+end;
+
 procedure TACBrDevice.DetectarTipoEProtocoloDispositivoUSB(
   var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
-var
-  i, f: Integer;
-  uPorta, TipoPorta, DescPorta: String;
-  DispositivoUSB: TACBrUSBWinDevice;
-  Achou: Boolean;
 begin
   ProtocoloACBr := 0;
   if not (DeviceType in [dtSerial, dtUSB]) then
     Exit;
 
-  if (WinUSB.DeviceList.Count < 1) then
-    WinUSB.FindUSBPrinters;
-
-  if (WinUSB.DeviceList.Count < 1) then
-    Exit;
-
-  DispositivoUSB := Nil;
-  uPorta := UpperCase(Porta);
-  TipoPorta := copy(uPorta, 1, 3);
-  DescPorta := copy(uPorta, 5, Length(uPorta));
-
-  i := 0;
-  Achou := False;
-  while (not Achou) and (i < WinUSB.DeviceList.Count) do
-  begin
-    DispositivoUSB := WinUSB.DeviceList.Items[i];
-
-    if (TipoPorta = 'COM') then
-      Achou := (pos('('+TipoPorta+')', UpperCase(DispositivoUSB.FrendlyName)) > 0)
-    else if (TipoPorta = '\\?') then
-      Achou := (uPorta = UpperCase(copy(DispositivoUSB.DeviceInterface,1, Length(uPorta))))
-    else if (TipoPorta = 'USB') then
-      Achou := (DescPorta = UpperCase(copy(DispositivoUSB.DeviceName, 1, Length(DescPorta))));
-
-    Inc(i);
-  end;
-
-  if Achou then
-  begin
-    TipoHardware := DispositivoUSB.DeviceKind;
-    ProtocoloACBr := DispositivoUSB.ACBrProtocol;
-
-    if (DeviceType = dtUSB) then
-    begin
-      // Se dispositivo Usa COM Virtual, prefira ela...
-      i := pos('(COM',DispositivoUSB.FrendlyName);
-      if (i > 0) then
-      begin
-        f := PosEx(')', DispositivoUSB.FrendlyName, i+1);
-        if (f > 0) then
-          Porta := copy(DispositivoUSB.FrendlyName, i+1, f-i-1);
-      end;
-    end;
-  end;
+  fsDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(TipoHardware, ProtocoloACBr);
 end;
 {$EndIf}
 
-procedure TACBrDevice.SetTimeOut(const Value: Integer);
+procedure TACBrDevice.SetTimeOut(const AValue: Integer);
+var
+  NovoTimeOut: Integer;
 begin
-  if Value = fsTimeOut then
-     exit ;
+  NovoTimeOut := (max(AValue,1) * 1000);
+  if NovoTimeOut = fsTimeOutMilissegundos then
+    Exit ;
 
-  GravaLog('SetTimeOut('+IntToStr(Value)+')');
+  GravaLog('SetTimeOut('+IntToStr(AValue)+')');
 
-  if IsTCPPort then
-  begin
-    fsTimeOut := Value;
-    fsSocket.ConnectionTimeout := (TimeOut * 1000);
-  end
-  else
-  begin
-    if Value < 1 then
-      fsTimeOut := 1
-    else
-      fsTimeOut := Value ;
-
-    if IsSerialPort then
-      fsSerial.DeadlockTimeout := (TimeOut * 1000);
-
-    {$IfDef MSWINDOWS}
-    if IsUSBPort then
-      fsWinUSB.TimeOut := (TimeOut * 1000);
-    {$EndIf}
-  end;
+  fsTimeOutMilissegundos := NovoTimeOut;
+  fsDeviceAtivo.TimeOutMilissegundos := NovoTimeOut;
 end;
 
 function TACBrDevice.GetTimeOutMilissegundos: Integer;
 begin
-  if IsTCPPort then
-    Result := fsSocket.ConnectionTimeout
-  else if IsSerialPort then
-    Result := fsSerial.DeadlockTimeout
-  {$IfDef MSWINDOWS}
-  else if IsUSBPort then
-    Result := fsWinUSB.TimeOut
-  {$EndIf}
-  else
-    Result := fsTimeOut;
+  Result := fsTimeOutMilissegundos;
 end;
 
 procedure TACBrDevice.SetArqLOG(AValue: String);
@@ -1374,89 +1011,27 @@ begin
   if fsArqLOG = AValue then Exit;
   fsArqLOG := AValue;
   {$IfDef MSWINDOWS}
-  fsWinUSB.LogFile := AValue;
+  fsDeviceWinUSB.WinUSB.LogFile := AValue;
   {$EndIf}
 end;
 
 procedure TACBrDevice.SetTimeOutMilissegundos(AValue: Integer);
 begin
-  GravaLog('SetTimeOutMilissegundos('+IntToStr(AValue)+')');
+  if AValue = fsTimeOutMilissegundos then
+    Exit ;
 
-  if IsTCPPort then
-  begin
-    fsSocket.ConnectionTimeout := AValue;
-    fsTimeOut := Max(Trunc(AValue / 1000),0);
-  end
-  else if IsSerialPort then
-  begin
-    fsSerial.DeadlockTimeout := AValue;
-    fsTimeOut := Max(Trunc(AValue / 1000),1);
-  end
-  {$IfDef MSWINDOWS}
-  else if IsUSBPort then
-  begin
-    fsWinUSB.TimeOut := AValue;
-    fsTimeOut := Max(Trunc(AValue / 1000),1);
-  end
-  {$EndIf}
-  else
-    fsTimeOut := AValue;
+  GravaLog('SetTimeOutMilissegundos('+IntToStr(AValue)+')');
+  fsTimeOutMilissegundos := AValue;
+  fsDeviceAtivo.TimeOutMilissegundos := AValue;
 end;
 
-
-function TACBrDevice.EmLinha( lTimeOut : Integer) : Boolean;
-var TempoLimite : TDateTime ;
+function TACBrDevice.EmLinha(const ATimeOutSegundos: Integer): Boolean;
+var
+  NovoTimeOut: Integer;
 begin
-  Result := True;
-
-  GravaLog('EmLinha('+IntToStr(lTimeOut)+')');
-
-  case fsDeviceType of
-    dtFile:
-      begin
-        try
-          {$IFDEF ThreadEnviaLPT}
-          EnviaStringThread(#0);  { Tenta escrever algo (#0) na Porta/Arquivo }
-          {$ENDIF}
-          Result := true ;
-        except
-          Result := false ;
-        end ;
-      end;
-
-    dtSerial:
-      begin
-        Result := False;
-        if lTimeout < 1 then
-          lTimeOut := 1;
-
-        if fsSerial.InstanceActive then
-        begin
-          TempoLimite := IncSecond( now, lTimeOut);
-          while (not Result) and (Now < TempoLimite) do
-          begin
-            case HandShake of
-              hsRTS_CTS :
-                Result := fsSerial.CTS;
-              hsDTR_DSR :
-                Result := fsSerial.DSR;
-            else ;
-              Result := True;    { Nao há sinal de HandShake para verificar }
-            end;
-
-            if not Result then
-            begin
-              {$IFNDEF NOGUI}
-              if fProcessMessages then
-                Application.ProcessMessages ;  { para redesenhar a tela do programa }
-              {$ENDIF}
-              Sleep(10) ;
-            end;
-          end;
-        end;
-      end;
-  end;
-
+  GravaLog('EmLinha('+IntToStr(ATimeOutSegundos)+')');
+  NovoTimeOut := max(ATimeOutSegundos,1)*1000;
+  Result := fsDeviceAtivo.EmLinha(NovoTimeOut);
   GravaLog('  '+BoolToStr(Result, True));
 end;
 
@@ -1495,91 +1070,19 @@ begin
   Result := (fsDeviceType = dtUSB);
 end;
 
-procedure TACBrDevice.AcharPortasSeriais(const AStringList : TStrings ;
-   UltimaPorta : Integer) ;
-var
-   I     : Integer ;
-   BS    : TBlockSerial ;
-   UmaPorta : String ;
+procedure TACBrDevice.AcharPortasRAW(const AStringList: TStrings);
 begin
-   GravaLog('AcharPortasSeriais('+IntToStr(UltimaPorta)+')');
-   AStringList.Clear;
+  fsDeviceRaw.AcharPortasRAW(AStringList);
+end;
 
-   BS := TBlockSerial.Create;
-   try
-      For I := 1 to UltimaPorta do
-      begin
-        try
-           UmaPorta := 'COM'+IntToStr(I) ;
-
-           BS.Connect( UmaPorta );
-           if not (BS.LastError in [2,5,13]) then
-              AStringList.Add(UmaPorta) ;
-
-           BS.CloseSocket;
-        except
-        end ;
-      end ;
-   finally
-      BS.Free ;
-   end ;
+procedure TACBrDevice.AcharPortasSeriais(const AStringList : TStrings; UltimaPorta : Integer) ;
+begin
+  fsDeviceSerial.AcharPortasSeriais(AStringList, UltimaPorta);
 end ;
 
 function TACBrDevice.DeviceToString( OnlyException: Boolean): String;
-Var
-  sStop, sHandShake : String ;
 begin
-  Result := '' ;
-
-  if (not OnlyException) or (fsBaud <> 9600)  then
-     Result := Result + ' BAUD='+IntToStr(fsBaud) ;
-
-  if (not OnlyException) or (fsData <> 8) then
-     Result := Result + ' DATA='+IntToStr(fsData) ;
-
-  if (not OnlyException) or (fsParity <> 'N') then
-     Result := Result + ' PARITY='+fsParity ;
-
-  if (not OnlyException) or (fsStop <> 0) then
-  begin
-     if fsStop = 2 then
-        sStop := '2'
-     else if fsStop = 1 then
-        sStop := '1,5'
-     else
-        sStop := '1' ;
-
-     Result := Result + ' STOP='+sStop ;
-  end ;
-
-  if (not OnlyException) or (fsHandShake <> hsNenhum) then
-  begin
-     if fsHandShake = hsXON_XOFF then
-        sHandShake := 'XON/XOFF'
-     else if fsHandShake = hsDTR_DSR then
-        sHandShake := 'DTR/DSR'
-     else if fsHandShake = hsRTS_CTS then
-        sHandShake := 'RTS/CTS' ;
-
-     Result := Result +  ' HANDSHAKE='+sHandShake ;
-  end ;
-
-  if fsHardFlow then
-     Result := Result + ' HARDFLOW' ;
-
-  if fsSoftFlow then
-     Result := Result + ' SOFTFLOW' ;
-
-  if (not OnlyException) or (MaxBandwidth > 0) then
-     Result := Result + ' MAXBANDWIDTH='+IntToStr(MaxBandwidth) ;
-     
-  if (not OnlyException) or (SendBytesCount > 0) then
-     Result := Result + ' SENDBYTESCOUNT='+IntToStr(SendBytesCount) ;
-
-  if (not OnlyException) or (SendBytesInterval > 0) then
-     Result := Result + ' SENDBYTESINTERVAL='+IntToStr(SendBytesInterval) ;
-
-  Result := Trim(Result) ;
+  Result := fsDeviceSerial.ParametrosSerial(OnlyException) ;
   GravaLog('  DeviceToString: '+Result);
 end;
 
@@ -1609,651 +1112,155 @@ end;
 
 function TACBrDevice.GetParamsString: String;
 begin
-   Result := DeviceToString( True );
+  Result := fsDeviceSerial.ParamsString;
 end;
 
-function TACBrDevice.GetPrinterRawIndex: Integer;
-var
-  PrnName: String;
-  PrnIndex: Integer;
-
-  function RetornaNome(const ANome: string): string;
-  begin
-    Result := Copy(ANome, 3, Length(ANome));
-    Result := Copy(Result, pos('\', Result) + 1, Length(Result));
-  end;
-
-  function RetornaPorta: Integer;
-  {$IfDef MSWINDOWS}
-   var
-     I: Integer;
-     VName: String;
-  {$EndIf}
-  begin
-    {$IfDef FMX}
-    Result := GetLabelPrinterIndex(PrnName);
-    {$Else}
-    Result := Printer.Printers.IndexOf(PrnName);
-    {$EndIf}
-
-    {$IfDef MSWINDOWS}
-    if Result < 0 then
-    begin
-      for I := 0 to Pred(Printer{$IfNDef FMX}.Printers{$EndIf}.Count) do
-      begin
-        VName := Printer.Printers[I]{$IfDef FMX}.Title{$EndIf};
-        if pos('\\', Copy(VName, 1, 2)) > 0 then
-        begin
-          if SameText(PrnName, RetornaNome(VName)) then
-          begin
-            Result := I;
-            Break;
-          end;
-        end;
-      end;
-    end;
-    {$EndIf}
-  end;
-
+{$IfDef HAS_BLUETOOTH}
+function TACBrDevice.GetDeviceBlueTooth: TBluetooth;
 begin
-  GravaLog('GetPrinterRawIndex');
-
-  PrnName := Porta;
-  if (copy(UpperCase(PrnName), 1, 4) = 'RAW:') then
-    PrnName := copy(PrnName, 5, Length(PrnName)) ;
-
-  if (PrnName = '*') then
-  begin
-    {$IfDef FMX}
-    if Assigned(Printer.ActivePrinter) then
-    begin
-      PrnName := Printer.ActivePrinter.Title;
-      PrnIndex := RetornaPorta;
-    end
-    else
-    begin
-     PrnIndex := 0;
-     if (Printer.Count = 0) then
-       DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
-    end;
-    {$Else}
-    PrnIndex := Printer.PrinterIndex;
-    if (PrnIndex < 0) then
-    begin
-      if Printer.Printers.Count > 0 then
-        PrnIndex := 0
-      else
-        DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
-    end;
-    {$EndIf}
-  end
-  else
-  begin
-    PrnIndex := RetornaPorta;
-
-    if (PrnIndex < 0) then
-      DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
-  end;
-
-  Result := PrnIndex;
-  GravaLog('  '+IntToStr(Result));
+  Result := fsDeviceBlueTooth.BlueTooth;
 end;
 
-function TACBrDevice.GetPrinterFileName: String;
+procedure TACBrDevice.AcharPortasBlueTooth(const AStringList: TStrings);
 begin
-  Result := Porta;
-  if (copy(UpperCase(Result), 1, 5) = 'FILE:') then
-    Result := copy(Result, 6, Length(Result)) ;
-
-  GravaLog('GetPrinterFileName: '+Result);
+  fsDeviceBlueTooth.AcharPortasBlueTooth(AStringList);
 end;
+{$EndIf}
 
-procedure TACBrDevice.SetParamsString(const Value: String);
-Var S, Linha   : String ;
-  Function GetValue( LinhaParametros, Parametro : String ) : String ;
-    Var P   : Integer ;
-        Sub : String ;
-  begin
-    Result := '' ;
-    P := pos(Parametro,LinhaParametros) ;
-
-    if P > 0 then
-    begin
-      Sub := Trim(copy(LinhaParametros, P + Length(Parametro) ,200)) ;
-      if copy(Sub,1,1) = '=' then
-         Sub := Trim(copy(Sub,2,200)) ;
-
-      P := pos(' ',Sub) ;
-      if P = 0 then
-         P := Length(Sub) ;
-
-      Result := Trim(copy(Sub,1,P)) ;
-    end ;
-  end ;
+function TACBrDevice.GetDeviceSerial: TBlockSerial;
 begin
-  GravaLog('SetParamsString('+Value+')');
-  SetDefaultValues ;
-
-  Linha := Trim(UpperCase(Value)) ;
-
-  Baud := StrToIntDef(GetValue(Linha,'BAUD'),Baud) ;
-
-  S := GetValue(Linha,'PARITY') ;
-  if S <> '' then
-    if CharInSet(S[1], ['O','E','M','S','N']) then
-      fsParity := S[1] ;
-
-  Data := StrToIntDef(GetValue(Linha,'DATA'),Data) ;
-
-  S := GetValue(Linha,'STOP') ;
-  if S = '1' then
-    Stop := s1
-  else if S = '1,5' then
-    Stop := s1eMeio
-  else if S = '2' then
-    Stop := s2 ;
-
-  HardFlow := (pos('HARDFLOW',Linha) > 0) ;
-  SoftFlow := (pos('SOFTFLOW',Linha) > 0) ;
-
-  S := GetValue(Linha,'HANDSHAKE') ;
-  if S = 'XON/XOFF' then
-     HandShake := hsXON_XOFF
-  else if S = 'DTR/DSR' then
-     HandShake := hsDTR_DSR
-  else if S = 'RTS/CTS' then
-     HandShake := hsRTS_CTS ;
-
-  S := GetValue(Linha,'MAXBANDWIDTH') ;
-  MaxBandwidth := StrToIntDef(S,MaxBandwidth) ;
-
-  S := GetValue(Linha,'SENDBYTESCOUNT') ;
-  SendBytesCount := StrToIntDef(S,SendBytesCount) ;
-
-  S := GetValue(Linha,'SENDBYTESINTERVAL') ;
-  SendBytesInterval := StrToIntDef(S,SendBytesInterval) ;
+  Result := fsDeviceSerial.Serial;
 end;
 
+function TACBrDevice.GetSoftFlow: Boolean;
+begin
+  Result := fsDeviceSerial.SoftFlow;
+end;
+
+function TACBrDevice.GetTimeOut: Integer;
+begin
+  Result := Max(Trunc(fsTimeOutMilissegundos / 1000),1);
+end;
+
+procedure TACBrDevice.SetParamsString(const AValue: String);
+begin
+  fsDeviceSerial.ParamsString := AValue;
+end;
 
 procedure TACBrDevice.EnviaString( const AString: AnsiString);
 begin
-  GravaLog('EnviaString('+AString+')', True);
+  GravaLog('EnviaString'+AString+')', True);
 
-  case fsDeviceType of
-    dtSerial:
-      EnviaStringSerial(AString);
-    dtHook:
-      EnviaStringHook(AString);
-    dtTCP:
-      EnviaStringTCP(AString);
-    {$IfDef MSWINDOWS}
-    dtUSB:
-      EnviaStringWinUSB(AString);
-    {$EndIf}
-    dtRawPrinter:
-      EnviaStringRaw(AString);
-    else
-    begin
-      {$IFNDEF ThreadEnviaLPT}
-      EnviaStringArquivo(AString);
-      {$ELSE}
-      EnviaStringThread(AString);
-      {$ENDIF} ;
-    end ;
-  end;
+  fsDeviceAtivo.EnviaString(AString);
 end;
 
 procedure TACBrDevice.EnviaByte(const AByte: Byte);
 begin
   GravaLog('EnviaByte('+IntToStr(AByte)+')');
-  EnviaString(chr(AByte));
+  fsDeviceAtivo.EnviaByte(AByte);
 end;
 
-function TACBrDevice.LeString(ATimeOut: Integer; NumBytes: Integer;
-  const Terminador: AnsiString): String;
+function TACBrDevice.LeString(const ATimeOutMilissegundos: Integer;
+  NumBytes: Integer; const Terminador: AnsiString): AnsiString;
 var
-  Buffer: AnsiString;
-  Fim: TDateTime;
-  LenTer, LenBuf: Integer;
+  NovoTimeOut: Integer;
 begin
-  if TemArqLog then
-    GravaLog('LeString('+IntToStr(ATimeOut)+', '+IntToStr(NumBytes)+', '+Terminador +')', True);
+  if ATimeOutMilissegundos <= 0 then
+    NovoTimeOut := fsTimeOutMilissegundos
+  else
+    NovoTimeOut := ATimeOutMilissegundos;
 
-  Result := '';
-  LenTer := Length(Terminador);
-
-  if ATimeOut = 0 then
-    ATimeOut := Self.TimeOut;
-
-  case fsDeviceType of
-    dtTCP:
-      begin
-        if (NumBytes > 0) then
-          Result := fsSocket.RecvBufferStr( NumBytes, ATimeOut)
-        else if (LenTer > 0) then
-          Result := fsSocket.RecvTerminated( ATimeOut, Terminador)
-        else
-          Result := fsSocket.RecvPacket( ATimeOut );
-      end;
-
-    dtSerial:
-      begin
-        if (NumBytes > 0) then
-          Result := fsSerial.RecvBufferStr( NumBytes, ATimeOut)
-        else if (LenTer > 0) then
-          Result := fsSerial.RecvTerminated( ATimeOut, Terminador)
-        else
-          Result := fsSerial.RecvPacket( ATimeOut );
-      end;
-
-    {$IfDef MSWINDOWS}
-    dtUSB:
-      begin
-        if (NumBytes > 0) then
-          Result := fsWinUSB.ReceiveNumBytes( NumBytes, ATimeOut)
-        else if (LenTer > 0) then
-          Result := fsWinUSB.ReceiveTerminated( Terminador, ATimeOut)
-        else
-          Result := fsWinUSB.ReceivePacket( ATimeOut );
-      end;
-    {$EndIf}
-
-    dtHook:
-      begin
-        if Assigned( HookLeString ) then
-        begin
-          NumBytes := max(NumBytes,1);
-          Fim := IncMilliSecond( Now, ATimeOut );
-          repeat
-            Buffer := '';
-            HookLeString( NumBytes, ATimeOut, Buffer );
-            LenBuf := Length(Buffer);
-            if (LenTer > 0) and (LenBuf > 0) then
-            begin
-              if (RightStr(Buffer, LenTer) = Terminador) then
-              begin
-                SetLength(Buffer, (LenBuf-LenTer));
-                NumBytes := 0; // força saida
-              end;
-            end;
-
-            Result := Result + Buffer;
-          until (Length(Result) >= NumBytes) or (now > Fim) ;
-        end;
-      end;
-  end;
-
+  GravaLog('LeString('+IntToStr(NovoTimeOut)+', '+IntToStr(NumBytes)+', '+Terminador +')', True);
+  Result := fsDeviceAtivo.LeString(NovoTimeOut, NumBytes, Terminador);
   GravaLog('  '+Result, True);
 end;
 
-function TACBrDevice.LeByte(ATimeOut: Integer): Byte;
+function TACBrDevice.LeByte(const ATimeOutMilissegundos: Integer): Byte;
 Var
-  Buffer: AnsiString;
+  NovoTimeOut: Integer;
 begin
-  GravaLog('LeByte('+IntToStr(ATimeOut)+')');
-  Result := 0;
+  if ATimeOutMilissegundos <= 0 then
+    NovoTimeOut := fsTimeOutMilissegundos
+  else
+    NovoTimeOut := ATimeOutMilissegundos;
 
-  if ATimeOut = 0 then
-     ATimeOut := Self.TimeOut;
-
-  case fsDeviceType of
-    dtTCP:
-      Result := fsSocket.RecvByte(ATimeOut);
-
-    dtSerial:
-      Result := fsSerial.RecvByte(ATimeOut);
-
-    dtHook:
-      begin
-        if Assigned( HookLeString ) then
-        begin
-          Buffer := '';
-          HookLeString( 1, ATimeOut, Buffer );
-          if Length(Buffer) > 0 then
-            Result := Ord( Buffer[1] );
-        end;
-      end;
-  end;
-
+  GravaLog('LeByte('+IntToStr(NovoTimeOut)+')');
+  Result := fsDeviceAtivo.LeByte(NovoTimeOut);
   GravaLog('  '+IntToStr(Result));
 end;
 
 procedure TACBrDevice.Limpar;
 begin
   GravaLog('Limpar');
-  case fsDeviceType of
-    dtSerial:
-      fsSerial.Purge;
-    dtTCP:
-      fsSocket.Purge;
-  end;
+  fsDeviceAtivo.Limpar;
 end;
 
 function TACBrDevice.BytesParaLer: Integer;
 begin
-  case fsDeviceType of
-    dtSerial:
-      Result := fsSerial.WaitingDataEx;
-    dtTCP:
-      Result := fsSocket.WaitingDataEx;
-    else
-      Result := 0;
-  end;
+  Result := fsDeviceAtivo.BytesParaLer;
   GravaLog('BytesParaLer: '+IntToStr(Result));
 end;
 
-procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;
-Var
-  I, Max, BytesToSend, BytesSent, FailCount : Integer ;
-  Buffer: AnsiString;
+function TACBrDevice.GetBaud: Integer;
 begin
-  GravaLog('EnviaStringSerial('+AString+')', True);
+  Result := fsDeviceSerial.Baud;
+end;
 
-  I   := 1 ;
-  Max := Length(AString) ;
-  FailCount := 0;
-
-  while (I <= Max) and (FailCount < CFailCount) do
-  begin
-     BytesToSend := fsSendBytesCount ;
-     if BytesToSend = 0 then
-        BytesToSend := Max ;
-
-     GravaLog('  BytesToSend:'+IntToStr(BytesToSend));
-
-     Buffer := copy(AString, I, BytesToSend );
-     BytesToSend := min(Length(Buffer), BytesToSend);
-     BytesSent := fsSerial.SendBuffer(Pointer(Buffer), BytesToSend);
-
-     if BytesSent <= 0 then
-     begin
-       Inc( FailCount );
-       GravaLog('  FailCount:'+IntToStr(FailCount));
-     end
-     else
-       FailCount := 0;
-
-     if fsSendBytesInterval > 0 then
-     begin
-       GravaLog('  Sleep('+IntToStr(fsSendBytesInterval)+')');
-       Sleep( fsSendBytesInterval ) ;
-     end;
-
-     I := I + BytesSent ;
-  end ;
-
-  if FailCount >= CFailCount then
-    DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceEnviaStrFailCount), [Porta]));
-end ;
-
-procedure TACBrDevice.EnviaStringHook(const AString: AnsiString);
+function TACBrDevice.GetData: Integer;
 begin
-  if Assigned( HookEnviaString ) then
-  begin
-    GravaLog('EnviaStringHook('+AString+')', True);
-    HookEnviaString( AString );
-  end;
+   Result := fsDeviceSerial.Data;
+end;
+
+function TACBrDevice.GetDeviceTCP: TBlockSocket;
+begin
+  Result := fsDeviceTCP.Socket;
+end;
+
+{$IfDef MSWINDOWS}
+function TACBrDevice.GetDeviceWinUSB: TACBrUSBWinDeviceAPI;
+begin
+  Result := fsDeviceWinUSB.WinUSB;
+end;
+{$EndIf}
+
+function TACBrDevice.GetHandShake: TACBrHandShake;
+begin
+  Result := fsDeviceSerial.HandShake;
+end;
+
+function TACBrDevice.GetHardFlow: Boolean;
+begin
+  Result := fsDeviceSerial.HardFlow;
+end;
+
+function TACBrDevice.GetHookAtivar: TACBrDeviceHookAtivar;
+begin
+  Result := fsDeviceHook.HookAtivar;
+end;
+
+function TACBrDevice.GetHookDesativar: TACBrDeviceHookDesativar;
+begin
+ Result := fsDeviceHook.HookDesativar;
+end;
+
+function TACBrDevice.GetHookEnviaString: TACBrDeviceHookEnviaString;
+begin
+  Result := fsDeviceHook.HookEnviaString;
+end;
+
+function TACBrDevice.GetHookLeString: TACBrDeviceHookLeString;
+begin
+  Result := fsDeviceHook.HookLeString;
 end;
 
 function TACBrDevice.GetNomeDocumento: String;
 begin
-  if fsNomeDocumento = '' then
-     if not (csDesigning in ComponentState) then
-        fsNomeDocumento := ClassName;
+  if (fsNomeDocumento = '') then
+    if not (csDesigning in ComponentState) then
+      fsNomeDocumento := ClassName;
 
   Result := fsNomeDocumento;
 end;
-
-procedure TACBrDevice.EnviaStringTCP(const AString: AnsiString);
-Var
-  I, Max, NBytes : Integer ;
-begin
-  GravaLog('EnviaStringTCP('+AString+')', True);
-
-  I   := 1 ;
-  Max := Length(AString) ;
-  NBytes := fsSendBytesCount ;
-  if NBytes = 0 then
-    NBytes := Max ;
-
-  while I <= Max do
-  begin
-    GravaLog('  BytesToSend:'+IntToStr(NBytes));
-
-    fsSocket.SendString( copy(AString, I, NBytes ) ) ;    { Envia por TCP }
-    if fsSendBytesInterval > 0 then
-    begin
-      GravaLog('  Sleep('+IntToStr(fsSendBytesInterval)+')');
-      Sleep( fsSendBytesInterval ) ;
-    end;
-
-    I := I + NBytes ;
-  end ;
-end;
-
-{$IfDef MSWINDOWS}
-procedure TACBrDevice.EnviaStringWinUSB(const AString: AnsiString);
-Var
-  I, Max, NBytes : Integer ;
-begin
-  GravaLog('EnviaStringWinUSB('+AString+')', True);
-
-  I   := 1 ;
-  Max := Length(AString) ;
-  NBytes := fsSendBytesCount ;
-  if NBytes = 0 then
-    NBytes := Max ;
-
-  while I <= Max do
-  begin
-    GravaLog('  BytesToSend:'+IntToStr(NBytes));
-
-    fsWinUSB.SendData( copy(AString, I, NBytes ));
-    if (fsSendBytesInterval > 0) then
-    begin
-      GravaLog('  Sleep('+IntToStr(fsSendBytesInterval)+')');
-      Sleep( fsSendBytesInterval ) ;
-    end;
-
-    I := I + NBytes ;
-  end ;
-end;
-{$EndIf}
-
-procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
-var
-  PrnIndex: Integer;
-  {$IfNDef FPC}
-   {$IfDef MSWINDOWS}
-   PrnName: String;
-   HandlePrn: THandle;
-   N: DWORD;
-   DocName: String;
-    DocInfo1: TDocInfo1;
-   {$Else}
-    F: TextFile;
-   {$EndIf}
-  {$Else}
-   Written: integer;
-   OldRawMode: Boolean;
-  {$EndIf}
-begin
-  GravaLog('EnviaStringRaw('+AString+')', True);
-  PrnIndex := GetPrinterRawIndex;
-
-  {$IfDef FPC}
-   Printer.PrinterIndex := PrnIndex;
-   Printer.Title := NomeDocumento;
-
-   OldRawMode := Printer.RawMode;
-   Printer.RawMode := True;
-   try
-     Printer.BeginDoc;
-     Written := 0;
-     Printer.Write(AString[1], Length(AString), Written);
-     Printer.EndDoc;
-   finally
-     Printer.RawMode := OldRawMode;
-   end;
-  {$Else}
-   {$IfDef MSWINDOWS}
-    PrnName := Printer.Printers[PrnIndex]{$IfDef FMX}.Title{$EndIf};
-    if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
-      DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
-
-    with DocInfo1 do
-    begin
-      DocName  := NomeDocumento;
-      pDocName := PChar(DocName);
-      pOutputFile := nil;
-      pDataType := 'RAW';
-    end;
-
-    StartDocPrinter(HandlePrn, 1, @DocInfo1);
-    WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
-    EndPagePrinter(HandlePrn);
-    EndDocPrinter(HandlePrn);
-    ClosePrinter(HandlePrn);
-   {$Else}
-    {$IfDef FMX}
-     if (PrnIndex < Printer.Count) then
-      Printer.ActivePrinter := Printer.Printers[PrnIndex];
-    {$EndIf}
-    AssignPrn(F);
-    try
-      ReWrite(F);
-      Write(F,AString);
-    finally
-      CloseFile(F);
-    end;
-   {$EndIf}
-  {$EndIf}
-end;
-
-procedure TACBrDevice.EnviaStringArquivo( const AString: AnsiString);
-Var
-  I, Max, NBytes: Integer ;
-  NomeArq: String;
-  {$IFDEF Device_Stream}
-    CreateModeFlag: Integer;
-    FS: TFileStream ;
-    Buffer: AnsiString ;
-  {$ELSE}
-    ArqPrn: TextFile ;
-  {$ENDIF}
-begin
-  GravaLog('EnviaStringArquivo('+AString+')', True);
-
-  I   := 1 ;
-  Max := Length(AString) ;
-  NBytes := fsSendBytesCount ;
-  if NBytes = 0 then
-     NBytes := Max ;
-
-  NomeArq := GetPrinterFileName;
-
-  {$IFDEF Device_Stream}
-    If IsTXTFilePort and FileExists(NomeArq) then
-      CreateModeFlag := fmOpenReadWrite
-    else
-      CreateModeFlag := fmCreate;
-
-    CreateModeFlag := CreateModeFlag or fmShareDenyWrite;
-    // Tentando abrir o arquivo
-    FS := TFileStream.Create( NomeArq, CreateModeFlag );
-
-    try
-       FS.Seek(0, soFromEnd);  // vai para EOF
-
-       while I <= Max do
-       begin
-          GravaLog('  BytesToSend:'+IntToStr(NBytes));
-          Buffer := copy(AString, I, NBytes ) ;
-
-          FS.Write(Pointer(Buffer)^,Length(Buffer));
-
-          if fsSendBytesInterval > 0 then
-          begin
-             GravaLog('  Sleep('+IntToStr(fsSendBytesInterval)+')');
-             Sleep( fsSendBytesInterval ) ;
-          end;
-
-          I := I + NBytes ;
-       end ;
-    finally
-       FS.Free ;
-    end;
-  {$ELSE}
-    AssignFile( ArqPrn, NomeArq );
-    try
-       if IsTXTFilePort and FileExists(NomeArq) then
-          Append( ArqPrn )
-       else
-          Rewrite( ArqPrn ) ;
-
-       while I <= Max do
-       begin
-          Write( ArqPrn, copy(AString, I, NBytes ) ) ;
-          if fsSendBytesInterval > 0 then
-             Sleep( fsSendBytesInterval ) ;
-          I := I + NBytes ;
-       end ;
-
-       Flush( ArqPrn ) ;
-    finally
-       {$I-}
-       {$IFNDEF FPC}System.{$ENDIF}CloseFile( ArqPrn ) ;
-       {$I+}
-    end ;
-  {$ENDIF}
-end ;
-
-{$IFDEF ThreadEnviaLPT}
-{ A ideia dessa Thread é testar se os dados estão sendo gravados com sucesso na
-  Porta Paralela (ou arquivo). É criada uma Thread para "gravar" os dados em
-  segundo plano, enquanto o programa monitora se as linhas estão sendo enviadas.
-  Caso a Thread nao consiga enviar uma linha dentro do Timeout definido a Thread
-  é cancelada e é gerado um TIMEOUT. Isso evita o "travamento" do programa
-  quando a porta ou arquivo não estão prontos para a gravação com o comando
-  Write() }
-procedure TACBrDevice.EnviaStringThread(AString: AnsiString);
-Var IsTimeOut  : Boolean ;
-    TempoFinal : TDateTime ;
-    UltimoBytesSent : Integer ;
-    ThreadEnviaLPT  : TACBrThreadEnviaLPT ;
-begin
-  { Criando Thread para monitorar o envio de dados a Porta Paralela }
-  IsTimeOut       := false ;
-  UltimoBytesSent := -1 ;
-  TempoFinal      := -1 ;
-  ThreadEnviaLPT  := TACBrThreadEnviaLPT.Create( Self, AString ) ;
-  try
-     while not ThreadEnviaLPT.Terminated do
-     begin
-        if UltimoBytesSent <> ThreadEnviaLPT.BytesSent then
-        begin
-           TempoFinal := IncSecond(now,TimeOut) ;
-           UltimoBytesSent := ThreadEnviaLPT.BytesSent ;
-        end ;
-
-        {$IFNDEF NOGUI}
-          if fProcessMessages then
-             Application.ProcessMessages ;
-        {$ENDIF}
-        IsTimeOut := (now > TempoFinal) ; {Verifica se estourou o tempo TIMEOUT}
-        if IsTimeOut then
-           Break ;
-
-        sleep(200) ;
-     end ;
-  finally
-     ThreadEnviaLPT.Terminate ;
-
-     if IsTimeOut then
-        DoException( Exception.Create( Format(ACBrStr(cACBrDeviceEnviaStrThreadException), [ Porta ] )));
-  end ;
-end;
-{$ENDIF}
 
 procedure TACBrDevice.ImprimePos(const Linha, Coluna : Integer;
   const AString: AnsiString);
@@ -2295,44 +1302,6 @@ procedure TACBrDevice.Eject;
 begin
   EnviaString( FF );
   fsPosImp.X := 0 ;
-end;
-
-{---------------------------- TACBrThreadEnviaLPT -----------------------------}
-constructor TACBrThreadEnviaLPT.Create(AOwner : TObject; const AString: String ) ;
-begin
-  if not (AOwner is TACBrDevice) then
-     raise Exception.Create(ACBrStr('Uso Inválido da TACBrThreadEnviaLPT'));
-
-  inherited Create( false ) ; { Rodar Imediatemanete }
-  FreeOnTerminate := true ;
-
-  fsOwner        := AOwner  ;
-  fsTextoAEnviar := AString ;
-end;
-
-procedure TACBrThreadEnviaLPT.Execute;
-var
-  I, MaxLen, BufferLen : Integer ;
-begin
-  if fsTextoAEnviar <> '' then
-  begin
-     fsBytesSent := 0 ;
-     I           := 1 ;
-     MaxLen      := Length( fsTextoAEnviar ) ;
-     BufferLen   := 256 ;
-
-     with TACBrDevice(fsOwner) do
-     begin
-        while (I <= MaxLen) and (not Terminated) do
-        begin
-           EnviaStringArquivo( copy( fsTextoAEnviar, I, BufferLen ) );
-           fsBytesSent := fsBytesSent + BufferLen ;
-           I := I + BufferLen ;
-        end ;
-     end ;
-  end ;
-
-  Terminate ;
 end;
 
 end.

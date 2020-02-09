@@ -3,16 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Fabio Farias                           }
-{                                       Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo:  Fabio Farias                                   }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -51,16 +47,18 @@ uses
   ACBrDevice, ACBrBase, ACBrBALClass,  {Units da ACBr}
   SysUtils, Classes,
   {$IFNDEF NOGUI}
-    {$IFDEF VisualCLX}
+    {$IF DEFINED(VisualCLX)}
       QExtCtrls,
-    {$ELSE}
+    {$ElseIf DEFINED(FMX)}
+      FMX.Types,
+    {$Else}
       ExtCtrls,
-    {$ENDIF}
+    {$IfEnd}
   {$ENDIF}
   {$IFDEF COMPILER6_UP}
     Types
   {$ELSE}
-    Windows
+    Windows, ACBrD5
   {$ENDIF};
 
 type

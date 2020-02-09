@@ -110,8 +110,8 @@ begin
     Ini.WriteString('Email', 'Pass', edtPassword.text);
     Ini.WriteBool('Email', 'TLS', chkTLS.Checked);
     Ini.WriteBool('Email', 'SSL', chkSSL.Checked);
-    Ini.ReadInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
-    Ini.ReadInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
+    Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
+    Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
   finally
     Ini.Free;
   end;

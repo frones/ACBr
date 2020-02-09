@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 270
   Top = 172
+  Width = 485
+  Height = 375
   ActiveControl = btnConectar
   Caption = 'Form1'
-  ClientHeight = 336
-  ClientWidth = 452
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -222,6 +222,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 0
       Text = 'Nenhuma'
@@ -235,6 +236,7 @@ object Form1: TForm1
       Top = 65
       Width = 145
       Height = 21
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 1
       Text = 'COM1'
@@ -254,6 +256,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 6
       TabOrder = 2
       Text = '9600'
@@ -277,6 +280,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 3
       TabOrder = 3
       Text = '8'
@@ -292,6 +296,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 6
       Text = 'Nenhum'
@@ -307,6 +312,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 4
       Text = 'none'
@@ -323,6 +329,7 @@ object Form1: TForm1
       Width = 145
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 5
       Text = 's1'

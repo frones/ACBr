@@ -68,7 +68,8 @@ implementation
 {$R *.lfm}
 
 Uses
-  typinfo, ACBrUtil ;
+  typinfo,
+  ACBrUtil, ACBrDeviceSerial;
 
 function TForm1.Converte(cmd: String): String;
 var A : Integer ;

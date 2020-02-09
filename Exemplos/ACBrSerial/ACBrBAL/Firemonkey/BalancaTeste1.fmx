@@ -1,0 +1,367 @@
+object Form1: TForm1
+  Left = 270
+  Top = 172
+  ActiveControl = btnConectar
+  Caption = 'Form1'
+  ClientHeight = 375
+  ClientWidth = 485
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  Left = 270
+  Top = 172
+  DesignerMasterStyle = 0
+  object Label2: TLabel
+    AutoSize = True
+    Position.X = 208.000000000000000000
+    Position.Y = 135.000000000000000000
+    Size.Width = 86.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Ultima Resposta'
+  end
+  object Label3: TLabel
+    AutoSize = True
+    Position.X = 208.000000000000000000
+    Position.Y = 90.000000000000000000
+    Size.Width = 92.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Ultimo Peso Lido:'
+  end
+  object Label9: TLabel
+    AutoSize = True
+    Position.X = 208.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 46.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'TimeOut'
+  end
+  object Label10: TLabel
+    AutoSize = True
+    Position.X = 208.000000000000000000
+    Position.Y = 188.000000000000000000
+    Size.Width = 59.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Mensagem'
+  end
+  object Label12: TLabel
+    AutoSize = True
+    Position.X = 297.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 44.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'Arq.Log:'
+  end
+  object SbArqLog: TSpeedButton
+    Position.X = 417.000000000000000000
+    Position.Y = 304.000000000000000000
+    Size.Width = 24.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = '...'
+    TextSettings.WordWrap = True
+    OnClick = SbArqLogClick
+  end
+  object btnConectar: TButton
+    Position.X = 203.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Ativar'
+    OnClick = btnConectarClick
+  end
+  object btnDesconectar: TButton
+    Enabled = False
+    Position.X = 331.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Desativar'
+    OnClick = btnDesconectarClick
+  end
+  object btnLerPeso: TButton
+    Enabled = False
+    Position.X = 256.000000000000000000
+    Position.Y = 56.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Ler Peso'
+    OnClick = btnLerPesoClick
+  end
+  object sttPeso: TLabel
+    StyledSettings = []
+    Position.X = 208.000000000000000000
+    Position.Y = 105.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 24.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'MS Sans Serif'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.WordWrap = False
+    TabOrder = 7
+  end
+  object sttResposta: TLabel
+    Position.X = 208.000000000000000000
+    Position.Y = 152.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    TabOrder = 8
+  end
+  object edtTimeOut: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Text = '2000'
+    Position.X = 208.000000000000000000
+    Position.Y = 304.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    OnKeyDown = edtTimeOutKeyDown
+  end
+  object chbMonitorar: TCheckBox
+    Position.X = 208.000000000000000000
+    Position.Y = 259.000000000000000000
+    Size.Width = 126.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Monitorar a Balan'#231'a'
+    OnClick = chbMonitorarClick
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 208.000000000000000000
+    Position.Y = 208.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 42.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Viewport.Width = 229.000000000000000000
+    Viewport.Height = 38.000000000000000000
+  end
+  object Panel1: TPanel
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 321.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    object Label1: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 41.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Balanca'
+    end
+    object Label4: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 49.000000000000000000
+      Size.Width = 60.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Porta Serial'
+    end
+    object Label5: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 92.000000000000000000
+      Size.Width = 51.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Baud rate'
+    end
+    object Label6: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 137.000000000000000000
+      Size.Width = 47.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Data Bits'
+    end
+    object Label7: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 181.000000000000000000
+      Size.Width = 30.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Parity'
+    end
+    object Label8: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 271.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Handshaking'
+    end
+    object Label11: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 224.000000000000000000
+      Size.Width = 47.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Stop Bits'
+    end
+    object cmbBalanca: TComboBox
+      Items.Strings = (
+        'Nenhuma'
+        'Filizola'
+        'Toledo')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 22.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+    object cmbPortaSerial: TComboBox
+      Items.Strings = (
+        'COM1'
+        'COM2'
+        'COM3'
+        'COM4'
+        'COM5'
+        'COM6'
+        'COM7'
+        'COM8')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 65.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+    end
+    object cmbBaudRate: TComboBox
+      Items.Strings = (
+        '110'
+        '300'
+        '600'
+        '1200'
+        '2400'
+        '4800'
+        '9600'
+        '14400'
+        '19200'
+        '38400'
+        '56000'
+        '57600')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 110.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+    end
+    object cmbDataBits: TComboBox
+      Items.Strings = (
+        '5'
+        '6'
+        '7'
+        '8')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 153.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+    end
+    object cmbHandShaking: TComboBox
+      Items.Strings = (
+        'Nenhum'
+        'XON/XOFF'
+        'RTS/CTS'
+        'DTR/DSR')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 289.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+    end
+    object cmbParity: TComboBox
+      Items.Strings = (
+        'none'
+        'odd'
+        'even'
+        'mark'
+        'space')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 198.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+    end
+    object cmbStopBits: TComboBox
+      Items.Strings = (
+        's1'
+        's1,5'
+        's2'
+        '')
+      ItemHeight = 13.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 242.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+    end
+  end
+  object edLog: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 9
+    Text = 'BalLog.txt'
+    Position.X = 294.000000000000000000
+    Position.Y = 304.000000000000000000
+    Size.Width = 122.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ACBrBAL1: TACBrBAL
+    Porta = 'COM1'
+    OnLePeso = ACBrBAL1LePeso
+    Left = 416
+    Top = 56
+  end
+end

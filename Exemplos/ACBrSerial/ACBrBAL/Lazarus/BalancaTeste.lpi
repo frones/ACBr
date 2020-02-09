@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -13,27 +13,26 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <Language Value=""/>
       <CharSet Value=""/>
-      <StringTable ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="default" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
-      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
-      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
@@ -43,12 +42,11 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="50">
       <Unit0>
         <Filename Value="BalancaTeste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="BalancaTeste"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="46"/>
       </Unit0>
       <Unit1>
         <Filename Value="balancateste1.pas"/>
@@ -58,95 +56,387 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="BalancaTeste1"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="145"/>
-        <CursorPos X="44" Y="156"/>
-        <UsageCount Value="23"/>
+        <TopLine Value="42"/>
+        <CursorPos X="29" Y="72"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <UnitName Value="ACBrBAL"/>
-        <EditorIndex Value="1"/>
-        <WindowIndex Value="0"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="21" Y="95"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
-        <UnitName Value="ACBrBALClass"/>
-        <EditorIndex Value="2"/>
-        <WindowIndex Value="0"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
-        <UnitName Value="ACBrTEFDCliSiTef"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="34"/>
         <CursorPos X="48" Y="38"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBr_TEFD-change-log.txt"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="41"/>
         <CursorPos X="30" Y="46"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
-        <UnitName Value="ACBrTEFDClass"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="49"/>
         <CursorPos X="34" Y="63"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1219"/>
+        <CursorPos X="3" Y="1218"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrSerial-change-log.txt"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="32"/>
+        <CursorPos X="38" Y="56"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="129"/>
+        <CursorPos X="89" Y="138"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="106"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\synaser.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1059"/>
+        <CursorPos X="3" Y="1063"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALDigitron.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="24" Y="59"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="73"/>
+        <CursorPos X="2" Y="96"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALLucasTec.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="54"/>
+        <CursorPos X="24" Y="73"/>
+        <UsageCount Value="10"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALMagellan.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="54"/>
+        <CursorPos X="3" Y="80"/>
+        <UsageCount Value="11"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALMagna.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos X="59" Y="62"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="60"/>
+        <CursorPos X="3" Y="82"/>
+        <UsageCount Value="13"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo2180.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="10" Y="75"/>
+        <UsageCount Value="13"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos X="3" Y="75"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="112"/>
+        <CursorPos X="102" Y="131"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrCHQPerto.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="224"/>
+        <CursorPos X="65" Y="232"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="5427"/>
+        <CursorPos X="25" Y="5438"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECFBematech.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="910"/>
+        <CursorPos X="15" Y="918"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1462"/>
+        <CursorPos X="24" Y="1470"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECFDataRegis.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="426"/>
+        <CursorPos X="22" Y="439"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECFEpson.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1561"/>
+        <CursorPos X="21" Y="1570"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrCHQUrano.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="123"/>
+        <CursorPos X="20" Y="133"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrCHQSotomaq.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="126"/>
+        <CursorPos X="20" Y="137"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="169"/>
+        <CursorPos X="24" Y="175"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="129"/>
+        <CursorPos X="27" Y="140"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDIS.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="386"/>
+        <CursorPos X="50" Y="394"/>
+        <UsageCount Value="10"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDISGertecSerial.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="77"/>
+        <CursorPos X="25" Y="88"/>
+        <UsageCount Value="10"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="674"/>
+        <CursorPos X="14" Y="681"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrLCB.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="408"/>
+        <CursorPos X="30" Y="421"/>
+        <UsageCount Value="10"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1201"/>
+        <CursorPos X="25" Y="1209"/>
+        <UsageCount Value="10"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="205"/>
+        <CursorPos X="12" Y="213"/>
+        <UsageCount Value="10"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrTER.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="274"/>
+        <CursorPos X="31" Y="283"/>
+        <UsageCount Value="10"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrTERWilbor.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="96"/>
+        <CursorPos X="33" Y="101"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="38"/>
+        <CursorPos X="25" Y="44"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="1688"/>
+        <CursorPos X="3" Y="1697"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALAFTS.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="3" Y="71"/>
+        <UsageCount Value="10"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALSaturno.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="58"/>
+        <CursorPos X="14" Y="68"/>
+        <UsageCount Value="15"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo9091_8530_8540.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="48"/>
+        <CursorPos X="11" Y="67"/>
+        <UsageCount Value="10"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALRinnert.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="50"/>
+        <CursorPos X="3" Y="75"/>
+        <UsageCount Value="10"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALMuller.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="6" Y="66"/>
+        <UsageCount Value="10"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo2090.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="3" Y="65"/>
+        <UsageCount Value="10"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALLibratek.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="54"/>
+        <CursorPos X="11" Y="71"/>
+        <UsageCount Value="10"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALMicheletti.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="49"/>
+        <CursorPos X="23" Y="62"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALAlfa.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="3" Y="61"/>
+        <UsageCount Value="10"/>
+      </Unit49>
     </Units>
     <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
-        <Filename Value="balancateste1.pas"/>
-        <Caret Line="119" Column="3" TopLine="117"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="149" Column="29" TopLine="140"/>
       </Position1>
       <Position2>
-        <Filename Value="balancateste1.pas"/>
-        <Caret Line="9" Column="40" TopLine="1"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
+        <Caret Line="109" Column="37" TopLine="97"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="50" Column="35" TopLine="40"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
+        <Caret Line="136" Column="30" TopLine="113"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="59" Column="15" TopLine="43"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <Caret Line="243" Column="10" TopLine="225"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="187" Column="16" TopLine="142"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="138" Column="89" TopLine="129"/>
       </Position5>
       <Position6>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
+        <Caret Line="131" Column="102" TopLine="112"/>
       </Position6>
       <Position7>
         <Filename Value="balancateste1.pas"/>
-        <Caret Line="3" Column="17" TopLine="1"/>
+        <Caret Line="89" Column="31" TopLine="80"/>
       </Position7>
       <Position8>
         <Filename Value="balancateste1.pas"/>
-        <Caret Line="171" Column="63" TopLine="159"/>
       </Position8>
       <Position9>
         <Filename Value="balancateste1.pas"/>
-        <Caret Line="172" Column="7" TopLine="159"/>
+        <Caret Line="8" Column="5"/>
       </Position9>
     </JumpHistory>
   </ProjectOptions>
@@ -164,8 +454,7 @@
     </Parsing>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
-        <StripSymbols Value="True"/>
+        <UseHeaptrc Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
       <Options>
@@ -174,19 +463,33 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="2">
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo.pas"/>
+        <Line Value="108"/>
+      </Item1>
+    </BreakPoints>
+    <Exceptions Count="5">
       <Item1>
         <Name Value="ECodetoolError"/>
       </Item1>
       <Item2>
         <Name Value="EFOpenError"/>
       </Item2>
+      <Item3>
+        <Name Value="ESynapseError"/>
+      </Item3>
+      <Item4>
+        <Name Value="EConvertError"/>
+      </Item4>
+      <Item5>
+        <Name Value="ESynaSerError"/>
+      </Item5>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>

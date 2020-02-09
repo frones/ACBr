@@ -2,9 +2,54 @@ unit BalancaTeste1;
 
 interface
 
+//** Converted with Mida 600     http://www.midaconverter.com - PROJETO.ACBR
+
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, ExtCtrls, ACBrDevice, ACBrBAL, ACBrBase;
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  System.IniFiles,
+  Data.DB,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Dialogs,
+  FMX.Objects,
+  FMX.Menus,
+  FMX.Grid,
+  FMX.ExtCtrls,
+  FMX.ListBox,
+  FMX.TreeView,
+  FMX.Memo,
+  FMX.TabControl,
+  FMX.Layouts,
+  FMX.Edit,
+  FMX.Platform,
+  FMX.Bind.DBEngExt,
+  FMX.Bind.Editors,
+  FMX.Bind.DBLinks,
+  FMX.Bind.Navigator,
+  Data.Bind.EngExt,
+  Data.Bind.Components,
+  Data.Bind.DBScope,
+  Data.Bind.DBLinks,
+  Datasnap.DBClient,
+  Fmx.Bind.Grid,
+  System.Rtti,
+  System.Bindings.Outputs,
+  Data.Bind.Grid,
+  Fmx.StdCtrls,
+  FMX.Header,
+  FMX.Graphics, ACBrBase, ACBrBAL, FMX.ScrollBox, FMX.Controls.Presentation;
+
+//**   Original VCL Uses section : 
+
+
+//**   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+//**   Buttons, ExtCtrls, ACBrDevice, ACBrBAL, ACBrBase;
+
 
 type
 
@@ -18,8 +63,8 @@ type
     edLog: TEdit;
     Label12: TLabel;
     SbArqLog: TSpeedButton;
-    sttPeso: TStaticText;
-    sttResposta: TStaticText;
+    sttPeso: TLabel;
+    sttResposta: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     edtTimeOut: TEdit;
@@ -46,11 +91,12 @@ type
     procedure btnLerPesoClick(Sender: TObject);
     procedure btnDesconectarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure SbArqLogClick(Sender: TObject);
-    procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure edtTimeOutKeyDown(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
+    procedure ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
   private
     { private declarations }
     Function Converte( cmd : String) : String;
@@ -63,7 +109,7 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.FMX}
 
 Uses
   typinfo,
@@ -85,11 +131,19 @@ begin
   end ;
 end;
 
-procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: String);
-var valid : integer;
+procedure TForm1.edtTimeOutKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
 begin
-   sttPeso.Caption     := formatFloat('##0.000', Peso );
-   sttResposta.Caption := Converte( Resposta ) ;
+  if not (KeyChar in ['0'..'9',#13,#8]) then
+     KeyChar := #0 ;
+end;
+
+procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
+var
+  valid : integer;
+begin
+   sttPeso.Text      := formatFloat('##0.000', Peso );
+   sttResposta.Text  := Converte( Resposta ) ;
 
    if Peso > 0 then
       Memo1.Lines.Text := 'Leitura OK !'
@@ -118,9 +172,9 @@ begin
    ACBrBAL1.Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex );
    ACBrBAL1.Device.Parity    := TACBrSerialParity( cmbParity.ItemIndex );
    ACBrBAL1.Device.Stop      := TACBrSerialStop( cmbStopBits.ItemIndex );
-   ACBrBAL1.Device.Data      := StrToInt( cmbDataBits.text );
-   ACBrBAL1.Device.Baud      := StrToInt( cmbBaudRate.Text );
-   ACBrBAL1.Device.Porta     := cmbPortaSerial.Text;
+   ACBrBAL1.Device.Data      := StrToInt( cmbDataBits.Selected.Text );
+   ACBrBAL1.Device.Baud      := StrToInt( cmbBaudRate.Selected.Text );
+   ACBrBAL1.Device.Porta     := cmbPortaSerial.Selected.Text;
    ACBrBAL1.ArqLOG           := edLog.Text;
 
    // Conecta com a balança
@@ -155,15 +209,9 @@ begin
 end;
 
 
-procedure TForm1.edtTimeOutKeyPress(Sender: TObject; var Key: Char);
-begin
-  if not (Key in ['0'..'9',#13,#8]) then
-     Key := #0 ;
-end;
-
 procedure TForm1.chbMonitorarClick(Sender: TObject);
 begin
-   ACBrBAL1.MonitorarBalanca := chbMonitorar.Checked ;
+   ACBrBAL1.MonitorarBalanca := chbMonitorar.IsChecked  ;
 end;
 
 procedure TForm1.FormCreate(Sender : TObject) ;
@@ -178,7 +226,7 @@ end;
 
 procedure TForm1.SbArqLogClick(Sender: TObject);
 begin
-  OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
+  OpenURL( ExtractFilePath( ParamStr(0) ) + edLog.Text);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);

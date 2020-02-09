@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 360
+  Left = 352
   Height = 449
-  Top = 186
+  Top = 185
   Width = 691
   ActiveControl = PageControl1
   Caption = 'Teste de Impressora Fiscal'
@@ -17,7 +17,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.6.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
@@ -2301,7 +2301,6 @@ object Form1: TForm1
               Height = 21
               Top = 62
               Width = 64
-              Increment = 1
               MaxValue = 9999
               MinValue = 0
               TabOrder = 4
@@ -2312,7 +2311,6 @@ object Form1: TForm1
               Height = 21
               Top = 62
               Width = 64
-              Increment = 1
               MaxValue = 9999
               MinValue = 0
               TabOrder = 5
@@ -2323,7 +2321,6 @@ object Form1: TForm1
               Height = 21
               Top = 62
               Width = 64
-              Increment = 1
               MaxValue = 9999
               MinValue = 0
               TabOrder = 6
@@ -2334,7 +2331,6 @@ object Form1: TForm1
               Height = 21
               Top = 14
               Width = 64
-              Increment = 1
               MaxValue = 9999
               MinValue = 0
               TabOrder = 7
@@ -4923,11 +4919,18 @@ object Form1: TForm1
     top = 368
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 4
     MargemSuperior = 2
     MargemEsquerda = 2
     MargemDireita = 2
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -4935,21 +4938,30 @@ object Form1: TForm1
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrSAT = ACBrSAT1
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    FormularioContinuo = True
     left = 336
     top = 368
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     left = 368
     top = 368
@@ -4989,10 +5001,10 @@ object Form1: TForm1
     top = 370
   end
   object ACBrNFe1: TACBrNFe
-    Configuracoes.Geral.SSLLib = libCapicom
-    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLLib = libCustom
+    Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpWinINet
-    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve200
@@ -5001,16 +5013,24 @@ object Form1: TForm1
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeESCPOS1
     left = 456
     top = 368
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     PathPDF = 'C:\lazarus\'
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -5019,21 +5039,32 @@ object Form1: TForm1
     ACBrNFe = ACBrNFe1
     TipoDANFE = tiSemGeracao
     ImprimeDescAcrescItem = False
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     left = 520
     top = 368
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     TipoDANFE = tiSemGeracao
+    FormularioContinuo = True
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
     left = 552
     top = 368
   end

@@ -38,7 +38,7 @@ interface
 uses
   {$IFDEF Delphi6_UP} Types, Variants, {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ACBrDevice ;
+  Dialogs, StdCtrls, Buttons, ACBrDevice, ACBrDeviceSerial ;
 
 type
   TfrConfiguraSerial = class(TForm)

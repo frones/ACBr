@@ -1,10 +1,11 @@
 object Form1: TForm1
-  Left = 382
-  Top = 218
+  Left = 401
+  Top = 220
   Width = 810
   Height = 493
   VertScrollBar.Range = 59
   ActiveControl = pgPrincipal
+  AutoScroll = False
   Caption = 'Teste de Impressora Fiscal'
   Color = clBtnFace
   Constraints.MinHeight = 400
@@ -160,6 +161,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -181,6 +183,7 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
+        ItemHeight = 13
         TabOrder = 1
         Text = 'Procurar'
         OnChange = cbxPortaChange
@@ -295,6 +298,9 @@ object Form1: TForm1
         Cancel = True
         Caption = 'Serial'
         Default = True
+        ModalResult = 1
+        TabOrder = 4
+        OnClick = btSerialClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -322,9 +328,6 @@ object Form1: TForm1
           FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        ModalResult = 1
-        TabOrder = 4
-        OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
         Left = 195
@@ -414,6 +417,7 @@ object Form1: TForm1
         Height = 21
         Style = csDropDownList
         Enabled = False
+        ItemHeight = 13
         TabOrder = 14
         OnChange = cbxECFVirtualChange
         Items.Strings = (
@@ -1891,6 +1895,7 @@ object Form1: TForm1
             Height = 21
             Style = csDropDownList
             Anchors = [akLeft, akTop, akRight]
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxSalvarCFe: TCheckBox
@@ -1909,6 +1914,7 @@ object Form1: TForm1
             Width = 133
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 11
             Items.Strings = (
               'Procurar'
@@ -1929,7 +1935,6 @@ object Form1: TForm1
             Top = 123
             Width = 121
             Height = 21
-            Alignment = taRightJustify
             TabOrder = 8
             Text = '0,00'
           end
@@ -2020,6 +2025,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -2028,6 +2034,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -2036,6 +2043,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 3
           end
         end
@@ -2253,6 +2261,9 @@ object Form1: TForm1
               Height = 43
               Anchors = [akTop, akRight]
               Caption = 'Serial'
+              ModalResult = 1
+              TabOrder = 1
+              OnClick = btSerial1Click
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
                 1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -2281,9 +2292,6 @@ object Form1: TForm1
                 00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
                 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
               Layout = blGlyphTop
-              ModalResult = 1
-              TabOrder = 1
-              OnClick = btSerial1Click
             end
             object cbUsarEscPos: TRadioButton
               Left = 8
@@ -2640,6 +2648,7 @@ object Form1: TForm1
               Font.Name = 'MS Sans Serif'
               Font.Pitch = fpVariable
               Font.Style = []
+              ItemHeight = 16
               ItemIndex = 24
               ParentFont = False
               TabOrder = 0
@@ -3206,6 +3215,9 @@ object Form1: TForm1
       Cancel = True
       Caption = 'Ativar'
       Default = True
+      ModalResult = 1
+      TabOrder = 0
+      OnClick = bAtivarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -3233,9 +3245,6 @@ object Form1: TForm1
         21218C3131943131943131943131943131943131943131943131943131943131
         94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      ModalResult = 1
-      TabOrder = 0
-      OnClick = bAtivarClick
     end
   end
   object MainMenu1: TMainMenu
@@ -4320,6 +4329,7 @@ object Form1: TForm1
     Top = 340
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
@@ -4330,10 +4340,16 @@ object Form1: TForm1
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     TipoDANFE = tiSemGeracao
+    FonteLinhaItem.Charset = DEFAULT_CHARSET
+    FonteLinhaItem.Color = clWindowText
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
+    FonteLinhaItem.Style = []
     Left = 718
     Top = 336
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
@@ -4388,6 +4404,7 @@ object Form1: TForm1
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeESCPOS1
     Left = 634
     Top = 336
@@ -4410,12 +4427,11 @@ object Form1: TForm1
     Rede.tipoLan = lanDHCP
     Rede.proxy = 0
     Rede.proxy_porta = 0
-    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
-    OnGetsignAC = ACBrSAT1GetsignAC
     Left = 596
     Top = 135
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
@@ -4433,6 +4449,7 @@ object Form1: TForm1
     Top = 138
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 4.000000000000000000
     MargemSuperior = 2.000000000000000000
@@ -4515,7 +4532,6 @@ object Form1: TForm1
     IdentPAF.Paf.NotaLegalDF = False
     IdentPAF.Paf.ParaibaLegal = False
     IdentPAF.Paf.TrocoEmCartao = False
-    OnGetChave = ACBrAAC1GetChave
     OnAntesAbrirArquivo = ACBrAAC1AntesAbrirArquivo
     OnDepoisAbrirArquivo = ACBrAAC1DepoisAbrirArquivo
     OnAntesGravarArquivo = ACBrAAC1AntesGravarArquivo

@@ -12,7 +12,7 @@ object frmGerencialFormatado: TfrmGerencialFormatado
   Font.Height = -11
   Font.Name = 'Tahoma'
   Position = poScreenCenter
-  LCLVersion = '1.3'
+  LCLVersion = '2.0.4.0'
   object memRelatorio: TMemo
     Left = 8
     Height = 413
@@ -63,6 +63,7 @@ object frmGerencialFormatado: TfrmGerencialFormatado
       'MSI'
       '<msi>1234567890</msi>'
     )
+    OnChange = memRelatorioChange
     ScrollBars = ssVertical
     TabOrder = 0
   end

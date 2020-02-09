@@ -86,6 +86,7 @@ type
     FDate: TDateTime;
     FXMailer: string;
     FCharsetCode: TMimeChar;
+    FTargetCharset: TMimeChar;
     FReplyTo: string;
     FMessageID: string;
     FPriority: TMessPriority;
@@ -95,6 +96,8 @@ type
   protected
     function ParsePriority(value: string): TMessPriority;
     function DecodeHeader(value: string): boolean; virtual;
+    function InlineCode(Value: string): string;
+    function InlineEmail(Value: string): string;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -162,6 +165,10 @@ type
 
     {:Specify base charset. By default is used system charset.}
     property CharsetCode: TMimeChar read FCharsetCode Write FCharsetCode;
+
+    {:System charset type. Default value is charset used by default in your
+     operating system.}
+    property TargetCharset: TMimeChar read FTargetCharset Write FTargetCharset;
   end;
 
   TMessHeaderClass = class of TMessHeader;
@@ -317,7 +324,8 @@ begin
   FToList := TStringList.Create;
   FCCList := TStringList.Create;
   FCustomHeaders := TStringList.Create;
-  FCharsetCode := GetCurCP;
+  FCharsetCode := ISO_8859_1;
+  FTargetCharset := GetCurCP;
 end;
 
 destructor TMessHeader.Destroy;
@@ -380,27 +388,27 @@ begin
     Value.Insert(0, 'X-mailer: ' + FXMailer);
   Value.Insert(0, 'MIME-Version: 1.0 (produced by Synapse)');
   if FOrganization <> '' then
-    Value.Insert(0, 'Organization: ' + InlineCodeEx(FOrganization, FCharsetCode));
+    Value.Insert(0, 'Organization: ' + InlineCode(FOrganization));
   s := '';
   for n := 0 to FCCList.Count - 1 do
     if s = '' then
-      s := InlineEmailEx(FCCList[n], FCharsetCode)
+      s := InlineEmail(FCCList[n])
     else
-      s := s + ', ' + InlineEmailEx(FCCList[n], FCharsetCode);
+      s := s + ', ' + InlineEmail(FCCList[n]);
   if s <> '' then
     Value.Insert(0, 'CC: ' + s);
   Value.Insert(0, 'Date: ' + Rfc822DateTime(FDate));
   if FSubject <> '' then
-    Value.Insert(0, 'Subject: ' + InlineCodeEx(FSubject, FCharsetCode));
+    Value.Insert(0, 'Subject: ' + InlineCode(FSubject));
   s := '';
   for n := 0 to FToList.Count - 1 do
     if s = '' then
-      s := InlineEmailEx(FToList[n], FCharsetCode)
+      s := InlineEmail(FToList[n])
     else
-      s := s + ', ' + InlineEmailEx(FToList[n], FCharsetCode);
+      s := s + ', ' + InlineEmail(FToList[n]);
   if s <> '' then
     Value.Insert(0, 'To: ' + s);
-  Value.Insert(0, 'From: ' + InlineEmailEx(FFrom, FCharsetCode));
+  Value.Insert(0, 'From: ' + InlineEmail(FFrom));
 end;
 
 function TMessHeader.ParsePriority(value: string): TMessPriority;
@@ -578,6 +586,16 @@ begin
     begin
       HeaderList.Add(Trim(SeparateRight(FCustomHeaders[n], ':')));
     end;
+end;
+
+function TMessHeader.InlineCode(Value: string): string;
+begin
+  Result := InlineCodeEx2(Value, FTargetCharset, FCharsetCode)
+end;
+
+function TMessHeader.InlineEmail(Value: string): string;
+begin
+  Result := InlineEmailEx2(Value, FTargetCharset, FCharsetCode)
 end;
 
 {==============================================================================}

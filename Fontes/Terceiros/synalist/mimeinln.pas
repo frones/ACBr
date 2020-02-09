@@ -87,6 +87,10 @@ function NeedInline(const Value: AnsiString): boolean;
  source charset, and the target characterset is automatically assigned.}
 function InlineCodeEx(const Value: string; FromCP: TMimeChar): string;
 
+{:Inline mime encoding similar to @link(InlineEncodeEx), but you can specify
+ source and target charset.}
+function InlineCodeEx2(const Value: string; FromCP, ToCP: TMimeChar): string;
+
 {:Inline MIME encoding similar to @link(InlineEncode), but the source charset
  is automatically set to the system default charset, and the target charset is
  automatically assigned from set of allowed encoding for MIME.}
@@ -94,6 +98,9 @@ function InlineCode(const Value: string): string;
 
 {:Converts e-mail address to canonical mime form. You can specify source charset.}
 function InlineEmailEx(const Value: string; FromCP: TMimeChar): string;
+
+{:Converts e-mail address to canonical mime form. You can specify source charset.}
+function InlineEmailEx2(const Value: string; FromCP, ToCP: TMimeChar): string;
 
 {:Converts e-mail address to canonical mime form. Source charser it system
  default charset.}
@@ -240,6 +247,15 @@ begin
 end;
 
 {==============================================================================}
+function InlineCodeEx2(const Value: string; FromCP, ToCP: TMimeChar): string;
+begin
+  if NeedInline(Value) then
+    Result := InlineEncode(Value, FromCP, ToCP)
+  else
+    Result := Value;
+end;
+
+{==============================================================================}
 
 function InlineCode(const Value: string): string;
 begin
@@ -258,6 +274,18 @@ begin
     Result := se
   else
     Result := '"' + InlineCodeEx(sd, FromCP) + '" <' + se + '>';
+end;
+
+function InlineEmailEx2(const Value: string; FromCP, ToCP: TMimeChar): string;
+var
+  sd, se: string;
+begin
+  sd := GetEmailDesc(Value);
+  se := GetEmailAddr(Value);
+  if sd = '' then
+    Result := se
+  else
+    Result := '"' + InlineCodeEx2(sd, FromCP, ToCP) + '" <' + se + '>';
 end;
 
 {==============================================================================}

@@ -1,4 +1,4 @@
-unit Unit1;
+Ôªøunit Unit1;
 
 interface
 
@@ -108,6 +108,7 @@ type
     cbbDefaultCharset: TComboBox;
     cbbIdeCharSet: TComboBox;
     lbl1: TLabel;
+    btLer: TButton;
     procedure ACBrMail1AfterMailProcess(Sender: TObject);
     procedure ACBrMail1BeforeMailProcess(Sender: TObject);
     procedure ACBrMail1MailException(const AMail: TACBrMail; const E: Exception; var ThrowIt: Boolean);
@@ -118,6 +119,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btLerClick(Sender: TObject);
   private
     procedure AjustaParametrosDeEnvio;
     procedure LerConfiguracao;
@@ -144,7 +146,7 @@ var
   Ini: TIniFile;
 begin
   IniFile := ChangeFileExt(ParamStr(0), '.ini');
-  Ini := TIniFile.Create(IniFile);
+  Ini := TIniFile.Create(IniFile {$IfDef POSIX}, TEncoding.ANSI{$EndIf});
   try
     Ini.WriteString('Email', 'From', edtFrom.text);
     Ini.WriteString('Email', 'FromName', edtFromName.text);
@@ -154,8 +156,8 @@ begin
     Ini.WriteString('Email', 'Pass', edtPassword.text);
     Ini.WriteBool('Email', 'TLS', chkTLS.IsChecked);
     Ini.WriteBool('Email', 'SSL', chkSSL.IsChecked);
-    Ini.ReadInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
-    Ini.ReadInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
+    Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
+    Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
   finally
     Ini.Free;
   end;
@@ -185,7 +187,7 @@ var
   Ini: TIniFile;
 begin
   IniFile := ChangeFileExt(ParamStr(0), '.ini');
-  Ini := TIniFile.Create(IniFile);
+  Ini := TIniFile.Create(IniFile{$IfDef POSIX}, TEncoding.ANSI{$EndIf});
   try
     edtFrom.text := Ini.readString('Email', 'From', 'fulano@empresa.com.br');
     edtFromName.text := Ini.readString('Email', 'FromName', 'Fulano de Tal');
@@ -252,7 +254,7 @@ begin
     try
       ArqXML := '35150905481336000137550010000111291000111298-nfe.xml';
       MS.LoadFromFile(Dir + ArqXML);
-      ACBrMail1.AddAttachment(MS, ArqXML);
+      ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
     finally
       MS.Free;
     end;
@@ -281,13 +283,13 @@ begin
     pmsStartProcess:
       mLog.Lines.Add('Iniciando processo de envio.');
     pmsConfigHeaders:
-      mLog.Lines.Add('Configurando o cabeÁalho do e-mail.');
+      mLog.Lines.Add('Configurando o cabe√ßalho do e-mail.');
     pmsLoginSMTP:
       mLog.Lines.Add('Logando no servidor de e-mail.');
     pmsStartSends:
       mLog.Lines.Add('Iniciando os envios.');
     pmsSendTo:
-      mLog.Lines.Add('Processando lista de destinat·rios.');
+      mLog.Lines.Add('Processando lista de destinat√°rios.');
     pmsSendCC:
       mLog.Lines.Add('Processando lista CC.');
     pmsSendBCC:
@@ -333,6 +335,11 @@ begin
   mLog.Lines.Add('***** 5 emails enviados ***** ');
 end;
 
+procedure TForm1.btLerClick(Sender: TObject);
+begin
+  LerConfiguracao;
+end;
+
 procedure TForm1.btnSalvarClick(Sender: TObject);
 begin
   GravarConfiguracao;
@@ -360,7 +367,7 @@ begin
   //ACBrMail1.AddReplyTo('um_email'); // opcional
   //ACBrMail1.AddBCC('um_email'); // opcional
   //ACBrMail1.Priority := MP_high;
-  //ACBrMail1.ReadingConfirmation := True; // solicita confirmaÁ„o de leitura
+  //ACBrMail1.ReadingConfirmation := True; // solicita confirma√ß√£o de leitura
 end;
 
 end.

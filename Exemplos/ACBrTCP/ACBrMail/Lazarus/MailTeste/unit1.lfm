@@ -1,219 +1,627 @@
 object Form1: TForm1
-  Left = 298
-  Height = 349
-  Top = 191
-  Width = 751
-  ActiveControl = cbUsarTXT
+  Left = 303
+  Height = 447
+  Top = 194
+  Width = 749
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Exemplo ACBrMail'
-  ClientHeight = 349
-  ClientWidth = 751
-  LCLVersion = '1.6.0.4'
-  Visible = False
-  object bEnviar: TButton
-    Left = 8
-    Height = 25
-    Top = 280
-    Width = 194
-    Caption = 'Enviar Email'
-    OnClick = bEnviarClick
-    TabOrder = 6
-  end
-  object mLog: TMemo
-    Left = 520
-    Height = 280
-    Top = 24
-    Width = 219
-    ScrollBars = ssAutoBoth
-    TabOrder = 11
-  end
-  object ProgressBar1: TProgressBar
-    Left = 213
-    Height = 20
-    Top = 317
-    Width = 526
-    Max = 11
-    Step = 1
-    TabOrder = 12
-  end
-  object Label1: TLabel
-    Left = 8
-    Height = 30
-    Top = 232
-    Width = 194
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Altere os parâmetros no código'#13#10'antes de fazer os envios.'
-    Font.Color = clRed
-    Font.Style = [fsBold]
-    ParentColor = False
-    ParentFont = False
-  end
-  object mAltBody: TMemo
-    Left = 213
-    Height = 80
-    Top = 72
-    Width = 283
-    Lines.Strings = (
-      'Linha 1'
-      'Linha 2'
-      '   Teste de e-mail'
-      'ÁÉÍÓÚçÇãÂ'
-    )
-    ScrollBars = ssAutoBoth
-    TabOrder = 9
-    WordWrap = False
-  end
-  object edSubject: TEdit
-    Left = 213
-    Height = 23
-    Top = 24
-    Width = 283
-    TabOrder = 8
-    Text = 'Teste de Envio ÁÉÍÓÚÇçáéíúó - 0'
-  end
-  object cbUsarThread: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 160
-    Width = 80
-    Caption = 'Usar thread'
-    TabOrder = 5
-  end
-  object bEnviarLote: TButton
-    Left = 8
-    Height = 25
-    Top = 312
-    Width = 194
-    Caption = 'Enviar 5 emails por Thread'
-    OnClick = bEnviarLoteClick
-    TabOrder = 7
-  end
-  object cbUsarTXT: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 16
-    Width = 158
-    Caption = 'Enviar Mensagem em TXT'
-    Checked = True
-    State = cbChecked
+  ClientHeight = 447
+  ClientWidth = 749
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '2.0.6.0'
+  object pnlTopo: TPanel
+    Left = 0
+    Height = 41
+    Top = 0
+    Width = 749
+    Align = alTop
+    ClientHeight = 41
+    ClientWidth = 749
     TabOrder = 0
+    object imgLogo: TImage
+      Left = 1
+      Height = 39
+      Top = 1
+      Width = 96
+      Align = alLeft
+      Center = True
+      Picture.Data = {
+        0A544A706567496D616765340B0000FFD8FFE000104A46494600010101006000
+        600000FFE100AA4578696600004D4D002A000000080005013200020000001400
+        00004A511000010000000101000000511100040000000100000B125112000400
+        00000100000B1287690004000000010000005E00000000323030363A30333A31
+        302032323A32383A303600000192860007000000320000007000000000554E49
+        434F444500004300720065006100740065006400200077006900740068002000
+        5400680065002000470049004D0050FFDB004300020101020101020202020202
+        0202030503030303030604040305070607070706070708090B0908080A080707
+        0A0D0A0A0B0C0C0C0C07090E0F0D0C0E0B0C0C0CFFDB00430102020203030306
+        0303060C0807080C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C
+        0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0CFFC00011080021
+        004B03012200021101031101FFC4001F00000105010101010101000000000000
+        00000102030405060708090A0BFFC400B5100002010303020403050504040000
+        017D01020300041105122131410613516107227114328191A1082342B1C11552
+        D1F02433627282090A161718191A25262728292A3435363738393A4344454647
+        48494A535455565758595A636465666768696A737475767778797A8384858687
+        88898A92939495969798999AA2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3
+        C4C5C6C7C8C9CAD2D3D4D5D6D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4F5F6
+        F7F8F9FAFFC4001F010003010101010101010101000000000000010203040506
+        0708090A0BFFC400B51100020102040403040705040400010277000102031104
+        052131061241510761711322328108144291A1B1C109233352F0156272D10A16
+        2434E125F11718191A262728292A35363738393A434445464748494A53545556
+        5758595A636465666768696A737475767778797A82838485868788898A929394
+        95969798999AA2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9
+        CAD2D3D4D5D6D7D8D9DAE2E3E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C
+        03010002110311003F00EDB505537127CABF7CF6F7359B78D1C2BBA468E35CE3
+        2C428CD696A1CDC49FEF1FE75F15FEDD1E0DD4BF6D2FDB5BE10FECF7E1FB864B
+        8D52737B7CCAC36C4D286396EB868ADA195C123189BBD7F5D4AA53A549D5AD25
+        1845394A4F6492BB6FC925A9FC69C3D934F34C7AC2C5D96ADB4AF64976EB7765
+        EACFB6BE1A7C23D7BE33EBBFD9FE1DB1FB648A034D39216DED94E70D249D00E0
+        E00CB1C1C038AFA43C1FFB047C3BF8736F6FA8FC52F1ADBD9E9FB889E69AFE1D
+        234F8CED27699653B89CE003B9339E95F29FFC1AD9FB41C9E21FD9C7C75F0875
+        5FF47D6BE1CEB66F2081D76C8B6B76583A1F5F2EE22973E9E728F4AF976D3E19
+        6B5FF05F4FF82DFF008B3C03E2CF176AFA2F803C1D36A82D61B46576B0D32C25
+        16EAB6C8D98D669E568D9DD81FBEC790AAB5FCDF9DE7BC599D71966391AC52CB
+        F2FCB630A956708F3D4AB192528D9BD62A494BE0B38D9C5B9BB5BFA2F22F0F72
+        2CB32EA78AC443EB55EAB928A96908D9DBE14F57AC7E276D6EACB7FD99D33F62
+        9F80BF117C3ADABF826DF41F1668F09F2A5B8D2BC4736A0B137BC914EC3F0272
+        3E9D3C3BE347ECC1F01349D6EF3498FE28786FC07E21B32A25D3F50F125A3FD9
+        CBA2C8BE6413C8B32E51D1865C65581E4106BCD3F62DFF008201FC57FF00826F
+        FF00C149EC7C73F07FE2769A7E0DAA451EADA7EBF7127F696B36AE089ED248A0
+        87C97643878A63B30DB7E5E0EEFA7FE2DEA5AD68BE37FDA066F0E2DC1D5E1F12
+        5AB5AADBC0B3C81BFE11ED1325226F95DC2EE214F048039E95FCF5E2B715E75C
+        218AA59C70EE7F5B134AAB82E59D5972C2537F6E353DA42296ED383B5F656B1F
+        A4E49C2B92E6B4A583C6E5D4E0E37D634D45B497471E595FCD49A7A3BBBE9F01
+        FC4FF0A59FC3CF15A6970F8B3C13E285B80CF6D73E1FD7ED7528E755E4E56291
+        9E3603AAB81DF190335CBCED81DEBED5FDA0F518BC63F053C5DE1AF11B5EEAA7
+        C497F1E8BF0E9F5FD3E1D3358D5F5696DD4DB148108D8D15DEE659B6425638A4
+        67411C7E6CBE25F16FF621F16699E2BF8811F8464D0F56D3FC23AF5B6990C37D
+        7C6CE5782782CAE5AE259593CB48EDE0BD2F2119665B672AA59952BF5AF0E3E9
+        599263707569F18CA185AB4A6A0AA45CAAD2ABB2E68CA105CB66D295D28ADD35
+        AA8FE5DC55E0A63F0D888CB214EB4269C9C5DA328793E696A9ADBAF7BEEFC2EE
+        188EE7F3AA6EE77753F9D687892CAD745F16EADA669FE24F0FF8CB4FD3648A28
+        B5CD11B3637CCD0C72B88FE791488CC9E596591816471F2952A33DBAD7F52E4B
+        9C61336C051CCF02DCA9568A9C1B8CA2DC64AE9F2CD464AEB5B3499F91E372FA
+        D81C4CF0789494E0DA6934D26B7D5369FC99EEFA83AC32CAF2C8914684B3BB1C
+        2A0192493E80735F9F9FB087C3BFDA17F6DDFDB7BE247C60FD9EF52D0743F107
+        8727C47A8EB3E50FB25A5D2C96F6F1C6258A55327D9E12A4E01033EB5F776AB3
+        6A2FA95C6C8E7F2D6460BB232CA467839C1EBD7F1AE87C05ADEB9A3D84D259F8
+        CB56F0C5D4B38061892EE3591154FEF19A15209C90AAB827EF9CAE006FC4B8A3
+        C72C12C1E2B2CC0E1A4EB6B4FF007D4E13A4D5ED35387B48B94651BAB36B757D
+        2E8D38231B0CAB152AB5E9F3295B58C945A49DF4E68B576EDD74B69767C71FF0
+        4ECF14F8FBFE0967FF0005F1D2F48F8C93690BAA7C489CE9FE22B8B1656B1B93
+        AA959E09D36A22002F3C9CE140521C0C62B5BC59E2ED7FFE0DFAFF0082DE78B3
+        E256B1E11D4FC4FF000CFC6D3EA8F6373698896FB4FBF97ED1B219586C1716F2
+        AA2B46D82447D83AB57D957FE2CF105EDE3799F13B5AB8DC5824B2C37C495046
+        D2DC12B9C9C0E7055BA0DA5B5FC39E20BED4FC4FA6C3E26F891A96BDA1FF0068
+        5B9B8B1BA37F2DBDF5BF9A564C83F70ED1901C29C64F4D9BFE523E2F51C46363
+        571B8452856A0A862631B454DADA74DA9B704B9A6945B93B3494D3573F488F19
+        D07EEC29C9352BC1B9C34F5F3D23AA56BA7EEEB63CA7F63EFF0082C6FED15FF0
+        54CFF82B468F07C17B3D53C27F02ECE2B58BC47A7EA96106A16F676311679EEA
+        6976E21BA9CB18E358DFB47C385635F6C7C67D26F3C51E3BFDA0B4AD26F21B5D
+        56F3C49691C05F52974FE7FE11ED0C9533C20CB0EE5CAF9880B2EEC8048AEDED
+        7C31E0AF843E0FB892D35AB8F0E68F61119E6834FD62FA18D70BCED8E197E66C
+        FCA00192718EB5F35F8ABE2BFC3FF16789AE356D5FC1FA0F88A6BC93FE3E2FCE
+        A536A26351B53CF965470CC115470CC06028C815F9AF8C994653C4B4A860F036
+        C1428F238FEED5494B91EF53DF8B95F45AB7A27ABBB3EEB27E3DA593547531AB
+        99CD3D39F6BEED7BAFABE89764B43A8D6E0D1FC0FE1CF1C45E301636DE19F146
+        9F0E9DA7F83D7C5D7BE28BAD4671F68DE2DDEED52669EE3CDB7892DA15203DB2
+        B83BE460BC5FC725D5B48FD987E37E9BE21BD8EE3C4125EE85A66B7209037DAE
+        59744F0EC177FEF2C9BE507B10E7D6AD6B5E3EF87B6FE1FB883C1F6F7BF0F35C
+        685A78754D13ED61772B463ECF28091B15915A424A83B7CB0792761F1EF1B781
+        34FF001FDC4DAA6BDE24B7F106A5E52CEB2DE697733DE3CB1AB1890CAE848605
+        1003BF0BB873C57E2380F0C70F83CCE18AAD8C7523ED6955972D28C53F6728BE
+        5507574E651B36E4EFA37B58EBCD3C67C1BA32A1430EDDE128A6AA477926B56D
+        27A5EFB69B23C5AEDDA562CC771F7AA67AD7A11F04C2FD74D97FEF87AE1FC4F6
+        EB69AEDC470AAA46A400AA7207033EBDFB76AFF47B827C4BCBF8A3193C1E0E95
+        484A31E76E6A295AE95AEA52D6EF6B6C9F63F9869F63DBEE7EFB7D4D50B8EB45
+        15FB151FE1C7D11F0DF6D9427EA6A85D7DC345155D4EC81CF47FF1F4BF5A96E6
+        8A2B389D987D8A375D6A85CFDD3451448F4A8942EBA5423A514571E2B647A14F
+        63FFD9
+      }
+    end
+    object lblDescricao: TLabel
+      Left = 101
+      Height = 23
+      Top = 5
+      Width = 155
+      Caption = 'ACBrMail - Demo'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Times New Roman'
+      Font.Style = [fsItalic]
+      ParentColor = False
+      ParentFont = False
+    end
   end
-  object cbUsarHTML: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 40
-    Width = 170
-    Caption = 'Enviar Mensagem em HTML'
-    Checked = True
-    State = cbChecked
+  object pgc: TPageControl
+    Left = 0
+    Height = 406
+    Top = 41
+    Width = 749
+    ActivePage = tsMensagem
+    Align = alClient
+    TabIndex = 0
     TabOrder = 1
-  end
-  object cbAddImgHTML: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 64
-    Width = 156
-    Caption = 'Incluir Imagem em HTML'
-    Checked = True
-    State = cbChecked
-    TabOrder = 2
-  end
-  object cbAddPDF: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 112
-    Width = 129
-    Caption = 'Incluir Anexo de PDF'
-    Checked = True
-    State = cbChecked
-    TabOrder = 3
-  end
-  object Label2: TLabel
-    Left = 213
-    Height = 15
-    Top = 6
-    Width = 39
-    Caption = 'Subject'
-    ParentColor = False
-  end
-  object Label3: TLabel
-    Left = 213
-    Height = 15
-    Top = 56
-    Width = 77
-    Caption = 'Alt Body (TXT)'
-    ParentColor = False
-  end
-  object Label4: TLabel
-    Left = 216
-    Height = 15
-    Top = 160
-    Width = 71
-    Caption = 'Body (HTML)'
-    ParentColor = False
-  end
-  object mBody: TMemo
-    Left = 213
-    Height = 128
-    Top = 176
-    Width = 283
-    Lines.Strings = (
-      '<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
-      '<body text="#000000" bgcolor="#FFFFFF">'
-      '<h1>Texto em HTML.</h1><br>'
-      '<p>Teste de Envio ÁÉÍÓÚÇçáéíúó ÝÍÃãõÕ</p><br>'
-      '<img src=''cid:LogoACBr''>'
-      '</body></html>'
-    )
-    ScrollBars = ssAutoBoth
-    TabOrder = 10
-    WordWrap = False
-  end
-  object Label5: TLabel
-    Left = 520
-    Height = 15
-    Top = 6
-    Width = 23
-    Caption = 'LOG'
-    ParentColor = False
-  end
-  object cbAddXML: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 136
-    Width = 141
-    Caption = 'Incluir XML por Stream'
-    Checked = True
-    State = cbChecked
-    TabOrder = 4
-  end
-  object cbAddImgAtt: TCheckBox
-    Left = 16
-    Height = 19
-    Top = 88
-    Width = 156
-    Caption = 'Incluir Imagem em Anexo'
-    Checked = True
-    State = cbChecked
-    TabOrder = 13
+    object tsMensagem: TTabSheet
+      Caption = 'E-Mail'
+      ClientHeight = 380
+      ClientWidth = 741
+      object Label2: TLabel
+        Left = 206
+        Height = 13
+        Top = 50
+        Width = 90
+        Caption = 'Assunto (Subject):'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object Label6: TLabel
+        Left = 206
+        Height = 13
+        Top = 5
+        Width = 126
+        Caption = 'Para e-Mail (AddAddress):'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object Label5: TLabel
+        Left = 513
+        Height = 13
+        Top = 50
+        Width = 20
+        Caption = 'LOG'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object Label3: TLabel
+        Left = 206
+        Height = 13
+        Top = 95
+        Width = 160
+        Caption = 'Mensagem (Alt Body modo texto)'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object Label4: TLabel
+        Left = 209
+        Height = 13
+        Top = 199
+        Width = 144
+        Caption = 'Mensagem (Body modo HTML)'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object Label1: TLabel
+        Left = 3
+        Height = 50
+        Top = 256
+        Width = 194
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'Altere os parâmetros na '#13#10'guia Configuração Conta '#13#10'antes de fazer os envios.'
+        Color = clBtnFace
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object lblAdressName: TLabel
+        Left = 513
+        Height = 13
+        Top = 5
+        Width = 56
+        Caption = 'Para Nome:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object grpOpcoes: TGroupBox
+        Left = 3
+        Height = 171
+        Top = 5
+        Width = 194
+        Caption = '[ Opções ]'
+        ClientHeight = 153
+        ClientWidth = 190
+        TabOrder = 0
+        object cbUsarTXT: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 3
+          Width = 142
+          Caption = 'Enviar Mensagem em TXT'
+          Checked = True
+          State = cbChecked
+          TabOrder = 0
+        end
+        object cbUsarHTML: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 23
+          Width = 150
+          Caption = 'Enviar Mensagem em HTML'
+          Checked = True
+          State = cbChecked
+          TabOrder = 1
+        end
+        object cbAddImgHTML: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 42
+          Width = 136
+          Caption = 'Incluir Imagem em HTML'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+        end
+        object cbAddImgAtt: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 62
+          Width = 141
+          Caption = 'Incluir Imagem em Anexo'
+          Checked = True
+          State = cbChecked
+          TabOrder = 3
+        end
+        object cbAddPDF: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 82
+          Width = 120
+          Caption = 'Incluir Anexo de PDF'
+          Checked = True
+          State = cbChecked
+          TabOrder = 4
+        end
+        object cbAddXML: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 103
+          Width = 127
+          Caption = 'Incluir XML por Stream'
+          Checked = True
+          State = cbChecked
+          TabOrder = 5
+        end
+        object cbUsarThread: TCheckBox
+          Left = 14
+          Height = 19
+          Top = 123
+          Width = 77
+          Caption = 'Usar thread'
+          TabOrder = 6
+        end
+      end
+      object edSubject: TEdit
+        Left = 206
+        Height = 21
+        Top = 68
+        Width = 301
+        TabOrder = 3
+        Text = 'Teste de Envio ÁÉÍÓÚÇçáéíúó - 0'
+      end
+      object edtAddressEmail: TEdit
+        Left = 206
+        Height = 21
+        Top = 23
+        Width = 301
+        TabOrder = 1
+        Text = 'fulano@empresa.com.br'
+      end
+      object mLog: TMemo
+        Left = 513
+        Height = 274
+        Top = 68
+        Width = 219
+        TabOrder = 6
+      end
+      object mAltBody: TMemo
+        Left = 207
+        Height = 80
+        Top = 113
+        Width = 300
+        Lines.Strings = (
+          'Linha 1'
+          'Linha 2'
+          '   Teste de e-mail'
+          'ÁÉÍÓÚçÇãÂ'
+        )
+        TabOrder = 4
+        WordWrap = False
+      end
+      object mBody: TMemo
+        Left = 206
+        Height = 128
+        Top = 214
+        Width = 301
+        Lines.Strings = (
+          '<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
+          '<body text="#000000" bgcolor="#FFFFFF">'
+          '<h1>Texto em HTML.</h1><br>'
+          '<p>Teste de Envio ÁÉÍÓÚÇçáéíúó ÝÍÃãõÕ</p><br>'
+          '<img src=''cid:LogoACBr''>'
+          '</body></html>'
+          ''
+          ''
+        )
+        TabOrder = 5
+        WordWrap = False
+      end
+      object ProgressBar1: TProgressBar
+        Left = 207
+        Height = 20
+        Top = 348
+        Width = 525
+        Max = 11
+        Step = 1
+        TabOrder = 9
+      end
+      object bEnviar: TButton
+        Left = 3
+        Height = 25
+        Top = 312
+        Width = 194
+        Caption = 'Enviar Email'
+        OnClick = bEnviarClick
+        TabOrder = 7
+      end
+      object bEnviarLote: TButton
+        Left = 3
+        Height = 25
+        Top = 343
+        Width = 194
+        Caption = 'Enviar 5 emails por Thread'
+        OnClick = bEnviarLoteClick
+        TabOrder = 8
+      end
+      object edtAddressName: TEdit
+        Left = 513
+        Height = 21
+        Top = 23
+        Width = 219
+        TabOrder = 2
+        Text = 'Fulano de Tal'
+      end
+    end
+    object tsConfigConta: TTabSheet
+      Caption = 'Configuração Conta'
+      ClientHeight = 380
+      ClientWidth = 741
+      ImageIndex = 1
+      object lblHost: TLabel
+        Left = 3
+        Height = 13
+        Top = 48
+        Width = 26
+        Caption = 'Host:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblFrom: TLabel
+        Left = 3
+        Height = 13
+        Top = 3
+        Width = 59
+        Caption = 'From e-Mail:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblFromName: TLabel
+        Left = 292
+        Height = 13
+        Top = 2
+        Width = 58
+        Caption = 'From Name:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblUser: TLabel
+        Left = 3
+        Height = 13
+        Top = 95
+        Width = 56
+        Caption = 'User Name:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblPassword: TLabel
+        Left = 292
+        Height = 13
+        Top = 95
+        Width = 50
+        Caption = 'Password:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblPort: TLabel
+        Left = 292
+        Height = 13
+        Top = 48
+        Width = 24
+        Caption = 'Port:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblTipoAutenticacao: TLabel
+        Left = 364
+        Height = 13
+        Top = 49
+        Width = 90
+        Caption = 'Tipo Autenticação:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lblDefaultCharset: TLabel
+        Left = 3
+        Height = 13
+        Top = 140
+        Width = 80
+        Caption = 'Default Charset:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object lbl1: TLabel
+        Left = 292
+        Height = 13
+        Top = 140
+        Width = 62
+        Caption = 'IDE Charset:'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
+      object edtHost: TEdit
+        Left = 3
+        Height = 21
+        Top = 66
+        Width = 283
+        TabOrder = 2
+        Text = 'smtp.empresa.com.br'
+      end
+      object edtFrom: TEdit
+        Left = 3
+        Height = 21
+        Top = 21
+        Width = 283
+        TabOrder = 0
+        Text = 'fulano@empresa.com.br'
+      end
+      object edtFromName: TEdit
+        Left = 292
+        Height = 21
+        Top = 21
+        Width = 283
+        TabOrder = 1
+        Text = 'Fula do Tal'
+      end
+      object edtUser: TEdit
+        Left = 3
+        Height = 21
+        Top = 113
+        Width = 283
+        TabOrder = 6
+        Text = 'fulano@empresa.com.br'
+      end
+      object edtPassword: TEdit
+        Left = 292
+        Height = 21
+        Top = 113
+        Width = 283
+        EchoMode = emPassword
+        PasswordChar = '@'
+        TabOrder = 7
+        Text = 'fulano@empresa.com.br'
+      end
+      object chkMostraSenha: TCheckBox
+        Left = 348
+        Height = 19
+        Top = 94
+        Width = 62
+        Caption = 'Mostrar?'
+        OnClick = chkMostraSenhaClick
+        TabOrder = 11
+      end
+      object edtPort: TEdit
+        Left = 292
+        Height = 21
+        Top = 66
+        Width = 58
+        TabOrder = 3
+        Text = '587'
+      end
+      object btnSalvar: TButton
+        Left = 3
+        Height = 25
+        Top = 200
+        Width = 194
+        Caption = 'Salvar Configuração'
+        OnClick = btnSalvarClick
+        TabOrder = 10
+      end
+      object chkTLS: TCheckBox
+        Left = 364
+        Height = 19
+        Top = 68
+        Width = 37
+        Caption = 'TLS'
+        OnClick = chkMostraSenhaClick
+        TabOrder = 4
+      end
+      object chkSSL: TCheckBox
+        Left = 415
+        Height = 19
+        Top = 68
+        Width = 37
+        Caption = 'SSL'
+        OnClick = chkMostraSenhaClick
+        TabOrder = 5
+      end
+      object cbbDefaultCharset: TComboBox
+        Left = 3
+        Height = 21
+        Top = 159
+        Width = 283
+        ItemHeight = 13
+        Style = csDropDownList
+        TabOrder = 8
+      end
+      object cbbIdeCharSet: TComboBox
+        Left = 292
+        Height = 21
+        Top = 160
+        Width = 283
+        ItemHeight = 13
+        Style = csDropDownList
+        TabOrder = 9
+      end
+      object btLerConfig: TButton
+        Left = 219
+        Height = 25
+        Top = 200
+        Width = 194
+        Caption = 'Ler Configuração'
+        OnClick = btLerConfigClick
+        TabOrder = 12
+      end
+    end
   end
   object ACBrMail1: TACBrMail
-    Host = 'email-ssl.com.br'
-    Port = '465'
-    SetSSL = True
-    SetTLS = True
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
     Attempts = 3
-    From = 'celso@djsystem.com.br'
-    FromName = 'Celso Marigo Junior'
     DefaultCharset = UTF_8
-    IDECharset = UTF_8
+    IDECharset = CP1252
     OnBeforeMailProcess = ACBrMail1BeforeMailProcess
     OnMailProcess = ACBrMail1MailProcess
     OnAfterMailProcess = ACBrMail1AfterMailProcess
     OnMailException = ACBrMail1MailException
-    left = 88
-    top = 192
+    left = 40
+    top = 326
   end
 end

@@ -62,6 +62,7 @@ type
     cbbDefaultCharset: TComboBox;
     cbbIdeCharSet: TComboBox;
     lbl1: TLabel;
+    btLerConfig: TButton;
     procedure ACBrMail1AfterMailProcess(Sender: TObject);
     procedure ACBrMail1BeforeMailProcess(Sender: TObject);
     procedure ACBrMail1MailException(const AMail: TACBrMail; const E: Exception; var ThrowIt: Boolean);
@@ -72,6 +73,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btLerConfigClick(Sender: TObject);
   private
     procedure AjustaParametrosDeEnvio;
     procedure LerConfiguracao;
@@ -108,8 +110,8 @@ begin
     Ini.WriteString('Email', 'Pass', edtPassword.text);
     Ini.WriteBool('Email', 'TLS', chkTLS.Checked);
     Ini.WriteBool('Email', 'SSL', chkSSL.Checked);
-    Ini.ReadInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
-    Ini.ReadInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
+    Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
+    Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
   finally
     Ini.Free;
   end;
@@ -206,7 +208,7 @@ begin
     try
       ArqXML := '35150905481336000137550010000111291000111298-nfe.xml';
       MS.LoadFromFile(Dir + ArqXML);
-      ACBrMail1.AddAttachment(MS, ArqXML);
+      ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
     finally
       MS.Free;
     end;
@@ -235,13 +237,13 @@ begin
     pmsStartProcess:
       mLog.Lines.Add('Iniciando processo de envio.');
     pmsConfigHeaders:
-      mLog.Lines.Add('Configurando o cabeÁalho do e-mail.');
+      mLog.Lines.Add('Configurando o cabe√ßalho do e-mail.');
     pmsLoginSMTP:
       mLog.Lines.Add('Logando no servidor de e-mail.');
     pmsStartSends:
       mLog.Lines.Add('Iniciando os envios.');
     pmsSendTo:
-      mLog.Lines.Add('Processando lista de destinat·rios.');
+      mLog.Lines.Add('Processando lista de destinat√°rios.');
     pmsSendCC:
       mLog.Lines.Add('Processando lista CC.');
     pmsSendBCC:
@@ -317,7 +319,12 @@ begin
   //ACBrMail1.AddReplyTo('um_email'); // opcional
   //ACBrMail1.AddBCC('um_email'); // opcional
   //ACBrMail1.Priority := MP_high;
-  //ACBrMail1.ReadingConfirmation := True; // solicita confirmaÁ„o de leitura
+  //ACBrMail1.ReadingConfirmation := True; // solicita confirma√ß√£o de leitura
+end;
+
+procedure TForm1.btLerConfigClick(Sender: TObject);
+begin
+  LerConfiguracao;
 end;
 
 end.

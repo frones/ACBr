@@ -88,6 +88,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Top = 70
     Width = 161
     Height = 21
+    ItemHeight = 13
     TabOrder = 1
     OnChange = cmbBaudRateChange
     Items.Strings = (
@@ -111,6 +112,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 3
     TabOrder = 2
     Text = '8'
@@ -127,6 +129,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 3
     Text = 'None'
@@ -144,6 +147,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 4
     Text = '1'
@@ -159,6 +163,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 5
     Text = 'Nenhum'
@@ -175,6 +180,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     DropDownCount = 10
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 0
     Text = 'COM1'
@@ -196,9 +202,8 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 75
     Height = 25
     Caption = '&OK'
-    Kind = bkOK
-    NumGlyphs = 2
     TabOrder = 6
+    Kind = bkOK
   end
   object BitBtn2: TBitBtn
     Left = 94
@@ -206,9 +211,8 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 75
     Height = 25
     Caption = 'Cancelar'
-    Kind = bkCancel
-    NumGlyphs = 2
     TabOrder = 7
+    Kind = bkCancel
   end
   object chHardFlow: TCheckBox
     Left = 8

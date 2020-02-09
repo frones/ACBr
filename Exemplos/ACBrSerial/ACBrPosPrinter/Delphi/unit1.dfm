@@ -1,10 +1,10 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 536
   Top = 240
-  Width = 860
-  Height = 570
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
+  ClientHeight = 531
+  ClientWidth = 844
   Color = clBtnFace
   Constraints.MinHeight = 570
   Constraints.MinWidth = 860

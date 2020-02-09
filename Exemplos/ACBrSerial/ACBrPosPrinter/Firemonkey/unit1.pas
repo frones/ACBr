@@ -717,6 +717,7 @@ end;
 procedure TFrPosPrinterTeste.btSearchPortsClick(Sender: TObject);
 var
   K: Integer;
+  PrinterSys: TPrinter;
 begin
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
@@ -727,8 +728,10 @@ begin
      cbxPorta.Items.Add('USB:'+ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[K].DeviceName);
   {$EndIf}
 
-  For K := 0 to Printer.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[K].Title);
+  PrinterSys := FMX.Printer.Printer;
+  if Assigned(PrinterSys) then
+    For K := 0 to PrinterSys.Count-1 do
+      cbxPorta.Items.Add('RAW:'+PrinterSys.Printers[K].Title);
 
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;

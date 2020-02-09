@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   sysutils,
-  Forms, Unit1, ConfiguraSerial;
+  Forms, Unit1, ConfiguraSerial, ACBrDeviceClass;
 
 {$R *.res}
 

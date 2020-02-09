@@ -1,5 +1,4 @@
 program PosPrinterTeste;
-
 uses
   Forms,
   unit1 in 'unit1.pas', {FrPosPrinterTeste}
@@ -8,6 +7,7 @@ uses
 {$R *.res}
 
 begin
+  //ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.CreateForm(TFrPosPrinterTeste, FrPosPrinterTeste);
   Application.Run;

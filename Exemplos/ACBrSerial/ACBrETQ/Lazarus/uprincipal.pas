@@ -70,7 +70,11 @@ var
 
 implementation
 uses
-  typinfo, Printers;
+  typinfo, Printers, synautil,
+  ACBrUtil, ACBrImage
+  {$IfDef MSWINDOWS}
+  ,ACBrWinUSBDevice
+  {$EndIf};
 
 {$R *.lfm}
 
@@ -101,24 +105,32 @@ begin
 
   cbPorta.Items.Clear;
   ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
+
+  {$IfDef MSWINDOWS}
+   ACBrETQ.Device.WinUSB.FindUSBPrinters();
+   for M := 0 to ACBrETQ.Device.WinUSB.DeviceList.Count-1 do
+     cbPorta.Items.Add('USB:'+ACBrETQ.Device.WinUSB.DeviceList.Items[M].DeviceName);
+  {$EndIf}
+
   cbPorta.Items.Add('LPT1') ;
-  cbPorta.Items.Add('LPT2') ;
   cbPorta.Items.Add('\\localhost\L42') ;
-  cbPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbPorta.Items.Add('c:\temp\teste.txt') ;
   cbPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
   For M := 0 to Printer.Printers.Count-1 do
     cbPorta.Items.Add('RAW:'+Printer.Printers[M]);
 
+  {$IfNDef MSWINDOWS}
   cbPorta.Items.Add('/dev/ttyS0') ;
   cbPorta.Items.Add('/dev/ttyS1') ;
   cbPorta.Items.Add('/dev/ttyUSB0') ;
   cbPorta.Items.Add('/dev/ttyUSB1') ;
   cbPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   cbDPI.ItemIndex := 0;
-  cbModelo.ItemIndex := 3;
-  cbPorta.ItemIndex := 0;
+  cbModelo.ItemIndex := 1;
+  cbPorta.ItemIndex := 16;
 end;
 
 procedure TFPrincipal.bEtqSimplesClick(Sender: TObject);
@@ -287,6 +299,12 @@ var
   MS : TMemoryStream;
   OK: Boolean;
 begin
+  if (edNomeImg.Text = '') then
+  begin
+    ShowMessage('Defina um nome para a Imagem');
+    Exit;
+  end;
+
   AtivarACBrETQ;
 
   OK := False;
@@ -294,29 +312,32 @@ begin
 
   case ACBrETQ.Modelo of
     etqPplb: OpenPictureDialog1.Filter := 'PCX|*.pcx';
-    etqZPLII: OpenPictureDialog1.Filter := 'PCX|*.pcx|BMP MonoCromático|*.bmp|PNG|*.png|IMG|*.img';
   else
-    OpenPictureDialog1.Filter := 'PCX|*.pcx|BMP MonoCromático|*.bmp|IMG|*.img';
+    OpenPictureDialog1.Filter := 'PCX|*.pcx|BMP MonoCromático|*.bmp';
   end;
 
   if rbStream.Checked then
    begin
-     if OpenPictureDialog1.Execute then
+     if (Image1.Picture.Bitmap.Empty) then
      begin
-       MS := TMemoryStream.Create;
-       try
-         MS.LoadFromFile(OpenPictureDialog1.FileName) ;
-         ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True, ExtractFileExt(OpenPictureDialog1.FileName) );
-         OK := True;
+       if OpenPictureDialog1.Execute then
+       begin
          try
-           MS.Position := 0;
-           Image1.Picture.LoadFromStream(MS);
+           Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
          except
            Image1.Picture.Clear;
          end ;
-       finally
-         MS.Free ;
-       end ;
+       end;
+     end;
+
+     MS := TMemoryStream.Create;
+     try
+       Image1.Picture.SaveToStream(MS);
+       MS.Position := 0;
+       ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True, ExtractFileExt(OpenPictureDialog1.FileName) );
+       OK := True;
+     finally
+       MS.Free ;
      end ;
    end
   else

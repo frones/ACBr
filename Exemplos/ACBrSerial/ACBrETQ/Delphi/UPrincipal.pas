@@ -64,7 +64,7 @@ var
 
 implementation
 uses
-  typinfo;
+  Printers, typinfo;
 
 {$R *.dfm}
 
@@ -74,6 +74,7 @@ var
   J: TACBrETQDPI;
 //  K: TACBrETQUnidade;
   L: TACBrETQBackFeed;
+  M: Integer;
 begin
   cbModelo.Items.Clear ;
   For I := Low(TACBrETQModelo) to High(TACBrETQModelo) do
@@ -89,14 +90,12 @@ begin
 
   ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
   cbPorta.Items.Add('LPT1') ;
-  cbPorta.Items.Add('LPT2') ;
-  cbPorta.Items.Add('LPT3') ;
-  cbPorta.Items.Add('/dev/ttyS0') ;
-  cbPorta.Items.Add('/dev/ttyS1') ;
-  cbPorta.Items.Add('/dev/ttyUSB0') ;
-  cbPorta.Items.Add('/dev/ttyUSB1') ;
-  cbPorta.Items.Add('c:\temp\etq.txt') ;
-  cbPorta.Items.Add('/tmp/etq.txt') ;
+  cbPorta.Items.Add('\\localhost\L42') ;
+  cbPorta.Items.Add('c:\temp\teste.txt') ;
+  cbPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  For M := 0 to Printer.Printers.Count-1 do
+    cbPorta.Items.Add('RAW:'+Printer.Printers[M]);
 
   cbDPI.ItemIndex := 0;
   cbModelo.ItemIndex := 1;
@@ -261,40 +260,65 @@ end;
 procedure TFPrincipal.bCarregarImgClick(Sender : TObject);
 var
    MS : TMemoryStream ;
+   OK: Boolean;
 begin
+  if (edNomeImg.Text = '') then
+  begin
+    ShowMessage('Defina um nome para a Imagem');
+    Exit;
+  end;
+
   AtivarACBrETQ;
 
+  OK := False;
   OpenPictureDialog1.InitialDir := ExtractFileDir(Application.ExeName);
+
+  case ACBrETQ.Modelo of
+    etqPplb: OpenPictureDialog1.Filter := 'PCX|*.pcx';
+  else
+    OpenPictureDialog1.Filter := 'PCX|*.pcx|BMP MonoCromático|*.bmp';
+  end;
 
   if rbStream.Checked then
    begin
-     OpenPictureDialog1.Filter := 'BMP MonoCromático|*.bmp' ;
-     if OpenPictureDialog1.Execute then
+     if (Image1.Picture.Width = 0) then
      begin
-        Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName) ;
-        MS := TMemoryStream.Create;
-        try
-           Image1.Picture.Bitmap.SaveToStream( MS );
-           ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True,
-                                   ExtractFileExt(OpenPictureDialog1.FileName) );
-        finally
-           MS.Free ;
-        end ;
+       if OpenPictureDialog1.Execute then
+       begin
+         try
+           Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+         except
+           Image1.Picture := nil;
+         end ;
+       end;
+     end;
+
+     MS := TMemoryStream.Create;
+     try
+       Image1.Picture.Bitmap.SaveToStream(MS);
+       MS.Position := 0;
+       ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True, ExtractFileExt(OpenPictureDialog1.FileName) );
+       OK := True;
+     finally
+       MS.Free ;
      end ;
    end
   else
    begin
-      OpenPictureDialog1.Filter := 'PCX|*.pcx|BMP MonoCromático|*.bmp|IMG|*.img' ;
-      if OpenPictureDialog1.Execute then
-      begin
-         try
-            Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
-         except
-            Image1.Picture := nil;
-         end ;
-         ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, edNomeImg.Text );
-      end ;
+     if OpenPictureDialog1.Execute then
+     begin
+       ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, edNomeImg.Text );
+       OK := True;
+       try
+         Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+       except
+         Image1.Picture := nil;
+       end ;
+     end ;
    end ;
+
+  if OK then
+    MessageDlg('Imagem '+edNomeImg.Text+', carregada na memória da Impressora', mtInformation,[mbOK],0);
 
   ACBrETQ.Desativar;
 end;

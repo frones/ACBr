@@ -14,7 +14,7 @@ object FPrincipal: TFPrincipal
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.6.0'
   object gbConfiguracao: TGroupBox
     Left = 10
     Height = 255
@@ -487,7 +487,7 @@ object FPrincipal: TFPrincipal
   end
   object ACBrETQ: TACBrETQ
     Origem = ogTop
-    ArqLOG = 'C:\TEMP\etq.txt'
+    ArqLOG = 'etq.txt'
     Porta = 'LPT1'
     Ativo = False
     left = 400

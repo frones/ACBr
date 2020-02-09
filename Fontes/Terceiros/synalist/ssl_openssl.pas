@@ -424,6 +424,13 @@ function TSSLOpenSSL.Init(server:Boolean): Boolean;
 var
   s: AnsiString;
 begin
+  if not InitSSLInterface then
+  begin
+    FLastError := -1;
+    FLastErrorDesc := 'Error loading OpenSSL lib';
+    Exit;
+  end;
+
   Result := False;
   FLastErrorDesc := '';
   FLastError := 0;

@@ -485,6 +485,13 @@ begin
   a^.s6_addr[15] := 1;
 end;
 
+{$IFDEF NEXTGEN}
+function GetHostByName(const name: string):Phostent;
+begin
+  Result := Posix.NetDB.gethostbyname(MarshaledAString(TMarshal.AsAnsi(name)));
+end;
+{$ENDIF}
+
 {=============================================================================}
 
 function WSAStartup(wVersionRequired: Word; var WSData: TWSAData): Integer;
@@ -705,11 +712,13 @@ begin
     Result := (Family = AF_INET6) and SockWship6Api;
 end;
 
+{
 function gethostbyname(name: pointer): PHostEnt; cdecl;
   external libc name _PU + 'gethostbyname';
 
 function gethostbyaddr(var addr; len: socklen_t; atype: integer): PHostEnt; cdecl;
   external libc name _PU + 'gethostbyaddr';
+}
 
 function SetVarSin(var Sin: TVarSin; IP, Port: string; Family, SockProtocol, SockType: integer; PreferIP4: Boolean): integer;
 var

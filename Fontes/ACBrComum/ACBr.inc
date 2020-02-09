@@ -172,6 +172,9 @@
 {$IfDEF DELPHIXE_UP}
   {$DEFINE HAS_BLUETOOTH}
 {$ENDIF}
+{$IFDEF DELPHI2009_UP}
+  {$DEFINE USE_JSONDATAOBJECTS_UNIT}
+{$ENDIF}
 
 // Definições multi-plataforma
 //------------------------------------------------------------------------------
@@ -222,6 +225,10 @@
   {$IFDEF QUnit}
     {$UNDEF VCL}
     {$DEFINE VisualCLX}
+  {$ENDIF}
+
+  {$IFDEF FMX}
+    {$UNDEF VCL}
   {$ENDIF}
 
   {$IFDEF VCL}

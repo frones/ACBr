@@ -94,18 +94,29 @@ const
   piacbrWinARM32       = $00000800; // Windows 32-bit ARM processor (raspberry pi)
 
 
-  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 or piacbrOSX32
+  piacbrAllDesktopPlatforms = piacbrWin32 or piacbrWin64 or piacbrOSX32
   {$IFDEF DELPHIXE3_UP}
-    or piacbriOSSimulator32 or piacbrAndroid32Arm or piacbrLinux32 or piacbriOSDevice32 or piacbrWinNX32
+    or piacbrLinux32 or piacbrWinNX32
   {$ENDIF}
   {$IFDEF DELPHIXE8_UP}
-    or piacbriOSDevice64 or piacbrLinux64 or piacbrWinIoT32
+    or piacbrLinux64
+  {$ENDIF}
+  {$IFDEF DELPHIX_BERLIN_UP}
+    or piacbrOSX64 or piacbrLinux32Arm or piacbrLinux64Arm
+  {$ENDIF};
+
+  piacbrAllPlatforms = piacbrAllDesktopPlatforms
+  {$IFDEF DELPHIXE3_UP}
+    or piacbriOSSimulator32 or piacbrAndroid32Arm or piacbriOSDevice32
+  {$ENDIF}
+  {$IFDEF DELPHIXE8_UP}
+    or piacbriOSDevice64 or piacbrWinIoT32
   {$ENDIF}
   {$IFDEF DELPHIX_SEATTLE_UP}
     or piacbrWinARM32
   {$ENDIF}
   {$IFDEF DELPHIX_BERLIN_UP}
-    or piacbrOSX64 or piacbrLinux32Arm or piacbrLinux64Arm or piacbrAndroid64Arm
+    or piacbrAndroid64Arm
   {$ENDIF}
   {$IFDEF DELPHIX_RIO_UP}
     or piacbriOSSimulator64
@@ -134,8 +145,8 @@ type
   {$IfDef NEXTGEN}
     AnsiString = RawByteString;
     AnsiChar = UTF8Char;
-    PAnsiChar = PUTF8Char;
-    PPAnsiChar = ^PUTF8Char;
+    PAnsiChar = MarshaledAString;
+    PPAnsiChar = ^MarshaledAString;
     WideString = String;
   {$EndIf}
 {$EndIf}
@@ -170,12 +181,13 @@ TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
     Procedure Insert(Index: Integer; AObject: TObject);
     {$IfDef NEXTGEN}
      procedure Sort(const AComparer: IComparer<TObject>);
+     function FindObject(Item: TObject; AComparer: IComparer<TObject>; Nearest: Boolean = False): Integer;
      procedure Assign(ObjectListSource: TObjectList<TObject>);
+     procedure Clear; virtual;
     {$Else}
      procedure Sort(Compare: TListSortCompare);
+     function FindObject(Item: Pointer; AComparer: TListSortCompare; Nearest: Boolean = False): Integer;
     {$EndIf}
-
-    function FindObject(Item: Pointer; Compare: TListSortCompare; Nearest: Boolean = False): Integer;
   end;
 
 { TACBrThreadTimer }
@@ -341,6 +353,10 @@ end;
      Add(ObjectListSource[I]);
  end;
 
+procedure TACBrObjectList.Clear;
+begin
+  inherited Clear;
+end;
 {$Else}
  procedure TACBrObjectList.Sort(Compare: TListSortCompare);
  begin
@@ -349,13 +365,16 @@ end;
  end;
 {$EndIf}
 
-{ Inspirado de http://www.avdf.com/mar97/delf_sortlist.html }
-
-function TACBrObjectList.FindObject(Item: Pointer; Compare: TListSortCompare;
-  Nearest: Boolean): Integer;
+{$IfDef NEXTGEN}
+function TACBrObjectList.FindObject(Item: TObject; AComparer: IComparer<TObject>; Nearest: Boolean = False): Integer;
+{$Else}
+function TACBrObjectList.FindObject(Item: Pointer; AComparer: TListSortCompare; Nearest: Boolean): Integer;
+{$EndIf}
 var
   nLow, nHigh, nCompare, nCheckPos : Integer;
 begin
+  { Inspirado de http://www.avdf.com/mar97/delf_sortlist.html }
+
   if not fIsSorted then
     raise Exception.Create('Lista de Objetos não foi ordanada por chamada ao método "Sort"');
 
@@ -367,7 +386,11 @@ begin
   while (Result = -1) and (nLow <= nHigh) do
   begin
     nCheckPos := (nLow + nHigh) div 2;
-    nCompare := Compare(Item,Pointer(Items[nCheckPos]));
+    {$IfDef NEXTGEN}
+     nCompare := AComparer.Compare(Item,Items[nCheckPos]);
+    {$Else}
+     nCompare := AComparer(Item,Pointer(Items[nCheckPos]));
+    {$EndIf}
     if (nCompare = -1) then                // less than
       nHigh := nCheckPos - 1
     else if (nCompare = 1) then            // greater than
@@ -375,7 +398,8 @@ begin
     else                                   // equal to
       Result := nCheckPos;
   end;
-   if (Result = -1) and Nearest then
+
+  if (Result = -1) and Nearest then
     Result := nLow;
 end;
 

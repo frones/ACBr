@@ -37,6 +37,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/02/2020
+-- ACBrBase --
+[+] Criado novo PID, "piacbrAllDesktopPlatforms", para ser usado nos componentes
+	que não fazem sentido para Mobile
+[*] TACBrObjectList, novos ajustes para compiladores NEXTGEN
+	(por: DSA)
+	
+-- ACBr.inc --
+[+] Novas verificações e chaves, para definir se usa a Classe JSonDataObjects	
+	(por: DSA)
+		
 Data: 23/01/2020
 -- ACBrUtil --
 [*] Revisão de alguns métodos que usavam AnsiString desnecessáriamente

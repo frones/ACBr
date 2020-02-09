@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -52,8 +48,8 @@ unit ACBrCEP ;
 interface
 
 uses
-  Classes, SysUtils, contnrs,
-  ACBrBase, ACBrSocket, ACBrIBGE, Jsons;
+  Classes, SysUtils,
+  ACBrBase, ACBrSocket, ACBrIBGE;
 
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
@@ -101,7 +97,7 @@ type
 
   { TACBrCEPEnderecos }
 
-  TACBrCEPEnderecos = class(TObjectList)
+  TACBrCEPEnderecos = class(TACBrObjectList)
     protected
       procedure SetObject (Index: Integer; Item: TACBrCEPEndereco);
       function GetObject (Index: Integer): TACBrCEPEndereco;
@@ -343,7 +339,15 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
 
 implementation
 
-uses strutils, math, synacode, ACBrUtil ;
+uses
+  strutils, math,
+  synacode, synautil,
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonDataObjects,
+  {$Else}
+    Jsons,
+  {$EndIf}
+  ACBrUtil, ACBrConsts;
 
 { TACBrCEPEndereco ************************************************************}
 
@@ -369,12 +373,12 @@ end;
 
 procedure TACBrCEPEnderecos.SetObject(Index : Integer ; Item : TACBrCEPEndereco) ;
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end ;
 
 function TACBrCEPEnderecos.GetObject(Index : Integer) : TACBrCEPEndereco ;
 begin
-  Result := inherited GetItem(Index) as TACBrCEPEndereco ;
+  Result := TACBrCEPEndereco(inherited Items[Index]);
 end ;
 
 procedure TACBrCEPEnderecos.Insert(Index : Integer ; Obj : TACBrCEPEndereco) ;
@@ -771,53 +775,41 @@ end;
 
 procedure TACBrWSBases4you.BuscarPorCEP(const ACEP: String);
 var
-  Acao: TStringList;
-  Stream: TMemoryStream;
+  Acao: String;
 begin
-  Acao   := TStringList.Create;
-  Stream := TMemoryStream.Create;
+  Acao :=
+   '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
+   '<SOAP-ENV:Envelope '+
+     'xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '+
+     'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '+
+     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+     'xmlns:tns="urn:cepwsdl" '+
+     'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '+
+     'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '+
+     'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" >'+
+     '<SOAP-ENV:Body>'+
+       '<mns:ConsultaCEP '+
+         'xmlns:mns="urn:cepwsdl" '+
+         'SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">'+
+         '<userkey xsi:type="xsd:string">' + Trim( fOwner.ChaveAcesso ) + '</userkey>'+
+         '<cep xsi:type="xsd:string">' + OnlyNumber( ACEP ) + '</cep>'+
+       '</mns:ConsultaCEP>'+
+     '</SOAP-ENV:Body>'+
+   '</SOAP-ENV:Envelope>';
+
   try
-    Acao.Text :=
-     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
-     '<SOAP-ENV:Envelope '+
-       'xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '+
-       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '+
-       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
-       'xmlns:tns="urn:cepwsdl" '+
-       'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '+
-       'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '+
-       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" >'+
-       '<SOAP-ENV:Body>'+
-         '<mns:ConsultaCEP '+
-           'xmlns:mns="urn:cepwsdl" '+
-           'SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">'+
-           '<userkey xsi:type="xsd:string">' + Trim( fOwner.ChaveAcesso ) + '</userkey>'+
-           '<cep xsi:type="xsd:string">' + OnlyNumber( ACEP ) + '</cep>'+
-         '</mns:ConsultaCEP>'+
-       '</SOAP-ENV:Body>'+
-     '</SOAP-ENV:Envelope>';
-
-    try
-      Acao.SaveToStream(Stream);
-
-      fOwner.HTTPSend.Clear;
-      fOwner.HTTPSend.Document.LoadFromStream(Stream);
-      fOwner.HTTPSend.Headers.Add( 'SoapAction: "urn:cepwsdl#ConsultaCEP"' );
-      fOwner.HTTPPost(fpURL);
-
-//      ProcessaResposta;
-    except
-      on E: Exception do
-      begin
-        raise EACBrCEPException.Create(
-          'Ocorreu o seguinte erro ao consumir o webService base4you:' + sLineBreak +
-          '  - ' + E.Message
-        );
-      end;
+    fOwner.HTTPSend.Clear;
+    WriteStrToStream( fOwner.HTTPSend.Document, Acao);
+    fOwner.HTTPSend.Headers.Add( 'SoapAction: "urn:cepwsdl#ConsultaCEP"' );
+    fOwner.HTTPPost(fpURL);
+  except
+    on E: Exception do
+    begin
+      raise EACBrCEPException.Create(
+        'Ocorreu o seguinte erro ao consumir o webService base4you:' + sLineBreak +
+        '  - ' + E.Message
+      );
     end;
-  finally
-    Stream.Free;
-    Acao.Free;
   end;
 end;
 
@@ -1506,13 +1498,9 @@ end;
 
 procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(const ACEP: String);
 var
-  Acao: TStringList;
-  Stream: TMemoryStream;
+  Acao: String;
 begin
-  Acao   := TStringList.Create;
-  Stream := TMemoryStream.Create;
-  try
-    Acao.Text :=
+  Acao :=
      '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
      '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
      'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> '+
@@ -1524,29 +1512,23 @@ begin
      ' </soapenv:Body>' +
      ' </soapenv:Envelope>';
 
-    try
-      Acao.SaveToStream(Stream);
+  try
+    fOwner.HTTPSend.Clear;
+    WriteStrToStream(fOwner.HTTPSend.Document, Acao);
+    fOwner.HTTPPost(fpURL);
 
-      fOwner.HTTPSend.Clear;
-      fOwner.HTTPSend.Document.LoadFromStream(Stream);
-      fOwner.HTTPPost(fpURL);
-
-      ProcessaResposta;
-    except
-      on E: Exception do
-      begin
-        if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
-          raise EACBrCEPException.Create('CEP NAO ENCONTRADO')
-        else
-          raise EACBrCEPException.Create(
-            'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak +
-            '  - ' + E.Message
-          );
-      end;
+    ProcessaResposta;
+  except
+    on E: Exception do
+    begin
+      if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
+        raise EACBrCEPException.Create('CEP NAO ENCONTRADO')
+      else
+        raise EACBrCEPException.Create(
+          'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak +
+          '  - ' + E.Message
+        );
     end;
-  finally
-    Stream.Free;
-    Acao.Free;
   end;
 end;
 
@@ -1656,7 +1638,7 @@ begin
 
   fOwner.HTTPSend.Clear;
   fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
-  fOwner.HTTPMethod('GET', fpURL+'estado' + Parametros);
+  fOwner.HTTPMethod('GET', fpURL+'address?' + Parametros);
 
   ProcessaResposta;
 end;
@@ -1691,71 +1673,50 @@ end;
 procedure TACBrWSCEPAberto.ProcessaResposta;
 var
   Buffer: string;
-  s: string;
-  i: Integer;
-  SL1: TStringList;
-
-  function LerTagJson(AJsonStr, ATag: String): string;
-  var
-    VJson: TJson;
-    VTag, VTag2: string;
-  begin
-    VJson := TJson.Create;
-    try
-      VJson.Parse(AJsonStr);
-
-      if(Pos('->', ATag) > 0)then
-      begin
-        VTag := LeftStr(ATag, Pos('->', ATag)-1);
-        VTag2 := Copy(ATag, Length(VTag)+3, MaxInt);
-        ATag := VTag;
-      end;
-
-      //Se for um objeto de valores, entra na recursao
-      if(VJson.Get(ATag).ValueType = jvObject)then
-        Result := LerTagJson(VJson.Get(ATag).Stringify, VTag2)
-      else
-        Result := VJson.Get(ATag).AsString;
-    finally
-      VJson.Free;
-    end;
-  end;
-
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  AJson: TJsonObject;
+  {$Else}
+  AJson: TJson;
+  {$EndIf}
 begin
-  SL1 := TStringList.Create;
-  try
-    Buffer := fOwner.RespHTTP.Text;
+  Buffer := fOwner.RespHTTP.Text;
 
-    Buffer := StringReplace(Buffer, '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<cep>', '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<resposta>', [rfReplaceAll]);
-    Buffer := StringReplace(Buffer, '</estado>'+ sLineBreak+'</cep>', '</estado>'+ sLineBreak+'</resposta>', [rfReplaceAll]);
-    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
-
-    SL1.Text := Buffer;
-
-    for i := 0 to SL1.Count-1 do
-    begin
-      s := SL1.Strings[i];
-
-      if LerTagJson(s, 'cep') <> '' then
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonSerializationConfig.NullConvertsToValueTypes:=True;
+    AJSon := TJsonObject.Parse(Buffer) as TJsonObject;
+    try
+      with fOwner.Enderecos.New do
       begin
-        with fOwner.Enderecos.New do
-        begin
-          CEP             := LerTagJson(s, 'cep');
-          Logradouro      := LerTagJson(s, 'logradouro');
-          Complemento     := LerTagJson(s, 'complemento');
-          Bairro          := LerTagJson(s, 'bairro');
-          Municipio       := LerTagJson(s, 'cidade->nome');
-          UF              := LerTagJson(s, 'estado->sigla');
-          IBGE_Municipio  := LerTagJson(s, 'cidade->ibge');
-          Altitude        := LerTagJson(s, 'altitude');
-          Latitude        := LerTagJson(s, 'latitude');
-          Longitude       := LerTagJson(s, 'longitude');
-        end;
+        CEP := AJson.S['cep'];
+        Bairro := AJson.S['bairro'];
+        Logradouro := AJson.S['logradouro'];
+        Municipio := AJson.O['cidade'].S['nome'];
+        IBGE_Municipio := AJson.O['cidade'].S['ibge'];
+        UF := AJson.O['estado'].S['sigla'];
       end;
+    finally
+      AJSon.Free;
     end;
-  finally
-    SL1.Free;
-  end;
+  {$Else}
+    AJSon := TJson.Create;
+    try
+      AJSon.Parse(Buffer);
+      with fOwner.Enderecos.New do
+      begin
+        CEP := AJson.Values['cep'].AsString;
+        Bairro := AJson.Values['bairro'].AsString;
+        Logradouro := AJson.Values['logradouro'].AsString;
+        with AJson.Values['cidade'].AsObject do
+        begin
+          Municipio := Values['nome'].AsString;
+          IBGE_Municipio := Values['ibge'].AsString;
+        end;
+        UF := AJson.Values['estado'].AsObject.Values['sigla'].AsString;
+      end;
+    finally
+      AJson.Free;
+    end;
+  {$EndIf}
 
   if Assigned(fOwner.OnBuscaEfetuada) then
     fOwner.OnBuscaEfetuada(Self);

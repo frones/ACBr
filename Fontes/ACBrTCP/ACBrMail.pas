@@ -3,18 +3,14 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Jean Patrick Figueiredo dos Santos     }
-{                                       Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo:  Jean Patrick Figueiredo dos Santos             }
 {         Silvio Clécio - xmailer - https://github.com/silvioprog/xmailer      }
 {         Projeto PHPMailer - https://github.com/Synchro/PHPMailer             }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -32,8 +28,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -51,7 +47,7 @@ unit ACBrMail;
 interface
 
 uses
-  Classes, syncobjs, SysUtils, contnrs,
+  Classes, syncobjs, SysUtils,
   SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil,
   ACBrBase;
 
@@ -90,7 +86,7 @@ type
 
   { TMailAttachments }
 
-  TMailAttachments = class( TObjectList )
+  TMailAttachments = class(TACBrObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TMailAttachment);
     function GetObject (Index: Integer): TMailAttachment;
@@ -320,12 +316,12 @@ end;
 
 procedure TMailAttachments.SetObject(Index: Integer; Item: TMailAttachment);
 begin
-  inherited SetItem (Index, Item) ;
+   inherited Items[Index] := Item;
 end;
 
 function TMailAttachments.GetObject(Index: Integer): TMailAttachment;
 begin
-  Result := inherited GetItem(Index) as TMailAttachment ;
+  Result := TMailAttachment(inherited Items[Index]);
 end;
 
 procedure TMailAttachments.Insert(Index: Integer; Obj: TMailAttachment);
@@ -514,7 +510,7 @@ begin
   fAttachments.Clear;
   SetPriority(MP_normal);
   fDefaultCharsetCode := UTF_8;
-  fIDECharsetCode := {$IFDEF FPC}UTF_8{$ELSE}CP1252{$ENDIF};
+  fIDECharsetCode := {$IfDef FPC}UTF_8{$Else}{$IfDef MSWINDOWS}CP1252{$Else}UTF_8{$EndIf}{$EndIf};
   fReadingConfirmation := False;
   fDeliveryConfirmation := False;
   fIsHTML := False;
@@ -626,38 +622,18 @@ var
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
   AAttachment: TMailAttachment;
-
-  function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
-    CharTo: TMimeChar): String;
-  begin
-    Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
-  end;
-
 begin
   if Assigned(OnBeforeMailProcess) then
     OnBeforeMailProcess( self );
 
   MailProcess(pmsStartProcess);
 
-  // Encoding according to IDE and Mail Charset //
-  if fDefaultCharsetCode <> fIDECharsetCode then
-  begin
-    if fBody.Count > 0 then
-      fBody.Text := InternalCharsetConversion(fBody.Text, fIDECharsetCode, fDefaultCharsetCode);
-
-    if fAltBody.Count > 0 then
-      fAltBody.Text := InternalCharsetConversion(fAltBody.Text, fIDECharsetCode, fDefaultCharsetCode);
-  end;
-
   // Configuring the Headers //
   MailProcess(pmsConfigHeaders);
 
   fMIMEMess.Header.CharsetCode := fDefaultCharsetCode;
-
-  if fDefaultCharsetCode <> fIDECharsetCode then
-    fMIMEMess.Header.Subject := InternalCharsetConversion(fSubject, fIDECharsetCode, fDefaultCharsetCode)
-  else
-    fMIMEMess.Header.Subject := fSubject;
+  fMIMEMess.Header.TargetCharset := fIDECharsetCode;
+  fMIMEMess.Header.Subject := fSubject;
 
   if Trim(fFromName) <> '' then
     fMIMEMess.Header.From := '"' + fFromName + '" <' + From + '>'
@@ -679,14 +655,17 @@ begin
   // Inspiration: http://www.ararat.cz/synapse/doku.php/public:howto:mimeparts
   MailProcess(pmsAddingMimeParts);
 
-  NeedMultiPartRelated := (fIsHTML and (fBody.Count > 0)) and (fAltBody.Count > 0);
+  // Encoding according to IDE and Mail Charset //
+  NeedMultiPartRelated := fIsHTML and (fBody.Count > 0) and (fAltBody.Count > 0);
 
   // The Root //
   MultiPartParent := fMIMEMess.AddPartMultipart( IfThen(NeedMultiPartRelated, 'alternative', 'mixed'), nil );
   MultiPartParent.CharsetCode := fDefaultCharsetCode;
+  MultiPartParent.TargetCharset := fIDECharsetCode;
+  MultiPartParent.ConvertCharset := (fDefaultCharsetCode <> fIDECharsetCode);
 
   // Text part //
-  if fAltBody.Count > 0 then
+  if (fAltBody.Count > 0) then
   begin
     with fMIMEMess.AddPart( MultiPartParent ) do
     begin
@@ -696,8 +675,9 @@ begin
       Description := 'Message text';
       Disposition := 'inline';
       CharsetCode := fDefaultCharsetCode;
-      TargetCharset := fDefaultCharsetCode;
-      EncodingCode := ME_QUOTED_PRINTABLE;
+      TargetCharset := fIDECharsetCode;
+      ConvertCharset := (fDefaultCharsetCode <> fIDECharsetCode);
+      EncodingCode := ME_BASE64;
       EncodePart;
       EncodePartHeader;
     end;
@@ -708,6 +688,8 @@ begin
   begin
     MultiPartParent := fMIMEMess.AddPartMultipart( 'related', MultiPartParent );
     MultiPartParent.CharsetCode := fDefaultCharsetCode;
+    MultiPartParent.TargetCharset := fIDECharsetCode;
+    MultiPartParent.ConvertCharset := (fDefaultCharsetCode <> fIDECharsetCode);
   end;
 
   if fIsHTML and (fBody.Count > 0) then
@@ -721,8 +703,9 @@ begin
       Description := 'HTML text';
       Disposition := 'inline';
       CharsetCode := fDefaultCharsetCode;
-      TargetCharset := fDefaultCharsetCode;
-      EncodingCode := ME_QUOTED_PRINTABLE;
+      TargetCharset := fIDECharsetCode;
+      ConvertCharset := (fDefaultCharsetCode <> fIDECharsetCode);
+      EncodingCode := ME_BASE64;
       EncodePart;
       EncodePartHeader;
     end;
@@ -732,18 +715,14 @@ begin
   for i := 0 to fAttachments.Count-1 do
   begin
     AAttachment := fAttachments[i];
-
-    BodyHasImage := pos(':'+LowerCase(AAttachment.Description),
-                        LowerCase(fBody.Text)) > 0;
+    BodyHasImage := pos(':'+LowerCase(AAttachment.Description), LowerCase(fBody.Text)) > 0;
 
     AAttachment.Stream.Position := 0;
-
     MimePartAttach := fMIMEMess.AddPart(MultiPartParent);
     MimePartAttach.DecodedLines.LoadFromStream(AAttachment.Stream);
     MimePartAttach.MimeTypeFromExt(AAttachment.FileName);
     MimePartAttach.Description := AAttachment.Description;
     case AAttachment.Disposition of
-      adAttachment: MimePartAttach.Disposition := 'attachment';
       adInline: MimePartAttach.Disposition := 'inline';
     else
       MimePartAttach.Disposition := 'attachment';
@@ -754,7 +733,9 @@ begin
     MimePartAttach.FileName    := AAttachment.FileName;
     MimePartAttach.EncodingCode:= ME_BASE64;
     MimePartAttach.PrimaryCode := MP_BINARY;  // To avoid MP_TEXT internal conversion ;
-    MimePartAttach.CharsetCode := fDefaultCharsetCode;
+    MimePartAttach.CharsetCode := fIDECharsetCode;
+    MimePartAttach.TargetCharset := fIDECharsetCode;
+    MimePartAttach.ConvertCharset := False;
 
     MimePartAttach.EncodePart;
     MimePartAttach.EncodePartHeader;
@@ -770,7 +751,24 @@ procedure TACBrMail.SendMail;
 var
   vAttempts: Byte;
   c, i: Integer;
+  ErrorMsgs: String;
+
+  procedure AddErrorMsg(const AError: String);
+  begin
+    if Trim(AError) = '' then
+      Exit;
+
+    if (pos(AError, ErrorMsgs) = 0) then
+    begin
+      if (ErrorMsgs <> '') then
+        ErrorMsgs := ErrorMsgs + sLineBreak;
+
+      ErrorMsgs := ErrorMsgs + AError;
+    end;
+  end;
+
 begin
+  ErrorMsgs := '';
   BuildMimeMess;
 
   if fTimeOut > 0 then
@@ -792,8 +790,9 @@ begin
     if fSMTP.Login then
       Break;
 
+    AddErrorMsg(fSMTP.ResultString);
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to Login.' + sLineBreak + SMTP.ResultString);
+      SmtpError('SMTP Error: Unable to Login.' + sLineBreak + ErrorMsgs);
   end;
 
   if fDeliveryConfirmation then
@@ -812,8 +811,9 @@ begin
     if fSMTP.MailFrom(fFrom, Length(fFrom)) then
       Break;
 
+    AddErrorMsg(fSMTP.ResultString);
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to send MailFrom.' + sLineBreak + SMTP.ResultString);
+      SmtpError('SMTP Error: Unable to send MailFrom.' + sLineBreak + ErrorMsgs);
   end;
 
   // Sending MailTo //
@@ -823,11 +823,12 @@ begin
   begin
     for vAttempts := 1 to fAttempts do
     begin
-      if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.ToList.Strings[i]))then
+      if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.ToList[i]))then
         Break;
 
+      AddErrorMsg(fSMTP.ResultString);
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send MailTo.' + sLineBreak + SMTP.ResultString);
+        SmtpError('SMTP Error: Unable to send MailTo.' + sLineBreak + ErrorMsgs);
     end;
   end;
 
@@ -840,11 +841,12 @@ begin
   begin
     for vAttempts := 1 to fAttempts do
     begin
-      if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.CCList.Strings[i])) then
+      if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.CCList[i])) then
         Break;
 
+      AddErrorMsg(fSMTP.ResultString);
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send CC list.' + sLineBreak + SMTP.ResultString);
+        SmtpError('SMTP Error: Unable to send CC list.' + sLineBreak + ErrorMsgs);
     end;
   end;
 
@@ -857,11 +859,12 @@ begin
   begin
     for vAttempts := 1 to fAttempts do
     begin
-      if fSMTP.MailTo(GetEmailAddr(fBCC.Strings[I])) then
+      if fSMTP.MailTo(GetEmailAddr(fBCC[I])) then
         Break;
 
+      AddErrorMsg(fSMTP.ResultString);
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send BCC list.' + sLineBreak + SMTP.ResultString);
+        SmtpError('SMTP Error: Unable to send BCC list.' + sLineBreak + ErrorMsgs);
     end;
   end;
 
@@ -873,8 +876,9 @@ begin
     if fSMTP.MailData(fMIMEMess.Lines) then
       Break;
 
+    AddErrorMsg(fSMTP.ResultString);
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to send Mail data.' + sLineBreak + SMTP.ResultString);
+      SmtpError('SMTP Error: Unable to send Mail data.' + sLineBreak + ErrorMsgs);
   end;
 
   // Login out from SMTP //
@@ -885,8 +889,9 @@ begin
     if fSMTP.Logout then
       Break;
 
+    AddErrorMsg(fSMTP.ResultString);
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to Logout.' + sLineBreak + SMTP.ResultString);
+      SmtpError('SMTP Error: Unable to Logout.' + sLineBreak + ErrorMsgs);
   end;
 
   // Done //

@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Régys Silveira                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -47,7 +44,7 @@ unit ACBrIBPTax;
 interface
 
 uses
-  Contnrs, SysUtils, Variants, Classes,
+  SysUtils, Variants, Classes,
   ACBrBase, ACBrSocket;
 
 type
@@ -130,7 +127,7 @@ type
     property Municipal: Double read FMunicipal write FMunicipal;
   end;
 
-  TACBrIBPTaxRegistros = class(TObjectList)
+  TACBrIBPTaxRegistros = class(TACBrObjectList)
   private
     function GetItem(Index: integer): TACBrIBPTaxRegistro;
     procedure SetItem(Index: integer; const Value: TACBrIBPTaxRegistro);
@@ -264,7 +261,7 @@ end;
 procedure TACBrIBPTaxRegistros.SetItem(Index: integer;
   const Value: TACBrIBPTaxRegistro);
 begin
-  Put(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TACBrIBPTax }

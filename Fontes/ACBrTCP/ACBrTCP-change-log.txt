@@ -37,6 +37,36 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2020
+-- ACBrTCP --
+[*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,
+    Android e Linux
+
+-- ACBrCEP --
+[-] Correção no funcionamento de TACBrWSCEPAberto, para a API V3 e JSonDataObjects
+[*] Simplificação nas classes: TACBrWSBases4you e TACBrWSCorreiosSIGEP, para
+    evitar problemas de Encoding
+
+-- ACBrIBGE --
+[-] Correção na leitura de Estatísticas de Cidades
+[*] Melhoria no tratamento da resposta do WebService para detectar se está ou não
+    compatada
+[*] Modificação para fazer uso de JSonDataObjects quando possível, agilizando
+    muito o tempo de tratamento da resposta em JSon
+    (por: DSA)
+
+-- ACBrMail --
+[*] Diversas modificações em "BuildMimeMess", para permitir o Encoding correto
+    em diversas plataforma e sem a dependência da libIconv
+[*] EncodeParts modificados para usar Base64
+[+] Melhoria para exibir todos os erros de SMTP, quando o componente está
+    configurado, para várias tentativas
+    https://www.projetoacbr.com.br/forum/topic/56158-bug-detectado-em-acbrmail/
+
+-- ACBrSuframa --
+[*] Simplificação na chamada do WebService, para evitar problemas de Encoding
+
+
 18/12/2019
 -- ACBrConsultaCNPJ --
 [-] Correção de URLs, após mudança no servidor da SEFAZ

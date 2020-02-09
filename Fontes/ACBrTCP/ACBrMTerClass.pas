@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2016 Elias César Vieira                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Daniel Simões de Almeida                        }
+{ Colaboradores nesse arquivo:     Elias César Vieira                          }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -48,7 +44,8 @@ unit ACBrMTerClass;
 interface
 
 uses
-  Classes, SysUtils, contnrs;
+  Classes, SysUtils,
+  ACBrBase;
 
 type
   { TACBrMTerComando }
@@ -68,7 +65,7 @@ type
 
   { TACBrMTerComandos }
 
-  TACBrMTerComandos = class(TObjectList)
+  TACBrMTerComandos = class(TACBrObjectList)
   private
     function GetObject(aIndex: Integer): TACBrMTerComando;
     procedure SetObject(aIndex: Integer; aItem: TACBrMTerComando);
@@ -143,12 +140,12 @@ end;
 
 function TACBrMTerComandos.GetObject(aIndex: Integer): TACBrMTerComando;
 begin
-  Result := inherited GetItem(aIndex) as TACBrMTerComando;
+  Result := TACBrMTerComando(inherited Items[aIndex]);
 end;
 
 procedure TACBrMTerComandos.SetObject(aIndex: Integer; aItem: TACBrMTerComando);
 begin
-  inherited SetItem(aIndex, aItem);
+  inherited Items[aIndex] := aItem;
 end;
 
 function TACBrMTerComandos.New(const AComando: AnsiString; ATimeOut: Integer
@@ -273,7 +270,7 @@ begin
   if (ALen < 1) then
     Exit;
 
-  if CharInSet(aRecebido[1], [ACK,NAK]) then
+  if CharInSet(Char(aRecebido[1]), [ACK,NAK]) then
     Exit;
 
   Result := aRecebido;
@@ -304,7 +301,7 @@ begin
   begin
     aChar := aString[I];
     { Mantem apenas Letras/Numeros/Pontos/Sinais e BackSpace (#8) }
-    if not CharInSet(aChar, [#32..#126,#8]) then
+    if not CharInSet(Char(aChar), [#32..#126,#8]) then
       Continue;
 
     Result := Result + aChar;

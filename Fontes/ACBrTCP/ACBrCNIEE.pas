@@ -3,16 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
-{                                       Régys Silveira                         }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo:    Régys Silveira                               }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -30,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -49,7 +44,7 @@ unit ACBrCNIEE;
 interface
 
 uses
-  Contnrs,  SysUtils, Variants, Classes,
+  SysUtils, Variants, Classes,
   ACBrBase, ACBrUtil, ACBrSocket;
 
 const
@@ -60,22 +55,42 @@ type
 
   TACBrCNIEEExporta = (exTXT, exCSV, exDSV, exXML, exHTML);
 
+{$IfDef NEXTGEN}
+  // NextGen não suporta "String[2]"
   TRegistro = packed record
-    Marca        : string[2];
-    Modelo       : string[2];
-    Versao       : string[2];
-    Tipo         : string[10];
-    MarcaDescr   : string[30];
-    ModeloDescr  : string[30];
-    VersaoSB     : string[20];
+    Marca        : array [0..2] of byte;
+    Modelo       : array [0..2] of byte;
+    Versao       : array [0..2] of byte;
+    Tipo         : array [0..10] of byte;
+    MarcaDescr   : array [0..30] of byte;
+    ModeloDescr  : array [0..30] of byte;
+    VersaoSB     : array [0..20] of byte;
     QtLacreSL    : Integer;
     QTLacreFab   : Integer;
-    MFD          : string[3];
-    LacreMFD     : string[3];
-    AtoAprovacao : string[25];
-    AtoRegistroMG: string[25];
-    FormatoNumero: string[20];
+    MFD          : array [0..3] of byte;
+    LacreMFD     : array [0..3] of byte;
+    AtoAprovacao : array [0..25] of byte;
+    AtoRegistroMG: array [0..25] of byte;
+    FormatoNumero: array [0..20] of byte;
   end;
+{$Else}
+  TRegistro = packed record
+    Marca        : String[2];
+    Modelo       : String[2];
+    Versao       : String[2];
+    Tipo         : String[10];
+    MarcaDescr   : String[30];
+    ModeloDescr  : String[30];
+    VersaoSB     : String[20];
+    QtLacreSL    : Integer;
+    QTLacreFab   : Integer;
+    MFD          : String[3];
+    LacreMFD     : String[3];
+    AtoAprovacao : String[25];
+    AtoRegistroMG: String[25];
+    FormatoNumero: String[20];
+  end;
+{$EndIf}
 
   TACBrCNIEERegistro = class
   private
@@ -110,7 +125,7 @@ type
     property QtLacresFab: Integer read FQtLacresFab write FQtLacresFab;
   end;
 
-  TACBrCNIEERegistros = class(TObjectList)
+  TACBrCNIEERegistros = class(TACBrObjectList)
   private
     function GetItem(Index: integer): TACBrCNIEERegistro;
     procedure SetItem(Index: integer; const Value: TACBrCNIEERegistro);
@@ -156,7 +171,7 @@ type
 implementation
 
 uses
-  StrUtils;
+  StrUtils, Math;
 
 { TACBrCNIEERegistros }
 
@@ -174,7 +189,7 @@ end;
 procedure TACBrCNIEERegistros.SetItem(Index: integer;
   const Value: TACBrCNIEERegistro);
 begin
-  Put(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TACBrCNIEE }
@@ -208,7 +223,7 @@ begin
 
   try
      HTTPGet( FURLDownload );
-     HTTPSend.Document.Seek(0, soFromBeginning);
+     HTTPSend.Document.Seek(0, soBeginning);
      HTTPSend.Document.SaveToFile( FArquivo );
      Result := True;
 
@@ -217,7 +232,7 @@ begin
         URLVersao     := StringReplace( FURLDownload, 'Tabela_CNIEE.bin', 'versao.txt', [] ) ;
         ArquivoVersao := ExtractFilePath( FArquivo ) + 'versao.txt';
         HTTPGet( URLVersao );
-        HTTPSend.Document.Seek(0, soFromBeginning);
+        HTTPSend.Document.Seek(0, soBeginning);
         HTTPSend.Document.SaveToFile( ArquivoVersao );
      except
      end ;
@@ -227,6 +242,27 @@ begin
 end;
 
 function TACBrCNIEE.AbrirTabela: Boolean;
+
+{$IfDef NEXTGEN}
+function RecordToString(const Arr: Array of Byte): String;
+var
+  i, l: Integer;
+begin
+  Result := '';
+  l := min(Arr[0], High(Arr));
+  // Primeiro byte informa o tamanho
+  for i := 1 to l do
+    Result := Result + chr(Arr[i]);
+
+  Result := Trim(Result);  // Remove caracteres de controle (STX)
+end;
+{$Else}
+function RecordToString(const ARecord:  String): String;
+begin
+  Result := Trim(string(ARecord))
+end;
+{$EndIf}
+
 var
   F: file of TRegistro;
   Registro: TRegistro;
@@ -252,20 +288,20 @@ begin
 
       with FCadastros.New do
       begin
-        CodMarca             := Trim(string(Registro.Marca));
-        CodModelo            := Trim(string(Registro.Modelo));
-        CodVersao            := Trim(string(Registro.Versao));
-        TipoECF              := Trim(string(Registro.Tipo));
-        DescrMarca           := Trim(string(Registro.MarcaDescr));
-        DescrModelo          := Trim(string(Registro.ModeloDescr));
-        Versao               := Trim(string(Registro.VersaoSB));
+        CodMarca             := RecordToString(Registro.Marca);
+        CodModelo            := RecordToString(Registro.Modelo);
+        CodVersao            := RecordToString(Registro.Versao);
+        TipoECF              := RecordToString(Registro.Tipo);
+        DescrMarca           := RecordToString(Registro.MarcaDescr);
+        DescrModelo          := RecordToString(Registro.ModeloDescr);
+        Versao               := RecordToString(Registro.VersaoSB);
         QtLacresSL           := Registro.QtLacreSL;
         QtLacresFab          := Registro.QTLacreFab;
-        TemMFD               := Trim(string(Registro.MFD));
-        TemLacreMFD          := Trim(string(Registro.LacreMFD));
-        AtoAprovacao         := Trim(string(Registro.AtoAprovacao));
-        AtoRegistro          := Trim(string(Registro.AtoRegistroMG));
-        FormatoNumFabricacao := Trim(string(Registro.FormatoNumero));
+        TemMFD               := RecordToString(Registro.MFD);
+        TemLacreMFD          := RecordToString(Registro.LacreMFD);
+        AtoAprovacao         := RecordToString(Registro.AtoAprovacao);
+        AtoRegistro          := RecordToString(Registro.AtoRegistroMG);
+        FormatoNumFabricacao := RecordToString(Registro.FormatoNumero);
       end;
     end;
     Result := True;

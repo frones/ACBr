@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -83,6 +79,9 @@ type
 
 implementation
 
+uses
+  synautil;
+
 const
   URL_WEBSERVICE = 'https://servicos.suframa.gov.br/cadastroWS/services/CadastroWebService';
 
@@ -129,9 +128,8 @@ end;
 
 procedure TACBrSuframa.ConsultarSituacao(const ASuframa, ACnpj: AnsiString);
 var
-  Acao: TStringList;
+  Acao: String;
   ParametrosConsulta: String;
-  Stream: TMemoryStream;
   ErroCodigo, ErroMsg: String;
   Retorno: String;
 begin
@@ -148,81 +146,72 @@ begin
       raise EACBrSuframa.Create( 'Erro de validação: ' + sLineBreak + String( ErroMsg ) );
   end;
 
-  Acao := TStringList.Create;
-  Stream := TMemoryStream.Create;
+  if ACNPJ = '' then
+  begin
+    ParametrosConsulta :=
+      '<con:consultarSituacaoInscsuf soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+        '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
+      '</con:consultarSituacaoInscsuf>';
+  end
+  else
+  begin
+    ParametrosConsulta :=
+      '<con:consultarSituacaoInscCnpj soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+        '<cnpj>' + ACBrUtil.OnlyNumber( ACNPJ ) + '</cnpj>' +
+        '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
+      '</con:consultarSituacaoInscCnpj>';
+  end;
+
+  Acao :=
+    '<?xml version="1.0" encoding="utf-8"?>' +
+    '<soapenv:Envelope ' +
+      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+      'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+      'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+      'xmlns:con="http://consultas.ws.cadastro.fucapi.br">' +
+      '<soapenv:Header/>' +
+      '<soapenv:Body>' + ParametrosConsulta + '</soapenv:Body>' +
+    '</soapenv:Envelope>';
+
   try
-    if ACNPJ = '' then
-    begin
-      ParametrosConsulta :=
-        '<con:consultarSituacaoInscsuf soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-          '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
-        '</con:consultarSituacaoInscsuf>';
-    end
+    Self.HTTPSend.Clear;
+    WriteStrToStream(Self.HTTPSend.Document, Acao);
+    Self.HTTPSend.Headers.Add( 'SOAPAction: "' + URL_WEBSERVICE + '"' );
+    Self.HTTPPost(URL_WEBSERVICE);
+
+    if ACNPJ <> '' then
+      Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscCnpjReturn'))
+    else
+      Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscsufReturn'));
+
+    if Retorno <> '' then
+      FSituacao.Codigo := StrToInt(Retorno)
     else
     begin
-      ParametrosConsulta :=
-        '<con:consultarSituacaoInscCnpj soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-          '<cnpj>' + ACBrUtil.OnlyNumber( ACNPJ ) + '</cnpj>' +
-          '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
-        '</con:consultarSituacaoInscCnpj>';
-    end;
-
-    Acao.Text :=
-      '<?xml version="1.0" encoding="utf-8"?>' +
-      '<soapenv:Envelope ' +
-        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-        'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-        'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
-        'xmlns:con="http://consultas.ws.cadastro.fucapi.br">' +
-        '<soapenv:Header/>' +
-        '<soapenv:Body>' + ParametrosConsulta + '</soapenv:Body>' +
-      '</soapenv:Envelope>';
-
-    try
-      Acao.SaveToStream(Stream);
-
-      Self.HTTPSend.Clear;
-      Self.HTTPSend.Document.LoadFromStream(Stream);
-      Self.HTTPSend.Headers.Add( 'SOAPAction: "' + URL_WEBSERVICE + '"' );
-      Self.HTTPPost(URL_WEBSERVICE);
-
-      if ACNPJ <> '' then
-        Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscCnpjReturn'))
-      else
-        Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscsufReturn'));
-
-      if Retorno <> '' then
-        FSituacao.Codigo := StrToInt(Retorno)
-      else
+      ErroCodigo := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultcode') );
+      if ErroCodigo <> EmptyStr then
       begin
-        ErroCodigo := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultcode') );
-        if ErroCodigo <> EmptyStr then
-        begin
-          ErroMsg := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultstring') );
-          raise EACBrSuframa.Create(ErroCodigo + sLineBreak + '  - ' + ErroMsg);
-        end;
-
-        if SameText(String(RespHTTP), Acao.Text) then
-        begin
-          RespHTTP.Clear;
-          raise EACBrSuframa.Create('Resposta do webservice não foi recebida.');
-        end;
+        ErroMsg := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultstring') );
+        raise EACBrSuframa.Create(ErroCodigo + sLineBreak + '  - ' + ErroMsg);
       end;
 
-      if Assigned(fOnBuscaEfetuada) then
-        OnBuscaEfetuada( Self );
-    except
-      on E: Exception do
+      if SameText(String(RespHTTP), Acao) then
       begin
-        raise EACBrSuframa.Create(
-          'Ocorreu o seguinte erro ao consumir o webService Suframa:' + sLineBreak +
-          '  - ' + E.Message
-        );
+        RespHTTP.Clear;
+        raise EACBrSuframa.Create('Resposta do webservice não foi recebida.');
       end;
     end;
-  finally
-    Stream.Free;
-    Acao.Free;
+
+    if Assigned(fOnBuscaEfetuada) then
+      OnBuscaEfetuada( Self );
+  except
+    on E: Exception do
+    begin
+      raise EACBrSuframa.Create(
+        'Ocorreu o seguinte erro ao consumir o webService Suframa:' + sLineBreak +
+        '  - ' + E.Message
+      );
+    end;
   end;
 end;
 

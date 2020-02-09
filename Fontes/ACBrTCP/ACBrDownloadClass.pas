@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Isaque Pinheiro                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -53,7 +49,7 @@ uses
 {$IFDEF MSWINDOWS}
   Windows,
 {$ENDIF}
-  Classes, SysUtils, Forms,
+  Classes, SysUtils,
   blcksock;
 
 type
@@ -272,7 +268,6 @@ begin
                     wHour,
                     wMin,
                     wSec);
-  Application.ProcessMessages;
 end;
 
 procedure TACBrDownloadClass.DoHookStatus(Sender: TObject; Reason: THookSocketReason;
@@ -385,14 +380,14 @@ begin
   begin
     fDownloadStatus := stResume;
     fFileStream := TFileStream.Create(fFilePart, fmOpenReadWrite or fmShareExclusive);
-    fFileStream.Seek(0, soFromEnd);
+    fFileStream.Seek(0, soEnd);
     fBytesResumed := fFileStream.Size;
   end
   else
   begin
     fDownloadStatus := stNone;
     fFileStream := TFileStream.Create(fFilePart, fmCreate or fmShareExclusive);
-    fFileStream.Seek(0, soFromBeginning);
+    fFileStream.Seek(0, soBeginning);
     fBytesResumed := 0;
   end;
 end;
@@ -410,11 +405,11 @@ begin
      iDiff := iDocSize - (fFileStream.Size-fBytesResumed);
      if iDiff > 0 then
      begin
-        fDocument.Seek(-iDiff, soFromEnd);
+        fDocument.Seek(-iDiff, soEnd);
         fFileStream.CopyFrom(fDocument, iDiff );
      end;
    finally
-     fDocument.Seek(0, soFromEnd);
+     fDocument.Seek(0, soEnd);
    end;
 end;
 

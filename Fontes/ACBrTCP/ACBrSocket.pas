@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{ Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
-{  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -46,10 +43,25 @@ unit ACBrSocket;
 
 interface
 
-uses SysUtils, Classes, Types, syncobjs,
-     blcksock, synsock, httpsend, ssl_openssl,  {Units da Synapse}
-     {$IFDEF MSWINDOWS} windows, wininet, {$ENDIF}  { Units para a auto-detecção de Proxy }
-     ACBrBase ;
+{$IFDEF VCL}
+  {$DEFINE UPDATE_SCREEN_CURSOR}
+{$ENDIF}
+
+{$IFDEF LCL}
+  {$DEFINE UPDATE_SCREEN_CURSOR}
+{$ENDIF}
+
+{$IFDEF NOGUI}
+  {$UNDEF UPDATE_SCREEN_CURSOR}
+{$ENDIF}
+
+uses
+  SysUtils, Classes, Types, syncobjs,
+  blcksock, synsock, httpsend, ssl_openssl,  {Units da Synapse}
+  {$IFDEF MSWINDOWS}
+    windows, wininet,
+  {$ENDIF}  { Units para a auto-detecção de Proxy }
+  ACBrBase;
 
 type
 
@@ -248,10 +260,12 @@ function IsAbsoluteURL(const URL: String): Boolean;
 implementation
 
 Uses
-  math,
+  math, StrUtils,
   ACBrUtil,
   synacode, synautil
-  {$IFNDEF NOGUI},Controls, Forms{$ENDIF};
+  {$IFDEF UPDATE_SCREEN_CURSOR}
+    ,Controls, Forms
+  {$ENDIF};
 
 function GetURLBasePath(const URL: String): String;
 begin
@@ -858,14 +872,14 @@ end ;
 procedure TACBrHTTP.HTTPMethod(const Method, AURL: String);
 var
   OK : Boolean ;
-  {$IFNDEF NOGUI}
+  {$IFDEF UPDATE_SCREEN_CURSOR}
    OldCursor : TCursor ;
   {$ENDIF}
    CT, Location, HtmlHead: String ;
    RespIsUTF8, AddUTF8InHeader: Boolean;
    ContaRedirecionamentos: Integer;
 begin
-  {$IFNDEF NOGUI}
+  {$IFDEF UPDATE_SCREEN_CURSOR}
    OldCursor := Screen.Cursor ;
    Screen.Cursor := crHourGlass;
   {$ENDIF}
@@ -946,7 +960,7 @@ begin
     end;
 
     OK := HTTPSend.ResultCode = 200;
-    RespHTTP.LoadFromStream( HTTPSend.Document ) ;
+    RespHTTP.LoadFromStream( HTTPSend.Document {$IfDef POSIX},TEncoding.ANSI{$EndIf} ) ;
 
     // DEBUG //
     //RespHTTP.SaveToFile('c:\temp\HttpResp.txt');
@@ -989,7 +1003,7 @@ begin
                                     'Resposta HTTP:' + sLineBreak +
                                       String(AjustaLinhas( AnsiString(RespHTTP.Text), 80, 20) )) ;
   finally
-    {$IFNDEF NOGUI}
+    {$IFDEF UPDATE_SCREEN_CURSOR}
      Screen.Cursor := OldCursor;
     {$ENDIF}
   end;

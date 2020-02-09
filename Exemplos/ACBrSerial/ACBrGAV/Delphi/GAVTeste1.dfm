@@ -1,11 +1,12 @@
 object Form1: TForm1
   Left = 254
   Top = 135
-  Width = 309
-  Height = 216
+  Width = 277
+  Height = 197
   HorzScrollBar.Range = 257
   VertScrollBar.Range = 161
   ActiveControl = cbxModelo
+  AutoScroll = False
   Caption = 'Teste de Gavetas'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -125,6 +126,8 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = '&Abrir'
+    TabOrder = 3
+    OnClick = btAbrirClick
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000120B0000120B00001000000000000000000000000000
@@ -139,8 +142,6 @@ object Form1: TForm1
       F055557F777FFF5557F5550000000FFF00555577777775FF77F5550777777000
       7055557FFFFFF777F7F555000000000000555577777777777755}
     NumGlyphs = 2
-    TabOrder = 3
-    OnClick = btAbrirClick
   end
   object btEstado: TBitBtn
     Left = 95
@@ -148,6 +149,8 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = '&Estado'
+    TabOrder = 4
+    OnClick = btEstadoClick
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000120B0000120B00001000000000000000000000000000
@@ -162,18 +165,15 @@ object Form1: TForm1
       FB33373F37777733373333BFBF999FBFB3333373FF77733F7333333BFBFBFBFB
       3333333773FFFF77333333333FBFBF3333333333377777333333}
     NumGlyphs = 2
-    TabOrder = 4
-    OnClick = btEstadoClick
   end
   object BitBtn1: TBitBtn
     Left = 182
     Top = 136
     Width = 75
     Height = 25
-    Kind = bkCancel
-    NumGlyphs = 2
     TabOrder = 5
     OnClick = BitBtn1Click
+    Kind = bkCancel
   end
   object cbxModelo: TComboBox
     Left = 12
@@ -181,6 +181,7 @@ object Form1: TForm1
     Width = 125
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     TabOrder = 0
     OnChange = cbxModeloChange
     Items.Strings = (
@@ -195,6 +196,7 @@ object Form1: TForm1
     Top = 20
     Width = 65
     Height = 21
+    ItemHeight = 13
     TabOrder = 1
     Text = 'COM1'
     OnChange = cbxPortaChange
@@ -222,57 +224,18 @@ object Form1: TForm1
     Top = 72
   end
   object ACBrECF1: TACBrECF
-    QuebraLinhaRodape = False
     Modelo = ecfBematech
     Porta = 'COM2'
     MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
-    MsgTrabalhando = 'Impressora est'#225' trabalhando'
-    MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
-    MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
-    PaginaDeCodigo = 850
-    MemoParams.Strings = (
-      '[Cabecalho]'
-      'LIN000=<center><b>Nome da Empresa</b></center>'
-      'LIN001=<center>Nome da Rua , 1234  -  Bairro</center>'
-      'LIN002=<center>Cidade  -  UF  -  99999-999</center>'
-      
-        'LIN003=<center>CNPJ: 01.234.567/0001-22    IE: 012.345.678.90</c' +
-        'enter>'
-      
-        'LIN004=<table width=100%><tr><td align=left><code>Data</code> <c' +
-        'ode>Hora</code></td><td align=right>COO: <b><code>NumCupom</code' +
-        '></b></td></tr></table>'
-      'LIN005=<hr>'
-      ' '
-      '[Cabecalho_Item]'
-      'LIN000=ITEM   CODIGO      DESCRICAO'
-      'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
-      'LIN002=<hr>'
-      
-        'MascaraItem=III CCCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQ' +
-        'QQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
-      ' '
-      '[Rodape]'
-      'LIN000=<hr>'
-      
-        'LIN001=<table width=100%><tr><td align=left><code>Data</code> <c' +
-        'ode>Hora</code></td><td align=right>Projeto ACBr: <b><code>ACBR<' +
-        '/code></b></td></tr></table>'
-      'LIN002=<center>Obrigado Volte Sempre</center>'
-      'LIN003=<hr>'
-      ' '
-      '[Formato]'
-      'Colunas=48'
-      'HTML=1'
-      'HTML_Title_Size=2'
-      'HTML_Font=<font size="2" face="Lucida Console">')
-    Device.HandShake = hsRTS_CTS
-    Device.HardFlow = True
-    ConfigBarras.MostrarCodigo = True
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
-    ConfigBarras.Margem = 0
-    InfoRodapeCupom.Imposto.ModoCompacto = False
+    MsgRelatorio = 'Imprimindo %s  %dª Via '
+    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
+    FormMsgFonte.Charset = DEFAULT_CHARSET
+    FormMsgFonte.Color = clWhite
+    FormMsgFonte.Height = 11
+    FormMsgFonte.Name = 'MS Sans Serif'
+    FormMsgFonte.Pitch = fpVariable
+    FormMsgFonte.Style = []
+    FormMsgColor = clHighlight
     Left = 224
     Top = 48
   end

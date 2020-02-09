@@ -613,6 +613,8 @@ end;
 
 procedure TJsonBase.Split(const S: String; const Delimiter: Char;
   Strings: TStrings);
+var
+  L: Integer;
 
   function IsPairBegin(C: Char): Boolean;
   begin
@@ -629,18 +631,18 @@ procedure TJsonBase.Split(const S: String; const Delimiter: Char;
     end;
   end;
 
-  function MoveToPair(P: PChar): PChar;
+  function MoveToPair(const i: Integer): Integer;
   var
     PairBegin, PairEnd: Char;
     C: Char;
   begin
-    PairBegin := P^;
+    PairBegin := S[i];
     PairEnd := GetPairEnd(PairBegin);
-    Result := P;
-    while Result^ <> #0 do
+    Result := i;
+    while Result <= L do
     begin
       Inc(Result);
-      C := Result^;
+      C := S[Result];
       if C = PairEnd then Break
       else if (PairBegin = '"') and (C = '\') then Inc(Result)
       else if (PairBegin <> '"') and IsPairBegin(C) then Result := MoveToPair(Result);
@@ -648,27 +650,28 @@ procedure TJsonBase.Split(const S: String; const Delimiter: Char;
   end;
 
 var
-  PtrBegin, PtrEnd: PChar;
+  b, e: Integer;
   C: Char;
   StrItem: String;
 begin
-  PtrBegin := PChar(S);
-  PtrEnd := PtrBegin;
-  while PtrEnd^ <> #0 do
+  b := 1;
+  e := 1;
+  L := Length(S);
+  while e <= L do
   begin
-    C := PtrEnd^;
+    C := S[e];
     if C = Delimiter then
     begin
-      StrItem := Trim(Copy(PtrBegin, 1, PtrEnd - PtrBegin));
+      StrItem := Trim(Copy(S, b, e - b));
       Strings.Add(StrItem);
-      PtrBegin := PtrEnd + 1;
-      PtrEnd := PtrBegin;
+      b := e+1;
+      e := b;
       Continue;
     end
-    else if IsPairBegin(C) then PtrEnd := MoveToPair(PtrEnd);
-    Inc(PtrEnd);
+    else if IsPairBegin(C) then e := MoveToPair(e);
+    Inc(e);
   end;
-  StrItem := Trim(Copy(PtrBegin, 1, PtrEnd - PtrBegin));
+  StrItem := Trim(Copy(S, b, e - b));
   if StrItem <> '' then Strings.Add(StrItem);
 end;
 

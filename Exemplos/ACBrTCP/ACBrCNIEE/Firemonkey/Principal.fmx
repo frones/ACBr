@@ -64,7 +64,6 @@ object frPrincipal: TfrPrincipal
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
-      ReadOnly = True
       Text = 'Tabela_CNIEE.bin'
       Position.X = 12.000000000000000000
       Position.Y = 80.000000000000000000

@@ -3,6 +3,7 @@ object Form1: TForm1
   Height = 535
   Top = 286
   Width = 822
+  ActiveControl = edNCM
   Caption = 'Form1'
   ClientHeight = 535
   ClientWidth = 822
@@ -12,6 +13,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   LCLVersion = '1.6.0.4'
+  Visible = False
   object GroupBox2: TGroupBox
     Left = 0
     Height = 68

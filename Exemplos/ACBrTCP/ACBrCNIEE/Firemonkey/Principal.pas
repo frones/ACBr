@@ -48,7 +48,9 @@ uses
   Data.Bind.Controls,
   FMX.Grid.Style,
   FMX.ScrollBox,
-  FMX.Controls.Presentation, ACBrBase, ACBrSocket, ACBrCNIEE;
+  FMX.Controls.Presentation,
+  Datasnap.Midas,
+  ACBrSocket, ACBrCNIEE, ACBrBase;
 
 //**   Original VCL Uses section : 
 
@@ -140,9 +142,10 @@ var
 implementation
 
 uses
+  {$IfDef ANDROID}
+  System.IOUtils,
+  {$EndIf}
   ProxyConfig,
-
-
   ACBrUtil;
 
 {$R *.FMX}
@@ -151,7 +154,11 @@ uses
 
 procedure TfrPrincipal.FormCreate(Sender: TObject);
 begin
+  {$Ifdef ANDROID}
+  edArquivo.Text := TPath.Combine(TPath.GetHomePath, 'Tabela_CNIEE.bin');
+  {$Else}
   edArquivo.Text := './Tabela_CNIEE.bin';
+  {$EndIf}
   ACBrCNIEE1.Arquivo := edArquivo.Text;
   ACBrCNIEE1.LerConfiguracoesProxy ;
 

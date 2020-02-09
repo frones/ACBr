@@ -19,6 +19,8 @@ type
     bBuscarCEP1 : TButton ;
     bBuscarLogradouro : TButton ;
     bBuscarLogradouro1 : TButton ;
+    btEstatisticas: TButton;
+    Button1: TButton;
     cbxWS : TComboBox ;
     edCEP : TEdit ;
     edIBGECod : TEdit ;
@@ -66,6 +68,8 @@ type
     procedure bBuscarCEPClick(Sender : TObject) ;
     procedure bBuscarLogradouro1Click(Sender : TObject) ;
     procedure bBuscarLogradouroClick(Sender : TObject) ;
+    procedure btEstatisticasClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure cbxWSChange(Sender : TObject) ;
     procedure FormCreate(Sender: TObject);
   private
@@ -192,6 +196,7 @@ end;
 
 procedure TForm1.bBuscarCEP1Click(Sender : TObject) ;
 begin
+  Memo1.Clear;
   AjustaProxy ;
 
   try
@@ -229,6 +234,7 @@ end;
 
 procedure TForm1.bBuscarLogradouro1Click(Sender : TObject) ;
 begin
+  Memo1.Clear;
   AjustaProxy ;
 
   try
@@ -254,6 +260,17 @@ begin
         Memo1.Lines.Add(E.Message);
      end ;
   end ;
+end;
+
+procedure TForm1.btEstatisticasClick(Sender: TObject);
+begin
+  ACBrIBGE1.ObterEstatisticasCidadesUF('SP');
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ACBrIBGE1.BuscarPorNome('Curitiba','PR',True);
+  ACBrIBGE1.SalvarCidades('c:\temp\cidades.txt');
 end;
 
 end.

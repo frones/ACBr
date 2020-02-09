@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 509
+  Left = 741
   Height = 320
-  Top = 202
+  Top = 363
   Width = 588
   ActiveControl = PageControl1
   Caption = 'Form1'
   ClientHeight = 320
   ClientWidth = 588
   OnCreate = FormCreate
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '2.0.6.0'
   object Memo1: TMemo
     Left = 0
     Height = 184
@@ -142,7 +142,6 @@ object Form1: TForm1
           Top = 16
           Width = 154
           TabOrder = 0
-          Text = '192.168.92.1'
         end
         object Label3: TLabel
           Left = 191
@@ -158,7 +157,6 @@ object Form1: TForm1
           Top = 16
           Width = 56
           TabOrder = 1
-          Text = '3128'
         end
         object Label4: TLabel
           Left = 22
@@ -368,7 +366,7 @@ object Form1: TForm1
         ClientWidth = 412
         TabOrder = 1
         object bBuscarLogradouro1: TButton
-          Left = 142
+          Left = 38
           Height = 33
           Top = 43
           Width = 112
@@ -383,13 +381,32 @@ object Form1: TForm1
           Width = 336
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
-          Text = 'Petrolina'
+          Text = 'Bragança Paulista'
+        end
+        object Button1: TButton
+          Left = 322
+          Height = 25
+          Top = 57
+          Width = 75
+          Caption = 'Button1'
+          OnClick = Button1Click
+          TabOrder = 2
+        end
+        object btEstatisticas: TButton
+          Left = 168
+          Height = 33
+          Top = 43
+          Width = 112
+          Caption = 'Estatísticas'
+          OnClick = btEstatisticasClick
+          TabOrder = 3
         end
       end
     end
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
+    TimeOut = 5000
     OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
     WebService = wsRepublicaVirtual
     PesquisarIBGE = True
@@ -399,7 +416,11 @@ object Form1: TForm1
   end
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
+    TimeOut = 10000
     OnAntesAbrirHTTP = ACBrIBGE1AntesAbrirHTTP
+    CacheArquivo = 'ACBrIBGE.txt'
+    CacheDiasValidade = 1
+    IgnorarCaixaEAcentos = True
     OnBuscaEfetuada = ACBrIBGE1BuscaEfetuada
     left = 312
     top = 160

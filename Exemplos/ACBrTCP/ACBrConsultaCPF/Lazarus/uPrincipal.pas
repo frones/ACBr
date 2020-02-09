@@ -5,8 +5,8 @@ unit uPrincipal;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, maskedit, ACBrBase,
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, maskedit,
   ACBrConsultaCPF;
 
 type

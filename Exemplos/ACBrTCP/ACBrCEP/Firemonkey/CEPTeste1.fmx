@@ -382,12 +382,12 @@ object Form1: TForm1
         Text = 'Por Nome'
         TabOrder = 1
         object bBuscarLogradouro1: TButton
-          Position.X = 142.000000000000000000
+          Position.X = 38.000000000000000000
           Position.Y = 59.000000000000000000
           Size.Width = 112.000000000000000000
           Size.Height = 33.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 1
+          TabOrder = 2
           Text = 'Buscar'
           OnClick = bBuscarLogradouro1Click
         end
@@ -401,6 +401,16 @@ object Form1: TForm1
           Size.Width = 372.000000000000000000
           Size.Height = 21.000000000000000000
           Size.PlatformDefault = False
+        end
+        object btEstatisticas: TButton
+          Position.X = 166.000000000000000000
+          Position.Y = 59.000000000000000000
+          Size.Width = 112.000000000000000000
+          Size.Height = 33.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Estat'#237'sticas'
+          OnClick = btEstatisticasClick
         end
       end
     end

@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 319
+  Left = 320
   Height = 434
-  Top = 272
+  Top = 274
   Width = 645
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsDialog
@@ -15,7 +15,7 @@ object frmPrincipal: TfrmPrincipal
   KeyPreview = True
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '2.0.6.0'
   object Panel2: TPanel
     Left = 0
     Height = 217
@@ -330,8 +330,8 @@ object frmPrincipal: TfrmPrincipal
     top = 208
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
-    ProxyPort = '8080'
-    left = 310
-    top = 170
+    TimeOut = 20000
+    left = 312
+    top = 168
   end
 end

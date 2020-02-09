@@ -304,6 +304,7 @@ begin
   for I := 0 to clbConectados.Count - 1 do
     if clbConectados.Checked[I] then
       ACBrMTer1.EnviarTexto(clbConectados.Items[I], edEnviarTexto.Text);
+
 end;
 
 procedure TForm1.btLimparDisplayClick(Sender: TObject);

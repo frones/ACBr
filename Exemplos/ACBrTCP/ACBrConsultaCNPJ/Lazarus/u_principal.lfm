@@ -9,7 +9,7 @@ object Fprincipal: TFprincipal
   ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.6'
   object Panel2: TPanel
     Left = 9
     Height = 329
@@ -504,7 +504,7 @@ object Fprincipal: TFprincipal
       ParentFont = False
       TabOrder = 0
       EditMask = '00.000.000\/0000-00;1;_'
-      Text = '  .   .   /    -  '
+      Text = '05.481.336/0001-37'
       SpaceChar = '_'
     end
     object Panel3: TPanel
@@ -549,12 +549,13 @@ object Fprincipal: TFprincipal
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 100
     OnTimer = Timer1Timer
     left = 564
     top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
+    ProxyPort = '8080'
+    TimeOut = 5000
     PesquisarIBGE = False
     left = 404
     top = 196

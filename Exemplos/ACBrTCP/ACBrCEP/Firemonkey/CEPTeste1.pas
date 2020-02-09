@@ -100,6 +100,7 @@ type
     TabSheet1: TTabItem;
     TabSheet2: TTabItem;
     tsIBGE: TTabItem;
+    btEstatisticas: TButton;
     procedure ACBrCEP1AntesAbrirHTTP(var AURL : String) ;
     procedure ACBrCEP1BuscaEfetuada(Sender : TObject) ;
     procedure ACBrIBGE1AntesAbrirHTTP(var AURL : String) ;
@@ -110,6 +111,7 @@ type
     procedure bBuscarLogradouroClick(Sender : TObject) ;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btEstatisticasClick(Sender: TObject);
   private
     procedure ConfigurarComponente ;
   public
@@ -169,6 +171,7 @@ begin
     Ini.Free;
   end;
 
+  cbxWS.ItemIndex := 8;
   PageControl1.First;
 end;
 
@@ -334,6 +337,11 @@ begin
         Memo1.Lines.Add(E.Message);
      end ;
   end ;
+end;
+
+procedure TForm1.btEstatisticasClick(Sender: TObject);
+begin
+   ACBrIBGE1.ObterEstatisticasCidadesUF('SP');
 end;
 
 end.

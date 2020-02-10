@@ -9,16 +9,16 @@ interface
 
 uses
   ACBrSerialReg, ACBrDevice, ACBrDeviceClass, ACBrDeviceSerial, ACBrDeviceTCP, 
-  ACBrDeviceLPT, ACBrDeviceWinUSB, ACBrDeviceHook, ACBrDeviceRaw, ACBrBAL, 
-  ACBrBALClass, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALSaturno, 
-  ACBrCHQ, ACBrCHQBematech, ACBrCHQChronos, ACBrCHQClass, 
-  ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, ACBrCHQPerto, ACBrCHQSchalter, 
-  ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, ACBrDISClass, ACBrDISGertecSerial, 
-  ACBrDISGertecTeclado, ACBrDISGertecTEC65lib, ACBrDISKeytecTeclado, 
-  ACBrDISSmakTecladoLib, ACBrDISSmakTeclado, ACBrDISSmakSerial, ACBrECF, 
-  ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, 
-  ACBrECFEpson, ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, 
-  ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
+  ACBrDeviceLPT, ACBrDeviceRaw, ACBrBAL, ACBrBALClass, ACBrBALFilizola, 
+  ACBrBALToledo, ACBrBALUrano, ACBrBALSaturno, ACBrCHQ, ACBrCHQBematech, 
+  ACBrCHQChronos, ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, 
+  ACBrCHQPerto, ACBrCHQSchalter, ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, 
+  ACBrDISClass, ACBrDISGertecSerial, ACBrDISGertecTeclado, 
+  ACBrDISGertecTEC65lib, ACBrDISKeytecTeclado, ACBrDISSmakTecladoLib, 
+  ACBrDISSmakTeclado, ACBrDISSmakSerial, ACBrECF, ACBrECFClass, 
+  ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, ACBrECFEpson, 
+  ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, ACBrECFNCR, 
+  ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
   ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, ACBrETQClass, 
   ACBrETQPpla, ACBrETQEpl2, ACBrETQZplII, ACBrGAV, ACBrGAVClass, 
   ACBrGAVImpressoraComum, ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, 
@@ -26,8 +26,7 @@ uses
   ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, 
   ACBrECFVirtualNaoFiscal, ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, 
   ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, 
-  ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang, ACBrEscGPrinter, 
-  ACBrEscPosHook, ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL, ACBrSMS, 
+  ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang, ACBrEscGPrinter, ACBrSMS, 
   ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, LazarusPackageIntf;
 
 implementation

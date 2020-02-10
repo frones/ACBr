@@ -1009,6 +1009,30 @@ begin
         FieldByName('Email').AsString    := Email;
       end;
     end;
+
+    with TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.Geral do
+      if Emitente.DadosEmitente.Endereco <> EmptyStr then
+      begin
+        FieldByName('RazaoSocial').AsString  := Emitente.RazSocial;
+        FieldByName('NomeFantasia').AsString := Emitente.DadosEmitente.NomeFantasia;
+
+        FieldByName('Cnpj').AsString               := FormatarCNPJ(Emitente.CNPJ);
+        FieldByName('InscricaoMunicipal').AsString := Emitente.InscMun;
+        FieldByName('InscricaoEstadual').AsString  := FormatarIE(Emitente.DadosEmitente.InscricaoEstadual, Emitente.DadosEmitente.UF);
+
+        FieldByName('Endereco').AsString        := Emitente.DadosEmitente.Endereco;
+        FieldByName('Numero').AsString          := Emitente.DadosEmitente.Numero;
+        FieldByName('Complemento').AsString     := Emitente.DadosEmitente.Complemento;
+        FieldByName('Bairro').AsString          := Emitente.DadosEmitente.Bairro;
+        FieldByName('CodigoMunicipio').AsString := Emitente.DadosEmitente.CodigoMunicipio;
+        FieldByName('UF').AsString              := Emitente.DadosEmitente.UF;
+        FieldByName('CEP').AsString             := FormatarCEP(Emitente.DadosEmitente.CEP);
+        FieldByName('xMunicipio').AsString      := Emitente.DadosEmitente.Municipio;
+
+        FieldByName('Telefone').AsString := FormatarFone(Emitente.DadosEmitente.Telefone);
+        FieldByName('Email').AsString    := Emitente.DadosEmitente.Email;
+      end;
+
     Post;
   end;
 end;

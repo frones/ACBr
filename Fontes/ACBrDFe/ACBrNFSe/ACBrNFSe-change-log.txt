@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/02/2020
+-- Diversos -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56153-nfse-dados-do-tomador-na-impress%C3%A3o/
+   Por: Haroldo
 -- pnfsNFSeW_SP -- 
 [*] https://www.projetoacbr.com.br/forum/topic/55000-municipioprestacao-do-servi%C3%A7o/?do=findComment&comment=368407
    Por: Bruno

@@ -180,6 +180,39 @@ type
     FecharSessao: String;
  end;
 
+ TDadosEmitente = class(TPersistent)
+  private
+    FNomeFantasia: String;
+    FInscricaoEstadual: String;
+    FEndereco: String;
+    FNumero: String;
+    FCEP: String;
+    FBairro: String;
+    FComplemento: String;
+    FMunicipio: String;
+    FUF: String;
+    FCodigoMunicipio: String;
+    FTelefone: String;
+    FEmail: String;
+  public
+    Constructor Create;
+    procedure Assign(Source: TPersistent); override;
+
+  published
+    property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
+    property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
+    property Endereco: String read FEndereco write FEndereco;
+    property Numero: String read FNumero write FNumero;
+    property CEP: String read FCEP write FCEP;
+    property Bairro: String read FBairro write FBairro;
+    property Complemento: String read FComplemento write FComplemento;
+    property Municipio: String read FMunicipio write FMunicipio;
+    property UF: String read FUF write FUF;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
+    property Telefone: String read FTelefone write FTelefone;
+    property Email: String read FEmail write FEmail;
+ end;
+
  { TParamEnvelope }
 
  TParamEnvelope = class
@@ -284,6 +317,7 @@ type
     FWebFraseSecr: String;
     FWebChaveAcesso: String;
     FDadosSenhaParams: TDadosSenhaParamsCollection;
+    FDadosEmitente: TDadosEmitente;
 
     procedure SetDadosSenhaParams(const Value: TDadosSenhaParamsCollection);
   public
@@ -299,6 +333,7 @@ type
     property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
     property WebChaveAcesso: String read FWebChaveAcesso write FWebChaveAcesso;
     property DadosSenhaParams: TDadosSenhaParamsCollection read FDadosSenhaParams write SetDadosSenhaParams;
+    property DadosEmitente: TDadosEmitente read FDadosEmitente write FDadosEmitente;
   end;
 
   { TGeralConfNFSe }
@@ -454,6 +489,7 @@ begin
   FWebFraseSecr     := '';
   FWebChaveAcesso   := '';
   FDadosSenhaParams := TDadosSenhaParamsCollection.Create;
+  FDadosEmitente    := TDadosEmitente.Create;
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -467,6 +503,8 @@ begin
     FWebSenha := TEmitenteConfNFSe(Source).WebSenha;
     FWebFraseSecr := TEmitenteConfNFSe(Source).WebFraseSecr;
     FWebChaveAcesso := TEmitenteConfNFSe(Source).WebChaveAcesso;
+
+    FDadosEmitente.Assign(TEmitenteConfNFSe(Source).DadosEmitente);
   end
   else
     inherited Assign(Source);
@@ -475,6 +513,7 @@ end;
 destructor TEmitenteConfNFSe.Destroy;
 begin
   FDadosSenhaParams.Free;
+  FDadosEmitente.Free;
 
   inherited;
 end;
@@ -1288,6 +1327,47 @@ begin
   FFecharSessao.Free;
 
   inherited;
+end;
+
+{ TDadosEmitente }
+
+procedure TDadosEmitente.Assign(Source: TPersistent);
+begin
+  if Source is TDownloadConf then
+  begin
+    FNomeFantasia := TDadosEmitente(Source).NomeFantasia;
+    FInscricaoEstadual := TDadosEmitente(Source).InscricaoEstadual;
+    FEndereco := TDadosEmitente(Source).Endereco;
+    FNumero := TDadosEmitente(Source).Numero;
+    FCEP := TDadosEmitente(Source).CEP;
+    FBairro := TDadosEmitente(Source).Bairro;
+    FComplemento := TDadosEmitente(Source).Complemento;
+    FMunicipio := TDadosEmitente(Source).Municipio;
+    FUF := TDadosEmitente(Source).UF;
+    FCodigoMunicipio := TDadosEmitente(Source).CodigoMunicipio;
+    FTelefone := TDadosEmitente(Source).Telefone;
+    FEmail := TDadosEmitente(Source).Email;
+  end
+  else
+    inherited Assign(Source);
+end;
+
+constructor TDadosEmitente.Create;
+begin
+  inherited Create;
+
+  FNomeFantasia := '';
+  FInscricaoEstadual := '';
+  FEndereco := '';
+  FNumero := '';
+  FCEP := '';
+  FBairro := '';
+  FComplemento := '';
+  FMunicipio := '';
+  FUF := '';
+  FCodigoMunicipio := '';
+  FTelefone := '';
+  FEmail := '';
 end;
 
 end.

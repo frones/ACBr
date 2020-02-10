@@ -43,7 +43,7 @@ uses
   Fmx.StdCtrls,
   FMX.Header,
   FMX.Graphics, FMX.Controls.Presentation,
-  ACBrDevice, FMX.ComboEdit;
+  ACBrDevice, ACBrDeviceSerial, FMX.ComboEdit;
 
 type
   TfrmConfiguraSerial = class(TForm)

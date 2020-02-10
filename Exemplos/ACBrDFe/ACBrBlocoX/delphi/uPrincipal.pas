@@ -282,7 +282,7 @@ begin
 //    ShowMessage(RespostaValidacao);
 
     ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.Clear;
-    ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.XML := Arquivo.Text;
+    ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.XML := TextoArquivo;
 
     if ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.Executar then
     begin

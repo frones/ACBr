@@ -100,7 +100,7 @@ function TNFeR.LerXml: Boolean;
 var
   ok: Boolean;
   i, j, k, nItem: Integer;
-  Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: AnsiString;
+  Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: String;
   Aspas, tagPag: String;
 begin
 

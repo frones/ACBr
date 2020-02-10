@@ -52,16 +52,16 @@ interface
 uses
   SysUtils, Classes;
 
-function CarregarLayoutTXT(const versao: string): AnsiString;
+function CarregarLayoutTXT(const versao: string): String;
 
 const
   VERSOES_VALIDAS_LAYOUT_TXT = '|1.10|2.00|3.10|4.00|';
 
 implementation
 
-function CarregarLayoutTXT(const versao: string): AnsiString;
+function CarregarLayoutTXT(const versao: string): String;
 var
-  Layout: AnsiString;
+  Layout: String;
   procedure LoadLayout(s: string);
   begin
     Layout := Layout + UpperCase(s + #10 + #13);

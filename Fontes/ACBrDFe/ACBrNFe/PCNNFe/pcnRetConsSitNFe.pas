@@ -50,8 +50,9 @@ unit pcnRetConsSitNFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, pcnLeitor, pcnProcNFe, pcnRetEnvEventoNFe;
+  SysUtils, Classes,
+  pcnConversao, pcnLeitor, pcnProcNFe, pcnRetEnvEventoNFe,
+  ACBrBase;
 
 type
 
@@ -82,7 +83,7 @@ type
     property nProt: String           read FnProt    write FnProt;
   end;
 
-  TRetEventoNFeCollection = class(TObjectList)
+  TRetEventoNFeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRetEventoNFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventoNFeCollectionItem);
@@ -254,13 +255,13 @@ end;
 
 function TRetEventoNFeCollection.GetItem(Index: Integer): TRetEventoNFeCollectionItem;
 begin
-  Result := TRetEventoNFeCollectionItem(inherited GetItem(Index));
+  Result := TRetEventoNFeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetEventoNFeCollection.SetItem(Index: Integer;
   Value: TRetEventoNFeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRetEventoCollectionItem }

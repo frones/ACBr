@@ -50,14 +50,15 @@ unit pcnRetEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-   pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature;
+  SysUtils, Classes,
+   pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature,
+   ACBrBase;
 
 type
   TRetInfEventoCollectionItem = class;
   TRetEventoNFe               = class;
 
-  TRetInfEventoCollection = class(TObjectList)
+  TRetInfEventoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRetInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetInfEventoCollectionItem);
@@ -123,13 +124,13 @@ end;
 
 function TRetInfEventoCollection.GetItem(Index: Integer): TRetInfEventoCollectionItem;
 begin
-  Result := TRetInfEventoCollectionItem(inherited GetItem(Index));
+  Result := TRetInfEventoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetInfEventoCollection.SetItem(Index: Integer;
   Value: TRetInfEventoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetInfEventoCollection.New: TRetInfEventoCollectionItem;

@@ -50,8 +50,9 @@ unit pcnEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, pcnGerador, pcnEventoNFe, pcnConsts, pcnNFeConsts, pcnSignature;
+  SysUtils, Classes,
+  pcnConversao, pcnGerador, pcnEventoNFe, pcnConsts, pcnNFeConsts, pcnSignature,
+  ACBrBase;
 
 type
   EventoException          = class(Exception);
@@ -59,7 +60,7 @@ type
   TInfEventoCollectionItem = class;
   TEventoNFe               = class;
 
-  TInfEventoCollection = class(TObjectList)
+  TInfEventoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
@@ -553,13 +554,13 @@ end;
 function TInfEventoCollection.GetItem(
   Index: Integer): TInfEventoCollectionItem;
 begin
-  Result := TInfEventoCollectionItem(inherited GetItem(Index));
+  Result := TInfEventoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfEventoCollection.SetItem(Index: Integer;
   Value: TInfEventoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfEventoCollection.New: TInfEventoCollectionItem;
@@ -587,3 +588,4 @@ begin
 end;
 
 end.
+

@@ -1259,6 +1259,11 @@ type
      destructor Destroy; override;
      procedure CarregaLogoEmp( const PictureLogo : TPicture );
 
+     procedure Imprimir();
+     procedure GerarPDF();
+     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil);
+
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
      property Vencimento        : TDateTime   read fVencimento        write SetVencimento;
@@ -1470,15 +1475,19 @@ type
     FTituloPreview   : string;
     FAlterarEscalaPadrao: Boolean;
     FNovaEscala: Integer;
+    FIndiceImprimirIndividual: Integer;
     function ComponentStateDesigning: Boolean;
     function GetArquivoLogo: String;
     function GetDirLogo: String;
     function GetNomeArquivo: String;
+    function GetIndiceImprimirIndividual: Integer;
+    function GetNomeArquivoPdfIndividual(const ANomeArquivo: String; const AIndex: Integer): String;
     procedure SetACBrBoleto(const Value: TACBrBoleto);
     procedure SetDirLogo(const AValue: String);
     procedure SetNomeArquivo(const AValue: String);
     procedure SetPdfSenha(const Value: string);
     procedure SetTituloPreview(const Value: string);
+    procedure SetIndiceImprimirIndividual(const Value: Integer);
   protected
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
@@ -1496,6 +1505,8 @@ type
     procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
 
     property ArquivoLogo : String read GetArquivoLogo;
+    property IndiceImprimirIndividual: Integer read GetIndiceImprimirIndividual  write SetIndiceImprimirIndividual   default 0;
+
   published
     property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
     property ACBrBoleto      : TACBrBoleto     read fACBrBoleto       write SetACBrBoleto stored False;
@@ -1919,6 +1930,43 @@ begin
     PictureLogo.LoadFromFile( ArquivoLogoEmp );
 end;
 
+procedure TACBrTitulo.Imprimir();
+begin
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  try
+    ACBrBoleto.Imprimir;
+  finally
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+
+  end;
+
+end;
+
+procedure TACBrTitulo.GerarPDF();
+begin
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  try
+    ACBrBoleto.GerarPDF;
+  finally
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+
+  end;
+
+end;
+
+procedure TACBrTitulo.EnviarEmail(const sPara, sAssunto: String;
+  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+begin
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  try
+    ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos);
+  finally
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+
+  end;
+
+end;
+
 function TACBrTitulo.CriarNFeNaLista: TACBrDadosNFe;
 var
   I: Integer;
@@ -2204,7 +2252,12 @@ begin
   if (EnviaPDF) then
   begin
     GerarPDF;
-    FMAIL.AddAttachment(ACBrBoletoFC.NomeArquivo,
+    if ACBrBoletoFC.IndiceImprimirIndividual > 0 then
+        FMAIL.AddAttachment( ACBrBoletoFC.GetNomeArquivoPdfIndividual(ACBrBoletoFC.NomeArquivo, ACBrBoletoFC.IndiceImprimirIndividual)  ,
+                        ExtractFileName( ACBrBoletoFC.GetNomeArquivoPdfIndividual(ACBrBoletoFC.NomeArquivo, ACBrBoletoFC.IndiceImprimirIndividual)) )
+
+    else
+      FMAIL.AddAttachment(ACBrBoletoFC.NomeArquivo,
                         ExtractFileName(ACBrBoletoFC.NomeArquivo) );
   end
   else
@@ -3531,6 +3584,8 @@ begin
   fPrinterName         := '' ;
   FAlterarEscalaPadrao := False;
   FNovaEscala          := 96;
+  FIndiceImprimirIndividual := 0;
+
 end;
 
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;
@@ -3643,6 +3698,20 @@ begin
   end;
 end;
 
+function TACBrBoletoFCClass.GetIndiceImprimirIndividual: Integer;
+begin
+   Result := FIndiceImprimirIndividual;
+end;
+
+function TACBrBoletoFCClass.GetNomeArquivoPdfIndividual(const ANomeArquivo: String;
+         const AIndex: Integer): String;
+begin
+  if ANomeArquivo = '' then
+    Result := PathWithDelim( ApplicationPath ) + ChangeFileExt(ACBrBoleto.ListadeBoletos[AIndex - 1 ].NumeroDocumento, '.pdf')
+  else
+    Result := ChangeFileExt( ChangeFileExt(ANomeArquivo,'') + '_' + ACBrBoleto.ListadeBoletos[AIndex - 1].NumeroDocumento, '.pdf');
+end;
+
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;
 begin
   fNumCopias := max( 1, Avalue);
@@ -3657,6 +3726,12 @@ procedure TACBrBoletoFCClass.SetTituloPreview(const Value: string);
 begin
   if Value <> FTituloPreview then
     FTituloPreview := Value;
+end;
+
+procedure TACBrBoletoFCClass.SetIndiceImprimirIndividual(const Value: Integer);
+begin
+  if Value <> FIndiceImprimirIndividual then
+    FIndiceImprimirIndividual:= Value;
 end;
 
 procedure TACBrBoletoFCClass.Imprimir;
@@ -3674,22 +3749,42 @@ var
    MostrarPreviewAntigo : Boolean;
    MostrarSetupAntigo   : Boolean;
    PrinterNameAntigo    : String;
+   NomeArquivoAntigo    : String;
 begin
    if NomeArquivo = '' then
       raise Exception.Create( ACBrStr('NomeArquivo não especificado')) ;
 
-   NomeArquivo := ChangeFileExt(NomeArquivo, '.pdf');
+   if not Assigned(fACBrBoleto) then
+       raise Exception.Create(ACBrStr('Componente não está associado a ACBrBoleto'));
 
    FiltroAntigo         := Filtro;
    MostrarPreviewAntigo := MostrarPreview;
    MostrarSetupAntigo   := MostrarSetup;
    PrinterNameAntigo    := PrinterName;
+   NomeArquivoAntigo    := NomeArquivo;
    try
      Filtro         := fiPDF;
      MostrarPreview := false;
      MostrarSetup   := false;
      PrinterName    := '';
-     Imprimir;
+
+     if fACBrBoleto.ListadeBoletos.Count < 1 then
+       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
+
+     if FIndiceImprimirIndividual > 0 then
+     begin
+       fPathNomeArquivo:= '';
+       NomeArquivo := GetNomeArquivoPdfIndividual(NomeArquivoAntigo, FIndiceImprimirIndividual);
+       Imprimir;
+       NomeArquivo:= NomeArquivoAntigo;
+
+     end
+     else
+     begin
+       NomeArquivo := ChangeFileExt(NomeArquivo, '.pdf');
+       Imprimir;
+     end;
+
    finally
      Filtro         := FiltroAntigo;
      MostrarPreview := MostrarPreviewAntigo;

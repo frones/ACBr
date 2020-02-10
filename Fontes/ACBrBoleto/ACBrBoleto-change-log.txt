@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2020
+-- ACBrBoleto --
+[+] Adicionado Metodos: Imprimir, GerarPDF, EnviarEmail na Classe Títulos
+permitindo assim realizar essas funcionalidades de forma individual para cada boleto da lista.
+
 04/02/2020
 -- ACBrBoleto --
 [+] Ajuste na leitura do arquivo ini validando também a tag TipoCobranca

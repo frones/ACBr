@@ -1191,13 +1191,20 @@ procedure TACBrBoletoFCFortesFr.BoletoCarneDataRecord(Sender: TObject;
 begin
    fIndice := RecNo - 1 ;
 
-   Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+   if (fBoletoFC.IndiceImprimirIndividual > 0) then
+     Eof := (RecNo > 1)
+   else
+     Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+
    RecordAction := raUseIt ;
 end;
 
 function TACBrBoletoFCFortesFr.GetACBrTitulo: TACBrTitulo;
 begin
-   Result := fBoletoFC.ACBrBoleto.ListadeBoletos[ fIndice ] ;
+  if (fBoletoFC.IndiceImprimirIndividual > 0) then
+    Result := fBoletoFC.ACBrBoleto.ListadeBoletos[ fBoletoFC.IndiceImprimirIndividual - 1 ]
+  else
+    Result := fBoletoFC.ACBrBoleto.ListadeBoletos[ fIndice ];
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutBoletoBeforePrint(Sender: TObject;
@@ -1219,7 +1226,11 @@ procedure TACBrBoletoFCFortesFr.LayoutBoletoDataRecord(Sender: TObject;
 begin
    fIndice := RecNo - 1 ;
 
-   Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+   if (fBoletoFC.IndiceImprimirIndividual > 0) then
+     Eof := (RecNo > 1)
+   else
+     Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+
    RecordAction := raUseIt ;
 end;
 
@@ -1242,7 +1253,11 @@ procedure TACBrBoletoFCFortesFr.LayoutFaturaDetalDataRecord(Sender: TObject;
 begin
   fIndice := RecNo - 1 ;
 
-  Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+  if (fBoletoFC.IndiceImprimirIndividual > 0) then
+     Eof := (RecNo > 1)
+  else
+    Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+
   RecordAction := raUseIt ;
 end;
 
@@ -1265,7 +1280,11 @@ procedure TACBrBoletoFCFortesFr.LayoutTermicaDataRecord(Sender: TObject;
 begin
    fIndice := RecNo - 1 ;
 
-   Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+   if (fBoletoFC.IndiceImprimirIndividual > 0) then
+     Eof := (RecNo > 1)
+   else
+     Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+
    RecordAction := raUseIt ;
 end;
 

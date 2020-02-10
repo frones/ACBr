@@ -1686,6 +1686,13 @@ begin
           end;
         end;
       end;
+    LayNfseConsultaSitLoteRps,
+    LayNfseConsultaLote,
+    LayNfseConsultaNfseRps,
+    LayNfseConsultaNfse:
+      begin
+        FxIdSignature := ' ' + Identificador + '="consultar';
+      end;
      (*
     LayNfseCancelaNfse:
       begin
@@ -1984,6 +1991,8 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proSJP: FTagI := '<' + FTagGrupo + FNameSpaceDad + ' Id="consultar">';
+
 //           proNotaBlu: FTagI := '<' + FTagGrupo +
 //                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
@@ -2030,6 +2039,8 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
+
+           proSJP: FTagI := '<' + FTagGrupo + FNameSpaceDad + ' Id="consultar">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
@@ -2125,6 +2136,8 @@ begin
            proIPM,
            proGiap,
            proSMARAPD: FTagI := '';
+
+           proSJP: FTagI := '<' + FTagGrupo + FNameSpaceDad + ' Id="consultar">';
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -3841,20 +3854,18 @@ begin
     GerarDadosMsg.Free;
   end;
 
-  // O procedimento recebe como parametro o XML a ser assinado e retorna o
-  // mesmo assinado da propriedade FPDadosMsg
-
   DefinirSignatureNode(FTagGrupo);
 
-  FPDadosMsg := FNotasFiscais.AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
-                                FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit,
-                                xSignatureNode, xDSIGNSLote, FxIdSignature);
-  (*
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
+
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit) and (FPDadosMsg <> '') then
     AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Consultar Situação do Lote: ');
-  *)
+
+
+//  FPDadosMsg := FNotasFiscais.AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
+//                                FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit,
+//                                xSignatureNode, xDSIGNSLote, FxIdSignature);
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit.IncluiEncodingDados);
 

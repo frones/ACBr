@@ -216,7 +216,7 @@ begin
         if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
                               proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep,
                               proiiBrasilv2, proMegaSoft, proModernizacaoPublica]) or
-           ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
+           ((FProvedor in [proPronimv2, proModernizacaoPublica]) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
           Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
         if (FProvedor <> proMegaSoft) then
@@ -750,7 +750,7 @@ begin
   case FProvedor of
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-    proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, proCenti,
+    proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, 
     proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft, proModernizacaoPublica:
          Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2020
+-- ACBrNFSeWebServices -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56112-servicos-utilizados-sem-a-assinatura-digital-consultarlote-provedor-sjp/
+    Incluido o atributo ID em algumas consultas para o provedor SJP
+   Por: Italo Jurisato Junior
+-- pnfsNFSeW_ABRASFv2 -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56006-atualiza%C3%A7%C3%A3o-xml-envio-centi/?do=findComment&comment=368050
+    O provedor Centi não possui o atributo ID na tag InfDeclaracaoPrestacaoServico.
+   Por: InfoPointerp
+
 07/02/2020
 -- pnfsConversao --
 [+] https://www.projetoacbr.com.br/forum/topic/56178-enum-publica/

@@ -182,8 +182,18 @@ begin
 end;
 
 procedure TfrmDemo.btnImprimirClick ( Sender: TObject ) ;
+//var
+//  i: Integer;
 begin
    ACBrBoleto1.Imprimir;
+
+   //Método para impressao de cada titulo de forma individual
+   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+   begin
+     ACBrBoleto1.ListadeBoletos[i].Imprimir();
+
+   end; }
+
 end;
 
 procedure TfrmDemo.btnZerarClick ( Sender: TObject ) ;
@@ -261,9 +271,19 @@ begin
 end;
 
 procedure TfrmDemo.Button1Click ( Sender: TObject ) ;
+//var
+  //i: Integer;
 begin
-   //ACBrBoletoFCLazReport1.NomeArquivo := './teste.pdf' ;
+   ACBrBoletoFCFortes1.NomeArquivo := './teste.pdf' ;
    ACBrBoleto1.GerarPDF;
+
+   //Método para geração PDF de forma individual
+   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+   begin
+     ACBrBoleto1.ListadeBoletos[i].GerarPDF();
+
+   end;}
+
 end;
 
 procedure TfrmDemo.Button2Click ( Sender: TObject ) ;
@@ -280,12 +300,22 @@ end;
 procedure TfrmDemo.Button4Click(Sender: TObject);
 var
   SL: TStringList;
+  //i: Integer;
 begin
   SL := TStringList.Create;
   try
     SL.Add('Olá,');
     SL.Add('Atenção, Boleto está em Anexo');
     ACBrBoleto1.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
+
+    //Método para envio e-mail de forma individual para cada título
+    {for i := 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+    begin
+      if (ACBrBoleto1.ListadeBoletos[i].Sacado.Email <> '') then
+        ACBrBoleto1.ListadeBoletos[i].EnviarEmail(ACBrBoleto1.ListadeBoletos[i].Sacado.Email ,'Teste de Envio de Email', SL, True);
+
+    end;}
+
   finally
     SL.Free;
   end;

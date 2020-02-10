@@ -131,8 +131,17 @@ begin
 end;
 
 procedure TfrmDemo.Button2Click(Sender: TObject);
+//var
+  //i: Integer; 
 begin
   dm.ACBrBoleto.GerarPDF;
+
+  //Método para geração PDF de forma individual
+   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+   begin
+     ACBrBoleto1.ListadeBoletos[i].GerarPDF();
+
+   end;}
 end;
 
 procedure TfrmDemo.Button4Click(Sender: TObject);
@@ -283,8 +292,17 @@ begin
 end;
 
 procedure TfrmDemo.Button7Click(Sender: TObject);
+//var
+//  i: Integer; 
 begin
   dm.ACBrBoleto.Imprimir;
+
+  //Método para impressao de cada titulo de forma individual
+   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+   begin
+     ACBrBoleto1.ListadeBoletos[i].Imprimir();
+
+   end; }
 end;
 
 procedure TfrmDemo.FormCreate(Sender: TObject);

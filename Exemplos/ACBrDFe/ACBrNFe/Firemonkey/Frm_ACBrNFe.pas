@@ -382,7 +382,7 @@ var
 implementation
 
 uses
-  FMX.Printer,
+  FMX.Printer, System.IOUtils,
   strutils, math, TypInfo, DateUtils, synacode, blcksock,
   pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
   ACBrUtil, ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
@@ -3151,15 +3151,15 @@ end;
 procedure TfrmACBrNFe.btVersaoClick(Sender: TObject);
 begin
   pgRespostas.ActiveTab := tsRespostas;
-  if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
-    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
-  else
-    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+  MemoResp.Lines.Add(ACBrNFe1.SSL.SSLCryptClass.Versao);
 end;
 
 function TfrmACBrNFe.CalcularNomeArquivoConfiguracao: String;
 begin
-  {$IF Defined(FMX) and Defined(POSIX) and Defined(DEBUG)}
+  {$IfDef ANDROID}
+   Result := '/storage/emulated/0/Pictures/ACBrNFe_Exemplo.ini';
+   //Result := TPath.Combine(TPath.GetDocumentsPath, 'ACBrNFe_Exemplo.ini' );
+  {$ElseIf Defined(FMX) and Defined(POSIX) and Defined(DEBUG)}
    // Salva no diretório anterior, pois o PAServer sempre apaga a Pasta antes de executar
    Result := ApplicationPath + '../' + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
   {$Else}
@@ -3279,19 +3279,20 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
+
+  {$IfDef MSWINDOWS}
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  {$EndIf}
+
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
-
-  for l := 0 to Printer.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[l].Title);
-
+  {$IfDef LINUX}
   cbxPorta.Items.Add('/dev/ttyS0') ;
-  cbxPorta.Items.Add('/dev/ttyS1') ;
   cbxPorta.Items.Add('/dev/ttyUSB0') ;
-  cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   pgRespostas.First;
   PageControl1.First;
@@ -3663,7 +3664,7 @@ begin
   TempXML := ApplicationPath + 'temp.xml';
   ACBrUtil.WriteToTXT(TempXML, AnsiString(RetWS), False, False);
 
-  MyWebBrowser.Navigate(TempXML);
+  MyWebBrowser.Navigate('file://'+TempXML);
 
   if (ACBrNFe1.NotasFiscais.Count > 0) then
     MemoResp.Lines.Add('Empresa: ' + ACBrNFe1.NotasFiscais.Items[0].NFe.Emit.xNome);

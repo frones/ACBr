@@ -12,7 +12,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants,
-  TestFramework, JsonDataObjects;
+  TestFramework, JsonDataObjects_ACBr;
 
 type
   TestTJsonBaseObject = class(TTestCase)

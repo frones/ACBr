@@ -274,7 +274,7 @@ implementation
 uses
   strutils, dateutils,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects,
+    JsonDataObjects_ACBr,
   {$Else}
     Jsons,
   {$EndIf}

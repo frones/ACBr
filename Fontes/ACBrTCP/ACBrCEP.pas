@@ -343,7 +343,7 @@ uses
   strutils, math,
   synacode, synautil,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects,
+    JsonDataObjects_ACBr,
   {$Else}
     Jsons,
   {$EndIf}

@@ -44,7 +44,7 @@ contains
   AJBarcode in '..\..\..\Fontes\Terceiros\AJBarcode\AJBarcode.pas',
   ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  JsonDataObjects in '..\..\..\Fontes\Terceiros\JsonDataObjects\Source\JsonDataObjects.pas',
+  JsonDataObjects_ACBr in '..\..\..\Fontes\Terceiros\JsonDataObjects\Source\JsonDataObjects_ACBr.pas',
   {$Else}
   Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
   {$EndIf}

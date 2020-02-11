@@ -2022,7 +2022,7 @@ begin
     exit;
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal)) then
+ if not(InputQuery('WebServices Inutilização ', 'Número Final', NumeroFinal)) then
     exit;
  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
     exit;

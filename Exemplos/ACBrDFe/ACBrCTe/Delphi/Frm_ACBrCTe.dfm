@@ -1804,6 +1804,12 @@ object frmACBrCTe: TfrmACBrCTe
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
     MargemDireita = 5.100000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2

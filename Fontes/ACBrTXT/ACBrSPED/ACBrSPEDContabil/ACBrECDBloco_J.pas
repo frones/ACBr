@@ -162,11 +162,16 @@ type
 
   TRegistroJ150 = class
   private
+    fNU_ORDEM: String;       /// Número de ordem da linha na visualização da demonstração
     fCOD_AGL: String;        /// Código de aglutinação das contas, atribuído pelo empresário ou sociedade empresária.
     fIND_COD_AGL: string;     /// Indicador do tipo de código de aglutinação das linhas (leiaute 7: T - Totalizador; D - Detalhe)
     fNIVEL_AGL: String;      /// Nível do Código de aglutinação (mesmo conceito do plano de contas - Registro I050).
     fCOD_AGL_SUP: String;    /// Código de aglutinação sintético/grupo de código de aglutinação de nível superior
     fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
+    fVL_CTA_INI: Currency;       /// Valor do saldo final da linha no período imediatamente anterior
+    fIND_DC_CTA_INI: String;     /// Indicador da situação do valor final da linha no período imediatamente anterior
+    fVL_CTA_FIN: Currency;       /// Valor final da linha antes do encerramento do exercício
+    fIND_DC_CTA_FIN: String;     /// Indicador da situação do valor final da linha antes do encerramento
     fVL_CTA: Currency;           /// Valor total do Código de aglutinação na Demonstração do Resultado do Exercício no período informado.
     fIND_DC_CTA: String;         /// Indicador da situação do valor total do código de aglutinação: D - Devedor; C - Credor;
     fIND_GRP_DRE: String;         /// Indicador de grupo da DRE: D ou R
@@ -175,11 +180,16 @@ type
     fIND_VL_ULT_DRE: String;     /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
     fNOTAS_EXP_REF: String;      /// Notas explicativas relativas às demonstrações contábeis.    
   public
+    property NU_ORDEM: String read fNU_ORDEM write fNU_ORDEM;
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
     property IND_COD_AGL: String read fIND_COD_AGL write fIND_COD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
     property COD_AGL_SUP: String read fCOD_AGL_SUP write fCOD_AGL_SUP;
     property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
+    property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
+    property IND_DC_CTA_INI: String read fIND_DC_CTA_INI write fIND_DC_CTA_INI;
+    property VL_CTA_FIN: Currency read fVL_CTA_FIN write fVL_CTA_FIN;
+    property IND_DC_CTA_FIN: String read fIND_DC_CTA_FIN write fIND_DC_CTA_FIN;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_VL: String read fIND_VL write fIND_VL;
     property VL_CTA_ULT_DRE: Currency read fVL_CTA_ULT_DRE write fVL_CTA_ULT_DRE;    

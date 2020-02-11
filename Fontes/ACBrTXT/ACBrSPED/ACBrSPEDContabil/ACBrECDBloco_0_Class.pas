@@ -156,6 +156,12 @@ begin
        Check(funChecaUF(UF), '(0-0000) A UF "%s" digitada é inválido!', [UF]);
        Check(funChecaIE(IE, UF), '(0-0000) A inscrição estadual "%s" digitada é inválida!', [IE]);
        Check(funChecaMUN(StrToInt(COD_MUN)), '(0-0000) O código do município "%s" digitado é inválido!', [COD_MUN]);
+       if DT_INI >= EncodeDate(2019,01,01) then
+       begin
+         Check(((IND_CENTRALIZADA >= '0') and (IND_CENTRALIZADA <= '1')), '(0-0000) O indicador "%s" da modalidade de escrituração centralizada ou descentralizada, deve ser informado o número 0 ou 1!', [IND_CENTRALIZADA]);
+         Check(((IND_MUDANC_PC >= '0') and (IND_MUDANC_PC <= '1')), '(0-0000) O indicador "%s"  de mudança de plano de contas, deve ser informado o número 0 ou 1!', [IND_MUDANC_PC]);
+         Check((((StrToIntDef(COD_PLAN_REF,0) >= 1) and (StrToIntDef(COD_PLAN_REF,0) <= 10)) or (COD_PLAN_REF = '')), '(0-0000) O Còdigo "%s" Código do Plano de Contas Referencial que será utilizado para o mapeamento de todas as contas analíticas, deve ser em branco ou informado o número entre 1 e 10!', [IND_MUDANC_PC]);
+       end;
        if DT_INI >= EncodeDate(2014,01,01) then
        begin
          Check(((TIP_ECD >= '0') and (TIP_ECD <= '2')), '(0-0000) O indicador "%s" de tipo ECD, deve ser informado o número 0, 1 ou 2!', [TIP_ECD]);
@@ -168,8 +174,36 @@ begin
          Check(((IND_EMP_GRD_PRT >= '0') and (IND_EMP_GRD_PRT <= '1')), '(0-0000) O indicador "%s" de empresa de grande porte, deve ser informado o número 0 ou 1!', [IND_EMP_GRD_PRT]);
        end;
 
+       // Layout 8 a partir da escrituração ano calendário 2019
+       if DT_INI >= EncodeDate(2019,01,01) then
+       begin
+         Add( LFill('0000') +
+              LFill('LECD') +
+              LFill(DT_INI) +
+              LFill(DT_FIN) +
+              LFill(NOME) +
+              LFill(CNPJ) +
+              LFill(UF) +
+              LFill(IE) +
+              LFill(COD_MUN, 7) +
+              LFill(IM) +
+              LFill(IND_SIT_ESP, 0, True) +
+              LFill(IND_SIT_INI_PER) +
+              LFill(IND_NIRE) +
+              LFill(IND_FIN_ESC) +
+              LFill(COD_HASH_SUB) +
+              LFill(IND_EMP_GRD_PRT) +
+              LFill(TIP_ECD) +
+              LFill(COD_SCP) +
+              LFill(IDENT_MF) +
+              LFill(IND_ESC_CONS) +
+              LFill(IND_CENTRALIZADA) +
+              LFill(IND_MUDANC_PC) +
+              LFill(COD_PLAN_REF)
+              );
+       end
        // Layout 5 a partir da escrituração ano calendário 2016
-       if DT_INI >= EncodeDate(2016,01,01) then
+       else if DT_INI >= EncodeDate(2016,01,01) then
        begin
          Add( LFill('0000') +
               LFill('LECD') +

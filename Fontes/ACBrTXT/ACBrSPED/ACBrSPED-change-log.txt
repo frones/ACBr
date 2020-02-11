@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 11/02/2020
+-- ACBrSPEDContabil --
+[*] Alterações nos registros 0000 e J150 para deixar em conformidade com a 
+    versão 8. 
+    https://www.projetoacbr.com.br/forum/topic/56130-ecd-layout-800/?do=findComment&comment=368153
+   Por: Renato Rubinho
+
 Data 07/02/2020
 -- ACBrSPEDFiscal --
 [-] Inclusão do registro 9900 pra totalizar as ocorrências do registro C597. (Juliana Tamizou)

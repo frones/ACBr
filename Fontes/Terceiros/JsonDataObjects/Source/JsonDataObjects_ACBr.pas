@@ -28,6 +28,7 @@ SOFTWARE.
 {$WARN SYMBOL_DEPRECATED OFF} // for StrLen/StrLComp
 {$POINTERMATH ON}
 
+// renomeado para evitar problemas para quem utiliza o DMVC ou projeto que já utilizam a lib
 unit JsonDataObjects_ACBr;
 
 {$IFDEF VER200}

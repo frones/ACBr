@@ -46,40 +46,49 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="11">
+    <RequiredPackages Count="14">
       <Item1>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item5>
       <Item6>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="frce"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBrTCP"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBrSerial"/>
       </Item8>
       <Item9>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item10>
       <Item11>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item11>
+      <Item12>
+        <PackageName Value="SynEdit"/>
+      </Item12>
+      <Item13>
+        <PackageName Value="ACBr_SAT"/>
+      </Item13>
+      <Item14>
+        <PackageName Value="LCL"/>
+      </Item14>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>

@@ -8,9 +8,11 @@ uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, SynGutterBase,
   SynGutterMarks, SynGutterLineNumber, SynGutterChanges, SynGutter,
   SynGutterCodeFolding, PrintersDlgs, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, RLPDFFilter,
-  ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, dateutils,
-  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL, ACBrIntegrador, Types;
+  StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin,
+  ACBrNFeDANFeRLClass, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFrA4,
+  ACBrDANFCeFortesFr, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
+  ACBrIntegrador, Types;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -39,6 +41,7 @@ type
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
     cbImprimir1Linha: TCheckBox;
+    cbContinuo: TCheckBox;
     cbLogotipo: TCheckBox;
     cbImprimirDescAcres: TCheckBox;
     cbLogoLateral: TCheckBox;
@@ -594,6 +597,7 @@ begin
     seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda', trunc(ACBrSATExtratoFortes1.MargemEsquerda));
     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita', trunc(ACBrSATExtratoFortes1.MargemDireita));
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
+    cbContinuo.Checked     := INI.ReadBool('Fortes','Continuo',True);
 
     lImpressora.Caption    := INI.ReadString('Printer','Name', '');
     if EstaVazio(lImpressora.Caption) then
@@ -885,6 +889,7 @@ begin
     INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
     INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
+    INI.WriteBool('Fortes','Continuo',cbContinuo.Checked);
 
     INI.WriteString('Printer','Name',Printer.PrinterName);
     INI.WriteBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
@@ -1792,6 +1797,7 @@ begin
     ACBrSATExtratoFortes1.MargemEsquerda  := seMargemEsquerda.Value ;
     ACBrSATExtratoFortes1.MargemDireita   := seMargemDireita.Value ;
     ACBrSATExtratoFortes1.MostraPreview   := cbPreview.Checked;
+    ACBrSATExtratoFortes1.FormularioContinuo := cbContinuo.Checked;
 
     try
       if lImpressora.Caption <> '' then

@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 344
+  Left = 394
   Height = 498
-  Top = 135
+  Top = 187
   Width = 900
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
@@ -12,7 +12,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.6.0'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -2362,7 +2362,7 @@ object Form1: TForm1
             MinValue = 3
             ParentFont = False
             TabOrder = 11
-            Value = 3
+            Value = 30
           end
           object Label8: TLabel
             AnchorSideLeft.Side = asrBottom
@@ -3041,13 +3041,24 @@ object Form1: TForm1
               ParentFont = False
             end
             object cbPreview: TCheckBox
-              Left = 192
+              Left = 184
               Height = 19
-              Top = 26
+              Top = 0
               Width = 61
               Caption = 'Preview'
               ParentFont = False
               TabOrder = 6
+            end
+            object cbContinuo: TCheckBox
+              Left = 184
+              Height = 19
+              Top = 24
+              Width = 70
+              Caption = 'Contínuo'
+              Checked = True
+              ParentFont = False
+              State = cbChecked
+              TabOrder = 7
             end
           end
           object GroupBox4: TGroupBox
@@ -3861,6 +3872,12 @@ object Form1: TForm1
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -3868,6 +3885,7 @@ object Form1: TForm1
     CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     ImprimeDescAcrescItem = False
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     left = 64
     top = 280
@@ -3887,6 +3905,12 @@ object Form1: TForm1
     MargemEsquerda = 2
     MargemDireita = 2
     ExpandeLogoMarca = True
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -3894,6 +3918,7 @@ object Form1: TForm1
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrSAT = ACBrSAT1
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    FormularioContinuo = True
     EspacoFinal = 50
     LogoWidth = 100
     left = 64

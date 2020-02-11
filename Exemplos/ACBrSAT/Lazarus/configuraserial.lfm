@@ -1,4 +1,4 @@
-object frConfigureSerial: TfrConfiguraSerial
+object frConfiguraSerial: TfrConfiguraSerial
   Left = 398
   Height = 429
   Top = 174
@@ -20,8 +20,7 @@ object frConfigureSerial: TfrConfiguraSerial
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '2.0.6.0'
   object Label5: TLabel
     Left = 8
     Height = 13

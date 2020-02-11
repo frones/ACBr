@@ -43,6 +43,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket, ACBrUtil, IniFiles;
 
 const
@@ -83,7 +90,7 @@ type
 
   { TACBrRastreioClass }
 
-  TACBrRastreioClass = class(TACBrObjectList)
+  TACBrRastreioClass = class(TObjectList{$IfDef NEXTGEN}<TACBrRastreio>{$EndIf})
   protected
     procedure SetObject(Index: integer; Item: TACBrRastreio);
     function GetObject(Index: integer): TACBrRastreio;

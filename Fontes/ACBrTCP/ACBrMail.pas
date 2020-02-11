@@ -48,6 +48,13 @@ interface
 
 uses
   Classes, syncobjs, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil,
   ACBrBase;
 
@@ -86,7 +93,7 @@ type
 
   { TMailAttachments }
 
-  TMailAttachments = class(TACBrObjectList)
+  TMailAttachments = class(TObjectList{$IfDef NEXTGEN}<TMailAttachment>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TMailAttachment);
     function GetObject (Index: Integer): TMailAttachment;

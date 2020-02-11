@@ -50,6 +50,13 @@ interface
 
 uses
   SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket, ACBrFeriadoWSClass;
 
 type
@@ -90,7 +97,7 @@ type
     property ListaCidade: String    read fListaCidade write fListaCidade;
   end;
 
-  TACBrFeriadoEventos = class(TACBrObjectList)
+  TACBrFeriadoEventos = class(TObjectList{$IfDef NEXTGEN}<TACBrFeriadoEvento>{$EndIf})
   protected
     procedure SetObject(Index: Integer; Item: TACBrFeriadoEvento);
     function GetObject(Index: Integer): TACBrFeriadoEvento;

@@ -42,6 +42,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket, ACBrUtil;
 
 type
@@ -63,7 +70,7 @@ type
 
   { TACBrNCMsList }
 
-  TACBrNCMsList = class(TACBrObjectList)
+  TACBrNCMsList = class(TObjectList{$IfDef NEXTGEN}<TACBrNCM>{$EndIf})
   protected
     procedure SetObject(Index: integer; Item: TACBrNCM);
     function GetObject(Index: integer): TACBrNCM;

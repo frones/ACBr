@@ -45,6 +45,13 @@ interface
 
 uses
   SysUtils, Variants, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket;
 
 type
@@ -127,7 +134,7 @@ type
     property Municipal: Double read FMunicipal write FMunicipal;
   end;
 
-  TACBrIBPTaxRegistros = class(TACBrObjectList)
+  TACBrIBPTaxRegistros = class(TObjectList{$IfDef NEXTGEN}<TACBrIBPTaxRegistro>{$EndIf})
   private
     function GetItem(Index: integer): TACBrIBPTaxRegistro;
     procedure SetItem(Index: integer; const Value: TACBrIBPTaxRegistro);

@@ -49,7 +49,14 @@ interface
 
 uses
     SysUtils, Variants, Classes,
-    ACBrBase, ACBrSocket, ACBrUtil;
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrBase, ACBrSocket, ACBrUtil;
 
 type
   EACBrCotacao = class(Exception);
@@ -82,7 +89,7 @@ type
 
   end;
 
-  TACBrCotacaoItens = class(TACBrObjectList)
+  TACBrCotacaoItens = class(TObjectList{$IfDef NEXTGEN}<TACBrCotacaoItem>{$EndIf})
   private
     function GetItem(Index: integer): TACBrCotacaoItem;
     procedure SetItem(Index: integer; const Value: TACBrCotacaoItem);

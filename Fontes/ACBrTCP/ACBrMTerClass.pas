@@ -45,6 +45,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase;
 
 type
@@ -65,7 +72,7 @@ type
 
   { TACBrMTerComandos }
 
-  TACBrMTerComandos = class(TACBrObjectList)
+  TACBrMTerComandos = class(TObjectList{$IfDef NEXTGEN}<TACBrMTerComando>{$EndIf})
   private
     function GetObject(aIndex: Integer): TACBrMTerComando;
     procedure SetObject(aIndex: Integer; aItem: TACBrMTerComando);

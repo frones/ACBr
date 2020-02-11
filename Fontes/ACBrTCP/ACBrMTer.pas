@@ -45,6 +45,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket, ACBrMTerClass, ACBrBAL, blcksock;
 
 type
@@ -153,7 +160,7 @@ type
 
   { TACBrMTerConexoes }
 
-  TACBrMTerConexoes = class(TACBrObjectList)
+  TACBrMTerConexoes = class(TObjectList{$IfDef NEXTGEN}<TACBrMTerConexao>{$EndIf})
   private
     fACBrMTer: TACBrMTer;
     function GetConexao(aIP: String): TACBrMTerConexao;

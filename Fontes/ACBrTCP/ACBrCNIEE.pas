@@ -45,6 +45,13 @@ interface
 
 uses
   SysUtils, Variants, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrUtil, ACBrSocket;
 
 const
@@ -125,7 +132,7 @@ type
     property QtLacresFab: Integer read FQtLacresFab write FQtLacresFab;
   end;
 
-  TACBrCNIEERegistros = class(TACBrObjectList)
+  TACBrCNIEERegistros = class(TObjectList{$IfDef NEXTGEN}<TACBrCNIEERegistro>{$EndIf})
   private
     function GetItem(Index: integer): TACBrCNIEERegistro;
     procedure SetItem(Index: integer; const Value: TACBrCNIEERegistro);

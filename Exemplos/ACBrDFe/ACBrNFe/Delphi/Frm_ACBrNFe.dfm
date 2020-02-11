@@ -1,9 +1,9 @@
 object frmACBrNFe: TfrmACBrNFe
   Left = 236
   Top = 118
-  Width = 882
-  Height = 651
   Caption = 'ACBrNFe - Programa Exemplo'
+  ClientHeight = 612
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -300,7 +300,6 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -310,7 +309,6 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -320,7 +318,6 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -330,7 +327,6 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -471,7 +467,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -502,7 +497,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -518,7 +512,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -611,7 +604,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -684,7 +676,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1394,9 +1385,6 @@ object frmACBrNFe: TfrmACBrNFe
             Top = 88
             Width = 22
             Height = 22
-            ModalResult = 1
-            TabOrder = 0
-            OnClick = btSerialClick
             Glyph.Data = {
               36030000424D3603000000000000360000002800000010000000100000000100
               1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -1425,6 +1413,9 @@ object frmACBrNFe: TfrmACBrNFe
               00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             Layout = blGlyphTop
+            ModalResult = 1
+            TabOrder = 0
+            OnClick = btSerialClick
           end
           object cbxModeloPosPrinter: TComboBox
             Left = 8
@@ -1432,7 +1423,6 @@ object frmACBrNFe: TfrmACBrNFe
             Width = 233
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
             TabOrder = 1
           end
           object cbxPorta: TComboBox
@@ -1440,7 +1430,6 @@ object frmACBrNFe: TfrmACBrNFe
             Top = 88
             Width = 201
             Height = 21
-            ItemHeight = 0
             TabOrder = 2
           end
           object cbxPagCodigo: TComboBox
@@ -1449,7 +1438,6 @@ object frmACBrNFe: TfrmACBrNFe
             Width = 101
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
             TabOrder = 3
           end
           object seColunas: TSpinEdit
@@ -1613,8 +1601,6 @@ object frmACBrNFe: TfrmACBrNFe
       Width = 153
       Height = 36
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1629,6 +1615,8 @@ object frmACBrNFe: TfrmACBrNFe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel
@@ -2016,6 +2004,7 @@ object frmACBrNFe: TfrmACBrNFe
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
+    Integrador = ACBrIntegrador1
     OnStatusChange = ACBrNFe1StatusChange
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libNone
@@ -2034,7 +2023,6 @@ object frmACBrNFe: TfrmACBrNFe
     Configuracoes.WebServices.TimeOut = 20000
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFeRL1
     Left = 330
     Top = 239
   end
@@ -2152,5 +2140,26 @@ object frmACBrNFe: TfrmACBrNFe
     PastaOutput = 'C:\Integrador\Output\'
     Left = 334
     Top = 342
+  end
+  object ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 8.000000000000000000
+    MargemSuperior = 8.000000000000000000
+    MargemEsquerda = 6.000000000000000000
+    MargemDireita = 5.099999999999999000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    FormularioContinuo = True
+    Left = 528
+    Top = 344
   end
 end

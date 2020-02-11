@@ -8,7 +8,8 @@ uses
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
   ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrNFeDANFEClass, ACBrDANFCeFortesFr,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFeRLClass, ACBrBase, ACBrDFe,
-  ACBrNFe, ACBrUtil, ShellAPI, XMLIntf, XMLDoc, zlib, ACBrIntegrador;
+  ACBrNFe, ACBrUtil, ShellAPI, XMLIntf, XMLDoc, zlib, ACBrIntegrador,
+  ACBrDANFCeFortesFrA4;
 
 type
   TfrmACBrNFe = class(TForm)
@@ -243,6 +244,7 @@ type
     btnStatusServ: TButton;
     ACBrIntegrador1: TACBrIntegrador;
     btVersao: TButton;
+    ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -2791,7 +2793,7 @@ begin
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
  NumeroFinal := '';
- if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal)) then
+ if not(InputQuery('WebServices Inutilização ', 'Número Final', NumeroFinal)) then
     exit;
  Justificativa := '';
  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
@@ -3475,10 +3477,11 @@ begin
     ACBrNFe1.DANFE := ACBrNFeDANFeRL1
   else
   begin
-    if rgDANFCE.ItemIndex = 0 then
-      ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
-    else
-      ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+    case rgDANFCE.ItemIndex of
+      0: ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+      1: ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+      2: ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA41;
+    end;
   end;
 
   ACBrNFe1.SSL.DescarregarCertificado;

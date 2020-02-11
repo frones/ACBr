@@ -1765,14 +1765,15 @@ begin
           Gerador.wCampoNFSe(tcInt, 'AP255', 'QuantidadeTransferencias', 01, 01, 1, QuantidadeTransferencias);
           Gerador.wCampoNFSe(tcDe2, 'AP256', 'ValorSaques             ', 01, 01, 1, ValorSaques);
           Gerador.wCampoNFSe(tcDe2, 'AP257', 'ValorTransferencias     ', 01, 01, 1, ValorTransferencias);
+
           if TipoViagem <> TAC_Agregado then
           begin
             Gerador.wCampoNFSe(tcInt, 'AP258', 'CodigoTipoCarga        ', 01, 01, 1, CodigoTipoCarga);
             Gerador.wCampoNFSe(tcBoolStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, True)));
+            Gerador.wCampoNFSe(tcBoolStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, True)));
           end;
-          Gerador.wCampoNFSe(tcBoolStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, True)));
-          Gerador.wCampoNFSe(tcBoolStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));
 
+          Gerador.wCampoNFSe(tcBoolStr, 'AP261', 'FreteRetorno', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));
           Gerador.wCampoNFSe(tcStr, 'AP262', 'CepRetorno      ', 01, 01, 0, CepRetorno);
           Gerador.wCampoNFSe(tcInt, 'AP263', 'DistanciaRetorno', 01, 01, 1, DistanciaRetorno);
         end;

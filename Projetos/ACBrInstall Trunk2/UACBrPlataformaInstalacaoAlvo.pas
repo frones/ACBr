@@ -35,7 +35,7 @@ unit UACBrPlataformaInstalacaoAlvo;
 interface
 
 uses SysUtils, Windows, Messages, Classes, Forms, System.Generics.Collections,
-  JclIDEUtils, JclCompilerUtils, DelphiData;
+  JclIDEUtils, JclCompilerUtils;
 
 
 type

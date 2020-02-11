@@ -89,7 +89,7 @@ object frmPrincipal: TfrmPrincipal
       object Label20: TLabel
         Left = 15
         Top = 321
-        Width = 467
+        Width = 465
         Height = 32
         Caption = 
           'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
@@ -105,8 +105,8 @@ object frmPrincipal: TfrmPrincipal
       object Label6: TLabel
         Left = 25
         Top = 131
-        Width = 504
-        Height = 56
+        Width = 483
+        Height = 42
         Caption = 
           'Este assistente o guiar'#225' no processo de instala'#231#227'o do Projeto AC' +
           'Br em seu computador.'#13#10#13#10#201' recomend'#225'vel fechar todos os outros a' +
@@ -1002,7 +1002,7 @@ object frmPrincipal: TfrmPrincipal
       object Label7: TLabel
         Left = 15
         Top = 392
-        Width = 522
+        Width = 518
         Height = 32
         Alignment = taCenter
         Caption = 
@@ -1040,6 +1040,10 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Selecione as IDEs'
       OnNextButtonClick = wizPgSelectIDEsNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object clbDelphiVersion: TCheckListBox
         Left = 6
         Top = 104
@@ -1099,6 +1103,10 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label2: TLabel
         Left = 6
         Top = 6
@@ -1314,6 +1322,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
       OnNextButtonClick = wizPgPacotesNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1323,19 +1335,27 @@ object frmPrincipal: TfrmPrincipal
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         inherited pnlBotoesMarcar: TPanel
           Top = 458
           Width = 554
+          ExplicitTop = 458
+          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 504
+            ExplicitLeft = 504
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 454
+            ExplicitLeft = 454
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
+          ExplicitWidth = 548
+          ExplicitHeight = 452
         end
       end
     end
@@ -1364,6 +1384,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1451,11 +1475,15 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
-        Width = 394
-        Height = 38
+        Width = 378
+        Height = 19
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clMaroon

@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/02/2020
+[-] - Acertos para funcionar corretamente a exclusão de arquivos.
+    - Acertos para funcionar corretamente a alteração da variavel PATH do Delphi
+
 24/01/2018
 [+] Adicionados os pacotes do eSocial e reinf a lista de pacotes para instalação
     por Regys.Silveira

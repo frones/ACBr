@@ -160,7 +160,7 @@ implementation
 
 uses
   ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils, Generics.Collections,
-  ACBrInstallDelphiComponentes, DelphiData;
+  ACBrInstallDelphiComponentes;
 
 {$R *.dfm}
 
@@ -255,8 +255,6 @@ end;
 procedure TfrmPrincipal.IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const
     NomeCaminhoArquivoLog: string; const Cabecalho: string);
 begin
-  // limpar o log
-  lstMsgInstalacao.Clear;
   // setar barra de progresso
   pgbInstalacao.Position := 0;
 
@@ -360,7 +358,6 @@ begin
     end;
     ACBrInstaladorAux.OpcoesInstall.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-
     Result := ACBrInstaladorAux.Instalar(ListaPacotes, ListaVersoesInstalacao, UmaListaPlataformasAlvos);
   finally
     ACBrInstaladorAux.Free;
@@ -410,6 +407,9 @@ procedure TfrmPrincipal.btnInstalarACBrClick(Sender: TObject);
 var
   Instalou: Boolean;
 begin
+  // limpar o log
+  lstMsgInstalacao.Clear;
+
   Instalou := False;
   btnInstalarACBr.Enabled := False;
   btnVisualizarLogCompilacao.Enabled := False;

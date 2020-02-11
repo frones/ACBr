@@ -351,9 +351,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -397,9 +395,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -2283,32 +2279,6 @@ begin
   }
 end;
 
-procedure TNF3eInutilizacao.SalvarEnvio;
-var
-  aPath: String;
-begin
-  inherited SalvarEnvio;
-
-  if FPConfiguracoesNF3e.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml', FPDadosMsg, aPath);
-  end;
-end;
-
-procedure TNF3eInutilizacao.SalvarResposta;
-var
-  aPath: String;
-begin
-  inherited SalvarResposta;
-
-  if FPConfiguracoesNF3e.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml', FPRetWS, aPath);
-  end;
-end;
-
 function TNF3eInutilizacao.TratarResposta: Boolean;
 //var
 //  NF3eRetorno: TRetInutNF3e;
@@ -2719,34 +2689,6 @@ begin
       Leitor.Free;
     end;
   end;
-end;
-
-procedure TNF3eEnvEvento.SalvarEnvio;
-begin
-  if ArqEnv = '' then
-    exit;
-
-  if FPConfiguracoesNF3e.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-                      FPDadosMsg, GerarPathEvento(FCNPJ));
-
-  if FPConfiguracoesNF3e.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
-end;
-
-procedure TNF3eEnvEvento.SalvarResposta;
-begin
-  if ArqResp = '' then
-    exit;
-
-  if FPConfiguracoesNF3e.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-                      FPRetWS, GerarPathEvento(FCNPJ));
-
-  if FPConfiguracoesNF3e.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ));
 end;
 
 function TNF3eEnvEvento.GerarMsgLog: String;

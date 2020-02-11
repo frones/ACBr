@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2020
+[*] ConfiguraSerial
+Adicionado Unit ACBrDeviceSerial
+
 07/02/2020
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado novas configurações referente ao componente SAT: Configurações de diretórios, Prefixo de CFe e Configurações de estrutura de diretórios

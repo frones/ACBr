@@ -37,7 +37,7 @@ interface
 
 uses
   SysUtils, Classes, Variants, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, Spin, ACBrDevice ;
+  Dialogs, StdCtrls, Buttons, Spin, ACBrDevice, ACBrDeviceSerial ;
 
 type
 

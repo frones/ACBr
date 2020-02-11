@@ -49,6 +49,8 @@ Símbolo : Significado
 
 11/02/2020
 -- pcnCIOTW_eFrete --
+[*] Imposta a condição para gerar a tag <DistanciaRetorno> somente
+    quando não for Tac-Agregado.
 [*] Imposta a condição para gerar a tag <FreteRetorno> somente
     quando não for Tac-Agregado.
 [*] Imposta a condição para gerar a tag <DestinacaoComercial> somente

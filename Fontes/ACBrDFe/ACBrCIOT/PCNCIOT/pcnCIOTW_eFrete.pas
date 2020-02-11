@@ -1774,8 +1774,10 @@ begin
             Gerador.wCampoNFSe(tcBoolStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));
           end;
 
-          Gerador.wCampoNFSe(tcStr, 'AP262', 'CepRetorno      ', 01, 01, 0, CepRetorno);
-          Gerador.wCampoNFSe(tcInt, 'AP263', 'DistanciaRetorno', 01, 01, 1, DistanciaRetorno);
+          Gerador.wCampoNFSe(tcStr, 'AP262', 'CepRetorno', 01, 01, 0, CepRetorno);
+
+          if TipoViagem <> TAC_Agregado then
+            Gerador.wCampoNFSe(tcInt, 'AP263', 'DistanciaRetorno', 01, 01, 1, DistanciaRetorno);
         end;
 
         Gerador.wGrupoNFSe('/AdicionarOperacaoTransporteRequest');

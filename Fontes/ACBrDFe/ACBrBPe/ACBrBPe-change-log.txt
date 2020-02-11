@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2020
+-- ACBrBPeWebServices --
+[*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos, pois
+    já existe essa procedures padrões que salvam os XMLs de envio e de retorno
+    na pasta correta. 
+   Por: Italo Jurisato Junior
+
 31/12/2019
 -- ACBrBPeBilhetes --
 [+] Implementado os métodos: GerarBPeIni e GerarIni, métodos a serem utilizados 

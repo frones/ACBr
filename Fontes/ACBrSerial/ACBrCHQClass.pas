@@ -43,13 +43,20 @@ unit ACBrCHQClass;
 
 interface
 uses
-  ACBrDevice, ACBrECF, ACBrBase,
-  Classes
+  Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   {$IFDEF COMPILER6_UP}
-   ,Types
+   Types,
   {$ELSE}
-   ,ACBrD5, Windows
-  {$ENDIF};
+   ACBrD5, Windows,
+  {$ENDIF}
+  ACBrDevice, ACBrECF, ACBrBase;
 
 { Classe para Modelo de Cheque, com definicao para o posicionamento dos campos}
 type
@@ -96,7 +103,7 @@ end;
   um arquivo no formato do Arquivo INI usado pela Bematech. Caso nenhum arquivo
   seja especificado, ou o arquivo nao exista, os valores Defaults serao
   utilizados (Mais explicações no Implementação da CarregaBemaFiINI abaixo) }
-TACBrCHQModelos = class(TACBrObjectList)
+TACBrCHQModelos = class(TObjectList{$IfDef NEXTGEN}<TACBrCHQModelo>{$EndIf})
   private
     fsArquivoBemaFiINI: String;
     procedure SetArquivoBemaFiINI(const Value: String);

@@ -87,6 +87,11 @@ unit ACBrECFNaoFiscal ;
 interface
 uses
   Classes, Math, SysUtils, IniFiles,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF}
   {$IFNDEF NOGUI}
      {$IF DEFINED(VisualCLX)}

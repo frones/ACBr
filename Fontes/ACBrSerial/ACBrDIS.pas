@@ -49,6 +49,13 @@ unit ACBrDIS;
 interface
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+    System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+    System.Contnrs,
+  {$Else}
+    Contnrs,
+  {$IfEnd}
   {$IFNDEF NOGUI}
     {$IF DEFINED(VisualCLX)}
       QExtCtrls,
@@ -120,7 +127,7 @@ TACBrDISLinha = class
 end ;
 
 { Lista de Objetos do tipo TACBrDISLinha }
-TACBrDISLinhas = class(TACBrObjectList)
+TACBrDISLinhas = class(TObjectList{$IfDef NEXTGEN}<TACBrDISLinha>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrDISLinha);
     function GetObject (Index: Integer): TACBrDISLinha;

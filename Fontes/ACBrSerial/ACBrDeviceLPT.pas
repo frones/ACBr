@@ -92,13 +92,15 @@ implementation
 
 uses
   dateutils, strutils,
-  {$If defined(VisualCLX)}
-   QForms,
-  {$ElseIf defined(FMX)}
-   FMX.Forms,
-  {$Else}
-   Forms,
-  {$IfEnd}
+  {$IFNDEF NOGUI}
+   {$If defined(VisualCLX)}
+    QForms,
+   {$ElseIf defined(FMX)}
+    FMX.Forms,
+   {$Else}
+    Forms,
+   {$IfEnd}
+  {$EndIf}
   {$IF defined(POSIX)}
    Posix.Unistd,
   {$IfEnd}

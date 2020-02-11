@@ -50,6 +50,13 @@ interface
 uses
   Classes, SysUtils,
   synaser, blcksock,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   {$IfDef COMPILER6_UP}
    Types,
   {$Else}
@@ -179,7 +186,7 @@ end;
 
 { TACBrTags }
 
-TACBrTags = class(TACBrObjectList)
+TACBrTags = class(TObjectList{$IfDef NEXTGEN}<TACBrTag>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrTag);
     function GetObject (Index: Integer): TACBrTag;

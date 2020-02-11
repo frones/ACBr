@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  strutils, math, ACBrConsts;
+  ACBrConsts;
 
 { TACBrEscGPrinter }
 

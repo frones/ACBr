@@ -723,8 +723,8 @@ begin
 
   if (fs_Terminador = '') and (AValue <> '') then  // não usou notação '#13,#10'
   begin
-    fs_Terminador := AValue;
-    fsTerminador := StringToAsc(AValue);
+    fs_Terminador := AnsiString(AValue);
+    fsTerminador := StringToAsc(fs_Terminador);
   end;
 end;
 
@@ -990,9 +990,9 @@ begin
     end;
 
     if ParseText then
-       RespHTTP.Text := ACBrUtil.ParseText( RespHTTP.Text, True, RespIsUTF8 )
+       RespHTTP.Text := ACBrUtil.ParseText( AnsiString(RespHTTP.Text), True, RespIsUTF8 )
     else
-       RespHTTP.Text := ACBrUtil.DecodeToString( RespHTTP.Text, RespIsUTF8 );
+       RespHTTP.Text := ACBrUtil.DecodeToString( AnsiString(RespHTTP.Text), RespIsUTF8 );
 
     if not OK then
        raise EACBrHTTPError.Create( 'Erro HTTP: '+IntToStr(HTTPSend.ResultCode)+' '+

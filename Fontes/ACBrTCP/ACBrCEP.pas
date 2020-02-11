@@ -49,6 +49,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrSocket, ACBrIBGE;
 
 type
@@ -97,7 +104,7 @@ type
 
   { TACBrCEPEnderecos }
 
-  TACBrCEPEnderecos = class(TACBrObjectList)
+  TACBrCEPEnderecos = class(TObjectList{$IfDef NEXTGEN}<TACBrCEPEndereco>{$EndIf})
     protected
       procedure SetObject (Index: Integer; Item: TACBrCEPEndereco);
       function GetObject (Index: Integer): TACBrCEPEndereco;
@@ -775,7 +782,7 @@ end;
 
 procedure TACBrWSBases4you.BuscarPorCEP(const ACEP: String);
 var
-  Acao: String;
+  Acao: AnsiString;
 begin
   Acao :=
    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
@@ -1213,7 +1220,7 @@ begin
 
    //sEndereco := ATipo_Logradouro+' '+ALogradouro+ '/'+ABairro+'/'+AMunicipio+'/'+AUF;
 
-   sParams := 'relaxation='+EncodeURL( ACBrStrToAnsi(sEndereco) )+
+   sParams := 'relaxation='+ String(EncodeURL( ACBrStrToAnsi(sEndereco) ))+
               '&TipoCep=ALL&semelhante=N&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=10';
    fOwner.HTTPGet(fpURL + sParams);
    ProcessaResposta;
@@ -1498,7 +1505,7 @@ end;
 
 procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(const ACEP: String);
 var
-  Acao: String;
+  Acao: AnsiString;
 begin
   Acao :=
      '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+

@@ -813,10 +813,10 @@ var
   I, CodMunicipio: Integer;
   oCidade: TACBrIBGECidade;
   JSonCidade: TJsonObject;
-  t1: TDateTime;
+  //t1: TDateTime;
 begin
   // DEBUG
-  t1 := now;
+  //t1 := now;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
     AJSonArr := TJsonObject.Parse(AJSonStr) as TJsonArray;
     try
@@ -875,7 +875,7 @@ begin
     end;
   {$EndIf}
   //DEBUG
-  WriteToTXT('./ibge.txt' , 'Tempo de Processamento: '+ FormatFloat('##0.000',SecondSpan(t1,Now))+' segundos' );
+  //WriteToTXT('./ibge.txt' , 'Tempo de Processamento: '+ FormatFloat('##0.000',SecondSpan(t1,Now))+' segundos' );
 end;
 
 procedure TACBrIBGECidades.ParseJSonStat(const AJSonStr: String);
@@ -1026,7 +1026,8 @@ end;
 
 function TACBrIBGE.UnZipDoc: String;
 var
-  CT, UnZipStr: String;
+  CT: String;
+  UnZipStr: AnsiString;
   RespIsUTF8: Boolean;
   zt: TCompressType;
 begin
@@ -1034,7 +1035,7 @@ begin
   if zt = ctUnknown then
   begin
     HTTPSend.Document.Position := 0;
-    Result := ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size);
+    Result := String(ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size));
     Exit;
   end;
 
@@ -1045,7 +1046,7 @@ begin
   if RespIsUTF8 then
     Result := UTF8ToNativeString(UnZipStr)
   else
-    Result := UnZipStr;
+    Result := String(UnZipStr);
 end;
 
 constructor TACBrIBGE.Create(AOwner : TComponent) ;

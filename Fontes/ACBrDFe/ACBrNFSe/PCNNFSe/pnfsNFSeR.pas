@@ -371,9 +371,11 @@ begin
         NFSe.Servico.Valores.OutrasRetencoes        := Leitor.rCampo(tcDe2, 'OutrasRetencoes');
         NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
         NFSe.Servico.Valores.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');
-        if (FProvedor in [proThema, proGINFES, proRJ, proPublica, proBHISS,
+
+        if (FProvedor in [proThema, proGinfes, proRJ, proPublica, proBHISS,
             proAbaco]) then
           NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
+
         NFSe.Servico.Valores.ValorLiquidoNfse       := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
         NFSe.Servico.Valores.ValorIssRetido         := Leitor.rCampo(tcDe2, 'ValorIssRetido');
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
@@ -1710,7 +1712,7 @@ begin
       NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');
 
-      if (FProvedor in [proThema, proGINFES, proRJ, proPublica, proBHISS, proEL,
+      if (FProvedor in [proThema, proRJ, proPublica, proBHISS, proEL,
           proWebISS, proAbaco]) then
         NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
 

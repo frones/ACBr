@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2020
+-- pnfsNFSeR -- 
+[*] Removido da lista o proGinfes, pois ao ler um XML da NFS-e o componente
+    estava multiplicando a aliquota por 100. 
+   Por: Italo Jurisato Junior
+
 10/02/2020
 -- Diversos -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56153-nfse-dados-do-tomador-na-impress%C3%A3o/

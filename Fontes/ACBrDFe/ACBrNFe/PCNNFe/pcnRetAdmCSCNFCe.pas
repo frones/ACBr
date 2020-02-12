@@ -50,7 +50,13 @@ unit pcnRetAdmCSCNFCe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  pcnConversao, pcnLeitor,
   ACBrBase;
 
 type

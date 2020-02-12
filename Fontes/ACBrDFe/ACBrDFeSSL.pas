@@ -38,6 +38,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   blcksock, syncobjs,
   ACBrBase;
 
@@ -102,7 +109,7 @@ type
 
   { TListaCertificados }
 
-  TListaCertificados = class(TACBrObjectList)
+  TListaCertificados = class(TObjectList{$IfDef NEXTGEN}<TDadosCertificado>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TDadosCertificado);
     function GetObject (Index: Integer): TDadosCertificado;

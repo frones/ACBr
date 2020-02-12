@@ -58,6 +58,11 @@ interface
 
 uses
   SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
   pcnConversao, pcnConversaoNFe, pcnSignature, pcnProcNFe, pcnGerador,
   ACBrBase;
 

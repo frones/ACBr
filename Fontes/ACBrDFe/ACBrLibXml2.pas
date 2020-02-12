@@ -539,12 +539,11 @@ begin
 end;
 
 function LoadLibraryLibXml2: Boolean;
+{$IfDef MSWINDOWS}
 var
-  i: Integer;
-  {$IfDef MSWINDOWS}
   x: Integer;
   s: String;
-  {$EndIf}
+{$EndIf}
 begin
   LibXml2Handle := LoadLib(LIBXML2_SO);
 

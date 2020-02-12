@@ -63,10 +63,10 @@ function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region NFe}
-function NFe_CarregarXML(const eArquivoOuXML: PChar): longint;
+function NFE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_CarregarINI(const eArquivoOuINI: PChar): longint;
+function NFE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
 function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
@@ -75,30 +75,30 @@ function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
 function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_LimparLista: longint;
+function NFE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
 function NFE_LimparListaEventos: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Assinar: longint;
+function NFE_Assinar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Validar: longint;
+function NFE_Validar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 {%endregion}
 
 {%region Servicos}
-function NFe_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Consultar(const eChaveOuNFe: PChar;
+function NFE_Consultar(const eChaveOuNFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
@@ -106,60 +106,60 @@ function NFE_ConsultarRecibo(const ARecibo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Inutilizar(const ACNPJ, AJustificativa: PChar;
+function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
+function NFE_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
+function NFE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_EnviarEvento(idLote: Integer;
+function NFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
+function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
+function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PChar;
+function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean;
+function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
+function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Imprimir: longint;
+function NFE_Imprimir: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
 function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
     bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ImprimirEventoPDF(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEventoPDF(const eChaveNFe, eChaveEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ImprimirInutilizacao(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacao(const eChave: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 {%endregion}
 

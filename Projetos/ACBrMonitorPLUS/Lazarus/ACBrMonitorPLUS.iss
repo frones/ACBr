@@ -11,8 +11,8 @@
   #define CHMFile  OutputDir + "\Output\chm\ACBrMonitor.chm"
   #define PDFFile  OutputDir + "\Output\pdf\ACBrMonitor.pdf"
 #else
-  #define CHMFile  OutputDir + "ACBrMonitor.chm"
-  #define PDFFile  OutputDir + "ACBrMonitor.pdf"
+  #define CHMFile  OutputDir + "\ACBrMonitor.chm"
+  #define PDFFile  OutputDir + "\ACBrMonitor.pdf"
 #endif
 
 ; para teste de compilação em 64 bits, descomente a linha abaixo

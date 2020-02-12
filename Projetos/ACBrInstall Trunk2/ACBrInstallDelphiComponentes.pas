@@ -107,6 +107,7 @@ type
 
     procedure CopiarOutrosArquivosParaPastaLibrary;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
+    procedure CompilaPacotePorNomeArquivo(const NomePacote: string);
     procedure OutputCallLine(const Text: string);
     procedure CompilarEInstalarPacotes(ListaPacotes: TPacotes);
     procedure CompilarPacotes(const PastaACBr: string; listaPacotes: TPacotes);
@@ -722,7 +723,6 @@ begin
     RemoverArquivosAntigosDoDisco;
     InformaSituacao('...OK');
   end;
-
   //se a opção não estiver marcada deve informar o progresso também...
   InformaProgresso;
 
@@ -917,6 +917,24 @@ begin
   end;//---endwith
 end;
 
+procedure TACBrInstallComponentes.CompilaPacotePorNomeArquivo(const NomePacote: string);
+begin
+  if UmaPlataformaDestino.InstalacaoAtual.RadToolKind = brBorlandDevStudio then
+  begin
+    (UmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).CleanPackageCache(BinaryFileName(UmaPlataformaDestino.sDirLibrary, FPacoteAtual));
+  end;
+  if UmaPlataformaDestino.InstalacaoAtual.CompilePackage(FPacoteAtual, UmaPlataformaDestino.sDirLibrary, UmaPlataformaDestino.sDirLibrary) then
+  begin
+    InformaSituacao(Format('Pacote "%s" compilado com sucesso.', [NomePacote]))
+  end
+  else
+  begin
+    Inc(FCountErros);
+    InformaSituacao(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
+    Exit;
+  end;
+end;
+
 procedure TACBrInstallComponentes.CopiarOutrosArquivosParaPastaLibrary;
   procedure CopiarArquivosParaPastaLibrary(const Mascara : string);
   var
@@ -1037,7 +1055,6 @@ var
 begin
   with UmaPlataformaDestino do
   begin
-
     if (InstalacaoAtual is TJclBDSInstallation) and (InstalacaoAtual.IDEVersionNumber >= 9) then
     begin
       case tPlatformAtual of
@@ -1067,24 +1084,20 @@ begin
       end;
 
       NomePacote := listaPacotes[iDpk].Caption;
-      // Busca diretório do pacote
-      sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if (IsDelphiPackage(NomePacote)) then
       begin
         FazLog('');
+        // Busca diretório do pacote
+        sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
         FPacoteAtual := sDirPackage + NomePacote;
-        if InstalacaoAtual.RadToolKind = brBorlandDevStudio then
-          (InstalacaoAtual as TJclBDSInstallation).CleanPackageCache(BinaryFileName(sDirLibrary, FPacoteAtual));
-        if InstalacaoAtual.CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-          InformaSituacao(Format('Pacote "%s" compilado com sucesso.', [NomePacote]))
-        else
+        CompilaPacotePorNomeArquivo(NomePacote);
+        if FCountErros> 0 then
         begin
-          Inc(FCountErros);
-          InformaSituacao(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
-          // parar no primeiro erro para evitar de compilar outros pacotes que
-          // precisam do pacote que deu erro
+          // Parar no primeiro erro para evitar de compilar outros pacotes que
+          // dependem desse que ocasionou erro.
           Break;
         end;
+
       end;
       InformaProgresso;
     end;
@@ -1103,19 +1116,19 @@ begin
     for iDpk := 0 to listaPacotes.Count - 1 do
     begin
       NomePacote := listaPacotes[iDpk].Caption;
-      // Busca diretório do pacote
-      sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if IsDelphiPackage(NomePacote) then
       begin
+        // Busca diretório do pacote
+        sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
         FPacoteAtual := sDirPackage + NomePacote;
+        GetDPKFileInfo(FPacoteAtual, bRunOnly);
         // instalar somente os pacotes de designtime
-        GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
         if not bRunOnly then
         begin
           // se o pacote estiver marcado instalar, senão desinstalar
           if listaPacotes[iDpk].Checked then
           begin
-            if InstalacaoAtual.InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+            if InstalacaoAtual.InstallPackage(FPacoteAtual, sDirLibrary, sDirLibrary) then
               InformaSituacao(Format('Pacote "%s" instalado com sucesso.', [NomePacote]))
             else
             begin
@@ -1126,7 +1139,7 @@ begin
           end
           else
           begin
-            if InstalacaoAtual.UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+            if InstalacaoAtual.UninstallPackage(FPacoteAtual, sDirLibrary, sDirLibrary) then
               InformaSituacao(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
           end;
         end;

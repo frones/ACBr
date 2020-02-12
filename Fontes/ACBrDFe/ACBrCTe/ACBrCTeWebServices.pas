@@ -351,9 +351,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -453,9 +451,7 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirEnvelopeSoap; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -2464,32 +2460,6 @@ begin
   end;
 end;
 
-procedure TCTeInutilizacao.SalvarEnvio;
-var
-  aPath: String;
-begin
-  inherited SalvarEnvio;
-
-  if FPConfiguracoesCTe.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml', FPDadosMsg, aPath);
-  end;
-end;
-
-procedure TCTeInutilizacao.SalvarResposta;
-var
-  aPath: String;
-begin
-  inherited SalvarResposta;
-
-  if FPConfiguracoesCTe.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml', FPRetWS, aPath);
-  end;
-end;
-
 function TCTeInutilizacao.TratarResposta: Boolean;
 var
   CTeRetorno: TRetInutCTe;
@@ -3278,34 +3248,6 @@ begin
       Leitor.Free;
     end;
   end;
-end;
-
-procedure TCTeEnvEvento.SalvarEnvio;
-begin
-  if ArqEnv = '' then
-    exit;
-
-  if FPConfiguracoesCTe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento(FCNPJ, FIE));
-
-  if FPConfiguracoesCTe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ, FIE));
-end;
-
-procedure TCTeEnvEvento.SalvarResposta;
-begin
-  if ArqResp = '' then
-    exit;
-
-  if FPConfiguracoesCTe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-      FPRetWS, GerarPathEvento(FCNPJ, FIE));
-
-  if FPConfiguracoesCTe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ, FIE));
 end;
 
 function TCTeEnvEvento.GerarMsgLog: String;

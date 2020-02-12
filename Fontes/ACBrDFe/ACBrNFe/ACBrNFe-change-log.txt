@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2020
+-- ACBrNFeWebServices --
+[*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos e
+    inutilizacão, pois já existe essas procedures padrões que salvam os XMLs 
+    de envio e de retorno na pasta correta. 
+   Por: Italo Jurisato Junior
 
 05/02/2020
 -- ACBrDANFCeFortesFrA4 --  

@@ -357,9 +357,7 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -458,9 +456,7 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -2616,32 +2612,6 @@ begin
   end;
 end;
 
-procedure TNFeInutilizacao.SalvarEnvio;
-var
-  aPath: String;
-begin
-  inherited SalvarEnvio;
-
-  if FPConfiguracoesNFe.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml', FPDadosMsg, aPath);
-  end;
-end;
-
-procedure TNFeInutilizacao.SalvarResposta;
-var
-  aPath: String;
-begin
-  inherited SalvarResposta;
-
-  if FPConfiguracoesNFe.Geral.Salvar then
-  begin
-    aPath := GerarPathPorCNPJ;
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml', FPRetWS, aPath);
-  end;
-end;
-
 function TNFeInutilizacao.TratarResposta: Boolean;
 var
   NFeRetorno: TRetInutNFe;
@@ -3386,38 +3356,6 @@ begin
       Leitor.Free;
     end;
   end;
-end;
-
-procedure TNFeEnvEvento.SalvarEnvio;
-begin
-//  inherited SalvarEnvio;
-
-  if ArqEnv = '' then
-    exit;
-
-  if FPConfiguracoesNFe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-                      FPDadosMsg, GerarPathEvento(FCNPJ, FIE));
-
-  if FPConfiguracoesNFe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ, FIE));
-end;
-
-procedure TNFeEnvEvento.SalvarResposta;
-begin
-//  inherited SalvarResposta;
-
-  if ArqResp = '' then
-    exit;
-
-  if FPConfiguracoesNFe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-                      FPRetWS, GerarPathEvento(FCNPJ, FIE));
-
-  if FPConfiguracoesNFe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ, FIE));
 end;
 
 function TNFeEnvEvento.GerarMsgLog: String;

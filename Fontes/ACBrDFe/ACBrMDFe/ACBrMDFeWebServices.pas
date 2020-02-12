@@ -334,9 +334,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -2344,38 +2342,6 @@ begin
       Leitor.Free;
     end;
   end;
-end;
-
-procedure TMDFeEnvEvento.SalvarEnvio;
-begin
-//  inherited SalvarEnvio;
-
-  if ArqEnv = '' then
-    exit;
-
-  if FPConfiguracoesMDFe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento(FCNPJ));
-
-  if FPConfiguracoesMDFe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
-end;
-
-procedure TMDFeEnvEvento.SalvarResposta;
-begin
-//  inherited SalvarResposta;
-
-  if ArqResp = '' then
-    exit;
-
-  if FPConfiguracoesMDFe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-      FPRetWS, GerarPathEvento(FCNPJ));
-
-  if FPConfiguracoesMDFe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ));
 end;
 
 function TMDFeEnvEvento.GerarMsgLog: String;

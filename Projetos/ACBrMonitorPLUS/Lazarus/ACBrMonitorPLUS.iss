@@ -8,6 +8,11 @@
 #define ACBrMonitorPLUSDir ACBrDIR + "\Projetos\ACBrMonitorPLUS\Lazarus"
 #ifNDef OutputDir
   #define OutputDir ACBrMonitorPLUSDir
+  #define CHMFile  OutputDir + "\Output\chm\ACBrMonitor.chm"
+  #define PDFFile  OutputDir + "\Output\pdf\ACBrMonitor.pdf"
+#else
+  #define CHMFile  OutputDir + "ACBrMonitor.chm"
+  #define PDFFile  OutputDir + "ACBrMonitor.pdf"
 #endif
 
 ; para teste de compilação em 64 bits, descomente a linha abaixo
@@ -128,8 +133,8 @@ Source: {#ACBrDIR}\Fontes\ACBrDiversos\ACBrDiversos-change-log.txt; DestDir: {ap
 
 ;Arquivo de leitura de CHM para exibição diretamente usando a tecla F1
 Source: {#ACBrMonitorPLUSDir}\lhelp\lhelp.exe; DestDir: {app}\lhelp; Flags: ignoreversion sign; Components: help
-Source: {#OutputDir}\Output\chm\ACBrMonitor.chm; DestDir: {app}; Flags: ignoreversion; Components: help
-Source: {#OutputDir}\Output\pdf\ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
+Source: {#CHMFile}; DestDir: {app}; Flags: ignoreversion; Components: help
+Source: {#PDFFile}; DestDir: {app}; Flags: ignoreversion; Components: help
 
 ;Exemplos
 Source: {#ACBrMonitorPLUSDir}\Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos

@@ -162,10 +162,6 @@ namespace ACBrLib.NFe
 
         #region Constructors
 
-        public ACBrNFe(string eChaveCrypt = "") : this("", eChaveCrypt)
-        {
-        }
-
         public ACBrNFe(string eArqConfig = "", string eChaveCrypt = "") : base("ACBrNFe64.dll", "ACBrNFe32.dll")
         {
             var inicializar = GetMethod<Delegates.NFE_Inicializar>();

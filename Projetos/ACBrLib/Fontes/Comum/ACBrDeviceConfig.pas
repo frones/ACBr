@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDevice;
+  ACBrDevice, ACBrDeviceSerial;
 
 type
 

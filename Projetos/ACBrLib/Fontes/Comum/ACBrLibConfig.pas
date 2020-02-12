@@ -1011,13 +1011,16 @@ begin
 end;
 
 function TLibConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
+Var
+  Criptografar: Boolean;
 begin
+  Criptografar := PrecisaCriptografar(ASessao, AChave);
+
   TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
-                                                          + ASessao + ',' + AChave + ',' +
-                                                          IfThen(PrecisaCriptografar(ASessao, AChave),
+                                                          + ASessao + ',' + AChave + ',' + IfThen(Criptografar,
                                                           StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
   Result := AValor;
-  if PrecisaCriptografar(ASessao, AChave) then
+  if Criptografar then
   begin
     case Tipo of
       tfGravar: Result := StringToB64Crypt(Result, ChaveCrypt);

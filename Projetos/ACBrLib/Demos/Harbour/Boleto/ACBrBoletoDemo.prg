@@ -1,8 +1,5 @@
 Function Main ()
    local boleto
-   local vendaRetorno, strIniVenda
-   local hIni, hIniVenda
-   LOCAL cSection
    
    boleto := ACBrBoleto():New()
    //                      Sessão       Chave    Valor

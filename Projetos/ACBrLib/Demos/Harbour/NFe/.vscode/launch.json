@@ -7,7 +7,7 @@
         {
             "type": "harbour-dbg",
             "request": "launch",
-            "name": "Launch Program Harbour ACBrSat",
+            "name": "Launch Program Harbour ACBrNFe",
             "program": "${workspaceFolder}\\debug\\ACBrNFeDemo.exe",
             "stopOnEntry": false,
             "terminalType": "none",   

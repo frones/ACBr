@@ -151,13 +151,14 @@ var
   VLinha, logo : string;
   i: Integer;
 begin
-  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia' ;
+  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia';
 
-  dm.ACBrBoleto.Cedente.Nome := 'Nome do edente' ;
-  dm.ACBrBoleto.Cedente.Logradouro := 'Logradouro do edente' ;
-  dm.ACBrBoleto.Cedente.Bairro := 'Bairro do edente' ;
-  dm.ACBrBoleto.Cedente.Cidade := 'Cidade do edente' ;
-  dm.ACBrBoleto.Cedente.CEP := 'CEP do edente' ;
+  dm.ACBrBoleto.Cedente.Nome := 'Nome do cedente';
+  dm.ACBrBoleto.Cedente.Logradouro := 'Logradouro do cedente';
+  dm.ACBrBoleto.Cedente.Bairro := 'Bairro do cedente';
+  dm.ACBrBoleto.Cedente.Cidade := 'Cidade do cedente';
+  dm.ACBrBoleto.Cedente.CEP := 'CEP do cedente';
+  dm.ACBrBoleto.Cedente.Telefone := '(xx) 99999-9999';
 
   Titulo := dm.ACBrBoleto.CriarTituloNaLista;
 
@@ -206,7 +207,7 @@ begin
       begin
         VLinha := '.';
 
-        VQtdeCarcA := length('Descrição Produto/Serviço ' + IntToStr(I)) ;
+        VQtdeCarcA := length('Descrição Produto/Serviço ' + IntToStr(I));
         VQtdeCarcB := Length('Valor:');
         VQtdeCarcC := 85 - (VQtdeCarcA + VQtdeCarcB);
 
@@ -223,7 +224,7 @@ begin
 
     logo:= ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
 
-    ArquivoLogoEmp := logo ;  // logo da empresa
+    ArquivoLogoEmp := logo;  // logo da empresa
     //ShowMessage(logo);
 
     Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
@@ -242,7 +243,7 @@ begin
   NrTitulos    := 10;
   NrTitulosStr := '10';
   Convertido   := true;
-  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia do Cliente' ;
+  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia do Cliente';
   repeat
     InputQuery('ACBrBoleto','Número de Boletos a incluir',NrTitulosStr);
     try
@@ -261,7 +262,7 @@ begin
       LocalPagamento    := 'Pagar preferêncialmente nas agências do Bradesco'; //MEnsagem exigida pelo bradesco
       Vencimento        := IncMonth(EncodeDate(2010,05,10),I);
       DataDocumento     := EncodeDate(2010,04,10);
-      NumeroDocumento   := PadRight(IntToStr(I),6,'0');
+      NumeroDocumento   := PadRight(IntToStr(I),8,'0');
       EspecieDoc        := 'DM';
       Aceite            := atSim;
       DataProcessamento := Now;
@@ -337,8 +338,8 @@ procedure TfrmDemo.cbxLayOutChange(Sender: TObject);
 begin
   dm.ACBrBoleto.ACBrBoletoFC.LayOut := TACBrBolLayOut( cbxLayOut.ItemIndex );
 
-  cbxImprimirVersoFatura.Enabled := (cbxLayOut.ItemIndex = 4); // lFaturaDetal
-  if cbxLayOut.ItemIndex <> 4 then
+  cbxImprimirVersoFatura.Enabled := (cbxLayOut.ItemIndex = 6); // lFaturaDetal
+  if cbxLayOut.ItemIndex <> 6 then
    cbxImprimirVersoFatura.Checked := false;
 end;
 

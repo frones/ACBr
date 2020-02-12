@@ -113,7 +113,7 @@ object frmDemo: TfrmDemo
       Width = 103
       Height = 21
       TabOrder = 5
-      Text = '00000000000'
+      Text = '12345678'
     end
   end
   object GroupBox2: TGroupBox

@@ -128,6 +128,14 @@
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnGerarRemessa = new System.Windows.Forms.Button();
             this.btnTotalTitulo = new System.Windows.Forms.Button();
+            this.btnConfigDados = new System.Windows.Forms.Button();
+            this.btnEnviarEmail = new System.Windows.Forms.Button();
+            this.btnGerarPDF = new System.Windows.Forms.Button();
+            this.Button1 = new System.Windows.Forms.Button();
+            this.btnLinhaDigitavel = new System.Windows.Forms.Button();
+            this.btnListaBancos = new System.Windows.Forms.Button();
+            this.btnLerRetorno = new System.Windows.Forms.Button();
+            this.btnCodigoBarras = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1126,6 +1134,11 @@
             // nudPorta
             // 
             this.nudPorta.Location = new System.Drawing.Point(302, 108);
+            this.nudPorta.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nudPorta.Name = "nudPorta";
             this.nudPorta.Size = new System.Drawing.Size(61, 20);
             this.nudPorta.TabIndex = 34;
@@ -1150,9 +1163,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rtbRespostas);
-            this.groupBox1.Location = new System.Drawing.Point(126, 255);
+            this.groupBox1.Location = new System.Drawing.Point(283, 255);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(657, 171);
+            this.groupBox1.Size = new System.Drawing.Size(500, 171);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Respostas";
@@ -1163,7 +1176,7 @@
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
             this.rtbRespostas.ReadOnly = true;
-            this.rtbRespostas.Size = new System.Drawing.Size(651, 152);
+            this.rtbRespostas.Size = new System.Drawing.Size(494, 152);
             this.rtbRespostas.TabIndex = 0;
             this.rtbRespostas.Text = "";
             // 
@@ -1189,7 +1202,7 @@
             // 
             // btnLimparLista
             // 
-            this.btnLimparLista.Location = new System.Drawing.Point(10, 371);
+            this.btnLimparLista.Location = new System.Drawing.Point(10, 400);
             this.btnLimparLista.Name = "btnLimparLista";
             this.btnLimparLista.Size = new System.Drawing.Size(110, 23);
             this.btnLimparLista.TabIndex = 4;
@@ -1227,11 +1240,100 @@
             this.btnTotalTitulo.UseVisualStyleBackColor = true;
             this.btnTotalTitulo.Click += new System.EventHandler(this.BtnTotalTitulo_Click);
             // 
+            // btnConfigDados
+            // 
+            this.btnConfigDados.Location = new System.Drawing.Point(12, 226);
+            this.btnConfigDados.Name = "btnConfigDados";
+            this.btnConfigDados.Size = new System.Drawing.Size(226, 23);
+            this.btnConfigDados.TabIndex = 6;
+            this.btnConfigDados.Text = "Configurar Dados Cedente";
+            this.btnConfigDados.UseVisualStyleBackColor = true;
+            this.btnConfigDados.Click += new System.EventHandler(this.BtnConfigDados_Click);
+            // 
+            // btnEnviarEmail
+            // 
+            this.btnEnviarEmail.Location = new System.Drawing.Point(128, 284);
+            this.btnEnviarEmail.Name = "btnEnviarEmail";
+            this.btnEnviarEmail.Size = new System.Drawing.Size(110, 23);
+            this.btnEnviarEmail.TabIndex = 7;
+            this.btnEnviarEmail.Text = "Enviar e-mail";
+            this.btnEnviarEmail.UseVisualStyleBackColor = true;
+            this.btnEnviarEmail.Click += new System.EventHandler(this.BtnEnviarEmail_Click);
+            // 
+            // btnGerarPDF
+            // 
+            this.btnGerarPDF.Location = new System.Drawing.Point(128, 255);
+            this.btnGerarPDF.Name = "btnGerarPDF";
+            this.btnGerarPDF.Size = new System.Drawing.Size(110, 23);
+            this.btnGerarPDF.TabIndex = 8;
+            this.btnGerarPDF.Text = "Gerar PDF";
+            this.btnGerarPDF.UseVisualStyleBackColor = true;
+            this.btnGerarPDF.Click += new System.EventHandler(this.BtnGerarPDF_Click);
+            // 
+            // Button1
+            // 
+            this.Button1.Location = new System.Drawing.Point(128, 313);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(110, 23);
+            this.Button1.TabIndex = 9;
+            this.Button1.Text = "Listar Ocorrencias";
+            this.Button1.UseVisualStyleBackColor = true;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // btnLinhaDigitavel
+            // 
+            this.btnLinhaDigitavel.Location = new System.Drawing.Point(128, 371);
+            this.btnLinhaDigitavel.Name = "btnLinhaDigitavel";
+            this.btnLinhaDigitavel.Size = new System.Drawing.Size(110, 23);
+            this.btnLinhaDigitavel.TabIndex = 10;
+            this.btnLinhaDigitavel.Text = "Linha Digitavel";
+            this.btnLinhaDigitavel.UseVisualStyleBackColor = true;
+            this.btnLinhaDigitavel.Click += new System.EventHandler(this.BtnLinhaDigitavel_Click);
+            // 
+            // btnListaBancos
+            // 
+            this.btnListaBancos.Location = new System.Drawing.Point(128, 342);
+            this.btnListaBancos.Name = "btnListaBancos";
+            this.btnListaBancos.Size = new System.Drawing.Size(110, 23);
+            this.btnListaBancos.TabIndex = 11;
+            this.btnListaBancos.Text = "Listar Bancos";
+            this.btnListaBancos.UseVisualStyleBackColor = true;
+            this.btnListaBancos.Click += new System.EventHandler(this.BtnListaBancos_Click);
+            // 
+            // btnLerRetorno
+            // 
+            this.btnLerRetorno.Location = new System.Drawing.Point(10, 371);
+            this.btnLerRetorno.Name = "btnLerRetorno";
+            this.btnLerRetorno.Size = new System.Drawing.Size(110, 23);
+            this.btnLerRetorno.TabIndex = 12;
+            this.btnLerRetorno.Text = "Ler Retorno";
+            this.btnLerRetorno.UseVisualStyleBackColor = true;
+            this.btnLerRetorno.Click += new System.EventHandler(this.BtnLerRetorno_Click);
+            // 
+            // btnCodigoBarras
+            // 
+            this.btnCodigoBarras.Location = new System.Drawing.Point(128, 400);
+            this.btnCodigoBarras.Name = "btnCodigoBarras";
+            this.btnCodigoBarras.Size = new System.Drawing.Size(110, 23);
+            this.btnCodigoBarras.TabIndex = 13;
+            this.btnCodigoBarras.Text = "Código de Barras";
+            this.btnCodigoBarras.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.btnCodigoBarras.UseVisualStyleBackColor = true;
+            this.btnCodigoBarras.Click += new System.EventHandler(this.BtnCodigoBarras_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 440);
+            this.Controls.Add(this.btnCodigoBarras);
+            this.Controls.Add(this.btnLerRetorno);
+            this.Controls.Add(this.btnListaBancos);
+            this.Controls.Add(this.btnLinhaDigitavel);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.btnGerarPDF);
+            this.Controls.Add(this.btnEnviarEmail);
+            this.Controls.Add(this.btnConfigDados);
             this.Controls.Add(this.btnGerarRemessa);
             this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.btnTotalTitulo);
@@ -1247,6 +1349,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ACBrLibBoleto Demo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.Shown += new System.EventHandler(this.FrmMain_Shown);
             this.tabControl1.ResumeLayout(false);
             this.tbpCedente.ResumeLayout(false);
@@ -1367,6 +1470,14 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.TextBox txtTelefone;
+        private System.Windows.Forms.Button btnConfigDados;
+        private System.Windows.Forms.Button btnEnviarEmail;
+        private System.Windows.Forms.Button btnGerarPDF;
+        private System.Windows.Forms.Button Button1;
+        private System.Windows.Forms.Button btnLinhaDigitavel;
+        private System.Windows.Forms.Button btnListaBancos;
+        private System.Windows.Forms.Button btnLerRetorno;
+        private System.Windows.Forms.Button btnCodigoBarras;
     }
 }
 

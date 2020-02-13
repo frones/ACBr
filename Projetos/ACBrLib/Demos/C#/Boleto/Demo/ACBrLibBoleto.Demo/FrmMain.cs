@@ -212,7 +212,12 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnGerarRemessa_Click(object sender, EventArgs e)
         {
-            boleto.GerarRemessa(txtDirRemessa.Text, 1, txtNomeRemessa.Text);
+            string ret = "";
+            if (string.IsNullOrEmpty(txtDirRemessa.Text))       
+                ret = Application.StartupPath;
+            else 
+                ret = txtDirRemessa.Text;
+            boleto.GerarRemessa(ret, 1, txtNomeRemessa.Text);
             rtbRespostas.AppendLine("Remessa Gerada.");
         }
 
@@ -229,5 +234,77 @@ namespace ACBrLibBoleto.Demo
         }
 
         #endregion EventHandlers
+
+        private void BtnConfigDados_Click(object sender, EventArgs e)
+        {
+            var iniPath = Helpers.OpenFile("Configurar Dados do Cedente (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(iniPath)) return;
+
+            var ret = boleto.ConfigurarDados(iniPath);
+            rtbRespostas.AppendLine(ret);
+
+
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.ListaOcorrenciasEX();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnGerarPDF_Click(object sender, EventArgs e)
+        {
+            boleto.GerarPDF();
+            rtbRespostas.AppendLine("PDF Gerado");
+        }
+
+        private void BtnLinhaDigitavel_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.RetornaLinhaDigitavel(0);
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnEnviarEmail_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            Int32.TryParse(boleto.TotalTitulosLista(), out i);
+
+            if (i == 0) return;
+
+            try
+            {
+                boleto.EnviarEmail(txtEmail.Text,
+                    "Teste envio Boleto",
+                    "Boleto em anexo", "");
+                rtbRespostas.AppendLine("e-mail enviado!");
+
+            } catch (Exception ex) {
+                rtbRespostas.AppendLine(ex.Message);
+            }
+
+        }
+
+        private void BtnListaBancos_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.ListaBancos();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnCodigoBarras_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.RetornaCodigoBarras(0);
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnLerRetorno_Click(object sender, EventArgs e)
+        {
+            boleto.LerRetorno(txtDirRetorno.Text, txtNomeRetorno.Text);
+            rtbRespostas.AppendLine("Retorno Gerado.");
+        }
     }
 }

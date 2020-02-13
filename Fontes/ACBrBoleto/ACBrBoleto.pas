@@ -1505,7 +1505,7 @@ type
     procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
 
     property ArquivoLogo : String read GetArquivoLogo;
-    property IndiceImprimirIndividual: Integer read GetIndiceImprimirIndividual  write SetIndiceImprimirIndividual   default 0;
+    property IndiceImprimirIndividual: Integer read GetIndiceImprimirIndividual  write SetIndiceImprimirIndividual   default -1;
 
   published
     property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
@@ -1932,11 +1932,17 @@ end;
 
 procedure TACBrTitulo.Imprimir();
 begin
-  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  if not Assigned(ACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
+
+  if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
+    raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
+
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
   try
     ACBrBoleto.Imprimir;
   finally
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
 
   end;
 
@@ -1944,11 +1950,17 @@ end;
 
 procedure TACBrTitulo.GerarPDF();
 begin
-  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  if not Assigned(ACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) ) ;
+
+  if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
+    raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
+
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
   try
     ACBrBoleto.GerarPDF;
   finally
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
 
   end;
 
@@ -1957,11 +1969,20 @@ end;
 procedure TACBrTitulo.EnviarEmail(const sPara, sAssunto: String;
   sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
 begin
-  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self) + 1;
+  if not Assigned(ACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
+
+  if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
+    raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
+
+  if not Assigned(ACBrBoleto.MAIL) then
+    raise Exception.Create( ACBrStr('Nenhum componente "ACBrMail" associado' ) );
+
+  ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
   try
     ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos);
   finally
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= 0;
+    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
 
   end;
 
@@ -2252,7 +2273,7 @@ begin
   if (EnviaPDF) then
   begin
     GerarPDF;
-    if ACBrBoletoFC.IndiceImprimirIndividual > 0 then
+    if ACBrBoletoFC.IndiceImprimirIndividual >= 0 then
         FMAIL.AddAttachment( ACBrBoletoFC.GetNomeArquivoPdfIndividual(ACBrBoletoFC.NomeArquivo, ACBrBoletoFC.IndiceImprimirIndividual)  ,
                         ExtractFileName( ACBrBoletoFC.GetNomeArquivoPdfIndividual(ACBrBoletoFC.NomeArquivo, ACBrBoletoFC.IndiceImprimirIndividual)) )
 
@@ -3584,7 +3605,7 @@ begin
   fPrinterName         := '' ;
   FAlterarEscalaPadrao := False;
   FNovaEscala          := 96;
-  FIndiceImprimirIndividual := 0;
+  FIndiceImprimirIndividual := -1;
 
 end;
 
@@ -3707,9 +3728,9 @@ function TACBrBoletoFCClass.GetNomeArquivoPdfIndividual(const ANomeArquivo: Stri
          const AIndex: Integer): String;
 begin
   if ANomeArquivo = '' then
-    Result := PathWithDelim( ApplicationPath ) + ChangeFileExt(ACBrBoleto.ListadeBoletos[AIndex - 1 ].NumeroDocumento, '.pdf')
+    Result := PathWithDelim( ApplicationPath ) + ChangeFileExt(ACBrBoleto.ListadeBoletos[AIndex].NumeroDocumento, '.pdf')
   else
-    Result := ChangeFileExt( ChangeFileExt(ANomeArquivo,'') + '_' + ACBrBoleto.ListadeBoletos[AIndex - 1].NumeroDocumento, '.pdf');
+    Result := ChangeFileExt( ChangeFileExt(ANomeArquivo,'') + '_' + ACBrBoleto.ListadeBoletos[AIndex].NumeroDocumento, '.pdf');
 end;
 
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;
@@ -3771,7 +3792,7 @@ begin
      if fACBrBoleto.ListadeBoletos.Count < 1 then
        raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
-     if FIndiceImprimirIndividual > 0 then
+     if FIndiceImprimirIndividual >= 0 then
      begin
        fPathNomeArquivo:= '';
        NomeArquivo := GetNomeArquivoPdfIndividual(NomeArquivoAntigo, FIndiceImprimirIndividual);

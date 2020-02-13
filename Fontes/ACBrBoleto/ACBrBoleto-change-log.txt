@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2020
+-- ACBrBoleto --
+[*] Ajustes nos Metodos: Imprimir, GerarPDF, EnviarEmail na Classe Títulos
+
 07/02/2020
 -- ACBrBoleto --
 [+] Adicionado Metodos: Imprimir, GerarPDF, EnviarEmail na Classe Títulos

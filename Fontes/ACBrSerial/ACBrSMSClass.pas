@@ -38,7 +38,17 @@ interface
 
 uses
   Classes, SysUtils, strUtils,
-  ACBrDevice, ACBrBase;
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrDevice
+  {$IFDEF NEXTGEN}
+   ,ACBrBase
+  {$ENDIF};
 
 const
   CTRL_Z = #26;
@@ -76,7 +86,7 @@ type
     property Mensagem: String read FMensagem write FMensagem;
   end;
 
-  TACBrSMSMensagens = class(TACBrObjectList)
+  TACBrSMSMensagens = class(TObjectList{$IfDef NEXTGEN}<TACBrSMSMensagem>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrSMSMensagem);
     function GetObject (Index: Integer): TACBrSMSMensagem;

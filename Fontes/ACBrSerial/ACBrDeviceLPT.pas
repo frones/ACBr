@@ -308,13 +308,14 @@ begin
   if fsUsarStream then
   begin
     if Assigned(fsFileStream) then
-      fsFileStream.Free;
+      FreeAndNil(fsFileStream);
   end
   else
   begin
     {$I-}
     Flush(fsArqPrn);
     {$IfNDef FPC}System.{$EndIf}CloseFile(fsArqPrn);
+    IOResult;
     {$I+}
   end;
 end;

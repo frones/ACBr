@@ -38,6 +38,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/02/2020
+-- ACBrDeviceBlueTooth --
+[*] Ajuste para permitir a porta como "BTH", para conectar no primeiro dispositivo
+    Pareado, disponível na lista
+
+-- ACBrDeviceLPT --
+[-] Ajuste para evitar a Erro I/O Error 103
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=56274
+[-] Correção de .A.V quando Fechando a Porta e "UsarStream = True"
+    (por: DSA)
+
 Data: 09/02/2020
 -- ACBrSerial --
 [*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,

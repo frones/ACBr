@@ -175,8 +175,6 @@ begin
 
   AtivarBlueTooth;
   DeviceName := GetDeviceName;
-  if (DeviceName = '') then
-    DoException( Exception.CreateFmt(ACBrStr(SErrDispositivoNaoEncontrado), [APorta]));
 
   DevBT := GetBluetoothDevice(DeviceName);
   if not Assigned(DevBT) then

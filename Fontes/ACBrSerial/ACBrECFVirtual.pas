@@ -41,12 +41,19 @@ unit ACBrECFVirtual ;
 interface
 uses
   Classes, Math, SysUtils, IniFiles,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   {$IFDEF COMPILER6_UP}
     DateUtils, StrUtils
   {$ELSE}
     ACBrD5, Windows
   {$ENDIF},
-  ACBrBase, ACBrECFClass, ACBrDevice;
+  ACBrECFClass, ACBrDevice ,ACBrBase;
 
 type
 
@@ -93,7 +100,7 @@ end;
 
 { TACBrECFVirtualClassItensCupom }
 
-TACBrECFVirtualClassItensCupom = class(TACBrObjectList)
+TACBrECFVirtualClassItensCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassItemCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassItemCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassItemCupom;
@@ -124,7 +131,7 @@ end;
 
 { TACBrECFVirtualClassPagamentosCupom }
 
-TACBrECFVirtualClassPagamentosCupom = class(TACBrObjectList)
+TACBrECFVirtualClassPagamentosCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassPagamentoCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassPagamentoCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassPagamentoCupom;
@@ -157,7 +164,7 @@ end;
 
 { TACBrECFVirtualClassCNFsCupom }
 
-TACBrECFVirtualClassCNFsCupom = class(TACBrObjectList)
+TACBrECFVirtualClassCNFsCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassCNFCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassCNFCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassCNFCupom;
@@ -195,7 +202,7 @@ end;
 
 { TACBrECFVirtualClassAliquotasCupom }
 
-TACBrECFVirtualClassAliquotasCupom = class(TACBrObjectList)
+TACBrECFVirtualClassAliquotasCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassAliquotaCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassAliquotaCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassAliquotaCupom;

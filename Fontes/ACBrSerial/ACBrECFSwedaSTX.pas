@@ -37,7 +37,17 @@ unit ACBrECFSwedaSTX ;
 interface
 uses
   Classes,
-  ACBrBase, ACBrECFClass, ACBrDevice, ACBrDeviceSerial;
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrECFClass, ACBrDevice, ACBrDeviceSerial
+  {$IFDEF NEXTGEN}
+   ,ACBrBase
+  {$ENDIF};
 
 const
    CFALHAS = 3 ;
@@ -61,7 +71,7 @@ TACBrECFSwedaInfo34 = class
 end ;
 
 { Lista de Objetos do tipo TACBrECFSwedaCache }
-TACBrECFSwedaCache = class(TACBrObjectList)
+TACBrECFSwedaCache = class(TObjectList{$IfDef NEXTGEN}<TACBrECFSwedaInfo34>{$EndIf})
 protected
   procedure SetObject (Index: Integer; Item: TACBrECFSwedaInfo34);
   function GetObject (Index: Integer): TACBrECFSwedaInfo34;

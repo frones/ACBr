@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2020
+[-] Comentado a linha que se refere a uma tag que não existe mais.
+Por: Italo Jurisato Junior
+
 11/02/2020
 -- ACBrBPeWebServices --
 [*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos, pois

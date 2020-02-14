@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1040,10 +1040,6 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Selecione as IDEs'
       OnNextButtonClick = wizPgSelectIDEsNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object clbDelphiVersion: TCheckListBox
         Left = 6
         Top = 104
@@ -1103,10 +1099,6 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 6
         Top = 6
@@ -1322,10 +1314,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
       OnNextButtonClick = wizPgPacotesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1335,27 +1323,19 @@ object frmPrincipal: TfrmPrincipal
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         inherited pnlBotoesMarcar: TPanel
           Top = 458
           Width = 554
-          ExplicitTop = 458
-          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 504
-            ExplicitLeft = 504
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 454
-            ExplicitLeft = 454
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
-          ExplicitWidth = 548
-          ExplicitHeight = 452
         end
       end
     end
@@ -1384,10 +1364,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1406,9 +1382,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object lstMsgInstalacao: TListBox
         Left = 21
-        Top = 72
+        Top = 79
         Width = 516
-        Height = 362
+        Height = 355
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1431,14 +1407,14 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 15
         Width = 516
-        Height = 51
+        Height = 58
         BevelOuter = bvLowered
         TabOrder = 0
         object lbInfo: TListBox
           Left = 1
           Top = 1
           Width = 514
-          Height = 49
+          Height = 56
           Align = alClient
           BorderStyle = bsNone
           Font.Charset = DEFAULT_CHARSET
@@ -1475,10 +1451,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1651,7 +1623,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

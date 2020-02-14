@@ -39,6 +39,8 @@ uses
   SysUtils, Windows, Messages, Classes, Forms, System.Generics.Collections,
   JclIDEUtils, JclCompilerUtils, ACBrPacotes, UACBrPlataformaInstalacaoAlvo;
 
+const
+  sVersaoInstalador = '1.5.0.0';
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
   TNivelLog = (nlNenhumLog, nlMinimo, nlMedio, nlMaximo);
@@ -82,6 +84,7 @@ type
 
     FCountErros: Integer;
     JaCopiouDLLs: Boolean;
+    FJaFezLimpezaArquivoACBrAntigos: Boolean;
 
     procedure FindDirs(APlatform:TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
     procedure CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String; const APathBin: string);
@@ -119,6 +122,7 @@ type
     procedure InstalarOutrosRequisitos;
     procedure FazInstalacaoDLLs(const APathBin: string);
     procedure ConfiguraMetodosCompiladores;
+    function FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
 
   public
     OpcoesInstall: TACBrInstallOpcoes;
@@ -164,6 +168,7 @@ begin
 
   ArquivoLog := '';
   FNivelLog  := nlMedio;
+  FJaFezLimpezaArquivoACBrAntigos := False;
 
   FApp := app;
 //  UmaPlataformaDestino := TPlataformaDestino.Create;
@@ -335,12 +340,14 @@ var
   Cabecalho: string;
   NomeVersao: string;
 begin
+
   with UmaPlataformaDestino do
   begin
     NomeVersao := VersionNumberToNome(InstalacaoAtual.VersionNumberStr);
 
     ArquivoLog := PathArquivoLog(NomeVersao+ ' ' + sPlatform);
-    Cabecalho := 'Versão do delphi: ' + NomeVersao + ' ' + sPlatform + sLineBreak +
+    Cabecalho := 'Versao Instalador: ' + sVersaoInstalador + sLineBreak +
+                 'Versão do delphi: ' + NomeVersao + ' ' + sPlatform + sLineBreak +
                  'Dir. Instalação : ' + OpcoesInstall.DiretorioRaizACBr + sLineBreak +
                  'Dir. Bibliotecas: ' + sDirLibrary;
 
@@ -350,6 +357,17 @@ begin
       FOnIniciaNovaInstalacao((ListaPacotes.Count * 2) + 6, ArquivoLog, Cabecalho);
 
     FCountErros := 0;
+
+    // limpar arquivos antigos somente ao iniciar o procedimento de instalação
+    if (OpcoesInstall.LimparArquivosACBrAntigos) and (not FJaFezLimpezaArquivoACBrAntigos)  then
+    begin
+      FJaFezLimpezaArquivoACBrAntigos := True;
+      InformaSituacao('Removendo arquivos ACBr antigos dos discos...');
+      RemoverArquivosAntigosDoDisco;
+      InformaSituacao('...OK');
+    end;
+    //se a opção não estiver marcada deve informar o progresso também...
+    InformaProgresso;
 
     ConfiguraMetodosCompiladores;
 
@@ -382,6 +400,13 @@ begin
     AddLibrarySearchPath;
     InformaSituacao('...OK');
     InformaProgresso;
+
+    // -- adicionar ao environment variables do delphi
+    InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
+    AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
+    InformaSituacao('...OK');
+    InformaProgresso;
+
 
     CompilarEInstalarPacotes(ListaPacotes);
   end; //<---- endwith
@@ -709,22 +734,11 @@ end;
 function TACBrInstallComponentes.Instalar(ListaPacotes: TPacotes; ListaVersoesInstalacao:TList<Integer>;
     ListaPlataformasInstalacao: TListaPlataformasAlvos): Boolean;
 var
-//  iListaVer: Integer;
   I: Integer;
-//  J: Integer;
 begin
   DesligarDefines;
   JaCopiouDLLs := False;
-
-  // limpar arquivos antigos somente ao iniciar o procedimento de instalação
-  if OpcoesInstall.LimparArquivosACBrAntigos then
-  begin
-    InformaSituacao('Removendo arquivos ACBr antigos dos discos...');
-    RemoverArquivosAntigosDoDisco;
-    InformaSituacao('...OK');
-  end;
-  //se a opção não estiver marcada deve informar o progresso também...
-  InformaProgresso;
+  FJaFezLimpezaArquivoACBrAntigos := False;
 
   for I := 0 to ListaVersoesInstalacao.Count -1 do
   begin
@@ -739,14 +753,20 @@ begin
     InstalarOutrosRequisitos;
   end;
 
-  // -- adicionar ao environment variables do delphi, somente para win32
-  UmaPlataformaDestino := ListaPlataformasInstalacao[ListaVersoesInstalacao[0]];
-  InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
-  AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
-  InformaSituacao('...OK');
-  InformaProgresso;
-
   Result := (FCountErros = 0);
+end;
+
+function TACBrInstallComponentes.FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
+var
+  wParam: Integer;
+  lParam: Integer;
+  lpdwResult: PDWORD_PTR;
+begin
+  // enviar um broadcast de atualização para o windows
+  wParam := 0;
+  lParam := LongInt(cs);
+  lpdwResult := nil;
+  Result := SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, lpdwResult);
 end;
 
 procedure TACBrInstallComponentes.InstalarCapicom(ADestino : TDestino; const APathBin: string);
@@ -812,7 +832,7 @@ begin
     // *************************************************************************
     // deixar somente a pasta lib se for configurado assim
     // *************************************************************************
-    if OpcoesInstall.DeixarSomentePastasLib then
+    if OpcoesInstall.DeixarSomentePastasLib and (tPlatformAtual = bpWin32) then
     begin
       try
         DeixarSomenteLib;
@@ -870,9 +890,6 @@ var
   PathsAtuais: string;
   ListaPaths: TStringList;
   I: Integer;
-  wParam: Integer;
-  lParam: Integer;
-  lpdwResult: PDWORD_PTR;
   Resultado: Integer;
 const
   cs: PChar = 'Environment Variables';
@@ -891,7 +908,7 @@ begin
       ListaPaths.Delimiter := ';';
       ListaPaths.StrictDelimiter := True;
       ListaPaths.DelimitedText := PathsAtuais;
-      // verificar se existe algo do ACBr e remover do environment variable PATH do delphi
+      // verificar se existe algo do ACBr e remover apenas se for Win32
       if (Trim(AProcurarRemover) <> '') and (tPlatformAtual = bpWin32) then
       begin
         for I := ListaPaths.Count - 1 downto 0 do
@@ -900,15 +917,12 @@ begin
             ListaPaths.Delete(I);
         end;
       end;
-      // adicionar o path
+      // adicionar ao path a pasta da biblioteca
       ListaPaths.Add(sDirLibrary);
-      // escrever a variavel no override da ide
       InstalacaoAtual.ConfigData.WriteString(cs, 'PATH', ListaPaths.DelimitedText);
-      // enviar um broadcast de atualização para o windows
-      wParam := 0;
-      lParam := LongInt(cs);
-      lpdwResult := NIL;
-      Resultado := SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, lpdwResult);
+
+      //Isso é realmente necessário??
+      Resultado := FazBroadcastDeAlteracaoDeConfiguracao(cs);
       if Resultado = 0 then
         raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(GetLastError));
     finally
@@ -1017,7 +1031,7 @@ begin
     // *************************************************************************
     if tPlatformAtual <> bpWin32 then
     begin
-      InformaSituacao(sLineBreak+'Não é necessário compilar os pacotes ' + sPlatform +'.');
+      InformaSituacao(sLineBreak+'No momento não estamos compilando os pacotes da plataforma ' + sPlatform +'.');
       Exit;
     end;
 
@@ -1098,6 +1112,19 @@ begin
           Break;
         end;
 
+        //Compilar também o pacote Design Time se a plataforma form Win32
+        if (tPlatformAtual = bpWin32) and FileExists(sDirPackage + 'DCL'+ NomePacote) then
+        begin
+          FazLog('');
+          FPacoteAtual := sDirPackage + 'DCL'+ NomePacote;
+          CompilaPacotePorNomeArquivo('DCL'+ NomePacote);
+          if FCountErros> 0 then
+          begin
+            // Parar no primeiro erro para evitar de compilar outros pacotes que
+            // dependem desse que ocasionou erro.
+            Break;
+          end;
+        end;
       end;
       InformaProgresso;
     end;
@@ -1122,6 +1149,17 @@ begin
         sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
         FPacoteAtual := sDirPackage + NomePacote;
         GetDPKFileInfo(FPacoteAtual, bRunOnly);
+
+        if bRunOnly then
+        begin
+          //Encontrar o pacote DesignTime correspondente caso exista
+          if FileExists(sDirPackage + 'DCL'+ NomePacote) then
+          begin
+            FPacoteAtual := sDirPackage + 'DCL'+ NomePacote;
+            GetDPKFileInfo(FPacoteAtual, bRunOnly);
+          end;
+        end;
+
         // instalar somente os pacotes de designtime
         if not bRunOnly then
         begin

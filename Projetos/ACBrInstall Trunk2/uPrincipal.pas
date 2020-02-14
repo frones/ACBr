@@ -291,13 +291,13 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
+  Caption := Caption + sVersaoInstalador;
   UmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
   FUltimoArquivoLog := '';
 
   MontaListaIDEsSuportadas;
 
   LerConfiguracoes;
-
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

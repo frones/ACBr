@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2020
+-- pcnCIOTW_eFrete --
+[-] Corrigido o nome da classe usada para buscar os dados de pagamento
+    do encerramento.
+   Por: Italo Jurisato Junior
+
 11/02/2020
 -- pcnCIOTW_eFrete --
 [*] Imposta a condição para gerar a tag <DistanciaRetorno> somente

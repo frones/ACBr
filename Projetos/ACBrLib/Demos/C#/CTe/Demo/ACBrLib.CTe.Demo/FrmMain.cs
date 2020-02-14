@@ -94,7 +94,7 @@ namespace ACBrLib.CTe.Demo
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathEvento", txtArqEvento.Text);
 
             ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "PathLogo", txtLogomarca.Text);
-            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "TipoDACTe", rdbRetrato.Checked ? TipoImpressao.tiRetrato : TipoImpressao.tiPaisagem);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "TipoDACTe", rdbRetrato.Checked ? TipoDACTE.tiRetrato : TipoDACTE.tiPaisagem);
 
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
@@ -146,9 +146,9 @@ namespace ACBrLib.CTe.Demo
             txtArqEvento.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.CTe, "PathEvento");
 
             txtLogomarca.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.DACTe, "PathLogo");
-            var tipoImpressao = ACBrCTe.ConfigLerValor<TipoImpressao>(ACBrSessao.DACTe, "TipoDACTe");
-            rdbRetrato.Checked = tipoImpressao == TipoImpressao.tiRetrato;
-            rdbPaisagem.Checked = tipoImpressao == TipoImpressao.tiPaisagem;
+            var tipoImpressao = ACBrCTe.ConfigLerValor<TipoDACTE>(ACBrSessao.DACTe, "TipoDACTe");
+            rdbRetrato.Checked = tipoImpressao == TipoDACTE.tiRetrato;
+            rdbPaisagem.Checked = tipoImpressao == TipoDACTE.tiPaisagem;
 
             txtNome.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
             txtEmail.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Email, "Conta");

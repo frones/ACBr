@@ -294,7 +294,7 @@ begin
       '147','105','112','212','166','113','126','131','145','150','168']) then
             Docto := Carteira + PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0')
          else
-            Docto := ACBrBoleto.Cedente.Agencia + ACBrBoleto.Cedente.Conta +
+            Docto := ACBrBoleto.Cedente.Agencia +
                      Carteira + PadLeft(ACBrTitulo.NossoNumero,TamanhoMaximoNossoNum,'0')
    end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2020
+-- ACBrBancoDaycoval --
+[*] Realizado correção para calculo do DV do nosso número quando carteira requer que seja considerado
+também a agência. (Juliana Tamizou)
+
 13/02/2020
 -- ACBrBoleto --
 [*] Ajustes nos Metodos: Imprimir, GerarPDF, EnviarEmail na Classe Títulos

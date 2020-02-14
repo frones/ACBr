@@ -1380,108 +1380,111 @@ var
   i, j: Integer;
   aPrefixo: string;
 begin
-  aPrefixo := Gerador.Prefixo;
-  Gerador.Prefixo := 'enc:';
-
-  Gerador.wGrupoNFSe('Viagens', 'AP12');
-
-  for I := 0 to CIOT.EncerrarOperacao.Viagens.Count -1 do
+  if CIOT.EncerrarOperacao.Viagens.Count > 0 then
   begin
-    Gerador.wGrupoNFSe('Viagem', 'AP12');
+    aPrefixo := Gerador.Prefixo;
+    Gerador.Prefixo := 'enc:';
 
-    with CIOT.EncerrarOperacao.Viagens.Items[I] do
+    Gerador.wGrupoNFSe('Viagens', 'AP12');
+
+    for I := 0 to CIOT.EncerrarOperacao.Viagens.Count -1 do
     begin
-      Gerador.wCampoNFSe(tcStr, 'AP13', 'DocumentoViagem       ', 01, 01, 0, DocumentoViagem);
-      Gerador.wCampoNFSe(tcInt, 'AP14', 'CodigoMunicipioOrigem ', 01, 07, 1, CodigoMunicipioOrigem);
-      Gerador.wCampoNFSe(tcInt, 'AP15', 'CodigoMunicipioDestino', 01, 07, 1, CodigoMunicipioDestino);
-      Gerador.wCampoNFSe(tcStr, 'AP16', 'CepOrigem             ', 01, 01, 0, CepOrigem);
-      Gerador.wCampoNFSe(tcStr, 'AP17', 'CepDestino            ', 01, 01, 0, CepDestino);
+      Gerador.wGrupoNFSe('Viagem', 'AP12');
 
-      Gerador.Prefixo := 'obj:';
-
-      if Valores.TotalOperacao > 0 then
+      with CIOT.EncerrarOperacao.Viagens.Items[I] do
       begin
-        Gerador.wGrupoNFSe('Valores', 'AP19');
+        Gerador.wCampoNFSe(tcStr, 'AP13', 'DocumentoViagem       ', 01, 01, 0, DocumentoViagem);
+        Gerador.wCampoNFSe(tcInt, 'AP14', 'CodigoMunicipioOrigem ', 01, 07, 1, CodigoMunicipioOrigem);
+        Gerador.wCampoNFSe(tcInt, 'AP15', 'CodigoMunicipioDestino', 01, 07, 1, CodigoMunicipioDestino);
+        Gerador.wCampoNFSe(tcStr, 'AP16', 'CepOrigem             ', 01, 01, 0, CepOrigem);
+        Gerador.wCampoNFSe(tcStr, 'AP17', 'CepDestino            ', 01, 01, 0, CepDestino);
 
-        with Valores do
+        Gerador.Prefixo := 'obj:';
+
+        if Valores.TotalOperacao > 0 then
         begin
-          Gerador.wCampoNFSe(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, TotalOperacao);
-          Gerador.wCampoNFSe(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, TotalViagem);
-          Gerador.wCampoNFSe(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, TotalDeAdiantamento);
-          Gerador.wCampoNFSe(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, TotalDeQuitacao);
-          Gerador.wCampoNFSe(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Combustivel);
-          Gerador.wCampoNFSe(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Pedagio);
-          Gerador.wCampoNFSe(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, OutrosCreditos);
-          Gerador.wCampoNFSe(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
-          Gerador.wCampoNFSe(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Seguro);
-          Gerador.wCampoNFSe(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, OutrosDebitos);
-          Gerador.wCampoNFSe(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, JustificativaOutrosDebitos);
-        end;
+          Gerador.wGrupoNFSe('Valores', 'AP19');
 
-        Gerador.wGrupoNFSe('/Valores');
-      end;
-
-      Gerador.wCampoNFSe(tcStr, 'AP31', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento));
-
-      with InformacoesBancarias do
-      begin
-        if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-        begin
-          Gerador.wGrupoNFSe('InformacoesBancarias', 'AP32');
-
-          Gerador.wCampoNFSe(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria);
-          Gerador.wCampoNFSe(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, Agencia);
-          Gerador.wCampoNFSe(tcStr, 'AP35', 'Conta              ', 01, 01, 0, Conta);
-          Gerador.wCampoNFSe(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
-
-          Gerador.wGrupoNFSe('/InformacoesBancarias');
-        end;
-      end;
-
-      if NotasFiscais.Count > 0 then
-      begin
-        Gerador.Prefixo := 'enc:';
-        Gerador.wGrupoNFSe('NotasFiscais', 'AP37');
-
-        for J := 0 to NotasFiscais.Count -1 do
-        begin
-          with NotasFiscais.Items[J] do
+          with Valores do
           begin
-            Gerador.wGrupoNFSe('NotaFiscal', 'AP38');
-            Gerador.wCampoNFSe(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Numero);
-            Gerador.wCampoNFSe(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Serie);
-            Gerador.wCampoNFSe(tcDat, 'AP41', 'Data                               ', 01, 01, 1, Data);
-            Gerador.wCampoNFSe(tcDe2, 'AP42', 'ValorTotal                         ', 01, 01, 1, ValorTotal);
-            Gerador.wCampoNFSe(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade        ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-            Gerador.wCampoNFSe(tcInt, 'AP44', 'CodigoNCMNaturezaCarga             ', 01, 04, 1, CodigoNCMNaturezaCarga);
-            Gerador.wCampoNFSe(tcStr, 'AP45', 'DescricaoDaMercadoria              ', 01, 01, 0, DescricaoDaMercadoria);
-            Gerador.wCampoNFSe(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria        ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-            Gerador.wCampoNFSe(tcStr, 'AP47', 'TipoDeCalculo                      ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-            Gerador.wCampoNFSe(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria ', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-            Gerador.wCampoNFSe(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-            Gerador.wCampoNFSe(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, QuantidadeDaMercadoriaNoDesembarque);
+            Gerador.wCampoNFSe(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, TotalOperacao);
+            Gerador.wCampoNFSe(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, TotalViagem);
+            Gerador.wCampoNFSe(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, TotalDeAdiantamento);
+            Gerador.wCampoNFSe(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, TotalDeQuitacao);
+            Gerador.wCampoNFSe(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Combustivel);
+            Gerador.wCampoNFSe(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Pedagio);
+            Gerador.wCampoNFSe(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, OutrosCreditos);
+            Gerador.wCampoNFSe(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
+            Gerador.wCampoNFSe(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Seguro);
+            Gerador.wCampoNFSe(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, OutrosDebitos);
+            Gerador.wCampoNFSe(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, JustificativaOutrosDebitos);
+          end;
 
-            if ToleranciaDePerdaDeMercadoria.Valor > 0 then
-            begin
-              Gerador.wGrupoNFSe('ToleranciaDePerdaDeMercadoria', 'AP50');
-              Gerador.wCampoNFSe(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-              Gerador.wCampoNFSe(tcDe2, 'AP52', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-              Gerador.wGrupoNFSe('/ToleranciaDePerdaDeMercadoria');
-            end;
+          Gerador.wGrupoNFSe('/Valores');
+        end;
 
-            Gerador.wGrupoNFSe('/NotaFiscal');
+        Gerador.wCampoNFSe(tcStr, 'AP31', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento));
+
+        with InformacoesBancarias do
+        begin
+          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
+          begin
+            Gerador.wGrupoNFSe('InformacoesBancarias', 'AP32');
+
+            Gerador.wCampoNFSe(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria);
+            Gerador.wCampoNFSe(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, Agencia);
+            Gerador.wCampoNFSe(tcStr, 'AP35', 'Conta              ', 01, 01, 0, Conta);
+            Gerador.wCampoNFSe(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+
+            Gerador.wGrupoNFSe('/InformacoesBancarias');
           end;
         end;
-        Gerador.wGrupoNFSe('/NotasFiscais');
+
+        if NotasFiscais.Count > 0 then
+        begin
+          Gerador.Prefixo := 'enc:';
+          Gerador.wGrupoNFSe('NotasFiscais', 'AP37');
+
+          for J := 0 to NotasFiscais.Count -1 do
+          begin
+            with NotasFiscais.Items[J] do
+            begin
+              Gerador.wGrupoNFSe('NotaFiscal', 'AP38');
+              Gerador.wCampoNFSe(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Numero);
+              Gerador.wCampoNFSe(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Serie);
+              Gerador.wCampoNFSe(tcDat, 'AP41', 'Data                               ', 01, 01, 1, Data);
+              Gerador.wCampoNFSe(tcDe2, 'AP42', 'ValorTotal                         ', 01, 01, 1, ValorTotal);
+              Gerador.wCampoNFSe(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade        ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
+              Gerador.wCampoNFSe(tcInt, 'AP44', 'CodigoNCMNaturezaCarga             ', 01, 04, 1, CodigoNCMNaturezaCarga);
+              Gerador.wCampoNFSe(tcStr, 'AP45', 'DescricaoDaMercadoria              ', 01, 01, 0, DescricaoDaMercadoria);
+              Gerador.wCampoNFSe(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria        ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
+              Gerador.wCampoNFSe(tcStr, 'AP47', 'TipoDeCalculo                      ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
+              Gerador.wCampoNFSe(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria ', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
+              Gerador.wCampoNFSe(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+              Gerador.wCampoNFSe(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, QuantidadeDaMercadoriaNoDesembarque);
+
+              if ToleranciaDePerdaDeMercadoria.Valor > 0 then
+              begin
+                Gerador.wGrupoNFSe('ToleranciaDePerdaDeMercadoria', 'AP50');
+                Gerador.wCampoNFSe(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
+                Gerador.wCampoNFSe(tcDe2, 'AP52', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
+                Gerador.wGrupoNFSe('/ToleranciaDePerdaDeMercadoria');
+              end;
+
+              Gerador.wGrupoNFSe('/NotaFiscal');
+            end;
+          end;
+          Gerador.wGrupoNFSe('/NotasFiscais');
+        end;
       end;
+
+      Gerador.wGrupoNFSe('/Viagem');
     end;
 
-    Gerador.wGrupoNFSe('/Viagem');
+    Gerador.wGrupoNFSe('/Viagens');
+
+    Gerador.Prefixo := aPrefixo;
   end;
-
-  Gerador.wGrupoNFSe('/Viagens');
-
-  Gerador.Prefixo := aPrefixo;
 end;
 
 procedure TCIOTW_eFrete.GerarPagamentosEncerramento;
@@ -1489,70 +1492,77 @@ var
   i: Integer;
   aPrefixo: string;
 begin
-  aPrefixo := Gerador.Prefixo;
-  Gerador.Prefixo := 'enc:';
-
-  //Pagamentos registrados.
-  //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
-  //- A soma dos pagamentos c/ categoria Adiantamento, deverá ter o mesmo valor apontado na
-  //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
-  //     deverá conter o mesmo valor da tag DocumentoViagem da tag Viagem .
-  //- Se a viagem possuir a tag TotalQuitacao maior que zero, deverá ter um pagamento correspondente,
-  //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
-  Gerador.wGrupoNFSe('Pagamentos', 'AP68');
-
-  for i := 0 to CIOT.EncerrarOperacao.Pagamentos.Count -1 do
+  if CIOT.EncerrarOperacao.Pagamentos.Count > 0 then
   begin
-    with CIOT.EncerrarOperacao.Pagamentos.Items[i] do
+    aPrefixo := Gerador.Prefixo;
+    Gerador.Prefixo := 'enc:';
+
+    //Pagamentos registrados.
+    //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
+    //- A soma dos pagamentos c/ categoria Adiantamento, deverá ter o mesmo valor apontado na
+    //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
+    //     deverá conter o mesmo valor da tag DocumentoViagem da tag Viagem .
+    //- Se a viagem possuir a tag TotalQuitacao maior que zero, deverá ter um pagamento correspondente,
+    //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
+    Gerador.wGrupoNFSe('Pagamentos', 'AP68');
+
+    for i := 0 to CIOT.EncerrarOperacao.Pagamentos.Count -1 do
     begin
-      Gerador.wGrupoNFSe('Pagamento', 'AP68');
-      Gerador.wCampoNFSe(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-      Gerador.wCampoNFSe(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento será liberado para saque.');
-      Gerador.wCampoNFSe(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
-      Gerador.wCampoNFSe(tcStr, 'AP72', 'TipoPagamento     ', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
-
-      // Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria.
-      // Não deve ser preenchido para TipoPagamento eFRETE.
-      with InformacoesBancarias do
+      with CIOT.EncerrarOperacao.Pagamentos.Items[i] do
       begin
-        if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
+        Gerador.wGrupoNFSe('Pagamento', 'AP68');
+        Gerador.wCampoNFSe(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
+        Gerador.wCampoNFSe(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento será liberado para saque.');
+        Gerador.wCampoNFSe(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
+        Gerador.wCampoNFSe(tcStr, 'AP72', 'TipoPagamento     ', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+
+        // Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria.
+        // Não deve ser preenchido para TipoPagamento eFRETE.
+        with InformacoesBancarias do
         begin
-          Gerador.wGrupoNFSe('InformacoesBancarias', 'AP75');
-          Gerador.Prefixo := 'obj:';
+          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
+          begin
+            Gerador.wGrupoNFSe('InformacoesBancarias', 'AP75');
+            Gerador.Prefixo := 'obj:';
 
-          Gerador.wCampoNFSe(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-          Gerador.wCampoNFSe(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-          Gerador.wCampoNFSe(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
-          Gerador.wCampoNFSe(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+            Gerador.wCampoNFSe(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+            Gerador.wCampoNFSe(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+            Gerador.wCampoNFSe(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
+            Gerador.wCampoNFSe(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
 
-          Gerador.wGrupoNFSe('/InformacoesBancarias');
+            Gerador.wGrupoNFSe('/InformacoesBancarias');
+          end;
         end;
+
+        Gerador.Prefixo := 'enc:';
+        Gerador.wCampoNFSe(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
+
+        Gerador.wGrupoNFSe('/Pagamento');
       end;
-
-      Gerador.Prefixo := 'enc:';
-      Gerador.wCampoNFSe(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
-
-      Gerador.wGrupoNFSe('/Pagamento');
     end;
+
+    Gerador.wGrupoNFSe('/Pagamentos');
+
+    Gerador.Prefixo := aPrefixo;
   end;
-
-  Gerador.wGrupoNFSe('/Pagamentos');
-
-  Gerador.Prefixo := aPrefixo;
 end;
 
 procedure TCIOTW_eFrete.GerarImpostosEncerramento;
 begin
   with CIOT.EncerrarOperacao.Impostos do
   begin
-    Gerador.wGrupoNFSe('Impostos', 'AP61');
-    Gerador.wCampoNFSe(tcDe2, 'AP62', 'IRRF                   ', 01, 01, 1, IRRF, 'Valor destinado ao IRRF');
-    Gerador.wCampoNFSe(tcDe2, 'AP63', 'SestSenat              ', 01, 01, 1, SestSenat, 'Valor destinado ao SEST / SENAT');
-    Gerador.wCampoNFSe(tcDe2, 'AP64', 'INSS                   ', 01, 01, 1, INSS, 'Valor destinado ao INSS.');
-    Gerador.wCampoNFSe(tcDe2, 'AP65', 'ISSQN                  ', 01, 01, 1, ISSQN, 'Valor destinado ao ISSQN.');
-    Gerador.wCampoNFSe(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
-    Gerador.wCampoNFSe(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 0, DescricaoOutrosImpostos);
-    Gerador.wGrupoNFSe('/Impostos');
+    if (IRRF > 0) or (SestSenat > 0) or (INSS > 0) or (ISSQN >0) or
+       (OutrosImpostos > 0) then
+    begin
+      Gerador.wGrupoNFSe('Impostos', 'AP61');
+      Gerador.wCampoNFSe(tcDe2, 'AP62', 'IRRF                   ', 01, 01, 1, IRRF, 'Valor destinado ao IRRF');
+      Gerador.wCampoNFSe(tcDe2, 'AP63', 'SestSenat              ', 01, 01, 1, SestSenat, 'Valor destinado ao SEST / SENAT');
+      Gerador.wCampoNFSe(tcDe2, 'AP64', 'INSS                   ', 01, 01, 1, INSS, 'Valor destinado ao INSS.');
+      Gerador.wCampoNFSe(tcDe2, 'AP65', 'ISSQN                  ', 01, 01, 1, ISSQN, 'Valor destinado ao ISSQN.');
+      Gerador.wCampoNFSe(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
+      Gerador.wCampoNFSe(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 0, DescricaoOutrosImpostos);
+      Gerador.wGrupoNFSe('/Impostos');
+    end;
   end;
 end;
 

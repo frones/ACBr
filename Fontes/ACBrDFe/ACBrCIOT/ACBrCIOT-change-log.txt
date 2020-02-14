@@ -49,6 +49,7 @@ Símbolo : Significado
 
 14/02/2020
 -- pcnCIOTW_eFrete --
+[-] Correção: estava gerando o grupo Viagens quando não tem viagens informadas.
 [-] Corrigido o nome da classe usada para buscar os dados de pagamento
     do encerramento.
    Por: Italo Jurisato Junior

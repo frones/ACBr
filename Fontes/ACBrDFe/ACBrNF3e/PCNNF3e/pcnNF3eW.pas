@@ -54,7 +54,6 @@ type
 
   TGeradorOpcoes = class(TPersistent)
   private
-    FAjustarTagNro: Boolean;
     FGerarTagIPIparaNaoTributado: Boolean;
     FGerarTXTSimultaneamente: Boolean;
     FNormatizarMunicipios: Boolean;
@@ -63,7 +62,6 @@ type
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
   published
-    property AjustarTagNro: Boolean                read FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: Boolean  read FGerarTagIPIparaNaoTributado;
     property GerarTXTSimultaneamente: Boolean      read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
     property NormatizarMunicipios: Boolean         read FNormatizarMunicipios    write FNormatizarMunicipios;
@@ -154,7 +152,6 @@ begin
   FGerador                             := TGerador.Create;
   FGerador.FIgnorarTagNivel            := '|?xml version|NF3e xmlns|infNF3e versao|obsCont|obsFisco|';
   FOpcoes                              := TGeradorOpcoes.Create;
-  FOpcoes.FAjustarTagNro               := True;
   FOpcoes.FGerarTXTSimultaneamente     := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;
   FOpcoes.FNormatizarMunicipios        := False;
@@ -366,7 +363,7 @@ begin
 
   Gerador.wGrupo('enderEmit', '#024');
   Gerador.wCampo(tcStr, '#025', 'xLgr   ', 2, 60, 1, NF3e.Emit.enderEmit.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#026', 'nro    ', 1, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, NF3e.Emit.enderEmit.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#026', 'nro    ', 1, 60, 1, NF3e.Emit.enderEmit.nro, DSC_NRO);
   Gerador.wCampo(tcStr, '#027', 'xCpl   ', 1, 60, 0, NF3e.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#028', 'xBairro', 2, 60, 1, NF3e.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#029', 'cMun   ', 1, 07, 1, cMun, DSC_CMUN);
@@ -447,7 +444,7 @@ begin
   UF := xUF;
   Gerador.wGrupo('enderDest', '#044');
   Gerador.wCampo(tcStr, '#045', 'xLgr   ', 2, 60, 1, NF3e.Dest.enderDest.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#046', 'nro    ', 1, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, NF3e.Dest.enderDest.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#046', 'nro    ', 1, 60, 1, NF3e.Dest.enderDest.nro, DSC_NRO);
   Gerador.wCampo(tcStr, '#047', 'xCpl   ', 1, 60, 0, NF3e.Dest.enderDest.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#048', 'xBairro', 1, 60, 1, NF3e.Dest.enderDest.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#049', 'cMun   ', 1, 07, 1, cMun, DSC_CMUN);
@@ -1138,7 +1135,7 @@ begin
 
   Gerador.wGrupo('enderCorresp', '#258');
   Gerador.wCampo(tcStr, '#259', 'xLgr   ', 2, 60, 1, NF3e.gFat.enderCorresp.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#260', 'nro    ', 1, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, NF3e.gFat.enderCorresp.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#260', 'nro    ', 1, 60, 1, NF3e.gFat.enderCorresp.nro, DSC_NRO);
   Gerador.wCampo(tcStr, '#261', 'xCpl   ', 1, 60, 0, NF3e.gFat.enderCorresp.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#262', 'xBairro', 1, 60, 1, NF3e.gFat.enderCorresp.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#263', 'cMun   ', 1, 07, 1, cMun, DSC_CMUN);

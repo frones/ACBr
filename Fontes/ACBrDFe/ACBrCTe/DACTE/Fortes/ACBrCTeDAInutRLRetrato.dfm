@@ -1,7 +1,7 @@
 inherited frmCTeDAInutRLRetrato: TfrmCTeDAInutRLRetrato
   Left = 375
   Top = 175
-  Caption = 'Inutilização - Retrato'
+  Caption = 'Inutiliza'#231#227'o - Retrato'
   ClientHeight = 485
   ClientWidth = 844
   Font.Height = -8
@@ -489,6 +489,7 @@ inherited frmCTeDAInutRLRetrato: TfrmCTeDAInutRLRetrato
         Width = 699
         Height = 87
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

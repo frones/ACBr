@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- pcnBPeW --
+[*] Remoção da propriedade: AjustarTagNro.
+Por: Italo Jurisato Junior
+
 14/02/2020
 [-] Comentado a linha que se refere a uma tag que não existe mais.
 Por: Italo Jurisato Junior

@@ -1,7 +1,6 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 256
   Top = 88
-  Height = 777
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -11,15 +10,15 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   inherited RLCTe: TRLReport
     Left = 8
     Top = -500
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DACT-e '
@@ -648,10 +647,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 122
         Width = 298
         Height = 28
-        AutoSize = False
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = False
+        BarcodeType = bcCode128C
       end
       object rlsQuadro01: TRLDraw
         Left = 0
@@ -1255,11 +1254,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 62
         Width = 298
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Transparent = False
       end
       object rllVariavel2: TRLLabel
@@ -4455,6 +4454,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Style = []
         Info = itNow
         ParentFont = False
+        Text = ''
       end
     end
     object rlb_16_DadosExcEmitente: TRLBand

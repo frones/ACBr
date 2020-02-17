@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- pcnNF3eW --
+[*] Remoção da propriedade: AjustarTagNro.
+Por: Italo Jurisato Junior
+
 11/02/2020
 -- ACBrNF3eWebServices --
 [*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos e

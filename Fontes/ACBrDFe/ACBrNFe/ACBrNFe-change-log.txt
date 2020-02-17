@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- pcnNFeW --
+[*] Remoção da propriedade: AjustarTagNro.
+Por: Italo Jurisato Junior
+
 14/02/2020
 -- pcnConversaoNFe --
 [*] https://www.projetoacbr.com.br/forum/topic/53721-nfe-evento-790700-averba%C3%A7%C3%A3o-para-exporta%C3%A7%C3%A3o-%C3%B3rg%C3%A3o-autor-an-retorna-tenaomapeado/?do=findComment&comment=369005

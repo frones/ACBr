@@ -939,7 +939,6 @@ begin
 
   // Informa as opções especificas de TNFeW
 
-  NFeW.Opcoes.AjustarTagNro := True;                             // Ajusta o tamanho do campo para 3 posições com zero a esquerda
   NFew.Opcoes.GerarTagIPIparaNaoTributado := True;               // No caso de produto não tributado gera a TAG especifica
   NFeW.Opcoes.GerarTXTSimultaneamente := False;                  // Possibilita gerar um arquivo TXT do formato do programa SEFAZ-SP
   NFeW.Opcoes.NormatizarMunicipios := False;                     // Realiza a normatização do nome do municipio conforme a tabela do IBGE

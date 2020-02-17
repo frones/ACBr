@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- pmdfeMDFeW --
+[*] Remoção da propriedade: AjustarTagNro.
+Por: Italo Jurisato Junior
+
 12/02/2020
 -- ACBrMDFeWebServices --
 [*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos, 

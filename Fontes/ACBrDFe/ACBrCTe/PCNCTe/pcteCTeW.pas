@@ -1,50 +1,34 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-//              PCN - Projeto Cooperar CTe                                    //
-//                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
-//                                                                            //
-//        site: www.projetocooperar.org/cte                                   //
-//       email: projetocooperar@zipmail.com.br                                //
-//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_cte/        //
-//     projeto: http://code.google.com/p/projetocooperar/                     //
-//         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
-//                                                                            //
-// Coordenação: (c) 2009 - Paulo Casagrande                                   //
-//                                                                            //
-//      Equipe: Vide o arquivo leiame.txt na pasta raiz do projeto            //
-//                                                                            //
-//      Versão: Vide o arquivo leiame.txt na pasta raiz do projeto            //
-//                                                                            //
-// Desenvolvimento                                                            //
-//         de CTe: Wiliam Zacarias da Silva Rosa                              //
-//                                                                            //
-//     Licença: GNU Lesser General Public License (GNU LGPL)                  //
-//                                                                            //
-//              - Este programa é software livre; você pode redistribuí-lo    //
-//              e/ou modificá-lo sob os termos da Licença Pública Geral GNU,  //
-//              conforme publicada pela Free Software Foundation; tanto a     //
-//              versão 2 da Licença como (a seu critério) qualquer versão     //
-//              mais nova.                                                    //
-//                                                                            //
-//              - Este programa é distribuído na expectativa de ser útil,     //
-//              mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de  //
-//              COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM       //
-//              PARTICULAR. Consulte a Licença Pública Geral GNU para obter   //
-//              mais detalhes. Você deve ter recebido uma cópia da Licença    //
-//              Pública Geral GNU junto com este programa; se não, escreva    //
-//              para a Free Software Foundation, Inc., 59 Temple Place,       //
-//              Suite 330, Boston, MA - 02111-1307, USA ou consulte a         //
-//              licença oficial em http://www.gnu.org/licenses/gpl.txt        //
-//                                                                            //
-//    Nota (1): - Esta  licença  não  concede  o  direito  de  uso  do nome   //
-//              "PCN  -  Projeto  Cooperar  NFe", não  podendo o mesmo ser    //
-//              utilizado sem previa autorização.                             //
-//                                                                            //
-//    Nota (2): - O uso integral (ou parcial) das units do projeto esta       //
-//              condicionado a manutenção deste cabeçalho junto ao código     //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -183,14 +167,12 @@ type
 
   TGeradorOpcoes = class(TObject)
   private
-    FAjustarTagNro: Boolean;
     FNormatizarMunicipios: Boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
     FPathArquivoMunicipios: String;
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
   public
-    property AjustarTagNro: Boolean                read FAjustarTagNro         write FAjustarTagNro;
     property NormatizarMunicipios: Boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
     property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
@@ -209,7 +191,6 @@ begin
   FGerador := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|CTe xmlns|infCTe versao|obsCont|obsFisco|';
   FOpcoes := TGeradorOpcoes.Create;
-  FOpcoes.FAjustarTagNro := True;
   FOpcoes.FNormatizarMunicipios := False;
   FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes := False;
@@ -561,10 +542,10 @@ begin
 
   Gerador.wGrupo('enderToma', '#045');
   Gerador.wCampo(tcStr, '#046', 'xLgr   ', 02, 255, 1, CTe.Ide.Toma4.EnderToma.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#047', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Ide.Toma4.EnderToma.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#048', 'xCpl   ', 01, 60, 0, CTe.Ide.Toma4.EnderToma.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#049', 'xBairro', 02, 60, 1, CTe.Ide.Toma4.EnderToma.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#050', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#047', 'nro    ', 01, 060, 1, CTe.Ide.Toma4.EnderToma.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#048', 'xCpl   ', 01, 060, 0, CTe.Ide.Toma4.EnderToma.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#049', 'xBairro', 02, 060, 1, CTe.Ide.Toma4.EnderToma.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#050', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.Ide.Toma4.EnderToma.cMun) then
     Gerador.wAlerta('#050', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -785,7 +766,7 @@ begin
 
   Gerador.wGrupo('enderEmit', '#102');
   Gerador.wCampo(tcStr, '#103', 'xLgr   ', 02, 60, 1, CTe.Emit.enderEmit.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#104', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Emit.enderEmit.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#104', 'nro    ', 01, 60, 1, CTe.Emit.enderEmit.nro, DSC_NRO);
   Gerador.wCampo(tcStr, '#105', 'xCpl   ', 01, 60, 0, CTe.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#106', 'xBairro', 02, 60, 1, CTe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#107', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
@@ -857,10 +838,10 @@ begin
 
   Gerador.wGrupo('enderToma', '#071');
   Gerador.wCampo(tcStr, '#072', 'xLgr   ', 02, 255, 1, CTe.toma.EnderToma.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#073', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.toma.EnderToma.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#074', 'xCpl   ', 01, 60, 0, CTe.toma.EnderToma.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#075', 'xBairro', 02, 60, 1, CTe.toma.EnderToma.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#076', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#073', 'nro    ', 01, 060, 1, CTe.toma.EnderToma.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#074', 'xCpl   ', 01, 060, 0, CTe.toma.EnderToma.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#075', 'xBairro', 02, 060, 1, CTe.toma.EnderToma.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#076', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.toma.EnderToma.cMun) then
     Gerador.wAlerta('#076', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -934,10 +915,10 @@ begin
 
   Gerador.wGrupo('enderReme', '#119');
   Gerador.wCampo(tcStr, '#120', 'xLgr   ', 02, 255, 1, CTe.Rem.EnderReme.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#121', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Rem.EnderReme.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#122', 'xCpl   ', 01, 60, 0, CTe.Rem.EnderReme.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#123', 'xBairro', 02, 60, 1, CTe.Rem.EnderReme.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#124', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#121', 'nro    ', 01, 060, 1, CTe.Rem.EnderReme.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#122', 'xCpl   ', 01, 060, 0, CTe.Rem.EnderReme.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#123', 'xBairro', 02, 060, 1, CTe.Rem.EnderReme.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#124', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.Rem.EnderReme.cMun) then
     Gerador.wAlerta('#124', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -1009,10 +990,10 @@ begin
 
   Gerador.wGrupo('enderExped', '#148');
   Gerador.wCampo(tcStr, '#149', 'xLgr   ', 02, 255, 1, CTe.Exped.EnderExped.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#150', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Exped.EnderExped.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#151', 'xCpl   ', 01, 60, 0, CTe.Exped.EnderExped.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#152', 'xBairro', 02, 60, 1, CTe.Exped.EnderExped.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#153', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#150', 'nro    ', 01, 060, 1, CTe.Exped.EnderExped.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#151', 'xCpl   ', 01, 060, 0, CTe.Exped.EnderExped.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#152', 'xBairro', 02, 060, 1, CTe.Exped.EnderExped.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#153', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.Exped.EnderExped.cMun) then
     Gerador.wAlerta('#153', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -1084,10 +1065,10 @@ begin
 
   Gerador.wGrupo('enderReceb', '#166');
   Gerador.wCampo(tcStr, '#167', 'xLgr   ', 02, 255, 1, CTe.Receb.EnderReceb.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#168', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Receb.EnderReceb.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#169', 'xCpl   ', 01, 60, 0, CTe.Receb.EnderReceb.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#170', 'xBairro', 02, 60, 1, CTe.Receb.EnderReceb.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#171', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#168', 'nro    ', 01, 060, 1, CTe.Receb.EnderReceb.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#169', 'xCpl   ', 01, 060, 0, CTe.Receb.EnderReceb.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#170', 'xBairro', 02, 060, 1, CTe.Receb.EnderReceb.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#171', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.Receb.EnderReceb.cMun) then
     Gerador.wAlerta('#171', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -1165,10 +1146,10 @@ begin
 
   Gerador.wGrupo('enderDest', '#185');
   Gerador.wCampo(tcStr, '#186', 'xLgr   ', 02, 255, 1, CTe.Dest.EnderDest.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#187', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Dest.EnderDest.nro), DSC_NRO);
-  Gerador.wCampo(tcStr, '#188', 'xCpl   ', 01, 60, 0, CTe.Dest.EnderDest.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#189', 'xBairro', 02, 60, 1, CTe.Dest.EnderDest.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#190', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcStr, '#187', 'nro    ', 01, 060, 1, CTe.Dest.EnderDest.nro, DSC_NRO);
+  Gerador.wCampo(tcStr, '#188', 'xCpl   ', 01, 060, 0, CTe.Dest.EnderDest.xCpl, DSC_XCPL);
+  Gerador.wCampo(tcStr, '#189', 'xBairro', 02, 060, 1, CTe.Dest.EnderDest.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcInt, '#190', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(CTe.Dest.EnderDest.cMun) then
     Gerador.wAlerta('#190', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -2364,10 +2345,10 @@ begin
 
       Gerador.wGrupo('enderFerro', '#14');
       Gerador.wCampo(tcStr, '#15', 'xLgr   ', 02, 255, 1, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.xLgr, DSC_XLGR);
-      Gerador.wCampo(tcStr, '#16', 'nro    ', 01, 60, 0, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.nro), DSC_NRO);
-      Gerador.wCampo(tcStr, '#17', 'xCpl   ', 01, 60, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.xCpl, DSC_XCPL);
-      Gerador.wCampo(tcStr, '#18', 'xBairro', 02, 60, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.xBairro, DSC_XBAIRRO);
-      Gerador.wCampo(tcInt, '#19', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
+      Gerador.wCampo(tcStr, '#16', 'nro    ', 01, 060, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.nro, DSC_NRO);
+      Gerador.wCampo(tcStr, '#17', 'xCpl   ', 01, 060, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.xCpl, DSC_XCPL);
+      Gerador.wCampo(tcStr, '#18', 'xBairro', 02, 060, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.xBairro, DSC_XBAIRRO);
+      Gerador.wCampo(tcInt, '#19', 'cMun   ', 07, 007, 1, cMun, DSC_CMUN);
 
       if not ValidarMunicipio(CTe.infCTeNorm.ferrov.ferroEnv[i].EnderFerro.cMun) then
         Gerador.wAlerta('#19', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);

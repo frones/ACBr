@@ -107,14 +107,12 @@ type
 
   TGeradorOpcoes = class(TPersistent)
   private
-    FAjustarTagNro: boolean;
     FNormatizarMunicipios: boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
     FPathArquivoMunicipios: String;
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
   published
-    property AjustarTagNro: boolean                read FAjustarTagNro;
     property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
     property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
@@ -135,7 +133,6 @@ begin
   FGerador.FIgnorarTagNivel := '|?xml version|MDFe xmlns|infMDFe versao|';
 
   FOpcoes                       := TGeradorOpcoes.Create;
-  FOpcoes.FAjustarTagNro        := True;
   FOpcoes.FNormatizarMunicipios := False;
   FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes    := False;
@@ -373,7 +370,7 @@ begin
                                       MDFe.Emit.EnderEmit.cMun);
   Gerador.wGrupo('enderEmit', '#030');
   Gerador.wCampo(tcStr, '#031', 'xLgr   ', 02, 60, 1, MDFe.Emit.enderEmit.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#032', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, MDFe.Emit.enderEmit.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#032', 'nro    ', 01, 60, 1, MDFe.Emit.enderEmit.nro, DSC_NRO);
   Gerador.wCampo(tcStr, '#033', 'xCpl   ', 01, 60, 0, MDFe.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#034', 'xBairro', 02, 60, 1, MDFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#035', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);

@@ -53,6 +53,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- DANFeNFCe5_00.fr3 --
+[*] Ajustes para formatação dos campos "quantidade" e "valor unitário" 
+    respeitarem a configuração de casas decimais do componente.
+  Por: BigWings
+
 27/01/2020
 -- DANFERetrato.fr3, DANFEPaisagem.fr3 --
 [-] Correção para impressão da continuação das informações complementares em nova página.

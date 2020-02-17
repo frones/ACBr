@@ -461,12 +461,24 @@ begin
      begin
         with RegI050.RegistroI051.Items[intFor] do
         begin
-           ///
-           Add( LFill('I051') +
-                LFill(COD_PLAN_REF, 1) +
-                LFill(COD_CCUS) +
-                LFill(COD_CTA_REF) 
-                );
+           /// Layout 8 a partir da escrituração ano calendário 2019
+           if DT_INI >= EncodeDate(2019,01,01) then
+           begin
+              Add( LFill('I051') +
+                   LFill(COD_CCUS) +
+                   LFill(COD_CTA_REF) 
+                 );
+		   end;	 
+           /// Layout até 7 escrituração ano calendário até 2018
+           if DT_FIN <= EncodeDate(2018,12,31) then
+           begin
+              Add( LFill('I051') +
+                   LFill(COD_PLAN_REF, 1) +
+                   LFill(COD_CCUS) +
+                   LFill(COD_CTA_REF) 
+                 );
+		   end;	 
+		   
         end;
        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
      end;

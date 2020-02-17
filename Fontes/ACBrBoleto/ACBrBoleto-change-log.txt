@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- ACBrBancoSicred --
+[*] Ajustes na definição de espécie do título para CNAB240
+
 14/02/2020
 -- ACBrBancoDaycoval --
 [*] Realizado correção para calculo do DV do nosso número quando carteira requer que seja considerado

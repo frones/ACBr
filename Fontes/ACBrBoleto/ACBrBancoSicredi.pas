@@ -1740,13 +1740,20 @@ begin
       atNao: AceiteStr := 'N';
     end;
 
-    {Espécie}
-    if (EspecieDoc = 'DM') then
-      Especie := '03'
-    else if (EspecieDoc = 'DMI') then
-      Especie := '03'
+    case AnsiIndexStr(EspecieDoc, ['DMI', 'DSI', 'DR', 'LC', 'NP', 'NPR', 'NS', 'RC', 'ND', 'BP']) of
+      0 : Especie := '03'; //DMI duplicata mercantil por indicação
+      1 : Especie := '05'; //DSI duplicata de serviço por indicação
+      2 : Especie := '06'; //DR duplicata rural
+      3 : Especie := '07'; //LC letra de câmbio
+      4 : Especie := '12'; //NP nota promissóri
+      5 : Especie := '13'; //NPR nota promissória rural
+      6 : Especie := '16'; //NS nota de seguro
+      7 : Especie := '17'; //RC recibo
+      8 : Especie := '19'; //ND nota de débito
+      9 : Especie := '32'; //Boleto Proposta
     else
-      Especie := '99';
+      Especie := '99'; //Outros
+    end;
 
     {Pegando Código da Ocorrencia}
     case OcorrenciaOriginal.Tipo of

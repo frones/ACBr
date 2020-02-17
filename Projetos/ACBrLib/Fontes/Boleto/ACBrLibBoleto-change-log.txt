@@ -44,10 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+--- ACBrLibBoletoConfig --
+[+] Adicionado propriedade para remover acentuação do arquivo de remessa.
+    (Por: Rafael Dias)
+
 03/01/2020
 --- ACBrLibBoleto --
 [+] Adicionado o metodo Boleto_ImportarConfig.
-    (Por; Rafael Dias)
+    (Por: Rafael Dias)
 
 15/04/2018
 --- ACBrLibBoleto --

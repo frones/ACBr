@@ -12,8 +12,9 @@ object LibBoletoDM: TLibBoletoDM
     Banco.TipoCobranca = cobNenhum
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
+    Banco.CasasDecimaisMoraJuros = 2
     Cedente.TipoInscricao = pJuridica
+    Cedente.IdentDistribuicao = tbBancoDistribui
     DirArqRemessa = 'C:\Temp\'
     DirArqRetorno = 'C:\Temp\'
     NumeroArquivo = 0

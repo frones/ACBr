@@ -112,6 +112,7 @@ begin
     NomeArqRemessa := pLibConfig.BoletoDiretorioConfig.NomeArqRemessa;
     NomeArqRetorno := pLibConfig.BoletoDiretorioConfig.NomeArqRetorno;
     NumeroArquivo := pLibConfig.BoletoDiretorioConfig.NumeroArquivo;
+    RemoveAcentosArqRemessa := pLibConfig.BoletoDiretorioConfig.RemoveAcentosArqRemessa;
 
     with ACBrBoleto1.Banco do
     begin

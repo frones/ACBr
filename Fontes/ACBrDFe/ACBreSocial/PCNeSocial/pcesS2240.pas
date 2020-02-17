@@ -1,17 +1,17 @@
 {******************************************************************************}
-{ Projeto: Componente ACBreSocial                                              }
-{  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
-{ eSocial - http://www.esocial.gov.br/                                         }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                              Jean Carlo Cantu                                }
+{                              Tiago Ravache                                   }
+{                              Guilherme Costa                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,19 +29,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
-|*  - Doação do componente para o Projeto ACBr
-|* 01/03/2016: Guilherme Costa
-|*  - Alterações para validação com o XSD
-******************************************************************************}
 {$I ACBr.inc}
 
 unit pcesS2240;
@@ -49,7 +40,13 @@ unit pcesS2240;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -122,7 +119,7 @@ type
     property infoExpRisco: TinfoExpRisco read FinfoExpRisco write FinfoExpRisco;
   end;
 
-  TRespRegCollection = class(TObjectList)
+  TRespRegCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRespRegCollectionItem;
     procedure SetItem(Index: Integer; Value: TRespRegCollectionItem);
@@ -172,7 +169,7 @@ type
     property obs: TObs read FObs write FObs;
   end;
 
-  TInfoAmbCollection = class(TObjectList)
+  TInfoAmbCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfoAmbCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
@@ -201,7 +198,7 @@ type
     property ativPericInsal: TAtivPericInsalCollection read FativPericInsal write FativPericInsal;
   end;
 
-  TAtivPericInsalCollection = class(TObjectList)
+  TAtivPericInsalCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TAtivPericInsalCollectionItem;
     procedure SetItem(Index: Integer; Value: TAtivPericInsalCollectionItem);
@@ -218,7 +215,7 @@ type
     property codAtiv: String read FcodAtiv write FcodAtiv;
   end;
 
-  TFatRiscoCollection = class(TObjectList)
+  TFatRiscoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TFatRiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TFatRiscoCollectionItem);
@@ -278,7 +275,7 @@ type
     property epi: TEpiCollection read getEpi write FEpi;
   end;
 
-  TEpiCollection = class(TObjectList)
+  TEpiCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TEpiCollectionItem;
     procedure SetItem(Index: Integer; Value: TEpiCollectionItem);

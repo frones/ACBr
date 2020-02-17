@@ -1,17 +1,17 @@
 {******************************************************************************}
-{ Projeto: Componente ACBreSocial                                              }
-{  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
-{ eSocial - http://www.esocial.gov.br/                                         }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                              Jean Carlo Cantu                                }
+{                              Tiago Ravache                                   }
+{                              Guilherme Costa                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,19 +29,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
-|*  - Doação do componente para o Projeto ACBr
-|* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
-|*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
-******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBreSocialEventos;
@@ -49,8 +40,13 @@ unit ACBreSocialEventos;
 interface
 
 uses
-  SysUtils, Classes, synautil, Contnrs,
-  pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos,
+  SysUtils, Classes, synautil,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase, pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos,
   pcesConversaoeSocial;
 
 type
@@ -68,7 +64,7 @@ type
     property XML: String read FXML write FXML;
   end;
 
-  TGeradosCollection = class(TObjectList)
+  TGeradosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TGeradosCollectionItem;
     procedure SetItem(Index: Integer; Value: TGeradosCollectionItem);

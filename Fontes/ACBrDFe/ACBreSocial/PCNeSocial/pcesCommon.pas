@@ -1,17 +1,17 @@
 {******************************************************************************}
-{ Projeto: Componente ACBreSocial                                              }
-{  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
-{ eSocial - http://www.esocial.gov.br/                                         }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                              Jean Carlo Cantu                                }
+{                              Tiago Ravache                                   }
+{                              Guilherme Costa                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,21 +29,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
-|*  - Doação do componente para o Projeto ACBr
-|* 01/03/2016: Guilherme Costa
-|*  - Alterações para validação com o XSD
-|* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
-|*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
-******************************************************************************}
 {$I ACBr.inc}
 
 unit pcesCommon;
@@ -51,7 +40,13 @@ unit pcesCommon;
 interface
 
 uses
-  SysUtils, Classes, Controls, Contnrs,
+  SysUtils, Classes, Controls,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase,
   pcesConversaoeSocial;
 
 const
@@ -184,7 +179,7 @@ type
     property perApur: string read FperApur write FperApur;
   end;
 
-  TeSocialCollection = class(TObjectList)
+  TeSocialCollection = class(TACBrObjectList)
   public
     FACBreSocial: TComponent;
     constructor Create(AACBreSocial: TComponent); reintroduce; virtual;
@@ -339,7 +334,7 @@ type
     property UfCtps: string read FUfCtps write FUfCtps;
   end;
 
-  TDependenteCollection = class(TObjectList)
+  TDependenteCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDependenteCollectionItem;
     procedure SetItem(Index: Integer; Value: TDependenteCollectionItem);
@@ -370,7 +365,7 @@ type
     property incTrab: tpSimNao read FIncTrab write FIncTrab;
   end;
 
-  TDescAtividadeCollection = class(TObjectList)
+  TDescAtividadeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDescAtividadeCollectionItem;
     procedure SetItem(Index: Integer; Value: TDescAtividadeCollectionItem);
@@ -477,7 +472,7 @@ type
     property CnpjSindTrab: string read FCnpjSindTrab write FCnpjSindTrab;
   end;
 
-  THorarioCollection = class(TObjectList)
+  THorarioCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): THorarioCollectionItem;
     procedure SetItem(Index: Integer; Value: THorarioCollectionItem);
@@ -496,7 +491,7 @@ type
     property CodHorContrat: string read FCodHorContrat write FCodHorContrat;
   end;
 
-  THorarioIntervaloCollection = class(TObjectList)
+  THorarioIntervaloCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): THorarioIntervaloCollectionItem;
     procedure SetItem(Index: Integer; Value: THorarioIntervaloCollectionItem);
@@ -629,7 +624,7 @@ type
     property ideEstabVinc: TIdeEstabVinc read FIdeEstabVinc write FIdeEstabVinc;
   end;
 
-  TIdeTrabSubstituidoCollection = class(TObjectList)
+  TIdeTrabSubstituidoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TIdeTrabSubstituidoCollectionItem;
     procedure SetItem(Index: Integer; Value: TIdeTrabSubstituidoCollectionItem);
@@ -1197,7 +1192,7 @@ type
     property grauExp: tpGrauExp read FGrauExp write FGrauExp;
   end;
 
-  TRubricaCollection = class(TObjectList)
+  TRubricaCollection = class(TACBrObjectList)
   private
   public
     function GetItem(Index: Integer): TRubricaCollectionItem;
@@ -1237,7 +1232,7 @@ type
     property vrRec : Double read FvrRec write FvrRec;
   end;
 
-  TRecPgtosCollection = class(TObjectList)
+  TRecPgtosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRecPgtosCollectionItem;
     procedure SetItem(Index: Integer; Value: TRecPgtosCollectionItem);
@@ -1259,7 +1254,7 @@ type
     property ideEstabLot : TideEstabLotCollection read FideEstabLot write FideEstabLot;
   end;
 
-  TideEstabLotCollection = class(TObjectList)
+  TideEstabLotCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TideEstabLotItem;
     procedure SetItem(Index: Integer; Value: TideEstabLotItem);
@@ -1307,7 +1302,7 @@ type
     property codFuncao: String read FcodFuncao write FcodFuncao;
   end;
 
-  TProcJudTrabCollection = class(TObjectList)
+  TProcJudTrabCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TProcJudTrabCollectionItem;
     procedure SetItem(Index: Integer; Value: TProcJudTrabCollectionItem);
@@ -1430,7 +1425,7 @@ type
     property infoMV: TInfoMV read getInfoMV write FInfoMV;
   end;
 
-  TdetVerbasCollection = class(TObjectList)
+  TdetVerbasCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TdetVerbasItem;
     procedure SetItem(Index: Integer; Value: TdetVerbasItem);
@@ -1462,7 +1457,7 @@ type
     property indSimples : tpIndSimples read FindSimples write FindSimples;
   end;
 
-  TInfoProcJudCollection = class(TObjectList)
+  TInfoProcJudCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfoProcJudItem;
     procedure SetItem(Index: Integer; Value: TInfoProcJudItem);
@@ -1497,7 +1492,7 @@ type
     property vrSenarSusp: Double read FvrSenarSusp write FvrSenarSusp;
   end;
 
-  TInfoProcJCollection = class(TObjectList)
+  TInfoProcJCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfoProcJItem;
     procedure SetItem(Index: Integer; Value: TInfoProcJItem);
@@ -1522,7 +1517,7 @@ type
     property vrSenarNRet: Double read FvrSenarNRet write FvrSenarNRet;
   end;
 
-  TPensaoAlimCollection = class(TObjectList)
+  TPensaoAlimCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TPensaoAlimCollectionItem;
     procedure SetItem(Index: Integer; Value: TPensaoAlimCollectionItem);
@@ -1545,7 +1540,7 @@ type
     property vlrPensao: Double read FVlrPensao write FVlrPensao;
   end;
 
-  TDetPlanoCollection = class(TObjectList)
+  TDetPlanoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDetPlanoCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetPlanoCollectionItem);
@@ -1570,7 +1565,7 @@ type
     property vlrPgDep: Double read FVlrPgDep write FVlrPgDep;
   end;
 
-  TDetOperCollection = class(TObjectList)
+  TDetOperCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDetOperCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetOperCollectionItem);
@@ -1623,7 +1618,7 @@ type
       write FInfoSaudeColet;
   end;
 
-  TNfsColecao = class(TObjectList)
+  TNfsColecao = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TNfsItem;
     procedure SetItem(Index: Integer; const Value: TNfsItem);
@@ -1652,7 +1647,7 @@ type
     property vrSenarDesc: Double read FvrSenarDesc write FvrSenarDesc;
   end;
 
-  TRemunOutrEmprCollection = class(TObjectList)
+  TRemunOutrEmprCollection = class(TACBrObjectList)
   private
     function GetItem(Index: integer): TRemunOutrEmprCollectionItem;
     procedure SetItem(Index: integer; Value: TRemunOutrEmprCollectionItem);
@@ -1701,7 +1696,7 @@ type
     property email: string read Femail write Femail;
   end;
 
-  TObservacoesCollection = class(TObjectList)
+  TObservacoesCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TObservacoesCollectionItem;
     procedure SetItem(Index: Integer; Value: TObservacoesCollectionItem);

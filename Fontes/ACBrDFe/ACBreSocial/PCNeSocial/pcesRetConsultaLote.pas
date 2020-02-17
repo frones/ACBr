@@ -1,17 +1,17 @@
 {******************************************************************************}
-{ Projeto: Componente ACBreSocial                                              }
-{  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
-{ eSocial - http://www.esocial.gov.br/                                         }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                              Jean Carlo Cantu                                }
+{                              Tiago Ravache                                   }
+{                              Guilherme Costa                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,28 +29,24 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{ ******************************************************************************
-|* Historico
-|*
-|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
-|*  - Doação do componente para o Projeto ACBr
-|* 29/02/2015: Guilherme Costa
-|*  - não estava sendo gerada a tag "tpProc"
-****************************************************************************** }
-
 {$I ACBr.inc}
+
 unit pcesRetConsultaLote;
 
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase, ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, pcesS5013;
 
@@ -58,7 +54,7 @@ type
   TtotCollectionItem = class;
   TRetEventosCollectionItem = class;
 
-  TtotCollection = class(TObjectList)
+  TtotCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TtotCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotCollectionItem);
@@ -81,7 +77,7 @@ type
 
   end;
 
-  TRetEventosCollection = class(TObjectList)
+  TRetEventosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRetEventosCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventosCollectionItem);

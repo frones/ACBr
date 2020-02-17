@@ -1,0 +1,358 @@
+================> file control
+        SELECT RETORNO-UTF-8 ASSIGN TO W7-UTF-8
+            ORGANIZATION IS LINE SEQUENTIAL
+            FILE STATUS  IS ST.
+
+==============> file section
+ fd  RETORNO-UTF-8 is global
+     label record is omitted
+     data record is reg-nfe
+     record is varying in size
+     from 1 to 32752 characters depending on ws-tam.
+ 01  reg-retorno-utf-8             pic x(32752).
+
+
+
+============>>  working storage section
+ 01  STATUS-ACBRLIB      pic s9(09) comp-5  global value zeros.
+ 01  LINHA-COMANDO       pic  x(1500)       global value spaces.
+ 01  W7-UTF-8            pic  x(08)         global value spaces.
+ 01  W7-UTF-8-SAI        pic  x(08)         global value spaces.
+ 01  ws-tam              pic  9(11)         global value zeros.
+ 01  linha-comando-1     pic  x(1000)       global value spaces.
+ 01  w7-comando-1        pic  x(124)        global value spaces.
+ 01  w7-comando-2        pic  x(124)        global value spaces.
+ 01  w7-retorno-1        pic  x(5000)       global value spaces.
+ 01  w7-retorno-2        pic  x(5000)       global value spaces.
+
+ 01  W7-ARQUIVO-DELETE IS GLOBAL.
+     03 W7-ARQUIVO-DEL   PIC  X(08)         VALUE SPACES.
+ 
+ 01  status-code         PIC S9(4) COMP-5   GLOBAL VALUE ZEROS.
+ 
+*==> Campos para Message Box.
+ 01  MSG-STYLE               PIC  S9(4)  COMP-5 VALUE IS 0 IS GLOBAL.
+ 01  w77-msg                 pic  x(80)  value spaces is global.
+ 01  ExcelSheetIndx          pic s9(9)   COMP-5 is global.
+ 01  ReturnValue             PIC S9(9)   COMP-5 is global.
+ 01  TITULO IS GLOBAL.
+     02 TITULO-TEXT     PIC  X(25) VALUE IS "Informação".
+ 01  Msg-Icone               GLOBAL Pic x        Value "E".
+*    (E=Error, Q=Question, W=Exclamation I=Infomation)
+ 01  Msg-Titulo              GLOBAL Pic x(30)    Value Spaces.
+ 01  Msg-Texto               GLOBAL Pic x(256)   Value Spaces.
+ 01  Msg-Estilo              GLOBAL Pic S9(9)    Comp-5.
+ 01  Msg-Retorno             GLOBAL Pic S9(9)    Comp-5.
+
+*==> File Status dos arquivos em GERAL.
+ 01  St           GLOBAL Pic xx.
+ 01  ST-STATUS is GLOBAL.
+     05  St-Indica       Pic 9.
+     05  St-RunTime      Pic 99 Binary.
+
+*==> Função ACBR
+ 01  NFE_Inicializar                PIC X(15) VALUE "NFE_Inicializar"             IS GLOBAL.
+ 01  NFE_Finalizar                  PIC X(13) VALUE "NFE_Finalizar"               IS GLOBAL.
+ 01  NFE_Nome                       PIC X(08) VALUE "NFE_Nome"                    IS GLOBAL.
+ 01  NFE_Versao                     PIC X(10) VALUE "NFE_Versao"                  IS GLOBAL.
+ 01  NFE_UltimoRetorno              PIC X(17) VALUE "NFE_UltimoRetorno"           IS GLOBAL.
+ 01  NFE_ConfigLer                  PIC X(13) VALUE "NFE_ConfigLer"               IS GLOBAL.
+ 01  NFE_ConfigLerValor             PIC X(18) VALUE "NFE_ConfigLerValor"          IS GLOBAL.
+ 01  NFE_CarregarINI                PIC X(15) VALUE "NFE_CarregarINI"             IS GLOBAL.
+ 01  NFE_StatusServico              PIC X(17) VALUE "NFE_StatusServico"           IS GLOBAL.
+ 01  NFE_CarregarXML                PIC X(15) VALUE "NFE_CarregarXML"             IS GLOBAL.
+ 01  NFE_LimparLista                PIC X(15) VALUE "NFE_LimparLista"             IS GLOBAL.
+ 01  NFE_Assinar                    PIC X(11) VALUE "NFE_Assinar"                 IS GLOBAL.
+ 01  NFE_Validar                    PIC X(11) VALUE "NFE_Validar"                 IS GLOBAL.
+ 01  NFE_ValidarRegrasdeNegocios    PIC X(27) VALUE "NFE_ValidarRegrasdeNegocios" IS GLOBAL.
+ 01  NFE_VerificarAssinatura        PIC X(23) VALUE "NFE_VerificarAssinatura"     IS GLOBAL.
+ 01  NFE_Consultar                  PIC X(13) VALUE "NFE_Consultar"               IS GLOBAL.
+ 01  NFE_Inutilizar                 PIC X(14) VALUE "NFE_Inutilizar"              IS GLOBAL.
+ 01  NFE_Enviar                     PIC X(10) VALUE "NFE_Enviar"                  IS GLOBAL.
+ 01  NFE_Imprimir                   PIC X(12) VALUE "NFE_Imprimir"                IS GLOBAL.
+ 01  NFE_ImprimirPDF                PIC X(15) VALUE "NFE_ImprimirPDF"             IS GLOBAL.
+ 01  NFE_CarregarEventoINI          PIC X(21) VALUE "NFE_CarregarEventoINI"       IS GLOBAL.
+ 01  NFE_LimparListaEventos         PIC X(22) VALUE "NFE_LimparListaEventos"      IS GLOBAL.
+ 01  NFE_EnviarEvento               PIC X(16) VALUE "NFE_EnviarEvento"            IS GLOBAL.
+ 01  NFE_ImprimirEvento             PIC X(18) VALUE "NFE_ImprimirEvento"          IS GLOBAL.
+ 01  NFE_ImprimirEventoPDF          PIC X(21) VALUE "NFE_ImprimirEventoPDF"       IS GLOBAL.
+ 01  NFE_Cancelar                   PIC X(12) VALUE "NFE_Cancelar"                IS GLOBAL.
+ 01  NFE_ConsultaCadastro           PIC X(20) VALUE "NFE_ConsultaCadastro"        IS GLOBAL.
+ 01  NFE_EnviarEmail                PIC X(15) VALUE "NFE_EnviarEmail"             IS GLOBAL.
+ 01  NFE_ConfigGravarValor          PIC X(21) VALUE "NFE_ConfigGravarValor"       IS GLOBAL.
+
+ 01  CEP_Inicializar                PIC X(15) VALUE "CEP_Inicializar"             IS GLOBAL. 
+ 01  CEP_Finalizar                  PIC X(13) VALUE "CEP_Finalizar"               IS GLOBAL.
+ 01  CEP_BuscarPorCEP               PIC X(16) VALUE "CEP_BuscarPorCEP"            IS GLOBAL.
+
+
+====>>>  inicializar
+ ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ PROCEDURE       DIVISION.
+
+     move spaces         to pow-text    of txt-string-retorno.
+     
+     move spaces         to w7-comando-1.
+     move spaces         to w7-retorno-1.
+     move zeros          to STATUS-ACBRLIB.
+
+*> SE NÃO EXISTIR, ELE CRIA AUTOMATICAMENTE NO DIRETORIO RAIZ DO SISTEMA
+     move "ACBRLIB.INI" to w7-comando-1.
+     
+      CALL NFE_Inicializar WITH STDCALL LINKAGE
+          USING BY REFERENCE w7-comando-1
+                             w7-retorno-1
+          RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib = zeros
+        move "Comando INICIALIZAR executado com sucesso !!! " to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"   to pow-text of Txt-status-erro
+     end-if.
+     
+     move w7-retorno-1   to pow-text    of txt-string-retorno.
+
+     move spaces         to w7-comando-1.
+     move spaces         to w7-retorno-2.
+     move zeros          to status-acbrlib.
+
+*> SE NÃO EXISTIR, ELE CRIA AUTOMATICAMENTE NO DIRETORIO RAIZ DO SISTEMA
+     move "ACBRLIB.INI" to w7-comando-1.
+
+     CALL NFE_CarregarINI WITH STDCALL LINKAGE
+          USING BY REFERENCE w7-comando-1
+                             w7-retorno-2
+          RETURNING STATUS-ACBRLIB.
+
+     if status-acbrlib not = zeros
+        move "Erro na execução ao CARREGAR INI !!!"      to pow-text of Txt-status-erro
+        exit program
+     end-if.
+     
+     move zeros             to STATUS-ACBRLIB.
+
+     CALL NFE_LimparLista RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib not = zeros
+        move "Erro na execução LIMPAR LISTA !!!"     to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+     move zeros             to STATUS-ACBRLIB.
+
+     CALL NFE_LimparListaEventos RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib not = zeros
+        move "Erro na execução LIMPAR LISTA EVENTOS !!!"     to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+     move spaces         to pow-text    of txt-string-retorno.
+
+
+======>>>  ler config ini ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ PROCEDURE       DIVISION.
+
+     move spaces         to pow-text    of txt-string-retorno.
+
+     move spaces         to w7-comando-1.
+     move spaces         to w7-retorno-2.
+     move zeros          to status-acbrlib.
+
+*> SE NÃO EXISTIR, ELE CRIA AUTOMATICAMENTE NO DIRETORIO RAIZ DO SISTEMA
+     move "ACBRLIB.INI" to w7-comando-1.
+
+     CALL NFE_Inicializar WITH STDCALL LINKAGE
+          USING BY REFERENCE w7-comando-1
+                             w7-retorno-2
+          RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+    
+     if status-acbrlib = zeros
+        move "Comando LER CONFIG INI executado com sucesso !!! " to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"      to pow-text of Txt-status-erro
+     end-if.
+     
+     move w7-retorno-2   to pow-text    of txt-string-retorno.
+
+
+
+========>> carregar  xml
+ ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ 77  w7-tamanho-string pic s9(06) comp-5 value zeros.
+ 77  w7-diversos       pic x(2000)       value spaces.
+
+ PROCEDURE       DIVISION.
+
+*    INVOKE pow-self "DisplayMessage" USING  "aqui 01" "Aviso"
+
+     move spaces            to pow-text    of txt-string-retorno.
+
+     move zeros             to STATUS-ACBRLIB.
+
+     CALL NFE_LimparLista RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib = zeros
+        move "Comando LIMPAR LISTA executado com sucesso !!! "  to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"     to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+     move zeros             to STATUS-ACBRLIB.
+
+     CALL NFE_LimparListaEventos RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib not = zeros
+        move "Erro na execução, LIMPAR LISTA EVENTOS !!!"       to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+     move spaces            to w7-comando-1.
+     move spaces            to w7-retorno-1.
+     move zeros             to STATUS-ACBRLIB.
+ 
+     move "Z:\NFE130\TRANSM\35191013626068000122550010000000241000000473-nfe.xml" to w7-comando-1.
+
+     CALL NFE_CarregarXML WITH STDCALL LINKAGE
+          USING BY REFERENCE w7-comando-1
+                             w7-retorno-1
+          RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+          
+     if status-acbrlib = zeros
+        move "Comando CARREGAR XML executado com sucesso !!! "  to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"     to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+     move w7-retorno-1      to pow-text    of txt-string-retorno.
+                                    
+
+
+====>>>  assinar xml
+
+ ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ 77  w7-tamanho-string pic s9(06) comp-5 value zeros.
+ 77  w7-diversos       pic x(2000)       value spaces.
+
+ 01  Tabela  Global.
+     03  tab1          pic x(32760)  occurs  20 times.
+
+ 01  WS-AREA           PIC N(50).                
+ 01  WS-CCSID          PIC 9(5).                  
+ 01  WS-ASCII          PIC X(50).                
+ 01  WS-EBCDIC         PIC X(50).    
+ 
+ PROCEDURE       DIVISION.
+
+     move zeros          to STATUS-ACBRLIB.
+
+     CALL NFE_Assinar RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib = zeros
+        move "Comando ASSINAR XML executado com sucesso !!! "   to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"     to pow-text of Txt-status-erro
+        exit program
+     end-if.
+
+
+
+====>>  status -erro
+0  - indica q biblioteca foi inicilizada corretamente
+-1 - indica q a biblioteca nao foi inicializada
+-3 - indica q houve erro ao ler a config informada
+-5 - nao foi possivel localizar o arq INI informado
+-6 - nao foi possivel encontrar o diretorio do arquivo
+-10- houve falhas na execuçao do metodo
+
+===> obs
+ATENÇÃO:- Observei que o 
+STATUS ERRO e o STATUS TAMANHO STRING sempre veem no primeiro retorno,
+ já a STRING do TEXTO de retorno as vezes somente no 2º comando, 
+então fiz um exemplo no botão "Ler Sessão Config INI" pegando no segundo retorno (abaixo)
+
+
+ ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ 01  w7-sessao               pic x(13)  value spaces.
+ 01  w7-nome-chave-sessao    pic x(11)  value spaces.
+
+ 77  w7-tamanho-string       pic s9(06) comp-5 value zeros.
+ 
+ PROCEDURE       DIVISION.
+
+     move spaces             to pow-text    of txt-string-retorno.
+
+     move spaces             to w7-retorno-1.
+     move zeros              to STATUS-ACBRLIB.
+
+     move 2000               to w7-tamanho-string
+
+     move "SoftwareHouse"    to w7-sessao.
+     move "RazaoSocial"      to w7-nome-chave-sessao.
+
+     CALL NFE_ConfigLerValor WITH STDCALL LINKAGE
+          USING BY REFERENCE w7-sessao
+                             w7-nome-chave-sessao
+                             w7-retorno-1
+                             w7-tamanho-string
+          RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib = zeros
+        move "Comando LER SESSÃO INI executado com sucesso !!! " to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"      to pow-text of Txt-status-erro
+     end-if.
+     
+     move w7-retorno-1   to pow-text    of txt-string-retorno.
+
+
+=====> finalizar
+ ENVIRONMENT     DIVISION.
+ DATA            DIVISION.
+ WORKING-STORAGE SECTION.
+ PROCEDURE       DIVISION.
+
+     move spaces         to pow-text    of txt-string-retorno.
+     move zeros          to status-acbrlib.
+
+     CALL NFE_Finalizar RETURNING STATUS-ACBRLIB.
+
+     move status-acbrlib to pow-numeric of Txt-status-retorno.
+
+     if status-acbrlib = zeros
+        move "Comando FINALIZAR executado com sucesso !!! "      to pow-text of Txt-status-erro
+     else
+        move "Erro na execução, verifica tabela abaixo !!!"      to pow-text of Txt-status-erro
+     end-if.
+     
+

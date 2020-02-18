@@ -37,7 +37,7 @@ unit ACBrBlocoX_Consulta;
 interface
 
 uses
-  ACBrBlocoX_Comum, Classes, SysUtils;
+  ACBrBlocoX_Comum, ACBrBase, Classes, SysUtils;
 
 type
 

@@ -37,7 +37,7 @@ unit ACBrBlocoX_WebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, ACBrBase,
   ACBrDFe, pcnRetEnvBlocoX, ACBrDFeWebService,
   ACBrUtil, pcnConversao, ACBrBlocoX_Comum;
 

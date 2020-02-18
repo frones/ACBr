@@ -37,7 +37,7 @@ unit ACBrBlocoX_Comum;
 interface
 
 uses
-  Classes, SysUtils, pcnGerador;
+  Classes, SysUtils, pcnGerador, ACBrBase;
 
 type
   EACBrBlocoXException = class(Exception);

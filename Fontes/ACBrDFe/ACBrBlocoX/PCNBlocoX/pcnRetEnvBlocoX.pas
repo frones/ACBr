@@ -574,13 +574,13 @@ end;
 
 function TRetEventoBlocoXCollection.GetItem(Index: Integer): TRetEventoBlocoX;
 begin 
-  Result := TRetEventoBlocoX(inherited GetItem(Index));
+  Result := TRetEventoBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetEventoBlocoXCollection.SetItem(Index: Integer;
   Value: TRetEventoBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetEventoBlocoXCollection.Add: TRetEventoBlocoX;
@@ -652,13 +652,13 @@ end;
 
 function TRetArquivoBlocoXCollection.GetItem(Index: Integer): TRetArquivoBlocoX;
 begin
-  Result := TRetArquivoBlocoX(inherited GetItem(Index));
+  Result := TRetArquivoBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetArquivoBlocoXCollection.SetItem(Index: Integer;
   Value: TRetArquivoBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetArquivoBlocoXCollection.Add: TRetArquivoBlocoX;
@@ -834,13 +834,13 @@ end;
 
 function TRetAvisoBlocoXCollection.GetItem(Index: Integer): TRetAvisoBlocoX;
 begin
-  Result := TRetAvisoBlocoX(inherited GetItem(Index));
+  Result := TRetAvisoBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetAvisoBlocoXCollection.SetItem(Index: Integer;
   Value: TRetAvisoBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetAvisoBlocoXCollection.Add: TRetAvisoBlocoX;
@@ -858,13 +858,13 @@ end;
 
 function TRetReciboBlocoXCollection.GetItem(Index: Integer): TRetReciboBlocoX;
 begin
-  Result := TRetReciboBlocoX(inherited GetItem(Index));
+  Result := TRetReciboBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetReciboBlocoXCollection.SetItem(Index: Integer;
   Value: TRetReciboBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetReciboBlocoXCollection.Add: TRetReciboBlocoX;
@@ -882,13 +882,13 @@ end;
 
 function TRetPendenciaBlocoXCollection.GetItem(Index: Integer): TRetPendenciaBlocoX;
 begin
-  Result := TRetPendenciaBlocoX(inherited GetItem(Index));
+  Result := TRetPendenciaBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetPendenciaBlocoXCollection.SetItem(Index: Integer;
   Value: TRetPendenciaBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetPendenciaBlocoXCollection.Add: TRetPendenciaBlocoX;
@@ -907,13 +907,13 @@ end;
 function TRetConsPendContrEstoqueBlocoXCollection.GetItem(
   Index: Integer): TRetConsPendContrEstoqueBlocoX;
 begin
-  Result := TRetConsPendContrEstoqueBlocoX(inherited GetItem(Index));
+  Result := TRetConsPendContrEstoqueBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetConsPendContrEstoqueBlocoXCollection.SetItem(Index: Integer;
   Value: TRetConsPendContrEstoqueBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetConsPendContrEstoqueBlocoXCollection.Add: TRetConsPendContrEstoqueBlocoX;
@@ -931,12 +931,12 @@ end;
 
 function TRetECFBlocoXCollection.GetItem(Index: Integer): TRetECFBlocoX;
 begin
-  Result := TRetECFBlocoX(inherited GetItem(Index));
+  Result := TRetECFBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetECFBlocoXCollection.SetItem(Index: Integer; Value: TRetECFBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetECFBlocoXCollection.Add: TRetECFBlocoX;
@@ -971,13 +971,13 @@ end;
 
 function TRetEstabelecimentoBlocoXCollection.GetItem(Index: Integer): TRetEstabelecimentoBlocoX;
 begin
-  Result := TRetEstabelecimentoBlocoX(inherited GetItem(Index));
+  Result := TRetEstabelecimentoBlocoX(inherited Items[Index]);
 end;
 
 procedure TRetEstabelecimentoBlocoXCollection.SetItem(Index: Integer;
   Value: TRetEstabelecimentoBlocoX);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetEstabelecimentoBlocoXCollection.Add: TRetEstabelecimentoBlocoX;

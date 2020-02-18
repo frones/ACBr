@@ -380,13 +380,13 @@ end;
 function TInfEventoCollection.GetItem(
   Index: Integer): TInfEventoCollectionItem;
 begin
-  Result := TInfEventoCollectionItem(inherited GetItem(Index));
+  Result := TInfEventoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfEventoCollection.SetItem(Index: Integer;
   Value: TInfEventoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfEventoCollection.New: TInfEventoCollectionItem;

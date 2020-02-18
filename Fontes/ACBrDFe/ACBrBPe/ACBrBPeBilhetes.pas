@@ -544,7 +544,7 @@ end;
 
 function Bilhete.GerarBPeIni: String;
 var
-  I, J, K: integer;
+  I: integer;
   sSecao: string;
   INIRec: TMemIniFile;
   IniBPe: TStringList;

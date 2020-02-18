@@ -79,7 +79,7 @@ function TBPeR.LerXml: Boolean;
 var
   ok: Boolean;
   i: Integer;
-  VersaoInfBPe: AnsiString;
+  VersaoInfBPe: String;
 //  Aspas: String;
 begin
   Leitor.Grupo := Leitor.Arquivo;

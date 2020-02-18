@@ -956,12 +956,12 @@ end;
 
 function TInfViagemCollection.GetItem(Index: Integer): TInfViagemCollectionItem;
 begin
-  Result := TInfViagemCollectionItem(inherited GetItem(Index));
+  Result := TInfViagemCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfViagemCollection.SetItem(Index: Integer; Value: TInfViagemCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfViagemCollection.Add: TInfViagemCollectionItem;
@@ -1054,12 +1054,12 @@ end;
 
 function TCompCollection.GetItem(Index: Integer): TCompCollectionItem;
 begin
-  Result := TCompCollectionItem(inherited GetItem(Index));
+  Result := TCompCollectionItem(inherited Items[Index]);
 end;
 
 procedure TCompCollection.SetItem(Index: Integer; Value: TCompCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TCompCollection.New: TCompCollectionItem;
@@ -1139,13 +1139,13 @@ end;
 
 function TpagCollection.GetItem(Index: Integer): TpagCollectionItem;
 begin
-  Result := TpagCollectionItem(inherited GetItem(Index));
+  Result := TpagCollectionItem(inherited Items[Index]);
 end;
 
 procedure TpagCollection.SetItem(Index: Integer;
   Value: TpagCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TpagCollection.New: TpagCollectionItem;
@@ -1182,13 +1182,13 @@ end;
 
 function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
 begin
-  Result := TautXMLCollectionItem(inherited GetItem(Index));
+  Result := TautXMLCollectionItem(inherited Items[Index]);
 end;
 
 procedure TautXMLCollection.SetItem(Index: Integer;
   Value: TautXMLCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TautXMLCollection.New: TautXMLCollectionItem;

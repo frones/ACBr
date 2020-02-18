@@ -342,13 +342,13 @@ end;
 function TRetchBPePendCollection.GetItem(
   Index: Integer): TRetchBPePendCollectionItem;
 begin
-  Result := TRetchBPePendCollectionItem(inherited GetItem(Index));
+  Result := TRetchBPePendCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetchBPePendCollection.SetItem(Index: Integer;
   Value: TRetchBPePendCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetchBPePendCollection.New: TRetchBPePendCollectionItem;
@@ -381,13 +381,13 @@ end;
 function TitemPedidoCollection.GetItem(
   Index: Integer): TitemPedidoCollectionItem;
 begin
-  Result := TitemPedidoCollectionItem(inherited GetItem(Index));
+  Result := TitemPedidoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TitemPedidoCollection.SetItem(Index: Integer;
   Value: TitemPedidoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TitemPedidoCollection.New: TitemPedidoCollectionItem;

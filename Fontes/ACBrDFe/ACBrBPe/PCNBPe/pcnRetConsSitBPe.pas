@@ -194,13 +194,14 @@ end;
 
 function TRetEventoBPeCollection.GetItem(Index: Integer): TRetEventoBPeCollectionItem;
 begin
-  Result := TRetEventoBPeCollectionItem(inherited GetItem(Index));
+  Result := TRetEventoBPeCollectionItem(inherited Items[Index]);
+
 end;
 
 procedure TRetEventoBPeCollection.SetItem(Index: Integer;
   Value: TRetEventoBPeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRetEventoCollectionItem }

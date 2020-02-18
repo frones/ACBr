@@ -144,12 +144,12 @@ end;
 
 function TProtBPeCollection.GetItem(Index: Integer): TProtBPeCollectionItem;
 begin
-  Result := TProtBPeCollectionItem(inherited GetItem(Index));
+  Result := TProtBPeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TProtBPeCollection.SetItem(Index: Integer; Value: TProtBPeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TretEnvBPe.LerXml: Boolean;

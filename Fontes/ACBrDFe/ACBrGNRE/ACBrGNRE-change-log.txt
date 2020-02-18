@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2020
+-- ACBrGNREServicos --
+[*] Removido o comando Break do loop, pois ele estava impedindo que fossem 
+    salvos todas as guias retornadas.
+   Por: Italo Jurisato Junior
+
 29/01/2020
 -- Diversos --
 [*] Implementado o SalvarXML que grava em disco o XML das guias separadamente.

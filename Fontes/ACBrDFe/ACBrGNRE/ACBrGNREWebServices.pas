@@ -728,8 +728,6 @@ begin
       else
         Self.SalvarXML(FGNRERetorno.resGuia.Items[i].XML,
                        FGNRERetorno.resGuia.Items[i].NumeroControle);
-
-      break;
     end;
   end;
 

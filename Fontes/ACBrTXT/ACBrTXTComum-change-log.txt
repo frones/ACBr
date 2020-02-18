@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2020
+-- ACBrLCDPR --
+[-] https://www.projetoacbr.com.br/forum/topic/56293-o-lcdpr-n%C3%A3o-est%C3%A1-limpando-as-informa%C3%A7%C3%B5es-dos-campos-ao-gerar-pela-segunda-vez/
+   Por: Rodrigo Gontijo
+
 Data: 06/01/2017
 -- ACBrTXTClass --
 [-] Correção no método "TACBrTXTClass.LFill(Value: Extended;..."

@@ -99,6 +99,7 @@ type
     procedure PrepararArquivo;
     procedure GerarBlocos;
     procedure SalvarBlocos;
+    procedure limparRegistros;
 
     property Arquivo : String read GetArquivo write SetArquivo;
   published
@@ -175,10 +176,19 @@ begin
 end;
 
 function TACBrLCDPR.GetArquivo: String;
+var
+  diaInicial, mesInicial, anoInicial: Word;
+  diaFinal, mesFinal, anoFinal: Word;
+  dataInicial, dataFinal: String;
 begin
+  DecodeDate(FBloco0000.DT_INI, anoInicial, mesInicial, diaInicial);
+  DecodeDate(FBloco0000.DT_FIN, anoFinal, mesFinal, diaFinal);
+  dataInicial := FormatFloat('0#', diaInicial) + '/' + FormatFloat('0#', mesInicial) + '/' + FormatFloat('####', anoInicial);
+  dataFinal := FormatFloat('0#', diaFinal) + '/' + FormatFloat('0#', mesFinal) + '/' + FormatFloat('####', anoFinal);
+
   Result := FArquivo + '_' + FBloco0000.NOME + '_' +
-    OnlyNumber(DateToStr(FBloco0000.DT_INI)) + '_' + OnlyNumber(DateToStr(FBloco0000.DT_FIN)) +
-    '.txt';
+      OnlyNumber(dataInicial) + '_' + OnlyNumber(dataFinal) +
+      '.txt';
 end;
 
 procedure TACBrLCDPR.PrepararArquivo;
@@ -430,6 +440,15 @@ begin
           );
         end;
     end;
+end;
+
+
+procedure TACBrLCDPR.limparRegistros;
+begin
+  Bloco0040.Blocos.Clear;
+  Bloco0050.CONTAS.Clear;
+  BlocoQ.RegistrosQ100.Clear;
+  BlocoQ.RegistrosQ200.Clear;
 end;
 
 end.

@@ -247,13 +247,13 @@ end;
 
 function TErroCollection.GetItem(Index: Integer): TErroCollectionItem;
 begin
-  Result := TErroCollectionItem(inherited GetItem(Index));
+  Result := TErroCollectionItem(inherited Items[Index]);
 end;
 
 procedure TErroCollection.SetItem(Index: Integer;
   Value: TErroCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TErro }
@@ -287,13 +287,13 @@ end;
 function TDadosSeguroCollection.GetItem(
   Index: Integer): TDadosSeguroCollectionItem;
 begin
-  Result := TDadosSeguroCollectionItem(inherited GetItem(Index));
+  Result := TDadosSeguroCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDadosSeguroCollection.SetItem(Index: Integer;
   Value: TDadosSeguroCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDadosSeguroCollection.New: TDadosSeguroCollectionItem;
@@ -326,13 +326,13 @@ end;
 
 function TInfoCollection.GetItem(Index: Integer): TInfoCollectionItem;
 begin
-  Result := TInfoCollectionItem(inherited GetItem(Index));
+  Result := TInfoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoCollection.SetItem(Index: Integer;
   Value: TInfoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoCollection.New: TInfoCollectionItem;

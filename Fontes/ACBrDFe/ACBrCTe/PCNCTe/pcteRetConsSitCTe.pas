@@ -248,12 +248,12 @@ end;
 
 function TRetEventoCTeCollection.GetItem(Index: Integer): TRetEventoCTeCollectionItem;
 begin
-  Result := TRetEventoCTeCollectionItem(inherited GetItem(Index));
+  Result := TRetEventoCTeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetEventoCTeCollection.SetItem(Index: Integer; Value: TRetEventoCTeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetEventoCTeCollection.New: TRetEventoCTeCollectionItem;

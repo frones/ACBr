@@ -2563,13 +2563,13 @@ end;
 function TinfPercursoCollection.GetItem(
   Index: Integer): TinfPercursoCollectionItem;
 begin
-  Result := TinfPercursoCollectionItem(inherited GetItem(Index));
+  Result := TinfPercursoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfPercursoCollection.SetItem(Index: Integer;
   Value: TinfPercursoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfPercursoCollection.New: TinfPercursoCollectionItem;
@@ -2636,13 +2636,13 @@ end;
 
 function TPassCollection.GetItem(Index: Integer): TPassCollectionItem;
 begin
-  Result := TPassCollectionItem(inherited GetItem(Index));
+  Result := TPassCollectionItem(inherited Items[Index]);
 end;
 
 procedure TPassCollection.SetItem(Index: Integer;
   Value: TPassCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TPassCollection.New: TPassCollectionItem;
@@ -2685,13 +2685,13 @@ end;
 function TObsContCollection.GetItem(
   Index: Integer): TObsContCollectionItem;
 begin
-  Result := TObsContCollectionItem(inherited GetItem(Index));
+  Result := TObsContCollectionItem(inherited Items[Index]);
 end;
 
 procedure TObsContCollection.SetItem(Index: Integer;
   Value: TObsContCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TObsContCollection.New: TObsContCollectionItem;
@@ -2802,13 +2802,13 @@ end;
 
 function TCompCollection.GetItem(Index: Integer): TCompCollectionItem;
 begin
-  Result := TCompCollectionItem(inherited GetItem(Index));
+  Result := TCompCollectionItem(inherited Items[Index]);
 end;
 
 procedure TCompCollection.SetItem(Index: Integer;
   Value: TCompCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TCompCollection.New: TCompCollectionItem;
@@ -2965,13 +2965,13 @@ end;
 
 function TInfQCollection.GetItem(Index: Integer): TInfQCollectionItem;
 begin
-  Result := TInfQCollectionItem(inherited GetItem(Index));
+  Result := TInfQCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfQCollection.SetItem(Index: Integer;
   Value: TInfQCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfQCollection.New: TInfQCollectionItem;
@@ -3022,13 +3022,13 @@ end;
 
 function TInfNFCollection.GetItem(Index: Integer): TInfNFCollectionItem;
 begin
-  Result := TInfNFCollectionItem(inherited GetItem(Index));
+  Result := TInfNFCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfNFCollection.SetItem(Index: Integer;
   Value: TInfNFCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfNFCollection.New: TInfNFCollectionItem;
@@ -3063,13 +3063,13 @@ end;
 function TinfUnidTranspNFCollection.GetItem(
   Index: Integer): TinfUnidTranspCollectionItem;
 begin
-  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidTranspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidTranspNFCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidTranspNFCollection.New: TinfUnidTranspCollectionItem;
@@ -3104,13 +3104,13 @@ end;
 function TinfUnidCargaCollection.GetItem(
   Index: Integer): TinfUnidCargaCollectionItem;
 begin
-  Result := TinfUnidCargaCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidCargaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidCargaCollection.SetItem(Index: Integer;
   Value: TinfUnidCargaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidCargaCollection.New: TinfUnidCargaCollectionItem;
@@ -3142,13 +3142,13 @@ end;
 
 function TInfNFeCollection.GetItem(Index: Integer): TInfNFeCollectionItem;
 begin
-  Result := TInfNFeCollectionItem(inherited GetItem(Index));
+  Result := TInfNFeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfNFeCollection.SetItem(Index: Integer;
   Value: TInfNFeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfNFeCollection.New: TInfNFeCollectionItem;
@@ -3183,13 +3183,13 @@ end;
 function TInfOutrosCollection.GetItem(
   Index: Integer): TInfOutrosCollectionItem;
 begin
-  Result := TInfOutrosCollectionItem(inherited GetItem(Index));
+  Result := TInfOutrosCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfOutrosCollection.SetItem(Index: Integer;
   Value: TInfOutrosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfOutrosCollection.New: TInfOutrosCollectionItem;
@@ -3224,13 +3224,13 @@ end;
 function TinfUnidTranspOutrosCollection.GetItem(
   Index: Integer): TinfUnidTranspCollectionItem;
 begin
-  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidTranspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidTranspOutrosCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidTranspOutrosCollection.New: TinfUnidTranspCollectionItem;
@@ -3268,13 +3268,13 @@ end;
 function TEmiDocAntCollection.GetItem(
   Index: Integer): TEmiDocAntCollectionItem;
 begin
-  Result := TemiDocAntCollectionItem(inherited GetItem(Index));
+  Result := TemiDocAntCollectionItem(inherited Items[Index]);
 end;
 
 procedure TEmiDocAntCollection.SetItem(Index: Integer;
   Value: TEmiDocAntCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TEmiDocAntCollection.New: TEmiDocAntCollectionItem;
@@ -3313,13 +3313,13 @@ end;
 function TIdDocAntCollection.GetItem(
   Index: Integer): TIdDocAntCollectionItem;
 begin
-  Result := TidDocAntCollectionItem(inherited GetItem(Index));
+  Result := TidDocAntCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdDocAntCollection.SetItem(Index: Integer;
   Value: TIdDocAntCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdDocAntCollection.New: TIdDocAntCollectionItem;
@@ -3366,13 +3366,13 @@ end;
 function TIdDocAntPapCollection.GetItem(
   Index: Integer): TIdDocAntPapCollectionItem;
 begin
-  Result := TidDocAntPapCollectionItem(inherited GetItem(Index));
+  Result := TidDocAntPapCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdDocAntPapCollection.SetItem(Index: Integer;
   Value: TIdDocAntPapCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdDocAntPapCollection.New: TIdDocAntPapCollectionItem;
@@ -3391,13 +3391,13 @@ end;
 function TIdDocAntEleCollection.GetItem(
   Index: Integer): TIdDocAntEleCollectionItem;
 begin
-  Result := TidDocAntEleCollectionItem(inherited GetItem(Index));
+  Result := TidDocAntEleCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdDocAntEleCollection.SetItem(Index: Integer;
   Value: TIdDocAntEleCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdDocAntEleCollection.New: TIdDocAntEleCollectionItem;
@@ -3415,13 +3415,13 @@ end;
 
 function TSegCollection.GetItem(Index: Integer): TSegCollectionItem;
 begin
-  Result := TSegCollectionItem(inherited GetItem(Index));
+  Result := TSegCollectionItem(inherited Items[Index]);
 end;
 
 procedure TSegCollection.SetItem(Index: Integer;
   Value: TSegCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TSegCollection.New: TSegCollectionItem;
@@ -3486,13 +3486,13 @@ end;
 
 function TOccCollection.GetItem(Index: Integer): TOccCollectionItem;
 begin
-  Result := TOccCollectionItem(inherited GetItem(Index));
+  Result := TOccCollectionItem(inherited Items[Index]);
 end;
 
 procedure TOccCollection.SetItem(Index: Integer;
   Value: TOccCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TOccCollection.New: TOccCollectionItem;
@@ -3525,13 +3525,13 @@ end;
 function TValePedCollection.GetItem(
   Index: Integer): TValePedCollectionItem;
 begin
-  Result := TValePedCollectionItem(inherited GetItem(Index));
+  Result := TValePedCollectionItem(inherited Items[Index]);
 end;
 
 procedure TValePedCollection.SetItem(Index: Integer;
   Value: TValePedCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TValePedCollection.New: TValePedCollectionItem;
@@ -3549,13 +3549,13 @@ end;
 
 function TVeicCollection.GetItem(Index: Integer): TVeicCollectionItem;
 begin
-  Result := TVeicCollectionItem(inherited GetItem(Index));
+  Result := TVeicCollectionItem(inherited Items[Index]);
 end;
 
 procedure TVeicCollection.SetItem(Index: Integer;
   Value: TVeicCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TVeicCollection.New: TVeicCollectionItem;
@@ -3587,13 +3587,13 @@ end;
 
 function TMotoCollection.GetItem(Index: Integer): TMotoCollectionItem;
 begin
-  Result := TMotoCollectionItem(inherited GetItem(Index));
+  Result := TMotoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TMotoCollection.SetItem(Index: Integer;
   Value: TMotoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TMotoCollection.New: TMotoCollectionItem;
@@ -3644,12 +3644,12 @@ end;
 
 function TpInfManuCollection.GetItem(Index: Integer): TpInfManuCollectionItem;
 begin
-  Result := TpInfManuCollectionItem(inherited GetItem(Index));
+  Result := TpInfManuCollectionItem(inherited Items[Index]);
 end;
 
 procedure TpInfManuCollection.SetItem(Index: Integer; Value: TpInfManuCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TpInfManuCollection.New: TpInfManuCollectionItem;
@@ -3693,13 +3693,13 @@ end;
 
 function TBalsaCollection.GetItem(Index: Integer): TBalsaCollectionItem;
 begin
-  Result := TBalsaCollectionItem(inherited GetItem(Index));
+  Result := TBalsaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TBalsaCollection.SetItem(Index: Integer;
   Value: TBalsaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TBalsaCollection.New: TBalsaCollectionItem;
@@ -3718,13 +3718,13 @@ end;
 function TdetContCollection.GetItem(
   Index: Integer): TdetContCollectionItem;
 begin
-  Result := TdetContCollectionItem(inherited GetItem(Index));
+  Result := TdetContCollectionItem(inherited Items[Index]);
 end;
 
 procedure TdetContCollection.SetItem(Index: Integer;
   Value: TdetContCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TdetContCollection.New: TdetContCollectionItem;
@@ -3758,13 +3758,13 @@ end;
 
 function TLacreCollection.GetItem(Index: Integer): TLacreCollectionItem;
 begin
-  Result := TLacreCollectionItem(inherited GetItem(Index));
+  Result := TLacreCollectionItem(inherited Items[Index]);
 end;
 
 procedure TLacreCollection.SetItem(Index: Integer;
   Value: TLacreCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TLacreCollection.New: TLacreCollectionItem;
@@ -3799,13 +3799,13 @@ end;
 function TInfNFAquavCollection.GetItem(
   Index: Integer): TInfNFAquavCollectionItem;
 begin
-  Result := TinfNFAquavCollectionItem(inherited GetItem(Index));
+  Result := TinfNFAquavCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfNFAquavCollection.SetItem(Index: Integer;
   Value: TInfNFAquavCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfNFAquavCollection.New: TInfNFAquavCollectionItem;
@@ -3824,13 +3824,13 @@ end;
 function TInfNFeAquavCollection.GetItem(
   Index: Integer): TInfNFeAquavCollectionItem;
 begin
-  Result := TinfNFeAquavCollectionItem(inherited GetItem(Index));
+  Result := TinfNFeAquavCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfNFeAquavCollection.SetItem(Index: Integer;
   Value: TInfNFeAquavCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -3878,13 +3878,13 @@ end;
 function TFerroEnvCollection.GetItem(
   Index: Integer): TFerroEnvCollectionItem;
 begin
-  Result := TFerroEnvCollectionItem(inherited GetItem(Index));
+  Result := TFerroEnvCollectionItem(inherited Items[Index]);
 end;
 
 procedure TFerroEnvCollection.SetItem(Index: Integer;
   Value: TFerroEnvCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TFerroEnvCollection.New: TFerroEnvCollectionItem;
@@ -3916,13 +3916,13 @@ end;
 
 function TDetVagCollection.GetItem(Index: Integer): TDetVagCollectionItem;
 begin
-  Result := TDetVagCollectionItem(inherited GetItem(Index));
+  Result := TDetVagCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDetVagCollection.SetItem(Index: Integer;
   Value: TDetVagCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDetVagCollection.New: TDetVagCollectionItem;
@@ -3940,13 +3940,13 @@ end;
 
 function TPeriCollection.GetItem(Index: Integer): TPeriCollectionItem;
 begin
-  Result := TPeriCollectionItem(inherited GetItem(Index));
+  Result := TPeriCollectionItem(inherited Items[Index]);
 end;
 
 procedure TPeriCollection.SetItem(Index: Integer;
   Value: TPeriCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TPeriCollection.New: TPeriCollectionItem;
@@ -3965,13 +3965,13 @@ end;
 function TVeicNovosCollection.GetItem(
   Index: Integer): TVeicNovosCollectionItem;
 begin
-  Result := TVeicNovosCollectionItem(inherited GetItem(Index));
+  Result := TVeicNovosCollectionItem(inherited Items[Index]);
 end;
 
 procedure TVeicNovosCollection.SetItem(Index: Integer;
   Value: TVeicNovosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TVeicNovosCollection.New: TVeicNovosCollectionItem;
@@ -4010,13 +4010,13 @@ end;
 
 function TDupCollection.GetItem(Index: Integer): TDupCollectionItem;
 begin
-  Result := TDupCollectionItem(inherited GetItem(Index));
+  Result := TDupCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDupCollection.SetItem(Index: Integer;
   Value: TDupCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDupCollection.New: TDupCollectionItem;
@@ -4124,13 +4124,13 @@ end;
 
 function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
 begin
-  Result := TautXMLCollectionItem(inherited GetItem(Index));
+  Result := TautXMLCollectionItem(inherited Items[Index]);
 end;
 
 procedure TautXMLCollection.SetItem(Index: Integer;
   Value: TautXMLCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TautXMLCollection.New: TautXMLCollectionItem;
@@ -4149,13 +4149,13 @@ end;
 function TInfCTeMultimodalCollection.GetItem(
   Index: Integer): TInfCTeMultimodalCollectionItem;
 begin
-  Result := TInfCTeMultimodalCollectionItem(inherited GetItem(Index));
+  Result := TInfCTeMultimodalCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfCTeMultimodalCollection.SetItem(Index: Integer;
   Value: TInfCTeMultimodalCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfCTeMultimodalCollection.New: TInfCTeMultimodalCollectionItem;
@@ -4202,13 +4202,13 @@ end;
 function TinfDocRefCollection.GetItem(
   Index: Integer): TinfDocRefCollectionItem;
 begin
-  Result := TinfDocRefCollectionItem(inherited GetItem(Index));
+  Result := TinfDocRefCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfDocRefCollection.SetItem(Index: Integer;
   Value: TinfDocRefCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfDocRefCollection.New: TinfDocRefCollectionItem;

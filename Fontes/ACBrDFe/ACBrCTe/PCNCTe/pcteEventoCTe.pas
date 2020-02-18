@@ -104,7 +104,7 @@ type
     property TipoEvento: String      read getTipoEvento;
   end;
 
-  TInfEntregaCollection = class(TObjectList)
+  TInfEntregaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfEntregaCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEntregaCollectionItem);
@@ -531,13 +531,13 @@ end;
 function TInfCorrecaoCollection.GetItem(
   Index: Integer): TInfCorrecaoCollectionItem;
 begin
-  Result := TInfCorrecaoCollectionItem(inherited GetItem(Index));
+  Result := TInfCorrecaoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfCorrecaoCollection.SetItem(Index: Integer;
   Value: TInfCorrecaoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfCorrecaoCollection.New: TInfCorrecaoCollectionItem;
@@ -594,13 +594,13 @@ end;
 
 function TInfGTVCollection.GetItem(Index: Integer): TInfGTVCollectionItem;
 begin
-  Result := TInfGTVCollectionItem(inherited GetItem(Index));
+  Result := TInfGTVCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfGTVCollection.SetItem(Index: Integer;
   Value: TInfGTVCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfGTVCollection.New: TInfGTVCollectionItem;
@@ -637,13 +637,13 @@ end;
 function TInfEspecieCollection.GetItem(
   Index: Integer): TInfEspecieCollectionItem;
 begin
-  Result := TInfEspecieCollectionItem(inherited GetItem(Index));
+  Result := TInfEspecieCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfEspecieCollection.SetItem(Index: Integer;
   Value: TInfEspecieCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfEspecieCollection.New: TInfEspecieCollectionItem;
@@ -661,7 +661,7 @@ end;
 
 function TInfEntregaCollection.GetItem(Index: Integer): TInfEntregaCollectionItem;
 begin
-  Result := TInfEntregaCollectionItem(inherited GetItem(Index));
+  Result := TInfEntregaCollectionItem(inherited Items[Index]);
 end;
 
 function TInfEntregaCollection.New: TInfEntregaCollectionItem;
@@ -672,7 +672,7 @@ end;
 
 procedure TInfEntregaCollection.SetItem(Index: Integer; Value: TInfEntregaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 end.

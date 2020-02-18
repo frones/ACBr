@@ -512,7 +512,7 @@ begin
               sTipoCobranca                                                                                + // 058 - 058 / Tipo de cobrança
               sTipoCarteira                                                                                + // 059 - 059 / Forma de Cadastramento = 1 Registrada / 2 Sem Registro
               sTipoDocto                                                                                   + // 060 - 060 / Tipo de documento
-              Space(1)                                                                                     + // 061 - 061 / Reservado (uso Banco)
+              IfThen( ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite ,'1','2' )                           + // 061 - 061 / Quem emite boleto 1 = Banco / 2 = Cliente
               Space(1)                                                                                     + // 062 - 062 / Reservado (uso Banco)
               PadRight(Copy(NumeroDocumento, 1, 15), 15)                                                   + // 063 - 077 / Nº do documento
               FormatDateTime('ddmmyyyy',Vencimento)                                                        + // 078 - 085 / Data de vencimento do título

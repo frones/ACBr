@@ -325,13 +325,13 @@ end;
 function TInfoCpCalcCollection.GetItem(
   Index: Integer): TInfoCpCalcCollectionItem;
 begin
-  Result := TInfoCpCalcCollectionItem(inherited GetItem(Index));
+  Result := TInfoCpCalcCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoCpCalcCollection.SetItem(Index: Integer;
   Value: TInfoCpCalcCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoCpCalcCollection.New: TInfoCpCalcCollectionItem;
@@ -370,13 +370,13 @@ end;
 function TIdeEstabLotCollection.GetItem(
   Index: Integer): TIdeEstabLotCollectionItem;
 begin
-  Result := TIdeEstabLotCollectionItem(inherited GetItem(Index));
+  Result := TIdeEstabLotCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeEstabLotCollection.SetItem(Index: Integer;
   Value: TIdeEstabLotCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeEstabLotCollection.New: TIdeEstabLotCollectionItem;
@@ -416,13 +416,13 @@ end;
 function TInfoCategIncidCollection.GetItem(
   Index: Integer): TInfoCategIncidCollectionItem;
 begin
-  Result := TInfoCategIncidCollectionItem(inherited GetItem(Index));
+  Result := TInfoCategIncidCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoCategIncidCollection.SetItem(Index: Integer;
   Value: TInfoCategIncidCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoCategIncidCollection.New: TInfoCategIncidCollectionItem;
@@ -470,13 +470,13 @@ end;
 function TInfoBaseCSCollection.GetItem(
   Index: Integer): TInfoBaseCSCollectionItem;
 begin
-  Result := TInfoBaseCSCollectionItem(inherited GetItem(Index));
+  Result := TInfoBaseCSCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoBaseCSCollection.SetItem(Index: Integer;
   Value: TInfoBaseCSCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoBaseCSCollection.New: TInfoBaseCSCollectionItem;
@@ -495,13 +495,13 @@ end;
 function TCalcTercCollection.GetItem(
   Index: Integer): TCalcTercCollectionItem;
 begin
-  Result := TCalcTercCollectionItem(inherited GetItem(Index));
+  Result := TCalcTercCollectionItem(inherited Items[Index]);
 end;
 
 procedure TCalcTercCollection.SetItem(Index: Integer;
   Value: TCalcTercCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TCalcTercCollection.New: TCalcTercCollectionItem;

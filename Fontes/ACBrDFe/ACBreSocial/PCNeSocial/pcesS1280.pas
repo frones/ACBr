@@ -161,13 +161,13 @@ end;
 
 function TS1280Collection.GetItem(Index: Integer): TS1280CollectionItem;
 begin
-  Result := TS1280CollectionItem(inherited GetItem(Index));
+  Result := TS1280CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1280Collection.SetItem(Index: Integer;
   Value: TS1280CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1280Collection.New: TS1280CollectionItem;
@@ -332,12 +332,12 @@ end;
 
 function TInfoSubstPatrOpPortColecao.GetItem(Index: Integer): TInfoSubstPatrOpPortItem;
 begin
-  Result := TInfoSubstPatrOpPortItem(inherited GetItem(Index));
+  Result := TInfoSubstPatrOpPortItem(inherited Items[Index]);
 end;
 
 procedure TInfoSubstPatrOpPortColecao.SetItem(Index: Integer; const Value: TInfoSubstPatrOpPortItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TEvtInfoComplPer.LerArqIni(const AIniString: String): Boolean;

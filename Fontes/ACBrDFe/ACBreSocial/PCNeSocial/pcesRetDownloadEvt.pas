@@ -98,13 +98,13 @@ end;
 
 function TArquivoCollection.GetItem(Index: Integer) : TArquivoCollectionItem;
 begin
-  Result := TArquivoCollectionItem(Inherited GetItem(Index));
+  Result := TArquivoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TArquivoCollection.SetItem(Index: Integer;
   Value: TArquivoCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRetIdentEvtsCollectionItem }

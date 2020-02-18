@@ -37,8 +37,15 @@ unit pcesS2260;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, ACBrUtil,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase, pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -149,13 +156,13 @@ end;
 
 function TS2260Collection.GetItem(Index: Integer): TS2260CollectionItem;
 begin
-  Result := TS2260CollectionItem(inherited GetItem(Index));
+  Result := TS2260CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2260Collection.SetItem(Index: Integer;
   Value: TS2260CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2260Collection.New: TS2260CollectionItem;

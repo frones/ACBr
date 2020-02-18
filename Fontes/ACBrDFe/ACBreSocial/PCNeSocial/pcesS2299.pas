@@ -360,12 +360,12 @@ end;
 
 function TS2299Collection.GetItem(Index: Integer): TS2299CollectionItem;
 begin
-  Result := TS2299CollectionItem(inherited GetItem(Index));
+  Result := TS2299CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2299Collection.SetItem(Index: Integer; Value: TS2299CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2299Collection.New: TS2299CollectionItem;
@@ -439,12 +439,12 @@ end;
 
 function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
+  Result := TDMDevCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDmDevCollection.SetItem(Index: Integer; Value: TDMDevCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDmDevCollection.New: TDMDevCollectionItem;
@@ -533,12 +533,12 @@ end;
 
 function TIdeADCCollection.GetItem(Index: Integer): TIdeADCItem;
 begin
-  Result := TIdeADCItem(inherited GetItem(Index));
+  Result := TIdeADCItem(inherited Items[Index]);
 end;
 
 procedure TIdeADCCollection.SetItem(Index: Integer; Value: TIdeADCItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeADCCollection.New: TIdeADCItem;
@@ -571,12 +571,12 @@ end;
 
 function TIdePeriodoCollection.GetItem(Index: Integer): TIdePeriodoItem;
 begin
-  Result := TIdePeriodoItem(inherited GetItem(Index));
+  Result := TIdePeriodoItem(inherited Items[Index]);
 end;
 
 procedure TIdePeriodoCollection.SetItem(Index: Integer; Value: TIdePeriodoItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdePeriodoCollection.New: TIdePeriodoItem;
@@ -628,13 +628,13 @@ end;
 function TInfoTrabIntermCollection.GetItem(
   Index: Integer): TInfoTrabIntermItem;
 begin
-  Result := TInfoTrabIntermItem(inherited GetItem(Index));
+  Result := TInfoTrabIntermItem(inherited Items[Index]);
 end;
 
 procedure TInfoTrabIntermCollection.SetItem(Index: Integer;
   Value: TInfoTrabIntermItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoTrabIntermCollection.New: TInfoTrabIntermItem;
@@ -652,12 +652,12 @@ end;
 
 function TConsigFGTSCollection.GetItem(Index: Integer): TConsigFGTSItem;
 begin
-  Result := TConsigFGTSItem(inherited GetItem(Index));
+  Result := TConsigFGTSItem(inherited Items[Index]);
 end;
 
 procedure TConsigFGTSCollection.SetItem(Index: Integer; Value: TConsigFGTSItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TConsigFGTSCollection.New: TConsigFGTSItem;

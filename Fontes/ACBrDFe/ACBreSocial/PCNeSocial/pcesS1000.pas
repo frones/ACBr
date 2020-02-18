@@ -334,12 +334,12 @@ end;
 
 function TS1000Collection.GetItem(Index: Integer): TS1000CollectionItem;
 begin
-  Result := TS1000CollectionItem(inherited GetItem(Index));
+  Result := TS1000CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1000Collection.SetItem(Index: Integer; Value: TS1000CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1000Collection.New: TS1000CollectionItem;
@@ -938,13 +938,13 @@ end;
 function TSoftwareHouseCollection.GetItem(
   Index: Integer): TSoftwareHouseCollectionItem;
 begin
-  Result := TSoftwareHouseCollectionItem(inherited GetItem(Index));
+  Result := TSoftwareHouseCollectionItem(inherited Items[Index]);
 end;
 
 procedure TSoftwareHouseCollection.SetItem(Index: Integer;
   Value: TSoftwareHouseCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TSoftwareHouseCollection.New: TSoftwareHouseCollectionItem;

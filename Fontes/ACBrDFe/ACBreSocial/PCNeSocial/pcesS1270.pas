@@ -147,13 +147,13 @@ end;
 
 function TS1270Collection.GetItem(Index: Integer): TS1270CollectionItem;
 begin
-  Result := TS1270CollectionItem(inherited GetItem(Index));
+  Result := TS1270CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1270Collection.SetItem(Index: Integer;
   Value: TS1270CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1270Collection.New: TS1270CollectionItem;
@@ -185,13 +185,13 @@ end;
 
 function TRemunAvNPColecao.GetItem(Index: Integer): TRemunAvNPItem;
 begin
-  Result := TRemunAvNPItem(inherited GetItem(Index));
+  Result := TRemunAvNPItem(inherited Items[Index]);
 end;
 
 procedure TRemunAvNPColecao.SetItem(Index: Integer;
   const Value: TRemunAvNPItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRemunAvNPColecao.New: TRemunAvNPItem;

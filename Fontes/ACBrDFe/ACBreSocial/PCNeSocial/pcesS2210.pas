@@ -286,13 +286,13 @@ end;
 
 function TS2210Collection.GetItem(Index: Integer): TS2210CollectionItem;
 begin
-  Result := TS2210CollectionItem(inherited GetItem(Index));
+  Result := TS2210CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2210Collection.SetItem(Index: Integer;
   Value: TS2210CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2210Collection.New: TS2210CollectionItem;
@@ -341,12 +341,12 @@ end;
 
 function TAgenteCausadorCollection.GetItem(Index: Integer): TAgenteCausadorItem;
 begin
-  Result := TAgenteCausadorItem(inherited GetItem(Index));
+  Result := TAgenteCausadorItem(inherited Items[Index]);
 end;
 
 procedure TAgenteCausadorCollection.SetItem(Index: Integer; const Value: TAgenteCausadorItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TAgenteCausadorCollection.New: TAgenteCausadorItem;
@@ -364,7 +364,7 @@ end;
 
 function TParteAtingidaCollection.GetItem(Index: Integer): TParteAtingidaItem;
 begin
-  Result := TParteAtingidaItem(inherited GetItem(Index));
+  Result := TParteAtingidaItem(inherited Items[Index]);
 end;
 
 function TParteAtingidaCollection.New: TParteAtingidaItem;
@@ -375,7 +375,7 @@ end;
 
 procedure TParteAtingidaCollection.SetItem(Index: Integer; const Value: TParteAtingidaItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TCat }

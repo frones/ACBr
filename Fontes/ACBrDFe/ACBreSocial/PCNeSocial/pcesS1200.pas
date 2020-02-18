@@ -442,12 +442,12 @@ end;
 
 function TRemunPer1200Collection.GetItem(Index: integer): TRemunPer1200CollectionItem;
 begin
-  Result := TRemunPer1200CollectionItem(inherited GetItem(Index));
+  Result := TRemunPer1200CollectionItem(inherited Items[Index]);
 end;
 
 procedure TRemunPer1200Collection.SetItem(Index: integer; Value: TRemunPer1200CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRemunPer1200Collection.New: TRemunPer1200CollectionItem;
@@ -481,12 +481,12 @@ end;
 
 function TIdeEstabLotCollection.GetItem(Index: integer): TIdeEstabLotCollectionItem;
 begin
-  Result := TIdeEstabLotCollectionItem(inherited GetItem(Index));
+  Result := TIdeEstabLotCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeEstabLotCollection.SetItem(Index: integer; Value: TIdeEstabLotCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeEstabLotCollection.New: TIdeEstabLotCollectionItem;
@@ -517,12 +517,12 @@ end;
 
 function TIdePeriodoCollection.GetItem(Index: integer): TIdePeriodoCollectionItem;
 begin
-  Result := TIdePeriodoCollectionItem(inherited GetItem(Index));
+  Result := TIdePeriodoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdePeriodoCollection.SetItem(Index: integer; Value: TIdePeriodoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdePeriodoCollection.New: TIdePeriodoCollectionItem;
@@ -552,12 +552,12 @@ end;
 
 function TIdeADCCollection.GetItem(Index: integer): TIdeADCCollectionItem;
 begin
-  Result := TIdeADCCollectionItem(inherited GetItem(Index));
+  Result := TIdeADCCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeADCCollection.SetItem(Index: integer; Value: TIdeADCCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeADCCollection.New: TIdeADCCollectionItem;
@@ -700,12 +700,12 @@ end;
 
 function TDMDevCollection.GetItem(Index: integer): TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
+  Result := TDMDevCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDMDevCollection.SetItem(Index: integer; Value: TDMDevCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDMDevCollection.New: TDMDevCollectionItem;
@@ -1521,12 +1521,12 @@ end;
 
 function TS1200Collection.GetItem(Index: integer): TS1200CollectionItem;
 begin
-  Result := TS1200CollectionItem(inherited GetItem(Index));
+  Result := TS1200CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1200Collection.SetItem(Index: integer; Value: TS1200CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1200Collection.New: TS1200CollectionItem;
@@ -1545,13 +1545,13 @@ end;
 function TInfoTrabIntermCollection.GetItem(
   Index: integer): TInfoTrabIntermCollectionItem;
 begin
-  Result := TInfoTrabIntermCollectionItem(inherited GetItem(Index));
+  Result := TInfoTrabIntermCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoTrabIntermCollection.SetItem(Index: integer;
   Value: TInfoTrabIntermCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoTrabIntermCollection.New: TInfoTrabIntermCollectionItem;

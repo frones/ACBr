@@ -236,13 +236,13 @@ end;
 
 function TS1020Collection.GetItem(Index: Integer): TS1020CollectionItem;
 begin
-  Result := TS1020CollectionItem(inherited GetItem(Index));
+  Result := TS1020CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1020Collection.SetItem(Index: Integer;
   Value: TS1020CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1020Collection.New: TS1020CollectionItem;
@@ -582,13 +582,13 @@ end;
 function TProcJudTerceiroCollection.GetItem(
   Index: Integer): TProcJudTerceiroCollectionItem;
 begin
-  Result := TProcJudTerceiroCollectionItem(Inherited GetItem(Index));
+  Result := TProcJudTerceiroCollectionItem(inherited Items[Index]);
 end;
 
 procedure TProcJudTerceiroCollection.SetItem(Index: Integer;
   Value: TProcJudTerceiroCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TProcJudTerceiroCollection.New: TProcJudTerceiroCollectionItem;

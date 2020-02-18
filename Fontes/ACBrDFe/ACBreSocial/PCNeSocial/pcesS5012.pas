@@ -295,13 +295,13 @@ end;
 function TInfoCRContribCollection.GetItem(
   Index: Integer): TInfoCRContribCollectionItem;
 begin
-  Result := TInfoCRContribCollectionItem(inherited GetItem(Index));
+  Result := TInfoCRContribCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoCRContribCollection.SetItem(Index: Integer;
   Value: TInfoCRContribCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoCRContribCollection.New: TInfoCRContribCollectionItem;

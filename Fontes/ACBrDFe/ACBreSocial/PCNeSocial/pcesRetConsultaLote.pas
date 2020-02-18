@@ -146,13 +146,13 @@ end;
 
 function TtotCollection.GetItem(Index: Integer): TtotCollectionItem;
 begin
-  Result := TtotCollectionItem(Inherited GetItem(Index));
+  Result := TtotCollectionItem(inherited Items[Index]);
 end;
 
 procedure TtotCollection.SetItem(Index: Integer;
   Value: TtotCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TtotCollection.New: TtotCollectionItem;
@@ -171,13 +171,13 @@ end;
 function TRetEventosCollection.GetItem(Index: Integer)
   : TRetEventosCollectionItem;
 begin
-  Result := TRetEventosCollectionItem(Inherited GetItem(Index));
+  Result := TRetEventosCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetEventosCollection.SetItem(Index: Integer;
   Value: TRetEventosCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetEventosCollection.New: TRetEventosCollectionItem;

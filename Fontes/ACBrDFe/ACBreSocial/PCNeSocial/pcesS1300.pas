@@ -129,13 +129,13 @@ end;
 
 function TS1300Collection.GetItem(Index: Integer): TS1300CollectionItem;
 begin
-  Result := TS1300CollectionItem(inherited GetItem(Index));
+  Result := TS1300CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1300Collection.SetItem(Index: Integer;
   Value: TS1300CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1300Collection.New: TS1300CollectionItem;
@@ -233,12 +233,12 @@ end;
 
 function TContribSindColecao.GetItem(Index: Integer): TContribSindItem;
 begin
-  Result := TContribSindItem(inherited GetItem(Index));
+  Result := TContribSindItem(inherited Items[Index]);
 end;
 
 procedure TContribSindColecao.SetItem(Index: Integer; const Value: TContribSindItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TEvtContrSindPatr.LerArqIni(const AIniString: String): Boolean;

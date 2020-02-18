@@ -194,12 +194,12 @@ end;
 
 function TS2245Collection.GetItem(Index: Integer): TS2245CollectionItem;
 begin
-  Result := TS2245CollectionItem(inherited GetItem(Index));
+  Result := TS2245CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2245Collection.SetItem(Index: Integer; Value: TS2245CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 constructor TEvtTreiCap.Create(AACBreSocial: TObject);
@@ -400,12 +400,12 @@ end;
 
 function TIdeProfRespCollection.GetItem(Index: Integer): TIdeProfRespCollectionItem;
 begin
-  Result := TIdeProfRespCollectionItem(inherited GetItem(index));
+  Result := TIdeProfRespCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeProfRespCollection.SetItem(Index: Integer; Value: TIdeProfRespCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeProfRespCollection.New: TIdeProfRespCollectionItem;

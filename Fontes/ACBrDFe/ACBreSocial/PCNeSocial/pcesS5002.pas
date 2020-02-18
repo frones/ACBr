@@ -250,13 +250,13 @@ end;
 function TInfoIrrfCollection.GetItem(
   Index: Integer): TInfoIrrfCollectionItem;
 begin
-  Result := TInfoIrrfCollectionItem(inherited GetItem(Index));
+  Result := TInfoIrrfCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoIrrfCollection.SetItem(Index: Integer;
   Value: TInfoIrrfCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoIrrfCollection.New: TInfoIrrfCollectionItem;
@@ -304,13 +304,13 @@ end;
 function TbasesIrrfCollection.GetItem(
   Index: Integer): TbasesIrrfCollectionItem;
 begin
-  Result := TbasesIrrfCollectionItem(inherited GetItem(Index));
+  Result := TbasesIrrfCollectionItem(inherited Items[Index]);
 end;
 
 procedure TbasesIrrfCollection.SetItem(Index: Integer;
   Value: TbasesIrrfCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TirrfCollection }
@@ -322,13 +322,13 @@ end;
 
 function TirrfCollection.GetItem(Index: Integer): TirrfCollectionItem;
 begin
-  Result := TirrfCollectionItem(inherited GetItem(Index));
+  Result := TirrfCollectionItem(inherited Items[Index]);
 end;
 
 procedure TirrfCollection.SetItem(Index: Integer;
   Value: TirrfCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TirrfCollection.New: TirrfCollectionItem;

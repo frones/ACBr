@@ -1088,13 +1088,13 @@ end;
 function TideEstabCollection.GetItem(
   Index: Integer): TideEstabCollectionItem;
 begin
-  Result := TideEstabCollectionItem(inherited GetItem(Index));
+  Result := TideEstabCollectionItem(inherited Items[Index]);
 end;
 
 procedure TideEstabCollection.SetItem(Index: Integer;
   Value: TideEstabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TideEstabCollection.New: TideEstabCollectionItem;
@@ -1113,13 +1113,13 @@ end;
 function TbasesAquisCollection.GetItem(
   Index: Integer): TbasesAquisCollectionItem;
 begin
-  Result := TbasesAquisCollectionItem(inherited GetItem(Index));
+  Result := TbasesAquisCollectionItem(inherited Items[Index]);
 end;
 
 procedure TbasesAquisCollection.SetItem(Index: Integer;
   Value: TbasesAquisCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TbasesAquisCollection.New: TbasesAquisCollectionItem;
@@ -1138,13 +1138,13 @@ end;
 function TbasesComercCollection.GetItem(
   Index: Integer): TbasesComercCollectionItem;
 begin
-  Result := TbasesComercCollectionItem(inherited GetItem(Index));
+  Result := TbasesComercCollectionItem(inherited Items[Index]);
 end;
 
 procedure TbasesComercCollection.SetItem(Index: Integer;
   Value: TbasesComercCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TbasesComercCollection.New: TbasesComercCollectionItem;
@@ -1163,13 +1163,13 @@ end;
 function TinfoCREstabCollection.GetItem(
   Index: Integer): TinfoCREstabCollectionItem;
 begin
-  Result := TinfoCREstabCollectionItem(inherited GetItem(Index));
+  Result := TinfoCREstabCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfoCREstabCollection.SetItem(Index: Integer;
   Value: TinfoCREstabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfoCREstabCollection.New: TinfoCREstabCollectionItem;
@@ -1211,13 +1211,13 @@ end;
 function TideLotacaoCollection.GetItem(
   Index: Integer): TideLotacaoCollectionItem;
 begin
-  Result := TideLotacaoCollectionItem(inherited GetItem(Index));
+  Result := TideLotacaoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TideLotacaoCollection.SetItem(Index: Integer;
   Value: TideLotacaoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TideLotacaoCollection.New: TideLotacaoCollectionItem;
@@ -1236,13 +1236,13 @@ end;
 function TinfoTercSuspCollection.GetItem(
   Index: Integer): TinfoTercSuspCollectionItem;
 begin
-  Result := TinfoTercSuspCollectionItem(inherited GetItem(Index));
+  Result := TinfoTercSuspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfoTercSuspCollection.SetItem(Index: Integer;
   Value: TinfoTercSuspCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfoTercSuspCollection.New: TinfoTercSuspCollectionItem;
@@ -1261,13 +1261,13 @@ end;
 function TbasesRemunCollection.GetItem(
   Index: Integer): TbasesRemunCollectionItem;
 begin
-  Result := TbasesRemunCollectionItem(inherited GetItem(Index));
+  Result := TbasesRemunCollectionItem(inherited Items[Index]);
 end;
 
 procedure TbasesRemunCollection.SetItem(Index: Integer;
   Value: TbasesRemunCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TbasesRemunCollection.New: TbasesRemunCollectionItem;
@@ -1301,13 +1301,13 @@ end;
 function TinfoSubstPatrOpPortCollection.GetItem(
   Index: Integer): TinfoSubstPatrOpPortCollectionItem;
 begin
-  Result := TinfoSubstPatrOpPortCollectionItem(inherited GetItem(Index));
+  Result := TinfoSubstPatrOpPortCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfoSubstPatrOpPortCollection.SetItem(Index: Integer;
   Value: TinfoSubstPatrOpPortCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfoSubstPatrOpPortCollection.New: TinfoSubstPatrOpPortCollectionItem;
@@ -1366,13 +1366,13 @@ end;
 function TInfoCRContribCollection.GetItem(
   Index: Integer): TInfoCRContribCollectionItem;
 begin
-  Result := TInfoCRContribCollectionItem(inherited GetItem(Index));
+  Result := TInfoCRContribCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoCRContribCollection.SetItem(Index: Integer;
   Value: TInfoCRContribCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoCRContribCollection.New: TInfoCRContribCollectionItem;

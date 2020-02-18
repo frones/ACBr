@@ -98,13 +98,13 @@ end;
 
 function TRetIdentEvtsCollection.GetItem(Index: Integer) : TRetIdentEvtsCollectionItem;
 begin
-  Result := TRetIdentEvtsCollectionItem(Inherited GetItem(Index));
+  Result := TRetIdentEvtsCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetIdentEvtsCollection.SetItem(Index: Integer;
   Value: TRetIdentEvtsCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetIdentEvtsCollection.New: TRetIdentEvtsCollectionItem;

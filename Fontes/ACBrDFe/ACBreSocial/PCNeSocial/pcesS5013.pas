@@ -374,12 +374,12 @@ end;
 
 function TBasePerApurCollection.GetItem(Index: Integer): TBasePerApurCollectionItem;
 begin
-  Result := TBasePerApurCollectionItem(inherited GetItem(Index));
+  Result := TBasePerApurCollectionItem(inherited Items[Index]);
 end;
 
 procedure TBasePerApurCollection.SetItem(Index: Integer; Value: TBasePerApurCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TInfoDpsFGTSCollection }
@@ -391,12 +391,12 @@ end;
 
 function TDpsPerApurCollection.GetItem(Index: Integer): TDpsPerApurCollectionItem;
 begin
-  Result := TDpsPerApurCollectionItem(inherited GetItem(Index));
+  Result := TDpsPerApurCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDpsPerApurCollection.SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TBasePerApurCollection.New: TBasePerApurCollectionItem;

@@ -129,13 +129,13 @@ end;
 
 function TGeradosCollection.GetItem(Index: Integer): TGeradosCollectionItem;
 begin
-  Result := TGeradosCollectionItem(inherited GetItem(Index));
+  Result := TGeradosCollectionItem(inherited Items[Index]);
 end;
 
 procedure TGeradosCollection.SetItem(Index: Integer;
   Value: TGeradosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TGeradosCollection.New: TGeradosCollectionItem;

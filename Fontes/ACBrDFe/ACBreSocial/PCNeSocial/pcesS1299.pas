@@ -37,8 +37,15 @@ unit pcesS1299;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, ACBrUtil,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase, pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -126,12 +133,12 @@ end;
 
 function TS1299Collection.GetItem(Index: Integer): TS1299CollectionItem;
 begin
-  Result := TS1299CollectionItem(inherited GetItem(Index));
+  Result := TS1299CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1299Collection.SetItem(Index: Integer; Value: TS1299CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1299Collection.New: TS1299CollectionItem;

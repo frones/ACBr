@@ -405,13 +405,13 @@ end;
 function TOcorrenciasCollection.GetItem(
   Index: Integer): TOcorrenciasCollectionItem;
 begin
-  Result := TOcorrenciasCollectionItem(Inherited GetItem(Index));
+  Result := TOcorrenciasCollectionItem(inherited Items[Index]);
 end;
 
 procedure TOcorrenciasCollection.SetItem(Index: Integer;
   Value: TOcorrenciasCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TOcorrenciasCollection.New: TOcorrenciasCollectionItem;
@@ -444,13 +444,13 @@ end;
 function TOcorrenciasProcCollection.GetItem(
   Index: Integer): TOcorrenciasProcCollectionItem;
 begin
-  Result := TOcorrenciasProcCollectionItem(Inherited GetItem(Index));
+  Result := TOcorrenciasProcCollectionItem(inherited Items[Index]);
 end;
 
 procedure TOcorrenciasProcCollection.SetItem(Index: Integer;
   Value: TOcorrenciasProcCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TOcorrenciasProcCollection.New: TOcorrenciasProcCollectionItem;
@@ -516,13 +516,13 @@ end;
 
 function THorarioConsultaCollection.GetItem(Index: Integer): THorarioConsultaCollectionItem;
 begin
-  Result := THorarioConsultaCollectionItem(inherited GetItem(Index));
+  Result := THorarioConsultaCollectionItem(inherited Items[Index]);
 end;
 
 procedure THorarioConsultaCollection.SetItem(Index: Integer;
   Value: THorarioConsultaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function THorarioConsultaCollection.New: THorarioConsultaCollectionItem;

@@ -171,12 +171,12 @@ end;
 
 function TS2399Collection.GetItem(Index: Integer): TS2399CollectionItem;
 begin
-  Result := TS2399CollectionItem(inherited GetItem(Index));
+  Result := TS2399CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2399Collection.SetItem(Index: Integer; Value: TS2399CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2399Collection.New: TS2399CollectionItem;
@@ -229,12 +229,12 @@ end;
 
 function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
+  Result := TDMDevCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDmDevCollection.SetItem(Index: Integer; Value: TDMDevCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDmDevCollection.New: TDMDevCollectionItem;

@@ -298,12 +298,12 @@ end;
 
 function TRemunPer1202Collection.GetItem(Index: integer): TRemunPer1202CollectionItem;
 begin
-  Result := TRemunPer1202CollectionItem(inherited GetItem(Index));
+  Result := TRemunPer1202CollectionItem(inherited Items[Index]);
 end;
 
 procedure TRemunPer1202Collection.SetItem(Index: integer; Value: TRemunPer1202CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRemunPer1202Collection.New: TRemunPer1202CollectionItem;
@@ -337,13 +337,13 @@ end;
 
 function TIdeEstabCollection.GetItem(Index: integer): TIdeEstabCollectionItem;
 begin
-  Result := TIdeEstabCollectionItem(inherited GetItem(Index));
+  Result := TIdeEstabCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeEstabCollection.SetItem(Index: integer;
   Value: TIdeEstabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeEstabCollection.New: TIdeEstabCollectionItem;
@@ -374,13 +374,13 @@ end;
 
 function TIdePeriodoCollection.GetItem(Index: integer): TIdePeriodoCollectionItem;
 begin
-  Result := TIdePeriodoCollectionItem(inherited GetItem(Index));
+  Result := TIdePeriodoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdePeriodoCollection.SetItem(Index: integer;
   Value: TIdePeriodoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdePeriodoCollection.New: TIdePeriodoCollectionItem;
@@ -404,12 +404,12 @@ end;
 
 function TIdeADCCollection.GetItem(Index: integer): TIdeADCCollectionItem;
 begin
-  Result := TIdeADCCollectionItem(inherited GetItem(Index));
+  Result := TIdeADCCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeADCCollection.SetItem(Index: integer; Value: TIdeADCCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeADCCollection.New: TIdeADCCollectionItem;
@@ -483,12 +483,12 @@ end;
 
 function TDMDevCollection.GetItem(Index: integer): TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
+  Result := TDMDevCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDMDevCollection.SetItem(Index: integer; Value: TDMDevCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDMDevCollection.New: TDMDevCollectionItem;
@@ -1063,12 +1063,12 @@ end;
 
 function TS1202Collection.GetItem(Index: integer): TS1202CollectionItem;
 begin
-  Result := TS1202CollectionItem(inherited GetItem(Index));
+  Result := TS1202CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1202Collection.SetItem(Index: integer; Value: TS1202CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1202Collection.New: TS1202CollectionItem;

@@ -470,12 +470,12 @@ end;
 
 function TIdeEstabLot2Collection.GetItem(Index: Integer): TIdeEstabLot2CollectionItem;
 begin
-  Result := TIdeEstabLot2CollectionItem(inherited GetItem(Index));
+  Result := TIdeEstabLot2CollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeEstabLot2Collection.SetItem(Index: Integer; Value: TIdeEstabLot2CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TInfoFGTS }
@@ -527,12 +527,12 @@ end;
 
 function TInfoTrabFGTSCollection.GetItem(Index: Integer): TInfoTrabFGTSCollectionItem;
 begin
-  Result := TInfoTrabFGTSCollectionItem(inherited GetItem(Index));
+  Result := TInfoTrabFGTSCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoTrabFGTSCollection.SetItem(Index: Integer; Value: TInfoTrabFGTSCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 function TInfoTrabFGTSCollection.New: TInfoTrabFGTSCollectionItem;
 begin
@@ -577,12 +577,12 @@ end;
 
 function TBasePerApurCollection.GetItem(Index: Integer): TBasePerApurCollectionItem;
 begin
-  Result := TBasePerApurCollectionItem(inherited GetItem(Index));
+  Result := TBasePerApurCollectionItem(inherited Items[Index]);
 end;
 
 procedure TBasePerApurCollection.SetItem(Index: Integer; Value: TBasePerApurCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TBasePerApurCollection.New: TBasePerApurCollectionItem;
@@ -614,12 +614,12 @@ end;
 
 function TInfoTrabDpsCollection.GetItem(Index: Integer): TInfoTrabDpsCollectionItem;
 begin
-  Result := TInfoTrabDpsCollectionItem(inherited GetItem(Index));
+  Result := TInfoTrabDpsCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoTrabDpsCollection.SetItem(Index: Integer; Value: TInfoTrabDpsCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoTrabDpsCollection.New: TInfoTrabDpsCollectionItem;
@@ -651,12 +651,12 @@ end;
 
 function TDpsPerApurCollection.GetItem(Index: Integer): TDpsPerApurCollectionItem;
 begin
-  Result := TDpsPerApurCollectionItem(inherited GetItem(Index));
+  Result := TDpsPerApurCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDpsPerApurCollection.SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeEstabLot2Collection.New: TIdeEstabLot2CollectionItem;

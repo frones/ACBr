@@ -208,13 +208,13 @@ end;
 
 function TS1250Collection.GetItem(Index: Integer): TS1250CollectionItem;
 begin
-  Result := TS1250CollectionItem(inherited GetItem(Index));
+  Result := TS1250CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1250Collection.SetItem(Index: Integer;
   Value: TS1250CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1250Collection.New: TS1250CollectionItem;
@@ -440,12 +440,12 @@ end;
 
 function TTpAquisColecao.GetItem(Index: Integer): TTpAquisItem;
 begin
-  Result := TTpAquisItem(inherited GetItem(Index));
+  Result := TTpAquisItem(inherited Items[Index]);
 end;
 
 procedure TTpAquisColecao.SetItem(Index: Integer; const Value: TTpAquisItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TTpAquisColecao.New: TTpAquisItem;
@@ -493,13 +493,13 @@ end;
 
 function TIdeProdutorColecao.GetItem(Index: Integer): TIdeProdutorItem;
 begin
-  Result := TIdeProdutorItem(inherited GetItem(Index));
+  Result := TIdeProdutorItem(inherited Items[Index]);
 end;
 
 procedure TIdeProdutorColecao.SetItem(Index: Integer;
   const Value: TIdeProdutorItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeProdutorColecao.New: TIdeProdutorItem;

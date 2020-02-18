@@ -174,12 +174,12 @@ end;
 
 function TItensCollection.GetItem(Index: integer): TItensCollectionItem;
 begin
-  Result := TItensCollectionItem(inherited GetItem(Index));
+  Result := TItensCollectionItem(inherited Items[Index]);
 end;
 
 procedure TItensCollection.SetItem(Index: integer; Value: TItensCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TItensCollection.New: TItensCollectionItem;
@@ -197,12 +197,12 @@ end;
 
 function TDMDevCollection.GetItem(Index: integer): TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
+  Result := TDMDevCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDMDevCollection.SetItem(Index: integer; Value: TDMDevCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDMDevCollection.New: TDMDevCollectionItem;
@@ -434,12 +434,12 @@ end;
 
 function TS1207Collection.GetItem(Index: integer): TS1207CollectionItem;
 begin
-  Result := TS1207CollectionItem(inherited GetItem(Index));
+  Result := TS1207CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1207Collection.SetItem(Index: integer; Value: TS1207CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1207Collection.New: TS1207CollectionItem;

@@ -332,12 +332,12 @@ end;
 
 function TS2240Collection.GetItem(Index: Integer): TS2240CollectionItem;
 begin
-  Result := TS2240CollectionItem(inherited GetItem(Index));
+  Result := TS2240CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2240Collection.SetItem(Index: Integer; Value: TS2240CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2240Collection.New: TS2240CollectionItem;
@@ -609,12 +609,12 @@ end;
 
 function TRespRegCollection.GetItem(Index: Integer): TRespRegCollectionItem;
 begin
-  Result := TRespRegCollectionItem(inherited GetItem(Index));
+  Result := TRespRegCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRespRegCollection.SetItem(Index: Integer; Value: TRespRegCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TEvtExpRisco.LerArqIni(const AIniString: String): Boolean;
@@ -827,12 +827,12 @@ end;
 
 function TInfoAmbCollection.GetItem(Index: Integer): TInfoAmbCollectionItem;
 begin
-  Result := TInfoAmbCollectionItem(inherited GetItem(index));
+  Result := TInfoAmbCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoAmbCollection.SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoAmbCollection.New: TInfoAmbCollectionItem;
@@ -866,12 +866,12 @@ end;
 
 function TAtivPericInsalCollection.GetItem(Index: Integer): TAtivPericInsalCollectionItem;
 begin
-  Result := TAtivPericInsalCollectionItem(inherited GetItem(index))
+  Result := TAtivPericInsalCollectionItem(inherited Items[Index])
 end;
 
 procedure TAtivPericInsalCollection.SetItem(Index: Integer; Value: TAtivPericInsalCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TAtivPericInsalCollection.New: TAtivPericInsalCollectionItem;
@@ -889,12 +889,12 @@ end;
 
 function TFatRiscoCollection.GetItem(Index: Integer): TFatRiscoCollectionItem;
 begin
-  Result := TFatRiscoCollectionItem(inherited GetItem(index))
+  Result := TFatRiscoCollectionItem(inherited Items[Index])
 end;
 
 procedure TFatRiscoCollection.SetItem(Index: Integer; Value: TFatRiscoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TFatRiscoCollection.New: TFatRiscoCollectionItem;
@@ -961,12 +961,12 @@ end;
 
 function TEpiCollection.GetItem(Index: Integer): TEpiCollectionItem;
 begin
-  Result := TEpiCollectionItem(inherited GetItem(Index));
+  Result := TEpiCollectionItem(inherited Items[Index]);
 end;
 
 procedure TEpiCollection.SetItem(Index: Integer; Value: TEpiCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TEpiCollection.New: TEpiCollectionItem;

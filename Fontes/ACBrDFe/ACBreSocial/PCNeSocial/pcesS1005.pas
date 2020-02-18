@@ -726,12 +726,12 @@ end;
 
 function TS1005Collection.GetItem(Index: Integer): TS1005CollectionItem;
 begin
-  Result := TS1005CollectionItem(inherited GetItem(Index));
+  Result := TS1005CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1005Collection.SetItem(Index: Integer; Value: TS1005CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1005Collection.New: TS1005CollectionItem;
@@ -749,13 +749,13 @@ end;
 function TInfoEntEducCollection.GetItem(
   Index: Integer): TInfoEntEducCollectionItem;
 begin
-  Result := TInfoEntEducCollectionItem(inherited GetItem(Index));
+  Result := TInfoEntEducCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoEntEducCollection.SetItem(Index: Integer;
   Value: TInfoEntEducCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoEntEducCollection.New: TInfoEntEducCollectionItem;

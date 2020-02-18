@@ -214,13 +214,13 @@ end;
 
 function TS1070Collection.GetItem(Index: Integer): TS1070CollectionItem;
 begin
-  Result := TS1070CollectionItem(inherited GetItem(Index));
+  Result := TS1070CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1070Collection.SetItem(Index: Integer;
   Value: TS1070CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1070Collection.New: TS1070CollectionItem;
@@ -254,13 +254,13 @@ end;
 function TInfoSuspCollection.GetItem(
   Index: Integer): TInfoSuspCollectionItem;
 begin
-  Result := TInfoSuspCollectionItem(Inherited GetItem(Index));
+  Result := TInfoSuspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TInfoSuspCollection.SetItem(Index: Integer;
   Value: TInfoSuspCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoSuspCollection.New: TInfoSuspCollectionItem;

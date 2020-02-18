@@ -237,13 +237,13 @@ end;
 
 function TS1010Collection.GetItem(Index: Integer): TS1010CollectionItem;
 begin
-  Result := TS1010CollectionItem(inherited GetItem(Index));
+  Result := TS1010CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1010Collection.SetItem(Index: Integer;
   Value: TS1010CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1010Collection.New: TS1010CollectionItem;
@@ -600,13 +600,13 @@ end;
 function TIdeProcessoCPCollection.GetItem(
   Index: Integer): TIdeProcessoCPCollectionItem;
 begin
-  Result := TIdeProcessoCPCollectionItem(Inherited GetItem(Index));
+  Result := TIdeProcessoCPCollectionItem(inherited Items[Index]);
 end;
 
 procedure TIdeProcessoCPCollection.SetItem(Index: Integer;
   Value: TIdeProcessoCPCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TIdeProcessoCPCollection.New: TIdeProcessoCPCollectionItem;
@@ -694,13 +694,13 @@ end;
 function TProcessoCollection.GetItem(
   Index: Integer): TProcesso;
 begin
-  Result := TProcesso(Inherited GetItem(Index));
+  Result := TProcesso(inherited Items[Index]);
 end;
 
 procedure TProcessoCollection.SetItem(Index: Integer;
   Value: TProcesso);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TProcessoCollection.New: TProcesso;

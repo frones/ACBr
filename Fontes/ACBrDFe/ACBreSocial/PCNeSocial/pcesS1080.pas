@@ -37,7 +37,15 @@ unit pcesS1080;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil, Contnrs,
+  SysUtils, Classes, ACBrUtil,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -147,13 +155,13 @@ end;
 
 function TS1080Collection.GetItem(Index: Integer): TS1080CollectionItem;
 begin
-  Result := TS1080CollectionItem(inherited GetItem(Index));
+  Result := TS1080CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1080Collection.SetItem(Index: Integer;
   Value: TS1080CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1080Collection.New: TS1080CollectionItem;

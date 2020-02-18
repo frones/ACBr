@@ -205,13 +205,13 @@ end;
 
 function TS2220Collection.GetItem(Index: Integer): TS2220CollectionItem;
 begin
-  Result := TS2220CollectionItem(inherited GetItem(Index));
+  Result := TS2220CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2220Collection.SetItem(Index: Integer;
   Value: TS2220CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2220Collection.New: TS2220CollectionItem;
@@ -261,13 +261,13 @@ end;
 
 function TExameCollection.GetItem(Index: Integer): TExameCollectionItem;
 begin
-  Result := TExameCollectionItem(inherited GetItem(Index));
+  Result := TExameCollectionItem(inherited Items[Index]);
 end;
 
 procedure TExameCollection.SetItem(Index: Integer;
   const Value: TExameCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TExameCollection.New: TExameCollectionItem;

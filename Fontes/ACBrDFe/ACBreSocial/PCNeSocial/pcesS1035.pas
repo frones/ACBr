@@ -41,8 +41,15 @@ unit pcesS1035;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls, Contnrs,
-  ACBrUtil,
+  SysUtils, Classes, DateUtils, Controls,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrUtil,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -152,13 +159,13 @@ end;
 
 function TS1035Collection.GetItem(Index: Integer): TS1035CollectionItem;
 begin
-  Result := TS1035CollectionItem(inherited GetItem(Index));
+  Result := TS1035CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1035Collection.SetItem(Index: Integer;
   Value: TS1035CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1035Collection.New: TS1035CollectionItem;

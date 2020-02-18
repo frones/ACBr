@@ -37,8 +37,15 @@ unit pcesS3000;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, ACBrUtil,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase, pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -117,13 +124,13 @@ end;
 
 function TS3000Collection.GetItem(Index: Integer): TS3000CollectionItem;
 begin
-  Result := TS3000CollectionItem(inherited GetItem(Index));
+  Result := TS3000CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS3000Collection.SetItem(Index: Integer;
   Value: TS3000CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS3000Collection.New: TS3000CollectionItem;

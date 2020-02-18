@@ -37,8 +37,15 @@ unit ACBreSocialLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, synautil, Contnrs,
-  ACBrUtil,
+  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$ELSE}
+   Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrUtil,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBreSocialConfiguracoes, ACBreSocialEventos,
   pcesCommon, pcesConversaoeSocial;
@@ -286,7 +293,7 @@ end;
 
 function TLoteEventos.GetItem(Index: integer): TItemLoteEventos;
 begin
-  Result := TItemLoteEventos(inherited GetItem(Index));
+  Result := TItemLoteEventos(inherited Items[Index]);
 end;
 
 function TLoteEventos.LoadFromFile(const CaminhoArquivo: String): Boolean;
@@ -353,7 +360,7 @@ end;
 
 procedure TLoteEventos.SetItem(Index: integer; const Value: TItemLoteEventos);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TLoteEventos.Validar: Boolean;

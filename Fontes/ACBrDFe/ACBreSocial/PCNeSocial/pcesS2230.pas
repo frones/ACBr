@@ -272,12 +272,12 @@ end;
 
 function TS2230Collection.GetItem(Index: Integer): TS2230CollectionItem;
 begin
-  Result := TS2230CollectionItem(inherited GetItem(Index));
+  Result := TS2230CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS2230Collection.SetItem(Index: Integer; Value: TS2230CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS2230Collection.New: TS2230CollectionItem;
@@ -366,13 +366,13 @@ end;
 function TinfoAtestado.GetItem(
   Index: Integer): TinfoAtestadoItem;
 begin
-  Result := TinfoAtestadoItem(inherited GetItem(Index));
+  Result := TinfoAtestadoItem(inherited Items[Index]);
 end;
 
 procedure TinfoAtestado.SetItem(Index: Integer;
   Value: TinfoAtestadoItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfoAtestado.New: TinfoAtestadoItem;

@@ -383,12 +383,12 @@ end;
 
 function TS1210Collection.GetItem(Index: Integer): TS1210CollectionItem;
 begin
-  Result := TS1210CollectionItem(inherited GetItem(Index));
+  Result := TS1210CollectionItem(inherited Items[Index]);
 end;
 
 procedure TS1210Collection.SetItem(Index: Integer; Value: TS1210CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TS1210Collection.New: TS1210CollectionItem;
@@ -459,12 +459,12 @@ end;
 
 function TInfoPgtoAntCollection.GetItem(Index: Integer): TInfoPgtoAntItem;
 begin
-  Result := TInfoPgtoAntItem(inherited GetItem(Index));
+  Result := TInfoPgtoAntItem(inherited Items[Index]);
 end;
 
 procedure TInfoPgtoAntCollection.SetItem(Index: Integer; const Value: TInfoPgtoAntItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoPgtoAntCollection.New: TInfoPgtoAntItem;
@@ -482,12 +482,12 @@ end;
 
 function TInfoPgtoCollection.GetItem(Index: Integer): TInfoPgtoItem;
 begin
-  Result := TInfoPgtoItem(inherited GetItem(Index));
+  Result := TInfoPgtoItem(inherited Items[Index]);
 end;
 
 procedure TInfoPgtoCollection.SetItem(Index: Integer; const Value: TInfoPgtoItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TInfoPgtoCollection.New: TInfoPgtoItem;
@@ -605,12 +605,12 @@ end;
 
 function TRubricasComPensaoCollection.GetItem(Index: Integer): TRubricasComPensaoItem;
 begin
-  Result := TRubricasComPensaoItem(inherited GetItem(Index));
+  Result := TRubricasComPensaoItem(inherited Items[Index]);
 end;
 
 procedure TRubricasComPensaoCollection.SetItem(Index: Integer; const Value: TRubricasComPensaoItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRubricasComPensaoCollection.New: TRubricasComPensaoItem;
@@ -656,12 +656,12 @@ end;
 
 function TdetPgtoFlCollection.GetItem(Index: Integer): TdetPgtoFlItem;
 begin
-  Result := TdetPgtoFlItem(inherited GetItem(Index));
+  Result := TdetPgtoFlItem(inherited Items[Index]);
 end;
 
 procedure TdetPgtoFlCollection.SetItem(Index: Integer; const Value: TdetPgtoFlItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TdetPgtoFlCollection.New: TdetPgtoFlItem;
@@ -720,12 +720,12 @@ end;
 
 function TDetPgtoAntCollection.GetItem(Index: Integer): TDetPgtoAntItem;
 begin
-  result := TDetPgtoAntItem(inherited GetItem(Index));
+  result := TDetPgtoAntItem(inherited Items[Index]);
 end;
 
 procedure TDetPgtoAntCollection.SetItem(Index: Integer; const Value: TDetPgtoAntItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDetPgtoAntCollection.New: TDetPgtoAntItem;
@@ -758,12 +758,12 @@ end;
 
 function TDetPgtoFerCollection.GetItem(Index: Integer): TDetPgtoFerItem;
 begin
-  result := TDetPgtoFerItem(inherited GetItem(Index));
+  result := TDetPgtoFerItem(inherited Items[Index]);
 end;
 
 procedure TDetPgtoFerCollection.SetITem(Index: Integer; const Value: TDetPgtoFerItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDetPgtoFerCollection.New: TDetPgtoFerItem;

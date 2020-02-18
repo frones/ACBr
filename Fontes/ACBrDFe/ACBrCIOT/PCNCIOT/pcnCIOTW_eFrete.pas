@@ -1262,9 +1262,9 @@ begin
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
   Gerador.wGrupoNFSe('Pagamentos', 'AP68');
 
-  for i := 0 to CIOT.AdicionarOperacao.Pagamentos.Count -1 do
+  for i := 0 to CIOT.AdicionarViagem.Pagamentos.Count -1 do
   begin
-    with CIOT.AdicionarOperacao.Pagamentos.Items[i] do
+    with CIOT.AdicionarViagem.Pagamentos.Items[i] do
     begin
       Gerador.wGrupoNFSe('Pagamento', 'AP68');
       Gerador.wCampoNFSe(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
@@ -1327,9 +1327,9 @@ begin
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
   Gerador.wGrupoNFSe('Pagamentos', 'AP68');
 
-  for i := 0 to CIOT.AdicionarOperacao.Pagamentos.Count -1 do
+  for i := 0 to CIOT.AdicionarPagamento.Pagamentos.Count -1 do
   begin
-    with CIOT.AdicionarOperacao.Pagamentos.Items[i] do
+    with CIOT.AdicionarPagamento.Pagamentos.Items[i] do
     begin
       Gerador.wGrupoNFSe('Pagamento', 'AP68');
       Gerador.wCampoNFSe(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
@@ -1961,7 +1961,7 @@ begin
         Gerador.wGrupoNFSe('EncerrarOperacaoTransporte');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupoNFSe('EncerrarOperacaoTransporteRequest ', 'WP01');
+        Gerador.wGrupoNFSe('EncerrarOperacaoTransporteRequest', 'WP01');
 
         GerarIdentificacao(2);
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2020
+-- pcnCIOTW_eFrete --
+[-] https://www.projetoacbr.com.br/forum/topic/56268-erro-transmiss%C3%A3o-acbrciot/?do=findComment&comment=369221
+   Por: mlspinelli
+
 14/02/2020
 -- pcnCIOTW_eFrete --
 [-] Correção: estava gerando o grupo Viagens quando não tem viagens informadas.

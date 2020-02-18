@@ -45,7 +45,7 @@ uses
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
-  {$IfEnd}
+  {$IFEND}
   ACBrBase,
   pcnConversao, pcnConversaoCIOT, ACBrUtil;
 
@@ -289,8 +289,6 @@ type
     FOutrosImpostos: Double;
     FDescricaoOutrosImpostos: string;
   public
-
-
     property IRRF: Double read FIRRF write FIRRF;
     property SestSenat: Double read FSestSenat write FSestSenat;
     property INSS: Double read FINSS write FINSS;
@@ -313,8 +311,6 @@ type
     FOutrosDebitos: Double;
     FJustificativaOutrosDebitos: string;
   public
-
-
     property TotalOperacao: Double read FTotalOperacao write FTotalOperacao;
     property TotalViagem: Double read FTotalViagem write FTotalViagem;
     property TotalDeAdiantamento: Double read FTotalDeAdiantamento write FTotalDeAdiantamento;
@@ -333,8 +329,6 @@ type
     FTipo: TpTipoProporcao;
     FValor: Double;
   public
-
-
     property Tipo: TpTipoProporcao read FTipo write FTipo;
     property Valor: Double read FValor write FValor;
   end;
@@ -344,8 +338,6 @@ type
     FTipo: TpTipoProporcao;
     FValor: Double;
   public
-
-
     property Tipo: TpTipoProporcao read FTipo write FTipo;
     property Valor: Double read FValor write FValor;
   end;
@@ -549,8 +541,6 @@ type
     FData: TDateTime;
     FIdPagamentoCliente: string;
   public
-
-
     property Motivo: string read FMotivo write FMotivo;
     property Data: TDateTime read FData write FData;
     property Protocolo: string read FProtocolo write FProtocolo;
@@ -561,8 +551,6 @@ type
   private
     FMensagem: string;
   public
-
-
     property Mensagem: string read FMensagem write FMensagem;
   end;
 
@@ -677,8 +665,6 @@ type
     FCodigoIdentificacaoOperacao: string;
     FDocumentoViagem: string;
   public
-
-
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property DocumentoViagem: string read FDocumentoViagem write FDocumentoViagem;
   end;

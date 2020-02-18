@@ -8034,6 +8034,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
                 TabOrder = 6
               end
+              object btnVersaoSSL: TButton
+                Left = 152
+                Height = 25
+                Top = 240
+                Width = 104
+                Caption = 'Versão SSL'
+                OnClick = btnVersaoSSLClick
+                TabOrder = 7
+              end
             end
             object tsWebServiceDFe: TTabSheet
               HelpType = htKeyword
@@ -11265,11 +11274,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 346
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteMDFe
+                  ActivePage = tsTesteNFe
                   Align = alClient
                   Font.Height = -13
                   ParentFont = False
-                  TabIndex = 2
+                  TabIndex = 0
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
@@ -16532,7 +16541,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0
@@ -16644,6 +16652,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     TipoDANFE = tiSemGeracao
     DescricaoPagamentos = [icaTipo, icaBandeira, icaAutorizacao]
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     left = 619
     top = 448
@@ -16668,6 +16677,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     TipoDANFE = tiSemGeracao
     DescricaoPagamentos = [icaTipo, icaBandeira, icaAutorizacao]
+    FormularioContinuo = True
     FonteLinhaItem.Height = -9
     FonteLinhaItem.Name = 'Lucida Console'
     left = 648
@@ -17690,6 +17700,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskqCom = '0.000'
     CasasDecimais.MaskvUnCom = '0.0000'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     left = 589
     top = 496
@@ -17714,6 +17725,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskvUnCom = '0.000'
     ACBrSAT = ACBrSAT1
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    FormularioContinuo = True
     left = 624
     top = 492
   end
@@ -17946,6 +17958,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    FormularioContinuo = True
     left = 680
     top = 446
   end

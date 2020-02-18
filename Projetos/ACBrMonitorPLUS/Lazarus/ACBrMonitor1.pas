@@ -148,6 +148,7 @@ type
     btnGerarAssinaturaSAT: TButton;
     btnFonteItens: TButton;
     btnSATEMAIL: TPanel;
+    btnVersaoSSL: TButton;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -1351,6 +1352,7 @@ type
     procedure btnValidarXMLClick(Sender: TObject);
     procedure btnValidarXMLCTeClick(Sender: TObject);
     procedure btnValidarXMLMDFeClick(Sender: TObject);
+    procedure btnVersaoSSLClick(Sender: TObject);
     procedure btSATAssociaClick(Sender: TObject);
     procedure btSATConfigRedeClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
@@ -3727,6 +3729,11 @@ begin
     ACBrMDFe1.Manifestos.Validar;
     showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
   end;
+end;
+
+procedure TFrmACBrMonitor.btnVersaoSSLClick(Sender: TObject);
+begin
+  MessageDlg( ACBrNFe1.SSL.SSLCryptClass.Versao , mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmACBrMonitor.btSATAssociaClick(Sender: TObject);

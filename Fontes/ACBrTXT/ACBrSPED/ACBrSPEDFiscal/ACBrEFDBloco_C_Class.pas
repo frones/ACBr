@@ -301,6 +301,7 @@ type
     function RegistroC790New: TRegistroC790;
     function registroC791New: TRegistroC791;
     function RegistroC800New: TRegistroC800;
+    function RegistroC810New: TRegistroC810;
     function RegistroC850New: TRegistroC850;
     function RegistroC860New: TRegistroC860;
     function RegistroC890New: TRegistroC890;
@@ -1114,6 +1115,11 @@ end;
 function TBloco_C.RegistroC800New: TRegistroC800;
 begin
    Result := FRegistroC001.RegistroC800.New;
+end;
+
+function TBloco_C.RegistroC810New: TRegistroC810;
+begin
+   Result := FRegistroC001.RegistroC800.Items[FRegistroC001.RegistroC800.Count -1].RegistroC810.New;
 end;
 
 function TBloco_C.RegistroC850New: TRegistroC850;
@@ -3728,7 +3734,7 @@ begin
              LFill( COD_ITEM ) +
              LFill( QTD, 0, 5 ) +
              LFill( UNID ) +
-             LFill( VL_ITEM ) +
+             LFill( VL_ITEM, 0, 2 ) +
              LFill( CST_ICMS ) +
              LFill( CFOP )
            ) ;

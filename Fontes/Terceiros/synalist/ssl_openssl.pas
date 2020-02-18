@@ -424,6 +424,7 @@ function TSSLOpenSSL.Init(server:Boolean): Boolean;
 var
   s: AnsiString;
 begin
+  Result := False;
   if not InitSSLInterface then
   begin
     FLastError := -1;
@@ -431,7 +432,6 @@ begin
     Exit;
   end;
 
-  Result := False;
   FLastErrorDesc := '';
   FLastError := 0;
   Fctx := nil;
@@ -766,7 +766,7 @@ end;
 
 function TSSLOpenSSL.GetPeerName: string;
 var
-  s: ansistring;
+  s: string;
 begin
   s := GetPeerSubject;
   s := SeparateRight(s, '/CN=');
@@ -819,7 +819,7 @@ begin
   Result := X509NameOneline(X509GetIssuerName(cert), sb, 4096);
 {$ELSE}
   setlength(s, 4096);
-  Result := X509NameOneline(X509GetIssuerName(cert), s, Length(s));
+  Result := String(X509NameOneline(X509GetIssuerName(cert), s, Length(s)));
 {$ENDIF}
   X509Free(cert);
 end;

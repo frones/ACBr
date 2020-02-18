@@ -1857,7 +1857,7 @@ begin
      if Dir = '' then
      begin
        Path := StringOfChar(#0, MAX_PATH);
-       x := GetTempPath(Length(Path), PChar(Path));
+       GetTempPath(Length(Path), PChar(Path));
        Path := PChar(Path);
      end
      else

@@ -29,10 +29,6 @@
 {******************************************************************************}
 Agradecimentos:
 
-* Administradores:
-- Daniel Simões de Almeida
-- André Ferreira de Moraes
-
 * Desenvolvedores:
 - Wemerson P. Souto - Doação do componente ao projeto ACBr
 

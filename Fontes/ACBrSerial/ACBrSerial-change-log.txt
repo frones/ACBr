@@ -44,7 +44,7 @@ Data: 13/02/2020
     Pareado, disponível na lista
 
 -- ACBrDeviceLPT --
-[-] Ajuste para evitar a Erro I/O Error 103
+[-] Ajuste para evitar a Erro I/O Error 103, quando ativando a Porta
     http://www.projetoacbr.com.br/forum/index.php?showtopic=56274
 [-] Correção de .A.V quando Fechando a Porta e "UsarStream = True"
     (por: DSA)

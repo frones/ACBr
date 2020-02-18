@@ -1277,7 +1277,7 @@ end;
 
 function TPagamentoCollection.GetItem(Index: Integer): TPagamentoCollectionItem;
 begin
-  Result := TPagamentoCollectionItem(inherited GetItem(Index));
+  Result := TPagamentoCollectionItem(inherited Items[Index]);
 end;
 
 function TPagamentoCollection.New: TPagamentoCollectionItem;
@@ -1289,7 +1289,7 @@ end;
 procedure TPagamentoCollection.SetItem(Index: Integer;
   Value: TPagamentoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TVeiculoCollectionItem }
@@ -1308,7 +1308,7 @@ end;
 
 function TVeiculoCollection.GetItem(Index: Integer): TVeiculoCollectionItem;
 begin
-  Result := TVeiculoCollectionItem(inherited GetItem(Index));
+  Result := TVeiculoCollectionItem(inherited Items[Index]);
 end;
 
 function TVeiculoCollection.New: TVeiculoCollectionItem;
@@ -1320,7 +1320,7 @@ end;
 procedure TVeiculoCollection.SetItem(Index: Integer;
   Value: TVeiculoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TViagemCollectionItem }
@@ -1360,7 +1360,7 @@ end;
 
 function TViagemCollection.GetItem(Index: Integer): TViagemCollectionItem;
 begin
-  Result := TViagemCollectionItem(inherited GetItem(Index));
+  Result := TViagemCollectionItem(inherited Items[Index]);
 end;
 
 function TViagemCollection.New: TViagemCollectionItem;
@@ -1372,7 +1372,7 @@ end;
 procedure TViagemCollection.SetItem(Index: Integer;
   Value: TViagemCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TNotaFiscalCollectionItem }
@@ -1403,7 +1403,7 @@ end;
 function TNotaFiscalCollection.GetItem(
   Index: Integer): TNotaFiscalCollectionItem;
 begin
-  Result := TNotaFiscalCollectionItem(inherited GetItem(Index));
+  Result := TNotaFiscalCollectionItem(inherited Items[Index]);
 end;
 
 function TNotaFiscalCollection.New: TNotaFiscalCollectionItem;
@@ -1415,7 +1415,7 @@ end;
 procedure TNotaFiscalCollection.SetItem(Index: Integer;
   Value: TNotaFiscalCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TDiferencaDeFrete }
@@ -1621,7 +1621,7 @@ end;
 
 function TMensagemCollection.GetItem(Index: Integer): TMensagemCollectionItem;
 begin
-  Result := TMensagemCollectionItem(inherited GetItem(Index));
+  Result := TMensagemCollectionItem(inherited Items[Index]);
 end;
 
 function TMensagemCollection.New: TMensagemCollectionItem;
@@ -1633,7 +1633,7 @@ end;
 procedure TMensagemCollection.SetItem(Index: Integer;
   Value: TMensagemCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRetEnvio }

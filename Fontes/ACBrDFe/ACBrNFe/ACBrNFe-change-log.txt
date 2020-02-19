@@ -44,10 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2020
+-- ACBrNFeDANFEClass --
+[*] https://www.projetoacbr.com.br/forum/topic/56109-detpag-com-tpintegra2-n%C3%A3o-imprime-c%C3%B3digo-de-autoriza%C3%A7%C3%A3o/
+   Por: Edmar Frazao
+
 17/02/2020
 -- pcnNFeW --
 [*] Remoção da propriedade: AjustarTagNro.
-Por: Italo Jurisato Junior
+   Por: Italo Jurisato Junior
 
 14/02/2020
 -- pcnConversaoNFe --

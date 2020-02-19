@@ -191,6 +191,7 @@ type
     FvalorRepasse: Currency; //Governa
     FValorDespesasNaoTributaveis: Currency; //Governa
     FValorTotalRecebido: Currency;
+    FValorTotalTributos: currency;
   public
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -231,6 +232,8 @@ type
     property ValorDespesasNaoTributaveis: Currency read FValorDespesasNaoTributaveis write FValorDespesasNaoTributaveis;
     //Recife
     property ValorTotalRecebido: Currency read FValorTotalRecebido write FValorTotalRecebido;
+    //Provedor proSimplISSv2
+    property ValorTotalTributos: currency read FValorTotalTributos write FValorTotalTributos;
   end;
 
   TItemServicoCollection = class(TACBrObjectList)

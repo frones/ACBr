@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2020
+-- pnfsNFSe/pnfsNFSeW_ABRASFv2 -- 
+[+] https://www.projetoacbr.com.br/forum/topic/56380-total-tributos-blumenau/
+   Por: João Paulo Muller
+
 12/02/2020
 -- pnfsNFSeR -- 
 [*] Removido da lista o proGinfes, pois ao ler um XML da NFS-e o componente

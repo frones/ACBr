@@ -430,7 +430,9 @@ begin
           InfSit.FSituacao := Leitor.rCampo(tcStr, 'sit');
 
           if InfSit.FSituacao = '100' then
-            InfSit.FSituacao := '4';
+            InfSit.FSituacao := '4'
+          else if InfSit.FSituacao = '217' then
+            InfSit.FSituacao := '2';
         end;
 
         j := 0;

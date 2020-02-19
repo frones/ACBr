@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/02/2020
+-- pnfsConsSitLoteRpsResposta -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56411-provedor-infisc-situa%C3%A7%C3%A3o-n%C3%A3o-precessado/
+   Por: Marcio ST
 -- pnfsNFSe/pnfsNFSeW_ABRASFv2 -- 
 [+] https://www.projetoacbr.com.br/forum/topic/56380-total-tributos-blumenau/
    Por: João Paulo Muller

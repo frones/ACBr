@@ -239,6 +239,7 @@ type
     FProdutos: TACBrCargaBalItens;
     FModelo: TACBrCargaBalModelo;
     procedure Progresso(const AMensagem: String; const AContAtual, AContTotal: Integer);
+
   protected
     function RFill(const Str: string; Tamanho: Integer = 0; Caracter: Char = ' '): string; overload;
     function LFIll(const Str: string; Tamanho: Integer = 0; Caracter: Char = '0'): string; overload;
@@ -251,6 +252,7 @@ type
     function GetNomeArquivoSetor: String;
     function GetNomeArquivoTaras: String;
     function GetNomeArquivoFornecedor: String;
+    function GetNomeArquivoTeclado: String;
 
     function GetNomeArquivoRelacaoProdutoNutricional: String;
     function GetNomeArquivoRelacaoProdutoReceita: String;
@@ -266,7 +268,7 @@ type
     function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(stlArquivo, stlSetor, stlNutricional, stlReceita: TStringList);
-    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor: TStringList; Versao: Integer);
+    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor, stlTeclado: TStringList; Versao: Integer);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(stlArquivo, stlNutricional, stlReceita, stlRelacaoProdutoNutricional, stlRelacaoProdutoReceita: TStringList);
@@ -623,6 +625,13 @@ begin
   end;
 end;
 
+function TACBrCargaBal.GetNomeArquivoTeclado: String;
+begin
+  case FModelo of
+    modToledoMGV5: Result := 'TXTECLAS.TXT';
+  end;
+end;
+
 function TACBrCargaBal.GetNomeArquivoNutricional: String;
 begin
   // A urano nao possuem arquivo nutricional a parte das informações
@@ -806,7 +815,7 @@ begin
   end;
 end;
 
-procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor: TStringList; Versao: Integer);
+procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor, stlTeclado: TStringList; Versao: Integer);
 var
   i, Total: Integer;
   ANutri, AReceita, ATara, AFornecedor, ASetor: string;
@@ -929,6 +938,19 @@ begin
         LFIll('0', 4)+ // Código da Conservação
         LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
       );
+
+      if Produtos[i].Tecla > 0 then
+      begin
+        stlTeclado.Add(
+          '01' +
+          '1' +
+          LFIll(Produtos[i].Tecla, 2) +
+          LFIll(Produtos[i].Codigo, 6) +
+          '0' +
+          RFIll(Produtos[i].Descricao, 24) +
+          RFIll('', 255)
+        );
+      end;
 
       if (Length(Produtos[i].InformacaoExtra.Receita) > 2) then
       begin
@@ -1348,7 +1370,7 @@ end;
 procedure TACBrCargaBal.GerarArquivos(const ADiretorio: String);
 var
   Produto, Setor, Receita, Nutricional, Tara, Fornecedor: TStringList;
-  RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList;
+  RelacaoProdutoNutricional, RelacaoProdutoReceita, Teclado: TStringList;
   NomeArquivo: TFileName;
   Total: integer;
 begin
@@ -1371,6 +1393,7 @@ begin
   RelacaoProdutoNutricional := TStringList.Create;
   RelacaoProdutoReceita     := TStringList.Create;
   Fornecedor                := TStringList.Create;
+  Teclado                   := TStringList.Create;
   try
     Total := Self.Produtos.Count;
     Progresso(ACBrStr('Iniciando a geração dos arquivos'), 0, Total);
@@ -1378,14 +1401,14 @@ begin
     // Varre os registros gerando o arquivo em lista
     case FModelo of
       modFilizola   : PreencherFilizola(Produto, Setor, Nutricional, Receita);
-      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, 0);
+      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, nil, 0);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 2);
-      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 3);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, Teclado, 2);
+      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, Teclado, 3);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
       modRamuza     : PreencherRamuza(Produto);
-      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 1);
+      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, nil, 1);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -1452,6 +1475,13 @@ begin
       FArquivosGerados.Add(NomeArquivo) ;
     end;
 
+    if Teclado.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoTeclado;
+      Teclado.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
+    end;
+
     Progresso('Terminado', Total, Total);
   finally
     Produto.Free;
@@ -1462,6 +1492,7 @@ begin
     RelacaoProdutoNutricional.Free;
     RelacaoProdutoReceita.Free;
     Fornecedor.Free;
+    Teclado.Free;
   end;
 end;
 

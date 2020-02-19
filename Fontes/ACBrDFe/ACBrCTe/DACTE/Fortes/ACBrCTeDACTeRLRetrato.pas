@@ -840,7 +840,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_1').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_1').AsString :=
-              ACBrStr('Declaração Doc.: ') + nDoc;
+              ACBrStr('N. Doc.: ') + nDoc;
           end;
           tdCFeSAT:
           begin
@@ -885,7 +885,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_2').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_2').AsString :=
-              ACBrStr('Declaração Doc.: ') + nDoc;
+              ACBrStr('N. Doc.: ') + nDoc;
           end;
           tdDutoviario:
           begin

@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2020
+-- ACBrCTeDACTeRLRetrato --
+[*] Alterado a mensagem "Declaração Doc." por "N. Doc." pois não estava sendo 
+    impresso o numero da declaração.
+  Por: Italo Jurisato Junior
+
 04/02/2020
 -- ACBrCTeDAInutRL --
 [*] https://www.projetoacbr.com.br/forum/topic/56085-memoryleak-em-impress%C3%A3o-de-inutiliza%C3%A7%C3%A3o-de-numeros/

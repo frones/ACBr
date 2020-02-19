@@ -1,10 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFSe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -22,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -34,7 +37,13 @@ unit pnfsLerListaNFSe;
 interface
 
 uses
-  SysUtils, Classes, Forms, variants, Contnrs,
+  SysUtils, Classes, Forms, variants,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnLeitor,
   pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil;
 
@@ -64,7 +73,7 @@ type
     property ChaveNFeRPS: TChaveNFeRPS             read FChaveNFeRPS     write FChaveNFeRPS;
   end;
 
- TLerListaNFSeCollection = class(TObjectList)
+ TLerListaNFSeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TLerListaNFSeCollectionItem;
     procedure SetItem(Index: Integer; Value: TLerListaNFSeCollectionItem);
@@ -88,7 +97,7 @@ type
     property NFSeSubstituicao: TSubstituicaoNFSe        read FNFSeSubstituicao write FNFSeSubstituicao;
   end;
 
- TMsgRetornoNFSeCollection = class(TObjectList)
+ TMsgRetornoNFSeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoNFSeCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoNFSeCollectionItem);
@@ -179,13 +188,13 @@ end;
 function TLerListaNFSeCollection.GetItem(
   Index: Integer): TLerListaNFSeCollectionItem;
 begin
-  Result := TLerListaNFSeCollectionItem(inherited GetItem(Index));
+  Result := TLerListaNFSeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TLerListaNFSeCollection.SetItem(Index: Integer;
   Value: TLerListaNFSeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TLerListaNFSeCollection.New: TLerListaNFSeCollectionItem;
@@ -223,13 +232,13 @@ end;
 function TMsgRetornoNFSeCollection.GetItem(
   Index: Integer): TMsgRetornoNFSeCollectionItem;
 begin
-  Result := TMsgRetornoNFSeCollectionItem(inherited GetItem(Index));
+  Result := TMsgRetornoNFSeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TMsgRetornoNFSeCollection.SetItem(Index: Integer;
   Value: TMsgRetornoNFSeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TMsgRetornoNFSeCollection.New: TMsgRetornoNFSeCollectionItem;

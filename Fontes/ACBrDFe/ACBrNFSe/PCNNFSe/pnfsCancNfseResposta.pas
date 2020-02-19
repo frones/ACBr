@@ -1,10 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFSe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -22,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -34,10 +37,14 @@ unit pnfsCancNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms, Contnrs,
-  ACBrUtil,
+  SysUtils, Classes, Forms,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
-//  strutils
 
 type
 
@@ -75,7 +82,7 @@ type
     property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
 
- TMsgRetornoCancCollection = class(TObjectList)
+ TMsgRetornoCancCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoCancCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoCancCollectionItem);
@@ -103,7 +110,7 @@ type
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
- TNotasCanceladasCollection = class(TObjectList)
+ TNotasCanceladasCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TNotasCanceladasCollectionItem;
     procedure SetItem(Index: Integer; Value: TNotasCanceladasCollectionItem);
@@ -203,13 +210,13 @@ end;
 function TMsgRetornoCancCollection.GetItem(
   Index: Integer): TMsgRetornoCancCollectionItem;
 begin
-  Result := TMsgRetornoCancCollectionItem(inherited GetItem(Index));
+  Result := TMsgRetornoCancCollectionItem(inherited Items[Index]);
 end;
 
 procedure TMsgRetornoCancCollection.SetItem(Index: Integer;
   Value: TMsgRetornoCancCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TMsgRetornoCancCollection.New: TMsgRetornoCancCollectionItem;
@@ -245,13 +252,13 @@ end;
 function TNotasCanceladasCollection.GetItem(
   Index: Integer): TNotasCanceladasCollectionItem;
 begin
-  Result := TNotasCanceladasCollectionItem(inherited GetItem(Index));
+  Result := TNotasCanceladasCollectionItem(inherited Items[Index]);
 end;
 
 procedure TNotasCanceladasCollection.SetItem(Index: Integer;
   Value: TNotasCanceladasCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TNotasCanceladasCollection.New: TNotasCanceladasCollectionItem;

@@ -1,10 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFSe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -22,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -34,8 +37,13 @@ unit pnfsEnvLoteRpsResposta;
 interface
 
 uses
-  SysUtils, Classes, Variants, StrUtils, Contnrs,
-  ACBrUtil,
+  SysUtils, Classes, Variants, StrUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
@@ -54,7 +62,7 @@ type
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
- TChaveNFeRPSCollection = class(TObjectList)
+ TChaveNFeRPSCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TChaveNFeRPSCollectionItem;
     procedure SetItem(Index: Integer; Value: TChaveNFeRPSCollectionItem);
@@ -89,7 +97,7 @@ type
     property ListaChaveNFeRPS: TChaveNFeRPSCollection  read FListaChaveNFeRPS     write SetListaChaveNFeRPS;
   end;
 
- TMsgRetornoEnvCollection = class(TObjectList)
+ TMsgRetornoEnvCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoEnvCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoEnvCollectionItem);
@@ -190,13 +198,13 @@ end;
 function TMsgRetornoEnvCollection.GetItem(
   Index: Integer): TMsgRetornoEnvCollectionItem;
 begin
-  Result := TMsgRetornoEnvCollectionItem(inherited GetItem(Index));
+  Result := TMsgRetornoEnvCollectionItem(inherited Items[Index]);
 end;
 
 procedure TMsgRetornoEnvCollection.SetItem(Index: Integer;
   Value: TMsgRetornoEnvCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TMsgRetornoEnvCollection.New: TMsgRetornoEnvCollectionItem;
@@ -232,13 +240,13 @@ end;
 function TChaveNFeRPSCollection.GetItem(
   Index: Integer): TChaveNFeRPSCollectionItem;
 begin
-  Result := TChaveNFeRPSCollectionItem(inherited GetItem(Index));
+  Result := TChaveNFeRPSCollectionItem(inherited Items[Index]);
 end;
 
 procedure TChaveNFeRPSCollection.SetItem(Index: Integer;
   Value: TChaveNFeRPSCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TChaveNFeRPSCollection.New: TChaveNFeRPSCollectionItem;

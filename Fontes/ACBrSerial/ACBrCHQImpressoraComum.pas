@@ -219,7 +219,7 @@ begin
 
         Linhas.Add(IntToStrZero(LinhaLocal,3)+'|'+
                    IntToStrZero(Round(ColunaAno/cAF),3)+'|'+
-                   copy(IntToStr(YearOf(fpData)),3,2) ) ;
+                   IntToStr(YearOf(fpData))) ;
         Linhas.Sort ;
 
         { Imprimindo }

@@ -150,7 +150,7 @@ begin
   EnviarStr( #27 + #161 + fpCidade + #13 ) ;
 
   { Data }
-  DataStr := FormatDateTime('dd/mm/yy',fpData) ;
+  DataStr := FormatDateTime('dd/mm/yyyy',fpData) ;
   DataStr := StringReplace(DataStr,DateSeparator,'/',[rfReplaceAll]) ;
   EnviarStr( #27 + #164 + DataStr + #13 ) ;
 

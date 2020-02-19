@@ -152,7 +152,7 @@ begin
   EnviarStr( #27 + #67 + Copy(fpCidade,1,20) + '$' ) ;  // Cidade - termina com caracter $ #36
 
   { Data }
-  DataStr := FormatDateTime('dd/mm/yy',fpData) ;
+  DataStr := FormatDateTime('dd/mm/yyyy',fpData) ;
   DataStr := StringReplace(DataStr, DateSeparator, '',[rfReplaceAll]) ;
   EnviarStr( #27 + #68 + DataStr ) ;
 

@@ -5,6 +5,8 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -47,7 +49,7 @@ Por: Italo Jurisato Junior
 
 12/02/2020
 -- ACBrMDFeWebServices --
-[*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos, 
+[*] Removido as procedures SalvarEnvio e SalvarRetorno do envio de eventos,
     pois já existe essas procedures padrões que salvam os XMLs de envio e 
     de retorno na pasta correta. 
    Por: Italo Jurisato Junior
@@ -1180,4 +1182,8 @@ Data 01/04/2013
 [*] Alterado para instalar em Lazarus, também adicionado o pacote ACBr_MDFe.lpk, criação 
     do arquivo para a imagem do componente no lazarus. 
     (Juliomar Marchetti)
+
+Data 01/08/2012
+[+] Doação do componente para o Projeto ACBr
+   Por: Italo Jurisato Junior
 

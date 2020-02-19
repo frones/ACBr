@@ -1,8 +1,6 @@
 inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   Left = 267
   Top = 209
-  Width = 860
-  Height = 507
   Caption = 'Evento - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,13 +10,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   inherited RLMDFeEvento: TRLReport
     Left = 32
     Top = 0
-    DataSource = Datasource1
-    Font.Height = -8
-    Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    DataSource = Datasource1
+    Font.Height = -8
+    Font.Name = 'Courier New'
     BeforePrint = rlEventoBeforePrint
     object rlb_09_Itens: TRLBand
       Left = 26
@@ -43,6 +41,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -60,6 +59,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -77,6 +77,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -94,6 +95,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -110,6 +112,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -126,6 +129,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
     end
@@ -249,6 +253,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rllblSistema: TRLLabel

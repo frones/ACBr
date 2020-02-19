@@ -1,10 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrMDFe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -22,17 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{*******************************************************************************
-|* Historico
-|*
-|* 01/08/2012: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -41,10 +37,16 @@ unit pmdfeMDFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pmdfeConversaoMDFe, pcnSignature, pmdfeProcMDFe, pcnGerador;
 
 type
@@ -143,7 +145,7 @@ type
     property VersaoStr: String read GetVersaoStr;
   end;
 
-  TinfMunCarregaCollection = class(TObjectList)
+  TinfMunCarregaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfMunCarregaCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfMunCarregaCollectionItem);
@@ -162,7 +164,7 @@ type
     property xMunCarrega: String  read FxMunCarrega write FxMunCarrega;
   end;
 
-  TinfPercursoCollection = class(TObjectList)
+  TinfPercursoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfPercursoCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfPercursoCollectionItem);
@@ -280,7 +282,7 @@ type
     property nLacre: String read FnLacre write FnLacre;
   end;
 
-  TlacresCollection = class(TObjectList)
+  TlacresCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TlacresCollectionItem;
     procedure SetItem(Index: Integer; Value: TlacresCollectionItem);
@@ -330,7 +332,7 @@ type
     property xComp: String read FxComp  write FxComp;
   end;
 
-  TCompCollection = class(TObjectList)
+  TCompCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TCompCollectionItem;
     procedure SetItem(Index: Integer; Value: TCompCollectionItem);
@@ -351,7 +353,7 @@ type
     property vParcela: Double   read FvParcela   write FvParcela;
   end;
 
-  TInfPrazoCollection = class(TObjectList)
+  TInfPrazoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TInfPrazoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfPrazoCollectionItem);
@@ -397,7 +399,7 @@ type
     property infBanc: TinfBanc             read FinfBanc  write FinfBanc;
   end;
 
-  TinfPagCollection = class(TObjectList)
+  TinfPagCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfPagCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfPagCollectionItem);
@@ -438,7 +440,7 @@ type
     *)
   end;
 
-  TinfCIOTCollection = class(TObjectList)
+  TinfCIOTCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfCIOTCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfCIOTCollectionItem);
@@ -457,7 +459,7 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
   end;
 
-  TinfContratanteCollection = class(TObjectList)
+  TinfContratanteCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfContratanteCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfContratanteCollectionItem);
@@ -526,7 +528,7 @@ type
     property tpProp: TpcteProp read FtpProp  write FtpProp;
   end;
 
-  TcondutorCollection = class(TObjectList)
+  TcondutorCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TcondutorCollectionItem;
     procedure SetItem(Index: Integer; Value: TcondutorCollectionItem);
@@ -545,7 +547,7 @@ type
     property CPF: String   read FCPF   write FCPF;
   end;
 
-  TveicReboqueCollection = class(TObjectList)
+  TveicReboqueCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TveicReboqueCollectionItem;
     procedure SetItem(Index: Integer; Value: TveicReboqueCollectionItem);
@@ -591,7 +593,7 @@ type
     property disp: TdispCollection read Fdisp write Setdisp;
   end;
 
-  TdispCollection = class(TObjectList)
+  TdispCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TdispCollectionItem;
     procedure SetItem(Index: Integer; Value: TdispCollectionItem);
@@ -668,7 +670,7 @@ type
     property infUnidTranspVazia: TinfUnidTranspVaziaCollection read FinfUnidTranspVazia write FinfUnidTranspVazia;
   end;
 
-  TinfTermCarregCollection = class(TObjectList)
+  TinfTermCarregCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfTermCarregCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfTermCarregCollectionItem);
@@ -687,7 +689,7 @@ type
     property xTermCarreg: String read FxTermCarreg write FxTermCarreg;
   end;
 
-  TinfTermDescarregCollection = class(TObjectList)
+  TinfTermDescarregCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfTermDescarregCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfTermDescarregCollectionItem);
@@ -706,7 +708,7 @@ type
     property xTermDescarreg: String read FxTermDescarreg write FxTermDescarreg;
   end;
 
-  TinfEmbCombCollection = class(TObjectList)
+  TinfEmbCombCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfEmbCombCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfEmbCombCollectionItem);
@@ -725,7 +727,7 @@ type
     property xBalsa: String read FxBalsa write FxBalsa;
   end;
 
-  TinfUnidCargaVaziaCollection = class(TObjectList)
+  TinfUnidCargaVaziaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidCargaVaziaCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidCargaVaziaCollectionItem);
@@ -744,7 +746,7 @@ type
     property tpUnidCargaVazia: TpcnUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
   end;
 
-  TinfUnidTranspVaziaCollection = class(TObjectList)
+  TinfUnidTranspVaziaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidTranspVaziaCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidTranspVaziaCollectionItem);
@@ -784,7 +786,7 @@ type
     property vag: TvagCollection read Fvag    write Setvag;
   end;
 
-  TvagCollection = class(TObjectList)
+  TvagCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TvagCollectionItem;
     procedure SetItem(Index: Integer; Value: TvagCollectionItem);
@@ -830,7 +832,7 @@ type
     property qVolTipo: String    read FqVolTipo    write FqVolTipo;
   end;
 
-  TPeriCTeCollection = class(TObjectList)
+  TPeriCTeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TPeriCollectionItem;
     procedure SetItem(Index: Integer; Value: TPeriCollectionItem);
@@ -853,7 +855,7 @@ type
     property infMunDescarga: TinfMunDescargaCollection read FinfMunDescarga write SetinfMunDescarga;
   end;
 
-  TinfMunDescargaCollection = class(TObjectList)
+  TinfMunDescargaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfMunDescargaCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfMunDescargaCollectionItem);
@@ -898,7 +900,7 @@ type
     property qtdParcial: Double read FqtdParcial write FqtdParcial;
   end;
 
-  TinfCTeCollection = class(TObjectList)
+  TinfCTeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfCTeCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfCTeCollectionItem);
@@ -944,7 +946,7 @@ type
     property qtdRat: Double                          read FqtdRat        write FqtdRat;
   end;
 
-  TinfUnidTranspCTeCollection = class(TObjectList)
+  TinfUnidTranspCTeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
@@ -959,7 +961,7 @@ type
   TinfUnidTranspNFCollection   = TinfUnidTranspCTeCollection;
   TinfUnidTranspMDFeCollection = TinfUnidTranspCTeCollection;
 
-  TinfUnidCargaCollection = class(TObjectList)
+  TinfUnidCargaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
@@ -984,7 +986,7 @@ type
     property qtdRat: Double                        read FqtdRat       write FqtdRat;
   end;
 
-  TinfCTCollection = class(TObjectList)
+  TinfCTCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfCTCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfCTCollectionItem);
@@ -1014,7 +1016,7 @@ type
     property infUnidTransp: TinfUnidTranspCTCollection read FinfUnidTransp write FinfUnidTransp;
   end;
 
-  TinfNFeCollection = class(TObjectList)
+  TinfNFeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfNFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfNFeCollectionItem);
@@ -1044,7 +1046,7 @@ type
     property peri: TPeriNFeCollection                   read Fperi          write SetPeri;
   end;
 
-  TinfNFCollection = class(TObjectList)
+  TinfNFCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfNFCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfNFCollectionItem);
@@ -1077,7 +1079,7 @@ type
     property infUnidTransp: TinfUnidTranspNFCollection read FinfUnidTransp write FinfUnidTransp;
   end;
 
-  TinfMDFeTranspCollection = class(TObjectList)
+  TinfMDFeTranspCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfMDFeTranspCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfMDFeTranspCollectionItem);
@@ -1105,7 +1107,7 @@ type
     property peri: TPeriMDFeCollection                   read Fperi          write SetPeri;
   end;
 
-  TSegCollection = class(TObjectList)
+  TSegCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TSegCollectionItem;
     procedure SetItem(Index: Integer; Value: TSegCollectionItem);
@@ -1134,7 +1136,7 @@ type
     property aver: TAverCollection read FAver   write FAver;
   end;
 
-  TAverCollection = class(TObjectList)
+  TAverCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TAverCollectionItem;
     procedure SetItem(Index: Integer; Value: TAverCollectionItem);
@@ -1172,7 +1174,7 @@ type
     property qCarga: Double  read FqCarga write FqCarga;
   end;
 
-  TautXMLCollection = class(TObjectList)
+  TautXMLCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TautXMLCollectionItem;
     procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
@@ -1399,12 +1401,12 @@ end;
 
 function TinfMunCarregaCollection.GetItem(Index: Integer): TinfMunCarregaCollectionItem;
 begin
-  Result := TinfMunCarregaCollectionItem(inherited GetItem(Index));
+  Result := TinfMunCarregaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfMunCarregaCollection.SetItem(Index: Integer; Value: TinfMunCarregaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfMunCarregaCollection.New: TinfMunCarregaCollectionItem;
@@ -1451,13 +1453,13 @@ end;
 function TinfPercursoCollection.GetItem(
   Index: Integer): TinfPercursoCollectionItem;
 begin
-  Result := TinfPercursoCollectionItem(inherited GetItem(Index));
+  Result := TinfPercursoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfPercursoCollection.SetItem(Index: Integer;
   Value: TinfPercursoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfPercursoCollection.New: TinfPercursoCollectionItem;
@@ -1538,13 +1540,13 @@ end;
 function TcondutorCollection.GetItem(
   Index: Integer): TcondutorCollectionItem;
 begin
-  Result := TcondutorCollectionItem(inherited GetItem(Index));
+  Result := TcondutorCollectionItem(inherited Items[Index]);
 end;
 
 procedure TcondutorCollection.SetItem(Index: Integer;
   Value: TcondutorCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TcondutorCollection.New: TcondutorCollectionItem;
@@ -1563,13 +1565,13 @@ end;
 function TveicReboqueCollection.GetItem(
   Index: Integer): TveicReboqueCollectionItem;
 begin
-  Result := TveicReboqueCollectionItem(inherited GetItem(Index));
+  Result := TveicReboqueCollectionItem(inherited Items[Index]);
 end;
 
 procedure TveicReboqueCollection.SetItem(Index: Integer;
   Value: TveicReboqueCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TveicReboqueCollection.New: TveicReboqueCollectionItem;
@@ -1620,13 +1622,13 @@ end;
 
 function TdispCollection.GetItem(Index: Integer): TdispCollectionItem;
 begin
-  Result := TdispCollectionItem(inherited GetItem(Index));
+  Result := TdispCollectionItem(inherited Items[Index]);
 end;
 
 procedure TdispCollection.SetItem(Index: Integer;
   Value: TdispCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TdispCollection.New: TdispCollectionItem;
@@ -1663,13 +1665,13 @@ end;
 
 function TvagCollection.GetItem(Index: Integer): TvagCollectionItem;
 begin
-  Result := TvagCollectionItem(inherited GetItem(Index));
+  Result := TvagCollectionItem(inherited Items[Index]);
 end;
 
 procedure TvagCollection.SetItem(Index: Integer;
   Value: TvagCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TvagCollection.New: TvagCollectionItem;
@@ -1708,13 +1710,13 @@ end;
 function TinfMunDescargaCollection.GetItem(
   Index: Integer): TinfMunDescargaCollectionItem;
 begin
-  Result := TinfMunDescargaCollectionItem(inherited GetItem(Index));
+  Result := TinfMunDescargaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfMunDescargaCollection.SetItem(Index: Integer;
   Value: TinfMunDescargaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfMunDescargaCollection.New: TinfMunDescargaCollectionItem;
@@ -1778,13 +1780,13 @@ end;
 
 function TinfCTeCollection.GetItem(Index: Integer): TinfCTeCollectionItem;
 begin
-  Result := TinfCTeCollectionItem(inherited GetItem(Index));
+  Result := TinfCTeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfCTeCollection.SetItem(Index: Integer;
   Value: TinfCTeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfCTeCollection.New: TinfCTeCollectionItem;
@@ -1821,13 +1823,13 @@ end;
 
 function TinfCTCollection.GetItem(Index: Integer): TinfCTCollectionItem;
 begin
-  Result := TinfCTCollectionItem(inherited GetItem(Index));
+  Result := TinfCTCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfCTCollection.SetItem(Index: Integer;
   Value: TinfCTCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfCTCollection.New: TinfCTCollectionItem;
@@ -1859,13 +1861,13 @@ end;
 
 function TinfNFeCollection.GetItem(Index: Integer): TinfNFeCollectionItem;
 begin
-  Result := TinfNFeCollectionItem(inherited GetItem(Index));
+  Result := TinfNFeCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfNFeCollection.SetItem(Index: Integer;
   Value: TinfNFeCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfNFeCollection.New: TinfNFeCollectionItem;
@@ -1910,13 +1912,13 @@ end;
 
 function TinfNFCollection.GetItem(Index: Integer): TinfNFCollectionItem;
 begin
-  Result := TinfNFCollectionItem(inherited GetItem(Index));
+  Result := TinfNFCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfNFCollection.SetItem(Index: Integer;
   Value: TinfNFCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfNFCollection.New: TinfNFCollectionItem;
@@ -1948,13 +1950,13 @@ end;
 
 function TlacresCollection.GetItem(Index: Integer): TlacresCollectionItem;
 begin
-  Result := TlacresCollectionItem(inherited GetItem(Index));
+  Result := TlacresCollectionItem(inherited Items[Index]);
 end;
 
 procedure TlacresCollection.SetItem(Index: Integer;
   Value: TlacresCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TlacresCollection.New: TlacresCollectionItem;
@@ -1973,13 +1975,13 @@ end;
 function TinfTermCarregCollection.GetItem(
   Index: Integer): TinfTermCarregCollectionItem;
 begin
-  Result := TinfTermCarregCollectionItem(inherited GetItem(Index));
+  Result := TinfTermCarregCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfTermCarregCollection.SetItem(Index: Integer;
   Value: TinfTermCarregCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfTermCarregCollection.New: TinfTermCarregCollectionItem;
@@ -2020,13 +2022,13 @@ end;
 function TinfTermDescarregCollection.GetItem(
   Index: Integer): TinfTermDescarregCollectionItem;
 begin
-  Result := TinfTermDescarregCollectionItem(inherited GetItem(Index));
+  Result := TinfTermDescarregCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfTermDescarregCollection.SetItem(Index: Integer;
   Value: TinfTermDescarregCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfTermDescarregCollection.New: TinfTermDescarregCollectionItem;
@@ -2045,13 +2047,13 @@ end;
 function TinfEmbCombCollection.GetItem(
   Index: Integer): TinfEmbCombCollectionItem;
 begin
-  Result := TinfEmbCombCollectionItem(inherited GetItem(Index));
+  Result := TinfEmbCombCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfEmbCombCollection.SetItem(Index: Integer;
   Value: TinfEmbCombCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfEmbCombCollection.New: TinfEmbCombCollectionItem;
@@ -2070,13 +2072,13 @@ end;
 function TinfUnidCargaVaziaCollection.GetItem(
   Index: Integer): TinfUnidCargaVaziaCollectionItem;
 begin
-  Result := TinfUnidCargaVaziaCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidCargaVaziaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidCargaVaziaCollection.SetItem(Index: Integer;
   Value: TinfUnidCargaVaziaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidCargaVaziaCollection.New: TinfUnidCargaVaziaCollectionItem;
@@ -2095,13 +2097,13 @@ end;
 function TinfUnidTranspVaziaCollection.GetItem(
   Index: Integer): TinfUnidTranspVaziaCollectionItem;
 begin
-  Result := TinfUnidTranspVaziaCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidTranspVaziaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidTranspVaziaCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspVaziaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidTranspVaziaCollection.New: TinfUnidTranspVaziaCollectionItem;
@@ -2120,13 +2122,13 @@ end;
 function TinfUnidTranspCTeCollection.GetItem(
   Index: Integer): TinfUnidTranspCollectionItem;
 begin
-  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidTranspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidTranspCTeCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidTranspCTeCollection.New: TinfUnidTranspCollectionItem;
@@ -2161,13 +2163,13 @@ end;
 function TinfUnidCargaCollection.GetItem(
   Index: Integer): TinfUnidCargaCollectionItem;
 begin
-  Result := TinfUnidCargaCollectionItem(inherited GetItem(Index));
+  Result := TinfUnidCargaCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfUnidCargaCollection.SetItem(Index: Integer;
   Value: TinfUnidCargaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfUnidCargaCollection.New: TinfUnidCargaCollectionItem;
@@ -2200,13 +2202,13 @@ end;
 function TinfMDFeTranspCollection.GetItem(
   Index: Integer): TinfMDFeTranspCollectionItem;
 begin
-  Result := TinfMDFeTranspCollectionItem(inherited GetItem(Index));
+  Result := TinfMDFeTranspCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfMDFeTranspCollection.SetItem(Index: Integer;
   Value: TinfMDFeTranspCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfMDFeTranspCollection.New: TinfMDFeTranspCollectionItem;
@@ -2252,13 +2254,13 @@ end;
 
 function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
 begin
-  Result := TautXMLCollectionItem(inherited GetItem(Index));
+  Result := TautXMLCollectionItem(inherited Items[Index]);
 end;
 
 procedure TautXMLCollection.SetItem(Index: Integer;
   Value: TautXMLCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TautXMLCollection.New: TautXMLCollectionItem;
@@ -2286,13 +2288,13 @@ end;
 
 function TPeriCTeCollection.GetItem(Index: Integer): TPeriCollectionItem;
 begin
-  Result := TPeriCollectionItem(inherited GetItem(Index));
+  Result := TPeriCollectionItem(inherited Items[Index]);
 end;
 
 procedure TPeriCTeCollection.SetItem(Index: Integer;
   Value: TPeriCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TPeriCTeCollection.New: TPeriCollectionItem;
@@ -2324,13 +2326,13 @@ end;
 
 function TSegCollection.GetItem(Index: Integer): TSegCollectionItem;
 begin
-  Result := TSegCollectionItem(inherited GetItem(Index));
+  Result := TSegCollectionItem(inherited Items[Index]);
 end;
 
 procedure TSegCollection.SetItem(Index: Integer;
   Value: TSegCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TSegCollection.New: TSegCollectionItem;
@@ -2371,13 +2373,13 @@ end;
 function TinfCIOTCollection.GetItem(
   Index: Integer): TinfCIOTCollectionItem;
 begin
-  Result := TinfCIOTCollectionItem(inherited GetItem(Index));
+  Result := TinfCIOTCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfCIOTCollection.SetItem(Index: Integer;
   Value: TinfCIOTCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfCIOTCollection.New: TinfCIOTCollectionItem;
@@ -2396,13 +2398,13 @@ end;
 function TinfContratanteCollection.GetItem(
   Index: Integer): TinfContratanteCollectionItem;
 begin
-  Result := TinfContratanteCollectionItem(inherited GetItem(Index));
+  Result := TinfContratanteCollectionItem(inherited Items[Index]);
 end;
 
 procedure TinfContratanteCollection.SetItem(Index: Integer;
   Value: TinfContratanteCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TinfContratanteCollection.New: TinfContratanteCollectionItem;
@@ -2420,12 +2422,12 @@ end;
 
 function TAverCollection.GetItem(Index: Integer): TAverCollectionItem;
 begin
-  Result := TAverCollectionItem(inherited GetItem(Index));
+  Result := TAverCollectionItem(inherited Items[Index]);
 end;
 
 procedure TAverCollection.SetItem(Index: Integer; Value: TAverCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TAverCollection.New: TAverCollectionItem;
@@ -2481,7 +2483,7 @@ end;
 
 function TCompCollection.GetItem(Index: Integer): TCompCollectionItem;
 begin
-  Result := TCompCollectionItem(inherited GetItem(Index));
+  Result := TCompCollectionItem(inherited Items[Index]);
 end;
 
 function TCompCollection.New: TCompCollectionItem;
@@ -2493,7 +2495,7 @@ end;
 procedure TCompCollection.SetItem(Index: Integer;
   Value: TCompCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TInfPrazoCollection }
@@ -2506,7 +2508,7 @@ end;
 function TInfPrazoCollection.GetItem(
   Index: Integer): TInfPrazoCollectionItem;
 begin
-  Result := TInfPrazoCollectionItem(inherited GetItem(Index));
+  Result := TInfPrazoCollectionItem(inherited Items[Index]);
 end;
 
 function TInfPrazoCollection.New: TInfPrazoCollectionItem;
@@ -2518,7 +2520,7 @@ end;
 procedure TInfPrazoCollection.SetItem(Index: Integer;
   Value: TInfPrazoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfPagCollection }
@@ -2530,7 +2532,7 @@ end;
 
 function TinfPagCollection.GetItem(Index: Integer): TinfPagCollectionItem;
 begin
-  Result := TinfPagCollectionItem(inherited GetItem(Index));
+  Result := TinfPagCollectionItem(inherited Items[Index]);
 end;
 
 function TinfPagCollection.New: TinfPagCollectionItem;
@@ -2542,7 +2544,7 @@ end;
 procedure TinfPagCollection.SetItem(Index: Integer;
   Value: TinfPagCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 end.

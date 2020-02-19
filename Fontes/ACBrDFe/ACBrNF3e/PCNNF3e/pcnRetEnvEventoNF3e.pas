@@ -1,14 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNF3e                                                 }
-{  Nota Fiscal de Energia Eletrica Eletrônica - NF3e                           }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2019                                        }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -26,17 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{*******************************************************************************
-|* Historico
-|*
-|* 18/12/2019: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -45,7 +37,13 @@ unit pcnRetEnvEventoNF3e;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnLeitor, pcnEventoNF3e, pcnSignature;
 
 type
@@ -60,7 +58,7 @@ type
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
-  TRetInfEventoCollection = class(TObjectList)
+  TRetInfEventoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRetInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetInfEventoCollectionItem);
@@ -112,13 +110,13 @@ uses
 
 function TRetInfEventoCollection.GetItem(Index: Integer): TRetInfEventoCollectionItem;
 begin
-  Result := TRetInfEventoCollectionItem(inherited GetItem(Index));
+  Result := TRetInfEventoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TRetInfEventoCollection.SetItem(Index: Integer;
   Value: TRetInfEventoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TRetInfEventoCollection.New: TRetInfEventoCollectionItem;

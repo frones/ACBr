@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:   Italo Jurisato Junior                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -29,13 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{*******************************************************************************
-|* Historico
-|*
-|* 18/12/2019: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
 
 {$I ACBr.inc}
 

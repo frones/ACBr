@@ -1,14 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNF3e                                                 }
-{  Nota Fiscal de Energia Eletrica Eletrônica - NF3e                           }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2019                                        }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -26,17 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{*******************************************************************************
-|* Historico
-|*
-|* 18/12/2019: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -45,7 +37,13 @@ unit pcnNF3e;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnConversaoNF3e, pcnSignature, pcnProcNF3e, pcnGerador;
 
 type
@@ -109,7 +107,7 @@ type
 
   { TautXMLCollection }
 
-  TautXMLCollection = class(TObjectList)
+  TautXMLCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TautXMLCollectionItem;
     procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
@@ -229,7 +227,7 @@ type
 
   { TgGrandFatCollection }
 
-  TgGrandFatCollection = class(TObjectList)
+  TgGrandFatCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgGrandFatCollectionItem;
     procedure SetItem(Index: Integer; Value: TgGrandFatCollectionItem);
@@ -257,7 +255,7 @@ type
 
   { TgHistFatCollection }
 
-  TgHistFatCollection = class(TObjectList)
+  TgHistFatCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgHistFatCollectionItem;
     procedure SetItem(Index: Integer; Value: TgHistFatCollectionItem);
@@ -300,7 +298,7 @@ type
 
   { TgContabCollection }
 
-  TgContabCollection = class(TObjectList)
+  TgContabCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgContabCollectionItem;
     procedure SetItem(Index: Integer; Value: TgContabCollectionItem);
@@ -324,7 +322,7 @@ type
 
   { TgProcCollection }
 
-  TgProcCollection = class(TObjectList)
+  TgProcCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TgProcCollectionItem);
@@ -548,7 +546,7 @@ type
 
   { TgAdBandCollection }
 
-  TgAdBandCollection = class(TObjectList)
+  TgAdBandCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgAdBandCollectionItem;
     procedure SetItem(Index: Integer; Value: TgAdBandCollectionItem);
@@ -590,7 +588,7 @@ type
 
   { TgTarifCollection }
 
-  TgTarifCollection = class(TObjectList)
+  TgTarifCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgTarifCollectionItem;
     procedure SetItem(Index: Integer; Value: TgTarifCollectionItem);
@@ -696,7 +694,7 @@ type
 
   { TDetCollection }
 
-  TDetCollection = class(TObjectList)
+  TDetCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetCollectionItem);
@@ -725,7 +723,7 @@ type
 
   { TNFDetCollection }
 
-  TNFDetCollection = class(TObjectList)
+  TNFDetCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TNFDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TNFDetCollectionItem);
@@ -757,7 +755,7 @@ type
 
   { TgSaldoCredCollection }
 
-  TgSaldoCredCollection = class(TObjectList)
+  TgSaldoCredCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgSaldoCredCollectionItem;
     procedure SetItem(Index: Integer; Value: TgSaldoCredCollectionItem);
@@ -783,7 +781,7 @@ type
 
   { TgConsumidorCollection }
 
-  TgConsumidorCollection = class(TObjectList)
+  TgConsumidorCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgConsumidorCollectionItem;
     procedure SetItem(Index: Integer; Value: TgConsumidorCollectionItem);
@@ -834,7 +832,7 @@ type
 
   { TgMedCollection }
 
-  TgMedCollection = class(TObjectList)
+  TgMedCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgMedCollectionItem;
     procedure SetItem(Index: Integer; Value: TgMedCollectionItem);
@@ -862,7 +860,7 @@ type
 
   { TgGrContratCollection }
 
-  TgGrContratCollection = class(TObjectList)
+  TgGrContratCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TgGrContratCollectionItem;
     procedure SetItem(Index: Integer; Value: TgGrContratCollectionItem);
@@ -1156,13 +1154,13 @@ end;
 
 function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
 begin
-  Result := TautXMLCollectionItem(inherited GetItem(Index));
+  Result := TautXMLCollectionItem(inherited Items[Index]);
 end;
 
 procedure TautXMLCollection.SetItem(Index: Integer;
   Value: TautXMLCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TautXMLCollection.New: TautXMLCollectionItem;
@@ -1185,7 +1183,7 @@ end;
 
 function TgGrandFatCollection.GetItem(Index: Integer): TgGrandFatCollectionItem;
 begin
-  Result := TgGrandFatCollectionItem(inherited GetItem(Index));
+  Result := TgGrandFatCollectionItem(inherited Items[Index]);
 end;
 
 function TgGrandFatCollection.New: TgGrandFatCollectionItem;
@@ -1197,7 +1195,7 @@ end;
 procedure TgGrandFatCollection.SetItem(Index: Integer;
   Value: TgGrandFatCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgHistFatCollectionItem }
@@ -1233,7 +1231,7 @@ end;
 
 function TgHistFatCollection.GetItem(Index: Integer): TgHistFatCollectionItem;
 begin
-  Result := TgHistFatCollectionItem(inherited GetItem(Index));
+  Result := TgHistFatCollectionItem(inherited Items[Index]);
 end;
 
 function TgHistFatCollection.New: TgHistFatCollectionItem;
@@ -1245,7 +1243,7 @@ end;
 procedure TgHistFatCollection.SetItem(Index: Integer;
   Value: TgHistFatCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgANEEL }
@@ -1336,7 +1334,7 @@ end;
 
 function TgContabCollection.GetItem(Index: Integer): TgContabCollectionItem;
 begin
-  Result := TgContabCollectionItem(inherited GetItem(Index));
+  Result := TgContabCollectionItem(inherited Items[Index]);
 end;
 
 function TgContabCollection.New: TgContabCollectionItem;
@@ -1348,7 +1346,7 @@ end;
 procedure TgContabCollection.SetItem(Index: Integer;
   Value: TgContabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgProcCollectionItem }
@@ -1363,7 +1361,7 @@ end;
 
 function TgProcCollection.GetItem(Index: Integer): TgProcCollectionItem;
 begin
-  Result := TgProcCollectionItem(inherited GetItem(Index));
+  Result := TgProcCollectionItem(inherited Items[Index]);
 end;
 
 function TgProcCollection.New: TgProcCollectionItem;
@@ -1374,7 +1372,7 @@ end;
 
 procedure TgProcCollection.SetItem(Index: Integer; Value: TgProcCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgProRef }
@@ -1547,7 +1545,7 @@ end;
 
 function TgAdBandCollection.GetItem(Index: Integer): TgAdBandCollectionItem;
 begin
-  Result := TgAdBandCollectionItem(inherited GetItem(Index));
+  Result := TgAdBandCollectionItem(inherited Items[Index]);
 end;
 
 function TgAdBandCollection.New: TgAdBandCollectionItem;
@@ -1559,7 +1557,7 @@ end;
 procedure TgAdBandCollection.SetItem(Index: Integer;
   Value: TgAdBandCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgTarifCollectionItem }
@@ -1583,7 +1581,7 @@ end;
 
 function TgTarifCollection.GetItem(Index: Integer): TgTarifCollectionItem;
 begin
-  Result := TgTarifCollectionItem(inherited GetItem(Index));
+  Result := TgTarifCollectionItem(inherited Items[Index]);
 end;
 
 function TgTarifCollection.New: TgTarifCollectionItem;
@@ -1595,7 +1593,7 @@ end;
 procedure TgTarifCollection.SetItem(Index: Integer;
   Value: TgTarifCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TdetItem }
@@ -1709,7 +1707,7 @@ end;
 
 function TDetCollection.GetItem(Index: Integer): TDetCollectionItem;
 begin
-  Result := TDetCollectionItem(inherited GetItem(Index));
+  Result := TDetCollectionItem(inherited Items[Index]);
 end;
 
 function TDetCollection.New: TDetCollectionItem;
@@ -1720,7 +1718,7 @@ end;
 
 procedure TDetCollection.SetItem(Index: Integer; Value: TDetCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TNFDetCollectionItem }
@@ -1755,7 +1753,7 @@ end;
 
 function TNFDetCollection.GetItem(Index: Integer): TNFDetCollectionItem;
 begin
-  Result := TNFDetCollectionItem(inherited GetItem(Index));
+  Result := TNFDetCollectionItem(inherited Items[Index]);
 end;
 
 function TNFDetCollection.New: TNFDetCollectionItem;
@@ -1766,7 +1764,7 @@ end;
 
 procedure TNFDetCollection.SetItem(Index: Integer; Value: TNFDetCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgSaldoCredCollectionItem }
@@ -1786,7 +1784,7 @@ end;
 function TgSaldoCredCollection.GetItem(
   Index: Integer): TgSaldoCredCollectionItem;
 begin
-  Result := TgSaldoCredCollectionItem(inherited GetItem(Index));
+  Result := TgSaldoCredCollectionItem(inherited Items[Index]);
 end;
 
 function TgSaldoCredCollection.New: TgSaldoCredCollectionItem;
@@ -1798,7 +1796,7 @@ end;
 procedure TgSaldoCredCollection.SetItem(Index: Integer;
   Value: TgSaldoCredCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgConsumidorCollectionItem }
@@ -1815,7 +1813,7 @@ end;
 function TgConsumidorCollection.GetItem(
   Index: Integer): TgConsumidorCollectionItem;
 begin
-  Result := TgConsumidorCollectionItem(inherited GetItem(Index));
+  Result := TgConsumidorCollectionItem(inherited Items[Index]);
 end;
 
 function TgConsumidorCollection.New: TgConsumidorCollectionItem;
@@ -1827,7 +1825,7 @@ end;
 procedure TgConsumidorCollection.SetItem(Index: Integer;
   Value: TgConsumidorCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgSCEE }
@@ -1881,7 +1879,7 @@ end;
 
 function TgMedCollection.GetItem(Index: Integer): TgMedCollectionItem;
 begin
-  Result := TgMedCollectionItem(inherited GetItem(Index));
+  Result := TgMedCollectionItem(inherited Items[Index]);
 end;
 
 function TgMedCollection.New: TgMedCollectionItem;
@@ -1892,7 +1890,7 @@ end;
 
 procedure TgMedCollection.SetItem(Index: Integer; Value: TgMedCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgGrContratCollectionItem }
@@ -1910,7 +1908,7 @@ end;
 function TgGrContratCollection.GetItem(
   Index: Integer): TgGrContratCollectionItem;
 begin
-  Result := TgGrContratCollectionItem(inherited GetItem(Index));
+  Result := TgGrContratCollectionItem(inherited Items[Index]);
 end;
 
 function TgGrContratCollection.New: TgGrContratCollectionItem;
@@ -1922,7 +1920,7 @@ end;
 procedure TgGrContratCollection.SetItem(Index: Integer;
   Value: TgGrContratCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TgJudic }

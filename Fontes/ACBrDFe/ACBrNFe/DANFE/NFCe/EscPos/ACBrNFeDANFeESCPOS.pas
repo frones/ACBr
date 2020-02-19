@@ -819,6 +819,9 @@ procedure TACBrNFeDANFeESCPOS.GerarDadosEvento;
 const
   TAMCOLDESCR = 11;
 begin
+  if FpEvento.Evento.Count < 1 then
+    Exit;
+
   // dados da nota eletrônica
   FPosPrinter.Buffer.Add('</fn></ce><n>Nota Fiscal para Consumidor Final</n>');
   FPosPrinter.Buffer.Add(ACBrStr('Número: ' + IntToStrZero(FpNFe.ide.nNF, 9) +
@@ -862,6 +865,9 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarObservacoesEvento;
 begin
+  if FpEvento.Evento.Count < 1 then
+    Exit;
+
   if FpEvento.Evento[0].InfEvento.detEvento.xJust <> '' then
   begin
     FPosPrinter.Buffer.Add('</linha_simples>');

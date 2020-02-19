@@ -98,6 +98,7 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
+    function ObterNFeXML(const AXML: String): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -341,7 +342,7 @@ end;
 
 procedure NotaFiscal.Validar;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML: String;
   NotaEhValida, ok: Boolean;
   ALayout: TLayOut;
   VerServ: Real;
@@ -363,13 +364,14 @@ begin
     else
       ALayout := LayNfeRecepcao;
 
-    // Extraindo apenas os dados da NFe (sem nfeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<NFe xmlns' +
-            RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') +
-            '</NFe>';
-
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
+    AXML := ObterNFeXML(AXML);  // Extraindo apenas os dados da NFe (sem nfeProc)
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr('NFe não encontrada no XML');
+      NotaEhValida := False;
+    end
+    else
+      NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
     if not NotaEhValida then
     begin
@@ -386,7 +388,7 @@ end;
 
 function NotaFiscal.VerificarAssinatura: Boolean;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML: String;
   AssEhValida: Boolean;
 begin
   AXML := FXMLAssinado;
@@ -395,14 +397,15 @@ begin
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
+    AXML := ObterNFeXML(AXML);  // Extraindo apenas os dados da NFe (sem nfeProc)
 
-    // Extraindo apenas os dados da NFe (sem nfeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<NFe xmlns' +
-            RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') +
-            '</NFe>';
-
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infNFe');
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr('NFe não encontrada no XML');
+      AssEhValida := False;
+    end
+    else
+      AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infNFe');
 
     if not AssEhValida then
     begin
@@ -3621,6 +3624,27 @@ begin
 
     Result := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Data, FNFe.Emit.CNPJCPF, FNFe.Emit.IE, FNFe.Ide.modelo));
   end;
+end;
+
+// Extraindo apenas os dados da NFe (sem nfeProc)
+function NotaFiscal.ObterNFeXML(const AXML: String): String;
+var
+  DeclaracaoXML: String;
+begin
+  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+
+  Result := RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>');
+  if not EstaVazio(Result) then
+    Result := '<NFe xmlns' + Result + '</NFe>'
+  else
+  begin
+    Result := LerTagXML(AXML, 'NFe');
+    if not EstaVazio(Result) then
+      Result := '<NFe>' + Result + '</NFe>'
+  end;
+
+  if not EstaVazio(Result) then
+    Result := DeclaracaoXML + Result;
 end;
 
 function NotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;

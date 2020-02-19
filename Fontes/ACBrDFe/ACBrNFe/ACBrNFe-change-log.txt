@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2020
+-- ACBrNFeNotasFiscais --
+[*] Ajuste para conseguir detectar XML da NFe, sem "xmlns"
+    https://www.projetoacbr.com.br/forum/topic/56387-erro-ao-validar-assinatura-com-acbr/
+
+-- ACBrDFeDANFeReport --
+[*] Melhoria em "TACBrDFeDANFeReport.ImprimirDANFECancelado", para usar Try/Finally
+
+-- ACBrNFeDANFeESCPOS --
+[-] Ajuste para evitar Index Bound Error, quando Imprimindo Cancelamento e Evento
+    não foi informado
+    (por: DSA)
+
 18/02/2020
 -- ACBrNFeDANFEClass --
 [*] https://www.projetoacbr.com.br/forum/topic/56109-detpag-com-tpintegra2-n%C3%A3o-imprime-c%C3%B3digo-de-autoriza%C3%A7%C3%A3o/

@@ -85,6 +85,7 @@ procedure TNFSeW_Governa.GerarTomador;
 begin
   Gerador.wCampoNFSE(tcStr, '', 'NumDocTmd', 11, 014, 1, NFSe.Tomador.IdentificacaoTomador.CpfCnpj,'');
   Gerador.wCampoNFSE(tcStr, '', 'InsEstTmd', 01, 020, 1, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual,'');
+  Gerador.wCampoNFSe(tcStr, '', 'TlfTmd'   , 01, 011, 1, NFSe.Tomador.Contato.Telefone, '');
   Gerador.wCampoNFSE(tcStr, '', 'InsMunTmd', 01, 020, 1, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
   Gerador.wCampoNFSe(tcStr, '', 'NomTmd'   , 05, 100, 1, NFSe.Tomador.RazaoSocial, '');
   Gerador.wCampoNFSe(tcStr, '', 'DesEndTmd', 05, 100, 1, NFSe.Tomador.Endereco.Endereco, '');

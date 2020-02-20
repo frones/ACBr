@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2020
+-- pnfsNFSeW_Governa -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56421-nfse-provedor-governavalparaiso-de-goi%C3%A1s/
+   Por: Ariel Ton Lima
+
 19/02/2020
 -- pnfsConsSitLoteRpsResposta -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56411-provedor-infisc-situa%C3%A7%C3%A3o-n%C3%A3o-precessado/

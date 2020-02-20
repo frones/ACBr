@@ -1246,7 +1246,7 @@ object frmACBrGNRe: TfrmACBrGNRe
           Top = 71
           Width = 177
           Height = 25
-          Caption = 'Enviar NFe Email'
+          Caption = 'Enviar Guia Email'
           TabOrder = 0
           OnClick = btnEnviarEmailClick
         end
@@ -1460,7 +1460,7 @@ object frmACBrGNRe: TfrmACBrGNRe
     MargemInferior = 8.000000000000000000
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.100000000000000000
+    MargemDireita = 5.099999999999999000
     PrintDialog = True
     Left = 430
     Top = 238

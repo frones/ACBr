@@ -378,7 +378,7 @@ begin
       ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
       ACBrMail1.FromName := 'Projeto ACBr - ACBrGNRE';
 
-      ACBrGNRE1.Guias.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
+      ACBrGNRE1.Guias.Items[0].EnviarEmail(Para, edtEmailAssunto.Text,
                                                mmEmailMsg.Lines
                                                , True  // Enviar PDF junto
                                                , CC    // Lista com emails que serao enviado copias - TStrings
@@ -895,7 +895,6 @@ end;
 procedure TfrmACBrGNRe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrGNRE1.SSL.LerCertificadosStore;
@@ -920,8 +919,6 @@ begin
   begin
     with ACBrGNRE1.SSL.ListaCertificados[I] do
     begin
-//      ASerie := NumeroSerie;
-
       if (CNPJ <> '') then
       begin
         with frmSelecionarCertificado.StringGrid1 do
@@ -1021,11 +1018,11 @@ begin
   pgRespostas.ActivePageIndex := 4;
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Envio GNRE');
-  MemoDados.Lines.Add('ambiente: '+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente));
-  MemoDados.Lines.Add('codigo: '+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo));
-  MemoDados.Lines.Add('descricao: '+ ACBrGNRE1.WebServices.Retorno.descricao);
-  MemoDados.Lines.Add('Recibo: '+ ACBrGNRE1.WebServices.Retorno.numeroRecibo);
-  MemoDados.Lines.Add('Protocolo: '+ ACBrGNRE1.WebServices.Retorno.protocolo);
+  MemoDados.Lines.Add('ambiente: '  + TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente));
+  MemoDados.Lines.Add('codigo: '    + IntToStr(ACBrGNRE1.WebServices.Retorno.codigo));
+  MemoDados.Lines.Add('descricao: ' + ACBrGNRE1.WebServices.Retorno.descricao);
+  MemoDados.Lines.Add('Recibo: '    + ACBrGNRE1.WebServices.Retorno.numeroRecibo);
+  MemoDados.Lines.Add('Protocolo: ' + ACBrGNRE1.WebServices.Retorno.protocolo);
 
   ACBrGNRE1.Guias.Clear;
 end;
@@ -1041,8 +1038,6 @@ begin
   begin
     ACBrGNRE1.GuiasRetorno.Clear;
     ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
-//    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
-//      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
     ACBrGNRE1.GuiasRetorno.Imprimir;
   end;
 end;
@@ -1064,35 +1059,33 @@ end;
 
 procedure TfrmACBrGNRe.btnGerarPDFClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione o GNRE';
-  OpenDialog1.DefaultExt := '*-gnre.txt';
-  OpenDialog1.Filter := 'Arquivos GNRE (*-gnre.txt)|*-gnre.txt|Arquivos TXT (*.txt)|*.txt|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.Title := 'Selecione a Guia';
+  OpenDialog1.DefaultExt := '*-guia.xml';
+  OpenDialog1.Filter := 'Arquivos Guia (*-guia.xml)|*-guia.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
     ACBrGNRE1.GuiasRetorno.Clear;
     ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
-//    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
-//      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
     ACBrGNRE1.GuiasRetorno.ImprimirPDF;
   end;
 end;
 
 procedure TfrmACBrGNRe.btnConsultaConfigUFClick(Sender: TObject);
 var
-  aux : String;
+  aUF, aReceita : String;
 begin
-  aux := '';
-  if not(InputQuery('Consulta Configuração UF', 'Uf', aux))
-   then exit;
-  ACBrGNRE1.WebServices.ConsultaUF.Uf := aux;
+  aUF := '';
+  if not(InputQuery('Consulta Configuração UF', 'UF', aUF)) then
+    exit;
 
-  aux := '';
-  if not(InputQuery('Consulta Configuração UF', 'Receita', aux))
-   then exit;
-  ACBrGNRE1.WebServices.ConsultaUF.receita := StrToIntDef(aux, 0);
+  aReceita := '';
+  if not(InputQuery('Consulta Configuração UF', 'Receita', aReceita)) then
+    exit;
 
+  ACBrGNRE1.WebServices.ConsultaUF.Uf := aUF;
+  ACBrGNRE1.WebServices.ConsultaUF.receita := StrToIntDef(aReceita, 0);
   ACBrGNRE1.WebServices.ConsultaUF.Executar;
 
   MemoResp.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsultaUF.RetWS);
@@ -1102,12 +1095,12 @@ begin
   pgRespostas.ActivePageIndex := 4;
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Consulta Configuração UF');
-  MemoDados.Lines.Add('ambiente: '    +TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente));
-  MemoDados.Lines.Add('codigo: '    +IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo));
-  MemoDados.Lines.Add('descricao: '  +ACBrGNRE1.WebServices.ConsultaUF.descricao);
-  MemoDados.Lines.Add('Uf: '      +ACBrGNRE1.WebServices.ConsultaUF.Uf);
+  MemoDados.Lines.Add('ambiente: '           + TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente));
+  MemoDados.Lines.Add('codigo: '             + IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo));
+  MemoDados.Lines.Add('descricao: '          + ACBrGNRE1.WebServices.ConsultaUF.descricao);
+  MemoDados.Lines.Add('Uf: '                 + ACBrGNRE1.WebServices.ConsultaUF.Uf);
   MemoDados.Lines.Add('exigeUfFavorecida : ' + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeUfFavorecida = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeReceita: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeReceita: '       + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃO'));
 //  MemoDados.Lines.Add('exigeContribuinteEmitente: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
 //  MemoDados.Lines.Add('exigeDataVencimento: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
 //  MemoDados.Lines.Add('exigeConvenio: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
@@ -1116,10 +1109,10 @@ end;
 
 procedure TfrmACBrGNRe.btnConsultarReciboClick(Sender: TObject);
 var
- aux : String;
+  aux : String;
 begin
-  if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
-   then exit;
+  if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
+    exit;
 
   ACBrGNRE1.WebServices.Retorno.numeroRecibo := aux;
   ACBrGNRE1.WebServices.Retorno.Executar;

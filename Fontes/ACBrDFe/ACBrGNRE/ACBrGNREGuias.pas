@@ -466,13 +466,13 @@ begin
         if Assigned(GNREGuia) then
         begin
           GNREGuia.ImprimirGuiaPDF( nil {GuiasRetorno});
-          NomeArq := PathWithDelim(GNREGuia.PathPDF) + NumID + '-gnre.pdf';
+          NomeArq := PathWithDelim(GNREGuia.PathPDF) + NumID + '-guia.pdf';
           AnexosEmail.Add(NomeArq);
         end;
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamGNRE,
-                   NumID + '-gnre.xml');
+                   NumID + '-guia.xml');
     end;
   finally
     AnexosEmail.Free;

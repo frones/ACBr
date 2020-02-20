@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2020
+-- ACBrGNREGuias --
+[*] Corrigido o nome do arquivo PDF.
+   Por: Italo Jurisato Junior
+
 18/02/2020
 -- ACBrGNREServicos --
 [*] Removido o comando Break do loop, pois ele estava impedindo que fossem 

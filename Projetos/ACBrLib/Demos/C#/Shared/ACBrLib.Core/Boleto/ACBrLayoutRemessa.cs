@@ -2,7 +2,7 @@
 {
     public enum ACBrLayoutRemessa
     {
-        c400 = 0,
-        c240 = 1
+        c400 = 1,
+        c240 = 0
     }
 }

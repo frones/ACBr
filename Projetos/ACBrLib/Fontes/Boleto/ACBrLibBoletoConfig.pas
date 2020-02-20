@@ -612,7 +612,11 @@ begin
   DirArqRetorno := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveDirArqRetorno, DirArqRetorno);
   DirHomologacao := AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveDirHomologacao, DirHomologacao);
   ImprimirMensagemPadrao := AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveImprimirMensagemPadrao, ImprimirMensagemPadrao);
-  LayoutRemessa := TACBrLayoutRemessa(AIni.ReadInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, integer(LayoutRemessa)));
+  case AIni.ReadInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, integer(LayoutRemessa)) of
+    0: LayoutRemessa:= c240;
+  else
+    LayoutRemessa:= c400;
+  end;
   LeCedenteRetorno := AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveLeCedenteRetorno, LeCedenteRetorno);
   NomeArqRemessa := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRemessa, NomeArqRemessa);
   NomeArqRetorno := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);
@@ -629,7 +633,11 @@ begin
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveDirArqRetorno, DirArqRetorno);
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveDirHomologacao, DirHomologacao);
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveImprimirMensagemPadrao, ImprimirMensagemPadrao);
-  AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, integer(LayoutRemessa) );
+  case integer(LayoutRemessa) of
+    0: AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, 1 );
+  else
+    AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, 0 );
+  end;
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveLeCedenteRetorno, LeCedenteRetorno);
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRemessa, NomeArqRemessa);
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);

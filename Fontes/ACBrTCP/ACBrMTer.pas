@@ -409,7 +409,7 @@ begin
     fACBrBAL := TACBrBAL.Create(Nil);
 
     fACBrBAL.Modelo := fConexoes.ACBrMTer.Balanca.Modelo;
-    fACBrBAL.Device.Porta := 'USB';
+    fACBrBAL.Device.Porta := 'DLL';
     fACBrBAL.Device.HookEnviaString := DoHookEnviaStringSerial;
   end;
 

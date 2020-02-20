@@ -1367,6 +1367,10 @@ begin
     Ini.WriteBool(  'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
     Ini.WriteBool(  'Arquivos', 'EmissaoPathCIOT',  cbxEmissaoPathCIOT.Checked);
     Ini.WriteBool(  'Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
+
+    if (edtCaminho.Text = '') and (edtSenha.Text = '') and (edtNumSerie.Text = '') then
+      cbxSepararPorCNPJ.Checked := False;
+
     Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathCIOT',         edtPathCIOT.Text);

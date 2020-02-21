@@ -57,9 +57,7 @@ uses
     ,Graphics
    {$EndIf}
   {$EndIf}
-  {$IfDef NEXTGEN}
-   ,ACBrBase
-  {$EndIf};
+  ,ACBrBase;
 
 const
   cErrImgPCXMono = 'Imagem não é PCX Monocromática';
@@ -78,9 +76,9 @@ procedure AscIIToRasterStr(AscIIArtLines: TStrings; out AWidth: Integer;
   out AHeight: Integer; out ARasterStr: AnsiString);
 
 procedure RasterStrToColumnStr(const ARasterStr: AnsiString; AWidth: Integer;
-  ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+  ColumnSliceLines: TAnsiStringList; BytesPerSlice: Integer = 3);
 procedure AscIIToColumnStr(AscIIArtLines: TStrings; out AWidth: Integer;
-  out AHeight: Integer; ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+  out AHeight: Integer; ColumnSliceLines: TAnsiStringList; BytesPerSlice: Integer = 3);
 
 procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out AWidth: Integer;
   out AHeight: Integer; out ARasterStr: AnsiString);
@@ -96,6 +94,10 @@ procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
 implementation
 
 uses
+// DEBUG
+// {$IfDef ANDROID}
+// System.IOUtils,
+// {$EndIf}
   math, strutils,
   ACBrUtil, ACBrConsts;
 
@@ -237,7 +239,11 @@ begin
   end;
 
   //DEBUG
+  //{$IfDef ANDROID}
+  //WriteToFile( TPath.Combine( TPath.GetSharedDocumentsPath, 'Raster.txt'), ARasterStr );
+  //{$Else}
   //WriteToFile('c:\temp\Raster.txt', ARasterStr);
+  //{$EndIf}
 end;
 
 procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
@@ -304,7 +310,7 @@ begin
 end;
 
 procedure RasterStrToColumnStr(const ARasterStr: AnsiString; AWidth: Integer;
-  ColumnSliceLines: TStrings; BytesPerSlice: Integer);
+  ColumnSliceLines: TAnsiStringList; BytesPerSlice: Integer);
 var
   SL: TStringList;
   AHeight: Integer;
@@ -320,7 +326,7 @@ end;
 
 //https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
 procedure AscIIToColumnStr(AscIIArtLines: TStrings; out AWidth: Integer; out
-  AHeight: Integer; ColumnSliceLines: TStrings; BytesPerSlice: Integer);
+  AHeight: Integer; ColumnSliceLines: TAnsiStringList; BytesPerSlice: Integer);
 var
   SliceStart, Col, Row, RealHeight, RealWidth, BitsPerSlice: Integer;
   ByteStr: String;

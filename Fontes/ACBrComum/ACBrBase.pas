@@ -169,6 +169,25 @@ TACBrComponent = class( TComponent )
 
 TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
+TAnsiStringList = class
+  private
+    FList: array of AnsiString;
+    function GetCount: Integer;
+    function GetItem(Index: Integer): AnsiString;
+    procedure SetItem(Index: Integer; const Value: AnsiString);
+    function GetText: AnsiString;
+
+  public
+    constructor Create;
+
+    procedure Clear;
+    function Add(AAnsiString: AnsiString): Integer;
+
+    property Count: Integer read GetCount;
+    property Items[Index: Integer]: AnsiString read GetItem write SetItem; default;
+    property Text: AnsiString read GetText;
+  end;
+
 { TACBrObjectList }
 
 TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
@@ -760,6 +779,53 @@ procedure TACBrInformacoes.SetItem(Index: Integer;
   const Value: TACBrInformacao);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TAnsiStringList }
+
+constructor TAnsiStringList.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TAnsiStringList.Clear;
+begin
+  SetLength(FList,0);
+end;
+
+function TAnsiStringList.Add(AAnsiString: AnsiString): Integer;
+var
+  NewSize: Integer;
+begin
+  NewSize := GetCount+1;
+  SetLength(FList, NewSize);
+  FList[NewSize-1] := AAnsiString;
+end;
+
+function TAnsiStringList.GetCount: Integer;
+begin
+  Result := Length(FList);
+end;
+
+function TAnsiStringList.GetItem(Index: Integer): AnsiString;
+begin
+  Result := FList[Index]
+end;
+
+procedure TAnsiStringList.SetItem(Index: Integer; const Value: AnsiString);
+begin
+  FList[Index] := Value;
+end;
+
+function TAnsiStringList.GetText: AnsiString;
+var
+  i, l: Integer;
+begin
+  Result := '';
+  l := GetCount-1;
+  for i := 0 to l do
+    Result := Result + GetItem(i)
 end;
 
 end.

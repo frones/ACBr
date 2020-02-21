@@ -196,7 +196,7 @@ function RemoveString(const sSubStr, sString: String): String;
 function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: String): String;
 function StripHTML(const AHTMLString : String) : String;
-procedure AcharProximaTag(const AString: String;
+procedure AcharProximaTag(const ABinaryString: AnsiString;
   const PosIni: Integer; var ATag: String; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
@@ -1320,17 +1320,17 @@ end;
    Localiza uma Tag dentro de uma String, iniciando a busca em PosIni.
    Se encontrar uma Tag, Retorna a mesma em ATag, e a posição inicial dela em PosTag
  ---------------------------------------------------------------------------- }
-procedure AcharProximaTag(const AString: String;
+procedure AcharProximaTag(const ABinaryString: AnsiString;
   const PosIni: Integer; var ATag: String; var PosTag: Integer);
 var
    PosTagAux, FimTag, LenTag : Integer ;
 begin
   ATag   := '';
-  PosTag := PosEx( '<', AString, PosIni);
+  PosTag := PosEx( '<', ABinaryString, PosIni);
   if PosTag > 0 then
   begin
-    PosTagAux := PosEx( '<', AString, PosTag + 1);  // Verificando se Tag é inválida
-    FimTag    := PosEx( '>', AString, PosTag + 1);
+    PosTagAux := PosEx( '<', ABinaryString, PosTag + 1);  // Verificando se Tag é inválida
+    FimTag    := PosEx( '>', ABinaryString, PosTag + 1);
     if FimTag = 0 then                             // Tag não fechada ?
     begin
       PosTag := 0;
@@ -1340,11 +1340,11 @@ begin
     while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
     begin
       PosTag    := PosTagAux;
-      PosTagAux := PosEx( '<', AString, PosTag + 1);
+      PosTagAux := PosEx( '<', ABinaryString, PosTag + 1);
     end ;
 
     LenTag := FimTag - PosTag + 1 ;
-    ATag   := LowerCase( copy( AString, PosTag, LenTag ) );
+    ATag   := LowerCase( copy( ABinaryString, PosTag, LenTag ) );
   end ;
 end ;
 

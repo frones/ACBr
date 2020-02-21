@@ -19,7 +19,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
     Size.Height = 596.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Top
     Sizes = (
@@ -31,7 +31,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 202.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -133,7 +133,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             TabOrder = 0
             ColumnCollection = <
               item
-                Value = 58.139534883720930000
+                Value = 58.139534883720920000
               end
               item
                 Value = 41.860465116279070000
@@ -167,6 +167,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             end
             object cbSuportaBMP: TCheckBox
               Align = Client
+              IsChecked = True
               Margins.Left = 8.000000000000000000
               Margins.Right = 8.000000000000000000
               Size.Width = 151.441864013671900000
@@ -199,13 +200,13 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             TabOrder = 0
             ColumnCollection = <
               item
-                Value = 33.333333333333340000
+                Value = 33.333333333333330000
               end
               item
-                Value = 33.333333333333340000
+                Value = 33.333333333333330000
               end
               item
-                Value = 33.333333333333340000
+                Value = 33.333333333333330000
               end>
             ControlCollection = <
               item
@@ -326,14 +327,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 7
-          Text = 'Par'#226'metros da Configura'#231#227'o'
-          object ListBoxGroupHeader5: TListBoxGroupHeader
-            Size.Width = 405.000000000000000000
-            Size.Height = 30.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 6
-            Text = 'C'#243'digos de Barras'
-          end
+          Text = 'C'#243'digos de Barras'
         end
         object ListBoxItem1: TListBoxItem
           Position.Y = 296.000000000000000000
@@ -459,6 +453,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 9
+          Text = 'Par'#226'metros'
         end
         object lbBotoes: TListBoxItem
           Position.Y = 400.000000000000000000
@@ -572,7 +567,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 203.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -654,13 +649,13 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           end>
         RowCollection = <
           item
-            Value = 33.333333333333340000
+            Value = 33.333333333333330000
           end
           item
-            Value = 33.333333333333340000
+            Value = 33.333333333333330000
           end
           item
-            Value = 33.333333333333340000
+            Value = 33.333333333333330000
           end
           item
             SizeStyle = Auto

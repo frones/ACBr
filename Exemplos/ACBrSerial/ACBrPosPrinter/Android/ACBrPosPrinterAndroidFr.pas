@@ -65,7 +65,6 @@ type
     cbHRI: TCheckBox;
     seBarrasLargura: TSpinBox;
     seBarrasAltura: TSpinBox;
-    ListBoxGroupHeader5: TListBoxGroupHeader;
     ListBoxGroupHeader6: TListBoxGroupHeader;
     GridPanelLayout6: TGridPanelLayout;
     cbxModelo: TComboBox;

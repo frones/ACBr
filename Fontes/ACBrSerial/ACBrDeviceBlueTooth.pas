@@ -152,7 +152,7 @@ begin
   GravaLog('AcharPortasBlueTooth');
   AtivarBlueTooth;
   for DevBT in fsBluetooth.PairedDevices do
-    if TestBit(DevBT.ClassDevice, 10) then //  if (1536 and DevBT.ClassDevice) = 1536 then
+    //if TestBit(DevBT.ClassDevice, 10) then //  if (1536 and DevBT.ClassDevice) = 1536 then
       AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});
 end;
 

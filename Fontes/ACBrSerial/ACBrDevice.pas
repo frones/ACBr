@@ -219,7 +219,7 @@ TACBrTagProcessor = class
     constructor Create;
     destructor Destroy; override;
 
-    function DecodificarTagsFormatacao(const AString: AnsiString): AnsiString;
+    function DecodificarTagsFormatacao(const ABinaryString: AnsiString): AnsiString;
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
 
@@ -522,23 +522,31 @@ begin
   inherited Destroy;
 end;
 
-function TACBrTagProcessor.DecodificarTagsFormatacao(const AString: AnsiString
+function TACBrTagProcessor.DecodificarTagsFormatacao(const ABinaryString: AnsiString
   ): AnsiString;
 Var
   Tag1, Tag2: String;
-  Cmd : AnsiString ;
+  Cmd, LowerString : AnsiString ;
   PosTag1, LenTag1, PosTag2, FimTag : Integer ;
   ATag: TACBrTag;
 begin
-  Result := AString;
-  if not TraduzirTags then exit ;
+  if not TraduzirTags then
+  begin
+    Result := ABinaryString;
+    Exit;
+  end;
 
+  Result  := '';
   Tag1    := '';
   PosTag1 := 0;
+  FimTag  := 0;
+  LowerString := '';
 
-  AcharProximaTag( String(Result), 1, Tag1, PosTag1);
+  AcharProximaTag( ABinaryString, FimTag+1, Tag1, PosTag1);
   while Tag1 <> '' do
   begin
+    Result := Result + copy(ABinaryString, FimTag+1, PosTag1-(FimTag+1));
+
     LenTag1  := Length( Tag1 );
     ATag     := FTags.AcharTag( Tag1 ) ;
     Tag2     := '' ;
@@ -548,7 +556,10 @@ begin
       if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
       begin
         Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
-        PosTag2 := PosEx(Tag2, LowerCase(String(Result)), PosTag1+LenTag1 );
+        if (LowerString = '') then
+          LowerString := LowerCase(ABinaryString);
+
+        PosTag2 := PosEx(Tag2, LowerString, PosTag1+LenTag1 );
 
         if PosTag2 = 0 then             // Não achou Tag de Fechamento
         begin
@@ -557,11 +568,11 @@ begin
         end
         else
         begin
-          Cmd := TraduzirTagBloco( Tag1, copy(Result, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
+          Cmd := TraduzirTagBloco( Tag1, copy(ABinaryString, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
 
           // Faz da Tag1, todo o Bloco para fazer a substituição abaixo //
           LenTag1 := PosTag2-PosTag1+LenTag1+1;
-          Tag1    := copy(Result, PosTag1, LenTag1 )
+          Tag1    := copy(ABinaryString, PosTag1, LenTag1 )
         end;
       end
       else
@@ -570,18 +581,15 @@ begin
     else
       Cmd := Tag1;   // Tag não existe nesse TagProcessor
 
+    Result := Result + Cmd;
     FimTag := PosTag1 + LenTag1 -1 ;
-
-    if Cmd <> Tag1 then   // Houve mudança no conteudo  ? Se SIM, substitua
-    begin
-      Result := StuffString( Result, PosTag1, LenTag1, Cmd );
-      FimTag := FimTag + (Length(Cmd) - LenTag1);
-    end ;
 
     Tag1    := '';
     PosTag1 := 0;
-    AcharProximaTag( Result, FimTag + 1, Tag1, PosTag1 );
-  end ;
+    AcharProximaTag( ABinaryString, FimTag + 1, Tag1, PosTag1 );
+  end;
+
+  Result := Result + copy(ABinaryString, FimTag+1, Length(ABinaryString));
 end;
 
 function TACBrTagProcessor.TraduzirTag(const ATag: AnsiString): AnsiString;

@@ -45,10 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter
-  {$IFDEF NEXTGEN}
-   ,ACBrBase
-  {$ENDIF};
+  ACBrPosPrinter, ACBrBase;
 
 const
   MAX_LEN_CMD = 65535;
@@ -220,25 +217,27 @@ end;
 function ComandoImprimirImagemColumnStr( APosPrinter: TACBrPosPrinter;
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 var
-  Slices: TStrings;
+  Slices: TAnsiStringList;
   i: Integer;
+  ASlice: AnsiString;
 begin
   with APosPrinter do
   begin
     Result := PosPrinter.ComandoEspacoEntreLinhas(16);  // 24 dots
 
-    Slices := TStringList.Create;
+    Slices := TAnsiStringList.Create;
     try
       RasterStrToColumnStr(RasterStr, AWidth, Slices, 3);
 
       For i := 0 to Slices.Count-1 do
       begin
-          Result := Result + ESC +
-                             '*' + // Bit image mode
-                             #33 + // 24-dot double density
-                             IntToLEStr(AWidth) +
-                             Slices[i] +
-                             LF;
+        ASlice := Slices[i];
+        Result := Result + ESC +
+                           '*' + // Bit image mode
+                           #33 + // 24-dot double density
+                           IntToLEStr(AWidth) +
+                           ASlice +
+                           LF;
       end;
     finally
       Slices.Free;
@@ -259,20 +258,17 @@ end;
 function ComandoGravarLogoColumnStr( const RasterStr: AnsiString; AWidth: Integer;
   AHeight: Integer; KeyCode: Byte): AnsiString;
 var
-  SLColumnStr: TStrings;
-  HeightInBytes, LenBuffer, LenSLineBreak, LenK: Integer;
+  SLColumnStr: TAnsiStringList;
+  HeightInBytes, LenBuffer, LenK: Integer;
   Buffer: AnsiString;
 begin
   if KeyCode <> 1 then
     raise EPosPrinterException.Create(ACBrStr('ACBrPosPrinter gravando Logo em modo Legado (FS q), somente aceita a posição "1"'));
 
-  SLColumnStr := TStringList.Create;
+  SLColumnStr := TAnsiStringList.Create;
   try
     RasterStrToColumnStr(RasterStr, AWidth, SLColumnStr, 0);
     Buffer := SLColumnStr.Text;
-    LenSLineBreak := Length(sLineBreak);
-    LenBuffer := Length(Buffer);
-    Delete(Buffer, LenBuffer-LenSLineBreak+1, LenSLineBreak) ;  // Remove sLineBreak do final
   finally
     SLColumnStr.Free;
   end;

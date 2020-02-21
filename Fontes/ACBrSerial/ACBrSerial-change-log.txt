@@ -38,6 +38,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/02/2020
+-- ACBrDevice --
+[*] Método TACBrTagProcessor.DecodificarTagsFormatacao, otimizado e modificado
+    para funcionar corretamente com NEXTGEN
+
+-- ACBrDeviceBlueTooth --
+[*] Método TACBrDeviceBlueTooth.AcharPortasBlueTooth modificado para exibir
+    todos os dispositivos pareados
+
+-- ACBrEscPosEpson --
+[*] Ajustes após mudança de assinatura dos métodos em ACBrImage
+    (por: DSA)
+
 Data: 13/02/2020
 -- ACBrDeviceBlueTooth --
 [*] Ajuste para permitir a porta como "BTH", para conectar no primeiro dispositivo

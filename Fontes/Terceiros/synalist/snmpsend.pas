@@ -70,7 +70,10 @@ interface
 
 uses
   Classes, SysUtils,
-  blcksock, synautil, asn1util, synaip, synacode, synacrypt;
+  blcksock, synautil, asn1util, synaip, synacode, synacrypt
+  {$IfDef NEXTGEN}
+   ,synafpc, System.Generics.Collections, System.Generics.Defaults
+  {$EndIf};
 
 const
   cSnmpProtocol = '161';
@@ -161,6 +164,12 @@ type
     EngineStamp: Cardinal;
   end;
 
+  {$IFDEF NEXTGEN}
+    TSNMPMibList = TList<TSNMPMib>;
+  {$ELSE}
+    TSNMPMibList = TList;
+  {$ENDIF}
+
   {:@abstract(Data object abstracts SNMP data packet)}
   TSNMPRec = class(TObject)
   protected
@@ -170,7 +179,7 @@ type
     FErrorStatus: Integer;
     FErrorIndex: Integer;
     FCommunity: AnsiString;
-    FSNMPMibList: TList;
+    FSNMPMibList: TSNMPMibList;
     FMaxSize: Integer;
     FFlags: TV3Flags;
     FFlagReportable: Boolean;
@@ -227,7 +236,7 @@ type
     function MIBByIndex(Index: Integer): TSNMPMib;
 
     {:List of @link(TSNMPMib) objects.}
-    property SNMPMibList: TList read FSNMPMibList;
+    property SNMPMibList: TSNMPMibList read FSNMPMibList;
   published
     {:Version of SNMP packet. Default value is 0 (SNMP ver. 1). You can use
      value 1 for SNMPv2c or value 3 for SNMPv3.}
@@ -435,7 +444,7 @@ implementation
 constructor TSNMPRec.Create;
 begin
   inherited Create;
-  FSNMPMibList := TList.Create;
+  FSNMPMibList := TSNMPMibList.Create;
   Clear;
   FAuthMode := AuthMD5;
   FPassword := '';

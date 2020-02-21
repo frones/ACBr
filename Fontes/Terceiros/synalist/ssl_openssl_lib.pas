@@ -97,6 +97,9 @@ uses
 {$IfDef ANDROID}
   ,System.IOUtils
 {$EndIf}
+{$IFDEF NEXTGEN}
+  ,System.Generics.Collections, System.Generics.Defaults
+{$ENDIF}
 {$IFNDEF MSWINDOWS}
   {$IFDEF FPC}
     {$IFDEF UNIX}
@@ -1098,11 +1101,18 @@ var
   _CRYPTOSetLockingCallback: TCRYPTOSetLockingCallback = nil;
 {$ENDIF}
 
+type
+  {$IFDEF NEXTGEN}
+    TCriticalSectionList = TList<TCriticalSection>;
+  {$ELSE}
+    TCriticalSectionList = TList;
+  {$ENDIF}
+
 var
   SSLCS: TCriticalSection;
   SSLloaded: boolean = false;
 {$IFNDEF CIL}
-  Locks: TList;
+  Locks: TCriticalSectionList;
 {$ENDIF}
 
 {$IFNDEF CIL}
@@ -1876,7 +1886,7 @@ var
   n: integer;
   max: integer;
 begin
-  Locks := TList.Create;
+  Locks := TCriticalSectionList.Create;
   max := _CRYPTOnumlocks;
   for n := 1 to max do
     Locks.Add(TCriticalSection.Create);

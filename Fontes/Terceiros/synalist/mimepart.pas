@@ -68,12 +68,21 @@ interface
 
 uses
   SysUtils, Classes,
+  {$IFDEF NEXTGEN}
+    System.Generics.Collections, System.Generics.Defaults,
+  {$ENDIF}
   synafpc,
   synachar, synacode, synautil, mimeinln;
 
 type
 
   TMimePart = class;
+
+{$IFDEF NEXTGEN}
+  TSubPartsList = TList<TMimePart>;
+{$ELSE}
+  TSubPartsList = TList;
+{$ENDIF}
 
   {:@abstract(Procedural type for @link(TMimepart.Walkpart) hook). This hook is used for
    easy walking through MIME subparts.}
@@ -131,7 +140,7 @@ type
     FPrePart: TStringList;
     FPostPart: TStringList;
     FDecodedLines: TMemoryStream;
-    FSubParts: TList;
+    FSubParts: TSubPartsList;
     FOnWalkPart: THookWalkPart;
     FMaxLineLength: integer;
     FSubLevel: integer;
@@ -450,7 +459,7 @@ begin
   FPrePart := TStringList.Create;
   FPostPart := TStringList.Create;
   FDecodedLines := TMemoryStream.Create;
-  FSubParts := TList.Create;
+  FSubParts := TSubPartsList.Create;
   FTargetCharset := GetCurCP;
   //was 'US-ASCII' before, but RFC-ignorant Outlook sometimes using default
   //system charset instead.

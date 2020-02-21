@@ -69,7 +69,7 @@ uses
   SysUtils, Classes,
   blcksock, synautil, synaip, synsock
   {$IfDef NEXTGEN}
-   ,synafpc
+   ,synafpc, System.Generics.Collections, System.Generics.Defaults
   {$EndIf};
 
 const
@@ -125,12 +125,18 @@ type
     property Permission: string read FPermission write FPermission;
   end;
 
+  {$IFDEF NEXTGEN}
+    TFTPRecList = TList<TFTPListRec>;
+  {$ELSE}
+    TFTPRecList = TList;
+  {$ENDIF}
+
   {:@abstract(This is TList of TFTPListRec objects.)
    This object is used for holding lististing of all files information in listed
    directory on FTP server.}
   TFTPList = class(TObject)
   protected
-    FList: TList;
+    FList: TFTPRecList;
     FLines: TStringList;
     FMasks: TStringList;
     FUnparsedLines: TStringList;
@@ -178,7 +184,7 @@ type
 
     {:By this property you have access to list of @link(TFTPListRec).
      This is for compatibility only. Please, use @link(Items) instead.}
-    property List: TList read FList;
+    property List: TFTPRecList read FList;
 
     {:By this property you have access to list of @link(TFTPListRec).}
     property Items[Index: Integer]: TFTPListRec read GetListItem; default;
@@ -1220,7 +1226,7 @@ end;
 constructor TFTPList.Create;
 begin
   inherited Create;
-  FList := TList.Create;
+  FList := TFTPRecList.Create;
   FLines := TStringList.Create;
   FMasks := TStringList.Create;
   FUnparsedLines := TStringList.Create;

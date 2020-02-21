@@ -1,0 +1,897 @@
+object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
+  Left = 0
+  Top = 0
+  Caption = 'ACBrPosPrinter Android Teste'
+  ClientHeight = 596
+  ClientWidth = 405
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
+  DesignerMasterStyle = 3
+  object tabsPrincipal: TTabControl
+    Touch.GestureManager = GestureManager1
+    OnGesture = GestureDone
+    Align = Client
+    FullSize = True
+    Size.Width = 405.000000000000000000
+    Size.Height = 596.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 1
+    TabOrder = 0
+    TabPosition = Top
+    Sizes = (
+      405s
+      547s
+      405s
+      547s)
+    object tabConfig: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 202.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Configura'#231#227'o'
+      ExplicitSize.cx = 8.000000000000000000
+      ExplicitSize.cy = 8.000000000000000000
+      object ToolBar1: TToolBar
+        Size.Width = 405.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object lblTituloConfig: TLabel
+          Align = Contents
+          Size.Width = 405.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'toollabel'
+          TextSettings.HorzAlign = Center
+          Text = 'Configura'#231#227'o'
+        end
+      end
+      object ListBox1: TListBox
+        Align = Client
+        Size.Width = 405.000000000000000000
+        Size.Height = 449.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        DisableFocusEffect = True
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        Viewport.Width = 400.000000000000000000
+        Viewport.Height = 449.000000000000000000
+        object ListBoxGroupHeader2: TListBoxGroupHeader
+          StyledSettings = [Family, Size, Style, FontColor]
+          Size.Width = 400.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Impressoras BlueTooth'
+        end
+        object lbImpressoras: TListBoxItem
+          Position.Y = 30.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 40.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object cbxImpressorasBth: TComboBox
+            Align = Client
+            Margins.Left = 8.000000000000000000
+            Margins.Right = 2.000000000000000000
+            Size.Width = 265.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+          end
+          object btnProcurarBth: TCornerButton
+            Align = Right
+            Margins.Left = 8.000000000000000000
+            Margins.Top = 2.000000000000000000
+            Margins.Right = 8.000000000000000000
+            Margins.Bottom = 2.000000000000000000
+            Position.X = 283.000000000000000000
+            Position.Y = 2.000000000000000000
+            Sides = [Top, Left, Bottom, Right]
+            Size.Width = 109.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = 'cornerbuttonstyle'
+            TabOrder = 1
+            Text = 'Procurar'
+            XRadius = 3.000000000000000000
+            YRadius = 3.000000000000000000
+            OnClick = btnProcurarBthClick
+          end
+        end
+        object ListBoxGroupHeader1: TListBoxGroupHeader
+          StyledSettings = [Family, Size, Style, FontColor]
+          Position.Y = 70.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Modelo'
+        end
+        object lbModelos: TListBoxItem
+          Position.Y = 100.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 40.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object GridPanelLayout6: TGridPanelLayout
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ColumnCollection = <
+              item
+                Value = 58.139534883720930000
+              end
+              item
+                Value = 41.860465116279070000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = cbxModelo
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = cbSuportaBMP
+                Row = 0
+              end>
+            RowCollection = <
+              item
+                Value = 100.000000000000000000
+              end
+              item
+                SizeStyle = Auto
+              end>
+            object cbxModelo: TComboBox
+              Align = Client
+              Margins.Left = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 216.558135986328100000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+            object cbSuportaBMP: TCheckBox
+              Align = Client
+              Margins.Left = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 151.441864013671900000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'Suporta BMP'
+            end
+          end
+        end
+        object ListBoxGroupHeader3: TListBoxGroupHeader
+          Position.Y = 140.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = 'Largura e Espacejamento '
+        end
+        object lbLarguraEspacejamento: TListBoxItem
+          Position.Y = 170.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 96.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          object GridPanelLayout1: TGridPanelLayout
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 96.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ColumnCollection = <
+              item
+                Value = 33.333333333333340000
+              end
+              item
+                Value = 33.333333333333340000
+              end
+              item
+                Value = 33.333333333333340000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = Label2
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = Label3
+                Row = 0
+              end
+              item
+                Column = 2
+                Control = Label7
+                Row = 0
+              end
+              item
+                Column = 0
+                Control = seColunas
+                Row = 1
+              end
+              item
+                Column = 1
+                Control = seEspLinhas
+                Row = 1
+              end
+              item
+                Column = 2
+                Control = seLinhasPular
+                Row = 1
+              end>
+            RowCollection = <
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                SizeStyle = Auto
+              end>
+            object Label2: TLabel
+              Align = Client
+              AutoSize = True
+              Size.Width = 133.333328247070300000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Colunas'
+              TabOrder = 0
+            end
+            object Label3: TLabel
+              Align = Client
+              AutoSize = True
+              Size.Width = 133.333328247070300000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Espa'#231'os'
+              TabOrder = 3
+            end
+            object Label7: TLabel
+              Align = Client
+              AutoSize = True
+              Size.Width = 133.333343505859400000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Linhas Pulo'
+              TabOrder = 5
+            end
+            object seColunas: TSpinBox
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 2
+              Cursor = crIBeam
+              Value = 48.000000000000000000
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 125.333328247070300000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object seEspLinhas: TSpinBox
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 1
+              Cursor = crIBeam
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 125.333328247070300000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object seLinhasPular: TSpinBox
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 4
+              Cursor = crIBeam
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 125.333343505859400000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+        end
+        object ListBoxGroupHeader4: TListBoxGroupHeader
+          Position.Y = 266.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 7
+          Text = 'Par'#226'metros da Configura'#231#227'o'
+          object ListBoxGroupHeader5: TListBoxGroupHeader
+            Size.Width = 405.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            Text = 'C'#243'digos de Barras'
+          end
+        end
+        object ListBoxItem1: TListBoxItem
+          Position.Y = 296.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 74.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 8
+          object GridPanelLayout5: TGridPanelLayout
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 74.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ColumnCollection = <
+              item
+                Value = 30.940594059405940000
+              end
+              item
+                Value = 30.940594059405940000
+              end
+              item
+                Value = 38.118811881188120000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = Label1
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = Label4
+                Row = 0
+              end
+              item
+                Column = 2
+                Control = cbHRI
+                Row = 0
+                RowSpan = 2
+              end
+              item
+                Column = 0
+                Control = seBarrasLargura
+                Row = 1
+              end
+              item
+                Column = 1
+                Control = seBarrasAltura
+                Row = 1
+              end>
+            RowCollection = <
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                SizeStyle = Auto
+              end>
+            object Label1: TLabel
+              Align = Client
+              AutoSize = True
+              Size.Width = 123.762374877929700000
+              Size.Height = 37.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Largura'
+              TabOrder = 2
+            end
+            object Label4: TLabel
+              Align = Client
+              AutoSize = True
+              Size.Width = 123.762374877929700000
+              Size.Height = 37.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Altura'
+              TabOrder = 3
+            end
+            object cbHRI: TCheckBox
+              Align = Client
+              Margins.Left = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 136.475250244140600000
+              Size.Height = 74.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'Exibe Numero'
+            end
+            object seBarrasLargura: TSpinBox
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 0
+              Cursor = crIBeam
+              Value = 1.000000000000000000
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 115.762374877929700000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object seBarrasAltura: TSpinBox
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 1
+              Cursor = crIBeam
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 115.762374877929700000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+        end
+        object ListBoxGroupHeader6: TListBoxGroupHeader
+          Position.Y = 370.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 9
+        end
+        object lbBotoes: TListBoxItem
+          Position.Y = 400.000000000000000000
+          Size.Width = 400.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 6
+          object GridPanelLayout2: TGridPanelLayout
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 50.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ColumnCollection = <
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                Value = 50.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = btLerConfig
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = btSalvarConfig
+                Row = 0
+              end>
+            RowCollection = <
+              item
+                Value = 100.000000000000000000
+              end
+              item
+                SizeStyle = Auto
+              end>
+            object btLerConfig: TCornerButton
+              Align = Client
+              Margins.Left = 5.000000000000000000
+              Margins.Top = 5.000000000000000000
+              Margins.Right = 5.000000000000000000
+              Margins.Bottom = 5.000000000000000000
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 190.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = 'Ler'
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = btLerConfigClick
+            end
+            object btSalvarConfig: TCornerButton
+              Align = Client
+              Margins.Left = 5.000000000000000000
+              Margins.Top = 5.000000000000000000
+              Margins.Right = 5.000000000000000000
+              Margins.Bottom = 5.000000000000000000
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 190.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = 'Salvar'
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = btSalvarConfigClick
+            end
+          end
+        end
+      end
+      object Layout1: TLayout
+        Align = Bottom
+        Position.Y = 497.000000000000000000
+        Size.Width = 405.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        object SpeedButton1: TSpeedButton
+          Align = Right
+          Position.X = 357.000000000000000000
+          Position.Y = 1.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'nexttoolbutton'
+          Text = 'SpeedButton1'
+        end
+        object btnAtivar: TCornerButton
+          Align = Contents
+          CornerType = InnerRound
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Sides = [Top, Left, Bottom, Right]
+          Size.Width = 401.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Ativar'
+          XRadius = 3.000000000000000000
+          YRadius = 3.000000000000000000
+          OnClick = btnAtivarClick
+        end
+      end
+    end
+    object tabTeste: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 203.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Testes'
+      ExplicitSize.cx = 8.000000000000000000
+      ExplicitSize.cy = 8.000000000000000000
+      object ToolBar2: TToolBar
+        Size.Width = 405.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object lblTituloTestes: TLabel
+          Align = Contents
+          Size.Width = 405.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'toollabel'
+          TextSettings.HorzAlign = Center
+          Text = 'Testes'
+        end
+        object btnBack: TSpeedButton
+          Align = Left
+          Margins.Left = 5.000000000000000000
+          Position.X = 5.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'backtoolbutton'
+          Text = 'Go to <Tab>'
+          OnClick = btnBackClick
+        end
+      end
+      object GridPanelLayout3: TGridPanelLayout
+        Align = Top
+        Position.Y = 48.000000000000000000
+        Size.Width = 405.000000000000000000
+        Size.Height = 129.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = btnTiposLetra
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = btAlinhamento
+            Row = 0
+          end
+          item
+            Column = 0
+            Control = btnBarras
+            Row = 1
+          end
+          item
+            Column = 1
+            Control = btQRCode
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = btnLerStatus
+            Row = 2
+          end
+          item
+            Column = 1
+            Control = btnLerInfo
+            Row = 2
+          end>
+        RowCollection = <
+          item
+            Value = 33.333333333333340000
+          end
+          item
+            Value = 33.333333333333340000
+          end
+          item
+            Value = 33.333333333333340000
+          end
+          item
+            SizeStyle = Auto
+          end>
+        object btnTiposLetra: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = 'Tipos Letras'
+          OnClick = btnTiposLetraClick
+        end
+        object btAlinhamento: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Alinhamento'
+          OnClick = btAlinhamentoClick
+        end
+        object btnBarras: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          Text = 'Cod.Barras'
+          OnClick = btnBarrasClick
+        end
+        object btQRCode: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'QR Code'
+          OnClick = btQRCodeClick
+        end
+        object btnLerStatus: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Ler Status'
+          OnClick = btnLerStatusClick
+        end
+        object btnLerInfo: TButton
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 198.500000000000000000
+          Size.Height = 39.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Ler Info'
+          OnClick = btnLerInfoClick
+        end
+      end
+      object mImp: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Align = Client
+        Size.Width = 405.000000000000000000
+        Size.Height = 319.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 397.000000000000000000
+        Viewport.Height = 311.000000000000000000
+      end
+      object GridPanelLayout4: TGridPanelLayout
+        Align = Bottom
+        Position.Y = 496.000000000000000000
+        Size.Width = 405.000000000000000000
+        Size.Height = 51.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 1
+            Control = btnImprimir
+            Row = 0
+          end
+          item
+            Column = 0
+            Control = btnLimpar
+            Row = 0
+          end>
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end
+          item
+            SizeStyle = Auto
+          end>
+        object btnImprimir: TCornerButton
+          Align = Client
+          CornerType = InnerRound
+          Images = ImageList1
+          ImageIndex = 0
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Sides = [Top, Left, Bottom, Right]
+          Size.Width = 198.500000000000000000
+          Size.Height = 47.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'btnImprimirStyle1'
+          TabOrder = 1
+          Text = 'Imprimir'
+          XRadius = 3.000000000000000000
+          YRadius = 3.000000000000000000
+          OnClick = btnImprimirClick
+        end
+        object btnLimpar: TCornerButton
+          Align = Client
+          CornerType = InnerRound
+          Images = ImageList1
+          ImageIndex = 1
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Sides = [Top, Left, Bottom, Right]
+          Size.Width = 198.500000000000000000
+          Size.Height = 47.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Limpar'
+          XRadius = 3.000000000000000000
+          YRadius = 3.000000000000000000
+          OnClick = btnLimparClick
+        end
+      end
+    end
+  end
+  object GestureManager1: TGestureManager
+    Sensitivity = 80.000000000000000000
+    Left = 192
+    Top = 1
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    Left = 352
+  end
+  object ImageList1: TImageList
+    Source = <
+      item
+        MultiResBitmap.Height = 32
+        MultiResBitmap.Width = 32
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              00E8494441545847ED96B10DC230104503A2A4600C0A76A2A46404600286A060
+              004A0A86601046807FE86C59C8CE39B9181C744F7A3A29922F5F39277163184A
+              265C25765CB51CB826C90DF4E4AA45BCDF946B35582089EA0255F7968D8219DC
+              C22B7C407AE587947A5EE01A8A50981B8C352AE109B6427B25B6B0A4AD4FEA0E
+              638B86F20857F01C5CA3F125091797700E892574D7684F79BEFD1DDA400A45D5
+              B1E0FAE6F33B44897F81CF61BF0E893E23CBFDDD383AF5B4914954BF8752C78C
+              3D5742B387C23E21FE5892DB3C6CAA0924AEAD7E6429721E7B8A4EE3EE1348C3
+              FF8ECC0EF9C648689A17982A96FDF6410B280000000049454E44AE426082}
+            FileName = 'C:\temp\baseline_print_black_18dp.png'
+          end>
+        Name = 'Print'
+      end
+      item
+        MultiResBitmap.Height = 32
+        MultiResBitmap.Width = 32
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              00B9494441545847ED97B10DC23014440DA2A060080A766104C66004C408F46C
+              80D88701D243418904F7AD5F4192B36507B9B8273D9DBEE4C427D92912842864
+              E699CB02EEE12A4EBF3CE109BEE2343156E602DF445B636BAB72807D9B9568EF
+              1C64EED90CCD156A8ED4AF6CF4DC33387A0E925AC82E630DE87EBAD40C1562A8
+              104385182AC45021860A315488F1CF420FCF51520BDD3C4B387B56610BEFF0FB
+              1F2B557B76032939BFD24BB883EB38A5634775855D9C849894103E5AAB390CA7
+              E1D78F0000000049454E44AE426082}
+            FileName = 'C:\temp\baseline_delete_black_18dp.png'
+          end>
+        Name = 'Clean'
+      end>
+    Destination = <>
+    Left = 10
+    Top = 8
+  end
+end

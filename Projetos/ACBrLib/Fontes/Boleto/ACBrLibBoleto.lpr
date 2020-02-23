@@ -64,6 +64,7 @@ exports
   Boleto_LimparLista,
   Boleto_TotalTitulosLista,
   Boleto_Imprimir,
+  Boleto_ImprimirBoleto,
   Boleto_GerarPDF,
   Boleto_GerarHTML,
   Boleto_GerarRemessa,

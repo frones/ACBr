@@ -115,6 +115,9 @@ type
   function Boleto_Imprimir(eNomeImpressora: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+  function Boleto_ImprimirBoleto(eIndice: longint; eNomeImpressora: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
   function Boleto_GerarPDF: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -247,7 +250,6 @@ end;
 {%endregion}
 
 {%region Boleto}
-
 
 function Boleto_ConfigurarDados(eArquivoIni: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;
@@ -431,7 +433,10 @@ begin
   try
     VerificarLibInicializada;
     NomeImpressora := String(eNomeImpressora);
-    pLib.GravarLog('Boleto_Imprimir', logNormal);
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('Boleto_Imprimir(' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('Boleto_Imprimir', logNormal);
 
     with TACBrLibBoleto(pLib) do
     begin
@@ -439,6 +444,7 @@ begin
       try
         if NaoEstaVazio(NomeImpressora) then
           BoletoDM.ACBrBoleto1.ACBrBoletoFC.PrinterName := NomeImpressora;
+
         BoletoDM.ACBrBoleto1.Imprimir;
         Result := SetRetorno(ErrOK);
 
@@ -453,7 +459,47 @@ begin
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
+end;
 
+function Boleto_ImprimirBoleto(eIndice: longint; eNomeImpressora: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  NomeImpressora : String;
+begin
+  try
+    VerificarLibInicializada;
+    NomeImpressora := String(eNomeImpressora);
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('Boleto_ImprimirBoleto(' + IntToStr(eIndice) + ', ' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('Boleto_ImprimirBoleto', logNormal);
+
+    with TACBrLibBoleto(pLib) do
+    begin
+      BoletoDM.Travar;
+      try
+        if NaoEstaVazio(NomeImpressora) then
+          BoletoDM.ACBrBoleto1.ACBrBoletoFC.PrinterName := NomeImpressora;
+
+        BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := eIndice;
+        try
+          BoletoDM.ACBrBoleto1.Imprimir;
+        finally
+          BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := -1;
+        end;
+        Result := SetRetorno(ErrOK);
+
+      finally
+        BoletoDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function Boleto_GerarPDF: longint;

@@ -65,11 +65,11 @@ METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrSat
     eArqConfig :=if(eArqConfig = nil, '', eArqConfig)
     eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
 
-    ::hHandle := DllLoad(ACBrLIBSat)
+    ::hHandle := DllLoad(ACBrLIB)
     if EMPTY(::hHandle) // Eric.Developer: xHarbour retorna 0x00000000
         oErr := ErrorNew()
         oErr:Severity := ES_ERROR        
-        oErr:Description := "Erro a carregar a dll [" + ACBrLIBSat + "]"
+        oErr:Description := "Erro a carregar a dll [" + ACBrLIB + "]"
         Throw(oErr)
     endif
     hResult := DllCall(::hHandle, DLL_OSAPI, "SAT_Inicializar", hb_StrToUTF8(eArqConfig), hb_StrToUTF8(eChaveCrypt))

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/02/2020
+-- ACBrDevice, ACBrDeviceBlueTooth --
+[*] mudança de assinatura do método:
+    AcharPortasBlueTooth(const AStringList: TStrings; TodasPortas: Boolean = True);
+    (por: DSA)
+
 Data: 21/02/2020
 -- ACBrDevice --
 [*] Método TACBrTagProcessor.DecodificarTagsFormatacao, otimizado e modificado

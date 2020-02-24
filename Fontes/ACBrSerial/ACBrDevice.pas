@@ -380,7 +380,7 @@ TACBrDevice = class( TComponent )
        var ProtocoloACBr: Integer);
     {$EndIf}
     {$IfDef HAS_BLUETOOTH}
-    procedure AcharPortasBlueTooth(const AStringList: TStrings);
+    procedure AcharPortasBlueTooth(const AStringList: TStrings; TodasPortas: Boolean = True);
     {$EndIf}
     function DeviceToString(OnlyException: Boolean): String;
 
@@ -1136,9 +1136,10 @@ begin
   Result := fsDeviceBlueTooth.BlueTooth;
 end;
 
-procedure TACBrDevice.AcharPortasBlueTooth(const AStringList: TStrings);
+procedure TACBrDevice.AcharPortasBlueTooth(const AStringList: TStrings;
+  TodasPortas: Boolean = True);
 begin
-  fsDeviceBlueTooth.AcharPortasBlueTooth(AStringList);
+  fsDeviceBlueTooth.AcharPortasBlueTooth(AStringList, TodasPortas);
 end;
 {$EndIf}
 

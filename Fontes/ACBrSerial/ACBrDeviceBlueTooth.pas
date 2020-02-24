@@ -70,7 +70,8 @@ type
 
     procedure Conectar(const APorta: String; const ATimeOutMilissegundos: Integer); override;
     procedure Desconectar(IgnorarErros: Boolean = True); override;
-    procedure AcharPortasBlueTooth(const AStringList: TStrings);
+    procedure AcharPortasBlueTooth(const AStringList: TStrings; TodasPortas: Boolean = True);
+    function IsPrinterDevice(ABluetoothDevice: TBluetoothDevice): Boolean;
 
     procedure EnviaString(const AString: AnsiString); override;
     function LeString(ATimeOutMilissegundos: Integer = 0; NumBytes: Integer = 0;
@@ -141,19 +142,28 @@ begin
   Result := Ok;
 end;
 
-procedure TACBrDeviceBlueTooth.AcharPortasBlueTooth(const AStringList: TStrings);
+procedure TACBrDeviceBlueTooth.AcharPortasBlueTooth(const AStringList: TStrings;
+  TodasPortas: Boolean);
 var
   DevBT: TBluetoothDevice;
+begin
+
+  GravaLog('AcharPortasBlueTooth');
+  AtivarBlueTooth;
+  for DevBT in fsBluetooth.PairedDevices do
+    if TodasPortas or IsPrinterDevice(DevBT) then
+      AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});
+end;
+
+function TACBrDeviceBlueTooth.IsPrinterDevice(
+  ABluetoothDevice: TBluetoothDevice): Boolean;
 begin
   // https://www.ampedrftech.com/guides/cod_definition.pdf
   // Bits 12 a 8 - 00110 Imaging (printing, scanner, camera, display, ...)
   // 1536 - 00110 0000 0000
 
-  GravaLog('AcharPortasBlueTooth');
-  AtivarBlueTooth;
-  for DevBT in fsBluetooth.PairedDevices do
-    //if TestBit(DevBT.ClassDevice, 10) then //  if (1536 and DevBT.ClassDevice) = 1536 then
-      AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});
+  Result := (1536 and ABluetoothDevice.ClassDevice) = 1536;
+  //Result := TestBit(ABluetoothDevice.ClassDevice, 10);
 end;
 
 procedure TACBrDeviceBlueTooth.AtivarBlueTooth;

@@ -795,12 +795,10 @@ begin
 end;
 
 function TAnsiStringList.Add(AAnsiString: AnsiString): Integer;
-var
-  NewSize: Integer;
 begin
-  NewSize := GetCount+1;
-  SetLength(FList, NewSize);
-  FList[NewSize-1] := AAnsiString;
+  Result := GetCount;
+  SetLength(FList, Result+1);
+  FList[Result] := AAnsiString;
 end;
 
 function TAnsiStringList.GetCount: Integer;

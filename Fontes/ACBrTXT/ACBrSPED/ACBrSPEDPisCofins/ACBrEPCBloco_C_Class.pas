@@ -2421,11 +2421,11 @@ begin
              LFill(VL_DESC,0,2)   +
              LFill(CstPisToStr(CST_PIS))       +
              LFill(VL_BC_PIS,0,2)              +
-             DFill(ALIQ_PIS, 4)                +
+             DFill(ALIQ_PIS, 4 , (CST_PIS in [stpisValorAliquotaPorST]) )                +
              LFill(VL_PIS,0,2)                 +
              LFill(CstCofinsToStr(CST_COFINS)) +
              LFill(VL_BC_COFINS,0,2)           +
-             DFill(ALIQ_COFINS, 4)             +
+             DFill(ALIQ_COFINS, 4 , (CST_COFINS in [stcofinsValorAliquotaPorST]) )       +
              LFill(VL_COFINS,0,2)              +
              LFill(COD_CTA) ) ;
         //

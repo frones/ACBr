@@ -123,12 +123,15 @@ implementation
 constructor TMDFeW.Create(AOwner: TMDFe);
 begin
   inherited Create;
-  FMDFe := AOwner;
 
-  FGerador                  := TGerador.Create;
-  FGerador.FIgnorarTagNivel := '|?xml version|MDFe xmlns|infMDFe versao|';
+  FMDFe    := AOwner;
+  FGerador := TGerador.Create;
 
-  FOpcoes                       := TGeradorOpcoes.Create;
+  FGerador.FIgnorarTagNivel   := '|?xml version|MDFe xmlns|infMDFe versao|';
+  FGerador.Opcoes.QuebraLinha := ';';
+
+  FOpcoes := TGeradorOpcoes.Create;
+
   FOpcoes.FNormatizarMunicipios := False;
   FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes    := False;

@@ -92,7 +92,7 @@ type
     function cStatProcessado(AValue: integer): Boolean;
     function cStatCancelado(AValue: integer): Boolean;
 
-    function Consultar( const AChave: String = ''): Boolean;
+    function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function ConsultarMDFeNaoEnc(const ACNPJCPF: String): Boolean;
     function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
@@ -531,7 +531,7 @@ begin
   Result := True;
 end;
 
-function TACBrMDFe.Consultar(const AChave: String): Boolean;
+function TACBrMDFe.Consultar(const AChave: String; AExtrairEventos: Boolean): Boolean;
 var
  i: Integer;
 begin
@@ -541,14 +541,16 @@ begin
   if NaoEstaVazio(AChave) then
   begin
     Manifestos.Clear;
-    WebServices.Consulta.MDFeChave := AChave;
+    WebServices.Consulta.MDFeChave      := AChave;
+    WebServices.Consulta.ExtrairEventos := AExtrairEventos;
     WebServices.Consulta.Executar;
   end
   else
   begin
     for i := 0 to Manifestos.Count - 1 do
     begin
-      WebServices.Consulta.MDFeChave := Manifestos.Items[i].NumID;
+      WebServices.Consulta.MDFeChave      := Manifestos.Items[i].NumID;
+      WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       WebServices.Consulta.Executar;
     end;
   end;

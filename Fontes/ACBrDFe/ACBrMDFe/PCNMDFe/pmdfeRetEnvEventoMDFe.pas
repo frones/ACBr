@@ -83,12 +83,14 @@ type
     FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
-    FXML: AnsiString;
+    FXML: String;
     Fsignature: Tsignature;
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: boolean;
+
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property idLote: Integer                    read FidLote    write FidLote;
     property versao: String                     read Fversao    write Fversao;
@@ -100,7 +102,7 @@ type
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
-    property XML: AnsiString                    read FXML       write FXML;  
+    property XML: String                        read FXML       write FXML;
   end;
 
 implementation

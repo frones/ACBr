@@ -269,6 +269,7 @@ type
     FOwner: TACBrDFe;
     FManifestos: TManifestos;
     FMDFeChave: String;
+    FExtrairEventos: Boolean;
     FProtocolo: String;
     FDhRecbto: TDateTime;
     FXMotivo: String;
@@ -281,6 +282,7 @@ type
 
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
+
     procedure SetMDFeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
@@ -298,6 +300,7 @@ type
     procedure Clear; override;
 
     property MDFeChave: String read FMDFeChave write SetMDFeChave;
+    property ExtrairEventos: Boolean read FExtrairEventos write FExtrairEventos;
     property Protocolo: String read FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
@@ -1665,6 +1668,44 @@ begin
 end;
 
 function TMDFeConsulta.TratarResposta: Boolean;
+
+procedure SalvarEventos(Retorno: string);
+var
+  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
+  Inicio, Fim: Integer;
+  TipoEvento: TpcnTpEvento;
+  Ok: Boolean;
+begin
+  while Retorno <> '' do
+  begin
+    Inicio := Pos('<procEventoMDFe', Retorno);
+    Fim    := Pos('</procEventoMDFe>', Retorno) + 15;
+
+    aEvento := Copy(Retorno, Inicio, Fim - Inicio + 1);
+
+    Retorno := Copy(Retorno, Fim + 1, Length(Retorno));
+
+    aProcEvento := '<procEventoMDFe versao="' + FVersao + '" xmlns="' + ACBRMDFe_NAMESPACE + '">' +
+                      SeparaDados(aEvento, 'procEventoMDFe') +
+                   '</procEventoMDFe>';
+
+    Inicio := Pos('Id=', aProcEvento) + 6;
+    Fim    := 52;
+
+    if Inicio = 6 then
+      aIDEvento := FormatDateTime('yyyymmddhhnnss', Now)
+    else
+      aIDEvento := Copy(aProcEvento, Inicio, Fim);
+
+    TipoEvento  := StrToTpEventoMDFe(Ok, SeparaDados(aEvento, 'tpEvento'));
+    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
+    sPathEvento := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
+
+    if (aProcEvento <> '') then
+      FPDFeOwner.Gravar( aIDEvento + '-procEventoMDFe.xml', aProcEvento, sPathEvento);
+  end;
+end;
+
 var
   MDFeRetorno: TRetConsSitMDFe;
   SalvarXML, MDFCancelado, MDFEncerrado, Atualiza: Boolean;
@@ -1827,104 +1868,128 @@ begin
                 (MDFeRetorno.cStat = 132);
     end;
 
-    for i := 0 to TACBrMDFe(FPDFeOwner).Manifestos.Count - 1 do
+    if Result then
     begin
-      with TACBrMDFe(FPDFeOwner).Manifestos.Items[i] do
+      if TACBrMDFe(FPDFeOwner).Manifestos.Count > 0 then
       begin
-        if (OnlyNumber(FMDFeChave) = NumID) then
+        for i := 0 to TACBrMDFe(FPDFeOwner).Manifestos.Count - 1 do
         begin
-          Atualiza := (NaoEstaVazio(MDFeRetorno.XMLprotMDFe));
-
-          if Atualiza and
-             TACBrMDFe(FPDFeOwner).cStatCancelado(MDFeRetorno.cStat) then
-            Atualiza := False;
-
-          if (FPConfiguracoesMDFe.Geral.ValidarDigest) and
-             (MDFeRetorno.protMDFe.digVal <> '') and (MDFe.signature.DigestValue <> '') and
-             (UpperCase(MDFe.signature.DigestValue) <> UpperCase(MDFeRetorno.protMDFe.digVal)) then
+          with TACBrMDFe(FPDFeOwner).Manifestos.Items[i] do
           begin
-            raise EACBrMDFeException.Create('DigestValue do documento ' +
-                NumID + ' não confere.');
-          end;
-
-          // Atualiza o Status da MDFe interna //
-          MDFe.procMDFe.cStat := MDFeRetorno.cStat;
-
-          if Atualiza then
-          begin
-            MDFe.procMDFe.tpAmb := MDFeRetorno.tpAmb;
-            MDFe.procMDFe.verAplic := MDFeRetorno.verAplic;
-            MDFe.procMDFe.chMDFe := MDFeRetorno.chMDFe;
-            MDFe.procMDFe.dhRecbto := FDhRecbto;
-            MDFe.procMDFe.nProt := FProtocolo;
-            MDFe.procMDFe.digVal := MDFeRetorno.protMDFe.digVal;
-            MDFe.procMDFe.cStat := MDFeRetorno.cStat;
-            MDFe.procMDFe.xMotivo := MDFeRetorno.xMotivo;
-
-            AProcMDFe := TProcMDFe.Create;
-            try
-              AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(XMLOriginal);
-              AProcMDFe.XML_Prot := MDFeRetorno.XMLprotMDFe;
-              AProcMDFe.Versao := FPVersaoServico;
-              AProcMDFe.GerarXML;
-
-              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
-
-              FRetMDFeDFe := '';
-
-              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
-              begin
-                Inicio := Pos('<procEventoMDFe', FPRetWS);
-                Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
-
-                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                FRetMDFeDFe := '<MDFeDFe>' +
-                                '<procMDFe versao="' + FVersao + '">' +
-                                  SeparaDados(XMLOriginal, 'mdfeProc') +
-                                '</procMDFe>' +
-                                '<procEventoMDFe versao="' + FVersao + '">' +
-                                  aEventos +
-                                '</procEventoMDFe>' +
-                               '</MDFeDFe>';
-
-              end;
-            finally
-              AProcMDFe.Free;
-            end;
-
-            SalvarXML := Result and
-                       FPConfiguracoesMDFe.Arquivos.Salvar and
-                       ((not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
-                         Processado);
-
-            if SalvarXML then
+            if (OnlyNumber(FMDFeChave) = NumID) then
             begin
-              if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
-                dhEmissao := MDFe.Ide.dhEmi
-              else
-                dhEmissao := Now;
+              Atualiza := (NaoEstaVazio(MDFeRetorno.XMLprotMDFe));
 
-              sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJCPF, MDFe.emit.IE));
+              if Atualiza and
+                 TACBrMDFe(FPDFeOwner).cStatCancelado(MDFeRetorno.cStat) then
+                Atualiza := False;
 
-              if (FRetMDFeDFe <> '') then
-                FPDFeOwner.Gravar( FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe, sPathMDFe);
-
-              // Salva o XML do MDF-e assinado e protocolado
-              NomeXMLSalvo := '';
-              if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+              if (FPConfiguracoesMDFe.Geral.ValidarDigest) and
+                 (MDFeRetorno.protMDFe.digVal <> '') and (MDFe.signature.DigestValue <> '') and
+                 (UpperCase(MDFe.signature.DigestValue) <> UpperCase(MDFeRetorno.protMDFe.digVal)) then
               begin
-                FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
-                NomeXMLSalvo := NomeArq;
+                raise EACBrMDFeException.Create('DigestValue do documento ' +
+                    NumID + ' não confere.');
               end;
 
-              // Salva na pasta baseado nas configurações do PathCTe
-              if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
-                GravarXML;
+              // Atualiza o Status da MDFe interna //
+              MDFe.procMDFe.cStat := MDFeRetorno.cStat;
+
+              if Atualiza then
+              begin
+                MDFe.procMDFe.tpAmb := MDFeRetorno.tpAmb;
+                MDFe.procMDFe.verAplic := MDFeRetorno.verAplic;
+                MDFe.procMDFe.chMDFe := MDFeRetorno.chMDFe;
+                MDFe.procMDFe.dhRecbto := FDhRecbto;
+                MDFe.procMDFe.nProt := FProtocolo;
+                MDFe.procMDFe.digVal := MDFeRetorno.protMDFe.digVal;
+                MDFe.procMDFe.cStat := MDFeRetorno.cStat;
+                MDFe.procMDFe.xMotivo := MDFeRetorno.xMotivo;
+
+                AProcMDFe := TProcMDFe.Create;
+                try
+                  AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(XMLOriginal);
+                  AProcMDFe.XML_Prot := MDFeRetorno.XMLprotMDFe;
+                  AProcMDFe.Versao := FPVersaoServico;
+                  AProcMDFe.GerarXML;
+
+                  XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
+
+                  FRetMDFeDFe := '';
+
+                  if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
+                  begin
+                    Inicio := Pos('<procEventoMDFe', FPRetWS);
+                    Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
+
+                    aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+                    FRetMDFeDFe := '<MDFeDFe>' +
+                                    '<procMDFe versao="' + FVersao + '">' +
+                                      SeparaDados(XMLOriginal, 'mdfeProc') +
+                                    '</procMDFe>' +
+                                    '<procEventoMDFe versao="' + FVersao + '">' +
+                                      aEventos +
+                                    '</procEventoMDFe>' +
+                                   '</MDFeDFe>';
+
+                  end;
+                finally
+                  AProcMDFe.Free;
+                end;
+
+                SalvarXML := Result and
+                           FPConfiguracoesMDFe.Arquivos.Salvar and
+                           ((not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                             Processado);
+
+                if SalvarXML then
+                begin
+                  if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
+                    dhEmissao := MDFe.Ide.dhEmi
+                  else
+                    dhEmissao := Now;
+
+                  sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJCPF, MDFe.emit.IE));
+
+                  if (FRetMDFeDFe <> '') then
+                    FPDFeOwner.Gravar( FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe, sPathMDFe);
+
+                  // Salva o XML do MDF-e assinado e protocolado
+                  NomeXMLSalvo := '';
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
+
+                  // Salva na pasta baseado nas configurações do PathCTe
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML;
+
+                  // Salva o XML de eventos retornados ao consultar um MDF-e
+                  if ExtrairEventos then
+                    SalvarEventos(aEventos);
+                end;
+              end;
+
+              break;
             end;
           end;
+        end;
+      end
+      else
+      begin
+        if ExtrairEventos and FPConfiguracoesMDFe.Arquivos.Salvar and
+           (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
+        begin
+          Inicio := Pos('<procEventoMDFe', FPRetWS);
+          Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
 
-          break;
+          aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+          // Salva o XML de eventos retornados ao consultar um MDF-e
+          SalvarEventos(aEventos);
         end;
       end;
     end;

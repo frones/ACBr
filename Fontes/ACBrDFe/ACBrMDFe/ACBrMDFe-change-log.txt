@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2020
+-- ACBrMDFe/ACBrMDFeWebServices --
+[+] Implementado a extração dos eventos do retorno da consulta.
+   Por: Italo Jurisato Junior
+
 17/02/2020
 -- pmdfeMDFeW --
 [*] Remoção da propriedade: AjustarTagNro.

@@ -177,7 +177,7 @@ type
     FemailDest: String;
     FdhRegEvento: TDateTime;
     FnProt: String;
-    FXML: AnsiString;
+    FXML: String;
     FNomeArquivo: String;
   public
     property Id: String              read FId          write FId;
@@ -194,7 +194,7 @@ type
     property emailDest: String       read FemailDest   write FemailDest;
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
-    property XML: AnsiString         read FXML         write FXML;
+    property XML: String             read FXML         write FXML;
     property NomeArquivo: String     read FNomeArquivo write FNomeArquivo;
   end;
 

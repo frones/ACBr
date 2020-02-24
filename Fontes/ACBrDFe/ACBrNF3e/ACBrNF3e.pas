@@ -94,7 +94,7 @@ type
     function Enviar(const ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
-    function Consultar( const AChave: String = ''): Boolean;
+    function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
@@ -556,7 +556,7 @@ begin
   Result := True;
 end;
 
-function TACBrNF3e.Consultar(const AChave: String): Boolean;
+function TACBrNF3e.Consultar(const AChave: String; AExtrairEventos: Boolean): Boolean;
 var
   i: integer;
 begin
@@ -566,14 +566,16 @@ begin
   if NaoEstaVazio(AChave) then
   begin
     NotasFiscais.Clear;
-    WebServices.Consulta.NF3eChave := AChave;
+    WebServices.Consulta.NF3eChave      := AChave;
+    WebServices.Consulta.ExtrairEventos := AExtrairEventos;
     WebServices.Consulta.Executar;
   end
   else
   begin
     for i := 0 to NotasFiscais.Count - 1 do
     begin
-      WebServices.Consulta.NF3eChave := NotasFiscais.Items[i].NumID;
+      WebServices.Consulta.NF3eChave      := NotasFiscais.Items[i].NumID;
+      WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       WebServices.Consulta.Executar;
     end;
   end;

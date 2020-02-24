@@ -270,6 +270,7 @@ type
   private
     FOwner: TACBrDFe;
     FNF3eChave: String;
+    FExtrairEventos: Boolean;
     FNotasFiscais: TNotasFiscais;
     FProtocolo: String;
     FDhRecbto: TDateTime;
@@ -283,6 +284,7 @@ type
 
     FprotNF3e: TProcNF3e;
     FprocEventoNF3e: TRetEventoNF3eCollection;
+
     procedure SetNF3eChave(const AValue: String);
   protected
     procedure DefinirURL; override;
@@ -300,6 +302,7 @@ type
     procedure Clear; override;
 
     property NF3eChave: String read FNF3eChave write SetNF3eChave;
+    property ExtrairEventos: Boolean read FExtrairEventos write FExtrairEventos;
     property Protocolo: String read FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
@@ -1829,6 +1832,44 @@ begin
 end;
 
 function TNF3eConsulta.TratarResposta: Boolean;
+
+procedure SalvarEventos(Retorno: string);
+var
+  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
+  Inicio, Fim: Integer;
+  TipoEvento: TpcnTpEvento;
+  Ok: Boolean;
+begin
+  while Retorno <> '' do
+  begin
+    Inicio := Pos('<procEventoNF3e', Retorno);
+    Fim    := Pos('</procEventoNF3e>', Retorno) + 15;
+
+    aEvento := Copy(Retorno, Inicio, Fim - Inicio + 1);
+
+    Retorno := Copy(Retorno, Fim + 1, Length(Retorno));
+
+    aProcEvento := '<procEventoNF3e versao="' + FVersao + '" xmlns="' + ACBRNF3e_NAMESPACE + '">' +
+                      SeparaDados(aEvento, 'procEventoNF3e') +
+                   '</procEventoNF3e>';
+
+    Inicio := Pos('Id=', aProcEvento) + 6;
+    Fim    := 52;
+
+    if Inicio = 6 then
+      aIDEvento := FormatDateTime('yyyymmddhhnnss', Now)
+    else
+      aIDEvento := Copy(aProcEvento, Inicio, Fim);
+
+    TipoEvento  := StrToTpEventoNF3e(Ok, SeparaDados(aEvento, 'tpEvento'));
+    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
+    sPathEvento := PathWithDelim(FPConfiguracoesNF3e.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
+
+    if (aProcEvento <> '') then
+      FPDFeOwner.Gravar( aIDEvento + '-procEventoNF3e.xml', aProcEvento, sPathEvento);
+  end;
+end;
+
 var
   NF3eRetorno: TRetConsSitNF3e;
   SalvarXML, NFCancelada, Atualiza: Boolean;
@@ -1989,136 +2030,160 @@ begin
                 CstatCancelada(NF3eRetorno.CStat);
     end;
 
-    for i := 0 to TACBrNF3e(FPDFeOwner).NotasFiscais.Count - 1 do
+    if Result then
     begin
-      with TACBrNF3e(FPDFeOwner).NotasFiscais.Items[i] do
+      if TACBrNF3e(FPDFeOwner).NotasFiscais.Count > 0 then
       begin
-        if (OnlyNumber(FNF3eChave) = NumID) then
+        for i := 0 to TACBrNF3e(FPDFeOwner).NotasFiscais.Count - 1 do
         begin
-          Atualiza := (NaoEstaVazio(NF3eRetorno.XMLprotNF3e));
-          if Atualiza and
-             TACBrNF3e(FPDFeOwner).CstatCancelada(NF3eRetorno.CStat) then
-            Atualiza := False;
-
-          // No retorno pode constar que a nota esta cancelada, mas traz o grupo
-          // <protNF3e> com as informações da sua autorização
-          if not Atualiza and TACBrNF3e(FPDFeOwner).cstatProcessado(NF3eRetorno.protNF3e.cStat) then
-            Atualiza := True;
-
-          if (FPConfiguracoesNF3e.Geral.ValidarDigest) and
-            (NF3eRetorno.protNF3e.digVal <> '') and (NF3e.signature.DigestValue <> '') and
-            (UpperCase(NF3e.signature.DigestValue) <> UpperCase(NF3eRetorno.protNF3e.digVal)) then
+          with TACBrNF3e(FPDFeOwner).NotasFiscais.Items[i] do
           begin
-            raise EACBrNF3eException.Create('DigestValue do documento ' +
-              NumID + ' não confere.');
-          end;
-
-          // Atualiza o Status da NF3e interna //
-          NF3e.procNF3e.cStat := NF3eRetorno.cStat;
-
-          if Atualiza then
-          begin
-            if TACBrNF3e(FPDFeOwner).CstatCancelada(NF3eRetorno.CStat) then
+            if (OnlyNumber(FNF3eChave) = NumID) then
             begin
-              NF3e.procNF3e.tpAmb := NF3eRetorno.tpAmb;
-              NF3e.procNF3e.verAplic := NF3eRetorno.verAplic;
-              NF3e.procNF3e.chNF3e := NF3eRetorno.chNF3e;
-              NF3e.procNF3e.dhRecbto := FDhRecbto;
-              NF3e.procNF3e.nProt := FProtocolo;
-              NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
-              NF3e.procNF3e.cStat := NF3eRetorno.cStat;
-              NF3e.procNF3e.xMotivo := NF3eRetorno.xMotivo;
-              NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+              Atualiza := (NaoEstaVazio(NF3eRetorno.XMLprotNF3e));
+              if Atualiza and
+                 TACBrNF3e(FPDFeOwner).CstatCancelada(NF3eRetorno.CStat) then
+                Atualiza := False;
 
-              GerarXML;
-            end
-            else
-            begin
-              NF3e.procNF3e.tpAmb := NF3eRetorno.protNF3e.tpAmb;
-              NF3e.procNF3e.verAplic := NF3eRetorno.protNF3e.verAplic;
-              NF3e.procNF3e.chNF3e := NF3eRetorno.protNF3e.chNF3e;
-              NF3e.procNF3e.dhRecbto := NF3eRetorno.protNF3e.dhRecbto;
-              NF3e.procNF3e.nProt := NF3eRetorno.protNF3e.nProt;
-              NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
-              NF3e.procNF3e.cStat := NF3eRetorno.protNF3e.cStat;
-              NF3e.procNF3e.xMotivo := NF3eRetorno.protNF3e.xMotivo;
-              NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+              // No retorno pode constar que a nota esta cancelada, mas traz o grupo
+              // <protNF3e> com as informações da sua autorização
+              if not Atualiza and TACBrNF3e(FPDFeOwner).cstatProcessado(NF3eRetorno.protNF3e.cStat) then
+                Atualiza := True;
 
-              // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-              AProcNF3e := TProcNF3e.Create;
-              try
-                AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLOriginal);
-                AProcNF3e.XML_Prot := NF3eRetorno.XMLprotNF3e;
-                AProcNF3e.Versao := NF3eRetorno.protNF3e.Versao;
-                if AProcNF3e.Versao = '' then
-                  AProcNF3e.Versao := FPVersaoServico;
-                AjustarOpcoes( AProcNF3e.Gerador.Opcoes );
-                AProcNF3e.GerarXML;
-
-                XMLOriginal := AProcNF3e.Gerador.ArquivoFormatoXML;
-              finally
-                AProcNF3e.Free;
-              end;
-            end;
-          end;
-
-          { Se no retorno da consulta constar que a nota possui eventos vinculados
-           será disponibilizado na propriedade FRetNF3eDFe, e conforme configurado
-           em "ConfiguracoesNF3e.Arquivos.Salvar", também será gerado o arquivo:
-           <chave>-NF3eDFe.xml}
-
-          FRetNF3eDFe := '';
-
-          if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNF3e'))) then
-          begin
-            Inicio := Pos('<procEventoNF3e', FPRetWS);
-            Fim    := Pos('</retConsSitNF3e', FPRetWS) -1;
-
-            aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-            FRetNF3eDFe := '<' + ENCODING_UTF8 + '>' +
-                          '<NF3eDFe>' +
-                           '<nf3eProc versao="' + FVersao + '">' +
-                             SeparaDados(XMLOriginal, 'nf3eProc') +
-                           '</nf3eProc>' +
-                           '<procEventoNF3e versao="' + FVersao + '">' +
-                             aEventos +
-                           '</procEventoNF3e>' +
-                          '</NF3eDFe>';
-          end;
-
-          SalvarXML := Result and FPConfiguracoesNF3e.Arquivos.Salvar and Atualiza;
-
-          if SalvarXML then
-          begin
-            // Salva o XML da NF3-e assinado, protocolado e com os eventos
-            if FPConfiguracoesNF3e.Arquivos.EmissaoPathNF3e then
-              dhEmissao := NF3e.Ide.dhEmi
-            else
-              dhEmissao := Now;
-
-            sPathNF3e := PathWithDelim(FPConfiguracoesNF3e.Arquivos.GetPathNF3e(dhEmissao, NF3e.Emit.CNPJ));
-
-            if (FRetNF3eDFe <> '') then
-              FPDFeOwner.Gravar( FNF3eChave + '-NF3eDFe.xml', FRetNF3eDFe, sPathNF3e);
-
-            if Atualiza then
-            begin
-              // Salva o XML da NF3-e assinado e protocolado
-              NomeXMLSalvo := '';
-              if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+              if (FPConfiguracoesNF3e.Geral.ValidarDigest) and
+                (NF3eRetorno.protNF3e.digVal <> '') and (NF3e.signature.DigestValue <> '') and
+                (UpperCase(NF3e.signature.DigestValue) <> UpperCase(NF3eRetorno.protNF3e.digVal)) then
               begin
-                FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
-                NomeXMLSalvo := NomeArq;
+                raise EACBrNF3eException.Create('DigestValue do documento ' +
+                  NumID + ' não confere.');
               end;
 
-              // Salva na pasta baseado nas configurações do PathNF3e
-              if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
-                GravarXML;
+              // Atualiza o Status da NF3e interna //
+              NF3e.procNF3e.cStat := NF3eRetorno.cStat;
+
+              if Atualiza then
+              begin
+                if TACBrNF3e(FPDFeOwner).CstatCancelada(NF3eRetorno.CStat) then
+                begin
+                  NF3e.procNF3e.tpAmb := NF3eRetorno.tpAmb;
+                  NF3e.procNF3e.verAplic := NF3eRetorno.verAplic;
+                  NF3e.procNF3e.chNF3e := NF3eRetorno.chNF3e;
+                  NF3e.procNF3e.dhRecbto := FDhRecbto;
+                  NF3e.procNF3e.nProt := FProtocolo;
+                  NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
+                  NF3e.procNF3e.cStat := NF3eRetorno.cStat;
+                  NF3e.procNF3e.xMotivo := NF3eRetorno.xMotivo;
+                  NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+
+                  GerarXML;
+                end
+                else
+                begin
+                  NF3e.procNF3e.tpAmb := NF3eRetorno.protNF3e.tpAmb;
+                  NF3e.procNF3e.verAplic := NF3eRetorno.protNF3e.verAplic;
+                  NF3e.procNF3e.chNF3e := NF3eRetorno.protNF3e.chNF3e;
+                  NF3e.procNF3e.dhRecbto := NF3eRetorno.protNF3e.dhRecbto;
+                  NF3e.procNF3e.nProt := NF3eRetorno.protNF3e.nProt;
+                  NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
+                  NF3e.procNF3e.cStat := NF3eRetorno.protNF3e.cStat;
+                  NF3e.procNF3e.xMotivo := NF3eRetorno.protNF3e.xMotivo;
+                  NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+
+                  // O código abaixo é bem mais rápido que "GerarXML" (acima)...
+                  AProcNF3e := TProcNF3e.Create;
+                  try
+                    AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLOriginal);
+                    AProcNF3e.XML_Prot := NF3eRetorno.XMLprotNF3e;
+                    AProcNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+                    if AProcNF3e.Versao = '' then
+                      AProcNF3e.Versao := FPVersaoServico;
+                    AjustarOpcoes( AProcNF3e.Gerador.Opcoes );
+                    AProcNF3e.GerarXML;
+
+                    XMLOriginal := AProcNF3e.Gerador.ArquivoFormatoXML;
+                  finally
+                    AProcNF3e.Free;
+                  end;
+                end;
+              end;
+
+              { Se no retorno da consulta constar que a nota possui eventos vinculados
+               será disponibilizado na propriedade FRetNF3eDFe, e conforme configurado
+               em "ConfiguracoesNF3e.Arquivos.Salvar", também será gerado o arquivo:
+               <chave>-NF3eDFe.xml}
+
+              FRetNF3eDFe := '';
+
+              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNF3e'))) then
+              begin
+                Inicio := Pos('<procEventoNF3e', FPRetWS);
+                Fim    := Pos('</retConsSitNF3e', FPRetWS) -1;
+
+                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+                FRetNF3eDFe := '<' + ENCODING_UTF8 + '>' +
+                              '<NF3eDFe>' +
+                               '<nf3eProc versao="' + FVersao + '">' +
+                                 SeparaDados(XMLOriginal, 'nf3eProc') +
+                               '</nf3eProc>' +
+                               '<procEventoNF3e versao="' + FVersao + '">' +
+                                 aEventos +
+                               '</procEventoNF3e>' +
+                              '</NF3eDFe>';
+              end;
+
+              SalvarXML := Result and FPConfiguracoesNF3e.Arquivos.Salvar and Atualiza;
+
+              if SalvarXML then
+              begin
+                // Salva o XML da NF3-e assinado, protocolado e com os eventos
+                if FPConfiguracoesNF3e.Arquivos.EmissaoPathNF3e then
+                  dhEmissao := NF3e.Ide.dhEmi
+                else
+                  dhEmissao := Now;
+
+                sPathNF3e := PathWithDelim(FPConfiguracoesNF3e.Arquivos.GetPathNF3e(dhEmissao, NF3e.Emit.CNPJ));
+
+                if (FRetNF3eDFe <> '') then
+                  FPDFeOwner.Gravar( FNF3eChave + '-NF3eDFe.xml', FRetNF3eDFe, sPathNF3e);
+
+                if Atualiza then
+                begin
+                  // Salva o XML da NF3-e assinado e protocolado
+                  NomeXMLSalvo := '';
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
+
+                  // Salva na pasta baseado nas configurações do PathNF3e
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML;
+
+                  // Salva o XML de eventos retornados ao consultar um NF3-e
+                  if ExtrairEventos then
+                    SalvarEventos(aEventos);
+                end;
+              end;
+
+              break;
             end;
           end;
+        end;
+      end
+      else
+      begin
+        if ExtrairEventos and FPConfiguracoesNF3e.Arquivos.Salvar and
+           (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNF3e'))) then
+        begin
+          Inicio := Pos('<procEventoNF3e', FPRetWS);
+          Fim    := Pos('</retConsSitNF3e', FPRetWS) -1;
 
-          break;
+          aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+          // Salva o XML de eventos retornados ao consultar um NF3-e
+          SalvarEventos(aEventos);
         end;
       end;
     end;

@@ -140,10 +140,14 @@ constructor TNF3eW.Create(AOwner: TNF3e);
 begin
   inherited Create;
 
-  FNF3e                                := AOwner;
-  FGerador                             := TGerador.Create;
-  FGerador.FIgnorarTagNivel            := '|?xml version|NF3e xmlns|infNF3e versao|obsCont|obsFisco|';
-  FOpcoes                              := TGeradorOpcoes.Create;
+  FNF3e    := AOwner;
+  FGerador := TGerador.Create;
+
+  FGerador.FIgnorarTagNivel   := '|?xml version|NF3e xmlns|infNF3e versao|obsCont|obsFisco|';
+  FGerador.Opcoes.QuebraLinha := ';';
+
+  FOpcoes := TGeradorOpcoes.Create;
+
   FOpcoes.FGerarTXTSimultaneamente     := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;
   FOpcoes.FNormatizarMunicipios        := False;

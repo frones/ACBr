@@ -505,6 +505,9 @@ type
     toRemessaPedidoNegativacao,
     toRemessaExcluirNegativacaoBaixar,
     toRemessaExcluirNegativacaoManterEmCarteira,
+    toRemessaSustarProtestoBaixarTitulo,
+    toRemessaSustarProtestoManterCarteira,
+    toRemessaRecusaAlegacaoSacado,
 	
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
@@ -729,10 +732,7 @@ type
     toRetornoOcorrenciaInfOutrosMotivos,
     toRetornoInclusaoNegativacao,
     toRetornoExclusaoNegativacao,
-    toRetornoEmTransito,
-    toRemessaSustarProtestoBaixarTitulo,
-    toRemessaSustarProtestoManterCarteira,
-    toRemessaRecusaAlegacaoSacado
+    toRetornoEmTransito
   );
 
   {TACBrOcorrencia}
@@ -3228,7 +3228,7 @@ end;
 function TACBrBoleto.GetOcorrenciasRemessa(): TACBrOcorrenciasRemessa;
 var I: Integer;
 begin
-  SetLength(Result, 48);
+  SetLength(Result, 77);
 
   for I:= 1 to 48 do
   begin

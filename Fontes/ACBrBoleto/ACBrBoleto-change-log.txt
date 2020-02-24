@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2020
+-- ACBrBancoBrasil --
+[*] Inclusão da leitura do motivo de ocorrência de liquidação 99 no retorno CNAB240.
+    (Juliana Tamizou)
+
 18/02/2020
 -- ACBrBancoSantander --
 [*] https://www.projetoacbr.com.br/forum/topic/56161-emiss%C3%A3o-do-boleto-pelo-banci/

@@ -1803,6 +1803,7 @@ begin
         11: Result:='11-Comandada cliente on-line';
         12: Result:='12-Decurso prazo - cliente';
         13: Result:='13-Decurso prazo - banco';
+        99: Result:='99-Liquidado por agendamento';
       end;
       toRetornoDebitoTarifas: // 28 - Débito de Tarifas/Custas (Febraban 240 posições, v08.9 de 15/04/2014)
       case CodMotivo of

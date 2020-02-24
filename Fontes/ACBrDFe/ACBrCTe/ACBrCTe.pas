@@ -119,7 +119,7 @@ type
     function Enviar(const ALote: String; Imprimir: Boolean = True;
       ASincrono: Boolean = False): Boolean;  overload;
 
-    function Consultar( const AChave: String = ''): Boolean;
+    function Consultar( const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
     function Inutilizar(const ACNPJ, AJustificativa: String;
@@ -746,7 +746,7 @@ begin
   end;
 end;
 
-function TACBrCTe.Consultar(const AChave: String): Boolean;
+function TACBrCTe.Consultar(const AChave: String; AExtrairEventos: Boolean): Boolean;
 var
   i: Integer;
 begin
@@ -756,14 +756,16 @@ begin
   if NaoEstaVazio(AChave) then
   begin
     Conhecimentos.Clear;
-    WebServices.Consulta.CTeChave := AChave;
+    WebServices.Consulta.CTeChave       := AChave;
+    WebServices.Consulta.ExtrairEventos := AExtrairEventos;
     WebServices.Consulta.Executar;
   end
   else
   begin
     for i := 0 to Conhecimentos.Count - 1 do
     begin
-      WebServices.Consulta.CTeChave := Conhecimentos.Items[i].NumID;
+      WebServices.Consulta.CTeChave       := Conhecimentos.Items[i].NumID;
+      WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       WebServices.Consulta.Executar;
     end;
   end;

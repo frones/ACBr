@@ -269,6 +269,7 @@ type
     FOwner: TACBrDFe;
     FConhecimentos: TConhecimentos;
     FCTeChave: String;
+    FExtrairEventos: Boolean;
     FProtocolo: String;
     FDhRecbto: TDateTime;
     FXMotivo: String;
@@ -282,6 +283,7 @@ type
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
+
     procedure SetCTeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
@@ -299,6 +301,7 @@ type
     procedure Clear; override;
 
     property CTeChave: String read FCTeChave write SetCTeChave;
+    property ExtrairEventos: Boolean read FExtrairEventos write FExtrairEventos;
     property Protocolo: String read FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
@@ -2285,7 +2288,8 @@ begin
                     GravarXML;
 
                   // Salva o XML de eventos retornados ao consultar um CT-e
-                  SalvarEventos(aEventos);
+                  if ExtrairEventos then
+                    SalvarEventos(aEventos);
                 end;
               end;
 
@@ -2296,7 +2300,8 @@ begin
       end
       else
       begin
-        if FPConfiguracoesCTe.Arquivos.Salvar and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
+        if ExtrairEventos and FPConfiguracoesCTe.Arquivos.Salvar and
+           (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
         begin
           Inicio := Pos('<procEventoCTe', FPRetWS);
           Fim    := Pos('</retConsSitCTe', FPRetWS) -1;

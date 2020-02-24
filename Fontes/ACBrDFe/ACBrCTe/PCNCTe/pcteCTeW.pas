@@ -187,13 +187,18 @@ implementation
 constructor TCTeW.Create(AOwner: TCTe);
 begin
   inherited Create;
-  FCTe := AOwner;
+
+  FCTe     := AOwner;
   FGerador := TGerador.Create;
-  FGerador.FIgnorarTagNivel := '|?xml version|CTe xmlns|infCTe versao|obsCont|obsFisco|';
+
+  FGerador.FIgnorarTagNivel   := '|?xml version|CTe xmlns|infCTe versao|obsCont|obsFisco|';
+  FGerador.Opcoes.QuebraLinha := ';';
+
   FOpcoes := TGeradorOpcoes.Create;
+
   FOpcoes.FNormatizarMunicipios := False;
-  FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
-  FOpcoes.FValidarInscricoes := False;
+  FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
+  FOpcoes.FValidarInscricoes    := False;
   FOpcoes.FValidarListaServicos := False;
 end;
 

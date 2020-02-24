@@ -1085,7 +1085,7 @@ begin
    if AValue = gtNenhum then
       Result := ''
    else
-      Result := FormatFloat('00', Integer( AValue ) + 1 );
+      Result := FormatFloat('00', Integer( AValue ));
 end;
 
 function StrToGrupoTensao(const AValue: string): TACBrGrupoTensao;

@@ -1,19 +1,15 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
-{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
-{  http://www.gnre.pe.gov.br/                                                  }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -31,17 +27,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -50,7 +38,8 @@ unit pgnreConfigUF;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao;
+  SysUtils, Classes,
+  pcnAuxiliar, pcnConversao;
 
 type
   TInfReceita = class;
@@ -60,7 +49,7 @@ type
   TInfProduto = class;
   TRetInfProduto = class;
 
-  TInfReceita = class
+  TInfReceita = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -89,7 +78,7 @@ type
     property exigeCamposAdicionais: string read FexigeCamposAdicionais write FexigeCamposAdicionais;
   end;
 
-  TRetInfReceita = class
+  TRetInfReceita = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -126,7 +115,7 @@ type
     property exigeCamposAdicionais: string read FexigeCamposAdicionais write FexigeCamposAdicionais;
   end;
 
-  TInfDetalhamentoReceita = class
+  TInfDetalhamentoReceita = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -135,7 +124,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TRetInfDetalhamentoReceita = class
+  TRetInfDetalhamentoReceita = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -144,7 +133,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TInfProduto = class
+  TInfProduto = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -153,7 +142,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TRetInfProduto = class
+  TRetInfProduto = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -162,7 +151,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TInfPeriodoApuracao = class
+  TInfPeriodoApuracao = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -171,7 +160,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TRetInfPeriodoApuracao = class
+  TRetInfPeriodoApuracao = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -180,7 +169,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TInfTipoDocumentoOrigem = class
+  TInfTipoDocumentoOrigem = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -189,7 +178,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TRetInfTipoDocumentoOrigem = class
+  TRetInfTipoDocumentoOrigem = class(TObject)
   private
     Fcodigo: Integer;
     Fdescricao: string;
@@ -198,7 +187,7 @@ type
     property descricao: string read Fdescricao write Fdescricao;
   end;
 
-  TInfCampoAdicional = class
+  TInfCampoAdicional = class(TObject)
   private
     Fobrigatorio: string;
     Fcodigo: Integer;
@@ -215,7 +204,7 @@ type
     property titulo: string read Ftitulo write Ftitulo;
   end;
 
-  TRetInfCampoAdicional = class
+  TRetInfCampoAdicional = class(TObject)
   private
     Fobrigatorio: string;
     Fcodigo: Integer;

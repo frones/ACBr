@@ -1,19 +1,15 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
-{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
-{  http://www.gnre.pe.gov.br/                                                  }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -31,17 +27,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -50,28 +38,33 @@ unit pgnreRetReceita;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
-  pgnreConfigUF, pgnreRetDetalhamentoReceita, pgnreRetProduto,
-  pgnreRetPeriodoApuracao, pgnreRetTipoDocumentoOrigem,
-  pgnreRetCampoAdicional,
-  ACBrUtil;
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrUtil,
+  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConfigUF, pgnreRetProduto,
+  pgnreRetDetalhamentoReceita, pgnreRetPeriodoApuracao,
+  pgnreRetTipoDocumentoOrigem, pgnreRetCampoAdicional;
 
 type
   TRetInfReceitaCollection = class;
   TRetInfReceitaCollectionItem = class;
   TRetReceita = class;
 
-  TRetInfReceitaCollection = class(TCollection)
+  TRetInfReceitaCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRetInfReceitaCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetInfReceitaCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetInfReceitaCollectionItem;
+    function Add: TRetInfReceitaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetInfReceitaCollectionItem;
     property Items[Index: Integer]: TRetInfReceitaCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetInfReceitaCollectionItem = class(TCollectionItem)
+  TRetInfReceitaCollectionItem = class(TObject)
   private
     FRetInfReceita: TRetInfReceita;
     FretDetalhamentoReceita: TRetInfDetalhamentoReceitaCollection;
@@ -82,7 +75,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property RetInfReceita: TRetInfReceita read FRetInfReceita write FRetInfReceita;
     property retDetalhamentoReceita: TRetInfDetalhamentoReceitaCollection read FretDetalhamentoReceita write FretDetalhamentoReceita;
     property retProduto: TRetInfProdutoCollection read FretProduto write FretProduto;
@@ -91,7 +84,7 @@ type
     property retCampoAdicional: TRetInfCampoAdicionalCollection read FretCampoAdicional write FretCampoAdicional;
   end;
 
-  TRetReceita = class(TPersistent)
+  TRetReceita = class(TObject)
   private
     FLeitor: TLeitor;
     FretReceita: TRetInfReceitaCollection;
@@ -103,8 +96,9 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: Boolean;
-  published
+
     property Leitor: TLeitor read FLeitor write FLeitor;
     property retReceita: TRetInfReceitaCollection read FretReceita write FretReceita;
     property InfDetalhamentoReceita: TRetDetalhamentoReceita read FInfDetalhamentoReceita write FInfDetalhamentoReceita;
@@ -116,41 +110,41 @@ type
 
 implementation
 
-{ TRetInfReceitasCollection }
+{ TRetInfReceitaCollection }
 
 function TRetInfReceitaCollection.Add: TRetInfReceitaCollectionItem;
 begin
-  Result := TRetInfReceitaCollectionItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TRetInfReceitaCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetInfReceitaCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetInfReceitaCollection.GetItem(
   Index: Integer): TRetInfReceitaCollectionItem;
 begin
-  Result := TRetInfReceitaCollectionItem(inherited GetItem(Index));
+  Result := TRetInfReceitaCollectionItem(inherited Items[Index]);
+end;
+
+function TRetInfReceitaCollection.New: TRetInfReceitaCollectionItem;
+begin
+  Result := TRetInfReceitaCollectionItem.Create();
+  Self.Add(Result);
 end;
 
 procedure TRetInfReceitaCollection.SetItem(Index: Integer;
   Value: TRetInfReceitaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
-{ TRetReceitasCollectionItem }
+{ TRetInfReceitaCollectionItem }
 
 constructor TRetInfReceitaCollectionItem.Create;
 begin
   FRetInfReceita := TRetInfReceita.Create;
-  FretDetalhamentoReceita := TRetInfDetalhamentoReceitaCollection.Create(Self);
-  FretProduto := TRetInfProdutoCollection.Create(Self);
-  FretPeriodoApuracao := TRetInfPeriodoApuracaoCollection.Create(Self);
-  FretTipoDocumentoOrigem := TRetInfTipoDocumentoOrigemCollection.Create(Self);
-  FretCampoAdicional := TRetInfCampoAdicionalCollection.Create(Self);
+  FretDetalhamentoReceita := TRetInfDetalhamentoReceitaCollection.Create;
+  FretProduto := TRetInfProdutoCollection.Create;
+  FretPeriodoApuracao := TRetInfPeriodoApuracaoCollection.Create;
+  FretTipoDocumentoOrigem := TRetInfTipoDocumentoOrigemCollection.Create;
+  FretCampoAdicional := TRetInfCampoAdicionalCollection.Create;
 end;
 
 destructor TRetInfReceitaCollectionItem.Destroy;
@@ -160,7 +154,8 @@ begin
   FretProduto.Free;
   FretPeriodoApuracao.Free;
   FretTipoDocumentoOrigem.Free;
-  FretCampoAdicional.Free;    
+  FretCampoAdicional.Free;
+
   inherited;
 end;
 
@@ -169,7 +164,7 @@ end;
 constructor TRetReceita.Create;
 begin
   FLeitor := TLeitor.Create;
-  FretReceita := TRetInfReceitaCollection.Create(Self);
+  FretReceita := TRetInfReceitaCollection.Create;
 end;
 
 destructor TRetReceita.Destroy;
@@ -191,11 +186,13 @@ begin
 
   if Assigned(FInfCampoAdicional) then
     FInfCampoAdicional.Free;
+
   inherited;
 end;
 
 function TRetReceita.LerXml: Boolean;
-var i, j: Integer;
+var
+  i, j: Integer;
   DetalhamentoReceita: TRetInfDetalhamentoReceitaCollectionItem;
   Produto: TRetInfProdutoCollectionItem;
   PeriodoApuracao: TRetInfPeriodoApuracaoCollectionItem;
@@ -203,13 +200,14 @@ var i, j: Integer;
   CampoAdicional: TRetInfCampoAdicionalCollectionItem;
 begin
   Result := False;
+
   try
     i := 0;
     if Leitor.rExtrai(1, 'ns1:receitas') <> '' then
     begin
       while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
-        FretReceita.Add;
+        FretReceita.New;
         FretReceita.Items[i].RetInfReceita.codigo    := Leitor.rAtributo('codigo');
         FretReceita.Items[i].RetInfReceita.descricao := Leitor.rAtributo('descricao');
 
@@ -230,10 +228,10 @@ begin
         FretReceita.Items[i].RetInfReceita.exigeConvenio                 := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
         FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'ns1:exigeCamposAdicionais');
 
-        if Assigned(InfDetalhamentoReceita) then
-          InfDetalhamentoReceita.Free;
+        if Assigned(FInfDetalhamentoReceita) then
+          FInfDetalhamentoReceita.Free;
 
-        InfDetalhamentoReceita := TRetDetalhamentoReceita.Create;
+        FInfDetalhamentoReceita := TRetDetalhamentoReceita.Create;
         
         if SameText(retReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita, 'S') then
         begin
@@ -244,7 +242,7 @@ begin
           begin
             for j := 0 to InfDetalhamentoReceita.retDetalhamentoReceita.Count - 1 do
             begin
-              DetalhamentoReceita := FretReceita.Items[i].FretDetalhamentoReceita.Add;
+              DetalhamentoReceita := FretReceita.Items[i].FretDetalhamentoReceita.New;
               DetalhamentoReceita.RetDetalhamentoReceita.codigo :=
                 InfDetalhamentoReceita.retDetalhamentoReceita.Items[j].RetDetalhamentoReceita.codigo;
               DetalhamentoReceita.RetDetalhamentoReceita.descricao :=
@@ -253,10 +251,10 @@ begin
           end;
         end;
 
-        if Assigned(InfProduto) then
-          InfProduto.Free;
+        if Assigned(FInfProduto) then
+          FInfProduto.Free;
 
-        InfProduto := TRetProduto.Create;
+        FInfProduto := TRetProduto.Create;
 
         if SameText(retReceita.Items[i].RetInfReceita.exigeProduto, 'S') then
         begin
@@ -267,17 +265,17 @@ begin
           begin
             for j := 0 to InfProduto.retProduto.Count - 1 do
             begin
-              Produto := FretReceita.Items[i].FretProduto.Add;
+              Produto := FretReceita.Items[i].FretProduto.New;
               Produto.RetProduto.codigo := InfProduto.retProduto.Items[j].RetProduto.codigo;
               Produto.RetProduto.descricao := InfProduto.retProduto.Items[j].RetProduto.descricao;
             end;
           end;
         end;
 
-        if Assigned(InfPeriodoApuracao) then
-          InfPeriodoApuracao.Free;
+        if Assigned(FInfPeriodoApuracao) then
+          FInfPeriodoApuracao.Free;
 
-        InfPeriodoApuracao := TRetPeriodoApuracao.Create;
+        FInfPeriodoApuracao := TRetPeriodoApuracao.Create;
 
         if SameText(retReceita.Items[i].RetInfReceita.exigePeriodoReferencia, 'S') then
         begin
@@ -290,7 +288,7 @@ begin
             begin
               for j := 0 to InfPeriodoApuracao.retPeriodoApuracao.Count - 1 do
               begin
-                PeriodoApuracao := FretReceita.Items[i].FretPeriodoApuracao.Add;
+                PeriodoApuracao := FretReceita.Items[i].FretPeriodoApuracao.New;
                 PeriodoApuracao.RetPeriodoApuracao.codigo :=
                   InfPeriodoApuracao.retPeriodoApuracao.Items[j].RetPeriodoApuracao.codigo;
                 PeriodoApuracao.RetPeriodoApuracao.descricao :=
@@ -300,10 +298,10 @@ begin
           end;
         end;
 
-        if Assigned(InfTipoDocumentoOrigem) then
-          InfTipoDocumentoOrigem.Free;
+        if Assigned(FInfTipoDocumentoOrigem) then
+          FInfTipoDocumentoOrigem.Free;
 
-        InfTipoDocumentoOrigem := TRetTipoDocumentoOrigem.Create;
+        FInfTipoDocumentoOrigem := TRetTipoDocumentoOrigem.Create;
 
         if SameText(retReceita.Items[i].RetInfReceita.exigeDocumentoOrigem, 'S') then
         begin
@@ -314,7 +312,7 @@ begin
           begin
             for j := 0 to InfTipoDocumentoOrigem.retTipoDocumentoOrigem.Count - 1 do
             begin
-              TipoDocumentoOrigem := FretReceita.Items[i].FretTipoDocumentoOrigem.Add;
+              TipoDocumentoOrigem := FretReceita.Items[i].FretTipoDocumentoOrigem.New;
               TipoDocumentoOrigem.RetTipoDocumentoOrigem.codigo :=
                 InfTipoDocumentoOrigem.retTipoDocumentoOrigem.Items[j].RetTipoDocumentoOrigem.codigo;
               TipoDocumentoOrigem.RetTipoDocumentoOrigem.descricao :=
@@ -323,10 +321,10 @@ begin
           end;
         end;
 
-        if Assigned(InfCampoAdicional) then
-          InfCampoAdicional.Free;
+        if Assigned(FInfCampoAdicional) then
+          FInfCampoAdicional.Free;
 
-        InfCampoAdicional := TRetCampoAdicional.Create;
+        FInfCampoAdicional := TRetCampoAdicional.Create;
 
         if SameText(retReceita.Items[i].RetInfReceita.exigeCamposAdicionais, 'S') then
         begin
@@ -337,7 +335,7 @@ begin
           begin
             for j := 0 to InfCampoAdicional.retCampoAdicional.Count - 1 do
             begin
-              CampoAdicional := FretReceita.Items[i].FretCampoAdicional.Add;
+              CampoAdicional := FretReceita.Items[i].FretCampoAdicional.New;
               CampoAdicional.RetCampoAdicional.obrigatorio :=
                 InfCampoAdicional.retCampoAdicional.Items[j].RetCampoAdicional.obrigatorio;
               CampoAdicional.RetCampoAdicional.codigo :=
@@ -358,7 +356,7 @@ begin
       end;
 
       if i = 0 then
-        retReceita.Add;
+        retReceita.New;
 
       Result := True;
     end;

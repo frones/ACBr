@@ -1,19 +1,15 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
-{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
-{  http://www.gnre.pe.gov.br/                                                  }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -31,17 +27,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -54,6 +42,12 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pgnreConversao;
 
 type
@@ -63,27 +57,27 @@ type
   TCampoExtra               = class;
   TReferencia               = class;
 
-  TCampoExtraCollection = class(TCollection)
+  TCampoExtraCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TCampoExtraCollectionItem;
     procedure SetItem(Index: Integer; Value: TCampoExtraCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TCampoExtraCollectionItem;
+    function Add: TCampoExtraCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TCampoExtraCollectionItem;
     property Items[Index: Integer]: TCampoExtraCollectionItem read GetItem write SetItem; default;
   end;
 
-  TCampoExtraCollectionItem = class(TCollectionItem)
+  TCampoExtraCollectionItem = class(TObject)
   private
     FCampoExtra: TCampoExtra;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CampoExtra: TCampoExtra read FCampoExtra write FCampoExtra;
   end;
 
-  TCampoExtra = class(TPersistent)
+  TCampoExtra = class(TObject)
   private
     Fcodigo: Integer;
     Ftipo: string;
@@ -94,7 +88,7 @@ type
     property valor: string read Fvalor write Fvalor;
   end;
 
-  TReferencia = class(TPersistent)
+  TReferencia = class(TObject)
   private
     Fperiodo: Integer;
     Fmes: string;
@@ -107,7 +101,7 @@ type
     property parcela: Integer read Fparcela write Fparcela;
   end;
 
-  TGNRE = class(TPersistent)
+  TGNRE = class(TObject)
   private
     Fc01_UfFavorecida: string;
     Fc02_receita: Integer;
@@ -141,7 +135,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property c01_UfFavorecida: string read Fc01_UfFavorecida write Fc01_UfFavorecida;
     property c02_receita: Integer read Fc02_receita write Fc02_receita;
     property c25_detalhamentoReceita: Integer read Fc25_detalhamentoReceita write Fc25_detalhamentoReceita;
@@ -184,6 +178,7 @@ Uses
 constructor TGNRE.Create;
 begin
   inherited Create;
+
   Fc01_UfFavorecida := '';
   Fc02_receita := 0;
   Fc25_detalhamentoReceita := 0;
@@ -210,7 +205,7 @@ begin
   Fc38_municipioDestinatario := '';
   Fc33_dataPagamento := 0;
   Freferencia := TReferencia.Create;
-  FcamposExtras := TCampoExtraCollection.Create(Self);
+  FcamposExtras := TCampoExtraCollection.Create;
   Fc42_identificadorGuia := '';
 end;
 
@@ -218,6 +213,7 @@ destructor TGNRE.Destroy;
 begin
   Freferencia.Free;
   FcamposExtras.Free;
+
   inherited Destroy;
 end;
 
@@ -225,25 +221,25 @@ end;
 
 function TCampoExtraCollection.Add: TCampoExtraCollectionItem;
 begin
-  Result := TCampoExtraCollectionItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TCampoExtraCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TCampoExtraCollectionItem);
+  Result := Self.New;
 end;
 
 function TCampoExtraCollection.GetItem(
   Index: Integer): TCampoExtraCollectionItem;
 begin
-  Result := TCampoExtraCollectionItem(inherited GetItem(Index));
+  Result := TCampoExtraCollectionItem(inherited Items[Index]);
+end;
+
+function TCampoExtraCollection.New: TCampoExtraCollectionItem;
+begin
+  Result := TCampoExtraCollectionItem.Create();
+  Self.Add(Result);
 end;
 
 procedure TCampoExtraCollection.SetItem(Index: Integer;
   Value: TCampoExtraCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TCampoExtraCollectionItem }

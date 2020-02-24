@@ -1,19 +1,15 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
-{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
-{  http://www.gnre.pe.gov.br/                                                  }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -31,17 +27,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrGNREGuias;
@@ -74,11 +63,10 @@ type
 
     function GetConfirmada: Boolean;
     function GetProcessada: Boolean;
-
-
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
+
     procedure SetXML(AValue: String);
     procedure SetXMLOriginal(AValue: String);
 //    function ValidarConcatChave: Boolean;
@@ -94,24 +82,20 @@ type
 
     procedure Assinar;
     procedure Validar;
+
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
-
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
-
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
-
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
 
     property NomeArq: String read FNomeArq write FNomeArq;
-
     property GNRE: TGNRE read FGNRE;
-
     // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
     property XML: String         read FXMLOriginal   write SetXML;
     // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
@@ -121,7 +105,6 @@ type
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
-
     property Alertas: String read FAlertas;
     property ErroValidacao: String read FErroValidacao;
     property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
@@ -149,9 +132,9 @@ type
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
     procedure Imprimir;
     procedure ImprimirPDF;
+
     function Add: Guia;
     function Insert(Index: integer): Guia;
-
     property Items[Index: integer]: Guia read GetItem write SetItem; default;
 
     function GetNamePath: String; override;
@@ -161,7 +144,6 @@ type
     function LoadFromStream(AStream: TStringStream; AGerarGNRE: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarGNRE: Boolean = True): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
-
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrGNRE: TComponent read FACBrGNRE;
@@ -215,7 +197,7 @@ end;
 procedure Guia.Assinar;
 var
   XMLStr: String;
-  XMLUTF8: AnsiString;
+  XMLUTF8: String;
   Leitor: TLeitor;
 begin
   TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.ValidarCNPJCertificado( GNRE.c03_idContribuinteEmitente );
@@ -393,7 +375,7 @@ begin
       begin
         camposExtras.Clear;
 
-        with camposExtras.Add do
+        with camposExtras.New do
         begin
           CampoExtra.codigo := IniGuia.ReadInteger(sSecao,'codigo',0);
           CampoExtra.tipo   := IniGuia.ReadString(sSecao,'tipo','');
@@ -411,9 +393,9 @@ begin
   end;
 end;
 
-function Guia.LerXML(AXML: AnsiString): Boolean;
+function Guia.LerXML(AXML: String): Boolean;
 begin
-  XMLOriginal := string(AXML);
+  XMLOriginal := AXML;
   FGNRER.Leitor.Arquivo := XMLOriginal;
   FGNRER.Versao := TACBrGNRE(TGuias(Collection).ACBrGNRE).Configuracoes.Geral.VersaoDF;
 
@@ -793,7 +775,7 @@ end;
 function TGuias.LoadFromString(AXMLString: String;
   AGerarGNRE: Boolean): Boolean;
 var
-  AXML: AnsiString;
+  AXML: String;
   P, N: integer;
 
   function PosGNRE: integer;

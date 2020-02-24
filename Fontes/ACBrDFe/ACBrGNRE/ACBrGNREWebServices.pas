@@ -1,19 +1,15 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
-{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
-{  http://www.gnre.pe.gov.br/                                                  }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -31,17 +27,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -521,7 +509,7 @@ function TGNRERecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FGNRERetorno.LerXml;
 
   Fcodigo            := FGNRERetorno.codigo;
@@ -693,7 +681,7 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -799,12 +787,14 @@ function TGNRERetRecepcao.SalvarXML(AGuia, ANumero: String): Boolean;
 var
   NomeArq: string;
 begin
+  Result := True;
+
   if FPConfiguracoesGNRE.Arquivos.Salvar then
   begin
     NomeArq := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathGNRE) +
                ANumero + '-guia.xml';
 
-    FPDFeOwner.Gravar(NomeArq, AGuia);
+    Result := FPDFeOwner.Gravar(NomeArq, AGuia);
   end;
 end;
 
@@ -915,7 +905,7 @@ function TGNRERecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -1034,7 +1024,7 @@ function TGNREConsultaUF.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FGNRERetorno.LerXML;
 
   FAmbiente          := FGNRERetorno.Ambiente;

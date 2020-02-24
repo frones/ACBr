@@ -57,7 +57,6 @@ type
     GridPanelLayout4: TGridPanelLayout;
     btnImprimir: TCornerButton;
     btnLimpar: TCornerButton;
-    ImageList1: TImageList;
     ListBoxItem1: TListBoxItem;
     GridPanelLayout5: TGridPanelLayout;
     Label1: TLabel;
@@ -66,9 +65,11 @@ type
     seBarrasLargura: TSpinBox;
     seBarrasAltura: TSpinBox;
     ListBoxGroupHeader6: TListBoxGroupHeader;
-    GridPanelLayout6: TGridPanelLayout;
-    cbxModelo: TComboBox;
+    ImageList1: TImageList;
+    StyleBook1: TStyleBook;
+    chbTodasBth: TCheckBox;
     cbSuportaBMP: TCheckBox;
+    cbxModelo: TComboBox;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -348,7 +349,7 @@ begin
     exit;
 
   cbxImpressorasBth.Items.Clear;
-  ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items );
+  ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
 end;
 
 procedure TPosPrinterAndroidTesteForm.btnTiposLetraClick(Sender: TObject);

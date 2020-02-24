@@ -94,7 +94,7 @@ type
     function CstatCancelada(AValue: Integer): Boolean;
 
     function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
-    function Consultar( const AChave: String = ''): Boolean;
+    function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutBPe; var Versao: Double;
@@ -440,7 +440,7 @@ begin
   Result := True;
 end;
 
-function TACBrBPe.Consultar(const AChave: String): Boolean;
+function TACBrBPe.Consultar(const AChave: String; AExtrairEventos: Boolean): Boolean;
 var
   i: Integer;
 begin
@@ -450,14 +450,16 @@ begin
   if NaoEstaVazio(AChave) then
   begin
     Bilhetes.Clear;
-    WebServices.Consulta.BPeChave := AChave;
+    WebServices.Consulta.BPeChave       := AChave;
+    WebServices.Consulta.ExtrairEventos := AExtrairEventos;
     WebServices.Consulta.Executar;
   end
   else
   begin
     for i := 0 to Bilhetes.Count - 1 do
     begin
-      WebServices.Consulta.BPeChave := Bilhetes.Items[i].NumID;
+      WebServices.Consulta.BPeChave       := Bilhetes.Items[i].NumID;
+      WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       WebServices.Consulta.Executar;
     end;
   end;

@@ -127,10 +127,14 @@ uses
 constructor TBPeW.Create(AOwner: TBPe);
 begin
   inherited Create;
-  FBPe                      := AOwner;
-  FGerador                  := TGerador.Create;
-  FGerador.FIgnorarTagNivel := '|?xml version|BPe xmlns|infBPe versao|obsCont|obsFisco|';
-  FOpcoes                   := TGeradorOpcoes.Create;
+
+  FBPe     := AOwner;
+  FGerador := TGerador.Create;
+
+  FGerador.FIgnorarTagNivel   := '|?xml version|BPe xmlns|infBPe versao|obsCont|obsFisco|';
+  FGerador.Opcoes.QuebraLinha := ';';
+
+  FOpcoes := TGeradorOpcoes.Create;
 
   FOpcoes.FGerarTXTSimultaneamente     := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;

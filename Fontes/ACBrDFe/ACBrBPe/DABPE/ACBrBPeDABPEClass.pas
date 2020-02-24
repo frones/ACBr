@@ -116,7 +116,7 @@ begin
   ErroAbstract('ImprimirDABPE');
 end;
 
-procedure TACBrBPeDABPEClass.ImprimirDABPECancelado(BPe: TBPe);
+procedure TACBrBPeDABPEClass.ImprimirDABPECancelado(BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirDABPECancelado');
 end;
@@ -131,17 +131,17 @@ begin
   ErroAbstract('ImprimirDABPEPDF');
 end;
 
-procedure TACBrBPeDABPEClass.ImprimirDABPEResumidoPDF(BPe: TBPe);
+procedure TACBrBPeDABPEClass.ImprimirDABPEResumidoPDF(BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirDABPEResumidoPDF');
 end;
 
-procedure TACBrBPeDABPEClass.ImprimirEVENTO(BPe: TBPe);
+procedure TACBrBPeDABPEClass.ImprimirEVENTO(BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirEVENTO');
 end;
 
-procedure TACBrBPeDABPEClass.ImprimirEVENTOPDF(BPe: TBPe);
+procedure TACBrBPeDABPEClass.ImprimirEVENTOPDF(BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

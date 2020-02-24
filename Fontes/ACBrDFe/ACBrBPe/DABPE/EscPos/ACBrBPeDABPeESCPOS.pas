@@ -87,7 +87,7 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDABPE(BPE: TBPe = nil); override;
-    procedure ImprimirDABPeCancelado(BPe: TBPe = nil); override;
+    procedure ImprimirDABPECancelado(BPe: TBPe = nil); override;
     procedure ImprimirEVENTO(BPe: TBPe = nil);override;
 
     procedure ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;
@@ -454,7 +454,7 @@ end;
 
 procedure TACBrBPeDABPeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean = False);
 var
-  qrcode: AnsiString;
+  qrcode: String;
   ConfigQRCodeErrorLevel: Integer;
 begin
   if Cancelamento then
@@ -503,7 +503,7 @@ end;
 
 procedure TACBrBPeDABPeESCPOS.GerarMensagemFiscal;
 var
-  TextoObservacao: AnsiString;
+  TextoObservacao: String;
 begin
   TextoObservacao := Trim(FpBPe.InfAdic.infAdFisco);
   if TextoObservacao <> '' then
@@ -515,7 +515,7 @@ end;
 
 procedure TACBrBPeDABPeESCPOS.GerarMensagemInteresseContribuinte;
 var
-  TextoObservacao: AnsiString;
+  TextoObservacao: String;
 begin
   TextoObservacao := Trim(FpBPe.InfAdic.infCpl);
   if TextoObservacao <> '' then
@@ -641,7 +641,7 @@ begin
   end;
 end;
 
-procedure TACBrBPeDABPeESCPOS.ImprimirDABPeCancelado(BPe: TBPe);
+procedure TACBrBPeDABPeESCPOS.ImprimirDABPECancelado(BPe: TBPe);
 begin
   if BPe = nil then
   begin

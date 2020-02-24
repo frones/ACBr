@@ -1,34 +1,33 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrReinf                                                }
-{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
-{ Reinf                                                                        }
-
-{ Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-
-{ Colaboradores nesse arquivo:                                                 }
-
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -38,7 +37,13 @@ unit pcnReinfRetEventos;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnAuxiliar, pcnConversao, pcnLeitor,
   pcnCommonReinf, pcnConversaoReinf;
 
@@ -115,7 +120,7 @@ type
     property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic;
   end;
 
-  TRComlCollection = class(TObjectList)
+  TRComlCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRComlCollectionItem;
     procedure SetItem(Index: Integer; Value: TRComlCollectionItem);
@@ -192,7 +197,7 @@ type
     property RRecEspetDesp: TRRecEspetDesp read FRRecEspetDesp write FRRecEspetDesp;
   end;
 
-  TRRecRepADCollection = class(TObjectList)
+  TRRecRepADCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRRecRepADCollectionItem;
     procedure SetItem(Index: Integer; Value: TRRecRepADCollectionItem);
@@ -222,7 +227,7 @@ type
     property vlrCRRecRepADSusp: Double read FvlrCRRecRepADSusp;
   end;
 
-  TRCPRBCollection = class(TObjectList)
+  TRCPRBCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TRCPRBCollectionItem;
     procedure SetItem(Index: Integer; Value: TRCPRBCollectionItem);
@@ -250,7 +255,7 @@ type
     property vlrCRCPRBSusp: Double read FvlrCRCPRBSusp;
   end;
 
-  TinfoCRTomCollection = class(TObjectList)
+  TinfoCRTomCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoCRTomCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoCRTomCollectionItem);
@@ -297,7 +302,7 @@ type
   end;
 
   { TeventoCollection }
-  TeventoCollection = class(TObjectList)
+  TeventoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TeventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TeventoCollectionItem);
@@ -362,7 +367,7 @@ end;
 function TRRecRepADCollection.GetItem(
   Index: Integer): TRRecRepADCollectionItem;
 begin
-  Result := TRRecRepADCollectionItem(inherited GetItem(Index));
+  Result := TRRecRepADCollectionItem(inherited Items[Index]);
 end;
 
 function TRRecRepADCollection.New: TRRecRepADCollectionItem;
@@ -374,7 +379,7 @@ end;
 procedure TRRecRepADCollection.SetItem(Index: Integer;
   Value: TRRecRepADCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRCPRBCollection }
@@ -387,7 +392,7 @@ end;
 function TRCPRBCollection.GetItem(
   Index: Integer): TRCPRBCollectionItem;
 begin
-  Result := TRCPRBCollectionItem(inherited GetItem(Index));
+  Result := TRCPRBCollectionItem(inherited Items[Index]);
 end;
 
 function TRCPRBCollection.New: TRCPRBCollectionItem;
@@ -399,7 +404,7 @@ end;
 procedure TRCPRBCollection.SetItem(Index: Integer;
   Value: TRCPRBCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoCRTomCollection }
@@ -412,7 +417,7 @@ end;
 function TinfoCRTomCollection.GetItem(
   Index: Integer): TinfoCRTomCollectionItem;
 begin
-  Result := TinfoCRTomCollectionItem(inherited GetItem(Index));
+  Result := TinfoCRTomCollectionItem(inherited Items[Index]);
 end;
 
 function TinfoCRTomCollection.New: TinfoCRTomCollectionItem;
@@ -424,7 +429,7 @@ end;
 procedure TinfoCRTomCollection.SetItem(Index: Integer;
   Value: TinfoCRTomCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TRComlCollection }
@@ -436,7 +441,7 @@ end;
 
 function TRComlCollection.GetItem(Index: Integer): TRComlCollectionItem;
 begin
-  Result := TRComlCollectionItem(inherited GetItem(Index));
+  Result := TRComlCollectionItem(inherited Items[Index]);
 end;
 
 function TRComlCollection.New: TRComlCollectionItem;
@@ -447,7 +452,7 @@ end;
 
 procedure TRComlCollection.SetItem(Index: Integer; Value: TRComlCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TInfoTotal }
@@ -518,7 +523,7 @@ end;
 function TeventoCollection.GetItem(
   Index: Integer): TeventoCollectionItem;
 begin
-  Result := TeventoCollectionItem(Inherited GetItem(Index));
+  Result := TeventoCollectionItem(inherited Items[Index]);
 end;
 
 function TeventoCollection.New: TeventoCollectionItem;
@@ -530,7 +535,7 @@ end;
 procedure TeventoCollection.SetItem(Index: Integer;
   Value: TeventoCollectionItem);
 begin
-  Inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TeventoCollectionItem }

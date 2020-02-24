@@ -1,41 +1,34 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrReinf                                                }
-{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
-{ Reinf                                                                        }
-
-{ Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-
-{ Colaboradores nesse arquivo:                                                 }
-
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 04/12/2017: Renato Rubinho
-|*  - Implementados registros que faltavam e isoladas as respectivas classes
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -44,7 +37,13 @@ unit pcnReinfR2070;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -220,7 +219,7 @@ type
     property dtLaudo: TDateTime read FdtLaudo write FdtLaudo;
   end;
 
-  TideEstabCollection = class(TObjectList)
+  TideEstabCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TideEstabCollectionItem;
     procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
@@ -249,7 +248,7 @@ type
     property pgtoResidExt: TpgtoResidExt read FpgtoResidExt write FpgtoResidExt;
   end;
 
-  TpgtoPFCollection = class(TObjectList)
+  TpgtoPFCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TpgtoPFCollectionItem;
     procedure SetItem(Index: Integer; Value: TpgtoPFCollectionItem);
@@ -292,7 +291,7 @@ type
     property depJudicial: TdepJudicial read FdepJudicial write FdepJudicial;
   end;
 
-  TdetDeducaoCollection = class(TObjectList)
+  TdetDeducaoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TdetDeducaoCollectionItem;
     procedure SetItem(Index: Integer; Value: TdetDeducaoCollectionItem);
@@ -312,7 +311,7 @@ type
     property vlrDeducao: double read FvlrDeducao write FvlrDeducao;
   end;
 
-  TrendIsentoCollection = class(TObjectList)
+  TrendIsentoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TrendIsentoCollectionItem;
     procedure SetItem(Index: Integer; Value: TrendIsentoCollectionItem);
@@ -334,7 +333,7 @@ type
     property descRendimento: String read FdescRendimento write FdescRendimento;
   end;
 
-  TdetCompetCollection = class(TObjectList)
+  TdetCompetCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TdetCompetCollectionItem;
     procedure SetItem(Index: Integer; Value: TdetCompetCollectionItem);
@@ -366,7 +365,7 @@ type
     property vlrCompAnoAnt: double read FvlrCompAnoAnt write FvlrCompAnoAnt;
   end;
 
-  TinfoRRACollection = class(TObjectList)
+  TinfoRRACollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoRRACollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoRRACollectionItem);
@@ -410,7 +409,7 @@ type
     property ideAdvogado: TideAdvogadoCollection read FideAdvogado write FideAdvogado;
   end;
 
-  TideAdvogadoCollection = class(TObjectList)
+  TideAdvogadoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TideAdvogadoCollectionItem;
     procedure SetItem(Index: Integer; Value: TideAdvogadoCollectionItem);
@@ -432,7 +431,7 @@ type
     property vlrAdvogado: double read FvlrAdvogado write FvlrAdvogado;
   end;
 
-  TinfoProcJudCollection = class(TObjectList)
+  TinfoProcJudCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoProcJudCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcJudCollectionItem);
@@ -477,7 +476,7 @@ type
     property vlrDepJudicial: double read FvlrDepJudicial write FvlrDepJudicial;
   end;
 
-  TpgtoPJCollection = class(TObjectList)
+  TpgtoPJCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TpgtoPJCollectionItem;
     procedure SetItem(Index: Integer; Value: TpgtoPJCollectionItem);
@@ -535,7 +534,7 @@ end;
 
 function TR2070Collection.GetItem(Index: Integer): TR2070CollectionItem;
 begin
-  Result := TR2070CollectionItem(inherited GetItem(Index));
+  Result := TR2070CollectionItem(inherited Items[Index]);
 end;
 
 function TR2070Collection.New: TR2070CollectionItem;
@@ -546,7 +545,7 @@ end;
 
 procedure TR2070Collection.SetItem(Index: Integer; Value: TR2070CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TR2070CollectionItem }
@@ -630,7 +629,7 @@ end;
 function TideEstabCollection.GetItem(
   Index: Integer): TideEstabCollectionItem;
 begin
-  Result := TideEstabCollectionItem(inherited GetItem(Index));
+  Result := TideEstabCollectionItem(inherited Items[Index]);
 end;
 
 function TideEstabCollection.New: TideEstabCollectionItem;
@@ -642,7 +641,7 @@ end;
 procedure TideEstabCollection.SetItem(Index: Integer;
   Value: TideEstabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TideEstabCollectionItem }
@@ -673,7 +672,7 @@ end;
 function TpgtoPFCollection.GetItem(
   Index: Integer): TpgtoPFCollectionItem;
 begin
-  Result := TpgtoPFCollectionItem(inherited GetItem(Index));
+  Result := TpgtoPFCollectionItem(inherited Items[Index]);
 end;
 
 function TpgtoPFCollection.New: TpgtoPFCollectionItem;
@@ -685,7 +684,7 @@ end;
 procedure TpgtoPFCollection.SetItem(Index: Integer;
   Value: TpgtoPFCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TpgtoPFCollectionItem }
@@ -724,7 +723,7 @@ end;
 function TdetDeducaoCollection.GetItem(
   Index: Integer): TdetDeducaoCollectionItem;
 begin
-  Result := TdetDeducaoCollectionItem(inherited GetItem(Index));
+  Result := TdetDeducaoCollectionItem(inherited Items[Index]);
 end;
 
 function TdetDeducaoCollection.New: TdetDeducaoCollectionItem;
@@ -736,7 +735,7 @@ end;
 procedure TdetDeducaoCollection.SetItem(Index: Integer;
   Value: TdetDeducaoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TrendIsentoCollection }
@@ -749,7 +748,7 @@ end;
 function TrendIsentoCollection.GetItem(
   Index: Integer): TrendIsentoCollectionItem;
 begin
-  Result := TrendIsentoCollectionItem(inherited GetItem(Index));
+  Result := TrendIsentoCollectionItem(inherited Items[Index]);
 end;
 
 function TrendIsentoCollection.New: TrendIsentoCollectionItem;
@@ -761,7 +760,7 @@ end;
 procedure TrendIsentoCollection.SetItem(Index: Integer;
   Value: TrendIsentoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TdetCompetCollection }
@@ -774,7 +773,7 @@ end;
 function TdetCompetCollection.GetItem(
   Index: Integer): TdetCompetCollectionItem;
 begin
-  Result := TdetCompetCollectionItem(inherited GetItem(Index));
+  Result := TdetCompetCollectionItem(inherited Items[Index]);
 end;
 
 function TdetCompetCollection.New: TdetCompetCollectionItem;
@@ -786,7 +785,7 @@ end;
 procedure TdetCompetCollection.SetItem(Index: Integer;
   Value: TdetCompetCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoRRACollection }
@@ -799,7 +798,7 @@ end;
 function TinfoRRACollection.GetItem(
   Index: Integer): TinfoRRACollectionItem;
 begin
-  Result := TinfoRRACollectionItem(inherited GetItem(Index));
+  Result := TinfoRRACollectionItem(inherited Items[Index]);
 end;
 
 function TinfoRRACollection.New: TinfoRRACollectionItem;
@@ -811,7 +810,7 @@ end;
 procedure TinfoRRACollection.SetItem(Index: Integer;
   Value: TinfoRRACollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoRRACollectionItem }
@@ -852,7 +851,7 @@ end;
 function TideAdvogadoCollection.GetItem(
   Index: Integer): TideAdvogadoCollectionItem;
 begin
-  Result := TideAdvogadoCollectionItem(inherited GetItem(Index));
+  Result := TideAdvogadoCollectionItem(inherited Items[Index]);
 end;
 
 function TideAdvogadoCollection.New: TideAdvogadoCollectionItem;
@@ -864,7 +863,7 @@ end;
 procedure TideAdvogadoCollection.SetItem(Index: Integer;
   Value: TideAdvogadoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoProcJudCollection }
@@ -877,7 +876,7 @@ end;
 function TinfoProcJudCollection.GetItem(
   Index: Integer): TinfoProcJudCollectionItem;
 begin
-  Result := TinfoProcJudCollectionItem(inherited GetItem(Index));
+  Result := TinfoProcJudCollectionItem(inherited Items[Index]);
 end;
 
 function TinfoProcJudCollection.New: TinfoProcJudCollectionItem;
@@ -889,7 +888,7 @@ end;
 procedure TinfoProcJudCollection.SetItem(Index: Integer;
   Value: TinfoProcJudCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoProcJudCollectionItem }
@@ -918,7 +917,7 @@ end;
 function TpgtoPJCollection.GetItem(
   Index: Integer): TpgtoPJCollectionItem;
 begin
-  Result := TpgtoPJCollectionItem(inherited GetItem(Index));
+  Result := TpgtoPJCollectionItem(inherited Items[Index]);
 end;
 
 function TpgtoPJCollection.New: TpgtoPJCollectionItem;
@@ -930,7 +929,7 @@ end;
 procedure TpgtoPJCollection.SetItem(Index: Integer;
   Value: TpgtoPJCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TpgtoPJCollectionItem }

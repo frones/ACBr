@@ -1,41 +1,34 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrReinf                                                }
-{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
-{ Reinf                                                                        }
-
-{ Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-
-{ Colaboradores nesse arquivo:                                                 }
-
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 04/12/2017: Renato Rubinho
-|*  - Implementados registros que faltavam e isoladas as respectivas classes
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -44,7 +37,13 @@ unit pcnReinfR2060;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -141,7 +140,7 @@ type
     property tipoCod: TtipoCodCollection read FtipoCod write FtipoCod;
   end;
 
-  TtipoCodCollection = class(TObjectList)
+  TtipoCodCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TtipoCodCollectionItem;
     procedure SetItem(Index: Integer; Value: TtipoCodCollectionItem);
@@ -176,7 +175,7 @@ type
     property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
   end;
 
-  TtipoAjusteCollection = class(TObjectList)
+  TtipoAjusteCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TtipoAjusteCollectionItem;
     procedure SetItem(Index: Integer; Value: TtipoAjusteCollectionItem);
@@ -202,7 +201,7 @@ type
     property dtAjuste: string read FdtAjuste write FdtAjuste;
   end;
 
-  TinfoProcCollection = class(TObjectList)
+  TinfoProcCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
@@ -241,7 +240,7 @@ end;
 
 function TR2060Collection.GetItem(Index: Integer): TR2060CollectionItem;
 begin
-  Result := TR2060CollectionItem(inherited GetItem(Index));
+  Result := TR2060CollectionItem(inherited Items[Index]);
 end;
 
 function TR2060Collection.New: TR2060CollectionItem;
@@ -252,7 +251,7 @@ end;
 
 procedure TR2060Collection.SetItem(Index: Integer; Value: TR2060CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TR2060CollectionItem }
@@ -330,7 +329,7 @@ end;
 function TtipoCodCollection.GetItem(
   Index: Integer): TtipoCodCollectionItem;
 begin
-  Result := TtipoCodCollectionItem(inherited GetItem(Index));
+  Result := TtipoCodCollectionItem(inherited Items[Index]);
 end;
 
 function TtipoCodCollection.New: TtipoCodCollectionItem;
@@ -342,7 +341,7 @@ end;
 procedure TtipoCodCollection.SetItem(Index: Integer;
   Value: TtipoCodCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtipoCodCollectionItem }
@@ -371,7 +370,7 @@ end;
 function TtipoAjusteCollection.GetItem(
   Index: Integer): TtipoAjusteCollectionItem;
 begin
-  Result := TtipoAjusteCollectionItem(inherited GetItem(Index));
+  Result := TtipoAjusteCollectionItem(inherited Items[Index]);
 end;
 
 function TtipoAjusteCollection.New: TtipoAjusteCollectionItem;
@@ -383,7 +382,7 @@ end;
 procedure TtipoAjusteCollection.SetItem(Index: Integer;
   Value: TtipoAjusteCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoProcCollection }
@@ -396,7 +395,7 @@ end;
 function TinfoProcCollection.GetItem(
   Index: Integer): TinfoProcCollectionItem;
 begin
-  Result := TinfoProcCollectionItem(inherited GetItem(Index));
+  Result := TinfoProcCollectionItem(inherited Items[Index]);
 end;
 
 function TinfoProcCollection.New: TinfoProcCollectionItem;
@@ -408,7 +407,7 @@ end;
 procedure TinfoProcCollection.SetItem(Index: Integer;
   Value: TinfoProcCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 procedure TevtCPRB.GerarideEstab;

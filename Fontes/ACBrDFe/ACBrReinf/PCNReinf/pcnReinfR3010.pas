@@ -1,41 +1,34 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrReinf                                                }
-{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
-{ Reinf                                                                        }
-
-{ Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-
-{ Colaboradores nesse arquivo:                                                 }
-
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 04/12/2017: Renato Rubinho
-|*  - Implementados registros que faltavam e isoladas as respectivas classes
-*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -44,7 +37,13 @@ unit pcnReinfR3010;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -114,7 +113,7 @@ type
     property ideEstab: TideEstabCollection read FideEstab write FideEstab;
   end;
 
-  TideEstabCollection = class(TObjectList)
+  TideEstabCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TideEstabCollectionItem;
     procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
@@ -141,7 +140,7 @@ type
     property receitaTotal: TreceitaTotal read FreceitaTotal write FreceitaTotal;
   end;
 
-  TboletimCollection = class(TObjectList)
+  TboletimCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TboletimCollectionItem;
     procedure SetItem(Index: Integer; Value: TboletimCollectionItem);
@@ -190,7 +189,7 @@ type
     property outrasReceitas: ToutrasReceitasCollection read FoutrasReceitas write FoutrasReceitas;
   end;
 
-  TreceitaIngressosCollection = class(TObjectList)
+  TreceitaIngressosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TreceitaIngressosCollectionItem;
     procedure SetItem(Index: Integer; Value: TreceitaIngressosCollectionItem);
@@ -220,7 +219,7 @@ type
     property vlrTotal: double read FvlrTotal write FvlrTotal;
   end;
 
-  ToutrasReceitasCollection = class(TObjectList)
+  ToutrasReceitasCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): ToutrasReceitasCollectionItem;
     procedure SetItem(Index: Integer; Value: ToutrasReceitasCollectionItem);
@@ -263,7 +262,7 @@ type
     property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
   end;
 
-  TinfoProcCollection = class(TObjectList)
+  TinfoProcCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
@@ -302,7 +301,7 @@ end;
 
 function TR3010Collection.GetItem(Index: Integer): TR3010CollectionItem;
 begin
-  Result := TR3010CollectionItem(inherited GetItem(Index));
+  Result := TR3010CollectionItem(inherited Items[Index]);
 end;
 
 function TR3010Collection.New: TR3010CollectionItem;
@@ -313,7 +312,7 @@ end;
 
 procedure TR3010Collection.SetItem(Index: Integer; Value: TR3010CollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TR3010CollectionItem }
@@ -363,7 +362,7 @@ end;
 function TideEstabCollection.GetItem(
   Index: Integer): TideEstabCollectionItem;
 begin
-  Result := TideEstabCollectionItem(inherited GetItem(Index));
+  Result := TideEstabCollectionItem(inherited Items[Index]);
 end;
 
 function TideEstabCollection.New: TideEstabCollectionItem;
@@ -375,7 +374,7 @@ end;
 procedure TideEstabCollection.SetItem(Index: Integer;
   Value: TideEstabCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TideEstabCollectionItem }
@@ -404,7 +403,7 @@ end;
 function TboletimCollection.GetItem(
   Index: Integer): TboletimCollectionItem;
 begin
-  Result := TboletimCollectionItem(inherited GetItem(Index));
+  Result := TboletimCollectionItem(inherited Items[Index]);
 end;
 
 function TboletimCollection.New: TboletimCollectionItem;
@@ -416,7 +415,7 @@ end;
 procedure TboletimCollection.SetItem(Index: Integer;
   Value: TboletimCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TboletimCollectionItem }
@@ -445,7 +444,7 @@ end;
 function TreceitaIngressosCollection.GetItem(
   Index: Integer): TreceitaIngressosCollectionItem;
 begin
-  Result := TreceitaIngressosCollectionItem(inherited GetItem(Index));
+  Result := TreceitaIngressosCollectionItem(inherited Items[Index]);
 end;
 
 function TreceitaIngressosCollection.New: TreceitaIngressosCollectionItem;
@@ -457,7 +456,7 @@ end;
 procedure TreceitaIngressosCollection.SetItem(Index: Integer;
   Value: TreceitaIngressosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { ToutrasReceitasCollection }
@@ -470,7 +469,7 @@ end;
 function ToutrasReceitasCollection.GetItem(
   Index: Integer): ToutrasReceitasCollectionItem;
 begin
-  Result := ToutrasReceitasCollectionItem(inherited GetItem(Index));
+  Result := ToutrasReceitasCollectionItem(inherited Items[Index]);
 end;
 
 function ToutrasReceitasCollection.New: ToutrasReceitasCollectionItem;
@@ -482,7 +481,7 @@ end;
 procedure ToutrasReceitasCollection.SetItem(Index: Integer;
   Value: ToutrasReceitasCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TreceitaTotal }
@@ -509,7 +508,7 @@ end;
 function TinfoProcCollection.GetItem(
   Index: Integer): TinfoProcCollectionItem;
 begin
-  Result := TinfoProcCollectionItem(inherited GetItem(Index));
+  Result := TinfoProcCollectionItem(inherited Items[Index]);
 end;
 
 function TinfoProcCollection.New: TinfoProcCollectionItem;
@@ -521,7 +520,7 @@ end;
 procedure TinfoProcCollection.SetItem(Index: Integer;
   Value: TinfoProcCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 procedure TevtEspDesportivo.GerarideEstab(Lista: TideEstabCollection);

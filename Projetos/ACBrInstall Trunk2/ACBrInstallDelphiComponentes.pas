@@ -379,9 +379,8 @@ begin
     begin
       InformaSituacao('Removendo pacotes 32bits da instalação anterior do ACBr na IDE...');
       RemoverPacotesAntigos;
+      InformaSituacao('...OK');
     end;
-
-    InformaSituacao('...OK');
     InformaProgresso;
 
     // *************************************************************************
@@ -402,9 +401,12 @@ begin
     InformaProgresso;
 
     // -- adicionar ao environment variables do delphi
+    if tPlatformAtual = bpWin32 then
+begin
     InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
     AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
     InformaSituacao('...OK');
+end;
     InformaProgresso;
 
 

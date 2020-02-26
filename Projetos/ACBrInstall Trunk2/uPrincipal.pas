@@ -264,6 +264,7 @@ begin
   FUltimoArquivoLog := NomeCaminhoArquivoLog;
   lbInfo.Clear;
   lbInfo.Items.Text := Cabecalho;
+  lstMsgInstalacao.Clear;
 end;
 
 procedure TfrmPrincipal.MontaListaIDEsSuportadas;
@@ -302,7 +303,6 @@ end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-//  FoACBr.Free;
   UmaListaPlataformasAlvos.Free;
 end;
 

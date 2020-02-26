@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="4"/>
       <RevisionNr Value="6"/>
-      <BuildNr Value="61"/>
+      <BuildNr Value="62"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="0.4.6.0"/>
@@ -290,34 +290,31 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="9">
+    <RequiredPackages Count="8">
       <Item1>
         <PackageName Value="ACBr_Integrador"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBrSerial"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="LCL"/>
       </Item7>
       <Item8>
-        <PackageName Value="LCL"/>
-      </Item8>
-      <Item9>
         <PackageName Value="FCL"/>
-      </Item9>
+      </Item8>
     </RequiredPackages>
     <Units Count="21">
       <Unit0>

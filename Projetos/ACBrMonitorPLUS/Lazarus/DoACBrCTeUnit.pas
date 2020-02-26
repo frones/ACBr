@@ -1164,20 +1164,25 @@ end;
 { TMetodoConsultarCTe }
 
 { Params: 0 - XML - Uma String com um Path completo XML ou chave CTe
+          1 - AExtrairEventos (1 para extrair)
 }
 procedure TMetodoConsultarCTe.Executar;
 var
   CargaDFe: TACBrCarregarCTe;
   AXML: String;
   Resposta: TConsultaCTeResposta;
+  AExtrairEventos: Boolean;
 begin
   AXML := fpCmd.Params(0);
+  AExtrairEventos := StrToBoolDef(fpCmd.Params(1), False);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
     ACBrCTe.Conhecimentos.Clear;
     CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, AXML);
     try
+      ACBrCTe.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
+
       if (ACBrCTe.Conhecimentos.Count = 0) then
       begin
         if ValidarChave(AXML) then

@@ -1474,19 +1474,24 @@ end;
 { TMetodoConsultarMDFe }
 
 { Params: 0 - XML - Uma String com um Path completo XML ou chave MDFe
+          1 - AExtrairEventos (1 para extrair)
 }
 procedure TMetodoConsultarMDFe.Executar;
 var
   CargaDFe: TACBrCarregarMDFe;
   AXML: String;
+  AExtrairEventos: Boolean;
 begin
   AXML := fpCmd.Params(0);
+  AExtrairEventos := StrToBoolDef(fpCmd.Params(1), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
     ACBrMDFe.Manifestos.Clear;
     CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML, False);
     try
+      ACBrMDFe.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
+
       if (ACBrMDFe.Manifestos.Count = 0) then
       begin
         if ValidarChave(AXML) then

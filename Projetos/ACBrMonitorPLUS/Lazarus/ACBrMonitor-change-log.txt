@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2020
+[+] DoACBrMDFeUnit, DoACBrBPeUnit, DoACBrCTeUnit e DoACBrNFeUnit
+Adicionado o parâmetro opcional: aExtrairEventos no método ConsultarMDFe,
+ConsultarBPe, ConsultarCTe e ConsultarNFe.  
+
 18/02/2020
 [*] ACBrMonitor1
 Adicionado botão para verificar a versão SSL que está sendo utilizada pelo Monitor

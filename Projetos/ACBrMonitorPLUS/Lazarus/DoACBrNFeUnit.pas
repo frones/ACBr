@@ -1290,20 +1290,25 @@ end;
 { TMetodoConsultarNFe }
 
 { Params: 0 - XML - Uma String com um Path completo XML ou chave NFe
+          1 - AExtrairEventos (1 para extrair)
 }
 procedure TMetodoConsultarNFe.Executar;
 var
   CargaDFe: TACBrCarregarNFe;
   AXML: String;
   Resposta: TConsultaNFeResposta;
+  AExtrairEventos: Boolean;
 begin
   AXML := fpCmd.Params(0);
+  AExtrairEventos := StrToBoolDef(fpCmd.Params(1), False);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     ACBrNFe.NotasFiscais.Clear;
     CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, AXML, False);
     try
+      ACBrNFe.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
+
       if (ACBrNFe.NotasFiscais.Count = 0) then
       begin
         if ValidarChave(AXML) then

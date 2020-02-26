@@ -1182,19 +1182,24 @@ end;
 { TMetodoConsultarBPe }
 
 { Params: 0 - XML - Uma String com um Path completo XML ou chave BPe
+          1 - AExtrairEventos (1 para extrair)
 }
 procedure TMetodoConsultarBPe.Executar;
 var
   CargaDFe: TACBrCarregarBPe;
   AXML: String;
+  AExtrairEventos: Boolean;
 begin
   AXML := fpCmd.Params(0);
+  AExtrairEventos := StrToBoolDef(fpCmd.Params(1), False);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
     ACBrBPe.Bilhetes.Clear;
     CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, AXML);
     try
+      ACBrBPe.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
+
       if (ACBrBPe.Bilhetes.Count = 0) then
       begin
         if ValidarChave(AXML) then

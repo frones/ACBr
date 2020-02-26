@@ -7,7 +7,7 @@
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Android</Platform>
-        <TargetedPlatforms>33883</TargetedPlatforms>
+        <TargetedPlatforms>32787</TargetedPlatforms>
         <AppType>Application</AppType>
         <PlatformSDK Condition="'$(PlatformSDK)'=='' And '$(Platform)'=='Android64'">AndroidSDK25.2.5_64bit.sdk</PlatformSDK>
     </PropertyGroup>
@@ -279,7 +279,6 @@
         <iPad_Launch2224>$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2224x1668.png</iPad_Launch2224>
         <iPad_Launch2388x1668>$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2388x1668.png</iPad_Launch2388x1668>
         <iPad_Launch2732x2048>$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2732x2048.png</iPad_Launch2732x2048>
-        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_iOSDevice64)'!=''">
         <iPhone_Spotlight29>$(BDS)\bin\Artwork\iOS\iPhone\FM_SpotlightSearchIcon_29x29.png</iPhone_Spotlight29>
@@ -436,12 +435,10 @@
     <PropertyGroup Condition="'$(Cfg_1_Android)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
         <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrSerial\;C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrComum\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
-        <IncludeAndroid_Splash>False</IncludeAndroid_Splash>
         <IncludeAndroid_NotificationAccentColor>False</IncludeAndroid_NotificationAccentColor>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Android64)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
-        <IncludeAndroid_Splash>False</IncludeAndroid_Splash>
         <IncludeAndroid_NotificationAccentColor>False</IncludeAndroid_NotificationAccentColor>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_iOSDevice32)'!=''">
@@ -479,7 +476,10 @@
     <PropertyGroup Condition="'$(Cfg_2_Android)'!=''">
         <BT_BuildType>AppStore</BT_BuildType>
         <VerInfo_Build>1</VerInfo_Build>
-        <IncludeAndroid_Splash>False</IncludeAndroid_Splash>
+        <IncludeAndroid_NotificationAccentColor>False</IncludeAndroid_NotificationAccentColor>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Android64)'!=''">
+        <VerInfo_Build>1</VerInfo_Build>
         <IncludeAndroid_NotificationAccentColor>False</IncludeAndroid_NotificationAccentColor>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_iOSDevice32)'!=''">
@@ -540,9 +540,9 @@
             <Platforms>
                 <Platform value="Android">True</Platform>
                 <Platform value="Android64">True</Platform>
-                <Platform value="iOSDevice32">True</Platform>
-                <Platform value="iOSDevice64">True</Platform>
-                <Platform value="iOSSimulator">True</Platform>
+                <Platform value="iOSDevice32">False</Platform>
+                <Platform value="iOSDevice64">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
@@ -553,8 +553,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_LauncherIcon72"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_426x320.png" Configuration="Debug" Class="Android_SplashImage426"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_24x24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_470x320.png" Configuration="Debug" Class="Android_SplashImage470"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android64\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Release" Class="Android_NotificationIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -567,32 +574,52 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_36x36.png" Configuration="Debug" Class="Android_LauncherIcon36"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_36x36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_144x144.png" Configuration="Debug" Class="Android_LauncherIcon144"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_96x96.png" Configuration="Debug" Class="Android_LauncherIcon96"/>
                 <DeployFile LocalName="Win32\Debug\ACBrPosPrinterAndroid.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
+                        <RemoteName>libACBrPosPrinterAndroid.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_426x320.png" Configuration="Debug" Class="Android_SplashImage426"/>
+                <DeployFile LocalName="Android\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_960x720.png" Configuration="Debug" Class="Android_SplashImage960"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_36x36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Android64\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile"/>
-                <DeployFile LocalName="Android\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android\Debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android64\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Release" Class="Android_NotificationIcon96"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470"/>
-                <DeployFile LocalName="Android64\Release\libACBrPosPrinterAndroid.so" Configuration="Release" Class="ProjectOutput"/>
-                <DeployFile LocalName="All Platforms\Release\ACBrPosPrinterAndroid" Configuration="Release" Class="ProjectOutput"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_24x24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
-
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32">
+                <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeArmeabiFile">
+                    <Platform Name="Android">
+                        <RemoteName>libACBrPosPrinterAndroid.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -602,10 +629,32 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_48x48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
                 <DeployFile LocalName="Android64\Release\strings.xml" Configuration="Release" Class="Android_Strings"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Release" Class="Android_LauncherIcon96"/>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_640x480.png" Configuration="Debug" Class="Android_SplashImage640"/>
+                <DeployFile LocalName="Android64\Debug\libACBrPosPrinterAndroid.so" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_72x72.png" Configuration="Debug" Class="Android_NotificationIcon72"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_640_480.png" Configuration="Release" Class="Android_SplashImage640"/>
+                <DeployFile LocalName="Android\Release\classes.dex" Configuration="Release" Class="AndroidClassesDexFile">
+                    <Platform Name="Android">
+                        <RemoteName>classes.dex</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Android\Debug\strings.xml" Configuration="Debug" Class="Android_Strings">
                     <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android64\Release\classes.dex" Configuration="Release" Class="AndroidClassesDexFile"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -645,45 +694,39 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_LauncherIcon48"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_72x72.png" Configuration="Debug" Class="Android_NotificationIcon72"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_96x96.png" Configuration="Debug" Class="Android_LauncherIcon96"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Release" Class="Android_LauncherIcon36"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_426_320.png" Configuration="Release" Class="Android_SplashImage426"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Release" Class="Android_NotificationIcon36">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Release" Class="Android_LauncherIcon36"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_640x480.png" Configuration="Debug" Class="Android_SplashImage640"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_470x320.png" Configuration="Debug" Class="Android_SplashImage470"/>
+                <DeployFile LocalName="Android64\Debug\strings.xml" Configuration="Debug" Class="Android_Strings"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_LauncherIcon72"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48"/>
+                <DeployFile LocalName="Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
+                <DeployFile LocalName="Android64\Release\libACBrPosPrinterAndroid.so" Configuration="Release" Class="ProjectOutput"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_48x48.png" Configuration="Debug" Class="Android_LauncherIcon48"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\release\mips\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeMipsFile">
-                    <Platform Name="Android">
-                        <RemoteName>libACBrPosPrinterAndroid.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_48x48.png" Configuration="Debug" Class="Android_LauncherIcon48"/>
-                <DeployFile LocalName="Android64\Release\classes.dex" Configuration="Release" Class="AndroidClassesDexFile"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_144x144.png" Configuration="Debug" Class="Android_LauncherIcon144"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
@@ -696,13 +739,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Release" Class="Android_NotificationIcon36"/>
-                <DeployFile LocalName="$(BDS)\lib\android\release\armeabi\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeArmeabiFile">
+                <DeployFile LocalName="Android\Release\libACBrPosPrinterAndroid.so" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteName>libACBrPosPrinterAndroid.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_426_320.png" Configuration="Release" Class="Android_SplashImage426"/>
                 <DeployFile LocalName="Android64\Debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\acbrmono.bmp" Configuration="Debug" Class="File">
                     <Platform Name="All Platforms">
@@ -740,16 +783,34 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Android64\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144"/>
-                <DeployFile LocalName="Android64\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_48x48.png" Configuration="Debug" Class="Android_LauncherIcon48"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_LauncherIcon48"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_36x36.png" Configuration="Debug" Class="Android_LauncherIcon36"/>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_48x48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960"/>
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
+                    <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="All Platforms\Release\ACBrPosPrinterAndroid" Configuration="Release" Class="ProjectOutput"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Android\Release\strings.xml" Configuration="Release" Class="Android_Strings">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
@@ -758,97 +819,6 @@
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_426x320.png" Configuration="Debug" Class="Android_SplashImage426"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_640_480.png" Configuration="Release" Class="Android_SplashImage640"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Android64\Debug\strings.xml" Configuration="Debug" Class="Android_Strings"/>
-                <DeployFile LocalName="Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
-                <DeployFile LocalName="Android\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest">
-                    <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_36x36.png" Configuration="Debug" Class="Android_LauncherIcon36"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_48x48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_24x24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_36x36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144">
-                    <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Android\Debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
-                    <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_144x144.png" Configuration="Debug" Class="Android_LauncherIcon144"/>
-                <DeployFile LocalName="Android64\Debug\libACBrPosPrinterAndroid.so" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_96x96.png" Configuration="Debug" Class="Android_LauncherIcon96"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Release" Class="Android_LauncherIcon96"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48"/>
-                <DeployFile LocalName="Android\Release\classes.dex" Configuration="Release" Class="AndroidClassesDexFile">
-                    <Platform Name="Android">
-                        <RemoteName>classes.dex</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_960x720.png" Configuration="Debug" Class="Android_SplashImage960"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_640x480.png" Configuration="Debug" Class="Android_SplashImage640"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_72x72.png" Configuration="Debug" Class="Android_NotificationIcon72"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_960x720.png" Configuration="Debug" Class="Android_SplashImage960"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_LauncherIcon72"/>
-                <DeployFile LocalName="Android64\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest"/>
-                <DeployFile LocalName="Android\Release\libACBrPosPrinterAndroid.so" Configuration="Release" Class="ProjectOutput">
-                    <Platform Name="Android">
-                        <RemoteName>libACBrPosPrinterAndroid.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Release" Class="Android_LauncherIcon96"/>
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
-                    <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_470x320.png" Configuration="Debug" Class="Android_SplashImage470"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144">
-                    <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -870,8 +840,19 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Android64\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
-                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Release" Class="Android_LauncherIcon36"/>
+                <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72"/>
+                <DeployFile LocalName="Android64\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

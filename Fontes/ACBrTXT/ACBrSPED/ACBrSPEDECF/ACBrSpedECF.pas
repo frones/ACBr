@@ -221,8 +221,6 @@ type
 
   end;
 
-procedure Register;
-
 implementation
 
 uses ACBrUtil;
@@ -230,11 +228,6 @@ uses ACBrUtil;
 {$IFNDEF FPC}
  {$R ACBr_SPEDECF.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrSPEDECF]);
-end;
 
 (* TACBrSpedECF *)
 

@@ -250,20 +250,9 @@ type
 
   end;
 
-procedure Register;
-
 implementation
 
 uses ACBrUtil;
-
-{$IFNDEF FPC}
- {$R ACBrLFD.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrLFD]);
-end;
 
 (* TACBrLFD *)
 

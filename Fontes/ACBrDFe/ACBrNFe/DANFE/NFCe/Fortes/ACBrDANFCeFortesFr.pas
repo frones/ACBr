@@ -321,8 +321,6 @@ type
     property Filtro         : TACBrNFeDANFCeFiltro read fFiltro write fFiltro default fiNenhum ;
   end ;
 
-procedure Register;
-
 implementation
 
 uses
@@ -335,11 +333,6 @@ uses
 {$else}
   {$R *.dfm}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrNFe',[TACBrNFeDANFCeFortes]);
-end;
 
 { TACBrNFeDANFCeFortesFr }
 

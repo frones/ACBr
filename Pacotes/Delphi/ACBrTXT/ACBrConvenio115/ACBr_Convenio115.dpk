@@ -35,6 +35,7 @@
 package ACBr_Convenio115;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -56,13 +57,15 @@ package ACBr_Convenio115;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_TXTComum,
   ACBr_OpenSSL;
 

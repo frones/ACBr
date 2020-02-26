@@ -51,7 +51,7 @@ unit ACBrNFeDANFeRLReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFeDANFeRLClass
+  SysUtils, Classes
   {$IfDef FPC}
      ,LResources
   {$EndIf} ;
@@ -60,13 +60,16 @@ procedure Register;
 
 implementation
 
+uses
+  ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4;
+
 {$IfNDef FPC}
   {$R ACBrNFe.dcr}
 {$EndIf}
 
 procedure Register;
 begin
-  RegisterComponents('ACBrNFe', [TACBrNFeDANFeRL]);
+  RegisterComponents('ACBrNFe', [TACBrNFeDANFeRL, TACBrNFeDANFCeFortes, TACBrNFeDANFCeFortesA4]);
 end;
 
 {$IfDef FPC}

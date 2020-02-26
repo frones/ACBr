@@ -16,7 +16,7 @@ package ACBr_MDFe;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$DEFINITIONINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -24,7 +24,6 @@ package ACBr_MDFe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
@@ -35,7 +34,8 @@ requires
   rtl,
   designide,
   ACBr_DFeComum,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  DCLACBr_Comum;
 
 contains
   ACBrMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas',

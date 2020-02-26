@@ -120,19 +120,12 @@ type
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
   end;
 
-procedure Register;
-
 implementation
 
 uses
   strutils, Math,
   ACBrNFe, ACBrValidador, ACBrUtil, ACBrDFeUtil, ACBrConsts, ACBrDFeDANFeReport,
    pcnConversao, pcnAuxiliar;
-
-procedure Register;
-begin
-  RegisterComponents('ACBrNFe', [TACBrNFeDANFeESCPOS]);
-end;
 
 { TACBrNFeDANFeESCPOS }
 

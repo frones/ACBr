@@ -57,7 +57,7 @@ package ACBr_CIOT;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$DEFINITIONINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -75,7 +75,8 @@ requires
   vcl,
   designide,
   ACBr_DFeComum,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  DCLACBr_Comum;
 
 contains
   ACBrCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOT.pas',

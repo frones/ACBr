@@ -48,6 +48,7 @@
 package ACBr_CTe;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -69,14 +70,15 @@ package ACBr_CTe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_DFeComum,
   ACBr_PCNComum;
 
@@ -84,7 +86,6 @@ contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',
   ACBrCTeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConfiguracoes.pas',
   ACBrCTeConhecimentos in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas',
-  ACBrCTeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeReg.pas',
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
   pcteConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas',
   pcteConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas',

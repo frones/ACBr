@@ -46,6 +46,7 @@
 package ACBr_BPe;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -67,16 +68,19 @@ package ACBr_BPe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
-{$DEFINE DEBUG}
 
 requires
   rtl,
   vcl,
   designide,
   ACBr_DFeComum,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  DCLACBr_Comum;
 
 contains
   ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',

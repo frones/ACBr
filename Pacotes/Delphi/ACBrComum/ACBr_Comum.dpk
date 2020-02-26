@@ -1,6 +1,7 @@
 package ACBr_Comum;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,31 +12,32 @@ package ACBr_Comum;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Biblioteca Comum, EAD, AAC  - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_synapse;
 
 contains
   ACBrBase in '..\..\..\Fontes\ACBrComum\ACBrBase.pas',
   ACBrConsts in '..\..\..\Fontes\ACBrComum\ACBrConsts.pas',
   ACBrUtil in '..\..\..\Fontes\ACBrComum\ACBrUtil.pas',
-  ACBrReg in '..\..\..\Fontes\ACBrComum\ACBrReg.pas',
   ACBrAAC in '..\..\..\Fontes\ACBrComum\ACBrAAC.pas',
   ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
   ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
@@ -49,5 +51,6 @@ contains
 //  {$EndIf}
 
 end.
+
 
 

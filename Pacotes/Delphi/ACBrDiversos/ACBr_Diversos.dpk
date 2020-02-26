@@ -2,6 +2,7 @@ package ACBr_Diversos;
 {$I ACBr.inc}
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -12,28 +13,29 @@ package ACBr_Diversos;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_Comum;
 
 contains
-  ACBrDiversosReg in '..\..\..\Fontes\ACBrDiversos\ACBrDiversosReg.pas',
   ACBrExtenso in '..\..\..\Fontes\ACBrDiversos\ACBrExtenso.pas',
   ACBrValidador in '..\..\..\Fontes\ACBrDiversos\ACBrValidador.pas',
   ACBrTroco in '..\..\..\Fontes\ACBrDiversos\ACBrTroco.pas',

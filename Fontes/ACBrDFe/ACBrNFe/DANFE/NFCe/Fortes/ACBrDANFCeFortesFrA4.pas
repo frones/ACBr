@@ -278,8 +278,6 @@ type
     { Public declarations }
   end;
 
-procedure Register;
-
 implementation
 
 {$ifdef FPC}
@@ -290,11 +288,6 @@ implementation
 
 uses RLPrinters, StrUtils,
      ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrDFeREport, ACBrDelphiZXingQRCode;
-
-procedure Register;
-begin
-  RegisterComponents('ACBrNFe',[TACBrNFeDANFCeFortesA4]);
-end;
 
 function TfrmACBrDANFCeFortesFrA4.CompoemEnderecoCFe: String;
 var

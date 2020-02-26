@@ -14,14 +14,13 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="42">
+    <Files Count="43">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas"/>
         <UnitName Value="ACBrPAFRegistros"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrPAF"/>
       </Item2>
       <Item3>
@@ -184,6 +183,11 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J_Class.pas"/>
         <UnitName Value="ACBrPAF_J_Class"/>
       </Item42>
+      <Item43>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPAFReg"/>
+      </Item43>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
@@ -198,7 +202,6 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
   </Package>
 </CONFIG>

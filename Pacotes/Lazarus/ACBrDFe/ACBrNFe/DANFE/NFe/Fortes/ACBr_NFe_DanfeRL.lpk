@@ -9,7 +9,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes"/>
+        <IncludeFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -20,7 +21,7 @@
     </CompilerOptions>
     <Description Value="ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="10">
+    <Files Count="14">
       <Item1>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas"/>
         <UnitName Value="ACBrNFeDANFeRL"/>
@@ -62,6 +63,22 @@
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRLRetrato.pas"/>
         <UnitName Value="ACBrNFeDAInutRLRetrato"/>
       </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
+        <Type Value="LFM"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <UnitName Value="ACBrDANFCeFortesFr"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.lfm"/>
+        <Type Value="LFM"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas"/>
+        <UnitName Value="ACBrDANFCeFortesFrA4"/>
+      </Item14>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

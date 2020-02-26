@@ -2,6 +2,7 @@
 package ACBr_Reinf;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,15 +24,18 @@ package ACBr_Reinf;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Reinf - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
-{$DEFINE DEBUG}
 
 requires
   vcl,
   rtl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  DCLACBr_Comum;
 
 contains
   ACBrReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas',

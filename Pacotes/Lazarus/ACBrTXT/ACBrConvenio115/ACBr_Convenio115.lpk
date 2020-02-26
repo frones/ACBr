@@ -14,12 +14,16 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="1">
+    <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115\ACBrConvenio115.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrConvenio115"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115\ACBrConvenio115Reg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrConvenio115Reg"/>
+      </Item2>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

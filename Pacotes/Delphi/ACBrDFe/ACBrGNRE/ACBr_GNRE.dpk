@@ -45,6 +45,7 @@
 package ACBr_GNRE;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -66,15 +67,17 @@ package ACBr_GNRE;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
-{$DEFINE DEBUG}
 
 requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  DCLACBr_Comum;
 
 contains
   ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',

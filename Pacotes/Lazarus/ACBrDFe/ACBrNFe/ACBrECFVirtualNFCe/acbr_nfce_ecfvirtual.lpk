@@ -17,12 +17,16 @@
 Permite que aplicações que usem o componente ACBrECF, emitam NFCe como se fosse um ECF"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="1">
+    <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe\ACBrECFVirtualNFCe.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrECFVirtualNFCe"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe\ACBrECFVirtualNFCeReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrECFVirtualNFCeReg"/>
+      </Item2>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

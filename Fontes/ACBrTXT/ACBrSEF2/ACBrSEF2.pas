@@ -172,8 +172,6 @@ type
 
   end;
 
-procedure Register;
-
 implementation
 
 Uses
@@ -182,12 +180,6 @@ Uses
 {$IFNDEF FPC}
  {$R ACBrSEF2.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrSEF2]);
-end;
-
 
 { TACBrSEF2 }
 

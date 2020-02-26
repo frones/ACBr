@@ -1,6 +1,7 @@
 package ACBr_NFSeDanfseFR;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,22 +12,25 @@ package ACBr_NFSeDanfseFR;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANFSe em FastReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
 {$IFDEF VER140} fs6, frx6, frxe6, frxDB6, {$ENDIF} // D6
 {$IFDEF VER150} fs7, frx7, frxe7, frxDB7, {$ENDIF} // D7
 {$IFDEF VER170} fs9, frx9, frxe9, frxDB9, {$ENDIF} // D2005
@@ -52,7 +56,6 @@ requires
   ACBr_NFSe;
 
 contains
-  ACBrNFSeDANFSeFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRReg.pas',
   ACBrNFSeDANFSeFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFR.pas';
 
 end.

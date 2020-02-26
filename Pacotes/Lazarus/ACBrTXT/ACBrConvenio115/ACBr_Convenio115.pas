@@ -4,16 +4,17 @@
 
 unit ACBr_Convenio115;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrConvenio115, LazarusPackageIntf;
+  ACBrConvenio115, ACBrConvenio115Reg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrConvenio115', @ACBrConvenio115.Register);
+  RegisterUnit('ACBrConvenio115Reg', @ACBrConvenio115Reg.Register);
 end;
 
 initialization

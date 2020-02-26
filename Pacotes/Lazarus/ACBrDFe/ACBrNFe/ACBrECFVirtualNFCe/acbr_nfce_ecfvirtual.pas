@@ -4,16 +4,17 @@
 
 unit acbr_nfce_ecfvirtual;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrECFVirtualNFCe, LazarusPackageIntf;
+  ACBrECFVirtualNFCe, ACBrECFVirtualNFCeReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrECFVirtualNFCe', @ACBrECFVirtualNFCe.Register);
+  RegisterUnit('ACBrECFVirtualNFCeReg', @ACBrECFVirtualNFCeReg.Register);
 end;
 
 initialization

@@ -1,6 +1,7 @@
 package ACBr_SPEDImportar;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL ON}
@@ -22,14 +23,16 @@ package ACBr_SPEDImportar;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_SPED;
 
 contains

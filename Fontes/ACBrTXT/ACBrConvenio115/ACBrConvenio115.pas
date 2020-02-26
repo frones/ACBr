@@ -429,8 +429,6 @@ type
 
 function SortMestre(Item1: Pointer; Item2: Pointer): Integer;
 
-procedure Register;
-
 const
   TTipoAssinanteConv115_Tab11_1DS: array [0 .. 6] of string =
     ('Sem Classificação',
@@ -477,11 +475,6 @@ implementation
 
 uses
   ACBrUtil, ACBrEAD, Variants, ACBrValidador;
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrConvenio115]);
-end;
 
 function MD5String(const texto: string): string;
 var

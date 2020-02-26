@@ -1,6 +1,7 @@
 package ACBr_EDI;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,8 +24,8 @@ package ACBr_EDI;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
-{$DESCRIPTION 'ACBr - Intercâmbio Eletrônico de Dados EDI - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
@@ -39,8 +40,7 @@ contains
   ACBrEDINotaFiscal in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas',
   ACBrEDIOcorrencia in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIOcorrencia.pas',
   pediConversao in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas',
-  ACBrEDIClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas',
-  ACBrEDI in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas';
+  ACBrEDIClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas';
 
 end.
 

@@ -58,7 +58,7 @@ package ACBr_ANe;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$DEFINITIONINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -75,7 +75,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  DCLACBr_Comum;
 
 contains
   ACBrANeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas',

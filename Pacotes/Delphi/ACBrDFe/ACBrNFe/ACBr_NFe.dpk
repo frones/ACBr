@@ -46,6 +46,7 @@
 package ACBr_NFe;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -67,21 +68,21 @@ package ACBr_NFe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  ACBr_DFeComum;
 
 contains
   ACBrNFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeConfiguracoes.pas',
   ACBrNFeNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeNotasFiscais.pas',
-  ACBrNFeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeReg.pas',
   ACBrNFeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeWebServices.pas',
   ACBrNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.pas',
   pcnNFeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeConsts.pas',

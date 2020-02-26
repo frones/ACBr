@@ -4,6 +4,7 @@
 
 unit ACBr_LFD;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -14,13 +15,13 @@ uses
   ACBrLFDBloco_E, ACBrLFDBloco_E_Class, ACBrLFDBloco_H, ACBrLFDBloco_H_Class, 
   ACBrLFDBloco_I, ACBrLFDBloco_I_Class, ACBrLFDBloco_J, ACBrLFDBloco_J_Class, 
   ACBrLFDBloco_K, ACBrLFDBloco_K_Class, ACBrLFDBloco_L, ACBrLFDBloco_L_Class, 
-  ACBrLFDBloco_Z, ACBrLFDBloco_Z_Class, LazarusPackageIntf;
+  ACBrLFDBloco_Z, ACBrLFDBloco_Z_Class, ACBrLFDReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrLFD', @ACBrLFD.Register);
+  RegisterUnit('ACBrLFDReg', @ACBrLFDReg.Register);
 end;
 
 initialization

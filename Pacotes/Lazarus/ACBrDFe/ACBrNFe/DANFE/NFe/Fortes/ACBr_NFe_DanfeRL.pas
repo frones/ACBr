@@ -4,13 +4,15 @@
 
 unit ACBr_NFe_DanfeRL;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrNFeDANFeRL, ACBrNFeDANFeRLClass, ACBrNFeDANFeRLReg, 
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeEventoRL, 
   ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado, ACBrNFeDAInutRL, 
-  ACBrNFeDAInutRLRetrato, LazarusPackageIntf;
+  ACBrNFeDAInutRLRetrato, ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, 
+  LazarusPackageIntf;
 
 implementation
 

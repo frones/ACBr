@@ -49,7 +49,7 @@ package ACBr_NFeDanfeRL;
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -74,15 +74,12 @@ package ACBr_NFeDanfeRL;
 
 requires
   rtl,
-  designide,
-  dsnap,
   ACBr_NFe,
   ACBrDFeReportRL;
 
 contains
   ACBrNFeDANFeRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas' {frlDANFeRL},
   ACBrNFeDANFeRLClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLClass.pas',
-  ACBrNFeDANFeRLReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLReg.pas',
   ACBrNFeDANFeRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLRetrato.pas' {frlDANFeRLRetrato},
   ACBrNFeDANFeRLPaisagem in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLPaisagem.pas' {frlDANFeRLPaisagem},
   ACBrNFeDANFeEventoRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRL.pas' {frlDANFeEventoRL},

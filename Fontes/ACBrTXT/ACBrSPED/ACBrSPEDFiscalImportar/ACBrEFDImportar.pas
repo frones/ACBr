@@ -99,18 +99,11 @@ type
     property AntesDeInserirColuna: TACBrSpedFiscalImportarColuna read FAntesDeInserirColuna write FAntesDeInserirColuna;
   end;
 
-procedure Register;
-
 implementation
 
 {$IFNDEF FPC}
  {$R ACBrSPEDFiscalImportar.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrSpedFiscalImportar]);
-end;
 
 { TACBrSpedFiscalImportar }
 

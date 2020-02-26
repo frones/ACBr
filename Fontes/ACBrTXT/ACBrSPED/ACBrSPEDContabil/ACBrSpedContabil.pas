@@ -194,8 +194,6 @@ type
       default 1000 ;
   end;
 
-procedure Register;
-
 implementation
 
 Uses ACBrUtil, ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
@@ -203,11 +201,6 @@ Uses ACBrUtil, ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
 {$IFNDEF FPC}
  {$R ACBr_SPEDContabil.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrSPEDContabil]);
-end;
 
 (* TACBrSPEDContabil *)
 

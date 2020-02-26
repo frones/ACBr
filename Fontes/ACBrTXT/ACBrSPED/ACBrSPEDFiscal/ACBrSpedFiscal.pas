@@ -211,8 +211,6 @@ type
     property EventsBloco_E: TEventsBloco_E read FEventsBloco_E; // write FOnEventsBloco_E;
   end;
 
-procedure Register;
-
 implementation
 
 uses ACBrUtil;
@@ -220,11 +218,6 @@ uses ACBrUtil;
 {$IFNDEF FPC}
  {$R ACBr_SPEDFiscal.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrSPEDFiscal]);
-end;
 
 (* TACBrSPEDFiscal *)
 

@@ -106,7 +106,7 @@ implementation
 
 Uses ACBrUtil, ACBrAAC ;
 {$IFNDEF FPC}
-   {$R ACBrComum.dcr}
+   {$R DCLACBrComum.dcr}
 {$ENDIF}
 
 {$IFDEF  RTL170_UP}

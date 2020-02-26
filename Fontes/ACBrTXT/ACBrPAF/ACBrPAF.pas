@@ -196,8 +196,6 @@ type
        write fsOnPAFGetKeyRSA;
   end;
 
-  procedure Register;
-
 implementation
 
 Uses
@@ -207,11 +205,6 @@ Uses
 {$IFNDEF FPC}
  {$R ACBrPAF.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrPAF]);
-end;
 
 constructor TACBrPAF.Create(AOwner: TComponent);
 begin

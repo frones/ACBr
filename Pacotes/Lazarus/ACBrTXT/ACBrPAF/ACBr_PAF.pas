@@ -4,6 +4,7 @@
 
 unit ACBr_PAF;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -15,13 +16,13 @@ uses
   ACBrPAF_H_Class, ACBrPAF_L, ACBrPAF_L_Class, ACBrPAF_M, ACBrPAF_M_Class, 
   ACBrPAF_S, ACBrPAF_S_Class, ACBrPAF_TITP, ACBrPAF_TITP_Class, ACBrPAF_U, 
   ACBrPAF_U_Class, ACBrPAF_Z, ACBrPAF_Z_Class, ACBrPAF_V, ACBrPAF_V_Class, 
-  ACBrPAF_J, ACBrPAF_J_Class, LazarusPackageIntf;
+  ACBrPAF_J, ACBrPAF_J_Class, ACBrPAFReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrPAF', @ACBrPAF.Register);
+  RegisterUnit('ACBrPAFReg', @ACBrPAFReg.Register);
 end;
 
 initialization

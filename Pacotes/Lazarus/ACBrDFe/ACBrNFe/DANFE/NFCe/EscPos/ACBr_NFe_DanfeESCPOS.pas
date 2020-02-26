@@ -4,16 +4,17 @@
 
 unit ACBr_NFe_DanfeESCPOS;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrNFeDANFeESCPOS, LazarusPackageIntf;
+  ACBrNFeDANFeESCPOS, ACBrNFeDANFeESCPOSReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrNFeDANFeESCPOS', @ACBrNFeDANFeESCPOS.Register);
+  RegisterUnit('ACBrNFeDANFeESCPOSReg', @ACBrNFeDANFeESCPOSReg.Register);
 end;
 
 initialization

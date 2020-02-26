@@ -75,7 +75,8 @@ requires
   vcl,
   designide,
   ACBr_DFeComum,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  DCLACBr_Comum;
 
 contains
   ACBrONE in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONE.pas',

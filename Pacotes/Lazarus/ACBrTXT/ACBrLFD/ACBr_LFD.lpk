@@ -14,14 +14,13 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Livro Fiscal Digital - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="31">
+    <Files Count="32">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD3505.pas"/>
         <UnitName Value="ACBrLFD3505"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrLFD"/>
       </Item2>
       <Item3>
@@ -140,6 +139,11 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Class.pas"/>
         <UnitName Value="ACBrLFDBloco_Z_Class"/>
       </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrLFDReg"/>
+      </Item32>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

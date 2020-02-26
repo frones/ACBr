@@ -14,10 +14,9 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="33">
+    <Files Count="34">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSEF2"/>
       </Item1>
       <Item2>
@@ -60,6 +59,11 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_BlocoH_1.pas"/>
         <UnitName Value="ACBrSEF2_BlocoH_1"/>
       </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2Reg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSEF2Reg"/>
+      </Item34>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

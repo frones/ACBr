@@ -20,12 +20,16 @@
     </CompilerOptions>
     <Description Value="ACBr - DANFe para NFC-e Impressora Serial - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="1">
+    <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos\ACBrNFeDANFeESCPOS.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNFeDANFeESCPOS"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos\ACBrNFeDANFeESCPOSReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFeDANFeESCPOSReg"/>
+      </Item2>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

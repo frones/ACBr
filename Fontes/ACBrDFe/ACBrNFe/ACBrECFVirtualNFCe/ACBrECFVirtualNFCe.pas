@@ -178,18 +178,11 @@ type
       read fsQuandoImprimirDocumento write fsQuandoImprimirDocumento;
   end;
 
-procedure Register;
-
 implementation
 
 uses pcnConversaoNFe,
   ACBrConsts, ACBrECFClass, ACBrUtil, ACBrNFeDANFEClass;
 	
-procedure Register;
-begin
-  RegisterComponents('ACBrNFe', [TACBrECFVirtualNFCe]);
-end;
-
 { TACBrECFVirtualNFCe }
 
 procedure TACBrECFVirtualNFCe.CreateVirtualClass;

@@ -28,6 +28,7 @@
 package ACBr_BlocoX;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -49,6 +50,8 @@ package ACBr_BlocoX;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Bloco X - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
@@ -56,7 +59,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  DCLACBr_Comum;
 
 contains
   ACBrBlocoX in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX.pas',

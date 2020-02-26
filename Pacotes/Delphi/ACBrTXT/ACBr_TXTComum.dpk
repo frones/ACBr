@@ -1,6 +1,7 @@
 package ACBr_TXTComum;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,6 +23,8 @@ package ACBr_TXTComum;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Biblioteca TXT Comum, Classes e Units que auxiliam na geração de arquivos fiscais TXT'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
@@ -29,7 +32,6 @@ package ACBr_TXTComum;
 requires
   rtl,
   vcl,
-  designide,
   ACBr_Diversos;
 
 contains

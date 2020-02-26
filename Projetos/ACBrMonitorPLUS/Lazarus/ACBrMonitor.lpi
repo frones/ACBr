@@ -190,7 +190,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="36">
+    <RequiredPackages Count="35">
       <Item1>
         <PackageName Value="ACBr_BPeDabpeESCPOS"/>
       </Item1>
@@ -264,42 +264,39 @@
         <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item26>
       <Item27>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item27>
       <Item28>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBrSerial"/>
       </Item28>
       <Item29>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item29>
       <Item30>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item30>
       <Item31>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item31>
       <Item32>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item32>
       <Item33>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrComum"/>
       </Item33>
       <Item34>
-        <PackageName Value="ACBrComum"/>
-      </Item34>
-      <Item35>
         <PackageName Value="LCLBase"/>
         <MinVersion Major="1" Release="1" Valid="True"/>
-      </Item35>
-      <Item36>
+      </Item34>
+      <Item35>
         <PackageName Value="LCL"/>
-      </Item36>
+      </Item35>
     </RequiredPackages>
     <Units Count="61">
       <Unit0>

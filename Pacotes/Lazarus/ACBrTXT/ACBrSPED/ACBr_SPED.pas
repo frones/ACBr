@@ -4,22 +4,20 @@
 
 unit ACBr_SPED;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrSped, ACBrSpedFiscal, ACBrSpedContabil, ACBrSpedPisCofins, 
-  ACBrEPCImportar, ACBrSpedECF, ACBrEFDImportar, LazarusPackageIntf;
+  ACBrEPCImportar, ACBrSpedECF, ACBrEFDImportar, ACBrSpedReg, 
+  ACBrSpedImportarReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrSpedFiscal', @ACBrSpedFiscal.Register);
-  RegisterUnit('ACBrSpedContabil', @ACBrSpedContabil.Register);
-  RegisterUnit('ACBrSpedPisCofins', @ACBrSpedPisCofins.Register);
-  RegisterUnit('ACBrEPCImportar', @ACBrEPCImportar.Register);
-  RegisterUnit('ACBrSpedECF', @ACBrSpedECF.Register);
-  RegisterUnit('ACBrEFDImportar', @ACBrEFDImportar.Register);
+  RegisterUnit('ACBrSpedReg', @ACBrSpedReg.Register);
+  RegisterUnit('ACBrSpedImportarReg', @ACBrSpedImportarReg.Register);
 end;
 
 initialization

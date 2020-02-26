@@ -14,9 +14,9 @@
     </CompilerOptions>
     <Files Count="7">
       <Item1>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIReg.pas"/>
         <HasRegisterProc Value="True"/>
-        <UnitName Value="ACBrEDI"/>
+        <UnitName Value="ACBrEDIReg"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas"/>

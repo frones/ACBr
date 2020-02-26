@@ -8,14 +8,14 @@ unit ACBr_EDI;
 interface
 
 uses
-  ACBrEDI, ACBrEDIClass, ACBrEDICobranca, ACBrEDIConhectos, ACBrEDINotaFiscal, 
-  ACBrEDIOcorrencia, pediConversao, LazarusPackageIntf;
+  ACBrEDIReg, ACBrEDIClass, ACBrEDICobranca, ACBrEDIConhectos, 
+  ACBrEDINotaFiscal, ACBrEDIOcorrencia, pediConversao, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrEDI', @ACBrEDI.Register);
+  RegisterUnit('ACBrEDIReg', @ACBrEDIReg.Register);
 end;
 
 initialization

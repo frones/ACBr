@@ -1516,6 +1516,7 @@ var
   I, J, K: Integer;
   sFim, sProdID, sDINumber, sADINumber, sDupNumber, sAdittionalField, sType,
   sDay, sDeduc, sNVE, sCNPJCPF: String;
+  cVTroco: Currency;
 begin
   Result := False;
 
@@ -2415,6 +2416,7 @@ begin
         Inc(I);
       end;
 
+      cVTroco:= 0;
       I := 1 ;
       while true do
       begin
@@ -2436,7 +2438,9 @@ begin
           tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
           cAut  := INIRec.ReadString(sSecao,'cAut','');
         end;
-        pag.vTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0) ;
+        cVTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0) ;
+        if (cVTroco > 0) then
+          pag.vTroco:=  cVTroco;
 
         Inc(I);
       end;

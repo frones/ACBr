@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2020
+-- ACBrNFeNotasFiscais -- 
+[*] Adicionado validação na leitura .INI do campo vTroco
+   Por: José M S Junior
+
 24/02/2020
 -- ACBrNFe/ACBrNFeWebServices --
 [+] Implementado a extração dos eventos do retorno da consulta.

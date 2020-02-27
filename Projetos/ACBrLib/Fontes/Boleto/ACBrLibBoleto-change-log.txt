@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2020
+--- ACBrLibBoletoConfig --
+[-] Removido a propriedade TamanhoMaximoNossoNumero, pois a mesma causava erro na geração dos boletos.
+    (Por: Rafael Dias)
+
 23/02/2020
 --- ACBrLibBoleto --
 [+] Adicionado o metodo Boleto_ImprimirBoleto. 

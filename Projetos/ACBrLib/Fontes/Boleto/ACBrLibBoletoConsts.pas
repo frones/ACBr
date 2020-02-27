@@ -64,7 +64,6 @@ const
   CChaveNumero = 'Numero';
   CChaveNumeroCorrespondente = 'NumeroCorrespondente';
   CChaveOrientacaoBanco = 'OrientacaoBanco';
-  CChaveTamanhoMaximoNossoNumero = 'TamanhoMaximoNossoNumero';
   CChaveTipoCobranca = 'TipoCobranca';
 
   CSessaoBoletoCedenteConfig = 'BoletoCedenteConfig';

@@ -123,7 +123,6 @@ begin
       Numero := pLibConfig.BoletoBancoConfig.Numero;
       NumeroCorrespondente := pLibConfig.BoletoBancoConfig.NumeroCorrespondente;
       OrientacoesBanco.Text := pLibConfig.BoletoBancoConfig.OrientacaoBanco;
-      TamanhoMaximoNossoNum := pLibConfig.BoletoBancoConfig.TamanhoMaximoNossoNumero;
       TipoCobranca := pLibConfig.BoletoBancoConfig.TipoCobranca;
     end;
 

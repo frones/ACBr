@@ -91,7 +91,6 @@ type
     FNumero: Integer;
     FNumeroCorrespondente: Integer;
     FOrientacaoBanco: String;
-    FTamanhoMaximoNossoNumero: Integer;
     FTipoCobranca: TACBrTipoCobranca;
 
   public
@@ -107,7 +106,6 @@ type
     property Numero: Integer read FNumero write FNumero;
     property NumeroCorrespondente: Integer read FNumeroCorrespondente write FNumeroCorrespondente;
     property OrientacaoBanco: String read FOrientacaoBanco write FOrientacaoBanco;
-    property TamanhoMaximoNossoNumero: Integer read FTamanhoMaximoNossoNumero write FTamanhoMaximoNossoNumero;
     property TipoCobranca: TACBrTipoCobranca read FTipoCobranca write FTipoCobranca;
 
   end;
@@ -554,7 +552,6 @@ begin
   FNumero:= 0;
   FNumeroCorrespondente:= 0;
   FOrientacaoBanco:= '';
-  FTamanhoMaximoNossoNumero:= 0;
   FTipoCobranca:= cobNenhum;
 end;
 
@@ -567,7 +564,6 @@ begin
   Numero:= AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveNumero, Numero );
   NumeroCorrespondente:= AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveNumeroCorrespondente, NumeroCorrespondente );
   OrientacaoBanco:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, OrientacaoBanco );
-  TamanhoMaximoNossoNumero:= AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveTamanhoMaximoNossoNumero, TamanhoMaximoNossoNumero );
   TipoCobranca:= TACBrTipoCobranca( AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveTipoCobranca, integer(TipoCobranca) ));
 
 end;
@@ -581,7 +577,6 @@ begin
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveNumero, Numero );
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveNumeroCorrespondente, NumeroCorrespondente );
   AIni.WriteString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, OrientacaoBanco );
-  AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveTamanhoMaximoNossoNumero , TamanhoMaximoNossoNumero );
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveTipoCobranca, integer(TipoCobranca) );
 
 end;

@@ -26,6 +26,7 @@ package ACBr_PAF;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires

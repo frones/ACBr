@@ -71,18 +71,20 @@ public abstract class ACBrLibBase {
     }
     
     /**
-     *
+     * Função para processar o resultado do retorno da biblioteca.
      * @param buffer
      * @param bufferLen
      * @return
      */
     protected String processResult(ByteBuffer buffer, IntByReference bufferLen){
-        if (bufferLen.getValue() <= STR_BUFFER_LEN) {
+        int bLen = bufferLen.getValue();
+        if (bLen <= STR_BUFFER_LEN) {
             return fromUTF8(buffer, bufferLen);
         }
 
-        if (bufferLen.getValue() > STR_BUFFER_LEN) {
-            buffer = ByteBuffer.allocate(bufferLen.getValue());
+        if (bLen > STR_BUFFER_LEN) {
+            buffer = ByteBuffer.allocate(bLen);
+            bufferLen = new IntByReference(bLen);
             UltimoRetorno(buffer, bufferLen);
         }
 
@@ -90,7 +92,8 @@ public abstract class ACBrLibBase {
     }
     
     /**
-     *
+     * Função para pegar o ultimo retorno da biblioteca caso o retorno seja 
+     * maior que o esperado, ou tenha ocorrido um erro.
      * @param buffer
      * @param bufferLen
      */

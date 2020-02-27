@@ -52,34 +52,38 @@ Private Declare Function Boleto_ConfigGravar _
                    
 Private Declare Function Boleto_ConfigLerValor _
                 Lib "ACBrBoleto32.dll" (ByVal eSessao As String, _
-                                            ByVal eChave As String, _
-                                            ByVal buffer As String, _
-                                            ByRef bufferLen As Long) As Long
+                                        ByVal eChave As String, _
+                                        ByVal buffer As String, _
+                                        ByRef bufferLen As Long) As Long
 
 Private Declare Function Boleto_ConfigGravarValor _
                 Lib "ACBrBoleto32.dll" (ByVal eSessao As String, _
-                                            ByVal eChave As String, _
-                                            ByVal valor As String) As Long
+                                        ByVal eChave As String, _
+                                        ByVal valor As String) As Long
                                             
 Private Declare Function Boleto_ConfigurarDados _
                 Lib "ACBrBoleto32.dll" (ByVal eArquivoIni As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                        ByVal buffer As String, _
+                                        ByRef bufferLen As Long) As Long
                                      
 Private Declare Function Boleto_IncluirTitulos _
                 Lib "ACBrBoleto32.dll" (ByVal eArquivoIni As String, _
-                                     ByVal eTpSaida As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                        ByVal eTpSaida As String, _
+                                        ByVal buffer As String, _
+                                        ByRef bufferLen As Long) As Long
                                      
 Private Declare Function Boleto_LimparLista Lib "ACBrBoleto32.dll" () As Long
                 
 Private Declare Function Boleto_TotalTitulosLista _
                 Lib "ACBrBoleto32.dll" (ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                        ByRef bufferLen As Long) As Long
                                      
 Private Declare Function Boleto_Imprimir _
                 Lib "ACBrBoleto32.dll" (ByVal eNomeImpressora As String) As Long
+                
+Private Declare Function Boleto_ImprimirBoleto _
+                Lib "ACBrBoleto32.dll" (ByVal eIndice As Long, _
+                                        ByVal eNomeImpressora As String) As Long
                 
 Private Declare Function Boleto_GerarPDF Lib "ACBrBoleto32.dll" () As Long
 
@@ -297,6 +301,13 @@ Public Sub Imprimir(Optional ByVal eNomeImpressora As String = "")
     Dim retorno   As Long
     
     retorno = Boleto_Imprimir(eNomeImpressora)
+    CheckResult retorno
+End Sub
+
+Public Sub ImprimirBoleto(ByVal Indice As Long, Optional ByVal eNomeImpressora As String = "")
+    Dim retorno   As Long
+    
+    retorno = Boleto_ImprimirBoleto(Indice, eNomeImpressora)
     CheckResult retorno
 End Sub
 

@@ -62,6 +62,8 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         int Boleto_TotalTitulosLista(ByteBuffer buffer, IntByReference bufferSize);
 
         int Boleto_Imprimir(String eNomeImpressora);
+        
+        int Boleto_ImprimirBoleto(int eIndice, String eNomeImpressora);
 
         int Boleto_GerarPDF();
 
@@ -216,8 +218,21 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
     
+    public void Imprimir() throws Exception {
+        Imprimir("");
+    }
+    
     public void Imprimir(String eNomeImpressora) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Imprimir(eNomeImpressora);
+        checkResult(ret);
+    }
+    
+    public void ImprimirBoleto(int Indice) throws Exception {
+        ImprimirBoleto(Indice, "");
+    }
+    
+    public void ImprimirBoleto(int Indice, String eNomeImpressora) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ImprimirBoleto(Indice, eNomeImpressora);
         checkResult(ret);
     }
     

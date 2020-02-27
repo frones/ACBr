@@ -449,8 +449,8 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacaoPDF( toUTF8(eArquivoXml) );
     checkResult( ret );
   }
-
-  @Override
+    
+    @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrNFeLib.INSTANCE.NFE_UltimoRetorno( buffer, bufferLen );
   }

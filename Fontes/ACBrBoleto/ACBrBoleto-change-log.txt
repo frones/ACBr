@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2020
+-- ACBrBoleto --
+[*] https://www.projetoacbr.com.br/forum/topic/56122-sugest%C3%A3o-gerarremessastream/
+   Por: Delcio
+-- ACBrBancoBancoob --
+[*] https://www.projetoacbr.com.br/forum/topic/56146-arquivo-de-remessa-banco-sicoob-registro-q-posi%C3%A7%C3%A3o-18/
+   Por: Vinicius Lopes Machado
 -- ACBrBancoBanestes --
 [*] https://www.projetoacbr.com.br/forum/topic/56047-retorno-remessa-banestes-400/
    Por: Renan Eustaquio

@@ -1422,6 +1422,7 @@ type
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
     function GerarRemessa(NumeroRemessa : Integer) : String;
+    function GerarRemessaStream(NumeroRemessa : Integer; Stream:TStream) : String;
     procedure LerRetorno(AStream : TStream = Nil);
     procedure ChecarDadosObrigatorios;
 
@@ -3076,6 +3077,7 @@ var
    SLRemessa   : TStringList;
    ContTitulos : Integer;
    NomeArq     : String ;
+   Stream:TMemoryStream;
 begin
    Result:= '';
    if ListadeBoletos.Count < 1 then
@@ -3088,6 +3090,31 @@ begin
 
    if not DirectoryExists( DirArqRemessa ) then
       raise Exception.Create( ACBrStr('Diretório inválido:' + sLineBreak + DirArqRemessa) );
+
+   Stream:= TMemoryStream.Create;
+  try
+    Result:= GerarRemessaStream(NumeroRemessa, Stream);
+    if Result <> '' then
+      Stream.SaveToFile(Result);
+  finally
+    Stream.Free;
+  end;
+
+end;
+
+function TACBrBoleto.GerarRemessaStream(NumeroRemessa: Integer;
+  Stream: TStream): String;
+var
+   SLRemessa   : TStringList;
+   ContTitulos : Integer;
+   NomeArq     : String ;
+begin
+   Result:= '';
+   if ListadeBoletos.Count < 1 then
+      raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
+
+   ChecarDadosObrigatorios;
+
 
    if ( NomeArqRemessa = '' ) then
       NomeArq := Banco.CalcularNomeArquivoRemessa
@@ -3125,7 +3152,7 @@ begin
       else
         SLRemessa.Text := NativeStringToAnsi(SLRemessa.Text);
 
-      SLRemessa.SaveToFile( NomeArq );
+      SLRemessa.SaveToStream( Stream );
       Result:= NomeArq;
    finally
       SLRemessa.Free;

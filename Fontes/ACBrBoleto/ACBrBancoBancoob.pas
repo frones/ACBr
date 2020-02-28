@@ -837,6 +837,12 @@ begin
         tbBancoNaoReemite : ATipoBoleto := '4';
       end;
 
+      {Pegando Tipo de Sacado}
+      if Length(OnlyNumber(Sacado.CNPJCPF)) > 11 then
+         Sacado.Pessoa:= pJuridica
+      else
+         Sacado.Pessoa:= pFisica;
+
       {Pegando especie do titulo}
       if EspecieDoc = 'CH' then
         AEspecieTitulo := '01'

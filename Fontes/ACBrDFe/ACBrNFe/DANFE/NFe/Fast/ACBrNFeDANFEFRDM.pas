@@ -367,7 +367,7 @@ begin
         FieldDefs.Add('XPais', ftString, 60);
         FieldDefs.Add('Fone', ftString, 15);
         FieldDefs.Add('IE', ftString, 18);
-        FieldDefs.Add('Consumidor', ftString, 150);
+        FieldDefs.Add('Consumidor', ftString, 400);
         CreateDataSet;
      end;
    end;
@@ -1156,7 +1156,7 @@ begin
               IfThen(Length(CNPJCPF) = 11, 'CONSUMIDOR CPF: ', 'CONSUMIDOR CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
         end;
 
-        if NaoEstaVazio(Trim(FieldByName('XLgr').AsString)) then
+        if NaoEstaVazio(Trim(FieldByName('XNome').AsString)) then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
         if NaoEstaVazio(Trim(FieldByName('XCpl').AsString)) then

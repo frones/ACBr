@@ -1,9 +1,12 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }  
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,10 +25,11 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
+
 Agradecimentos:
 
 * Administradores:
@@ -56,6 +60,11 @@ Símbolo : Significado
 [+] Adição de registros ao LFD
 		http://www.projetoacbr.com.br/forum/topic/36052-lfd-registros-a025-b430-b440-b450-e-b490/
 		Juliomar Marchetti
+
+Data 27/03/2017
+[*] Geração do Registro A025. (Renato Rubinho)
+[*] Geração dos Registros B440, B450 e B490 (Renato Rubinho)
+[-] Correção B430 (Renato Rubinho)
 		
 06/01/2017
 [+] Diversas correções de erros na geração de arquivo e adição do E050
@@ -76,6 +85,10 @@ Data 13/10/2014
 [-] Correção do registro A350 (por: Vagner Nox)
 http://www.projetoacbr.com.br/forum/index.php?/tracker/issue-45-lfd-livro-fiscal-eletr%C3%B4nico-registro-a350-com-bug/
 
+Data 21/11/2013
+[*] Ajuste na função RegistroE310New (Wilson B. Junior)
+[+] Inclusa Função RegistroH020New (Wilson B. Junior)
+
 Data 04/04/2013
 [+] Alterado o ACBrLFD.pas para inserir a imagem ao componente no lazarus
 	(Juliomar Marchetti)
@@ -83,7 +96,6 @@ Data 04/04/2013
 Data 01/04/2013
 [-] Alterado propriedades do tipo  TDate para TDatetime para que o componente possa
     ser compilado corretamente no Delphi7. (Isaque Pinheiro)
-
 
 Data 15/02/2013
 [+] COmponente comcluído e gerando arquivo válidado pelo aplicativo Validador do

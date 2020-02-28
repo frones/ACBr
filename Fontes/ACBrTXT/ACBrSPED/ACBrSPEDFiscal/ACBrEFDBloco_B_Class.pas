@@ -3,10 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009 Isaque Pinheiro                        }
-{                                       Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Isaque Pinheiro e Renan Eustaquio               }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -30,13 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{ ******************************************************************************
-  |* Historico
-  |*
-  |* 06/11/2018: Renan Eustaquio
-  |*  - Criação e distribuição da Primeira Versao
-  ******************************************************************************* }
 
 unit ACBrEFDBloco_B_Class;
 

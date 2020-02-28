@@ -3,10 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
-{                                       Isaque Pinheiro                        }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Isaque Pinheiro e Alessandro Yamasaki           }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -41,7 +40,6 @@
 |*  - Criado 'Local da execução do serviço',
 |*  - Criado 'Base de Cálculo do Crédito'
 |*  - Criado 'Origem Credito'
-|*
 *******************************************************************************}
 
 unit ACBrEPCBlocos;

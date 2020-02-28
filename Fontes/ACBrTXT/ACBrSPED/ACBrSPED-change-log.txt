@@ -784,7 +784,8 @@ Versão 0.01a   30/10/09
 [+] Início do Projeto
 [+] Primeira Versao lançada baseado no componente fornecido por Isaque Pinheiro.
 
-
+10/04/2009: Isaque Pinheiro
+Criação e distribuição da Primeira Versao
 
 
 

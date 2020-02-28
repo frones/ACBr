@@ -3,10 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:          Isaque Pinheiro                        }
-{                                       Juliomar Marchetti                     }
+{ Colaboradores nesse arquivo: Isaque Pinheiro e Juliomar Marchetti            }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }

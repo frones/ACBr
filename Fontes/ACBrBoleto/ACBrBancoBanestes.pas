@@ -470,8 +470,8 @@ begin
 
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
 
-         MotivoLinha := 378;
-         for i := 0 to 3 do
+         MotivoLinha := 319;//posição inicial
+         for i := 0 to 4 do
          begin
            //MotivoRejeicaoComando.Add(copy(Linha,MotivoLinha,2));
            MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ',
@@ -524,9 +524,10 @@ begin
          ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+		 ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;//valor pago pelo cliente																 
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+         ValorRecebido        := (StrToFloatDef(Copy(Linha,254,13),0)/100) - (StrToFloatDef(Copy(Linha,176,13),0)/100);//valor recebido na conta 
          NossoNumero          := Copy(Linha,63,8);
          Carteira             := Copy(Linha,108,1);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;

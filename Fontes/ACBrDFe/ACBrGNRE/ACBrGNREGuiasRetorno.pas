@@ -295,6 +295,9 @@ begin
           GNRERetorno.TelefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');
         end;
 
+        if Leitor.rExtrai(Nivel, 'informacoesComplementares') <> '' then
+          GNRERetorno.InfoComplementares  := Leitor.rCampo(tcStr, 'informacao');
+
         if Leitor.rExtrai(Nivel, 'itensGNRE') <> '' then
         begin
           Inc(Nivel);
@@ -427,7 +430,7 @@ begin
   // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
   XMLString := ConverteXMLtoNativeString(Arquivo);
 
-  if Pos('<ns1:guia versao="2.00">', XMLString) > 0  then
+  if Pos('guia versao="2.00">', XMLString) > 0  then
     Result := LerXML(XMLString)
   else
   begin

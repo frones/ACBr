@@ -45,6 +45,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2020
+-- ACBrGNREGuiaClass/ACBrGNREGuiaFR --
+[*] https://www.projetoacbr.com.br/forum/topic/56465-melhorias-gnre/
+   Por: Gustavo Déo da Silva
+-- ACBrGNREGuiasRetorno --
+[*] https://www.projetoacbr.com.br/forum/topic/56465-melhorias-gnre/?do=findComment&comment=370368
+   Por: Gustavo Déo da Silva
+
 20/02/2020
 -- ACBrGNREGuias --
 [*] Corrigido o nome do arquivo PDF.

@@ -55,6 +55,7 @@ type
     FSistema:String;
     FUsuario:String;
     FPathPDF : String;
+    FArquivoPDF : string;
     FImpressora : String;
     FMostrarPreview : Boolean;
     FMostrarStatus: Boolean;
@@ -78,6 +79,7 @@ type
     property Sistema: String read FSistema write FSistema;
     property Usuario: String read FUsuario write FUsuario;
     property PathPDF: String read GetPathPDF write SetPathPDF;
+    property ArquivoPDF: String read FArquivoPDF write FArquivoPDF;
     property Impressora: String read FImpressora write FImpressora;
     property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
     property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
@@ -105,6 +107,7 @@ begin
   FSistema    := '';
   FUsuario    := '';
   FPathPDF    := '';
+  FArquivoPDF := '';
   FImpressora := '';
 
   FMostrarPreview := True;

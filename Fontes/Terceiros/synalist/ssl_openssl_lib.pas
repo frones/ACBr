@@ -1998,7 +1998,7 @@ begin
         SSLLibPath := TPath.GetDocumentsPath;
 
       Ok := LoadLibraries;
-      if (not Result) then         // Try System Default Lib
+      if (not Ok) then         // Try System Default Lib
       begin
         SSLLibPath := '';
         Ok := LoadLibraries;

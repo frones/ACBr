@@ -595,8 +595,12 @@ begin
   SetLength(name, 256);
   fillchar(name[0],sizeof(name),0);
   if Posix.Unistd.GetHostName(@name[0], length(name))=0 then
-   result := Uppercase(StringOf(name)) else
-   result := 'LOCALHOST';
+  begin
+    result := StringOf(name);
+    result := Uppercase( copy(result,1,pos(#0,result+#0)-1) );
+  end
+  else
+    result := 'LOCALHOST';
 end;
 
 function Send(s: TSocket; Buf: TMemory; len, flags: Integer): Integer;

@@ -37,7 +37,7 @@ unit ACBrBPe;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, synautil,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase, 
   ACBrBPeConfiguracoes, ACBrBPeWebServices, ACBrBPeBilhetes, ACBrBPeDABPEClass,
   pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe, 
@@ -127,6 +127,8 @@ type
       ANSU: String): Boolean;
     function DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; const ACNPJCPF,
       AchBPe: String): Boolean;
+
+    function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -395,6 +397,16 @@ begin
   end;
 end;
 
+function TACBrBPe.GravarStream(AStream: TStream): Boolean;
+begin
+  if EstaVazio(FEventoBPe.Gerador.ArquivoFormatoXML) then
+    FEventoBPe.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(FEventoBPe.Gerador.ArquivoFormatoXML));
+  Result := True;
+end;
+
 procedure TACBrBPe.SetStatus(const stNewStatus: TStatusACBrBPe);
 begin
   if stNewStatus <> FStatus then
@@ -646,22 +658,27 @@ procedure TACBrBPe.EnviarEmailEvento(const sPara, sAssunto: String;
 var
   NomeArq: String;
   AnexosEmail: TStrings;
+  StreamBPe : TMemoryStream;
 begin
   AnexosEmail := TStringList.Create;
+  StreamBPe := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
 
     if Anexos <> nil then
       AnexosEmail.Text := Anexos.Text;
 
+    GravarStream(StreamBPe);
+
     ImprimirEventoPDF;
     NomeArq := OnlyNumber(EventoBPe.Evento[0].infEvento.Id);
     NomeArq := PathWithDelim(DABPE.PathPDF) + NomeArq + '-procEventoBPe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe, '', sReplyTo);
   finally
     AnexosEmail.Free;
+    StreamBPe.Free;
   end;
 end;
 

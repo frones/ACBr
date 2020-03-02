@@ -292,6 +292,7 @@ type
 
     // XML do Resumo ou Documento descompactado
     FXML: String;
+    FNomeArq: String;
 
   public
     constructor Create;
@@ -305,6 +306,7 @@ type
     property resEvento: TresEvento   read FresEvento  write FresEvento;
     property procEvento: TprocEvento read FprocEvento write FprocEvento;
     property XML: String             read FXML        write FXML;
+    property NomeArq: String         read FNomeArq    write FNomeArq;
   end;
 
   TRetDistDFeInt = class

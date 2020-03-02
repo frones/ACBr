@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2020
+-- pcnRetDistDFeInt --
+[+] Acrescentado a propriedade NomeArq com o objetivo de armazenar o Path+Nome do
+    XML retornado pelo DistribuicaoDFe.
+   Por: Italo Jurisato Junior
+
 07/02/2020
 -- pcnConversao --
 [*] Incluido o enumerador cstVazio nas funções: StrToCSTICMS e

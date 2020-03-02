@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2020
+-- ACBrNFe --
+[+] https://www.projetoacbr.com.br/forum/topic/56528-enviar-email-do-evento/
+   Por: Renan Eustaquio
+-- ACBrNFeWebServices --
+[+] Acrescentado no TratamentoResposta o armazenamento do Path+Nome do
+    XML retornado pelo DistribuicaoDFe.
+   Por: Italo Jurisato Junior
+
 28/02/2020
 -- ACBrDANFCeFortesFrA4 -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56412-danfce-a4-n%C3%A3o-exibe-chave-de-acesso-para-notas-em-conting%C3%AAncia/

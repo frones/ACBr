@@ -3634,7 +3634,7 @@ end;
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
   I: integer;
-  AXML: String;
+  AXML, aPath: String;
 begin
   FPRetWS := SeparaDadosArray(['nfeDistDFeInteresseResult',
                                'nfeResultMsg'],FPRetornoWS );
@@ -3672,14 +3672,17 @@ begin
       if NaoEstaVazio(NomeArq) then
         FlistaArqs.Add( FNomeArq );
 
+      aPath := GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]);
+      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + FNomeArq;
+
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       begin
         if FPConfiguracoesNFe.Arquivos.SalvarEvento then
-           if (FretDistDFeInt.docZip.Items[I].schema in [schresEvento, schprocEventoNFe]) then // salvar evento
-              FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+          if (FretDistDFeInt.docZip.Items[I].schema in [schresEvento, schprocEventoNFe]) then
+            FPDFeOwner.Gravar(NomeArq, AXML, aPath);
 
         if (FretDistDFeInt.docZip.Items[I].schema in [schresNFe, schprocNFe]) then
-           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+          FPDFeOwner.Gravar(NomeArq, AXML, aPath);
       end;
     end;
   end;

@@ -38,7 +38,7 @@ unit ACBrNFe;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase,
+  Classes, SysUtils, ACBrBase, synautil,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
@@ -163,6 +163,8 @@ type
       AchNFe: String): Boolean;
     function Inutilizar(const ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
+
+    function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -617,6 +619,16 @@ begin
   end;
 end;
 
+function TACBrNFe.GravarStream(AStream: TStream): Boolean;
+begin
+  if EstaVazio(FEventoNFe.Gerador.ArquivoFormatoXML) then
+    FEventoNFe.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(FEventoNFe.Gerador.ArquivoFormatoXML));
+  Result := True;
+end;
+
 procedure TACBrNFe.SetStatus(const stNewStatus: TStatusACBrNFe);
 begin
   if stNewStatus <> FStatus then
@@ -943,22 +955,27 @@ procedure TACBrNFe.EnviarEmailEvento(const sPara, sAssunto: String;
 var
   NomeArq: String;
   AnexosEmail: TStrings;
+  StreamNFe : TMemoryStream;
 begin
   AnexosEmail := TStringList.Create;
+  StreamNFe := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
 
     if Anexos <> nil then
       AnexosEmail.Text := Anexos.Text;
 
+    GravarStream(StreamNFe);
+
     ImprimirEventoPDF;
     NomeArq := OnlyNumber(EventoNFe.Evento[0].InfEvento.Id);
     NomeArq := PathWithDelim(DANFE.PathPDF) + NomeArq + '-procEventoNFe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe, '', sReplyTo);
   finally
     AnexosEmail.Free;
+    StreamNFe.Free;
   end;
 end;
 

@@ -39,7 +39,7 @@ unit ACBrCTe;
 interface
 
 uses
-  Classes, Sysutils,
+  Classes, Sysutils, synautil,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrBase,
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
@@ -137,6 +137,8 @@ type
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
+
+    function GravarStream(AStream: TStream): Boolean;
 
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
@@ -338,6 +340,16 @@ begin
   end;
 
   Result := urlUF + sEntrada;
+end;
+
+function TACBrCTe.GravarStream(AStream: TStream): Boolean;
+begin
+  if EstaVazio(FEventoCTe.Gerador.ArquivoFormatoXML) then
+    FEventoCTe.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(FEventoCTe.Gerador.ArquivoFormatoXML));
+  Result := True;
 end;
 
 function TACBrCTe.GetNameSpaceURI: String;
@@ -947,22 +959,27 @@ procedure TACBrCTe.EnviarEmailEvento(const sPara, sAssunto: String;
 var
   NomeArq: String;
   AnexosEmail: TStrings;
+  StreamCTe : TMemoryStream;
 begin
   AnexosEmail := TStringList.Create;
+  StreamCTe := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
 
     if Anexos <> nil then
       AnexosEmail.Text := Anexos.Text;
 
+    GravarStream(StreamCTe);
+
     ImprimirEventoPDF;
     NomeArq := OnlyNumber(EventoCTe.Evento[0].InfEvento.Id);
     NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe, '', sReplyTo);
   finally
     AnexosEmail.Free;
+    StreamCTe.Free;
   end;
 end;
 

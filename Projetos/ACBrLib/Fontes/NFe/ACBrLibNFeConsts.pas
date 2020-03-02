@@ -111,6 +111,13 @@ const
   CChaveEspacoFinal = 'EspacoFinal';
   CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
   CChaveImprimeEmDuasLinhas = 'ImprimeEmDuasLinhas';
+  CChaveFonteLinhaItemName = 'FonteLinhaItem.Name';
+  CChaveFonteLinhaItemColor = 'FonteLinhaItem.Color';
+  CChaveFonteLinhaItemSize = 'FonteLinhaItem.Size';
+  CChaveFonteLinhaItemBold = 'FonteLinhaItem.Bold';
+  CChaveFonteLinhaItemItalic = 'FonteLinhaItem.Italic';
+  CChaveFonteLinhaItemUnderline = 'FonteLinhaItem.Underline';
+  CChaveFonteLinhaItemStrikeOut = 'FonteLinhaItem.StrikeOut';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespInutilizacao = 'Inutilizacao';

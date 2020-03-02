@@ -155,6 +155,7 @@ type
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
+    FFonteLinhaItem: TFont;
 
     procedure setImprimeEmUmaLinha(const Value: Boolean);
     procedure setImprimeEmDuasLinhas(const Value: Boolean);
@@ -186,6 +187,7 @@ type
     property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
     property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
+    property FonteLinhaItem: TFont read FFonteLinhaItem write FFonteLinhaItem;
 
   end;
 
@@ -534,6 +536,9 @@ begin
   FMargemSuperior := 0;
   FMargemEsquerda := 0;
   FMargemDireita := 0;
+  FFonteLinhaItem := TFont.Create;
+  FFonteLinhaItem.Name := 'Lucida Console';
+  FFonteLinhaItem.Size := 7;
 end;
 
 procedure TDANFeNFCeConfig.LerIni(const AIni: TCustomIniFile);
@@ -557,6 +562,18 @@ begin
   MargemSuperior := AIni.ReadFloat(CSessaoDANFENFCE, CChaveMargemSuperior, MargemSuperior);
   MargemEsquerda := AIni.ReadFloat(CSessaoDANFENFCE, CChaveMargemEsquerda, MargemEsquerda);
   MargemDireita := AIni.ReadFloat(CSessaoDANFENFCE, CChaveMargemDireita, MargemDireita);
+  FonteLinhaItem.Name    :=  AIni.ReadString( CSessaoDANFENFCE, CChaveFonteLinhaItemName, FonteLinhaItem.Name );
+  FonteLinhaItem.Color   :=  TColor(AIni.ReadInteger( CSessaoDANFENFCE, CChaveFonteLinhaItemColor, FonteLinhaItem.Color ));
+  FonteLinhaItem.Size    :=  AIni.ReadInteger( CSessaoDANFENFCE, CChaveFonteLinhaItemSize, FonteLinhaItem.Size );
+  FonteLinhaItem.Style := [];
+  if AIni.ReadBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemBold , False ) then
+    FonteLinhaItem.Style := FonteLinhaItem.Style + [fsBold];
+  if AIni.ReadBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemItalic , False ) then
+    FonteLinhaItem.Style := FonteLinhaItem.Style + [fsItalic];
+  if AIni.ReadBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemUnderline , False ) then
+    FonteLinhaItem.Style := FonteLinhaItem.Style + [fsUnderline];
+  if AIni.ReadBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemStrikeOut , False ) then
+    FonteLinhaItem.Style := FonteLinhaItem.Style + [fsStrikeOut];
 end;
 
 procedure TDANFeNFCeConfig.GravarIni(const AIni: TCustomIniFile);
@@ -580,9 +597,18 @@ begin
   AIni.WriteFloat(CSessaoDANFENFCE, CChaveMargemSuperior, FMargemSuperior);
   AIni.WriteFloat(CSessaoDANFENFCE, CChaveMargemEsquerda, FMargemEsquerda);
   AIni.WriteFloat(CSessaoDANFENFCE, CChaveMargemDireita, FMargemDireita);
+  AIni.WriteString( CSessaoDANFENFCE,   CChaveFonteLinhaItemName   , FonteLinhaItem.Name );
+  AIni.WriteInteger( CSessaoDANFENFCE,  CChaveFonteLinhaItemColor , FonteLinhaItem.Color );
+  AIni.WriteInteger( CSessaoDANFENFCE,  CChaveFonteLinhaItemSize  , FonteLinhaItem.Size );
+  AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemBold , fsBold in FonteLinhaItem.Style );
+  AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemItalic , fsItalic in FonteLinhaItem.Style );
+  AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemUnderline , fsUnderline in FonteLinhaItem.Style );
+  AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemStrikeOut , fsStrikeOut in FonteLinhaItem.Style );
 end;
 
 procedure TDANFeNFCeConfig.Apply(const DFeReport: TACBrNFeDANFCEClass);
+Var
+  DANFeFortes: TACBrNFeDANFCeFortes;
 begin
   if not Assigned(DFeReport) then Exit;
 
@@ -608,8 +634,13 @@ begin
 
   if DFeReport is TACBrNFeDANFCeFortes then
   begin
-    TACBrNFeDANFCeFortes(DFeReport).TamanhoLogoHeight := FTamanhoLogoHeight;
-    TACBrNFeDANFCeFortes(DFeReport).TamanhoLogoWidth := FTamanhoLogoWidth;
+    DANFeFortes := TACBrNFeDANFCeFortes(DFeReport);
+    DANFeFortes.TamanhoLogoHeight := FTamanhoLogoHeight;
+    DANFeFortes.TamanhoLogoWidth := FTamanhoLogoWidth;
+    DANFeFortes.FonteLinhaItem.Name := FonteLinhaItem.Name;
+    DANFeFortes.FonteLinhaItem.Color := FonteLinhaItem.Color;
+    DANFeFortes.FonteLinhaItem.Size := FonteLinhaItem.Size;
+    DANFeFortes.FonteLinhaItem.Style := FonteLinhaItem.Style;
   end;
 end;
 

@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+--- ACBrLibDeviceUtils ---
+[+] Adicionado Classe para funções utilitárias do Componente ACBrDevice.
+Por: José M S Junior
+
 16/01/2020
 --- ACBrLibConsultaCadastro
 [-] Ajuste na formatação de retorno do campo CEP

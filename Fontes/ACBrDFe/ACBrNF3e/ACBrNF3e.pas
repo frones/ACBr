@@ -37,7 +37,7 @@ unit ACBrNF3e;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, synautil,
   ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNF3eConfiguracoes, ACBrNF3eWebServices, ACBrNF3eNotasFiscais,
   ACBrNF3eDANF3eClass,
@@ -132,6 +132,8 @@ type
       AchNF3e: String): Boolean;
     function Inutilizar(const ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
+
+    function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -508,6 +510,16 @@ begin
   Result := urlUF + sEntrada;
 end;
 
+function TACBrNF3e.GravarStream(AStream: TStream): Boolean;
+begin
+  if EstaVazio(FEventoNF3e.Gerador.ArquivoFormatoXML) then
+    FEventoNF3e.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(FEventoNF3e.Gerador.ArquivoFormatoXML));
+  Result := True;
+end;
+
 procedure TACBrNF3e.SetStatus(const stNewStatus: TStatusACBrNF3e);
 begin
   if stNewStatus <> FStatus then
@@ -768,22 +780,27 @@ procedure TACBrNF3e.EnviarEmailEvento(const sPara, sAssunto: String;
 var
   NomeArq: String;
   AnexosEmail: TStrings;
+  StreamNF3e : TMemoryStream;
 begin
   AnexosEmail := TStringList.Create;
+  StreamNF3e := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
 
     if Anexos <> nil then
       AnexosEmail.Text := Anexos.Text;
 
+    GravarStream(StreamNF3e);
+
     ImprimirEventoPDF;
     NomeArq := OnlyNumber(EventoNF3e.Evento[0].InfEvento.Id);
     NomeArq := PathWithDelim(DANF3e.PathPDF) + NomeArq + '-procEventoNF3e.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNF3e, '', sReplyTo);
   finally
     AnexosEmail.Free;
+    StreamNF3e.Free;
   end;
 end;
 

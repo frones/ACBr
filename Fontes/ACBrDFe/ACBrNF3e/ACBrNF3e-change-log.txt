@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2020
+-- ACBrNF3e --
+[+] Agora o XML do evento é anexado ao enviar o mesmo por email.
+   Por: Italo Jurisato Junior
+-- ACBrNF3eWebServices --
+[+] Acrescentado no TratamentoResposta o armazenamento do Path+Nome do
+    XML retornado pelo DistribuicaoDFe.
+   Por: Italo Jurisato Junior
+
 24/02/2020
 -- ACBrNF3e/ACBrNF3eWebServices --
 [+] Implementado a extração dos eventos do retorno da consulta.

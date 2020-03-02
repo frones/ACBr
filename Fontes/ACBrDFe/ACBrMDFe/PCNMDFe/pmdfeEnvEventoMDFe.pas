@@ -262,7 +262,7 @@ begin
            end;
 
            Gerador.wCampo(tcDe2, '#', 'vContrato', 01, 15, 1, vContrato, DSC_VCONTRATO);
-           Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 0, TIndPagToStr(indPag), DSC_INDPAG);
+           Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 1, TIndPagToStr(indPag), DSC_INDPAG);
 
            // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
            if indPag = ipPrazo then

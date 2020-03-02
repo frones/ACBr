@@ -37,7 +37,7 @@ unit ACBrMDFe;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, synautil,
   ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,
@@ -76,9 +76,15 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    function GravarStream(AStream: TStream): Boolean;
+
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamMDFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+
+    procedure EnviarEmailEvento(const sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     function Enviar(ALote: integer; Imprimir: Boolean = True;
       ASincrono:  Boolean = False): Boolean; overload;
@@ -182,6 +188,34 @@ begin
   end;
 end;
 
+procedure TACBrMDFe.EnviarEmailEvento(const sPara, sAssunto: String; sMensagem, sCC, Anexos, sReplyTo: TStrings);
+var
+  NomeArq: String;
+  AnexosEmail: TStrings;
+  StreamMDFe : TMemoryStream;
+begin
+  AnexosEmail := TStringList.Create;
+  StreamMDFe := TMemoryStream.Create;
+  try
+    AnexosEmail.Clear;
+
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+
+    GravarStream(StreamMDFe);
+
+    ImprimirEventoPDF;
+    NomeArq := OnlyNumber(EventoMDFe.Evento[0].InfEvento.Id);
+    NomeArq := PathWithDelim(DAMDFE.PathPDF) + NomeArq + '-procEventoMDFe.pdf';
+    AnexosEmail.Add(NomeArq);
+
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamMDFe, '', sReplyTo);
+  finally
+    AnexosEmail.Free;
+    StreamMDFe.Free;
+  end;
+end;
+
 procedure TACBrMDFe.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
@@ -271,6 +305,16 @@ begin
   end;
 
   Result := urlUF + sEntrada;
+end;
+
+function TACBrMDFe.GravarStream(AStream: TStream): Boolean;
+begin
+  if EstaVazio(FEventoMDFe.Gerador.ArquivoFormatoXML) then
+    FEventoMDFe.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(FEventoMDFe.Gerador.ArquivoFormatoXML));
+  Result := True;
 end;
 
 function TACBrMDFe.GetNameSpaceURI: String;

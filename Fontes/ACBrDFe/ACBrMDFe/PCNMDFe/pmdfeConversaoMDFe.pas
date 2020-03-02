@@ -74,7 +74,7 @@ type
             tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
             tcPerigosaConteinerizada, tcPerigosaCargaGeral);
 
-  TIndPag = (ipVista, ipPrazo, ipNenhum);
+  TIndPag = (ipVista, ipPrazo);
 
   TComp = (tcValePedagio, tcImpostos, tcDespesas, tcOutros);
 
@@ -366,14 +366,14 @@ end;
 
 function TIndPagToStr(const t: TIndPag): String;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', ''],
-                              [ipVista, ipPrazo, ipNenhum]);
+  Result := EnumeradoToStr(t, ['0', '1'],
+                              [ipVista, ipPrazo]);
 end;
 
 function StrToTIndPag(out ok: Boolean; const s: String): TIndPag;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', ''],
-                                  [ipVista, ipPrazo, ipNenhum]);
+  Result := StrToEnumerado(ok, s, ['0', '1'],
+                                  [ipVista, ipPrazo]);
 end;
 
 function TCompToStr(const t: TComp): String;

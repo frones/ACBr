@@ -126,12 +126,13 @@ Private Declare Function MDFE_GetPathEvento _
                                     
 Private Declare Function MDFE_StatusServico _
                 Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
-                                     ByRef bufferSize As Long) As Long
+                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_Consultar _
                 Lib "ACBrMDFE32.dll" (ByVal eChaveOuNFe As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferSize As Long) As Long
+                                      ByVal AExtrairEventos As Boolean, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_Enviar _
                 Lib "ACBrMDFE32.dll" (ByVal aLote As Long, _
@@ -499,7 +500,7 @@ Public Function StatusServico() As String
     StatusServico = processResult(buffer, bufferLen)
 End Function
 
-Public Function Consultar(ByVal eChaveOuNFe As String) As String
+Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEventos As Boolean = False) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -507,7 +508,7 @@ Public Function Consultar(ByVal eChaveOuNFe As String) As String
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDFE_Consultar(eChaveOuNFe, buffer, bufferLen)
+    retorno = MDFE_Consultar(eChaveOuNFe, AExtrairEventos, buffer, bufferLen)
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)

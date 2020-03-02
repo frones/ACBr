@@ -50,7 +50,7 @@ VISIBLE:
     METHOD GetPathEvento(aCodEvento)
 
     METHOD StatusServico()
-    METHOD Consultar(eChaveOuNFe)
+    METHOD Consultar(eChaveOuNFe, AExtrairEventos)
     METHOD Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, NumeroInicial, NumeroFinal)
     METHOD Enviar(ALote, Imprimir, Sincrono, Zipado)
     METHOD ConsultarRecibo(ARecibo)
@@ -293,11 +293,11 @@ METHOD StatusServico() CLASS ACBrNFe
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 
-METHOD Consultar(eChaveOuNFe) CLASS ACBrNFe
+METHOD Consultar(eChaveOuNFe, AExtrairEventos) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Consultar", hb_StrToUTF8(eChaveOuNFe), @buffer, @bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Consultar", hb_StrToUTF8(eChaveOuNFe), AExtrairEventos, @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 

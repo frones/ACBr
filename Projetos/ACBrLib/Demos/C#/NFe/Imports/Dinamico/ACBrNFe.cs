@@ -102,7 +102,7 @@ namespace ACBrLib.NFe
             public delegate int NFE_StatusServico(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int NFE_Consultar(string eChaveOuNFe, StringBuilder buffer, ref int bufferSize);
+            public delegate int NFE_Consultar(string eChaveOuNFe, bool AExtrairEventos, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_ConsultaCadastro(string cUF, string nDocumento, bool nIE, StringBuilder buffer, ref int bufferSize);
@@ -451,13 +451,13 @@ namespace ACBrLib.NFe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eChaveOuNFe)
+        public string Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.NFE_Consultar>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuNFe), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuNFe), AExtrairEventos, buffer, ref bufferLen));
 
             CheckResult(ret);
 

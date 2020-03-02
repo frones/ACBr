@@ -273,12 +273,16 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     return processResult( buffer, bufferLen );
   }
-
+  
   public String consultar( String eChaveOuNFe ) throws Exception {
+      return consultar(eChaveOuNFe, false);
+  }
+
+  public String consultar( String eChaveOuNFe, boolean AExtrairEventos ) throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
     IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
 
-    int ret = ACBrNFeLib.INSTANCE.NFE_Consultar( toUTF8( eChaveOuNFe ), buffer, bufferLen );
+    int ret = ACBrNFeLib.INSTANCE.NFE_Consultar( toUTF8( eChaveOuNFe ), AExtrairEventos, buffer, bufferLen );
     checkResult( ret );
 
     return processResult( buffer, bufferLen );
@@ -518,7 +522,7 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     int NFE_StatusServico( ByteBuffer buffer, IntByReference bufferSize );
 
-    int NFE_Consultar( String eChaveOuNFe, ByteBuffer buffer, IntByReference bufferSize );
+    int NFE_Consultar( String eChaveOuNFe, boolean AExtrairEventos, ByteBuffer buffer, IntByReference bufferSize );
 
     int NFE_Inutilizar( String ACNPJ, String AJustificativa, int Ano, int Modelo, int Serie,
                         int NumeroInicial, int NumeroFinal, ByteBuffer buffer, IntByReference bufferSize );

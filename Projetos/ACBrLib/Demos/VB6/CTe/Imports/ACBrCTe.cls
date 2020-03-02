@@ -130,6 +130,7 @@ Private Declare Function CTE_StatusServico _
                                      
 Private Declare Function CTE_Consultar _
                 Lib "ACBrCTE32.dll" (ByVal eChaveOuNFe As String, _
+                                     ByVal AExtrairEventos As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
@@ -523,7 +524,7 @@ Public Function StatusServico() As String
     StatusServico = processResult(buffer, bufferLen)
 End Function
 
-Public Function Consultar(ByVal eChaveOuNFe As String) As String
+Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEventos As Boolean = False) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -531,7 +532,7 @@ Public Function Consultar(ByVal eChaveOuNFe As String) As String
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = CTE_Consultar(eChaveOuNFe, buffer, bufferLen)
+    retorno = CTE_Consultar(eChaveOuNFe, AExtrairEventos, buffer, bufferLen)
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)

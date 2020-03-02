@@ -100,7 +100,7 @@ namespace ACBrLib.MDFe
             public delegate int MDFE_StatusServico(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MDFE_Consultar(string eChaveOuCTe, StringBuilder buffer, ref int bufferSize);
+            public delegate int MDFE_Consultar(string eChaveOuCTe, bool aExtrairEventos, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_Enviar(int aLote, bool imprimir, bool sincrono, StringBuilder buffer, ref int bufferSize);
@@ -443,13 +443,13 @@ namespace ACBrLib.MDFe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eChaveOuNFe)
+        public string Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.MDFE_Consultar>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuNFe), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuNFe), AExtrairEventos, buffer, ref bufferLen));
 
             CheckResult(ret);
 

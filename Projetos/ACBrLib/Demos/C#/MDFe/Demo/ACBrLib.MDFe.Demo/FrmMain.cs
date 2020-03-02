@@ -124,7 +124,7 @@ namespace ACBrLib.MDFe.Demo
 
                 //Config Documento Auxiliar
                 ACBrMDFe.ConfigGravarValor(ACBrSessao.DAMDFe, "PathLogo", txtLogomarca.Text);
-                ACBrMDFe.ConfigGravarValor(ACBrSessao.DAMDFe, "TipoDAMDFe", rdbRetrato.Checked ? TipoImpressao.tiRetrato : TipoImpressao.tiPaisagem);
+                ACBrMDFe.ConfigGravarValor(ACBrSessao.DAMDFe, "TipoDAMDFe", rdbRetrato.Checked ? TipoDAMDFE.tiRetrato : TipoDAMDFE.tiPaisagem);
 
                 //Config Email
                 ACBrMDFe.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
@@ -201,9 +201,9 @@ namespace ACBrLib.MDFe.Demo
 
             //Config Documento Auxiliar
             txtLogomarca.Text = ACBrMDFe.ConfigLerValor<string>(ACBrSessao.DAMDFe, "PathLogo");
-            var tipoImpressao = ACBrMDFe.ConfigLerValor<TipoImpressao>(ACBrSessao.DAMDFe, "TipoDAMDFe");
-            rdbRetrato.Checked = tipoImpressao == TipoImpressao.tiRetrato;
-            rdbPaisagem.Checked = tipoImpressao == TipoImpressao.tiPaisagem;
+            var tipoImpressao = ACBrMDFe.ConfigLerValor<TipoDAMDFE>(ACBrSessao.DAMDFe, "TipoDAMDFe");
+            rdbRetrato.Checked = tipoImpressao == TipoDAMDFE.tiRetrato;
+            rdbPaisagem.Checked = tipoImpressao == TipoDAMDFE.tiPaisagem;
 
             //Config Email
             txtNome.Text = ACBrMDFe.ConfigLerValor<string>(ACBrSessao.Email, "Nome");

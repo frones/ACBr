@@ -100,7 +100,7 @@ namespace ACBrLib.CTe
             public delegate int CTE_StatusServico(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_Consultar(string eChaveOuCTe, StringBuilder buffer, ref int bufferSize);
+            public delegate int CTE_Consultar(string eChaveOuCTe, bool AExtrairEventos, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_ConsultaCadastro(string cUF, string nDocumento, bool nIE, StringBuilder buffer, ref int bufferSize);
@@ -450,13 +450,13 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eChaveOuCTe)
+        public string Consultar(string eChaveOuCTe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.CTE_Consultar>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuCTe), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuCTe), AExtrairEventos, buffer, ref bufferLen));
 
             CheckResult(ret);
 

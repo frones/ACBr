@@ -48,6 +48,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2020
+-- ACBrBancoBancoob --
+[*] Adicionado validação de código Negativação CNAB240.
+  https://www.projetoacbr.com.br/forum/topic/55961-bancoobsicoob-negativacao-cnab240/
+
+28/02/2020
+-- ACBrBancoSicredi --
+[-] Correção na leitura CNPJ alinhdo a esquerda no segmentoQ.
+  https://www.projetoacbr.com.br/forum/topic/56025-erro-seguimento-q-banco-sicred/
+
+28/02/2020
+-- ACBrBancoSicredi --
+[*] Realizado Revert na leitura retorno CNAB400 referente ao campo Multa.
+  Motivo: Mater padrão do componente para leitura de Retorno deste campos.
+  Para Acrescimos provenientes de Multa no arquivo de retorno, até o momento mantivemos no campo "ValorOutrosCreditos".
+
+28/02/2020
 -- ACBrBoleto --
 [*] https://www.projetoacbr.com.br/forum/topic/56122-sugest%C3%A3o-gerarremessastream/
    Por: Delcio

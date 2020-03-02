@@ -680,9 +680,7 @@ begin
       ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-      PercentualMulta      := StrToFloatDef(Copy(Linha,280,13),0)/100;
-      MultaValorFixo       := True;
-      ValorOutrosCreditos  := 0;
+      ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
       if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
         DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
                                           Copy(Linha,333,2)+'/'+
@@ -1894,7 +1892,7 @@ begin
              PadRight(TiraAcentos(Sacado.Cidade), 15)                       + // 137 a 151 - Cidade
              PadLeft(Sacado.UF, 2)                                          + // 152 a 153 - Unidade da Federação
              TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
-             PadRight(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')   + // 155 a 169 - Número de inscrição
+             PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')    + // 155 a 169 - Número de inscrição
              PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
              PadRight('', 3, '0')                                           + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente

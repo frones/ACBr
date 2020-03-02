@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2020
+--- ACBrLibNFeClass ---
+[+] Adicionado o metodo um novo parametro ao metodo NFE_Consultar, para definir se deve ou não extrair os eventos, se houverem, da resposta.
+    Por: Rafael Dias
+
 17/01/2020
 --- ACBrLibNFeClass ---
 [+] Adicionado o metodo NFE_GetPath e NFE_GetPathEvento.

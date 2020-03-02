@@ -129,7 +129,7 @@ function NFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTama
 {%region Servicos}
 function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Consultar(const eChaveOuNFe: PChar;
+function NFE_Consultar(const eChaveOuNFe: PChar; AExtrairEventos: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
@@ -1004,7 +1004,7 @@ begin
   end;
 end;
 
-function NFE_Consultar(const eChaveOuNFe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_Consultar(const eChaveOuNFe: PChar; AExtrairEventos: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
@@ -1018,7 +1018,7 @@ begin
     ChaveOuNFe := string(eChaveOuNFe);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFE_Consultar(' + ChaveOuNFe + ' )', logCompleto, True)
+      pLib.GravarLog('NFE_Consultar(' + ChaveOuNFe + ', ' + BoolToStr(AExtrairEventos, True) + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFE_Consultar', logNormal);
 
@@ -1042,10 +1042,9 @@ begin
           raise EACBrLibException.Create(ErrChaveNFe, Format(SErrChaveInvalida, [ChaveOuNFe]));
       end
       else
-        NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(
-          NFeDM.ACBrNFe1.NotasFiscais.Items[NFeDM.ACBrNFe1.NotasFiscais.Count - 1].NFe.infNFe.ID,
-          'NFe','',[rfIgnoreCase]);
+        NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave := NFeDM.ACBrNFe1.NotasFiscais.Items[NFeDM.ACBrNFe1.NotasFiscais.Count - 1].NumID;
 
+      NFeDM.ACBrNFe1.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       Resp := TConsultaNFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with NFeDM.ACBrNFe1 do

@@ -130,7 +130,7 @@ function CTE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTama
 {%region Servicos}
 function CTE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Consultar(const eChaveOuCTe: PChar;
+function CTE_Consultar(const eChaveOuCTe: PChar; AExtrairEventos: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
@@ -1000,7 +1000,7 @@ begin
   end;
 end;
 
-function CTE_Consultar(const eChaveOuCTe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CTE_Consultar(const eChaveOuCTe: PChar; AExtrairEventos: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
@@ -1013,7 +1013,7 @@ begin
     ChaveOuCTe := string(eChaveOuCTe);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CTE_Consultar(' + ChaveOuCTe + ' )', logCompleto, True)
+      pLib.GravarLog('CTE_Consultar(' + ChaveOuCTe + ', ' + BoolToStr(AExtrairEventos, True) + ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_Consultar', logNormal);
 
@@ -1040,6 +1040,8 @@ begin
         CTeDM.ACBrCTe1.WebServices.Consulta.CTeChave := StringReplace(
           CTeDM.ACBrCTe1.Conhecimentos.Items[CTeDM.ACBrCTe1.Conhecimentos.Count - 1].CTe.infCTe.ID,
           'CTe','',[rfIgnoreCase]);
+
+      CTeDM.ACBrCTe1.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
 
       Resp := TConsultaCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try

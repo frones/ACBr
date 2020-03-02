@@ -130,7 +130,7 @@ function MDFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTam
 {%region Servicos}
 function MDFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFE_Consultar(const eChaveOuMDFe: PChar;
+function MDFE_Consultar(const eChaveOuMDFe: PChar; AExtrairEventos: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
@@ -995,7 +995,7 @@ begin
   end;
 end;
 
-function MDFE_Consultar(const eChaveOuMDFe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_Consultar(const eChaveOuMDFe: PChar; AExtrairEventos: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
@@ -1009,7 +1009,7 @@ begin
     ChaveOuMDFe := string(eChaveOuMDFe);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MDFE_Consultar(' + ChaveOuMDFe + ' )', logCompleto, True)
+      pLib.GravarLog('MDFE_Consultar(' + ChaveOuMDFe  + ', ' + BoolToStr(AExtrairEventos, True) +  ' )', logCompleto, True)
     else
       pLib.GravarLog('MDFE_Consultar', logNormal);
 
@@ -1037,6 +1037,7 @@ begin
           MDFeDM.ACBrMDFe1.Manifestos.Items[MDFeDM.ACBrMDFe1.Manifestos.Count - 1].MDFe.infMDFe.ID,
           'MDFe','',[rfIgnoreCase]);
 
+      MDFeDM.ACBrMDFe1.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
       Resp := TConsultaResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with MDFeDM.ACBrMDFe1 do

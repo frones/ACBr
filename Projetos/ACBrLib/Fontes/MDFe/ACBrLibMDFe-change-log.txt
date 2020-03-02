@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2020
+--- ACBrLibMDFeClass ---
+[+] Adicionado o metodo um novo parametro ao metodo MDFE_Consultar, para definir se deve ou não extrair os eventos, se houverem, da resposta.
+    Por: Rafael Dias
+
 17/01/2020
 --- ACBrLibMDFeClass ---
 [+] Adicionado o metodo MDFE_GetPath e MDFE_GetPathEvento.

@@ -46,49 +46,40 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="14">
+    <RequiredPackages Count="11">
       <Item1>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="frce"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="ACBrTCP"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrSerial"/>
       </Item5>
       <Item6>
-        <PackageName Value="frce"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item8>
       <Item9>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="SynEdit"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
-      </Item11>
-      <Item12>
-        <PackageName Value="SynEdit"/>
-      </Item12>
-      <Item13>
-        <PackageName Value="ACBr_SAT"/>
-      </Item13>
-      <Item14>
         <PackageName Value="LCL"/>
-      </Item14>
+      </Item11>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -106,10 +97,9 @@
       <Unit2>
         <Filename Value="configuraserial.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frConfigureSerial"/>
+        <ComponentName Value="frConfiguraSerial"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="configureserial"/>
       </Unit2>
     </Units>
   </ProjectOptions>

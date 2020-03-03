@@ -5,14 +5,12 @@ unit Unit1 ;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, SynGutterBase,
-  SynGutterMarks, SynGutterLineNumber, SynGutterChanges, SynGutter,
+  Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML,
   SynGutterCodeFolding, PrintersDlgs, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin,
-  ACBrNFeDANFeRLClass, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFrA4,
-  ACBrDANFCeFortesFr, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
-  ACBrIntegrador, Types;
+  RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  dateutils, ACBrSATExtratoFortesFr, ACBrPosPrinter, ACBrDFeSSL,
+  ACBrIntegrador;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -346,7 +344,7 @@ var
 implementation
 
 Uses
-  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, configuraserial,
+  math, typinfo, ACBrUtil, pcnConversao, pcnRede, IniFiles, configuraserial,
   RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.lfm}
@@ -363,7 +361,6 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   R: pcnRede.TSegSemFio;
-  P: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -399,12 +396,11 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
-  For P := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[P]);
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
+  {$IfDef MSWINDOWS}
+  ACBrPosPrinter1.Device.AcharPortasUSB( cbxPorta.Items );
+  {$EndIf}
 
-  cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('USB:ELGIN') ;
-  cbxPorta.Items.Add('USB:EPSON') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
@@ -1211,13 +1207,10 @@ begin
 end;
 
 procedure TForm1.mTesteFimAFimClick(Sender: TObject);
-var
-  Numero: Integer;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
-  Numero := ACBrSAT1.CFe.ide.nCFe ;
   PageControl1.ActivePage := tsLog;
 
   ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
@@ -1503,7 +1496,7 @@ begin
 
     For A := 0 to Loops do  // Ajuste aqui para vender mais itens
     begin
-    with Det.Add do
+    with Det.New do
     begin
       nItem := 1 + (A * 3);
       Prod.cProd := 'ACBR0001';
@@ -1517,7 +1510,7 @@ begin
       Prod.indRegra := irTruncamento;
       Prod.vDesc := 1;
 
-      with Prod.obsFiscoDet.Add do
+      with Prod.obsFiscoDet.New do
       begin
         xCampoDet := 'campo';
         xTextoDet := 'texto';
@@ -1549,7 +1542,7 @@ begin
       infAdProd := 'Informacoes adicionais';
     end;
 
-    with Det.Add do
+    with Det.New do
     begin
       nItem := 2 + (A * 3);
       Prod.cProd := '6291041500213';
@@ -1587,7 +1580,7 @@ begin
       //Imposto.COFINSST.vAliqProd := 779.4577;
     end;
 
-    with Det.Add do
+    with Det.New do
     begin
       nItem := 3 + (A * 3);
       Prod.cProd := 'abc123';
@@ -1658,7 +1651,7 @@ begin
       vMP := Pagto1;
     end;    }
 
-    with Pagto.Add do
+    with Pagto.New do
     begin
       cMP := mpDinheiro;
       vMP := TotalGeral; //- Pagto1 + 100;

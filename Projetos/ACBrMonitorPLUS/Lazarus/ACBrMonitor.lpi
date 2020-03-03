@@ -561,9 +561,8 @@
         <IsPartOfProject Value="True"/>
       </Unit60>
       <Unit61>
-        <Filename Value="..\..\ACBrLib\Fontes\Comum\acbrlibdeviceutils.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Comum\ACBrLibDeviceUtils.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibDeviceUtils"/>
       </Unit61>
     </Units>
   </ProjectOptions>

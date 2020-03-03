@@ -1,9 +1,11 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,9 +24,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 Agradecimentos:
 
@@ -77,12 +78,35 @@ Data: 18/11/2014
 [+] Adicionado o registro E550 e correções
     http://www.projetoacbr.com.br/forum/index.php?/topic/18640-sef-pernambuco-n%C3%A3o-importa-os-valores-dos-arquivos/#entry117868
 
-Data: 30/04/2014
--- ACBrSEF2
-[+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
-[*] Correções em outros blocos (Marcelo Santos)
+09/05/2014
+[*] Ajuste COD_PAIS para 5 posições (Registro0150)
+[*] Ajuste StrToIntDef(COD_BF_ISS) (Registro0025)
+[*] Ajuste StrToIntDef(wIND_RT,0)  (Registro0030)
+(Juliano Rosa)
 
 Data: 06/05/2014
 -- ACBrSEF2
 [+] Adicionado o Registro E120 no Bloco E para o SEF2 (Juliano Rosa)
 [*] Correções de LFill no Bloco 0 (Juliano Rosa)
+
+Data: 30/04/2014
+-- ACBrSEF2
+[+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
+[*] Correções em outros blocos (Marcelo Santos)
+
+Data: 22/11/2013
+[+] Inclusão do inventario (Fabio Alves)
+
+Data: 09/05/2013
+[+] Inclusão Registros APURAÇÃO DO IPI E500, E520, E525, E540, E560
+[*] Ajustes WriteRegistroE305 wCOP e LFill nos campos IND_MRO, IND_OPER, QTD_LCTO
+
+[-] Correção grava Bloco H se existir registro de inventário.
+[-] Correção contagem dos registros do Bloco E no Registro 9900
+[-] Correção RegistroE340New
+(Juliano Rosa)
+
+
+Data: 06/05/2013
+[+] Inclusão do Registro E120 (Juliano Rosa)
+

@@ -5,8 +5,6 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Willian Hübner e Elton Barbosa (EMBarbosa)      }
-{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -29,27 +27,33 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-unit LCDPRUtils;
 
-interface
+Agradecimentos:
 
-uses
-  SysUtils, ACBrUtil;
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
 
-function formatNumeric(Value : Double) : String;
-function formatDate(Value : TDateTime) : String;
+* Desenvolvedores:
+- Willian Hübner - Doação do componente ao projeto ACBr
 
-implementation
+{******************************************************************************
+|*  ACBrLCDPR - Livro caixa digital do produtor rural
+|*
+|*
+|*Projeto de escrituração do livro caixa do produtor, obrigatório para o ano de 2019.
+|*  Componente desenvolvido com base nos links:
+|*
+|*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/leiaute-1-0-lcdpr.xlsx
+|*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-0.docx
+|*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-2.docx
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
 
-function formatDate(Value : TDateTime) : String;
-begin
-  Result := FormatDateTime('ddmmyyyy', Value);
-end;
+Símbolo : Significado
 
-function formatNumeric(Value : Double) : String;
-begin
-  Result := OnlyNumber(FormatFloat(',0.00;-,0.00', Value));
-end;
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
 
-
-end.

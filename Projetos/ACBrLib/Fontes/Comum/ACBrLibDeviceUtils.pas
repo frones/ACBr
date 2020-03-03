@@ -73,7 +73,9 @@ begin
   Result := '';
   ListPorts:= TStringList.Create;
   try
-    Device.AcharPortasUSB(ListPorts);
+    {$IfDef MSWINDOWS}
+      Device.AcharPortasUSB(ListPorts);
+    {$EndIf}
     for i:= 0 to ListPorts.Count - 1 do
     begin
       Result:= Result + ListPorts[i] + '|';

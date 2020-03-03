@@ -3074,9 +3074,6 @@ end;
 
 function TACBrBoleto.GerarRemessa( NumeroRemessa : Integer ) : String;
 var
-   SLRemessa   : TStringList;
-   ContTitulos : Integer;
-   NomeArq     : String ;
    Stream:TMemoryStream;
 begin
    Result:= '';

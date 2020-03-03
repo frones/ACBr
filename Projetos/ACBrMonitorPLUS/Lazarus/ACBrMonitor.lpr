@@ -22,7 +22,7 @@ uses
   ACBrLibeSocialRespostas, ACBrLibMDFeConsts, ACBrLibMDFeRespostas,
   ACBrLibReinfConsts, ACBrLibReinfRespostas, ACBrLibNFeRespostas,
   ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas,
-  ACBrLibCertUtils;
+  ACBrLibCertUtils, ACBrLibDeviceUtils;
 
 {$R *.res}
 var

@@ -22,7 +22,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="10"/>
-      <BuildNr Value="309"/>
+      <BuildNr Value="310"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ECFTeste - Programa de teste do ACBrECF" ProductVersion="0.9.0.114"/>
@@ -212,13 +212,13 @@
     </RunParams>
     <RequiredPackages Count="16">
       <Item1>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item3>
       <Item4>
         <PackageName Value="acbr_nfce_ecfvirtual"/>

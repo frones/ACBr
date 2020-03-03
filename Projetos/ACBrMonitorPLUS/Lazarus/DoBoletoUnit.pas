@@ -209,6 +209,27 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoImprimirBoleto  }
+
+TMetodoImprimirBoleto  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarPDFBoleto  }
+
+TMetodoGerarPDFBoleto  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEnviarEmailBoleto  }
+
+TMetodoEnviarEmailBoleto  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses ACBrUtil, DoACBrUnit, strutils, typinfo,
@@ -244,6 +265,9 @@ begin
   ListaDeMetodos.Add(CMetodoMontarNossoNumero);
   ListaDeMetodos.Add(CMetodoRetornaLinhaDigitavel);
   ListaDeMetodos.Add(CMetodoRetornaCodigoBarras);
+  ListaDeMetodos.Add(CMetodoImprimirBoleto);
+  ListaDeMetodos.Add(CMetodoGerarPDFBoleto);
+  ListaDeMetodos.Add(CMetodoEnviarEmailBoleto);
 end;
 
 procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
@@ -279,6 +303,9 @@ begin
     18 : AMetodoClass := TMetodoMontarNossoNumero;
     19 : AMetodoClass := TMetodoRetornaLinhaDigitavel;
     20 : AMetodoClass := TMetodoRetornaCodigoBarras;
+    21 : AMetodoClass := TMetodoImprimirBoleto;
+    22 : AMetodoClass := TMetodoGerarPDFBoleto;
+    23 : AMetodoClass := TMetodoEnviarEmailBoleto;
 
     else
       DoACbr(ACmd);
@@ -728,6 +755,111 @@ begin
 
   with TACBrObjetoBoleto(fpObjetoDono) do
     ACBrBoleto.Banco.TipoCobranca := ACBrBoleto.GetTipoCobranca(StrToInt64Def(Trim(ACodBanco),0))
+
+end;
+
+{ TMetodoImprimirBoleto }
+
+{ Params: 0 - Indice do Título a ser impresso
+          1 - PrintName = Nome da Impressora
+}
+procedure TMetodoImprimirBoleto.Executar;
+var
+  AIndice: Integer;
+  AName: String;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    AIndice := StrToIntDef(fpCmd.Params(0),0);
+    AName := fpCmd.Params(1);
+
+    if NaoEstaVazio(AName) then
+      ACBrBoleto.ACBrBoletoFC.PrinterName := AName;
+
+    try
+      DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
+      try
+        ACBrBoleto.ListadeBoletos[AIndice].Imprimir();
+      Except
+        raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
+      end;
+    finally
+      DoDepoisDeImprimir;
+    end;
+
+  end;
+
+end;
+
+{ TMetodoGerarPDFBoleto }
+
+{ Params: 0 - Indice do Título a ser impresso}
+procedure TMetodoGerarPDFBoleto.Executar;
+var
+  AIndice: Integer;
+begin
+  AIndice := StrToIntDef(fpCmd.Params(0),0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    try
+      ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
+    Except
+      raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
+    end;
+
+  end;
+
+end;
+
+{ TMetodoEnviarEmailBoleto }
+
+{ Params: 0 - Indice do Título a ser enviado
+          1 - Dest : email do destinatário
+}
+procedure TMetodoEnviarEmailBoleto.Executar;
+var
+  AIndice: Integer;
+  ADest: String;
+  Mensagem: TStringList;
+begin
+  AIndice := StrToIntDef(fpCmd.Params(0),0);
+  ADest := Trim(fpCmd.Params(1));
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if AIndice > (ACBrBoleto.ListadeBoletos.Count -1) then
+      raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
+
+    if (ADest = '') and (ACBrBoleto.ListadeBoletos.Count > 0) then
+      ADest := ACBrBoleto.ListadeBoletos[AIndice].Sacado.Email;
+
+    with MonitorConfig.BOLETO.Email do
+    begin
+        Mensagem := TStringList.Create;
+      try
+        Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
+        try
+          ACBrBoleto.ListadeBoletos[AIndice].EnviarEmail( ADest,
+                 EmailAssuntoBoleto,
+                 Mensagem,
+                 True);
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
+        except
+          on E: Exception do
+            raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
+        end;
+
+      finally
+        Mensagem.Free;
+      end;
+    end;
+
+  end;
 
 end;
 

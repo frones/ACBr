@@ -298,7 +298,7 @@
         <PackageName Value="LCL"/>
       </Item35>
     </RequiredPackages>
-    <Units Count="61">
+    <Units Count="62">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -560,6 +560,11 @@
         <Filename Value="..\..\ACBrLib\Fontes\Comum\ACBrLibCertUtils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit60>
+      <Unit61>
+        <Filename Value="..\..\ACBrLib\Fontes\Comum\acbrlibdeviceutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrLibDeviceUtils"/>
+      </Unit61>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

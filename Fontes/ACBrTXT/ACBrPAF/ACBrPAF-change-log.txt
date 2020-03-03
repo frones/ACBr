@@ -147,6 +147,14 @@ http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-
 15/07/2013
 [*] Acertos na geração do arquivo "Registros do Paf-ECF", enviados pelo fórum.
 
+01/03/2012
+[+] Implementado Registro Tipo B "Substituição da placa eletrônica de
+    gerenciamento de bomba de combustivel (Gutierres Santana da Costa)
+
+29/02/2012 
+[*] Implementado property ID_ABASTECIMENTO e DATA_ABASTECIMENTO (Gutierres Santana da Costa)
+[*] VOLUME passou concatenação para 10,3 (Gutierres Santana da Costa)
+
 28/02/2012
 [*] Adicionado campo R5.NUM_CONT, para exibir o conteudo da invalidação deste
     registro nos testes de adulteração do PAF-ECF. (Se esse registro não for
@@ -181,9 +189,13 @@ http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-
 
 Versão 0.09   29/11/11
 ---------------
+[+] Implementado Registro Tipo C "Controle de Abastecimento e Encerrante" 
+    (Gutierres Santana da Costa)
+
 [-] Acerto no arquivo de DAVs emitidos, alguém alterou o que já havia sido
     acertado para a ER 1.09 na parte de itens.
     (por: Régys Silveira)
+
 
 Versão 0.09   28/10/11
 ---------------

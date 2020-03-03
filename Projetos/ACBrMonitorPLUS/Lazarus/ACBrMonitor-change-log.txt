@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2020
+[+] DoBoletoUnit, ACBrMonitorConsts
+Adicionado novos métodos componente Boleto: ImprimirBoleto, GerarPDFBoleto, EnviarEmailBoleto
+Permite o geração e envio de e-mail de um unico título da lista
+
+28/02/2020
+[+] DoACBrPosPrinter, ACBrMonitorConsts
+Adicionado novos métodos AcharPortasSeriais, AcharPortasUSB, AcharPortasRaw
+
 26/02/2020
 [+] DoACBrMDFeUnit, DoACBrBPeUnit, DoACBrCTeUnit e DoACBrNFeUnit
 Adicionado o parâmetro opcional: aExtrairEventos no método ConsultarMDFe,

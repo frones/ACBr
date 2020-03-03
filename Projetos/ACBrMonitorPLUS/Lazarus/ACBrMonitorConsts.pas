@@ -522,6 +522,9 @@ const
   CMetodoMontarNossoNumero =         'montarnossonumero';
   CMetodoRetornaLinhaDigitavel =     'retornalinhadigitavel';
   CMetodoRetornaCodigoBarras =       'retornacodigobarras';
+  CMetodoImprimirBoleto =            'imprimirboleto';
+  CMetodoGerarPDFBoleto =            'gerarpdfboleto';
+  CMetodoEnviarEmailBoleto =         'enviaremailboleto';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';
@@ -685,6 +688,9 @@ const
   CMetodoImprimirLogo           = 'imprimirlogo';
   CMetodoGravarLogoArquivo      = 'gravarlogoarquivo';
   CMetodoApagarLogo             = 'apagarlogo';
+  CMetodoAcharPortasSeriais     = 'acharportasseriais';
+  CMetodoAcharPortasUSB         = 'acharportasusb';
+  CMetodoAcharPortasRAW         = 'acharportasraw';
 
   CExtensaoXML =                     '.xml';
 

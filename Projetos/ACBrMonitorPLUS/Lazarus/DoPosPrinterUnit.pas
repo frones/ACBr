@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrPosPrinter,
-  ACBrMonitorConsts, ACBrMonitorConfig;
+  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibDeviceUtils;
 
 type
 
@@ -246,6 +246,24 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoAcharPortasSeriais}
+TMetodoAcharPortasSeriais = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAcharPortasUSB}
+TMetodoAcharPortasUSB = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAcharPortasRAW}
+TMetodoAcharPortasRAW = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
@@ -289,6 +307,9 @@ begin
   ListaDeMetodos.Add(CMetodoImprimirLogo);
   ListaDeMetodos.Add(CMetodoGravarLogoArquivo);
   ListaDeMetodos.Add(CMetodoApagarLogo);
+  ListaDeMetodos.Add(CMetodoAcharPortasSeriais);
+  ListaDeMetodos.Add(CMetodoAcharPortasUSB);
+  ListaDeMetodos.Add(CMetodoAcharPortasRAW);
 
 end;
 
@@ -336,6 +357,9 @@ begin
    29  : AMetodoClass := TMetodoImprimirLogo;
    30  : AMetodoClass := TMetodoGravarLogoArquivo;
    31  : AMetodoClass := TMetodoApagarLogo;
+   32  : AMetodoClass := TMetodoAcharPortasSeriais;
+   33  : AMetodoClass := TMetodoAcharPortasUSB;
+   34  : AMetodoClass := TMetodoAcharPortasRAW;
   end;
 
   if Assigned(AMetodoClass) then
@@ -795,6 +819,39 @@ begin
   with TACBrObjetoPosPrinter(fpObjetoDono) do
   begin
     ACBrPosPrinter.ApagarLogo(AAKC1, AAKC2);
+  end;
+
+end;
+
+{ TMetodoAcharPortasSeriais }
+
+procedure TMetodoAcharPortasSeriais.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta:= PortasSeriais(ACBrPosPrinter.Device);
+  end;
+
+end;
+
+{ TMetodoAcharPortasUSB }
+
+procedure TMetodoAcharPortasUSB.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta:= PortasUSB(ACBrPosPrinter.Device);
+  end;
+
+end;
+
+{ TMetodoAcharPortasRAW }
+
+procedure TMetodoAcharPortasRAW.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta:= PortasRAW(ACBrPosPrinter.Device);
   end;
 
 end;

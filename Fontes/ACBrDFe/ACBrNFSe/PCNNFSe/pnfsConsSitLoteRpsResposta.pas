@@ -435,10 +435,10 @@ begin
             InfSit.FSituacao := '2';
         end;
 
-        j := 0;
         if (leitor.rExtrai(1, 'motivos') <> '') then
         begin
-          while Leitor.rExtrai(2, 'mot', '', j + 1) <> '' do
+          j := 0;
+          while Leitor.rExtrai(2, 'mot', '', j) <> '' do
           begin
             sMotDes := Leitor.rCampo(tcStr, 'mot');
 

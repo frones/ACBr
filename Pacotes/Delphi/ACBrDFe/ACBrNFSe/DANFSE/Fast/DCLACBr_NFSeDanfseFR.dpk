@@ -33,7 +33,8 @@ requires
   rtl,
   designide,
   ACBr_NFSeDanfseFR,
-  DCLACBr_Comum;
+  DCLACBr_Comum,
+  ACBr_NFSe;
 
 contains
   ACBrNFSeDANFSeFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRReg.pas';

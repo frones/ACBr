@@ -3,13 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Ederson Selvati                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -27,67 +26,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 28/07/2008: Ederson Selvati
-|*  - Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-|*  - Modificação do TACBrSintegra passando de apenas classe para TComponent
-|* 12/08/2008: Ederson Selvati
-|*  - Adicao dos registros 60M e 60A (Movimento de ECF)
-|* 20/08/2008: Ederson Selvati
-|*  - Adicao do registro 60D (Movimento de ECF por produto)
-|* 23/08/2008: Ederson Selvati
-|*  - Adicao do registro 74 (Registro de inventário)
-|* 13/11/2008: Ederson Selvati
-|*  - Adicao do registro 61 (Nota fiscal de venda a consumidor)
-|*  - Adicao do registro 61R (Itens das notas constantes do registro 61
-|* 12/03/2009: Ederson Selvati
-|*  - Adicao do registro 60I
-|*  - Adicao do registro 60R
-|* 20/05/2009: Walter Donizete Faria
-|*  - Adicao do registro 70
-|*  - Adicao do registro 71
-|* 27/07/2009: Jose Aparecido da Silva
-|   - Adicao do registro 85
-|   - Adicao do registro 86
-|* 08/09/2009: Ederson Selvati
-|   - Adicao do registro 55 GNRE
-|   - Adicao do registro 88EAN MG?
-|* 03/11/2009: Ederson Selvati
-|   - Adição dos registros 88SME e 88SMS
-|* 03/11/2009: Douglas Uesato
-|   - Adição dos registros 88EC e 88SF
-|* 24/05/2010: Ederson Selvati
-|   - Adição dos registros 76 e 77
-|* 05/07/2010: Francisco a Souza
-|   - Adição do registro 56
-|* 03/12/2010: Marcelo Cainelli
-|   - Adição dos registros 88 para combustíveis
-|* 23/01/2012: EMBarbosa
-|   - Adição dos registros 88STES e 88STITNF por Wilson Camargo
-|* 23/02/2012: EMBarbosa
-|   * Correção do contador (88STES e 88STITNF) por Wilson Camargo
-|* 17/10/2012: EMBarbosa
-|   - Agora é possível lançar mais de uma redução Z no mesmo dia (60M) e ainda
-|     assim, ter a ordenação de registros 60 filhos corretamente. Para isso,
-|     crie os registros dentro do 60M, usando seus respectivos correspondentes
-|     Regs60A, Regs60D, Regs60I.
-|* 20/02/2013: Juliana Tamizou
-|   - Corrigido memory leak no registro 60R
-|* 30/04/2013: Juliana Tamizou
-|  - Modificado inclusão do registro 74 para evitar duplicidade de registros
-|    para o mesmo produto.
-|* 09/12/2014: EMBarbosa
-|  - No registro 61, campos "Número inicial de ordem" e "Número final de ordem"
-|     possuem limite de 6 caracteres. Como o componente usa tipos inteiros, fica
-|     difícil para o usuário limitar a esse tamanho por fora do componente.
-*******************************************************************************}
+{******************************************************************************}
 
 {$I ACBr.inc}
 

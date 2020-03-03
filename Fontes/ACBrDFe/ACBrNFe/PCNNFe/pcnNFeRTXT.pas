@@ -1221,7 +1221,7 @@ begin
       (*YA07*)NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');
     end;
 
-    if ID = 'YA' then
+    if (ID = 'YA') and (NFe.infNFe.Versao <= 3.10) then
     begin
       NFe.pag.New;
       i := NFe.pag.Count - 1;

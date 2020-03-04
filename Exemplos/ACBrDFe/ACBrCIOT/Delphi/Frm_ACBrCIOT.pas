@@ -402,6 +402,7 @@ begin
              (****************  DADOS DO CONTRATO  **************)
              TipoViagem := TAC_Agregado;
              TipoPagamento := eFRETE;
+             EmissaoGratuita := (TipoPagamento = TransferenciaBancaria);
              BloquearNaoEquiparado := False;
              MatrizCNPJ := edtEmitCNPJ.text;
              FilialCNPJ := edtEmitCNPJ.text;
@@ -685,7 +686,7 @@ begin
              QuantidadeTransferencias := 0; //Quantidade de Transferências  Bancárias que serão solicitadas pelo Contratado na operação de transporte.
              ValorSaques := 0;
              ValorTransferencias := 0;
-             CodigoTipoCarga := 1;
+             CodigoTipoCarga := tpGranelsolido;
              AltoDesempenho := True;
              DestinacaoComercial := True;
              FreteRetorno := False;
@@ -857,7 +858,7 @@ begin
              QuantidadeTransferencias := 0;
              ValorSaques := 0;
              ValorTransferencias := 0;
-             CodigoTipoCarga := 1;
+             CodigoTipoCarga := tpGranelsolido;
              CepOrigem := '4800000';
              CepDestino := '4800000';
              DistanciaPercorrida := 100;

@@ -45,6 +45,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2020
+-- ACBrNFeDANFERDM --
+[*] Ajuste nos métodos "ImprimirDANFEPDF", "ImprimirEventoPDF" e "ImprimirInutilizacaoPDF"
+    para usar a propriedade "NomeDocumento" como nome do arquivo PDF a ser gerado,
+    caso informada.
+    https://www.projetoacbr.com.br/forum/topic/56597-impress%C3%A3o-de-carta-corre%C3%A7%C3%A3o/
+  Por: infopointerrp / BigWings
+
+[*] Ajuste no tamanho do campo de identificação do destinatário caso estrangeiro.
+  Por: BigWings
+
 09/01/2020
 -- pcnConversaoNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, ACBrNFeDANFEFRDM --
 [*] Criação de propriedade "ExibeCampoDePagamento" para controlar a impressão

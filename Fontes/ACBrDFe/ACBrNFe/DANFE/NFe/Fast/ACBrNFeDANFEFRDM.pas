@@ -353,7 +353,7 @@ begin
 
      with cdsDestinatario do
      begin
-        FieldDefs.Add('CNPJCPF', ftString, 18);
+        FieldDefs.Add('CNPJCPF', ftString, 20);
         FieldDefs.Add('XNome', ftString, 60);
         FieldDefs.Add('XLgr', ftString, 60);
         FieldDefs.Add('Nro', ftString, 60);
@@ -2351,7 +2351,8 @@ procedure TACBrNFeFRClass.ImprimirDANFEPDF(ANFE: TNFe);
 const
   TITULO_PDF = 'Nota Fiscal Eletrônica';
 var
-	fsShowDialog : Boolean;
+  fsShowDialog : Boolean;
+  NomeArq: String;
 begin
   if PrepareReport(ANFE) then
   begin
@@ -2368,7 +2369,10 @@ begin
     fsShowDialog := frxPDFExport.ShowDialog;
     try
       frxPDFExport.ShowDialog := False;
-      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) +	OnlyNumber(NFe.infNFe.ID) + '-nfe.pdf';
+      NomeArq := Trim(DANFEClassOwner.NomeDocumento);
+      if EstaVazio(NomeArq) then
+        NomeArq := OnlyNumber(NFe.infNFe.ID) + '-nfe.pdf';
+      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) +	NomeArq;
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -2427,8 +2431,10 @@ begin
     fsShowDialog := frxPDFExport.ShowDialog;
     try
       frxPDFExport.ShowDialog := False;
-      NomeArq := StringReplace(TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
-      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+      NomeArq := Trim(DANFEClassOwner.NomeDocumento);
+      if EstaVazio(NomeArq) then
+        NomeArq := OnlyNumber(TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.ID) + '-procEventoNFe.pdf';
+      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq;
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -2476,8 +2482,10 @@ begin
     fsShowDialog := frxPDFExport.ShowDialog;
     try
       frxPDFExport.ShowDialog := False;
-      NomeArq := OnlyNumber(TACBrNFe(DANFEClassOwner.ACBrNFe).InutNFe.RetInutNFe.Id);
-      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq + '-procInutNFe.pdf';
+      NomeArq := Trim(DANFEClassOwner.NomeDocumento);
+      if EstaVazio(NomeArq) then
+        NomeArq := OnlyNumber(TACBrNFe(DANFEClassOwner.ACBrNFe).InutNFe.RetInutNFe.Id) + '-procInutNFe.pdf';
+      frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq;
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));

@@ -1726,7 +1726,7 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = True
     Config.PaginaDeCodigo = 65001
-    Config.XmlSignLib = xsMsXml
+    Config.XmlSignLib = xsLibXml2
     ConfigArquivos.SepararPorCNPJ = True
     ConfigArquivos.SepararPorModelo = True
     ConfigArquivos.SepararPorAno = True

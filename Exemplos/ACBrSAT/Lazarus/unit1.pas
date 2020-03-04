@@ -1658,7 +1658,7 @@ begin
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
-                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br';
+                      'Precisa de um PAF-ECF homologado?;Conheça o Projeto ACBr - www.projetoacbr.com.br';
 
    { InfAdic.infCpl := '</linha_simples>;'+
                         '</ce><e><n>SENHA XXX</n></e>;'+

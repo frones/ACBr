@@ -388,20 +388,22 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
-  cbxPorta.Items.Add('LPT1');
-  cbxPorta.Items.Add('LPT2');
-  cbxPorta.Items.Add('\\localhost\Epson');
-  cbxPorta.Items.Add('c:\temp\ecf.txt');
-  cbxPorta.Items.Add('TCP:192.168.0.31:9100');
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
+  {$IfDef MSWINDOWS}
+  ACBrPosPrinter1.Device.AcharPortasUSB( cbxPorta.Items );
+  {$EndIf}
 
-  for x := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[x]);
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
-  cbxPorta.Items.Add('/dev/ttyS0');
-  cbxPorta.Items.Add('/dev/ttyS1');
-  cbxPorta.Items.Add('/dev/ttyUSB0');
-  cbxPorta.Items.Add('/dev/ttyUSB1');
-  cbxPorta.Items.Add('/tmp/ecf.txt');
+  {$IfNDef MSWINDOWS}
+   cbxPorta.Items.Add('/dev/ttyS0') ;
+   cbxPorta.Items.Add('/dev/ttyS1') ;
+   cbxPorta.Items.Add('/dev/ttyUSB0') ;
+   cbxPorta.Items.Add('/dev/ttyUSB1') ;
+   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   Application.OnException := TrataErros;
 
@@ -1573,7 +1575,7 @@ begin
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
-                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br';
+                      'Precisa de um PAF-ECF homologado?;Conheça o Projeto ACBr - www.pojetoacbr.com.br';
 
    { InfAdic.infCpl := '</linha_simples>;'+
                         '</ce><e><n>SENHA XXX</n></e>;'+

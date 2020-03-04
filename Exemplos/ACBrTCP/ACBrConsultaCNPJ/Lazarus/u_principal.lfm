@@ -9,7 +9,6 @@ object Fprincipal: TFprincipal
   ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.8.0.6'
   object Panel2: TPanel
     Left = 9
     Height = 329
@@ -504,7 +503,7 @@ object Fprincipal: TFprincipal
       ParentFont = False
       TabOrder = 0
       EditMask = '00.000.000\/0000-00;1;_'
-      Text = '05.481.336/0001-37'
+      Text = '  .   .   /    -  '
       SpaceChar = '_'
     end
     object Panel3: TPanel

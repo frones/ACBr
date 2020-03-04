@@ -46,7 +46,13 @@ unit ACBrRFD;
 interface
 uses
   ACBrBase, ACBrConsts,
-  SysUtils , Classes, ACBrEAD
+  SysUtils , Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+   ACBrEAD
   {$IfDef LINUX}
     {$IfNDef FPC}
       {$IfDef  POSIX}

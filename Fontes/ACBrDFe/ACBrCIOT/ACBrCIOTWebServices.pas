@@ -595,6 +595,20 @@ begin
         FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
               ' xmlns:enc="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
       end;
+
+    opConsultarTipoCarga:
+      begin
+        FPArqEnv  := 'ped-ConsultarTipoCarga';
+        FPArqResp := 'res-ConsultarTipoCarga';
+        Acao      := 'ConsultarTipoCarga';
+      end;
+
+    opAlterarDataLiberacaoPagamento:
+      begin
+        FPArqEnv  := 'ped-AlterarDataLiberacaoPagamento';
+        FPArqResp := 'res-AlterarDataLiberacaoPagamento';
+        Acao      := 'AlterarDataLiberacaoPagamento';
+      end;
   end;
 
   FPServico := CURL_WSDL + Acao;

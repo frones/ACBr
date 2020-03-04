@@ -40,6 +40,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2020
+-- Diversos --
+[+] https://www.projetoacbr.com.br/forum/topic/56268-erro-transmiss%C3%A3o-acbrciot/?do=findComment&comment=370598
+   Por: mlspinelli
+
 17/02/2020
 -- pcnCIOTW_eFrete --
 [-] https://www.projetoacbr.com.br/forum/topic/56268-erro-transmiss%C3%A3o-acbrciot/?do=findComment&comment=369221

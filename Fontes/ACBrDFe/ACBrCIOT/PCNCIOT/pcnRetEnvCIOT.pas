@@ -106,7 +106,9 @@ begin
        (leitor.rExtrai(1, 'AdicionarViagemResponse') <> '') or
        (leitor.rExtrai(1, 'AdicionarPagamentoResponse') <> '') or
        (leitor.rExtrai(1, 'CancelarPagamentoResponse') <> '') or
-       (leitor.rExtrai(1, 'EncerrarOperacaoTransporteResponse') <> '') then
+       (leitor.rExtrai(1, 'EncerrarOperacaoTransporteResponse') <> '') or
+       (leitor.rExtrai(1, 'ConsultarTipoCargaResponse') <> '') or
+       (leitor.rExtrai(1, 'AlterarDataLiberacaoPagamentoResponse') <> '') then
     begin
       if (leitor.rExtrai(2, 'LoginResult') <> '') or
          (leitor.rExtrai(2, 'LogoutResult') <> '') or
@@ -121,7 +123,9 @@ begin
          (leitor.rExtrai(2, 'AdicionarViagemResult') <> '') or
          (leitor.rExtrai(2, 'AdicionarPagamentoResult') <> '') or
          (leitor.rExtrai(2, 'CancelarPagamentoResult') <> '') or
-         (leitor.rExtrai(2, 'EncerrarOperacaoTransporteResult') <> '') then
+         (leitor.rExtrai(2, 'EncerrarOperacaoTransporteResult') <> '') or
+         (leitor.rExtrai(2, 'ConsultarTipoCargaResult') <> '') or
+         (leitor.rExtrai(2, 'AlterarDataLiberacaoPagamentoResult') <> '') then
       begin
         with RetEnvio do
         begin
@@ -292,6 +296,30 @@ begin
                 Mensagem := Leitor.rCampo(tcStr, 'string');
               end;
               inc(i);
+            end;
+          end;
+
+          if leitor.rExtrai(3, 'TipoCargas') <> '' then
+          begin
+            i := 0;
+            while Leitor.rExtrai(4, 'TipoCarga', '', i + 1) <> '' do
+            begin
+              with TipoCarga.New do
+              begin
+                Codigo    := Leitor.rCampo(tcStr, 'CodigoTipoCarga');
+                Descricao := StrToTipoCarga(ok, leitor.rCampo(tcStr, 'DescricaoTipoCarga'));
+              end;
+              inc(i);
+            end;
+          end;
+
+          if leitor.rExtrai(3, 'AlterarDataLiberacaoPagamentoResult') <> '' then
+          begin
+            With AlterarDataLiberacaoPagamento do
+            begin
+              CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
+              IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
+              DataDeLiberacao             := leitor.rCampo(tcDat, 'DataLiberacao');
             end;
           end;
 

@@ -56,8 +56,9 @@ type
   TpOperacao = (opLogin, opLogout,
                 opGravarProprietario, opGravarVeiculo, opGravarMotorista,
                 opAdicionar, opAdicionarViagem, opAdicionarPagamento,
-                opObterCodigoIOT, opObterPdf, opRetificar, opCancelar,
-                opCancelarPagamento, opEncerrar);
+                opObterCodigoIOT , opObterPdf, opRetificar, opCancelar,
+                opCancelarPagamento, opEncerrar, opConsultarTipoCarga,
+                opAlterarDataLiberacaoPagamento);
 
   tpTipoConta = (tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
 
@@ -71,7 +72,7 @@ type
 
   TpTipoProporcao = (tpNenhum, tpPorcentagem, tpValorAbsoluto);
 
-  TpDiferencaFreteTipo = (SemDiferenca, SomenteUltrapassado, Integral);
+  TpDiferencaFrete = (SemDiferenca, SomenteUltrapassado, Integral);
 
   TpDiferencaFreteBaseCalculo = (QuantidadeDesembarque, QuantidadeMenor);
 
@@ -91,7 +92,15 @@ type
 
   TpTipoProprietario = (tpTAC, tpETC, tpCTC);
 
+  //  TAC – Transportador Autônomo de Cargas;
+  //  ETC – Empresa de Transporte Rodoviário de Cargas;
+  //  CTC – Cooperativa de Transporte Rodoviário de Cargas;
+
   tpEstadoCIOT = (ecEmViagem, ecEncerrado, ecCancelado);
+
+  tpTipoCarga = (tpGranelsolido, tpGranelLiquido, tpFrigorificada, tpConteinerizada, tpCargaGeral,
+                 tpNeogranel, tpPerigosaGranelSolido, tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
+                 tpPerigosaConteinerizada, tpPerigosaCargaGeral);
 
 const
   NAME_SPACE_CIOT  = '';
@@ -104,24 +113,40 @@ function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCIOT;
 function SchemaCIOTToStr(const t: TSchemaCIOT): String;
 function StrToSchemaCIOT(out ok: Boolean; const s: String): TSchemaCIOT;
 
-function StrToVersaoCIOT(out ok: Boolean; const s: String): TVersaoCIOT;
 function VersaoCIOTToStr(const t: TVersaoCIOT): String;
+function StrToVersaoCIOT(out ok: Boolean; const s: String): TVersaoCIOT;
 
-function DblToVersaoCIOT(out ok: Boolean; const d: Double): TVersaoCIOT;
-function VersaoCIOTToint(const t: TVersaoCIOT): Integer;
+function VersaoCIOTToInt(const t: TVersaoCIOT): Integer;
 function VersaoCIOTToDbl(const t: TVersaoCIOT): Double;
+function DblToVersaoCIOT(out ok: Boolean; const d: Double): TVersaoCIOT;
 
 function TipoContaToStr(const t: tpTipoConta): string;
+
 function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
+function StrToTipoEmbalagem(out ok: Boolean; const s: String): tpTipoEmbalagem;
 
 function TipoViagemCIOTToStr(const t: TpTipoViagem): string;
+
 function TpPagamentoToStr(const t: TpTipoPagamento): string;
+function StrToTpPagamento(out ok: Boolean; const s: String): TpTipoPagamento;
+
 function TpUnMedMercToStr(const t: TpUnidadeDeMedidaDaMercadoria): string;
+
 function TpVgTipoCalculoToStr(const t: TpViagemTipoDeCalculo): string;
+
 function TpProporcaoToStr(const t: TpTipoProporcao): string;
-function TpDifFreteToStr(const t: TpDiferencaFreteTipo): string;
+function StrToTpProporcao(out ok: Boolean; const s: String): TpTipoProporcao;
+
+function TpDifFreteToStr(const t: TpDiferencaFrete): string;
+function StrToTpDifFrete(out ok: Boolean; const s: String): TpDiferencaFrete;
+
 function TpDiferencaFreteBCToStr(const t: TpDiferencaFreteBaseCalculo): string;
+function StrToTpDiferencaFreteBC(out ok: Boolean; const s: String): TpDiferencaFreteBaseCalculo;
+
 function TpCatPagToStr(const t: TpTipoCategoriaPagamento): string;
+
+function TpOperacaoToStr(const t: TpOperacao): string;
+
 function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 
 function TipoRodadoToStr(const t: TpTipoRodado): string;
@@ -138,6 +163,9 @@ function StrToTipoProprietario(out ok: Boolean; const s: String): TpTipoPropriet
 
 function EstadoCIOTToStr(const t: TpEstadoCIOT): string;
 function StrToEstadoCIOT(out ok: Boolean; const s: String): TpEstadoCIOT;
+
+function TipoCargaToStr(const t: tpTipoCarga): string;
+function StrToTipoCarga(out ok: Boolean; const s: String): tpTipoCarga;
 
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 
@@ -174,7 +202,6 @@ end;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCIOT;
 begin
   Result := StrToEnumerado(ok, s,
-//  ['CIOTEnviar', 'CIOTRetEnviar'],
   ['eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
    'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'CIOTRetEnviar'],
   [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos, LayeFreteMotoristas,
@@ -204,14 +231,32 @@ begin
   Result := TSchemaCIOT( GetEnumValue(TypeInfo(TSchemaCIOT), SchemaStr ) );
 end;
 
+function VersaoCIOTToStr(const t: TVersaoCIOT): String;
+begin
+  Result := EnumeradoToStr(t, ['5.00'], [ve500]);
+end;
+
 function StrToVersaoCIOT(out ok: Boolean; const s: String): TVersaoCIOT;
 begin
   Result := StrToEnumerado(ok, s, ['5.00'], [ve500]);
 end;
 
-function VersaoCIOTToStr(const t: TVersaoCIOT): String;
+function VersaoCIOTToInt(const t: TVersaoCIOT): Integer;
 begin
-  Result := EnumeradoToStr(t, ['5.00'], [ve500]);
+  case t of
+    ve500: Result := 5;
+  else
+    Result := 0;
+  end;
+end;
+
+function VersaoCIOTToDbl(const t: TVersaoCIOT): Double;
+begin
+  case t of
+    ve500: Result := 5;
+  else
+    Result := 0;
+  end;
 end;
 
 function DblToVersaoCIOT(out ok: Boolean; const d: Double): TVersaoCIOT;
@@ -227,13 +272,22 @@ begin
   end;
 end;
 
-function VersaoCIOTToInt(const t: TVersaoCIOT): Integer;
+function TipoContaToStr(const t: tpTipoConta): string;
 begin
-  case t of
-    ve500: Result := 5;
-  else
-    Result := 0;
-  end;
+  Result := EnumeradoToStr(t, ['ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
+                          [tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
+end;
+
+function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
+begin
+  Result := EnumeradoToStr(t, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
+                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
+end;
+
+function StrToTipoEmbalagem(out ok: Boolean; const s: String): tpTipoEmbalagem;
+begin
+  Result := StrToEnumerado(ok, s, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
+                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
 end;
 
 function TipoViagemCIOTToStr(const t: TpTipoViagem): String;
@@ -242,20 +296,18 @@ begin
                               [Padrao, TAC_Agregado, Frota]);
 end;
 
-function VersaoCIOTToDbl(const t: TVersaoCIOT): Double;
-begin
-  case t of
-    ve500: Result := 5;
-  else
-    Result := 0;
-  end;
-end;
-
 function TpPagamentoToStr(const t: TpTipoPagamento): string;
 begin
   result := EnumeradoToStr(t, ['TransferenciaBancaria', 'eFRETE'],
                               [TransferenciaBancaria, eFRETE]);
 end;
+
+function StrToTpPagamento(out ok: Boolean; const s: String): TpTipoPagamento;
+begin
+  Result := StrToEnumerado(ok, s, ['TransferenciaBancaria', 'eFRETE'],
+                                  [TransferenciaBancaria, eFRETE]);
+end;
+
 function TpUnMedMercToStr(const t: TpUnidadeDeMedidaDaMercadoria): string;
 begin
   result := EnumeradoToStr(t, ['Tonelada', 'Kg'],
@@ -274,15 +326,33 @@ begin
                               [tpNenhum, tpPorcentagem, tpValorAbsoluto]);
 end;
 
-function TpDifFreteToStr(const t: TpDiferencaFreteTipo): string;
+function StrToTpProporcao(out ok: Boolean; const s: String): TpTipoProporcao;
+begin
+  Result := StrToEnumerado(ok, s, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
+                                  [tpNenhum, tpPorcentagem, tpValorAbsoluto]);
+end;
+
+function TpDifFreteToStr(const t: TpDiferencaFrete): string;
 begin
   result := EnumeradoToStr(t,['SemDiferenca', 'SomenteUltrapassado', 'Integral'],
                              [SemDiferenca, SomenteUltrapassado, Integral]);
 end;
 
+function StrToTpDifFrete(out ok: Boolean; const s: String): TpDiferencaFrete;
+begin
+  Result := StrToEnumerado(ok, s, ['SemDiferenca', 'SomenteUltrapassado', 'Integral'],
+                                  [SemDiferenca, SomenteUltrapassado, Integral]);
+end;
+
 function TpDiferencaFreteBCToStr(const t: TpDiferencaFreteBaseCalculo): string;
 begin
   result := EnumeradoToStr(t, ['QuantidadeDesembarque', 'QuantidadeMenor'],
+                              [QuantidadeDesembarque, QuantidadeMenor]);
+end;
+
+function StrToTpDiferencaFreteBC(out ok: Boolean; const s: String): TpDiferencaFreteBaseCalculo;
+begin
+  Result := StrToEnumerado(ok, s, ['QuantidadeDesembarque', 'QuantidadeMenor'],
                               [QuantidadeDesembarque, QuantidadeMenor]);
 end;
 
@@ -292,35 +362,33 @@ begin
                               [tcpAdiantamento, tcpEstadia, tcpQuitacao, tcpSemCategoria, tcpFrota]);
 end;
 
+function TpOperacaoToStr(const t: TpOperacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                ['Login', 'Logout', 'Gravar Proprietario',
+                'Gravar Veículo', 'Gravar Motorista',
+                'Adicionar', 'Adicionar Viagem', 'Adicionar Pagamento',
+                'Obter Codigo CIOT', 'Obter Pdf', 'Retificar', 'Cancelar',
+                'Cancelar Pagamento', 'Encerrar', 'ConsultarTipoCarga',
+                'AlterarDataLiberacaoPagamento'],
+                [opLogin, opLogout, opGravarProprietario,
+                opGravarVeiculo, opGravarMotorista,
+                opAdicionar, opAdicionarViagem, opAdicionarPagamento,
+                opObterCodigoIOT, opObterPdf, opRetificar, opCancelar,
+                opCancelarPagamento, opEncerrar, opConsultarTipoCarga,
+                opAlterarDataLiberacaoPagamento]);
+end;
+
 function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 begin
   result := EnumeradoToStr(t, ['RedeCredenciada', 'Cliente'],
                               [edRedeCredenciada, edCliente]);
 end;
 
-function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
-begin
-  Result := StrToEnumerado(ok, s,
-                          ['ieFrete', 'iRepom', 'iPamcard'],
-                          [ieFrete, iRepom, iPamcard] );
-end;
-
-function TipoContaToStr(const t: tpTipoConta): string;
-begin
-  Result := EnumeradoToStr(t, ['ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
-                          [tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
-end;
-
-function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
-begin
-  Result := EnumeradoToStr(t, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
-                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
-end;
-
 function TipoRodadoToStr(const t: TpTipoRodado): string;
 begin
   Result := EnumeradoToStr(t, ['NaoAplicavel', 'Truck', 'Toco', 'Cavalo'],
-                          [trNaoAplicavel, trTruck, trToco, trCavalo]);
+                              [trNaoAplicavel, trTruck, trToco, trCavalo]);
 end;
 
 function StrToTipoRodado(out ok: Boolean; const s: String): TpTipoRodado;
@@ -381,5 +449,45 @@ begin
                                   [ecEmViagem, ecEncerrado, ecCancelado]);
 end;
 
-end.
+function TipoCargaToStr(const t: tpTipoCarga): string;
+begin
+  Result := EnumeradoToStr(t, ['Granel sólido - HML', 'Granel líquido - HML',
+                               'Frigorificada - HML', 'Conteinerizada - HML',
+                               'Carga Geral - HML', 'Neogranel - HML',
+                               'Perigosa (granel sólido) - HML',
+                    					 'Perigosa (granel líquido) - HML',
+                               'Perigosa (carga frigorificada) - HML',
+                               'Perigosa (conteinerizada) - HML',
+                               'Perigosa (carga geral) - HML'],
+                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
+                               tpConteinerizada, tpCargaGeral, tpNeogranel,
+                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
+                               tpPerigosaCargaFrigorificada,
+                               tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
+end;
 
+function StrToTipoCarga(out ok: Boolean; const s: String): tpTipoCarga;
+begin
+  Result := StrToEnumerado(ok, s, ['Granel sólido - HML', 'Granel líquido - HML',
+                                   'Frigorificada - HML', 'Conteinerizada - HML',
+                                   'Carga Geral - HML', 'Neogranel - HML',
+                                   'Perigosa (granel sólido) - HML',
+                                   'Perigosa (granel líquido) - HML',
+                                   'Perigosa (carga frigorificada) - HML',
+                                   'Perigosa (conteinerizada) - HML',
+                                   'Perigosa (carga geral) - HML'],
+                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
+                               tpConteinerizada, tpCargaGeral, tpNeogranel,
+                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
+                               tpPerigosaCargaFrigorificada,
+                               tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
+end;
+
+function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
+begin
+  Result := StrToEnumerado(ok, s,
+                          ['ieFrete', 'iRepom', 'iPamcard'],
+                          [ieFrete, iRepom, iPamcard] );
+end;
+
+end.

@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2020
+-- ACBrNFSeNotasFiscais/ACBrNFSeWebServices -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56533-quebralinha-goiania-smarapd-consultasituacaolote/
+   Por: Michel Ouriques
+-- ACBrNFSeWebServices/pnfsNFSeR -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56586-provedor-smarapd-pequenas-altera%C3%A7%C3%B5es/
+   Por: Lutzem Massao Aihara
+-- pnfsNFSe/pnfsNFSeW_IPM -- 
+[*] https://www.projetoacbr.com.br/forum/topic/56522-bento-gon%C3%A7alves-ipm-campo-tipo-de-tomador/
+   Por: Sandro Felipe Adad
+
 20/02/2020
 -- pnfsNFSeW_Governa -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56421-nfse-provedor-governavalparaiso-de-goi%C3%A1s/

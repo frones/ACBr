@@ -1292,7 +1292,7 @@ begin
 
       // Se o RPS na lista de NFS-e consultado está na lista de FNotasFiscais, então atualiza os dados da mesma. A não existencia, implica em adcionar novo ponteiro em FNotasFiscais
       // foi alterado para testar o Numero, serie e tipo, pois o numero pode voltar ao terminar a seriação.
-      if FProvedor in [proNFSeBrasil, proEL, proEquiplano] then
+      if FProvedor in [proNFSeBrasil, proEL, proEquiplano, proSMARAPD] then
         // Se o provedor for NFSeBrasil ou EL compara apenas o numero do RPS
         CondicaoNovoRetorno := (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))
       else
@@ -1338,7 +1338,9 @@ begin
       end
       else
       begin
-        FNotasFiscais.Items[ii].NFSe.NumeroLote    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
+        if (Provedor <> proSMARAPD) then
+          FNotasFiscais.Items[ii].NFSe.NumeroLote := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
+		  
         FNotasFiscais.Items[ii].NFSe.dhRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.dhRecebimento;
         FNotasFiscais.Items[ii].NFSe.Protocolo     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Protocolo;
       end;
@@ -5764,7 +5766,8 @@ begin
         case Configuracoes.Geral.Provedor of
           proGoverna,
           proIPM,
-          proIssDSF: Result := True
+          proIssDSF,
+          proSmarapd: Result := True
         else
           Result := FConsSitLoteRPS.Executar;
         end;

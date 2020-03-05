@@ -764,7 +764,8 @@ begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
                             SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
 
-      XMLAss := Self.Items[0].CorrigirAssinatura(XMLAss);
+      if (Self.Count > 0) then
+        XMLAss := Self.Items[0].CorrigirAssinatura(XMLAss);
 
       Result := XMLAss;
     end;

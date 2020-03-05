@@ -3057,6 +3057,8 @@ begin
     DataEmissaoRps          := Leitor.rCampo(tcDatHor, 'DataEmissao');
     Competencia             := Leitor.rCampo(tcStr, 'DataEmissao');
     DataEmissao             := Leitor.rCampo(tcDatHor, 'DataEmissao');
+    dhRecebimento           := Leitor.rCampo(tcDatHor, 'DataEmissao');
+    Protocolo               := Leitor.rCampo(tcStr, 'ChaveValidacao');
     if (Leitor.rCampo(tcStr, 'SituacaoNf') = 'Cancelada') then
     begin
       Status    := srCancelado;

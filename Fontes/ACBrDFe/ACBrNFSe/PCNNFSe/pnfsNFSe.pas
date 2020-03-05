@@ -544,11 +544,13 @@ type
     FInscricaoMunicipal: String;
     FInscricaoEstadual: String;
     FDocTomadorEstrangeiro: String;
+    FTipo: string;
   public
     property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
     property DocTomadorEstrangeiro: String read FDocTomadorEstrangeiro write FDocTomadorEstrangeiro;
+    property Tipo:string read FTipo write FTipo;
   end;
 
  TDadosTomador = class(TObject)

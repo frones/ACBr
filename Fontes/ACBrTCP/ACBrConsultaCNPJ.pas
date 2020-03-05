@@ -48,7 +48,7 @@ uses
 
 const
   CURL_CAPTCH = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/captcha/gerarCaptcha.asp';
-  CURL_REFER = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_solicitacao3.asp';
+  CURL_REFER = 'http://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao_CS.asp';
   CURL_POST = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/valida.asp';
 
 
@@ -236,11 +236,10 @@ begin
   while Retentar do
   begin
     HTTPSend.Clear;
-    PostStr := 'cnpj='+OnlyNumber(ACNPJ)+'&' +
-               'origem=comprovante&' +
-               'search_type=cnpj&' +
-               'submit1=Consultar&' +
-               'txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha);
+    PostStr := 'origem=comprovante&' +
+               'cnpj='+OnlyNumber(ACNPJ)+'&' +
+               'txtTexto_captcha_serpro_gov_br=' +Trim(ACaptcha) +'&' +
+               'search_type=cnpj';
 
     WriteStrToStream( HTTPSend.Document, PostStr );
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';

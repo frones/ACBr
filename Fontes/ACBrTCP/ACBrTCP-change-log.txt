@@ -38,6 +38,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2020
+-- ACBrConsultaCNPJ --
+[*] Novo ajuste nas URLs de consulta do Servidor
+    (por: Alisson Gabriel)
+    https://www.projetoacbr.com.br/forum/topic/56582-consultacnpj-altera%C3%A7%C3%A3o-link/
+
+-- ACBrCEP --
+[-] Correção para Bad Request na Consulta de Cep, por Logradouro - ViaCEP
+   https://www.projetoacbr.com.br/forum/topic/56594-bad-request-na-consulta-de-cep-viacep
+   (por: paaraujo)
+
 09/02/2020
 -- ACBrTCP --
 [*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,

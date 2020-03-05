@@ -1432,9 +1432,9 @@ begin
   if AUF = '' then
      raise EACBrCEPException.Create('UF deve ser informado.');
 
-  UF         := TiraAcentos(AUF);
-  Municipio  := TiraAcentos(AMunicipio);
-  Logradouro := TiraAcentos(ALogradouro);
+  UF         := LowerCase(TiraAcentos(AUF));
+  Municipio  := LowerCase(TiraAcentos(AMunicipio));
+  Logradouro := LowerCase(TiraAcentos(ALogradouro));
 
   fOwner.HTTPGet( fpURL + UF + '/' + Municipio + '/' + Logradouro + '/xml' );
   ProcessaResposta();

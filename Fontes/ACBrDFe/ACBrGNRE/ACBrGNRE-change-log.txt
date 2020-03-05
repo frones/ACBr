@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2020
+-- ACBrGNREGuiaFRDM --
+[*] Melhorias na impressão da guia do GNRE em Fast Report.
+    https://www.projetoacbr.com.br/forum/topic/56585-nova-melhoria-gnre/
+  Por: Gustavo Déo da Silva / BigWings
+
 28/02/2020
 -- ACBrGNREGuiaClass/ACBrGNREGuiaFR --
 [*] https://www.projetoacbr.com.br/forum/topic/56465-melhorias-gnre/

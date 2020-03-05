@@ -157,6 +157,16 @@ begin
       FieldByName('CodReceita').AsInteger      := CodReceita;
       FieldByName('TipoDocEmitente').AsInteger := TipoDocEmitente;
 
+      if FieldByName('TipoDocEmitente').AsInteger = 0 then
+      begin
+        case Length(DocEmitente) of
+          11: FieldByName('TipoDocEmitente').AsInteger := 1;
+          14: FieldByName('TipoDocEmitente').AsInteger := 2;
+        else
+          FieldByName('TipoDocEmitente').AsInteger := 3;
+        end;
+      end;
+
       case TipoDocEmitente of
         1: FieldByName('DocEmitente').AsString := FormatMaskText('000\.000\.000\-00;0', DocEmitente);
         2: FieldByName('DocEmitente').AsString := FormatMaskText('00\.000\.000\/0000\-00;0', DocEmitente);

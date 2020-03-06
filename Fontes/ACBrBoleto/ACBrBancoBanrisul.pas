@@ -385,7 +385,7 @@ begin
                space(16)                                                        + // Brancos
                PadLeft(copy(trim(Cedente.Agencia), 1, 4) + cd, 13, '0')            + // Codigo da Agencia e Cedente AAAACCCCCCCCC
                space(7)                                                         + // Brancos
-               space(25)                                                        + // Identificação do título para o cedente (usado no arquivo de retorno)
+               PadRight(SeuNumero,25)                                               + // Identificação do título para o cedente (usado no arquivo de retorno)
                PadRight(NossoNumero, 8, '0')+CalculaDigitosChaveASBACE(NossoNumero) + // Nosso Número
                PadRight( AMensagem, 32)                                         + // Mensagem no bloqueto
                space(3)                                                         + // Brancos

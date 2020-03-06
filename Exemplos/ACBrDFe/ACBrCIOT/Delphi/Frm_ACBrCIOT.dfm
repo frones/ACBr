@@ -1327,7 +1327,7 @@ object frmACBrCIOT: TfrmACBrCIOT
       Top = 1
       Width = 567
       Height = 248
-      ActivePage = tsOperacao
+      ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
       object tsOperacao: TTabSheet
@@ -1342,7 +1342,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Columns = 2
           ItemIndex = 0
           Items.Strings = (
-            'Login'
+            'Login (Necess'#225'rio se usado sem Cert.)'
             'Cadastrar Propriet'#225'rio do Ve'#237'culo'
             'Cadastrar Ve'#237'culo'
             'Cadastrar Motorista'
@@ -1355,7 +1355,8 @@ object frmACBrCIOT: TfrmACBrCIOT
             'Cancelar Opera'#231#227'o de Transporte'
             'Cancelar Pag. Progr. para uma Oper. de Trans.'
             'Encerrar uma Opera'#231#227'o de Transporte'
-            'Logout')
+            'Logout (Necess'#225'rio se usado sem Cert.)'
+            'Consultar Tipos de Carga')
           TabOrder = 0
         end
       end

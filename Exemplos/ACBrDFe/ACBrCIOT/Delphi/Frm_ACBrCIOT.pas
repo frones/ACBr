@@ -182,6 +182,7 @@ type
     btnEnviarCiotEmail: TButton;
     tsOperacao: TTabSheet;
     rgOperacao: TRadioGroup;
+
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathCIOTClick(Sender: TObject);
@@ -218,6 +219,8 @@ type
     procedure btnEnviarCiotEmailClick(Sender: TObject);
   private
     { Private declarations }
+    sToken: string;
+
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
@@ -298,7 +301,8 @@ procedure TfrmACBrCIOT.AlimentarComponente;
 begin
   with ACBrCIOT1.Contratos.Add.CIOT do
   begin
-    Integradora.Token := '123456789';
+    // Só é necessario se usar usuario e senha e não o certificado
+    Integradora.Token := sToken;
 
     case rgOperacao.ItemIndex of
       0: begin
@@ -376,17 +380,17 @@ begin
              NomeDeSolteiraDaMae := 'joana pereira';
 
              Endereco.Bairro := 'teste';
-             Endereco.Rua := '';
-             Endereco.Numero := '';
-             Endereco.Complemento := '';
-             Endereco.CEP := '';
-             Endereco.CodigoMunicipio := 0;
+             Endereco.Rua := 'teste';
+             Endereco.Numero := '200';
+             Endereco.Complemento := 'teste';
+             Endereco.CEP := '89870000';
+             Endereco.CodigoMunicipio := 4212908;
 
              Telefones.Celular.DDD := 0;
              Telefones.Celular.Numero := 0;
 
-             Telefones.Fixo.DDD := 0;
-             Telefones.Fixo.Numero := 0;
+             Telefones.Fixo.DDD := 49;
+             Telefones.Fixo.Numero := 33661011;
 
              Telefones.Fax.DDD := 0;
              Telefones.Fax.Numero := 0;
@@ -570,7 +574,7 @@ begin
                Telefones.Celular.Numero := 0;
 
                Telefones.Fixo.DDD := 49;
-               Telefones.Fixo.Numero := 33661011;
+               Telefones.Fixo.Numero := 33661012;
 
                Telefones.Fax.DDD := 0;
                Telefones.Fax.Numero := 0;
@@ -686,7 +690,7 @@ begin
              QuantidadeTransferencias := 0; //Quantidade de Transferências  Bancárias que serão solicitadas pelo Contratado na operação de transporte.
              ValorSaques := 0;
              ValorTransferencias := 0;
-             CodigoTipoCarga := tpGranelsolido;
+             CodigoTipoCarga := tpCargaGeral;
              AltoDesempenho := True;
              DestinacaoComercial := True;
              FreteRetorno := False;
@@ -824,15 +828,15 @@ begin
            Integradora.Operacao := opObterCodigoIOT;
 
            ObterCodigoOperacaoTransporte.MatrizCNPJ := edtEmitCNPJ.Text;
-           ObterCodigoOperacaoTransporte.IdOperacaoCliente := '123';
+           ObterCodigoOperacaoTransporte.IdOperacaoCliente := '501';
          end;
 
       8: begin
            // Obter Pdf Operação Transporte
            Integradora.Operacao := opObterPdf;
 
-           ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao := '123';
-           ObterOperacaoTransportePDF.DocumentoViagem := '456';
+           ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao := '161000017511/1739';
+//           ObterOperacaoTransportePDF.DocumentoViagem := '456';
          end;
 
       9: begin
@@ -858,7 +862,7 @@ begin
              QuantidadeTransferencias := 0;
              ValorSaques := 0;
              ValorTransferencias := 0;
-             CodigoTipoCarga := tpGranelsolido;
+             CodigoTipoCarga := tpCargaGeral;
              CepOrigem := '4800000';
              CepDestino := '4800000';
              DistanciaPercorrida := 100;
@@ -993,6 +997,10 @@ begin
            ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao := '123';
            ObterOperacaoTransportePDF.DocumentoViagem := '456';
          end;
+
+     14: begin
+          Integradora.Operacao := opConsultarTipoCarga;
+         end;
     end;
   end;
 end;
@@ -1052,6 +1060,10 @@ begin
       MemoDados.Lines.Add('Quantidade Pagamentos,.......: '+ IntToStr(QuantidadePagamentos));
       MemoDados.Lines.Add('Id Pagamento Cliente.........: '+ IdPagamentoCliente);
 
+      // A propriedade Token só é retornado caso o componente não esteja
+      // configurado com o certificado digital e o serviço Login foi executado.
+      sToken := Token;
+
       if DocumentoViagem.Count > 0 then
       begin
         MemoDados.Lines.Add('Documento Viagem');
@@ -1064,6 +1076,19 @@ begin
         MemoDados.Lines.Add('Documento Pagamento');
         for i := 0 to DocumentoPagamento.Count -1 do
            MemoDados.Lines.Add('Mensagem: '+ DocumentoPagamento[i].Mensagem);
+      end;
+
+      if TipoCarga.Count > 0 then
+      begin
+        MemoDados.Lines.Add('  ');
+        MemoDados.Lines.Add('  ');
+        MemoDados.Lines.Add('********* Tipos Cargas ***********');
+        MemoDados.Lines.Add('  ');
+        for i := 0 to TipoCarga.Count -1 do
+        begin
+           MemoDados.Lines.Add(TipoCarga[i].Codigo.ToString +
+                               ' - '+ TipoCargaToStr(TipoCarga[i].Descricao));
+        end;
       end;
     end;
   end;
@@ -1271,6 +1296,11 @@ var
   Y: TSSLType;
   Integradora: TCIOTIntegradora;
 begin
+  // Variavel para armazenar o Token retornado pelo serviço Login
+  // Necessário quando o componente não esta configurado com o
+  // Certificado Digital
+  sToken := '';
+
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
     cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
@@ -1565,7 +1595,7 @@ begin
     FormatoAlerta    := edtFormatoAlerta.Text;
     FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
     VersaoDF         := TVersaoCIOT(cbVersaoDF.ItemIndex);
-    Integradora      := StrToEnumIntegradora(Ok, cbbIntegradora.text);
+    Integradora      := StrToIntegradora(Ok, cbbIntegradora.text);
     Usuario          := edtUsuarioWebService.Text;
     Senha            := edtSenhaWebService.Text;
     HashIntegrador   := edtHashIntegrador.Text;

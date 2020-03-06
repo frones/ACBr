@@ -985,7 +985,7 @@ type
     FVeiculo: TGravarVeiculo;
     FMotorista: TGravarMotorista;
 
-    FPDF: String;
+    FPDF: AnsiString;
     FCodigoIdentificacaoOperacao: string;
     FDataRetificacao: TDateTime;
     FData: TDateTime;
@@ -1019,7 +1019,7 @@ type
     property Veiculo: TGravarVeiculo read FVeiculo write FVeiculo;
     property Motorista: TGravarMotorista read FMotorista write FMotorista;
 
-    property PDF: String read FPDF write FPDF;
+    property PDF: AnsiString read FPDF write FPDF;
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property DataRetificacao: TDateTime read FDataRetificacao write FDataRetificacao;
     property Data: TDateTime read FData write FData;

@@ -672,6 +672,8 @@ begin
 end;
 
 function TCIOTEnviar.TratarResposta: Boolean;
+var
+  NomeArq: string;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
 
@@ -680,9 +682,10 @@ begin
   FRetornoEnvio.LerXml;
 
   if FRetornoEnvio.RetEnvio.PDF <> '' then
-    FPDFeOwner.Gravar(FRetornoEnvio.RetEnvio.ProtocoloServico + '.pdf',
-                      FRetornoEnvio.RetEnvio.PDF,
-                      GerarPathDownload);
+  begin
+    NomeArq := GerarPathDownload + FRetornoEnvio.RetEnvio.ProtocoloServico + '.pdf';
+    WriteToTXT(NomeArq, FRetornoEnvio.RetEnvio.PDF, False, False, True);
+  end;
 
   FPMsg := '';
 

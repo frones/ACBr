@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/03/2020
+-- ACBrUtil --
+[-] Correção em PadLeft, PadRight, e PadCenter, para funcionar corretamente com
+    Strings em UTF8, no FPC
+    (por: DSA)
+
 Data: 21/02/2020
 -- ACBrUtil --
 [*] Método AcharProximaTag modificado para receber parâmetro de Entrada, como AnsiString

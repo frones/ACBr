@@ -1145,6 +1145,18 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
+  Semelhante a LeftStr(), mas trata corretanmente Strings em UTF8 no FPC
+ ---------------------------------------------------------------------------- }
+function LeftStrNativeString(const AString: String; const ALen: Integer): String;
+begin
+  {$IfDef FPC}
+   Result := UTF8LeftStr(AString, ALen);
+  {$Else}
+   Result := LeftStr(AString, ALen);
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
   Completa <AString> com <Caracter> a direita, até o tamanho <nLen>, Alinhando
   a <AString> a Esquerda. Se <AString> for maior que <nLen>, ela será truncada
  ---------------------------------------------------------------------------- }
@@ -1157,8 +1169,8 @@ begin
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
-    Result := LeftStr(AString, nLen);
-end ;
+    Result := LeftStrNativeString(AString, nLen);
+end;
 
 {-----------------------------------------------------------------------------
   Completa <AString> com <Caracter> a esquerda, até o tamanho <nLen>, Alinhando
@@ -1173,8 +1185,8 @@ begin
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
-    Result := LeftStr(AString, nLen) ;  //RightStr(AString,nLen) ;
-end ;
+    Result := LeftStrNativeString(AString, nLen);  //RightStr(AString,nLen) ;
+end;
 
 {-----------------------------------------------------------------------------
  Completa <AString> Centralizando, preenchendo com <Caracter> a esquerda e direita
@@ -1192,8 +1204,8 @@ begin
     Result    := PadRight( StringOfChar(Caracter, nCharLeft) + AString, nLen, Caracter) ;
   end
   else
-    Result := LeftStr(AString, nLen) ;
-end ;
+    Result := LeftStrNativeString(AString, nLen);
+end;
 
 {-----------------------------------------------------------------------------
   Ajusta a <AString> com o tamanho de <nLen> inserindo espaços no meio,

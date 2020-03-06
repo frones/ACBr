@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibSat Demo - Visual Basic 6"
@@ -1468,13 +1468,17 @@ Private Sub Form_Load()
     cmbImpressao.AddItem "EscPos", TipoRelatorioBobina.tpEscPos
     cmbImpressao.ListIndex = 0
            
-    cbbModelo.AddItem "Texto", ACBrPosPrinterModelo.Texto
-    cbbModelo.AddItem "EscPosEpson", ACBrPosPrinterModelo.EscPosEpson
-    cbbModelo.AddItem "EscBematech", ACBrPosPrinterModelo.EscBematech
-    cbbModelo.AddItem "EscDaruma", ACBrPosPrinterModelo.EscDaruma
-    cbbModelo.AddItem "EscVox", ACBrPosPrinterModelo.EscVox
-    cbbModelo.AddItem "EscDiebold", ACBrPosPrinterModelo.EscDiebold
-    cbbModelo.AddItem "EscEpsonP2", ACBrPosPrinterModelo.EscEpsonP2
+    cbbModelo.AddItem "ppTexto", ACBrPosPrinterModelo.ppTexto
+    cbbModelo.AddItem "ppEscPosEpson", ACBrPosPrinterModelo.ppEscPosEpson
+    cbbModelo.AddItem "ppEscBematech", ACBrPosPrinterModelo.ppEscBematech
+    cbbModelo.AddItem "ppEscDaruma", ACBrPosPrinterModelo.ppEscDaruma
+    cbbModelo.AddItem "ppEscVox", ACBrPosPrinterModelo.ppEscVox
+    cbbModelo.AddItem "ppEscDiebold", ACBrPosPrinterModelo.ppEscDiebold
+    cbbModelo.AddItem "ppEscEpsonP2", ACBrPosPrinterModelo.ppEscEpsonP2
+    cbbModelo.AddItem "ppCustomPos", ACBrPosPrinterModelo.ppCustomPos
+    cbbModelo.AddItem "ppEscPosStar", ACBrPosPrinterModelo.ppEscPosStar
+    cbbModelo.AddItem "ppEscZJiang", ACBrPosPrinterModelo.ppEscZJiang
+    cbbModelo.AddItem "ppEscGPrinter", ACBrPosPrinterModelo.ppEscGPrinter
     
     cbbModelo.ListIndex = 0
     
@@ -1494,7 +1498,7 @@ Private Sub Form_Load()
         cbbImpressora.AddItem p.DeviceName
     Next
     
-    cbbPaginaCodigo.AddItem "None", PosPaginaCodigo.None
+    cbbPaginaCodigo.AddItem "None", PosPaginaCodigo.pcNone
     cbbPaginaCodigo.AddItem "pc437", PosPaginaCodigo.pc437
     cbbPaginaCodigo.AddItem "pc850", PosPaginaCodigo.pc850
     cbbPaginaCodigo.AddItem "pc852", PosPaginaCodigo.pc852

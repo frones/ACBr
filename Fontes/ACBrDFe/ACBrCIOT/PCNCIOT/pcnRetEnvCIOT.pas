@@ -135,7 +135,7 @@ begin
 
           Token := leitor.rCampo(tcStr, 'Token');
 
-          PDF := leitor.rCampo(tcStr, 'Pdf');
+          PDF := leitor.rCampo(tcEsp, 'Pdf');
 
           if PDF <> '' then
             PDF := UnZip(DecodeBase64(PDF));

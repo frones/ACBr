@@ -17,7 +17,6 @@
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <BuildModes Count="4">
       <Item1 Name="Debug 32" Default="True"/>
@@ -152,7 +151,7 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="13">
+    <RequiredPackages Count="12">
       <Item1>
         <PackageName Value="SynEdit"/>
       </Item1>
@@ -172,26 +171,23 @@
         <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBrComum"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBr_Integrador"/>
-      </Item12>
-      <Item13>
         <PackageName Value="LCL"/>
-      </Item13>
+      </Item12>
     </RequiredPackages>
     <Units Count="5">
       <Unit0>

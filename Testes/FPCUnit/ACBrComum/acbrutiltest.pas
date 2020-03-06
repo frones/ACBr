@@ -266,6 +266,7 @@ type
   padRightTest = class(TTestCase)
   published
     procedure CompletarStringComAcentos;
+    procedure CortarStringComAcentos;
     procedure CompletarString;
     procedure ManterString;
     procedure TruncarString;
@@ -277,7 +278,9 @@ type
   published
    procedure CompletarString;
    procedure CompletarStringAcentosAnsi;
+   procedure CortarStringAcentosAnsi;
    procedure CompletarStringAcentosUTF8;
+   procedure CortarStringAcentosUTF8;
    procedure ManterString;
    procedure TruncarString;
   end;
@@ -4340,21 +4343,44 @@ begin
   CheckEquals('     '+AcentosStr, PadLeft(AcentosStr, 10));
 end;
 
+procedure padLeftTest.CortarStringAcentosAnsi;
+var
+  Str1, Str2: String;
+begin
+  Str1 := ACBrStr('аимсзг');
+  Str2 := ACBrStr('аим');
+
+  CheckEquals(Str2, PadLeft(Str1, 3));
+end;
+
 procedure padLeftTest.CompletarStringAcentosUTF8;
 Var
-  UTF8Str : AnsiString;
+  UTF8Str: String;
 begin
   {$IfDef FPC}
   UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
   {$Else}
-   {$IFDEF UNICODE}
-    UTF8Str := 'аимсз';
-   {$ELSE}
-    UTF8Str := UTF8Encode('аимсз');
-   {$ENDIF}
+   UTF8Str := UTF8Encode('аимсз');
   {$EndIf}
 
+  //D7 irА falhar
   CheckEquals('     '+UTF8Str, PadLeft(UTF8Str, 10));
+end;
+
+procedure padLeftTest.CortarStringAcentosUTF8;
+Var
+  UTF8Str1, UTF8Str2: String;
+begin
+  {$IfDef FPC}
+  UTF8Str1 := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
+  UTF8Str2 := CP1252ToUTF8('аим');  // Nota: essa Unit usa CP1252
+  {$Else}
+   UTF8Str1 := UTF8Encode('аимсз');
+   UTF8Str2 := UTF8Encode('аим');
+  {$EndIf}
+
+  //D7 irА falhar
+  CheckEquals(UTF8Str2, PadLeft(UTF8Str1, 3));
 end;
 
 procedure padLeftTest.ManterString;
@@ -4378,6 +4404,16 @@ begin
 
   CheckEquals(StrAcentos+'ZZZZZ', PadRight(StrAcentos, 15, 'Z'));
   CheckEquals(StrAcentos+'     ', PadRight(StrAcentos, 15));
+end;
+
+procedure padRightTest.CortarStringComAcentos;
+var
+  Str1, Str2: String;
+begin
+  Str1 := ACBrStr('аимсзг');
+  Str2 := ACBrStr('аим');
+
+  CheckEquals(Str2, PadRight(Str1, 3));
 end;
 
 procedure padRightTest.CompletarString;

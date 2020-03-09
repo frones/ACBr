@@ -591,6 +591,7 @@ var
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
    wLinhaMulta :String;
    iSequencia : integer;
+   AProtesto : String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -769,7 +770,24 @@ begin
       else
         ATipoSacado := '99';
       end;
-    
+
+      {Pegando campo Intruções conforme código protesto}
+      if ((DataProtesto > 0) and (DataProtesto > Vencimento)) then
+      begin
+        case TipoDiasProtesto of
+             diCorridos : AProtesto := '34';
+             diUteis    : AProtesto := '35';
+        else
+          AProtesto := '';
+        end;
+      end
+      else
+        AProtesto := '';
+
+      if (PadLeft(trim(Instrucao1),2,'0') = '00') and (AProtesto <> '')  then
+        Instrucao1:= AProtesto;
+
+
     with ACBrBoleto do
     begin
        wCarteira:= Trim(Carteira);

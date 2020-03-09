@@ -1,11 +1,11 @@
-package ACBr_OpenSSL;
+package DCLACBr_OpenSSL;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -25,16 +25,15 @@ package ACBr_OpenSSL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Bind para OpenSSL 1.1.1 - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$DESCRIPTION 'ACBr - (DesignTime) Bind para OpenSSL 1.1.1 - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,
-  ACBr_Comum;
+  ACBr_OpenSSL;
 
 contains
-  OpenSSLExt in '..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas',
-  ACBrEAD in '..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas';
+  ACBrOpenSSLReg in '..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas';
 
 end.

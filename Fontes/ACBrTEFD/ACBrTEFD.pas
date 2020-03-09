@@ -368,8 +368,6 @@ type
 
    end;
 
-procedure Register;
-
 procedure ApagaEVerifica( const Arquivo : String ) ;
 
 implementation
@@ -379,12 +377,6 @@ Uses ACBrUtil, dateutils, TypInfo, StrUtils, Math;
 {$IFNDEF FPC}
    {$R ACBrTEFD.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTEFD', [TACBrTEFD]);
-end;
-
 
 procedure ApagaEVerifica( const Arquivo : String ) ;
 begin

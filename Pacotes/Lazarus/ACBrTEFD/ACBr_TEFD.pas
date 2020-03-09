@@ -4,18 +4,19 @@
 
 unit ACBr_TEFD;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrTEFD, ACBrTEFDClass, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, 
   ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDCappta, 
-  LazarusPackageIntf;
+  ACBrTEFDReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrTEFD', @ACBrTEFD.Register);
+  RegisterUnit('ACBrTEFDReg', @ACBrTEFDReg.Register);
 end;
 
 initialization

@@ -2157,6 +2157,8 @@ begin
       ACBrMDFe.WebServices.Consulta.MDFeChave := AChave;
 
     ACBrMDFe.WebServices.Consulta.Executar;
+    if EstaVazio(ACBrMDFe.WebServices.Consulta.Protocolo) then
+      raise Exception.Create(ACBrStr('Não foi possível consultar o número de Protocolo para a Chave: ') + AChave );
 
     ACBrMDFe.EventoMDFe.Evento.Clear;
     with ACBrMDFe.EventoMDFe.Evento.New do

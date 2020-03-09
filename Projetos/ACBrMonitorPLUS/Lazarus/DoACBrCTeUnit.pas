@@ -1913,6 +1913,8 @@ begin
       ACBrCTe.WebServices.Consulta.CTeChave := AChave;
 
     ACBrCTe.WebServices.Consulta.Executar;
+    if EstaVazio(ACBrCTe.WebServices.Consulta.Protocolo) then
+      raise Exception.Create(ACBrStr('Não foi possível consultar o número de Protocolo para a Chave: ') + AChave );
 
     ACBrCTe.EventoCTe.Evento.Clear;
     with ACBrCTe.EventoCTe.Evento.New do

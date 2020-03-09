@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2020
+[*] DoACBrNFe, DoACBrMDFe, DoACBrCTe
+Adicionado validação de numero do protocolo nos métodos de Cancelamento
+
 02/03/2020
 [+] DoBoletoUnit, ACBrMonitorConsts
 Adicionado novos métodos componente Boleto: ImprimirBoleto, GerarPDFBoleto, EnviarEmailBoleto

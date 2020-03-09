@@ -2131,6 +2131,8 @@ begin
       ACBrNFe.WebServices.Consulta.NFeChave := AChave;
 
     ACBrNFe.WebServices.Consulta.Executar;
+    if EstaVazio(ACBrNFe.WebServices.Consulta.Protocolo) then
+      raise Exception.Create(ACBrStr('Não foi possível consultar o número de Protocolo para a Chave: ') + AChave );
 
     ACBrNFe.EventoNFe.Evento.Clear;
     with ACBrNFe.EventoNFe.Evento.New do
@@ -2161,7 +2163,6 @@ begin
     finally
       Resposta.Free;
     end;
-
 
   end;
 end;

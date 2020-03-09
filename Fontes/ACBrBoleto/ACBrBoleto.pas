@@ -3305,12 +3305,13 @@ function TACBrBoleto.LerArqIni(const AIniBoletos: String): Boolean;
 var
   IniBoletos : TMemIniFile ;
   Titulo : TACBrTitulo;
+  NFe : TACBrDadosNFe;
   wTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
   wLocalPagto, MemFormatada, MemDetalhamento: String;
   Sessao, sFim: String;
-  I: Integer;
+  I, N: Integer;
 begin
   Result   := False;
 
@@ -3521,8 +3522,33 @@ begin
             Sacado.SacadoAvalista.Email         := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.Email','');
             Sacado.SacadoAvalista.Fone          := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.Fone','');
             Sacado.SacadoAvalista.InscricaoNr   := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
-          end;
 
+            //Apenas banco Pine
+            if (IniBoletos.SectionExists('NFe1') ) then
+            begin
+              with Self do
+              begin
+                N := 1 ;
+                while true do
+                begin
+                  Sessao := 'NFe' + IntToStr(N);
+                  sFim   := IniBoletos.ReadString(Sessao,'ChaveNFe','FIM');
+
+                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                    break ;
+
+                  NFe := CriarNFeNaLista;
+                  NFe.NumNFe := IniBoletos.ReadString(Sessao,'NumNFe','');
+                  NFe.ValorNFe := IniBoletos.ReadFloat(Sessao,'ValorNFe',0);
+                  NFe.EmissaoNFe := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'EmissaoNFe','')), 0);
+                  NFe.ChaveNFe := sFim;
+
+                  Inc(N);
+                end;
+              end;
+            end;
+
+          end;
           inc(I);
           Result := True;
         end;

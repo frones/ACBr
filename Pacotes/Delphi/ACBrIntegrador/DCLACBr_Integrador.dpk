@@ -1,11 +1,11 @@
-package ACBr_Integrador;
+package DCLACBr_Integrador;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -25,20 +25,16 @@ package ACBr_Integrador;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Integrador - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$DESCRIPTION 'ACBr - (DesignTime) Integrador - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,
-  ACBr_PCNComum;
+  ACBr_Integrador,
+  designide;
 
 contains
-  ACBrIntegrador in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegrador.pas',
-  ACBrIntegradorResposta in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorResposta.pas',
-  pcnVFPe in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPe.pas',
-  pcnVFPeR in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeR.pas',
-  pcnVFPeW in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeW.pas';
+  ACBrIntegradorReg in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorReg.pas';
 
 end.

@@ -1,6 +1,7 @@
 package ACBr_TCP;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,18 +12,21 @@ package ACBr_TCP;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail, Feriado - (http://www.projectoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -33,7 +37,6 @@ requires
 contains
   ACBrSocket in '..\..\..\Fontes\ACBrTCP\ACBrSocket.pas',
   ACBrCEP in '..\..\..\Fontes\ACBrTCP\ACBrCEP.pas',
-  ACBrTCPReg in '..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas',
   ACBrIBGE in '..\..\..\Fontes\ACBrTCP\ACBrIBGE.pas',
   ACBrCNIEE in '..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas',
   ACBrSuframa in '..\..\..\Fontes\ACBrTCP\ACBrSuframa.pas',

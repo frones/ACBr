@@ -1,6 +1,7 @@
 package ACBr_MTER;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,29 +12,30 @@ package ACBr_MTER;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - MTER Componente Servidor de Micro Terminais TCP/IP - (http://www.projectoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_TCP,
   ACBr_Serial;
 
 contains
-  ACBrMTERReg in '..\..\..\Fontes\ACBrTCP\ACBrMTERReg.pas',
   ACBrMTer in '..\..\..\Fontes\ACBrTCP\ACBrMTer.pas',
   ACBrMTerClass in '..\..\..\Fontes\ACBrTCP\ACBrMTerClass.pas',
   ACBrMTerVT100 in '..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas',

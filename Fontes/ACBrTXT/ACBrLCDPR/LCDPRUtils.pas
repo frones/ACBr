@@ -36,20 +36,34 @@ interface
 uses
   SysUtils, ACBrUtil;
 
-function formatNumeric(Value : Double) : String;
+function formatNumeric(Value : Double; Size: Integer = 0) : String;
 function formatDate(Value : TDateTime) : String;
 
 implementation
 
 function formatDate(Value : TDateTime) : String;
 begin
+
+  /// Se a data for nula será retornado ''
+  if (Value = 0) or (DateTimeToStr(Value) = '30/12/1899') then
+  begin
+     Result := '';
+     Exit;
+  end;
+
   Result := FormatDateTime('ddmmyyyy', Value);
 end;
 
-function formatNumeric(Value : Double) : String;
+function formatNumeric(Value : Double; Size: Integer = 0) : String;
+var
+  newValue:String;
 begin
-  Result := OnlyNumber(FormatFloat(',0.00;-,0.00', Value));
-end;
+  newValue := OnlyNumber(FormatFloat(',0.00;-,0.00', Value));
 
+  if Size > 0 then
+    Result := PadLeft(newValue, Size, '0')
+  else
+    Result := newValue;
+end;
 
 end.

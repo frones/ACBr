@@ -327,7 +327,7 @@ begin
             AddCampo(COD_MUN) +
             AddCampo(CEP) +
             AddCampo(TipoExploracaoToStr(TIPO_EXPLORACAO)) +
-            AddCampo(formatNumeric(PARTICIPACAO), False)
+            AddCampo(formatNumeric(PARTICIPACAO, 5), False)
           );
         end;
 
@@ -341,7 +341,7 @@ begin
                 AddCampo(TipoContraparteToStr(TIPO_CONTRAPARTE)) +
                 AddCampo(CPF_CONTRAPARTE) +
                 AddCampo(NOME_CONTRAPARTE) +
-                AddCampo(formatNumeric(PERC_CONTRAPARTE), False)
+                AddCampo(formatNumeric(PERC_CONTRAPARTE, 5), False)
               );
             end;
         end;
@@ -427,13 +427,14 @@ begin
     end;
 end;
 
-
 procedure TACBrLCDPR.limparRegistros;
 begin
   Bloco0040.Blocos.Clear;
   Bloco0050.CONTAS.Clear;
   BlocoQ.RegistrosQ100.Clear;
   BlocoQ.RegistrosQ200.Clear;
+
+  Bloco9999.QTD_LIN := 0;
 end;
 
 end.

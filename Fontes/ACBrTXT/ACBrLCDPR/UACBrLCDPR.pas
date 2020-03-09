@@ -128,7 +128,8 @@ begin
   FBloco9999      := TRegistro9999.Create;
   FDadosContador  := TContador.Create;
 
-  FConteudo     := TStringList.Create;;
+  FConteudo     := TStringList.Create;
+
   FDelimitador  := '|';
   FArquivo      := 'LCDPR';
 end;

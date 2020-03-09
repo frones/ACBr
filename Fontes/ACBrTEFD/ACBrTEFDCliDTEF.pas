@@ -63,7 +63,7 @@ Const
    CACBrTEFD_CliDTEF_Backup = 'ACBr_CliDTEF_Backup.tef' ;
 
 {$IFDEF LINUX}
-  CACBrTEFD_CliDTEF_Lib = '' ;
+  CACBrTEFD_CliDTEF_Lib = 'libDPOSDRV.so' ;
 {$ELSE}
   CACBrTEFD_CliDTEF_Lib = 'DPOSDRV.DLL' ;
 {$ENDIF}

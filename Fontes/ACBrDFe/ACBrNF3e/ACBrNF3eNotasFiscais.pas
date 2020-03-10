@@ -3291,7 +3291,7 @@ begin
 
     with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
     begin
-      GravarStream(StreamNF3e);
+      Self.GravarStream(StreamNF3e);
 
       if (EnviaPDF) then
       begin

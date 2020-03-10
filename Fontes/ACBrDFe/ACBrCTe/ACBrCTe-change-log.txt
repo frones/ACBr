@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2020
+-- ACBrCTe --
+[*] Ao enviar o evento por e-mail não estava sendo informado o nome do XML do 
+    evento corretamente.
+   Por: Italo Jurisato Junior
+
 02/03/2020
 -- ACBrCTe --
 [+] https://www.projetoacbr.com.br/forum/topic/56528-enviar-email-do-evento/

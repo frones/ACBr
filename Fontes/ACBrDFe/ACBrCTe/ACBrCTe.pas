@@ -976,7 +976,8 @@ begin
     NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe, 
+	  NomeArq + '-procEventoCTe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamCTe.Free;

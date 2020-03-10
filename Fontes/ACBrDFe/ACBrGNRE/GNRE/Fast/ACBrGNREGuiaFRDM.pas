@@ -167,7 +167,7 @@ begin
         end;
       end;
 
-      case TipoDocEmitente of
+      case FieldByName('TipoDocEmitente').AsInteger of
         1: FieldByName('DocEmitente').AsString := FormatMaskText('000\.000\.000\-00;0', DocEmitente);
         2: FieldByName('DocEmitente').AsString := FormatMaskText('00\.000\.000\/0000\-00;0', DocEmitente);
         3: FieldByName('DocEmitente').AsString := RemoverZeros(DocEmitente);

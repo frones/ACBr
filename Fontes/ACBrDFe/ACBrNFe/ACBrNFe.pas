@@ -972,7 +972,8 @@ begin
     NomeArq := PathWithDelim(DANFE.PathPDF) + NomeArq + '-procEventoNFe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe, 
+	  NomeArq + '-procEventoNFe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamNFe.Free;

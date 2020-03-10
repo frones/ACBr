@@ -32,4 +32,7 @@ package DCLACBr_LCDPR;
 requires
   rtl;
 
+contains
+  ACBrLCDPRReg in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\ACBrLCDPRReg.pas';
+
 end.

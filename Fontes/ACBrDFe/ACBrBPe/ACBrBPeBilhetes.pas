@@ -484,7 +484,7 @@ begin
 
     with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
     begin
-      GravarStream(StreamBPe);
+      Self.GravarStream(StreamBPe);
 
       if (EnviaPDF) then
       begin

@@ -1296,9 +1296,9 @@ begin
     Gerador.wCampo(tcStr, '#', 'NCM    ', 08, 008, 0, MDFe.prodPred.NCM, DSC_NCM);
 
     if (MDFe.prodPred.infLocalCarrega.CEP > 0) or
-       (MDFe.prodPred.infLocalCarrega.latitude > 0) or (MDFe.prodPred.infLocalCarrega.Longitude > 0) or
+       (MDFe.prodPred.infLocalCarrega.latitude <> 0) or (MDFe.prodPred.infLocalCarrega.Longitude <> 0) or
        (MDFe.prodPred.infLocalDescarrega.CEP > 0) or
-       (MDFe.prodPred.infLocalDescarrega.latitude > 0) or (MDFe.prodPred.infLocalDescarrega.Longitude > 0) then
+       (MDFe.prodPred.infLocalDescarrega.latitude <> 0) or (MDFe.prodPred.infLocalDescarrega.Longitude <> 0) then
     begin
       Gerador.wGrupo('infLotacao', '#');
 
@@ -1307,7 +1307,7 @@ begin
       if (MDFe.prodPred.infLocalCarrega.CEP > 0) then
         Gerador.wCampo(tcInt, '#', 'CEP', 08, 08, 1, MDFe.prodPred.infLocalCarrega.CEP, DSC_CEP)
       else
-        if (MDFe.prodPred.infLocalCarrega.latitude > 0) or (MDFe.prodPred.infLocalCarrega.Longitude > 0) then
+        if (MDFe.prodPred.infLocalCarrega.latitude <> 0) or (MDFe.prodPred.infLocalCarrega.Longitude <> 0) then
         begin
           Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 06, 1, MDFe.prodPred.infLocalCarrega.latitude, DSC_LATITUDE);
           Gerador.wCampo(tcDe6, '#', 'longitude', 01, 06, 1, MDFe.prodPred.infLocalCarrega.Longitude, DSC_LONGITUDE);
@@ -1320,7 +1320,7 @@ begin
       if (MDFe.prodPred.infLocalDescarrega.CEP > 0) then
         Gerador.wCampo(tcInt, '#', 'CEP', 08, 08, 1, MDFe.prodPred.infLocalDescarrega.CEP, DSC_CEP)
       else
-        if (MDFe.prodPred.infLocalDescarrega.latitude > 0) or (MDFe.prodPred.infLocalDescarrega.Longitude > 0) then
+        if (MDFe.prodPred.infLocalDescarrega.latitude <> 0) or (MDFe.prodPred.infLocalDescarrega.Longitude <> 0) then
         begin
           Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 06, 1, MDFe.prodPred.infLocalDescarrega.latitude, DSC_LATITUDE);
           Gerador.wCampo(tcDe6, '#', 'longitude', 01, 06, 1, MDFe.prodPred.infLocalDescarrega.Longitude, DSC_LONGITUDE);

@@ -292,7 +292,7 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
-  Caption := Caption + sVersaoInstalador;
+  Caption := Caption + ' ' + sVersaoInstalador;
   UmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
   FUltimoArquivoLog := '';
 

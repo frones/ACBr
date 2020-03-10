@@ -2,20 +2,21 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBr_BoletoFC_Fortes; 
+unit ACBr_BoletoFC_Fortes;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-   ACBrBoletoFCFortesFr, LazarusPackageIntf;
+  ACBrBoletoFCFortesFr, ACBrBoletoFCFortesFrReg, LazarusPackageIntf;
 
 implementation
 
-procedure Register; 
+procedure Register;
 begin
-  RegisterUnit('ACBrBoletoFCFortesFr', @ACBrBoletoFCFortesFr.Register); 
-end; 
+  RegisterUnit('ACBrBoletoFCFortesFrReg', @ACBrBoletoFCFortesFrReg.Register);
+end;
 
 initialization
-  RegisterPackage('ACBr_BoletoFC_Fortes', @Register); 
+  RegisterPackage('ACBr_BoletoFC_Fortes', @Register);
 end.

@@ -1001,8 +1001,6 @@ type
 var
   ACBrBoletoFCFortesForm: TACBrBoletoFCFortesFr;
 
-procedure Register;
-
 implementation
 
 Uses ACBrUtil, strutils ;
@@ -1013,11 +1011,6 @@ Uses ACBrUtil, strutils ;
   {$R *.dfm}
   {$R ACBrBoletoFCFortes.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrBoleto',[TACBrBoletoFCFortes]);
-end;
 
 { TACBrBoletoFCFortes }
 

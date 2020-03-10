@@ -135,7 +135,7 @@ const
     'Remessa Contrato de Cobrança',
     'Remessa Negativação Sem Protesto',
     'Remessa Baixa Título Negativado Sem Protesto',
-    'Remessa Alterar Valor Mínimo', 
+    'Remessa Alterar Valor Mínimo',
     'Remessa Alterar Valor Máximo',
     'Remessa Excluir Negativacao Serasa e Baixar',
     'Remessa Pedido de negativação',
@@ -1528,8 +1528,6 @@ type
   end;
 
 
-procedure Register;
-
 implementation
 
 Uses Forms, Math, dateutils, strutils,
@@ -1582,11 +1580,6 @@ begin
      tdPercentualSobreValorNominalDiaUtil : Result := '6';
      tdCancelamentoDesconto : Result := '7';
   end;
-end;
-
-procedure Register;
-begin
-   RegisterComponents('ACBrBoleto', [TACBrBoleto]);
 end;
 
 { TACBrCedente }

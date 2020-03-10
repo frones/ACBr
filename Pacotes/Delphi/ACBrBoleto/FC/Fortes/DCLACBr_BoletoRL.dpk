@@ -1,11 +1,11 @@
-package ACBr_BoletoRL;
+package DCLACBr_BoletoRL;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -15,7 +15,7 @@ package ACBr_BoletoRL;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$DEFINITIONINFO ON}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -25,17 +25,15 @@ package ACBr_BoletoRL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
-{$RUNONLY}
+{$DESCRIPTION 'ACBr - (Designtime) Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
+{$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,
-  frce,
-  ACBr_Boleto;
+  acbr_boletorl;
 
 contains
-  ACBrBoletoFCFortesFr in '..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas';
+  ACBrBoletoFCFortesFrReg in '..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFrReg.pas';
 
 end.

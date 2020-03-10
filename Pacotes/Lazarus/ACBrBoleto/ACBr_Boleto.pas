@@ -13,13 +13,13 @@ uses
   ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
   ACBrBancoBic, ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, 
   ACBrBancoCaixaSICOB, ACBrBancoBrasilSicoob, ACBrBancoCitiBank, 
-  ACBrBancoPine, ACBrBancoPineBradesco, LazarusPackageIntf;
+  ACBrBancoPine, ACBrBancoPineBradesco, ACBrBoletoReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrBoleto', @ACBrBoleto.Register);
+  RegisterUnit('ACBrBoletoReg', @ACBrBoletoReg.Register);
 end;
 
 initialization

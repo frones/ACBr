@@ -675,7 +675,8 @@ begin
     NomeArq := PathWithDelim(DABPE.PathPDF) + NomeArq + '-procEventoBPe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe, '', sReplyTo);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe, 
+	  NomeArq + '-procEventoBPe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamBPe.Free;

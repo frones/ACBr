@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2020
+-- ACBrBPe --
+[*] Ao enviar o evento por e-mail não estava sendo informado o nome do XML do 
+    evento corretamente.
+   Por: Italo Jurisato Junior
+
 02/03/2020
 -- ACBrBPe --
 [+] Agora o XML do evento é anexado ao enviar o mesmo por email.

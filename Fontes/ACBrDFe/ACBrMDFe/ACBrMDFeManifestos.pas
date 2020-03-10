@@ -503,7 +503,7 @@ begin
 
     with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
     begin
-      GravarStream(StreamMDFe);
+      Self.GravarStream(StreamMDFe);
 
       if (EnviaPDF) then
       begin

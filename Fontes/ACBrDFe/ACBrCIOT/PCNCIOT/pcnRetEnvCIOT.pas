@@ -138,7 +138,7 @@ begin
           PDF := leitor.rCampo(tcEsp, 'Pdf');
 
           if PDF <> '' then
-            PDF := UnZip(DecodeBase64(PDF));
+            PDF := DecodeBase64(PDF);
 
           CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
           Data                        := leitor.rCampo(tcDatHor, 'Data');

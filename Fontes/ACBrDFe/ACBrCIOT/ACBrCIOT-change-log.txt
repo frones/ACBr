@@ -40,6 +40,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2020
+-- pcnRetEnvCIOT --
+[*] Após decodifica o conteudo da Tag PDF estava sendo executado indevidamente o 
+    UnZip, com isso o arquivo PDF salvo em disco ficava corrompido.
+   Por: Italo Jurisato Junior
+
 06/03/2020
 -- pcnConversaoCIOT --
 [*] https://www.projetoacbr.com.br/forum/topic/56604-pcnconversaociot/?do=findComment&comment=371048

@@ -17,10 +17,9 @@
 Declaração de Substituição Tributária, Diferencial de Alíquota e Antecipação"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="9">
+    <Files Count="10">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDA.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrDeSTDA"/>
       </Item1>
       <Item2>
@@ -55,6 +54,11 @@ Declaração de Substituição Tributária, Diferencial de Alíquota e Antecipa�
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABlocos.pas"/>
         <UnitName Value="ACBrDeSTDABlocos"/>
       </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDAReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDeSTDAReg"/>
+      </Item10>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

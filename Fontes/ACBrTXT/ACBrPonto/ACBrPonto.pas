@@ -106,8 +106,6 @@ type
     property OnError: TErrorEvent read GetOnError write SetOnError;
   end;
 
-procedure Register;
-
 implementation
 
 Uses
@@ -115,11 +113,6 @@ Uses
 {$IFNDEF FPC}
 {$R ACBrPonto.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrPonto]);
-end;
 
 constructor TACBrPonto.Create(AOwner: TComponent);
 begin

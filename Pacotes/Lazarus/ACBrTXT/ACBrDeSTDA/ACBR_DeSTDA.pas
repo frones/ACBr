@@ -4,18 +4,19 @@
 
 unit ACBR_DeSTDA;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrDeSTDA, ACBrDeSTDA4715, ACBrDeSTDABloco_0, ACBrDeSTDABloco_0_Class, 
   ACBrDeSTDABloco_9, ACBrDeSTDABloco_9_Class, ACBrDeSTDABloco_G, 
-  ACBrDeSTDABloco_G_Class, ACBrDeSTDABlocos, LazarusPackageIntf;
+  ACBrDeSTDABloco_G_Class, ACBrDeSTDABlocos, ACBrDeSTDAReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrDeSTDA', @ACBrDeSTDA.Register);
+  RegisterUnit('ACBrDeSTDAReg', @ACBrDeSTDAReg.Register);
 end;
 
 initialization

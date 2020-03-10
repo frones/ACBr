@@ -18,10 +18,10 @@
 Gera arquivo TXT para ponto eletrônico na &quot;Portaria Nº 1.510, de 21 de Agosto de 2009&quot;"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="7">
+    <Files Count="8">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto.pas"/>
-        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPonto"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_ACJEF.pas"/>
@@ -47,6 +47,11 @@ Gera arquivo TXT para ponto eletrônico na &quot;Portaria Nº 1.510, de 21 de Ag
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFDT_Class.pas"/>
         <UnitName Value="ACBrPonto_AFDT_Class"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPontoReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPontoReg"/>
+      </Item8>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

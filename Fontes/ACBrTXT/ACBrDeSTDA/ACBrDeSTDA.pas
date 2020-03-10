@@ -143,9 +143,6 @@ type
 
   end;
 
-procedure Register;
-
-
 implementation
 
 uses ACBrUtil, ACBrDeSTDABlocos, ACBrDeSTDABloco_G, ACBrDeSTDABloco_9;
@@ -154,13 +151,7 @@ uses ACBrUtil, ACBrDeSTDABlocos, ACBrDeSTDABloco_G, ACBrDeSTDABloco_9;
  {$R ACBr_DeSTDA.dcr}
 {$ENDIF}
 
-procedure Register;
-begin
-  RegisterComponents('ACBrTXT', [TACBrDeSTDA]);
-end;
-
 { TACBrDeSTDA }
-
 procedure TACBrDeSTDA.CancelaGeracao;
 begin
   LimpaRegistros;

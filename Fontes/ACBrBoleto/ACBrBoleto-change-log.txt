@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2020
+-- ACBrBancoBrasil --
+[*] Inclusão da ocorrência BaixaAutomatica na função TipoOcorrenciaToCod (Michele - ACT)
 09/03/2020
 -- ACBrBancoSicred --
 [-] Ajuste na Validação da função CalcularTamanhoMaxNossoNumero.

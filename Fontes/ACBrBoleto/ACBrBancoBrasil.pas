@@ -1369,6 +1369,7 @@ begin
    case TipoOcorrencia of
      toRetornoRegistroConfirmado                   : Result := '02';
      toRetornoLiquidado                            : Result := '06';
+     toRetornoBaixaAutomatica                      : Result := '09';
      toRetornoTituloEmSer                          : Result := '11';
      toRetornoAbatimentoConcedido                  : Result := '12';
      toRetornoAbatimentoCancelado                  : Result := '13';

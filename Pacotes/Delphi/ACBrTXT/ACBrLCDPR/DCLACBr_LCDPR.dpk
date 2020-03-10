@@ -30,7 +30,8 @@ package DCLACBr_LCDPR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  ACBr_LCDPR;
 
 contains
   ACBrLCDPRReg in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\ACBrLCDPRReg.pas';

@@ -84,8 +84,7 @@ contains
   RegistroQ100 in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\RegistroQ100.pas',
   RegistroQ200 in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\RegistroQ200.pas',
   LCDPRUtils in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\LCDPRUtils.pas',
-  uDadosContador in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\uDadosContador.pas',
-  ACBrLCDPRReg in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\ACBrLCDPRReg.pas';
+  uDadosContador in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\uDadosContador.pas';
 
 end.
 

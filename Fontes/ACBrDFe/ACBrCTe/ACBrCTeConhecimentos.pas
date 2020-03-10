@@ -558,7 +558,7 @@ begin
 
     with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
     begin
-      GravarStream(StreamCTe);
+      Self.GravarStream(StreamCTe);
 
       if (EnviaPDF) then
       begin

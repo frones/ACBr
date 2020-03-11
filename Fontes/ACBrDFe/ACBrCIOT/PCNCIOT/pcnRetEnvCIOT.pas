@@ -158,9 +158,9 @@ begin
               RazaoSocial       := leitor.rCampo(tcStr, 'RazaoSocial');
               RNTRC             := leitor.rCampo(tcStr, 'RNTRC');
               Tipo              := StrToTipoProprietario(ok, leitor.rCampo(tcStr, 'Tipo'));
-              TACouEquiparado   := StrToBool(leitor.rCampo(tcBoolStr, 'TACouEquiparado'));
+              TACouEquiparado   := StrToBool(leitor.rCampo(tcStr, 'TACouEquiparado'));
               DataValidadeRNTRC := leitor.rCampo(tcDat, 'DataValidadeRNTRC');
-              RNTRCAtivo        := StrToBool(leitor.rCampo(tcBoolStr, 'RNTRCAtivo'));
+              RNTRCAtivo        := StrToBool(leitor.rCampo(tcStr, 'RNTRCAtivo'));
 
               if (leitor.rExtrai(4, 'Endereco') <> '') then
               begin

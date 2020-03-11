@@ -712,7 +712,7 @@ begin
         end;
       end;
 
-      Gerador.wCampoNFSe(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.Contratante.ResponsavelPeloPagamento, True)));
+      Gerador.wCampoNFSe(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
       Gerador.wCampoNFSe(tcStr, 'AP135', 'RNTRC                   ', 01, 01, 1, RNTRC);
 
       Gerador.wGrupoNFSe('/Contratante');
@@ -1823,9 +1823,9 @@ begin
           if TipoViagem <> TAC_Agregado then
           begin
             Gerador.wCampoNFSe(tcInt, 'AP258', 'CodigoTipoCarga        ', 01, 01, 1, CodigoTipoCarga);
-            Gerador.wCampoNFSe(tcBoolStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, False)));
-            Gerador.wCampoNFSe(tcBoolStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, False)));
-            Gerador.wCampoNFSe(tcBoolStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, False)));
+            Gerador.wCampoNFSe(tcStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, False)));
+            Gerador.wCampoNFSe(tcStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, False)));
+            Gerador.wCampoNFSe(tcStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, False)));
 
             if FreteRetorno then
             begin
@@ -1917,7 +1917,7 @@ begin
           GerarViagemAdicViagem;
           GerarPagamentosAdicViagem;
 
-          Gerador.wCampoNFSe(tcBoolStr, 'AP259', 'NaoAdicionarParcialmente', 01, 01, 1, LowerCase(BoolToStr(NaoAdicionarParcialmente, True)));
+          Gerador.wCampoNFSe(tcStr, 'AP259', 'NaoAdicionarParcialmente', 01, 01, 1, LowerCase(BoolToStr(NaoAdicionarParcialmente, True)));
         end;
 
         Gerador.wGrupoNFSe('/AdicionarViagemRequest');

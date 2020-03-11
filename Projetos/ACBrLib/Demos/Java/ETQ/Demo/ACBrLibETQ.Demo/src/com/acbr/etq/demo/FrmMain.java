@@ -6,13 +6,7 @@
 package com.acbr.etq.demo;
 
 import com.acbr.ACBrSessao;
-import com.acbr.etq.ACBrETQ;
-import com.acbr.etq.ETQBackFeed;
-import com.acbr.etq.ETQBarraExibeCodigo;
-import com.acbr.etq.ETQDPI;
-import com.acbr.etq.ETQModelo;
-import com.acbr.etq.ETQOrientacao;
-import com.acbr.etq.TipoCodBarra;
+import com.acbr.etq.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
@@ -54,6 +48,8 @@ public class FrmMain extends javax.swing.JFrame {
         cmbBackFeed.setSelectedItem(ETQBackFeed.valueOf(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "BackFeed"))));
         nudAvancoEtq.setValue(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "Avanco")));
         chkLimparMemoria.setSelected("1".equals(acbrETQ.configLerValor(ACBrSessao.ETQ, "LimparMemoria")));
+        cmbUnidadeMedida.setSelectedItem(ETQUnidade.valueOf(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "Unidade"))));
+
     }
 
     private void saveConfig() throws Exception {
@@ -65,6 +61,7 @@ public class FrmMain extends javax.swing.JFrame {
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "BackFeed", ((ETQBackFeed) cmbBackFeed.getSelectedItem()).asInt());
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "Avanco", (Integer) nudAvancoEtq.getValue());
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "LimparMemoria", chkLimparMemoria.isSelected() ? "1" : "0");
+        acbrETQ.configGravarValor(ACBrSessao.ETQ, "Unidade", ((ETQUnidade)cmbUnidadeMedida.getSelectedItem()).asInt());
 
         acbrETQ.configGravar();
     }
@@ -94,6 +91,8 @@ public class FrmMain extends javax.swing.JFrame {
         nudAvancoEtq = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
         chkLimparMemoria = new javax.swing.JCheckBox();
+        jLabel10 = new javax.swing.JLabel();
+        cmbUnidadeMedida = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         pnlImagem = new javax.swing.JPanel();
         txtImagem = new javax.swing.JTextField();
@@ -153,6 +152,11 @@ public class FrmMain extends javax.swing.JFrame {
 
         chkLimparMemoria.setText("Limpar Memoria");
 
+        jLabel10.setText("Unidade de medida");
+
+        cmbUnidadeMedida.setModel(new DefaultComboBoxModel<>(ETQUnidade.values()));
+        cmbUnidadeMedida.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,14 +174,18 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nudAvancoEtq)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbModelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbDPi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbBackFeed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(cmbUnidadeMedida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(chkLimparMemoria)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -213,9 +221,14 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbBackFeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nudAvancoEtq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nudAvancoEtq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chkLimparMemoria))
         );
@@ -348,7 +361,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,7 +424,7 @@ public class FrmMain extends javax.swing.JFrame {
             saveConfig();
             acbrETQ.ativar();
 
-            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo)cmbModelo.getSelectedItem()))) {
+            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo) cmbModelo.getSelectedItem()))) {
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 2, 2, 3, 3, "BISCOITO MARILAN RECH 335G", 0, true);
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 2, 1, 8, 3, "CHOC BRANCO");
                 acbrETQ.imprimirBarras(ETQOrientacao.orNormal, TipoCodBarra.barEAN13, 2, 2, 13, 5, "7896003701685", 10, ETQBarraExibeCodigo.becSIM);
@@ -428,7 +441,7 @@ public class FrmMain extends javax.swing.JFrame {
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, "G", 55, 100, 15, 50, "20,59");
             }
 
-            acbrETQ.imprimir((int)nudCopias.getValue(), (int)nudAvancoEtq.getValue());
+            acbrETQ.imprimir((int) nudCopias.getValue(), (int) nudAvancoEtq.getValue());
             acbrETQ.desativar();
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -441,7 +454,7 @@ public class FrmMain extends javax.swing.JFrame {
             saveConfig();
 
             acbrETQ.ativar();
-            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo)cmbModelo.getSelectedItem()))) {
+            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo) cmbModelo.getSelectedItem()))) {
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 1, 2, 2, 3, "BISCOITO REC 33G");
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 1, 1, 6, 3, "CHOC BRANCO");
                 acbrETQ.imprimirBarras(ETQOrientacao.orNormal, TipoCodBarra.barEAN13, 2, 2, 8, 3, "7896003701685", 10, ETQBarraExibeCodigo.becPadrao);
@@ -475,8 +488,8 @@ public class FrmMain extends javax.swing.JFrame {
         try {
             saveConfig();
             acbrETQ.ativar();
-            
-            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo)cmbModelo.getSelectedItem()))) {
+
+            if (Arrays.asList(ETQModelo.etqPpla, ETQModelo.etqPplb).contains(((ETQModelo) cmbModelo.getSelectedItem()))) {
                 acbrETQ.iniciarEtiqueta();
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 2, 2, 3, 3, "BISCOITO MARILAN RECH 335G", 0, true);
                 acbrETQ.imprimirTexto(ETQOrientacao.orNormal, 2, 2, 1, 8, 3, "CHOC BRANCO");
@@ -562,7 +575,9 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JComboBox<ETQDPI> cmbDPi;
     private javax.swing.JComboBox<ETQModelo> cmbModelo;
     private javax.swing.JComboBox<String> cmbPorta;
+    private javax.swing.JComboBox<ETQUnidade> cmbUnidadeMedida;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

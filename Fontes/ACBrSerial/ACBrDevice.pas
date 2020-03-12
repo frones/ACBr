@@ -998,7 +998,7 @@ begin
   if not (DeviceType in [dtSerial, dtUSB]) then
     Exit;
 
-  fsDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(TipoHardware, ProtocoloACBr);
+  fsDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(fsPorta, TipoHardware, ProtocoloACBr);
 end;
 {$EndIf}
 

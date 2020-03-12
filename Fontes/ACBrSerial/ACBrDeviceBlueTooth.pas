@@ -147,12 +147,12 @@ procedure TACBrDeviceBlueTooth.AcharPortasBlueTooth(const AStringList: TStrings;
 var
   DevBT: TBluetoothDevice;
 begin
-
   GravaLog('AcharPortasBlueTooth');
   AtivarBlueTooth;
-  for DevBT in fsBluetooth.PairedDevices do
-    if TodasPortas or IsPrinterDevice(DevBT) then
-      AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});
+  if (fsBluetooth.PairedDevices <> nil) then
+    for DevBT in fsBluetooth.PairedDevices do
+      if TodasPortas or IsPrinterDevice(DevBT) then
+        AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});
 end;
 
 function TACBrDeviceBlueTooth.IsPrinterDevice(

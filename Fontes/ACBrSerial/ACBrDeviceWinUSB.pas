@@ -63,7 +63,8 @@ type
     function LeString(ATimeOutMilissegundos: Integer = 0; NumBytes: Integer = 0;
       const Terminador: AnsiString = ''): AnsiString; override;
 
-    procedure DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
+    procedure DetectarTipoEProtocoloDispositivoUSB(const APorta: String;
+      var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
 
     property WinUSB: TACBrUSBWinDeviceAPI read fsWinUSB;
   end;
@@ -163,7 +164,8 @@ begin
     Result := fsWinUSB.ReceivePacket( ATimeOutMilissegundos );
 end;
 
-procedure TACBrDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
+procedure TACBrDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(const APorta: String;
+  var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
 var
   i, f: Integer;
   uPorta, TipoPorta, DescPorta: String;
@@ -177,7 +179,7 @@ begin
     Exit;
 
   DispositivoUSB := nil;
-  uPorta := UpperCase(fpPorta);
+  uPorta := UpperCase(APorta);
   TipoPorta := copy(uPorta, 1, 3);
   DescPorta := copy(uPorta, 5, Length(uPorta));
 

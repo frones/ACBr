@@ -38,6 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/03/2020
+-- ACBrUSBID.ini --
+[*] Ajuste para não forçar o protocolo em Impressora Etiquetas Elgin L42 PRO
+
+-- ACBrDeviceWinUSB, ACBrDevice --
+[*] Ajuste no método "DetectarTipoEProtocoloDispositivoUSB", para considerar
+    porta correta, durante a Primeira ativação.
+
+-- ACBrDeviceBlueTooth --
+[*] Ajuste para evitar A.V., caso não exista nenhum dispositivo pareado
+    (por: DSA)
+
 Data: 03/03/2020
 -- ACBrRFD --
 [+] Inclido as diretivas de compilação para funcionar corretamente com NEXTGEN.

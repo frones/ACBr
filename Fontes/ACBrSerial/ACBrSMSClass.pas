@@ -37,7 +37,7 @@ unit ACBrSMSClass;
 interface
 
 uses
-  Classes, SysUtils, strUtils,
+  Classes, SysUtils,
   {$IF DEFINED(NEXTGEN)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -159,7 +159,8 @@ type
 implementation
 
 uses
-  ACBrSMS, ACBrUtil;
+  strutils, dateutils,
+  ACBrSMS, ACBrUtil, ACBrConsts;
 
 { TACBrSMSMensagens }
 
@@ -175,14 +176,51 @@ begin
 end;
 
 procedure TACBrSMSMensagens.CarregaSMS(const APath: string);
-function FormaDataHora(ADataHora : String) : TDateTime;
-begin
-  Result := StrToDateTimeDef(Copy(ADataHora, 9, 2) + '/' +
-                             Copy(ADataHora, 6, 2) + '/' +
-                             Copy(ADataHora, 1, 4) +
-                             Copy(ADataHora, 11, Length(ADataHora) -6),
-                             StrToDate('01/01/1990'));
-end;
+
+  function FormataDataHora(ADataHora : String) : TDateTime;
+  begin
+    try
+      Result := EncodeDateTime(
+                      StrToInt(Copy(ADataHora, 1, 4)),
+                      StrToInt(Copy(ADataHora, 6, 2)),
+                      StrToInt(Copy(ADataHora, 9, 2)),
+                      StrToIntDef(Copy(ADataHora,11, 2), 0),
+                      StrToIntDef(Copy(ADataHora,14, 2), 0),
+                      StrToIntDef(Copy(ADataHora,17, 2), 0),
+                      0 );
+    except
+      Result := StrToDateTimeDef( Copy(ADataHora, 7, 2) + DateSeparator +
+                                  Copy(ADataHora, 4, 2) + DateSeparator +
+                                  Copy(ADataHora, 1, 2)+' '+
+                                  Copy(ADataHora,10, 8), 0);
+    end;
+  end;
+
+  function ConvertMsg(AData: String): String;
+  var
+    BinaryStr: AnsiString;
+    WideStr: WideString;
+    LenData, i: Integer;
+    B1, B2: Byte;
+  begin
+    BinaryStr := '';
+    LenData := Length(AData);
+
+    i := 1;
+    while i < LenData do
+    begin
+       B2 := StrToInt('$' + copy(AData, i  , 2));
+       B1 := StrToInt('$' + copy(AData, i+2, 2));
+       BinaryStr := BinaryStr + AnsiChr(B1)+AnsiChr(B2) ;
+       Inc(i, 4) ;
+    end ;
+
+    LenData := Trunc(Length(BinaryStr)/2);
+    SetLength(WideStr, LenData);
+    System.Move(BinaryStr[1], WideStr[1], LenData*2);
+    Result := String(WideStr);
+  end;
+
 const
   DelimitadorSMS = 'READ","';
   DelimitadorID = '+CMGL:';  
@@ -224,7 +262,7 @@ begin
           Conteudo := StringReplace(Conteudo, Telefone, '', [rfReplaceAll]);
           Conteudo := StringReplace(Conteudo, '"', '', [rfReplaceAll]);
           Conteudo := StringReplace(Conteudo, ',', ' ', [rfReplaceAll]);
-          DataHora := FormaDataHora(Trim(Copy(Conteudo, 1, 21)));
+          DataHora := FormataDataHora(Trim(Copy(Conteudo, 1, 21)));
           Mensagem := '';
           J := I + 1;
           FimSMS := (J > ListaSMS.Count -1);
@@ -240,6 +278,9 @@ begin
             if not FimSMS then
               FimSMS := Pos(DelimitadorSMS, ListaSMS[J]) > 0;
           end;
+
+          if (copy(Mensagem,1,2) = '00') and StrIsNumber(Mensagem) then
+            Mensagem := ConvertMsg(Mensagem);
         end;
       end
     end;

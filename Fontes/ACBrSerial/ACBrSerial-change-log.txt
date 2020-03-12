@@ -39,6 +39,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 12/03/2020
+-- ACBrSMSClass --
+[-] Ajuste para leitura de Data/Hora com retorno de apenas 2 dígitos no ano
+[-] Ajuste para leitura de mensagens codificadas, por motívos de acentuação
+    https://www.projetoacbr.com.br/forum/topic/56691-decodificar-sms-com-ascii/
+    (por: DSA)
+
 -- ACBrUSBID.ini --
 [*] Ajuste para não forçar o protocolo em Impressora Etiquetas Elgin L42 PRO
 

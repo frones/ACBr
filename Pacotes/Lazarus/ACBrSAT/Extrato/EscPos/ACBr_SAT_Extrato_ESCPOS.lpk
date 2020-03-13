@@ -21,12 +21,16 @@
     <Description Value="ACBr - Extrato Cupom Fiscal Eletrônico SAT para Serial - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="2">
+    <Files Count="3">
       <Item2>
         <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\EscPos\ACBrSATExtratoESCPOS.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSATExtratoESCPOS"/>
       </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\EscPos\ACBrSATExtratoESCPOSReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSATExtratoESCPOSReg"/>
+      </Item3>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

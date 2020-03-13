@@ -29,68 +29,26 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{$I ACBr.inc}
 
 unit ACBrSATExtratoFRReg;
 
+{$I ACBr.inc}
+
 interface
 
-uses
-  Classes, SysUtils,
-  ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
-  pcnCFe, pcnCFeCanc, pcnConversao;
-
-type
-
-  { TACBrSATExtratoFast }
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
-  {$ENDIF RTL230_UP}
-  TACBrSATExtratoFast = class( TACBrSATExtratoReportClass )
-  private
-  protected
-    procedure Imprimir;
-  public
-    procedure ImprimirExtrato(ACFe: TCFe = nil); override;
-    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
-    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
-  end ;
-
 implementation
+
+uses
+  Classes, ACBr_SATExtratoFR;
 
 {$IFNDEF FPC}
 //  {$R ACBrSATExtratoFast.dcr}
 {$ENDIF}
-
-{ TACBrSATExtratoFast }
 
 procedure Register;
 begin
   RegisterComponents('ACBrSAT',[TACBrSATExtratoFast]);
 end;
 
-procedure TACBrSATExtratoFast.Imprimir;
-begin
-
-end;
-
-procedure TACBrSATExtratoFast.ImprimirExtrato(ACFe: TCFe);
-begin
-  inherited;
-  Imprimir;
-end;
-
-procedure TACBrSATExtratoFast.ImprimirExtratoCancelamento(ACFe: TCFe;
-  ACFeCanc: TCFeCanc);
-begin
-  inherited;
-  Imprimir;
-end;
-
-procedure TACBrSATExtratoFast.ImprimirExtratoResumido(ACFe: TCFe);
-begin
-  inherited;
-  Imprimir;
-end;
 
 end.

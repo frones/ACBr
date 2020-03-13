@@ -1,6 +1,7 @@
 package ACBr_SAT;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,17 +23,18 @@ package ACBr_SAT;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_DFeComum;
 
 contains
-  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',
   ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
   ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
   ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',

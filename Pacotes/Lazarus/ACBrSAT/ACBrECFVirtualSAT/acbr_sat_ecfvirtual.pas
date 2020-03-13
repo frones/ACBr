@@ -4,16 +4,17 @@
 
 unit ACBr_SAT_ECFVirtual;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrECFVirtualSAT, LazarusPackageIntf;
+  ACBrECFVirtualSAT, ACBrECFVirtualSATReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrECFVirtualSAT', @ACBrECFVirtualSAT.Register);
+  RegisterUnit('ACBrECFVirtualSATReg', @ACBrECFVirtualSATReg.Register);
 end;
 
 initialization

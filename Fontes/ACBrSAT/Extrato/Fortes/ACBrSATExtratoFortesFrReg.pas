@@ -1,11 +1,14 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrBlocoX                                               }
-{ Biblioteca multiplataforma de componentes Delphi para Geração de arquivos    }
-{ do Bloco X                                                                   }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
+{ Colaboradores nesse arquivo: André Ferreira de Moraes                        }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -23,48 +26,27 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
+unit ACBrSATExtratoFortesFrReg;
+
 {$I ACBr.inc}
-package ACBr_SATWS;
 
-{$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
-{$ALIGN 8}
-{$ASSERTIONS ON}
-{$BOOLEVAL OFF}
-{$DEBUGINFO ON}
-{$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA ON}
-{$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
-{$LONGSTRINGS ON}
-{$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
-{$OVERFLOWCHECKS OFF}
-{$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
-{$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
-{$TYPEDADDRESS OFF}
-{$VARSTRINGCHECKS ON}
-{$WRITEABLECONST OFF}
-{$MINENUMSIZE 1}
-{$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - SATWS - Consulta de lotes enviados de CF-e-SAT - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+interface
 
-requires
-  rtl,
-  vcl,
-  ACBr_DFeComum;
+  procedure Register;
 
-contains
-  ACBrSATWS in '..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS.pas',
-  ACBrSATWS_WebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS_WebServices.pas',
-  pcnSATConsulta in '..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\PCNSATWS\pcnSATConsulta.pas',
-  pcnSATConsultaRet in '..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\PCNSATWS\pcnSATConsultaRet.pas';
+implementation
+
+Uses
+  Classes, ACBrSATExtratoFortesFr;
+
+procedure Register;
+begin
+  RegisterComponents('ACBrSAT',[TACBrSATExtratoFortes]);
+end;
+
 
 end.

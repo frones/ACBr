@@ -158,8 +158,6 @@ type
   end;
 
 
-procedure Register;
-
 implementation
 
 uses ACBrECFClass, ACBrSATClass;
@@ -167,11 +165,6 @@ uses ACBrECFClass, ACBrSATClass;
 {$IFNDEF FPC}
    {$R ACBrECFVirtualSAT.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrSAT', [TACBrECFVirtualSAT]);
-end;
 
 { TACBrECFVirtualSAT }
 

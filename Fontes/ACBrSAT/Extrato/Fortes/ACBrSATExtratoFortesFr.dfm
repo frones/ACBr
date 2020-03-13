@@ -1,9 +1,9 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Left = 444
   Top = 7
-  Width = 781
-  Height = 1055
   Caption = 'ACBrSATExtratoFortes'
+  ClientHeight = 1016
+  ClientWidth = 765
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,16 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     Top = 8
     Width = 302
     Height = 1512
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
@@ -122,28 +122,28 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 44
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object bcChaveAcesso2: TRLBarcode
         Left = 0
         Top = 70
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pGap05: TRLPanel
         Left = 0
@@ -173,8 +173,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 142
           Height = 135
-          Align = faRight
           Margins.LeftMargin = 2.000000000000000000
+          Align = faRight
           object lTitLei12744Lateral: TRLMemo
             Left = 8
             Top = 121
@@ -1080,10 +1080,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 0
         Width = 286
         Height = 68
-        AutoSize = True
-        BandType = btHeader
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = True
+        BandType = btHeader
         object lEmitCNPJ_IE_IM: TRLMemo
           Left = 4
           Top = 40
@@ -1349,16 +1349,16 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     Top = 8
     Width = 302
     Height = 1134
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 300.000000000000000000
@@ -1767,28 +1767,28 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 56
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object bcChaveAcessoCan2: TRLBarcode
         Left = 0
         Top = 82
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pGap6: TRLPanel
         Left = 0
@@ -1818,8 +1818,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 142
           Height = 135
-          Align = faRight
           Margins.LeftMargin = 2.000000000000000000
+          Align = faRight
           object pConsumidorLateralCanc: TRLPanel
             Left = 8
             Top = 0
@@ -2054,28 +2054,28 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 327
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object bcChaveAcessoCanc22: TRLBarcode
         Left = 0
         Top = 353
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pGap7: TRLPanel
         Left = 0
@@ -2105,8 +2105,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 142
           Height = 135
-          Align = faRight
           Margins.LeftMargin = 2.000000000000000000
+          Align = faRight
           object pNumSATDataHoraLateralCanc2: TRLPanel
             Left = 8
             Top = 0

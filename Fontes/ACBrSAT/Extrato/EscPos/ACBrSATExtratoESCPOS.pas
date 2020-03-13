@@ -94,8 +94,6 @@ type
 
   end ;
 
-procedure Register;
-
 implementation
 
 uses
@@ -105,11 +103,6 @@ uses
 {$IFNDEF FPC}
    {$R ACBrSATExtratoESCPOS.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrSAT',[TACBrSATExtratoESCPOS]);
-end;
 
 { TACBrSATExtratoESCPOS }
 

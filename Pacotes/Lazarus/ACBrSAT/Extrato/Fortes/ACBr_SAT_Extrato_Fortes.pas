@@ -4,16 +4,19 @@
 
 unit ACBr_SAT_Extrato_Fortes;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrSATExtratoFortesFr, ACBrSATExtratoReportClass, LazarusPackageIntf;
+  ACBrSATExtratoFortesFr, ACBrSATExtratoReportClass, 
+  ACBrSATExtratoFortesFrReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrSATExtratoFortesFr', @ACBrSATExtratoFortesFr.Register);
+  RegisterUnit('ACBrSATExtratoFortesFrReg', @ACBrSATExtratoFortesFrReg.Register
+    );
 end;
 
 initialization

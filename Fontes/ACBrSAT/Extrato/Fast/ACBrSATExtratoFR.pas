@@ -29,43 +29,60 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{$I ACBr.inc}
 
 unit ACBrSATExtratoFR;
+
+{$I ACBr.inc}
 
 interface
 
 uses 
-  Classes, SysUtils, ACBrSATExtratoClass, pcnConversao;
+  Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
+  pcnCFe, pcnCFeCanc, pcnConversao;
 
 type
 
-  { TACBrSATExtratoFortesClass }
-
-  TACBrSATExtratoFortesClass = class( TACBrSATExtratoClass )
+  { TACBrSATExtratoFast }
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TACBrSATExtratoFast = class( TACBrSATExtratoReportClass )
   private
+  protected
+    procedure Imprimir;
   public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-
-  published
-
+    procedure ImprimirExtrato(ACFe: TCFe = nil); override;
+    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
+    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   end ;
 
 implementation
 
-{ TACBrSATExtratoFortes }
 
-constructor TACBrSATExtratoFortesClass.Create(AOwner: TComponent);
+{ TACBrSATExtratoFast }
+
+procedure TACBrSATExtratoFast.Imprimir;
 begin
-  inherited create( AOwner );
+
 end;
 
-destructor TACBrSATExtratoFortesClass.Destroy;
+procedure TACBrSATExtratoFast.ImprimirExtrato(ACFe: TCFe);
 begin
-//  fMargens.Free;
+  inherited;
+  Imprimir;
+end;
 
-  inherited Destroy ;
+procedure TACBrSATExtratoFast.ImprimirExtratoCancelamento(ACFe: TCFe;
+  ACFeCanc: TCFeCanc);
+begin
+  inherited;
+  Imprimir;
+end;
+
+procedure TACBrSATExtratoFast.ImprimirExtratoResumido(ACFe: TCFe);
+begin
+  inherited;
+  Imprimir;
 end;
 
 end.

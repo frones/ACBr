@@ -360,8 +360,6 @@ type
     property Resumido : Boolean read fResumido write fResumido;
   end ;
 
-procedure Register;
-
 implementation
 
 uses  math, RLTypes,
@@ -374,11 +372,6 @@ uses  math, RLTypes,
   {$R *.dfm}
   {$R ACBrSATExtratoFortesFr.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrSAT',[TACBrSATExtratoFortes]);
-end;
 
 { TACBrSATExtratoFortesFr }
 

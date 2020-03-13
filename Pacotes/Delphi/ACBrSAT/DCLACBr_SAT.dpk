@@ -1,11 +1,11 @@
-package ACBr_SATExtratoRL;
+package DCLACBr_SAT;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -15,7 +15,7 @@ package ACBr_SATExtratoRL;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$DEFINITIONINFO ON}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -25,18 +25,17 @@ package ACBr_SATExtratoRL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fortes Report - (http://www.projectoacbr.com.br/)'}
-{$RUNONLY}
+{$DESCRIPTION 'ACBr - (Designtime) Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,
-  ACBrDFeReportRL,
+  designide,
   ACBr_SAT;
 
 contains
-  ACBrSATExtratoFortesFr in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas',
-  ACBrSATExtratoReportClass in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas';
+  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas';
+
 
 end.

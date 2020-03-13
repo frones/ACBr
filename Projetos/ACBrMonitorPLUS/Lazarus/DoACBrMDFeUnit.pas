@@ -450,6 +450,7 @@ var
   AMetodoClass: TACBrMetodoClass;
   CmdNum: Integer;
   Ametodo: TACBrMetodo;
+  AACBrUnit: TACBrObjetoACBr;
 begin
   inherited Executar(ACmd);
 
@@ -497,7 +498,16 @@ begin
     37 : AMetodoClass := TMetodoGetPathEvento;
 
     else
-      DoACbr(ACmd);
+      begin
+        AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos
+        try
+          AACBrUnit.Executar(ACmd);
+        finally
+          AACBrUnit.Free;
+        end;
+
+      end;
+
   end;
 
   if Assigned(AMetodoClass) then

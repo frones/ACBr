@@ -57,7 +57,7 @@ uses
   DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit, DoNcmUnit,
   DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
-  DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta;
+  DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -69,6 +69,10 @@ const
   UTF8BOM : AnsiString = #$EF#$BB#$BF;
   HelpShortcut = 'F1';
   ClHelp = 'lhelp';
+  CMODELO_NFCE_FORTES = 0;
+  CMODELO_NFCE_ESCPOS = 1;
+  CIMPRESSAO_NFCE_A4 = 0;
+  CIMPRESSAO_NFCE_BOBINA = 1;
 
 type
   TCores = class
@@ -1601,6 +1605,7 @@ type
     FLastHandle: Integer;
 
     FMonitorConfig: TMonitorConfig;
+    FDoACBr: TACBrObjetoACBr;
     FDoNFe: TACBrObjetoNFe;
     FDoCTe: TACBrObjetoCTe;
     FDoMDFe: TACBrObjetoMDFe;
@@ -1680,7 +1685,7 @@ type
 
     procedure LerIni(AtualizaMonitoramento: Boolean = True);
     procedure SalvarIni;
-    procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);
+    procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);    //MostrarPreview está sendo Tratado como String, pois pode receber três parâmetros: True, False, Vazio ''
     procedure ConfiguraDACTe(GerarPDF: Boolean; MostrarPreview : String);
     procedure ConfiguraDABPe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
@@ -1694,9 +1699,6 @@ type
     procedure ConfiguraPosPrinter(SerialParams : String = '');
     procedure SetComumConfig(Configuracoes : TConfiguracoes) ;
     procedure AtualizaSSLLibsCombo ;
-
-    procedure CarregarDFe( XMLorFile : String; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
-    procedure CarregarDFe( XMLsorFiles : TStrings; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
 
     procedure AntesDeImprimir(ShowPreview: Boolean = true);
     procedure DepoisDeImprimir;
@@ -1718,7 +1720,7 @@ implementation
 
 uses
   IniFiles, TypInfo, LCLType, strutils,
-  UtilUnit, pcnAuxiliar, DoACBrUnit,
+  UtilUnit, pcnAuxiliar,
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
@@ -1804,6 +1806,8 @@ begin
   FMonitorConfig := TMonitorConfig.Create(
                  PathWithDelim(ExtractFilePath(Application.ExeName)) + CMonitorIni );
   FMonitorConfig.OnGravarConfig := @AtualizarTela;
+
+  FDoACBr := TACBrObjetoACBr.Create(MonitorConfig);
 
   FDoNFe := TACBrObjetoNFe.Create(MonitorConfig, ACBrNFe1);
   FDoNFe.OnAntesDeImprimir  := @AntesDeImprimir;
@@ -4119,6 +4123,7 @@ begin
 
   fsSLPrecos.Free;
 
+  FDoACBr.Free;
   FDoSAT.Free;
   FDoECF.Free;
   FDoMDFe.Free;
@@ -6656,51 +6661,37 @@ begin
         AddLinesLog(Linha);
 
         if fsCmd.Objeto = 'ACBR' then
-          DoACBr(fsCmd)
+          FDoACBr.Executar(fsCmd)
         else if fsCmd.Objeto = 'ECF' then
           FDoECF.Executar(fsCmd)
         else if fsCmd.Objeto = 'GAV' then
-        FDoGAV.Executar(fsCmd)
-//          DoGAV(fsCmd)
+          FDoGAV.Executar(fsCmd)
         else if fsCmd.Objeto = 'CHQ' then
-        FDoCHQ.Executar(fsCmd)
-//          DoCHQ(fsCmd)
+          FDoCHQ.Executar(fsCmd)
         else if fsCmd.Objeto = 'DIS' then
-        FDoDIS.Executar(fsCmd)
-//          DoDIS(fsCmd)
+          FDoDIS.Executar(fsCmd)
         else if fsCmd.Objeto = 'LCB' then
-        FDoLCB.Executar(fsCmd)
-//          DoLCB(fsCmd)
+          FDoLCB.Executar(fsCmd)
         else if fsCmd.Objeto = 'BAL' then
-        FDoBAL.Executar(fsCmd)
-//          DoBAL(fsCmd)
+          FDoBAL.Executar(fsCmd)
         else if fsCmd.Objeto = 'ETQ' then
-        FDoETQ.Executar(fsCmd)
-//          DoETQ(fsCmd)
+          FDoETQ.Executar(fsCmd)
         else if fsCmd.Objeto = 'BOLETO' then
           FDoBoleto.Executar(fsCmd)
-//          DoBoleto(fsCmd)
         else if fsCmd.Objeto = 'CEP' then
-        FDoCEP.Executar(fsCmd)
-//          DoCEP(fsCmd)
+          FDoCEP.Executar(fsCmd)
         else if fsCmd.Objeto = 'IBGE' then
-        FDoIBGE.Executar(fsCmd)
-//          DoIBGE(fsCmd)
+          FDoIBGE.Executar(fsCmd)
         else if fsCmd.Objeto = 'EMAIL' then
-        FDoEmail.Executar(fsCmd)
-//          DoEmail(fsCmd)
+          FDoEmail.Executar(fsCmd)
         else if fsCmd.Objeto = 'SEDEX' then
-        FDoSedex.Executar(fsCmd)
-//          DoSedex(fsCmd)
+          FDoSedex.Executar(fsCmd)
         else if fsCmd.Objeto = 'NCM' then
-        FDoNcm.Executar(fsCmd)
-//          DoNcm(fsCmd)
+          FDoNcm.Executar(fsCmd)
         else if fsCmd.Objeto = 'NFE' then
           FDoNFe.Executar(fsCmd)
-//          DoACBrNFe(fsCmd)
         else if fsCmd.Objeto = 'CTE' then
           FDoCTe.Executar(fsCmd)
-//          DoACBrCTe(fsCmd)
         else if fsCmd.Objeto = 'MDFE' then
           FDoMDFe.Executar(fsCmd)
         else if fsCmd.Objeto = 'ESOCIAL' then
@@ -6708,15 +6699,13 @@ begin
         else if fsCmd.Objeto = 'REINF' then
           FDoReinf.Executar(fsCmd)
         else if fsCmd.Objeto = 'GNRE' then
-        FDoGNRe.Executar(fsCmd)
-//          DoACBrGNRe(fsCmd)
+          FDoGNRe.Executar(fsCmd)
         else if fsCmd.Objeto = 'SAT' then
           FDoSAT.Executar(fsCmd)
         else if fsCmd.Objeto = 'BPE' then
           FDoBPe.Executar(fsCmd)
         else if fsCmd.Objeto = 'ESCPOS' then
           FDoPosPrinter.Executar(fsCmd);
-//          DoPosPrinter(fsCmd);
 
         // Atualiza Memo de Entrada //
         mCmd.Lines.Assign(fsProcessar);
@@ -8922,6 +8911,8 @@ begin
 end;
 
 procedure TFrmACBrMonitor.ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview: String);
+//MostrarPreview está sendo Tratado como String, pois pode receber três parâmetros: True, False, Vazio
+//(a definição vazio '' permite utilizar a configuração preview definida em tela)
 var
   OK: boolean;
   tDescPagto: TDescricaoPagamento;
@@ -8930,9 +8921,9 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if (rgModeloDANFeNFCE.ItemIndex = 0) or GerarPDF then
+      if (rgModeloDANFeNFCE.ItemIndex = CMODELO_NFCE_FORTES) or GerarPDF then
       begin
-        if (rgModoImpressaoEvento.ItemIndex = 0) then
+        if (rgModoImpressaoEvento.ItemIndex = CIMPRESSAO_NFCE_A4) then
           ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA4_1
         else
           ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
@@ -8976,7 +8967,6 @@ begin
     ACBrNFe1.DANFE.PathPDF              := PathWithDelim(edtPathPDF.Text);
     ACBrNFe1.DANFE.CasasDecimais.qCom   := spedtCasasDecimaisQtd.Value;
     ACBrNFe1.DANFE.CasasDecimais.vUnCom := spedtDecimaisVUnit.Value;
-    //
     ACBrNFe1.DANFE.ImprimeTotalLiquido := cbxImpValLiq.Checked;
     ACBrNFe1.DANFE.MostraStatus := cbxMostraStatus.Checked;
     ACBrNFe1.DANFE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
@@ -9111,8 +9101,9 @@ begin
   //  ForceForeground(Self.Handle);
 end;
 
-procedure TFrmACBrMonitor.ConfiguraDACTe(GerarPDF: Boolean;
-  MostrarPreview: String);
+procedure TFrmACBrMonitor.ConfiguraDACTe(GerarPDF: Boolean; MostrarPreview: String);
+//MostrarPreview está sendo Tratado como String, pois pode receber três parâmetros: True, False, Vazio
+//(a definição vazio '' permite utilizar a configuração preview definida em tela)
 var
   OK: boolean;
 begin
@@ -9821,305 +9812,6 @@ begin
   cbXmlSignLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib );
 
   cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
-end;
-
-procedure TFrmACBrMonitor.CarregarDFe( XMLorFile : String; var PathDfe: String;
-  tipoDFe : TDFeCarregar = tDFeNFe);
-var
-  IsXML : Boolean;
-begin
-  IsXML := StringIsXML(XMLorFile);
-  if IsXML then
-  begin
-    case tipoDFe of
-      tDFeNFe :
-      begin
-        if not ACBrNFe1.NotasFiscais.LoadFromString(XMLorFile) then
-           raise Exception.Create('Erro ao carregar a nfe.');
-      end;
-
-      tDFeEventoNFe :
-      begin
-        if not ACBrNFe1.EventoNFe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar o evento da nota.');
-      end;
-
-      tDFeInutNFe :
-      begin
-        if not ACBrNFe1.InutNFe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar a inutilização da nota.');
-      end;
-
-      tDFeCTe :
-      begin
-        if not ACBrCTe1.Conhecimentos.LoadFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar CTe');
-      end;
-
-      tDFeEventoCTe:
-      begin
-        if not ACBrCTe1.EventoCTe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar o evento do CTe');
-      end;
-
-      tDFeInutCTe:
-      begin
-        if not ACBrCTe1.InutCTe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar inutilização do CTe');
-      end;
-
-      tDFeMDFe:
-      begin
-        if not ACBrMDFe1.Manifestos.LoadFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar MDFe');
-      end;
-
-      tDFeEventoMDFe:
-      begin
-        if not ACBrMDFe1.EventoMDFe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar o evento do MDFe');
-      end;
-
-      tDFeBPe:
-      begin
-        if not ACBrBPe1.Bilhetes.LoadFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar BPe');
-      end;
-
-      tDFeEventoBPe:
-      begin
-        if not ACBrBPe1.EventoBPe.LerXMLFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar o evento do BPe');
-      end;
-
-      tDFeGNRe:
-      begin
-        if not ACBrGNRE1.GuiasRetorno.LoadFromString(XMLorFile) then
-          raise Exception.Create('Erro ao carregar a GNRe');
-      end;
-    end;
-  end
-  else
-  begin
-    case tipoDFe of
-      tDFeNFe :
-      begin
-        if FilesExists(XMLorFile) then
-        begin
-           if not ACBrNFe1.NotasFiscais.LoadFromFile(XMLorFile) then
-             raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-           else
-             PathDfe := XMLorFile;
-        end
-        else
-          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-      end;
-
-      tDFeEventoNFe :
-      begin
-        if FilesExists(XMLorFile) then
-        begin
-          if not ACBrNFe1.EventoNFe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end
-        else
-          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-      end;
-
-      tDFeInutNFe :
-      begin
-        if FilesExists(XMLorFile) then
-        begin
-          if not ACBrNFe1.InutNFe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end
-        else
-          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-      end;
-
-      tDFeCTe:
-      begin
-        if FilesExists(XMLorFile) then
-        begin
-          if not ACBrCTe1.Conhecimentos.LoadFromFile(XMLorFile) then
-            raise Exception.Create('Erro ao abrir do arquivo do CTe '+ XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end
-        else
-          raise Exception.Create('Arquivo do CTe '+ XMLorFile +' não encontrado.');
-      end;
-
-      tDFeEventoCTe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrCTe1.EventoCTe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo de Evento do CTe '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end
-        else
-          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-      end;
-
-      tDFeInutCTe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrCTe1.InutCTe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo de Inutilização do CTe '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-
-      tDFeMDFe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrMDFe1.Manifestos.LoadFromFile(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo do Manifesto: '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-
-      tDFeEventoMDFe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrMDFe1.EventoMDFe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o evento do MDFe '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-
-      tDFeBPe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrBPe1.Bilhetes.LoadFromFile(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo do Bilhete: '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-
-      tDFeEventoBPe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrBPe1.EventoBPe.LerXML(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o evento do BPe '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-
-      tDFeGNRe:
-      begin
-        if FileExists(XMLorFile) then
-        begin
-          if not ACBrGNRE1.GuiasRetorno.LoadFromFile(XMLorFile) then
-            raise Exception.Create('Erro ao abrir o arquivo da Guia: '+XMLorFile)
-          else
-            PathDfe := XMLorFile;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TFrmACBrMonitor.CarregarDFe(XMLsorFiles : TStrings;
-  var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe);
-var
-  i : Integer;
-begin
-  for i := 0 to XMLsorFiles.Count -1 do
-  begin
-    try
-      CarregarDFe(XMLsorFiles[i], PathDfe, tipoDFe);
-      case tipoDFe of
-        tDFeNFe :
-        begin
-          if ACBrNFe1.NotasFiscais.Count > 0 then
-             Exit;
-        end;
-
-        tDFeEventoNFe:
-        begin
-          if ACBrNFe1.EventoNFe.Evento.Count > 0 then
-             Exit;
-        end;
-
-        tDFeInutNFe:
-        begin
-          if Assigned(ACBrNFe1.InutNFe) then
-             Exit;
-        end;
-
-        tDFeCTe:
-        begin
-          if ACBrCTe1.Conhecimentos.Count > 0 then
-             Exit;
-        end;
-
-        tDFeEventoCTe:
-        begin
-          if ACBrCTe1.EventoCTe.Evento.Count > 0 then
-             Exit;
-        end;
-
-        tDFeInutCTe:
-        begin
-          if Assigned(ACBrCTe1.InutCTe) then
-             Exit;
-        end;
-
-        tDFeMDFe:
-        begin
-          if ACBrMDFe1.Manifestos.Count > 0 then
-             Exit;
-        end;
-
-        tDFeEventoMDFe:
-        begin
-          if ACBrMDFe1.EventoMDFe.Evento.Count > 0 then
-             Exit;
-        end;
-
-        tDFeBPe:
-        begin
-          if ACBrBPe1.Bilhetes.Count > 0 then
-             Exit;
-        end;
-
-        tDFeEventoBPe:
-        begin
-          if ACBrBPe1.EventoBPe.Evento.Count > 0 then
-             Exit;
-        end;
-
-        tDFeGNRe:
-        begin
-          if ACBrGNRE1.GuiasRetorno.Count > 0 then
-             Exit;
-        end;
-      end;
-    except
-      on E: Exception do
-      begin
-        if i = XMLsorFiles.Count -1 then
-          raise Exception.Create(E.Message);
-      end;
-    end;
-  end;
 end;
 
 procedure TFrmACBrMonitor.AntesDeImprimir(ShowPreview: Boolean);

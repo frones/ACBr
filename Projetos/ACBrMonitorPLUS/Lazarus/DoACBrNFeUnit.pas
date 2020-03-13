@@ -441,11 +441,10 @@ implementation
 
 uses
   IniFiles, DateUtils, Forms, strutils,
-  DoACBrUnit,
   ACBrDFeConfiguracoes, ACBrNFeDANFEClass,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   pcnConversao, pcnConversaoNFe,
-  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, pcnNFe;
+  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, pcnNFe, DoACBrUnit;
 
 { TACBrObjetoNFe }
 
@@ -514,7 +513,7 @@ begin
   ListaDeMetodos.Add(CMetodoDataVencimentoCertificado);
   ListaDeMetodos.Add(CMetodoSetTipoImpressao);
 
-  // DoACBr
+  // DoACBrUnit
   ListaDeMetodos.Add(CMetodoSavetofile);
   ListaDeMetodos.Add(CMetodoLoadfromfile);
   ListaDeMetodos.Add(CMetodoLerini);
@@ -538,6 +537,7 @@ var
   AMetodoClass: TACBrMetodoClass;
   CmdNum: Integer;
   Ametodo: TACBrMetodo;
+  AACBrUnit: TACBrObjetoACBr;
 begin
   inherited Executar(ACmd);
 
@@ -603,7 +603,16 @@ begin
     57 : AMetodoClass := TMetodoSetTipoImpressao;
 
     else
-      DoACbr(ACmd);
+      begin
+        AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos
+        try
+          AACBrUnit.Executar(ACmd);
+        finally
+          AACBrUnit.Free;
+        end;
+
+      end;
+
   end;
 
   if Assigned(AMetodoClass) then

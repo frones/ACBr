@@ -397,6 +397,16 @@ const
   CMetodoFim  =                        'fim';
   CMetodoSair =                        'sair';
   CMetodoObterCertificados =           'obtercertificados';
+  CMetodoRun =                         'run';
+  CMetodoSendKeys =                    'sendkeys';
+  CMetodoAppActivate =                 'appactivate';
+  CMetodoAppExists =                   'appexists';
+  CMetodoBlockInput =                  'blockinput';
+  CMetodoFileExists =                  'filesexists';
+  CMetodoCopyFile =                    'copyfile';
+  CMetodoDeleteFiles =                 'deletefiles';
+  CMetodoAjustaLnhasLog =              'ajustalinhaslog';
+  CMetodoSetWebservice =               'setwebservice';
 
   CMetodoValidarnfe =                  'validarnfe';
   CMetodoAssinarnfe =                  'assinarnfe';

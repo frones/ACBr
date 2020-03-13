@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2020
+[*] DoACBrUnit, DoACBrNFe, DoACBrMDFe, DoACBrCTe, DoACBrSAT, DoACBrBPe, DoACBreSocial, DoACBrReinf, DoACBrBoletoUnit, DoACBrECFUnit,
+utilUnit, cmdUnit, ACBrMonitor1
+Realizado Refatoração na classe DoACBrUnit e modificação na chamada de métódos padrão do Objeto ACBr nas demais classes.
+
 06/03/2020
 [*] DoACBrNFe, DoACBrMDFe, DoACBrCTe
 Adicionado validação de numero do protocolo nos métodos de Cancelamento

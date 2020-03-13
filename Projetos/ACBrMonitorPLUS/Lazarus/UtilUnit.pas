@@ -45,6 +45,8 @@ Procedure GravaINICrypt(INI : TIniFile; Section, Ident, AString, Pass : String )
 Function LeINICrypt(INI : TIniFile; Section, Ident, Pass : String) : String ;
 function VersaoACBr(): String;
 Function VerificaArquivoDesatualizado(APath: String):Boolean;
+Function ConvertStrRecived( AStr: AnsiString ) : AnsiString ;
+Function LerConverterIni( AStr: AnsiString ) : TMemIniFile;
 
 implementation
 
@@ -131,6 +133,58 @@ begin
     PathLocal:= PathWithDelim( ExtractFilePath( ParamStr(0) ) ) + NomeArquivo;
     if FileExists(PathLocal) and ( APath <> PathLocal ) then
       result:= (FileDateToDateTime( FileAge( APath ) )) < (FileDateToDateTime( FileAge( PathLocal ) ));
+  end;
+
+end;
+
+function ConvertStrRecived(AStr: AnsiString): AnsiString;
+Var
+    P   : Integer ;
+    Hex : String ;
+    CharHex : Char ;
+begin
+  { Verificando por codigos em Hexa }
+  Result := AStr ;
+
+  P := pos('\x',Result) ;
+  while P > 0 do
+  begin
+     Hex := copy(Result,P+2,2) ;
+
+     try
+        CharHex := Chr(StrToInt('$'+Hex)) ;
+     except
+        CharHex := ' ' ;
+     end ;
+
+     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]) ;
+     P      := pos('\x',Result) ;
+  end ;
+
+end;
+
+function LerConverterIni(AStr: AnsiString): TMemIniFile;
+var
+  SL: TStringList;
+begin
+  Result := TMemIniFile.Create(' ');
+  SL     := TStringList.Create;
+  try
+    try
+      if (pos(#10,aStr) = 0) and FilesExists(Astr) then
+        SL.LoadFromFile(AStr)
+      else
+        SL.Text := ConvertStrRecived( Astr );
+
+      Result.SetStrings(SL);
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create('Erro ao carregar arquivo'+sLineBreak+E.Message);
+      end;
+    end;
+  finally
+    SL.Free;
   end;
 
 end;

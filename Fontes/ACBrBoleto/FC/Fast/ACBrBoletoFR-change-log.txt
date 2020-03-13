@@ -1,9 +1,9 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,9 +22,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 Agradecimentos:
 
@@ -94,11 +93,20 @@ ACBrBoletoFCFR
 		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/
 		por Juliomar Marchetti
 
+16/06/2016
+-- ACBrBoletoFCFR --
+[*] Adicionado a propriedade IncorporarBackgroundPdf e IncorporarFontesPdf (Paulo Monteiro)
+
 13/06/2016
 -- ACBrBoletoFCFR
 [*] Melhoria para funcionamento em threads
 		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/#comment-201083
 		(Juliomar Marchetti)
+
+19/04/2016
+-- ACBrBoletoFCFR --
+[*] Adicionado a propriedade modo thread para quem utiliza o recurso de geração de boleto em aplicações multi thread datasnap, 
+    isapi, etc. (Paulo Monteiro)
 
 12/03/2016
 [*] Modificado para deixar alguns botões fora do preview em fast report
@@ -114,6 +122,11 @@ ACBrBoletoFCFR
 [+] Adicionadas as orientações do Banco.
 [*] Acerto na data de vencimento da remessa Caixa.
     http://www.projetoacbr.com.br/forum/topic/24039-remessa-240-cef/#comment-156598
+
+07/05/2014
+-- ACBrBoletoFCFR --
+[*] Adicionado algumas propriedades na exportação para pdf seguindo o padrão dos outros componentes 
+    e setando o frxPDFExport.Background := false; isso faz diminuir 70% do tamanho do pdf (Paulo Monteiro)
 
 Data: 27/08/2013
 --ACBrBoletoFCFR -- 

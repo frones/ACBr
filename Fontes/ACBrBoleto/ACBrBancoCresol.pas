@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:   Lucas R L Reis                                }
+{ Colaboradores nesse arquivo: Lucas R L Reis                                  }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -26,9 +26,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -109,7 +108,7 @@ begin
 
       CodigoBarras := IntToStr(Numero) + '9' + FatorVencimento +
                       IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
-                      PadLeft(OnlyNumber(Cedente.Agencia), 4, '0') +
+                      IntToStrZero(StrToIntDef(Cedente.Agencia,0),4) +
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
                       PadLeft(RightStr(Cedente.Conta, 7), 7, '0') + '0';
@@ -129,7 +128,7 @@ end;
 function TACBrBancoCresol.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia + '-' +
+   Result := IntToStrZero(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Agencia,0),4) + '-' +
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito + '/' +
              ACBrTitulo.ACBrBoleto.Cedente.Conta + '-' +
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;

@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:   Juliana Rodrigues Prado                       }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -26,36 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|
-|* 0.0.1 - 07/05/2014: Paulo Monteiro - Alterações para leitura correta do Retorno
-|*  [*] Adicionado a leitura do retorno cnab 400 para convênio de 6 posições
-|*      Layout de Arquivo Retorno para Convênios na faixa numérica entre 000.001
-|*      a 999.999 (Convênios de até 6 posições) Versão Set/09
-|*      Separando em LerRetorno400Pos6 e LerRetorno400Pos7
-|*  [-] Alterado a validação da conta do arquivo retorno cnab 400 pois como o valor
-|*      fpTamanhoConta está 12 e causava erro, pois 12 é para cnab 240 e não para o 400
-|*  [*] Limpeza dos codigos antigos documentados na funções:
-|*      CodMotivoRejeicaoToDescricao, TipoOcorrenciaToDescricao
-|*  [*] Preenchidos os campos CodigoLiquidacao e CodigoLiquidacaoDescricao na
-|*      leitura do retorno do cnab 400
-|*  [*] CodOcorrenciaToTipo adicionadas as ocorrencias conforme a contribuição
-|*      do Jacinto Junior, testada e homologada, pois faltava e algumas estavam
-|*      erradas.
-|*  [*] CodOcorrenciaToTipo conforme a contribuição do Jacinto Junior,
-|*      Ajustadas para retornar o enumerado correto.
-|*      Verificadas conforme o layout do banco e testadas através do arquivo retorno.
-|*  [*] TipoOCorrenciaToCod conforme a contribuição do Jacinto Junior,
-|*      ajustada para utilizar ocorrências corretas e acrescentado novas ocorrências
-|*      Verificadas conforme o layout do banco e testadas através do arquivo retorno.
-|*  [-] Retorno convenio 7 pos, alterado a leitura do campo Carteira  := Copy(Linha,107,2);
-|*      conforme o layout do banco, pois antes estava pegando a variacao da carteira
-******************************************************************************}
 
 {$I ACBr.inc}
 

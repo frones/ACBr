@@ -1284,7 +1284,7 @@ end;
 procedure TACBrBoletoFCFortesFr.RLBand1BeforePrint(Sender: TObject;
    var PrintIt: boolean);
 Var
-   NossoNum,CodCedente,TipoDoc, Carteira : String;
+   NossoNum,CodCedente,TipoDoc, Carteira: String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin

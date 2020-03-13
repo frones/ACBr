@@ -7095,11 +7095,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1015
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -16517,8 +16517,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Visible = True
     OnClick = TrayIcon1Click
     OnDblClick = Restaurar1Click
-    left = 204
-    top = 590
+    left = 200
+    top = 616
   end
   object ApplicationProperties1: TApplicationProperties
     HintHidePause = 5000
@@ -16541,7 +16541,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0
@@ -16715,8 +16714,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 248
-    top = 640
+    left = 232
+    top = 616
   end
   object ImageList1: TImageList
     left = 206

@@ -10260,8 +10260,23 @@ begin
 end;
 
 procedure TFrmACBrMonitor.DefineTextoTrayTitulo;
+  function LocalMonitoramento:String;
+  begin
+    if rbTCP.Checked then
+      Result := 'Monitorando Porta: ' + edPortaTCP.Text
+    else
+    begin
+      if cbMonitorarPasta.Checked then
+        Result := 'Monitorando Dir.: ' + ExtractFilePath(ArqEntTXT)
+      else
+        Result := 'Monitorando Arq.: ' + ExtractFileName(ArqEntTXT);
+    end;
+
+  end;
+
 begin
-  TrayIcon1.Hint := 'ACBrMonitor PLUS' + sVersaoACBr;
+  TrayIcon1.Hint := 'ACBrMonitorPLUS ' + sVersaoACBr +
+                    sLineBreak + LocalMonitoramento + ' ';
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 

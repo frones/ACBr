@@ -896,15 +896,6 @@ begin
       else
         AEspecieTitulo := '99';
 
-      {Mora Juros}
-      if (ValorMoraJuros > 0) then
-        begin
-          if (DataMoraJuros > 0) then
-            ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
-          else ADataMoraJuros := PadLeft('', 8, '0');
-        end
-      else ADataMoraJuros := PadLeft('', 8, '0');
-
      {Descontos}
      if (ValorDesconto > 0) then
        begin
@@ -960,6 +951,19 @@ begin
         else if  CodigoMoraJuros = cjTaxaMensal then
           CodigoMora :='2';
       end;
+     end;
+
+     {Mora Juros}
+     if (ValorMoraJuros > 0) then
+       begin
+         if (DataMoraJuros > 0) then
+           ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
+         else ADataMoraJuros := PadLeft('', 8, '0');
+       end
+     else
+     begin
+       ADataMoraJuros := PadLeft('', 8, '0');
+       CodigoMora := '0'; // Se não tem juro atribuido, não informar o código mora
      end;
 
      if CodigoMora = '0' then
@@ -1113,7 +1117,7 @@ begin
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
                IfThen((PercentualMulta > 0),
                        IfThen(MultaValorFixo,'1','2'), '0')               + // 66 Código da multa - 1 valor fixo / 2 valor percentual / 0 Sem Multa
-               IfThen((DataMulta > 0),
+               IfThen((DataMulta > 0) and (PercentualMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMulta),
                                       '00000000')                         + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
                IfThen((PercentualMulta > 0),

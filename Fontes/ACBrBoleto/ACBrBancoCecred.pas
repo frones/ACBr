@@ -385,13 +385,13 @@ begin
     end;
 
     if CodigoMulta = cmValorFixo then
-    Begin
+    begin
       aCodMulta := '1';
       if PercentualMulta > 0 then
         aValorMulta := IntToStrZero(Round(ValorDocumento*(PercentualMulta/100)*100), 15);
-    End
-     else
-    Begin
+    end
+    else
+    begin
       aCodMulta := '2'; //Percentual
       if PercentualMulta > 0 then
         aValorMulta := IntToStrZero(Round(PercentualMulta * 100), 15);
@@ -417,7 +417,10 @@ begin
     if (ValorMoraJuros > 0) and (DataMoraJuros > 0) then
       ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
     else
+    begin
+      aCodJuros := '3';// isento ;
       ADataMoraJuros := PadRight('', 8, '0');
+    end;
 
     //Descontos
     if (ValorDesconto > 0) and (DataDesconto > 0) then

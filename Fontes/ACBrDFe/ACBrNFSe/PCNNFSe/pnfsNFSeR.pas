@@ -1448,6 +1448,15 @@ begin
     end;
 
     if FProvedor = proNenhum then
+    begin
+      if (Leitor.rExtrai(1, 'emit') <> '') then
+      begin
+        CM := Leitor.rCampo(tcStr, 'cMun');
+        FProvedor := CodCidadeToProvedor(CM);
+      end;
+    end;
+
+    if FProvedor = proNenhum then
       FProvedor := FProvedorConf;
   end;
 

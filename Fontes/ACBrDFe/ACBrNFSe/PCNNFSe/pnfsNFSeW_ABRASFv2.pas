@@ -424,7 +424,7 @@ begin
     end;
   end;
 
-  if FProvedor = proSimplISSv2 then
+  if FProvedor in [proSimplISSv2, proDeISS] then
   begin
     Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 1, NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES);
     Gerador.wCampoNFSe(tcDe2, '#22', 'ValTotTributos ', 01, 15, 1, NFSe.Servico.Valores.ValorTotalTributos);
@@ -498,6 +498,7 @@ begin
   case FProvedor of
     proABase,
     proActcon,
+	proDeISS,
     proPronimv2,
     proTecnos,
     proVirtual,

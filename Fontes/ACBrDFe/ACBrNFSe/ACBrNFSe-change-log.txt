@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2020
+-- pnfsNFSeW_ABRASFv2 -- 
+[*] Ajustes para o provedor DeISS
+   Por: Carlos Junior / Italo Jurisato Junior
+
 05/03/2020
 -- ACBrNFSeNotasFiscais/ACBrNFSeWebServices -- 
 [*] https://www.projetoacbr.com.br/forum/topic/56533-quebralinha-goiania-smarapd-consultasituacaolote/

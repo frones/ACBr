@@ -513,7 +513,7 @@ begin
               sTipoDocto                                                                                   + // 060 - 060 / Tipo de documento
               IfThen( ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite ,'1','2' )                           + // 061 - 061 / Quem emite boleto 1 = Banco / 2 = Cliente
               Space(1)                                                                                     + // 062 - 062 / Reservado (uso Banco)
-              PadRight(Copy(NumeroDocumento, 1, 15), 15)                                                   + // 063 - 077 / Nº do documento
+              PadLeft(Copy(NumeroDocumento, 1, 15), 15, '0')                                               + // 063 - 077 / Nº do documento
               FormatDateTime('ddmmyyyy',Vencimento)                                                        + // 078 - 085 / Data de vencimento do título
               IntToStrZero(round(ValorDocumento * 100), 15)                                                + // 086 - 100 / Valor nominal do título
               PadLeft('0', 4, '0')                                                                         + // 101 - 104 / Agência encarregada da cobrança

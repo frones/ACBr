@@ -50,6 +50,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/03/2020
+-- ACBrBancoSantander--
+[-] Ajuste no preenchimento do campo NumeroDocumento com zeros a esquerda
+
+13/03/2020
+-- ACBrBancoCecred--
+[-] Ajuste na validação de CódigoMoraJuros e DataMoraJuros na geração da Remessa CNAB240
+
+13/03/2020
+-- ACBrBancoBancoob --
+[-] Ajuste na validação de CódigoMora e DataMoraJuros na geração da Remessa CNAB240
+
+13/03/2020
 -- ACBrBancoSafra --
 [-] Correção no tamanho da leitura do campo Agencia no CNAB400
 

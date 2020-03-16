@@ -978,6 +978,7 @@ begin
 
     with TACBrLibNFe(pLib) do
     begin
+      NFeDM.ValidarIntegradorNFCe;
       NFeDM.Travar;
       Resp := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try

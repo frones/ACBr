@@ -357,12 +357,43 @@ begin
     Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.c06_valorPrincipal, '',
                          True, 'tipo="11"');
 
+  if GNRE.ValorFECP > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.ValorFECP, '',
+                         True, 'tipo="12"');
+
   if GNRE.c10_valorTotal > 0 then
     Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.c10_valorTotal, '',
                          True, 'tipo="21"');
 
-  //    <valor tipo="..." >...</valor>
-  Gerador.wCampo(tcStr, '', 'convenio      ', 01, 30, 0, GNRE.c15_convenio, '');
+  if GNRE.TotalFECP > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.TotalFECP, '',
+                         True, 'tipo="22"');
+
+  if GNRE.MultaICMS > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.MultaICMS, '',
+                         True, 'tipo="31"');
+
+  if GNRE.MultaFECP > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.MultaFECP, '',
+                         True, 'tipo="32"');
+
+  if GNRE.JurosICMS > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.JurosICMS, '',
+                         True, 'tipo="41"');
+
+  if GNRE.JurosFECP > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.JurosFECP, '',
+                         True, 'tipo="42"');
+
+  if GNRE.AtualMonetICMS > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.AtualMonetICMS, '',
+                         True, 'tipo="51"');
+
+  if GNRE.AtualMonetFECP > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.AtualMonetFECP, '',
+                         True, 'tipo="52"');
+
+  Gerador.wCampo(tcStr, '', 'convenio', 01, 30, 0, GNRE.c15_convenio, '');
 
   if GNRE.c35_idContribuinteDestinatario <> '' then
   begin

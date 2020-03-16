@@ -131,7 +131,16 @@ type
     Freferencia: TReferencia;
     FcamposExtras: TCampoExtraCollection;
     Fc42_identificadorGuia: string;
+    // usado na versão 2.00
     FtipoGNRE: TTipoGNRE;
+    FValorFECP: Currency;
+    FTotalFECP: Currency;
+    FMultaICMS: Currency;
+    FMultaFECP: Currency;
+    FJurosICMS: Currency;
+    FJurosFECP: Currency;
+    FAtualMonetICMS: Currency;
+    FAtualMonetFECP: Currency;
   public
     constructor Create;
     destructor Destroy; override;
@@ -166,6 +175,14 @@ type
     property c42_identificadorGuia: string read Fc42_identificadorGuia write Fc42_identificadorGuia;
     // usado na versão 2.00
     property tipoGNRE: TTipoGNRE read FtipoGNRE write FtipoGNRE;
+    property ValorFECP: Currency read FValorFECP write FValorFECP;
+    property TotalFECP: Currency read FTotalFECP write FTotalFECP;
+    property MultaICMS: Currency read FMultaICMS write FMultaICMS;
+    property MultaFECP: Currency read FMultaFECP write FMultaFECP;
+    property JurosICMS: Currency read FJurosICMS write FJurosICMS;
+    property JurosFECP: Currency read FJurosFECP write FJurosFECP;
+    property AtualMonetICMS: Currency read FAtualMonetICMS write FAtualMonetICMS;
+    property AtualMonetFECP: Currency read FAtualMonetFECP write FAtualMonetFECP;
   end;
 
 implementation

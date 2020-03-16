@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2020
+-- Diversos --
+[+] Acrescentado novos campos especificos da versão 2.00
+    (ValorFECP, TotalFECP, MultaICMS, MultaFECP, JurosICMS, 
+     JurosFECP, AtualMonetICMS e AtualMonetFECP).
+  Por: Italo Jurisato Junior
+
 05/03/2020
 -- ACBrGNREGuiaFRDM --
 [*] Melhorias na impressão da guia do GNRE em Fast Report.

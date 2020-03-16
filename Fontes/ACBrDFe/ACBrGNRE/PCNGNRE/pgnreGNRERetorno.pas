@@ -83,6 +83,14 @@ type
     FInfoCabec: TInfoCabec;
     FtipoGnre: string;
     FValorICMS: Currency;
+    FAtualMonetFECP: Currency;
+    FTotalFECP: Currency;
+    FJurosFECP: Currency;
+    FMultaFECP: Currency;
+    FAtualMonetICMS: Currency;
+    FJurosICMS: Currency;
+    FMultaICMS: Currency;
+    FValorFECP: Currency;
   public
     constructor Create;
     destructor Destroy; override;
@@ -127,6 +135,14 @@ type
     // Versao 2.00
     property tipoGnre: string read FtipoGnre write FtipoGnre;
     property ValorICMS: Currency read FValorICMS write FValorICMS;
+    property ValorFECP: Currency read FValorFECP write FValorFECP;
+    property TotalFECP: Currency read FTotalFECP write FTotalFECP;
+    property MultaICMS: Currency read FMultaICMS write FMultaICMS;
+    property MultaFECP: Currency read FMultaFECP write FMultaFECP;
+    property JurosICMS: Currency read FJurosICMS write FJurosICMS;
+    property JurosFECP: Currency read FJurosFECP write FJurosFECP;
+    property AtualMonetICMS: Currency read FAtualMonetICMS write FAtualMonetICMS;
+    property AtualMonetFECP: Currency read FAtualMonetFECP write FAtualMonetFECP;
   end;
 
 implementation

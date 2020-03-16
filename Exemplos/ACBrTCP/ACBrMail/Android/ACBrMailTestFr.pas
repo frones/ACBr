@@ -306,14 +306,14 @@ begin
   begin
     // Depende de: "<img src='cid:LogoACBr'>" em ACBrMail1.Body;
     if Pos('cid:LogoACBr', ACBrMail1.Body.Text) > 0 then
-      ACBrMail1.AddAttachment(Dir + 'acbr_logo2.png', 'LogoACBr');
+      ACBrMail1.AddAttachment(Dir + 'acbr_logo2.png', 'LogoACBr', adInline);
   end;
 
   if cbAddImgAtt.IsChecked  then
-    ACBrMail1.AddAttachment(Dir + 'acbr_logo.jpg');
+    ACBrMail1.AddAttachment(Dir + 'acbr_logo.jpg', '', adAttachment);
 
   if cbAddPDF.IsChecked  then
-    ACBrMail1.AddAttachment(Dir + '35150905481336000137550010000111291000111298-nfe.pdf', 'DANFE');
+    ACBrMail1.AddAttachment(Dir + '35150905481336000137550010000111291000111298-nfe.pdf', 'DANFE', adAttachment);
 
   if cbAddXML.IsChecked  then
   begin

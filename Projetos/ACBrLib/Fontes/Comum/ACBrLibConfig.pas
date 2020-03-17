@@ -275,6 +275,7 @@ type
   private
     FOwner: TObject;
     FIni: TMemIniFile;
+    FIniAge: Integer;
     FLog: TLogConfig;
     FNomeArquivo: String;
     FChaveCrypt: AnsiString;
@@ -291,6 +292,9 @@ type
     procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
     procedure VerificarSessaoEChave(ASessao, AChave: String);
+
+    procedure VerificarSeIniFoiModificado;
+    procedure LerDataHoraArqIni;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; virtual;
@@ -730,6 +734,7 @@ begin
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
 
   FIni := TMemIniFile.Create('');
+  FIniAge := 0;
 
   TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
     StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
@@ -750,6 +755,22 @@ begin
   FPosDeviceConfig.Free;
 
   inherited Destroy;
+end;
+
+procedure TLibConfig.VerificarSeIniFoiModificado;
+var
+  NewIniAge: LongInt;
+begin
+  if not FileExists(FNomeArquivo) then Exit;
+
+  NewIniAge := FileAge(FNomeArquivo);
+  if NewIniAge > FIniAge then
+    Ler;
+end;
+
+procedure TLibConfig.LerDataHoraArqIni;
+begin
+  FIniAge := FileAge(FNomeArquivo);
 end;
 
 procedure TLibConfig.VerificarNomeEPath(Gravando: Boolean);
@@ -849,6 +870,7 @@ begin
       Exit;
     end;
 
+    LerDataHoraArqIni;
     INIParaClasse;
     AplicarConfiguracoes;
   finally
@@ -885,6 +907,7 @@ begin
       FIni.Rename(FNomeArquivo, False);
 
     FIni.UpdateFile;
+    LerDataHoraArqIni;
   finally
     TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);
     Destravar;
@@ -996,6 +1019,7 @@ end;
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);
 begin
   VerificarSessaoEChave(ASessao, AChave);
+  VerificarSeIniFoiModificado;
   FIni.WriteString(ASessao, AChave, AjustarValor(tfGravar, ASessao, AChave, AValor));
   AplicarConfiguracoes;
 end;
@@ -1003,6 +1027,7 @@ end;
 function TLibConfig.LerValor(ASessao, AChave: String): String;
 begin
   VerificarSessaoEChave(ASessao, AChave);
+  VerificarSeIniFoiModificado;
   Result := FIni.ReadString(ASessao, AChave, '');
   Result := AjustarValor(tfLer, ASessao, AChave, Result)
 end;

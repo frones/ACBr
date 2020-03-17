@@ -44,7 +44,6 @@ uses
 type
 
   { TPadraoSATResposta }
-
   TPadraoSATResposta = class(TACBrLibResposta<TACBrSAT>)
   private
     FArquivo: String;
@@ -53,8 +52,6 @@ type
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
 
-    procedure Processar(const SAT: TACBrSAT); virtual; reintroduce;
-
   published
     property Arquivo: String read FArquivo write FArquivo;
     property XML: String read FXML write FXML;
@@ -62,7 +59,6 @@ type
   end;
 
   { TACBrLibSATResposta }
-
   TACBrLibSATResposta = class(TACBrLibRespostaBase)
   private
     FCodigoDeErro: Integer;
@@ -90,7 +86,6 @@ type
   end;
 
   { TRetornoConsultarSessao }
-
   TRetornoConsultarSessao = class(TPadraoSATResposta)
   private
     FnCFe: String;
@@ -105,7 +100,6 @@ type
   end;
 
   { TRetornoConsultarSessaoCancelado }
-
   TRetornoConsultarSessaoCancelado = class(TPadraoSATResposta)
   private
     FnCFeCanc: String;
@@ -120,7 +114,6 @@ type
   end;
 
   { TRetornoCriarCFe }
-
   TRetornoCriarCFe = class(TPadraoSATResposta)
   private
     FnCFe: String;
@@ -135,7 +128,6 @@ type
   end;
 
   { TRetornoCancelarCFe }
-
   TRetornoCancelarCFe = class(TPadraoSATResposta)
   private
     FResultado: String;
@@ -156,7 +148,6 @@ type
   end;
 
   { TRetornoTesteFimaFim }
-
   TRetornoTesteFimaFim = class(TPadraoSATResposta)
   private
     FResultado: String;
@@ -177,7 +168,6 @@ type
   end;
 
   { TRetornoEnvio }
-
   TRetornoEnvio = class(TPadraoSATResposta)
   private
     FResultado: String;
@@ -198,7 +188,6 @@ type
   end;
 
   { TRetornoStatusSAT }
-
   TRetornoStatusSAT = class(TACBrLibRespostaBase)
   private
     FNSERIE          : String;
@@ -252,7 +241,6 @@ uses
   ACBrUtil, ACBrLibSATConsts;
 
 { TRetornoStatusSAT }
-
 constructor TRetornoStatusSAT.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoStatusSAT, ATipo, AFormato);
@@ -283,7 +271,6 @@ begin
 end;
 
 { TRetornoEnvio }
-
 constructor TRetornoEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoENVIO, ATipo, AFormato);
@@ -301,7 +288,6 @@ begin
 end;
 
 { TRetornoTesteFimaFim }
-
 constructor TRetornoTesteFimaFim.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoTESTEFIMAFIM, ATipo, AFormato);
@@ -319,7 +305,6 @@ begin
 end;
 
 { TRetornoCancelarCFe }
-
 constructor TRetornoCancelarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFeCancelado, ATipo, AFormato);
@@ -337,7 +322,6 @@ begin
 end;
 
 { TRetornoCriarCFe }
-
 constructor TRetornoCriarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFe, ATipo, AFormato);
@@ -355,7 +339,6 @@ begin
 end;
 
 { TRetornoConsultarSessaoCancelado }
-
 constructor TRetornoConsultarSessaoCancelado.Create(
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -373,20 +356,13 @@ begin
 end;
 
 { TPadraoResposta }
-
 constructor TPadraoSATResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
-procedure TPadraoSATResposta.Processar(const SAT: TACBrSAT);
-begin
-  // Metodo para ser implementada nas classes filhas
-end;
-
 { TRetornoConsultarSessao }
-
 constructor TRetornoConsultarSessao.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFe, ATipo, AFormato);
@@ -403,7 +379,6 @@ begin
 end;
 
 { TPadraoResposta }
-
 constructor TACBrLibSATResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespostaSat, ATipo, AFormato);

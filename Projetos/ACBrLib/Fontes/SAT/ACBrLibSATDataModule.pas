@@ -163,7 +163,6 @@ begin
   begin
     GravarLog('     Criando PosPrinter Interno', logCompleto);
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
-    TLibSATConfig(pLib.Config).PosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
   end;
 
   ACBrSATExtratoESCPOS1.PosPrinter := FACBrPosPrinter;

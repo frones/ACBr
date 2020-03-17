@@ -53,6 +53,7 @@ exports
   SAT_Nome,
   SAT_Versao,
   SAT_UltimoRetorno,
+  SAT_ImportarConfig,
   SAT_ConfigLer,
   SAT_ConfigGravar,
   SAT_ConfigLerValor,

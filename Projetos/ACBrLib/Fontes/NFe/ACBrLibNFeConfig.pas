@@ -249,7 +249,6 @@ type
     FDANFeConfig: TDANFeReportConfig;
     FNFeConfig: TConfiguracoesNFe;
     FIntegradorConfig: TIntegradorConfig;
-    FDeviceConfig: TDeviceConfig;
 
   protected
     procedure INIParaClasse; override;
@@ -270,7 +269,6 @@ type
     property NFe: TConfiguracoesNFe read FNFeConfig;
     property DANFe: TDANFeReportConfig read FDANFeConfig;
     property Integrador: TIntegradorConfig read FIntegradorConfig;
-    property PosDevice: TDeviceConfig read FDeviceConfig write FDeviceConfig;
 
   end;
 
@@ -637,10 +635,10 @@ begin
     DANFeFortes := TACBrNFeDANFCeFortes(DFeReport);
     DANFeFortes.TamanhoLogoHeight := FTamanhoLogoHeight;
     DANFeFortes.TamanhoLogoWidth := FTamanhoLogoWidth;
-    DANFeFortes.FonteLinhaItem.Name := FonteLinhaItem.Name;
-    DANFeFortes.FonteLinhaItem.Color := FonteLinhaItem.Color;
-    DANFeFortes.FonteLinhaItem.Size := FonteLinhaItem.Size;
-    DANFeFortes.FonteLinhaItem.Style := FonteLinhaItem.Style;
+    DANFeFortes.FonteLinhaItem.Name := FFonteLinhaItem.Name;
+    DANFeFortes.FonteLinhaItem.Color := FFonteLinhaItem.Color;
+    DANFeFortes.FonteLinhaItem.Size := FFonteLinhaItem.Size;
+    DANFeFortes.FonteLinhaItem.Style := FFonteLinhaItem.Style;
   end;
 end;
 
@@ -851,7 +849,6 @@ begin
   FNFeConfig.Free;
   FDANFeConfig.Free;
   FIntegradorConfig.Free;
-  if FDeviceConfig <> nil then FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -864,7 +861,6 @@ begin
   FNFeConfig.LerIni(Ini);
   FDANFeConfig.LerIni(Ini);
   FIntegradorConfig.LerIni(Ini);
-  if FDeviceConfig <> nil then FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibNFeConfig.ClasseParaINI;
@@ -875,7 +871,6 @@ begin
   FNFeConfig.GravarIni(Ini);
   FDANFeConfig.GravarIni(Ini);
   FIntegradorConfig.GravarIni(Ini);
-  if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibNFeConfig.ClasseParaComponentes;

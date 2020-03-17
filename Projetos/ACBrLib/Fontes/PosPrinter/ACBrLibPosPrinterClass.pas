@@ -142,7 +142,8 @@ function POS_GetPosPrinter: Pointer;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig,
+  ACBrLibDeviceUtils;
 
 { TACBrLibPosPrinter }
 
@@ -880,9 +881,8 @@ end;
 function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
-  i: Integer;
-  Portas: TStringList;
   Resposta: string;
+  Portas: TStringList;
 begin
   try
     VerificarLibInicializada;
@@ -896,15 +896,10 @@ begin
       Resposta := '';
       Portas := TStringList.Create;
       try
-        PosDM.ACBrPosPrinter1.Device.AcharPortasSeriais( Portas );
+        Resposta := PortasSeriais(PosDM.ACBrPosPrinter1.Device);
+        Resposta := Resposta + '|' + PortasUSB(PosDM.ACBrPosPrinter1.Device);
+        Resposta := Resposta + '|' + PortasRAW(PosDM.ACBrPosPrinter1.Device);
 
-        {$IfDef MSWINDOWS}
-        PosDM.ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters();
-        for i := 0 to PosDM.ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
-          Portas.Add('USB:'+PosDM.ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[i].DeviceName);
-        {$EndIf}
-
-        Resposta := StringReplace(Portas.Text, sLineBreak, '|', [rfReplaceAll]);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally

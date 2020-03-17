@@ -92,7 +92,7 @@ begin
     ConfigModoPagina.Direcao := TACBrPosDirecao(pLibConfig.PosPrinter.MpDirecao);
     ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinter.MpEspacoEntreLinhas;
 
-    pLibConfig.DeviceConfig.Apply(Device);
+    pLibConfig.PosDeviceConfig.Apply(Device);
   end;
 end;
 

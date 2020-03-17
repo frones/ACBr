@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   synachar, mimemess,
-  ACBrLibResposta;
+  ACBrLibResposta, ACBrDeviceConfig;
 
 type
   //               0           1          2           3             4
@@ -274,13 +274,13 @@ type
   TLibConfig = class
   private
     FOwner: TObject;
-    FEmail: TEmailConfig;
-    FPosPrinter: TPosPrinterConfig;
     FIni: TMemIniFile;
-    FIniAge: Integer;
     FLog: TLogConfig;
     FNomeArquivo: String;
     FChaveCrypt: AnsiString;
+    FEmail: TEmailConfig;
+    FPosPrinter: TPosPrinterConfig;
+    FPosDeviceConfig: TDeviceConfig;
     FProxyInfo: TProxyConfig;
     FSistema: TSistemaConfig;
     FSoftwareHouse: TEmpresaConfig;
@@ -292,8 +292,6 @@ type
     procedure VerificarNomeEPath(Gravando: Boolean);
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
-    procedure VerificarSeIniFoiModificado;
-    procedure LerDataHoraArqIni;
   protected
     function AtualizarArquivoConfiguracao: Boolean; virtual;
     procedure AplicarConfiguracoes; virtual;
@@ -301,7 +299,7 @@ type
     procedure INIParaClasse; virtual;
     procedure ClasseParaINI; virtual;
     procedure ClasseParaComponentes; virtual; abstract;
-    procedure ImportarIni(AIni: TCustomIniFile); virtual; abstract;
+    procedure ImportarIni(FIni: TCustomIniFile); virtual; abstract;
 
     procedure Travar; virtual;
     procedure Destravar; virtual;
@@ -331,6 +329,7 @@ type
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
     property PosPrinter: TPosPrinterConfig read FPosPrinter;
+    property PosDeviceConfig: TDeviceConfig read FPosDeviceConfig;
     property SoftwareHouse: TEmpresaConfig read FSoftwareHouse;
     property Sistema: TSistemaConfig read FSistema;
     property Emissor: TEmpresaConfig read FEmissor;
@@ -725,12 +724,12 @@ begin
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
   FPosPrinter := TPosPrinterConfig.Create();
+  FPosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
   FProxyInfo := TProxyConfig.Create(FChaveCrypt);
   FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
 
   FIni := TMemIniFile.Create('');
-  FIniAge := 0;
 
   TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
     StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
@@ -748,6 +747,7 @@ begin
   FProxyInfo.Free;
   FEmail.Free;
   FPosPrinter.Free;
+  FPosDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -782,7 +782,6 @@ begin
   try
     FNomeArquivo := AValue;
     VerificarNomeEPath(True);
-    Ler;
   except
     FNomeArquivo := NomeArquivoAnt;
     raise;
@@ -799,17 +798,6 @@ begin
   NaoExiste := '*NaoExiste*';
   if (FIni.ReadString(ASessao, AChave, NaoExiste) = NaoExiste) then
     raise EACBrLibException.Create(ErrConfigLer, SErrConfChaveNaoExiste);
-end;
-
-procedure TLibConfig.VerificarSeIniFoiModificado;
-var
-  NewIniAge: LongInt;
-begin
-  if not FileExists(FNomeArquivo) then Exit;
-
-  NewIniAge := FileAge(FNomeArquivo);
-  if NewIniAge > FIniAge then
-    Ler;
 end;
 
 function TLibConfig.AtualizarArquivoConfiguracao: Boolean;
@@ -861,13 +849,27 @@ begin
       Exit;
     end;
 
-    LerDataHoraArqIni;
     INIParaClasse;
     AplicarConfiguracoes;
   finally
     TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logParanoico);
     Destravar;
   end;
+end;
+
+procedure TLibConfig.INIParaClasse;
+begin
+
+  FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
+  FCodificaoResposta := TACBrLibCodificacao(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
+  FLog.LerIni(FIni);
+  FSistema.LerIni(FIni);
+  FEmail.LerIni(FIni);
+  FPosPrinter.LerIni(FIni);
+  FPosDeviceConfig.LerIni(FIni);
+  FProxyInfo.LerIni(FIni);
+  FSoftwareHouse.LerIni(FIni);
+  FEmissor.LerIni(FIni);
 end;
 
 procedure TLibConfig.Gravar;
@@ -883,29 +885,10 @@ begin
       FIni.Rename(FNomeArquivo, False);
 
     FIni.UpdateFile;
-    LerDataHoraArqIni;
   finally
     TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);
     Destravar;
   end;
-end;
-
-procedure TLibConfig.LerDataHoraArqIni;
-begin
-  FIniAge := FileAge(FNomeArquivo);
-end;
-
-procedure TLibConfig.INIParaClasse;
-begin
-  FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
-  FCodificaoResposta := TACBrLibCodificacao(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
-  FLog.LerIni(FIni);
-  FSistema.LerIni(FIni);
-  FEmail.LerIni(FIni);
-  FPosPrinter.LerIni(FIni);
-  FProxyInfo.LerIni(FIni);
-  FSoftwareHouse.LerIni(FIni);
-  FEmissor.LerIni(FIni);
 end;
 
 procedure TLibConfig.ClasseParaINI;
@@ -919,6 +902,7 @@ begin
   FSistema.GravarIni(FIni);
   FEmail.GravarIni(FIni);
   FPosPrinter.GravarIni(FIni);
+  FPosDeviceConfig.GravarIni(FIni);
   FProxyInfo.GravarIni(FIni);
   FSoftwareHouse.GravarIni(FIni);
   FEmissor.GravarIni(FIni);
@@ -1001,6 +985,8 @@ begin
     PosPrinter.GvTempoOFF := FMIni.ReadInteger(CSecGaveta, CKeyGavetaTempoOFF, PosPrinter.GvTempoOFF);
     PosPrinter.GvSinalInvertido := FMIni.ReadBool(CSecGaveta, CKeyGavSinalInvertido, PosPrinter.GvSinalInvertido);
 
+    PosDeviceConfig.ImportarSerialParams(FIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
+
     ImportarIni(FMIni);
   finally
     FreeAndNil(FMIni);
@@ -1010,7 +996,6 @@ end;
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);
 begin
   VerificarSessaoEChave(ASessao, AChave);
-  VerificarSeIniFoiModificado;
   FIni.WriteString(ASessao, AChave, AjustarValor(tfGravar, ASessao, AChave, AValor));
   AplicarConfiguracoes;
 end;
@@ -1018,7 +1003,6 @@ end;
 function TLibConfig.LerValor(ASessao, AChave: String): String;
 begin
   VerificarSessaoEChave(ASessao, AChave);
-  VerificarSeIniFoiModificado;
   Result := FIni.ReadString(ASessao, AChave, '');
   Result := AjustarValor(tfLer, ASessao, AChave, Result)
 end;

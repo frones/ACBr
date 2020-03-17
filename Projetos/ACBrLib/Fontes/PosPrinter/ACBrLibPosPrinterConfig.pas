@@ -39,76 +39,35 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrLibConfig, ACBrDeviceConfig;
+  ACBrLibConfig;
 
 type
   { TLibPosPrinterConfig }
   TLibPosPrinterConfig = class(TLibConfig)
-  private
-    FDeviceConfig: TDeviceConfig;
-
   protected
-    procedure INIParaClasse; override;
-    procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
-
-  public
-    constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
-    destructor Destroy; override;
-
-    property DeviceConfig: TDeviceConfig read FDeviceConfig;
 
   end;
 
 implementation
 
 uses
-  ACBrLibPosPrinterClass, ACBrLibConsts, ACBrMonitorConsts, ACBrLibComum,
-  ACBrUtil;
+  ACBrLibPosPrinterClass, ACBrLibComum, ACBrUtil;
 
 { TLibPosPrinterConfig }
-
-constructor TLibPosPrinterConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
-begin
-  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
-
-  FDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
-end;
-
-destructor TLibPosPrinterConfig.Destroy;
-begin
-  FDeviceConfig.Free;
-
-  inherited Destroy;
-end;
-
-procedure TLibPosPrinterConfig.INIParaClasse;
-begin
-  inherited INIParaClasse;
-
-  FDeviceConfig.LerIni(Ini);
-end;
-
-procedure TLibPosPrinterConfig.ClasseParaINI;
-begin
-  inherited ClasseParaINI;
-
-  FDeviceConfig.GravarIni(Ini);
-end;
-
 procedure TLibPosPrinterConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibPosPrinter(Owner).PosDM.AplicarConfiguracoes;
 end;
 
-procedure TLibPosPrinterConfig.ImportarIni(AIni: TCustomIniFile);
+procedure TLibPosPrinterConfig.ImportarIni(FIni: TCustomIniFile);
 begin
-  DeviceConfig.ImportarSerialParams(AIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
+  //
 end;
 
 procedure TLibPosPrinterConfig.Travar;

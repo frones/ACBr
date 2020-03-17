@@ -298,7 +298,7 @@ type
     procedure INIParaClasse; virtual;
     procedure ClasseParaINI; virtual;
     procedure ClasseParaComponentes; virtual; abstract;
-    procedure ImportarIni(FIni: TCustomIniFile); virtual; abstract;
+    procedure ImportarIni(AIni: TCustomIniFile); virtual; abstract;
 
     procedure Travar; virtual;
     procedure Destravar; virtual;
@@ -855,7 +855,6 @@ end;
 
 procedure TLibConfig.INIParaClasse;
 begin
-
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
   FCodificaoResposta := TACBrLibCodificacao(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
   FLog.LerIni(FIni);

@@ -51,7 +51,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
+    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -106,9 +106,9 @@ begin
     TACBrLibPosPrinter(Owner).PosDM.AplicarConfiguracoes;
 end;
 
-procedure TLibPosPrinterConfig.ImportarIni(FIni: TCustomIniFile);
+procedure TLibPosPrinterConfig.ImportarIni(AIni: TCustomIniFile);
 begin
-  DeviceConfig.ImportarSerialParams(FIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
+  DeviceConfig.ImportarSerialParams(AIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
 end;
 
 procedure TLibPosPrinterConfig.Travar;

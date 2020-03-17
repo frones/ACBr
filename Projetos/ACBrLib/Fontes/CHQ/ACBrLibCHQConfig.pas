@@ -71,7 +71,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
+    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -156,12 +156,12 @@ begin
     TACBrLibCHQ(Owner).CHQDM.AplicarConfiguracoes;
 end;
 
-procedure TLibCHQConfig.ImportarIni(FIni: TCustomIniFile);
+procedure TLibCHQConfig.ImportarIni(AIni: TCustomIniFile);
 begin
-  FCHQConfig.Porta := FIni.ReadString(CSecCHQ, CKeyCHQPorta, FCHQConfig.Porta);
-  FCHQConfig.Modelo := TACBrCHQModelo(FIni.ReadInteger(CSecCHQ, CKeyCHQModelo, Integer(FCHQConfig.Modelo)));
+  FCHQConfig.Porta := AIni.ReadString(CSecCHQ, CKeyCHQPorta, FCHQConfig.Porta);
+  FCHQConfig.Modelo := TACBrCHQModelo(AIni.ReadInteger(CSecCHQ, CKeyCHQModelo, Integer(FCHQConfig.Modelo)));
 
-  FDeviceConfig.ImportarSerialParams(FIni.ReadString(CSecCHQ, CKeyCHQSerialParams, FCHQConfig.Porta));
+  FDeviceConfig.ImportarSerialParams(AIni.ReadString(CSecCHQ, CKeyCHQSerialParams, FCHQConfig.Porta));
 end;
 
 procedure TLibCHQConfig.Travar;

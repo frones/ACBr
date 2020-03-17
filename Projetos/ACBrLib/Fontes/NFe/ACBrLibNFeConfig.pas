@@ -255,7 +255,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
+    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -886,7 +886,7 @@ begin
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
 end;
 
-procedure TLibNFeConfig.ImportarIni(FIni: TCustomIniFile);
+procedure TLibNFeConfig.ImportarIni(AIni: TCustomIniFile);
 Var
   AuxStr: String;
   Ok: Boolean;
@@ -894,11 +894,11 @@ begin
   with NFe.Certificados do
   begin
     //Sessão Certificado
-    ArquivoPFX := FIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
-    NumeroSerie := FIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
+    ArquivoPFX := AIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
+    NumeroSerie := AIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
 
     AuxStr := '';
-    AuxStr := FIni.ReadString(CSecCertificado, CKeySenha, '');
+    AuxStr := AIni.ReadString(CSecCertificado, CKeySenha, '');
     if NaoEstaVazio(AuxStr) then
       Senha := AuxStr;
   end;
@@ -906,91 +906,91 @@ begin
   with NFe.Geral do
   begin
     //Sessão Certificado
-    SSLCryptLib := TSSLCryptLib(FIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
-    SSLHttpLib := TSSLHttpLib(FIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
-    SSLXmlSignLib := TSSLXmlSignLib(FIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
+    SSLCryptLib := TSSLCryptLib(AIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
+    SSLHttpLib := TSSLHttpLib(AIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
+    SSLXmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
 
     //ACBrNFeMonitor
-    RetirarAcentos := FIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
-    ValidarDigest := FIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
+    RetirarAcentos := AIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
+    ValidarDigest := AIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
 
     //Webservices
-    FormaEmissao := TpcnTipoEmissao(FIni.ReadInteger(CSecWebService, CKeyFormaEmissaoNFe, Integer(FormaEmissao)));
-    VersaoDF := StrToVersaoDF(Ok, FIni.ReadString(CSecWebService, CKeyVersao, VersaoDFToStr(VersaoDF)));
-    VersaoQRCode := TpcnVersaoQrCode(FIni.ReadInteger(CSecWebService, CKeyVersaoQRCode, Integer(VersaoQRCode)));
-    CamposFatObrigatorios := FIni.ReadBool(CSecWebService, CKeyCamposFatObrig, CamposFatObrigatorios);
-    ForcarGerarTagRejeicao938 := TForcarGeracaoTag(FIni.ReadInteger(CSecWebService, CKeyTagRejeicao938, Integer(ForcarGerarTagRejeicao938)));
+    FormaEmissao := TpcnTipoEmissao(AIni.ReadInteger(CSecWebService, CKeyFormaEmissaoNFe, Integer(FormaEmissao)));
+    VersaoDF := StrToVersaoDF(Ok, AIni.ReadString(CSecWebService, CKeyVersao, VersaoDFToStr(VersaoDF)));
+    VersaoQRCode := TpcnVersaoQrCode(AIni.ReadInteger(CSecWebService, CKeyVersaoQRCode, Integer(VersaoQRCode)));
+    CamposFatObrigatorios := AIni.ReadBool(CSecWebService, CKeyCamposFatObrig, CamposFatObrigatorios);
+    ForcarGerarTagRejeicao938 := TForcarGeracaoTag(AIni.ReadInteger(CSecWebService, CKeyTagRejeicao938, Integer(ForcarGerarTagRejeicao938)));
 
     //Arquivos
-    AtualizarXMLCancelado := FIni.ReadBool(CSecArquivos, CKeyArquivosAtualizarXMLCancelado, AtualizarXMLCancelado);
+    AtualizarXMLCancelado := AIni.ReadBool(CSecArquivos, CKeyArquivosAtualizarXMLCancelado, AtualizarXMLCancelado);
 
     //NFCe
-    IdCSC := FIni.ReadString(CSecNFCe, CKeyNFCeIdToken, IdCSC);
-    CSC := FIni.ReadString(CSecNFCe, CKeyNFCeToken, CSC);
+    IdCSC := AIni.ReadString(CSecNFCe, CKeyNFCeIdToken, IdCSC);
+    CSC := AIni.ReadString(CSecNFCe, CKeyNFCeToken, CSC);
   end;
 
   with NFe.Arquivos do
   begin
     //ACBrNFeMonitor
-    IniServicos := FIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServices, IniServicos);
+    IniServicos := AIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServices, IniServicos);
 
     //Arquivos
-    Salvar := FIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
-    SepararPorMes := FIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
-    SepararPorCNPJ := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
-    SepararPorModelo := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    SepararPorModelo := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    AdicionarLiteral := FIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
-    SalvarApenasNFeProcessadas := FIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasNFeProcessadas);
-    NormatizarMunicipios := FIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
-    EmissaoPathNFe := FIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathNFe);
-    PathNFe := FIni.ReadString(CSecArquivos, CKeyArquivosPathNFe, PathNFe);
-    PathInu := FIni.ReadString(CSecArquivos, CKeyArquivosPathInu, PathInu);
-    PathEvento := FIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
+    Salvar := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
+    SepararPorMes := AIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
+    SepararPorCNPJ := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
+    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
+    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
+    AdicionarLiteral := AIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
+    SalvarApenasNFeProcessadas := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasNFeProcessadas);
+    NormatizarMunicipios := AIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
+    EmissaoPathNFe := AIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathNFe);
+    PathNFe := AIni.ReadString(CSecArquivos, CKeyArquivosPathNFe, PathNFe);
+    PathInu := AIni.ReadString(CSecArquivos, CKeyArquivosPathInu, PathInu);
+    PathEvento := AIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
 
-    AuxStr := FIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
+    AuxStr := AIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
     if NaoEstaVazio(AuxStr) then
       PathSchemas := PathWithDelim(AuxStr) + 'NFe';
 
     with DownloadDFe do
     begin
-      SepararPorNome := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
-      PathDownload := FIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
+      SepararPorNome := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
+      PathDownload := AIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
     end;
   end;
 
   with NFe.WebServices do
   begin
     // ACBrNFeMonitor
-    TimeOut := FIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
+    TimeOut := AIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
 
     // Certificado
-    SSLType := TSSLType(FIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
+    SSLType := TSSLType(AIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
 
     //Webservices
-    Ambiente := TpcnTipoAmbiente(FIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
-    UF := FIni.ReadString(CSecWebService, CKeyUF, UF);
-    AjustaAguardaConsultaRet := FIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
-    AguardarConsultaRet := FIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
-    Tentativas := FIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
-    IntervaloTentativas := FIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
+    Ambiente := TpcnTipoAmbiente(AIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
+    UF := AIni.ReadString(CSecWebService, CKeyUF, UF);
+    AjustaAguardaConsultaRet := AIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
+    AguardarConsultaRet := AIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
+    Tentativas := AIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
+    IntervaloTentativas := AIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
 
     with TimeZoneConf do
     begin
-      ModoDeteccao := TTimeZoneModoDeteccao(FIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
-      TimeZoneStr := FIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
+      ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
+      TimeZoneStr := AIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
     end;
   end;
 
   with NFe.RespTec do
   begin
     // RespTecnico
-    IdCSRT := FIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
-    CSRT := FIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
+    IdCSRT := AIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
+    CSRT := AIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
   end;
 
   //Impressão
-  DANFe.Import(FIni);
+  DANFe.Import(AIni);
 end;
 
 procedure TLibNFeConfig.Travar;

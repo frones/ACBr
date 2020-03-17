@@ -79,7 +79,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
+    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -178,14 +178,14 @@ begin
     TACBrLibBAL(Owner).BALDM.AplicarConfiguracoes;
 end;
 
-procedure TLibBALConfig.ImportarIni(FIni: TCustomIniFile);
+procedure TLibBALConfig.ImportarIni(AIni: TCustomIniFile);
 begin
-  BALConfig.ArqLog    := FIni.ReadString(CSecBAL, CKeyBALArqLog, BALConfig.ArqLog);
-  BALConfig.Porta     := FIni.ReadString(CSecBAL, CKeyBALPorta, BALConfig.Porta);
-  BALConfig.Modelo    := TACBrBALModelo(FIni.ReadInteger(CSecBAL, CKeyBALModelo, Integer(BALConfig.Modelo)));
-  BALConfig.Intervalo := FIni.ReadInteger(CSecBAL, CKeyBALIntervalo, BALConfig.Intervalo);
+  BALConfig.ArqLog    := AIni.ReadString(CSecBAL, CKeyBALArqLog, BALConfig.ArqLog);
+  BALConfig.Porta     := AIni.ReadString(CSecBAL, CKeyBALPorta, BALConfig.Porta);
+  BALConfig.Modelo    := TACBrBALModelo(AIni.ReadInteger(CSecBAL, CKeyBALModelo, Integer(BALConfig.Modelo)));
+  BALConfig.Intervalo := AIni.ReadInteger(CSecBAL, CKeyBALIntervalo, BALConfig.Intervalo);
 
-  DeviceConfig.ImportarSerialParams(FIni.ReadString(CSecBAL, CKeyBALDevice, ''));
+  DeviceConfig.ImportarSerialParams(AIni.ReadString(CSecBAL, CKeyBALDevice, ''));
 end;
 
 procedure TLibBALConfig.Travar;

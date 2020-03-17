@@ -47,7 +47,7 @@ type
   TLibMailConfig = class(TLibConfig)
   protected
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
+    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -80,7 +80,7 @@ begin
     TACBrLibMail(Owner).MailDM.AplicarConfiguracoes;
 end;
 
-procedure TLibMailConfig.ImportarIni(FIni: TCustomIniFile);
+procedure TLibMailConfig.ImportarIni(AIni: TCustomIniFile);
 begin
   //Faz nada pois é importadado na classe base
 end;

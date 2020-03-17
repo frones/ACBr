@@ -782,6 +782,7 @@ begin
   try
     FNomeArquivo := AValue;
     VerificarNomeEPath(True);
+    Ler;
   except
     FNomeArquivo := NomeArquivoAnt;
     raise;

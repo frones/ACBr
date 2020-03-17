@@ -49,6 +49,9 @@ Símbolo : Significado
 [*] Ajuste para que os métodos TLibConfig.GravarValor e TLibConfig.LerValor,
     verifique se houve modificações no arquivo de Configuração no Disco, antes
     de processar o novo valor
+
+[-] Ajuste em TLibConfig.SetNomeArquivo, para que o Novo arquivo seja carregado
+    na memória, após atribuido
     (por: DSA)
 
 --- ACBrLibDeviceUtils ---

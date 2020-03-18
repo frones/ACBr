@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2020
+-- ACBrMDFeManifestos --
+[-] Ajuste na Leitura dados de Pagamento Frete na função LerArqINI
+   Por: José M S Junior
+
 10/03/2020
 -- ACBrMDFe --
 [*] Ao enviar o evento por e-mail não estava sendo informado o nome do XML do 

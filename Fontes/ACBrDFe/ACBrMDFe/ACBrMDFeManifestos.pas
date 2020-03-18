@@ -1542,7 +1542,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with rodo.infANTT.infPag[I].Comp.New do
+                with Comp.New do
                 begin
                   tpComp := StrToTComp(ok, INIRec.ReadString(sSecao, 'tpComp', '01'));
                   vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0 );
@@ -1552,7 +1552,7 @@ begin
                 Inc(J);
               end;
 
-              if MDFe.rodo.infANTT.infPag[I].indPag = ipPrazo then
+              if indPag = ipPrazo then
               begin
                 j := 1;
                 while true do
@@ -1563,7 +1563,7 @@ begin
                   if sFim = 'FIM' then
                     break;
 
-                  with rodo.infANTT.infPag[I].infPrazo.New do
+                  with infPrazo.New do
                   begin
                     nParcela := INIRec.ReadInteger(sSecao, 'nParcela', 1);
                     dVenc    := StringToDateTime(INIRec.ReadString(sSecao, 'dVenc', '0'));
@@ -1578,23 +1578,25 @@ begin
 
               if INIRec.SectionExists(sSecao) then
               begin
-                MDFe.rodo.infANTT.infPag[I].infBanc.CNPJIPEF := INIRec.ReadString(sSecao, 'CNPJIPEF', '');
-
-                if MDFe.rodo.infANTT.infPag[I].infBanc.CNPJIPEF = '' then
+                with infBanc do
                 begin
-                  MDFe.rodo.infANTT.infPag[I].infBanc.codBanco   := INIRec.ReadString(sSecao, 'codBanco', '');
-                  MDFe.rodo.infANTT.infPag[I].infBanc.codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
+                  CNPJIPEF := INIRec.ReadString(sSecao, 'CNPJIPEF', '');
+
+                  if CNPJIPEF = '' then
+                  begin
+                    codBanco   := INIRec.ReadString(sSecao, 'codBanco', '');
+                    codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
+                  end;
+
                 end;
               end;
             end;
-
             Inc(I);
           end;
         end;
       end;
 
       // Dados do veículo de Tração (Obrigatório) - Nível 1
-
       if INIRec.ReadString('veicTracao', 'placa', '') <> '' then
       begin
         rodo.veicTracao.cInt    := INIRec.ReadString('veicTracao', 'cInt', '');

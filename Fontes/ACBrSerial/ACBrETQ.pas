@@ -63,6 +63,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     fsMargemEsquerda: Integer;
     fsEtqFinalizada: Boolean;
     fsEtqInicializada: Boolean;
+    fsCopias, fsAvancoEtq: Integer;
     fsOnGravarLog: TACBrGravarLog;
     fsModelo: TACBrETQModelo;
     fsListaCmd: TACBrETQCmdList;
@@ -225,6 +226,8 @@ begin
   fsOnGravarLog     := Nil;
   fsEtqFinalizada   := False;
   fsEtqInicializada := False;
+  fsCopias          := 1;
+  fsAvancoEtq       := 0;
   fsMargemEsquerda  := 0;
 end;
 
@@ -429,6 +432,8 @@ begin
   fsAtivo           := True;
   fsEtqFinalizada   := False;
   fsEtqInicializada := False;
+  fsCopias          := 1;
+  fsAvancoEtq       := 0;
 end;
 
 procedure TACBrETQ.Desativar;
@@ -461,6 +466,8 @@ begin
 
   fsEtqInicializada := True;
   fsEtqFinalizada   := False;
+  fsCopias          := 1;
+  fsAvancoEtq       := 0;
 end;
 
 procedure TACBrETQ.FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
@@ -469,14 +476,13 @@ var
 begin
   GravarLog('- FinalizarEtiqueta: Copias:'+IntToStr(Copias)+', AvancoEtq:'+IntToStr(AvancoEtq));
 
-  AtivarSeNecessario;
-
-  wCmd := fsETQ.ComandosFinalizarEtiqueta(Copias, AvancoEtq);
-
-  fsListaCmd.Add(wCmd);
+  if not fsEtqInicializada then
+    IniciarEtiqueta;
 
   fsEtqInicializada := False;
   fsEtqFinalizada   := True;
+  fsCopias          := Copias;
+  fsAvancoEtq       := AvancoEtq;
 end;
 
 procedure TACBrETQ.GravarLog(aString: AnsiString; Traduz: Boolean);
@@ -511,7 +517,18 @@ begin
 
     // Verifica se ficou um bloco de etiquetas sem ser Finalizado
     if (not fsEtqFinalizada) then
-      FinalizarEtiqueta(Copias, AvancoEtq);
+      FinalizarEtiqueta(Copias, AvancoEtq)
+    else
+    begin
+      if Copias > 1 then
+        fsCopias := Copias;
+
+      if AvancoEtq > 0 then
+        fsAvancoEtq := AvancoEtq;
+    end;
+
+    wCmd := fsETQ.ComandosFinalizarEtiqueta(fsCopias, fsAvancoEtq);
+    fsListaCmd.Add(wCmd);
 
     if LimparMemoria then
     begin
@@ -527,6 +544,8 @@ begin
     fsListaCmd.Clear;
     fsEtqInicializada := False;
     fsEtqFinalizada   := False;
+    fsCopias          := 1;
+    fsAvancoEtq       := 0;
   end;
 end;
 

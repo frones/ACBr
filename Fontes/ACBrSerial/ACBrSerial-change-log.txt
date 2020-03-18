@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/03/2020
+-- ACBrETQ --
+[-] Correção para que o método "FinalizarEtiqueta" funcione corretamente como o
+    método "Imprimir", e ambos respeitem os parâmetros "Copias" e "AvancoEtq"
+    (por: DSA)
+
 Data: 12/03/2020
 -- ACBrSMSClass --
 [-] Ajuste para leitura de Data/Hora com retorno de apenas 2 dígitos no ano

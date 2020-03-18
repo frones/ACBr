@@ -1327,7 +1327,7 @@ object frmACBrCIOT: TfrmACBrCIOT
       Top = 1
       Width = 567
       Height = 248
-      ActivePage = tsEnvios
+      ActivePage = tsOperacao
       Align = alTop
       TabOrder = 0
       object tsOperacao: TTabSheet

@@ -1086,7 +1086,7 @@ begin
         MemoDados.Lines.Add('  ');
         for i := 0 to TipoCarga.Count -1 do
         begin
-           MemoDados.Lines.Add(TipoCarga[i].Codigo.ToString +
+           MemoDados.Lines.Add(IntToStr(TipoCarga[i].Codigo) +
                                ' - '+ TipoCargaToStr(TipoCarga[i].Descricao));
         end;
       end;

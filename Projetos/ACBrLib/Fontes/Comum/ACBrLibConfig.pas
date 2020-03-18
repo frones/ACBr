@@ -860,8 +860,8 @@ begin
     VerificarNomeEPath(not ArquivoInformado);
     TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
 
-    if FIni.FileName <> FNomeArquivo then
-      FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
+    //if FIni.FileName <> FNomeArquivo then
+    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
 
     if not FileExists(FNomeArquivo) then
     begin

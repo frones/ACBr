@@ -40,6 +40,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2020
+-- ACBrCIOTServicos --
+[*] Ajustes nas URLs de Produção do eFrete.
+   Por: mlspinelli
+
 11/03/2020
 -- pcnRetEnvCIOT/pcnCIOTW_eFrete --
 [*] O tipo tcBoolStr estava sendo utilizado de forma indevida, trocado por tcStr.

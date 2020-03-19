@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2005 Anderson Rogerio Bejatto               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:          Daniel Simoes de Almeida               }
+{ Colaboradores nesse arquivo: Anderson Rogerio Bejatto                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -26,28 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 19/09/2011: Régys Borges da Silveira
-|*  - Primeira Versao ACBrCargaBal
-|
-|* 04/04/2019: Iago Mozart
-|*  + Inclusão do campo "Código da informação Extra do item para a versão 3 do 
-|*     arquivo para modelo tipo MGV6
-|*  - Ajustes por Waldir Paim
-|
-|* 14/05/2019: EMBarbosa
-|*  + Inclusão do campo "Observacoes" usado no "arquivo de informações extras"
-|*     ou "arquivo de receitas" da MGV6
-|*  * Informações extras ou relativas a receita movidas para nova classe
-|*     TACBrCargaBalInformacaoExtra usada para o arquivo mencionado acima
-******************************************************************************}
 
 unit ACBrCargaBal;
 

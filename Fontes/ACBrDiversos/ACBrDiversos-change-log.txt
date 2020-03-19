@@ -1,9 +1,10 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,9 +23,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -52,12 +52,11 @@ Símbolo : Significado
 
 14/05/2019
 -- ACBrCargaBal --
-+ Inclusão do campo "Observacoes" usado no "arquivo de informações extras"
-    ou "arquivo de receitas" da MGV6
-* Informações extras ou relativas a receita movidas para nova classe
-    TACBrCargaBalInformacaoExtra usada para o arquivo mencionado acima
-    veja: https://www.projetoacbr.com.br/forum/topic/51307-adi%C3%A7%C3%A3o-do-campo-observa%C3%A7%C3%A3o-nas-informa%C3%A7%C3%B5es-extras-receita-da-balan%C3%A7a/?tab=comments#comment-338350 
-    por: EMBarbosa
++ Inclusão do campo "Código da informação Extra do item para a versão 3 do arquivo para modelo tipo MGV6 por Iago Mozart
+- Ajustes por Waldir Paim
+
+04/04/2019
+-- ACBrCargaBal --
 
 04/07/2018
 -- ACBrValidador --
@@ -687,6 +686,13 @@ Versão 0.8.8b  28/09/09
 		Rotinas: ECF.LeituraMFDSerial(dtInicial,dtFinal) = Retorna MFD por Data; 
 		ECF.LeituraMFDSerial(COOInicial,COOFinal) = Retorna MFD por COO;
  
+08/02/09
+[-] Correção na validação de CEPs de MG e ES (Daniel Simoes de Almeida)
+
+21/12/08
+-- ACBrValidador -- 
+[-] CNPJ 00000000000000 era aceito como válido (Daniel Simoes de Almeida)
+
 Versão 0.8.8b  01/12/08
 -- ACBrConsts --
 [+]    Mensagens de Erro e Alerta de ACBrECF centralizadas em ACBrConsts.pas,
@@ -706,6 +712,9 @@ Versão 0.8.8b  01/12/08
 [*]    Função IntToStrZero modificada para aceitar Int64. Esse problema
        poderia causar "erro de conversão" na criação do arquivo ACBrRFD
 
+29/10/08
+[-] Inscrição Estadual de AL para permitir o digito 1 no tipo do contribuinte
+(Jhony Alceu Pereira)
 
 Versão 0.8.7b  14/04/08
 
@@ -747,6 +756,10 @@ Versão 0.8.7b  14/04/08
 [-]  Corrigido Bug na Leitura dos Totais de Pagamentos na FS600 (Andre Bohn)
 [+]  Implementado a Leitura dos Totais de CNFs para FS600 (Andre Bohn)
 
+30/08/07
+-- ACBrValidador --
+[-] Inscrição Estadual de TO corrigida para suportar numeros com 10 digitos
+(Carlos do Nascimento Filho)
 
 Versão 0.8.6b  15/06/07
 
@@ -877,8 +890,13 @@ Versão 0.8.6b  15/06/07
 -- ACBrCalculadora --
 [+]   Adicionada a propriedade "CorForm" : TColor (por: Nei José Van Lare Junior)
 
+17/03/07
+-- ACBrGIF --
+
+
 
 Versão 0.8.5b  02/12/06
+[+] Inclusão do componente ACBrGIF (Daniel Simões)
 
 -- ACBr --
 [+]   Modo CONSOLE. Todos os componentes e Units do ACBr foram compatibilizadas
@@ -1015,6 +1033,9 @@ Versão 0.8.5b  02/12/06
 -- SynaSer --
 [*]  Fontes da Classe SynaSer atualizados para a versão: 007.000.001
 
+29/05/06
+-- ACBrCMC7 --
+[-] Calculo de CMC7 compatiblizado com o Banrisul (Diogo Augusto Pereira)
 
 
 Versão 0.8.4b  25/05/06

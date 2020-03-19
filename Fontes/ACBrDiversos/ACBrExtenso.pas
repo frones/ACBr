@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,25 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 16/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrExtenso
-|* 30/09/2006: Daniel Simoes de Almeida
-|*  - Adicionada a propriedade ZeroAEsquerda : Boolean (default true)
-|*    Quando True , o valor: 0,21 = Zero Reais e Vinte e Um Centavos
-|*    Quando False, o valor: 0,21 = Vinte e Um Centavos
-|* 22/02/2007: Daniel Simoes de Almeida
-|*  - Adicionada a propriedade Formato : TACBrExtensoFormato (default extPadrao)
-|*    extPadrao -> 15,10 - Quinze Reais e Dez Centavos
-|*    extDolar  -> 15,10 - Dolares Americanos Quinze com 010/100 
-******************************************************************************}
 
 {$I ACBr.inc}
 

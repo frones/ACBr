@@ -106,6 +106,7 @@ begin
     { Peso não foi recebido (TimeOut) }
     fpUltimoPesoLido := -9;
   end;
+  Result := fpUltimoPesoLido;
 end;
 
 end.

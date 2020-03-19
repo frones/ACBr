@@ -471,8 +471,6 @@ begin
 end;
 
 procedure TACBrETQ.FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
-var
-  wCmd: AnsiString;
 begin
   GravarLog('- FinalizarEtiqueta: Copias:'+IntToStr(Copias)+', AvancoEtq:'+IntToStr(AvancoEtq));
 

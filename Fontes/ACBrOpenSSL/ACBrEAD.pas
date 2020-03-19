@@ -1047,7 +1047,7 @@ Var
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
   pmd_ctx: PEVP_MD_CTX;
-  md_value_bin, md_value_hex : array [0..1023] of AnsiChar;
+  md_value_bin : array [0..1023] of AnsiChar;
   NameDgst : AnsiString;
   ABinStr, Base64Str: AnsiString;
   Memory: Pointer;

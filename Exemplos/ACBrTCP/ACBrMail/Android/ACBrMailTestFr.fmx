@@ -1093,6 +1093,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 0
               Text = 'Enviar Mensagem em TXT'
+              TextSettings.WordWrap = True
             end
             object cbUsarHTML: TCheckBox
               Align = Client
@@ -1104,6 +1105,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 1
               Text = 'Enviar Mensagem em HTML'
+              TextSettings.WordWrap = True
             end
             object cbAddImgHTML: TCheckBox
               Align = Client
@@ -1115,6 +1117,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 2
               Text = 'Incluir Imagem em HTML'
+              TextSettings.WordWrap = True
             end
             object cbAddImgAtt: TCheckBox
               Align = Client
@@ -1126,6 +1129,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 3
               Text = 'Incluir Imagem em Anexo'
+              TextSettings.WordWrap = True
             end
             object cbAddPDF: TCheckBox
               Align = Client
@@ -1137,6 +1141,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 4
               Text = 'Incluir Anexo de PDF'
+              TextSettings.WordWrap = True
             end
             object cbAddXML: TCheckBox
               Align = Client
@@ -1148,6 +1153,7 @@ object ACBrMailTestForm: TACBrMailTestForm
               Size.PlatformDefault = False
               TabOrder = 5
               Text = 'Incluir XML por Stream'
+              TextSettings.WordWrap = True
             end
             object cbUsarThread: TCheckBox
               Align = Client

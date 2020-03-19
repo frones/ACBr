@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2020
+-- ACBrMDFeWebServices --
+[-] Ajustes na passagem das informações para gerar e enviar o evento de 
+    Pagamento do Frete
+   Por: Italo Jurisato Junior
+
 18/03/2020
 -- ACBrMDFeManifestos --
 [-] Ajuste na Leitura dados de Pagamento Frete na função LerArqINI

@@ -642,6 +642,7 @@ const
 
   CMetodoConsultar = 'consultar';
   CMetodoRastrear  = 'rastrear';
+  CMetodoConsultarCaptcha = 'consultarcaptcha';
 
   CMetodoSetPorta          = 'setporta';
   CMetodoTemperatura       = 'temperatura';

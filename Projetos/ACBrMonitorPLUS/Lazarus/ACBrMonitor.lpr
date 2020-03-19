@@ -22,7 +22,8 @@ uses
   ACBrLibeSocialRespostas, ACBrLibMDFeConsts, ACBrLibMDFeRespostas,
   ACBrLibReinfConsts, ACBrLibReinfRespostas, ACBrLibNFeRespostas,
   ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas,
-  ACBrLibCertUtils, ACBrLibDeviceUtils;
+  ACBrLibCertUtils, ACBrLibDeviceUtils, ACBrLibConsultaCNPJConsts,
+  ACBrLibConsultaCPFRespostas, DoCNPJUnit, DoCPFUnit;
 
 {$R *.res}
 var

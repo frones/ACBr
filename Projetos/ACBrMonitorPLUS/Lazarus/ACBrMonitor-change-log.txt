@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] ACBrMonitor1, DoCPFUnit, DoCNPJUnit, ACBrMonitorConsts, ACBrCMD
+Adicionado Funcionalidade de ConsultaCNPJ e ConsultaCPF no site da Receita Federal
+
 13/03/2020
 [*] ACBrMonitor1
 Adicionado Informação da Porta ou arquivo de monitoramento do ACBrMonitor no Hint do SysTray

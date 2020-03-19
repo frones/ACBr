@@ -43,21 +43,23 @@ uses
   ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
   ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
-  ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
-  ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
-  ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo,
-  PrintersDlgs, IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe,
-  ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, pgnreConversao,
-  ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
-  ACBrDFeConfiguracoes, ACBrBPe, ACBrBPeDABPeESCPOS, ACBrReinf, ACBreSocial,
-  ACBrIntegrador, LazHelpCHM, pmdfeConversaoMDFe, pcesConversaoeSocial,
-  pcnConversaoReinf, ACBrMonitorConfig, ACBrMonitorConsts, DOACBrNFeUnit,
-  DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit, DoBALUnit,
-  DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit, DoNcmUnit,
-  DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
+  ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrConsultaCNPJ,
+  ACBrConsultaCPF, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
+  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml,
+  pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe, ACBrSAT,
+  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
+  pgnreConversao, ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX,
+  ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
+  fileinfo, ACBrDFeConfiguracoes, ACBrBPe, ACBrBPeDABPeESCPOS, ACBrReinf,
+  ACBreSocial, ACBrIntegrador, LazHelpCHM, pmdfeConversaoMDFe,
+  pcesConversaoeSocial, pcnConversaoReinf, ACBrMonitorConfig, ACBrMonitorConsts,
+  DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit,
+  DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit,
+  DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
-  DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit;
+  DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit, DoCNPJUnit,
+  DoCPFUnit;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -101,6 +103,8 @@ type
     ACBrBPe1: TACBrBPe;
     ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS;
     ACBrCEP1: TACBrCEP;
+    ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
+    ACBrConsultaCPF1: TACBrConsultaCPF;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrEAD1: TACBrEAD;
@@ -1628,6 +1632,8 @@ type
     FDoSAT: TACBrObjetoSAT;
     FDoECF: TACBrObjetoECF;
     FDoBPe: TACBrObjetoBPe;
+    FDoCNPJ: TACBrObjetoConsultaCNPJ;
+    FDoCPF: TACBrObjetoConsultaCPF;
 
     function IsVisible : Boolean; virtual;
 
@@ -1853,6 +1859,9 @@ begin
   FDoSedex := TACBrObjetoSedex.Create(MonitorConfig, ACBrSedex1);
 
   FDoETQ := TACBrObjetoETQ.Create(MonitorConfig, ACBrETQ1);
+
+  FDoCNPJ := TACBrObjetoConsultaCNPJ.Create(MonitorConfig, ACBrConsultaCNPJ1);
+  FDoCPF := TACBrObjetoConsultaCPF.Create(MonitorConfig, ACBrConsultaCPF1);
 
   FDoGNRe := TACBrObjetoGNRe.Create(MonitorConfig, ACBrGNRe1);
   FDoGNRe.OnAntesDeImprimir := @AntesDeImprimir;
@@ -4143,6 +4152,8 @@ begin
   FDoDIS.Free;
   FDoSedex.Free;
   FDoETQ.Free;
+  FDoCNPJ.Free;
+  FDoCPF.Free;
   FDoGNRe.Free;
   FDoPosPrinter.Free;
   FDoBPe.Free;
@@ -6632,7 +6643,9 @@ begin
        (UpperCase(Copy(Objeto, 1, 7)) = 'ESOCIAL') or
        (UpperCase(Copy(Objeto, 1, 5)) = 'REINF') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'BPE') or
-       (UpperCase(Copy(Objeto, 1, 3)) = 'CTE')then
+       (UpperCase(Copy(Objeto, 1, 3)) = 'CTE') or
+       (UpperCase(Copy(Objeto, 1, 4)) = 'CNPJ') or
+       (UpperCase(Copy(Objeto, 1, 3)) = 'CPF') then
     begin
       Linha := Trim(fsProcessar.Text);
       if Copy(Linha, 1, 3) = UTF8BOM then
@@ -6686,6 +6699,10 @@ begin
           FDoEmail.Executar(fsCmd)
         else if fsCmd.Objeto = 'SEDEX' then
           FDoSedex.Executar(fsCmd)
+        else if fsCmd.Objeto = 'CNPJ' then
+          FDoCNPJ.Executar(fsCmd)
+        else if fsCmd.Objeto = 'CPF' then
+          FDoCPF.Executar(fsCmd)
         else if fsCmd.Objeto = 'NCM' then
           FDoNcm.Executar(fsCmd)
         else if fsCmd.Objeto = 'NFE' then

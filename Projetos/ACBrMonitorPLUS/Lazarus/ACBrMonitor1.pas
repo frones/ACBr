@@ -8993,7 +8993,11 @@ begin
     begin
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ImprimeDescPorPercentual := cbxImpDescPorc.Checked;
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ExibeResumoCanhoto       := cbxExibeResumo.Checked;
-      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).TextoResumoCanhoto       := edtMsgResumoCanhoto.Text;
+      if (cbxExibeResumo.Checked) and (trim(edtMsgResumoCanhoto.Text) <> '') then
+        (ACBrNFe1.DANFE as TACBrNFeDANFEClass).TextoResumoCanhoto     := SubstituirVariaveis(edtMsgResumoCanhoto.Text)
+      else
+        (ACBrNFe1.DANFE as TACBrNFeDANFEClass).TextoResumoCanhoto     := edtMsgResumoCanhoto.Text;
+
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).FormularioContinuo       := cbxFormCont.Checked;
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).PosCanhoto               := TPosRecibo( rgLocalCanhoto.ItemIndex );
     end;
@@ -9020,6 +9024,7 @@ begin
       ACBrNFeDANFeRL1.ExpandirDadosAdicionaisAuto:= cbxExpandirDadosAdicionaisAuto.Checked;
       ACBrNFeDANFeRL1.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
       ACBrNFeDANFeRL1.ImprimeDescAcrescItem:= TpcnImprimeDescAcrescItem(rgImprimeDescAcrescItemNFe.ItemIndex);
+
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then
     begin

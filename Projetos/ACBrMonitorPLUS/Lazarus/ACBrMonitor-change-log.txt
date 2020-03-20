@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] ACBrMonitor1
+Adicionado funcionalidade de validar Variaveis na Mensagem personalizada do canhoto de NFe.
+
 [+] ACBrMonitor1, DoCPFUnit, DoCNPJUnit, ACBrMonitorConsts, ACBrCMD
 Adicionado Funcionalidade de ConsultaCNPJ e ConsultaCPF no site da Receita Federal
 

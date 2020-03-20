@@ -101,19 +101,14 @@ begin
   end;
 
   if (ADataNascimento = '') then
-    raise Exception.Create('Data Nascimento não informado.')
-  else
-  begin
-    if not( ValidarCPF(ACPF) ) then
-      raise Exception.Create('CPF ' + ACPF + ' inválido.');
-  end;
+    raise Exception.Create('Data Nascimento não informado.');
 
   if (ACaptcha = '') then
     raise Exception.Create('Captcha não informado.');
 
   with TACBrObjetoConsultaCPF(fpObjetoDono) do
   begin
-    ACBrConsultaCPF.Consulta(ACPF, ADataNascimento, ACaptcha);
+    ACBrConsultaCPF.Consulta(ACPF, StringReplace(ADataNascimento, '/', '', [rfReplaceAll]), ACaptcha);
     RespostaConsulta;
   end;
 
@@ -218,7 +213,7 @@ begin
       Resp.DigitoVerificador:= DigitoVerificador;
       Resp.DataInscricao:= DataInscricao;
 
-      fpCmd.Resposta := Resp.Gerar;
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
     end;
   finally
     Resp.Free;

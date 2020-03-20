@@ -219,7 +219,7 @@ begin
       Resp.CNAE2:= CNAE2;
       Resp.NaturezaJuridica:= NaturezaJuridica;
 
-      fpCmd.Resposta := Resp.Gerar;
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
     end;
   finally
     Resp.Free;

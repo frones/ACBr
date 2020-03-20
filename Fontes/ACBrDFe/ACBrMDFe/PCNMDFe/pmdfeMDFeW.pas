@@ -420,7 +420,8 @@ begin
     if (MDFe.Rodo.infANTT.RNTRC <> '') or
        (MDFe.Rodo.infANTT.infCIOT.Count > 0) or
        (MDFe.Rodo.infANTT.valePed.disp.Count > 0) or
-       (MDFe.rodo.infANTT.infContratante.Count > 0) then
+       (MDFe.rodo.infANTT.infContratante.Count > 0) or
+       (MDFe.rodo.infANTT.infPag.Count > 0) then
     begin
       Gerador.wGrupo('infANTT', '#02');
       Gerador.wCampo(tcStr, '#02', 'RNTRC', 08, 08, 0, OnlyNumber(MDFe.Rodo.infANTT.RNTRC), DSC_RNTRC);

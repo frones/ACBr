@@ -46,6 +46,9 @@ Símbolo : Significado
 -- pmdfeEnvEventoMDFe --
 [-] Correção na leitura das listas Comp e infPrazo do XML de eventos.
    Por: Valter F. C.
+-- pmdfeMDFeW --
+[-] Correção para geração do grupo infPag.
+   Por: BigWings
 
 19/03/2020
 -- ACBrMDFeWebServices --

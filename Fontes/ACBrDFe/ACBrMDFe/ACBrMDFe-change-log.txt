@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2020
+-- pmdfeEnvEventoMDFe --
+[-] Correção na leitura das listas Comp e infPrazo do XML de eventos.
+   Por: Valter F. C.
+
 19/03/2020
 -- ACBrMDFeWebServices --
 [-] Ajustes na passagem das informações para gerar e enviar o evento de 

@@ -12,7 +12,7 @@ uses
     LResources, FileUtil,
   {$ENDIF}
   Forms, Controls, Graphics, Dialogs,
-  StdCtrls, Buttons, ACBrDevice ;
+  StdCtrls, Buttons, ACBrDevice, ACBrDeviceSerial ;
 
 type
   TfrConfiguraSerial = class(TForm)

@@ -45,6 +45,9 @@ var
 
 implementation
 
+uses
+  ACBrConsts;
+
 { TForm5 }
 
 procedure TForm5.FormCreate(Sender : TObject);

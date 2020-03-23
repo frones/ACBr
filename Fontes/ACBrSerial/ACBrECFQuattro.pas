@@ -30,20 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 15/03/2006:  Daniel Simoes de Almeida
-|*   Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-|* 15/05/2006:  Daniel Simoes de Almeida
-|*   - Corrigido vários bugs: GetEstado, GetTotalPago, FechaRelatorio,
-|*     FechaCupom
-|* 18/06/2008:  Joao Victor Maia Fernandes
-|*   LerTotaisAliquota, LerTotaisFormaPagamento, LerTotaisComprovanteNaoFiscal,
-|*   TotalSubstituicaoTributaria, CNPJ, IE, DataMovimento, GrandeTotal,
-|*   VendaBruta, TotalDescontos, TotalCancelamentos, TotalAcrescimos,
-|*   NumCOOInicial, NumUltimoItem, TotalIsencao, TotalNaoTributado
-******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrECFQuattro ;

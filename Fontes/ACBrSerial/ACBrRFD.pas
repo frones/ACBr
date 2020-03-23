@@ -30,15 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 10/04/2008: Daniel Simoes de Almeida
-|*  - Adicionado campo [ECF] -> DataHoraSwBasico= em ACBRRFD.INI
-|*    Se preenchido, será informado no campo Data/Hora da gravação do SB do
-|*    registro E01... Se não informado grava campo com vazios
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrRFD;

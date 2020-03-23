@@ -30,16 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 30/08/2007: Marcio Jose da Silva
-|*  - Primeira Versao ACBrBALRinnert
-|*
-|* 10/10/2016: Elias César Vieira
-|*  - Refatoração de ACBrBALRinnert
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrBALRinnert;

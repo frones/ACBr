@@ -30,13 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 30/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrCHQImpressoraComum
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQImpressoraComum;

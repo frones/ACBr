@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:   Fabio Farias                                  }
+{ Colaboradores nesse arquivo: Fabio Farias                                    }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -29,21 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 04/10/2005: Fabio Farias  / Daniel Simões de Almeida
-|*  - Primeira Versao ACBrBALFilizola
-|* 25/05/2005: Daniel Simoes de Almeida
-|*  - Adaptado para funcionar com vários modelos de Filizola (MF, BP) permitindo
-|*    variação na posição do ponto flutante
-|* 16/02/2007: Juliano Pereira dos Santos
-|*  - Adaptado para funcionar com modelo "CS"
-|*
-|* 11/10/2016 - Elias César Vieira
-|*  - Refatoração de ACBrBALFilizola
-******************************************************************************}
 
 {$I ACBr.inc}
 

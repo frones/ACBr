@@ -30,15 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 24/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrCHQSchalter
-|* 12/11/2005: Daniel Simoes de Almeida
-|*  - Corrigido métodos ImprimeLinha e ImprimeVerso
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQSchalter;

@@ -30,56 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 28/06/2004:  Daniel Simoes de Almeida
-|*   Inicio do desenvolvimento
-|* 31/05/2005:  Daniel Simoes de Almeida
-|*   Variaveis Subtotal ou TotalPago poderiam, conter valores com mais de 2
-|*   decimais, o que poderia causar problemas nas comparações dos valores.
-|*   -  Bug reportado por Licerio Jose Rodrigues Neto
-|* 28/07/2005:  Daniel Simoes de Almeida
-|*   Leitura do comando de Abertura de gaveta não era decodificada com AscToString
-|*   -  Bug reportado por Fabio Farias
-|* 05/08/2005:  Daniel Simoes de Almeida
-|*  - Propriedade "Operador" será gravada no arquivo ACBrECFxxx.INI
-|*  - Rodapé padrão modificado para incluir as Informações: Versao do ACBr e
-|*  Operador
-|* 12/08/2005:  Daniel Simoes de Almeida
-|*  - Troco no cupom não era subtraido da forma de Pagamento Dinheiro
-|* 27/10/2005: Daniel Simoes de Almeida
-|*  - Modificado o Texto impresso apos o termino das Formas de pagamento de
-|*    "Valor Recebido" para "S O M A"...
-|*    - Essa linha será impressa apenas se tiver mais de 1 pagamento no Cupom
-|* 22/11/2005: Daniel Simoes de Almeida
-|*  - Relatorio Gerencial não imprimia a primeira linha
-|*  - Relatorio Gerencial modificado para imprimir apenas um cabeçalho,
-|*    semelhante aos ECFs novos (não impreme mais uma Leitura X)
-|*  - Corrigido Consumo excessivo de CPU ao vender Muitos Itens
-|* 29/11/2005: Daniel Simoes de Almeida
-|*  - Corrigido bug no retorno da propriedade NomeArqINI
-|* 03/05/2006:  Daniel Simoes de Almeida
-|*  - Usando Arquivos ou portas paralelas, em algumas ocasioes ocorria erro de
-|*    I/O ao Ativar     (bug reportado por Fabio Farias)
-|* 06/02/2007:  Thiago Delgado Pinto
-|*  - Adicionada a função "NumeroColunas", para facilitar a impressao de linhas
-|*    com expandido
-|* 21/02/2007:  Marcos Agostini
-|*  - Corrigido Bug no Cancelamento de Item com Desconto
-|* 06/03/2007:  Fabio Farias
-|*  - Corrigido Bug na Abertura de Cupom Fiscal Vinculado, quando Cupom anterior
-|*    continha mais de uma forma de Pagamento
-|* 01/04/2007:  Daniel Simoes de Almeida
-|*  - Implementados métodos de Cupom Não Fiscal
-|* 11/05/2007:  Fabio Farias
-|*  - Corrigido Bug no Cancelamento de Item (arredondamento)
-|* 24/12/2008:  Daniel Simoes de Almeida
-|*  - Implementado retorno da propriedade DataMovimento (por Waldir Paim)
-|*  - Identificação do Cliente no rodapé do Cupom estava duplicando
-|*    as informações, corrigido
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrECFNaoFiscal ;

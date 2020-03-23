@@ -30,15 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 30/09/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrDISGertecTeclado
-|* 05/11/2004: Daniel Simoes de Almeida
-|*  - Adcionado suporte a Linux
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrDISGertecTeclado;

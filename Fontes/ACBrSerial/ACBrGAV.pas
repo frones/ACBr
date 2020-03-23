@@ -30,18 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 28/06/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrGAV
-|* 23/01/2007: Daniel Simoes de Almeida
-|*  - Corrigido Problemas de FreeNotification com a propriedade "ECF"
-|* 12/07/2007: André Ferreira de Moraes
-|*  - Corrigido Problemas de perda do comando de abertura quando
-|*    modelo = gavImpressoraComum e usado ACBrMonitorConsole
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrGAV;

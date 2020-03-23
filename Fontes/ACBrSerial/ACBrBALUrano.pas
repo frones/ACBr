@@ -30,16 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 17/02/2009: Ivan Carlos Martello
-|*  - Primeira Versao ACBrBALUrano
-|*
-|* 11/10/2016 - Elias César Vieira
-|*  - Refatoração de ACBrBALUrano
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrBALUrano;

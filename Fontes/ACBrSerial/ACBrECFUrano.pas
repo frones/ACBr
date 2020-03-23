@@ -29,41 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 21/09/2005: Daniel Simões de Almeida / Aurimenes Apolonio B Silva
-|* Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-|* 08/12/2005:  Daniel Simoes de Almeida
-|*  - Diminuido tempo de alguns Sleeps de 100 para 10 a fim de agilizar a
-|*    comunicaçao com o ECF (experimental)
-|* 29/02/2008:  Valmor Flores
-|*  - Implementado CarregaAliquotas
-|* 11/03/2008:  Gelson Oliveira
-|*  - Adequacao da Rotina FechaCupom para imprimir a mensagem promocional.
-|*  (Quatro linhas ao final do cupom contendo 48 caracteres cada linha.)
-|* 13/07/2009:  Carlos Antonio da Silva
-|*  - Alteração do método GetEstado para obter estado de Redução Z
-|*  - Implementados novos métodos:
-|*    - RetornaInfoECF
-|*    - GetCNPJ
-|*    - GetIE
-|*    - GetGrandeTotal
-|*    - GetVendaBruta
-|*    - GetNumCRZ
-|*    - GetNumGNF
-|*    - GetNumCOOInicial
-|*    - GetTotalCancelamentos
-|*    - GetTotalDescontos
-|*    - GetTotalAcrescimos
-|*    - GetTotalIsencao
-|*    - GetTotalNaoTributado
-|*    - GetTotalSubstituicaoTributaria
-|*    - LerTotaisAliquota
-|*    - LerTotaisFormaPagamento
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrECFUrano ;

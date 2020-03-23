@@ -30,16 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 24/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrCHQChronos
-|* 01/06/2005: Daniel Simoes de Almeida
-|*  - Corrigido BUG no envio da Data em Linux (data como dd-mm-aa)
-|*    Bug reportado por Matheus Nogueira
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQChronos;

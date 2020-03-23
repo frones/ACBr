@@ -35,15 +35,6 @@
 |* Everton H. Cardoso  -  Bematech S/A - Testes deste Modulo  
 ******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 24/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrCHQBematech
-|* 25/04/2014 : William Duarte
-|*  - Segunda Versao ACBrCHQBematech
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQBematech;

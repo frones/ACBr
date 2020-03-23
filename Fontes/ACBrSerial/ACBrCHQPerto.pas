@@ -35,16 +35,6 @@
  |* Miguel Silva  -  Perto S/A - Teste deste Modulo
  ******************************************************************************}
 
-{******************************************************************************
- |* Historico
- |*
- |* 24/08/2004: Daniel Simoes de Almeida
- |*  - Primeira Versao ACBrCHQPerto
- |* 07/07/2009: Marcelo Correia Pinheiro
- |*  - Corrigido bug na comuicação com a impressora e definição de timeouts
- |*    para comandos enviados à impressora.
- ******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQPerto;

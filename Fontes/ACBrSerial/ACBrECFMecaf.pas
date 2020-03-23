@@ -40,53 +40,7 @@
 |*   STX/ETX. Se o protocolo estiver diferente não funcionará, é possivel mudar
 |*   o protocolo usando o "MODO MENU" da impressora.
 ******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 13/09/2004:  Daniel Simoes de Almeida
-|*   Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-|* 23/05/2005:  Daniel Simoes de Almeida
-|*   Corrigido BUG em FechaCupom. Linhas de Observação eram impressas com
-|*   alinhamento errado.
-|*   Corrigido BUG em Estado. No incio do dia Estado sempre constava como
-|*   estBloqueda
-|*   -  Bugs reportados por Licerio Jose Rodrigues Neto
-|* 16/06/2005:  Daniel Simoes de Almeida e Licerio Jose Rodrigues Neto
-|*   - Adaptado para suporte da Versao FCP201 da MECAF (antiga)
-|* 23/05/2005:  Daniel Simoes de Almeida
-|*   - Corrigido BUG em VendeItem... para a MECAF imprimir Item em 2 linhas (e
-|*     e nao 3 linhas) ela deve restringir a descriçao em 20 caracteres
-|*     - Bug Reportado por Rildecy de Queiroz Borba
-|* 01/11/2005: Gabriel Fernandes - Duel Informática
-|*   - Compatibilizado com a vesão 301
-|*   - Corrigido BUG. Quando a redução z ficava pendente de um dia para o outro
-|*     o ECF ficava em estDesconhecido.
-|* 08/12/2005:  Daniel Simoes de Almeida
-|*  - Diminuido tempo de alguns Sleeps de 100 para 10 a fim de agilizar a
-|*    comunicaçao com o ECF (experimental)
-|* 27/04/2006:  Daniel Simoes de Almeida e Valmor Florez
-|*   - Melhorado o suporte a Versao FCP201/301 da MECAF (antiga)
-|* 29/06/2006:  Daniel Simoes de Almeida
-|*   - Métodos que usam campo de Texto livre modificados para filtrar os
-|*     caracteres acentuados
-|* 04/04/2007:  Daniel Simoes de Almeida
-|*  - Implementados métodos de Cupom Não Fiscal
-|* 20/08/2007:  Daniel Simoes de Almeida
-|*  - Adicionada as propriedades: CNPJ, IE, DataMovimento, NumCOOInicial,
-|*    NumCRZ, VendaBruta, GrandeTotal, TotalDescontos, TotalAcrescimos,
-|*    TotalCancelamentos, TotalIsencao, TotalNaoTributado,
-|*    TotalSubstituicaoTributaria,
-|*  - Adicionado os métodos: LerTotaisAliquota, LerTotaisFormaPagamento,
-|*    LerTotaisComprovanteNaoFiscal
-|* 06/11/2008:  Anderson Rogerio Bejatto
-|*  - Alteração Método VendeItem
-|* 24/12/2008:  Daniel Simoes de Almeida
-|*  - Cancelamento de cupons sem itens retornava Erro 51. Corrigido vendendo um
-|*    Item de 0.01 centavos antes de cancelar   (Reportado por Licério Neto)
-|*  - Metodo CarregaAliquotas alterado para incluir prefixo 'T' no indice
-|* 25/03/2010:  José Nilton Pace
-|*  - Implementado método GETNUMCCF
-******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrECFMecaf ;

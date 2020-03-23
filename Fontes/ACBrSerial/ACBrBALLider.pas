@@ -5,7 +5,8 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Laércio S Amici | Emerson Virissimo da Silva    }
+{ Colaboradores nesse arquivo: Laércio S Amici                                 }                      
+{                              Emerson Virissimo da Silva                      }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -31,7 +32,7 @@
 {******************************************************************************}
 
 {******************************************************************************
-|* Historico
+|* Observacoes
 |*
 |* 27/05/2014: Laércio S Amici | Emerson Virissimo da Silva
 |*  - Primeira Versao ACBrBALLider
@@ -51,9 +52,6 @@
 |*      Configuração de leitura:
 |*      Baud Rate = 2400, Data Bits = 8, Parity = None, Stop Bits = 1,
 |*                        Handshaking = None
-|*
-|* 10/10/2016: Elias César Vieira
-|*  - Refatoração de ACBrBALLider
 ******************************************************************************}
 
 {$I ACBr.inc}

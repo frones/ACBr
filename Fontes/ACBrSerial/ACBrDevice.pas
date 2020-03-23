@@ -29,17 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{                                                                              }
-{******************************************************************************
-|* Historico
-|*
-|* 30/10/2008: Primeira Versao
-|*    Daniel Simoes de Almeida
-|*  - Migraçao do componente TACBrDevice de ACBrBase.pas para essa Unit para
-|*    evitar que componentes, que usem TACBrComponente (de ACBrBase.pas) mas que
-|*    nao usem TACBrDevice, carreguem codigo desnecessario como por exemplo
-|*    toda a classe SynaSer
-******************************************************************************}
 
 {$I ACBr.inc}
 

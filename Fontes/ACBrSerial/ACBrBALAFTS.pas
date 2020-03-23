@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Paulo Henrique de Castro                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -30,15 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 31/03/2016: Paulo Henrique de Castro
-|*  - Primeira Versao ACBrBALSaturno
-|*
-|* 10/10/2016: Elias César Vieira
-|*  - Refatoração de ACBrBALAFTS
-******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrBALAFTS;

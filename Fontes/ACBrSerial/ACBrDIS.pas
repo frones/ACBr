@@ -30,18 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 28/09/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrDIS
-|* 15/03/2007: Daniel Simoes de Almeida
-|*  - Adicionada a propriedade "PausaVai_e_Volta" em ACBrDISLinha. (default 3)
-|*    - Permite deifinir uma pausa antes de inverter a direção
-|* 15/05/2007: Daniel Simoes de Almeida
-|*  - Adicionada a propriedade "RemoveAcentos : Boolean" default = True
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrDIS;

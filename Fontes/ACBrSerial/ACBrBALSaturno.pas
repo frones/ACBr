@@ -30,16 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 29/03/2016: Wislei de Brito Fernandes
-|*  - Primeira Versao ACBrBALSaturno
-|*
-|* 10/10/2016: Elias César Vieira
-|*  - Refatoração de ACBrBALSaturno
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrBALSaturno;

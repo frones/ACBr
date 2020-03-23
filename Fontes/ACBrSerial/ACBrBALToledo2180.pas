@@ -29,19 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 04/10/2005: Daniel Simões de Almeida
-|*  - Primeira Versao ACBrBALToledo
-|* 11/04/2007 Daniel Simões de Almeida
-|*  - Corrigido para trabalhar com diversos protocolos da Toledo
-|*
-|* 11/10/2016 - Elias César Vieira
-|*  - Refatoração de ACBrBALToledo2180
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrBALToledo2180;

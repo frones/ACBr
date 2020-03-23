@@ -30,15 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 20/08/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrCHQ
-|* 23/01/2007: Daniel Simoes de Almeida
-|*  - Corrigido Problemas de FreeNotification com a propriedade "ECF"
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrCHQ;

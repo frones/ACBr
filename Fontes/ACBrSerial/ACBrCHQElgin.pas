@@ -5,7 +5,8 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Laércio S Amici                                 }
+{                              Emerson Virissimo da Silva                      }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -29,15 +30,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 16/03/2015: Laércio S Amici | Emerson Virissimo da Silva
-|*  - Primeira Versao ACBrCHQElgin
-|*    Baseado na impressora Elgin ImpreCheq
-|*
-******************************************************************************}
 
 {$I ACBr.inc}
 

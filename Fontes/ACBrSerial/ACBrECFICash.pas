@@ -29,17 +29,7 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 25/11/2005: Rodrigo Frühwirth
-|*   Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-|* 06/12/2005:  Rodrigo Frühwirth
-|*  - Corrigido bug na leitura do Estado do ECF
-|* 08/12/2005:  Daniel Simoes de Almeida
-|*  - Diminuido tempo de alguns Sleeps de 100 para 10 a fim de agilizar a
-|*    comunicaçao com o ECF (experimental)
-******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrECFICash ;

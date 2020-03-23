@@ -31,20 +31,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 21/09/2004: Daniel Simoes de Almeida
-|*  - Primeira Versao ACBrLCB
-|* 23/08/2006: Daniel Simoes de Almeida
-|*  - Modificado mecanismo de leitura com o uso da propriedade SUFIXO, para
-|*    evitar a leitura de códigos incompletos.
-|* 23/08/2006: Daniel Simoes de Almeida
-|*  - Modificado para permitir a String "TECLADO" na Porta. Isso permite
-|*    ativar o componente, mesmo sem a presença de um Leitor Serial.
-|*    - Útil apenas para quem controla a Fila do ACBrLCB manualmente
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrLCB;

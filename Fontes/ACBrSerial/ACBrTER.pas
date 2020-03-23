@@ -30,16 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 25/10/2005: Gabriel Rodrigo Frones
-|*  - Primeira Versao ACBrTER
-|
-|* 11/05/2011: Marcelo Ferreira (Marcelo-sp)
-|*  - Implemento - Função LeBalanca
-******************************************************************************}
-
 {$I ACBr.inc}
 
 Unit ACBrTER;

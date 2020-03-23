@@ -30,14 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/05/2004: Primeira Versao
-|*    Daniel Simoes de Almeida
-|*    Criaçao de um arquivo unico para registro dos Componentes
-******************************************************************************}
-
 {$I ACBr.inc}
 unit ACBrSerialReg;
 

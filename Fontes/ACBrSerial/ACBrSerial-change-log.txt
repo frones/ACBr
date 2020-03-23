@@ -140,6 +140,11 @@ Data: 21/12/2019
 -- ACBrEscBematech --
 [*] Adicionada proteção contra A.V., caso a resposta da Impressora seja inválida
     (por: DSA)
+	
+Data: 19/12/2019
+--ACBrBAL--
+[*] Inclusão da classe ACBrBALLibratekWT3000IR (por André Adami)	
+
 
 Data: 02/12/2019
 -- ACBrETQPpla --
@@ -171,6 +176,18 @@ Data: 25/09/2019
 [+] Adicionado novo modelo: ppEscGPrinter
     Muito utilizado por diversos fabricantes, e bastante compatível com Epson Esc/Pos
     (por: DSA)
+
+Data: 26/08/2019
+-- ACBrBAL --
+[*] Inclusão do modelo ACBrBALWeightechWT3000_ABS. (por André Adami)
+
+Data: 30/07/2019
+-- ACBrBAL --
+[*] Inclusão do modelo ACBrBALWeightechWT1000. (por Daniel Sonda)
+
+Data: 10/07/2019
+-- ACBrECF -- 
+[+] Inclusão do modelo EscPosStar. (por Jean Carlos dos Santos)
 
 Data: 21/05/2019
 -- ACBrPosPrinter --
@@ -206,6 +223,14 @@ Data: 21/02/2019
 [+] Adicionado novo modelo "ppCustomPos", para permitir a compatibilização com as
     impressoras da Custom http://www.nitere.com.br/produto-impressoras-q3x
     (por: DSA)
+	
+Data: 11/02/2019
+-- ACBrESCZJiang --
+[+] Inclusão do novo modelo ZJiang. (por Daniel Simões de Almeida)
+	
+Data: 08/02/2019
+-- ACBrBAL --
+[*] Adicionado modelo ACBrBALMarelCG62XL. (por Smaili Santana Amorim)
 
 Data: 03/02/2019
 -- ACBrPosPrinter, ACBrEscPosHook --
@@ -433,6 +458,10 @@ Data: 27/01/2019
 Data: 05/04/2018
 -- ACBrETQEpl2 --
 [-] Correção no método "ImprimirLinha" (por: Elias)
+
+Data: 04/01/2018
+-- ACBrBAL --
+[*] Inclusão do modelo ACBrBALPrecision. (por: Fabio Junior Borba)
 
 Data: 18/03/2018
 -- ACBrPosPrinter --
@@ -1184,6 +1213,18 @@ Data: 11/10/2016
 -- ACBrDevice --
 [-] Correção para suporte a portas paralelas (por: DSA e Waldir Paim)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=32722
+	
+Data: 10/10/2016
+--ACBrBAL -- 
+[*] Refatoração de ACBrBALAFTS
+[*] Refatoração de ACBrBALSaturno 
+[*] Refatoração de ACBrBALFilizola
+[*] Refatoração de ACBrBALLider
+[*] Refatoração de ACBrBALLucasTec 
+[*] Refatoração de ACBrBALRinnert 
+[*] Refatoração de ACBrBALToledo2180 
+[*] Refatoração de ACBrBALUrano
+[*] Refatoração de ACBrBALUranoPOP(por: Elias César Vieira)	
 
 Data: 07/10/2016
 -- ACBrPosPrinter --
@@ -1364,6 +1405,10 @@ Data: 27/07/2016
 [*] Ajustes para permitir calculos com Truncamento, quando:
     ArredondaItemMFD := False                                   (por: DSA)
     http://www.projetoacbr.com.br/forum/topic/31494-truncar-valor-total-item-acbrecfnaofiscal/
+
+Data: 12/07/2016
+--ACBrBAL --
+[*] Inclusão da ACBrBALLibratek (por Marciano da Rocha)
 
 Data: 27/06/2016
 -- ACBrECFEscECF --
@@ -1620,6 +1665,11 @@ Data; 04/02/2016
 -- ACBrETQPpla --
 [*] Ajuste para permitir SubFontes até 999 em "ImprimirTexto"
     http://www.projetoacbr.com.br/forum/topic/27887-subfonte-do-componente-acbretq/
+	
+Data: 16/03/2015
+-- ACBrCHQ --
+[*] Adicionado modelo ACBrCHQElgin baseado na impressora Elgin ImpreCheq.
+    (Laércio S Amici | Emerson Virissimo da Silva)
 
 Data: 27/01/2015   (por: DSA)
 -- ACBrECF --
@@ -2417,6 +2467,10 @@ Data: 06/03/2015
 [*] Ajuste no método: MudaHorarioVerao para compatibilizar com protocolo novo
     em modelos mais recentes (por: jperim)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=20198
+	
+Data: 04/03/2015
+-- ACBrBAL --
+[*] Inclusão do modelo ACBrBALToledo9091_8530_8540. (por Rafael Dipold)
 
 Data: 20/02/2015
 -- ACBrECFBematech --  (por: DSA)
@@ -2780,6 +2834,10 @@ Data: 10/04/2014
 -- ACBrECFDaruma --
 [*] Implementada rotina de descarga da DLL  (por: DSA)
 
+Data: 25/04/2014
+-- ACBRCHQBematech --
+[*] Segunda Versao ACBrCHQBematech (por William Duarte)
+
 Data: 08/04/2014
 -- ACBrECFEpson --
 [*] IdentificaOperador modificado para não imprimir Relatório Gerencial após a
@@ -3034,6 +3092,11 @@ Data: 15/05/2013
 [+] Adicionado campos ao rodape para informar o valor dos impostos conforme 
     lei de transparência dos impostos, vejam no demo do ACBrECF como utilizar
 
+Data: 20/04/2013
+-- ACBrPosPrinter --
+[+] Inclusão do componente ACBrPosPrinter para comunicação com impressoras não
+    fiscais. (Daniel Simões de Almeida)
+	
 Data: 17/03/2013
 -- ACBrECF --
 [+] Adicionada funcionalidade de Impressão de Rodapé de Bar e Restaurantes
@@ -4321,6 +4384,10 @@ Versão 0.9.6  11/09/2010
 -- ACBrECF --
 [-] Corrigido rotina VendaItem, para Daruma FS345, quando quantidade do item 
     tem 3 casas decimais (Isaque Pinheiro).
+	
+27/08/2010
+-- ACBrBal --
+[*] Novo modelo de balança adicionado, LucasTec. (por João Paulo)
 
 Versão 0.9.6  15/07/2010
 -- ACBrRFD --
@@ -4453,6 +4520,10 @@ Versão 0.8.9b  03/04/10
 -- ACBrECFDaruma --
 [-]    Corrigido Bug no método "UsuarioAtual", não carregava o numero do usuário 
        atual no modelo FS345. (Por Isaque Pinheiro)
+	   
+Data: 25/03/2010 
+-- ACBrECFMecaf --
+[+] Implementado método GETNUMCCF (por José Nilton Pace)
 
 Versão 0.9.0a  16/03/10
 -- ACBrECF --
@@ -4856,7 +4927,38 @@ Versão 0.8.8b  28/09/09
 	 - ECF´s: Bematech
 		Rotinas: ECF.LeituraMFDSerial(dtInicial,dtFinal) = Retorna MFD por Data; 
 		ECF.LeituraMFDSerial(COOInicial,COOFinal) = Retorna MFD por COO;
- 
+
+Data: 13/07/2009 	
+-- ACBrECFUrano --
+[*] Alteração do método GetEstado para obter estado de Redução Z
+[*] Implementados novos métodos: RetornaInfoECF, GetCNPJ, GetIE, GetGrandeTotal,
+    GetVendaBruta, GetNumCRZ, GetNumGNF, GetNumCOOInicial, GetTotalCancelamentos,
+    GetTotalDescontos, GetTotalAcrescimos, GetTotalIsencao, GetTotalNaoTributado,
+    GetTotalSubstituicaoTributaria, LerTotaisAliquota, LerTotaisFormaPagamento.
+(por Carlos Antonio da Silva)	
+
+Data: 07/07/2009 
+-- ACBRCHQPerto --
+[-] Corrigido bug na comuicação com a impressora e definição de timeouts
+    para comandos enviados à impressora. (por Marcelo Correia Pinheiro)
+	
+Data: 02/03/2009
+-- ACBrECFDataRegis -- 
+[*] Compatibilização com a Versão 04 (por Weber Luvisa (ByteCom))
+
+Data: 24/12/2008  
+-- ACBrECFMecaf --
+[-] Cancelamento de cupons sem itens retornava Erro 51. Corrigido vendendo um
+    Item de 0.01 centavos antes de cancelar   (Reportado por Licério Neto)
+	(por Daniel Simoes de Almeida)
+[*] Metodo CarregaAliquotas alterado para incluir prefixo 'T' no indice
+    (por Daniel Simoes de Almeida)
+-- ACBrECFNaoFiscal --
+Daniel Simoes de Almeida
+|*  - Implementado retorno da propriedade DataMovimento (por Waldir Paim)
+|*  - Identificação do Cliente no rodapé do Cupom estava duplicando
+|*    as informações, corrigido
+	
 Versão 0.8.8b  01/12/08
 -- ACBrConsts --
 [+]    Mensagens de Erro e Alerta de ACBrECF centralizadas em ACBrConsts.pas,
@@ -4870,12 +4972,45 @@ Versão 0.8.8b  01/12/08
 [+]    Adicionado varios metodos e propriedades, por: Joao Victor Maia Fernandes
 
 -- ACBrECFYanco --
-[+]    Adicionado varios metodos e propriedades, por: Sauli Bueno
+[+] Adicionado varios metodos e propriedades: GetGrandeTotal, GetDataMovimento, GetNumCRO,
+    GetNumCRZ, GetVendaBruta, GetTotalDescontos, GetTotalCancelamento, GetTotalAcrescimos, 
+	LerTotaisAliquota, GetTotalNaoTributado, GetTotalSubstituicaoTributaria, GetTotalIsencao.
+[-] Correção no método GetDataHora
+(por: Sauli Bueno)
 
 -- ACBrUtil --
 [*]    Função IntToStrZero modificada para aceitar Int64. Esse problema
        poderia causar "erro de conversão" na criação do arquivo ACBrRFD
 
+Data: 06/11/2008  
+-- ACBrECFMecaf --
+[*] Alteração Método VendeItem (por Anderson Rogerio Bejatto)
+
+
+Data: 30/10/2008
+-- ACBrDevice --
+[*] Migraçao do componente TACBrDevice de ACBrBase.pas para essa Unit para
+    evitar que componentes, que usem TACBrComponente (de ACBrBase.pas) mas que
+    nao usem TACBrDevice, carreguem codigo desnecessario como por exemplo
+    toda a classe SynaSer. (por Daniel Simoes de Almeida)
+	
+Data: 10/10/2008
+-- ACBrECFYanco --
+[+] Implementação do método GetHorarioVerao
+[+] Implementação do método MudaHorarioVerao
+[+] Implementação do método GetCNPJ
+[+] Implementação do método GetIE
+[-] Correção no método GetEstado
+[-] Correção no método CarregaFormasPagamento
+(por Anderson Rogerio Bejatto)
+
+Data: 18/06/2008 
+-- ACBrECFQuattro --
+[+] LerTotaisAliquota, LerTotaisFormaPagamento, LerTotaisComprovanteNaoFiscal,
+    TotalSubstituicaoTributaria, CNPJ, IE, DataMovimento, GrandeTotal,
+    VendaBruta, TotalDescontos, TotalCancelamentos, TotalAcrescimos,
+    NumCOOInicial, NumUltimoItem, TotalIsencao, TotalNaoTributado 
+	(por Joao Victor Maia Fernandes)
 
 Versão 0.8.7b  14/04/08
 
@@ -4917,6 +5052,62 @@ Versão 0.8.7b  14/04/08
 [-]  Corrigido Bug na Leitura dos Totais de Pagamentos na FS600 (Andre Bohn)
 [+]  Implementado a Leitura dos Totais de CNFs para FS600 (Andre Bohn)
 
+Data: 10/04/2008
+-- ACBrRFD --
+[+] Adicionado campo [ECF] -> DataHoraSwBasico= em ACBRRFD.INI
+    Se preenchido, será informado no campo Data/Hora da gravação do SB do
+    registro E01... Se não informado grava campo com vazios
+(por Daniel Simoes de Almeida)
+
+Data: 11/03/2008
+-- ACBrECFUrano --
+[*] Adequacao da Rotina FechaCupom para imprimir a mensagem promocional.
+   (Quatro linhas ao final do cupom contendo 48 caracteres cada linha.)
+(por Gelson Oliveira)
+
+Data: 29/02/2008
+-- ACBrECFUrano --
+[+] Implementado CarregaAliquotas. (por Valmor Flores)
+
+Data: 11/12/2007 
+-- ACBrECFDataRegis --
+[*] Implementação de varios Metodos e Comparação com Implementacao do Anderson R B
+(porJoão Victor Maia Fernandes)
+
+Data: 08/12/2007
+-- ACBrECFDataRegis --
+[-] Alteração do Metodo Carrega aliquota, pois a Dataregis apresenta defeito
+    (por Anderson Rogerio Bejatto)
+	
+Data: 04/12/2007
+-- ACBrECFNCR --
+[+] Inclusão do modelo ACBrNCR. (por André Bohn)
+
+Data: 28/11/2007  
+-- ACBrECFDataRegis --
+[*] Implementacao de varios Metodos (por Anderson Rogerio Bejatto
+
+Data: 30/08/07
+--  ACBrBAL -- 
+[*] Inclusão do modelo ACBrBALMuller 
+[*] Inclusão do modelo ACBrBALRinnert (por Marcio Jose da Silva)
+
+Data: 20/08/2007 
+-- ACBrECFMecaf/ACBrECFSChalter --
+[*] Adicionada as propriedades: CNPJ, IE, DataMovimento, NumCOOInicial,
+    NumCRZ, VendaBruta, GrandeTotal, TotalDescontos, TotalAcrescimos,
+    TotalCancelamentos, TotalIsencao, TotalNaoTributado,
+    TotalSubstituicaoTributaria. (por Daniel Simoes de Almeida)
+[+] Adicionado os métodos: LerTotaisAliquota, LerTotaisFormaPagamento,
+    LerTotaisComprovanteNaoFiscal (por Daniel Simoes de Almeida)
+-- ACBrECFSChalter --
+[-] Corrigido Bug em: LeituraMemoriaFiscalSerial (TimeOut e VerificaFimLeitura)
+    (por Daniel Simoes de Almeida)
+	
+Data: 12/07/2007
+-- ACBrGAV --
+[-] Corrigido Problemas de perda do comando de abertura quando modelo = gavImpressoraComum
+    e usado ACBrMonitorConsole (por André Ferreira de Moraes)
 
 Versão 0.8.6b  15/06/07
 
@@ -5047,7 +5238,61 @@ Versão 0.8.6b  15/06/07
 -- ACBrCalculadora --
 [+]   Adicionada a propriedade "CorForm" : TColor (por: Nei José Van Lare Junior)
 
+Data: 25/03/2007  
+-- ACBrECFSChalter --
+|[+] Método: GetNumUltimoItem (por Alan Lucas)
 
+Data: 15/05/2007 
+-- ACBrDIS --
+[+] Adicionada a propriedade "RemoveAcentos : Boolean" default = True.
+    (por Daniel Simoes de Almeida)
+	
+Data: 11/05/2007 
+-- ACBrECFNaoFiscal --
+[-] Corrigido Bug no Cancelamento de Item (arredondamento). (por Fabio Farias)
+	
+Data: 20/04/2007 
+-- ACBrECFSChalter --
+[-] Corrigido BUG na leitura do NumCupom após a abertura do Cupom Fiscal
+[-] Corrigido BUG na detecção de Estado estPagamento, quando ocorre
+    SubtotalizaCupom sem desconto ou acrescimo
+[-] Corrigido BUG no VerificaFimImpressao (não estava lendo toda a resposta)
+(por Daniel Simoes de Almeida)
+
+Data: 04/04/2007 
+-- ACBrECFMecaf --
+[+] Implementados métodos de Cupom Não Fiscal (por Daniel Simoes de Almeida)
+
+Data: 01/04/2007  
+-- ACBrECFNaoFiscal --
+[+] Implementados métodos de Cupom Não Fiscal. (por Daniel Simoes de Almeida)
+-- ACBrECFSChalter --
+[+] Implementados métodos de Cupom Não Fiscal. (por Daniel Simoes de Almeida)
+
+Data: 15/03/2007 
+-- ACBRDIS --
+[+] Adicionada a propriedade "PausaVai_e_Volta" em ACBrDISLinha. (default 3)
+    Permite deifinir uma pausa antes de inverter a direção.
+	(por Daniel Simoes de Almeida)
+	
+Data: 06/03/2007  
+-- ACBrECFNaoFiscal --
+[-] Corrigido Bug na Abertura de Cupom Fiscal Vinculado, quando Cupom anterior
+    continha mais de uma forma de Pagamento (por Fabio Farias)
+	
+Data: 27/02/2007  
+-- ACBrECFDataRegis --
+[*] Ajuste para rodar na versão 02.06 (melhoria da 02.05) (por Fabio Farias)
+
+Data: 21/02/2007  
+-- ACBrECFNaoFiscal --
+[-] Corrigido Bug no Cancelamento de Item com Desconto. (por Marcos Agostini)
+
+Data: 06/02/2007 
+-- ACBrECFNaoFiscal --
+[+] Adicionada a função "NumeroColunas", para facilitar a impressao de linhas
+    com expandido (por Thiago Delgado Pinto)
+	
 Versão 0.8.5b  02/12/06
 
 -- ACBr --
@@ -5185,7 +5430,33 @@ Versão 0.8.5b  02/12/06
 -- SynaSer --
 [*]  Fontes da Classe SynaSer atualizados para a versão: 007.000.001
 
+Data: 23/08/2006
+-- ACBrLCB --
+[*] Modificado para permitir a String "TECLADO" na Porta. Isso permite ativar o 
+    componente, mesmo sem a presença de um Leitor Serial.
+    Útil apenas para quem controla a Fila do ACBrLCB manualmente.
+	(por Daniel Simoes de Almeida)
 
+
+
+Data: 22/08/2006 
+-- ACBrECFDataRegis --
+[-] Corrigido tempo de espera em EnviaComando quando impressora for xx.03
+(por Fabio Farias)
+
+Data: 17/08/2006
+-- ACBrECFDataRegis --
+[-] Corrigido bug em arquivo auxiliar de itens quando ocorrer erro no EfetuaPagamento
+(por Anderson Rogerio Bejatto)
+
+Data: 18/07/2006 
+-- ACBrECFDataRegis --
+[-] Corrigido bug na procedure EnviaMensagem
+(por Daniel Simoes de Almeida e Anderson Rogerio Bejatto)
+
+Data: 31/05/2006  
+-- ACBrECFDataRegis --
+[*] Se não achar a Uniade de Medida em VendeItem, tenta com "UN" (por Fabio Farias)
 
 Versão 0.8.4b  25/05/06
 
@@ -5360,6 +5631,28 @@ Versão 0.8.4b  25/05/06
 
 -- SynaSer --
 [*]  Fontes da Classe SynaSer atualizados para a versão: 006.003.007
+
+Data: 08/12/2005  
+-- ACBrECFDataRegis --
+[*] VerificaFimImpressao poderia disparar excessão com ECF off-line
+    (por Daniel Simoes de Almeida)
+[*] Removido tempo de alguns Sleeps a fim de agilizar a comunicaçao com o ECF
+    (experimental) (por Anderson Rogerio Bejatto)
+[*] Método Cancela cupom detecta o estado do ECF para permitir cancelamento
+    com o Cupom aberto... (por Anderson Rogerio Bejatto)
+[*] Modificado mecanismo de Gravação e Leitura de memoria auxiliar (INI) para
+    ficar mais rápida a rotina de venda (por Anderson Rogerio Bejatto)
+
+Data: 29/11/2005 
+-- ACBrECFNaoFiscal --
+[-] Corrigido bug no retorno da propriedade NomeArqINI.
+    ( por Daniel Simoes de Almeida)
+
+Data: 22/11/2005 
+-- ACBRECFDataRegis --
+[*] Adicionada a Impressão do Numero do Item antes do Cod.Produto no formato
+    001.. (DataRegis não imprime n.Item, o que dificulta no cancelamento)
+	(por Daniel Simões de Almeida)
 
 Versão 0.8.3b  20/10/05
 -- ACBrTER --
@@ -5621,6 +5914,15 @@ Versão 0.8.2b  05/07/05
 [*]   Função Poem_Zeros(Texto : String; Tamanho : Integer) modificada para
       permitir Strings com numeros (Texto) maiores do que o máximo permitido
       pelo tipo Inteiro.
+	  
+Data: 01/06/2005 
+-- ACBrCHQ --
+[*] Inclusão do modelo ACBrCHQSotomaq (por Daniel Simoes de Almeida) 
+	  
+Data: 25/05/05
+-- ACBrBAL --
+[*] Adaptado para funcionar com vários modelos de Filizola (MF, BP) permitindo
+    variação na posição do ponto flutante (por: DSA)
 
 Versão 0.8.1b  01/04/05
 -- Estrutura de Diretórios --
@@ -5954,6 +6256,13 @@ Versão 0.06a  14/09/04
      impressao direta de documentos em Matriciais.
      - Propriedade PosImp : Tpoint, contem a cordenada atual da Impressora.
 
+Data: 30/08/2004
+-- ACBrCHQ --
+[*]Primeira Versao ACBrCHQImpressoraComum. (por  Daniel Simoes de Almeida)
+
+Data: 24/08/2004 
+ACBrCHQ --
+[*] Primeira Versao ACBrCHQImpressoraECF. (por Daniel Simoes de Almeida)
 
 Versão 0.05a  20/08/04
 [+] Demos de todos os componentes ACBr já compilados para Linux e Windows
@@ -6054,3 +6363,8 @@ Versão 0.01a   14/06/04
 [+] Componente ACBrCalculadora Finalizado,
 [+] Componente ACBrECF implementado parcialmente (80%)
 [+] Demo para o componente ACBrECF em VCL e CLX parcialmente desenvolvido (50%)
+
+Data: 27/05/2004
+--ACBrSerial --
+[*] Criaçao de um arquivo unico para registro dos Componentes
+    (por Daniel Simoes de Almeida)

@@ -393,7 +393,7 @@ begin
         if (FPDFeOwner.Integrador.Respostas.Count >= 6) then
         begin
           if StrIsBase64(FPDFeOwner.Integrador.Respostas[6]) then
-            FPRetornoWS := DecodeBase64(FPDFeOwner.Integrador.Respostas[6])
+            FPRetornoWS := DecodeBase64(AnsiString(FPDFeOwner.Integrador.Respostas[6]))
           else
             FPRetornoWS := FPDFeOwner.Integrador.Respostas[6];
         end

@@ -441,8 +441,8 @@ begin
     begin
       xCampo := 'Lei da Transparencia';
       xTexto := 'O valor aproximado de tributos incidentes sobre o preço deste servico e de R$ ' +
-                FormatFloat('##0.00', CTe.imp.vTotTrib) + ' (' +
-                FormatFloat('#0.00', 0.0) + '%) ' +
+                FormatFloat(',0.00', CTe.imp.vTotTrib) + ' (' +
+                FormatFloat(',0.00', 0.0) + '%) ' +
                 'Fonte: IBPT';
     end;
   end;

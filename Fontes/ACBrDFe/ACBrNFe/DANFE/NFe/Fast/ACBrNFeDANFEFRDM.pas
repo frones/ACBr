@@ -1041,9 +1041,9 @@ begin
         FieldByName('UTrib').AsString             := Prod.uTrib;
         FieldByName('QTrib').AsFloat              := Prod.qTrib;
         FieldByName('VUnTrib').AsFloat            := Prod.vUnTrib;
-        FieldByName('vFrete').AsString            := FormatFloatBr( Prod.vFrete ,'###,###,##0.00');
-        FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg   ,'###,###,##0.00');
-        FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
+        FieldByName('vFrete').AsString            := FormatFloatBr( Prod.vFrete ,',0.00');
+        FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg   ,',0.00');
+        FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,',0.00');
 
         if FDANFEClassOwner is TACBrNFeDANFEClass then
         begin
@@ -1076,31 +1076,31 @@ begin
               end;
             end;
           end;
-          FieldByName('vDesc').AsString           := FormatFloatBr( TACBrNFeDANFEClass(FDANFEClassOwner).ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
+          FieldByName('vDesc').AsString           := FormatFloatBr( TACBrNFeDANFEClass(FDANFEClassOwner).ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),',0.00');
         end
         else
         begin
           FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
           FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
           FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
-          FieldByName('vDesc').AsString         := FormatFloatBr( Prod.vDesc,'###,###,##0.00');
+          FieldByName('vDesc').AsString         := FormatFloatBr( Prod.vDesc,',0.00');
         end;
 
         FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
         FieldByName('CST').AsString               := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
-        FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,'###,###,##0.00');
-        FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,'###,###,##0.00');
-        FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,'###,###,##0.00');
-        FieldByName('VBCST').AsString             := FormatFloatBr( Imposto.ICMS.vBcST      ,'###,###,##0.00');
-        FieldByName('pMVAST').AsString            := FormatFloatBr( Imposto.ICMS.pMVAST     ,'###,###,##0.00');
-        FieldByName('pICMSST').AsString           := FormatFloatBr( Imposto.ICMS.pICMSST    ,'###,###,##0.00');
-        FieldByName('VICMSST').AsString           := FormatFloatBr( Imposto.ICMS.vICMSST    ,'###,###,##0.00');
-        FieldByName('VIPI').AsString              := FormatFloatBr( Imposto.IPI.VIPI        ,'###,###,##0.00');
-        FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,'###,###,##0.00');
-        FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN    ,'###,###,##0.00');
-        FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,'###,###,##0.00');
-        FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
-        FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
+        FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,',0.00');
+        FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,',0.00');
+        FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,',0.00');
+        FieldByName('VBCST').AsString             := FormatFloatBr( Imposto.ICMS.vBcST      ,',0.00');
+        FieldByName('pMVAST').AsString            := FormatFloatBr( Imposto.ICMS.pMVAST     ,',0.00');
+        FieldByName('pICMSST').AsString           := FormatFloatBr( Imposto.ICMS.pICMSST    ,',0.00');
+        FieldByName('VICMSST').AsString           := FormatFloatBr( Imposto.ICMS.vICMSST    ,',0.00');
+        FieldByName('VIPI').AsString              := FormatFloatBr( Imposto.IPI.VIPI        ,',0.00');
+        FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,',0.00');
+        FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
+        FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');
+        FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,',0.00');
+        FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,',0.00');
 
         Post;
       end;
@@ -1743,7 +1743,7 @@ begin
     FieldByName('TotalLiquido').AsString                := IfThen( FDANFEClassOwner.ImprimeTotalLiquido ,ACBrStr('LÍQUIDO') ,'TOTAL');
     FieldByName('LinhasPorPagina').AsInteger            := 0;
     FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen(TACBrNFeDANFEFR(FDANFEClassOwner).ExpandirDadosAdicionaisAuto , 'S' , 'N');
-    FieldByName('sDisplayFormat').AsString              := '###,###,###,##0.%.*d';
+    FieldByName('sDisplayFormat').AsString              := ',0.%.*d';
     FieldByName('iFormato').AsInteger                   := integer( FDANFEClassOwner.CasasDecimais.Formato );
     FieldByName('Mask_qCom').AsString                   := FDANFEClassOwner.CasasDecimais.MaskqCom;
     FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais.MaskvUnCom;

@@ -438,7 +438,7 @@ begin
 
     with Servico.Valores  do
     begin
-      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat('###,##0.00' , ValorServicos );
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat(',0.00' , ValorServicos );
       rlmCodServico.Lines.Clear;
 
       if Servico.xItemListaServico <> '' then
@@ -467,29 +467,29 @@ begin
         end
       end;
 
-      rllValorPIS.Caption             := FormatFloat('###,##0.00', ValorPis );
-      rllValorCOFINS.Caption          := FormatFloat('###,##0.00', ValorCofins );
-      rllValorIR.Caption              := FormatFloat('###,##0.00', ValorIr );
-      rllValorINSS.Caption            := FormatFloat('###,##0.00', ValorInss );
-      rllValorCSLL.Caption            := FormatFloat('###,##0.00', ValorCsll );
-      rllValorServicos1.Caption       := FormatFloat('###,##0.00', ValorServicos );
-      rllDescIncondicionado1.Caption  := FormatFloat('###,##0.00', DescontoIncondicionado );
-      rllDescCondicionado.Caption     := FormatFloat('###,##0.00', DescontoCondicionado );
-      rllRetencoesFederais.Caption    := FormatFloat('###,##0.00', ValorPis +
-                                                                   ValorCofins +
-                                                                   ValorInss +
-                                                                   ValorIr +
-                                                                   ValorCsll );
-      rllOutrasRetencoes.Caption      := FormatFloat('###,##0.00', OutrasRetencoes );
-      rllValorIssRetido.Caption       := FormatFloat('###,##0.00', ValorIssRetido );
-      rllValorLiquido.Caption         := FormatFloat('###,##0.00', ValorLiquidoNfse );
-      rllValorServicos2.Caption       := FormatFloat('###,##0.00', ValorServicos );
-      rllValorDeducoes.Caption        := FormatFloat('###,##0.00', ValorDeducoes );
-      rllDescIncondicionado2.Caption  := FormatFloat('###,##0.00', DescontoIncondicionado );
-      rllBaseCalc.Caption             := FormatFloat('###,##0.00', BaseCalculo );
+      rllValorPIS.Caption             := FormatFloat(',0.00', ValorPis );
+      rllValorCOFINS.Caption          := FormatFloat(',0.00', ValorCofins );
+      rllValorIR.Caption              := FormatFloat(',0.00', ValorIr );
+      rllValorINSS.Caption            := FormatFloat(',0.00', ValorInss );
+      rllValorCSLL.Caption            := FormatFloat(',0.00', ValorCsll );
+      rllValorServicos1.Caption       := FormatFloat(',0.00', ValorServicos );
+      rllDescIncondicionado1.Caption  := FormatFloat(',0.00', DescontoIncondicionado );
+      rllDescCondicionado.Caption     := FormatFloat(',0.00', DescontoCondicionado );
+      rllRetencoesFederais.Caption    := FormatFloat(',0.00', ValorPis +
+                                                              ValorCofins +
+                                                              ValorInss +
+                                                              ValorIr +
+                                                              ValorCsll );
+      rllOutrasRetencoes.Caption      := FormatFloat(',0.00', OutrasRetencoes );
+      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido );
+      rllValorLiquido.Caption         := FormatFloat(',0.00', ValorLiquidoNfse );
+      rllValorServicos2.Caption       := FormatFloat(',0.00', ValorServicos );
+      rllValorDeducoes.Caption        := FormatFloat(',0.00', ValorDeducoes );
+      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado );
+      rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo );
       rllAliquota.Caption             := ManterAliquota ( Aliquota );
       rllISSReter.Caption             := SituacaoTributariaDescricao( IssRetido );
-      rllValorISS.Caption             := FormatFloat('###,##0.00',ValorIss);
+      rllValorISS.Caption             := FormatFloat(',0.00',ValorIss);
     end;
   end;
 end;
@@ -550,7 +550,7 @@ begin
       rllNumNF0Ent.Caption      := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
       rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+
-                                         '-Total:' + FormatFloat('###,##0.00', Servico.Valores.ValorLiquidoNfse) ;
+                                         '-Total:' + FormatFloat(',0.00', Servico.Valores.ValorLiquidoNfse) ;
     end;
   end;
 end;
@@ -643,10 +643,10 @@ Function TfrlDANFSeRLRetrato.ManterAliquota( dAliquota : Double ) : String;
 begin
   // thema precisa ser desta forma pois usa aliquota 2,5 => 0,025
 //  if (dAliquota > 0) and (dAliquota < 1) then
-//    Result := FormatFloat('###,##0.00', dAliquota * 100 )
+//    Result := FormatFloat(',0.00', dAliquota * 100 )
 //  else
   // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
-    Result := FormatFloat('###,##0.00', dAliquota );
+    Result := FormatFloat(',0.00', dAliquota );
 end;
 
 end.

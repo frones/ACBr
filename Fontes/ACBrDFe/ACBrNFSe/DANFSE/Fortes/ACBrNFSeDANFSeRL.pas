@@ -200,7 +200,7 @@ begin
         '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DANFSeReport.fpNFSe.DataEmissao) +
         '; Tomador: ' + DANFSeReport.fpNFSe.Tomador.RazaoSocial +
         '; CNPJ: ' + DANFSeReport.fpNFSe.Tomador.IdentificacaoTomador.CpfCnpj +
-        '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', DANFSeReport.fpNFSe.Servico.Valores.ValorServicos);
+        '; Valor total: ' + FormatFloat(',0.00', DANFSeReport.fpNFSe.Servico.Valores.ValorServicos);
     end;
 
     DANFSeReport.RLNFSe.Prepare;

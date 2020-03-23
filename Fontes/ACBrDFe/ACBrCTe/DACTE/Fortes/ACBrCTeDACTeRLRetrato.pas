@@ -2274,7 +2274,7 @@ begin
     rllAWB.Caption := nOCA;
     rllTarifaCL.Caption := tarifa.CL;
     rllTarifaCodigo.Caption := tarifa.cTar;
-    rllTarifaValor.Caption := FormatCurr('###,###,##0.00', tarifa.vTar);
+    rllTarifaValor.Caption := FormatCurr(',0.00', tarifa.vTar);
     rllContaCorrente.Caption := IdT; // ??? Conta Corrente ???
     rllMinuta.Caption := FormatFloat('0000000000', nMinu);
     rllLojaAgenteEmissor.Caption := xLAgEmi;
@@ -2300,8 +2300,8 @@ begin
 
   with fpCTe.infCTeNorm.aquav do
   begin
-    rllBCAFRMM.Caption := FormatCurr('###,###,##0.00', vPrest);
-    rllValorAFRMM.Caption := FormatCurr('###,###,##0.00', vAFRMM);
+    rllBCAFRMM.Caption := FormatCurr(',0.00', vPrest);
+    rllValorAFRMM.Caption := FormatCurr(',0.00', vAFRMM);
 
     rllPortoEmbarque.Caption := prtEmb;
     rllPortoDestino.Caption := prtDest;

@@ -844,8 +844,8 @@ begin
         Append;
         cdsItensServico.FieldByName('DiscriminacaoServico').AsString := Descricao;
         cdsItensServico.FieldByName('Quantidade').AsString           := FloatToStr( Quantidade );
-        cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, '###,###,##0.00');
-        cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, '###,###,##0.00');
+        cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, ',0.00');
+        cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, ',0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
 
 //        if Provedor = proEL then

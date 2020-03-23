@@ -2898,7 +2898,7 @@ begin
           vResumo := vResumo + FCTe.Ide.Toma4.xNome;
       end;
 
-      vResumo := vResumo + ' - VALOR A RECEBER: R$ ' + FormatFloat('###,###,###,##0.00',FCTe.vPrest.vRec);
+      vResumo := vResumo + ' - VALOR A RECEBER: R$ ' + FormatFloat(',0.00',FCTe.vPrest.vRec);
     end;
     FieldByName('ResumoCanhoto').AsString := vResumo;
 

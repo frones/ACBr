@@ -916,11 +916,11 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
         end;
 
         if vTribFed > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribFed,'###,###,##0.00') + sFederal ;
+          Result := Result + ' ' + FormatFloatBr( vTribFed,',0.00') + sFederal ;
         if vTribEst > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribEst,'###,###,##0.00') + sEstadual;
+          Result := Result + ' ' + FormatFloatBr( vTribEst,',0.00') + sEstadual;
         if vTribMun > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribMun,'###,###,##0.00') + sMunicipal;
+          Result := Result + ' ' + FormatFloatBr( vTribMun,',0.00') + sMunicipal;
       end
       else
         Result := '';

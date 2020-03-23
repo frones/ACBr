@@ -419,12 +419,12 @@ begin
 
   With fpNFSe do
   begin
-    rllNatOperacao.Caption    := NaturezaOperacaoDescricao( NaturezaOperacao );
+    rllNatOperacao.Caption    := ACBrStr(NaturezaOperacaoDescricao( NaturezaOperacao ));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
     RLLabel137.Visible        := MostrarNaturezaOperacao;
-    rllRegimeEspecial.Caption := nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao );
-    rllOpcaoSimples.Caption   := SimNao( Integer ( OptanteSimplesNacional ) );
-    rllIncentivador.Caption   := SimNao( Integer ( IncentivadorCultural ) );
+    rllRegimeEspecial.Caption := ACBrStr(nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao ));
+    rllOpcaoSimples.Caption   := ACBrStr(SimNao( Integer ( OptanteSimplesNacional ) ));
+    rllIncentivador.Caption   := ACBrStr(SimNao( Integer ( IncentivadorCultural ) ));
     rllCodObra.Caption        := ConstrucaoCivil.CodigoObra;
     rllCodART.Caption         := ConstrucaoCivil.Art;
 

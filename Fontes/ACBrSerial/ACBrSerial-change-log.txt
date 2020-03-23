@@ -1216,15 +1216,9 @@ Data: 11/10/2016
 	
 Data: 10/10/2016
 --ACBrBAL -- 
-[*] Refatoração de ACBrBALAFTS
-[*] Refatoração de ACBrBALSaturno 
-[*] Refatoração de ACBrBALFilizola
-[*] Refatoração de ACBrBALLider
-[*] Refatoração de ACBrBALLucasTec 
-[*] Refatoração de ACBrBALRinnert 
-[*] Refatoração de ACBrBALToledo2180 
-[*] Refatoração de ACBrBALUrano
-[*] Refatoração de ACBrBALUranoPOP(por: Elias César Vieira)	
+[*] Refatoração das classes ACBrBALAFTS, ACBrBALSaturno, ACBrBALFilizola,
+    ACBrBALLider, ACBrBALLucasTec, ACBrBALRinnert, ACBrBALToledo2180, 
+    ACBrBALUrano e ACBrBALUranoPOP(por: Elias César Vieira)	
 
 Data: 07/10/2016
 -- ACBrPosPrinter --
@@ -4942,9 +4936,31 @@ Data: 07/07/2009
 [-] Corrigido bug na comuicação com a impressora e definição de timeouts
     para comandos enviados à impressora. (por Marcelo Correia Pinheiro)
 	
+Data: 25/06/2009
+-- ACBrECFSweda --
+[*] Ajustado Retorno do Estado da Impressora
+[-] Ajustado Retorno do COOInicial, estava trazendo o CCF Inicial
+(por José Nilton Pace) 
+	
 Data: 02/03/2009
 -- ACBrECFDataRegis -- 
 [*] Compatibilização com a Versão 04 (por Weber Luvisa (ByteCom))
+
+Data: 17/01/2009
+-- ACBrECFSweda --
+[-] Ajustes no LeResposta.
+    Alguns modelos de 9000IIIE, retorna ocasionalmente  um caracter de
+    controle, (#17) no inicio da Resposta, corrigido com um TrimLeft( Resposta )
+[-] Flag fsEsperaMinima, causava lentidão em comandos com TimeOut muito alto
+    ajustado para usar no máximo 10 seg em fsEsperaMinima
+[-] LeituraMemoriaFiscalSerial, aumentado TimeOut (10) das respostas
+    intermediárias (++), evitando leituras incompletas por TimeOut.
+	(por Daniel Simoes de Almeida)
+	
+Data: 12/01/2009
+-- ACBrECFSweda --
+[*] Ajuste no método GetVersaoSweda para identificar o modelo ST200
+   (bug reportado por Waldir Paim) (por Ederson Selvati)
 
 Data: 24/12/2008  
 -- ACBrECFMecaf --
@@ -4958,6 +4974,12 @@ Daniel Simoes de Almeida
 |*  - Implementado retorno da propriedade DataMovimento (por Waldir Paim)
 |*  - Identificação do Cliente no rodapé do Cupom estava duplicando
 |*    as informações, corrigido
+-- ACBrECFSweda --
+[-] Método Interno Purge poderia causar Loop Infinito, corrigido
+   (bug reportado por Waldir Paim)
+[-] Método GetTotalPago não retornava o valor correto quando pagamento excedia
+    o subtotal do Cupom, corrigido (bug reportado por Jocelio)
+	(por Daniel Simoes de Almeida)
 	
 Versão 0.8.8b  01/12/08
 -- ACBrConsts --
@@ -5011,6 +5033,11 @@ Data: 18/06/2008
     VendaBruta, TotalDescontos, TotalCancelamentos, TotalAcrescimos,
     NumCOOInicial, NumUltimoItem, TotalIsencao, TotalNaoTributado 
 	(por Joao Victor Maia Fernandes)
+	
+Data: 29/04/2008
+-- ACBrECFSweda --
+[-] Corrigido o retorno de NumSerie e NumVersao em modelos MFD.
+    (por Daniel Simões de Almeida)
 
 Versão 0.8.7b  14/04/08
 
@@ -5057,6 +5084,8 @@ Data: 10/04/2008
 [+] Adicionado campo [ECF] -> DataHoraSwBasico= em ACBRRFD.INI
     Se preenchido, será informado no campo Data/Hora da gravação do SB do
     registro E01... Se não informado grava campo com vazios
+[*] Override em AchaCNFDescricao para pesquisar ignorando o 1 caracter (simbolo)
+|-] Bug Sweda, não carrega ou acha Aliquotas com T1 ao invez de T01
 (por Daniel Simoes de Almeida)
 
 Data: 11/03/2008
@@ -5086,6 +5115,10 @@ Data: 04/12/2007
 Data: 28/11/2007  
 -- ACBrECFDataRegis --
 [*] Implementacao de varios Metodos (por Anderson Rogerio Bejatto
+(por Daniel Simões de Almeida)
+
+Data: 05/09/2007
+[-] Corrigido Retorno do COO em Impressoras MFD (ST100)
 
 Data: 30/08/07
 --  ACBrBAL -- 
@@ -5104,10 +5137,23 @@ Data: 20/08/2007
 [-] Corrigido Bug em: LeituraMemoriaFiscalSerial (TimeOut e VerificaFimLeitura)
     (por Daniel Simoes de Almeida)
 	
+Data: 17/08/2007
+-- ACBrECFSweda --
+[-] Adicionado os métodos: NaoFiscalCompleto, AbreNaoFiscal,
+    RegistraItemNaoFiscal, LerTotaisFormaPagamento,
+    LerTotaisComprovanteNaoFiscal. (por Daniel Simões de Almeida)
+	
 Data: 12/07/2007
 -- ACBrGAV --
 [-] Corrigido Problemas de perda do comando de abertura quando modelo = gavImpressoraComum
     e usado ACBrMonitorConsole (por André Ferreira de Moraes)
+	
+Data: 05/07/2007
+-- ACBrECFSweda --
+[-] Corrigida a Leitura de Memoria Fiscal por Serial (não responde)
+(Daniel Simões de Almeida)
+[-] Corrigido a carga de Formas de Pagamento na MFD (le todas as 20)
+(por WPSouto)
 
 Versão 0.8.6b  15/06/07
 
@@ -5238,10 +5284,6 @@ Versão 0.8.6b  15/06/07
 -- ACBrCalculadora --
 [+]   Adicionada a propriedade "CorForm" : TColor (por: Nei José Van Lare Junior)
 
-Data: 25/03/2007  
--- ACBrECFSChalter --
-|[+] Método: GetNumUltimoItem (por Alan Lucas)
-
 Data: 15/05/2007 
 -- ACBrDIS --
 [+] Adicionada a propriedade "RemoveAcentos : Boolean" default = True.
@@ -5268,6 +5310,27 @@ Data: 01/04/2007
 [+] Implementados métodos de Cupom Não Fiscal. (por Daniel Simoes de Almeida)
 -- ACBrECFSChalter --
 [+] Implementados métodos de Cupom Não Fiscal. (por Daniel Simoes de Almeida)
+
+Data: 25/03/2007  
+-- ACBrECFSChalter --
+[+] Método: GetNumUltimoItem (por Alan Lucas)
+-- ACBrECFSweda --
+[+] Novas propriedades: CNPJ, TotalAcrescimos, NumUltimoItem. (por Alan Lucas)
+[-] Corrigido NumCOOInicial (por José Nilton Pace)
+
+Data: 22/03/2007
+--ACBrECFSweda --
+[-] Gato para resolver o erro -P111+0065 no modelo 7000 1.1 logo após
+    um vinculado
+[+] Novas propriedades: DataMovimento, GrandeTotal, NumCRZ, VendaBruta,
+    TotalCancelamentos, TotalDescontos, TotalSubstituicaoTributaria,
+    TotalNaoTributado, TotalIsencao,  NumCOOInicial
+	(por Ederson Selvati)
+
+Data: 21/03/2007
+--ACBrECFSweda --	
+[*] Método SubtotalizaCupom adaptado para maior compatibilidade com as várias
+    versões de ECF Sweda. (por Alan Lucas)
 
 Data: 15/03/2007 
 -- ACBRDIS --
@@ -5430,14 +5493,24 @@ Versão 0.8.5b  02/12/06
 -- SynaSer --
 [*]  Fontes da Classe SynaSer atualizados para a versão: 007.000.001
 
+Data: 07/11/2006
+-- ACBrECFSweda --
+[-] Corrigido problemas na Detecção do estado após ocorrencia de Erro no ECF
+[-] Corrigido problemas no Calculo do Valor Total em VendeItem (TruncFix)
+[-] Corrigido problema na VendeItem quando executado várias vezes rapidamente
+    na sequencia. (por Daniel Simoes de Almeida)
+
+Data: 03/10/2006
+-- ACBrECFSweda --
+[-] Comando ImprimeCheque adaptado para funcionar na Serie detectada como (B)
+(por Daniel Simoes de Almeida)
+
 Data: 23/08/2006
 -- ACBrLCB --
 [*] Modificado para permitir a String "TECLADO" na Porta. Isso permite ativar o 
     componente, mesmo sem a presença de um Leitor Serial.
     Útil apenas para quem controla a Fila do ACBrLCB manualmente.
 	(por Daniel Simoes de Almeida)
-
-
 
 Data: 22/08/2006 
 -- ACBrECFDataRegis --
@@ -5631,6 +5704,28 @@ Versão 0.8.4b  25/05/06
 
 -- SynaSer --
 [*]  Fontes da Classe SynaSer atualizados para a versão: 006.003.007
+
+Data: 09/05/2006
+-- ACBrECFSweda --
+[-] GavetaAberta: modificado para ficar de acordo com o Manual. Se o sinal
+    estiver invertido use a nova propriedade ACBrECF.GavetaSinalInvertido
+[-] Inserido pequeno Interavalo na leitura do Estado se o ECF for swdC
+(por Daniel Simoes de Almeida)
+[-] Corrigido Bug na detecção do Modelo / Versão quando Versao = 1.1.
+(por Daniel Simoes de Almeida  e  Ederson Selvati)
+
+Data: 13/03/2006
+-- ACBrECFSweda --
+[-] Removida a propriedade UsaDTR, Revisto mecanismo de comunicação usando o
+    DTR. Se tiver problemas com o DTR use ACBrECF1.Device.Hardflow := True ;
+	(por Daniel Simoes de Almeida)
+	
+Data: 16/12/2005
+-- ACBrECFSweda --
+[-] Adicionda a propriedade UsaDTR : Boolean (False)... Se ela for Verdadeiro
+    o DTR é desligado para ler a resposta do ECF, (isso pode ser necessário
+    em alguns modelos de ECF. No metodo Ativar o componente tenta detctar
+    o estado necessário para o UsaDTR) (por Daniel Simoes de Almeida)
 
 Data: 08/12/2005  
 -- ACBrECFDataRegis --

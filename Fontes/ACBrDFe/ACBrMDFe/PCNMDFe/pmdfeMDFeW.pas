@@ -1293,8 +1293,8 @@ begin
     Gerador.wGrupo('prodPred', '#');
     Gerador.wCampo(tcStr, '#', 'tpCarga', 02, 002, 1, TCargaToStr(MDFe.prodPred.tpCarga), DSC_TPCARGA);
     Gerador.wCampo(tcStr, '#', 'xProd  ', 06, 120, 1, MDFe.prodPred.xProd, DSC_XPROD);
-    Gerador.wCampo(tcStr, '#', 'cEAN   ', 14, 014, 0, MDFe.prodPred.cEAN, DSC_CEAN);
-    Gerador.wCampo(tcStr, '#', 'NCM    ', 08, 008, 0, MDFe.prodPred.NCM, DSC_NCM);
+    Gerador.wCampo(tcStr, '#', 'cEAN   ', 00, 014, 0, MDFe.prodPred.cEAN, DSC_CEAN);
+    Gerador.wCampo(tcStr, '#', 'NCM    ', 02, 008, 0, MDFe.prodPred.NCM, DSC_NCM);
 
     if (MDFe.prodPred.infLocalCarrega.CEP > 0) or
        (MDFe.prodPred.infLocalCarrega.latitude <> 0) or (MDFe.prodPred.infLocalCarrega.Longitude <> 0) or

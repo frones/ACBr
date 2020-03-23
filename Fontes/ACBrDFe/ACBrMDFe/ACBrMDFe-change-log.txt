@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2020
+-- pmdfeMDFeW --
+[-] Correção no tamanho minimo dos campos cEAN e NCM.
+   Por: Italo Jurisato Junior
+
 20/03/2020
 -- pmdfeEnvEventoMDFe --
 [-] Correção na leitura das listas Comp e infPrazo do XML de eventos.

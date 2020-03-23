@@ -26,7 +26,7 @@ namespace ACBrLib.NFe.Demo
         {
             InitializeComponent();
 
-            ACBrNFe = new ACBrNFe();
+            ACBrNFe = new ACBrNFe(Path.Combine("E:\\Programacao\\ACBr", "ACBr.ini"));
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)

@@ -142,7 +142,7 @@ namespace ACBrLib.ETQ
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.ETQ_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -150,7 +150,7 @@ namespace ACBrLib.ETQ
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.ETQ_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));

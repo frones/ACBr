@@ -211,7 +211,7 @@ namespace ACBrLib.CTe
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.CTE_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -219,7 +219,7 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.CTE_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));

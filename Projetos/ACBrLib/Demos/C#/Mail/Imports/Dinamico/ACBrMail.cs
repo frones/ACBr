@@ -133,7 +133,7 @@ namespace ACBrLib.Mail
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.MAIL_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -141,7 +141,7 @@ namespace ACBrLib.Mail
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.MAIL_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));

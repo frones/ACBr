@@ -287,7 +287,7 @@ namespace ACBrLib.Core
         /// </summary>
         /// <typeparam name="T">Delegate</typeparam>
         /// <returns></returns>
-        /// <exception cref="ACBrException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         protected virtual T GetMethod<T>() where T : class
         {
             if (!methodList.ContainsKey(typeof(T)))
@@ -313,7 +313,7 @@ namespace ACBrLib.Core
         /// <param name="method"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        /// <exception cref="ACBrException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         [HandleProcessCorruptedStateExceptions]
         protected virtual T ExecuteMethod<T>(Func<T> method)
         {

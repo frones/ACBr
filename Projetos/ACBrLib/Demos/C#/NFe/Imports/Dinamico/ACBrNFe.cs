@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
@@ -212,7 +210,7 @@ namespace ACBrLib.NFe
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.NFE_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -220,7 +218,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.NFE_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));

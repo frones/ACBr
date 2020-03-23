@@ -174,7 +174,7 @@ namespace ACBrLib.Sat
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.SAT_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -182,7 +182,7 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.SAT_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));

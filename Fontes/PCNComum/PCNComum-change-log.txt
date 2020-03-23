@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2020
+-- pcnGerador --
+[*] Removido os métodos wGrupoNFSe e wCampoNFSe, agora os métodos wGrupo e wCampo,
+    são capazes de gerar as tags com o prefixo quando for o caso.
+   Por: Italo Jurisato Junior
+
 02/03/2020
 -- pcnRetDistDFeInt --
 [+] Acrescentado a propriedade NomeArq com o objetivo de armazenar o Path+Nome do

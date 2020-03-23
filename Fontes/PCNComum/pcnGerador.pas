@@ -76,17 +76,18 @@ type
     FIDNivel: string;
     FOpcoes: TGeradorOpcoes;
     FPrefixo: string;
+
     procedure addStringArquivoXML(const Value: String);
   public
     FIgnorarTagNivel: string;
     FIgnorarTagIdentacao: string;
+
     constructor Create;
     destructor Destroy; override;
+
     function SalvarArquivo(const CaminhoArquivo: string; const FormatoGravacao: TpcnFormatoGravacao = fgXML): Boolean;
     procedure wGrupo(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
     procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
-    procedure wGrupoNFSe(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
-    procedure wCampoNFSe(const Tipo: TpcnTipoCampo; const ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; const Atributo: String = '');
     procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True; PreencheZeros: Boolean = True);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
@@ -303,6 +304,7 @@ begin
   FOpcoes := TGeradorOpcoes.Create;
   FListaDeAlertas := TStringList.Create;
   FLayoutArquivoTXT := TStringList.Create;
+  FPrefixo := '';
 end;
 
 destructor TGerador.Destroy;
@@ -358,34 +360,44 @@ begin
 end;
 
 procedure TGerador.wGrupo(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
+var
+  aTAG: string;
 begin
+  if copy(TAG, 1, 1) = '/' then
+    aTAG := '/' + FPrefixo + copy(TAG, 2, length(TAG))
+  else
+    aTAG := FPrefixo + TAG;
+
   // A propriedade FIgnorarTagNivel é utilizada para Ignorar TAG
   // na construção dos níveis para apresentação na mensagem de erro.
   gtNivel(ID);
   // Caso a tag seja um Grupo com Atributo
-  if (pos('="', TAG) > 0) or (pos('= "', TAG) > 0) then
-    gtCampo(RetornarConteudoEntre(TAG, ' ', '='), RetornarConteudoEntre(TAG, '"', '"'));
+  if (pos('="', aTAG) > 0) or (pos('= "', aTAG) > 0) then
+    gtCampo(RetornarConteudoEntre(aTAG, ' ', '='), RetornarConteudoEntre(aTAG, '"', '"'));
   //
-  if not SubStrEmSubStr(TAG, FIgnorarTagNivel) then
+  if not SubStrEmSubStr(aTAG, FIgnorarTagNivel) then
   begin
-    if TAG[1] <> '/' then
-      FTagNivel := FTagNivel + '<' + TAG + '>';
-    if (TAG[1] = '/') and (Copy(TAG, 2, 3) = 'det') then
+    if aTAG[1] <> '/' then
+      FTagNivel := FTagNivel + '<' + aTAG + '>';
+
+    if (aTAG[1] = '/') and (Copy(aTAG, 2, 3) = 'det') then
       FTagNivel := Copy(FTagNivel, 1, pos('<det', FTagNivel) - 1)
     else
-      FTagNivel := StringReplace(FTagNivel, '<' + Copy(TAG, 2, MaxInt) + '>', '', []);
+      FTagNivel := StringReplace(FTagNivel, '<' + Copy(aTAG, 2, MaxInt) + '>', '', []);
   end;
-  //
-  if (Identar) and (TAG[1] = '/') then
+
+  if (Identar) and (aTAG[1] = '/') then
     Dec(FOpcoes.FNivelIdentacao);
-  if SubStrEmSubStr(TAG, FIgnorarTagIdentacao) then
+
+  if SubStrEmSubStr(aTAG, FIgnorarTagIdentacao) then
     Dec(FOpcoes.FNivelIdentacao);
-  //
+
   if FOpcoes.IdentarXML then
-    addStringArquivoXML(StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '>' + #13#10)
+    addStringArquivoXML(StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + aTAG + '>' + #13#10)
   else
-    addStringArquivoXML('<' + TAG + '>');
-  if (Identar) and (TAG[1] <> '/') then
+    addStringArquivoXML('<' + aTAG + '>');
+
+  if (Identar) and (aTAG[1] <> '/') then
     Inc(FOpcoes.FNivelIdentacao);
 end;
 
@@ -475,8 +487,11 @@ var
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
   EstaVazio: Boolean;
 begin
+  if ocorrencias < 0 then
+    Exit;
+
   ID                  := Trim(ID);
-  Tag                 := Trim(TAG);
+  Tag                 := FPrefixo + Trim(TAG);
   Atributo            := Trim(Atributo);
   EstaVazio           := False;
   NumeroDecimais      := 0;
@@ -801,23 +816,6 @@ begin
     ListArquivo.Free;
     ListCorrigido.Free;
   end;
-end;
-
-procedure TGerador.wCampoNFSe(const Tipo: TpcnTipoCampo; const ID, TAG: string;
-  const min, max, ocorrencias: smallint; const valor: variant;
-  const Descricao: string; ParseTextoXML: Boolean; const Atributo: String);
-begin
-  Self.wCampo(Tipo, ID, Self.Prefixo + TAG, min, max, ocorrencias, valor,
-              Descricao, ParseTextoXML, Atributo);
-end;
-
-procedure TGerador.wGrupoNFSe(const TAG: string; const ID: string;
-  const Identar: Boolean);
-begin
-  if copy(TAG, 1, 1) = '/' then
-     Self.wGrupo('/' + Self.Prefixo + copy(TAG, 2, length(TAG)), ID, Identar)
-  else
-     Self.wGrupo(Self.Prefixo + TAG, ID, Identar);
 end;
 
 end.

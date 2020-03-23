@@ -82,54 +82,54 @@ procedure TNFSeW_AssesorPublico.GerarNotas;
 begin
   Gerador.wGrupo('NOTA');
 
-  Gerador.wCampoNFSe(tcStr, '', 'LOTE', 1, 1, 1, NFSe.NumeroLote, '');
-  Gerador.wCampoNFSe(tcStr, '', 'SEQUENCIA', 1, 1, 1, NFSe.IdentificacaoRps.Numero, '');
-  Gerador.wCampoNFSe(tcStr, '', 'DATAEMISSAO', 1, 1, 1, FormatDateTime('dd/MM/yyyy',NFSe.DataEmissao), '');
-  Gerador.wCampoNFSe(tcHor, '', 'HORAEMISSAO', 1, 1, 1, NFSe.DataEmissao, '');
+  Gerador.wCampo(tcStr, '', 'LOTE', 1, 1, 1, NFSe.NumeroLote, '');
+  Gerador.wCampo(tcStr, '', 'SEQUENCIA', 1, 1, 1, NFSe.IdentificacaoRps.Numero, '');
+  Gerador.wCampo(tcStr, '', 'DATAEMISSAO', 1, 1, 1, FormatDateTime('dd/MM/yyyy',NFSe.DataEmissao), '');
+  Gerador.wCampo(tcHor, '', 'HORAEMISSAO', 1, 1, 1, NFSe.DataEmissao, '');
 
   if NFSe.Servico.CodigoMunicipio = IntToStr(NFSe.Servico.MunicipioIncidencia) then begin
-    Gerador.wCampoNFSe(tcStr, '', 'LOCAL', 1, 1, 1, 'D', '');
+    Gerador.wCampo(tcStr, '', 'LOCAL', 1, 1, 1, 'D', '');
   end
   else begin
-    Gerador.wCampoNFSe(tcStr, '', 'LOCAL', 1, 1, 1, 'F', '');
-//    Gerador.wCampoNFSe(tcStr, '', 'UFFORA', 1, 1, 1, '1', '');
-//    Gerador.wCampoNFSe(tcStr, '', 'MUNICIPIOFORA', 1, 1, 1, '1', '');
-//    Gerador.wCampoNFSe(tcStr, '', 'PAISFORA', 1, 1, 1, '1', '');
+    Gerador.wCampo(tcStr, '', 'LOCAL', 1, 1, 1, 'F', '');
+//    Gerador.wCampo(tcStr, '', 'UFFORA', 1, 1, 1, '1', '');
+//    Gerador.wCampo(tcStr, '', 'MUNICIPIOFORA', 1, 1, 1, '1', '');
+//    Gerador.wCampo(tcStr, '', 'PAISFORA', 1, 1, 1, '1', '');
   end;
 
 
 // devem ser previamente cadastrados no sistema
-  Gerador.wCampoNFSe(tcStr, '', 'SITUACAO', 1, 1, 1, NFSe.Situacao, '');
+  Gerador.wCampo(tcStr, '', 'SITUACAO', 1, 1, 1, NFSe.Situacao, '');
 
   if NFSe.Servico.Valores.IssRetido = stRetencao then
-    Gerador.wCampoNFSe(tcStr, '', 'RETIDO', 1, 1, 1, 'S', '')
+    Gerador.wCampo(tcStr, '', 'RETIDO', 1, 1, 1, 'S', '')
   else
-    Gerador.wCampoNFSe(tcStr, '', 'RETIDO', 1, 1, 1, 'N', '');
+    Gerador.wCampo(tcStr, '', 'RETIDO', 1, 1, 1, 'N', '');
 
-  Gerador.wCampoNFSe(tcStr, '', 'ATIVIDADE', 1, 1, 1, NFSe.Servico.ItemListaServico, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ALIQUOTAAPLICADA', 1, 1, 1, NFSe.Servico.Valores.Aliquota, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'DEDUCAO', 1, 1, 1,  NFSe.Servico.Valores.ValorDeducoes, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'IMPOSTO', 1, 1, 1, NFSe.Servico.Valores.valorOutrasRetencoes, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'RETENCAO', 1, 1, 1, NFSe.Servico.Valores.ValorIssRetido, '');
-  Gerador.wCampoNFSe(tcStr, '', 'OBSERVACAO', 1, 1, 1, NFSe.Servico.Discriminacao, '');
-  Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJ', 1, 1, 1, NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '');
-  Gerador.wCampoNFSe(tcStr, '', 'RGIE', 1, 1, 1, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
-  Gerador.wCampoNFSe(tcStr, '', 'NOMERAZAO', 1, 1, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'NOMEFANTASIA', 1, 1, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'MUNICIPIO', 1, 1, 1, NFSe.Tomador.Endereco.CodigoMunicipio, '');
-  Gerador.wCampoNFSe(tcStr, '', 'BAIRRO', 1, 1, 1, NFSe.Tomador.Endereco.Bairro, '');
-  Gerador.wCampoNFSe(tcStr, '', 'CEP', 1, 1, 1, NFSe.Tomador.Endereco.CEP, '');
-  Gerador.wCampoNFSe(tcStr, '', 'PREFIXO', 1, 1, 1, 'RUA', '');
-  Gerador.wCampoNFSe(tcStr, '', 'LOGRADOURO', 1, 1, 1, NFSe.Tomador.Endereco.Endereco, '');
-  Gerador.wCampoNFSe(tcStr, '', 'COMPLEMENTO', 1, 1, 1, NFSe.Tomador.Endereco.Complemento, '');
-  Gerador.wCampoNFSe(tcStr, '', 'NUMERO', 1, 1, 1, NFSe.Tomador.Endereco.Numero, '');
-//  Gerador.wCampoNFSe(tcStr, '', 'EMAIL', 1, 1, 1, NFSe.Tomador.Contato.Email, '');
-  Gerador.wCampoNFSe(tcStr, '', 'DENTROPAIS', 1, 1, 1, 'S', '');
-  Gerador.wCampoNFSe(tcDe2, '', 'PIS', 1, 1, 1,NFSe.Servico.Valores.ValorPis, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'COFINS', 1, 1, 1, NFSe.Servico.Valores.ValorCofins, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'INSS', 1, 1, 1, NFSe.Servico.Valores.ValorInss , '');
-  Gerador.wCampoNFSe(tcDe2, '', 'IR', 1, 1, 1, NFSe.Servico.Valores.ValorIr, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'CSLL', 1, 1, 1,  NFSe.Servico.Valores.ValorCsll  , '');
+  Gerador.wCampo(tcStr, '', 'ATIVIDADE', 1, 1, 1, NFSe.Servico.ItemListaServico, '');
+  Gerador.wCampo(tcDe2, '', 'ALIQUOTAAPLICADA', 1, 1, 1, NFSe.Servico.Valores.Aliquota, '');
+  Gerador.wCampo(tcDe2, '', 'DEDUCAO', 1, 1, 1,  NFSe.Servico.Valores.ValorDeducoes, '');
+  Gerador.wCampo(tcDe2, '', 'IMPOSTO', 1, 1, 1, NFSe.Servico.Valores.valorOutrasRetencoes, '');
+  Gerador.wCampo(tcDe2, '', 'RETENCAO', 1, 1, 1, NFSe.Servico.Valores.ValorIssRetido, '');
+  Gerador.wCampo(tcStr, '', 'OBSERVACAO', 1, 1, 1, NFSe.Servico.Discriminacao, '');
+  Gerador.wCampo(tcStr, '', 'CPFCNPJ', 1, 1, 1, NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '');
+  Gerador.wCampo(tcStr, '', 'RGIE', 1, 1, 1, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
+  Gerador.wCampo(tcStr, '', 'NOMERAZAO', 1, 1, 1, NFSe.Tomador.RazaoSocial, '');
+  Gerador.wCampo(tcStr, '', 'NOMEFANTASIA', 1, 1, 1, NFSe.Tomador.RazaoSocial, '');
+  Gerador.wCampo(tcStr, '', 'MUNICIPIO', 1, 1, 1, NFSe.Tomador.Endereco.CodigoMunicipio, '');
+  Gerador.wCampo(tcStr, '', 'BAIRRO', 1, 1, 1, NFSe.Tomador.Endereco.Bairro, '');
+  Gerador.wCampo(tcStr, '', 'CEP', 1, 1, 1, NFSe.Tomador.Endereco.CEP, '');
+  Gerador.wCampo(tcStr, '', 'PREFIXO', 1, 1, 1, 'RUA', '');
+  Gerador.wCampo(tcStr, '', 'LOGRADOURO', 1, 1, 1, NFSe.Tomador.Endereco.Endereco, '');
+  Gerador.wCampo(tcStr, '', 'COMPLEMENTO', 1, 1, 1, NFSe.Tomador.Endereco.Complemento, '');
+  Gerador.wCampo(tcStr, '', 'NUMERO', 1, 1, 1, NFSe.Tomador.Endereco.Numero, '');
+//  Gerador.wCampo(tcStr, '', 'EMAIL', 1, 1, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampo(tcStr, '', 'DENTROPAIS', 1, 1, 1, 'S', '');
+  Gerador.wCampo(tcDe2, '', 'PIS', 1, 1, 1,NFSe.Servico.Valores.ValorPis, '');
+  Gerador.wCampo(tcDe2, '', 'COFINS', 1, 1, 1, NFSe.Servico.Valores.ValorCofins, '');
+  Gerador.wCampo(tcDe2, '', 'INSS', 1, 1, 1, NFSe.Servico.Valores.ValorInss , '');
+  Gerador.wCampo(tcDe2, '', 'IR', 1, 1, 1, NFSe.Servico.Valores.ValorIr, '');
+  Gerador.wCampo(tcDe2, '', 'CSLL', 1, 1, 1,  NFSe.Servico.Valores.ValorCsll  , '');
 
   GerarServicos;
 
@@ -145,9 +145,9 @@ begin
   for i := 0 to NFSe.Servico.ItemServico.Count - 1 do begin
     Gerador.wGrupo('SERVICO');
 
-    Gerador.wCampoNFSe(tcStr, '', 'DESCRICAO', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Descricao, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'VALORUNIT', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario, '');
-    Gerador.wCampoNFSe(tcDe4, '', 'QUANTIDADE', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Quantidade, '');
+    Gerador.wCampo(tcStr, '', 'DESCRICAO', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Descricao, '');
+    Gerador.wCampo(tcDe2, '', 'VALORUNIT', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario, '');
+    Gerador.wCampo(tcDe4, '', 'QUANTIDADE', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Quantidade, '');
 
     Gerador.wGrupo('/SERVICO');
   end;

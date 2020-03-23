@@ -3640,7 +3640,7 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
+        Gerador.wCampo(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
 
         FvNotas := FvNotas + Gerador.ArquivoFormatoXML;
       finally
@@ -4259,40 +4259,40 @@ begin
         begin
           if FNotasFiscais.Items[0].NFSe.Numero = '' then
           begin
-            Gerador.wGrupoNFSe('RPSConsulta');
+            Gerador.wGrupo('RPSConsulta');
             for i := 0 to FNotasFiscais.Count-1 do
             begin
               with FNotasFiscais.Items[I] do
                 if NFSe.IdentificacaoRps.Numero <> '' then
                 begin
-                  Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.IdentificacaoRps.Numero + '"');
-                  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
-                  Gerador.wCampoNFSe(tcStr, '#1', 'NumeroRPS', 01, 12, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
+                  Gerador.wGrupo('RPS Id="rps:' + NFSe.IdentificacaoRps.Numero + '"');
+                  Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
+                  Gerador.wCampo(tcStr, '#1', 'NumeroRPS', 01, 12, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
                   // Roberto godinho - Para o provedor CTA deve enviar a série de prestação (99) e não a série do RPS
                   if FProvedor = proCTA then
-                    Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, IIf(NFSe.SeriePrestacao='', '99', NFSe.SeriePrestacao), '')
+                    Gerador.wCampo(tcStr, '', 'SeriePrestacao', 01, 2,  1, IIf(NFSe.SeriePrestacao='', '99', NFSe.SeriePrestacao), '')
                   else
-                    Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.SeriePrestacao, '');
-                  Gerador.wGrupoNFSe('/RPS');
+                    Gerador.wCampo(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.SeriePrestacao, '');
+                  Gerador.wGrupo('/RPS');
                 end;
             end;
-            Gerador.wGrupoNFSe('/RPSConsulta');
+            Gerador.wGrupo('/RPSConsulta');
           end
           else begin
-            Gerador.wGrupoNFSe('NotaConsulta');
+            Gerador.wGrupo('NotaConsulta');
             for i := 0 to FNotasFiscais.Count-1 do
             begin
               with FNotasFiscais.Items[I] do
                 if NFSe.Numero <> '' then
                 begin
-                  Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
-                  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
-                  Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
-                  Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-                  Gerador.wGrupoNFSe('/Nota');
+                  Gerador.wGrupo('Nota Id="nota:' + NFSe.Numero + '"');
+                  Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
+                  Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
+                  Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+                  Gerador.wGrupo('/Nota');
                 end;
             end;
-            Gerador.wGrupoNFSe('/NotaConsulta');
+            Gerador.wGrupo('/NotaConsulta');
           end;
         end;
 
@@ -4343,7 +4343,7 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
+        Gerador.wCampo(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
 
         Consulta := Consulta + Gerador.ArquivoFormatoXML;
       finally
@@ -4711,12 +4711,12 @@ begin
         begin
           with FNotasFiscais.Items[I] do
           begin
-            Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
-            Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
-            Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
-            Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
-            Gerador.wGrupoNFSe('/Nota');
+            Gerador.wGrupo('Nota Id="nota:' + NFSe.Numero + '"');
+            Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
+            Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
+            Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+            Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
+            Gerador.wGrupo('/Nota');
           end;
         end;
 
@@ -4735,8 +4735,8 @@ begin
         begin
           with FNotasFiscais.Items[I] do
           begin
-            Gerador.wCampoNFSe(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
-            Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, TNFSeCancelarNfse(Self).FCodigoCancelamento, ''); {@/\@}
+            Gerador.wCampo(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
+            Gerador.wCampo(tcStr, '', 'motivo', 1, 39, 1, TNFSeCancelarNfse(Self).FCodigoCancelamento, ''); {@/\@}
           end;
         end;
 
@@ -4754,18 +4754,18 @@ begin
         Gerador.Prefixo := Prefixo4;
         for i := 0 to FNotasFiscais.Count-1 do
         begin
-          Gerador.wGrupoNFSe('NotCan');
+          Gerador.wGrupo('NotCan');
           with FNotasFiscais.Items[I] do
           begin
-            Gerador.wGrupoNFSe('InfNotCan');
+            Gerador.wGrupo('InfNotCan');
             Gerador.Prefixo := Prefixo3;
-            Gerador.wCampoNFSe(tcStr, '', 'NumNot', 01, 10, 1, OnlyNumber(NFSe.Numero), '');
-            Gerador.wCampoNFSe(tcStr, '', 'CodVer', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampoNFSe(tcStr, '', 'DesMotCan', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
+            Gerador.wCampo(tcStr, '', 'NumNot', 01, 10, 1, OnlyNumber(NFSe.Numero), '');
+            Gerador.wCampo(tcStr, '', 'CodVer', 01, 255,  1, NFSe.CodigoVerificacao, '');
+            Gerador.wCampo(tcStr, '', 'DesMotCan', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
             Gerador.Prefixo := Prefixo4;
-            Gerador.wGrupoNFSe('/InfNotCan');
+            Gerador.wGrupo('/InfNotCan');
           end;
-          Gerador.wGrupoNFSe('/NotCan');
+          Gerador.wGrupo('/NotCan');
         end;
 
         FvNotas := Gerador.ArquivoFormatoXML;
@@ -4847,11 +4847,11 @@ begin
           try
             Gerador.ArquivoFormatoXML := '';
             Gerador.Prefixo := Prefixo4;
-            Gerador.wGrupoNFSe('credenciais');
-            Gerador.wCampoNFSe(tcStr, '#01', 'usuario     ', 01, 15, 1, GerarDadosMsg.UserWeb);
-            Gerador.wCampoNFSe(tcStr, '#02', 'senha       ', 01, 05, 1, GerarDadosMsg.SenhaWeb);
-            Gerador.wCampoNFSe(tcStr, '#03', 'chavePrivada', 01, 01, 1, GerarDadosMsg.ChaveAcessoPrefeitura);
-            Gerador.wGrupoNFSe('/credenciais');
+            Gerador.wGrupo('credenciais');
+            Gerador.wCampo(tcStr, '#01', 'usuario     ', 01, 15, 1, GerarDadosMsg.UserWeb);
+            Gerador.wCampo(tcStr, '#02', 'senha       ', 01, 05, 1, GerarDadosMsg.SenhaWeb);
+            Gerador.wCampo(tcStr, '#03', 'chavePrivada', 01, 01, 1, GerarDadosMsg.ChaveAcessoPrefeitura);
+            Gerador.wGrupo('/credenciais');
 
             FPDadosMsg := FTagI + Gerador.ArquivoFormatoXML +
                                 GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
@@ -5125,12 +5125,12 @@ begin
         begin
           with FNotasFiscais.Items[I] do
           begin
-            Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
-            Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
-            Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
-            Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeSubstituirNfse(Self).FMotivoCancelamento, '');
-            Gerador.wGrupoNFSe('/Nota');
+            Gerador.wGrupo('Nota Id="nota:' + NFSe.Numero + '"');
+            Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
+            Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
+            Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+            Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeSubstituirNfse(Self).FMotivoCancelamento, '');
+            Gerador.wGrupo('/Nota');
           end;
         end;
 

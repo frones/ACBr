@@ -1,14 +1,14 @@
 object frmDemo: TfrmDemo
   Left = 381
   Height = 601
-  Top = 90
+  Top = 95
   Width = 811
   Caption = 'Demo ACBrBoleto'
   ClientHeight = 601
   ClientWidth = 811
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.0.2'
+  LCLVersion = '2.0.4.0'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
@@ -259,6 +259,15 @@ object frmDemo: TfrmDemo
       Caption = 'Enviar Email'
       OnClick = Button4Click
       TabOrder = 7
+    end
+    object Label32: TLabel
+      Left = 468
+      Height = 15
+      Top = 26
+      Width = 40
+      Caption = 'Label32'
+      ParentColor = False
+      OnClick = Label32Click
     end
   end
   object GroupBox1: TGroupBox
@@ -701,44 +710,41 @@ object frmDemo: TfrmDemo
     MAIL = ACBrMail1
     Banco.Numero = 237
     Banco.TamanhoMaximoNossoNum = 11
-    Banco.TipoCobranca = cobBradesco
+    Banco.TipoCobranca = cobBancoCresolSCRS
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.Nome = 'teste cedente'
-    Cedente.CodigoCedente = '4863177'
-    Cedente.Agencia = '2132'
-    Cedente.AgenciaDigito = '6'
-    Cedente.Conta = '0018600'
-    Cedente.ContaDigito = '7'
+    Banco.CasasDecimaisMoraJuros = 2
+    Cedente.Nome = 'Banco PIne'
+    Cedente.CodigoCedente = '511935'
+    Cedente.Agencia = '03161'
+    Cedente.AgenciaDigito = '5'
+    Cedente.Conta = '000000017598'
+    Cedente.ContaDigito = '6'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
-    Cedente.TipoDocumento = Tradicional
-    Cedente.CNPJCPF = '82.961.095/0001-74'
+    Cedente.TipoCarteira = tctRegistrada
+    Cedente.CaracTitulo = tcCaucionada
+    Cedente.CNPJCPF = '62.144.175/0001-20'
     Cedente.TipoInscricao = pJuridica
-    Cedente.Logradouro = 'Rua  XI de Agosto'
-    Cedente.NumeroRes = '100'
+    Cedente.Logradouro = 'Av das Nacoes Unidas'
+    Cedente.NumeroRes = '8501'
+    Cedente.Complemento = '30 Andar'
     Cedente.Bairro = 'Centro'
-    Cedente.Cidade = 'Tatui'
+    Cedente.Cidade = 'Sao Paulo'
     Cedente.UF = 'SP'
     Cedente.CEP = '18270000'
+    Cedente.IdentDistribuicao = tbBancoDistribui
+    Cedente.Operacao = '0008426'
     DirArqRemessa = 'c:\temp'
-    NomeArqRetorno = 'ret281.ret'
-    DirArqRetorno = '.\'
+    NomeArqRetorno = 'sicredi.crt'
+    DirArqRetorno = 'c:\temp'
     NumeroArquivo = 0
     DataArquivo = 0
     DataCreditoLanc = 0
+    LeCedenteRetorno = True
     ACBrBoletoFC = ACBrBoletoFCFortes1
     left = 160
     top = 216
-  end
-  object ACBrBoletoFCLazReport1: TACBrBoletoFCLazReport
-    MostrarSetup = False
-    MostrarProgresso = False
-    SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    NomeArquivo = 'boletoLaz'
-    left = 80
-    top = 272
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
     MostrarSetup = False

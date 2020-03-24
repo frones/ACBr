@@ -1,7 +1,7 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 561
+  Left = 286
   Height = 552
-  Top = 171
+  Top = 10
   Width = 926
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
@@ -12,7 +12,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   OnClose = FormClose
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.4.0'
   object Panel1: TPanel
     Left = 256
     Height = 552
@@ -46,7 +46,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 4
         Height = 31
         Top = 4
-        Width = 157
+        Width = 158
         Caption = 'Formatação de Caracter'
         OnClick = bTagFormtacaoCaracterClick
         TabOrder = 0
@@ -55,7 +55,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 4
         Height = 31
         Top = 37
-        Width = 157
+        Width = 158
         Caption = 'Alinhamento'
         OnClick = bTagsAlinhamentoClick
         TabOrder = 1
@@ -64,7 +64,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 4
         Height = 31
         Top = 70
-        Width = 157
+        Width = 158
         Caption = 'Codigos de Barras'
         OnClick = bTagsCodBarrasClick
         TabOrder = 2
@@ -73,13 +73,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 4
         Height = 28
         Top = 103
-        Width = 157
+        Width = 158
         Caption = 'QRCode'
         OnClick = bTagQRCodeClick
         TabOrder = 3
       end
       object bTagsTestePagCodigo: TButton
-        Left = 165
+        Left = 166
         Height = 31
         Top = 4
         Width = 189
@@ -88,7 +88,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 4
       end
       object bTagsTestePageMode: TButton
-        Left = 165
+        Left = 166
         Height = 31
         Top = 37
         Width = 189
@@ -97,7 +97,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 5
       end
       object bTagGaveta: TButton
-        Left = 165
+        Left = 166
         Height = 31
         Top = 70
         Width = 189
@@ -106,7 +106,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 6
       end
       object bImpLinhaALinha: TButton
-        Left = 165
+        Left = 166
         Height = 28
         Top = 103
         Width = 189
@@ -115,37 +115,37 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 7
       end
       object btInfoUSB: TButton
-        Left = 358
+        Left = 359
         Height = 31
         Top = 4
-        Width = 152
+        Width = 151
         Caption = 'Informações USB'
         OnClick = btInfoUSBClick
         TabOrder = 8
       end
       object bImpTagsValidas: TButton
-        Left = 358
+        Left = 359
         Height = 31
         Top = 37
-        Width = 152
+        Width = 151
         Caption = 'Mostrar TODAS TAGS'
         OnClick = bImpTagsValidasClick
         TabOrder = 9
       end
       object bTagsTesteInvalidas: TButton
-        Left = 358
+        Left = 359
         Height = 31
         Top = 70
-        Width = 152
+        Width = 151
         Caption = 'Teste de Tags Invalidas'
         OnClick = bTagsTesteInvalidasClick
         TabOrder = 10
       end
       object Button1: TButton
-        Left = 358
+        Left = 359
         Height = 28
         Top = 103
-        Width = 152
+        Width = 151
         Caption = 'Teste de Senha'
         OnClick = Button1Click
         TabOrder = 11
@@ -325,7 +325,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             Left = 240
             Height = 25
             Top = 36
-            Width = 118
+            Width = 117
             AutoSize = True
             Caption = 'Tags de Logotipo'
             OnClick = bTagLogoClick
@@ -375,7 +375,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           end
           object bImprimirImagem: TButton
             AnchorSideRight.Control = bConverter
-            Left = 326
+            Left = 327
             Height = 25
             Top = 40
             Width = 72
@@ -387,10 +387,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             TabOrder = 2
           end
           object bTagBMP: TButton
-            Left = 484
+            Left = 485
             Height = 25
             Top = 40
-            Width = 168
+            Width = 167
             Anchors = [akTop, akRight]
             AutoSize = True
             Caption = 'Tags de Impressão de BMP'
@@ -428,7 +428,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           end
           object bConverter: TButton
             AnchorSideRight.Control = bTagBMP
-            Left = 402
+            Left = 403
             Height = 25
             Top = 40
             Width = 78
@@ -702,7 +702,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 16
         Height = 19
         Top = 15
-        Width = 217
+        Width = 218
         Caption = 'Limpar texto a cada teste selecionado'
         TabOrder = 0
       end
@@ -732,7 +732,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 19
         Hint = 'Traduz as Tags de Formatação e Cod.Barras'
         Top = 253
-        Width = 88
+        Width = 86
         Caption = 'TraduzirTags'
         Checked = True
         OnChange = cbTraduzirTagsChange
@@ -744,7 +744,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 19
         Hint = 'Não processa as Tags, imprime-as como texto normal'
         Top = 273
-        Width = 83
+        Width = 82
         Caption = 'IgnorarTags'
         OnChange = cbIgnorarTagsChange
         TabOrder = 1
@@ -1163,7 +1163,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 23
         Hint = 'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Porta Serial após o envio'
         Top = 15
-        Width = 94
+        Width = 95
         Caption = 'Exibe Numero'
         OnChange = cbHRIChange
         TabOrder = 2
@@ -1187,10 +1187,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         AnchorSideLeft.Control = seQRCodeTipo
         AnchorSideLeft.Side = asrCenter
         AnchorSideBottom.Control = seQRCodeTipo
-        Left = 38
+        Left = 39
         Height = 15
         Top = 0
-        Width = 24
+        Width = 23
         Anchors = [akLeft, akBottom]
         Caption = 'Tipo'
         ParentColor = False

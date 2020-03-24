@@ -1,3 +1,32 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{																			   }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}4
 unit Frm_SPEDFiscal;
 
 {$IFDEF FPC}
@@ -111,8 +140,8 @@ begin
   //Definindo
   with ACBrSPEDFiscal1 do
   begin
-    DT_INI := StrToDate('01/11/2011');
-    DT_FIN := StrToDate('30/11/2011');
+    DT_INI := StrToDate('01/07/2012');
+    DT_FIN := StrToDate('30/07/2012');
   end;
 
   if cbConcomitante.Checked then
@@ -134,7 +163,7 @@ begin
     // Dados da Empresa
     with Registro0000New do
     begin
-      COD_VER := vlVersao103;
+      COD_VER := vlVersao105;
       COD_FIN := raOriginal;
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
       CNPJ := '11111111111180';
@@ -617,18 +646,18 @@ begin
               ALIQ_ST := 0;
               VL_ICMS_ST := 0;
               IND_APUR := iaMensal;
-              CST_IPI := ipiEntradaIsenta;
+              //CST_IPI := ipiEntradaIsenta;
               COD_ENQ := '';
               VL_BC_IPI := 0;
               ALIQ_IPI := 0;
               VL_IPI := 0;
-              CST_PIS := pisOutrasOperacoes;
+              //CST_PIS := pisOutrasOperacoes;
               VL_BC_PIS := 0;
               ALIQ_PIS_PERC := 0;
               QUANT_BC_PIS := 0;
               ALIQ_PIS_R := 0;
               VL_PIS := 0;
-              CST_COFINS := cofinsOutrasOperacoes;
+             // CST_COFINS := cofinsOutrasOperacoes;
               VL_BC_COFINS := 0;
               ALIQ_COFINS_PERC := 0;
               QUANT_BC_COFINS := 0;
@@ -1178,8 +1207,9 @@ begin
       //
       with RegistroH005New do
       begin
-        DT_INV := DT_FIN; //o valor informado no campo deve ser menor ou igual ao valor no campo DT_FIN do registro 0000
+        DT_INV := StrToDate('30/07/2012');    // DT_FIN; //o valor informado no campo deve ser menor ou igual ao valor no campo DT_FIN do registro 0000
         VL_INV := 1000;
+        MOT_INV:= miControleMercadoriaSujeitaST;
         // FILHO
         for IInvent := 1 to 10 do
         begin

@@ -9,7 +9,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '2.0.4.0'
   object Label2: TLabel
     Left = 8
     Height = 13
@@ -207,7 +207,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object btnB_H: TButton
       Left = 424
       Height = 25
-      Top = 22
+      Top = 24
       Width = 100
       Caption = 'Registros Bloco H'
       OnClick = btnB_HClick

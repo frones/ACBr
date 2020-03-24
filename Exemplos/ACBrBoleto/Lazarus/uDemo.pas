@@ -1,3 +1,33 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{																			   }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
 unit uDemo; 
 
 {$mode objfpc}{$H+}
@@ -6,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, EditBtn, ACBrBoleto, ACBrBoletoFCLazReportDm, ACBrBoletoFCFortesFr,
+  StdCtrls, EditBtn, ACBrBoleto, ACBrBoletoFCFortesFr,
   ExtCtrls, MaskEdit, Buttons, ACBrUtil, ACBrMail;
 
 type
@@ -17,7 +47,6 @@ type
   TfrmDemo = class ( TForm )
      ACBrBoleto1: TACBrBoleto;
      ACBrBoletoFCFortes1 : TACBrBoletoFCFortes ;
-     ACBrBoletoFCLazReport1 : TACBrBoletoFCLazReport ;
      ACBrMail1: TACBrMail;
      btnIncluiBoleto: TButton;
      btnIncluir10Boletos: TButton;
@@ -89,6 +118,7 @@ type
      Label3: TLabel;
      Label30: TLabel;
      Label31: TLabel;
+     Label32: TLabel;
      Label4: TLabel;
      Label5: TLabel;
      Label6: TLabel;
@@ -109,6 +139,7 @@ type
      procedure Button4Click(Sender: TObject);
      procedure cbxLayOutChange(Sender : TObject) ;
      procedure FormCreate ( Sender: TObject ) ;
+     procedure Label32Click(Sender: TObject);
   private
     { private declarations }
   public
@@ -153,7 +184,7 @@ begin
 
      with Titulo do
      begin
-        LocalPagamento    := 'Pagar preferêncialmente nas agências do '+ ACBrBoleto1.Banco.Nome; //MEnsagem exigida pelo bradesco
+       // LocalPagamento    := 'Pagar preferêncialmente nas agências do '+ ACBrBoleto1.Banco.Nome; //MEnsagem exigida pelo bradesco
         Vencimento        := IncMonth(EncodeDate(2010,05,10),I);
         DataDocumento     := EncodeDate(2010,04,10);
         NumeroDocumento   := PadRight(IntToStr(I),6,'0');
@@ -216,9 +247,16 @@ begin
    cbxLayOut.ItemIndex := 0;
 end;
 
+procedure TfrmDemo.Label32Click(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmDemo.btnIncluiBoletoClick ( Sender: TObject ) ;
 var
   Titulo : TACBrTitulo;
+  DadosNFe: TACBrDadosNFe;
+  Z, I: integer;
 begin
      Titulo := ACBrBoleto1.CriarTituloNaLista;
 
@@ -245,11 +283,12 @@ begin
         Sacado.UF         := edtUF.Text;
         Sacado.CEP        := OnlyNumber(edtCEP.Text);
         ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
-        LocalPagamento    := edtLocalPag.Text+ ' '+ ACBrBoleto1.Banco.Nome;
+        //LocalPagamento    := edtLocalPag.Text+ ' '+ ACBrBoleto1.Banco.Nome;
         ValorMoraJuros    := StrToCurrDef(edtMoraJuros.Text,0);
         ValorDesconto     := StrToCurrDef(edtValorDesconto.Text,0);
         ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
         DataMoraJuros     := edtDataMora.Date;
+        DataMulta         := edtDataMora.Date;;
         DataDesconto      := edtDataDesconto.Date;
         DataAbatimento    := edtDataAbatimento.Date;
         DataProtesto      := edtDataProtesto.Date;
@@ -258,11 +297,33 @@ begin
         OcorrenciaOriginal.Tipo  := toRemessaRegistrar;
         Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
         Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
+
+        for I:= 0 to 4 do
+        begin
+         DadosNFe:= Titulo.CriarNFeNaLista;
+         DadosNFe.NumNFe:= '123456';
+         DadosNFe.EmissaoNFe:= Now;
+         DadosNFe.ValorNFe:= 100;
+         DadosNFe.ChaveNFe:=  StringOfChar('1' ,44);
+        end;
+
+
+         with Sacado.SacadoAvalista do
+         begin
+          NomeAvalista:= 'RIAADE SUPRIMENTOS MEDICOS LTDA';
+          CNPJCPF:= '15.037.934/0001-75';
+          Logradouro:= 'Rua XI de Agosto';
+          Numero:= '100';
+          Bairro:= 'Centro';
+          Cidade:= 'Tatui';
+          UF:= 'SP';
+          CEP:= '18270-170';
+         end;
+        end;
         {Parcela := 1;
         TotalParcelas := 1};
 
        // ACBrBoleto1.AdicionarMensagensPadroes(Titulo,Mensagem);
-     end;
 end;
 
 procedure TfrmDemo.btnGerarRemessaClick ( Sender: TObject ) ;
@@ -288,13 +349,13 @@ end;
 
 procedure TfrmDemo.Button2Click ( Sender: TObject ) ;
 begin
-   ACBrBoletoFCLazReport1.NomeArquivo := './teste.html' ;
    ACBrBoleto1.GerarHTML;
 end;
 
 procedure TfrmDemo.Button3Click(Sender: TObject);
 begin
-   ACBrBoleto1.LerRetorno();
+   //ACBrBoleto1.LerRetorno();
+   ACBrBoleto1.GetOcorrenciasRemessa();
 end;
 
 procedure TfrmDemo.Button4Click(Sender: TObject);

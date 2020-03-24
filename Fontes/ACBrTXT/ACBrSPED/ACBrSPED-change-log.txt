@@ -69,6 +69,18 @@ Data 28/01/2020
 -- ACBrEFDBlocos --
 [*] Inclusão de novo item para o tipo enumerado TACBrMotInv devido a versão 3.03 do Guia Prático EFD
 
+Data: 15/09/2019
+-- ACBrEFDImportar --
+[+] Início do bloco 1 (por Marcelo Silva | Apollo Sistemas)
+
+Data: 08/05/2019
+-- ACBrEFDImportar --
+[-] Verificação se existe mais de um delimitador para cada linha no momento da
+    importação. Isso se faz necessário pois em arquivos SPED que já foram
+    assinados existem linhas após a finalização do arquivo (Bloco 9999) e estas
+    linhas devem ser ignoradas na importação para não ocasionarem erro.
+(por Rodrigo Coelho | Bunny Soft)
+
 Data 03/08/2018
 -- ACBrEFDBlocos --
 [-] Correção na definição de tipo dos campos IND_VEIC e VEIC_ID no registro D140.
@@ -80,6 +92,10 @@ Data 17/04/2018
 [*] Atualização de valores válidos para o campo IND_DOC do registro 1100 EFD ICMS/IPI.
     https://www.projetoacbr.com.br/forum/topic/42786-declara%C3%A7%C3%A3o-%C3%BAnica-de-exporta%C3%A7%C3%A3o/  
   Por: Wesley Oliveira
+  
+Data 03/07/2017
+-- ACBrEFDImportar --
+[+] Importação ICMS IPI. (por Rodrigo Buschmann | Digibyte) 
   
 Data 22/06/2017
 [-] Correção nos regystros Ya do SpedECF
@@ -245,6 +261,10 @@ Versão 1.02 05/05/2015
 [*] O Objeto do Registro agora é passado como parâmetro nos eventos, para que possa
     ser lido alguma informação do registro atual a que o evento for disparado.
     (por Isaque Pinheiro)
+	
+Data: 23/02/2015
+-- ACBrEFDImportar --
+[+] Criação da classe. (por Macgayver Armini Apolonio)
 
 Versão 1.02  16/01/2014
 -- ACBrSPEDFiscal --

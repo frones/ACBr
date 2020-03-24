@@ -1,9 +1,9 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,9 +22,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 Agradecimentos:
 
@@ -55,6 +54,10 @@ Símbolo : Significado
     ParamAdic: AnsiString
     https://www.projetoacbr.com.br/forum/topic/50545-finalizatransacaositefinterativo-fun%C3%A7%C3%A3o-descontinuada/-
     (por: DSA)
+
+10/03/2019
+-- ACBrTEFDCappta --
+[+] Inclusão da classe ACBrTEFDCappta. (por Juliomar Marchetti)
 
 01/02/2019
 -- ACBrTEFDCliSitef --
@@ -684,6 +687,17 @@ Data:  02/09/2011  - Ver: 1.34
 Data:  11/08/2011  - Ver: 1.33
 [-] Correção de Bug descrito em:
     http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&p=12735
+	
+Data: 10/08/2011 
+-- ACBrTEFDTicketCar --
+[+] Inclusão da classe ACBrTEFDTicketCar. (por Márcio D. Carvalho)
+-- ACBrTEFDCliDTEF --
+[+] Inclusão da classe ACBrTEFDCliDTEF. (por Márcio D. Carvalho)
+-- ACBrTEFDCrediShop --
+[+] Inclusão da classe ACBrTEFDCrediShop. (por Márcio D. Carvalho)
+-- ACBrTEFDBanese --
+[*] Exibição da msg "IMPRIMINDO", durante a impressão
+    (por Márcio Delfino Carvalho)
 
 Data:  26/07/2011  - Ver: 1.32
 [+] Implementado recurso para que os TEF Discados, indentifique se o tipo
@@ -716,6 +730,8 @@ Data:  09/05/2011
        gpCliSiTef: ACBrTEF.TEFCliSiTef.PathDLL := '.\DLLs\TEF\SiTef';
     end;
 
+Data: 18/03/11
+[+] Inclusão TACBrTEFDBanese. (por Márcio Delfino Carvalho)
 
 Versão 1.30    13/03/11
 [+] Adicionado suporte ao tratamento de Cupons Não Fiscais. Porém, é necessário
@@ -741,6 +757,10 @@ Versão 1.20b   05/07/10
     com um Espaço no Inicio do texto
 [*] Metodo TACBrTEFDLinha.SetLinha, compatibilizado com formato de Chaves do
     TEF V&SPague
+	
+Data: 26/06/2010
+-- ACBrTEFDVeSPague --
+[+] Inclusão da classe ACBrTEFDVeSPague. (por Daniel Simoes de Almeida)
 
 Versão 1.17b   19/04/10
 [+] Adicionada a propriedade em TACBrTEFD.NumeroMaximoCartoes : Integer
@@ -929,6 +949,7 @@ Versão 1.4b   08/02/10
     exibição por 2 vezes.
 
 Versão 1.3b   03/02/10
+[+] Inclusão da classe ACbrTEFDGpu.pas (por Evandro Mira)
 [-] Corrigido Bug na verificação de transação Aprovada (retorno) em CRT e CHQ
 [-] Corrigido Bug na verificação de Saldo Restante a Pagar em transaçoes com
     Multiplos Cartoes

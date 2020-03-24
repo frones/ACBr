@@ -1,13 +1,11 @@
 {******************************************************************************}
-
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2019 Daniel Simoes de Almeida               }
-{                                       Juliomar Marchetti                     }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -28,17 +26,9 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 10/03/2019: Juliomar Marchetti
-|*  - Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
-******************************************************************************}
 
 {$I ACBr.inc}
 

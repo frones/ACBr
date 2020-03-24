@@ -99,6 +99,8 @@
     <Compile Include="Sat\SATModelo.cs" />
     <Compile Include="Sat\TipoExtrato.cs" />
     <Compile Include="Serial\ACBrDevice.cs" />
+    <Compile Include="Serial\SerialBaud.cs" />
+    <Compile Include="Serial\SerialDataBits.cs" />
     <Compile Include="Serial\SerialHandShake.cs" />
     <Compile Include="Serial\SerialParity.cs" />
     <Compile Include="Serial\SerialStopBytes.cs" />

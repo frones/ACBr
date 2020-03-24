@@ -407,6 +407,27 @@ type
     procedure MontarCodigoBarras_Bradesco_VencimentoNulo;
   end;
 
+  { GerarRemessa_Bradesco_Test }
+
+  GerarRemessa_Bradesco_Test= class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure GerarRemessa_Bradesco240;
+    procedure GerarRemessa_Bradesco400;
+  end;
+
+  { GerarRetorno_Bradesco_Test }
+
+  GerarRetorno_Bradesco_Test= class(TTestCase)
+  protected
+  published
+    procedure GerarRetorno_Bradesco240;
+    procedure GerarRetorno_Bradesco400;
+  end;
+
   {$ENDREGION}
 
   {$REGION - Classes Unicred}
@@ -557,6 +578,8 @@ implementation
 uses
   dateutils, ACBrUtil, forms;
 
+  {$REGION - Implementação Classes Banco UnicredES }
+
 { MontarCampoNossoNumero_UnicredES_Test }
 
 procedure MontarCampoNossoNumero_UnicredES_Test.SetUp;
@@ -609,6 +632,8 @@ begin
     CheckEquals( MSG, e.Message );
   end;
 end;
+
+  {$ENDREGION}
 
   {$REGION - Implementação Classes Banco Unicred }
 
@@ -1482,6 +1507,134 @@ begin
   Titulo.NossoNumero          := '52172552552';
 
   CheckEquals('2', Boleto.Banco.CalcularDigitoVerificador(Titulo));
+end;
+
+{ GerarRemessa_Bradesco_Test }
+
+procedure GerarRemessa_Bradesco_Test.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure GerarRemessa_Bradesco_Test.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure GerarRemessa_Bradesco_Test.GerarRemessa_Bradesco240;
+var
+  lArqGerado, lArqValido: TStringList;
+begin
+  try
+
+    lArqGerado := TStringList.Create;
+    lArqValido := TStringList.Create;
+
+    CriaBoletoPadrao('RemessaBradesco240.rem', Remessa, c240, cobBradesco);
+
+    //Carrega Arquivo Gerado
+    lArqGerado.LoadFromFile( CarregarArquivos('RemessaBradesco240.rem', Remessa) );
+
+    //Altera a Data Atual gerada pela Data do Arquivo Válido ('ddmmyyyyhhnnss')
+    lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '02122019000000', 144);
+
+    lArqGerado.Text:= StringReplace(lArqGerado.Text,
+                      FormatDateTime('ddmmyyyy',now),'02122019',[rfReplaceAll]);
+
+    //Carrega Arquivo Válido
+    lArqValido.LoadFromFile( CarregarArquivos('RemessaBradesco240Valido.rem', Remessa) );
+
+    CheckEquals(lArqValido.Text, lArqGerado.Text);
+
+  finally
+    FreeAndNil(lArqValido);
+    FreeAndNil(lArqGerado);
+  end;
+
+end;
+
+procedure GerarRemessa_Bradesco_Test.GerarRemessa_Bradesco400;
+var
+  lArqGerado, lArqValido: TStringList;
+begin
+  try
+
+    lArqGerado := TStringList.Create;
+    lArqValido := TStringList.Create;
+
+    CriaBoletoPadrao('RemessaBradesco400.rem', Remessa, c400, cobBradesco);
+
+    //Carrega Arquivo Gerado
+    lArqGerado.LoadFromFile( CarregarArquivos('RemessaBradesco400.rem', Remessa) );
+
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
+    lArqGerado.Text:= StringReplace(lArqGerado.Text,
+                      FormatDateTime('ddmmyy',now),'160120',[rfReplaceAll]);
+
+    //Carrega Arquivo Válido
+    lArqValido.LoadFromFile( CarregarArquivos('RemessaBradesco400Valido.rem', Remessa) );
+
+    CheckEquals(lArqValido.Text, lArqGerado.Text);
+
+  finally
+    FreeAndNil(lArqValido);
+    FreeAndNil(lArqGerado);
+  end;
+
+end;
+
+{ GerarRetorno_Bradesco_Test }
+
+procedure GerarRetorno_Bradesco_Test.GerarRetorno_Bradesco240;
+var
+  SLArqGerado, SLArqValido: TStringList;
+begin
+  try
+    SLArqGerado := TStringList.Create;
+    SLArqValido := TStringList.Create;
+
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
+    CriaBoletoPadrao( 'RetBradesco240.ret', Retorno, c240, cobBradesco );
+
+    //Carrega Arquivo de Retorno Gerado para comparar dados
+    SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetBradesco240.ret', Retorno) );
+
+    //Carrega Arquivo Válido
+    SLArqValido.LoadFromFile( CarregarArquivos('ResultRetBradesco240Valido.ret', Retorno) );
+
+    CheckEquals( SLArqValido.Text, SLArqGerado.Text );
+
+  finally
+    FreeAndNil(SLArqValido);
+    FreeAndNil(SLArqGerado);
+  end;
+
+end;
+
+procedure GerarRetorno_Bradesco_Test.GerarRetorno_Bradesco400;
+var
+  SLArqGerado, SLArqValido: TStringList;
+begin
+  try
+    SLArqGerado := TStringList.Create;
+    SLArqValido := TStringList.Create;
+
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
+    CriaBoletoPadrao( 'RetBradesco400.ret', Retorno, c400, cobBradesco);
+
+    //Carrega Arquivo de Retorno Gerado para comparar dados
+    SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetBradesco400.ret', Retorno) );
+
+    //Carrega Arquivo Válido
+    SLArqValido.LoadFromFile( CarregarArquivos('ResultRetBradesco400Valido.ret', Retorno) );
+
+    CheckEquals( SLArqValido.Text, SLArqGerado.Text );
+
+  finally
+    FreeAndNil(SLArqValido);
+    FreeAndNil(SLArqGerado);
+  end;
+
 end;
 
   {$ENDREGION}
@@ -3262,6 +3415,8 @@ initialization
   RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Bradesco_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Bradesco_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Bradesco_Test{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Bradesco_Test{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Bradesco_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Unicred_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Unicred_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Unicred_Test{$ifndef FPC}.Suite{$endif});

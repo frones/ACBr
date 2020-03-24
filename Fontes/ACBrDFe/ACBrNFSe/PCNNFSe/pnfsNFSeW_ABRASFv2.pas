@@ -978,9 +978,7 @@ function TNFSeW_ABRASFv2.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
 
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo           := FPrefixo4;
-
+  Gerador.ArquivoFormatoXML  := '';
   Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   if (FProvedor in [pro4R, proABase, proActcon, proAgili, proCoplan, proDigifred,
@@ -1004,6 +1002,8 @@ begin
 
   if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '') then
     Atributo := ' Id="' + (NFSe.IdentificacaoRps.Numero) + '"';
+
+  Gerador.Prefixo := '';
 
   if (FProvedor in [proNotaInteligente, proPronimv2, proTiplanv2, proiiBrasilv2{, proSimplISSv2}]) then
     Gerador.wGrupo('Rps')
@@ -1063,7 +1063,11 @@ begin
   if (Provedor = proPronimv2) then
     Gerador.Opcoes.SuprimirDecimais := True;
 
+  Gerador.Prefixo := FPrefixo4;
+
   GerarXML_ABRASF_v2;
+
+  Gerador.Prefixo := '';
 
   Gerador.wGrupo('/Rps');
 

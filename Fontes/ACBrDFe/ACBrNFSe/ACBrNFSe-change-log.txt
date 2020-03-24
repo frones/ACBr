@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2020
+-- pnfsNFSeW_ABRASFv1/pnfsNFSeW_ABRASFv2 -- 
+[*] Ajustes necessarios por conta do refactoring feito no pcnGerador
+   Por: Italo Jurisato Junior
+
 16/03/2020
 -- pnfsNFSeW_ABRASFv2 -- 
 [*] Ajustes para o provedor DeISS

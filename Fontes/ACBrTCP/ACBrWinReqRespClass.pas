@@ -29,12 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 15/01/2014: Jean Patrick Figueiredo dos Santos
-|*  - Contribuição da classe para o Projeto ACBr
-******************************************************************************}
 
 {$I ACBr.inc}
 

@@ -29,14 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 27/10/2011: Primeira Versao
-|*    Isaque Pinheiro e Daniel Simoes de Almeida
-|*    Criaçao do componente ACBrDownload, que implementa de fazer download de
-|*    arquivos via http e ftp, com recurso de pausa e continuação do download.
-******************************************************************************}
 
 {$I ACBr.inc}
 

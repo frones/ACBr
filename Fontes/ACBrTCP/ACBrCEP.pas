@@ -30,17 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 12/08/2010: Primeira Versao
-|*    Daniel Simoes de Almeida e André Moraes
-|*
-|* 24/05/2018: Versão X
-|*    Igor de Bastos Costa
-|*    Atualizacao dos comandos do CEPAberto que alterou a API para versao 3.0
-******************************************************************************}
-
 unit ACBrCEP ;
 
 {$I ACBr.inc}

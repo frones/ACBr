@@ -3,8 +3,6 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -260,7 +258,12 @@ Símbolo : Significado
 -- ACBrMail --
 [*] Metodo "TACBrMail.SendMail", modificado para retornar a mensagem de erro
     original do Servidor SMTP (Por: Carlos H. Cantu)
-
+	
+24/05/2018
+-- ACBrCEP --
+[*] Atualizacao dos comandos do CEPAberto que alterou a API para versao 3.0.
+    (por Igor de Bastos Costa)
+	
 08/05/2018
 -- ACBrCEP --
 [+] TACBrCEP, adição de novo provedor viaCEP
@@ -370,6 +373,10 @@ Símbolo : Significado
 -- ACBrConsultaCPF --
 [-] Refatoração, e ajustes para funcionar com nova URL em Lazarus
     (por: DSA)
+	
+14/11/2017
+-- ACBrFeriado --
+[*] Separação das classes em arquivos próprios. (por Filipe de Almeida Sortica)
 
 10/11/2017
 -- ACBrMail --
@@ -383,6 +390,15 @@ Símbolo : Significado
     Encoding nativo.
     https://www.projetoacbr.com.br/forum/topic/39818-problemas-em-anexar-xml-no-e-mail
     (por: DSA)
+
+07/11/2017
+-- ACBrFeriado --
+[+] Inclusão de pesquisa no arquivo JSON. (por Filipe de Almeida Sortica)
+
+27/10/2017
+-- ACBrFeriado --
+[+] Primeira Versao, inclusão de pesquisa no WebService calendario.com.br
+    (por Filipe de Almeida Sortica)
 
 23/10/2017
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
@@ -668,6 +684,14 @@ Símbolo : Significado
 [+] Adicionado suporte ao campo "Data da Inscrição"
     http://www.projetoacbr.com.br/forum/topic/30634-consultacpf-corre%C3%A7%C3%A3o-de-endere%C3%A7o/
     (por: Alan Lucas)
+	
+17/05/2016
+-- ACBrMTerSB100 --
+[+] Inclusão do modelo ACBrMTerSB100. (por Elias César Vieira)
+-- ACBrMTerStxEtx --
+[+] Inclusão do modelo ACBrMTerStxEtx. (por Elias César Vieira)
+-- ACBrMTerVT100 --
+[+] Inclusão do modelo ACBrMTerVT100. (por Elias César Vieira)
 
 03/02/2016
 -- ACBrMTer --
@@ -935,6 +959,12 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/
     http://www.projetoacbr.com.br/forum/index.php?/topic/13345-novo-componete-acbrtabelassped/#entry80872
 [+] Ajuste para o padrão dos componentes do projeto ACBr
     (por: Isaque Pinheiro/Juliomar Marchetti)
+	
+15/01/2014
+-- ACBrWinINetReqResp --
+[+]Inclusão da classe no Projeto ACBr. (por Jean Patrick Figueiredo dos Santos)
+-- ACBrWinReqRespClass --
+[+]Inclusão da classe no Projeto ACBr. (por Jean Patrick Figueiredo dos Santos)
 
 27/01/2013
 -- ACBrCEP --
@@ -1026,6 +1056,8 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/
 [*] Refactoring de funções que já existiam nos fontes do ACBr ou synapse:
     HTTPEncode -> synacode.EncodeURLElement; PosEx -> strutils.PosEx
     (por: DSA)
+-- ACBrTaxaDolar--
+[+] Inclusão do componente ACBrTaxaDolar. (por Jefferson - Jeffersonlupinacc@gmail.com)
 
 17/06/2013
 -- ACBrConsultaCNPJ --
@@ -1048,6 +1080,10 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/
     dentro delas.
 [+] Adicionado evento para capturar erros de importação.
     por: regys.silveira
+	
+25/05/2013
+-- ACBrConsultaCNPJ --
+[+] Inclusão do componente ACBrConsultaCNPJ (por Fernando - fernando-mm@hotmail.com)
 
 17/05/2013
 -- ACBrIBPTax --
@@ -1123,7 +1159,8 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/
 
 30/10/2011
 -- ACBrDownload --
-[+] Liberado componente para download de arquivos
+[+] Liberado componente para download de arquivos via http e ftp, com 
+    recurso de pausa e continuação do download.
     por: Isaque Pinheiro / Daniel Simões
 
 17/10/2011
@@ -1158,4 +1195,11 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/
 -- ACBrCNIEE --
 [+] Librado componente para download e leitura da tabela de CNIEE
     por: Régys Silveira / Daniel Simões
+	
+12/08/2010
+-- ACBrIBGE --
+[+] Inclusão do componente ACBrIBGE. (por Daniel Simoes de Almeida e André Moraes)
 
+24/10/2008
+-- ACBrSocket --
+[+] Inclusão do componente ACBrSocket. (por Daniel Simoes de Almeida)

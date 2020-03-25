@@ -726,8 +726,6 @@ begin
              FreteRetorno := False;
              CepRetorno := '';
              DistanciaRetorno := 100;
-
-             Integrador := edtHashIntegrador.text;
            end;
          end;
 

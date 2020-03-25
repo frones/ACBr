@@ -494,16 +494,13 @@ begin
     with rodo.infANTT.infContratante.New do
     begin
       CNPJCPF       := edtEmitCNPJ.Text;
-      // Campos Novos descomentar para fazer os testes
-//      idEstrangeiro := '';
-//      xNome         := 'Nome do Contatratante';
+      idEstrangeiro := '';
+      xNome         := 'Nome do Contatratante';
     end;
 
     {
     Informações OPCIONAIS sobre o Pagamento do Frete
     }
-    // Inicio dos Campos Novos descomentar para fazer os testes
-    (*
     with rodo.infANTT.infPag.New do
     begin
       xNome         := 'Nome do Responsavel pelo Pagamento';
@@ -567,7 +564,6 @@ begin
         rodo.infANTT.infPag[0].infBanc.codAgencia := '00001';
       end;
     end;
-    *)
 
     // Informações sobre o veiculo de tração
     rodo.veicTracao.cInt    := '001';
@@ -713,8 +709,6 @@ begin
     {
     Informações OPCIONAIS sobre o produto predominante
     }
-    // Inicio dos Campos Novos Descomentar para fazer os testes
-    (*
     prodPred.tpCarga := tcGranelSolido;
     prodPred.xProd   := 'Descricao do Produto';
     prodPred.cEAN    := '78967142344650';
@@ -731,7 +725,6 @@ begin
     prodPred.infLocalDescarrega.CEP       := 14800000;
     prodPred.infLocalDescarrega.latitude  := 0;
     prodPred.infLocalDescarrega.longitude := 0;
-    *)
 
     tot.qCTe := 2;
     tot.vCarga := 3500.00;

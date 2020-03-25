@@ -1846,6 +1846,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.Certificados.VerificarValidade = False
     DANFSE = ACBrNFSeDANFSeRL1
     Left = 336
     Top = 248

@@ -1530,8 +1530,8 @@ begin
     ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
     ACBrNFSe1.DANFSe.PathPDF    := PathMensal;
 
-    ACBrNFSe1.DANFSe.MargemDireita  := 7;
-    ACBrNFSe1.DANFSe.MargemEsquerda := 7;
+    ACBrNFSe1.DANFSe.MargemDireita  := 5;
+    ACBrNFSe1.DANFSe.MargemEsquerda := 5;
     ACBrNFSe1.DANFSe.MargemSuperior := 5;
     ACBrNFSe1.DANFSe.MargemInferior := 5;
   end;

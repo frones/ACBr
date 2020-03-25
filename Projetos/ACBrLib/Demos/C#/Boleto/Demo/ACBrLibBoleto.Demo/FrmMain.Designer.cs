@@ -816,40 +816,46 @@
             // cmbBanco
             // 
             this.cmbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBanco.FormattingEnabled = true;
             this.cmbBanco.Items.AddRange(new object[] {
-            "cobNenhum",
+            "cobBancoABCBrasil",
+            "cobBancoCECRED",
+            "cobBancoCresolSCRS",
+            "cobBancoDaAmazonia",
             "cobBancoDoBrasil",
-            "cobSantander",
+            "cobBancoDoBrasilSICOOB",
+            "cobBancoDoNordeste",
+            "cobBancoMercantil",
+            "cobBancoob",
+            "cobBancoPine",
+            "cobBancoPineBradesco",
+            "cobBancoSafra",
+            "cobBanese",
+            "cobBanestes",
+            "cobBanrisul",
+            "cobBicBanco",
+            "cobBradesco",
+            "cobBradescoSICOOB",
+            "cobBRB",
             "cobCaixaEconomica",
             "cobCaixaSicob",
-            "cobBradesco",
-            "cobItau",
-            "cobBancoMercantil",
-            "cobSicred",
-            "cobBancoob",
-            "cobBanrisul",
-            "cobBanestes",
-            "cobHSBC",
-            "cobBancoDoNordeste",
-            "cobBRB",
-            "cobBicBanco",
-            "cobBradescoSICOOB",
-            "cobBancoSafra",
-            "cobSafraBradesco",
-            "cobBancoCECRED",
-            "cobBancoDaAmazonia",
-            "cobBancoDoBrasilSICOOB",
-            "cobUniprime",
-            "cobUnicredRS",
-            "cobBanese",
+            "cobCitiBank",
             "cobCrediSIS",
+            "cobDaycoval",
+            "cobHSBC",
+            "cobItau",
+            "cobNenhum",
+            "cobSafraBradesco",
+            "cobSantander",
+            "cobSicred",
             "cobUnicredES",
-            "cobBancoCresolSCRS",
-            "cobCitiBank"});
+            "cobUnicredRS",
+            "cobUnicredSC",
+            "cobUniprime",
+            "cobUniprimeNortePR"});
             this.cmbBanco.Location = new System.Drawing.Point(6, 25);
             this.cmbBanco.Name = "cmbBanco";
             this.cmbBanco.Size = new System.Drawing.Size(172, 21);
+            this.cmbBanco.Sorted = true;
             this.cmbBanco.TabIndex = 3;
             // 
             // label16

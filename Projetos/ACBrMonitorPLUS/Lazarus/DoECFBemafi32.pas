@@ -3,7 +3,7 @@
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
 { criar uma interface de comunicação com equipamentos de automacao comercial.  }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel Simões de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simões de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }

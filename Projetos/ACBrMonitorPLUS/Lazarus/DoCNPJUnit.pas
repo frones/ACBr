@@ -1,3 +1,6 @@
+{*******************************************************************************}
+{ Projeto: ACBrMonitor                                                          }
+{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida                }

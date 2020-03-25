@@ -1,9 +1,9 @@
 {*******************************************************************************}
-{ Projeto: ACBrMonitor                                                         }
+{ Projeto: ACBrMonitor                                                          }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Juliana Rodrigues Prado Tamizou                  }
 {                              Jean Patrick F. dos Santos (envio de e-mails)    }
@@ -31,6 +31,7 @@
 {        Rua Cel.Aureliano de Camargo, 963 - Tatuí - SP - 18270-170             }
 {                                                                               }
 {*******************************************************************************}
+
 {$mode objfpc}{$H+}
 
 unit DoBoletoUnit;

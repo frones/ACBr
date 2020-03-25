@@ -28,7 +28,7 @@ package ACBr_NFSe;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Nota Fiscal de Serviço Eletrônica - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

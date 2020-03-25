@@ -2006,6 +2006,7 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   ACBrBanco.TamanhoMaximoNossoNum := 9;
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       SegT := ARetorno[ContLinha] ;
@@ -2081,6 +2082,7 @@ begin
         end;
       end;
    end;
+   ACBrBanco.TamanhoMaximoNossoNum := 5;
 end;
 
 end.

@@ -2083,6 +2083,8 @@ begin
            proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
+           proSJP: FTagI := '<' + FTagGrupo + FNameSpaceDad + ' Id="consultar">';
+
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
 

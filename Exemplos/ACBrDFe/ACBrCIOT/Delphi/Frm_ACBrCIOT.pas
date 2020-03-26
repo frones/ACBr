@@ -70,7 +70,6 @@ type
     Edit1: TEdit;
     btnSha256: TButton;
     cbAssinar: TCheckBox;
-    btnHTTPS: TButton;
     btnLeituraX509: TButton;
     cbSSLLib: TComboBox;
     cbCryptLib: TComboBox;
@@ -226,7 +225,6 @@ type
     procedure btnCNPJClick(Sender: TObject);
     procedure btnIssuerNameClick(Sender: TObject);
     procedure btnSha256Click(Sender: TObject);
-    procedure btnHTTPSClick(Sender: TObject);
     procedure btnLeituraX509Click(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
@@ -295,6 +293,7 @@ begin
         if frmStatus <> nil then
           frmStatus.Hide;
       end;
+
     stCIOTEnviar:
       begin
         if frmStatus = nil then
@@ -304,6 +303,7 @@ begin
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
+
     stCIOTRetEnviar:
       begin
         if frmStatus = nil then
@@ -313,6 +313,7 @@ begin
           frmStatus.Show;
           frmStatus.BringToFront;
       end;
+
     stCIOTEmail:
       begin
         if frmStatus = nil then
@@ -338,9 +339,6 @@ begin
       0: begin
            // Login - Solicita Token
            Integradora.Operacao := opLogin;
-
-           ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao := '123';
-           ObterOperacaoTransportePDF.DocumentoViagem := '456';
          end;
 
       1: begin
@@ -1021,13 +1019,23 @@ begin
      13: begin
            // Logout - Encerra acesso ao Sistema
            Integradora.Operacao := opLogout;
-
-           ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao := '123';
-           ObterOperacaoTransportePDF.DocumentoViagem := '456';
          end;
 
      14: begin
-          Integradora.Operacao := opConsultarTipoCarga;
+           Integradora.Operacao := opConsultarTipoCarga;
+         end;
+
+     15: begin
+           Integradora.Operacao := opAlterarDataLiberacaoPagamento;
+
+           with AlterarDataLiberacaoPagamento do
+           begin
+             CodigoIdentificacaoOperacao := '123';
+             // Identificador do pagamento no sistema do Cliente.
+             IdPagamentoCliente := '456';
+             DataDeLiberacao := StrToDate('10/05/2020');
+             Motivo := 'Acordo entre as partes';
+           end;
          end;
     end;
   end;
@@ -1095,6 +1103,7 @@ begin
       if DocumentoViagem.Count > 0 then
       begin
         MemoDados.Lines.Add('Documento Viagem');
+
         for i := 0 to DocumentoViagem.Count -1 do
            MemoDados.Lines.Add('Mensagem: '+ DocumentoViagem[i].Mensagem);
       end;
@@ -1102,6 +1111,7 @@ begin
       if DocumentoPagamento.Count > 0 then
       begin
         MemoDados.Lines.Add('Documento Pagamento');
+
         for i := 0 to DocumentoPagamento.Count -1 do
            MemoDados.Lines.Add('Mensagem: '+ DocumentoPagamento[i].Mensagem);
       end;
@@ -1112,6 +1122,7 @@ begin
         MemoDados.Lines.Add('  ');
         MemoDados.Lines.Add('********* Tipos Cargas ***********');
         MemoDados.Lines.Add('  ');
+
         for i := 0 to TipoCarga.Count -1 do
         begin
            MemoDados.Lines.Add(IntToStr(TipoCarga[i].Codigo) +
@@ -1183,38 +1194,10 @@ begin
   pgRespostas.ActivePageIndex := 1;
 end;
 
-procedure TfrmACBrCIOT.btnHTTPSClick(Sender: TObject);
-var
-  Acao: String;
-  OldUseCert: Boolean;
-begin
-  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
-     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
-     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
-     ' <soapenv:Header/>' +
-     ' <soapenv:Body>' +
-     ' <cli:consultaCEP>' +
-     ' <cep>18270-170</cep>' +
-     ' </cli:consultaCEP>' +
-     ' </soapenv:Body>' +
-     ' </soapenv:Envelope>';
-
-  OldUseCert := ACBrCIOT1.SSL.UseCertificateHTTP;
-  ACBrCIOT1.SSL.UseCertificateHTTP := False;
-
-  try
-    MemoResp.Lines.Text := ACBrCIOT1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
-  finally
-    ACBrCIOT1.SSL.UseCertificateHTTP := OldUseCert;
-  end;
-
-  pgRespostas.ActivePageIndex := 0;
-end;
-
 procedure TfrmACBrCIOT.btnIssuerNameClick(Sender: TObject);
 begin
- ShowMessage(ACBrCIOT1.SSL.CertIssuerName + sLineBreak + sLineBreak +
-             'Certificadora: ' + ACBrCIOT1.SSL.CertCertificadora);
+  ShowMessage(ACBrCIOT1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+              'Certificadora: ' + ACBrCIOT1.SSL.CertCertificadora);
 end;
 
 procedure TfrmACBrCIOT.btnLeituraX509Click(Sender: TObject);
@@ -1300,7 +1283,7 @@ end;
 procedure TfrmACBrCIOT.cbSSLTypeChange(Sender: TObject);
 begin
   if cbSSLType.ItemIndex <> -1 then
-     ACBrCIOT1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+    ACBrCIOT1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
 end;
 
 procedure TfrmACBrCIOT.cbXmlSignLibChange(Sender: TObject);
@@ -1728,7 +1711,6 @@ end;
 procedure TfrmACBrCIOT.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrCIOT1.SSL.LerCertificadosStore;
@@ -1753,8 +1735,6 @@ begin
   begin
     with ACBrCIOT1.SSL.ListaCertificados[I] do
     begin
-//      ASerie := NumeroSerie;
-
       if (CNPJ <> '') then
       begin
         with frmSelecionarCertificado.StringGrid1 do

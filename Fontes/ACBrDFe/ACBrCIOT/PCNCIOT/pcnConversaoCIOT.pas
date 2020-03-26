@@ -49,9 +49,9 @@ type
 
   TLayOutCIOT = (LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos,
                  LayeFreteMotoristas, LayeFreteOperacaoTransporte,
-                 LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar);
+                 LayeFreteFaturamentoTransportadora);
 
-  TSchemaCIOT = (schErro, schEnviar, schEnviarRetorno);
+  TSchemaCIOT = (schErro, schEnviar);
 
   TpOperacao = (opLogin, opLogout,
                 opGravarProprietario, opGravarVeiculo, opGravarMotorista,
@@ -98,8 +98,9 @@ type
 
   tpEstadoCIOT = (ecEmViagem, ecEncerrado, ecCancelado);
 
-  tpTipoCarga = (tpGranelsolido, tpGranelLiquido, tpFrigorificada, tpConteinerizada, tpCargaGeral,
-                 tpNeogranel, tpPerigosaGranelSolido, tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
+  tpTipoCarga = (tpGranelsolido, tpGranelLiquido, tpFrigorificada, tpConteinerizada,
+                 tpCargaGeral, tpNeogranel, tpPerigosaGranelSolido,
+                 tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
                  tpPerigosaConteinerizada, tpPerigosaCargaGeral);
 
 const
@@ -191,8 +192,6 @@ begin
     LayeFreteMotoristas,
     LayeFreteOperacaoTransporte,
     LayeFreteFaturamentoTransportadora: Result := schEnviar;
-
-    LayCIOTRetEnviar:                   Result := schEnviarRetorno;
   else
     Result := schErro;
   end;
@@ -202,18 +201,18 @@ function LayOutToServico(const t: TLayOutCIOT): String;
 begin
   Result := EnumeradoToStr(t,
     ['eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
-     'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'CIOTRetEnviar'],
+     'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora'],
     [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos, LayeFreteMotoristas,
-     LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar]);
+     LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora]);
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCIOT;
 begin
   Result := StrToEnumerado(ok, s,
   ['eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
-   'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'CIOTRetEnviar'],
+   'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora'],
   [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos, LayeFreteMotoristas,
-   LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar]);
+   LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora]);
 end;
 
 function SchemaCIOTToStr(const t: TSchemaCIOT): String;

@@ -56,8 +56,6 @@ type
     FPLayout: TLayOutCIOT;
     FPConfiguracoesCIOT: TConfiguracoesCIOT;
 
-    function ExtrairModeloChaveAcesso(AChaveCIOT: String): String;
-
   protected
     procedure InicializarServico; override;
     procedure DefinirEnvelopeSoap; override;
@@ -71,7 +69,7 @@ type
     procedure Clear; override;
 
     property Status: TStatusACBrCIOT read FPStatus;
-    property Layout: TLayOutCIOT read FPLayout;
+    property Layout: TLayOutCIOT     read FPLayout;
   end;
 
   { TCIOTEnviar }
@@ -100,7 +98,6 @@ type
     property CodRetorno: Integer         read FCodRetorno     write FCodRetorno;
   end;
 
-
   { TCIOTEnvioWebService }
 
   TCIOTEnvioWebService = class(TCIOTWebService)
@@ -123,8 +120,8 @@ type
     function Executar: Boolean; override;
     procedure Clear; override;
 
-    property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
-    property URLEnvio: String read FPURLEnvio write FPURLEnvio;
+    property XMLEnvio: String        read FXMLEnvio        write FXMLEnvio;
+    property URLEnvio: String        read FPURLEnvio       write FPURLEnvio;
     property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
   end;
 
@@ -141,8 +138,8 @@ type
 
     function Envia: Boolean;
 
-    property ACBrCIOT: TACBrDFe read FACBrCIOT write FACBrCIOT;
-    property CIOTEnviar: TCIOTEnviar read FCIOTEnviar write FCIOTEnviar;
+    property ACBrCIOT: TACBrDFe                   read FACBrCIOT         write FACBrCIOT;
+    property CIOTEnviar: TCIOTEnviar              read FCIOTEnviar       write FCIOTEnviar;
     property EnvioWebService: TCIOTEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -174,16 +171,6 @@ begin
   inherited Clear;
 
   FPStatus := stCIOTIdle;
-end;
-
-function TCIOTWebService.ExtrairModeloChaveAcesso(AChaveCIOT: String): String;
-begin
-  AChaveCIOT := OnlyNumber(AChaveCIOT);
-
-  if ValidarChave('CIOT' + AChaveCIOT) then
-    Result := copy(AChaveCIOT, 21, 2)
-  else
-    Result := '';
 end;
 
 procedure TCIOTWebService.InicializarServico;
@@ -338,6 +325,7 @@ var
   LeitorXML: TLeitor;
 begin
   LeitorXML := TLeitor.Create;
+
   try
     LeitorXML.Arquivo := FXMLEnvio;
     LeitorXML.Grupo := FXMLEnvio;

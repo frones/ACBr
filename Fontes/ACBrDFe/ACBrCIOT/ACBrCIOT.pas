@@ -43,8 +43,8 @@ uses
   pcnConversao, pcnConversaoCIOT;
 
 const
-  ACBRCIOT_VERSAO = '1.0.0a';
-  ACBRCIOT_NAMESPACE = 'ATMWenSvr';
+  ACBRCIOT_VERSAO = '1.0.0';
+  ACBRCIOT_NAMESPACE = '';
   ACBRCIOT_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
                'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
@@ -78,11 +78,6 @@ type
       StreamCIOT: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar: Boolean;
-
-    function IntegrarMotorista: Boolean;
-    function AverbarNFe: Boolean;
-    function DeclararMDFe: Boolean;
-    function AddBackMail: Boolean;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -181,8 +176,8 @@ function TACBrCIOT.cStatConfirmado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 150: Result := True;
-    else
-      Result := False;
+  else
+    Result := False;
   end;
 end;
 
@@ -190,8 +185,8 @@ function TACBrCIOT.cStatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302: Result := True;
-    else
-      Result := False;
+  else
+    Result := False;
   end;
 end;
 
@@ -257,7 +252,7 @@ var
   Versao: Double;
   UF: String;
 begin
-  // Para qual quer UF a URL é sempre a mesma.
+  // Para qualquer UF a URL é sempre a mesma.
   UF := 'XX';
   Versao := LerVersaoDeParams(GetNomeModeloDFe, UF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
@@ -288,7 +283,7 @@ var
 begin
   Versao := VersaoCIOTToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  // Para qual quer UF a URL é sempre a mesma.
+  // Para qualquer UF a URL é sempre a mesma.
   UF := 'XX';
   LerServicoDeParams(GetNomeModeloDFe, UF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
@@ -317,54 +312,6 @@ begin
   Contratos.Assinar;
 
   Result := WebServices.Envia;
-end;
-
-function TACBrCIOT.IntegrarMotorista: Boolean;
-begin
-  Result := True;
-
-//  if Contratos.Count <= 0 then
-//    GerarException(ACBrStr('ERRO: Nenhum CIOT adicionado'));
-//
-//  if Contratos.Count > 1 then
-//    GerarException(ACBrStr('ERRO: Conjunto de CIOT transmitidos (máximo de 1 CIOT)' +
-//      ' excedido. Quantidade atual: ' + IntToStr(Contratos.Count)));
-
-  Contratos.Assinar;
-end;
-
-function TACBrCIOT.AverbarNFe: Boolean;
-begin
-  Result := True;
-
-  if Contratos.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum CIOT adicionado'));
-
-  if Contratos.Count > 1 then
-    GerarException(ACBrStr('ERRO: Conjunto de CIOT transmitidos (máximo de 1 CIOT)' +
-      ' excedido. Quantidade atual: ' + IntToStr(Contratos.Count)));
-
-  Contratos.Assinar;
-end;
-
-function TACBrCIOT.DeclararMDFe: Boolean;
-begin
-  Result := True;
-
-  if Contratos.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum CIOT adicionado'));
-
-  if Contratos.Count > 1 then
-    GerarException(ACBrStr('ERRO: Conjunto de CIOT transmitidos (máximo de 1 CIOT)' +
-      ' excedido. Quantidade atual: ' + IntToStr(Contratos.Count)));
-
-  Contratos.Assinar;
-end;
-
-function TACBrCIOT.AddBackMail: Boolean;
-begin
-  {a}
-  Result := True;
 end;
 
 end.

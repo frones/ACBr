@@ -117,6 +117,7 @@ end;
 
 function TCIOTW_eFrete.ObterNomeArquivo: String;
 begin
+  Result := '';
 //  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
@@ -1578,10 +1579,8 @@ begin
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
-  Gerador.Prefixo := 'pef:';
 
-//  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
-//  versao := VersaoCIOTToInt(VersaoDF);
+  Gerador.Prefixo := 'pef:';
 
   case CIOT.Integradora.Operacao of
     opLogin:
@@ -1847,7 +1846,7 @@ begin
         Gerador.wGrupo('RetificarOperacaoTransporte');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('RetificarOperacaoTransporteRequest', 'WP01');
+        Gerador.wGrupo('RetificarOperacaoTransporteRequest');
 
         GerarIdentificacao(3);
 
@@ -1885,7 +1884,7 @@ begin
         Gerador.wGrupo('CancelarOperacaoTransporte');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('CancelarOperacaoTransporteRequest', 'WP01');
+        Gerador.wGrupo('CancelarOperacaoTransporteRequest');
 
         GerarIdentificacao(1);
 
@@ -1906,7 +1905,7 @@ begin
         Gerador.wGrupo('AdicionarViagem');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('AdicionarViagemRequest', 'WP01');
+        Gerador.wGrupo('AdicionarViagemRequest');
 
         GerarIdentificacao(3);
 
@@ -1931,7 +1930,7 @@ begin
         Gerador.wGrupo('AdicionarPagamento');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('AdicionarPagamentoRequest', 'WP01');
+        Gerador.wGrupo('AdicionarPagamentoRequest');
 
         GerarIdentificacao(3);
 
@@ -1953,7 +1952,7 @@ begin
         Gerador.wGrupo('CancelarPagamento');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('CancelarPagamentoRequest', 'WP01');
+        Gerador.wGrupo('CancelarPagamentoRequest');
 
         GerarIdentificacao(2);
 
@@ -1975,7 +1974,7 @@ begin
         Gerador.wGrupo('EncerrarOperacaoTransporte');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('EncerrarOperacaoTransporteRequest', 'WP01');
+        Gerador.wGrupo('EncerrarOperacaoTransporteRequest');
 
         GerarIdentificacao(2);
 
@@ -2005,7 +2004,7 @@ begin
         Gerador.wGrupo('ConsultarTipoCarga');
 
         Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('ConsultarTipoCargaRequest', 'WP01');
+        Gerador.wGrupo('ConsultarTipoCargaRequest');
         GerarIdentificacao(1);
         Gerador.wGrupo('/ConsultarTipoCargaRequest');
 
@@ -2018,14 +2017,14 @@ begin
         Gerador.wGrupo('AlterarDataLiberacaoPagamento');
         Gerador.Prefixo := 'obj:';
 
-        Gerador.wGrupo('EditarPagamentoRequest', 'WP01');
+        Gerador.wGrupo('EditarPagamentoRequest');
         GerarIdentificacao(1);
 
         with CIOT.AlterarDataLiberacaoPagamento do
         begin
           Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 0, CodigoIdentificacaoOperacao);
           Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente         ', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-          Gerador.wCampo(tcDat, 'KP02', 'DataLiberacao                     ', 01, 01, 0, DataDeLiberacao);
+          Gerador.wCampo(tcDat, 'KP02', 'DataLiberacao              ', 01, 01, 0, DataDeLiberacao);
           Gerador.wCampo(tcStr, 'KP02', 'Motivo                     ', 01, 01, 0, Motivo);
         end;
 

@@ -37,7 +37,7 @@ unit ACBrCIOTConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes, pcnConversao, pcnConversaoCIOT;
 
 type
@@ -58,6 +58,8 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfCIOT: TGeralConfCIOT); reintroduce;
 
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
   published
     property Integradora: TCIOTIntegradora read FIntegradora write FIntegradora;
     property VersaoDF: TVersaoCIOT read FVersaoDF write SetVersaoDF default ve500;
@@ -77,6 +79,9 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
     procedure Assign(DeArquivosConfCIOT: TArquivosConfCIOT); reintroduce;
+
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathCIOT(Data: TDateTime = 0; CNPJ: String = ''): String;
   published
@@ -117,6 +122,7 @@ constructor TConfiguracoesCIOT.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'CIOT';
   WebServices.ResourceName := 'ACBrCIOTServicos';
 end;
 
@@ -169,6 +175,30 @@ begin
   FHashIntegrador := '';
 end;
 
+procedure TGeralConfCIOT.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Integradora', Integer(Integradora));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Usuario', Usuario);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Senha', Senha);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'CNPJEmitente', CNPJEmitente);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'HashIntegrador', HashIntegrador);
+end;
+
+procedure TGeralConfCIOT.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  Integradora := TCIOTIntegradora(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Integradora', Integer(Integradora)));
+  VersaoDF := TVersaoCIOT(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  Usuario := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Usuario', Usuario);
+  Senha := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Senha', Senha);
+  CNPJEmitente := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CNPJEmitente', CNPJEmitente);
+  HashIntegrador := AIni.ReadString(fpConfiguracoes.SessaoIni, 'HashIntegrador', HashIntegrador);
+end;
+
 procedure TGeralConfCIOT.SetVersaoDF(const Value: TVersaoCIOT);
 begin
   FVersaoDF := Value;
@@ -201,6 +231,22 @@ end;
 function TArquivosConfCIOT.GetPathCIOT(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathCIOT, 'CIOT', CNPJ, '', Data);
+end;
+
+procedure TArquivosConfCIOT.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCIOT', EmissaoPathCIOT);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathCIOT', PathCIOT);
+end;
+
+procedure TArquivosConfCIOT.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  EmissaoPathCIOT := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCIOT', EmissaoPathCIOT);
+  PathCIOT := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathCIOT', PathCIOT);
 end;
 
 end.

@@ -490,6 +490,7 @@ var
 
 begin
   N := PosCIOT;
+
   while N > 0 do
   begin
     AXML := copy(AXMLString, 1, N + 6);
@@ -512,15 +513,18 @@ end;
 function TContratos.GravarXML(PathNomeArquivo: String): Boolean;
 var
   i: integer;
-  NomeArq, PathArq : String;
+  NomeArq, PathArq: String;
 begin
   Result := True;
   i := 0;
+
   while Result and (i < Self.Count) do
   begin
     PathArq := ExtractFilePath(PathNomeArquivo);
     NomeArq := ExtractFileName(PathNomeArquivo);
+
     Result := Self.Items[i].GravarXML(NomeArq, PathArq);
+
     Inc(i);
   end;
 end;

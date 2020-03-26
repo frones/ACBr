@@ -40,6 +40,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2020
+-- Diversos --
+[*] Limpeza nos fontes, remoção de métodos que não são utilizos pelo componente.
+[+] Implementado os métodos GravarINI e LerINI visando salvar as configurações
+    do componente em arquivo INI.
+   Por: Italo Jurisato Junior
+
 19/03/2020
 -- ACBrCIOTServicos --
 [*] Ajustes nas URLs de Produção do eFrete.

@@ -234,8 +234,8 @@ begin
   begin
     Gerador.wGrupo('Servico');
     Gerador.wCampo(tcStr, '#59', 'CodigoCnae'             , 01, 007, 0, NFSe.Servico.CodigoCnae, '');
-    Gerador.wCampo(tcStr, '#60', 'CodigoServico116'       , 01, 005, 1, NFSe.Servico.ItemListaServico, '');
-    Gerador.wCampo(tcStr, '#61', 'CodigoServicoMunicipal' , 01, 020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
+    Gerador.wCampo(tcStr, '#60', 'CodigoServico116'       , 01, 005, 1, NFSe.Servico.ItemServico[i].CodLCServ, '');   //NFSe.Servico.ItemListaServico
+    Gerador.wCampo(tcStr, '#61', 'CodigoServicoMunicipal' , 01, 020, 1, NFSe.Servico.ItemServico[i].CodServ, '');  //NFSe.Servico.CodigoTributacaoMunicipio
     Gerador.wCampo(tcDe4, '#62', 'Quantidade'             , 01, 005, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
     Gerador.wCampo(tcStr, '#63', 'Unidade'                , 01, 020, 1, NFSe.Servico.ItemServico[i].Unidade, '');
     Gerador.wCampo(tcStr, '#64', 'Descricao'              , 01, 255, 1, NFSe.Servico.ItemServico[i].Discriminacao, '');

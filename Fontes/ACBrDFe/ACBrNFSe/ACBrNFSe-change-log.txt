@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2020
+-- pnfsNFSeW_EL-- 
+[*] https://www.projetoacbr.com.br/forum/topic/56922-m%C3%BAltiplos-servi%C3%A7os-da-nfse-provedor-el/
+   Por: Paulo Alves N Junior
 -- Diversos -- 
 [*] Alterações visando atender o provedor Actcon.
    Por: Italo Jurisato Junior

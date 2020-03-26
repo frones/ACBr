@@ -116,6 +116,7 @@ begin
   Gerador.wGrupo('Prestador');
 
   case FProvedor of
+    proActcon,
     proISSNet: begin
                  Gerador.wGrupo('CpfCnpj');
                  if length(OnlyNumber(NFSe.Prestador.Cnpj)) <= 11 then

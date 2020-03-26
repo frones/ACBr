@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2020
+-- Diversos -- 
+[*] Alterações visando atender o provedor Actcon.
+   Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices -- 
 [*] Incluido o ID na consulta da NFS-e por RPS para o provedor SJP.
    Por: Italo Jurisato Junior

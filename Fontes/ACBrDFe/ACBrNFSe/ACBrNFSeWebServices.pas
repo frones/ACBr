@@ -3418,6 +3418,12 @@ begin
   begin
     DefinirSignatureNode(FTagGrupo);
 
+    if FProvedor = proActcon then
+    begin
+      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsSincronoEnvio', 'EnviarLoteRpsEnvio', [rfReplaceAll]);
+      FTagGrupo := 'EnviarLoteRpsEnvio';
+    end;
+
     FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FTagGrupo,
                                   FTagElemento,

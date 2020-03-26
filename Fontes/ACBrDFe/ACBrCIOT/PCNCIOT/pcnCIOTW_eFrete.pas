@@ -1821,14 +1821,14 @@ begin
 
           if TipoViagem <> TAC_Agregado then
           begin
-            Gerador.wCampo(tcInt, 'AP258', 'CodigoTipoCarga        ', 01, 01, 1, CodigoTipoCarga);
-            Gerador.wCampo(tcStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, False)));
-            Gerador.wCampo(tcStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, False)));
-            Gerador.wCampo(tcStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, False)));
+            Gerador.wCampo(tcInt, 'AP258', 'CodigoTipoCarga    ', 01, 01, 1, CodigoTipoCarga);
+            Gerador.wCampo(tcStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, True)));
+            Gerador.wCampo(tcStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, True)));
+            Gerador.wCampo(tcStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));
 
             if FreteRetorno then
             begin
-              Gerador.wCampo(tcStr, 'AP262', 'CepRetorno', 01, 01, 0, CepRetorno);
+              Gerador.wCampo(tcStr, 'AP262', 'CepRetorno      ', 01, 01, 0, CepRetorno);
               Gerador.wCampo(tcInt, 'AP263', 'DistanciaRetorno', 01, 01, 1, DistanciaRetorno);
             end;
           end;

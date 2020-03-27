@@ -2926,8 +2926,9 @@ begin
      begin
         LastFile := SearchRec.Name ;
 
-        if pos(LastFile, '..') = 0 then    { ignora . e .. }
-           AStringList.Add( IfThen(IncludePath, Path, '') + LastFile) ;
+        if (SearchRec.Attr and faDirectory) <> 0 then
+          if pos(LastFile, '..') = 0 then    { ignora . e .. }
+             AStringList.Add( IfThen(IncludePath, Path, '') + LastFile) ;
 
         SysUtils.FindNext(SearchRec) ;
      end ;

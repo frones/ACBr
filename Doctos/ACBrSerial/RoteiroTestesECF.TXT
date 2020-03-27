@@ -3,7 +3,7 @@
    Obrigado pelo seu interesse em ajudar nos Testes do ACBrECF. Por favor efetue
 os testes abaixo utilizando o programa ECFTeste (Windows ou Linux) e anote os
 resultados nesse mesmo arquivo TXT. Envie este arquivo com as respostas para o
-e-mail:  daniel@djsystem.com.br
+e-mail:  daniel@projetoacbr.com.br
 
   Nome:________________________________  Empresa:___________________________
 

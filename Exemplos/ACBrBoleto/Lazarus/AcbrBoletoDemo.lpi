@@ -29,7 +29,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="5">
       <Item1>
         <PackageName Value="ACBrTCP"/>
       </Item1>
@@ -42,18 +42,14 @@
         <MinVersion Minor="9" Release="7" Valid="True"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_BoletoFC_LazReport"/>
-        <MinVersion Minor="1" Valid="True"/>
-      </Item4>
-      <Item5>
         <PackageName Value="ACBr_Boleto"/>
         <MinVersion Valid="True"/>
-      </Item5>
-      <Item6>
+      </Item4>
+      <Item5>
         <PackageName Value="LCL"/>
-      </Item6>
+      </Item5>
     </RequiredPackages>
-    <Units Count="123">
+    <Units Count="109">
       <Unit0>
         <Filename Value="AcbrBoletoDemo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -67,8 +63,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="267"/>
-        <CursorPos X="48" Y="279"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="355"/>
+        <CursorPos X="6" Y="358"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -80,7 +77,7 @@
         <ResourceBaseClass Value="Form"/>
         <TopLine Value="773"/>
         <CursorPos Y="783"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="23"/>
         <Bookmarks Count="2">
           <Item0 X="24" Y="529" ID="1"/>
           <Item1 X="44" Y="477" ID="2"/>
@@ -88,125 +85,81 @@
       </Unit2>
       <Unit3>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="3315"/>
-        <CursorPos X="39" Y="3332"/>
-        <UsageCount Value="92"/>
-        <Bookmarks Count="2">
-          <Item0 X="12" Y="790" ID="2"/>
-          <Item1 X="11" Y="1280" ID="1"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="3614"/>
+        <CursorPos Y="3623"/>
+        <UsageCount Value="100"/>
+        <Bookmarks Count="1">
+          <Item0 X="12" Y="793" ID="2"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas"/>
-        <TopLine Value="949"/>
-        <CursorPos X="6" Y="964"/>
-        <UsageCount Value="52"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="22" Y="51"/>
+        <UsageCount Value="83"/>
       </Unit4>
       <Unit5>
-        <Filename Value="C:\lazarus\fpc\2.4.0\source\rtl\objpas\classes\classesh.inc"/>
-        <TopLine Value="770"/>
-        <CursorPos X="3" Y="784"/>
-        <UsageCount Value="5"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="C:\lazarus\fpc\2.4.0\source\rtl\objpas\classes\stringl.inc"/>
-        <TopLine Value="1099"/>
-        <CursorPos X="3" Y="1103"/>
-        <UsageCount Value="5"/>
-      </Unit6>
-      <Unit7>
         <Filename Value="..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas"/>
         <TopLine Value="113"/>
         <CursorPos X="56" Y="133"/>
-        <UsageCount Value="7"/>
-      </Unit7>
-      <Unit8>
+        <UsageCount Value="8"/>
+      </Unit5>
+      <Unit6>
         <Filename Value="..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
         <TopLine Value="54"/>
         <CursorPos X="126" Y="69"/>
-        <UsageCount Value="7"/>
-      </Unit8>
-      <Unit9>
+        <UsageCount Value="8"/>
+      </Unit6>
+      <Unit7>
         <Filename Value="..\..\Fontes\ACBrSerial\ACBrECFSweda.pas"/>
         <TopLine Value="1339"/>
         <CursorPos X="57" Y="1353"/>
-        <UsageCount Value="3"/>
-      </Unit9>
-      <Unit10>
+        <UsageCount Value="4"/>
+      </Unit7>
+      <Unit8>
         <Filename Value="..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <TopLine Value="968"/>
         <CursorPos X="36" Y="981"/>
-        <UsageCount Value="7"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas"/>
-        <ComponentName Value="ACBRBoletoFCFortesFr"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ACBRBoletoFCFortesFr"/>
-        <TopLine Value="339"/>
-        <CursorPos X="49" Y="343"/>
-        <UsageCount Value="6"/>
-      </Unit11>
-      <Unit12>
+        <UsageCount Value="8"/>
+      </Unit8>
+      <Unit9>
         <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlreport.pas"/>
         <UnitName Value="RLReport"/>
         <CursorPos X="23" Y="12"/>
-        <UsageCount Value="4"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlpdffilter.pas"/>
-        <UnitName Value="RLPDFFilter"/>
-        <TopLine Value="1027"/>
-        <CursorPos X="37" Y="1044"/>
         <UsageCount Value="5"/>
-        <Bookmarks Count="1">
-          <Item0 X="3" Y="1504" ID="1"/>
-        </Bookmarks>
-      </Unit13>
-      <Unit14>
+      </Unit9>
+      <Unit10>
         <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlfilters.pas"/>
         <UnitName Value="RLFilters"/>
         <TopLine Value="195"/>
         <CursorPos X="32" Y="217"/>
-        <UsageCount Value="3"/>
-      </Unit14>
-      <Unit15>
+        <UsageCount Value="4"/>
+      </Unit10>
+      <Unit11>
         <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlprinters.pas"/>
         <UnitName Value="RLPrinters"/>
         <TopLine Value="144"/>
         <CursorPos Y="161"/>
-        <UsageCount Value="3"/>
-      </Unit15>
-      <Unit16>
+        <UsageCount Value="4"/>
+      </Unit11>
+      <Unit12>
         <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlconsts.pas"/>
         <UnitName Value="RLConsts"/>
         <TopLine Value="262"/>
         <CursorPos X="55" Y="263"/>
-        <UsageCount Value="3"/>
-      </Unit16>
-      <Unit17>
+        <UsageCount Value="4"/>
+      </Unit12>
+      <Unit13>
         <Filename Value="..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.lfm"/>
         <TopLine Value="2275"/>
         <CursorPos X="28" Y="2289"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="4"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
-        <TopLine Value="7968"/>
-        <CursorPos Y="7981"/>
-        <UsageCount Value="6"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="C:\lazarus\lcl\include\canvas.inc"/>
-        <TopLine Value="1454"/>
-        <CursorPos Y="1467"/>
-        <UsageCount Value="6"/>
-      </Unit19>
-      <Unit20>
+      </Unit13>
+      <Unit14>
         <Filename Value="D:\Lazarus\Comp\fortes4lazarus\trunk\rlsavedialog.pas"/>
         <ComponentName Value="RLSaveDialog"/>
         <HasResources Value="True"/>
@@ -214,166 +167,141 @@
         <UnitName Value="RLSaveDialog"/>
         <TopLine Value="369"/>
         <CursorPos Y="390"/>
-        <UsageCount Value="3"/>
-      </Unit20>
-      <Unit21>
+        <UsageCount Value="4"/>
+      </Unit14>
+      <Unit15>
         <Filename Value="C:\Lazarus\Comp\fortes4lazarus\trunk\rlpdffilter.pas"/>
         <UnitName Value="RLPDFFilter"/>
         <TopLine Value="1027"/>
         <CursorPos X="3" Y="1031"/>
-        <UsageCount Value="3"/>
-      </Unit21>
-      <Unit22>
+        <UsageCount Value="4"/>
+      </Unit15>
+      <Unit16>
         <Filename Value="..\..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrSpedFiscal.pas"/>
         <TopLine Value="399"/>
         <CursorPos Y="411"/>
-        <UsageCount Value="4"/>
-      </Unit22>
-      <Unit23>
+        <UsageCount Value="5"/>
+      </Unit16>
+      <Unit17>
         <Filename Value="C:\lazarus\lcl\lclproc.pas"/>
         <UnitName Value="LCLProc"/>
         <TopLine Value="1505"/>
         <CursorPos X="13" Y="1517"/>
-        <UsageCount Value="7"/>
-      </Unit23>
-      <Unit24>
-        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
-        <TopLine Value="3628"/>
-        <CursorPos Y="3645"/>
         <UsageCount Value="8"/>
-      </Unit24>
-      <Unit25>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2909"/>
+        <CursorPos Y="2915"/>
+        <UsageCount Value="13"/>
+      </Unit18>
+      <Unit19>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrD5.pas"/>
         <CursorPos X="19" Y="7"/>
-        <UsageCount Value="4"/>
-      </Unit25>
-      <Unit26>
+        <UsageCount Value="5"/>
+      </Unit19>
+      <Unit20>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <TopLine Value="3049"/>
         <CursorPos Y="3061"/>
-        <UsageCount Value="8"/>
-      </Unit26>
-      <Unit27>
+        <UsageCount Value="9"/>
+      </Unit20>
+      <Unit21>
         <Filename Value="C:\lazarus\components\fortes4lazarus\rlrichfilter.pas"/>
         <UnitName Value="RLRichFilter"/>
-        <UsageCount Value="4"/>
-      </Unit27>
-      <Unit28>
+        <UsageCount Value="5"/>
+      </Unit21>
+      <Unit22>
         <Filename Value="C:\lazarus\components\fortes4lazarus\rlpdffilter.pas"/>
         <UnitName Value="RLPDFFilter"/>
-        <UsageCount Value="4"/>
-      </Unit28>
-      <Unit29>
+        <UsageCount Value="5"/>
+      </Unit22>
+      <Unit23>
         <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
         <UnitName Value="Dialogs"/>
-        <UsageCount Value="4"/>
-      </Unit29>
-      <Unit30>
+        <UsageCount Value="5"/>
+      </Unit23>
+      <Unit24>
         <Filename Value="C:\lazarus\lcl\include\messagedialogs.inc"/>
         <TopLine Value="305"/>
         <CursorPos X="33" Y="312"/>
-        <UsageCount Value="4"/>
-      </Unit30>
-      <Unit31>
+        <UsageCount Value="5"/>
+      </Unit24>
+      <Unit25>
         <Filename Value="D:\lazarus\Comp\ZVDateTimeCtrls\zvdatetimepicker.pas"/>
         <UnitName Value="ZVDateTimePicker"/>
         <TopLine Value="458"/>
         <CursorPos X="38" Y="460"/>
-        <UsageCount Value="3"/>
-      </Unit31>
-      <Unit32>
+        <UsageCount Value="4"/>
+      </Unit25>
+      <Unit26>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
         <TopLine Value="38"/>
         <CursorPos X="3" Y="45"/>
-        <UsageCount Value="3"/>
-      </Unit32>
-      <Unit33>
+        <UsageCount Value="4"/>
+      </Unit26>
+      <Unit27>
         <Filename Value="D:\lazarus\TOOLS\DJ_Perfil.pas"/>
         <HasResources Value="True"/>
         <TopLine Value="2"/>
         <CursorPos X="51" Y="9"/>
-        <UsageCount Value="3"/>
-      </Unit33>
-      <Unit34>
+        <UsageCount Value="4"/>
+      </Unit27>
+      <Unit28>
         <Filename Value="D:\lazarus\TOOLS\DJ_Registro.pas"/>
         <TopLine Value="3"/>
         <CursorPos X="50" Y="10"/>
-        <UsageCount Value="3"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
-        <TopLine Value="176"/>
-        <CursorPos X="23" Y="52"/>
-        <UsageCount Value="5"/>
-      </Unit35>
-      <Unit36>
+        <UsageCount Value="4"/>
+      </Unit28>
+      <Unit29>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1927"/>
         <CursorPos X="22" Y="1929"/>
-        <UsageCount Value="38"/>
-        <Loaded Value="True"/>
-      </Unit36>
-      <Unit37>
+        <UsageCount Value="30"/>
+      </Unit29>
+      <Unit30>
         <Filename Value="D:\lazarus\djpdv\djmonitor\Rfd.pas"/>
         <ComponentName Value="frRFD"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <TopLine Value="1373"/>
         <CursorPos Y="1380"/>
-        <UsageCount Value="3"/>
-      </Unit37>
-      <Unit38>
+        <UsageCount Value="4"/>
+      </Unit30>
+      <Unit31>
         <Filename Value="D:\lazarus\Comp\CCR\virtualtreeview-new\trunk\VirtualTrees.pas"/>
         <TopLine Value="15397"/>
         <CursorPos X="5" Y="15404"/>
-        <UsageCount Value="3"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="C:\lazarus\fpc\2.4.1\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <TopLine Value="196"/>
-        <CursorPos X="10" Y="203"/>
-        <UsageCount Value="6"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="C:\lazarus\fpc\2.4.1\source\rtl\objpas\sysutils\sysstr.inc"/>
-        <TopLine Value="1727"/>
-        <CursorPos X="3" Y="1730"/>
-        <UsageCount Value="6"/>
-      </Unit40>
-      <Unit41>
-        <Filename Value="D:\lazarus\Comp\Fortes\rlpdffilter.pas"/>
-        <UnitName Value="RLPDFFilter"/>
-        <TopLine Value="186"/>
-        <CursorPos X="4" Y="186"/>
-        <UsageCount Value="5"/>
-      </Unit41>
-      <Unit42>
+        <UsageCount Value="4"/>
+      </Unit31>
+      <Unit32>
         <Filename Value="..\..\..\Fontes\ACBrSintegra\ACBrSintegraReg.pas"/>
         <TopLine Value="33"/>
-        <UsageCount Value="3"/>
-      </Unit42>
-      <Unit43>
+        <UsageCount Value="4"/>
+      </Unit32>
+      <Unit33>
         <Filename Value="..\..\..\Fontes\ACBrSintegra\ACBrSintegra.pas"/>
         <TopLine Value="46"/>
         <CursorPos X="56" Y="55"/>
-        <UsageCount Value="3"/>
-      </Unit43>
-      <Unit44>
+        <UsageCount Value="4"/>
+      </Unit33>
+      <Unit34>
         <Filename Value="C:\lazarus\fpc\2.4.1\source\rtl\inc\mathh.inc"/>
         <TopLine Value="65"/>
         <CursorPos X="14" Y="78"/>
-        <UsageCount Value="3"/>
-      </Unit44>
-      <Unit45>
+        <UsageCount Value="4"/>
+      </Unit34>
+      <Unit35>
         <Filename Value="..\..\..\..\..\lazarus\djpdv\djmonitor\datamoduleExportar.pas"/>
         <ComponentName Value="dmExportar"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <UsageCount Value="3"/>
-      </Unit45>
-      <Unit46>
+        <UsageCount Value="4"/>
+      </Unit35>
+      <Unit36>
         <Filename Value="..\..\..\..\..\lazarus\djpdv\djmonitor\Rfd.pas"/>
         <ComponentName Value="frRFD"/>
         <HasResources Value="True"/>
@@ -381,307 +309,150 @@
         <TopLine Value="542"/>
         <CursorPos X="27" Y="549"/>
         <ComponentState Value="1"/>
-        <UsageCount Value="3"/>
-      </Unit46>
-      <Unit47>
+        <UsageCount Value="4"/>
+      </Unit36>
+      <Unit37>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrValidador.pas"/>
-        <TopLine Value="1346"/>
-        <CursorPos X="10" Y="1351"/>
-        <UsageCount Value="18"/>
-      </Unit47>
-      <Unit48>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="73"/>
+        <CursorPos X="53" Y="80"/>
+        <UsageCount Value="10"/>
+      </Unit37>
+      <Unit38>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
-        <TopLine Value="115"/>
-        <CursorPos X="4" Y="112"/>
-        <UsageCount Value="25"/>
-      </Unit48>
-      <Unit49>
+        <EditorIndex Value="5"/>
+        <TopLine Value="91"/>
+        <CursorPos X="15" Y="97"/>
+        <UsageCount Value="32"/>
+        <Loaded Value="True"/>
+      </Unit38>
+      <Unit39>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoItau.pas"/>
-        <TopLine Value="420"/>
-        <CursorPos X="70" Y="435"/>
-        <UsageCount Value="16"/>
-      </Unit49>
-      <Unit50>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="83"/>
+        <CursorPos X="4" Y="86"/>
+        <UsageCount Value="8"/>
+      </Unit39>
+      <Unit40>
         <Filename Value="C:\Users\JULIANA TAMIZOU\Downloads\ACBrBoletoItau\ACBrBoleto.pas"/>
         <TopLine Value="1151"/>
         <CursorPos X="20" Y="1161"/>
-        <UsageCount Value="3"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.dfm"/>
-        <TopLine Value="444"/>
-        <CursorPos X="37" Y="451"/>
-        <UsageCount Value="5"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit51>
-      <Unit52>
+        <UsageCount Value="4"/>
+      </Unit40>
+      <Unit41>
         <Filename Value="C:\temp\Boletos\RLBoleto\RLBoleto_115\RLBoleto\Comp\RLCob237.pas"/>
         <TopLine Value="473"/>
         <CursorPos Y="482"/>
-        <UsageCount Value="3"/>
-      </Unit52>
-      <Unit53>
+        <UsageCount Value="4"/>
+      </Unit41>
+      <Unit42>
         <Filename Value="C:\temp\Boletos\Delphi_Boleto_2_1\2.1\gbCob237.pas"/>
         <TopLine Value="27"/>
         <CursorPos X="26" Y="33"/>
-        <UsageCount Value="13"/>
-      </Unit53>
-      <Unit54>
+        <UsageCount Value="4"/>
+      </Unit42>
+      <Unit43>
         <Filename Value="C:\temp\Boletos\Delphi_Boleto_2_1\2.1\gbCob341.pas"/>
         <TopLine Value="543"/>
         <CursorPos X="12" Y="519"/>
-        <UsageCount Value="13"/>
-      </Unit54>
-      <Unit55>
+        <UsageCount Value="4"/>
+      </Unit43>
+      <Unit44>
         <Filename Value="..\Delphi\uDemo.pas"/>
         <ComponentName Value="frmDemo"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <TopLine Value="223"/>
         <CursorPos X="11" Y="8"/>
-        <UsageCount Value="4"/>
-      </Unit55>
-      <Unit56>
+        <UsageCount Value="5"/>
+      </Unit44>
+      <Unit45>
         <Filename Value="C:\temp\Boletos\Delphi_Boleto_2_1\2.1\gbCobranca.pas"/>
         <TopLine Value="256"/>
         <CursorPos X="19" Y="265"/>
-        <UsageCount Value="10"/>
-      </Unit56>
-      <Unit57>
+        <UsageCount Value="1"/>
+      </Unit45>
+      <Unit46>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoMercantil.pas"/>
-        <TopLine Value="227"/>
-        <CursorPos X="10" Y="259"/>
-        <UsageCount Value="22"/>
-      </Unit57>
-      <Unit58>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="91"/>
+        <CursorPos X="4" Y="93"/>
+        <UsageCount Value="13"/>
+      </Unit46>
+      <Unit47>
         <Filename Value="C:\temp\Boletos\freeboleto\uFreeBoleto.pas"/>
-        <UsageCount Value="4"/>
-      </Unit58>
-      <Unit59>
+        <UsageCount Value="5"/>
+      </Unit47>
+      <Unit48>
         <Filename Value="uDemo.lfm"/>
-        <TopLine Value="686"/>
-        <CursorPos X="34" Y="700"/>
-        <UsageCount Value="15"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="731"/>
+        <CursorPos Y="734"/>
+        <UsageCount Value="26"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit59>
-      <Unit60>
+      </Unit48>
+      <Unit49>
         <Filename Value="..\..\..\..\..\lazarus\TOOLS\DJ_Sistema.pas"/>
         <TopLine Value="354"/>
         <CursorPos X="8" Y="370"/>
-        <UsageCount Value="8"/>
-      </Unit60>
-      <Unit61>
+        <UsageCount Value="9"/>
+      </Unit49>
+      <Unit50>
         <Filename Value="C:\lazarus\fpc\2.4.1\source\rtl\inc\wstringh.inc"/>
         <TopLine Value="15"/>
         <CursorPos X="10" Y="24"/>
-        <UsageCount Value="8"/>
-      </Unit61>
-      <Unit62>
-        <Filename Value="..\..\..\..\..\lazarus\TOOLS\DJ_Registro.pas"/>
-        <ComponentName Value="DJRegForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <TopLine Value="939"/>
-        <CursorPos X="6" Y="949"/>
-        <UsageCount Value="6"/>
-      </Unit62>
-      <Unit63>
-        <Filename Value="..\..\..\..\..\lazarus\TOOLS\dj_tools.pas"/>
-        <UsageCount Value="5"/>
-      </Unit63>
-      <Unit64>
-        <Filename Value="..\Delphi\uDemo.dfm"/>
-        <CursorPos X="22" Y="10"/>
-        <UsageCount Value="5"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit64>
-      <Unit65>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.lfm"/>
         <UsageCount Value="9"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.lfm"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit65>
-      <Unit66>
-        <Filename Value="C:\lazarus\fpc\2.4.1\source\rtl\objpas\classes\classesh.inc"/>
-        <TopLine Value="540"/>
-        <CursorPos X="3" Y="549"/>
-        <UsageCount Value="6"/>
-      </Unit66>
-      <Unit67>
+      </Unit51>
+      <Unit52>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrCaixaEconomica.pas"/>
         <TopLine Value="74"/>
         <CursorPos X="22" Y="81"/>
-        <UsageCount Value="27"/>
-      </Unit67>
-      <Unit68>
-        <Filename Value="C:\Users\JULIANA TAMIZOU\Downloads\ACBrBoleto\ACBrBoleto.pas"/>
-        <TopLine Value="455"/>
-        <CursorPos X="93" Y="464"/>
-        <UsageCount Value="5"/>
-      </Unit68>
-      <Unit69>
+        <UsageCount Value="18"/>
+      </Unit52>
+      <Unit53>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto-change-log.txt"/>
         <TopLine Value="50"/>
         <CursorPos X="26" Y="59"/>
-        <UsageCount Value="15"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit69>
-      <Unit70>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCLazReportFr.pas"/>
-        <ComponentName Value="dmACbrBoletoFCLazReport"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-        <UnitName Value="ACbrBoletoFCLazReport"/>
-        <TopLine Value="29"/>
-        <CursorPos X="9" Y="42"/>
         <UsageCount Value="6"/>
-      </Unit70>
-      <Unit71>
-        <Filename Value="C:\Lazarus\Comp\CCR\powerpdf\PReport.pas"/>
-        <TopLine Value="94"/>
-        <UsageCount Value="5"/>
-      </Unit71>
-      <Unit72>
-        <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
-        <UnitName Value="StdCtrls"/>
-        <TopLine Value="22"/>
-        <UsageCount Value="5"/>
-      </Unit72>
-      <Unit73>
-        <Filename Value="C:\lazarus\lcl\printers.pas"/>
-        <UnitName Value="Printers"/>
-        <TopLine Value="278"/>
-        <CursorPos X="3" Y="291"/>
-        <UsageCount Value="5"/>
-      </Unit73>
-      <Unit74>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCLazReportFr.lfm"/>
-        <CursorPos X="57"/>
-        <UsageCount Value="5"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit74>
-      <Unit75>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit53>
+      <Unit54>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCLazReport.pas"/>
         <ComponentName Value="dmACbrBoletoFCLazReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <TopLine Value="34"/>
         <CursorPos X="25" Y="53"/>
-        <UsageCount Value="14"/>
-      </Unit75>
-      <Unit76>
-        <Filename Value="C:\lazarus\components\lazreport\source\lr_class.pas"/>
-        <ComponentName Value="frObjEditorForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="LR_Class"/>
-        <TopLine Value="1652"/>
-        <CursorPos Y="1664"/>
-        <UsageCount Value="6"/>
-      </Unit76>
-      <Unit77>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCLazReport.lrs"/>
         <UsageCount Value="5"/>
-      </Unit77>
-      <Unit78>
+      </Unit54>
+      <Unit55>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCLazReportDm.pas"/>
         <ComponentName Value="dmACbrBoletoFCLazReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <TopLine Value="32"/>
         <CursorPos X="42" Y="52"/>
-        <UsageCount Value="20"/>
-      </Unit78>
-      <Unit79>
-        <Filename Value="..\..\..\Pacotes\Lazarus\ACBr_PAF.pas"/>
-        <CursorPos X="54" Y="16"/>
-        <UsageCount Value="6"/>
-      </Unit79>
-      <Unit80>
-        <Filename Value="C:\Lazarus\Comp\fortes4lazarus\trunk\rlprintdialog.pas"/>
-        <UnitName Value="RLPrintDialog"/>
-        <TopLine Value="173"/>
-        <CursorPos X="106" Y="179"/>
-        <UsageCount Value="6"/>
-      </Unit80>
-      <Unit81>
-        <Filename Value="C:\lazarus\lcl\include\controlcanvas.inc"/>
-        <TopLine Value="79"/>
-        <CursorPos Y="92"/>
-        <UsageCount Value="6"/>
-      </Unit81>
-      <Unit82>
-        <Filename Value="C:\lazarus\lcl\include\promptdialog.inc"/>
-        <TopLine Value="277"/>
-        <CursorPos Y="290"/>
-        <UsageCount Value="6"/>
-      </Unit82>
-      <Unit83>
-        <Filename Value="C:\Lazarus\Comp\fortes4lazarus\trunk\rlfilters.pas"/>
-        <UnitName Value="RLFilters"/>
-        <TopLine Value="210"/>
-        <CursorPos X="50" Y="220"/>
-        <UsageCount Value="6"/>
-      </Unit83>
-      <Unit84>
-        <Filename Value="C:\Lazarus\djpdv\Venda.pas"/>
-        <TopLine Value="661"/>
-        <CursorPos X="49" Y="674"/>
-        <UsageCount Value="6"/>
-      </Unit84>
-      <Unit85>
+        <UsageCount Value="11"/>
+      </Unit55>
+      <Unit56>
         <Filename Value="C:\Lazarus\TOOLS\DJ_Consts.pas"/>
         <TopLine Value="10"/>
         <CursorPos Y="29"/>
-        <UsageCount Value="7"/>
-      </Unit85>
-      <Unit86>
+        <UsageCount Value="8"/>
+      </Unit56>
+      <Unit57>
         <Filename Value="C:\lazarus\lcl\lresources.pp"/>
         <UnitName Value="LResources"/>
         <TopLine Value="784"/>
         <CursorPos Y="796"/>
-        <UsageCount Value="8"/>
-      </Unit86>
-      <Unit87>
-        <Filename Value="FCLazReport_Padrao.lrf"/>
-        <CursorPos X="80" Y="12"/>
-        <UsageCount Value="6"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit87>
-      <Unit88>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\FCLazReport_Padrao.lrf"/>
-        <CursorPos X="77" Y="10"/>
-        <UsageCount Value="6"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit88>
-      <Unit89>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
-        <UsageCount Value="6"/>
-      </Unit89>
-      <Unit90>
-        <Filename Value="C:\Lazarus\TOOLS\DJ_WebConsultas.pas"/>
-        <TopLine Value="122"/>
-        <CursorPos X="15" Y="129"/>
-        <UsageCount Value="6"/>
-      </Unit90>
-      <Unit91>
-        <Filename Value="C:\Lazarus\TOOLS\DJ_Registro.pas"/>
-        <TopLine Value="4614"/>
-        <CursorPos X="41" Y="4617"/>
-        <UsageCount Value="6"/>
-      </Unit91>
-      <Unit92>
-        <Filename Value="C:\lazarus\fpc\2.5.1\source\rtl\objpas\classes\classesh.inc"/>
-        <TopLine Value="868"/>
-        <CursorPos X="15" Y="881"/>
-        <UsageCount Value="6"/>
-      </Unit92>
-      <Unit93>
-        <Filename Value="C:\lazarus\fpc\2.5.1\source\rtl\objpas\classes\streams.inc"/>
-        <TopLine Value="548"/>
-        <CursorPos X="3" Y="551"/>
-        <UsageCount Value="6"/>
-      </Unit93>
-      <Unit94>
+        <UsageCount Value="9"/>
+      </Unit57>
+      <Unit58>
         <Filename Value="C:\lazarus\components\lazreport\source\lr_barc.pas"/>
         <ComponentName Value="frBarCodeForm"/>
         <HasResources Value="True"/>
@@ -689,313 +460,477 @@
         <UnitName Value="LR_BarC"/>
         <TopLine Value="697"/>
         <CursorPos X="47" Y="720"/>
-        <UsageCount Value="7"/>
-      </Unit94>
-      <Unit95>
-        <Filename Value="C:\lazarus\components\lazreport\source\lr_utils.pas"/>
-        <UnitName Value="LR_Utils"/>
-        <TopLine Value="167"/>
-        <CursorPos X="3" Y="172"/>
-        <UsageCount Value="6"/>
-      </Unit95>
-      <Unit96>
-        <Filename Value="..\..\..\Pacotes\Lazarus\ACBrComum.pas"/>
-        <CursorPos X="42" Y="10"/>
-        <UsageCount Value="6"/>
-      </Unit96>
-      <Unit97>
+        <UsageCount Value="8"/>
+      </Unit58>
+      <Unit59>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
         <TopLine Value="1249"/>
         <CursorPos X="24" Y="1255"/>
-        <UsageCount Value="8"/>
-      </Unit97>
-      <Unit98>
+        <UsageCount Value="9"/>
+      </Unit59>
+      <Unit60>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSicredi.pas"/>
-        <TopLine Value="1175"/>
-        <CursorPos X="10" Y="1191"/>
-        <UsageCount Value="20"/>
-      </Unit98>
-      <Unit99>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1951"/>
+        <CursorPos X="39" Y="2008"/>
+        <UsageCount Value="29"/>
+        <Loaded Value="True"/>
+      </Unit60>
+      <Unit61>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBanrisul.pas"/>
-        <TopLine Value="35"/>
-        <CursorPos X="17" Y="51"/>
-        <UsageCount Value="21"/>
-      </Unit99>
-      <Unit100>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="61"/>
+        <CursorPos X="17" Y="53"/>
+        <UsageCount Value="12"/>
+      </Unit61>
+      <Unit62>
         <Filename Value="..\..\..\..\..\lazaruan\fortes4lazarus\trunk\rlreport.pas"/>
         <UnitName Value="RLReport"/>
         <TopLine Value="6864"/>
         <CursorPos X="45" Y="6864"/>
-        <UsageCount Value="7"/>
-      </Unit100>
-      <Unit101>
-        <Filename Value="..\..\..\..\..\lazaruan\TOOLS\DJ_Registro.pas"/>
-        <ComponentName Value="DJRegForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <TopLine Value="1768"/>
-        <CursorPos X="51" Y="1783"/>
-        <UsageCount Value="6"/>
-      </Unit101>
-      <Unit102>
+        <UsageCount Value="8"/>
+      </Unit62>
+      <Unit63>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoob.pas"/>
         <TopLine Value="79"/>
         <CursorPos X="36" Y="91"/>
-        <UsageCount Value="20"/>
-      </Unit102>
-      <Unit103>
+        <UsageCount Value="11"/>
+      </Unit63>
+      <Unit64>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSantander.pas"/>
-        <TopLine Value="283"/>
-        <CursorPos X="24" Y="287"/>
-        <UsageCount Value="19"/>
-      </Unit103>
-      <Unit104>
+        <EditorIndex Value="1"/>
+        <TopLine Value="85"/>
+        <CursorPos X="43" Y="97"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+      </Unit64>
+      <Unit65>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrCaixaEconomicaSICOB.pas"/>
         <TopLine Value="81"/>
         <CursorPos X="32" Y="88"/>
-        <UsageCount Value="26"/>
-      </Unit104>
-      <Unit105>
+        <UsageCount Value="17"/>
+      </Unit65>
+      <Unit66>
         <Filename Value="C:\lazarus\components\lazreport\source\lr_propedit.pas"/>
         <CursorPos X="19" Y="10"/>
-        <UsageCount Value="7"/>
-      </Unit105>
-      <Unit106>
+        <UsageCount Value="8"/>
+      </Unit66>
+      <Unit67>
         <Filename Value="C:\lazarus\components\lazreport\source\barcode.pas"/>
         <UnitName Value="Barcode"/>
         <TopLine Value="237"/>
         <CursorPos X="20" Y="252"/>
-        <UsageCount Value="7"/>
-      </Unit106>
-      <Unit107>
+        <UsageCount Value="8"/>
+      </Unit67>
+      <Unit68>
         <Filename Value="C:\lazarus\components\lazreport\source\lr_desgn.pas"/>
         <HasResources Value="True"/>
         <UnitName Value="LR_Desgn"/>
-        <UsageCount Value="7"/>
-      </Unit107>
-      <Unit108>
+        <UsageCount Value="8"/>
+      </Unit68>
+      <Unit69>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas"/>
-        <TopLine Value="190"/>
-        <CursorPos Y="200"/>
-        <UsageCount Value="26"/>
-      </Unit108>
-      <Unit109>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="103"/>
+        <CursorPos X="4" Y="101"/>
+        <UsageCount Value="17"/>
+      </Unit69>
+      <Unit70>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBanestes.pas"/>
         <TopLine Value="86"/>
         <CursorPos X="31" Y="95"/>
-        <UsageCount Value="18"/>
-      </Unit109>
-      <Unit110>
+        <UsageCount Value="9"/>
+      </Unit70>
+      <Unit71>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas"/>
-        <TopLine Value="894"/>
-        <CursorPos X="10" Y="917"/>
-        <UsageCount Value="19"/>
-      </Unit110>
-      <Unit111>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="84"/>
+        <CursorPos X="4" Y="86"/>
+        <UsageCount Value="10"/>
+      </Unit71>
+      <Unit72>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas"/>
-        <TopLine Value="417"/>
-        <CursorPos X="6" Y="426"/>
-        <UsageCount Value="15"/>
-      </Unit111>
-      <Unit112>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="38"/>
+        <CursorPos X="17" Y="45"/>
+        <UsageCount Value="8"/>
+      </Unit72>
+      <Unit73>
         <Filename Value="C:\lazarus\lcl\include\application.inc"/>
         <TopLine Value="2185"/>
         <CursorPos Y="2196"/>
-        <UsageCount Value="8"/>
-      </Unit112>
-      <Unit113>
+        <UsageCount Value="9"/>
+      </Unit73>
+      <Unit74>
         <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\objpas\sysutils\sysstrh.inc"/>
         <TopLine Value="107"/>
         <CursorPos X="10" Y="119"/>
-        <UsageCount Value="10"/>
-      </Unit113>
-      <Unit114>
+        <UsageCount Value="1"/>
+      </Unit74>
+      <Unit75>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.lrs"/>
-        <UsageCount Value="9"/>
-      </Unit114>
-      <Unit115>
+        <UsageCount Value="10"/>
+      </Unit75>
+      <Unit76>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="775"/>
         <CursorPos Y="798"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
-      </Unit115>
-      <Unit116>
+        <UsageCount Value="5"/>
+      </Unit76>
+      <Unit77>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\mimemess.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="274"/>
         <CursorPos X="12" Y="288"/>
-        <UsageCount Value="9"/>
-      </Unit116>
-      <Unit117>
+        <UsageCount Value="10"/>
+      </Unit77>
+      <Unit78>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredES.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="189"/>
         <CursorPos X="9" Y="208"/>
-        <UsageCount Value="13"/>
-      </Unit117>
-      <Unit118>
+        <UsageCount Value="4"/>
+      </Unit78>
+      <Unit79>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="92"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="91"/>
         <CursorPos X="15" Y="112"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
-      </Unit118>
-      <Unit119>
+        <UsageCount Value="5"/>
+      </Unit79>
+      <Unit80>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrDFeDANFeReport.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="159"/>
         <CursorPos X="3" Y="162"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
-      </Unit119>
-      <Unit120>
+        <UsageCount Value="5"/>
+      </Unit80>
+      <Unit81>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="714"/>
-        <CursorPos Y="737"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit120>
-      <Unit121>
+        <ComponentName Value="ACBRBoletoFCFortesFr"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1114"/>
+        <CursorPos X="4" Y="1134"/>
+        <UsageCount Value="21"/>
+      </Unit81>
+      <Unit82>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\smtpsend.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="158"/>
         <CursorPos X="17" Y="170"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit121>
-      <Unit122>
+        <UsageCount Value="2"/>
+      </Unit82>
+      <Unit83>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\blcksock.pas"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="498"/>
         <CursorPos X="14" Y="511"/>
+        <UsageCount Value="2"/>
+      </Unit83>
+      <Unit84>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoPine.pas"/>
+        <TopLine Value="57"/>
+        <CursorPos X="27" Y="59"/>
+        <UsageCount Value="61"/>
+        <Loaded Value="True"/>
+      </Unit84>
+      <Unit85>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSintegra\ACBrSintegra.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="558"/>
+        <CursorPos X="14" Y="519"/>
+        <UsageCount Value="19"/>
+      </Unit85>
+      <Unit86>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoPineBradesco.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <CursorPos Y="60"/>
+        <UsageCount Value="25"/>
+      </Unit86>
+      <Unit87>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\Fast\ACBrBoletoFCFR.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="151"/>
+        <CursorPos X="48" Y="159"/>
+        <UsageCount Value="6"/>
+      </Unit87>
+      <Unit88>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCaixaSICOB.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="311"/>
+        <CursorPos X="27" Y="318"/>
+        <UsageCount Value="8"/>
+      </Unit88>
+      <Unit89>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBradescoSICOOB.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="61"/>
+        <CursorPos X="15" Y="61"/>
+        <UsageCount Value="25"/>
+      </Unit89>
+      <Unit90>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="104"/>
+        <CursorPos X="8" Y="113"/>
+        <UsageCount Value="25"/>
+      </Unit90>
+      <Unit91>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="69"/>
+        <CursorPos X="17" Y="61"/>
+        <UsageCount Value="25"/>
+      </Unit91>
+      <Unit92>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="797"/>
+        <CursorPos X="47" Y="813"/>
+        <UsageCount Value="31"/>
+        <Loaded Value="True"/>
+      </Unit92>
+      <Unit93>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoABCBrasil.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="853"/>
+        <CursorPos X="30" Y="861"/>
+        <UsageCount Value="6"/>
+      </Unit93>
+      <Unit94>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCaixa.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="79"/>
+        <CursorPos X="18" Y="61"/>
+        <UsageCount Value="8"/>
+      </Unit94>
+      <Unit95>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSped.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
+        <CursorPos X="5" Y="45"/>
+        <UsageCount Value="18"/>
+      </Unit95>
+      <Unit96>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBlocos.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="37"/>
+        <CursorPos X="5" Y="45"/>
+        <UsageCount Value="18"/>
+        <Bookmarks Count="1">
+          <Item0 X="4" Y="1035" ID="1"/>
+        </Bookmarks>
+      </Unit96>
+      <Unit97>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="215"/>
+        <CursorPos X="20" Y="208"/>
+        <UsageCount Value="18"/>
+      </Unit97>
+      <Unit98>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H_Class.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="237"/>
+        <CursorPos X="43" Y="246"/>
+        <UsageCount Value="18"/>
+      </Unit98>
+      <Unit99>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_H_Importar.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="91"/>
+        <CursorPos X="33" Y="97"/>
+        <UsageCount Value="18"/>
+      </Unit99>
+      <Unit100>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrSpedFiscal.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2492"/>
+        <CursorPos X="33" Y="2514"/>
+        <UsageCount Value="13"/>
+      </Unit100>
+      <Unit101>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_9_Class.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <UsageCount Value="13"/>
+      </Unit101>
+      <Unit102>
+        <Filename Value="..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_9.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="12"/>
+        <UsageCount Value="13"/>
+      </Unit102>
+      <Unit103>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas"/>
+        <ComponentName Value="frmACBrDANFCeFortesFrA4"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="335"/>
+        <CursorPos X="19" Y="341"/>
+        <UsageCount Value="13"/>
+      </Unit103>
+      <Unit104>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <UsageCount Value="8"/>
+      </Unit104>
+      <Unit105>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="59"/>
+        <CursorPos X="17" Y="54"/>
+        <UsageCount Value="8"/>
+      </Unit105>
+      <Unit106>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCecred.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="130"/>
+        <CursorPos X="4" Y="129"/>
+        <UsageCount Value="8"/>
+      </Unit106>
+      <Unit107>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoDaycoval.pas"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="606"/>
+        <CursorPos X="66" Y="614"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit107>
+      <Unit108>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="128"/>
+        <CursorPos X="82" Y="131"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
-      </Unit122>
+      </Unit108>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3325"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
+        <Caret Line="1374" Column="29" TopLine="1361"/>
       </Position1>
       <Position2>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3324" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
+        <Caret Line="97" Column="26" TopLine="87"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3328" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
+        <Caret Line="1490" Column="36" TopLine="1478"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3325"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
+        <Caret Line="102" Column="25" TopLine="86"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3324" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas"/>
+        <Caret Line="1805" Column="33" TopLine="1780"/>
       </Position5>
       <Position6>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3328" TopLine="3307"/>
+        <Caret Line="736" Column="27" TopLine="713"/>
       </Position6>
       <Position7>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3330" TopLine="3307"/>
       </Position7>
       <Position8>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3331" TopLine="3307"/>
+        <Caret Line="386" Column="19" TopLine="370"/>
       </Position8>
       <Position9>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3334" TopLine="3307"/>
+        <Caret Line="1527" Column="21" TopLine="1511"/>
       </Position9>
       <Position10>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3335" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="52" Column="28" TopLine="51"/>
       </Position10>
       <Position11>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3338" TopLine="3310"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="105" Column="4" TopLine="99"/>
       </Position11>
       <Position12>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3313"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="50" Column="17" TopLine="43"/>
       </Position12>
       <Position13>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3324" TopLine="3313"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="78" Column="4" TopLine="76"/>
       </Position13>
       <Position14>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3328" TopLine="3313"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="52" Column="29" TopLine="48"/>
       </Position14>
       <Position15>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3313"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="111" Column="47" TopLine="100"/>
       </Position15>
       <Position16>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3343" TopLine="3315"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="50" Column="23" TopLine="43"/>
       </Position16>
       <Position17>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3324" TopLine="3315"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="78" Column="4" TopLine="76"/>
       </Position17>
       <Position18>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3328" TopLine="3315"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="111" Column="68" TopLine="103"/>
       </Position18>
       <Position19>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3315"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="110" Column="29" TopLine="103"/>
       </Position19>
       <Position20>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3404" TopLine="3387"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <Caret Line="54" Column="16" TopLine="42"/>
       </Position20>
       <Position21>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3343" TopLine="3327"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <Caret Line="218" Column="15" TopLine="209"/>
       </Position21>
       <Position22>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3406" TopLine="3389"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <Caret Line="219" Column="30" TopLine="209"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3324" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <Caret Line="61" Column="16" TopLine="49"/>
       </Position23>
       <Position24>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3328" TopLine="3307"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <Caret Line="782" Column="14" TopLine="773"/>
       </Position24>
       <Position25>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3330" TopLine="3310"/>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="340" Column="32" TopLine="328"/>
       </Position25>
       <Position26>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3331" TopLine="3310"/>
+        <Caret Line="165" Column="27" TopLine="154"/>
       </Position26>
       <Position27>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3334" TopLine="3310"/>
+        <Caret Line="1520" Column="5" TopLine="1513"/>
       </Position27>
       <Position28>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3335" TopLine="3310"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSicredi.pas"/>
+        <Caret Line="66" Column="24" TopLine="49"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3338" TopLine="3310"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSicredi.pas"/>
+        <Caret Line="2008" Column="39" TopLine="2003"/>
       </Position29>
       <Position30>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Caret Line="3341" TopLine="3313"/>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="340" Column="32" TopLine="331"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -1018,7 +953,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="2">
+    <BreakPoints Count="6">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -1031,8 +966,36 @@
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
-        <Line Value="3324"/>
+        <Line Value="3335"/>
       </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
+        <Line Value="1113"/>
+      </Item3>
+      <Item4>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoDaycoval.pas"/>
+        <Line Value="616"/>
+      </Item4>
+      <Item5>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSicredi.pas"/>
+        <Line Value="2009"/>
+      </Item5>
+      <Item6>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="uDemo.pas"/>
+        <Line Value="358"/>
+      </Item6>
     </BreakPoints>
     <Exceptions Count="8">
       <Item1>

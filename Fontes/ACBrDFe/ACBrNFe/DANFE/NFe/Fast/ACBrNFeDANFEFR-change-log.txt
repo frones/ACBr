@@ -1,9 +1,9 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -22,9 +22,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 Agradecimentos:
 
@@ -259,4 +258,45 @@ Data: 22/03/2017
 [*] Ajuste no tamanho do campo unidade.
      http://www.projetoacbr.com.br/forum/topic/35347-sugest%C3%A3o-simples-na-unit-acbrnfedanfefrdmpas-envolvendo-a-propriedade-imprimirunqtvlcomercial/
      Por : Henrique Leonardo	
-	
+
+02/04/2015
+[*] Criação de uma class, removendo o datamodule e os componentes não visuais
+    dele, sendo criado todos em tempo de execução.
+(por Isaque Pinheiro)
+
+26/02/2013 
+[*] Foi realizado inúmeras modificações para Normalizar o Danfe com o Manual
+    e ter uma versão que fosse possível imprimir com o FR que vem com o Delphi
+(por João Henrique de Souza)	 
+
+26/08/2010
+[-] Desmarcada a propriedade StoreInDFM do FastReport para não gravar
+    o relatório no DFM e evitar o erro de compilação em versão menores
+    do delphi, favor utilizar o arquivo externo.
+[-] Acerto na propriedade "PreparedReport"
+(por Régys Silveira e Itamar Bermond)
+
+25/08/2010
+[*] Configuração do preview do DANFE. (por Régys Silveira)
+
+24/08/2010
+[*] Padronização da logomarca para utilizar o caminho como nos outros DANFEs
+[-] Acerto nas diretivas de compilação para Delphi 2009 e superior
+[-] Acertos gerais no DANFE
+|        . Layout
+|        . Exibição da logomarca
+|        . Tamanho das colunas para conter valores grandes
+|        . marca d'agua para ambiente de homologação
+|        . Adicionado o complemento a descrição da mercadoria
+|        . Adicionado a origem no CST
+|        . Acerto para mostrar o CST corretamente quando for Simples Nacional
+[-] Acerto no CST para o Simples Nacional
+[-] Acertos no DANFE para o Simples Nacional
+[-] Acerto da exportação para PDF
+[-] Acerto para checar se o relatório foi realmente preparado
+    antes de continuar a imprir ou gerar o PDF
+[-] Acerto nas propriedades do arquivo PDF
+(por Régys Silveira)
+
+11/08/2010
+[+] Inicio do desenvolvimento (por Itamar Luiz Bermond)

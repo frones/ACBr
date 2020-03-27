@@ -1,17 +1,16 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Wemerson Souto                                  }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -29,42 +28,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 11/08/2010: Itamar Luiz Bermond
-|*  - Inicio do desenvolvimento
-|* 24/08/2010: Régys Silveira
-|*  - Acerto nas diretivas de compilação para Delphi 2009 e superior
-|*  - Acertos gerais no DANFE
-|        . Layout
-|        . Exibição da logomarca
-|        . Tamanho das colunas para conter valores grandes
-|        . marca d'agua para ambiente de homologação
-|        . Adicionado o complemento a descrição da mercadoria
-|        . Adicionado a origem no CST
-|        . Acerto para mostrar o CST corretamente quando for Simples Nacional
-|*  - Padronização da logomarca para utilizar o caminho como nos outros DANFEs
-|*  - Acerto no CST para o Simples Nacional
-|*  - Acertos no DANFE para o Simples Nacional
-|* 25/08/2010: Régys Silveira
-|*  - Configuração do preview do DANFE.
-|* 26/08/2010: Régys Silveira, Itamar Bermond
-|*  - Desmarcada a propriedade StoreInDFM do FastReport para não gravar
-|*    o relatório no DFM e evitar o erro de compilação em versão menores
-|*    do delphi, favor utilizar o arquivo externo.
-|* 26/02/2013: João Henrique de Souza
-|*  - Foi realizado inúmeras modificações para Normalizar o Danfe com o Manual
-|*    e ter uma versão que fosse possível imprimir com o FR que vem com o Delphi
-|* 02/04/2015: Isaque Pinheiro
-|*  - Criação de uma class, removendo o datamodule e os componentes não visuais
-|*    dele, sendo criado todos em tempo de execução.
-******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrNFeDANFEFRDM;

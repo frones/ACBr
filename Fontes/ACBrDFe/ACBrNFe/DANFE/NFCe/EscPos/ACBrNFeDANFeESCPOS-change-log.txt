@@ -1,13 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componentes ACBr - ACBrNFe                                          }
+{ Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo: Wemerson Souto                                  }
-{                              Daniel Simoes de Almeida                        }
-{                              André Ferreira de Moraes                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -31,48 +25,40 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+Agradecimentos:
 
-package ACBr_NFSeDanfseRL;
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
 
-{$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
-{$ALIGN 8}
-{$ASSERTIONS ON}
-{$BOOLEVAL OFF}
-{$DEBUGINFO ON}
-{$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA ON}
-{$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
-{$LONGSTRINGS ON}
-{$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
-{$OVERFLOWCHECKS OFF}
-{$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
-{$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
-{$TYPEDADDRESS OFF}
-{$VARSTRINGCHECKS ON}
-{$WRITEABLECONST OFF}
-{$MINENUMSIZE 1}
-{$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{******************************************************************************
+|* ACBrNFeDANFeESCPOS
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
 
-requires
-  rtl,
-  designide,
-  dsnap,
-  ACBr_NFSe,
-  ACBrDFeReportRL;
+Símbolo : Significado
 
-contains
-  ACBrNFSeDANFSeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},
-  ACBrNFSeDANFSeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLClass.pas',
-  ACBrNFSeDANFSeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLReg.pas',
-  ACBrNFSeDANFSeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLRetrato.pas' {frlDANFSeRLRetrato};
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
 
-end.
+
+06/05/2015 
+[*] Refatoração para usar TACBrPosPrinter (por DSA)
+
+28/11/2014: 
+[+] Implementação da possibilidade de utilizar tags nos relatorios (segue o
+    padrão do acbrecf) (por Régys Silveira)
+
+25/11/2014 
+[*] Acertos gerais e adaptação do layout a norma técnica
+[*] adição de método para impressão de relatórios
+[+] adição de impressão de eventos
+(por Régys Silveira)
+
+20/11/2014  
+[+] Contribuições para impressão na Bematech e Daruma. (por Welkson Renny de Medeiros)	
+
+04/04/2013
+[+] Inicio do desenvolvimento. (por André Ferreira de Moraes)

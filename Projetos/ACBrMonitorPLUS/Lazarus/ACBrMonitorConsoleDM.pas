@@ -599,13 +599,13 @@ begin
      Memo.Add('******************************************************************************'+sLineBreak+
               '* Projeto: ACBr Monitor Console                                              *'+sLineBreak+
               '*                                                                            *'+sLineBreak+
-              '* Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida             *'+sLineBreak+
+              '* Direitos Autorais Reservados (c) 2020 Daniel SimÃµes de Almeida            *'+sLineBreak+
               '*                                                                            *'+sLineBreak+
               '*  Você pode obter a última versão desse arquivo na página do Projeto ACBr   *'+sLineBreak+
               '* Componentes localizado em      http://www.sourceforge.net/projects/acbr    *'+sLineBreak+
               '*                                                                            *'+sLineBreak+
-              '* Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br*'+sLineBreak+
-              '*              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                *'+sLineBreak+
+              '* Daniel Simões de Almeida  -  daniel@projetoacbr.com.br  -  www.djsystem.com.br*'+sLineBreak+
+              '* Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170               *'+sLineBreak+
               '******************************************************************************'+sLineBreak+sLineBreak );
 
      Memo.Add('******************************************************************************'+sLineBreak+

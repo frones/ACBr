@@ -1058,6 +1058,8 @@ Data: 24/02/2014     (por: DSA)
     comandos gerados para a Impressora  (por: Larissa)
     http://www.projetoacbr.com.br/forum/index.php?/topic/14395-impressão-extrato-cancelamento
 
+Data: 04/04/2013
+[+] Inicio do desenvolvimentodo extrato. (por André Ferreira de Moraes)
 
 
 

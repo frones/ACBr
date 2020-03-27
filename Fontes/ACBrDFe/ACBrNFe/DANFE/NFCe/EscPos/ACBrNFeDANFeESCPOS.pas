@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: André Ferreira de Moraes                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -29,24 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 04/04/2013:  André Ferreira de Moraes
-|*   Inicio do desenvolvimento
-|* 20/11/2014:  Welkson Renny de Medeiros
-|*   Contribuições para impressão na Bematech e Daruma
-|* 25/11/2014: Régys Silveira
-|*   Acertos gerais e adaptação do layout a norma técnica
-|*   adição de método para impressão de relatórios
-|*   adição de impressão de eventos
-|* 28/11/2014: Régys Silveira
-|*   Implementação da possibilidade de utilizar tags nos relatorios (segue o
-|*   padrão do acbrecf)
-|* 06/05/2015: DSA
-|*   Refatoração para usar TACBrPosPrinter
-******************************************************************************}
 
 {$I ACBr.inc}
 

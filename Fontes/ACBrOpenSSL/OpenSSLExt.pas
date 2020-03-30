@@ -2904,7 +2904,7 @@ end;
 
 function BIOReset(b: pBIO): cint;
 begin
-  if InitlibeaInterface and Assigned(_BioReset) then
+  if InitSSLInterface and Assigned(_BioReset) then
     Result := _BioReset(b)
   else
     Result := -2;
@@ -2951,7 +2951,7 @@ end;
 
 function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
 begin
-  if InitlibeaInterface and Assigned(_EvpPkeyGet1RSA) then
+  if InitSSLInterface and Assigned(_EvpPkeyGet1RSA) then
     Result := _EvpPkeyGet1RSA(pkey)
   else
     Result := nil;
@@ -2959,7 +2959,7 @@ end;
 
 function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
 begin
-  if InitlibeaInterface and Assigned(_EvpPkeySet1RSA) then
+  if InitSSLInterface and Assigned(_EvpPkeySet1RSA) then
     Result := _EvpPkeySet1RSA(pkey, rsa)
   else
     Result := 0;
@@ -4018,7 +4018,7 @@ end;
 function PEM_read_bio_RSAPrivateKey(bp : pBIO ; var x : pRSA ;
    cb : Ppem_password_cb ; u : pointer) : pRSA ;
 begin
-  if InitlibeaInterface and Assigned(_PEM_read_bio_RSAPrivateKey) then
+  if InitSSLInterface and Assigned(_PEM_read_bio_RSAPrivateKey) then
     Result := _PEM_read_bio_RSAPrivateKey(bp, x, cb, u)
   else
     Result := nil;
@@ -4027,7 +4027,7 @@ end;
 function PEM_write_bio_RSAPrivateKey(bp: pBIO; x: pRSA; const enc: pEVP_CIPHER;
   kstr: PAnsiChar; klen: integer; cb: Ppem_password_cb; u: pointer): integer;
 begin
-  if InitlibeaInterface and Assigned(_PEM_write_bio_RSAPrivateKey) then
+  if InitSSLInterface and Assigned(_PEM_write_bio_RSAPrivateKey) then
     Result := _PEM_write_bio_RSAPrivateKey(bp, x, enc, kstr, klen, cb, u )
   else
     Result := -1;
@@ -4036,7 +4036,7 @@ end;
 function PEM_read_bio_RSAPublicKey(bp : pBIO ; var x : pRSA ;
    cb : Ppem_password_cb ; u : pointer) : pRSA ;
 begin
-  if InitlibeaInterface and Assigned(_PEM_read_bio_RSAPublicKey) then
+  if InitSSLInterface and Assigned(_PEM_read_bio_RSAPublicKey) then
     Result := _PEM_read_bio_RSAPublicKey(bp, x, cb, u )
   else
     Result := nil;
@@ -4044,7 +4044,7 @@ end;
 
 function PEM_write_bio_RSAPublicKey(bp : pBIO ; x : pRSA) : integer ;
 begin
-  if InitlibeaInterface and Assigned(_PEM_write_bio_RSAPublicKey) then
+  if InitSSLInterface and Assigned(_PEM_write_bio_RSAPublicKey) then
     Result := _PEM_write_bio_RSAPublicKey(bp, x )
   else
     Result := -1;

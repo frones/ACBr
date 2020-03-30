@@ -423,6 +423,7 @@ begin
       end;
     end;
 
+    Gerador.Prefixo := 'adic:';
     Gerador.wGrupo('/Viagens');
   end;
 
@@ -501,7 +502,6 @@ begin
       if Categoria = tcpFrota then
         Gerador.wCampo(tcStr, 'AP81', 'CnpjFilialAbastecimento', 01, 01, 1, CnpjFilialAbastecimento);
 
-      Gerador.Prefixo := 'adic:';
       Gerador.wGrupo('/Pagamentos');
     end;
   end;
@@ -1237,6 +1237,7 @@ begin
       end;
     end;
 
+    Gerador.Prefixo := 'adic:';
     Gerador.wGrupo('/Viagem');
   end;
 
@@ -1299,12 +1300,12 @@ begin
         end;
       end;  
 
+      Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
 
       if Categoria = tcpFrota then
         Gerador.wCampo(tcStr, 'AP81', 'CnpjFilialAbastecimento', 01, 01, 1, CnpjFilialAbastecimento);
 
-      Gerador.Prefixo := 'adic:';
       Gerador.wGrupo('/Pagamento');
     end;
   end;
@@ -1481,6 +1482,7 @@ begin
         end;
       end;
 
+      Gerador.Prefixo := 'enc:';
       Gerador.wGrupo('/Viagem');
     end;
 
@@ -2007,7 +2009,9 @@ begin
 
         Gerador.Prefixo := 'obj:';
         Gerador.wGrupo('ConsultarTipoCargaRequest');
+
         GerarIdentificacao(1);
+
         Gerador.wGrupo('/ConsultarTipoCargaRequest');
 
         Gerador.Prefixo := 'pef:';
@@ -2020,6 +2024,7 @@ begin
         Gerador.Prefixo := 'obj:';
 
         Gerador.wGrupo('EditarPagamentoRequest');
+
         GerarIdentificacao(1);
 
         with CIOT.AlterarDataLiberacaoPagamento do

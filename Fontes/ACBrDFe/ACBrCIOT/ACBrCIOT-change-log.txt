@@ -40,6 +40,8 @@ Símbolo : Significado
 
 30/03/2020
 -- pcnCIOTW_eFrete --
+[-] Correção no prefixo das tags de fechamento de alguns grupos.
+   Por: Italo Jurisato Junior
 [-] Correção no prefixo das tags: Token, Integrador, Versao do 
     serviço Logout.
    Por: Italo Jurisato Junior

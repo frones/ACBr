@@ -279,7 +279,7 @@ begin
               FimSMS := Pos(DelimitadorSMS, ListaSMS[J]) > 0;
           end;
 
-          if (copy(Mensagem,1,2) = '00') and StrIsNumber(Mensagem) then
+          if (copy(Mensagem,1,2) = '00') and StrIsNumber(Trim(Mensagem)) then
             Mensagem := ConvertMsg(Mensagem);
         end;
       end

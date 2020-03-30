@@ -38,6 +38,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/03/2020
+-- ACBrECFVirtual --
+[+] Adicionado o Evento "QuandoMudarEstado", para permitir a aplicação detectar
+    qual será o novo estado, e modifica-lo, se desejar. (útil para evitar estRequerz)
+    TACBrECFVirtualQuandoMudarEstado = procedure(const EstadoAtual: TACBrECFEstado;
+      var NovoEstado: TACBrECFEstado) of object;
+
+-- ACBrSMS --
+[-] Correção para processar corretamente as msgs codificadas
+    (por: DSA)
+
 Data: 18/03/2020
 -- ACBrETQ --
 [-] Correção para que o método "FinalizarEtiqueta" funcione corretamente como o

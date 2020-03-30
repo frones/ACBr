@@ -288,6 +288,8 @@ end;
 TACBrECFVirtualLerGravarINI = procedure(ConteudoINI: TStrings; var Tratado: Boolean) of object;
 TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
   CupomVirtual: TACBrECFVirtualClassCupom; var PermiteCancelamento: Boolean) of object;
+TACBrECFVirtualQuandoMudarEstado = procedure(const EstadoAtual: TACBrECFEstado;
+  var NovoEstado: TACBrECFEstado) of object;
 
 { TACBrECFVirtual }
   {$IFDEF RTL230_UP}
@@ -307,6 +309,7 @@ TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
     function GetQuandoCancelarCupom: TACBrECFVirtualQuandoCancelarCupom;
     function GetQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     function GetQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
+    function GetQuandoMudarEstado: TACBrECFVirtualQuandoMudarEstado;
     procedure SetCNPJ(const AValue: String);
     procedure SetColunas(AValue: Integer);
     procedure SetIE(const AValue: String);
@@ -318,6 +321,7 @@ TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
     procedure SetQuandoCancelarCupom(AValue: TACBrECFVirtualQuandoCancelarCupom);
     procedure SetQuandoGravarArqINI(AValue: TACBrECFVirtualLerGravarINI);
     procedure SetQuandoLerArqINI(AValue: TACBrECFVirtualLerGravarINI);
+    procedure SetQuandoMudarEstado(AValue: TACBrECFVirtualQuandoMudarEstado);
   protected
     fpECFVirtualClass: TACBrECFVirtualClass;
 
@@ -351,6 +355,8 @@ TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
       write SetQuandoLerArqINI ;
     property QuandoCancelarCupom : TACBrECFVirtualQuandoCancelarCupom
       read GetQuandoCancelarCupom write SetQuandoCancelarCupom ;
+    property QuandoMudarEstado : TACBrECFVirtualQuandoMudarEstado read GetQuandoMudarEstado
+      write SetQuandoMudarEstado;
 end ;
 
 { Classe filha de TACBrECFClass com implementaçao para Virtual }
@@ -363,6 +369,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fsQuandoCancelarCupom: TACBrECFVirtualQuandoCancelarCupom;
     fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
+    fsQuandoMudarEstado: TACBrECFVirtualQuandoMudarEstado;
 
     function GetChaveCupom: String;
     procedure SetChaveCupom(const AValue: String);
@@ -446,6 +453,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure LeituraXVirtual ; virtual ;
     Procedure ReducaoZVirtual(DataHora : TDateTime = 0 ) ; virtual ;
     procedure GetEstadoECFVirtual; virtual;
+    procedure SetEstadoECFVirtual(const NovoEstado: TACBrECFEstado);
 
     Procedure AbreRelatorioGerencialVirtual(Indice: Integer = 0) ; virtual ;
     procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
@@ -514,8 +522,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Constructor Create( AECFVirtual : TACBrECFVirtual );
     Destructor Destroy  ; override ;
 
-    procedure LeArqINI ;
-    procedure GravaArqINI ;
+    procedure LeArqINI;
+    procedure GravaArqINI;
 
     property QuandoGravarArqINI : TACBrECFVirtualLerGravarINI read fsQuandoGravarArqINI
       write fsQuandoGravarArqINI ;
@@ -523,6 +531,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
       write fsQuandoLerArqINI ;
     property QuandoCancelarCupom : TACBrECFVirtualQuandoCancelarCupom
       read fsQuandoCancelarCupom write fsQuandoCancelarCupom ;
+    property QuandoMudarEstado : TACBrECFVirtualQuandoMudarEstado read fsQuandoMudarEstado
+      write fsQuandoMudarEstado;
 
     property ECFVirtual : TACBrECFVirtual read fsECFVirtualOwner ;
     property Device     : TACBrDevice     read GetDevice write SetDevice;
@@ -1537,6 +1547,11 @@ begin
   Result := fpECFVirtualClass.QuandoLerArqINI;
 end;
 
+function TACBrECFVirtual.GetQuandoMudarEstado: TACBrECFVirtualQuandoMudarEstado;
+begin
+  Result := fpECFVirtualClass.QuandoMudarEstado;
+end;
+
 procedure TACBrECFVirtual.SetCNPJ(const AValue: String);
 begin
   fpECFVirtualClass.CNPJ := AValue;
@@ -1592,6 +1607,11 @@ begin
   fpECFVirtualClass.QuandoLerArqINI := AValue;
 end;
 
+procedure TACBrECFVirtual.SetQuandoMudarEstado(AValue: TACBrECFVirtualQuandoMudarEstado);
+begin
+  fpECFVirtualClass.QuandoMudarEstado := AValue;
+end;
+
 procedure TACBrECFVirtual.LeArqINI;
 begin
   fpECFVirtualClass.LeArqINI;
@@ -1613,6 +1633,7 @@ begin
   fsQuandoLerArqINI := nil;
   fsQuandoGravarArqINI := nil;
   fsQuandoCancelarCupom := nil;
+  fsQuandoMudarEstado := nil;
   fpCupom := TACBrECFVirtualClassCupom.Create(Self);
   fpNumMaxLinhasRodape := 0;
   fpArredondaItemMFD := True;
@@ -1689,7 +1710,7 @@ begin
               //'         Device: '+fpDevice.DeviceToString(False) +
               sLineBreak +
               StringOfChar('-',80) + sLineBreak );
-    //fpEstado := estDesconhecido ;
+    //SetEstadoECFVirtual(estDesconhecido);
     fpAtivo  := true ;
   end;
 
@@ -2073,7 +2094,7 @@ begin
   try
     ZeraCupom;
 
-    fpEstado := estVenda ;
+    SetEstadoECFVirtual(estVenda);
     fpNumCCF := fpNumCCF + 1 ;
 
     EnviaConsumidorVirtual;
@@ -2399,7 +2420,7 @@ begin
       Veja "TACBrECFVirtualClassCupom.SetDescAcresSubtotal" }
     fpCupom.DescAcresSubtotal := DescontoAcrescimo;
 
-    fpEstado := estPagamento ;
+    SetEstadoECFVirtual(estPagamento);
 
     if (DescontoAcrescimo < 0) then
     begin
@@ -2543,7 +2564,7 @@ begin
     EnviaConsumidorVirtual;
     FechaCupomVirtual(Observacao, IndiceBMP);
 
-    fpEstado := estLivre ;
+    SetEstadoECFVirtual(estLivre);
 
     GravaArqINI ;
   except
@@ -2713,7 +2734,7 @@ begin
           Total := Max( RoundTo(Total - Valor,-2), 0) ;
 
     ZeraCupom;
-    fpEstado := estLivre;
+    SetEstadoECFVirtual(estLivre);
 
     GravaArqINI ;
   except
@@ -2747,7 +2768,7 @@ begin
   try
     ZeraCupom ;
     fpLeiturasX := fpLeiturasX + 1 ;
-    fpEstado    := estLivre ;
+    SetEstadoECFVirtual(estLivre);
 
     if AbrirDia then
       AbreDia;
@@ -2783,13 +2804,13 @@ begin
 
     ReducaoZVirtual( DataHora );
 
-    if fpEstado = estRequerZ then
+    if (fpEstado = estRequerZ) then
     begin
-      fpEstado := estLivre ;
-      fpDia    := now ;
+      SetEstadoECFVirtual(estLivre);
+      fpDia := now ;
     end
     else
-      fpEstado := estBloqueada ;
+      SetEstadoECFVirtual(estBloqueada);
 
     fpNumCER     := 0;
     fpVendaBruta := 0;
@@ -2839,6 +2860,24 @@ begin
   {}
 end;
 
+procedure TACBrECFVirtualClass.SetEstadoECFVirtual(
+  const NovoEstado: TACBrECFEstado);
+var
+  ANovoEstado: TACBrECFEstado;
+begin
+  GravaLog( 'SetEstadoECFVirtual: '+GetEnumName(TypeInfo(TACBrECFEstado), integer( NovoEstado ) ) );
+
+  ANovoEstado := NovoEstado;
+  if Assigned(fsQuandoMudarEstado) then
+  begin
+    fsQuandoMudarEstado(fpEstado, ANovoEstado);
+    if ANovoEstado <> NovoEstado then
+      GravaLog( '         Modificado: '+GetEnumName(TypeInfo(TACBrECFEstado), integer( ANovoEstado ) ) );
+  end;
+
+  fpEstado := ANovoEstado;
+end;
+
 procedure TACBrECFVirtualClass.AbreRelatorioGerencial(Indice : Integer) ;
 var
   IndiceStr: String;
@@ -2862,7 +2901,7 @@ begin
     RG.Contador := RG.Contador + 1;
 
     ZeraCupom;
-    fpEstado := estRelatorio ;
+    SetEstadoECFVirtual(estRelatorio);
 
     AbreRelatorioGerencialVirtual( Indice );
     AbreDocumento ;
@@ -2932,7 +2971,7 @@ begin
     SubTotalCupomAnterior := Subtotal;
 
     //ZeraCupom;  // Não Zera Dados, para permitir chamar "CancelaCupom" após Vinculado
-    fpEstado := estRelatorio ;
+    SetEstadoECFVirtual(estRelatorio);
 
     AbreCupomVinculadoVirtual(COO, FPG, CodComprovanteNaoFiscal, SubTotalCupomAnterior, Valor);
     AbreDocumento ;
@@ -2961,7 +3000,7 @@ begin
   if Estado <> estRelatorio then exit ;
 
   try
-    fpEstado := estLivre ;
+    SetEstadoECFVirtual(estLivre);
     FechaRelatorioVirtual;
 
     GravaArqINI ;
@@ -2989,8 +3028,7 @@ begin
 
   try
     ZeraCupom;
-
-    fpEstado := estNaoFiscal ;
+    SetEstadoECFVirtual(estNaoFiscal);
 
     AbreNaoFiscalVirtual(CPF_CNPJ, Nome);
     AbreDocumento ;
@@ -3088,8 +3126,7 @@ begin
   try
     EnviaConsumidorVirtual;
     FechaCupomVirtual(Observacao, IndiceBMP);
-
-    fpEstado := estLivre ;
+    SetEstadoECFVirtual(estLivre);
 
     GravaArqINI ;
   except
@@ -3656,14 +3693,16 @@ begin
     if (CompareDate(now, fpDia) > 0) then
     begin
        case fpEstado of
-         estLivre:     fpEstado := estRequerZ;
-         estBloqueada: fpEstado := estRequerX ;
+         estLivre:
+           SetEstadoECFVirtual(estRequerZ);
+         estBloqueada:
+           SetEstadoECFVirtual(estRequerX);
        end;
     end;
   end ;
 
   if fpEstado in [estDesconhecido, estNaoInicializada] then
-    fpEstado := estLivre ;
+    SetEstadoECFVirtual(estLivre);
 
   GetEstadoECFVirtual;
 

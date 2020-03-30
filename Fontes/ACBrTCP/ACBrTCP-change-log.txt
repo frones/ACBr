@@ -36,6 +36,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2020
+-- ACBrMail --
+[*] Ajuste no método "BuildMimeMess", para que o MimeType seja reconhecido pela
+    Extensão do arquivo
+
+-- ACBrWinReqResp, ACBrWinHTTPReqResp, ACBrWinINetReqResp --
+[*] Amplo refactoring, visando melhoria no código
+[*] Novas propriedades e métodos adicionados, para permitir uma completa
+    comunicação HTTP: HeaderReq, HeaderResp, HTTPMethod
+[+] Adicionado mecanimo de Log (Debug)
+
 05/03/2020
 -- ACBrConsultaCNPJ --
 [*] Novo ajuste nas URLs de consulta do Servidor

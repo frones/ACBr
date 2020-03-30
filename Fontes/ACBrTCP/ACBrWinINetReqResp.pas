@@ -55,16 +55,22 @@ type
   { TACBrWinINetReqResp }
 
   TACBrWinINetReqResp = class(TACBrWinReqResp)
-  private
-    fSession, fConnection, fRequest: HINTERNET;
   protected
-    procedure UpdateErrorCodes(ARequest: HINTERNET); override;
-    procedure CheckNotAborted;
-    procedure CloseConnection;
-  public
-    constructor Create;
-    procedure Execute(Resp: TStream); override;
-    procedure Abortar; override;
+    function GetLastHttpResultCode: DWORD; override;
+
+    function InternalOpenSession: Boolean; override;
+    function InternalOpenConnection: Boolean; override;
+    function InternalOpenRequest: Boolean; override;
+    function SetConnectionTimeOut: Boolean; override;
+    function SetConnectionSSL: Boolean; override;
+    function SetConnectionCertificate: Boolean; override;
+    function SetConnectionSecurityFlags: Boolean; override;
+    function SetProxyUser: Boolean; override;
+    function SetHeaderReq: Boolean; override;
+    function SendData(const AData: AnsiString): Boolean; override;
+    function ReceiveResponse: Boolean; override;
+    function ReadData(ABuffer: Pointer; BufferSize: Integer): Integer; override;
+    procedure CloseConnection; override;
   end;
 
 implementation
@@ -73,287 +79,253 @@ uses synautil;
 
 { TACBrWinINetReqResp }
 
-procedure TACBrWinINetReqResp.UpdateErrorCodes(ARequest: HINTERNET);
+function TACBrWinINetReqResp.GetLastHttpResultCode: DWORD;
 Var
   dummy, AStatusCode, ASize: DWORD;
 begin
-  FpInternalErrorCode := GetLastError;
-  FpHTTPResultCode := 0;
-
-  if Assigned(ARequest) then
+  Result := 0;
+  if Assigned(FpRequest) then
   begin
     dummy := 0;
     AStatusCode := 0;
     ASize := SizeOf(DWORD);
-    if HttpQueryInfo( ARequest,
+    if HttpQueryInfo( FpRequest,
                       HTTP_QUERY_STATUS_CODE or HTTP_QUERY_FLAG_NUMBER,
                       @AStatusCode, ASize,
                       dummy ) then
     begin
-      FpHTTPResultCode := AStatusCode;
+      Result := AStatusCode;
     end;
   end;
 end;
 
-procedure TACBrWinINetReqResp.CheckNotAborted;
+function TACBrWinINetReqResp.InternalOpenSession: Boolean;
+var
+  AccessType: DWORD;
 begin
-  if not Assigned(fSession) then
-    raise EACBrWinReqResp.Create('Conexão foi abortada');
+  inherited InternalOpenSession;
+
+  if ProxyHost <> '' then
+    AccessType := INTERNET_OPEN_TYPE_PROXY
+  else
+    AccessType := INTERNET_OPEN_TYPE_PRECONFIG;
+
+  FpSession := InternetOpen( PChar('WinINet ACBr/1.0'),
+                             AccessType,
+                             PChar(ProxyHostAndPort),
+                             nil, 0);
+  Result := Assigned(FpSession);
+end;
+
+function TACBrWinINetReqResp.InternalOpenConnection: Boolean;
+begin
+  inherited InternalOpenConnection;
+  FpConnection := InternetConnect( FpSession,
+                                  PChar(Host), PortNumber,
+                                  PChar(ProxyUser), PChar(ProxyPass),
+                                  INTERNET_SERVICE_HTTP,
+                                  0, 0 {cardinal(Self)} );
+  Result := Assigned(FpConnection);
+end;
+
+function TACBrWinINetReqResp.InternalOpenRequest: Boolean;
+var
+  RequestFlags: DWORD;
+begin
+  Result := inherited InternalOpenRequest;
+
+  if (UseSSL) then
+  begin
+    RequestFlags := INTERNET_FLAG_KEEP_CONNECTION or INTERNET_FLAG_NO_CACHE_WRITE;
+    RequestFlags := RequestFlags or INTERNET_FLAG_SECURE;
+
+    if (UseCertificate) then
+      RequestFlags := RequestFlags or
+                       ( INTERNET_FLAG_IGNORE_CERT_CN_INVALID or
+                         INTERNET_FLAG_IGNORE_CERT_DATE_INVALID );
+  end
+  else
+    RequestFlags := INTERNET_SERVICE_HTTP;
+
+  FpRequest := HttpOpenRequest( FpConnection,
+                                PChar(Method), PChar(URI),
+                                nil, nil, nil, RequestFlags, 0);
+  Result:= Assigned(FpRequest);
+end;
+
+function TACBrWinINetReqResp.SetConnectionTimeOut: Boolean;
+begin
+  Result := inherited SetConnectionTimeOut;
+
+  if Result and (TimeOut > 0) then
+  begin
+    Result := InternetSetOption(FpSession, INTERNET_OPTION_CONNECT_TIMEOUT, @TimeOut, SizeOf(TimeOut)) and
+              InternetSetOption(FpSession, INTERNET_OPTION_SEND_TIMEOUT, @TimeOut, SizeOf(TimeOut))    and
+              InternetSetOption(FpSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @TimeOut, SizeOf(TimeOut));
+  end;
+end;
+
+function TACBrWinINetReqResp.SetConnectionSSL: Boolean;
+begin
+  { Não disponível, configuração de SSL deve ser feita no Windows I.E. }
+  Result := True;
+end;
+
+function TACBrWinINetReqResp.SetConnectionCertificate: Boolean;
+begin
+  Result := inherited SetConnectionCertificate;
+
+  if Result and UseCertificate then
+    Result := InternetSetOption( FpRequest,
+                                 INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+                                 CertContext, SizeOf(CERT_CONTEXT) );
+end;
+
+function TACBrWinINetReqResp.SetConnectionSecurityFlags: Boolean;
+var
+  SecurityFlags, FlagsLen: DWORD;
+begin
+  Result := inherited SetConnectionSecurityFlags;
+
+  if Result then
+  begin
+    SecurityFlags := 0;
+    FlagsLen := SizeOf(SecurityFlags);
+    CheckNotAborted;
+    // Query actual Flags
+    Result:= InternetQueryOption( FpRequest,
+                                  INTERNET_OPTION_SECURITY_FLAGS,
+                                  @SecurityFlags, FlagsLen );
+    if Result then
+    begin
+      SecurityFlags := SecurityFlags or
+                       SECURITY_FLAG_IGNORE_REVOCATION or
+                       SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                       SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
+                       SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                       SECURITY_FLAG_IGNORE_WRONG_USAGE;
+      Result := InternetSetOption( FpRequest,
+                                   INTERNET_OPTION_SECURITY_FLAGS,
+                                   @SecurityFlags, FlagsLen );
+    end;
+  end;
+end;
+
+function TACBrWinINetReqResp.SetProxyUser: Boolean;
+begin
+  Result := inherited SetProxyUser;
+
+  if Result and (Trim(ProxyUser) <> '') then
+  begin
+    Result := InternetSetOption( FpRequest, INTERNET_OPTION_PROXY_USERNAME,
+                                 PChar(ProxyUser), Length(ProxyUser));
+
+    if Result and (Trim(ProxyPass) <> '') then
+      Result := InternetSetOption( FpRequest, INTERNET_OPTION_PROXY_PASSWORD,
+                                   PChar(ProxyPass), Length(ProxyPass));
+  end;
+end;
+
+function TACBrWinINetReqResp.SetHeaderReq: Boolean;
+var
+  AHeader: String;
+begin
+  Result := inherited SetHeaderReq;
+
+  if Result then
+  begin
+    AHeader := CalculateHeaderReq;
+    Result := HttpAddRequestHeaders(FpRequest, PChar(AHeader), Length(AHeader), HTTP_ADDREQ_FLAG_ADD);
+  end;
+end;
+
+function TACBrWinINetReqResp.SendData(const AData: AnsiString): Boolean;
+begin
+  Result := inherited SendData(AData);
+  if Result then
+    Result := HttpSendRequest(FpRequest, nil, 0, Pointer(AData), Length(AData));
+end;
+
+function TACBrWinINetReqResp.ReceiveResponse: Boolean;
+var
+  BufferSize, dummy: DWORD;
+  Buffer: Pointer;
+  HeaderStr: String;
+begin
+  Result := inherited ReceiveResponse;
+
+  if Result then
+  begin
+    // Quering Headers Size
+    BufferSize := 0;
+    Buffer := nil;
+    dummy := 0;
+    HttpQueryInfo( FpRequest,
+                   HTTP_QUERY_RAW_HEADERS_CRLF,
+                   Buffer,
+                   BufferSize,
+                   dummy );
+
+    // Allocate memory for the buffer.
+    if (GetLastError = ERROR_INSUFFICIENT_BUFFER) then
+    begin
+      HeaderStr := '';
+      Buffer := AllocMem(BufferSize);
+      try
+        // Now, use WinHttpQueryHeaders to retrieve the header.
+        Result := HttpQueryInfo( FpRequest,
+                                 HTTP_QUERY_RAW_HEADERS_CRLF,
+                                 Buffer,
+                                 BufferSize,
+                                 dummy );
+        if Result then
+        begin
+          SetLength(HeaderStr, BufferSize);
+          Move(Buffer^, HeaderStr[1], BufferSize);
+        end;
+      finally
+        Freemem(Buffer);
+      end;
+
+      HeaderResp.Text := HeaderStr;
+    end;
+  end;
+end;
+
+function TACBrWinINetReqResp.ReadData(ABuffer: Pointer; BufferSize: Integer
+  ): Integer;
+var
+  BytesRead: DWORD;
+begin
+  Result := inherited ReadData(ABuffer, BufferSize);
+
+  if (Result = 0) then
+  begin
+    BytesRead := 0;
+    if InternetReadFile(FpRequest, ABuffer, BufferSize, BytesRead) then
+      Result := BytesRead;
+  end;
 end;
 
 procedure TACBrWinINetReqResp.CloseConnection;
 begin
-  if Assigned(fRequest) then
+  if Assigned(FpRequest) then
   begin
-    InternetCloseHandle(fRequest);
-    fRequest := Nil
+    InternetCloseHandle(FpRequest);
+    FpRequest := Nil
   end;
 
-  if Assigned(fConnection) then
+  if Assigned(FpConnection) then
   begin
-    InternetCloseHandle(fConnection);
-    fConnection := Nil
+    InternetCloseHandle(FpConnection);
+    FpConnection := Nil
   end;
 
-  if Assigned(fSession) then
+  if Assigned(FpSession) then
   begin
-    InternetCloseHandle(fSession);
-    fSession := Nil
+    InternetCloseHandle(FpSession);
+    FpSession := Nil
   end;
-end;
-
-constructor TACBrWinINetReqResp.Create;
-begin
-  inherited;
-
-  fSession := Nil;
-  fConnection := Nil;
-  fRequest := Nil;
-end;
-
-procedure TACBrWinINetReqResp.Execute(Resp: TStream);
-var
-  aBuffer: array[0..4096] of AnsiChar;
-  BytesRead: cardinal;
-  flags, flagsLen: longword;
-  Ok, UseSSL, UseCertificate: Boolean;
-  AccessType: Integer;
-  ANone, AURI, AHost, AProt, APort, pProxy, Header: String;
-begin
-
-  AURI  := '';
-  AProt := '';
-  AHost := '';
-  APort := '';
-  ANone := '';
-
-  AURI := ParseURL(Url, AProt, ANone, ANone, AHost, APort, ANone, ANone);
-
-  UseSSL := (UpperCase(AProt) = 'HTTPS');
-  UseCertificate := UseSSL and Assigned( CertContext );
-
-  if ProxyHost <> '' then
-  begin
-    AccessType := INTERNET_OPEN_TYPE_PROXY;
-    if (ProxyPort <> '') and (ProxyPort <> '0') then
-      pProxy := ProxyHost + ':' + ProxyPort
-    else
-      pProxy := ProxyHost;
-  end
-  else
-    AccessType := INTERNET_OPEN_TYPE_PRECONFIG;
-
-  //DEBUG
-  //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
-
-  fSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
-  fConnection := Nil;
-  fRequest := Nil;
-
-  try
-    if not Assigned(fSession) then
-      raise EACBrWinReqResp.Create('Erro: Internet Open or Proxy');
-
-    if TimeOut > 0 then
-    begin
-      //DEBUG
-      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
-
-      CheckNotAborted;
-      if not InternetSetOption(fSession, INTERNET_OPTION_CONNECT_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
-        raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
-
-      CheckNotAborted;
-      if not InternetSetOption(fSession, INTERNET_OPTION_SEND_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
-        raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
-
-      CheckNotAborted;
-      if not InternetSetOption(fSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
-        raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
-    end;
-
-    if APort = '' then
-    begin
-      if (UseSSL) then
-        APort := IntToStr(INTERNET_DEFAULT_HTTPS_PORT)
-      else
-        APort := IntToStr(INTERNET_DEFAULT_HTTP_PORT);
-    end;
-
-    //Debug, TimeOut Test
-    //AHost := 'www.google.com';
-    //port := 81;
-
-    //DEBUG
-    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+APort);
-
-    CheckNotAborted;
-    fConnection := InternetConnect(fSession, PChar(AHost), StrToInt(APort),
-                                   PChar(ProxyUser), PChar(ProxyPass),
-                                   INTERNET_SERVICE_HTTP,
-                                   0, 0{cardinal(Self)});
-    if not Assigned(fConnection) then
-      raise EACBrWinReqResp.Create('Erro: Internet Connect or Host');
-
-    if (UseSSL) then
-    begin
-      flags := INTERNET_FLAG_KEEP_CONNECTION or INTERNET_FLAG_NO_CACHE_WRITE;
-      flags := flags or INTERNET_FLAG_SECURE;
-
-      if (UseCertificate) then
-        flags := flags or (INTERNET_FLAG_IGNORE_CERT_CN_INVALID or
-                           INTERNET_FLAG_IGNORE_CERT_DATE_INVALID);
-    end
-    else
-      flags := INTERNET_SERVICE_HTTP;
-
-    //DEBUG
-    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+AURI);
-
-    CheckNotAborted;
-    fRequest := HttpOpenRequest(fConnection, PChar('POST'),
-                                PChar(AURI), nil, nil, nil, flags, 0);
-
-    if not Assigned(fRequest) then
-      raise EACBrWinReqResp.Create('Erro: Open Request');
-
-    UpdateErrorCodes(fRequest);
-
-    if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (not UseSSL) ) or
-       ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UseSSL) ) then
-      AHost := AHost +':'+ APort;
-
-    Header := 'Host: ' + AHost + sLineBreak +
-              'Content-Type: ' + MimeType + '; charset='+Charsets + SLineBreak +
-              'Accept-Charset: ' + Charsets + SLineBreak;
-
-    if SOAPAction <> '' then
-      Header := Header +'SOAPAction: "' + SOAPAction + '"' +SLineBreak;
-
-    if (UseCertificate) then
-    begin
-      CheckNotAborted;
-      if not InternetSetOption(fRequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-                               CertContext, SizeOf(CERT_CONTEXT)) then
-        raise EACBrWinReqResp.Create('Erro: Problema ao inserir o certificado')
-    end;
-
-    flags := 0;
-    flagsLen := SizeOf(flags);
-    CheckNotAborted;
-    if not InternetQueryOption(fRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-      raise EACBrWinReqResp.Create('InternetQueryOption erro ao ler wininet flags.' + GetWininetError(GetLastError));
-
-    flags := flags or SECURITY_FLAG_IGNORE_REVOCATION or
-                      SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                      SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
-                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
-                      SECURITY_FLAG_IGNORE_WRONG_USAGE;
-    CheckNotAborted;
-    if not InternetSetOption(fRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-      raise EACBrWinReqResp.Create('InternetQueryOption erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS' + GetWininetError(GetLastError));
-
-    if trim(ProxyUser) <> '' then
-    begin
-      CheckNotAborted;
-      if not InternetSetOption(fRequest, INTERNET_OPTION_PROXY_USERNAME,
-                               PChar(ProxyUser), Length(ProxyUser)) then
-        raise EACBrWinReqResp.Create('Erro: Proxy User');
-
-      if trim(ProxyPass) <> '' then
-      begin
-        CheckNotAborted;
-        if not InternetSetOption(fRequest, INTERNET_OPTION_PROXY_PASSWORD,
-                                 PChar(ProxyPass), Length(ProxyPass)) then
-          raise EACBrWinReqResp.Create('Erro: Proxy Password');
-      end;
-    end;
-
-    CheckNotAborted;
-    HttpAddRequestHeaders(fRequest, PChar(Header), Length(Header), HTTP_ADDREQ_FLAG_ADD);
-
-    if EncodeDataToUTF8 then
-      Data := UTF8Encode(Data);
-
-    //DEBUG
-    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+AURI);
-    //WriteToTXT('c:\temp\httpreqresp.log', FData);
-
-    Ok := False;
-    Resp.Size := 0;
-    CheckNotAborted;
-    if HttpSendRequest(fRequest, nil, 0, Pointer(Data), Length(Data)) then
-    begin
-      BytesRead := 0;
-      //DEBUG
-      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
-
-      CheckNotAborted;
-      while InternetReadFile(fRequest, @aBuffer, SizeOf(aBuffer), BytesRead) do
-      begin
-        //DEBUG
-        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
-
-        if (BytesRead = 0) then
-          Break;
-
-        Resp.Write(aBuffer, BytesRead);
-      end;
-
-      if Resp.Size > 0 then
-      begin
-        Resp.Position := 0;
-
-        //DEBUG
-        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
-        //Resp.Position := 0;
-        //FData := ReadStrFromStream(Resp, Resp.Size);
-        //Resp.Position := 0;
-        //WriteToTXT('c:\temp\httpreqresp.log', FData);
-
-        Ok := True;
-      end;
-    end;
-
-    UpdateErrorCodes(fRequest);
-
-    if not OK then
-    begin
-      //DEBUG
-      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+
-      //   ' - Erro WinNetAPI: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
-
-      raise EACBrWinReqResp.Create('Erro: Requisição não enviada.' + sLineBreak +
-                                    GetWinInetError(InternalErrorCode));
-    end;
- finally
-   CloseConnection
- end;
-end;
-
-procedure TACBrWinINetReqResp.Abortar;
-begin
- CloseConnection;
 end;
 
 {$Else}

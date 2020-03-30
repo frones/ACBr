@@ -925,9 +925,7 @@ begin
 
           //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
           if IsAbsoluteURL(Location) then
-          begin
-            fURL := Location;
-          end
+            fURL := Location
           else
             fURL := GetURLBasePath( fURL ) + Location;
 
@@ -938,7 +936,7 @@ begin
           // ... mas talvez seja necessário, pois a maioria dos browsers o fazem
           // http://blogs.msdn.com/b/ieinternals/archive/2011/08/19/understanding-the-impact-of-redirect-response-status-codes-on-http-methods-like-head-get-post-and-delete.aspx
           if (HttpSend.ResultCode = 303) or
-             (((HttpSend.ResultCode = 301) or (HttpSend.ResultCode = 302)) and (Method = 'POST')) then
+             ( ((HttpSend.ResultCode = 301) or (HttpSend.ResultCode = 302)) and (Method = 'POST')) then
           begin
             HTTPSend.HTTPMethod('GET', fURL ) ;
           end

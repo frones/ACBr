@@ -719,7 +719,6 @@ begin
     AAttachment.Stream.Position := 0;
     MimePartAttach := fMIMEMess.AddPart(MultiPartParent);
     MimePartAttach.DecodedLines.LoadFromStream(AAttachment.Stream);
-    MimePartAttach.MimeTypeFromExt(AAttachment.FileName);
     MimePartAttach.Description := AAttachment.Description;
     case AAttachment.Disposition of
       adInline: MimePartAttach.Disposition := 'inline';
@@ -735,6 +734,7 @@ begin
     MimePartAttach.CharsetCode := fIDECharsetCode;
     MimePartAttach.TargetCharset := fIDECharsetCode;
     MimePartAttach.ConvertCharset := False;
+    MimePartAttach.MimeTypeFromExt(AAttachment.FileName);
 
     MimePartAttach.EncodePart;
     MimePartAttach.EncodePartHeader;

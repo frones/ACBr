@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/03/2020
+-- pnfsConversao/pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/56886-provedor-centi-fora-padr%C3%A3o-issretido/
+   Por: Eliomar
+
 26/03/2020
 -- pnfsNFSeW_EL-- 
 [*] https://www.projetoacbr.com.br/forum/topic/56922-m%C3%BAltiplos-servi%C3%A7os-da-nfse-provedor-el/

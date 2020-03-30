@@ -2187,7 +2187,16 @@ begin
   if NFSe.Status = srCancelado then
     NFSe.Cancelada := snSim
   else
-    NFSe.Cancelada := snNao;  
+    NFSe.Cancelada := snNao;
+
+  if FProvedor = proCenti then // carrega-se aqui o IssRetido estar no nivel a acima e não no nivel serviço
+  begin
+    if (Leitor.rExtrai(FNivel, 'IssRetido') <> '') then
+    begin
+      NFSe.Servico.Valores.IssRetido := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'), FProvedor);
+      NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
+    end;
+  end;
 
   if FProvedor = proSystemPro then
   begin
@@ -2241,8 +2250,11 @@ begin
   begin
     if (Leitor.rExtrai(NivelTemp, 'Servico') <> '') then
     begin
-      NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
-      NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
+      if FProvedor <> proCenti then // se for Centi ja foi feito a cima.
+      begin
+        NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
+        NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
+      end;
 
       SetxItemListaServico;
 

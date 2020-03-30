@@ -211,7 +211,7 @@ function CodCidadeToCodSiafi(const ACodigo: Integer): String;
 function CodSiafiToCodCidade(const ACodigo: String): String;
 
 function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): String;
-function StrToSituacaoTributaria(out ok: boolean; const s: String): TnfseSituacaoTributaria;
+function StrToSituacaoTributaria(out ok: boolean; const s: String; const provedor : TnfseProvedor = proNenhum): TnfseSituacaoTributaria;
 function SituacaoTributariaDescricao( const t: TnfseSituacaoTributaria ): String;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): String;
@@ -18026,11 +18026,20 @@ begin
                            [stRetencao, stNormal, stSubstituicao]);
 end;
 
-function StrToSituacaoTributaria(out ok: boolean; const s: String): TnfseSituacaoTributaria;
+function StrToSituacaoTributaria(out ok: boolean; const s: String; const provedor : TnfseProvedor): TnfseSituacaoTributaria;
 begin
-  result := StrToEnumerado(ok, s,
-                           ['1', '2', '3'],
-                           [stRetencao, stNormal, stSubstituicao]);
+  if provedor = proCenti then
+  begin
+    result := StrToEnumerado(ok, s,
+                             ['0', '1', '2'],
+                             [stNormal, stRetencao, stSubstituicao]);
+  end
+  else
+  begin
+    result := StrToEnumerado(ok, s,
+                             ['1', '2', '3'],
+                             [stRetencao, stNormal, stSubstituicao]);
+  end;
 end;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): String;

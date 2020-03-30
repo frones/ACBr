@@ -517,10 +517,13 @@ begin
     else
       lTitLei12741.Lines.Text := MsgTributos;
 
-    for I := 0 to InfAdic.obsCont.Count - 1 do
+    if ACBrNFeDANFCeFortes.ImprimeInfContr then
     begin
-      lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
-                                             InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) ) ;
+      for I := 0 to InfAdic.obsCont.Count - 1 do
+      begin
+        lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
+                                               InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) ) ;
+      end;
     end;
 
     if InfAdic.infCpl <> '' then

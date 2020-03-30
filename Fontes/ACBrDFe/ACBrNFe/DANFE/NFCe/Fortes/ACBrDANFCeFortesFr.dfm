@@ -1,9 +1,9 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 523
   Top = 163
-  Width = 813
-  Height = 805
   Caption = 'ACBrNFeDANFCeFortesFr'
+  ClientHeight = 749
+  ClientWidth = 797
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,16 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Top = 8
     Width = 302
     Height = 1512
+    Margins.LeftMargin = 1.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 1.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -9
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 1.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 1.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
@@ -42,6 +42,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 463
       Width = 294
       Height = 137
+      Margins.LeftMargin = 1.000000000000000000
+      Margins.RightMargin = 1.000000000000000000
       AutoSize = True
       BandType = btSummary
       Font.Charset = DEFAULT_CHARSET
@@ -49,8 +51,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Font.Height = -9
       Font.Name = 'Arial'
       Font.Style = []
-      Margins.LeftMargin = 1.000000000000000000
-      Margins.RightMargin = 1.000000000000000000
       ParentFont = False
       object imgQRCode: TRLImage
         Left = 4
@@ -67,9 +67,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 112
       Width = 294
       Height = 104
-      AllowedBands = [btDetail, btSummary]
       Margins.LeftMargin = 2.000000000000000000
       Margins.RightMargin = 2.000000000000000000
+      AllowedBands = [btDetail, btSummary]
       OnDataRecord = rlsbDetItemDataRecord
       object rlbDetItem: TRLBand
         Left = 8
@@ -848,12 +848,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 320
       Width = 294
       Height = 39
+      Margins.LeftMargin = 1.000000000000000000
+      Margins.RightMargin = 1.000000000000000000
       AutoSize = True
       BandType = btSummary
       InsideMargins.LeftMargin = 1.000000000000000000
       InsideMargins.RightMargin = 1.000000000000000000
-      Margins.LeftMargin = 1.000000000000000000
-      Margins.RightMargin = 1.000000000000000000
       BeforePrint = rlbChaveDeAcessoBeforePrint
       object lTitConsulteChave: TRLMemo
         Left = 8
@@ -912,12 +912,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 359
       Width = 294
       Height = 81
+      Margins.LeftMargin = 1.000000000000000000
+      Margins.RightMargin = 1.000000000000000000
       AutoSize = True
       BandType = btSummary
       InsideMargins.LeftMargin = 1.000000000000000000
       InsideMargins.RightMargin = 1.000000000000000000
-      Margins.LeftMargin = 1.000000000000000000
-      Margins.RightMargin = 1.000000000000000000
       BeforePrint = rlbChaveDeAcessoBeforePrint
       object lProtocolo: TRLLabel
         Left = 8
@@ -1039,10 +1039,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 440
       Width = 294
       Height = 23
-      AutoSize = True
-      BandType = btSummary
       Margins.LeftMargin = 2.000000000000000000
       Margins.RightMargin = 2.000000000000000000
+      AutoSize = True
+      BandType = btSummary
       BeforePrint = rlbChaveDeAcessoBeforePrint
       object lCancelada: TRLLabel
         Left = 8
@@ -1073,6 +1073,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 720
       Width = 294
       Height = 72
+      Margins.LeftMargin = 2.000000000000000000
+      Margins.RightMargin = 2.000000000000000000
       AutoSize = True
       BandType = btSummary
       Font.Charset = DEFAULT_CHARSET
@@ -1080,8 +1082,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Font.Height = -9
       Font.Name = 'Arial'
       Font.Style = []
-      Margins.LeftMargin = 2.000000000000000000
-      Margins.RightMargin = 2.000000000000000000
       ParentFont = False
       BeforePrint = rlbRodapeBeforePrint
       object pGap6: TRLPanel
@@ -1167,6 +1167,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 600
       Width = 294
       Height = 120
+      Margins.LeftMargin = 1.000000000000000000
+      Margins.RightMargin = 1.000000000000000000
       AutoSize = True
       BandType = btSummary
       Computable = False
@@ -1176,8 +1178,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Font.Name = 'Arial'
       Font.Style = []
       InsideMargins.RightMargin = 1.000000000000000000
-      Margins.LeftMargin = 1.000000000000000000
-      Margins.RightMargin = 1.000000000000000000
       ParentFont = False
       BeforePrint = rlbQRLateralBeforePrint
       object rlpDadosQRCodeLateral: TRLPanel
@@ -1345,6 +1345,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Top = 4
     Width = 280
     Height = 1512
+    Margins.LeftMargin = 1.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 1.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
@@ -1353,10 +1357,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Font.Style = []
     InsideMargins.LeftMargin = 1.000000000000000000
     InsideMargins.RightMargin = 1.000000000000000000
-    Margins.LeftMargin = 1.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 1.000000000000000000
-    Margins.BottomMargin = 0.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 74.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000

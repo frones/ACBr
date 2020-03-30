@@ -469,8 +469,20 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarMensagemInteresseContribuinte;
 var
   TextoObservacao: string;
+  i: Integer;
 begin
+  if ImprimeInfContr then
+  begin
+    for i := 0 to FpNFe.InfAdic.obsCont.Count - 1 do
+    begin
+      TextoObservacao := StringReplace(Trim(FpNFe.InfAdic.obsCont[i].xCampo) + ': ' +
+          Trim(FpNFe.InfAdic.obsCont[i].xTexto), ';', sLineBreak, [rfReplaceAll]);
+      FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
+    end;
+  end;
+
   TextoObservacao := Trim(FpNFe.InfAdic.infCpl);
+
   if TextoObservacao <> '' then
   begin
     TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);

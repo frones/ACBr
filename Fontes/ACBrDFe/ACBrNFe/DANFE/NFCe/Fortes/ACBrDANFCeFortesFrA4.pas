@@ -705,7 +705,7 @@ var
 begin
   with self.FACBrNFeDANFCeFortesA4.FpNFe do
   begin
-    if InfAdic.obsCont.Count > 0 then
+    if FACBrNFeDANFCeFortesA4.ImprimeInfContr then
     begin
       for I := 0 to InfAdic.obsCont.Count - 1 do
         Text := Text + StringReplace(InfAdic.obsCont[i].xCampo + ': ' +

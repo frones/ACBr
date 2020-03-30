@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/03/2020
+-- Diversos --
+[+] Implementado a impressão das informações adicionais no DANFE NFC-e
+    que estão em observação do contribuinte mediante a verificação da 
+    propriedade ImprimeInfContr.
+   Por: Italo Jurisato Junior
+
 27/03/2020
 -- ACBrNFeNotasFiscais -- 
 [*] Ajuste na validação na leitura .INI seção Volume

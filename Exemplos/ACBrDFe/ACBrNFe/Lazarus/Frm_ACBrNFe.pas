@@ -49,6 +49,8 @@ type
 
   TfrmACBrNFe = class(TForm)
     bVersao: TButton;
+    edtURLPFX: TEdit;
+    Label51: TLabel;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -3267,14 +3269,7 @@ end;
 procedure TfrmACBrNFe.bVersaoClick(Sender: TObject);
 begin
   pgRespostas.ActivePageIndex := 0;
-  if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
-  begin
-    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion);
-    MemoResp.Lines.Add(SSLUtilFile);
-    MemoResp.Lines.Add(SSLLibFile);
-  end
-  else
-    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+  MemoResp.Lines.Add(ACBrNFe1.SSL.SSLCryptClass.Versao);
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;
@@ -3291,6 +3286,7 @@ begin
     Ini.WriteInteger('Certificado', 'CryptLib',   cbCryptLib.ItemIndex);
     Ini.WriteInteger('Certificado', 'HttpLib',    cbHttpLib.ItemIndex);
     Ini.WriteInteger('Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
+    Ini.WriteString( 'Certificado', 'URL',        edtURLPFX.Text);
     Ini.WriteString( 'Certificado', 'Caminho',    edtCaminho.Text);
     Ini.WriteString( 'Certificado', 'Senha',      edtSenha.Text);
     Ini.WriteString( 'Certificado', 'NumSerie',   edtNumSerie.Text);
@@ -3410,6 +3406,7 @@ begin
     cbCryptLib.ItemIndex   := Ini.ReadInteger('Certificado', 'CryptLib',   0);
     cbHttpLib.ItemIndex    := Ini.ReadInteger('Certificado', 'HttpLib',    0);
     cbXmlSignLib.ItemIndex := Ini.ReadInteger('Certificado', 'XmlSignLib', 0);
+    edtURLPFX.Text         := Ini.ReadString( 'Certificado', 'URL',        '');
     edtCaminho.Text        := Ini.ReadString( 'Certificado', 'Caminho',    '');
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
@@ -3510,6 +3507,7 @@ var
   Ok: Boolean;
   PathMensal: string;
 begin
+  ACBrNFe1.Configuracoes.Certificados.URLPFX      := edtURLPFX.Text;
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;

@@ -326,6 +326,8 @@ type
     rbEscPos: TRadioButton;
     btVersao: TButton;
     TimerInit: TTimer;
+    Label51: TLabel;
+    edtURLPFX: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -3255,7 +3257,6 @@ var
   Y: TSSLType;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
-  l: Integer;
 begin
   FMX.Forms.Application.OnException := TratarExceptions;
 
@@ -3343,6 +3344,7 @@ begin
     Ini.WriteInteger('Certificado', 'CryptLib',   cbCryptLib.ItemIndex);
     Ini.WriteInteger('Certificado', 'HttpLib',    cbHttpLib.ItemIndex);
     Ini.WriteInteger('Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
+    Ini.WriteString( 'Certificado', 'URL',        edtURLPFX.Text);
     Ini.WriteString( 'Certificado', 'Caminho',    edtCaminho.Text);
     Ini.WriteString( 'Certificado', 'Senha',      edtSenha.Text);
     Ini.WriteString( 'Certificado', 'NumSerie',   edtNumSerie.Text);
@@ -3463,6 +3465,7 @@ begin
     cbCryptLib.ItemIndex   := Ini.ReadInteger('Certificado', 'CryptLib',   0);
     cbHttpLib.ItemIndex    := Ini.ReadInteger('Certificado', 'HttpLib',    0);
     cbXmlSignLib.ItemIndex := Ini.ReadInteger('Certificado', 'XmlSignLib', 0);
+    edtURLPFX.Text         := Ini.ReadString( 'Certificado', 'URL',        '');
     edtCaminho.Text        := Ini.ReadString( 'Certificado', 'Caminho',    '');
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
@@ -3573,6 +3576,7 @@ procedure TfrmACBrNFe.ConfigurarComponente;
 var
   PathMensal: string;
 begin
+  ACBrNFe1.Configuracoes.Certificados.URLPFX      := edtURLPFX.Text;
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFe1.Configuracoes.Certificados.Senha       := AnsiString(edtSenha.Text);
   ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;

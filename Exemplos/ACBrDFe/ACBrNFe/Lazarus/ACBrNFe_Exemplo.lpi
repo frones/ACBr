@@ -209,7 +209,9 @@
       <Unit3>
         <Filename Value="Frm_ConfiguraSerial.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmConfiguraSerial"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit3>
       <Unit4>
         <Filename Value="Frm_Status.pas"/>
@@ -263,7 +265,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -276,6 +278,9 @@
       <Item4>
         <Name Value="EACBrDFeException"/>
       </Item4>
+      <Item5>
+        <Name Value="EOleException"/>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

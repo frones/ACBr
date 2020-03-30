@@ -127,14 +127,14 @@ object frmACBrNFe: TfrmACBrNFe
               Position.X = 8.000000000000000000
               Position.Y = 118.000000000000000000
               Size.Width = 279.000000000000000000
-              Size.Height = 144.000000000000000000
+              Size.Height = 187.000000000000000000
               Size.PlatformDefault = False
               Text = 'Certificado'
               TabOrder = 0
               object Label1: TLabel
                 AutoSize = True
                 Position.X = 8.000000000000000000
-                Position.Y = 16.000000000000000000
+                Position.Y = 56.000000000000000000
                 Size.Width = 48.000000000000000000
                 Size.Height = 16.000000000000000000
                 Size.PlatformDefault = False
@@ -144,7 +144,7 @@ object frmACBrNFe: TfrmACBrNFe
               object Label2: TLabel
                 AutoSize = True
                 Position.X = 8.000000000000000000
-                Position.Y = 56.000000000000000000
+                Position.Y = 96.000000000000000000
                 Size.Width = 33.000000000000000000
                 Size.Height = 16.000000000000000000
                 Size.PlatformDefault = False
@@ -153,7 +153,7 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object sbtnCaminhoCert: TSpeedButton
                 Position.X = 235.000000000000000000
-                Position.Y = 32.000000000000000000
+                Position.Y = 72.000000000000000000
                 Size.Width = 30.000000000000000000
                 Size.Height = 33.000000000000000000
                 Size.PlatformDefault = False
@@ -163,7 +163,7 @@ object frmACBrNFe: TfrmACBrNFe
               object Label25: TLabel
                 AutoSize = True
                 Position.X = 8.000000000000000000
-                Position.Y = 96.000000000000000000
+                Position.Y = 136.000000000000000000
                 Size.Width = 90.000000000000000000
                 Size.Height = 16.000000000000000000
                 Size.PlatformDefault = False
@@ -172,7 +172,7 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object sbtnGetCert: TSpeedButton
                 Position.X = 243.000000000000000000
-                Position.Y = 110.000000000000000000
+                Position.Y = 150.000000000000000000
                 Size.Width = 30.000000000000000000
                 Size.Height = 27.000000000000000000
                 Size.PlatformDefault = False
@@ -181,7 +181,7 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object sbtnNumSerie: TSpeedButton
                 Position.X = 206.000000000000000000
-                Position.Y = 110.000000000000000000
+                Position.Y = 150.000000000000000000
                 Size.Width = 27.000000000000000000
                 Size.Height = 27.000000000000000000
                 Size.PlatformDefault = False
@@ -190,36 +190,56 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object edtCaminho: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                TabOrder = 0
+                TabOrder = 1
                 Position.X = 8.000000000000000000
-                Position.Y = 32.000000000000000000
+                Position.Y = 72.000000000000000000
                 Size.Width = 225.000000000000000000
                 Size.Height = 21.000000000000000000
                 Size.PlatformDefault = False
               end
               object edtSenha: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                TabOrder = 1
+                TabOrder = 2
                 Password = True
                 Position.X = 8.000000000000000000
-                Position.Y = 72.000000000000000000
+                Position.Y = 112.000000000000000000
                 Size.Width = 249.000000000000000000
                 Size.Height = 21.000000000000000000
                 Size.PlatformDefault = False
               end
               object edtNumSerie: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                TabOrder = 2
+                TabOrder = 3
                 Position.X = 8.000000000000000000
-                Position.Y = 112.000000000000000000
+                Position.Y = 152.000000000000000000
                 Size.Width = 193.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object Label51: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 71.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'URL para PFX'
+                TabOrder = 4
+              end
+              object edtURLPFX: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 0
+                Position.X = 8.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 249.000000000000000000
                 Size.Height = 21.000000000000000000
                 Size.PlatformDefault = False
               end
             end
             object btnDataValidade: TButton
               Position.X = 8.000000000000000000
-              Position.Y = 266.000000000000000000
+              Position.Y = 314.000000000000000000
               Size.Width = 99.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
@@ -228,8 +248,8 @@ object frmACBrNFe: TfrmACBrNFe
               OnClick = btnDataValidadeClick
             end
             object btnNumSerie: TButton
-              Position.X = 112.000000000000000000
-              Position.Y = 266.000000000000000000
+              Position.X = 115.000000000000000000
+              Position.Y = 314.000000000000000000
               Size.Width = 73.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
@@ -239,31 +259,31 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object btnSubName: TButton
               Position.X = 8.000000000000000000
-              Position.Y = 298.000000000000000000
+              Position.Y = 346.000000000000000000
               Size.Width = 99.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 3
+              TabOrder = 4
               Text = 'Subject Name'
               OnClick = btnSubNameClick
             end
             object btnCNPJ: TButton
-              Position.X = 112.000000000000000000
-              Position.Y = 298.000000000000000000
+              Position.X = 115.000000000000000000
+              Position.Y = 346.000000000000000000
               Size.Width = 73.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 4
+              TabOrder = 5
               Text = 'CNPJ'
               OnClick = btnCNPJClick
             end
             object btnIssuerName: TButton
-              Position.X = 188.000000000000000000
-              Position.Y = 298.000000000000000000
-              Size.Width = 76.000000000000000000
+              Position.X = 196.000000000000000000
+              Position.Y = 314.000000000000000000
+              Size.Width = 85.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 5
+              TabOrder = 3
               Text = 'Issuer Name'
               OnClick = btnIssuerNameClick
             end
@@ -274,7 +294,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.Height = 89.000000000000000000
               Size.PlatformDefault = False
               Text = 'Calculo de Hash e assinatura'
-              TabOrder = 6
+              TabOrder = 7
               object Edit1: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
                 TabOrder = 0
@@ -312,7 +332,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.Width = 128.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 7
+              TabOrder = 8
               Text = 'HTTPS sem Certificado'
               OnClick = btnHTTPSClick
             end
@@ -363,13 +383,13 @@ object frmACBrNFe: TfrmACBrNFe
               OnChange = cbXmlSignLibChange
             end
             object btVersao: TButton
-              Position.X = 8.000000000000000000
-              Position.Y = 363.000000000000000000
-              Size.Width = 115.000000000000000000
+              Position.X = 196.000000000000000000
+              Position.Y = 347.000000000000000000
+              Size.Width = 85.000000000000000000
               Size.Height = 25.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 8
-              Text = 'Vers'#227'o OpenSSL'
+              TabOrder = 6
+              Text = 'Ver.SSL Lib'
               OnClick = btVersaoClick
             end
           end
@@ -1229,7 +1249,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos NFe'
-              TabOrder = 118
+              TabOrder = 209
             end
             object Label39: TLabel
               AutoSize = True
@@ -1240,7 +1260,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Cancelamento'
-              TabOrder = 119
+              TabOrder = 210
             end
             object sbPathCan: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1260,7 +1280,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
-              TabOrder = 121
+              TabOrder = 212
             end
             object sbPathCCe: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1280,7 +1300,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Inutiliza'#231#227'o'
-              TabOrder = 123
+              TabOrder = 214
             end
             object sbPathInu: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1300,7 +1320,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos DPEC'
-              TabOrder = 125
+              TabOrder = 216
             end
             object sbPathDPEC: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1320,7 +1340,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Evento'
-              TabOrder = 127
+              TabOrder = 218
             end
             object sbPathEvento: TSpeedButton
               Position.X = 247.000000000000000000
@@ -2490,12 +2510,19 @@ object frmACBrNFe: TfrmACBrNFe
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 4
     CasasDecimais.vUnCom = 4
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     TipoDANFE = tiSemGeracao
+    FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     Left = 529
     Top = 287

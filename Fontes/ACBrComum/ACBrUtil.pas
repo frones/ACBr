@@ -348,7 +348,8 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
 function ForceForeground(AppHandle:{$IfDef FPC}LCLType.HWND{$Else}THandle{$EndIf}): boolean;
 {$EndIf}
 
-Procedure WriteToFile( const Arq: String; const ABinaryString : AnsiString);
+Procedure WriteToFile( const Arq: String; const ABinaryString : AnsiString;
+   const ForceDirectory : Boolean = False);
 Procedure WriteToTXT( const ArqTXT : String; const ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
    const ForceDirectory : Boolean = False);
@@ -3238,7 +3239,7 @@ begin
  {$EndIf}
 end ;
 
- function FlushToDisk(const sFile: string): Boolean;
+  function FlushToDisk(const sFile: string): boolean;
 {$IfDef MSWINDOWS}
  { Fonte: http://stackoverflow.com/questions/1635947/how-to-make-sure-that-a-file-was-permanently-saved-on-usb-when-user-doesnt-use }
  var
@@ -3271,7 +3272,7 @@ end ;
  end ;
 {$EndIf}
 
- function FlushFileToDisk(const sFile: string): Boolean;
+  function FlushFileToDisk(const sFile: string): boolean;
  {$IfDef MSWINDOWS}
  var
    hFile: THandle;
@@ -3465,9 +3466,10 @@ end;
 {$EndIf}
 
 
-procedure WriteToFile(const Arq: String; const ABinaryString: AnsiString);
+procedure WriteToFile(const Arq: String; const ABinaryString: AnsiString;
+  const ForceDirectory: Boolean);
 begin
-  WriteToTXT(Arq, ABinaryString, False, False);
+  WriteToTXT(Arq, ABinaryString, False, False, ForceDirectory);
 end;
 
 {-----------------------------------------------------------------------------

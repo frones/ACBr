@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/03/2020
+-- ACBrUtil --
+[*] Método "WriteToFile", com assinatura modificada, incluindo o parâmetro "ForceDirectory"
+    Procedure WriteToFile( const Arq: String; const ABinaryString : AnsiString;
+       const ForceDirectory : Boolean = False);
+    (por: DSA)
+
 Data: 27/03/2020
 -- ACBrUtil --
 [*] Método "FindSubDirectories", aplicado correção para funcionamento em ANDROID

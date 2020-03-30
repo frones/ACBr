@@ -242,8 +242,8 @@ begin
          toRemessaAlterarControleParticipante    : Ocorrencia := '07'; {Alteração do controle do participante}
          toRemessaAlterarNumeroControle          : Ocorrencia := '08'; {Alteração de seu número}
          toRemessaProtestar                      : Ocorrencia := '09'; {Pedido de protesto}
-         toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '18'; {Sustar protesto e baixar}
-         toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '19'; {Sustar protesto e manter na carteira}
+         toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '10'; {Sustar protesto e baixar}
+         toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '11'; {Sustar protesto e manter na carteira}
          toRemessaAlterarValorTitulo             : Ocorrencia := '20'; {Alteração de valor}
          toRemessaTransferenciaCarteira          : Ocorrencia := '23'; {Transferência entre carteiras}
          toRemessaDevTransferenciaCarteira       : Ocorrencia := '24'; {Dev. Transferência entre carteiras}
@@ -1176,8 +1176,8 @@ begin
     07 : Result:= toRemessaAlterarControleParticipante;     {Alteração do controle do participante}
     08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
     09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
-    18 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
-    19 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
+    10 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    11 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
     22 : Result:= toRemessaTransfCessaoCreditoIDProd10;     {Transferência Cessão crédito ID. Prod.10}
     23 : Result:= toRemessaTransferenciaCarteira;           {Transferência entre Carteiras}
     24 : Result:= toRemessaDevTransferenciaCarteira;        {Dev. Transferência entre Carteiras}

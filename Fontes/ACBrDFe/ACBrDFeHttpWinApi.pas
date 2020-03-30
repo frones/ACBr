@@ -49,16 +49,14 @@ type
     FWinHTTPReqResp: TACBrWinReqResp;
 
   protected
-    function GetHTTPResultCode: Integer; override;
-    function GetInternalErrorCode: Integer; override;
-    procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
+    procedure ConfigConnection; override;
+    function GetLastErrorDesc: String; override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    function Enviar(const ConteudoXML: String; const AURL: String;
-      const ASoapAction: String; const AMimeType: String = ''): String; override;
+    procedure Execute; override;
     procedure Abortar; override;
   end;
 
@@ -88,42 +86,21 @@ begin
   inherited Destroy;
 end;
 
-function TDFeHttpWinHttp.Enviar(const ConteudoXML: String; const AURL: String;
-  const ASoapAction: String; const AMimeType: String): String;
-var
-  Resp: TMemoryStream;
+procedure TDFeHttpWinHttp.Execute;
 begin
-  Result := '';
+  inherited;
 
-  ConfigurarHTTP(AURL, ASoapAction, AMimeType);
-
-  Resp := TMemoryStream.Create;
+  // Enviando, dispara exceptions no caso de erro //
   try
-    try
-      // Enviando, dispara exceptions no caso de erro //
-      FWinHTTPReqResp.Execute(ConteudoXML, Resp);
-      // DEBUG //
-      //Resp.SaveToFile('c:\temp\ReqResp.xml');
-
-      Resp.Position := 0;
-      Result := String( ReadStrFromStream(Resp, Resp.Size) );
-
-      // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
-      // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-      if not (FWinHTTPReqResp.HTTPResultCode in [200, 201, 202]) then
-        raise EACBrDFeException.Create('');
-
-    except
-      On E: Exception do
-      begin
-        raise EACBrDFeException.CreateDef( Format( cACBrDFeSSLEnviarException,
-                                           [InternalErrorCode, HTTPResultCode, AURL] ) + sLineBreak +
-                                           E.Message ) ;
-      end;
-    end;
+    FWinHTTPReqResp.Execute(DataResp);
+    HeaderResp.Text := FWinHTTPReqResp.HeaderResp.Text;
   finally
-    Resp.Free;
+    FpHTTPResultCode := FWinHTTPReqResp.HttpResultCode;
+    FpInternalErrorCode := FWinHTTPReqResp.InternalErrorCode;
   end;
+
+  // DEBUG //
+  //DataResp.SaveToFile('c:\temp\ReqResp.xml');
 end;
 
 procedure TDFeHttpWinHttp.Abortar;
@@ -131,37 +108,46 @@ begin
   FWinHTTPReqResp.Abortar;
 end;
 
-procedure TDFeHttpWinHttp.ConfigurarHTTP(const AURL, ASoapAction: String;
-  const AMimeType: String);
+procedure TDFeHttpWinHttp.ConfigConnection;
 begin
-  with FpDFeSSL do
+  inherited;
+
+  // Proxy //
+  FWinHTTPReqResp.ProxyHost := FpDFeSSL.ProxyHost;
+  FWinHTTPReqResp.ProxyPort := FpDFeSSL.ProxyPort;
+  FWinHTTPReqResp.ProxyUser := FpDFeSSL.ProxyUser;
+  FWinHTTPReqResp.ProxyPass := FpDFeSSL.ProxyPass;
+
+  // Header //
+  FWinHTTPReqResp.Url := URL;
+  FWinHTTPReqResp.Method := Method;
+  FWinHTTPReqResp.MimeType := MimeType;
+  FWinHTTPReqResp.SOAPAction := SoapAction;
+  if HeaderReq.Count > 0 then
+    FWinHTTPReqResp.HeaderReq.AddStrings(HeaderReq);
+
+  // SSL e Certificado //
+  if FpDFeSSL.UseCertificateHTTP then
+    FWinHTTPReqResp.CertContext := FpDFeSSL.CertContextWinApi
+  else
+    FWinHTTPReqResp.CertContext := Nil;
+
+  FWinHTTPReqResp.SSLType := FpDFeSSL.SSLType;
+
+  // TimeOut //
+  FWinHTTPReqResp.TimeOut := FpDFeSSL.TimeOut;
+
+  // Document //
+  if (DataReq.Size > 0) then
   begin
-    if UseCertificateHTTP then
-      FWinHTTPReqResp.CertContext := FpDFeSSL.CertContextWinApi
-    else
-      FWinHTTPReqResp.CertContext := Nil;
-
-    FWinHTTPReqResp.SSLType   := SSLType;
-    FWinHTTPReqResp.ProxyHost := ProxyHost;
-    FWinHTTPReqResp.ProxyPort := ProxyPort;
-    FWinHTTPReqResp.ProxyUser := ProxyUser;
-    FWinHTTPReqResp.ProxyPass := ProxyPass;
-    FWinHTTPReqResp.TimeOut   := TimeOut;
+    DataReq.Position := 0;
+    FWinHTTPReqResp.Data := ReadStrFromStream(DataReq, DataReq.Size);
   end;
-
-  FWinHTTPReqResp.Url        := AURL;
-  FWinHTTPReqResp.SOAPAction := ASoapAction;
-  FWinHTTPReqResp.MimeType   := AMimeType;
 end;
 
-function TDFeHttpWinHttp.GetHTTPResultCode: Integer;
+function TDFeHttpWinHttp.GetLastErrorDesc: String;
 begin
-  Result := FWinHTTPReqResp.HTTPResultCode;
-end;
-
-function TDFeHttpWinHttp.GetInternalErrorCode: Integer;
-begin
-  Result := FWinHTTPReqResp.InternalErrorCode;
+  Result := FWinHTTPReqResp.GetWinInetError(FpInternalErrorCode);
 end;
 
 end.

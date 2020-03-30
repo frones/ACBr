@@ -72,6 +72,7 @@ type
 
     function GetCertContextWinApi: Pointer; override;
     function LerPFXInfo(const PFXData: Ansistring): Boolean;
+    procedure CarregarCertificadoDeDadosPFX; override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
@@ -88,7 +89,6 @@ type
        const Hash: AnsiString;
        const Assinado: Boolean =  False): Boolean; override;
 
-    procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
     function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; override;
 
@@ -397,52 +397,6 @@ begin
   Result := FCertContextWinApi;
 end;
 
-procedure TDFeOpenSSL.CarregarCertificado;
-var
-  LoadFromFile, LoadFromData: Boolean;
-  FS: TFileStream;
-begin
-  DescarregarCertificado;
-  if not InitSSLInterface then
-    raise EACBrDFeException.Create(sErrCarregarOpenSSL);
-
-  with FpDFeSSL do
-  begin
-    // Verificando se possui parâmetros necessários //
-    if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
-    begin
-      if not EstaVazio(NumeroSerie) then
-        raise EACBrDFeException.Create(sErrCertNaoSuportado + sLineBreak + sErrUtilizePFX)
-      else
-        raise EACBrDFeException.Create(sErrCertNaoInformado + sLineBreak + sErrUtilizePFX);
-    end;
-
-    LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
-    LoadFromData := (not EstaVazio(DadosPFX));
-
-    if not (LoadFromFile or LoadFromData) then
-      raise EACBrDFeException.CreateFmt(ACBrStr(sErrCertNaoEncontrado), [ArquivoPFX]);
-
-    if LoadFromFile then
-    begin
-      FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
-      try
-        DadosPFX := ReadStrFromStream(FS, FS.Size);
-      finally
-        FS.Free;
-      end;
-    end;
-
-    if EstaVazio(DadosPFX) then
-      raise EACBrDFeException.Create(sErrCertCarregar);
-
-    if not LerPFXInfo(DadosPFX) then
-      raise EACBrDFeException.Create(sErrCertSenhaErrada);
-  end;
-
-  FpCertificadoLido := True;
-end;
-
 procedure TDFeOpenSSL.DescarregarCertificado;
 begin
   DestroyKey;
@@ -495,6 +449,15 @@ begin
   finally
     BioFreeAll(b);
   end;
+end;
+
+procedure TDFeOpenSSL.CarregarCertificadoDeDadosPFX;
+begin
+  if not InitSSLInterface then
+    raise EACBrDFeException.Create(sErrCarregarOpenSSL);
+
+  if not LerPFXInfo(FpDFeSSL.DadosPFX) then
+    raise EACBrDFeException.Create(sErrCertSenhaErrada);
 end;
 
 function TDFeOpenSSL.CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean;

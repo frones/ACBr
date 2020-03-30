@@ -39,6 +39,47 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/03/2020
+-- ACBrDFe, ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade "Configuracoes.Certificados.URLPFX: String"
+    Permite informar uma URL, para Download de um Certificado PFX (A1)
+    - O URL será chamada com o método GET, e deve ser um Link para download
+      direto ao arquivo (URLs com redirecionamentos podem não funcionar)
+    - Após o arquivo ser baixado, se a propriedade Configuracoes.Certificados.ArquivoPFX,
+      também estiver especificada, uma cópia Local será salva, e usada na próxima
+      carga do certificado
+      - Um novo download será efetuado, quando a Data de Vencimento do Certificado
+        atingir 15 dias para expirar.
+        - A tentativa de baixar um novo certificado ocorrerá apenas uma vez por dia
+
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeWinCrypt --
+[*] TDFeSSLCryptClass, e TDFeSSL, refatoração nas rotinas internas, de
+    Carga do Certificado
+[+] TDFeSSLHttpClass, refatoração e adicionada as Propriedades:
+    DataReq: TMemoryStream -> Stream com Dados a serem enviados na requisição
+    HeaderReq: THttpHeader -> StringList com Header a serem incluídos na requisição
+    DataResp: TMemoryStream -> Stream com Dados da resposta
+    HeaderResp: THttpHeader -> StringList com Header da resposta
+    URL: String -> URL que será ussada na requisição
+    Method: String -> Método que será ussada na requisição (GET, POST, etc)
+    SoapAction: String -> Informação do SoapAction (apenas se for necessário), para inclusão no Header de requisição
+    MimeType: String -> Informação do MimeType, para inclusão no Header de requisição
+    LastErrorDesc: String -> Retorna a Descrição do último Erro
+
+[+] TDFeSSLHttpClass, adicionado as Metodos:
+    procedure HTTPMethod(const AMethod, AURL: String); -> Informa o Método e a URL e Executa a requisição
+    procedure Execute; -> Executa a requisição
+    procedure Clear; -> Limpa da memória, todos os dados enviados e recebidos
+
+[+] TDFeSSL, Adicionada a propriedade: "URLPFX: String"
+[+] TDFeSSL, Adicionado os métodos:
+    procedure HTTPMethod(const AMethod, AURL: String);
+    function HTTPGet(const AURL: String): AnsiString;
+    function HTTPPost(const ADataToSend: AnsiString; const AURL: String): AnsiString;
+
+[-] TDFeSSL.SetSSLCryptLib, correção para evitar A.V., quando atribuindo um
+    Modelo desativado por diretiva de compilação
+
 09/02/2020
 -- ACBrDFe --
 [*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,

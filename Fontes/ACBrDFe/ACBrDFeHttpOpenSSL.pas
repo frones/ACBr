@@ -54,20 +54,19 @@ type
     {$IfDef SYNADEBUG}
      FSynaDebug: TSynaDebug;
     {$EndIf}
-    procedure VerificarSSLType(AValue: TSSLType);
+    procedure CheckSSLType(AValue: TSSLType);
 
   protected
-    function GetHTTPResultCode: Integer; override;
-    function GetInternalErrorCode: Integer; override;
-    procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
+    procedure ConfigConnection; override;
+    function GetLastErrorDesc: String; override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    function Enviar(const ConteudoXML: String; const AURL: String;
-      const ASoapAction: String; const AMimeType: String = ''): String; override;
+    procedure Execute; override;
     procedure Abortar; override;
+
   end;
 
 implementation
@@ -100,54 +99,61 @@ begin
   inherited Destroy;
 end;
 
-function TDFeHttpOpenSSL.Enviar(const ConteudoXML: String; const AURL: String;
-  const ASoapAction: String; const AMimeType: String): String;
+procedure TDFeHttpOpenSSL.Abortar;
+begin
+  FHTTP.Sock.CloseSocket;
+end;
+
+procedure TDFeHttpOpenSSL.Execute;
 var
   OK: Boolean;
 begin
-  Result := '';
-
-  // Configurando o THTTPSend //
-  ConfigurarHTTP(AURL, ASoapAction, AMimeType);
-
-  // Gravando no Buffer de Envio //
-  WriteStrToStream(FHTTP.Document, AnsiString(ConteudoXML)) ;
+  inherited;
 
   // DEBUG //
   //FHTTP.Document.SaveToFile( 'c:\temp\HttpSendDocument.xml' );
   //FHTTP.Headers.SaveToFile( 'c:\temp\HttpSendHeader.xml' );
 
   // Transmitindo //
-  OK := FHTTP.HTTPMethod('POST', AURL);
+  OK := FHTTP.HTTPMethod(Method, URL);
+  FpHTTPResultCode := FHTTP.ResultCode;
+  FpInternalErrorCode := FHTTP.Sock.LastError;
 
   // Lendo a resposta //
-  if OK then
-  begin
-    // DEBUG //
-    //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
-    FHTTP.Document.Position := 0;
-    Result := String( ReadStrFromStream(FHTTP.Document, FHTTP.Document.Size) );
-  end;
-
-  // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
-  // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-  OK := OK and (FHTTP.ResultCode in [200, 201, 202]);
   if not OK then
     raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
-                                       [InternalErrorCode, HTTPResultCode, AURL] )
-                                       + sLineBreak + FHTTP.Sock.LastErrorDesc);
+                                           [FpInternalErrorCode, FpHTTPResultCode, URL] ) +
+                                    sLineBreak + LastErrorDesc);
+
+  // DEBUG //
+  //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
+  FHTTP.Document.Position := 0;
+  DataResp.LoadFromStream(FHTTP.Document);
+  HeaderResp.Text := FHTTP.Headers.Text;
 end;
 
-procedure TDFeHttpOpenSSL.Abortar;
+procedure TDFeHttpOpenSSL.ConfigConnection;
 begin
-  FHTTP.Sock.CloseSocket;
-end;
-
-procedure TDFeHttpOpenSSL.ConfigurarHTTP(const AURL, ASoapAction: String;
-  const AMimeType: String);
-begin
+  inherited;
   FHTTP.Clear;
 
+  // Proxy //
+  FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
+  FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
+  FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
+  FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
+
+  // Header //
+  FHTTP.MimeType  := MimeType;
+  FHTTP.UserAgent := 'Synapse OpenSSL ACBr/1.0';
+  FHTTP.Protocol  := '1.1';
+  if (SoapAction <> '') then
+    FHTTP.Headers.Add('SOAPAction: "' + SoapAction + '"');
+
+  if HeaderReq.Count > 0 then
+    FHTTP.Headers.AddStrings(HeaderReq);
+
+  // SSL e Certificado //
   if not FpDFeSSL.UseCertificateHTTP then
   begin
     FHTTP.Sock.SSL.PFX := '';
@@ -159,9 +165,10 @@ begin
     FHTTP.Sock.SSL.KeyPassword := FpDFeSSL.Senha;
   end;
 
-  VerificarSSLType(FpDFeSSL.SSLType);
+  CheckSSLType(FpDFeSSL.SSLType);
   FHTTP.Sock.SSL.SSLType := FpDFeSSL.SSLType;
 
+  // TimeOut //
   FHTTP.Timeout := FpDFeSSL.TimeOut;
   with FHTTP.Sock do
   begin
@@ -173,21 +180,23 @@ begin
     HTTPTunnelTimeout := FpDFeSSL.TimeOut;
   end;
 
-  FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
-  FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
-  FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
-  FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
-  FHTTP.MimeType  := AMimeType;
-  FHTTP.UserAgent := 'Synapse OpenSSL ACBr/1.0';
-  FHTTP.Protocol  := '1.1';
+  // Document //
+  if (DataReq.Size > 0) then
+  begin
+    DataReq.Position := 0;
+    FHTTP.Document.LoadFromStream(DataReq);
+  end;
+
   //FHTTP.Sock.SSL.VerifyCert := False;
   FHTTP.AddPortNumberToHost := False;
-
-  if ASoapAction <> '' then
-    FHTTP.Headers.Add('SOAPAction: "' + ASoapAction + '"');
 end;
 
-procedure TDFeHttpOpenSSL.VerificarSSLType(AValue: TSSLType);
+function TDFeHttpOpenSSL.GetLastErrorDesc: String;
+begin
+  Result := FHTTP.Sock.LastErrorDesc;
+end;
+
+procedure TDFeHttpOpenSSL.CheckSSLType(AValue: TSSLType);
 var
   SSLMethod: ssl_openssl_lib.PSSL_METHOD;
   OpenSSLVersion: String;
@@ -207,12 +216,12 @@ begin
       SSLMethod := ssl_openssl_lib.SslMethodTLSV12;
     LT_TLSv1_3:
       SSLMethod := ssl_openssl_lib.SslMethodTLSV13;
-    LT_all:
-      begin
-        SSLMethod := ssl_openssl_lib.SslMethodTLS;
-        if not Assigned(SSLMethod) then
-          SSLMethod := ssl_openssl_lib.SslMethodV23;
-      end;
+  else
+    begin
+      SSLMethod := ssl_openssl_lib.SslMethodTLS;
+      if not Assigned(SSLMethod) then
+        SSLMethod := ssl_openssl_lib.SslMethodV23;
+    end;
   end;
 
   if not Assigned(SSLMethod) then
@@ -222,16 +231,6 @@ begin
     raise EACBrDFeException.CreateFmt(ACBrStr('%s, não suporta %s'),
           [OpenSSLVersion, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]);
   end;
-end;
-
-function TDFeHttpOpenSSL.GetHTTPResultCode: Integer;
-begin
-  Result := FHTTP.ResultCode;
-end;
-
-function TDFeHttpOpenSSL.GetInternalErrorCode: Integer;
-begin
-  Result := FHTTP.Sock.LastError;
 end;
 
 end.

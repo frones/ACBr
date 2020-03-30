@@ -167,6 +167,7 @@ begin
 
   with FSSL do
   begin
+    URLPFX := Configuracoes.Certificados.URLPFX;
     ArquivoPFX := Configuracoes.Certificados.ArquivoPFX;
     DadosPFX := Configuracoes.Certificados.DadosPFX;
     NameSpaceURI := GetNameSpaceURI;

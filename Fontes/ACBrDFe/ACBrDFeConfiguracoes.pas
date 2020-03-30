@@ -61,6 +61,7 @@ type
     FK: String;
     FNumeroSerie: String;
     FArquivoPFX: String;
+    FURLPFX: String;
     FVerificarValidade: Boolean;
 
     function GetSenha: AnsiString;
@@ -68,6 +69,7 @@ type
     procedure SetDadosPFX(const AValue: AnsiString);
     procedure SetNumeroSerie(const AValue: String);
     procedure SetSenha(const AValue: AnsiString);
+    procedure SetURLPFX(AValue: String);
   protected
     fpConfiguracoes: TConfiguracoes;
 
@@ -78,6 +80,7 @@ type
     procedure LerIni( const AIni: TCustomIniFile ); virtual;
 
   published
+    property URLPFX: String read FURLPFX write SetURLPFX;
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
@@ -1015,6 +1018,7 @@ begin
   fpConfiguracoes := AConfiguracoes;
   FSenha := '';
   FK := '';
+  FURLPFX := '';
   FArquivoPFX := '';
   FDadosPFX := '';
   FNumeroSerie := '';
@@ -1027,10 +1031,12 @@ begin
   Senha := DeCertificadosConf.Senha;
   NumeroSerie := DeCertificadosConf.NumeroSerie;
   ArquivoPFX := DeCertificadosConf.ArquivoPFX;
+  URLPFX := DeCertificadosConf.URLPFX;
 end;
 
 procedure TCertificadosConf.GravarIni(const AIni: TCustomIniFile);
 begin
+  AIni.WriteString(CDFeSessaoIni, 'URLPFX', URLPFX);
   AIni.WriteString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
 
   if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
@@ -1050,6 +1056,7 @@ end;
 
 procedure TCertificadosConf.LerIni(const AIni: TCustomIniFile);
 begin
+  URLPFX := AIni.ReadString(CDFeSessaoIni, 'URLPFX', URLPFX);
   ArquivoPFX := AIni.ReadString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
 
   if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
@@ -1086,6 +1093,15 @@ begin
 
   if Assigned(fpConfiguracoes.Owner) then
     TACBrDFe(fpConfiguracoes.Owner).SSL.Senha := AValue;
+end;
+
+procedure TCertificadosConf.SetURLPFX(AValue: String);
+begin
+  if FURLPFX = AValue then Exit;
+
+  FURLPFX := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.URLPFX := AValue;
 end;
 
 procedure TCertificadosConf.SetArquivoPFX(const AValue: String);

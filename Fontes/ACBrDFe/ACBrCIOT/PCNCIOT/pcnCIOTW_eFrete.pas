@@ -1615,11 +1615,13 @@ begin
 
         with CIOT.Integradora do
         begin
+          Gerador.Prefixo := 'obj1:';
           Gerador.wCampo(tcStr, 'AP04', 'Token     ', 01, 01, 0, Token);
           Gerador.wCampo(tcStr, 'AP04', 'Integrador', 01, 01, 0, Integrador);
           Gerador.wCampo(tcInt, 'AP05', 'Versao    ', 01, 01, 1, 1);
         end;
 
+        Gerador.Prefixo := 'obj:';
         Gerador.wGrupo('/LogoutRequest');
 
         Gerador.Prefixo := 'log:';

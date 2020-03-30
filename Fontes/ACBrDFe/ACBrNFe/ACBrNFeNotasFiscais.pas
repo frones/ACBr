@@ -2366,12 +2366,12 @@ begin
 
         with Transp.Vol.New do
         begin
-          qVol  := StrToInt(INIRec.ReadString(sSecao, 'Quantidade', INIRec.ReadString(sSecao, 'qVol', '0')));
+          qVol  := StrToIntDef(INIRec.ReadString(sSecao, 'Quantidade', INIRec.ReadString(sSecao, 'qVol', '0')),0);
           esp   := INIRec.ReadString(sSecao, 'Especie', INIRec.ReadString(sSecao, 'esp', ''));
           marca := INIRec.ReadString(sSecao, 'Marca', '');
           nVol  := INIRec.ReadString(sSecao, 'Numeracao', INIRec.ReadString(sSecao, 'nVol', ''));
-          pesoL := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoLiquido', INIRec.ReadString(sSecao, 'pesoL', '')), 0);
-          pesoB := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoBruto', INIRec.ReadString(sSecao, 'pesoB', '')), 0);
+          pesoL := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoLiquido', INIRec.ReadString(sSecao, 'pesoL', '0')), 0);
+          pesoB := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoBruto', INIRec.ReadString(sSecao, 'pesoB', '0')), 0);
 
           J := 1;
           while true do

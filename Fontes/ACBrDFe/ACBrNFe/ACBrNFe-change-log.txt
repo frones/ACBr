@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2020
+-- ACBrNFeNotasFiscais -- 
+[*] Ajuste na validação na leitura .INI seção Volume
+   Por: José M S Junior
+
 13/03/2020
 -- pcnNFeRTXT --  
 [-] Ajuste na Validação da tag Pagamento na versão 3.1 do Layout da NFe

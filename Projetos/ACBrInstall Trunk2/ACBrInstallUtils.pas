@@ -44,11 +44,14 @@ uses SysUtils, Windows, Messages, Classes, Forms;
   function FindDirPackage(const aDir: String; const sPacote: String): string;
 
   function VersionNumberToNome(const AVersionStr: string): string;
+  function GetSystemWindowsDirectory(lpBuffer: LPWSTR; uSize: UINT): UINT; stdcall;
 
 implementation
 
 uses
   ShellApi, Types, IOUtils;
+
+function GetSystemWindowsDirectory; external kernel32 name 'GetSystemWindowsDirectoryW';
 
 procedure GetDriveLetters(AList: TStrings);
 var
@@ -224,11 +227,11 @@ const
   SYS_64 = 'SysWOW64';
   SYS_32 = 'System32';
 begin
-// retorna o diretório de sistema atual
+  // retorna o diretório de sistema atual
   Result := '';
 
-  //SetLength(strTmp, MAX_PATH);
-  if Windows.GetWindowsDirectory(strTmp, MAX_PATH) > 0 then
+  // verifica se aplicacao esta rodando em sessao de terminal server.
+  if GetSystemWindowsDirectory(strTmp, MAX_PATH) > 0 then
   begin
     DirWindows := Trim(StrPas(strTmp));
     DirWindows := IncludeTrailingPathDelimiter(DirWindows);

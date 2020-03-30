@@ -49,6 +49,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2020
+-- ACBrBancoCresol --
+[*] Ajuste cód. Ocorrência 10 e 11 seguindo manual Banco Cresol
+
+27/03/2020
+-- ACBrBancoBrasil --
+[*] Ajuste Remessa240 Regitro R posição 232 - 240 em branco
+
 25/03/2020
 -- ACBrBancoSIcred --
 [-] Correção na leitura do retorno CNAB240 para ler o nosso número.

@@ -763,7 +763,8 @@ begin
               PadRight(AMensagem,40,' ')                                              + // 100 - 139  - Mensagem 3
               PadRight('',60,' ')                                                     + // 140 - 199  - Não tratado
               PadRight('',8,'0')                                                      + // 200 - 207
-              StringOfChar('0', 33);                                                    // 208 - 240 Zeros (De acordo com o manual de particularidades BB)
+              StringOfChar('0', 24)                                                   + // 208 - 231 Zeros (De acordo com o manual de particularidades BB)
+              StringOfChar(' ', 9);                                                     // 232 - 240 Brancos (De acordo com o manual de particularidades BB)
 
      {SEGMENTO S}
      if GeraSegS then

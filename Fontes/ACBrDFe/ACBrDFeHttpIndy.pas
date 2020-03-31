@@ -100,7 +100,11 @@ begin
   // Enviando, dispara exceptions no caso de erro //
   FIndyReqResp.Execute(DataReq, DataResp);
   FpInternalErrorCode := GetLastError;
-  FpHTTPResultCode := 0;
+  // Indy não tem mapeamento para HttpResultCode
+  if DataResp.Size > 0 then
+    FpHTTPResultCode := 200
+  else
+    FpHTTPResultCode := 0;
 
   // DEBUG //
   //DataResp.SaveToFile('c:\temp\ReqResp.xml');

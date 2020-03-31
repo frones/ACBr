@@ -1029,6 +1029,7 @@ begin
   FMimeType := AMimeType;
   HTTPMethod( AMethod, AURL ) ;
 
+  FDataResp.Position := 0;
   Result := ReadStrFromStream(FDataResp, FDataResp.Size);
 
   // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted

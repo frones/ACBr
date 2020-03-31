@@ -53,7 +53,6 @@ type
     function GetCNPJFromExtensions: String;
   protected
     procedure CarregarCertificadoDeArquivoPFX; override;
-    procedure CarregarCertificadoDeDadosPFX; override;
     procedure CarregarCertificadoDeNumeroSerie; override;
     procedure LerInfoCertificadoCarregado; override;
   public
@@ -167,19 +166,14 @@ begin
   end;
 end;
 
-procedure TDFeCapicom.CarregarCertificadoDeDadosPFX;
-begin
-  raise EACBrDFeException.Create(
-    'TDFeCapicom não suporta carga de Certificado por DadosPFX.' + sLineBreak +
-    'Utilize "NumeroSerie" ou "ArquivoPFX"')
-end;
-
 procedure TDFeCapicom.CarregarCertificadoDeArquivoPFX;
 var
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
   KeyLocation: Integer;
 begin
+  inherited CarregarCertificadoDeArquivoPFX;
+
   ResultInitialize := CoInitialize(nil);
   if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
@@ -210,6 +204,8 @@ var
   Cert: ICertificate2;
   i: Integer;
 begin
+  inherited CarregarCertificadoDeNumeroSerie;
+
   ResultInitialize := CoInitialize(nil);
   if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');

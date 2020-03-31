@@ -52,11 +52,14 @@ type
 
     function GetCNPJFromExtensions: String;
   protected
+    procedure CarregarCertificadoDeArquivoPFX; override;
+    procedure CarregarCertificadoDeDadosPFX; override;
+    procedure CarregarCertificadoDeNumeroSerie; override;
+    procedure LerInfoCertificadoCarregado; override;
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
     procedure DescarregarCertificado; override;
 
@@ -85,107 +88,6 @@ begin
   DescarregarCertificado;
 
   inherited Destroy;
-end;
-
-procedure TDFeCapicom.CarregarCertificado;
-var
-  Store_temp: IStore3;
-  Certs: ICertificates2;
-  Cert: ICertificate2;
-  KeyLocation, i: Integer;
-  Inicializado: Boolean;
-  ResultInitialize: HRESULT;
-begin
-  inherited CarregarCertificado;   // Carrega o Certificado com WinCrypt
-
-  FpCertificadoLido := False;
-
-  ResultInitialize := CoInitialize(nil);
-  if (ResultInitialize = E_FAIL) then
-    raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
-
-  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
-  try
-    if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
-    begin
-      // Lendo lista de Certificados //
-      Store_temp := CoStore.Create;
-      try
-        Store_temp.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
-        FCertificado := nil;
-        Certs := Store_temp.Certificates as ICertificates2;
-
-        // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
-        for i := 1 to Certs.Count do
-        begin
-          Cert := IInterface(Certs.Item[i]) as ICertificate2;
-          if String(Cert.SerialNumber) = FpDFeSSL.NumeroSerie then
-          begin
-            FCertificado := Cert;
-            Break;
-          end;
-        end;
-      finally
-        Store_temp.Close;
-      end;
-    end
-
-    else if not EstaVazio(FpDFeSSL.ArquivoPFX) then
-    begin
-      FCertificado := CoCertificate.Create;
-
-      KeyLocation := CAPICOM_CURRENT_USER_KEY;
-      if Integer(FpDFeSSL.StoreLocation) = CAPICOM_LOCAL_MACHINE_STORE then
-        KeyLocation := CAPICOM_LOCAL_MACHINE_KEY;
-
-      FCertificado.Load( WideString(FpDFeSSL.ArquivoPFX), WideString(FpDFeSSL.Senha),
-                         CAPICOM_KEY_STORAGE_DEFAULT, KeyLocation);
-
-    end
-
-    else if not EstaVazio(FpDFeSSL.DadosPFX) then
-    begin
-      raise EACBrDFeException.Create(
-        'TDFeCapicom não suporta carga de Certificado por DadosPFX.' +
-        sLineBreak + 'Utilize "NumeroSerie" ou "ArquivoPFX"')
-    end
-
-    else
-    begin
-      raise EACBrDFeException.Create(
-      'Número de Série do Certificado Digital não especificado !');
-    end;
-
-    // Não Achou ? //
-    if FCertificado = nil then
-      raise EACBrDFeException.Create('Certificado Digital não encontrado!');
-
-    // Salvando propriedades do Certificado //
-    with FpDadosCertificado do
-    begin
-      NumeroSerie := String(FCertificado.SerialNumber);
-      SubjectName := String(FCertificado.SubjectName);
-      if CNPJ = '' then
-        CNPJ := GetCNPJFromExtensions;
-
-      DataVenc   := FCertificado.ValidToDate;
-      IssuerName := String(FCertificado.IssuerName);
-      if FCertificado.PrivateKey.IsHardwareDevice then
-        Tipo := tpcA3
-      else
-        Tipo := tpcA1;
-    end;
-
-    // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //
-    FCertStoreMem := CoStore.Create;
-    FCertStoreMem.Open(CAPICOM_MEMORY_STORE, CACBR_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
-    FCertStoreMem.Add(FCertificado);
-  finally
-    if Inicializado then
-      CoUninitialize;
-  end;
-
-  FpCertificadoLido := True;
 end;
 
 function TDFeCapicom.SelecionarCertificado: String;
@@ -262,6 +164,112 @@ begin
 
     AExtension := nil;
     Inc(i);
+  end;
+end;
+
+procedure TDFeCapicom.CarregarCertificadoDeDadosPFX;
+begin
+  raise EACBrDFeException.Create(
+    'TDFeCapicom não suporta carga de Certificado por DadosPFX.' + sLineBreak +
+    'Utilize "NumeroSerie" ou "ArquivoPFX"')
+end;
+
+procedure TDFeCapicom.CarregarCertificadoDeArquivoPFX;
+var
+  ResultInitialize: HRESULT;
+  Inicializado: Boolean;
+  KeyLocation: Integer;
+begin
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
+    raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
+
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
+  try
+    FCertificado := CoCertificate.Create;
+
+    KeyLocation := CAPICOM_CURRENT_USER_KEY;
+    if Integer(FpDFeSSL.StoreLocation) = CAPICOM_LOCAL_MACHINE_STORE then
+      KeyLocation := CAPICOM_LOCAL_MACHINE_KEY;
+
+    FCertificado.Load( WideString(FpDFeSSL.ArquivoPFX), WideString(FpDFeSSL.Senha),
+                       CAPICOM_KEY_STORAGE_DEFAULT, KeyLocation);
+
+  finally
+    if Inicializado then
+      CoUninitialize;
+  end;
+end;
+
+procedure TDFeCapicom.CarregarCertificadoDeNumeroSerie;
+var
+  ResultInitialize: HRESULT;
+  Inicializado: Boolean;
+  Store_temp: IStore3;
+  Certs: ICertificates2;
+  Cert: ICertificate2;
+  i: Integer;
+begin
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
+    raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
+
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
+  try
+    // Lendo lista de Certificados //
+    Store_temp := CoStore.Create;
+    try
+      Store_temp.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
+      FCertificado := nil;
+      Certs := Store_temp.Certificates as ICertificates2;
+
+      // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
+      for i := 1 to Certs.Count do
+      begin
+        Cert := IInterface(Certs.Item[i]) as ICertificate2;
+        if String(Cert.SerialNumber) = FpDFeSSL.NumeroSerie then
+        begin
+          FCertificado := Cert;
+          Break;
+        end;
+      end;
+    finally
+      Store_temp.Close;
+    end;
+  finally
+    if Inicializado then
+      CoUninitialize;
+  end;
+end;
+
+procedure TDFeCapicom.LerInfoCertificadoCarregado;
+begin
+  // Não Achou ? //
+  if FCertificado = nil then
+    raise EACBrDFeException.Create('Certificado Digital não Carregado!');
+
+  // Salvando propriedades do Certificado //
+  with FpDadosCertificado do
+  begin
+    NumeroSerie := String(FCertificado.SerialNumber);
+    SubjectName := String(FCertificado.SubjectName);
+    if CNPJ = '' then
+      CNPJ := GetCNPJFromExtensions;
+
+    DataVenc   := FCertificado.ValidToDate;
+    IssuerName := String(FCertificado.IssuerName);
+    if FCertificado.PrivateKey.IsHardwareDevice then
+      Tipo := tpcA3
+    else
+      Tipo := tpcA1;
+  end;
+
+  // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //
+  if FCertStoreMem = nil then
+  begin
+    FCertStoreMem := CoStore.Create;
+    FCertStoreMem.Open(CAPICOM_MEMORY_STORE, CACBR_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
+    FCertStoreMem.Add(FCertificado);
   end;
 end;
 

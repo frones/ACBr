@@ -147,8 +147,8 @@ type
     function GetCertContextWinApi: Pointer; virtual;
     function GetCertPFXData: AnsiString; virtual;
 
-    procedure CarregarCertificadoDeArquivoPFX;
-    procedure CarregarCertificadoDeURLPFX;
+    procedure CarregarCertificadoDeArquivoPFX; virtual;
+    procedure CarregarCertificadoDeURLPFX; virtual;
     procedure CarregarCertificadoDeDadosPFX; virtual;
     procedure CarregarCertificadoDeNumeroSerie; virtual;
     procedure LerInfoCertificadoCarregado; virtual;
@@ -857,11 +857,15 @@ begin
       begin
         SysUtils.DeleteFile(AArquivoPFX);
         WriteToFile(AArquivoPFX, ADadosPFX, True);
+        DescarregarCertificado;
+        CarregarCertificadoDeArquivoPFX;
+      end
+      else
+      begin
+        FpDFeSSL.DadosPFX := ADadosPFX;
+        DescarregarCertificado;
+        CarregarCertificadoDeDadosPFX;
       end;
-
-      DescarregarCertificado;
-      FpDFeSSL.DadosPFX := ADadosPFX;
-      CarregarCertificadoDeDadosPFX;
     end;
   end;
 end;

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2020
+-- ACBrDFeCapicom --
+[*] Ajustes para compatibilizar com último refactoring
+    (por: DSA)
+
 30/03/2020
 -- ACBrDFe, ACBrDFeConfiguracoes --
 [+] Adicionada a propriedade "Configuracoes.Certificados.URLPFX: String"

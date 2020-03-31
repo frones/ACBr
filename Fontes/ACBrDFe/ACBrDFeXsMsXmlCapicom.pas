@@ -131,8 +131,8 @@ begin
         xmldsig.store := Store;
       end;
 
-      dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType,
-        PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+      dsigKey := xmldsig.createKeyFromCSP( CAPICOM_PROV_RSA_FULL, '',
+                                           PrivateKey.ContainerName, 0);
       if (dsigKey = nil) then
         raise EACBrDFeException.Create('Erro ao criar a chave do CSP.');
 

@@ -59,7 +59,7 @@ type
 implementation
 
 uses
-  SysUtils,
+  SysUtils, strutils,
   ACBrConsts, ACBrUtil,
   {$IFDEF COMPILER6_UP}
     DateUtils
@@ -86,21 +86,20 @@ end;
 function TACBrBALFilizola.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
+  Pi, Pf: Integer;
 begin
   Result := 0;
 
   { Retira STX, ETX }
   wResposta := aResposta;
-  if (Copy(wResposta, 1, 1) = STX) then
-    wResposta := Copy(wResposta, 2, Length(wResposta));
+  Pi := pos(STX, wResposta);  // Inicio do Peso
+  Pf := PosEx(ETX, wResposta, Pi+1);  // Fim do Peso
+  if (Pf = 0) then
+    Pf := PosEx(CR, wResposta, Pi+1);  // Fim do Peso, tratativa para o modelo C&F C6MT
+  if (Pf = 0) then
+    Pf := Length(wResposta)+1;
 
-  //Deverá buscar a primeira ocorrencia do TX e trarar a Sting.
-  if pos(ETX,wResposta) > 0 then
-    wResposta := Copy(wResposta, 1, pos(ETX,wResposta) - 1)
-  else
-    if pos(CR,wResposta) > 0 then //tratativa para o modelo C&F C6MT
-	wResposta := Copy(wResposta, 1, pos(CR,wResposta) - 1);
-	
+  wResposta := Trim(copy(wResposta, Pi+1, (Pf-Pi)-1));
   if (wResposta = EmptyStr) then
     Exit;
 

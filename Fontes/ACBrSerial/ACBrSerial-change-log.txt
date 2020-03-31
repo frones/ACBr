@@ -39,6 +39,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 30/03/2020
+-- ACBrBALFilizola --
+[*] Refatoração em "TACBrBALFilizola.InterpretarRepostaPeso", para que a rotina
+    se ajuste a diversos tipos de resposta.
+    (por: DSA)
+
 -- ACBrECFVirtual --
 [+] Adicionado o Evento "QuandoMudarEstado", para permitir a aplicação detectar
     qual será o novo estado, e modifica-lo, se desejar. (útil para evitar estRequerz)

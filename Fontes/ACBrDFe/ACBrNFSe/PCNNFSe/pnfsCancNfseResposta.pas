@@ -37,7 +37,7 @@ unit pnfsCancNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms,
+  SysUtils, Classes,
   {$IF DEFINED(NEXTGEN)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}

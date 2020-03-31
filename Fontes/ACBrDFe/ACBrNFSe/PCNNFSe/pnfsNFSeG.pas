@@ -37,12 +37,12 @@ unit pnfsNFSeG;
 interface
 
 uses
-  SysUtils, Classes, Forms, StrUtils, DateUtils,
+  SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnGerador, pcnConversao,
-  pnfsNFSe, pnfsConversao, ACBrUtil;
+  pnfsNFSe, pnfsConversao;
 
 type
 
@@ -253,6 +253,9 @@ type
    end;
 
 implementation
+
+uses
+  StrUtils, DateUtils, ACBrUtil;
 
 (*
 class function TNFSeG2.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString;

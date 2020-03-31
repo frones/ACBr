@@ -37,7 +37,7 @@ unit ACBrNFSeNotasFiscais;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms, StrUtils,
+  Classes,
   ACBrNFSeConfiguracoes, ACBrDFeUtil, ACBrDFeSSL,
   pnfsNFSe, pnfsNFSeR, pnfsNFSeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
@@ -181,6 +181,7 @@ type
 implementation
 
 uses
+  SysUtils, StrUtils,
   ACBrNFSe, ACBrUtil, pnfsConversao, synautil;
 
 { NotaFiscal }

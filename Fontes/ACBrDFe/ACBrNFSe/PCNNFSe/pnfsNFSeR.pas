@@ -37,9 +37,8 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils, Variants, IniFiles, Math, StrUtils,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
-  ACBrUtil;
+  SysUtils, Classes, Variants, IniFiles,
+  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao;
 
 type
 
@@ -128,6 +127,9 @@ type
   end;
 
 implementation
+
+uses
+  Math, StrUtils, DateUtils, ACBrUtil;
 
 { TNFSeR }
 

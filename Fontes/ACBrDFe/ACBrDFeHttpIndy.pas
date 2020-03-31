@@ -57,7 +57,7 @@ type
   {$IF CompilerVersion >= 33}
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Client: THTTPClient);
   {$ELSE}
-    procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; ASession: Pointer);
+    procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; ARequest: Pointer);
   {$IFEND}
   protected
     procedure ConfigConnection; override;
@@ -98,13 +98,17 @@ begin
   inherited;
 
   // Enviando, dispara exceptions no caso de erro //
-  FIndyReqResp.Execute(DataReq, DataResp);
-  FpInternalErrorCode := GetLastError;
-  // Indy não tem mapeamento para HttpResultCode
-  if DataResp.Size > 0 then
-    FpHTTPResultCode := 200
-  else
-    FpHTTPResultCode := 0;
+  try
+    DataReq.Position := 0;
+    FIndyReqResp.Execute(DataReq, DataResp);
+  finally
+    FpInternalErrorCode := GetLastError;
+    // Indy não tem mapeamento para HttpResultCode
+    if DataResp.Size > 0 then
+      FpHTTPResultCode := 200
+    else
+      FpHTTPResultCode := 0;
+  end;
 
   // DEBUG //
   //DataResp.SaveToFile('c:\temp\ReqResp.xml');
@@ -164,7 +168,7 @@ begin
     if (UseCertificateHTTP) then
     begin
       if not InternetSetOption(Client, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-        FpDFeSSL.CertContextWinApi, SizeOf(CERT_CONTEXT)) then
+        PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi), SizeOf(CERT_CONTEXT)) then
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
                                        IntToStr(GetLastError));
     end;
@@ -198,29 +202,50 @@ end;
 {$ELSE}
 
 procedure TDFeHttpIndy.OnBeforePost(const HTTPReqResp: THTTPReqResp;
-  ASession: Pointer);
+  ARequest: Pointer);
 var
   ContentHeader: String;
+  SecurityFlags, FlagsLen: Cardinal;
 begin
   with FpDFeSSL do
   begin
     if (UseCertificateHTTP) then
     begin
-      if not InternetSetOption(ASession, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-        FpDFeSSL.CertContextWinApi, SizeOf(CERT_CONTEXT)) then
+      if not InternetSetOption(ARequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+        PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi), SizeOf(CERT_CONTEXT)) then
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
+                                       IntToStr(GetLastError));
+    end;
+
+    SecurityFlags := 0;
+    FlagsLen := SizeOf(SecurityFlags);
+    // Query actual Flags
+    if InternetQueryOption( ARequest,
+                            INTERNET_OPTION_SECURITY_FLAGS,
+                            @SecurityFlags, FlagsLen ) then
+    begin
+      SecurityFlags := SecurityFlags or
+                       SECURITY_FLAG_IGNORE_REVOCATION or
+                       SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                       SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
+                       SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                       SECURITY_FLAG_IGNORE_WRONG_USAGE;
+      if not InternetSetOption( ARequest,
+                                INTERNET_OPTION_SECURITY_FLAGS,
+                                @SecurityFlags, FlagsLen ) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS: ' +
                                        IntToStr(GetLastError));
     end;
 
     if trim(ProxyUser) <> '' then
     begin
-      if not InternetSetOption(ASession, INTERNET_OPTION_PROXY_USERNAME,
+      if not InternetSetOption(ARequest, INTERNET_OPTION_PROXY_USERNAME,
         PChar(ProxyUser), Length(ProxyUser)) then
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_USERNAME: ' +
                                        IntToStr(GetLastError));
 
       if trim(ProxyPass) <> '' then
-        if not InternetSetOption(ASession, INTERNET_OPTION_PROXY_PASSWORD,
+        if not InternetSetOption(ARequest, INTERNET_OPTION_PROXY_PASSWORD,
           PChar(ProxyPass), Length(ProxyPass)) then
           raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_PASSWORD: ' +
                                          IntToStr(GetLastError));
@@ -229,7 +254,7 @@ begin
     if (FMimeType <> '') then
     begin
       ContentHeader := Format(ContentTypeTemplate, [FMimeType]);
-      HttpAddRequestHeaders(ASession, PChar(ContentHeader), Length(ContentHeader),
+      HttpAddRequestHeaders(ARequest, PChar(ContentHeader), Length(ContentHeader),
                             HTTP_ADDREQ_FLAG_REPLACE);
     end;
   end;

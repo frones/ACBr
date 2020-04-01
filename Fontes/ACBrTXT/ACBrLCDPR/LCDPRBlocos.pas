@@ -33,18 +33,30 @@ unit LCDPRBlocos;
 
 interface
 
+uses
+  SysUtils, StrUtils, Classes;
+
 type
-  TCodVer = (Versao001, Versao011);
+  TCodVer    = (Versao001, Versao011, Versao013);
   TIndInicio = (indRegular, indAbertura, indInicioObriga);
   TIndSitEsp = (iseNormal, iseFalecimento, iseEspolio, iseSaidaDefinitiva);
-  TFormaApur = (faLivroCaixa, faApurLucro);
-  TTipoExploracao = (teExploracaoInd, teCondominio, teImovelArrendado, teParceria, teComodato, teOutro);
+  TFormaApur       = (faLivroCaixa, faApurLucro);
+  TTipoExploracao  = (teExploracaoInd, teCondominio, teImovelArrendado, teParceria, teComodato, teOutro);
   TTipoContraparte = (tpcCondomino, tpcArrendante, tpcParceiro, tpcComodatario, tpcOutro);
-  TTipoDoc = (tdNotaFiscal, tdFatura, tdRecibo, tdContrato, tdFolhaPagamento, tdOutros);
+  TTipoDoc  = (tdNotaFiscal, tdFatura, tdRecibo, tdContrato, tdFolhaPagamento, tdOutros);
   TTipoLanc = (tlReceitaRural, tlDespesaCusteio, tlProdEntregue);
 
+function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
+  const AEnumerados: array of variant): variant;
+
+//Código da versão do leiaute.
 function CodVerToStr(CodVer : TCodVer) : String;
+function StrtoCodVer(out ok: boolean; const s: string): TCodVer;
+
+//Indicador do Início do Período:
 function IndInicioToStr(IndInicio : TIndInicio) : String;
+function StrtoIndInicio(out ok: boolean; const s: string): TIndInicio;
+
 function IndSitEspToStr(IndSitEsp : TIndSitEsp) : String;
 function IndFormaApurToStr(IndFormaApur : TFormaApur) : String;
 function TipoExploracaoToStr(TipoExploracao : TTipoExploracao) : String;
@@ -54,14 +66,36 @@ function TipoLancToStr(TipoLanc : TTipoLanc) : String;
 
 implementation
 
+function StrToEnumerado(out ok: boolean; const s: string; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := -1;
+  for i := Low(AString) to High(AString) do
+    if AnsiSameText(s, AString[i]) then
+      result := AEnumerados[i];
+  ok := result <> -1;
+  if not ok then
+    result := AEnumerados[0];
+end;
+
+// Código da versão do leiaute.
 function CodVerToStr(CodVer : TCodVer) : String;
 begin
   case CodVer of
     Versao001 : Result := '0001';
     Versao011 : Result := '0011';
+    Versao013 : Result := '0013';
   end;
 end;
 
+function StrtoCodVer(out ok: boolean; const s: string): TCodVer;
+begin
+   result := StrToEnumerado(ok, s, ['0', '1','2'], [Versao001, Versao011, Versao013]);
+end;
+
+//Indicador do Início do Período:
 function IndInicioToStr(IndInicio : TIndInicio) : String;
 begin
   case IndInicio of
@@ -70,6 +104,12 @@ begin
     indInicioObriga : Result := '2';
   end;
 end;
+
+function StrtoIndInicio(out ok: boolean; const s: string): TIndInicio;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1','2'], [indRegular, indAbertura, indInicioObriga]);
+end;
+
 
 function IndSitEspToStr(IndSitEsp : TIndSitEsp) : String;
 begin

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2020
+-- ACBrDFeUtil --
+[*] Métodos "ObterCodigoMunicipio" e "ObterNomeMunicipio", modificados para usar
+    o componente ACBrIBGE, e não a antiga e obsoleta listas de TXT de cidades
+    (por: DSA)
+
 31/03/2020
 -- ACBrDFeCapicom --
 [*] Ajustes para compatibilizar com último refactoring

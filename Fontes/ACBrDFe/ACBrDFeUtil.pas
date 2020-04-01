@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, StrUtils, SysUtils, synacode, synautil,
-  {IniFiles,} ACBrDFeSSL, pcnAuxiliar;
+  {IniFiles,} ACBrDFeSSL, ACBrIBGE, pcnAuxiliar;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -71,6 +71,9 @@ function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
 function CalcularHashDados(const ADados: TStream; AChave: String): string;
 function CalcularHashArquivo(const APathArquivo: String; AChave: String): string;
+
+var
+  ACBrIBGE1: TACBrIBGE;
 
 implementation
 
@@ -415,77 +418,45 @@ begin
   Result := copy(AXML, I + 1, J - I - 1);
 end;
 
-function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
-  const APathArqMun: String): String;
+function GetACBrIBGE(const APathArqMun: String): TACBrIBGE;
 var
-  i: Integer;
-  PathArqMun, Codigo: String;
-  List: TStringList;
+  AfileName, PathArqMun: String;
 begin
-  result := '';
+  if not Assigned(ACBrIBGE1) then
+    ACBrIBGE1 := TACBrIBGE.Create(Nil);
+
+  Result := ACBrIBGE1;
+  AfileName := ExtractFileName(ACBrIBGE1.CacheArquivo);
+  if (AfileName = '') then
+    AfileName := 'ACBrIBGE.txt';
+
   if EstaVazio(APathArqMun) then
     PathArqMun := ApplicationPath + 'MunIBGE'
   else
     PathArqMun := APathArqMun;
 
-  PathArqMun := PathWithDelim(PathArqMun) + 'MunIBGE-UF' +
-             InttoStr(UFparaCodigo(AxUF)) + '.txt';
+  Result.CacheArquivo := PathWithDelim(APathArqMun) + AfileName ;
+end;
 
-  if FileExists(PathArqMun) then
-  begin
-    List := TStringList.Create;
-    try
-      List.LoadFromFile(PathArqMun);
-      Codigo := IntToStr(AcMun);
-      i := 0;
-      while (i < list.count) and (result = '') do
-      begin
-        if pos(Codigo, List[i]) > 0 then
-          result := Trim(StringReplace(list[i], codigo, '', []));
-        inc(i);
-      end;
+function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
+  const APathArqMun: String): String;
+begin
+  result := '';
+  if (GetACBrIBGE(APathArqMun) = Nil) then
+    Exit;
 
-    finally
-      List.free;
-    end;
-  end;
+  if (ACBrIBGE1.BuscarPorCodigo(AcMun) > 0) then
+    Result := ACBrIBGE1.Cidades[0].Municipio;
 end;
 
 function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String): Integer;
-var
-  i: integer;
-  PathArquivo: string;
-  List: TstringList;
-  UpMun, UpMunList: String;
 begin
   result := 0;
-  if EstaVazio(APathArqMun) then
-    PathArquivo := ApplicationPath + 'MunIBGE'
-  else
-    PathArquivo := APathArqMun;
+  if (GetACBrIBGE(APathArqMun) = Nil) then
+    Exit;
 
-  PathArquivo := PathWithDelim(PathArquivo) + 'MunIBGE-UF' +
-               InttoStr(UFparaCodigo(AxUF)) + '.txt';
-
-  if FileExists(PathArquivo) then
-  begin
-    UpMun := UpperCase(TiraAcentos(AxMun));
-    List := TstringList.Create;
-    try
-      List.LoadFromFile(PathArquivo);
-      i := 0;
-      while (i < list.count) and (result = 0) do
-      begin
-        UpMunList := UpperCase(TiraAcentos(List[i]));
-        if pos(UpMun, UpMunList ) = 9 then
-          result := StrToInt(Trim(copy(list[i],1,7)));
-
-        inc(i);
-      end;
-    finally
-      List.free;
-    end;
-  end;
+  if (ACBrIBGE1.BuscarPorNome(AxMun, AxUF) > 0) then
+    Result := ACBrIBGE1.Cidades[0].CodMunicipio;
 end;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
@@ -527,8 +498,12 @@ begin
 end;
 
 initialization
-
   Randomize;
+  ACBrIBGE1 := Nil;
+
+finalization;
+  if Assigned(ACBrIBGE1) then
+    FreeAndNil(ACBrIBGE1);
 
 end.
 

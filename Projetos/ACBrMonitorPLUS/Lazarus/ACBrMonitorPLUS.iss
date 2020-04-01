@@ -115,9 +115,6 @@ Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\Reinf\*.*; DestDir: {app}\Schemas\Re
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\BPe\*.*; DestDir: {app}\Schemas\BPe; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\GNRe\*.*; DestDir: {app}\Schemas\GNRe; Components: programa;
 
-;Lista de municípios do IBGE
-Source: {#ACBrMonitorPLUSDir}\MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
-
 ;Arquivos de Change-log.TXT
 Source: {#ACBrMonitorPLUSDir}\Notas_Lancamento.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 Source: {#ACBrMonitorPLUSDir}\ACBrMonitor-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help

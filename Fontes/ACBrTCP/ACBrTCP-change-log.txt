@@ -39,6 +39,8 @@ Símbolo : Significado
 01/04/2020
 -- ACBrIBGE --
 [-] Correção para tratamento de Encoding, quando Resultado não está compactado
+[-] Correção para evitar carregar duas vezes as Cidades, quando o Cache está
+    parcial (sem todas as UFs e Cidades)
     (por: DSA)
 
 27/03/2020

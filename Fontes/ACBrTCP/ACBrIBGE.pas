@@ -1455,6 +1455,9 @@ begin
 end;
 
 procedure TACBrIBGE.ObterUFs;
+var
+  UFsEmCache: String;
+  i: Integer;
 begin
   if not fCacheLido then
     CarregarCache;
@@ -1462,9 +1465,17 @@ begin
   if (fListaUFs.Count >= CIBGE_UF_COUNT) then  // Já fez a carga ?
     Exit;
 
+  UFsEmCache := '';
+  for i := 0 to fListaUFs.Count-1 do
+    UFsEmCache := UFsEmCache + fListaUFs[i].fUF + ',';
+
   fListaUFs.Clear;
   HTTPGet(CIBGE_URL_UF);
   fListaUFs.AddFromJSonStr(UnZipDoc);
+
+  if (UFsEmCache <> '') then
+    for i := 0 to fListaUFs.Count-1 do
+      fListaUFs[i].CidadesCarregadas := (pos(fListaUFs[i].fUF, UFsEmCache) > 0);
 end;
 
 procedure TACBrIBGE.ObterEstatisticasUF;

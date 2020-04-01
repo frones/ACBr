@@ -239,38 +239,34 @@ begin
 
   case fpEventoCTe.InfEvento.tpEvento of
     teCCe:
-    begin
       rllLinha1.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
-      rllLinha2.Caption := ACBrStr(
-        'Não possui valor fiscal, simples representação da CC-e indicada abaixo.');
-      rllLinha3.Caption := ACBrStr(
-        'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO SITE DA SEFAZ AUTORIZADORA.');
-    end;
+
     teCancelamento:
-    begin
       rllLinha1.Caption := 'CANCELAMENTO';
-      rllLinha2.Caption := ACBrStr(
-        'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.');
-      rllLinha3.Caption := ACBrStr(
-        'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.');
-    end;
+
     teEPEC:
-    begin
       rllLinha1.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
-      rllLinha2.Caption := ACBrStr(
-        'Não possui valor fiscal, simples representação da EPEC indicada abaixo.');
-      rllLinha3.Caption := ACBrStr(
-        'CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.');
-    end;
+
     tePrestDesacordo:
-    begin
       rllLinha1.Caption := 'PRESTAÇÃO DE SERVIÇO EM DESACORDO';
-      rllLinha2.Caption := ACBrStr(
-        'Não possui valor fiscal, simples representação do evento indicado abaixo.');
-      rllLinha3.Caption := ACBrStr(
-        'CONSULTE A AUTENTICIDADE DA PRESTAÇÃO DE SERVIÇO EM DESACORDO NO SITE DA SEFAZ AUTORIZADORA.');
-    end;
+
+    teMultiModal:
+      rllLinha1.Caption := 'REGISTROS DO MULTIMODAL';
+
+    teGTV:
+      rllLinha1.Caption := 'INFORMAÇÕES DA GTV';
+
+    teComprEntrega:
+      rllLinha1.Caption := 'COMPROVANTE DE ENTREGA';
+
+    teCancComprEntrega:
+      rllLinha1.Caption := 'CANCELAMENTO DO COMPROVANTE DE ENTREGA';
   end;
+
+  rllLinha2.Caption := ACBrStr(
+    'Não possui valor fiscal, simples representação do evento indicado abaixo.');
+  rllLinha3.Caption := ACBrStr(
+           'CONSULTE A AUTENTICIDADE DO EVENTO NO SITE DA SEFAZ AUTORIZADORA.');
 end;
 
 procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject;
@@ -301,20 +297,40 @@ begin
   with fpEventoCTe do
   begin
     case InfEvento.tpEvento of
-      teCCe: rllTituloEvento.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
-      teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
-      teEPEC: rllTituloEvento.Caption :=
-          ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
-      tePrestDesacordo: rllTituloEvento.Caption :=
-          ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
+      teCCe:
+        rllTituloEvento.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
+
+      teCancelamento:
+        rllTituloEvento.Caption := 'CANCELAMENTO';
+
+      teEPEC:
+        rllTituloEvento.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
+
+      tePrestDesacordo:
+        rllTituloEvento.Caption := ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
+
+      teMultiModal:
+        rllTituloEvento.Caption := 'REGISTROS DO MULTIMODAL';
+
+      teGTV:
+        rllTituloEvento.Caption := 'INFORMAÇÕES DA GTV';
+
+      teComprEntrega:
+        rllTituloEvento.Caption := 'COMPROVANTE DE ENTREGA';
+
+      teCancComprEntrega:
+        rllTituloEvento.Caption := 'CANCELAMENTO DO COMPROVANTE DE ENTREGA';
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
+
     case InfEvento.tpAmb of
-      taProducao: rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-      taHomologacao: rllTipoAmbiente.Caption :=
-          ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      taProducao:
+        rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+      taHomologacao:
+        rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
+
     rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
     rllDescricaoEvento.Caption := InfEvento.DescEvento;
@@ -452,13 +468,21 @@ end;
 
 procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  Exibir: Boolean;
 begin
   inherited;
 
-  PrintIt := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
-    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (fpEventoCTe.InfEvento.tpAmb = taHomologacao);
+  Exibir := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
+            (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
+            (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
+            (fpEventoCTe.InfEvento.tpEvento = teMultiModal) or
+            (fpEventoCTe.InfEvento.tpEvento = teGTV) or
+            (fpEventoCTe.InfEvento.tpEvento = teComprEntrega) or
+            (fpEventoCTe.InfEvento.tpEvento = teCancComprEntrega) or
+            (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
+
+  PrintIt := Exibir or (fpEventoCTe.InfEvento.tpAmb = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
@@ -470,20 +494,15 @@ begin
     rllMsgTeste.Enabled := True;
   end;
 
-  rlmCondicoes.Visible := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
-    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
-  rlmCondicoes.Enabled := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
-    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
+  rlmCondicoes.Visible := Exibir;
+  rlmCondicoes.Enabled := Exibir;
+
+  rlmCondicoes.Lines.Clear;
 
   case fpEventoCTe.InfEvento.tpEvento of
     teCCe:
     begin
       lblTitulo_06.Caption := ACBrStr('CONDIÇÕES DE USO');
-      rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add(ACBrStr(
         'A Carta de Correção e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularização'));
       rlmCondicoes.Lines.Add(ACBrStr(
@@ -494,10 +513,10 @@ begin
         'II - a correção de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatário;'));
       rlmCondicoes.Lines.Add(ACBrStr('III - a data de emissão ou de saída.'));
     end;
+
     teCancelamento:
     begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
-      rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' +
         fpEventoCTe.InfEvento.detEvento.nProt);
       rlmCondicoes.Lines.Add('Motivo do Cancelamento    : ' +
@@ -505,10 +524,10 @@ begin
       rlmCondicoes.Lines.Add('Chave do CTe Cancelado    : ' +
         fpEventoCTe.InfEvento.chCTe);
     end;
+
     teEPEC:
     begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
-      rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add('Motivo do EPEC     : ' +
         fpEventoCTe.InfEvento.detEvento.xJust);
       rlmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat(
@@ -521,11 +540,45 @@ begin
         fpEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
         fpEventoCTe.InfEvento.detEvento.UFFim);
     end;
+
     tePrestDesacordo:
     begin
       lblTitulo_06.Caption := ACBrStr('JUSTIFICATIVA');
-      rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add(fpEventoCTe.InfEvento.detEvento.xOBS);
+    end;
+
+    teMultiModal:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Registro : ' + fpEventoCTe.InfEvento.detEvento.xRegistro);
+      rlmCondicoes.Lines.Add('Documento: ' + fpEventoCTe.InfEvento.detEvento.nDoc);
+    end;
+
+    teGTV:
+    begin
+      lblTitulo_06.Caption := ACBrStr('INFORMAÇÕES DO GTV');
+
+      if fpEventoCTe.InfEvento.detEvento.infGTV.Count > 0 then
+      begin
+        rlmCondicoes.Lines.Add('Documento    : ' + fpEventoCTe.InfEvento.detEvento.infGTV.Items[0].nDoc);
+        rlmCondicoes.Lines.Add('Identificador: ' + fpEventoCTe.InfEvento.detEvento.infGTV.Items[0].id);
+      end;
+    end;
+
+    teComprEntrega:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Documento: ' + fpEventoCTe.InfEvento.detEvento.nDoc);
+      rlmCondicoes.Lines.Add('Nome     : ' + fpEventoCTe.InfEvento.detEvento.xNome);
+      rlmCondicoes.Lines.Add('Latitude : ' + FormatFloat('#0.000000', fpEventoCTe.InfEvento.detEvento.latitude));
+      rlmCondicoes.Lines.Add('Longitude: ' + FormatFloat('#0.000000', fpEventoCTe.InfEvento.detEvento.longitude));
+    end;
+
+    teCancComprEntrega:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Protocolo do Evento Cancelado: ' +
+        fpEventoCTe.InfEvento.detEvento.nProtCE);
     end;
   end;
 end;
@@ -561,6 +614,7 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject
   var PrintIt: boolean);
 begin
   inherited;
+
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
 end;
 
@@ -568,6 +622,7 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   inherited;
+
   rlb_09_Itens.Enabled := True;
 end;
 
@@ -575,6 +630,7 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   inherited;
+
   rllblSistema.Caption := fpDACTe.Sistema + ' - ' + fpDACTe.Usuario;
 end;
 

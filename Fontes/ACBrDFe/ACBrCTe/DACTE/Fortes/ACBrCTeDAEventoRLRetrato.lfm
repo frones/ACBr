@@ -1,13 +1,15 @@
 inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
-  Left = 280
-  Top = 90
-  Caption = 'Evento - Retrato'
+  Left = 262
+  Height = 557
+  Top = 120
+  Caption = 'Evento -  Retrato'
+  ClientHeight = 557
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTeEvento: TRLReport
-    Left = 18
-    Top = 20
+    Left = 0
+    Top = 0
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7

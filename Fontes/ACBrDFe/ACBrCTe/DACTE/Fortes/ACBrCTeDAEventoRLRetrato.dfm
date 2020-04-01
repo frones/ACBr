@@ -10,8 +10,8 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTeEvento: TRLReport
-    Left = 18
-    Top = 20
+    Left = 0
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000

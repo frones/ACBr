@@ -2,13 +2,15 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   Left = 267
   Top = 209
   Caption = 'Evento - Retrato'
+  ClientHeight = 749
+  ClientWidth = 763
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFeEvento: TRLReport
-    Left = 32
+    Left = 0
     Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000

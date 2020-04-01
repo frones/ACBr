@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2020
+-- ACBrIBGE --
+[-] Correção para tratamento de Encoding, quando Resultado não está compactado
+    (por: DSA)
+
 27/03/2020
 -- ACBrMail --
 [*] Ajuste no método "BuildMimeMess", para que o MimeType seja reconhecido pela

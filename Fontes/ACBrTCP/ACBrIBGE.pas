@@ -1020,7 +1020,7 @@ end;
 function TACBrIBGE.UnZipDoc: String;
 var
   CT: String;
-  UnZipStr: AnsiString;
+  Resp: AnsiString;
   RespIsUTF8: Boolean;
   zt: TCompressType;
 begin
@@ -1028,18 +1028,17 @@ begin
   if zt = ctUnknown then
   begin
     HTTPSend.Document.Position := 0;
-    Result := String(ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size));
-    Exit;
-  end;
-
-  UnZipStr := UnZip(HTTPSend.Document);
+    Resp := ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size);
+  end
+  else
+    Resp := UnZip(HTTPSend.Document);
 
   CT := LowerCase( GetHeaderValue('Content-Type:') );
   RespIsUTF8 := (pos('utf-8', CT) > 0);
   if RespIsUTF8 then
-    Result := UTF8ToNativeString(UnZipStr)
+    Result := UTF8ToNativeString(Resp)
   else
-    Result := String(UnZipStr);
+    Result := String(Resp);
 end;
 
 constructor TACBrIBGE.Create(AOwner : TComponent) ;

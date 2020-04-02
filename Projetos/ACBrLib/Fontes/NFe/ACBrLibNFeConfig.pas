@@ -41,7 +41,7 @@ uses
   pcnConversao, pcnConversaoNFe,
   ACBrNFeConfiguracoes, ACBrDFeReport, ACBrDFeDANFeReport,
   ACBrNFeDANFEClass, ACBrNFeDANFeRLClass, ACBrLibConfig,
-  ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
+  ACBrIntegradorConfig, DFeReportConfig;
 
 type
   TTipoRelatorioBobina = (tpFortes, tpEscPos, tpFortesA4);

@@ -159,8 +159,6 @@ procedure TLibCHQConfig.ImportarIni(AIni: TCustomIniFile);
 begin
   FCHQConfig.Porta := AIni.ReadString(CSecCHQ, CKeyCHQPorta, FCHQConfig.Porta);
   FCHQConfig.Modelo := TACBrCHQModelo(AIni.ReadInteger(CSecCHQ, CKeyCHQModelo, Integer(FCHQConfig.Modelo)));
-
-  FDeviceConfig.ImportarSerialParams(AIni.ReadString(CSecCHQ, CKeyCHQSerialParams, FCHQConfig.Porta));
 end;
 
 procedure TLibCHQConfig.Travar;

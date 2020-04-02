@@ -29,7 +29,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrLibPosPrinterConfig, ACBrLibComum;
+  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig, ACBrLibComum;
 
 {$R *.lfm}
 
@@ -92,7 +92,17 @@ begin
     ConfigModoPagina.Direcao := TACBrPosDirecao(pLibConfig.PosPrinter.MpDirecao);
     ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinter.MpEspacoEntreLinhas;
 
-    pLibConfig.PosDeviceConfig.Apply(Device);
+    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
+    Device.Data := pLibConfig.PosDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
   end;
 end;
 

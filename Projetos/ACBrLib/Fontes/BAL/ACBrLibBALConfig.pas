@@ -183,8 +183,6 @@ begin
   BALConfig.Porta     := AIni.ReadString(CSecBAL, CKeyBALPorta, BALConfig.Porta);
   BALConfig.Modelo    := TACBrBALModelo(AIni.ReadInteger(CSecBAL, CKeyBALModelo, Integer(BALConfig.Modelo)));
   BALConfig.Intervalo := AIni.ReadInteger(CSecBAL, CKeyBALIntervalo, BALConfig.Intervalo);
-
-  DeviceConfig.ImportarSerialParams(AIni.ReadString(CSecBAL, CKeyBALDevice, ''));
 end;
 
 procedure TLibBALConfig.Travar;

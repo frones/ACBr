@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDeviceSerial,
   ACBrLibETQConfig, ACBrLibComum, ACBrLibETQClass;
 
 {$R *.lfm}
@@ -100,7 +100,17 @@ begin
     Origem         := pLibConfig.ETQConfig.Origem;
     DPI            := pLibConfig.ETQConfig.DPI;
 
-    pLibConfig.DeviceConfig.Apply(Device);
+    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
+    Device.Data := pLibConfig.PosDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
   end;
 end;
 

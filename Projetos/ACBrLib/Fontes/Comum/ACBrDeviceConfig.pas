@@ -37,8 +37,7 @@ unit ACBrDeviceConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
-  ACBrDevice, ACBrDeviceSerial;
+  Classes, SysUtils, IniFiles;
 
 type
 
@@ -50,12 +49,12 @@ type
     FBaud: Integer;
     FData : Integer;
     FTimeOut : Integer;
-    FParity: TACBrSerialParity;
-    FStop: TACBrSerialStop;
+    FParity: Integer;
+    FStop: Integer;
     FMaxBandwidth: Integer;
     FSendBytesCount: Integer;
     FSendBytesInterval: Integer;
-    FHandShake: TACBrHandShake;
+    FHandShake: Integer;
     FHardFlow: Boolean;
     FSoftFlow: Boolean;
 
@@ -66,18 +65,16 @@ type
     procedure DefinirValoresPadroes;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
-    procedure ImportarSerialParams(const SerialParams: String);
-    procedure Apply(const AACBrDevice: TACBrDevice);
 
     property Baud: Integer read FBaud write FBaud;
     property Data: Integer read FData write FData;
     property TimeOut : Integer read FTimeOut write FTimeOut;
-    property Parity: TACBrSerialParity read FParity write FParity;
-    property Stop: TACBrSerialStop read FStop write FStop;
+    property Parity: Integer read FParity write FParity;
+    property Stop: Integer read FStop write FStop;
     property MaxBandwidth: Integer read  FMaxBandwidth write FMaxBandwidth;
     property SendBytesCount: Integer read  FSendBytesCount write FSendBytesCount;
     property SendBytesInterval: Integer read  FSendBytesInterval write FSendBytesInterval;
-    property HandShake: TACBrHandShake read FHandShake write FHandShake;
+    property HandShake: Integer read FHandShake write FHandShake;
     property SoftFlow: Boolean read FSoftFlow write FSoftFlow;
     property HardFlow: Boolean read FHardFlow write FHardFlow;
 
@@ -102,12 +99,12 @@ begin
   FBaud := 9600;
   FData := 8;
   FTimeOut := 3;
-  FParity := pNone;
-  FStop := s1;
+  FParity := 0;
+  FStop := 0;
   FMaxBandwidth := 0;
   FSendBytesCount := 0;
   FSendBytesInterval := 0;
-  FHandShake := hsNenhum;
+  FHandShake := 0;
   FHardFlow := False;
   FSoftFlow := False;
 end;
@@ -117,12 +114,12 @@ begin
   FBaud := AIni.ReadInteger(FSessao, CChaveBaud, FBaud);
   FData := AIni.ReadInteger(FSessao, CChaveData, FData);
   FTimeOut := AIni.ReadInteger(FSessao, CChaveTimeOut, FTimeOut);
-  FParity := TACBrSerialParity(AIni.ReadInteger(FSessao, CChaveParity, Integer(FParity)));
-  FStop := TACBrSerialStop(AIni.ReadInteger(FSessao, CChaveStop, Integer(FStop)));
+  FParity := AIni.ReadInteger(FSessao, CChaveParity, Integer(FParity));
+  FStop := AIni.ReadInteger(FSessao, CChaveStop, Integer(FStop));
   FMaxBandwidth := AIni.ReadInteger(FSessao, CChaveMaxBandwidth, FMaxBandwidth);
   FSendBytesCount := AIni.ReadInteger(FSessao, CChaveSendBytesCount, FSendBytesCount);
   FSendBytesInterval := AIni.ReadInteger(FSessao, CChaveSendBytesInterval, FSendBytesInterval);
-  FHandShake := TACBrHandShake(AIni.ReadInteger(FSessao, CChaveHandShake, Integer(FHandShake)));
+  FHandShake := AIni.ReadInteger(FSessao, CChaveHandShake, Integer(FHandShake));
   FHardFlow := AIni.ReadBool(FSessao, CChaveSoftFlow, FHardFlow);
   FSoftFlow := AIni.ReadBool(FSessao, CChaveHardFlow, FSoftFlow);
 end;
@@ -140,46 +137,6 @@ begin
   AIni.WriteInteger(FSessao, CChaveHandShake, Integer(FHandShake));
   AIni.WriteBool(FSessao, CChaveSoftFlow, FHardFlow);
   AIni.WriteBool(FSessao, CChaveHardFlow, FSoftFlow);
-end;
-
-procedure TDeviceConfig.ImportarSerialParams(const SerialParams: String);
-Var
-  Device: TACBrDevice;
-begin
-  Device := TACBrDevice.Create(nil);
-
-  try
-    Device.ParamsString := SerialParams;
-
-    Baud := Device.Baud;
-    Data := Device.Data;
-    TimeOut := Device.TimeOut;
-    Parity := Device.Parity;
-    Stop := Device.Stop;
-    MaxBandwidth := Device.MaxBandwidth;
-    SendBytesCount := Device.SendBytesCount;
-    SendBytesInterval := Device.SendBytesInterval;
-    HandShake := Device.HandShake;
-    HardFlow := Device.HardFlow;
-    SoftFlow := Device.SoftFlow;
-  finally
-    FreeAndNil(Device);
-  end;
-end;
-
-procedure TDeviceConfig.Apply(const AACBrDevice: TACBrDevice);
-begin
-  AACBrDevice.Baud := Baud;
-  AACBrDevice.Data := Data;
-  AACBrDevice.TimeOut := TimeOut;
-  AACBrDevice.Parity := Parity;
-  AACBrDevice.Stop := Stop;
-  AACBrDevice.MaxBandwidth := MaxBandwidth;
-  AACBrDevice.SendBytesCount := SendBytesCount;
-  AACBrDevice.SendBytesInterval := SendBytesInterval;
-  AACBrDevice.HandShake := HandShake;
-  AACBrDevice.HardFlow := HardFlow;
-  AACBrDevice.SoftFlow := SoftFlow;
 end;
 
 end.

@@ -860,8 +860,8 @@ begin
     VerificarNomeEPath(not ArquivoInformado);
     TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
 
-    //if FIni.FileName <> FNomeArquivo then
-    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
+    if FIni.FileName <> FNomeArquivo then
+      FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
 
     if not FileExists(FNomeArquivo) then
     begin
@@ -1006,8 +1006,6 @@ begin
     PosPrinter.GvTempoON := FMIni.ReadInteger(CSecGaveta, CKeyGavetaTempoON, PosPrinter.GvTempoON);
     PosPrinter.GvTempoOFF := FMIni.ReadInteger(CSecGaveta, CKeyGavetaTempoOFF, PosPrinter.GvTempoOFF);
     PosPrinter.GvSinalInvertido := FMIni.ReadBool(CSecGaveta, CKeyGavSinalInvertido, PosPrinter.GvSinalInvertido);
-
-    PosDeviceConfig.ImportarSerialParams(FIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
 
     ImportarIni(FMIni);
   finally

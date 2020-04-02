@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDeviceSerial,
   ACBrLibCHQConfig, ACBrLibComum, ACBrLibCHQClass;
 
 {$R *.lfm}
@@ -89,9 +89,19 @@ begin
     Porta := pLibConfig.CHQConfig.Porta;
     Modelo := pLibConfig.CHQConfig.Modelo;
     PaginaDeCodigo := pLibConfig.CHQConfig.PaginaDeCodigo;
-  end;
 
-  pLibConfig.DeviceConfig.Apply(ACBrCHQ1.Device);
+    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
+    Device.Data := pLibConfig.PosDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
+  end;
 end;
 
 procedure TLibCHQDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

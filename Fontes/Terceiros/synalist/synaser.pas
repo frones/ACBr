@@ -1699,7 +1699,11 @@ end;
 procedure TBlockSerial.SetCommState;
 begin
   DcbToTermios(dcb, termiosstruc);
-  SerialCheck(tcsetattr(FHandle, TCSANOW, termiosstruc));
+  {$IfDef POSIX}
+    ioctl(Fhandle, TCSANOW, PInteger(@TermiosStruc));
+  {$Else}
+    SerialCheck(tcsetattr(FHandle, TCSANOW, termiosstruc));
+  {$EndIf}
   ExceptCheck;
 end;
 {$ELSE}

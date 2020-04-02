@@ -5770,9 +5770,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel258: TRLLabel
         Left = 4
         Top = 160
-        Width = 171
+        Width = 185
         Height = 10
-        Caption = 'Instru'#231#245'es - Texto de responsabilidade do cedente.'
+        Caption = 'Instru'#231#245'es - Texto de responsabilidade do beneficiario.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

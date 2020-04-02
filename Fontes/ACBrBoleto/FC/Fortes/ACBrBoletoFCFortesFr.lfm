@@ -7156,7 +7156,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 160
         Width = 171
-        Caption = 'Instruções - Texto de responsabilidade do cedente.'
+        Caption = 'Instruções - Texto de responsabilidade do beneficiario.'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

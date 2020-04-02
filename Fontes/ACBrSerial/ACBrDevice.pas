@@ -518,6 +518,9 @@ Var
   Cmd, LowerString : AnsiString ;
   PosTag1, LenTag1, PosTag2, FimTag : Integer ;
   ATag: TACBrTag;
+  {$IfDef UNICODE}
+  CP: Integer;
+  {$EndIf}
 begin
   if not TraduzirTags then
   begin
@@ -525,60 +528,72 @@ begin
     Exit;
   end;
 
-  Result  := '';
-  Tag1    := '';
-  PosTag1 := 0;
-  FimTag  := 0;
-  LowerString := '';
-
-  AcharProximaTag( ABinaryString, FimTag+1, Tag1, PosTag1);
-  while Tag1 <> '' do
-  begin
-    Result := Result + copy(ABinaryString, FimTag+1, PosTag1-(FimTag+1));
-
-    LenTag1  := Length( Tag1 );
-    ATag     := FTags.AcharTag( Tag1 ) ;
-    Tag2     := '' ;
-
-    if ATag <> Nil then
-    begin
-      if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
-      begin
-        Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
-        if (LowerString = '') then
-          LowerString := LowerCase(ABinaryString);
-
-        PosTag2 := PosEx(Tag2, LowerString, PosTag1+LenTag1 );
-
-        if PosTag2 = 0 then             // Não achou Tag de Fechamento
-        begin
-          Tag2 := '';
-          Cmd  := '';
-        end
-        else
-        begin
-          Cmd := TraduzirTagBloco( Tag1, copy(ABinaryString, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
-
-          // Faz da Tag1, todo o Bloco para fazer a substituição abaixo //
-          LenTag1 := PosTag2-PosTag1+LenTag1+1;
-          Tag1    := copy(ABinaryString, PosTag1, LenTag1 )
-        end;
-      end
-      else
-        Cmd := TraduzirTag( Tag1 ) ;
-    end
-    else
-      Cmd := Tag1;   // Tag não existe nesse TagProcessor
-
-    Result := Result + Cmd;
-    FimTag := PosTag1 + LenTag1 -1 ;
-
+  {$IfDef UNICODE}
+  CP := DefaultSystemCodePage;
+  {$EndIf}
+  try
+    {$IfDef UNICODE}
+    DefaultSystemCodePage := 437;  // DEFAULT ANSI
+    {$EndIf}
+    Result  := '';
     Tag1    := '';
     PosTag1 := 0;
-    AcharProximaTag( ABinaryString, FimTag + 1, Tag1, PosTag1 );
-  end;
+    FimTag  := 0;
+    LowerString := '';
 
-  Result := Result + copy(ABinaryString, FimTag+1, Length(ABinaryString));
+    AcharProximaTag( ABinaryString, FimTag+1, Tag1, PosTag1);
+    while Tag1 <> '' do
+    begin
+      Result := Result + copy(ABinaryString, FimTag+1, PosTag1-(FimTag+1));
+
+      LenTag1  := Length( Tag1 );
+      ATag     := FTags.AcharTag( Tag1 ) ;
+      Tag2     := '' ;
+
+      if ATag <> Nil then
+      begin
+        if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
+        begin
+          Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
+          if (LowerString = '') then
+            LowerString := LowerCase(ABinaryString);
+
+          PosTag2 := PosEx(Tag2, LowerString, PosTag1+LenTag1 );
+
+          if PosTag2 = 0 then             // Não achou Tag de Fechamento
+          begin
+            Tag2 := '';
+            Cmd  := '';
+          end
+          else
+          begin
+            Cmd := TraduzirTagBloco( Tag1, copy(ABinaryString, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
+
+            // Faz da Tag1, todo o Bloco para fazer a substituição abaixo //
+            LenTag1 := PosTag2-PosTag1+LenTag1+1;
+            Tag1    := copy(ABinaryString, PosTag1, LenTag1 )
+          end;
+        end
+        else
+          Cmd := TraduzirTag( Tag1 ) ;
+      end
+      else
+        Cmd := Tag1;   // Tag não existe nesse TagProcessor
+
+      Result := Result + Cmd;
+      FimTag := PosTag1 + LenTag1 -1 ;
+
+      Tag1    := '';
+      PosTag1 := 0;
+      AcharProximaTag( ABinaryString, FimTag + 1, Tag1, PosTag1 );
+    end;
+
+    Result := Result + copy(ABinaryString, FimTag+1, Length(ABinaryString));
+  finally
+    {$IfDef UNICODE}
+    DefaultSystemCodePage := CP;
+    {$EndIf}
+  end;
 end;
 
 function TACBrTagProcessor.TraduzirTag(const ATag: AnsiString): AnsiString;

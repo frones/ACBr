@@ -144,14 +144,13 @@ METHOD Desativar() CLASS ACBrBAL
     RETURN nil
 
 METHOD LePeso(MillisecTimeOut) CLASS ACBrBAL
-    local hResult
-    local ePeso
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen) 
 
-    ePeso := 0.00
-
-    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_LePeso", MillisecTimeOut, @ePeso)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_LePesoStr", MillisecTimeOut, @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ePeso
+    RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD SolicitarPeso() CLASS ACBrBAL
     local hResult
@@ -160,21 +159,19 @@ METHOD SolicitarPeso() CLASS ACBrBAL
     RETURN nil
 
 METHOD UltimoPesoLido() CLASS ACBrBAL
-    local hResult
-    local ePeso
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen) 
 
-    ePeso := 0.00
-
-    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_UltimoPesoLido", @ePeso)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_UltimoPesoLidoStr", @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ePeso
+    RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD InterpretarRespostaPeso(Resposta) CLASS ACBrBAL
-    local hResult
-    local ePeso
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen) 
 
-    ePeso := 0.00
-
-    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_InterpretarRespostaPeso", hb_StrToUTF8(Resposta), @ePeso)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_InterpretarRespostaPesoStr", hb_StrToUTF8(Resposta), @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ePeso
+    RETURN ::ProcessResult(buffer, bufferLen)

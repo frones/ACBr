@@ -63,9 +63,12 @@ exports
   BAL_Ativar,
   BAL_Desativar,
   BAL_LePeso,
+  BAL_LePesoStr,
   BAL_SolicitarPeso,
   BAL_UltimoPesoLido,
-  BAL_InterpretarRespostaPeso;
+  BAL_UltimoPesoLidoStr,
+  BAL_InterpretarRespostaPeso,
+  BAL_InterpretarRespostaPesoStr;
 
 begin
   {$IFDEF DEBUG}

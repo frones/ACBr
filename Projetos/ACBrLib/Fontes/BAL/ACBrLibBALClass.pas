@@ -93,11 +93,17 @@ function BAL_Desativar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_UltimoPesoLido(var Peso: Double): longint;
-      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
@@ -107,7 +113,7 @@ function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longin
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibBALConsts, ACBrLibConfig, ACBrLibBALConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibBALConfig;
 
 { TACBrLibBAL }
 
@@ -291,6 +297,42 @@ begin
   end;
 end;
 
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Peso: Double;
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('BAL_LePesoStr( ' + IntToStr(MillisecTimeOut) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('BAL_LePesoStr', logNormal);
+
+    with TACBrLibBAL(pLib) do
+    begin
+      BALDM.Travar;
+
+      try
+        Peso := BALDM.ACBrBAL1.LePeso(MillisecTimeOut);
+        Resposta := FloatToStr(Peso);
+        MoverStringParaPChar(Resposta, sValor, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        BALDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -344,6 +386,38 @@ begin
   end;
 end;
 
+function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Peso: Double;
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('BAL_UltimoPesoLidoStr', logNormal);
+
+    with TACBrLibBAL(pLib) do
+    begin
+      BALDM.Travar;
+      try
+        Peso := BALDM.ACBrBAL1.UltimoPesoLido;
+        Resposta := FloatToStr(Peso);
+        MoverStringParaPChar(Resposta, sValor, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        BALDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
@@ -364,6 +438,43 @@ begin
       try
         Peso := BALDM.ACBrBAL1.InterpretarRepostaPeso(AResposta);
         Result := SetRetorno(ErrOK);
+      finally
+        BALDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  AResposta: AnsiString;
+  Peso: Double;
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+    AResposta := AnsiString(eResposta);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('BAL_InterpretarRespostaPesoStr( ' + AResposta + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('BAL_InterpretarRespostaPesoStr', logNormal);
+
+    with TACBrLibBAL(pLib) do
+    begin
+      BALDM.Travar;
+      try
+        Peso := BALDM.ACBrBAL1.InterpretarRepostaPeso(AResposta);
+        Resposta := FloatToStr(Peso);
+        MoverStringParaPChar(Resposta, sValor, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         BALDM.Destravar;
       end;

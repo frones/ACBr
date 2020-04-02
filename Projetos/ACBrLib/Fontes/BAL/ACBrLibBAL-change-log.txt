@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2020
+--- ACBrLibBALClass ---
+[+] Adicionado os métodos BAL_LePesoStr, BAL_UltimoPesoLidoStr e BAL_InterpretarRespostaPesoStr, para ser usadas em linguagens de programação que não tem tipagem. Ex.: [x]Harbour.
+   Por: Rafael Teno Dias
+
 03/01/2020
 --- ACBrLibBALClass ---
 --- ACBrLibBALConfig ---

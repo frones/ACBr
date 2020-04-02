@@ -44,6 +44,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] ACBrMonitor1
+Remoção da propriedade PathArquivoMunicipios
+
 [+] ACBrMonitor1
 Adicionado funcionalidade de validar Variaveis na Mensagem personalizada do canhoto de NFe.
 

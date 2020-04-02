@@ -9555,11 +9555,11 @@ end;
 procedure TFrmACBrMonitor.SetComumConfig(Configuracoes: TConfiguracoes);
 var
   OK: boolean;
-  PathMunIBGE: String;
+  //PathMunIBGE: String;
   PathSchemaDFe: String;
 begin
   PathSchemaDFe := '';
-  PathMunIBGE := PathWithDelim(ExtractFilePath(Application.ExeName)) + 'MunIBGE' + PathDelim ;
+  //PathMunIBGE := PathWithDelim(ExtractFilePath(Application.ExeName)) + 'MunIBGE' + PathDelim ;
   with Configuracoes do
   begin
     with Geral do
@@ -9708,7 +9708,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
-    TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+    //TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
     TConfiguracoesNFe(Configuracoes).Geral.CamposFatObrigatorios    := ckCamposFatObrigatorio.Checked;
     TConfiguracoesNFe(Configuracoes).Geral.ForcarGerarTagRejeicao938 := TForcarGeracaoTag(cbTagRejeicao938.ItemIndex);
 
@@ -9731,7 +9731,7 @@ begin
     TConfiguracoesCTe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.SalvarApenasCTeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
-    TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+    //TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
 
     PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'CTe';
     if DirectoryExists(PathSchemaDFe) then
@@ -9751,7 +9751,7 @@ begin
     TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarApenasMDFeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
-    TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+    //TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
 
     PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'MDFe';
     if DirectoryExists(PathSchemaDFe) then
@@ -9771,7 +9771,7 @@ begin
     TConfiguracoesBPe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.SalvarApenasBPeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
-    TConfiguracoesBPe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+    //TConfiguracoesBPe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
 
     PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'BPe';
     if DirectoryExists(PathSchemaDFe) then

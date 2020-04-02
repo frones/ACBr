@@ -431,11 +431,11 @@ begin
     AfileName := 'ACBrIBGE.txt';
 
   if EstaVazio(APathArqMun) then
-    PathArqMun := ApplicationPath + 'MunIBGE'
+    PathArqMun := ApplicationPath
   else
     PathArqMun := APathArqMun;
 
-  Result.CacheArquivo := PathWithDelim(APathArqMun) + AfileName ;
+  Result.CacheArquivo := PathWithDelim(PathArqMun) + AfileName ;
 end;
 
 function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;

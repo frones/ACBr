@@ -100,7 +100,7 @@ type
     procedure SetAttribute(AName, AContent: string);
     procedure SetNamespace(AHref: string; APrefix: string = '');
 
-    function AddChild(AName: string; ANamespace: string = ''): TACBrXmlNode;
+    function AddChild(AName: string; ANamespace: string = ''; APrefixNamespace: string = ''): TACBrXmlNode;
     function GetNextNamespace(var ANamespace: TACBrXmlNamespace): boolean;
     function GetNextChild(var ANode: TACBrXmlNode): boolean;
     function GetNextAttribute(var AAttribute: TACBrXmlAttribute): boolean;
@@ -291,7 +291,7 @@ type
     constructor Create(AName: string = ''; ANamespace: string = ''; APrefixNamespace: string = '');
     destructor Destroy; override;
 
-    function CreateElement(AName: string; ANamespace: string = ''): TACBrXmlNode;
+    function CreateElement(AName: string; ANamespace: string = ''; APrefixNamespace: string = ''): TACBrXmlNode;
 
     procedure Clear();
     procedure SaveToFile(AFilename: string);
@@ -391,9 +391,9 @@ begin
   FXmlCdataNode := cdataNode;
 end;
 
-function TACBrXmlNode.AddChild(AName: string; ANamespace: string): TACBrXmlNode;
+function TACBrXmlNode.AddChild(AName: string; ANamespace: string; APrefixNamespace: string = ''): TACBrXmlNode;
 begin
-  Result := FXmlDoc.CreateElement(AName, ANamespace);
+  Result := FXmlDoc.CreateElement(AName, ANamespace, APrefixNamespace);
   AppendChild(Result);
 end;
 
@@ -1016,9 +1016,9 @@ begin
   if xmlRootElement <> nil then FreeAndNil(xmlRootElement);
 end;
 
-function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string): TACBrXmlNode;
+function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string; APrefixNamespace: string): TACBrXmlNode;
 var
-  Namespace, NodeName: PAnsichar;
+  NodeName: PAnsichar;
 begin
   Result := nil;
   NodeName := PAnsichar(ansistring(AName));
@@ -1026,8 +1026,7 @@ begin
   Result := TACBrXmlNode.Create(Self, xmlNewDocNode(xmlDocInternal, nil, NodeName, nil));
   if ANamespace <> EmptyStr then
   begin
-    Namespace := PAnsichar(ansistring(ANamespace));
-    xmlSetNs(Result.FXmlNode, xmlNewNs(Result.FXmlNode, Namespace, nil));
+    Result.SetNamespace(ANamespace, APrefixNamespace);
   end;
 end;
 

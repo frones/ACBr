@@ -57,7 +57,6 @@ resourcestring
   DSC_CPF = 'CPF';
 
 type
- {$M+}
   { TACBrXmlWriterOptions }
   TACBrXmlWriterOptions = class
   private
@@ -68,11 +67,11 @@ type
     FIdentarXML: Boolean;
     FSuprimirDecimais: Boolean;
     FFormatoAlerta: string;
+    FQuebraLinha: string;
 
   public
     constructor Create;
 
-  published
     property DecimalChar: Char read FDecimalChar write FDecimalChar;
     property SomenteValidar: Boolean read FSomenteValidar write FSomenteValidar default False;
     property RetirarEspacos: Boolean read FRetirarEspacos write FRetirarEspacos default True;
@@ -80,9 +79,9 @@ type
     property IdentarXML: Boolean read FIdentarXML write FIdentarXML default False;
     property SuprimirDecimais: Boolean read FSuprimirDecimais write FSuprimirDecimais default False;
     property FormatoAlerta: string read FFormatoAlerta write FFormatoAlerta;
+    property QuebraLinha: string read FQuebraLinha write FQuebraLinha;
 
   end;
- {$M-}
 
   { TACBrXmlWriter }
   TACBrXmlWriter = class
@@ -99,10 +98,12 @@ type
       obrigatorio: boolean): TACBrXmlNode;
     function AddNodeCPF(const ID: string; CPF: string; const cPais: integer;
       obrigatorio: boolean): TACBrXmlNode;
+    function CreateElement(AName: string; ANamespace: string = '';
+      APrefixNamespace: string = ''): TACBrXmlNode; virtual;
     function AddNode(const Tipo: TpcnTipoCampo; ID, TAG: string;
       const min, max, ocorrencias: smallint; const valor: variant;
       const Descricao: string = ''; ParseTextoXML: boolean = True;
-      Atributo: string = ''): TACBrXmlNode;
+      Atributo: string = ''): TACBrXmlNode; virtual;
     procedure wAlerta(const ID, TAG, Descricao, Alerta: string);
     function GerarSignature(const Signature: TSignature): TACBrXmlNode;
     function CreateOptions: TACBrXmlWriterOptions; virtual; abstract;
@@ -233,6 +234,12 @@ begin
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;
 
+function TACBrXmlWriter.CreateElement(AName: string; ANamespace: string;
+  APrefixNamespace: string): TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement(AName, ANamespace,  APrefixNamespace);
+end;
+
 function TACBrXmlWriter.AddNode(const Tipo: TpcnTipoCampo; ID, TAG: string;
   const min, max, ocorrencias: smallint; const valor: variant;
   const Descricao: string = ''; ParseTextoXML: boolean = True;
@@ -253,6 +260,9 @@ var
   AttSplit: TSplitResult;
 begin
   Result := nil;
+
+  if ocorrencias < 0 then Exit;
+
   ID := Trim(ID);
   Tag := Trim(TAG);
   Atributo := Trim(Atributo);
@@ -435,7 +445,7 @@ begin
 
     if ParseTextoXML then
       Result.Content := FiltrarTextoXML(FOpcoes.RetirarEspacos,
-        ConteudoProcessado, FOpcoes.RetirarAcentos)
+        ConteudoProcessado, FOpcoes.RetirarAcentos, True, FOpcoes.FQuebraLinha)
     else
       Result.Content := ConteudoProcessado;
 
@@ -471,13 +481,11 @@ function TACBrXmlWriter.GerarSignature(const Signature: TSignature): TACBrXmlNod
 var
   xmlNode, xmlNodeAux: TACBrXmlNode;
 begin
-  Result := FDocument.CreateElement('Signature',
-    'http://www.w3.org/2000/09/xmldsig#');
+  Result := FDocument.CreateElement('Signature', 'http://www.w3.org/2000/09/xmldsig#');
   xmlNode := Result.AddChild('SignedInfo');
 
   xmlNodeAux := xmlNode.AddChild('CanonicalizationMethod');
-  xmlNodeAux.SetAttribute('Algorithm',
-    'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
+  xmlNodeAux.SetAttribute('Algorithm', 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
 
   xmlNodeAux := xmlNode.AddChild('SignatureMethod');
   xmlNodeAux.SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#rsa-sha1');
@@ -486,13 +494,10 @@ begin
   xmlNode.SetAttribute('URI', Signature.URI);
 
   xmlNodeAux := xmlNode.AddChild('Transforms');
-  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm',
-    'http://www.w3.org/2000/09/xmldsig#enveloped-signature');
-  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm',
-    'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
+  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#enveloped-signature');
+  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm', 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
 
-  xmlNode.AddChild('DigestMethod').SetAttribute('Algorithm',
-    'http://www.w3.org/2000/09/xmldsig#sha1');
+  xmlNode.AddChild('DigestMethod').SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#sha1');
   xmlNode.AddChild('DigestValue').Content := Signature.DigestValue;
 
   Result.AddChild('SignatureValue').Content := Signature.SignatureValue;

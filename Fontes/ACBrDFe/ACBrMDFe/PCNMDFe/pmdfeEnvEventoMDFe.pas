@@ -230,7 +230,7 @@ begin
    tePagamentoOperacao:
      begin
        Gerador.wGrupo('evPagtoOperMDFe');
-       Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 13, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 24, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'HP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
 
        Gerador.wGrupo('infViagens', '#');

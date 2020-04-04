@@ -10,7 +10,8 @@ uses
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
   FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
   ACBrMail, ACBrBase, ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
-  ACBrNFeDANFeESCPOS, ACBrPosPrinter, ACBrDFe, ACBrNFe;
+  ACBrNFeDANFeESCPOS, ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrIBGE, ACBrSocket,
+  ACBrCEP, FMX.Objects, FMX.Effects;
 
 type
   TACBrNFCeTestForm = class(TForm)
@@ -224,6 +225,14 @@ type
     sbAcharCEP: TSpeedButton;
     lEmitcUF: TLabel;
     lEmitcMun: TLabel;
+    ACBrCEP1: TACBrCEP;
+    ACBrIBGE1: TACBrIBGE;
+    lWait: TLayout;
+    AniIndicator1: TAniIndicator;
+    Rectangle1: TRectangle;
+    RoundRect1: TRoundRect;
+    lMsgAguarde: TLabel;
+    ShadowEffect1: TShadowEffect;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -244,6 +253,9 @@ type
     procedure sbCertVerSenhaClick(Sender: TObject);
     procedure seProxyVerSenhaClick(Sender: TObject);
     procedure swWebServiceAmbienteSwitch(Sender: TObject);
+    procedure sbAcharCEPClick(Sender: TObject);
+    procedure cbxEmitUFChange(Sender: TObject);
+    procedure cbxEmitCidadeChange(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -253,6 +265,10 @@ type
     procedure GravarINI;
     procedure ConfigurarACBr;
     function PedirPermissoes: Boolean;
+    procedure IniciarTelaDeEspera(const AMsg: String = '');
+    procedure TerminarTelaDeEspera;
+    procedure ConsultarCEP;
+    procedure CarregarListaDeCidades;
   public
     { Public declarations }
   end;
@@ -266,10 +282,11 @@ uses
   System.typinfo, System.IniFiles, System.StrUtils, System.Permissions,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
+  Androidapi.JNI.Widget,
   {$EndIf}
   FMX.DialogService, FMX.Platform,
   ssl_openssl_lib, blcksock,
-  ACBrUtil, ACBrConsts,
+  ACBrUtil, ACBrConsts, ACBrValidador, pcnConversao,
   FileSelectFr, System.Math;
 
 {$R *.fmx}
@@ -339,6 +356,17 @@ begin
   {$EndIf}
 
   Result := Ok;
+end;
+
+procedure TACBrNFCeTestForm.sbAcharCEPClick(Sender: TObject);
+var
+  Erro: String;
+begin
+  if edtEmitCEP.Text.IsEmpty then
+    Exit;
+
+  IniciarTelaDeEspera;
+  TThread.CreateAnonymousThread(ConsultarCEP).Start;
 end;
 
 procedure TACBrNFCeTestForm.sbCertAcharPFXClick(Sender: TObject);
@@ -479,6 +507,56 @@ begin
   Result := ApplicationPath + 'ACBrNFeTeste.ini';
 end;
 
+procedure TACBrNFCeTestForm.CarregarListaDeCidades;
+var
+  Cidade: string;
+  i, cUF: Integer;
+begin
+  try
+    try
+      cUF := UFtoCUF(cbxEmitUF.Selected.Text);
+      ACBrIBGE1.BuscarPorcUF( cUF );
+      cbxEmitCidade.Items.Clear;
+      for i := 0 to ACBrIBGE1.Cidades.Count-1 do
+      begin
+        Cidade := ACBrIBGE1.Cidades[i].Municipio;
+        cbxEmitCidade.Items.Add(Cidade);
+        cbxEmitCidade.items.Objects[i] := ACBrIBGE1.ListaCidades[i];
+      end;
+    except
+      TThread.Synchronize(nil, procedure
+      begin
+        lMsgAguarde.Text := 'Erro ao carregar cidades';
+      end);
+      sleep(1500);
+    end;
+  finally
+    TThread.Synchronize(nil, procedure
+    begin
+      TerminarTelaDeEspera;
+    end);
+  end;
+end;
+
+procedure TACBrNFCeTestForm.cbxEmitCidadeChange(Sender: TObject);
+begin
+  if Assigned(cbxEmitCidade.Selected) then
+    lEmitcMun.Text := TACBrIBGECidade(cbxEmitCidade.Items.Objects[cbxEmitCidade.Selected.Index]).CodMunicipio.ToString;
+end;
+
+procedure TACBrNFCeTestForm.cbxEmitUFChange(Sender: TObject);
+var
+  cUF: Integer;
+begin
+  if Assigned(cbxEmitUF.Selected) then
+  begin
+    cUF := UFtoCUF(cbxEmitUF.Selected.Text);
+    lEmitcUF.Text := IntToStrZero(cUF, 2);
+    IniciarTelaDeEspera('Carregando Cidades');
+    TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
+  end;
+end;
+
 procedure TACBrNFCeTestForm.sbEmailMostrarSenhaClick(Sender: TObject);
 begin
   edtEmailPassword.Password := not sbEmailMostrarSenha.IsPressed;
@@ -523,6 +601,43 @@ begin
   ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbImprimirDescAcres.IsChecked;
 
+end;
+
+procedure TACBrNFCeTestForm.ConsultarCEP;
+var
+  Erro: string;
+begin
+  Erro := '';
+  try
+    try
+      ACBrCEP1.BuscarPorCEP(OnlyNumber(edtEmitCEP.Text));
+    except
+      TThread.Synchronize(nil, procedure
+      begin
+        lMsgAguarde.Text := 'Erro ao consultar o CEP: '+edtEmitCEP.Text;
+      end);
+      Sleep(1500);
+    end;
+  finally
+    TThread.Synchronize(nil, procedure
+    begin
+      if (ACBrCEP1.Enderecos.Count > 0) then
+      begin
+        with ACBrCEP1.Enderecos[0] do
+        begin
+          edtEmitLogradouro.Text := Tipo_Logradouro + ' ' + Logradouro;
+          edtEmitBairro.Text := Bairro;
+          edtEmitCEP.Text := CEP;
+          edtEmitComp.Text := Complemento;
+          cbxEmitUF.ItemIndex := cbxEmitUF.Items.IndexOf(UF);  // Atualiza Cidades em cbxEmitUFChange
+          cbxEmitCidade.ItemIndex := cbxEmitCidade.Items.IndexOf(Municipio);
+          edtEmitNumero.SetFocus;
+        end;
+      end;
+
+      TerminarTelaDeEspera;
+    end);
+  end;
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -636,6 +751,24 @@ begin
   finally
     Ini.Free;
   end;
+end;
+
+procedure TACBrNFCeTestForm.IniciarTelaDeEspera(const AMsg: String);
+begin
+  if not AMsg.IsEmpty then
+    lMsgAguarde.Text := AMsg
+  else
+    lMsgAguarde.Text := 'Aguarde Processando...';
+
+  lWait.Visible := True;
+  AniIndicator1.Enabled := True;
+  lWait.BringToFront;
+end;
+
+procedure TACBrNFCeTestForm.TerminarTelaDeEspera;
+begin
+  lWait.Visible := False;
+  AniIndicator1.Enabled := False;
 end;
 
 procedure TACBrNFCeTestForm.LerINI;

@@ -187,7 +187,7 @@ TAnsiStringList = class
 
 { TACBrObjectList }
 
-TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
+  TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
   protected
     fIsSorted: Boolean;
   public
@@ -879,15 +879,14 @@ end;
 
 function THttpHeader.AddHeader(const AHeader, AValue: string): Integer;
 var
-  I: Integer;
   LinhaHeader: String;
 begin
   LinhaHeader := AHeader + ': ' + AValue;
-  I := GetHeaderIndex(AHeader);
-  if I < 0 then
-    Add(LinhaHeader)
+  Result := GetHeaderIndex(AHeader);
+  if Result < 0 then
+    Result := Add(LinhaHeader)
   else
-    Strings[I] := LinhaHeader;
+    Strings[Result] := LinhaHeader;
 end;
 
 end.

@@ -133,6 +133,8 @@ var
   RequestFlags: DWORD;
 begin
   Result := inherited InternalOpenRequest;
+  if not Result then
+    Exit;
 
   if (UseSSL) then
   begin

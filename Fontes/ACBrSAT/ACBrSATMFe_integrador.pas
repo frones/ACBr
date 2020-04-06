@@ -265,7 +265,7 @@ function TACBrSATMFe_integrador_XML.ConsultarStatusOperacional : String ;
 begin
   FIntegrador.Clear;
   FIntegrador.NomeComponente := cNomeComponente;
-  FIntegrador.NomeMetodo := 'ConsultarStatusOperacional';
+  FIntegrador.NomeMetodo := 'ConsultarStatusOperacionalMFE';
   FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
   Result := FIntegrador.Enviar;
 end ;

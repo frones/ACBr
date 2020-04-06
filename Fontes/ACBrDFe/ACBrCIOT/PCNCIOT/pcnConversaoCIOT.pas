@@ -515,6 +515,14 @@ end;
 
 function TipoCargaToStr(const t: tpTipoCarga): string;
 begin
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                               '10', '11'],
+                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
+                               tpConteinerizada, tpCargaGeral, tpNeogranel,
+                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
+                               tpPerigosaCargaFrigorificada,
+                               tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
+{
   Result := EnumeradoToStr(t, ['Granel sólido - HML', 'Granel líquido - HML',
                                'Frigorificada - HML', 'Conteinerizada - HML',
                                'Carga Geral - HML', 'Neogranel - HML',
@@ -528,6 +536,7 @@ begin
                                tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
                                tpPerigosaCargaFrigorificada,
                                tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
+}
 end;
 
 function StrToTipoCarga(out ok: Boolean; const s: String): tpTipoCarga;

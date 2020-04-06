@@ -360,7 +360,7 @@
     </xsd:complexType>
 
 	 
-	 <xsd:complexType name="tcItemProduto">
+    <xsd:complexType name="tcItemProduto">
 	<xsd:sequence>
 	   <xsd:element type="tsValor" name="ItemQuantidade"/>
 	   <xsd:element type="xsd:string" name="ItemUnidade"/>
@@ -417,7 +417,7 @@
             <xsd:element name="Servico" type="tcDadosServico" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="Produtos" type="tcDadosProdutos" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="Itens" type="tcDadosServicos" minOccurs="0" maxOccurs="1"/>
-			<xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
+	    <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="Tomador" type="tcDadosTomador" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>

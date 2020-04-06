@@ -863,6 +863,7 @@ const
   CKeyIgnorarComandoModoEmissao =     'IgnorarComandoModoEmissao';
   CKeyModoXML =                       'ModoXML';
   CKeyRetirarAcentos =                'RetirarAcentos';
+  CKeyRetirarEspacos =                'RetirarEspacos';
   CKeyGravar_Log_Comp =               'Gravar_Log_Comp';
   CKeyArquivo_Log_Comp =              'Arquivo_Log_Comp';
   CKeyLinhas_Log_Comp =               'Linhas_Log_Comp';

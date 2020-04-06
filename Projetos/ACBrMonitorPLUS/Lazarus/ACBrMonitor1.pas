@@ -268,6 +268,7 @@ type
     cbFormaEmissaoBPe: TComboBox;
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
+    cbRetirarEspacos: TCheckBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
     cbxExibeResumo: TCheckBox;
@@ -4785,6 +4786,7 @@ begin
     ACBrBPeDABPeESCPOS1.PosPrinter.Device.Desativar;
 
     cbRetirarAcentos.Checked           := RetirarAcentos;
+    cbRetirarEspacos.Checked           := RetirarEspacos;
     edLogComp.Text                     := Arquivo_Log_Comp;
     cbLogComp.Checked                  := Gravar_Log_Comp;
     sedLogLinhasComp.Value             := Linhas_Log_Comp;
@@ -5972,6 +5974,7 @@ begin
     begin
       IgnorarComandoModoEmissao := cbModoEmissao.Checked;
       RetirarAcentos            := cbRetirarAcentos.Checked;
+      RetirarEspacos            := cbRetirarEspacos.Checked;
       Gravar_Log_Comp           := cbLogComp.Checked;
       Arquivo_Log_Comp          := edLogComp.Text;
       Linhas_Log_Comp           := sedLogLinhasComp.Value;
@@ -9628,6 +9631,7 @@ begin
 
       ValidarDigest  := cbValidarDigest.Checked;
       RetirarAcentos := cbRetirarAcentos.Checked;
+      RetirarEspacos := cbRetirarEspacos.Checked;
     end;
 
     with Certificados do

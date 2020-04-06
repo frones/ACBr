@@ -44,6 +44,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade para RemoverEspaços do XML
+
 [*] ACBrMonitor1
 Remoção da propriedade PathArquivoMunicipios
 

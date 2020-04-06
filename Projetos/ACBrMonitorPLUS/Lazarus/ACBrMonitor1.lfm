@@ -7570,7 +7570,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object cbValidarDigest: TCheckBox
                   Left = 8
                   Height = 21
-                  Top = 18
+                  Top = 40
                   Width = 244
                   Caption = 'Validar Digest Value ao consultar XML'
                   Font.Height = -13
@@ -7603,6 +7603,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                   TabOrder = 2
                   Value = 15
+                end
+                object cbRetirarEspacos: TCheckBox
+                  Left = 8
+                  Height = 21
+                  Top = 20
+                  Width = 160
+                  Caption = 'Retirar Espaços no XML'
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 3
                 end
               end
               object gbDFeTimeZone: TGroupBox
@@ -16541,6 +16551,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0

@@ -411,6 +411,7 @@ type
     IgnorarComandoModoEmissao: Boolean;
     ModoXML           : Boolean;
     RetirarAcentos    : Boolean;
+    RetirarEspacos    : Boolean;
     Gravar_Log_Comp   : Boolean;
     Arquivo_Log_Comp  : String;
     Linhas_Log_Comp   : Integer;
@@ -929,6 +930,7 @@ begin
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyIgnorarComandoModoEmissao, IgnorarComandoModoEmissao );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyModoXML, ModoXML );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyRetirarAcentos, RetirarAcentos );
+      Ini.WriteBool( CSecACBrNFeMonitor, CKeyRetirarEspacos, RetirarEspacos );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyGravar_Log_Comp, Gravar_Log_Comp );
       Ini.WriteString( CSecACBrNFeMonitor, CKeyArquivo_Log_Comp, Arquivo_Log_Comp );
       Ini.WriteInteger( CSecACBrNFeMonitor, CKeyLinhas_Log_Comp, Linhas_Log_Comp );
@@ -1611,6 +1613,7 @@ begin
       IgnorarComandoModoEmissao := Ini.ReadBool( CSecACBrNFeMonitor, CKeyIgnorarComandoModoEmissao, IgnorarComandoModoEmissao );
       ModoXML                   := Ini.ReadBool( CSecACBrNFeMonitor, CKeyModoXML, ModoXML );
       RetirarAcentos            := Ini.ReadBool( CSecACBrNFeMonitor, CKeyRetirarAcentos, RetirarAcentos );
+      RetirarEspacos            := Ini.ReadBool( CSecACBrNFeMonitor, CKeyRetirarEspacos, RetirarEspacos );
       Gravar_Log_Comp           := Ini.ReadBool( CSecACBrNFeMonitor, CKeyGravar_Log_Comp, Gravar_Log_Comp );
       Arquivo_Log_Comp          := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivo_Log_Comp, Arquivo_Log_Comp );
       Linhas_Log_Comp           := Ini.ReadInteger( CSecACBrNFeMonitor, CKeyLinhas_Log_Comp, Linhas_Log_Comp );
@@ -2280,6 +2283,7 @@ begin
     IgnorarComandoModoEmissao := False;
     ModoXML                   := False;
     RetirarAcentos            := True;
+    RetirarEspacos            := False;
     Gravar_Log_Comp           := False;
     Arquivo_Log_Comp          := 'LOG_COMP.TXT';
     Linhas_Log_Comp           := 0;

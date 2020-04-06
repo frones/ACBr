@@ -218,6 +218,9 @@ type
 
     property Cidades: TACBrIBGECidades read fCidadesEncontradas ;
 
+    function BuscarPorcUF( const AcUF: Integer ) : Integer ;
+    function BuscarPorUF( const AUF: string ) : Integer ;
+
     function BuscarPorCodigo( const ACodMun : Integer ) : Integer ;
     function BuscarPorNome( const ACidade : String; const AUF: String = '';
       const Exata: Boolean = False) : Integer ;
@@ -1092,6 +1095,31 @@ begin
   Result := fCidadesEncontradas.Count;
 end ;
 
+function TACBrIBGE.BuscarPorcUF(const AcUF: Integer): Integer;
+var
+  I, CidadeMin: Integer;
+begin
+  RespHTTP.Clear;
+  fCidadesEncontradas.Clear;
+  ObterCidades( AcUF );
+
+  CidadeMin := AcUF * 100000;
+  I := fListaCidades.Find(CidadeMin, False);
+  if (I >= 0) then
+  begin
+    while (I < fListaCidades.Count) and (fListaCidades[I].CodUF = AcUF) do
+    begin
+      fCidadesEncontradas.Copy(fListaCidades[I]);
+      Inc(I);
+    end;
+  end;
+
+  Result := fCidadesEncontradas.Count;
+
+  if Assigned( OnBuscaEfetuada ) then
+     OnBuscaEfetuada( Self );
+end;
+
 function TACBrIBGE.BuscarPorNome(const ACidade: String; const AUF: String;
   const Exata: Boolean): Integer;
 var
@@ -1149,6 +1177,11 @@ begin
   if Assigned( OnBuscaEfetuada ) then
      OnBuscaEfetuada( Self );
 end ;
+
+function TACBrIBGE.BuscarPorUF(const AUF: string): Integer;
+begin
+  Result := BuscarPorcUF( UFToCodUF(Trim(AUF)) );
+end;
 
 procedure TACBrIBGE.ObterCidades;
 var

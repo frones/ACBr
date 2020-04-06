@@ -36,6 +36,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2020
+-- ACBrIBGE --
+[+] Adicionado os métodos:
+    function BuscarPorcUF( const AcUF: Integer ) : Integer ;
+    function BuscarPorUF( const AUF: string ) : Integer ;
+    - Que permitem carregar Todas as Cidades, de uma UF. Útil para criar listas
+    de Cidades, por UF.
+    (por: DSA)
+
 01/04/2020
 -- ACBrIBGE --
 [-] Correção para tratamento de Encoding, quando Resultado não está compactado

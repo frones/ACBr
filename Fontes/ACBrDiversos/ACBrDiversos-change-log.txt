@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2020
+-- ACBrValidador --
+[+] Adicionado o método "FormatarMascaraDinamica"
+   Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
+   Útil para criar rotinas de Formatação de Mascara durante OnTyping, OnChange
+
+-- ACBrCargaBal, ACBrTroco --
+[*] Ajustes para compilação em Android NEXTGEN
+    (por: DSA)
+
 29/08/2018
 -- ACBrValidador --
 [*] https://www.projetoacbr.com.br/forum/topic/53119-poss%C3%ADvel-erro-no-acbrvalidador/

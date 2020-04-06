@@ -37,7 +37,14 @@ unit ACBrCargaBal;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase;
 
 type
@@ -198,14 +205,13 @@ type
   	property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
-  TACBrCargaBalItens = class(TObjectList)
+  TACBrCargaBalItens = class(TObjectList{$IfDef NEXTGEN}<TACBrCargaBalItem>{$EndIf})
   private
     function GetItem(Index: Integer): TACBrCargaBalItem;
     procedure SetItem(Index: Integer; const Value: TACBrCargaBalItem);
   public
     constructor Create;
     destructor Destroy; Override;
-    procedure Clear; override;
     function New: TACBrCargaBalItem;
     property Items[Index: Integer]: TACBrCargaBalItem read GetItem write SetItem; Default;
   end;
@@ -374,11 +380,6 @@ end;
 
 { TACBrCargaBalItens }
 
-procedure TACBrCargaBalItens.Clear;
-begin
-  inherited Clear;
-end;
-
 constructor TACBrCargaBalItens.create;
 begin
   inherited Create(True);
@@ -404,7 +405,7 @@ end;
 procedure TACBrCargaBalItens.SetItem(Index: Integer;
   const Value: TACBrCargaBalItem);
 begin
-  Put(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TACBrCargaBal }

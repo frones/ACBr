@@ -182,7 +182,8 @@ Function FormatarCEP( const AValue: String )     : String ; overload;
 Function FormatarCEP( const AValue: Integer )    : String ; overload;
 function FormatarSUFRAMA( const AValue: String ) : String ;
 
-Function FormatarMascaraNumerica(ANumValue: string; const Mascara: String): String;
+Function FormatarMascaraNumerica(const ANumValue: string; const Mascara: String): String;
+Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
 
 Function OnlyCNPJorCPF( const Documento : String ) : String ;
 
@@ -528,16 +529,17 @@ begin
   Result := AValue;
 end;
 
-function FormatarMascaraNumerica(ANumValue: string; const Mascara: String): String;
+function FormatarMascaraNumerica(const ANumValue: string; const Mascara: String): String;
 var
   LenMas, LenDoc: Integer;
   I, J: Integer;
   C: Char;
+  wNumValue: String;
 begin
   Result := '';
-  ANumValue := Trim( ANumValue );
+  wNumValue := Trim( ANumValue );
   LenMas := Length( Mascara ) ;
-  LenDoc := Length( ANumValue );
+  LenDoc := Length( wNumValue );
 
   J := LenMas ;
   For I := LenMas downto 1 do
@@ -549,12 +551,39 @@ begin
       if J <= ( LenMas - LenDoc ) then
         C := '0'
       else
-        C := ANumValue[( J - ( LenMas - LenDoc ) )] ;
+        C := wNumValue[( J - ( LenMas - LenDoc ) )] ;
 
       Dec( J ) ;
     end;
 
     Result := C + Result;
+  end;
+end;
+
+Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
+var
+  LenMas, LenDoc: Integer;
+  i, j: Integer;
+  c: Char;
+  wValue: String;
+begin
+  Result := '';
+  wValue := Trim( AValue );
+  LenMas := Length( Mascara ) ;
+  LenDoc := Length( wValue );
+
+  i := 1; j := 1 ;
+  while (i <= LenMas) and (j <= LenDoc) do
+  begin
+    c := Mascara[i];
+    if c = '*' then
+    begin
+      c := wValue[j];
+      Inc(j);
+    end;
+
+    Result := Result + c;
+    Inc(i);
   end;
 end;
 

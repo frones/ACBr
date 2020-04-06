@@ -35,8 +35,16 @@ unit ACBrTroco;
 {$I ACBr.inc}
 
 interface
-uses ACBrBase,
-     SysUtils , Classes, Contnrs ;
+uses
+  SysUtils , Classes,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrBase;
 
 type
 
@@ -52,7 +60,7 @@ TDinheiro = class
   end;
 
 {Classe que ira armazenar os objetos de TDinheiro}
-TDinheiroList = class(TObjectList)
+TDinheiroList = class(TObjectList{$IfDef NEXTGEN}<TDinheiro>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TDinheiro);
     function GetObject (Index: Integer): TDinheiro;
@@ -81,7 +89,7 @@ TTroco = class
 end;
 
 {Classe que ira armazenar os objetos de TTroco}
-TTrocoList = class(TObjectList)
+TTrocoList = class(TObjectList{$IfDef NEXTGEN}<TTroco>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TTroco);
     function GetObject (Index: Integer): TTroco;
@@ -345,7 +353,7 @@ end;
 
 function TDinheiroList.GetObject(Index: Integer): TDinheiro;
 begin
-   Result := inherited GetItem(Index) as TDinheiro;
+  Result := TDinheiro(inherited Items[Index]);
 end;
 
 procedure TDinheiroList.Insert(Index: Integer; Obj: TDinheiro);
@@ -355,7 +363,7 @@ end;
 
 procedure TDinheiroList.SetObject(Index: Integer; Item: TDinheiro);
 begin
-   inherited SetItem(Index, Item);
+   inherited Items[Index] := Item;
 end;
 
 {---------------------------------- TTroco ----------------------------------}
@@ -380,7 +388,7 @@ end;
 
 function TTrocoList.GetObject(Index: Integer): TTroco;
 begin
-   Result := inherited GetItem(Index) as TTroco;
+  Result := TTroco(inherited Items[Index]);
 end;
 
 procedure TTrocoList.Insert(Index: Integer; Obj: TTroco);
@@ -390,7 +398,7 @@ end;
 
 procedure TTrocoList.SetObject(Index: Integer; Item: TTroco);
 begin
-   inherited SetItem(Index, Item);
+   inherited Items[Index] := Item;
 end;
 
 end.

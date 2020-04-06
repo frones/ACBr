@@ -233,6 +233,9 @@ type
     RoundRect1: TRoundRect;
     lMsgAguarde: TLabel;
     ShadowEffect1: TShadowEffect;
+    imgErrorCep: TImage;
+    imgErrorCNPJ: TImage;
+    imgErrorTelefone: TImage;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -256,9 +259,21 @@ type
     procedure sbAcharCEPClick(Sender: TObject);
     procedure cbxEmitUFChange(Sender: TObject);
     procedure cbxEmitCidadeChange(Sender: TObject);
+    procedure EditApenasNumeros(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
+    procedure edtEmitCEPValidating(Sender: TObject; var Text: string);
+    procedure FormDestroy(Sender: TObject);
+    procedure edtEmitCNPJValidating(Sender: TObject; var Text: string);
+    procedure edtEmitCNPJTyping(Sender: TObject);
+    procedure edtEmitCEPTyping(Sender: TObject);
+    procedure edtEmitFoneTyping(Sender: TObject);
+    procedure edtEmitFoneValidating(Sender: TObject; var Text: string);
+    procedure edtEmitCEPValidate(Sender: TObject; var Text: string);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
+    FcMunList: TStringList;
+    FcUF: Integer;
 
     function CalcularNomeArqINI: String;
     procedure LerINI;
@@ -299,6 +314,12 @@ var
   p: TSSLType;
 begin
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
+  FcMunList := TStringList.Create;
+  FcUF := 0;
+
+  imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
+  imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
+  imgErrorTelefone.Bitmap := imgErrorCep.Bitmap;
 
   // Ajustando opções de Configuração de ACBrMail //
   cbEmailDefaultCharset.Items.Clear;
@@ -326,6 +347,11 @@ begin
   tabsPrincipal.First;
   ProgressBar1.Visible := False;
   LerINI;
+end;
+
+procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
+begin
+  FcMunList.Free;
 end;
 
 function TACBrNFCeTestForm.PedirPermissoes: Boolean;
@@ -362,8 +388,11 @@ procedure TACBrNFCeTestForm.sbAcharCEPClick(Sender: TObject);
 var
   Erro: String;
 begin
-  if edtEmitCEP.Text.IsEmpty then
+  if imgErrorCep.Visible then
+  begin
+    TDialogService.ShowMessage('CEP inválido');
     Exit;
+  end;
 
   IniciarTelaDeEspera;
   TThread.CreateAnonymousThread(ConsultarCEP).Start;
@@ -509,20 +538,16 @@ end;
 
 procedure TACBrNFCeTestForm.CarregarListaDeCidades;
 var
-  Cidade: string;
-  i, cUF: Integer;
+  cUF: Integer;
 begin
+  cUF := StrToIntDef(lEmitcUF.Text,0);
+  if (cUF = 0) or (FcUF = cUF) then
+    Exit;
+
+  FcUF := cUF;
   try
     try
-      cUF := UFtoCUF(cbxEmitUF.Selected.Text);
-      ACBrIBGE1.BuscarPorcUF( cUF );
-      cbxEmitCidade.Items.Clear;
-      for i := 0 to ACBrIBGE1.Cidades.Count-1 do
-      begin
-        Cidade := ACBrIBGE1.Cidades[i].Municipio;
-        cbxEmitCidade.Items.Add(Cidade);
-        cbxEmitCidade.items.Objects[i] := ACBrIBGE1.ListaCidades[i];
-      end;
+      ACBrIBGE1.BuscarPorcUF(FcUF);
     except
       TThread.Synchronize(nil, procedure
       begin
@@ -532,8 +557,25 @@ begin
     end;
   finally
     TThread.Synchronize(nil, procedure
+
+    var
+      i: Integer;
+      Cidade: TACBrIBGECidade;
     begin
-      TerminarTelaDeEspera;
+      cbxEmitCidade.BeginUpdate;
+      try
+        cbxEmitCidade.Items.Clear;
+        FcMunList.Clear;
+        for i := 0 to ACBrIBGE1.Cidades.Count-1 do
+        begin
+          Cidade := ACBrIBGE1.Cidades[i];
+          cbxEmitCidade.Items.Add(Cidade.Municipio);
+          FcMunList.Add(IntToStr(Cidade.CodMunicipio));
+        end;
+      finally
+        cbxEmitCidade.EndUpdate;
+        TerminarTelaDeEspera;
+      end;
     end);
   end;
 end;
@@ -541,7 +583,7 @@ end;
 procedure TACBrNFCeTestForm.cbxEmitCidadeChange(Sender: TObject);
 begin
   if Assigned(cbxEmitCidade.Selected) then
-    lEmitcMun.Text := TACBrIBGECidade(cbxEmitCidade.Items.Objects[cbxEmitCidade.Selected.Index]).CodMunicipio.ToString;
+    lEmitcMun.Text := FcMunList[cbxEmitCidade.Selected.Index];
 end;
 
 procedure TACBrNFCeTestForm.cbxEmitUFChange(Sender: TObject);
@@ -551,9 +593,12 @@ begin
   if Assigned(cbxEmitUF.Selected) then
   begin
     cUF := UFtoCUF(cbxEmitUF.Selected.Text);
-    lEmitcUF.Text := IntToStrZero(cUF, 2);
-    IniciarTelaDeEspera('Carregando Cidades');
-    TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
+    if (cUF <> FcUF) then
+    begin
+      lEmitcUF.Text := IntToStrZero(cUF, 2);
+      IniciarTelaDeEspera('Carregando Cidades');
+      TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
+    end;
   end;
 end;
 
@@ -620,24 +665,103 @@ begin
     end;
   finally
     TThread.Synchronize(nil, procedure
+    var
+      EndAchado: TACBrCEPEndereco;
     begin
       if (ACBrCEP1.Enderecos.Count > 0) then
       begin
-        with ACBrCEP1.Enderecos[0] do
-        begin
-          edtEmitLogradouro.Text := Tipo_Logradouro + ' ' + Logradouro;
-          edtEmitBairro.Text := Bairro;
-          edtEmitCEP.Text := CEP;
-          edtEmitComp.Text := Complemento;
-          cbxEmitUF.ItemIndex := cbxEmitUF.Items.IndexOf(UF);  // Atualiza Cidades em cbxEmitUFChange
-          cbxEmitCidade.ItemIndex := cbxEmitCidade.Items.IndexOf(Municipio);
-          edtEmitNumero.SetFocus;
-        end;
+        EndAchado := ACBrCEP1.Enderecos[0];
+        edtEmitLogradouro.Text := EndAchado.Tipo_Logradouro + ' ' + EndAchado.Logradouro;
+        edtEmitBairro.Text := EndAchado.Bairro;
+        edtEmitCEP.Text := ACBrValidador.FormatarCEP(EndAchado.CEP);
+        edtEmitComp.Text := EndAchado.Complemento;
+        lEmitcUF.Text := IntToStr(UFtoCUF(EndAchado.UF));
+        CarregarListaDeCidades;
+        cbxEmitUF.ItemIndex := cbxEmitUF.Items.IndexOf(EndAchado.UF);
+        cbxEmitCidade.ItemIndex := cbxEmitCidade.Items.IndexOf(EndAchado.Municipio);
+        edtEmitNumero.SetFocus;
       end;
 
       TerminarTelaDeEspera;
     end);
   end;
+end;
+
+procedure TACBrNFCeTestForm.EditApenasNumeros(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  if not CharIsNum(KeyChar) then
+    KeyChar := #0;
+end;
+
+procedure TACBrNFCeTestForm.edtEmitCEPTyping(Sender: TObject);
+begin
+  if (edtEmitCEP.Text.Length > 5) then
+  begin
+    edtEmitCEP.Text := FormatarMascaraDinamica(OnlyNumber(edtEmitCEP.Text), '*****-***');
+    edtEmitCEP.CaretPosition := edtEmitCEP.Text.Length;
+  end;
+end;
+
+procedure TACBrNFCeTestForm.edtEmitCEPValidate(Sender: TObject;
+  var Text: string);
+begin
+  if not imgErrorCep.Visible then
+    sbAcharCEPClick(Sender);
+end;
+
+procedure TACBrNFCeTestForm.edtEmitCEPValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCep.Visible := (Text.Length < 9);
+end;
+
+procedure TACBrNFCeTestForm.edtEmitCNPJTyping(Sender: TObject);
+begin
+  if (edtEmitCNPJ.Text.Length > 2) then
+  begin
+    edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
+    edtEmitCNPJ.CaretPosition := edtEmitCNPJ.Text.Length;
+  end;
+end;
+
+procedure TACBrNFCeTestForm.edtEmitCNPJValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCNPJ.Visible := (Text.Length < 18) or
+                          (not ACBrValidador.ValidarCNPJ(Text).IsEmpty);
+end;
+
+procedure TACBrNFCeTestForm.edtEmitFoneTyping(Sender: TObject);
+var
+  AStr, Mascara: String;
+begin
+  if (edtEmitFone.Text.Length > 2) then
+  begin
+    AStr := OnlyNumber(edtEmitFone.Text);
+    Mascara := '(**)****-****';
+    case AStr.Length of
+      10:
+      begin
+        if (copy(AStr,1,1) = '0') and (copy(AStr,3,2) = '00') then  // 0300,0500,0800,0900
+          Mascara := '****-***-****';
+      end;
+      11: Mascara := '(**)*****-****';
+      12: Mascara := '+**(**)****-****';
+    end;
+
+    edtEmitFone.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
+    edtEmitFone.CaretPosition := edtEmitFone.Text.Length;
+  end;
+end;
+
+procedure TACBrNFCeTestForm.edtEmitFoneValidating(Sender: TObject;
+  var Text: string);
+var
+  AStr: string;
+begin
+  AStr := OnlyNumber(Text);
+  imgErrorTelefone.Visible := (AStr.Length < 10);
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);

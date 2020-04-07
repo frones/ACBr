@@ -49,6 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2020
+-- ACBrBoleto, ACBrBancoBradesco --
+[*] Realização de um Refactory nas classes dos Bancos.
+O propósito é centralizar, unificar e padronizar funcionalidades das classes dos banco a medida do possível, visto que 
+a maioria são identicas ou com pequenos detalhes divergentes.
+As funcionalidades que são possíveis unificar para uso dos demais Bancos estão ficando centralizadas 
+na classe ACBrBancoClass no unit ACBrBoleto. (obs: As modificações não devem alterar em nada o comportamento da classe
+e também as demais classes ainda não refatoradas.)
+
 27/03/2020
 -- ACBrBancoCresol --
 [*] Ajuste cód. Ocorrência 10 e 11 seguindo manual Banco Cresol

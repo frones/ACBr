@@ -284,17 +284,21 @@ type
     procedure edtConfCertURLValidating(Sender: TObject; var Text: string);
     procedure edtConfCertPFXValidating(Sender: TObject; var Text: string);
     procedure edtConfCertSenhaValidating(Sender: TObject; var Text: string);
+    procedure btnProcurarBthClick(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
     FcUF: Integer;
 
-    function CalcularNomeArqINI: String;
-    procedure LerINI;
-    procedure GravarINI;
+    function CalcularNomeArqConfiguracao: String;
+    procedure LerConfiguracao;
+    procedure GravarConfiguracao;
     procedure ConfigurarACBr;
-    function PedirPermissoes: Boolean;
+
+    procedure CarregarImpressorasBth;
+
+    procedure PedirPermissoesInternet;
     procedure IniciarTelaDeEspera(const AMsg: String = '');
     procedure TerminarTelaDeEspera;
     procedure ConsultarCEP;
@@ -371,7 +375,7 @@ begin
 
   tabsPrincipal.First;
   ProgressBar1.Visible := False;
-  LerINI;
+  LerConfiguracao;
 end;
 
 procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
@@ -379,7 +383,7 @@ begin
   FcMunList.Free;
 end;
 
-function TACBrNFCeTestForm.PedirPermissoes: Boolean;
+procedure TACBrNFCeTestForm.PedirPermissoesInternet;
 Var
   Ok: Boolean;
 begin
@@ -399,14 +403,8 @@ begin
       end );
 
   if not OK then
-  begin
-    TDialogService.MessageDialog( 'Sem permissões para acesso a Internet',
-                                  TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],
-                                  TMsgDlgBtn.mbOk, 0, nil, nil);
-  end;
+    raise EPermissionException.Create( 'Sem permissões para acesso a Internet');
   {$EndIf}
-
-  Result := Ok;
 end;
 
 procedure TACBrNFCeTestForm.sbAcharCEPClick(Sender: TObject);
@@ -521,7 +519,7 @@ end;
 
 procedure TACBrNFCeTestForm.btLerConfigClick(Sender: TObject);
 begin
-  LerINI;
+  LerConfiguracao;
 end;
 
 procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
@@ -532,6 +530,12 @@ end;
 procedure TACBrNFCeTestForm.btnLimparClick(Sender: TObject);
 begin
   mLog.Lines.Clear;
+end;
+
+procedure TACBrNFCeTestForm.btnProcurarBthClick(Sender: TObject);
+begin
+  CarregarImpressorasBth;
+  cbxImpressorasBth.DropDown;
 end;
 
 procedure TACBrNFCeTestForm.btnVersaoOpenSSLClick(Sender: TObject);
@@ -553,12 +557,19 @@ end;
 
 procedure TACBrNFCeTestForm.btSalvarConfigClick(Sender: TObject);
 begin
-  GravarINI;
+  GravarConfiguracao;
 end;
 
-function TACBrNFCeTestForm.CalcularNomeArqINI: String;
+function TACBrNFCeTestForm.CalcularNomeArqConfiguracao: String;
 begin
   Result := ApplicationPath + 'ACBrNFeTeste.ini';
+end;
+
+procedure TACBrNFCeTestForm.CarregarImpressorasBth;
+begin
+  PedirPermissoesInternet;
+  cbxImpressorasBth.Items.Clear;
+  ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
 end;
 
 procedure TACBrNFCeTestForm.CarregarListaDeCidades;
@@ -873,24 +884,31 @@ begin
   end;
 end;
 
-procedure TACBrNFCeTestForm.GravarINI;
+procedure TACBrNFCeTestForm.GravarConfiguracao;
 var
   IniFile: string;
   Ini: TIniFile;
 begin
-  IniFile := CalcularNomeArqINI;
+  IniFile := CalcularNomeArqConfiguracao;
   Ini := TIniFile.Create(IniFile {$IfDef POSIX}, TEncoding.ANSI{$EndIf});
   try
     // configurações do ACBrPosPrinter //
-    INI.WriteInteger('PosPrinter','Modelo', cbxModelo.ItemIndex);
-    INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     if Assigned(cbxImpressorasBth.Selected) then
       INI.WriteString('PosPrinter','Porta', cbxImpressorasBth.Selected.Text);
+    INI.WriteInteger('PosPrinter','Modelo', cbxModelo.ItemIndex);
+    INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     INI.WriteInteger('PosPrinter','Colunas', Trunc(seColunas.Value) );
     INI.WriteInteger('PosPrinter','EspacoEntreLinhas', Trunc(seEspLinhas.Value) );
     INI.WriteInteger('PosPrinter','LinhasPular', Trunc(seLinhasPular.Value) );
+    Ini.WriteBool('PosPrinter', 'Logo', cbImprimirLogo.IsChecked);
     INI.WriteInteger('PosPrinter.Logo','KC1',Trunc(seKC1.Value));
     INI.WriteInteger('PosPrinter.Logo','KC2',Trunc(seKC2.Value));
+
+    // Configurações de ACBrNFeDANFeESCPOS //
+    Ini.WriteBool('DANFCE', 'QrCodeLateral', cbQRCodeLateral.IsChecked);
+    Ini.WriteBool('DANFCE', 'ItemUmaLinha', cbImprimir1Linha.IsChecked);
+    Ini.WriteBool('DANFCE', 'ItemDescAcres', cbImprimirDescAcres.IsChecked);
+    Ini.WriteBool('DANFCE', 'LogoLateral', cbLogoLateral.IsChecked);
 
     // Configurações do ACBrMail //
     Ini.WriteString('Email', 'From', edtEmailFrom.text);
@@ -904,28 +922,19 @@ begin
     Ini.WriteInteger('Email', 'DefaultCharset', cbEmailDefaultCharset.ItemIndex);
     Ini.WriteInteger('Email', 'IdeCharset', cbEmailIdeCharSet.ItemIndex);
 
-    // Configurações de ACBrNFeDANFeESCPOS //
-    Ini.WriteBool('DANFCE', 'QrCodeLateral', cbQRCodeLateral.IsChecked);
-    Ini.WriteBool('DANFCE', 'ItemUmaLinha', cbImprimir1Linha.IsChecked);
-    Ini.WriteBool('DANFCE', 'ItemDescAcres', cbImprimirDescAcres.IsChecked);
-    Ini.WriteBool('DANFCE', 'Logo', cbImprimirLogo.IsChecked);
-    Ini.WriteBool('DANFCE', 'LogoLateral', cbLogoLateral.IsChecked);
-
     // Configurações de ACBrNFe //
     Ini.WriteString( 'Certificado', 'URL', edtConfCertURL.Text);
     Ini.WriteString( 'Certificado', 'Caminho', edtConfCertPFX.Text);
     Ini.WriteString( 'Certificado', 'Senha', edtConfCertSenha.Text);
-    Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
-    Ini.WriteInteger('Proxy', 'Porta', Trunc(sbProxyPort.Value));
-    Ini.WriteString('Proxy', 'User', edtProxyUser.Text);
-    Ini.WriteString('Proxy', 'Pass', edtProxyPass.Text);
-    Ini.WriteString( 'Token', 'IdCSCn', edtTokenID.Text);
-    Ini.WriteString( 'Token', 'CSC', edtTokenCSC.Text);
+
     if cbxWebServiceUF.ItemIndex >= 0  then
       Ini.WriteString('WebService', 'UF', cbxWebServiceUF.Selected.Text);
     Ini.WriteInteger('WebService', 'Ambiente', ifthen( swWebServiceAmbiente.IsChecked, 0, 1) );  // segue TpcnTipoAmbiente
     Ini.WriteInteger('WebService', 'TimeOut', Trunc(sbWebServiceTimeout.Value));
     Ini.WriteInteger('WebService', 'SSLType',    cbxWebServiceSSLType.ItemIndex);
+
+    Ini.WriteString( 'Token', 'IdCSCn', edtTokenID.Text);
+    Ini.WriteString( 'Token', 'CSC', edtTokenCSC.Text);
 
     // Configurações do Emitente //
     Ini.WriteString('Emitente', 'CNPJ', edtEmitCNPJ.Text);
@@ -938,8 +947,14 @@ begin
     Ini.WriteString('Emitente', 'Numero', edtEmitNumero.Text);
     Ini.WriteString('Emitente', 'Complemento', edtEmitComp.Text);
     Ini.WriteString('Emitente', 'Bairro', edtEmitBairro.Text);
-    Ini.WriteString('Emitente', 'cMun', lEmitcMun.Text);
-    Ini.WriteString('Emitente', 'cUF', lEmitcUF.Text);
+    Ini.WriteInteger('Emitente', 'cUF', StrToIntDef(lEmitcUF.Text,0));
+    Ini.WriteInteger('Emitente', 'cMun', StrToIntDef(lEmitcMun.Text,0));
+
+    // Configurações do Proxy //
+    Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
+    Ini.WriteInteger('Proxy', 'Porta', Trunc(sbProxyPort.Value));
+    Ini.WriteString('Proxy', 'User', edtProxyUser.Text);
+    Ini.WriteString('Proxy', 'Pass', edtProxyPass.Text);
   finally
     Ini.Free;
   end;
@@ -977,119 +992,86 @@ begin
   Result := Ok;
 end;
 
-procedure TACBrNFCeTestForm.LerINI;
+procedure TACBrNFCeTestForm.LerConfiguracao;
 var
   IniFile: string;
   Ini: TIniFile;
+  cUF: Integer;
 begin
-  IniFile := CalcularNomeArqINI;
+  IniFile := CalcularNomeArqConfiguracao;
   Ini := TIniFile.Create(IniFile{$IfDef POSIX}, TEncoding.ANSI{$EndIf});
   try
-    edtEmailFrom.text := Ini.ReadString('Email', 'From', 'fulano@empresa.com.br');
-    edtEmailFromName.text := Ini.ReadString('Email', 'FromName', 'Fulano de Tal');
-    edtEmailHost.text := Ini.ReadString('Email', 'Host', 'smtp.empresa.com.br');
-    sbEmailPort.Value := Ini.ReadInteger('Email', 'Port', 587);
-    edtEmailUser.text := Ini.ReadString('Email', 'User', 'fulano@empresa.com.br');
-    edtEmailPassword.text := Ini.ReadString('Email', 'Pass', 'Sua_Senha_123');
-    chkEmailTLS.IsChecked  := Ini.ReadBool('Email', 'TLS', False);
-    chkEmailSSL.IsChecked  := Ini.ReadBool('Email', 'SSL', False);
-    cbEmailDefaultCharset.ItemIndex := Ini.ReadInteger('Email', 'DefaultCharset', 27);
-    cbEmailIdeCharSet.ItemIndex := Ini.ReadInteger('Email', 'IdeCharset', {$IfDef MSWINDOWS}15{$Else}27{$EndIf});
+    // configurações do ACBrPosPrinter //
+    if cbxImpressorasBth.Items.Count < 1 then
+      CarregarImpressorasBth;
+
+    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(Ini.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta));
+    cbxModelo.ItemIndex := Ini.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
+    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
+    seColunas.Value := Ini.ReadInteger('PosPrinter','Colunas', ACBrPosPrinter1.Colunas);
+    seEspLinhas.Value := Ini.ReadInteger('PosPrinter','EspacoEntreLinhas', ACBrPosPrinter1.EspacoEntreLinhas);
+    seLinhasPular.Value := Ini.ReadInteger('PosPrinter','LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
+    cbImprimirLogo.IsChecked := Ini.ReadBool('PosPrinter', 'Logo', not ACBrPosPrinter1.ConfigLogo.IgnorarLogo);
+    seKC1.Value := Ini.ReadInteger('PosPrinter.Logo','KC1', ACBrPosPrinter1.ConfigLogo.KeyCode1);
+    seKC2.Value := Ini.ReadInteger('PosPrinter.Logo','KC2', ACBrPosPrinter1.ConfigLogo.KeyCode2);
+
+    // Configurações de ACBrNFeDANFeESCPOS //
+    cbQRCodeLateral.IsChecked := Ini.ReadBool('DANFCE', 'QrCodeLateral', ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral);
+    cbImprimir1Linha.IsChecked := Ini.ReadBool('DANFCE', 'ItemUmaLinha', ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha);
+    cbImprimirDescAcres.IsChecked := Ini.ReadBool('DANFCE', 'ItemDescAcres', ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem);
+    cbLogoLateral.IsChecked := Ini.ReadBool('DANFCE', 'LogoLateral', ACBrNFeDANFeESCPOS1.ImprimeLogoLateral);
+
+    // Configurações do ACBrMail //
+    edtEmailFrom.text := Ini.ReadString('Email', 'From', ACBrMail1.From);
+    edtEmailFromName.text := Ini.ReadString('Email', 'FromName', ACBrMail1.FromName);
+    edtEmailHost.text := Ini.ReadString('Email', 'Host', ACBrMail1.Host);
+    sbEmailPort.Value := Ini.ReadInteger('Email', 'Port', StrToIntDef(ACBrMail1.Port,0));
+    edtEmailUser.text := Ini.ReadString('Email', 'User', ACBrMail1.Username);
+    edtEmailPassword.text := Ini.ReadString('Email', 'Pass', ACBrMail1.Password);
+    chkEmailTLS.IsChecked := Ini.ReadBool('Email', 'TLS', ACBrMail1.SetTLS);
+    chkEmailSSL.IsChecked := Ini.ReadBool('Email', 'SSL', ACBrMail1.SetSSL);
+    cbEmailDefaultCharset.ItemIndex := Ini.ReadInteger('Email', 'DefaultCharset', Integer(ACBrMail1.DefaultCharset));
+    cbEmailIdeCharSet.ItemIndex := Ini.ReadInteger('Email', 'IdeCharset', Integer(ACBrMail1.IDECharset));
+
+    // Configurações de ACBrNFe //
+    edtConfCertURL.Text := Ini.ReadString('Certificado', 'URL', ACBrNFe1.SSL.URLPFX);
+    edtConfCertPFX.Text  := Ini.ReadString('Certificado', 'Caminho', ACBrNFe1.SSL.ArquivoPFX);
+    edtConfCertSenha.Text := Ini.ReadString('Certificado', 'Senha', ACBrNFe1.SSL.Senha);
+
+    cbxWebServiceUF.ItemIndex := cbxWebServiceUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', ACBrNFe1.Configuracoes.WebServices.UF));
+    swWebServiceAmbiente.IsChecked := (Ini.ReadInteger('WebService', 'Ambiente', Integer(ACBrNFe1.Configuracoes.WebServices.Ambiente)) = 0);
+    sbWebServiceTimeout.Value := Ini.ReadInteger('WebService', 'TimeOut', ACBrNFe1.Configuracoes.WebServices.TimeOut);
+    cbxWebServiceSSLType.ItemIndex := Ini.ReadInteger('WebService', 'SSLType', Integer(ACBrNFe1.Configuracoes.WebServices.SSLType));
+
+    edtTokenID.Text := Ini.ReadString( 'Token', 'IdCSCn', ACBrNFe1.Configuracoes.Geral.IdCSC);
+    edtTokenCSC.Text := Ini.ReadString( 'Token', 'CSC', ACBrNFe1.Configuracoes.Geral.CSC);
+
+    // Configurações do Emitente //
+    edtEmitCNPJ.Text := Ini.ReadString('Emitente', 'CNPJ', '');
+    edtEmitIE.Text := Ini.ReadString('Emitente', 'IE', '');
+    edtEmitRazao.Text := Ini.ReadString('Emitente', 'RazaoSocial', '');
+    edtEmitFantasia.Text := Ini.ReadString('Emitente', 'Fantasia', '');
+    edtEmitFone.Text := Ini.ReadString('Emitente', 'Fone', '');
+    edtEmitCEP.Text := Ini.ReadString('Emitente', 'CEP', '');
+    edtEmitLogradouro.Text := Ini.ReadString('Emitente', 'Logradouro', '');
+    edtEmitNumero.Text := Ini.ReadString('Emitente', 'Numero', '');
+    edtEmitComp.Text := Ini.ReadString('Emitente', 'Complemento', '');
+    edtEmitBairro.Text := Ini.ReadString('Emitente', 'Bairro', '');
+    cUF := Ini.ReadInteger('Emitente', 'cUF', 0);
+    lEmitcUF.Text := IntToStr(cUF);
+    CarregarListaDeCidades;
+    cbxEmitUF.ItemIndex := cbxEmitUF.Items.IndexOf(CUFtoUF(cUF));
+    cbxEmitCidade.ItemIndex := FcMunList.IndexOf(IntToStr(Ini.ReadInteger('Emitente', 'cMun', 0)));
+
+    // Configurações do Proxy //
+    edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', ACBrNFe1.Configuracoes.WebServices.ProxyHost);
+    sbProxyPort.Value := Ini.ReadInteger('Proxy', 'Porta', StrToIntDef(ACBrNFe1.Configuracoes.WebServices.ProxyPort,0));
+    edtProxyUser.Text := Ini.ReadString('Proxy', 'User', ACBrNFe1.Configuracoes.WebServices.ProxyUser);
+    edtProxyPass.Text := Ini.ReadString('Proxy', 'Pass', ACBrNFe1.Configuracoes.WebServices.ProxyPass);
   finally
     Ini.Free;
   end;
 end;
 
 end.
-
-
-procedure TACBrNFCeTestForm.AjustaParametrosDeEnvio;
-begin
-  ACBrMail1.From := edtFrom.text;
-  ACBrMail1.FromName := edtFromName.text;
-  ACBrMail1.Host := edtHost.text; // troque pelo seu servidor smtp
-  ACBrMail1.Username := edtUser.text;
-  ACBrMail1.Password := edtPassword.text;
-  ACBrMail1.Port := edtPort.text; // troque pela porta do seu servidor smtp
-  ACBrMail1.SetTLS := chkTLS.IsChecked;
-  ACBrMail1.SetSSL := chkSSL.IsChecked;  // Verifique se o seu servidor necessita SSL
-  ACBrMail1.DefaultCharset := TMailCharset(cbbDefaultCharset.ItemIndex);
-  ACBrMail1.IDECharset := TMailCharset(cbbIdeCharSet.ItemIndex);
-  ACBrMail1.AddAddress(edtAddressEmail.text, edtAddressName.text);
-  //ACBrMail1.AddCC('outro_email@gmail.com'); // opcional
-  //ACBrMail1.AddReplyTo('um_email'); // opcional
-  //ACBrMail1.AddBCC('um_email'); // opcional
-  //ACBrMail1.Priority := MP_high;
-  //ACBrMail1.ReadingConfirmation := True; // solicita confirmação de leitura
-end;
-
-  ACBrMail1.AddAddress(edtAddressEmail.text, edtAddressName.text);
-
-procedure TACBrNFCeTestForm.bEnviarClick(Sender: TObject);
-var
-  Dir, ArqXML: string;
-  MS: TMemoryStream;
-  P, N: Integer;
-begin
-  if not PedirPermissoes then
-    Exit;
-
-  mLog.Lines.Clear;
-  ProgressBar1.Value := 1;
-
-  Dir := ApplicationPath;
-
-  P := pos(' - ', edSubject.Text);
-  if P > 0 then
-  begin
-    N := StrToIntDef(copy(edSubject.Text, P + 3, 5), 0) + 1;
-    edSubject.Text := copy(edSubject.Text, 1, P + 2) + IntToStr(N);
-  end;
-
-  ACBrMail1.Clear;
-  ACBrMail1.IsHTML := cbUsarHTML.IsChecked;
-  ACBrMail1.Subject := edSubject.Text;
-
-  AjustaParametrosDeEnvio;
-
-  // mensagem principal do e-mail. pode ser html ou texto puro
-  if cbUsarTXT.IsChecked  then
-    ACBrMail1.AltBody.Assign(mAltBody.Lines);
-
-  if cbUsarHTML.IsChecked  then
-    ACBrMail1.Body.Assign(mBody.Lines);
-
-  if cbUsarHTML.IsChecked  and cbAddImgHTML.IsChecked  then
-  begin
-    // Depende de: "<img src='cid:LogoACBr'>" em ACBrMail1.Body;
-    if Pos('cid:LogoACBr', ACBrMail1.Body.Text) > 0 then
-      ACBrMail1.AddAttachment(Dir + 'acbr_logo2.png', 'LogoACBr');
-  end;
-
-  if cbAddImgAtt.IsChecked  then
-    ACBrMail1.AddAttachment(Dir + 'acbr_logo.jpg');
-
-  if cbAddPDF.IsChecked  then
-    ACBrMail1.AddAttachment(Dir + '35150905481336000137550010000111291000111298-nfe.pdf', 'DANFE');
-
-  if cbAddXML.IsChecked  then
-  begin
-    MS := TMemoryStream.Create;
-    try
-      ArqXML := '35150905481336000137550010000111291000111298-nfe.xml';
-      MS.LoadFromFile(Dir + ArqXML);
-      ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
-    finally
-      MS.Free;
-    end;
-  end;
-
-  ACBrMail1.Send(cbUsarThread.IsChecked);
-end;
-
-
-    Ini.WriteString('Email', 'AddressEmail', edtAddressEmail.text);
-    Ini.WriteString('Email', 'AddressName', edtEmailAddressName.text);
-    edtAddressEmail.text := Ini.ReadString('Email', 'AddressEmail', 'fulano@empresa.com.br');
-    edtAddressName.text := Ini.ReadString('Email', 'AddressName', 'Fulano de Tal');
 

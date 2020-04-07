@@ -100,7 +100,7 @@ type
     procedure SetAttribute(AName, AContent: string);
     procedure SetNamespace(AHref: string; APrefix: string = '');
 
-    function AddChild(AName: string; ANamespace: string = ''; APrefixNamespace: string = ''): TACBrXmlNode;
+    function AddChild(AName: string; ANamespace: string = ''; APrefix: string = ''): TACBrXmlNode;
     function GetNextNamespace(var ANamespace: TACBrXmlNamespace): boolean;
     function GetNextChild(var ANode: TACBrXmlNode): boolean;
     function GetNextAttribute(var AAttribute: TACBrXmlAttribute): boolean;
@@ -288,10 +288,10 @@ type
     procedure SetRootElement(ARootNode: TACBrXmlNode);
 
   public
-    constructor Create(AName: string = ''; ANamespace: string = ''; APrefixNamespace: string = '');
+    constructor Create(AName: string = ''; ANamespace: string = ''; APrefix: string = '');
     destructor Destroy; override;
 
-    function CreateElement(AName: string; ANamespace: string = ''; APrefixNamespace: string = ''): TACBrXmlNode;
+    function CreateElement(AName: string; ANamespace: string = ''; APrefix: string = ''): TACBrXmlNode;
 
     procedure Clear();
     procedure SaveToFile(AFilename: string);
@@ -391,9 +391,9 @@ begin
   FXmlCdataNode := cdataNode;
 end;
 
-function TACBrXmlNode.AddChild(AName: string; ANamespace: string; APrefixNamespace: string = ''): TACBrXmlNode;
+function TACBrXmlNode.AddChild(AName: string; ANamespace: string; APrefix: string = ''): TACBrXmlNode;
 begin
-  Result := FXmlDoc.CreateElement(AName, ANamespace, APrefixNamespace);
+  Result := FXmlDoc.CreateElement(AName, ANamespace, APrefix);
   AppendChild(Result);
 end;
 
@@ -411,8 +411,7 @@ procedure TACBrXmlNode.SetAttribute(AName, AContent: string);
 var
   xmlAtt: xmlAttrPtr;
 begin
-  xmlAtt := xmlSetProp(FXmlNode, PAnsichar(ansistring(AName)),
-    PAnsichar(ansistring(AContent)));
+  xmlAtt := xmlSetProp(FXmlNode, PAnsichar(ansistring(AName)), PAnsichar(ansistring(AContent)));
   if xmlAtt = nil then
     raise EACBrXmlException.Create('Erro ao adicionar atributo');
 
@@ -422,9 +421,16 @@ end;
 procedure TACBrXmlNode.SetNamespace(AHref: string; APrefix: string);
 Var
   xmlNs: xmlNsPtr;
+  Prefix: PAnsichar;
 begin
-  xmlNs := xmlNewNs(FXmlNode, PAnsichar(ansistring(AHref)),
-    PAnsichar(ansistring(APrefix)));
+  if not Assigned(AHref) or (Trim(AHref) = EmptyStr) them
+    raise EACBrXmlException.Create('Erro Namespace não pode ser vazio ou nulo');
+
+  Prefix := nil;
+  if Assigned(AHref) and (Trim(APrefix) <> EmptyStr) then
+    Prefix := PAnsichar(ansistring(APrefix));
+
+  xmlNs := xmlNewNs(FXmlNode, PAnsichar(ansistring(AHref)),  Prefix);
   if xmlNs = nil then
     raise EACBrXmlException.Create('Erro ao adicionar namespace');
 
@@ -934,7 +940,7 @@ begin
 end;
 
 { XmlDocument }
-constructor TACBrXmlDocument.Create(AName: string; ANamespace: string; APrefixNamespace: string);
+constructor TACBrXmlDocument.Create(AName: string; ANamespace: string; APrefix: string);
 var
   xmlNode: xmlNodePtr;
 begin
@@ -951,7 +957,7 @@ begin
 
     if ANamespace <> EmptyStr then
     begin
-      xmlRootElement.SetNamespace(ANamespace, APrefixNamespace);
+      xmlRootElement.SetNamespace(ANamespace, APrefix);
     end;
   end
   else
@@ -1016,7 +1022,7 @@ begin
   if xmlRootElement <> nil then FreeAndNil(xmlRootElement);
 end;
 
-function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string; APrefixNamespace: string): TACBrXmlNode;
+function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string; APrefix: string): TACBrXmlNode;
 var
   NodeName: PAnsichar;
 begin
@@ -1026,7 +1032,7 @@ begin
   Result := TACBrXmlNode.Create(Self, xmlNewDocNode(xmlDocInternal, nil, NodeName, nil));
   if ANamespace <> EmptyStr then
   begin
-    Result.SetNamespace(ANamespace, APrefixNamespace);
+    Result.SetNamespace(ANamespace, APrefix);
   end;
 end;
 

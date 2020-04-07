@@ -2911,8 +2911,7 @@ begin
     end;
 
   finally
-    ListHeader.SkipLastLineBreak := True;
-    Result:= ListHeader.Text;
+    Result:= Trim(ListHeader.Text);
     ListHeader.Free;
   end;
 
@@ -2980,8 +2979,7 @@ begin
              Padleft('0',6,'0')                                         + //Uso exclusivo FEBRABAN/CNAB}
              PadRight('',205,' '));                                       //Uso exclusivo FEBRABAN/CNAB}
   finally
-    ListTrailler.SkipLastLineBreak := True;
-    Result:= ListTrailler.Text;
+    Result:= Trim(ListTrailler.Text);
     ListTrailler.Free;
   end;
 

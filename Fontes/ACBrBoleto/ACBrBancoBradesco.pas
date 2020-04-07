@@ -319,8 +319,7 @@ begin
     end;
 
   finally
-    ListTransacao.SkipLastLineBreak := True;
-    Result:= ListTransacao.Text;
+    Result:= Trim(ListTransacao.Text);
     ListTransacao.Free;
   end;
 

@@ -168,9 +168,7 @@ type
     lbiHeaderToken: TListBoxGroupHeader;
     lbiToken: TListBoxItem;
     gpToken: TGridPanelLayout;
-    Label26: TLabel;
     edtTokenID: TEdit;
-    Label27: TLabel;
     edtTokenCSC: TEdit;
     lbiHeaderConfCertProxy: TListBoxGroupHeader;
     lbiProxy: TListBoxItem;
@@ -185,7 +183,6 @@ type
     edtProxyPass: TEdit;
     seProxyVerSenha: TSpeedButton;
     gpWebServiceNFCe: TGridPanelLayout;
-    Label32: TLabel;
     Label33: TLabel;
     sbWebServiceTimeout: TSpinBox;
     Label34: TLabel;
@@ -236,6 +233,18 @@ type
     imgErrorCep: TImage;
     imgErrorCNPJ: TImage;
     imgErrorTelefone: TImage;
+    imgErrorUF: TImage;
+    imgErrorCidade: TImage;
+    laIDCSC: TLayout;
+    lIDCSC: TLabel;
+    imgErrorIDCSC: TImage;
+    laCSC: TLayout;
+    lCSC: TLabel;
+    imgErrorCSC: TImage;
+    laWebServiceUF: TLayout;
+    lWebServiceUF: TLabel;
+    imgErrorWebServiceUF: TImage;
+    imgErrorCert: TImage;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -269,6 +278,12 @@ type
     procedure edtEmitFoneTyping(Sender: TObject);
     procedure edtEmitFoneValidating(Sender: TObject; var Text: string);
     procedure edtEmitCEPValidate(Sender: TObject; var Text: string);
+    procedure cbxWebServiceUFChange(Sender: TObject);
+    procedure edtTokenCSCValidating(Sender: TObject; var Text: string);
+    procedure edtTokenIDValidating(Sender: TObject; var Text: string);
+    procedure edtConfCertURLValidating(Sender: TObject; var Text: string);
+    procedure edtConfCertPFXValidating(Sender: TObject; var Text: string);
+    procedure edtConfCertSenhaValidating(Sender: TObject; var Text: string);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -284,6 +299,7 @@ type
     procedure TerminarTelaDeEspera;
     procedure ConsultarCEP;
     procedure CarregarListaDeCidades;
+    function ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
   public
     { Public declarations }
   end;
@@ -320,6 +336,15 @@ begin
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
   imgErrorTelefone.Bitmap := imgErrorCep.Bitmap;
+  imgErrorCidade.Bitmap := imgErrorCep.Bitmap;
+  imgErrorUF.Bitmap := imgErrorCep.Bitmap;
+  imgErrorIDCSC.Bitmap := imgErrorCep.Bitmap;
+  imgErrorCSC.Bitmap := imgErrorCep.Bitmap;
+  imgErrorWebServiceUF.Bitmap := imgErrorCep.Bitmap;
+  imgErrorCert.Bitmap := imgErrorCep.Bitmap;
+
+  cbxWebServiceUF.ItemIndex := -1;
+  cbxEmitUF.ItemIndex := -1;
 
   // Ajustando opções de Configuração de ACBrMail //
   cbEmailDefaultCharset.Items.Clear;
@@ -581,16 +606,24 @@ begin
 end;
 
 procedure TACBrNFCeTestForm.cbxEmitCidadeChange(Sender: TObject);
+var
+  Ok: Boolean;
 begin
-  if Assigned(cbxEmitCidade.Selected) then
+  Ok := Assigned(cbxEmitCidade.Selected);
+  imgErrorCidade.Visible := not Ok;
+  if Ok then
     lEmitcMun.Text := FcMunList[cbxEmitCidade.Selected.Index];
 end;
 
 procedure TACBrNFCeTestForm.cbxEmitUFChange(Sender: TObject);
 var
   cUF: Integer;
+  Ok: Boolean;
 begin
-  if Assigned(cbxEmitUF.Selected) then
+  Ok := Assigned(cbxEmitUF.Selected);
+  imgErrorUF.Visible := not Ok;
+
+  if Ok then
   begin
     cUF := UFtoCUF(cbxEmitUF.Selected.Text);
     if (cUF <> FcUF) then
@@ -600,6 +633,11 @@ begin
       TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
     end;
   end;
+end;
+
+procedure TACBrNFCeTestForm.cbxWebServiceUFChange(Sender: TObject);
+begin
+  imgErrorWebServiceUF.Visible := (cbxWebServiceUF.ItemIndex < 0);
 end;
 
 procedure TACBrNFCeTestForm.sbEmailMostrarSenhaClick(Sender: TObject);
@@ -694,6 +732,24 @@ begin
     KeyChar := #0;
 end;
 
+procedure TACBrNFCeTestForm.edtConfCertPFXValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, Text, edtConfCertSenha.Text);
+end;
+
+procedure TACBrNFCeTestForm.edtConfCertSenhaValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, edtConfCertPFX.Text, Text);
+end;
+
+procedure TACBrNFCeTestForm.edtConfCertURLValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCert.Visible := not ValidarEditsCertificado(Text, edtConfCertPFX.Text, edtConfCertSenha.Text);
+end;
+
 procedure TACBrNFCeTestForm.edtEmitCEPTyping(Sender: TObject);
 begin
   if (edtEmitCEP.Text.Length > 5) then
@@ -762,6 +818,18 @@ var
 begin
   AStr := OnlyNumber(Text);
   imgErrorTelefone.Visible := (AStr.Length < 10);
+end;
+
+procedure TACBrNFCeTestForm.edtTokenCSCValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorCSC.Visible := Text.IsEmpty
+end;
+
+procedure TACBrNFCeTestForm.edtTokenIDValidating(Sender: TObject;
+  var Text: string);
+begin
+  imgErrorIDCSC.Visible := Text.IsEmpty;
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -893,6 +961,20 @@ procedure TACBrNFCeTestForm.TerminarTelaDeEspera;
 begin
   lWait.Visible := False;
   AniIndicator1.Enabled := False;
+end;
+
+function TACBrNFCeTestForm.ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  Ok := not Pass.IsEmpty;
+  if Ok then
+    Ok := (not URL.IsEmpty) or (not PFX.IsEmpty);
+
+  if Ok and (not PFX.IsEmpty) then
+    Ok := FileExists(PFX);
+
+  Result := Ok;
 end;
 
 procedure TACBrNFCeTestForm.LerINI;

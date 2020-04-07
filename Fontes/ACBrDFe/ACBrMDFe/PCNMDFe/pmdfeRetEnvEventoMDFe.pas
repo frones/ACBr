@@ -205,8 +205,11 @@ begin
           infEvento.detEvento.cMunCarrega := Leitor.rCampo(tcInt, 'cMunCarrega');
           infEvento.detEvento.xMunCarrega := Leitor.rCampo(tcStr, 'xMunCarrega');
 
-          InfEvento.detEvento.infViagens.qtdViagens := Leitor.rCampo(tcInt, 'qtdViagens');
-          InfEvento.detEvento.infViagens.nroViagem  := Leitor.rCampo(tcInt, 'nroViagem');
+          if Leitor.rExtrai(4, 'infViagens') <> '' then
+          begin
+            InfEvento.detEvento.infViagens.qtdViagens := Leitor.rCampo(tcInt, 'qtdViagens');
+            InfEvento.detEvento.infViagens.nroViagem  := Leitor.rCampo(tcInt, 'nroViagem');
+          end;
 
           // Carrega os dados da informação de Documentos
           i := 0;

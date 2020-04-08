@@ -1826,7 +1826,11 @@ begin
 
           if TipoViagem <> TAC_Agregado then
           begin
-            Gerador.wCampo(tcStr, 'AP258', 'CodigoTipoCarga    ', 01, 01, 1, TipoCargaToStr(CodigoTipoCarga));
+            if TipoViagem = Padrao then
+              Gerador.wCampo(tcStr, 'AP258', 'CodigoTipoCarga', 01, 01, 1, '')
+            else
+              Gerador.wCampo(tcStr, 'AP258', 'CodigoTipoCarga', 01, 01, 1, TipoCargaToStr(CodigoTipoCarga));
+
             Gerador.wCampo(tcStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, True)));
             Gerador.wCampo(tcStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, True)));
             Gerador.wCampo(tcStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));

@@ -40,6 +40,9 @@ Símbolo : Significado
 
 08/04/2020
 -- pcnCIOTW_eFrete --
+[*] Imposto uma condição para gerar a tag CodigoTipoCarga
+   Por: Italo Jurisato Junior
+-- pcnCIOTW_eFrete --
 [-] Correção no prefixo das tags de fechamento do grupo Pagamento.
    Por: Italo Jurisato Junior
 

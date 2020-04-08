@@ -497,6 +497,7 @@ begin
         end;
       end;  
 
+      Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
 
       if Categoria = tcpFrota then

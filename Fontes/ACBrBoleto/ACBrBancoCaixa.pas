@@ -956,7 +956,7 @@ begin
          tbCliEmite        : ATipoBoleto := '2' + '0';
       end;
 
-      if (DataProtesto > Vencimento) then
+      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
         Instrucao1:= '01'    // Protestar
       else
         Instrucao1:='02'; //Devolver (Não Protestar)
@@ -1150,6 +1150,13 @@ begin
 
    if TempData <> '00/00/00' then
      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
+
+    case StrToIntDef(Copy(ARetorno[0],18,1),0) of
+       1: ACBrBanco.ACBrBoleto.Cedente.TipoInscricao:= pFisica;
+       2: ACBrBanco.ACBrBoleto.Cedente.TipoInscricao:= pJuridica;
+       else
+          ACBrBanco.ACBrBoleto.Cedente.TipoInscricao:= pJuridica;
+    end;
 
    rCNPJCPF := trim( Copy(ARetorno[0],19,14)) ;
 

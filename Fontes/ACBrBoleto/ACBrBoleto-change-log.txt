@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/04/2020
+-- ACBrBancoCaixa --
+[*] Inclusão da leitura do tipo de documento do beneficiário na leitura do retorno CNAB240.(AG Sistemas)
+https://www.projetoacbr.com.br/forum/topic/57111-acbr-boleto-caixa/
+    
+
 07/04/2020
 -- ACBrBoleto, ACBrBancoBradesco --
 [*] Realização de um Refactory nas classes dos Bancos.

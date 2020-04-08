@@ -423,11 +423,11 @@ Var
   xmlNs: xmlNsPtr;
   Prefix: PAnsichar;
 begin
-  if not Assigned(AHref) or (Trim(AHref) = EmptyStr) them
+  if Trim(AHref) = EmptyStr then
     raise EACBrXmlException.Create('Erro Namespace não pode ser vazio ou nulo');
 
   Prefix := nil;
-  if Assigned(AHref) and (Trim(APrefix) <> EmptyStr) then
+  if Trim(APrefix) <> EmptyStr then
     Prefix := PAnsichar(ansistring(APrefix));
 
   xmlNs := xmlNewNs(FXmlNode, PAnsichar(ansistring(AHref)),  Prefix);

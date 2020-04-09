@@ -98,8 +98,8 @@ type
 
   tpEstadoCIOT = (ecEmViagem, ecEncerrado, ecCancelado);
 
-  tpTipoCarga = (tpGranelsolido, tpGranelLiquido, tpFrigorificada, tpConteinerizada,
-                 tpCargaGeral, tpNeogranel, tpPerigosaGranelSolido,
+  tpTipoCarga = (tpNaoAplicavel, tpGranelsolido, tpGranelLiquido, tpFrigorificada,
+                 tpConteinerizada, tpCargaGeral, tpNeogranel, tpPerigosaGranelSolido,
                  tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
                  tpPerigosaConteinerizada, tpPerigosaCargaGeral);
 
@@ -515,33 +515,18 @@ end;
 
 function TipoCargaToStr(const t: tpTipoCarga): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+  Result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                                '10', '11'],
-                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
-                               tpConteinerizada, tpCargaGeral, tpNeogranel,
-                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
-                               tpPerigosaCargaFrigorificada,
+                              [tpNaoAplicavel, tpGranelsolido, tpGranelLiquido,
+                               tpFrigorificada, tpConteinerizada, tpCargaGeral,
+                               tpNeogranel, tpPerigosaGranelSolido,
+                               tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
                                tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
-{
-  Result := EnumeradoToStr(t, ['Granel sólido - HML', 'Granel líquido - HML',
-                               'Frigorificada - HML', 'Conteinerizada - HML',
-                               'Carga Geral - HML', 'Neogranel - HML',
-                               'Perigosa (granel sólido) - HML',
-                    					 'Perigosa (granel líquido) - HML',
-                               'Perigosa (carga frigorificada) - HML',
-                               'Perigosa (conteinerizada) - HML',
-                               'Perigosa (carga geral) - HML'],
-                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
-                               tpConteinerizada, tpCargaGeral, tpNeogranel,
-                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
-                               tpPerigosaCargaFrigorificada,
-                               tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
-}
 end;
 
 function StrToTipoCarga(out ok: Boolean; const s: String): tpTipoCarga;
 begin
-  Result := StrToEnumerado(ok, s, ['Granel sólido - HML', 'Granel líquido - HML',
+  Result := StrToEnumerado(ok, s, ['', 'Granel sólido - HML', 'Granel líquido - HML',
                                    'Frigorificada - HML', 'Conteinerizada - HML',
                                    'Carga Geral - HML', 'Neogranel - HML',
                                    'Perigosa (granel sólido) - HML',
@@ -549,10 +534,10 @@ begin
                                    'Perigosa (carga frigorificada) - HML',
                                    'Perigosa (conteinerizada) - HML',
                                    'Perigosa (carga geral) - HML'],
-                              [tpGranelsolido, tpGranelLiquido, tpFrigorificada,
-                               tpConteinerizada, tpCargaGeral, tpNeogranel,
-                               tpPerigosaGranelSolido, tpPerigosaGranelLiquido,
-                               tpPerigosaCargaFrigorificada,
+                              [tpNaoAplicavel, tpGranelsolido, tpGranelLiquido,
+                               tpFrigorificada, tpConteinerizada, tpCargaGeral,
+                               tpNeogranel, tpPerigosaGranelSolido,
+                               tpPerigosaGranelLiquido,tpPerigosaCargaFrigorificada,
                                tpPerigosaConteinerizada, tpPerigosaCargaGeral]);
 end;
 

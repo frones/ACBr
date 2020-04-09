@@ -39,6 +39,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/04/2020
+-- pcnConversaoCIOT --
+[+] Criado o enumerador tpNaoAplicavel para o campo CodigoTipoCarga, ele deve 
+    ser utilizando quando o TipoViagem for Padrao
+   Por: Cleonir
+
+09/04/2020
 -- pcnCIOTW_eFrete --
 [*] https://www.projetoacbr.com.br/forum/topic/57119-alterações-em-pcnciotw_efrete-campos-obrigatórios-do-layout-e-tag-pagamentos/
    Por: Matheus

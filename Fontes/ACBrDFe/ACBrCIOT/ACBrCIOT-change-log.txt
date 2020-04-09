@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2020
+-- pcnCIOTW_eFrete --
+[*] https://www.projetoacbr.com.br/forum/topic/57119-alterações-em-pcnciotw_efrete-campos-obrigatórios-do-layout-e-tag-pagamentos/
+   Por: Matheus
+[*] https://www.projetoacbr.com.br/forum/topic/57073-erroao-adicionar-operação-de-transporte-viagem-padrão/
+   Por: Cleonir
+
 08/04/2020
 -- pcnCIOTW_eFrete --
 [*] Imposto uma condição para gerar a tag CodigoTipoCarga

@@ -373,7 +373,7 @@ begin
             Gerador.wGrupo('NotaFiscal', 'AP38');
             Gerador.wCampo(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Numero);
             Gerador.wCampo(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Serie);
-            Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 1, Data);
+            Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 0, Data);
             Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                        ', 01, 01, 1, ValorTotal);
             Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
             Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, CodigoNCMNaturezaCarga);
@@ -715,7 +715,7 @@ begin
       end;
 
       Gerador.wCampo(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
-      Gerador.wCampo(tcStr, 'AP135', 'RNTRC                   ', 01, 01, 1, RNTRC);
+      Gerador.wCampo(tcStr, 'AP135', 'RNTRC                   ', 01, 01, 0, RNTRC);
 
       Gerador.wGrupo('/Contratante');
     end;
@@ -1740,7 +1740,7 @@ begin
           Gerador.wCampo(tcStr, 'AP02', 'EmissaoGratuita       ', 01, 01, 1, LowerCase(BoolToStr(EmissaoGratuita, True)));
           Gerador.wCampo(tcStr, 'AP03', 'BloquearNaoEquiparado ', 01, 01, 1, LowerCase(BoolToStr(BloquearNaoEquiparado, True)));
           Gerador.wCampo(tcStr, 'AP04', 'MatrizCNPJ            ', 14, 14, 1, MatrizCNPJ);
-          Gerador.wCampo(tcStr, 'AP05', 'FilialCNPJ            ', 14, 14, 1, FilialCNPJ);
+          Gerador.wCampo(tcStr, 'AP05', 'FilialCNPJ            ', 14, 14, 0, FilialCNPJ);
           Gerador.wCampo(tcStr, 'AP06', 'IdOperacaoCliente     ', 01, 01, 0, IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
 
           if TipoViagem <> TAC_Agregado then

@@ -168,6 +168,8 @@ type
     ACBr_LCDPR_dpk: TCheckBox;
     ACBr_ONE_dpk: TCheckBox;
     ACBr_EDI_dpk: TCheckBox;
+    ACBr_NF3e_dpk: TCheckBox;
+    ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -346,6 +348,14 @@ begin
         ACBr_BPe_dpk.Checked := True;
       end;
 
+      // dependencia da NF3e
+      if ACBr_NF3eDANF3eESCPOS_dpk.Checked and
+        (not(ACBr_NF3e_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
+      begin
+        ACBr_Serial_dpk.Checked := True;
+        ACBr_NF3e_dpk.Checked := True;
+      end;
+
       // dependencia do SAT
       if ACBr_SATExtratoESCPOS_dpk.Checked and
         (not(ACBr_SAT_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
@@ -365,7 +375,7 @@ begin
         (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) or
         (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
         (ACBr_BPe_dpk.Checked) or (ACBr_ANe_dpk.Checked) or
-        (ACBr_CIOT_dpk.Checked) then
+        (ACBr_CIOT_dpk.Checked) or (ACBr_NF3e_dpk.Checked) then
       begin
         ACBr_PCNComum_dpk.Checked := True;
         ACBr_OpenSSL_dpk.Checked := True;

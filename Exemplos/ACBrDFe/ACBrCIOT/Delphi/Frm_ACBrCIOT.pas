@@ -211,6 +211,8 @@ type
     btnEnviarCiotEmail: TButton;
     tsOperacao: TTabSheet;
     rgOperacao: TRadioGroup;
+    Button1: TButton;
+    Button2: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -245,6 +247,7 @@ type
     procedure btnGerarCIOTClick(Sender: TObject);
     procedure btnCriarEnviarClick(Sender: TObject);
     procedure btnEnviarCiotEmailClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     sToken: string;
@@ -432,7 +435,7 @@ begin
            with AdicionarOperacao do
            begin
              (****************  DADOS DO CONTRATO  **************)
-             TipoViagem := TAC_Agregado;
+             TipoViagem := Padrao; // TAC_Agregado;
              TipoPagamento := eFRETE;
              EmissaoGratuita := (TipoPagamento = TransferenciaBancaria);
              BloquearNaoEquiparado := False;
@@ -718,7 +721,15 @@ begin
              QuantidadeTransferencias := 0; //Quantidade de Transferências  Bancárias que serão solicitadas pelo Contratado na operação de transporte.
              ValorSaques := 0;
              ValorTransferencias := 0;
-             CodigoTipoCarga := tpCargaGeral;
+
+             // se o tipo de viagem for padrão (TipoViagem := Padrao) devemos
+             // informar o valor tpNaoAplicavel ao campo CodigoTipoCarga
+             // valores permitidos para o campo:
+             // tpNaoAplicavel, tpGranelsolido, tpGranelLiquido, tpFrigorificada,
+             // tpConteinerizada, tpCargaGeral, tpNeogranel, tpPerigosaGranelSolido,
+             // tpPerigosaGranelLiquido, tpPerigosaCargaFrigorificada,
+             // tpPerigosaConteinerizada, tpPerigosaCargaGeral
+             CodigoTipoCarga := tpNaoAplicavel;
              AltoDesempenho := True;
              DestinacaoComercial := True;
              FreteRetorno := False;
@@ -1177,21 +1188,16 @@ end;
 procedure TfrmACBrCIOT.btnGerarCIOTClick(Sender: TObject);
 var
   vAux : String;
+  Codigo: Integer;
+
 begin
   vAux := '';
-  if not (InputQuery('WebServices Enviar', 'ID do Contrato', vAux)) then
+  if not (InputQuery('Consultar por Descrição', 'Nome da Cidade', vAux)) then
     exit;
 
-  ACBrCIOT1.Contratos.Clear;
-  AlimentarComponente;
-  ACBrCIOT1.Contratos.Items[0].GravarXML('', '');
+  Codigo := ObterCodigoMunicipio(vAux, 'SP', 'C:\Erp\Txt\Blt' );
 
-  ShowMessage('Arquivo gerado em: '+ACBrCIOT1.Contratos.Items[0].NomeArq);
-  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrCIOT1.Contratos.Items[0].NomeArq);
-  MemoResp.Lines.LoadFromFile(ACBrCIOT1.Contratos.Items[0].NomeArq);
-  LoadXML(MemoResp.Lines.Text, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
+  ShowMessage('Codigo: ' + IntToStr(Codigo));
 end;
 
 procedure TfrmACBrCIOT.btnIssuerNameClick(Sender: TObject);
@@ -1248,6 +1254,22 @@ procedure TfrmACBrCIOT.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBrCIOT1.SSL.CertSubjectName + sLineBreak + sLineBreak +
               'Razão Social: ' + ACBrCIOT1.SSL.CertRazaoSocial);
+end;
+
+procedure TfrmACBrCIOT.Button2Click(Sender: TObject);
+var
+  vAux : String;
+  Nome: string;
+  Codigo: Integer;
+begin
+  vAux := '';
+  if not (InputQuery('Consultar por Codigo', 'Codigo da Cidade', vAux)) then
+    exit;
+
+  Codigo := StrToInt(vAux);
+  Nome := ObterNomeMunicipio('SP', Codigo,'C:\Erp\Txt\Blt' );
+
+  ShowMessage('Nome: ' + Nome);
 end;
 
 procedure TfrmACBrCIOT.cbCryptLibChange(Sender: TObject);

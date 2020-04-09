@@ -1382,6 +1382,24 @@ object frmACBrCIOT: TfrmACBrCIOT
           TabOrder = 2
           OnClick = btnEnviarCiotEmailClick
         end
+        object Button1: TButton
+          Left = 9
+          Top = 46
+          Width = 177
+          Height = 25
+          Caption = 'Consultar por descri'#231#227'o'
+          TabOrder = 3
+          OnClick = btnGerarCIOTClick
+        end
+        object Button2: TButton
+          Left = 9
+          Top = 77
+          Width = 177
+          Height = 25
+          Caption = 'Consultar por Codigo'
+          TabOrder = 4
+          OnClick = Button2Click
+        end
       end
     end
     object pgRespostas: TPageControl
@@ -1508,6 +1526,7 @@ object frmACBrCIOT: TfrmACBrCIOT
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.Geral.Integradora = ieFrete
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'

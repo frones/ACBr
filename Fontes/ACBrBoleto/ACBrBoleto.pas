@@ -5,7 +5,8 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou e André Ferreira de Moraes      }
+{ Colaboradores nesse arquivo: Juliana Tamizou, André Ferreira de Moraes,      }
+{ José M S Junior                                                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -739,8 +740,8 @@ type
   { TACBrBancoClass }
 
   TACBrBancoClass = class
-  private
-     procedure ErroAbstract( const NomeProcedure : String ) ;
+ // private
+ //    procedure ErroAbstract( const NomeProcedure : String ) ;
   protected
     fpDigito: Integer;
     fpNome:   String;
@@ -788,6 +789,7 @@ type
     function DefineDataDesconto(const ACBrTitulo: TACBrTitulo): String; virtual;    //Utilizado para definir a Data de Desconto na Remessa
     function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; virtual;      //Utilizado para definir o Codigo Multa na Remessa
     function DefineDataMulta(const ACBrTitulo: TACBrTitulo): String; virtual;        //Utilizado para definir data multa na Remessa
+    function DefineTamanhoContaRemessa: Integer; virtual;     //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
 
     function DefineTipoInscricao: String; virtual; //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual; //Utilizado para definir Responsável Emissão na Remessa
@@ -946,6 +948,7 @@ type
     property LayoutVersaoArquivo  : Integer read GetLayoutVersaoArquivo write SetLayoutVersaoArquivo;
     property LayoutVersaoLote     : Integer read GetLayoutVersaoLote write SetLayoutVersaoLote;
     property CasasDecimaisMoraJuros: Integer read GetCasasDecimaisMoraJuros write SetCasasDecimaisMoraJuros;
+    property DensidadeGravacao : string read GetDensidadeGravacao write SetDensidadeGravacao;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite, tbBancoPreEmite);
@@ -3007,9 +3010,9 @@ begin
 
   // A leitura deverá ser feita a partir da posição 26 devido ao fato de não existirem agências bancárias com mais de 4 (quatro) algarismos.
   rAgencia := trim(Copy(ARetorno[1], 26, ACBrBanco.TamanhoAgencia));
-  rConta   := trim(Copy(ARetorno[1], 30, ACBrBanco.TamanhoConta));
+  rConta   := trim(Copy(ARetorno[1], 30, DefineTamanhoContaRemessa));
 
-  rDigitoConta := Copy(ARetorno[1],37,1);
+  rDigitoConta := Copy(ARetorno[1], 30 + DefineTamanhoContaRemessa ,1);
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],109,5),0);
 
@@ -3372,13 +3375,15 @@ begin
    Result:= ACBrBanco.Numero;
 end;
 }
+
+(*
 procedure TACBrBancoClass.ErroAbstract(const NomeProcedure: String);
 begin
    raise Exception.Create(Format(ACBrStr('Função %s não implementada '+
                                          ' para o banco %s') + sLineBreak +
                                          'Ajude no desenvolvimento do ACBrECF. '+ sLineBreak+
                                          'Acesse nosso Forum em: http://acbr.sf.net/',[NomeProcedure,Nome])) ;
-end;
+end; *)
 
 function TACBrBancoClass.GetLocalPagamento: String;
 begin
@@ -3887,6 +3892,11 @@ begin
     else
       Result := PadRight('', 8, '0');
   end;
+end;
+
+function TACBrBancoClass.DefineTamanhoContaRemessa: Integer;
+begin
+  Result:= ACBrBanco.TamanhoConta;
 end;
 
 function TACBrBancoClass.InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;

@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou                                 }
+{ Colaboradores nesse arquivo: Juliana Tamizou, José M S Junior                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -45,7 +45,7 @@ type
 
   TACBrBancoUnicredSC = class(TACBrBancoUnicredRS)
   protected
-    function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String;
+    function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo):String; override;
 
   public
@@ -130,7 +130,7 @@ begin
      sConta        := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta)  , 0), 7);
 
      {Pegando Código da Ocorrencia}
-     sOcorrencia:= TipoOCorrenciaRemessaToCod(OcorrenciaOriginal.Tipo);
+     sOcorrencia:= TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo);
 
      {Pegando Especie}
      sEspecie:= DefineEspecieDoc(ACBrTitulo);
@@ -199,7 +199,7 @@ begin
 
        aRemessa.Add(UpperCase(sLinha));
 
-       sLinha := MontaInstrucoes(ACBrTitulo, aRemessa.Count );
+       sLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
        if not(sLinha = EmptyStr) then
          aRemessa.Add(UpperCase(sLinha));
      end;

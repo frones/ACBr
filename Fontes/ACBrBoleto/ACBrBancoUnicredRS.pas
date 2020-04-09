@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou                                 }
+{ Colaboradores nesse arquivo: Juliana Tamizou, José M S Junior                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -46,37 +46,24 @@ type
   TACBrBancoUnicredRS = class(TACBrBancoClass)
   private
   protected
-    fpCodParametroMovimento: String;
-    fpModuloMultiplicadorFinal: Integer;
-    procedure ValidaNossoNumeroResponsavel(out ANossoNumero: String;
-      out ADigVerificador: String; const ACBrTitulo :TACBrTitulo); virtual;
-    function MontaInstrucoes(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; virtual;
-    function TipoOCorrenciaRemessaToCod(const ATipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
-    function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String; virtual;
-    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; virtual;
-    function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; virtual;
-    function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; virtual;
+
+    function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
+    function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
+    function ConverterDigitoModuloFinal(): String; override;
+    function DefineTamanhoContaRemessa: Integer; override;
 
   public
     Constructor create(AOwner: TACBrBanco);
 
-    property CodParametroMovimento: String read fpCodParametroMovimento;
-    property ModuloMultiplicadorFinal: Integer read fpModuloMultiplicadorFinal;
-
-    function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
-    function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
-    function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
-    procedure GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList); override;
+
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
-    procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
-    Procedure LerRetorno400(ARetorno:TStringList); override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
-
+    function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
@@ -98,131 +85,9 @@ begin
    fpTamanhoConta           := 7;
    fpTamanhoCarteira        := 3;
    fpCodParametroMovimento  := '113';
+   fpModuloMultiplicadorInicial:= 0;
    fpModuloMultiplicadorFinal := 7;
 
-end;
-
-function TACBrBancoUnicredRS.MontaInstrucoes(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String;
-var
-  lNossoNumero, lDigNossoNumero: String;
-begin
-  Result := '';
-  ValidaNossoNumeroResponsavel(lNossoNumero, lDigNossoNumero, ACBrTitulo);
-
-  with ACBrTitulo, ACBrBoleto do
-  begin
-
-     {Primeira instrução vai no registro 1}
-     if Mensagem.Count <= 1 then
-     begin
-        Result := '';
-        Exit;
-     end;
-
-     Result := '2'               +                                         // IDENTIFICAÇÃO DO LAYOUT PARA O REGISTRO
-               Copy(PadRight(Mensagem[1], 80, ' '), 1, 80);                // CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
-
-     if Mensagem.Count >= 3 then
-        Result := Result +
-                  Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)              // CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
-     else
-        Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
-
-     if Mensagem.Count >= 4 then
-        Result := Result +
-                  Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)              // CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
-     else
-        Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
-
-     if Mensagem.Count >= 5 then
-        Result := Result +
-                  Copy(PadRight(Mensagem[4], 80, ' '), 1, 80)              // CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
-     else
-        Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
-
-
-     Result := Result                                              +
-               space(45)                                           +       // COMPLEMENTO DO REGISTRO
-               IntToStrZero(StrToIntDef(trim(Carteira), 0), 3)                         +
-               IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia), 0), 5) +
-               IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta)  , 0), 7) +
-               Cedente.ContaDigito                                                     +
-               lNossoNumero + lDigNossoNumero                                          +
-               IntToStrZero( nRegistro + 1, 6);                            // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
-  end;
-
-end;
-
-procedure TACBrBancoUnicredRS.ValidaNossoNumeroResponsavel(out
-  ANossoNumero: String; out ADigVerificador: String; const ACBrTitulo: TACBrTitulo);
-begin
-  ANossoNumero:= '0';
-  ADigVerificador:= '0';
-
-  if (ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) then
-  begin
-    ANossoNumero := StringOfChar('0', CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira, ACBrTitulo.NossoNumero) );
-    ADigVerificador := '0';
-  end
-  else
-  begin
-    ANossoNumero := ACBrTitulo.NossoNumero;
-    ADigVerificador := CalcularDigitoVerificador(ACBrTitulo);
-    if (ANossoNumero = EmptyStr) then
-      ADigVerificador := '0';
-  end;
-
-end;
-
-function TACBrBancoUnicredRS.TipoOCorrenciaRemessaToCod(
-  const ATipoOcorrencia: TACBrTipoOcorrencia): String;
-begin
-  case ATipoOcorrencia of
-         toRemessaBaixar                         : Result := '02'; {Pedido de Baixa}
-         toRemessaConcederAbatimento             : Result := '04'; {Concessão de Abatimento}
-         toRemessaCancelarAbatimento             : Result := '05'; {Cancelamento de Abatimento concedido}
-         toRemessaAlterarVencimento              : Result := '06'; {Alteração de vencimento}
-         toRemessaAlterarNumeroControle          : Result := '08'; {Alteração de seu número}
-         toRemessaProtestar                      : Result := '09'; {Pedido de protesto}
-         toRemessaNaoProtestar                   : Result := '10'; {Não Protestar}
-         toRemessaCancelarInstrucaoProtestoBaixa : Result := '18'; {Sustar protesto e baixar}
-         toRemessaCancelarInstrucaoProtesto      : Result := '19'; {Sustar protesto e manter na carteira}
-         toRemessaOutrasOcorrencias              : Result := '31'; {Alteração de Outros Dados}
-         toRemessaPedidoNegativacao                  : Result := '45'; {Pedido de negativação}
-         toRemessaExcluirNegativacaoBaixar           : Result := '46'; {Excluir negativação e baixar}
-         toRemessaExcluirNegativacaoManterEmCarteira : Result := '47'; {Excluir negativação e manter em carteira.}
-       else
-         Result := '01';                                           {Remessa}
-  end;
-
-end;
-
-function TACBrBancoUnicredRS.InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;
-begin
-  {Pegando campo Intruções}
-  with ACBrTitulo do
-  begin
-    if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-       Result := '06' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
-    else if ( TipoOCorrenciaRemessaToCod(OcorrenciaOriginal.Tipo) ) = '31' then
-       Result := '9999'
-    else
-       Result := '0000';
-  end;
-end;
-
-function TACBrBancoUnicredRS.DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String;
-begin
-  with ACBrTitulo do
-  begin
-    case Sacado.Pessoa of
-        pFisica   : Result := '01';
-        pJuridica : Result := '02';
-     else
-        Result := '99';
-     end;
-
-  end;
 end;
 
 function TACBrBancoUnicredRS.DefineCampoLivreCodigoBarras(
@@ -240,14 +105,11 @@ end;
 function TACBrBancoUnicredRS.DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String;
 begin
   Result := copy(PadLeft( trim(ACBrTitulo.Carteira), 3, '0'), 2, 2)  + ACBrTitulo.NossoNumero;
+
 end;
 
-function TACBrBancoUnicredRS.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrBancoUnicredRS.ConverterDigitoModuloFinal(): String;
 begin
-  Modulo.CalculoPadrao;
-  Modulo.MultiplicadorFinal := fpModuloMultiplicadorFinal;
-  Modulo.Documento := DefineNumeroDocumentoModulo(ACBrTitulo);
-  Modulo.Calcular;
 
   if Modulo.ModuloFinal = 1 then
      Result:= '0'
@@ -256,68 +118,15 @@ begin
 
 end;
 
-function TACBrBancoUnicredRS.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
-var
-  sCodigoBarras   : String;
-  sFatorVencimento: String;
-  sDigitoCodBarras: String;
+function TACBrBancoUnicredRS.DefineTamanhoContaRemessa: Integer;
 begin
-  with ACBrTitulo.ACBrBoleto do
-  begin
-    sFatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
-
-    sCodigoBarras :=     IntToStrZero(Numero, 3) +                                              { Instituição Financ }
-                         '9' +                                                                  { Cód. Moeda = Real }
-                         sFatorVencimento +                                                     { Fator Vencimento }
-                         IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +             { Valor Nominal }
-                         DefineCampoLivreCodigoBarras(ACBrTitulo);                              { Campo Livre}
-
-    sDigitoCodBarras := CalcularDigitoCodigoBarras(sCodigoBarras);
-  end;
-
-  { Insere o digito verificador calculado no código de barras }
-  Result := IntToStrZero(Numero, 3) + '9' + sDigitoCodBarras + Copy(sCodigoBarras, 5, 39);
+  Result:= 12;
 end;
 
 function TACBrBancoUnicredRS.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := copy(PadLeft( trim(ACBrTitulo.Carteira), 3, '0'), 2, 2) + '/'+ ACBrTitulo.NossoNumero + '-'+ CalcularDigitoVerificador(ACBrTitulo);
-end;
-
-function TACBrBancoUnicredRS.MontarCampoCodigoCedente (
-   const ACBrTitulo: TACBrTitulo ) : String;
-begin
-   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia        + '-' +
-             ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito  + '/' +
-             ACBrTitulo.ACBrBoleto.Cedente.Conta          + '-' +
-             ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
-end;
-
-procedure TACBrBancoUnicredRS.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
-var
-  wLinha: String;
-begin
-   with ACBrBanco.ACBrBoleto.Cedente do
-   begin
-      wLinha:= '0'                                                +  { ID do Registro }
-               '1'                                                +  { ID do Arquivo( 1 - Remessa) }
-               'REMESSA'                                          +  { Literal de Remessa }
-               '01'                                               +  { Código do Tipo de Serviço }
-               PadRight('COBRANCA', 15)                           +  { Descrição do tipo de serviço }
-               PadLeft(CodigoCedente, 20, '0')                    +  { Codigo da Empresa no Banco }
-               PadRight(Nome, 30)                                 +  { Nome da Empresa }
-               IntToStrZero(fpNumero, 3)                          +  { Código do Banco 091 }
-               PadRight(fpNome, 15)                               +  { Nome do Banco(091 - Unicred ) }
-               FormatDateTime('ddmmyy',Now)                       +  { Data de geração do arquivo }
-               Space(07)                                          +  { brancos }
-               PadLeft(fpCodParametroMovimento, 3 )               +  { Cód. Parâm. Movto da Unicred }
-               IntToStrZero(NumeroRemessa, 7)                     +  { Nr. Sequencial de Remessa  }
-               Space(277)                                         +  { brancos }
-               IntToStrZero(1, 6);                                   { Nr. Sequencial de Remessa + brancos + Contador }
-
-      ARemessa.Add(UpperCase(wLinha));
-   end;
 end;
 
 procedure TACBrBancoUnicredRS.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
@@ -337,7 +146,7 @@ begin
     sNumContrato  := sAgencia + sConta + ACBrBoleto.Cedente.ContaDigito;
 
     {Pegando Código da Ocorrencia}
-    sOcorrencia:= TipoOCorrenciaRemessaToCod(OcorrenciaOriginal.Tipo);
+    sOcorrencia:= TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo);
 
     {Pegando campo Intruções}
     sProtesto:= InstrucoesProtesto(ACBrTitulo);
@@ -350,7 +159,7 @@ begin
        sLinha:= '1'                                                     +  { 001: ID Registro }
                 sAgencia                                                +  { 002: Agência }
                 Cedente.AgenciaDigito                                   +  { 007: Agência Dígito }
-                PadLeft(sConta, 12, '0')                                +  { 008: Conta Corrente }
+                PadLeft(sConta, DefineTamanhoContaRemessa, '0')         +  { 008: Conta Corrente }
                 Cedente.ContaDigito                                     +  { 020: Conta Corrente Dígito }
                 '0'                                                     +  { 021: Zero }
                 sCarteira                                               +  { 022: Carteira }
@@ -388,198 +197,11 @@ begin
 
        aRemessa.Add(UpperCase(sLinha));
 
-       sLinha := MontaInstrucoes(ACBrTitulo, aRemessa.Count );
+       sLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
        if not(sLinha = EmptyStr) then
          aRemessa.Add(UpperCase(sLinha));
 
     end;
-  end;
-end;
-
-procedure TACBrBancoUnicredRS.GerarRegistroTrailler400( ARemessa:TStringList );
-var
-  wLinha: String;
-begin
-  wLinha := '9' + Space(393)                     +  { ID Registro }
-            IntToStrZero( ARemessa.Count + 1, 6);   { Contador de Registros }
-  ARemessa.Add(UpperCase(wLinha));
-
-end;
-
-procedure TACBrBancoUnicredRS.LerRetorno400(ARetorno: TStringList);
-var
-  vTitulo                     : TACBrTitulo;
-  iContLinha, iCodOcorrencia  : Integer;
-  iCodMotivo, i, iMotivoLinha : Integer;
-  sCodMotivo_19, sAgencia     : String;
-  sConta, sDigitoConta        : String;
-  sLinha, sCedente, sCNPJCPF  : String;
-  sCodEmpresa                 : String;
-
-begin
-  if (StrToIntDef(Copy(ARetorno.Strings[0], 77, 3), -1) <> Numero) then
-     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
-                            'não é um arquivo de retorno da ' + Nome));
-
-  sCodEmpresa  := Trim(Copy(ARetorno[0], 27, 20));
-  sCedente     := Trim(Copy(ARetorno[0], 47, 30));
-  sAgencia     := Trim(Copy(ARetorno[1], 25, ACBrBanco.TamanhoAgencia));
-  sConta       := Trim(Copy(ARetorno[1], 30, ACBrBanco.TamanhoConta));
-  sDigitoConta :=      Copy(ARetorno[1], 42, 1);
-
-  ACBrBanco.ACBrBoleto.NumeroArquivo := 0;//StrToIntDef(Copy(ARetorno[0], 109, 5), 0);
-
-  ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2) + '/' +
-                                                          Copy(ARetorno[0], 97, 2) + '/' +
-                                                          Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY' );
-
-  if StrToIntDef( Copy(ARetorno[0], 380, 6 ), 0) <> 0 then
-    ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0], 380, 2) + '/' +
-                                                                Copy(ARetorno[0], 382, 2) + '/' +
-                                                                Copy(ARetorno[0], 384, 2), 0, 'DD/MM/YY');
-
-  case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-     11: sCNPJCPF := Copy(ARetorno[1],7,11);
-     14: sCNPJCPF := Copy(ARetorno[1],4,14);
-  else
-    sCNPJCPF := Copy(ARetorno[1],4,14);
-  end;
-
-  ValidarDadosRetorno(sAgencia, sConta);
-  with ACBrBanco.ACBrBoleto do
-  begin
-     if (not LeCedenteRetorno) and (sCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
-        raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
-
-     case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-        11: Cedente.TipoInscricao:= pFisica;
-        14: Cedente.TipoInscricao:= pJuridica;
-     else
-        Cedente.TipoInscricao := pJuridica;
-     end;
-
-     if LeCedenteRetorno then
-     begin
-        try
-          Cedente.CNPJCPF := sCNPJCPF;
-        except
-          // Retorno quando é CPF está vindo errado por isso ignora erro na atribuição
-        end;
-
-        Cedente.CodigoCedente:= sCodEmpresa;
-        Cedente.Nome         := sCedente;
-        Cedente.Agencia      := sAgencia;
-        Cedente.AgenciaDigito:= '0';
-        Cedente.Conta        := sConta;
-        Cedente.ContaDigito  := sDigitoConta;
-     end;
-
-     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
-  end;
-
-  for iContLinha := 1 to ARetorno.Count - 2 do
-  begin
-     sLinha := ARetorno[iContLinha] ;
-
-     if Copy(sLinha,1,1)<> '1' then
-        Continue;
-
-     vTitulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
-
-     with vTitulo do
-     begin
-        SeuNumero                   := copy(sLinha,38,25);
-        NumeroDocumento             := copy(sLinha,117,10);
-        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                       copy(sLinha,109,2),0));
-
-        iCodOcorrencia := StrToInt(IfThen( trim(copy(sLinha,109,2)) = '', '00', copy(sLinha,109,2)));
-
-        //-|Se a ocorrencia for igual a 19 - Confirmação de Receb. de Protesto
-        //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-        if(iCodOcorrencia = 19)then
-         begin
-           sCodMotivo_19:= copy(sLinha,295,1);
-           if(sCodMotivo_19 = 'A')then
-            begin
-              MotivoRejeicaoComando.Add(copy(sLinha,295,1));
-              DescricaoMotivoRejeicaoComando.Add('A - Aceito');
-            end
-           else
-            begin
-              MotivoRejeicaoComando.Add(copy(sLinha,295,1));
-              DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
-            end;
-         end
-        else
-         begin
-           iMotivoLinha := 319;
-           for i := 0 to 4 do
-           begin
-              iCodMotivo := StrToInt(IfThen( (trim(copy(sLinha,iMotivoLinha,2)) = '') ,'00', copy(sLinha,iMotivoLinha,2)));
-              {Se for o primeiro motivo}
-              if (i = 0) then
-               begin
-                 {Somente estas ocorrencias possuem motivos 00}
-                 if(iCodOcorrencia in [02, 06, 09, 10, 15, 17])then
-                  begin
-                    MotivoRejeicaoComando.Add( IntToStrZero(iCodMotivo, 2) );
-                    DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
-                  end
-                 else
-                  begin
-                    if(iCodMotivo = 0)then
-                     begin
-                       MotivoRejeicaoComando.Add('00');
-                       DescricaoMotivoRejeicaoComando.Add('Sem Motivo');
-                     end
-                    else
-                     begin
-                       MotivoRejeicaoComando.Add( IntToStrZero(iCodMotivo, 2) );
-                       DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
-                     end;
-                  end;
-               end
-              else
-               begin
-                 //Apos o 1º motivo os 00 significam que não existe mais motivo
-                 if iCodMotivo <> 0 then
-                 begin
-                    MotivoRejeicaoComando.Add( IntToStrZero(iCodMotivo, 2) );
-                    DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
-                 end;
-               end;
-
-              iMotivoLinha := iMotivoLinha + 2; //Incrementa a coluna dos motivos
-           end;
-         end;
-
-        if  (Copy(sLinha,111,2) <> '00') and (Copy(sLinha,111,2) <> '  ') then
-          DataOcorrencia := StringToDateTimeDef( Copy(sLinha,111,2)+'/'+
-                                                 Copy(sLinha,113,2)+'/'+
-                                                 Copy(sLinha,115,2),0, 'DD/MM/YY' );
-        if Copy(sLinha,147,2)<>'00' then
-           Vencimento := StringToDateTimeDef( Copy(sLinha,147,2)+'/'+
-                                              Copy(sLinha,149,2)+'/'+
-                                              Copy(sLinha,151,2),0, 'DD/MM/YY' );
-
-        ValorDocumento       := StrToFloatDef(Copy(sLinha,153,13),0)/100;
-        ValorIOF             := StrToFloatDef(Copy(sLinha,215,13),0)/100;
-        ValorAbatimento      := StrToFloatDef(Copy(sLinha,228,13),0)/100;
-        ValorDesconto        := StrToFloatDef(Copy(sLinha,241,13),0)/100;
-        ValorMoraJuros       := StrToFloatDef(Copy(sLinha,267,13),0)/100;
-        ValorOutrosCreditos  := StrToFloatDef(Copy(sLinha,280,13),0)/100;
-        ValorRecebido        := StrToFloatDef(Copy(sLinha,254,13),0)/100;
-        NossoNumero          := Copy(sLinha,71,11);
-        Carteira             := Copy(sLinha,22,3);
-        ValorDespesaCobranca := StrToFloatDef(Copy(sLinha,176,13),0)/100;
-        ValorOutrasDespesas  := StrToFloatDef(Copy(sLinha,189,13),0)/100;
-
-        if StrToIntDef(Copy(sLinha,296,6),0) <> 0 then
-           DataCredito:= StringToDateTimeDef( Copy(sLinha,296,2)+'/'+
-                                              Copy(sLinha,298,2)+'/'+
-                                              Copy(sLinha,300,2),0, 'DD/MM/YY' );
-     end;
   end;
 end;
 
@@ -843,6 +465,29 @@ begin
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;
+end;
+
+function TACBrBancoUnicredRS.TipoOcorrenciaToCodRemessa(
+  const ATipoOcorrencia: TACBrTipoOcorrencia): String;
+begin
+  case ATipoOcorrencia of
+         toRemessaBaixar                         : Result := '02'; {Pedido de Baixa}
+         toRemessaConcederAbatimento             : Result := '04'; {Concessão de Abatimento}
+         toRemessaCancelarAbatimento             : Result := '05'; {Cancelamento de Abatimento concedido}
+         toRemessaAlterarVencimento              : Result := '06'; {Alteração de vencimento}
+         toRemessaAlterarNumeroControle          : Result := '08'; {Alteração de seu número}
+         toRemessaProtestar                      : Result := '09'; {Pedido de protesto}
+         toRemessaNaoProtestar                   : Result := '10'; {Não Protestar}
+         toRemessaCancelarInstrucaoProtestoBaixa : Result := '18'; {Sustar protesto e baixar}
+         toRemessaCancelarInstrucaoProtesto      : Result := '19'; {Sustar protesto e manter na carteira}
+         toRemessaOutrasOcorrencias              : Result := '31'; {Alteração de Outros Dados}
+         toRemessaPedidoNegativacao                  : Result := '45'; {Pedido de negativação}
+         toRemessaExcluirNegativacaoBaixar           : Result := '46'; {Excluir negativação e baixar}
+         toRemessaExcluirNegativacaoManterEmCarteira : Result := '47'; {Excluir negativação e manter em carteira.}
+       else
+         Result := '01';                                           {Remessa}
+  end;
+
 end;
 
 

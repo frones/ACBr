@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou                                 }
+{ Colaboradores nesse arquivo: Juliana Tamizou, José M S Junior                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -128,7 +128,7 @@ begin
                 CodJurosToStr(CodigoMoraJuros,ValorMoraJuros)                 +{ 105 a 105	  Tipo de Valor Mora	001}
                 '0'                                                           +{ 106 a 106	  Filler	001 }
                 Space(2)                                                      +{ 107 a 108	  Branco	002	Branco }
-                TipoOCorrenciaRemessaToCod(OcorrenciaOriginal.Tipo)           +{ 109 a 110	  Identificação da Ocorrência	002 }
+                TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo)           +{ 109 a 110	  Identificação da Ocorrência	002 }
                 PadRight(ACBrTitulo.SeuNumero, 10)                            +{ 111 a 120	  Nº do Documento (Seu número)	010 }
                 FormatDateTime( 'ddmmyy', Vencimento)                         +{ 121 a 126	  Data de vencimento do Título	006 }
                 IntToStrZero(Round(ValorDocumento * 100 ), 13)                +{ 127 a 139	  Valor do Título	013 }
@@ -144,7 +144,7 @@ begin
                 IntToStrZero(Round(ValorDescontoAntDia * 100), 13)            +{ 180 a 192  	Valor do Desconto  	013 }
                 PadLeft(sNossoNumero + sDigitoNossoNumero, 11, '0')           +{ 193 a 203  	Nosso Número na UNICRED  	011 }
                 StringOfChar('0', 2)                                          +{ 204 a 205  	Zeros  	002 }
-                ifthen(TipoOCorrenciaRemessaToCod(OcorrenciaOriginal.Tipo) <> '04',
+                ifthen(TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo) <> '04',
                        StringOfChar('0', 13),
                        IntToStrZero(Round(ValorAbatimento * 100), 13))        +{ 206 a 218  	Valor do Abatimento a ser concedido   	013 }
                 sTipoSacado                                                   +{ 219 a 220	  Tipo de inscrição do Pagador 01 – CPF 02 - CNPJ }

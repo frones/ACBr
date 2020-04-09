@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2020
+-- ACBrBoleto, ACBrBancoBradesco, ACBrBancoUnicredRS, ACBrBancoUnicredSC, ACBrBancoUnicredES --
+[*] Realização de Refactory nas classes dos Bancos, unificando funcionalidades criadas na classe principal ACBrBancoClass.
+
 08/04/2020
 -- ACBrBancoCaixa --
 [*] Inclusão da leitura do tipo de documento do beneficiário na leitura do retorno CNAB240.(AG Sistemas)

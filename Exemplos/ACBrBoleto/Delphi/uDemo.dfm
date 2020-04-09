@@ -1,9 +1,9 @@
 object frmDemo: TfrmDemo
   Left = 288
   Top = 133
+  Width = 827
+  Height = 577
   Caption = 'Demo ACBrBoleto '
-  ClientHeight = 538
-  ClientWidth = 811
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -93,6 +93,7 @@ object frmDemo: TfrmDemo
       Top = 32
       Width = 73
       Height = 21
+      ItemHeight = 13
       TabOrder = 3
       Text = 'Sim'
       Items.Strings = (
@@ -554,6 +555,7 @@ object frmDemo: TfrmDemo
       Width = 161
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       TabOrder = 10
       OnChange = cbxLayOutChange
     end
@@ -593,58 +595,67 @@ object frmDemo: TfrmDemo
       OnClick = Button1Click
     end
     object Button2: TButton
-      Left = 104
+      Left = 92
       Top = 16
-      Width = 75
+      Width = 71
       Height = 25
       Caption = 'Gerar PDF'
       TabOrder = 1
       OnClick = Button2Click
     end
     object Button3: TButton
-      Left = 192
+      Left = 262
       Top = 16
-      Width = 131
+      Width = 118
       Height = 25
       Caption = 'Zerar Lista de Boletos'
       TabOrder = 2
       OnClick = Button3Click
     end
     object Button4: TButton
-      Left = 336
+      Left = 394
       Top = 16
-      Width = 97
+      Width = 83
       Height = 25
       Caption = 'Incluir Boleto'
       TabOrder = 3
       OnClick = Button4Click
     end
     object Button5: TButton
-      Left = 448
+      Left = 489
       Top = 16
-      Width = 129
+      Width = 113
       Height = 25
       Caption = 'Incluir V'#225'rios Boletos'
       TabOrder = 4
       OnClick = Button5Click
     end
     object Button6: TButton
-      Left = 592
+      Left = 615
       Top = 16
-      Width = 97
+      Width = 88
       Height = 25
       Caption = 'Gerar Remessa'
       TabOrder = 5
       OnClick = Button6Click
     end
     object Button7: TButton
-      Left = 704
+      Left = 717
       Top = 16
-      Width = 89
+      Width = 78
       Height = 25
       Caption = 'Imprimir'
       TabOrder = 6
       OnClick = Button7Click
+    end
+    object Button8: TButton
+      Left = 176
+      Top = 16
+      Width = 71
+      Height = 25
+      Caption = 'Enviar Email'
+      TabOrder = 7
+      OnClick = Button8Click
     end
   end
 end

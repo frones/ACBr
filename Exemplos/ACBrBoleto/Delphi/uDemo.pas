@@ -118,6 +118,7 @@ type
     cbxLayOut: TComboBox;
     cbxImprimirVersoFatura: TCheckBox;
     btnLerRetorno: TButton;
+    Button8: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
@@ -129,6 +130,7 @@ type
     procedure cbxLayOutChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnLerRetornoClick(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
   private
 {$IFDEF demo_forte}
     dm: TdmForte;
@@ -371,6 +373,30 @@ begin
   cbxImprimirVersoFatura.Enabled := (cbxLayOut.ItemIndex = 6); // lFaturaDetal
   if cbxLayOut.ItemIndex <> 6 then
    cbxImprimirVersoFatura.Checked := false;
+end;
+
+procedure TfrmDemo.Button8Click(Sender: TObject);
+var
+  SL: TStringList;
+  //i: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Add('Olá,');
+    SL.Add('Atenção, Boleto está em Anexo');
+    dm.ACBrBoleto.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
+
+    //Método para envio e-mail de forma individual para cada título
+    {for i := 0 to dm.ACBrBoleto.ListadeBoletos.Count -1 do
+    begin
+      if (dm.ACBrBoleto.ListadeBoletos[i].Sacado.Email <> '') then
+        dm.ACBrBoleto.ListadeBoletos[i].EnviarEmail(dm.ACBrBoleto.ListadeBoletos[i].Sacado.Email ,'Teste de Envio de Email', SL, True);
+
+    end;}
+
+  finally
+    SL.Free;
+  end;
 end;
 
 end.

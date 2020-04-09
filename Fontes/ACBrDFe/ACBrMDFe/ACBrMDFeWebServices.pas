@@ -992,8 +992,8 @@ begin
                      [FMDFeRetornoSincrono.versao,
                       TpAmbToStr(FMDFeRetornoSincrono.TpAmb),
                       FMDFeRetornoSincrono.verAplic,
-                      IntToStr(FMDFeRetornoSincrono.protMDFe.cStat),
-                      FMDFeRetornoSincrono.protMDFe.xMotivo,
+                      IntToStr(FMDFeRetornoSincrono.cStat),
+                      FMDFeRetornoSincrono.xMotivo,
                       CodigoParaUF(FMDFeRetornoSincrono.cUF),
                       FormatDateTimeBr(FMDFeRetornoSincrono.protMDFe.dhRecbto),
                       FMDFeRetornoSincrono.chMDFe])

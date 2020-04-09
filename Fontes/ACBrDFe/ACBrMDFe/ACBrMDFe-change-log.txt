@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2020
+-- ACBrMDFeWebServices --
+[-] Correção para exibir o "cStat" e "xMotivo" na mensagem de retorno do webservice
+    em caso de rejeição no envio em modo síncrono.
+  Por: BigWings
+
 07/04/2020
 -- pmdfeRetEnvEventoMDFe --
 [-] Possivel correção na leitura do XML de retorno de Consulta a um MDFe

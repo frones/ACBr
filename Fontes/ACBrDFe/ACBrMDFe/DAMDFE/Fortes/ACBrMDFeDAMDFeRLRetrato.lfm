@@ -1,6 +1,6 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 223
-  Top = 91
+  Left = 209
+  Top = 84
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -637,7 +637,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_3_Aereo: TRLBand[1]
       Left = 26
-      Height = 54
+      Height = 20
       Top = 576
       Width = 742
       AutoExpand = False
@@ -659,7 +659,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_4_Aquav: TRLBand[2]
       Left = 26
       Height = 121
-      Top = 630
+      Top = 596
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -995,8 +995,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand[3]
       Left = 26
-      Height = 60
-      Top = 751
+      Height = 20
+      Top = 717
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -1016,7 +1016,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_6_Observacao: TRLBand[4]
       Left = 26
       Height = 152
-      Top = 929
+      Top = 855
       Width = 742
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1149,7 +1149,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_7_Documentos_Titulos: TRLBand[5]
       Left = 26
       Height = 32
-      Top = 811
+      Top = 737
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -1708,7 +1708,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object subItens: TRLSubDetail[7]
       Left = 26
       Height = 86
-      Top = 843
+      Top = 769
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1734,7 +1734,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
-        object LinhaQuantidade: TRLDraw
+        object LinhaDivisoria: TRLDraw
           Left = 374
           Height = 33
           Top = 16
@@ -1790,7 +1790,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object rlbNumcipio: TRLLabel
+        object rlbMunicipio: TRLLabel
           Left = 0
           Height = 16
           Top = 0
@@ -1834,10 +1834,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Height = 0
       BeforePrint = rlb_1_DadosManifestoBeforePrint
       object rliLogo: TRLImage
-        Left = 6
-        Height = 96
+        Left = 7
+        Height = 62
         Top = 57
-        Width = 96
+        Width = 94
         Center = True
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -2326,6 +2326,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   end
   inherited RLPDFFilter1: TRLPDFFilter
     left = 234
-    top = 39
+    top = 32
   end
 end

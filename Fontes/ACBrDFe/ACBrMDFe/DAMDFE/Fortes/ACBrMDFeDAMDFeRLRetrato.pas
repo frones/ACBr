@@ -96,7 +96,7 @@ type
     RLSystemInfo1: TRLSystemInfo;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
-    LinhaQuantidade: TRLDraw;
+    LinhaDivisoria: TRLDraw;
     rlmChave1: TRLMemo;
     rlmChave2: TRLMemo;
     rlb_1_DadosManifesto: TRLBand;
@@ -148,7 +148,7 @@ type
     RLDraw12: TRLDraw;
     RLDraw13: TRLDraw;
     RLDraw14: TRLDraw;
-    rlbNumcipio: TRLLabel;
+    rlbMunicipio: TRLLabel;
     RLDraw15: TRLDraw;
     rllTituloValorMerc: TRLLabel;
     rllValorMercadoria: TRLLabel;
@@ -663,6 +663,7 @@ begin
   with rlbItens do
   begin
     AutoSize           := True;
+    IntegralHeight     := False;
     Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
@@ -712,7 +713,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  J, nItem : integer;
+  J, nItem: integer;
 
   procedure Printar( sTemp : String; nItem : Integer );
   begin
@@ -726,7 +727,9 @@ begin
 
   with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
-    rlbNumcipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
+    rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
+
+    LinhaDivisoria.Left := (rlbMunicipio.Width div 2) - 30;
 
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do

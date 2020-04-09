@@ -2,6 +2,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 209
   Top = 84
   Caption = 'Manifesto - Retrato'
+  ClientHeight = 749
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -534,7 +535,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Left = 26
       Top = 576
       Width = 742
-      Height = 54
+      Height = 20
       AutoExpand = False
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -549,7 +550,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_4_Aquav: TRLBand
       Left = 26
-      Top = 630
+      Top = 596
       Width = 742
       Height = 121
       BandType = btHeader
@@ -829,9 +830,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand
       Left = 26
-      Top = 751
+      Top = 717
       Width = 742
-      Height = 60
+      Height = 20
       BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -845,7 +846,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_6_Observacao: TRLBand
       Left = 26
-      Top = 929
+      Top = 855
       Width = 742
       Height = 152
       BandType = btSummary
@@ -959,7 +960,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_7_Documentos_Titulos: TRLBand
       Left = 26
-      Top = 811
+      Top = 737
       Width = 742
       Height = 32
       AutoExpand = False
@@ -1421,7 +1422,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 26
-      Top = 843
+      Top = 769
       Width = 742
       Height = 86
       Borders.Sides = sdCustom
@@ -1440,7 +1441,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Background.Width = 865
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
-        object LinhaQuantidade: TRLDraw
+        object LinhaDivisoria: TRLDraw
           Left = 374
           Top = 16
           Width = 1
@@ -1486,7 +1487,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentColor = False
           ParentFont = False
         end
-        object rlbNumcipio: TRLLabel
+        object rlbMunicipio: TRLLabel
           Left = 0
           Top = 0
           Width = 740

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2020
+-- ACBrMDFeDAEventoRLRetrato --
+[-] https://www.projetoacbr.com.br/forum/topic/56891-impressão-mdfe-fortes/
+   Por: Ronie Oliveira
+
 01/04/2020
 -- ACBrMDFeDAEventoRLRetrato --
 [+] Inclusão do evento de Pagamento da Operação de Transporte

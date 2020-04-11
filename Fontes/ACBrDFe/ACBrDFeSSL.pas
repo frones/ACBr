@@ -806,6 +806,7 @@ begin
 
   PFXStream := TFileStream.Create(FpDFeSSL.ArquivoPFX, fmOpenRead or fmShareDenyNone);
   try
+    PFXStream.Position := 0;
     FpDFeSSL.DadosPFX := ReadStrFromStream(PFXStream, PFXStream.Size);
   finally
     PFXStream.Free;
@@ -818,7 +819,8 @@ procedure TDFeSSLCryptClass.CarregarCertificadoDeURLPFX;
 var
   UsarCertificadoLocal, UsarCertificadoConexao: Boolean;
   DataArquivoPFX: TDateTime;
-  ADadosPFX, AArquivoPFX, AURLPFX: String;
+  AArquivoPFX, AURLPFX: String;
+  ADadosPFX: AnsiString;
   DiasRestantes: Integer;
 begin
   AArquivoPFX := FpDFeSSL.ArquivoPFX;

@@ -130,7 +130,7 @@ begin
   FName := ExtractFileName(aFileName);
   FIsDirectory := IsDir;
   FData := ADate;
-  FSize := Size
+  FSize := ASize
 end;
 
 function TFileInfo.FormatByteSize: String;
@@ -302,8 +302,8 @@ begin
     while (RetFind = 0) and (LastFile <> SearchRec.Name) do
     begin
       LastFile := SearchRec.Name;
-      if ((SearchRec.Attr and Attr) <> 0) and
-         ( ((SearchRec.Attr and faHidden) = 0) or FShowHidden) then
+      if ((SearchRec.Attr = 0) or ((SearchRec.Attr and Attr) <> 0)) and
+         (FShowHidden or ((SearchRec.Attr and faHidden) = 0)) then
       begin
         FI := TFileInfo.Create( LastFile,
                                 ((SearchRec.Attr and faDirectory) <> 0),

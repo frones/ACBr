@@ -233,7 +233,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Size.Width = 291.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
-                  OnChange = edtConfCertURLChange
+                  OnTyping = edtConfCertURLTyping
                 end
                 object btnCertInfo: TCornerButton
                   Align = Client
@@ -276,7 +276,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Size.Width = 221.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
-                  OnChange = edtConfCertURLChange
+                  OnTyping = edtConfCertURLTyping
                 end
                 object sbCertVerSenha: TSpeedButton
                   StaysPressed = True
@@ -316,7 +316,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Size.Width = 221.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
-                  OnChange = edtConfCertURLChange
+                  OnTyping = edtConfCertURLTyping
                 end
                 object sbCertConfAcharPFX: TSpeedButton
                   StaysPressed = True

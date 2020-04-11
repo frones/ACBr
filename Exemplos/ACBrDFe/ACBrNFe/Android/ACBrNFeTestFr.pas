@@ -282,7 +282,6 @@ type
     procedure edtEmitCEPValidate(Sender: TObject; var Text: string);
     procedure cbxWebServiceUFChange(Sender: TObject);
     procedure btnProcurarBthClick(Sender: TObject);
-    procedure edtConfCertURLChange(Sender: TObject);
     procedure FormVirtualKeyboardHidden(Sender: TObject;
       KeyboardVisible: Boolean; const Bounds: TRect);
     procedure edtEnterScrollableControl(Sender: TObject);
@@ -302,6 +301,7 @@ type
     procedure imgErrorCepClick(Sender: TObject);
     procedure tiStartUpTimer(Sender: TObject);
     procedure edtEmitCNPJTyping(Sender: TObject);
+    procedure edtConfCertURLTyping(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -473,11 +473,19 @@ begin
 
   FrSlect.ShowModal(
     procedure(ModalResult : TModalResult)
+    var
+      AFile: string;
     begin
-      if ModalResult = mrOK then
-        edtConfCertPFX.Text := FrSlect.FileName;
+        if ModalResult = mrOK then
+        begin
+          AFile := FrSlect.FileName;
+          if AFile.IndexOf(ApplicationPath) = 0 then
+            AFile := ExtractFileName(AFile);
+
+          edtConfCertPFX.Text := AFile;
+        end
       end
-  );
+    );
 end;
 
 procedure TACBrNFCeTestForm.sbCertVerSenhaClick(Sender: TObject);
@@ -907,9 +915,11 @@ begin
     KeyChar := #0;
 end;
 
-procedure TACBrNFCeTestForm.edtConfCertURLChange(Sender: TObject);
+procedure TACBrNFCeTestForm.edtConfCertURLTyping(Sender: TObject);
 begin
-  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, edtConfCertPFX.Text, edtConfCertSenha.Text);
+  imgErrorCert.Visible := not ValidarEditsCertificado( edtConfCertURL.Text,
+                                                       edtConfCertPFX.Text,
+                                                       edtConfCertSenha.Text);
 end;
 
 procedure TACBrNFCeTestForm.edtEmitCEPTyping(Sender: TObject);
@@ -1211,17 +1221,13 @@ begin
 end;
 
 function TACBrNFCeTestForm.ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
-var
-  Ok: Boolean;
 begin
-  Ok := not Pass.IsEmpty;
-  if Ok then
-    Ok := (not URL.IsEmpty) or (not PFX.IsEmpty);
+  Result := not Pass.IsEmpty;
+  if Result then
+    Result := (not URL.IsEmpty) or (not PFX.IsEmpty);
 
-  if Ok and (not PFX.IsEmpty) then
-    Ok := FileExists(PFX);
-
-  Result := Ok;
+  if Result and (not PFX.IsEmpty) then
+    Result := (not URL.IsEmpty) or FileExists(PFX);
 end;
 
 procedure TACBrNFCeTestForm.LerConfiguracao;
@@ -1309,7 +1315,7 @@ begin
   edtEmitRazaoTyping(nil);
   edtEmitCEPTyping(nil);
   edtEmitFoneTyping(nil);
-  edtConfCertURLChange(nil);
+  edtConfCertURLTyping(nil);
 end;
 
 end.

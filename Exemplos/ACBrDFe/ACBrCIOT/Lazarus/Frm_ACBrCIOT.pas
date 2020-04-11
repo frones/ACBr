@@ -257,6 +257,7 @@ type
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
+    procedure ConfigurarEmail;
     Procedure AlimentarComponente;
     procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
@@ -711,22 +712,24 @@ begin
   OpenDialog1.Filter := 'Arquivos RegBol (*-CIOT.xml)|*-CIOT.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrCIOT1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    ACBrCIOT1.Contratos.Clear;
-    ACBrCIOT1.Contratos.LoadFromFile(OpenDialog1.FileName);
-    CC:=TstringList.Create;
-    CC.Add('email_1@provedor.com'); //especifique um email válido
-    CC.Add('email_2@provedor.com.br'); //especifique um email válido
+  if not OpenDialog1.Execute then
+    Exit;
 
+  ACBrCIOT1.Contratos.Clear;
+  ACBrCIOT1.Contratos.LoadFromFile(OpenDialog1.FileName);
+  CC := TStringList.Create;
+  try
+    //CC.Add('email_1@provedor.com'); //especifique um email válido
+    //CC.Add('email_2@provedor.com.br'); //especifique um email válido
+    ConfigurarEmail;
     ACBrCIOT1.Contratos.Items[0].EnviarEmail(Para
-                                             , edtEmailAssunto.Text
-                                             , mmEmailMsg.Lines
-                                             , False // Enviar PDF junto
-                                             , nil   // Lista com emails que serão enviado cópias - TStrings
-                                             , nil   // Lista de RegBolxos - TStrings
-                                              );
-
+      , edtEmailAssunto.Text
+      , mmEmailMsg.Lines
+      , False // Enviar PDF junto
+      , CC   // Lista com emails que serão enviado cópias - TStrings
+      , nil   // Lista de RegBolxos - TStrings
+      );
+  finally
     CC.Free;
   end;
 end;
@@ -1018,6 +1021,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -1140,6 +1144,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -1221,6 +1226,20 @@ begin
     PathSchemas      := edtPathSchemas.Text;
     PathCIOT         := edtPathCIOT.Text;
   end;
+end;
+
+procedure TfrmACBrCIOT.ConfigurarEmail;
+begin
+  ACBrMail1.Host := edtSmtpHost.Text;
+  ACBrMail1.Port := edtSmtpPort.Text;
+  ACBrMail1.Username := edtSmtpUser.Text;
+  ACBrMail1.Password := edtSmtpPass.Text;
+  ACBrMail1.From := edtSmtpUser.Text;
+  ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
+  ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
+  ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+  ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
+  ACBrMail1.FromName := 'Projeto ACBr - ACBrCIOT';
 end;
 
 procedure TfrmACBrCIOT.LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);

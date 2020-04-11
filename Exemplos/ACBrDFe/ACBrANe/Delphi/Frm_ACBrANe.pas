@@ -248,6 +248,7 @@ type
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
+    procedure ConfigurarEmail;
     Procedure AlimentarComponente(ANomeArq: String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
@@ -580,6 +581,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -702,6 +704,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -793,6 +796,20 @@ begin
     PathMensal       := GetPathANe(0);
     PathSalvar       := PathMensal;
   end;
+end;
+
+procedure TfrmACBrANe.ConfigurarEmail;
+begin
+  ACBrMail1.Host := edtSmtpHost.Text;
+  ACBrMail1.Port := edtSmtpPort.Text;
+  ACBrMail1.Username := edtSmtpUser.Text;
+  ACBrMail1.Password := edtSmtpPass.Text;
+  ACBrMail1.From := edtSmtpUser.Text;
+  ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
+  ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
+  ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+  ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
+  ACBrMail1.FromName := 'Projeto ACBr - ACBrANe';
 end;
 
 procedure TfrmACBrANe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
@@ -1045,21 +1062,24 @@ begin
   OpenDialog1.Filter := 'Arquivos ANe (*-ANe.xml)|*-ANe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrANe1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    ACBrANe1.Documentos.Clear;
-    ACBrANe1.Documentos.LoadFromFile(OpenDialog1.FileName);
-    CC:=TstringList.Create;
-    CC.Add('email_1@provedor.com'); //especifique um email válido
-    CC.Add('email_2@provedor.com.br'); //especifique um email válido
+  if not OpenDialog1.Execute then
+    Exit;
 
+  ACBrANe1.Documentos.Clear;
+  ACBrANe1.Documentos.LoadFromFile(OpenDialog1.FileName);
+  CC := TStringList.Create;
+  try
+    //CC.Add('email_1@provedor.com'); //especifique um email válido
+    //CC.Add('email_2@provedor.com.br'); //especifique um email válido
+    ConfigurarEmail;
     ACBrANe1.Documentos.Items[0].EnviarEmail(Para
-                                             , edtEmailAssunto.Text
-                                             , mmEmailMsg.Lines
-                                             , False // Enviar PDF junto
-                                             , nil   // Lista com emails que serão enviado cópias - TStrings
-                                             , nil   // Lista de anexos - TStrings
-                                             );
+      , edtEmailAssunto.Text
+      , mmEmailMsg.Lines
+      , False // Enviar PDF junto
+      , CC   // Lista com emails que serão enviado cópias - TStrings
+      , nil   // Lista de anexos - TStrings
+      );
+  finally
     CC.Free;
   end;
 end;

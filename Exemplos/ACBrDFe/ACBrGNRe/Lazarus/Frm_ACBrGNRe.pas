@@ -254,6 +254,7 @@ type
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
+    procedure ConfigurarEmail;
     Procedure AlimentarComponente;
     procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
@@ -392,35 +393,25 @@ begin
 
   OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    ACBrGNRE1.Guias.Clear;
-    ACBrGNRE1.Guias.LoadFromFile(OpenDialog1.FileName);
-    CC:=TstringList.Create;
+  if not OpenDialog1.Execute then
+    Exit;
 
-    try
-      CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
-      CC.Add('anfm@zipmail.com.br');    // especifique um email valido
-
-      ACBrMail1.Host := edtSmtpHost.Text;
-      ACBrMail1.Port := edtSmtpPort.Text;
-      ACBrMail1.Username := edtSmtpUser.Text;
-      ACBrMail1.Password := edtSmtpPass.Text;
-      ACBrMail1.From := edtSmtpUser.Text;
-      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
-      ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
-      ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
-      ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
-      ACBrMail1.FromName := 'Projeto ACBr - ACBrGNRE';
-
-      ACBrGNRE1.Guias.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
-                                               mmEmailMsg.Lines
-                                               , True  // Enviar PDF junto
-                                               , CC    // Lista com emails que serao enviado copias - TStrings
-                                               , nil); // Lista de anexos - TStrings
-    finally
-      CC.Free;
-    end;
+  ACBrGNRE1.Guias.Clear;
+  ACBrGNRE1.Guias.LoadFromFile(OpenDialog1.FileName);
+  CC := TStringList.Create;
+  try
+    //CC.Add('email_1@provedor.com'); // especifique um email valido
+    //CC.Add('email_2@provedor.com.br');    // especifique um email valido
+    ConfigurarEmail;
+    ACBrGNRE1.Guias.Items[0].EnviarEmail(Para
+      , edtEmailAssunto.Text
+      , mmEmailMsg.Lines
+      , True  // Enviar PDF junto
+      , CC    // Lista com emails que serao enviado copias - TStrings
+      , nil // Lista de anexos - TStrings
+      );
+  finally
+    CC.Free;
   end;
 end;
 
@@ -686,6 +677,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -803,6 +795,7 @@ begin
     StreamMemo.Free;
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -880,6 +873,20 @@ begin
     PathSchemas      := edtPathSchemas.Text;
     PathGNRE         := edtPathGNRE.Text;
   end;
+end;
+
+procedure TfrmACBrGNRe.ConfigurarEmail;
+begin
+  ACBrMail1.Host := edtSmtpHost.Text;
+  ACBrMail1.Port := edtSmtpPort.Text;
+  ACBrMail1.Username := edtSmtpUser.Text;
+  ACBrMail1.Password := edtSmtpPass.Text;
+  ACBrMail1.From := edtSmtpUser.Text;
+  ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
+  ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
+  ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+  ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
+  ACBrMail1.FromName := 'Projeto ACBr - ACBrGNRE';
 end;
 
 procedure TfrmACBrGNRe.LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);

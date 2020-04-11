@@ -1627,7 +1627,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Caption = 'Imprimir Evento'
           OnClick = btnImprimirEventoClick
-          TabOrder = 3
+          TabOrder = 5
         end
         object btnGerarPDFEvento: TButton
           Left = 191
@@ -1636,7 +1636,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Caption = 'Gerar PDF Evento'
           OnClick = btnGerarPDFEventoClick
-          TabOrder = 4
+          TabOrder = 6
         end
         object btnInclusaoCondutor: TButton
           Left = 8
@@ -1645,7 +1645,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Caption = 'Inclusão de Condutor'
           OnClick = btnInclusaoCondutorClick
-          TabOrder = 5
+          TabOrder = 3
         end
         object btnInclusaoDFe: TButton
           Left = 191
@@ -1654,7 +1654,16 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Caption = 'Inclusão de DFe'
           OnClick = btnInclusaoDFeClick
-          TabOrder = 6
+          TabOrder = 4
+        end
+        object btnEnviarEventoEmail: TButton
+          Left = 376
+          Height = 25
+          Top = 71
+          Width = 177
+          Caption = 'Enviar Evento Email'
+          OnClick = btnEnviarEventoEmailClick
+          TabOrder = 7
         end
       end
       object tsDistribuicao: TTabSheet

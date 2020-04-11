@@ -1552,6 +1552,15 @@ object frmACBrMDFe: TfrmACBrMDFe
           TabOrder = 7
           OnClick = btnPagOperacaoTranspClick
         end
+        object btnEnviarEventoEmail: TButton
+          Left = 374
+          Top = 71
+          Width = 177
+          Height = 25
+          Caption = 'Enviar Evento Email'
+          TabOrder = 8
+          OnClick = btnEnviarEventoEmailClick
+        end
       end
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'

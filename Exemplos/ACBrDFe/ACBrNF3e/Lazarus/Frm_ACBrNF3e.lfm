@@ -1680,7 +1680,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Height = 25
           Top = 133
           Width = 177
-          Caption = 'Enviar NFe Email'
+          Caption = 'Enviar NF3e Email'
           OnClick = btnEnviarEmailClick
           TabOrder = 5
         end

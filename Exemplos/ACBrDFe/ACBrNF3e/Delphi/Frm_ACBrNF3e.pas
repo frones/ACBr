@@ -308,6 +308,7 @@ type
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
+    procedure ConfigurarEmail;
     Procedure AlimentarComponente(NumDFe: String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
@@ -998,35 +999,24 @@ begin
 
   OpenDialog1.InitialDir := ACBrNF3e1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    ACBrNF3e1.NotasFiscais.Clear;
-    ACBrNF3e1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    CC:=TstringList.Create;
+  if not OpenDialog1.Execute then
+    Exit;
 
-    try
-      CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
-      CC.Add('anfm@zipmail.com.br');    // especifique um email valido
+  ACBrNF3e1.NotasFiscais.Clear;
+  ACBrNF3e1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
-      ACBrMail1.Host := edtSmtpHost.Text;
-      ACBrMail1.Port := edtSmtpPort.Text;
-      ACBrMail1.Username := edtSmtpUser.Text;
-      ACBrMail1.Password := edtSmtpPass.Text;
-      ACBrMail1.From := edtSmtpUser.Text;
-      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
-      ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
-      ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
-      ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
-      ACBrMail1.FromName := 'Projeto ACBr - ACBrNF3e';
-
-      ACBrNF3e1.NotasFiscais.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
-                                               mmEmailMsg.Lines
-                                               , True  // Enviar PDF junto
-                                               , CC    // Lista com emails que serao enviado copias - TStrings
-                                               , nil); // Lista de anexos - TStrings
-    finally
-      CC.Free;
-    end;
+  CC := TStringList.Create;
+  try
+    //CC.Add('email_1@provedor.com'); // especifique um email valido
+    //CC.Add('email_2@provedor.com.br');    // especifique um email valido
+    ConfigurarEmail;
+    ACBrNF3e1.NotasFiscais.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
+                                             mmEmailMsg.Lines
+                                             , True  // Enviar PDF junto
+                                             , CC    // Lista com emails que serao enviado copias - TStrings
+                                             , nil); // Lista de anexos - TStrings
+  finally
+    CC.Free;
   end;
 end;
 
@@ -1056,24 +1046,28 @@ begin
 
   OpenDialog1.InitialDir := ACBrNF3e1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    Evento := TStringList.Create;
+  if not OpenDialog1.Execute then
+    Exit;
+
+  Evento := TStringList.Create;
+  CC := TStringList.Create;
+  try
     Evento.Clear;
     Evento.Add(OpenDialog1.FileName);
     ACBrNF3e1.EventoNF3e.Evento.Clear;
     ACBrNF3e1.EventoNF3e.LerXML(OpenDialog1.FileName);
 
-    CC:=TstringList.Create;
-    CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
-    CC.Add('anfm@zipmail.com.br');    // especifique um email valido
-
-    ACBrNF3e1.EnviarEmailEvento(Para, edtEmailAssunto.Text, mmEmailMsg.Lines,
-                               nil, // Lista com emails que serao enviado copias - TStrings
-                               nil, // Lista de anexos - TStrings
-                               nil  // ReplyTo
-                               );
-
+    //CC.Add('email_1@provedor.com'); // especifique um email valido
+    //CC.Add('email_2@provedor.com.br');    // especifique um email valido
+    ConfigurarEmail;
+    ACBrNF3e1.EnviarEmailEvento(Para
+      , edtEmailAssunto.Text
+      , mmEmailMsg.Lines
+      , CC // Lista com emails que serao enviado copias - TStrings
+      , nil // Lista de anexos - TStrings
+      , nil  // ReplyTo
+      );
+  finally
     CC.Free;
     Evento.Free;
   end;
@@ -1686,6 +1680,7 @@ begin
     Ini.WriteBool(   'PosPrinter', 'CortarPapel',       cbCortarPapel.Checked );
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -1818,6 +1813,7 @@ begin
     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter', 'ParamsString', '');
 
     ConfigurarComponente;
+    ConfigurarEmail;
   finally
     Ini.Free;
   end;
@@ -1915,6 +1911,20 @@ begin
     ACBrNF3e1.DANF3e.TipoDANF3e := StrToTpImp(OK, IntToStr(rgTipoDaNF3e.ItemIndex + 1));
     ACBrNF3e1.DANF3e.Logo       := edtLogoMarca.Text;
   end;
+end;
+
+procedure TfrmACBrNF3e.ConfigurarEmail;
+begin
+  ACBrMail1.Host := edtSmtpHost.Text;
+  ACBrMail1.Port := edtSmtpPort.Text;
+  ACBrMail1.Username := edtSmtpUser.Text;
+  ACBrMail1.Password := edtSmtpPass.Text;
+  ACBrMail1.From := edtSmtpUser.Text;
+  ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
+  ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
+  ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+  ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
+  ACBrMail1.FromName := 'Projeto ACBr - ACBrNF3e';
 end;
 
 procedure TfrmACBrNF3e.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);

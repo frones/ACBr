@@ -815,31 +815,38 @@ begin
     'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-  begin
-    ACBrNFSe1.NotasFiscais.Clear;
-    ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+  if not OpenDialog1.Execute then
+    Exit;
 
-    if not(InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
-      exit;
+  ACBrNFSe1.NotasFiscais.Clear;
+  ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
-    sCC := TStringList.Create;
+  if not(InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
+    exit;
+
+  sCC := TStringList.Create;
+  try
     sCC.Clear; // Usando para add outros e-mail como Com-Cópia
-
-    ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(vAux, edtEmailAssunto.Text,
-      mmEmailMsg.Lines, True // Enviar PDF junto
-      , nil // Lista com emails que serão enviado cópias - TStrings
+//    sCC.Add('email_1@provedor.com'); // especifique um email valido
+//    sCC.Add('email_2@provedor.com.br');    // especifique um email valido
+    ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(vAux
+      , edtEmailAssunto.Text
+      , mmEmailMsg.Lines
+      , True // Enviar PDF junto
+      , sCC // Lista com emails que serão enviado cópias - TStrings
       , nil // Lista de anexos - TStrings
+      , nil // Reply-to
       );
-
+  finally
     sCC.Free;
-
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
-    MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
-    LoadXML(MemoResp.Text, WBResposta);
-
-    pgRespostas.ActivePageIndex := 1;
   end;
+
+  MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+  MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+  LoadXML(MemoResp.Text, WBResposta);
+
+  pgRespostas.ActivePageIndex := 1;
+
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarLoteClick(Sender: TObject);

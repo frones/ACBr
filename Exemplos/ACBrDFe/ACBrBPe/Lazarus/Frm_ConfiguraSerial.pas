@@ -84,6 +84,9 @@ var
 
 implementation
 
+uses
+  ACBrDeviceSerial;
+
 {$R *.lfm}
 
 { TfrConfiguraSerial }

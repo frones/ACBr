@@ -373,7 +373,8 @@ end;
 
 procedure TFileSelectForm.SetInitialDir(const Value: String);
 begin
-  ChangeDirectory(Value);
+  if Visible then
+    ChangeDirectory(Value);
 end;
 
 procedure TFileSelectForm.SpeedButton1Click(Sender: TObject);

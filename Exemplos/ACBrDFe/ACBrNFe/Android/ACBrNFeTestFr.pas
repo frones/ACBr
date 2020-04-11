@@ -13,6 +13,9 @@ uses
   ACBrNFeDANFeESCPOS, ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrIBGE, ACBrSocket,
   ACBrCEP, FMX.Objects, FMX.Effects;
 
+const
+  VK_KEYBOARD_SISE = 250;
+
 type
   TACBrNFCeTestForm = class(TForm)
     GestureManager1: TGestureManager;
@@ -245,6 +248,9 @@ type
     lWebServiceUF: TLabel;
     imgErrorWebServiceUF: TImage;
     imgErrorCert: TImage;
+    imgErrorRazaoSocial: TImage;
+    ListBoxGroupFooter1: TListBoxGroupFooter;
+    tiStartUp: TTimer;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -270,31 +276,47 @@ type
     procedure cbxEmitCidadeChange(Sender: TObject);
     procedure EditApenasNumeros(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
-    procedure edtEmitCEPValidating(Sender: TObject; var Text: string);
     procedure FormDestroy(Sender: TObject);
-    procedure edtEmitCNPJValidating(Sender: TObject; var Text: string);
-    procedure edtEmitCNPJTyping(Sender: TObject);
     procedure edtEmitCEPTyping(Sender: TObject);
     procedure edtEmitFoneTyping(Sender: TObject);
-    procedure edtEmitFoneValidating(Sender: TObject; var Text: string);
     procedure edtEmitCEPValidate(Sender: TObject; var Text: string);
     procedure cbxWebServiceUFChange(Sender: TObject);
-    procedure edtTokenCSCValidating(Sender: TObject; var Text: string);
-    procedure edtTokenIDValidating(Sender: TObject; var Text: string);
-    procedure edtConfCertURLValidating(Sender: TObject; var Text: string);
-    procedure edtConfCertPFXValidating(Sender: TObject; var Text: string);
-    procedure edtConfCertSenhaValidating(Sender: TObject; var Text: string);
     procedure btnProcurarBthClick(Sender: TObject);
+    procedure edtConfCertURLChange(Sender: TObject);
+    procedure FormVirtualKeyboardHidden(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
+    procedure edtEnterScrollableControl(Sender: TObject);
+    procedure edtExitScrollableControl(Sender: TObject);
+    procedure imgErrorCNPJClick(Sender: TObject);
+    procedure edtEmitRazaoTyping(Sender: TObject);
+    procedure imgErrorRazaoSocialClick(Sender: TObject);
+    procedure imgErrorTelefoneClick(Sender: TObject);
+    procedure imgErrorUFClick(Sender: TObject);
+    procedure imgErrorCidadeClick(Sender: TObject);
+    procedure imgErrorIDCSCClick(Sender: TObject);
+    procedure imgErrorCSCClick(Sender: TObject);
+    procedure imgErrorCertClick(Sender: TObject);
+    procedure edtTokenIDTyping(Sender: TObject);
+    procedure edtTokenCSCTyping(Sender: TObject);
+    procedure imgErrorWebServiceUFClick(Sender: TObject);
+    procedure imgErrorCepClick(Sender: TObject);
+    procedure tiStartUpTimer(Sender: TObject);
+    procedure edtEmitCNPJTyping(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
     FcUF: Integer;
+    FScrollBox: TCustomScrollBox;
 
     function CalcularNomeArqConfiguracao: String;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
     procedure ConfigurarACBr;
+    procedure ConfigurarMail;
+    procedure ConfigurarPosPrinter;
+    procedure ConfigurarDANFCe;
+    procedure ConfigurarNFe;
 
     procedure CarregarImpressorasBth;
 
@@ -304,6 +326,8 @@ type
     procedure ConsultarCEP;
     procedure CarregarListaDeCidades;
     function ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
+
+    procedure AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
   public
     { Public declarations }
   end;
@@ -317,7 +341,7 @@ uses
   System.typinfo, System.IniFiles, System.StrUtils, System.Permissions,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
-  Androidapi.JNI.Widget,
+  Androidapi.JNI.Widget, FMX.Helpers.Android,
   {$EndIf}
   FMX.DialogService, FMX.Platform,
   ssl_openssl_lib, blcksock,
@@ -325,6 +349,22 @@ uses
   FileSelectFr, System.Math;
 
 {$R *.fmx}
+
+procedure Toast(const AMsg: string; ShortDuration: Boolean = True);
+var
+  ToastLength: Integer;
+begin
+  {$IfDef MSWINDOWS}
+   TDialogService.ShowMessage(AMsg);
+  {$Else}
+   if ShortDuration then
+     ToastLength := TJToast.JavaClass.LENGTH_SHORT
+   else
+     ToastLength := TJToast.JavaClass.LENGTH_LONG;
+
+   TJToast.JavaClass.makeText(SharedActivityContext, StrToJCharSequence(AMsg), ToastLength).show
+  {$EndIf}
+end;
 
 procedure TACBrNFCeTestForm.FormCreate(Sender: TObject);
 var
@@ -336,6 +376,7 @@ begin
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
   FcMunList := TStringList.Create;
   FcUF := 0;
+  FScrollBox := nil;
 
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
@@ -346,6 +387,7 @@ begin
   imgErrorCSC.Bitmap := imgErrorCep.Bitmap;
   imgErrorWebServiceUF.Bitmap := imgErrorCep.Bitmap;
   imgErrorCert.Bitmap := imgErrorCep.Bitmap;
+  imgErrorRazaoSocial.Bitmap := imgErrorCep.Bitmap;
 
   cbxWebServiceUF.ItemIndex := -1;
   cbxEmitUF.ItemIndex := -1;
@@ -375,7 +417,6 @@ begin
 
   tabsPrincipal.First;
   ProgressBar1.Visible := False;
-  LerConfiguracao;
 end;
 
 procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
@@ -427,7 +468,8 @@ var
 begin
   FrSlect := TFileSelectForm.Create(Self);
   FrSlect.InitialDir := ApplicationPath;
-  FrSlect.FileMask := '*.pfx';
+  FrSlect.ShowHidden := True;
+  FrSlect.FileMask := '*'; //'*.pfx';
 
   FrSlect.ShowModal(
     procedure(ModalResult : TModalResult)
@@ -456,7 +498,7 @@ begin
   if swWebServiceAmbiente.IsChecked then
     lAmbiente.Text := 'Produção'
   else
-    lAmbiente.Text := 'Homologação'
+    lAmbiente.Text := 'Testes'
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1AfterMailProcess(Sender: TObject);
@@ -517,6 +559,59 @@ begin
   mLog.Lines.Add('   ' + AMail.Subject);
 end;
 
+procedure TACBrNFCeTestForm.AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
+var
+  OffSet, ControlSize, KeyBoardScreenTop, ControlScreenBottom: Extended;
+  AParent: TControl;
+  AVirtualKeyboard: IVirtualKeyboardControl;
+  Y: Extended;
+begin
+  // Não chamou com parâmetros corretos
+  if (not Assigned(AControl)) or (not Assigned(AScrollBox)) then
+    Exit;
+
+  // Verificando se esse controle, exibirá o Teclado
+  if not Supports(AControl, IVirtualKeyboardControl, AVirtualKeyboard) then
+    Exit;
+
+  // Verificando se precisa fazer o Scroll
+  KeyBoardScreenTop := Self.Height - VK_KEYBOARD_SISE;
+  ControlSize := AControl.Position.Y + AControl.Height + 10;
+  ControlScreenBottom := AScrollBox.LocalToAbsolute(TPointF.Zero).Y +
+                         AControl.LocalToAbsolute(TPointF.Zero).Y +
+                         (ControlSize*2);
+
+  // Verificando se precisa Reposicionar o Scroll...
+  if (ControlScreenBottom > KeyBoardScreenTop) then
+  begin
+    // Ajusta o Scroll, para que o Teclado não fique sobre ele
+    FScrollBox := AScrollBox;  // Salva o Scroll ajustado, para que o mesmo seja retornado em OnVirtualKeyboardHidden
+    //FScrollBox.Margins.Bottom := VK_KEYBOARD_SISE;
+
+    // Calculando o OffSet, de onde está o AControl, até o Topo do AScrollBox
+    OffSet := 0;
+    AParent := TControl(AControl.Parent);
+    while Assigned(AParent) and (AParent <> AScrollBox) do
+    begin
+      OffSet := OffSet + AParent.Position.Y;
+      AParent := TControl(AParent.Parent);
+    end;
+
+    // Humm... O AControl não está dentro do ScrollBox informado...
+    if (not Assigned(AParent)) or (AParent <> AScrollBox) then
+      raise Exception.CreateFmt('Controle %s não está em: %s',[AControl.Name, AScrollBox.Name]);
+
+    // Reposiciona o Scroll, de acordo com o Offset calculado
+    Y := OffSet + AScrollBox.ViewportPosition.Y + ControlSize - VK_KEYBOARD_SISE;
+    AScrollBox.ViewportPosition := PointF(AScrollBox.ViewportPosition.X, Y);
+    if AScrollBox.ViewportPosition.Y < Y then
+    begin
+      AScrollBox.Margins.Bottom := Y - AScrollBox.ViewportPosition.Y;
+      AScrollBox.ViewportPosition := PointF(AScrollBox.ViewportPosition.X, Y);
+    end;
+  end;
+end;
+
 procedure TACBrNFCeTestForm.btLerConfigClick(Sender: TObject);
 begin
   LerConfiguracao;
@@ -542,6 +637,12 @@ procedure TACBrNFCeTestForm.btnVersaoOpenSSLClick(Sender: TObject);
 var
   AMsg: string;
 begin
+  ConfigurarNFe;
+  // Força novo Download, apaga Cache Local
+  if not ACBrNFe1.Configuracoes.Certificados.URLPFX.IsEmpty then
+    if not ACBrNFe1.Configuracoes.Certificados.ArquivoPFX.IsEmpty then
+      System.SysUtils.DeleteFile(ACBrNFe1.Configuracoes.Certificados.ArquivoPFX);
+
   ACBrNFe1.SSL.CarregarCertificado;
   mLog.Lines.Add('');
   mLog.Lines.Add('---- Informações do Certificado ----');
@@ -585,11 +686,16 @@ begin
     try
       ACBrIBGE1.BuscarPorcUF(FcUF);
     except
-      TThread.Synchronize(nil, procedure
+      On E: Exception do
       begin
-        lMsgAguarde.Text := 'Erro ao carregar cidades';
-      end);
-      sleep(1500);
+        TThread.Synchronize(nil, procedure
+        begin
+          lMsgAguarde.Text := 'Erro ao carregar cidades';
+          mLog.Lines.Add(E.ClassName);
+          mLog.Lines.Add(E.Message);
+        end);
+        sleep(1500);
+      end;
     end;
   finally
     TThread.Synchronize(nil, procedure
@@ -610,6 +716,9 @@ begin
         end;
       finally
         cbxEmitCidade.EndUpdate;
+        if (cbxEmitCidade.Items.Count > 0) then
+          cbxEmitCidade.ItemIndex := 0;
+
         TerminarTelaDeEspera;
       end;
     end);
@@ -640,7 +749,7 @@ begin
     if (cUF <> FcUF) then
     begin
       lEmitcUF.Text := IntToStrZero(cUF, 2);
-      IniciarTelaDeEspera('Carregando Cidades');
+      IniciarTelaDeEspera('Carregando Cidades de '+cbxEmitUF.Selected.Text);
       TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
     end;
   end;
@@ -663,6 +772,14 @@ end;
 
 procedure TACBrNFCeTestForm.ConfigurarACBr;
 begin
+  ConfigurarMail;
+  ConfigurarPosPrinter;
+  ConfigurarDANFCe;
+  ConfigurarNFe;
+end;
+
+procedure TACBrNFCeTestForm.ConfigurarMail;
+begin
   // Configurando o ACBrMail //
   ACBrMail1.From := edtEmailFrom.text;
   ACBrMail1.FromName := edtEmailFromName.text;
@@ -674,7 +791,43 @@ begin
   ACBrMail1.SetSSL := chkEmailSSL.IsChecked;  // Verifique se o seu servidor necessita SSL
   ACBrMail1.DefaultCharset := TMailCharset(cbEmailDefaultCharset.ItemIndex);
   ACBrMail1.IDECharset := TMailCharset(cbEmailIdeCharSet.ItemIndex);
+end;
 
+procedure TACBrNFCeTestForm.ConfigurarNFe;
+var
+  CertPFX: string;
+begin
+  CertPFX := edtConfCertPFX.Text;
+  if ExtractFilePath(CertPFX) = '' then
+    CertPFX := ApplicationPath + CertPFX;
+
+  ACBrNFe1.Configuracoes.Certificados.URLPFX := edtConfCertURL.Text;
+  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX := CertPFX;
+  ACBrNFe1.Configuracoes.Certificados.Senha := edtConfCertSenha.Text;
+  ACBrNFe1.SSL.URLPFX := ACBrNFe1.Configuracoes.Certificados.URLPFX;
+  ACBrNFe1.SSL.ArquivoPFX := ACBrNFe1.Configuracoes.Certificados.ArquivoPFX;
+  ACBrNFe1.SSL.Senha := ACBrNFe1.Configuracoes.Certificados.Senha;
+
+  if Assigned(cbxWebServiceUF.Selected) then
+    ACBrNFe1.Configuracoes.WebServices.UF := cbxWebServiceUF.Selected.Text;
+
+  ACBrNFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(IfThen(swWebServiceAmbiente.IsChecked, 0, 1));
+  ACBrNFe1.Configuracoes.WebServices.TimeOut := Trunc(sbWebServiceTimeout.Value);
+
+  if Assigned(cbxWebServiceSSLType.Selected) then
+    ACBrNFe1.Configuracoes.WebServices.SSLType := TSSLType(cbxWebServiceSSLType.ItemIndex);
+
+  ACBrNFe1.Configuracoes.Geral.IdCSC := edtTokenID.Text;
+  ACBrNFe1.Configuracoes.Geral.CSC := edtTokenCSC.Text;
+
+  ACBrNFe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
+  ACBrNFe1.Configuracoes.WebServices.ProxyPort := Trunc(sbProxyPort.Value).ToString;
+  ACBrNFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
+  ACBrNFe1.Configuracoes.WebServices.ProxyPass := edtProxyPass.Text;
+end;
+
+procedure TACBrNFCeTestForm.ConfigurarPosPrinter;
+begin
   // Configurando o ACBrPosPrinter //
   if Assigned(cbxImpressorasBth.Selected) then
     ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text;
@@ -682,19 +835,25 @@ begin
   if Assigned(cbxModelo.Selected) then
     ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
 
+  if Assigned(cbxPagCodigo.Selected) then
+    ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
+
   ACBrPosPrinter1.ColunasFonteNormal := Trunc(seColunas.Value);
   ACBrPosPrinter1.EspacoEntreLinhas := Trunc(seEspLinhas.Value);
   ACBrPosPrinter1.LinhasEntreCupons := Trunc(seLinhasPular.Value);
   ACBrPosPrinter1.ConfigLogo.KeyCode1 := Trunc(seKC1.Value);
   ACBrPosPrinter1.ConfigLogo.KeyCode2 := Trunc(seKC2.Value);
   ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbImprimirLogo.IsChecked;
+end;
 
+procedure TACBrNFCeTestForm.ConfigurarDANFCe;
+begin
   // Configurando ACBrNFeDANFeESCPOS //
+  ACBrNFeDANFeESCPOS1.PosPrinter := ACBrPosPrinter1;
   ACBrNFeDANFeESCPOS1.ImprimeLogoLateral := cbLogoLateral.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral := cbQRCodeLateral.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbImprimirDescAcres.IsChecked;
-
 end;
 
 procedure TACBrNFCeTestForm.ConsultarCEP;
@@ -706,11 +865,16 @@ begin
     try
       ACBrCEP1.BuscarPorCEP(OnlyNumber(edtEmitCEP.Text));
     except
-      TThread.Synchronize(nil, procedure
+      On E: Exception do
       begin
-        lMsgAguarde.Text := 'Erro ao consultar o CEP: '+edtEmitCEP.Text;
-      end);
-      Sleep(1500);
+        TThread.Synchronize(nil, procedure
+        begin
+          lMsgAguarde.Text := 'Erro ao consultar o CEP: '+edtEmitCEP.Text;
+          mLog.Lines.Add(E.ClassName);
+          mLog.Lines.Add(E.Message);
+        end);
+        Sleep(1500);
+      end;
     end;
   finally
     TThread.Synchronize(nil, procedure
@@ -743,22 +907,9 @@ begin
     KeyChar := #0;
 end;
 
-procedure TACBrNFCeTestForm.edtConfCertPFXValidating(Sender: TObject;
-  var Text: string);
+procedure TACBrNFCeTestForm.edtConfCertURLChange(Sender: TObject);
 begin
-  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, Text, edtConfCertSenha.Text);
-end;
-
-procedure TACBrNFCeTestForm.edtConfCertSenhaValidating(Sender: TObject;
-  var Text: string);
-begin
-  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, edtConfCertPFX.Text, Text);
-end;
-
-procedure TACBrNFCeTestForm.edtConfCertURLValidating(Sender: TObject;
-  var Text: string);
-begin
-  imgErrorCert.Visible := not ValidarEditsCertificado(Text, edtConfCertPFX.Text, edtConfCertSenha.Text);
+  imgErrorCert.Visible := not ValidarEditsCertificado(edtConfCertURL.Text, edtConfCertPFX.Text, edtConfCertSenha.Text);
 end;
 
 procedure TACBrNFCeTestForm.edtEmitCEPTyping(Sender: TObject);
@@ -768,6 +919,8 @@ begin
     edtEmitCEP.Text := FormatarMascaraDinamica(OnlyNumber(edtEmitCEP.Text), '*****-***');
     edtEmitCEP.CaretPosition := edtEmitCEP.Text.Length;
   end;
+
+  imgErrorCep.Visible := (edtEmitCEP.Text.Length < 9);
 end;
 
 procedure TACBrNFCeTestForm.edtEmitCEPValidate(Sender: TObject;
@@ -777,26 +930,26 @@ begin
     sbAcharCEPClick(Sender);
 end;
 
-procedure TACBrNFCeTestForm.edtEmitCEPValidating(Sender: TObject;
-  var Text: string);
-begin
-  imgErrorCep.Visible := (Text.Length < 9);
-end;
-
 procedure TACBrNFCeTestForm.edtEmitCNPJTyping(Sender: TObject);
 begin
   if (edtEmitCNPJ.Text.Length > 2) then
   begin
-    edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
-    edtEmitCNPJ.CaretPosition := edtEmitCNPJ.Text.Length;
+    TThread.Queue(nil, procedure
+    begin
+      edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
+      edtEmitCNPJ.CaretPosition := edtEmitCNPJ.Text.Length;
+    end);
   end;
+
+  imgErrorCNPJ.Visible := (edtEmitCNPJ.Text.Length < 18) or
+                          (not ACBrValidador.ValidarCNPJ(edtEmitCNPJ.Text).IsEmpty);
 end;
 
-procedure TACBrNFCeTestForm.edtEmitCNPJValidating(Sender: TObject;
-  var Text: string);
+procedure TACBrNFCeTestForm.edtExitScrollableControl(Sender: TObject);
 begin
-  imgErrorCNPJ.Visible := (Text.Length < 18) or
-                          (not ACBrValidador.ValidarCNPJ(Text).IsEmpty);
+  {$IfDef MSWINDOWS}
+   FormVirtualKeyboardHidden(Sender,False, TRect.Create(0,0,0,0));
+  {$EndIf}
 end;
 
 procedure TACBrNFCeTestForm.edtEmitFoneTyping(Sender: TObject);
@@ -820,27 +973,29 @@ begin
     edtEmitFone.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
     edtEmitFone.CaretPosition := edtEmitFone.Text.Length;
   end;
+
+  imgErrorTelefone.Visible := (OnlyNumber(edtEmitFone.Text).Length < 10);
 end;
 
-procedure TACBrNFCeTestForm.edtEmitFoneValidating(Sender: TObject;
-  var Text: string);
-var
-  AStr: string;
+procedure TACBrNFCeTestForm.edtEmitRazaoTyping(Sender: TObject);
 begin
-  AStr := OnlyNumber(Text);
-  imgErrorTelefone.Visible := (AStr.Length < 10);
+  imgErrorRazaoSocial.Visible := (edtEmitRazao.Text.Length < 4);
 end;
 
-procedure TACBrNFCeTestForm.edtTokenCSCValidating(Sender: TObject;
-  var Text: string);
+procedure TACBrNFCeTestForm.edtEnterScrollableControl(Sender: TObject);
 begin
-  imgErrorCSC.Visible := Text.IsEmpty
+  if (Sender is TControl) then
+    AjustarScroll(TControl(Sender), lbConfNFCe);
 end;
 
-procedure TACBrNFCeTestForm.edtTokenIDValidating(Sender: TObject;
-  var Text: string);
+procedure TACBrNFCeTestForm.edtTokenCSCTyping(Sender: TObject);
 begin
-  imgErrorIDCSC.Visible := Text.IsEmpty;
+  imgErrorCSC.Visible := edtTokenCSC.Text.IsEmpty;
+end;
+
+procedure TACBrNFCeTestForm.edtTokenIDTyping(Sender: TObject);
+begin
+  imgErrorIDCSC.Visible := edtTokenID.Text.IsEmpty;
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -862,6 +1017,19 @@ begin
       tabsPrincipal.Previous;
       Key := 0;
     end;
+  end;
+end;
+
+procedure TACBrNFCeTestForm.FormVirtualKeyboardHidden(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+begin
+  if Assigned(FScrollBox) then
+  begin
+    if FScrollBox.ContainsObject(Self.ActiveControl) then  // Se proximo controle é do mesmo Scroll, não retorne deslocamento
+      Exit;
+    
+    FScrollBox.Margins.Bottom := 0;
+    FScrollBox := nil;
   end;
 end;
 
@@ -960,6 +1128,64 @@ begin
   end;
 end;
 
+procedure TACBrNFCeTestForm.imgErrorCepClick(Sender: TObject);
+begin
+  Toast('CEP incompleto');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorCertClick(Sender: TObject);
+begin
+  Toast('Configuração do Certificado incompleta');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorCidadeClick(Sender: TObject);
+begin
+  Toast('Selecione uma Cidade');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorCNPJClick(Sender: TObject);
+var
+  Erro: string;
+begin
+  if (edtEmitCNPJ.Text.Length < 18) then
+    Erro := 'CNPJ incompleto'
+  else
+    Erro:= ACBrValidador.ValidarCNPJ(edtEmitCNPJ.Text);
+
+  if not Erro.IsEmpty then
+    Toast(Erro);
+end;
+
+procedure TACBrNFCeTestForm.imgErrorCSCClick(Sender: TObject);
+begin
+  Toast('Informe o CSC do Emissor');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorIDCSCClick(Sender: TObject);
+begin
+  Toast('Informe a ID do CSC');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorRazaoSocialClick(Sender: TObject);
+begin
+  Toast('Informe uma Razão Social');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorTelefoneClick(Sender: TObject);
+begin
+ Toast('Telefone inválido');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorUFClick(Sender: TObject);
+begin
+  Toast('Selecione uma UF');
+end;
+
+procedure TACBrNFCeTestForm.imgErrorWebServiceUFClick(Sender: TObject);
+begin
+  Toast('Informe a UF do WebService');
+end;
+
 procedure TACBrNFCeTestForm.IniciarTelaDeEspera(const AMsg: String);
 begin
   if not AMsg.IsEmpty then
@@ -976,6 +1202,12 @@ procedure TACBrNFCeTestForm.TerminarTelaDeEspera;
 begin
   lWait.Visible := False;
   AniIndicator1.Enabled := False;
+end;
+
+procedure TACBrNFCeTestForm.tiStartUpTimer(Sender: TObject);
+begin
+  tiStartUp.Enabled := False;  // Dispara apenas uma vez
+  LerConfiguracao;
 end;
 
 function TACBrNFCeTestForm.ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
@@ -1071,6 +1303,13 @@ begin
   finally
     Ini.Free;
   end;
+
+  // Calculando Alertas dos Campos //
+  edtEmitCNPJTyping(nil);
+  edtEmitRazaoTyping(nil);
+  edtEmitCEPTyping(nil);
+  edtEmitFoneTyping(nil);
+  edtConfCertURLChange(nil);
 end;
 
 end.

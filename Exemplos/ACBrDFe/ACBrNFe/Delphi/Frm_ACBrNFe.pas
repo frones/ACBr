@@ -529,7 +529,7 @@ begin
     Ide.hSaiEnt   := now;
     Ide.tpNF      := tnSaida;
     Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);;
-    Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variÃ¡vel quando for para ambiente de produÃ§Ã£o
+    Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variavel quando for para ambiente de producao
     Ide.cUF       := UFtoCUF(edtEmitUF.Text);
     Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
     Ide.finNFe    := fnNormal;
@@ -558,15 +558,15 @@ begin
     Emit.enderEmit.xPais   := 'BRASIL';
 
     Emit.IEST              := '';
-//      Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
-//      Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
-                                    // a inclusão de serviços na NFe
     Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
-    Dest.CNPJCPF           := '05481336000137';
-//      Dest.IE                := '687138770110'; //NFC-e não aceita IE
+    // Na NFC-e o Destinatário é opcional
+    {
+    Dest.CNPJCPF           := 'informar o CPF do destinatário';
     Dest.ISUF              := '';
-    Dest.xNome             := 'D.J. COM. E LOCAÇÃO DE SOFTWARES LTDA - ME';
+    Dest.xNome             := 'nome do destinatário';
+
+    Dest.indIEDest         := inNaoContribuinte;
 
     Dest.EnderDest.Fone    := '1533243333';
     Dest.EnderDest.CEP     := 18270170;
@@ -579,6 +579,7 @@ begin
     Dest.EnderDest.UF      := 'SP';
     Dest.EnderDest.cPais   := 1058;
     Dest.EnderDest.xPais   := 'BRASIL';
+    }
 
 //Use os campos abaixo para informar o endereço de retirada quando for diferente do Remetente/Destinatário
     Retirada.CNPJCPF := '';
@@ -707,47 +708,6 @@ begin
       end;
     end;
 
-    (*
-    //Adicionando Serviços
-    with Det.New do
-    begin
-      Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
-      Prod.cProd    := '123457';
-      Prod.cEAN     := '';
-      Prod.xProd    := 'Descrição do Serviço';
-      Prod.NCM      := '99';
-      Prod.EXTIPI   := '';
-      Prod.CFOP     := '5933';
-      Prod.uCom     := 'UN';
-      Prod.qCom     := 1;
-      Prod.vUnCom   := 100;
-      Prod.vProd    := 100;
-
-      Prod.cEANTrib  := '';
-      Prod.uTrib     := 'UN';
-      Prod.qTrib     := 1;
-      Prod.vUnTrib   := 100;
-
-      Prod.vFrete    := 0;
-      Prod.vSeg      := 0;
-      Prod.vDesc     := 0;
-
-      infAdProd      := 'Informação Adicional do Serviço';
-
-      //Grupo para serviços
-      with Imposto.ISSQN do
-      begin
-        cSitTrib  := ISSQNcSitTribNORMAL;
-        vBC       := 100;
-        vAliq     := 2;
-        vISSQN    := 2;
-        cMunFG    := 3554003;
-        cListServ := '14.02'; // Preencha este campo usando a tabela disponível
-                              // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-      end;
-    end;
-    *)
-
     Total.ICMSTot.vBC     := 100;
     Total.ICMSTot.vICMS   := 18;
     Total.ICMSTot.vBCST   := 0;
@@ -783,25 +743,6 @@ begin
     Total.retTrib.vRetPrev   := 0;
 
     Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
-
-    Cobr.Fat.nFat  := 'Numero da Fatura';
-    Cobr.Fat.vOrig := 100;
-    Cobr.Fat.vDesc := 0;
-    Cobr.Fat.vLiq  := 100;
-
-    with Cobr.Dup.New do
-    begin
-      nDup  := '1234';
-      dVenc := now+10;
-      vDup  := 50;
-    end;
-
-    with Cobr.Dup.New do
-    begin
-      nDup  := '1235';
-      dVenc := now+10;
-      vDup  := 50;
-    end;
 
     with pag.New do
     begin

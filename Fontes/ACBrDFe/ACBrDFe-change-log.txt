@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2020
+-- ACBrXmlDocument --
+[-] Correção na passagem de parametros do método: AddChild.
+   Por: Italo  Jurisato Junior
+
 01/04/2020
 -- ACBrDFeUtil --
 [*] Métodos "ObterCodigoMunicipio" e "ObterNomeMunicipio", modificados para usar

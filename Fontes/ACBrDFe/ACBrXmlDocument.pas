@@ -391,7 +391,7 @@ begin
   FXmlCdataNode := cdataNode;
 end;
 
-function TACBrXmlNode.AddChild(AName: string; ANamespace: string; APrefix: string = ''): TACBrXmlNode;
+function TACBrXmlNode.AddChild(AName: string; ANamespace: string = ''; APrefix: string = ''): TACBrXmlNode;
 begin
   Result := FXmlDoc.CreateElement(AName, ANamespace, APrefix);
   AppendChild(Result);

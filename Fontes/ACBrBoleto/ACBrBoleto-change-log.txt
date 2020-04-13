@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2020
+-- ACBrBancoSafra --
+[*] Ajuste no Segmento R CNAB240 preenchendo campo Desconto
+
 09/04/2020
 -- ACBrBoleto, ACBrBancoBradesco, ACBrBancoUnicredRS, ACBrBancoUnicredSC, ACBrBancoUnicredES --
 [*] Realização de Refactory nas classes dos Bancos, unificando funcionalidades criadas na classe principal ACBrBancoClass.

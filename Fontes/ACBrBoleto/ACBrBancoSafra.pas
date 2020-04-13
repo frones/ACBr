@@ -808,17 +808,21 @@ begin
 
       Inc(FSequencia);
       {SEGMENTO R}
-      segmentoR := IntToStrZero(ACBrBanco.Numero, 3)                                     + // 001 - 003 / Código do Banco na compensação
-                  '0001'                                                                + // 004 - 007 / Numero do lote remessa
-                  '3'                                                                   + // 008 - 008 / Tipo de registro
-                  IntToStrZero(FSequencia ,5)                                           + // 009 - 013 / Número seqüencial do registro no lote
-                  'R'                                                                   + // 014 - 014 / Cód. Segmento do registro detalhe
-                  Space(1)                                                              + // 015 - 015 / Reservado (uso Banco)
-                  sCodMovimento                                                         + // 016 - 017 / Código de movimento remessa
-                  '0'                                                                   + // 018 - 018 / Código do desconto 2
-                  PadLeft('', 8, '0')                                                   + // 019 - 026 / Data do desconto 2
-                  IntToStrZero(0, 15)                                                   + // 027 - 041 / Valor/Percentual a ser concedido
-                  Space(24)                                                             + // 042 – 065 / Reservado (uso Banco)
+      segmentoR := IntToStrZero(ACBrBanco.Numero, 3)                                                    + // 001 - 003 / Código do Banco na compensação
+                  '0001'                                                                                + // 004 - 007 / Numero do lote remessa
+                  '3'                                                                                   + // 008 - 008 / Tipo de registro
+                  IntToStrZero(FSequencia ,5)                                                           + // 009 - 013 / Número seqüencial do registro no lote
+                  'R'                                                                                   + // 014 - 014 / Cód. Segmento do registro detalhe
+                  Space(1)                                                                              + // 015 - 015 / Reservado (uso Banco)
+                  sCodMovimento                                                                         + // 016 - 017 / Código de movimento remessa
+                  '0'                                                                                   + // 018 - 018 / Código do desconto 2
+                  PadLeft('', 8, '0')                                                                   + // 019 - 026 / Data do desconto 2
+                  IntToStrZero(0, 15)                                                                   + // 027 - 041 / Valor/Percentual a ser concedido
+                  sTipoDesconto                                                                         + // 42 - 42 1 = Valor Fixo ate a Data Informada / 2 = Percentual ate a Data Informada / 3 = Valor por Antecipação dia Corrido
+                                                                                                          //         5 = Percentual por Antecipação dia corrido
+                  IfThen((ACBrTitulo.ValorDesconto > 0),
+                          FormatDateTime('ddmmyyyy', ACBrTitulo.DataDesconto), '00000000')              + // 43 - 50 Campo numerico e deve ser preenchido, caso não tenha desconto manter o campo zerado. DDMMAAAA
+                  IntToStrZero(round(ACBrTitulo.ValorDesconto), 15)                                     + // 51 - 65 / Valor/Percentual a ser aplicado
                   IfThen((ACBrTitulo.PercentualMulta > 0),
                          IfThen(ACBrTitulo.MultaValorFixo,'1','2'), '0')                + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
                   IfThen((ACBrTitulo.PercentualMulta > 0),

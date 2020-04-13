@@ -968,12 +968,11 @@ begin
     GravarStream(StreamNFe);
 
     ImprimirEventoPDF;
-    NomeArq := OnlyNumber(EventoNFe.Evento[0].InfEvento.Id);
-    NomeArq := PathWithDelim(DANFE.PathPDF) + NomeArq + '-procEventoNFe.pdf';
-    AnexosEmail.Add(NomeArq);
+    AnexosEmail.Add(DANFE.ArquivoPDF);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe, 
-	  NomeArq + '-procEventoNFe.xml', sReplyTo);
+    NomeArq := OnlyNumber(EventoNFe.Evento[0].InfEvento.Id);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe,
+	    NomeArq + '-procEventoNFe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamNFe.Free;

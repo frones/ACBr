@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2020
+-- Diversos --
+[*] Melhorias no método EnviarEmailEvento.
+   Por: Italo Jurisato Junior
+
 10/03/2020
 -- ACBrNF3e --
 [*] Ao enviar o evento por e-mail não estava sendo informado o nome do XML do 

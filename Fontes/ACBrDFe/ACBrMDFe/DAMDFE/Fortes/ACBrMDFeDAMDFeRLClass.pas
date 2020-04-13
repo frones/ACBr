@@ -51,10 +51,10 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDAMDFe(MDFe: TMDFe = nil); override;
-    procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); override;
-    procedure ImprimirEVENTO(MDFe: TMDFe = nil); override;
-    procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); override;
+    procedure ImprimirEVENTO(AMDFe: TMDFe = nil); override;
+    procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); override;
   published
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
 end;
@@ -62,7 +62,7 @@ end;
 implementation
 
 uses
-  Dialogs, ACBrUtil, ACBrMDFe,
+  Dialogs, ACBrUtil, ACBrMDFe, pmdfeEnvEventoMDFe,
   ACBrMDFeDAMDFeRLRetrato, ACBrMDFeDAEventoRL, ACBrMDFeDAEventoRLRetrato;
 
 constructor TACBrMDFeDAMDFeRL.Create(AOwner: TComponent);
@@ -76,12 +76,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFE(MDFe: TMDFe = nil);
+procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFE(AMDFe: TMDFe = nil);
 var
   i: Integer;
   Manifestos: array of TMDFe;
 begin
-  if (MDFe = nil) then
+  if (AMDFe = nil) then
   begin
     SetLength(Manifestos, TACBrMDFe(ACBrMDFe).Manifestos.Count);
 
@@ -91,18 +91,18 @@ begin
   else
   begin
     SetLength(Manifestos, 1);
-    Manifestos[0] := MDFe;
+    Manifestos[0] := AMDFe;
   end;
 
   TfrlDAMDFeRLRetrato.Imprimir(Self, Manifestos);
 end;
 
-procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFEPDF(MDFe: TMDFe = nil);
+procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFEPDF(AMDFe: TMDFe = nil);
 var
   i: integer;
 begin
   FPArquivoPDF := '';
-  if MDFe = nil then
+  if AMDFe = nil then
   begin
     for i := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
     begin
@@ -114,17 +114,17 @@ begin
   end
   else
   begin
-     FPArquivoPDF := PathWithDelim(Self.PathPDF) + OnlyNumber(MDFe.infMDFe.ID) + '-mdfe.pdf';
-     TfrlDAMDFeRLRetrato.SalvarPDF(Self, MDFe, FPArquivoPDF);
+     FPArquivoPDF := PathWithDelim(Self.PathPDF) + OnlyNumber(AMDFe.infMDFe.ID) + '-mdfe.pdf';
+     TfrlDAMDFeRLRetrato.SalvarPDF(Self, AMDFe, FPArquivoPDF);
   end;
 end;
 
-procedure TACBrMDFeDAMDFeRL.ImprimirEVENTO(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFeRL.ImprimirEVENTO(AMDFe: TMDFe);
 var
   i, j: integer;
   Impresso: boolean;
 begin
-  if MDFe = nil then
+  if AMDFe = nil then
   begin
     for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
     begin
@@ -152,53 +152,64 @@ begin
   begin
     for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
     begin
-      TfrmMDFeDAEventoRLRetrato.Imprimir(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i], MDFe);
+      TfrmMDFeDAEventoRLRetrato.Imprimir(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i], AMDFe);
     end;
   end;
 end;
 
-procedure TACBrMDFeDAMDFeRL.ImprimirEVENTOPDF(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFeRL.ImprimirEVENTOPDF(AMDFe: TMDFe);
 var
-  i, j: integer;
-  Impresso: boolean;
+  Impresso: Boolean;
+  I, J: Integer;
+  NumID, ArqPDF: String;
+
+  function ImprimirEVENTOPDFTipo(EventoMDFeItem: TInfEventoCollectionItem; AMDFe: TMDFe): String;
+  begin
+    Result := Self.PathPDF + OnlyNumber(EventoMDFeItem.InfEvento.id) + '-procEventoMDFe.pdf';
+
+    // TipoDAMDFE ainda não está sendo utilizado no momento
+    TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, EventoMDFeItem, Result, AMDFe);
+  end;
+
 begin
   FPArquivoPDF := '';
-  if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
-  begin
-    for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
-    begin
-      FPArquivoPDF := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-        OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.ID) +
-        '-procEventoMDFe.pdf';
-      Impresso := False;
 
-      for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
+  with TACBrMDFe(ACBrMDFe) do
+  begin
+    if (AMDFe = nil) and (Manifestos.Count > 0) then
+    begin
+      for i := 0 to (EventoMDFe.Evento.Count - 1) do
       begin
-        if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID) =
-        TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+        Impresso := False;
+        ArqPDF := '';
+        for j := 0 to (Manifestos.Count - 1) do
         begin
-            TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-              FPArquivoPDF, TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
+          NumID := OnlyNumber(Manifestos.Items[j].MDFe.infMDFe.ID);
+          if (NumID = OnlyNumber(EventoMDFe.Evento.Items[i].InfEvento.chMDFe)) then
+          begin
+            ArqPDF := ImprimirEVENTOPDFTipo(EventoMDFe.Evento.Items[i], Manifestos.Items[j].MDFe);
             Impresso := True;
             Break;
+          end;
         end;
-      end;
 
-      if Impresso = False then
-      begin
-        TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i], FPArquivoPDF);
+        if (not Impresso) then
+          ArqPDF := ImprimirEVENTOPDFTipo(EventoMDFe.Evento.Items[i], nil);
+
+        FPArquivoPDF := FPArquivoPDF + ArqPDF;
+        if (i < (EventoMDFe.Evento.Count - 1)) then
+          FPArquivoPDF := FPArquivoPDF + sLinebreak;
       end;
-    end;
-  end
-  else
-  begin
-    for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
+    end
+    else
     begin
-        FPArquivoPDF := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-                 OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.ID) +
-                 '-procEventoMDFe.pdf';
-
-        TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i], FPArquivoPDF, MDFe);
+      for i := 0 to (EventoMDFe.Evento.Count - 1) do
+      begin
+        ArqPDF := ImprimirEVENTOPDFTipo(EventoMDFe.Evento.Items[i], AMDFe);
+        FPArquivoPDF := FPArquivoPDF + ArqPDF;
+        if (i < (EventoMDFe.Evento.Count - 1)) then
+          FPArquivoPDF := FPArquivoPDF + sLinebreak;
+      end;
     end;
   end;
 end;

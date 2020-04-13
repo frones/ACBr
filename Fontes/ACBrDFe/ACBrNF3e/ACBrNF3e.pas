@@ -793,12 +793,11 @@ begin
     GravarStream(StreamNF3e);
 
     ImprimirEventoPDF;
-    NomeArq := OnlyNumber(EventoNF3e.Evento[0].InfEvento.Id);
-    NomeArq := PathWithDelim(DANF3e.PathPDF) + NomeArq + '-procEventoNF3e.pdf';
-    AnexosEmail.Add(NomeArq);
+    AnexosEmail.Add(DANF3E.ArquivoPDF);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNF3e, 
-	  NomeArq + '-procEventoNF3e.xml', sReplyTo);
+    NomeArq := OnlyNumber(EventoNF3e.Evento[0].InfEvento.Id);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNF3e,
+  	  NomeArq + '-procEventoNF3e.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamNF3e.Free;

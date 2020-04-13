@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2020
+-- Diversos --
+[*] Melhorias no método EnviarEmailEvento e ImprimirEventoPDF.
+   Por: Italo Jurisato Junior
+
 09/04/2020
 -- ACBrMDFeWebServices --
 [-] Correção para exibir o "cStat" e "xMotivo" na mensagem de retorno do webservice

@@ -671,12 +671,11 @@ begin
     GravarStream(StreamBPe);
 
     ImprimirEventoPDF;
-    NomeArq := OnlyNumber(EventoBPe.Evento[0].infEvento.Id);
-    NomeArq := PathWithDelim(DABPE.PathPDF) + NomeArq + '-procEventoBPe.pdf';
-    AnexosEmail.Add(NomeArq);
+    AnexosEmail.Add(DABPE.ArquivoPDF);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe, 
-	  NomeArq + '-procEventoBPe.xml', sReplyTo);
+    NomeArq := OnlyNumber(EventoBPe.Evento[0].InfEvento.Id);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe,
+	    NomeArq + '-procEventoBPe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamBPe.Free;

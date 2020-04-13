@@ -205,12 +205,11 @@ begin
     GravarStream(StreamMDFe);
 
     ImprimirEventoPDF;
-    NomeArq := OnlyNumber(EventoMDFe.Evento[0].InfEvento.Id);
-    NomeArq := PathWithDelim(DAMDFE.PathPDF) + NomeArq + '-procEventoMDFe.pdf';
-    AnexosEmail.Add(NomeArq);
+    AnexosEmail.Add(DAMDFE.ArquivoPDF);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamMDFe, 
-	  NomeArq + '-procEventoMDFe.xml', sReplyTo);
+    NomeArq := OnlyNumber(EventoMDFe.Evento[0].InfEvento.Id);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamMDFe,
+	    NomeArq + '-procEventoMDFe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamMDFe.Free;

@@ -972,12 +972,11 @@ begin
     GravarStream(StreamCTe);
 
     ImprimirEventoPDF;
-    NomeArq := OnlyNumber(EventoCTe.Evento[0].InfEvento.Id);
-    NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
-    AnexosEmail.Add(NomeArq);
+    AnexosEmail.Add(DACTE.ArquivoPDF);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe, 
-	  NomeArq + '-procEventoCTe.xml', sReplyTo);
+    NomeArq := OnlyNumber(EventoCTe.Evento[0].InfEvento.Id);
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe,
+  	  NomeArq + '-procEventoCTe.xml', sReplyTo);
   finally
     AnexosEmail.Free;
     StreamCTe.Free;

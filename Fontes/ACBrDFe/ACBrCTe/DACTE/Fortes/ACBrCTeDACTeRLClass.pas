@@ -55,12 +55,12 @@ type
      FPrintDialog: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure ImprimirDACTe(CTe: TCTe = nil); override;
-    procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
-    procedure ImprimirEVENTO(CTe: TCTe = nil); override;
-    procedure ImprimirEVENTOPDF(CTe: TCTe = nil); override;
-    procedure ImprimirINUTILIZACAO(CTe: TCTe = nil); override;
-    procedure ImprimirINUTILIZACAOPDF(CTe: TCTe = nil); override;
+    procedure ImprimirDACTe(ACTe: TCTe = nil); override;
+    procedure ImprimirDACTePDF(ACTe: TCTe = nil); override;
+    procedure ImprimirEVENTO(ACTe: TCTe = nil); override;
+    procedure ImprimirEVENTOPDF(ACTe: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAO(ACTe: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(ACTe: TCTe = nil); override;
   published
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrCTe,
+  StrUtils, Dialogs, ACBrUtil, ACBrCTe, pcteEnvEventoCTe,
   ACBrCTeDAInutRL, ACBrCTeDAInutRLRetrato,
   ACBrCTeDACTeRL, ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5,
   ACBrCTeDAEventoRL, ACBrCTeDAEventoRLRetrato;
@@ -79,13 +79,13 @@ begin
   FPrintDialog := True;
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirDACTe(CTe: TCTe = nil);
+procedure TACBrCTeDACTeRL.ImprimirDACTe(ACTe: TCTe = nil);
 var
   i: integer;
   Conhecimentos: array of TCTe;
 begin
 
-  if CTe = nil then
+  if ACTe = nil then
   begin
     SetLength(Conhecimentos, TACBrCTe(ACBrCTe).Conhecimentos.Count);
 
@@ -97,7 +97,7 @@ begin
   else
   begin
     SetLength(Conhecimentos, 1);
-    Conhecimentos[0] := CTe;
+    Conhecimentos[0] := ACTe;
   end;
 
   case TamanhoPapel of
@@ -106,13 +106,13 @@ begin
   end;
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirDACTePDF(CTe: TCTe = nil);
+procedure TACBrCTeDACTeRL.ImprimirDACTePDF(ACTe: TCTe = nil);
 var
   i: integer;
 begin
 
   FPArquivoPDF := '';
-  if CTe = nil then
+  if ACTe = nil then
   begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
     begin
@@ -132,16 +132,16 @@ begin
   else
   begin
     FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) +
-                    OnlyNumber(CTe.infCTe.ID) + '-cte.pdf';
+                    OnlyNumber(ACTe.infCTe.ID) + '-cte.pdf';
 
     case TamanhoPapel of
-        tpA5: TfrmDACTeRLRetratoA5.SalvarPDF(Self, CTe, FPArquivoPDF);
-        else TfrmDACTeRLRetrato.SalvarPDF(Self, CTe, FPArquivoPDF);
+        tpA5: TfrmDACTeRLRetratoA5.SalvarPDF(Self, ACTe, FPArquivoPDF);
+        else TfrmDACTeRLRetrato.SalvarPDF(Self, ACTe, FPArquivoPDF);
     end;
   end;
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirEVENTO(CTe: TCTe);
+procedure TACBrCTeDACTeRL.ImprimirEVENTO(ACTe: TCTe);
 var
   i, j: integer;
   Impresso: boolean;
@@ -172,64 +172,78 @@ begin
   begin
     for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
     begin
-      TfrmCTeDAEventoRLRetrato.Imprimir(Self, TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i], CTe);
+      TfrmCTeDAEventoRLRetrato.Imprimir(Self, TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i], ACTe);
     end;
   end;
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirEVENTOPDF(CTe: TCTe);
+procedure TACBrCTeDACTeRL.ImprimirEVENTOPDF(ACTe: TCTe);
 var
-  i, j: integer;
-  Impresso: boolean;
+  Impresso: Boolean;
+  I, J: Integer;
+  NumID, ArqPDF: String;
+
+  function ImprimirEVENTOPDFTipo(EventoNFeItem: TInfEventoCollectionItem; ACTe: TCTe): String;
+  begin
+    Result := Self.PathPDF + OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoNFe.pdf';
+
+    // TipoDANFE ainda não está sendo utilizado no momento
+    TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoNFeItem, Result, ACTe);
+  end;
+
 begin
-  if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
-  begin
-    for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
-    begin
-      FPArquivoPDF := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-               OnlyNumber(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id) + 
-	       '-procEventoCTe.pdf';
+  FPArquivoPDF := '';
 
-      Impresso := False;
-      for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
+  with TACBrCTe(ACBrCTe) do
+  begin
+    if (ACTe = nil) and (Conhecimentos.Count > 0) then
+    begin
+      for i := 0 to (EventoCTe.Evento.Count - 1) do
       begin
-        if OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+        Impresso := False;
+        ArqPDF := '';
+        for j := 0 to (Conhecimentos.Count - 1) do
         begin
-          TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
-            FPArquivoPDF, TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe);
-          Impresso := True;
-          Break;
+          NumID := OnlyNumber(Conhecimentos.Items[j].CTe.infCTe.ID);
+          if (NumID = OnlyNumber(EventoCTe.Evento.Items[i].InfEvento.chCTe)) then
+          begin
+            ArqPDF := ImprimirEVENTOPDFTipo(EventoCTe.Evento.Items[i], Conhecimentos.Items[j].CTe);
+            Impresso := True;
+            Break;
+          end;
         end;
-      end;
 
-      if Impresso = False then
-      begin
-        TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i], FPArquivoPDF);
+        if (not Impresso) then
+          ArqPDF := ImprimirEVENTOPDFTipo(EventoCTe.Evento.Items[i], nil);
+
+        FPArquivoPDF := FPArquivoPDF + ArqPDF;
+        if (i < (EventoCTe.Evento.Count - 1)) then
+          FPArquivoPDF := FPArquivoPDF + sLinebreak;
       end;
-    end;
-  end
-  else
-  begin
-    for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
+    end
+    else
     begin
-      FPArquivoPDF := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-               OnlyNumber(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id) +
-               '-procEventoCTe.pdf';
-      TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i], FPArquivoPDF, CTe);
+      for i := 0 to (EventoCTe.Evento.Count - 1) do
+      begin
+        ArqPDF := ImprimirEVENTOPDFTipo(EventoCTe.Evento.Items[i], ACTe);
+        FPArquivoPDF := FPArquivoPDF + ArqPDF;
+        if (i < (EventoCTe.Evento.Count - 1)) then
+          FPArquivoPDF := FPArquivoPDF + sLinebreak;
+      end;
     end;
   end;
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAO(CTe: TCTe);
+procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAO(ACTe: TCTe);
 begin
-  TfrmCTeDAInutRLRetrato.Imprimir(Self, TACBrCTe(ACBrCTe).InutCTe, CTe);
+  TfrmCTeDAInutRLRetrato.Imprimir(Self, TACBrCTe(ACBrCTe).InutCTe, ACTe);
 end;
 
-procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAOPDF(CTe: TCTe);
+procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAOPDF(ACTe: TCTe);
 begin
   FPArquivoPDF := StringReplace(TACBrCTe(ACBrCTe).InutCTe.ID, 'ID', '', [rfIgnoreCase]);
   FPArquivoPDF := PathWithDelim(Self.PathPDF) + FPArquivoPDF + '-procInutCTe.pdf';
-  TfrmCTeDAInutRLRetrato.SalvarPDF(Self, TACBrCTe(ACBrCTe).InutCTe, FPArquivoPDF, CTe);
+  TfrmCTeDAInutRLRetrato.SalvarPDF(Self, TACBrCTe(ACBrCTe).InutCTe, FPArquivoPDF, ACTe);
 end;
 
 end.

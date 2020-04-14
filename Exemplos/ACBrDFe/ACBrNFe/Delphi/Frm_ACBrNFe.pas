@@ -277,6 +277,9 @@ type
     ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
     Label51: TLabel;
     edtURLPFX: TEdit;
+    Label52: TLabel;
+    cbTipoEmpresa: TComboBox;
+
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -515,6 +518,8 @@ begin
 end;
 
 procedure TfrmACBrNFe.AlimentarNFCe(NumDFe: String);
+var
+  Ok: Boolean;
 begin
   with ACBrNFe1.NotasFiscais.Add.NFe do
   begin
@@ -557,8 +562,11 @@ begin
     Emit.enderEmit.cPais   := 1058;
     Emit.enderEmit.xPais   := 'BRASIL';
 
-    Emit.IEST              := '';
-    Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+    Emit.IEST := '';
+    // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
+    // passar os valores 1, 2 ou 3
+    // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+    Emit.CRT  := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
 
     // Na NFC-e o Destinatário é opcional
     {
@@ -637,19 +645,56 @@ begin
 
         with ICMS do
         begin
-          CST          := cst00;
-          ICMS.orig    := oeNacional;
-          ICMS.modBC   := dbiValorOperacao;
-          ICMS.vBC     := 100;
-          ICMS.pICMS   := 18;
-          ICMS.vICMS   := 18;
-          ICMS.modBCST := dbisMargemValorAgregado;
-          ICMS.pMVAST  := 0;
-          ICMS.pRedBCST:= 0;
-          ICMS.vBCST   := 0;
-          ICMS.pICMSST := 0;
-          ICMS.vICMSST := 0;
-          ICMS.pRedBC  := 0;
+          // caso o CRT seja:
+          // 1=Simples Nacional
+          // Os valores aceitos para CSOSN são:
+          // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
+          // csosn300, csosn400, csosn500,csosn900
+
+          // 2=Simples Nacional, excesso sublimite de receita bruta;
+          // ou 3=Regime Normal.
+          // Os valores aceitos para CST são:
+          // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
+          // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
+          // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
+
+          // (consulte o contador do seu cliente para saber qual deve ser utilizado)
+          // Pode variar de um produto para outro.
+
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            CST := cst00
+          else
+            CSOSN := csosn101;
+
+          orig    := oeNacional;
+          modBC   := dbiValorOperacao;
+          vBC     := 100;
+          pICMS   := 18;
+          vICMS   := 18;
+          modBCST := dbisMargemValorAgregado;
+          pMVAST  := 0;
+          pRedBCST:= 0;
+          vBCST   := 0;
+          pICMSST := 0;
+          vICMSST := 0;
+          pRedBC  := 0;
+
+          pCredSN := 5;
+          vCredICMSSN := 50;
+          vBCFCPST := 100;
+          pFCPST := 2;
+          vFCPST := 2;
+          vBCSTRet := 0;
+          pST := 0;
+          vICMSSubstituto := 0;
+          vICMSSTRet := 0;
+          vBCFCPSTRet := 0;
+          pFCPSTRet := 0;
+          vFCPSTRet := 0;
+          pRedBCEfet := 0;
+          vBCEfet := 0;
+          pICMSEfet := 0;
+          vICMSEfet := 0;
 
           // partilha do ICMS e fundo de probreza
           with ICMSUFDest do
@@ -771,6 +816,7 @@ end;
 
 procedure TfrmACBrNFe.AlimentarNFe(NumDFe: String);
 var
+  Ok: Boolean;
   NotaF: NotaFiscal;
   Produto: TDetCollectionItem;
 //    Servico: TDetCollectionItem;
@@ -857,7 +903,11 @@ begin
   NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
   NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
                                                  // a inclusão de serviços na NFe
-  NotaF.NFe.Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+
+    // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
+    // passar os valores 1, 2 ou 3
+    // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+  NotaF.NFe.Emit.CRT  := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
 
 //Para NFe Avulsa preencha os campos abaixo
 
@@ -1047,80 +1097,148 @@ begin
   Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0;
   Produto.Prod.comb.ICMSCons.UFcons        := '';
 
-  // lei da transparencia nos impostos
-  Produto.Imposto.vTotTrib := 0;
-  Produto.Imposto.ICMS.CST          := cst00;
-  Produto.Imposto.ICMS.orig    := oeNacional;
-  Produto.Imposto.ICMS.modBC   := dbiValorOperacao;
-  Produto.Imposto.ICMS.vBC     := 100;
-  Produto.Imposto.ICMS.pICMS   := 18;
-  Produto.Imposto.ICMS.vICMS   := 18;
-  Produto.Imposto.ICMS.modBCST := dbisMargemValorAgregado;
-  Produto.Imposto.ICMS.pMVAST  := 0;
-  Produto.Imposto.ICMS.pRedBCST:= 0;
-  Produto.Imposto.ICMS.vBCST   := 0;
-  Produto.Imposto.ICMS.pICMSST := 0;
-  Produto.Imposto.ICMS.vICMSST := 0;
-  Produto.Imposto.ICMS.pRedBC  := 0;
 
-  // partilha do ICMS e fundo de probreza
-  Produto.Imposto.ICMSUFDest.vBCUFDest      := 0.00;
-  Produto.Imposto.ICMSUFDest.pFCPUFDest     := 0.00;
-  Produto.Imposto.ICMSUFDest.pICMSUFDest    := 0.00;
-  Produto.Imposto.ICMSUFDest.pICMSInter     := 0.00;
-  Produto.Imposto.ICMSUFDest.pICMSInterPart := 0.00;
-  Produto.Imposto.ICMSUFDest.vFCPUFDest     := 0.00;
-  Produto.Imposto.ICMSUFDest.vICMSUFDest    := 0.00;
-  Produto.Imposto.ICMSUFDest.vICMSUFRemet   := 0.00;
+  with Produto.Imposto do
+  begin
+    // lei da transparencia nos impostos
+    vTotTrib := 0;
 
-  (*
-  // IPI, se hpouver...
-  Produto.Imposto.IPI.CST      := ipi99;
-  Produto.Imposto.IPI.clEnq    := '999';
-  Produto.Imposto.IPI.CNPJProd := '';
-  Produto.Imposto.IPI.cSelo    := '';
-  Produto.Imposto.IPI.qSelo    := 0;
-  Produto.Imposto.IPI.cEnq     := '';
+    with ICMS do
+    begin
+      // caso o CRT seja:
+      // 1=Simples Nacional
+      // Os valores aceitos para CSOSN são:
+      // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
+      // csosn300, csosn400, csosn500,csosn900
 
-  Produto.Imposto.IPI.vBC    := 100;
-  Produto.Imposto.IPI.qUnid  := 0;
-  Produto.Imposto.IPI.vUnid  := 0;
-  Produto.Imposto.IPI.pIPI   := 5;
-  Produto.Imposto.IPI.vIPI   := 5;
-  *)
+      // 2=Simples Nacional, excesso sublimite de receita bruta;
+      // ou 3=Regime Normal.
+      // Os valores aceitos para CST são:
+      // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
+      // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
+      // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
 
-  Produto.Imposto.II.vBc      := 0;
-  Produto.Imposto.II.vDespAdu := 0;
-  Produto.Imposto.II.vII      := 0;
-  Produto.Imposto.II.vIOF     := 0;
+      // (consulte o contador do seu cliente para saber qual deve ser utilizado)
+      // Pode variar de um produto para outro.
 
-  Produto.Imposto.PIS.CST      := pis99;
-  Produto.Imposto.PIS.vBC  := 0;
-  Produto.Imposto.PIS.pPIS := 0;
-  Produto.Imposto.PIS.vPIS := 0;
+      if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+        CST := cst00
+      else
+        CSOSN := csosn101;
 
-  Produto.Imposto.PIS.qBCProd   := 0;
-  Produto.Imposto.PIS.vAliqProd := 0;
-  Produto.Imposto.PIS.vPIS      := 0;
+      orig    := oeNacional;
+      modBC   := dbiValorOperacao;
+      vBC     := 100;
+      pICMS   := 18;
+      vICMS   := 18;
+      modBCST := dbisMargemValorAgregado;
+      pMVAST  := 0;
+      pRedBCST:= 0;
+      vBCST   := 0;
+      pICMSST := 0;
+      vICMSST := 0;
+      pRedBC  := 0;
 
-  Produto.Imposto.PISST.vBc       := 0;
-  Produto.Imposto.PISST.pPis      := 0;
-  Produto.Imposto.PISST.qBCProd   := 0;
-  Produto.Imposto.PISST.vAliqProd := 0;
-  Produto.Imposto.PISST.vPIS      := 0;
+      pCredSN := 5;
+      vCredICMSSN := 50;
+      vBCFCPST := 100;
+      pFCPST := 2;
+      vFCPST := 2;
+      vBCSTRet := 0;
+      pST := 0;
+      vICMSSubstituto := 0;
+      vICMSSTRet := 0;
+      vBCFCPSTRet := 0;
+      pFCPSTRet := 0;
+      vFCPSTRet := 0;
+      pRedBCEfet := 0;
+      vBCEfet := 0;
+      pICMSEfet := 0;
+      vICMSEfet := 0;
+    end;
 
-  Produto.Imposto.COFINS.CST            := cof99;
-  Produto.Imposto.COFINS.vBC     := 0;
-  Produto.Imposto.COFINS.pCOFINS := 0;
-  Produto.Imposto.COFINS.vCOFINS := 0;
-  Produto.Imposto.COFINS.qBCProd   := 0;
-  Produto.Imposto.COFINS.vAliqProd := 0;
+    with ICMSUFDest do
+    begin
+      // partilha do ICMS e fundo de probreza
+      vBCUFDest      := 0.00;
+      pFCPUFDest     := 0.00;
+      pICMSUFDest    := 0.00;
+      pICMSInter     := 0.00;
+      pICMSInterPart := 0.00;
+      vFCPUFDest     := 0.00;
+      vICMSUFDest    := 0.00;
+      vICMSUFRemet   := 0.00;
+    end;
 
-  Produto.Imposto.COFINSST.vBC       := 0;
-  Produto.Imposto.COFINSST.pCOFINS   := 0;
-  Produto.Imposto.COFINSST.qBCProd   := 0;
-  Produto.Imposto.COFINSST.vAliqProd := 0;
-  Produto.Imposto.COFINSST.vCOFINS   := 0;
+    (*
+    // IPI, se hpouver...
+    with IPI do
+    begin
+      CST      := ipi99;
+      clEnq    := '999';
+      CNPJProd := '';
+      cSelo    := '';
+      qSelo    := 0;
+      cEnq     := '';
+
+      vBC    := 100;
+      qUnid  := 0;
+      vUnid  := 0;
+      pIPI   := 5;
+      vIPI   := 5;
+    end;
+    *)
+
+    with II do
+    begin
+      II.vBc      := 0;
+      II.vDespAdu := 0;
+      II.vII      := 0;
+      II.vIOF     := 0;
+    end;
+
+    with PIS do
+    begin
+      CST  := pis99;
+      vBC  := 0;
+      pPIS := 0;
+      vPIS := 0;
+
+      qBCProd   := 0;
+      vAliqProd := 0;
+      vPIS      := 0;
+    end;
+
+    with PISST do
+    begin
+      vBc       := 0;
+      pPis      := 0;
+      qBCProd   := 0;
+      vAliqProd := 0;
+      vPIS      := 0;
+    end;
+
+    with COFINS do
+    begin
+      CST     := cof99;
+      vBC     := 0;
+      pCOFINS := 0;
+      vCOFINS := 0;
+      qBCProd   := 0;
+      vAliqProd := 0;
+    end;
+
+    with COFINSST do
+    begin
+      vBC       := 0;
+      pCOFINS   := 0;
+      qBCProd   := 0;
+      vAliqProd := 0;
+      vCOFINS   := 0;
+    end;
+  end;
+
+
 
   //Adicionando Serviços
   (*
@@ -1212,18 +1330,6 @@ begin
   NotaF.NFe.Transp.retTransp.vICMSRet := 0;
   NotaF.NFe.Transp.retTransp.CFOP     := '';
   NotaF.NFe.Transp.retTransp.cMunFG   := 0;
-
-  NotaF.NFe.Transp.veicTransp.placa := '';
-  NotaF.NFe.Transp.veicTransp.UF    := '';
-  NotaF.NFe.Transp.veicTransp.RNTC  := '';
-
-//Dados do Reboque
-  (*
-  Reboque := NotaF.NFe.Transp.Reboque.Add;
-  Reboque.placa := '';
-  Reboque.UF    := '';
-  Reboque.RNTC  := '';
-  *)
 
   Volume := NotaF.NFe.Transp.Vol.New;
   Volume.qVol  := 1;
@@ -1693,6 +1799,9 @@ begin
       Sincrono := True
     else
       Sincrono := False;
+
+    if ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe then
+      PrepararImpressao;
 
     ACBrNFe1.Enviar(vNumLote, True, Sincrono);
   end;
@@ -3281,6 +3390,7 @@ begin
     Ini.WriteString('Emitente', 'CodCidade',   edtEmitCodCidade.Text);
     Ini.WriteString('Emitente', 'Cidade',      edtEmitCidade.Text);
     Ini.WriteString('Emitente', 'UF',          edtEmitUF.Text);
+    Ini.WriteInteger('Emitente', 'CRT',         cbTipoEmpresa.ItemIndex);
 
     Ini.WriteString('Email', 'Host',    edtSmtpHost.Text);
     Ini.WriteString('Email', 'Port',    edtSmtpPort.Text);
@@ -3404,6 +3514,8 @@ begin
     edtEmitCodCidade.Text  := Ini.ReadString('Emitente', 'CodCidade',   '');
     edtEmitCidade.Text     := Ini.ReadString('Emitente', 'Cidade',      '');
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
+
+    cbTipoEmpresa.ItemIndex := Ini.ReadInteger('Emitente', 'CRT', 2);
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');
     edtSmtpPort.Text     := Ini.ReadString('Email', 'Port',    '');

@@ -918,6 +918,19 @@ object frmACBrNFe: TfrmACBrNFe
               Height = 13
               Caption = 'Fone'
             end
+            object Label52: TLabel
+              Left = 8
+              Top = 289
+              Width = 83
+              Height = 13
+              Caption = 'Tipo de Empresa:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+            end
             object edtEmitCNPJ: TEdit
               Left = 8
               Top = 20
@@ -1008,6 +1021,24 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 35
               Height = 21
               TabOrder = 12
+            end
+            object cbTipoEmpresa: TComboBox
+              Left = 8
+              Top = 305
+              Width = 249
+              Height = 24
+              Style = csDropDownList
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 13
+              Items.Strings = (
+                'Simples Nacional'
+                'Simples Nacional, excesso sublimite de receita bruta'
+                'Regime Normal')
             end
           end
           object TabSheet13: TTabSheet

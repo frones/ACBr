@@ -62,7 +62,8 @@ type
 
   tpTipoConta = (tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
 
-  tpTipoEmbalagem = (teBigbag, tePallet, teGranel, teContainer, teSaco);
+  tpTipoEmbalagem = (teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
+                     teSaco, teCaixa, teUnitario, teFardo, teTanque);
 
   TpTipoViagem = (Indefinido, Padrao, TAC_Agregado, Frota);
 
@@ -293,14 +294,20 @@ end;
 
 function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
 begin
-  Result := EnumeradoToStr(t, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
-                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
+  Result := EnumeradoToStr(t, ['Indefinido', 'Bigbag', 'Pallet', 'Granel', 
+                               'Container', 'Saco', 'Caixa', 'Unitario', 
+							   'Fardo', 'Tanque'],
+                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
+                           teSaco, teCaixa, teUnitario, teFardo, teTanque]);
 end;
 
 function StrToTipoEmbalagem(out ok: Boolean; const s: String): tpTipoEmbalagem;
 begin
-  Result := StrToEnumerado(ok, s, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
-                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
+  Result := StrToEnumerado(ok, s, ['Indefinido', 'Bigbag', 'Pallet', 'Granel', 
+                                   'Container', 'Saco', 'Caixa', 'Unitario', 
+							       'Fardo', 'Tanque'],
+                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
+                           teSaco, teCaixa, teUnitario, teFardo, teTanque]);
 end;
 
 function TipoViagemCIOTToStr(const t: TpTipoViagem): String;

@@ -405,7 +405,7 @@ procedure LoadInpOut;
 procedure LoadBlockInput;
 
 function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
-function GetFileVersion(AFile: String): String;
+function GetFileVersion(const AFile: String): String;
 
 {$ENDIF}
 
@@ -4463,7 +4463,7 @@ begin
   Result := IntToHex(WinErro, 8);
 end;
 
-function GetFileVersion(AFile: String): String;
+function GetFileVersion(const AFile: String): String;
 var
   Major, Minor, Release, Build: Integer;
   Zero, VersionInfoSize: DWORD;

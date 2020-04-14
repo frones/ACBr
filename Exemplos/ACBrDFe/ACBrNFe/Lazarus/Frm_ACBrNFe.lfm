@@ -1,7 +1,7 @@
 object frmACBrNFe: TfrmACBrNFe
-  Left = 389
+  Left = 983
   Height = 651
-  Top = 107
+  Top = 378
   Width = 882
   Caption = 'ACBrNFe - Programa Exemplo'
   ClientHeight = 651
@@ -27,8 +27,8 @@ object frmACBrNFe: TfrmACBrNFe
       Height = 576
       Top = 0
       Width = 295
-      ActivePage = TabSheet1
-      TabIndex = 0
+      ActivePage = TabSheet2
+      TabIndex = 1
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Configurações'
@@ -39,10 +39,10 @@ object frmACBrNFe: TfrmACBrNFe
           Height = 550
           Top = 0
           Width = 287
-          ActivePage = TabSheet3
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
-          TabIndex = 0
+          TabIndex = 3
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -1094,6 +1094,36 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 35
               TabOrder = 12
             end
+            object cbTipoEmpresa: TComboBox
+              Left = 8
+              Height = 24
+              Top = 312
+              Width = 249
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'MS Sans Serif'
+              ItemHeight = 16
+              Items.Strings = (
+                'Simples Nacional'
+                'Simples Nacional, excesso sublimite de receita bruta'
+                'Regime Normal'
+              )
+              ParentFont = False
+              Style = csDropDownList
+              TabOrder = 13
+            end
+            object Label52: TLabel
+              Left = 8
+              Height = 13
+              Top = 296
+              Width = 83
+              Caption = 'Tipo de Empresa:'
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              ParentColor = False
+              ParentFont = False
+            end
           end
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
@@ -1629,14 +1659,15 @@ object frmACBrNFe: TfrmACBrNFe
           ChildSizing.ShrinkHorizontal = crsScaleChilds
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 2
+          ChildSizing.ControlsPerLine = 3
           ClientHeight = 31
           ClientWidth = 269
-          Columns = 2
+          Columns = 3
           ItemIndex = 0
           Items.Strings = (
-            'Fortes Report'
-            'Esc Pos'
+            'Fortes'
+            'EscPos'
+            'A4'
           )
           TabOrder = 3
         end
@@ -2258,6 +2289,7 @@ object frmACBrNFe: TfrmACBrNFe
     Configuracoes.Geral.AtualizarXMLCancelado = True
     Configuracoes.Geral.VersaoQRCode = veqr000
     Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.Arquivos.NormatizarMunicipios = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -2387,5 +2419,26 @@ object frmACBrNFe: TfrmACBrNFe
     WantBracesParsed = False
     left = 504
     top = 342
+  end
+  object ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 8
+    MargemSuperior = 8
+    MargemEsquerda = 6
+    MargemDireita = 5.1
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    FormularioContinuo = True
+    left = 752
+    top = 239
   end
 end

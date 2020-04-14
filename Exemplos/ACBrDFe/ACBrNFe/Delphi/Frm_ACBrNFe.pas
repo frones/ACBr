@@ -1800,7 +1800,7 @@ begin
     else
       Sincrono := False;
 
-    if ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe then
+    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe) and (rgDANFCE.ItemIndex = 1) then
       PrepararImpressao;
 
     ACBrNFe1.Enviar(vNumLote, True, Sincrono);
@@ -1920,7 +1920,7 @@ begin
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
-  CC := TstringList.Create;
+  CC := TStringList.Create;
   try
     //CC.Add('email_1@provedor.com'); // especifique um email valido
     //CC.Add('email_2@provedor.com.br');    // especifique um email valido
@@ -1961,7 +1961,7 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
   end;
 
-  OpenDialog1.Title := 'Selecione ao Evento';
+  OpenDialog1.Title := 'Selecione o evento';
   OpenDialog1.DefaultExt := '*.XML';
   OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -1971,15 +1971,15 @@ begin
     Exit;
 
   Evento := TStringList.Create;
-  CC := TstringList.Create;
+  CC := TStringList.Create;
   try
     Evento.Clear;
     Evento.Add(OpenDialog1.FileName);
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName);
 
-//    CC.Add('email_1@provedor.com'); // especifique um email valido
-//    CC.Add('email_2@provedor.com.br');    // especifique um email valido
+    //CC.Add('email_1@provedor.com'); // especifique um email valido
+    //CC.Add('email_2@provedor.com.br');    // especifique um email valido
     ConfigurarEmail;
     ACBrNFe1.EnviarEmailEvento(Para
       , edtEmailAssunto.Text
@@ -2804,7 +2804,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    PrepararImpressao;
+    if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+      PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
@@ -3295,19 +3296,20 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
+
+  {$IfDef MSWINDOWS}
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  {$EndIf}
+
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
-
-  for l := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[l]);
-
+  {$IfDef LINUX}
   cbxPorta.Items.Add('/dev/ttyS0') ;
-  cbxPorta.Items.Add('/dev/ttyS1') ;
   cbxPorta.Items.Add('/dev/ttyUSB0') ;
-  cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 0;
@@ -3390,7 +3392,7 @@ begin
     Ini.WriteString('Emitente', 'CodCidade',   edtEmitCodCidade.Text);
     Ini.WriteString('Emitente', 'Cidade',      edtEmitCidade.Text);
     Ini.WriteString('Emitente', 'UF',          edtEmitUF.Text);
-    Ini.WriteInteger('Emitente', 'CRT',         cbTipoEmpresa.ItemIndex);
+    Ini.WriteInteger('Emitente', 'CRT',        cbTipoEmpresa.ItemIndex);
 
     Ini.WriteString('Email', 'Host',    edtSmtpHost.Text);
     Ini.WriteString('Email', 'Port',    edtSmtpPort.Text);

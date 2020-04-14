@@ -204,7 +204,9 @@
       <Unit2>
         <Filename Value="Frm_SelecionarCertificado.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSelecionarCertificado"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
       <Unit3>
         <Filename Value="Frm_ConfiguraSerial.pas"/>
@@ -265,7 +267,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="5">
+    <Exceptions Count="6">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -281,6 +283,9 @@
       <Item5>
         <Name Value="EOleException"/>
       </Item5>
+      <Item6>
+        <Name Value="EACBrNFeException"/>
+      </Item6>
     </Exceptions>
   </Debugging>
 </CONFIG>

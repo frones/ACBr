@@ -60,21 +60,19 @@ package ACBr_ANe;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Averbação Eletrônica Nacional - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
-  ACBr_DFeComum,
-  DCLACBr_Comum;
+  ACBr_DFeComum;
 
 contains
   ACBrANeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas',
   ACBrANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANe.pas',
   ACBrANeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeConfiguracoes.pas',
   ACBrANeDocumentos in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeDocumentos.pas',
-  ACBrANeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeReg.pas',
   pcaRetEnvANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaRetEnvANe.pas',
   pcaANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANe.pas',
   pcaANeR in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeR.pas',

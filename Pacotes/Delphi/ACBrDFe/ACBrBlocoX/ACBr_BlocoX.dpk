@@ -53,14 +53,13 @@ package ACBr_BlocoX;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Bloco X - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
-  ACBr_DFeComum,
-  DCLACBr_Comum;
+  ACBr_DFeComum;
 
 contains
   ACBrBlocoX in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX.pas',
@@ -68,7 +67,6 @@ contains
   ACBrBlocoX_Estoque in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Estoque.pas',
   ACBrBlocoX_ReducaoZ in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas',
   ACBrBlocoX_WebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_WebServices.pas',
-  ACBrBlocoX_Reg in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Reg.pas',
   pcnRetEnvBlocoX in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX\pcnRetEnvBlocoX.pas',
   ACBrBlocoX_Consulta in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Consulta.pas';
 

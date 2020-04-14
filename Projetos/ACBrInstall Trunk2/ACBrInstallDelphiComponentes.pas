@@ -40,7 +40,7 @@ uses
   JclIDEUtils, JclCompilerUtils, ACBrPacotes, UACBrPlataformaInstalacaoAlvo;
 
 const
-  sVersaoInstalador = '1.5.0.2';
+  sVersaoInstalador = '1.5.0.3';
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
   TNivelLog = (nlNenhumLog, nlMinimo, nlMedio, nlMaximo);

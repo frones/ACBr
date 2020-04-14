@@ -400,7 +400,8 @@ type
                               mtvLicencaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
                               mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
                               mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
-                              mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao);
+                              mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao,
+                              mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020);
 
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros, tpatNao);
 
@@ -931,13 +932,13 @@ const
 
   TMotivoAlteracaoCargoFuncao: array[0..3] of string = ('1', '2', '3', '9');
 
-  TMotivoAfastamento: array[0..30] of string = ('01', '03', '05', '06', '07',
+  TMotivoAfastamento: array[0..31] of string = ('01', '03', '05', '06', '07',
                                                 '08', '10', '11', '12', '13',
                                                 '14', '15', '16', '17', '18',
                                                 '19', '20', '21', '22', '23',
                                                 '24', '25', '26', '27', '28',
                                                 '29', '30', '31', '33', '34',
-                                                '35');
+                                                '35', '37');
 
   TGenericosString0_1 : array[0..1] of string = ('0','1' );
   TGenericosString0_2 : array[0..2] of string = ('0','1','2' );

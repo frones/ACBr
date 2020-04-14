@@ -387,6 +387,7 @@ begin
   FMudancaCPF   := TMudancaCPF3.Create;
   Fobservacoes  := TobservacoesCollection.Create;
   FconsigFGTS   := TConsigFGTSCollection.Create;
+  FQtdDiasInterm := -1;
 end;
 
 destructor TInfoDeslig.Destroy;
@@ -711,7 +712,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
 
-  If (obj.QtdDiasInterm > 0) And (VersaoDF <> ve02_04_01) Then
+  If (obj.QtdDiasInterm >= 0) And (VersaoDF <> ve02_04_01) Then
      Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
 
   if (VersaoDF = ve02_04_01) then

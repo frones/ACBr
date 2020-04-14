@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2020
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/57153-evento-2230-calamidade-pública/
+   Por: Jeihcio Francis
+-- pcesS2299 --
+[*] https://www.projetoacbr.com.br/forum/topic/57044-evento-2299-tag-qtddiasinterm/
+   Por: Jeihcio Francis
+
 05/02/2020
 -- pcesS1210 --
 [*] https://www.projetoacbr.com.br/forum/topic/56126-pcess1210pas-tag-detrubrfer-penalim-corre%C3%A7%C3%A3o-fontes/

@@ -131,7 +131,7 @@ type
     procedure wizPgPacotesNextButtonClick(Sender: TObject; var Stop: Boolean);
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
-    UmaListaPlataformasAlvos: TListaPlataformasAlvos;
+    FUmaListaPlataformasAlvos: TListaPlataformasAlvos;
 
     FUltimoArquivoLog: string;
 
@@ -279,10 +279,10 @@ var
 begin
   // popular o combobox de versões do delphi instaladas na máquina
 
-  for iFor := 0 to UmaListaPlataformasAlvos.Count - 1 do
+  for iFor := 0 to FUmaListaPlataformasAlvos.Count - 1 do
   begin
-    NomeAlvo := UmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name + ' ' + UmaListaPlataformasAlvos[iFor].sPlatform;
-    Habilitado := EhSuportada(UmaListaPlataformasAlvos[iFor]);
+    NomeAlvo := FUmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name + ' ' + FUmaListaPlataformasAlvos[iFor].sPlatform;
+    Habilitado := EhSuportada(FUmaListaPlataformasAlvos[iFor]);
 
     clbDelphiVersion.Items.Add(NomeAlvo);
     clbDelphiVersion.ItemEnabled[iFor] := Habilitado;
@@ -292,7 +292,7 @@ end;
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
   Caption := Caption + ' ' + sVersaoInstalador;
-  UmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
+  FUmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
   FUltimoArquivoLog := '';
 
   MontaListaIDEsSuportadas;
@@ -302,7 +302,7 @@ end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  UmaListaPlataformasAlvos.Free;
+  FUmaListaPlataformasAlvos.Free;
 end;
 
 procedure TfrmPrincipal.Logar(const AString: String);
@@ -357,7 +357,7 @@ begin
     end;
     ACBrInstaladorAux.OpcoesInstall.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-    Result := ACBrInstaladorAux.Instalar(ListaPacotes, ListaVersoesInstalacao, UmaListaPlataformasAlvos);
+    Result := ACBrInstaladorAux.Instalar(ListaPacotes, ListaVersoesInstalacao, FUmaListaPlataformasAlvos);
   finally
     ACBrInstaladorAux.Free;
   end;
@@ -452,7 +452,7 @@ begin
     Exit
   end;
 
-  if MatchText(UmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual.VersionNumberStr,
+  if MatchText(FUmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual.VersionNumberStr,
                ['d7','d9','d10','d11']) then
   begin
     Application.MessageBox(
@@ -462,15 +462,15 @@ begin
     );
   end;
 
-  if (UmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].tPlatformAtual <> bpWin32) and
+  if (FUmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].tPlatformAtual <> bpWin32) and
      (clbDelphiVersion.Checked[clbDelphiVersion.ItemIndex]) then
   begin
     //Ligar instalacao win32 da IDE correspondente...
     I := (clbDelphiVersion.ItemIndex - 1);
     repeat
-      if (UmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual =
-          UmaListaPlataformasAlvos[i].InstalacaoAtual) and
-         (UmaListaPlataformasAlvos[i].tPlatformAtual = bpWin32) then
+      if (FUmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual =
+          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
+         (FUmaListaPlataformasAlvos[i].tPlatformAtual = bpWin32) then
       begin
         clbDelphiVersion.Checked[i] := True;
       end;
@@ -478,20 +478,20 @@ begin
     until (I < 0);
 
   end
-  else if (UmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].tPlatformAtual = bpWin32) and
+  else if (FUmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].tPlatformAtual = bpWin32) and
      (not clbDelphiVersion.Checked[clbDelphiVersion.ItemIndex]) then
   begin
     //Desligar todas instalacoes nao win32.
     I := (clbDelphiVersion.ItemIndex + 1);
     repeat
-      if (UmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual =
-          UmaListaPlataformasAlvos[i].InstalacaoAtual) and
-         (UmaListaPlataformasAlvos[i].tPlatformAtual <> bpWin32)then
+      if (FUmaListaPlataformasAlvos[clbDelphiVersion.ItemIndex].InstalacaoAtual =
+          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
+         (FUmaListaPlataformasAlvos[i].tPlatformAtual <> bpWin32)then
       begin
         clbDelphiVersion.Checked[i] := False;
       end;
       Inc(I);
-    until (I = UmaListaPlataformasAlvos.Count);
+    until (I = FUmaListaPlataformasAlvos.Count);
   end;
 
 //

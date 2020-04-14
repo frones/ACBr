@@ -50,7 +50,7 @@ type
     sDirLibrary: string;
     function GetDirLibrary: string;
     constructor CreateNew(AInstalacao: TJclBorRADToolInstallation; UmaPlatform: TJclBDSPlatform;
-          UmasPlatform: string);
+          const UmasPlatform: string);
   end;
 
   TPlataformaDestino = TACBrPlataformaInstalacaoAlvo;
@@ -125,7 +125,7 @@ begin
 end;
 
 constructor TACBrPlataformaInstalacaoAlvo.CreateNew(AInstalacao: TJclBorRADToolInstallation;
-  UmaPlatform: TJclBDSPlatform; UmasPlatform: string);
+  UmaPlatform: TJclBDSPlatform; const UmasPlatform: string);
 begin
   inherited Create;
 

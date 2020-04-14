@@ -154,6 +154,7 @@ begin
       UnloadServerFunctions;
     end;
   except
+    //pra que esse try..except??
   end;
 end;
 

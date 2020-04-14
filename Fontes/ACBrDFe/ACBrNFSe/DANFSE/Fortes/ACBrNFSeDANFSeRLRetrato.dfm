@@ -1006,7 +1006,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       Left = 23
       Top = 495
       Width = 752
-      Height = 297
+      Height = 317
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1984,7 +1984,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
-        Left = 30
+        Left = 15
         Top = 57
         Width = 724
         Height = 31
@@ -2029,7 +2029,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 792
+      Top = 812
       Width = 752
       Height = 103
       BandType = btSummary
@@ -2101,7 +2101,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 895
+      Top = 915
       Width = 752
       Height = 73
       BandType = btSummary

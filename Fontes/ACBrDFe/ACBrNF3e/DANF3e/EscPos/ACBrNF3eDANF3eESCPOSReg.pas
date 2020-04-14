@@ -30,63 +30,29 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+{*******************************************************************************
+|* Historico
+|*
+|* 18/12/2019: Italo Jurisato Junior
+|*  - Doação do componente para o Projeto ACBr
+*******************************************************************************}
+
+unit ACBrNF3eDANF3eESCPOSReg;
+
 {$I ACBr.inc}
 
-package ACBr_NF3e;
+interface
 
-{$R *.res}
-{$R *.otares}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
-{$ALIGN 8}
-{$ASSERTIONS ON}
-{$BOOLEVAL OFF}
-{$DEBUGINFO ON}
-{$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA ON}
-{$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
-{$LONGSTRINGS ON}
-{$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
-{$OVERFLOWCHECKS OFF}
-{$RANGECHECKS OFF}
-{$DEFINITIONINFO ON}
-{$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
-{$TYPEDADDRESS OFF}
-{$VARSTRINGCHECKS ON}
-{$WRITEABLECONST OFF}
-{$MINENUMSIZE 1}
-{$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Nota Fiscal de Energia Eletrica Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+procedure Register;
 
-requires
-  rtl,
-  vcl,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+implementation
 
-contains
-  ACBrNF3eConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eConfiguracoes.pas',
-  ACBrNF3eNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eNotasFiscais.pas',
-  ACBrNF3eWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eWebServices.pas',
-  ACBrNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3e.pas',
-  pcnNF3eConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eConsts.pas',
-  pcnConsSitNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConsSitNF3e.pas',
-  pcnConversaoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConversaoNF3e.pas',
-  pcnEnvEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEnvEventoNF3e.pas',
-  pcnEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEventoNF3e.pas',
-  pcnNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3e.pas',
-  pcnNF3eR in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eR.pas',
-  pcnNF3eW in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eW.pas',
-  pcnProcNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnProcNF3e.pas',
-  pcnRetConsSitNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetConsSitNF3e.pas',
-  pcnRetEnvEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvEventoNF3e.pas',
-  pcnRetEnvNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvNF3e.pas',
-  ACBrNF3eDANF3eClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\ACBrNF3eDANF3eClass.pas';
+uses Classes, ACBrNF3eDANF3eESCPOS;
+
+procedure Register;
+begin
+  RegisterComponents('ACBrNF3e', [TACBrNF3eDANF3eESCPOS]);
+end;
+
 
 end.

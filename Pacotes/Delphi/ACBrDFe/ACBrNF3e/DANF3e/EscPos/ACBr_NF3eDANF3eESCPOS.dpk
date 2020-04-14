@@ -42,6 +42,7 @@
 package ACBr_NF3eDANF3eESCPOS;
 
 {$R *.res}
+{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -67,11 +68,11 @@ package ACBr_NF3eDANF3eESCPOS;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANF3e para NF3e Impressora Serial - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   ACBr_Serial,
   ACBr_NF3e;
 

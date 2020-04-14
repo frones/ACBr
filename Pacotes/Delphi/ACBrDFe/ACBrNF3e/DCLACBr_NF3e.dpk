@@ -1,4 +1,3 @@
-{******************************************************************************}
 { Projeto: Componentes ACBr - ACBrNF3e                                         }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -30,17 +29,14 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{$I ACBr.inc}
-
-package ACBr_NF3e;
+package DCLACBr_NF3e;
 
 {$R *.res}
-{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -50,7 +46,7 @@ package ACBr_NF3e;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$DEFINITIONINFO ON}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -60,33 +56,17 @@ package ACBr_NF3e;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Nota Fiscal de Energia Eletrica Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$DESCRIPTION 'ACBr - (Designtime) Nota Fiscal de Energia Eletrica Eletrônica - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+  designide,
+  ACBr_NF3e,
+  DCLACBr_Comum;
 
 contains
-  ACBrNF3eConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eConfiguracoes.pas',
-  ACBrNF3eNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eNotasFiscais.pas',
-  ACBrNF3eWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eWebServices.pas',
-  ACBrNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3e.pas',
-  pcnNF3eConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eConsts.pas',
-  pcnConsSitNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConsSitNF3e.pas',
-  pcnConversaoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConversaoNF3e.pas',
-  pcnEnvEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEnvEventoNF3e.pas',
-  pcnEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEventoNF3e.pas',
-  pcnNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3e.pas',
-  pcnNF3eR in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eR.pas',
-  pcnNF3eW in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eW.pas',
-  pcnProcNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnProcNF3e.pas',
-  pcnRetConsSitNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetConsSitNF3e.pas',
-  pcnRetEnvEventoNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvEventoNF3e.pas',
-  pcnRetEnvNF3e in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvNF3e.pas',
-  ACBrNF3eDANF3eClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\ACBrNF3eDANF3eClass.pas';
+  ACBrNF3eReg in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eReg.pas';
 
 end.

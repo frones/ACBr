@@ -20,12 +20,16 @@
     </CompilerOptions>
     <Description Value="ACBr - DANF3e para NF3-e Impressora Serial - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="1">
+    <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\EscPos\ACBrNF3eDANF3eESCPOS.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNF3eDANF3eESCPOS"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\EscPos\ACBrNF3eDANF3eESCPOSReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNF3eDANF3eESCPOSReg"/>
+      </Item2>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

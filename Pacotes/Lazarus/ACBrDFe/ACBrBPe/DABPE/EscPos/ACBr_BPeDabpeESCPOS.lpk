@@ -12,11 +12,16 @@
         <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrBPe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="1">
+    <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\EscPos\ACBrBPeDABPeESCPOS.pas"/>
-        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrBPeDABPeESCPOS"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\EscPos\ACBrBPeDABPeESCPOSReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrBPeDABPeESCPOSReg"/>
+      </Item2>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

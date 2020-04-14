@@ -8,13 +8,13 @@ unit ACBr_BPeDabpeESCPOS;
 interface
 
 uses
-  ACBrBPeDABPeESCPOS, LazarusPackageIntf;
+  ACBrBPeDABPeESCPOS, ACBrBPeDABPeESCPOSReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrBPeDABPeESCPOS', @ACBrBPeDABPeESCPOS.Register);
+  RegisterUnit('ACBrBPeDABPeESCPOSReg', @ACBrBPeDABPeESCPOSReg.Register);
 end;
 
 initialization

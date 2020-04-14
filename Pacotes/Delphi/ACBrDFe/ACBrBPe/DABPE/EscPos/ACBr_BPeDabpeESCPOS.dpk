@@ -44,6 +44,7 @@
 package ACBr_BPeDabpeESCPOS;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -65,9 +66,11 @@ package ACBr_BPeDabpeESCPOS;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - DABPe para BP-e Impressora Serial - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
 {$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - DABPe para BP-e Impressora Serial - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,

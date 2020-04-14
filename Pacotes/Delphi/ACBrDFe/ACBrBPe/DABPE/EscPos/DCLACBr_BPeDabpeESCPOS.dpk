@@ -1,14 +1,17 @@
 {******************************************************************************}
-{ Projeto: Componentes ACBr - ACBrBPe                                          }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
+{ Projeto: Componente ACBrBPe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Bilhete de }
+{ Passagem eletrônica - BPe                                                    }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -26,27 +29,26 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
 {******************************************************************************}
 
 {*******************************************************************************
 |* Historico
 |*
-|* 20/06/2017: Italo Jurisato Junior
+|* 01/11/2017: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
 *******************************************************************************}
 
-{$I ACBr.inc}
-
-package ACBr_BPe;
+package DCLACBr_BPeDabpeESCPOS;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -65,35 +67,17 @@ package ACBr_BPe;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
-{$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$DESCRIPTION 'ACBr - (Designtime) DABPe para BP-e Impressora Serial - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+  designide,
+  ACBr_BPeDabpeESCPOS;
 
 contains
-  ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',
-  ACBrBPeBilhetes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeBilhetes.pas',
-  ACBrBPeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeConfiguracoes.pas',
-  ACBrBPeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas',
-  pcnBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPe.pas',
-  pcnBPeR in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeR.pas',
-  pcnBPeW in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeW.pas',
-  pcnBPeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeConsts.pas',
-  pcnConversaoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConversaoBPe.pas',
-  pcnProcBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnProcBPe.pas',
-  pcnConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsSitBPe.pas',
-  pcnEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEventoBPe.pas',
-  pcnEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEnvEventoBPe.pas',
-  pcnRetEnvBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvBPe.pas',
-  pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',
-  pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
-  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
+  ACBrBPeDABPeESCPOSReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\EscPos\ACBrBPeDABPeESCPOSReg.pas';
 
 end.

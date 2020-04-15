@@ -42,7 +42,6 @@
 package ACBr_NF3eDANF3eESCPOS;
 
 {$R *.res}
-{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}

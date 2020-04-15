@@ -462,7 +462,12 @@ begin
   if (not (fsEtqInicializada or fsEtqFinalizada)) then
     fsListaCmd.Insert(0, wCmd)       //Se Etiqueta não foi iniciada, comandos incluídos no início
   else
+  begin
+    if fsEtqFinalizada then
+      fsListaCmd.Add(fsETQ.ComandosFinalizarEtiqueta(fsCopias, fsAvancoEtq));
+
     fsListaCmd.Add(wCmd);    //Se Etiqueta foi iniciada, comandos são concatenados
+  end;
 
   fsEtqInicializada := True;
   fsEtqFinalizada   := False;

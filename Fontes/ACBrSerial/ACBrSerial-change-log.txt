@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/04/2020
+-- ACBrETQ --
+[-] Correção para que os parâmetros enviados no método "FinalizarEtiqueta", sejam 
+    considerados, caso um novo comando "IniciarEtiqueta", seja recebido
+    (por: DSA)
+
 Data: 02/04/2020
 -- ACBrDevice --
 [-] Workaround, para que processamento de Tags funcione corretamente em Delphi Linux 64

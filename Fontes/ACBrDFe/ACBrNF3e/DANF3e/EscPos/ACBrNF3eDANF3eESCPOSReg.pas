@@ -1,5 +1,5 @@
 {******************************************************************************}
-{ Projeto: Componentes ACBr - ACBrNF3e                                         }
+{ Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
@@ -30,13 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{*******************************************************************************
-|* Historico
-|*
-|* 18/12/2019: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
-
 unit ACBrNF3eDANF3eESCPOSReg;
 
 {$I ACBr.inc}
@@ -47,12 +40,14 @@ procedure Register;
 
 implementation
 
-uses Classes, ACBrNF3eDANF3eESCPOS;
+uses
+  Classes, ACBrNF3eDANF3eESCPOS;
 
 procedure Register;
 begin
   RegisterComponents('ACBrNF3e', [TACBrNF3eDANF3eESCPOS]);
 end;
+
 
 
 end.

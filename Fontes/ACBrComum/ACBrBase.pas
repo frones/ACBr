@@ -423,7 +423,12 @@ begin
     else if (nCompare = 1) then            // greater than
       nLow := nCheckPos + 1
     else                                   // equal to
+    begin
       Result := nCheckPos;
+      // Check if we have another match below
+      while (Result > nLow) and (AComparer(Item,Pointer(Items[Result-1])) = 0) do
+        Dec(Result);
+    end;
   end;
 
   if (Result = -1) and Nearest then

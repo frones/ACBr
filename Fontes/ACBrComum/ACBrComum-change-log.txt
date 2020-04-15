@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/04/2020
+-- ACBrBase -- 
+[-] Correção em Busca "bubble sort", de TACBrObjectList. 
+    Ajuste para localização no menor "Match", exato
+    (por: DSA)
+
 Data: 30/03/2020
 -- ACBrUtil --
 [*] Método "WriteToFile", com assinatura modificada, incluindo o parâmetro "ForceDirectory"

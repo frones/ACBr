@@ -996,7 +996,7 @@ begin
   while P < LenHex do
   begin
     DecVal := StrToInt('$'+copy(AHexStr,P,2)) ;
-    Result := AnsiChar( DecVal ) + Result;
+    Result := AnsiChr( DecVal ) + Result;
     P := P + 2 ;
   end ;
 end;

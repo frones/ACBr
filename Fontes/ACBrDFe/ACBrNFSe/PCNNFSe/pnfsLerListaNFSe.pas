@@ -406,6 +406,10 @@ begin
     //CTA
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaNotas') <> '');
+	  
+    //CTA
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'NotasConsultadas') <> '');	  
 
     //EL
     if not Nivel1 then
@@ -506,8 +510,8 @@ begin
             ((Provedor in [proEquiplano, proIPM]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proNFSeBrasil, proISSJoinville]) and (Leitor.rExtrai(Nivel, 'nota', '', i + 1) <> '')) or
             ((Provedor in [proISSJoinville]) and (Leitor.rExtrai(Nivel, 'nota_recebida', '', i + 1) <> '')) or
-            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or
-            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or
+            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote  
+            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS 
             ((Provedor in [proInfisc, proInfiscv11]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) or
             ((Provedor in [proGoverna]) and (Leitor.rExtrai(Nivel, 'InfRetConsultaNotCan', '', i + 1) <> '')) or
             ((Provedor in [proCTA, proISSDSF]) and (Leitor.rExtrai(Nivel, 'Nota', '', i + 1) <> '')) or
@@ -970,7 +974,7 @@ begin
         if ListaNfse.FMsgRetorno[i].FMensagem = '' then
           ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Erro');
 
-        if FProvedor = proIssDSF then
+        if FProvedor in [proIssDSF, proSiat] then 
         begin
           if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
           begin
@@ -1071,7 +1075,7 @@ begin
       end;
     end;
 
-    if FProvedor in [proSP, proNotaBlu, proISSDSF] then
+    if FProvedor in [proSP, proNotaBlu, proISSDSF, proSiat] then 
     begin
       try
         if (Leitor.rExtrai(1, 'RetornoConsulta') <> '') or

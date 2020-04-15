@@ -126,6 +126,7 @@ type
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
     function LerXML_proAssessorPublico: boolean;
+    function LerXML_proSiat: Boolean;
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -231,7 +232,8 @@ begin
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
     proSP, 
     proNotaBlu:    Result := LerXml_proSP;
-    proAssessorPublico: Result := LerXML_proAssessorPublico;															 
+    proAssessorPublico: Result := LerXML_proAssessorPublico;
+    proSiat:       Result := LerXML_proSiat;
   else
     Result := LerXml_ABRASF;
   end;
@@ -753,6 +755,11 @@ begin
   except
     Result := False;
   end;
+end;
+
+function TretSitLote.LerXML_proSiat: Boolean; 
+begin
+  Result := False;
 end;
 
 end.

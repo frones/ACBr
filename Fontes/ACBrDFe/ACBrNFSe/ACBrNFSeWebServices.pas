@@ -1052,7 +1052,8 @@ begin
 
       proGiap: FNameSpaceDad := xmlns3 + FNameSpace + '"';
 
-      proIssDSF: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
+      proIssDSF,
+      proSiat: FNameSpaceDad := xmlns3 + FNameSpace + '"' + 
                                   ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                   ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
@@ -1589,7 +1590,7 @@ begin
     proSP,
     proGiap: Result := (UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true'));
 
-    proISSDSF: Result := Alerta203 or (FDataRecebimento <> 0);
+    proISSDSF, proSiat: Result := Alerta203 or (FDataRecebimento <> 0); 
 
     proEgoverneISS,
     proiiBrasilv2: Result := ProcSucesso;
@@ -1672,7 +1673,7 @@ begin
 
             j := Pos('">', FPDadosMsg) + 1;
 
-            if FProvedor = proIssDSF then
+            if FProvedor in [proIssDSF, proSiat] then 
               FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
                             '"' + Trim(FNameSpace) + '"'
             else
@@ -1875,7 +1876,8 @@ begin
 
         proAssessorPublico,
         proIssDSF,
-        proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+        proEquiplano,
+        proSiat: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]); {MXM}
 
         proEgoverneISS: FvNotas := FvNotas +
                                    '<rgm:NotaFiscal>' +
@@ -2734,7 +2736,7 @@ begin
     if FTagGrupo <> '' then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
-    if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA]) then
+	if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA, proSiat]) then 
       FTagElemento := FPrefixo3 + FTagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -3104,7 +3106,7 @@ begin
     if FTagGrupo <> '' then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
-    if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA]) then
+    if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA, proSiat]) then 
       FTagElemento := FPrefixo3 + FTagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -3379,7 +3381,7 @@ begin
     if FTagGrupo <> '' then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
-    if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF]) then
+    if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proSiat]) then 
       FTagElemento := FPrefixo3 + FTagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -4236,7 +4238,7 @@ var
   Gerador: TGerador;
   Consulta: string;
 begin
-  if (FNotasFiscais.Count <= 0) and (FProvedor in [proGoverna,proIssDSF]) then
+  if (FNotasFiscais.Count <= 0) and (FProvedor in [proGoverna,proIssDSF, proSiat]) then 
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps.CabecalhoStr;
@@ -4257,7 +4259,7 @@ begin
 
     InicializarTagITagF;
 
-    if FProvedor in [proIssDSF, proCTA] then
+    if FProvedor in [proIssDSF, proCTA, proSiat] then 
     begin
       Gerador := TGerador.Create;
       try
@@ -4277,7 +4279,7 @@ begin
                   Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
                   Gerador.wCampo(tcStr, '#1', 'NumeroRPS', 01, 12, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
                   // Roberto godinho - Para o provedor CTA deve enviar a série de prestação (99) e não a série do RPS
-                  if FProvedor = proCTA then
+                  if FProvedor in [proCTA, proSiat] then
                     Gerador.wCampo(tcStr, '', 'SeriePrestacao', 01, 2,  1, IIf(NFSe.SeriePrestacao='', '99', NFSe.SeriePrestacao), '')
                   else
                     Gerador.wCampo(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.SeriePrestacao, '');
@@ -4319,7 +4321,7 @@ begin
       TipoRps   := FTipo;
 
       // Necessário para o provedor ISSDSF e CTA
-      if FProvedor in [proIssDSF, proCTA] then
+      if FProvedor in [proIssDSF, proCTA, proSiat] then 
       begin
         NumeroLote := FNumeroLote;
         Transacao  := FNotasFiscais.Transacao;
@@ -4665,7 +4667,7 @@ begin
     begin
       if (FNumeroNFSe = '') then
         FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
-      if FProvedor = proISSDSF then
+      if FProvedor in [proISSDSF, proSiat] then 
         FCodigoVerificacao := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
     end;
 
@@ -4709,7 +4711,7 @@ begin
 
     InicializarTagITagF;
 
-    if FProvedor in [proIssDSF, proCTA] then
+    if FProvedor in [proIssDSF, proCTA, proSiat] then 
     begin
       Gerador := TGerador.Create;
       try
@@ -5123,7 +5125,7 @@ begin
 
     InicializarTagITagF;
 
-    if FProvedor in [proIssDSF] then
+    if FProvedor in [proIssDSF, proSiat] then 
     begin
       Gerador := TGerador.Create;
       try
@@ -5775,7 +5777,8 @@ begin
           proGoverna,
           proIPM,
           proIssDSF,
-          proSmarapd: Result := True
+          proSmarapd,
+		  proSiat: Result := True
         else
           Result := FConsSitLoteRPS.Executar;
         end;
@@ -5885,7 +5888,7 @@ begin
               // não sabemos se vai funcionar como o esperado.
               //****************************************************************
               if (ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve200) or
-                 (Configuracoes.Geral.Provedor in [proIssDSF]) then
+                 (Configuracoes.Geral.Provedor in [proIssDSF, proSiat]) then 
               begin
                 try
                   Tentativas := 0;

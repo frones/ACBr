@@ -152,6 +152,8 @@ type
     function LerXML_proIPM: Boolean;
     function LerXML_proGiap: Boolean;
     function LerXML_proAssessorPublica: Boolean;
+    function LerXML_proSiat: Boolean; 
+
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -313,6 +315,7 @@ begin
     proIPM:        Result := LerXML_proIPM;
     proGiap:       Result := LerXML_proGiap;
     proAssessorPublico : Result := LerXML_proAssessorPublica;
+    proSiat:       Result := LerXML_proSiat;
   else
     Result := LerXml_ABRASF;
   end;
@@ -1265,6 +1268,103 @@ begin
   finally
     FreeAndNil(sMessage);
     FreeAndNil(sValue);
+  end;
+end;
+
+function TretEnvLote.LerXML_proSiat: Boolean; 
+var
+  i, posI, count: Integer;
+  strAux: AnsiString;
+  leitorAux: TLeitor;
+begin
+  try
+    Result := True;
+
+    if leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '' then
+    begin
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+        FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        if (FInfRec.FSucesso = 'true') then
+        begin
+          FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'NumeroLote');
+          FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataEnvioLote')
+        end;
+      end;
+
+      i := 0;
+      if (leitor.rExtrai(1, 'Alertas') <> '') then
+      begin
+        strAux := leitor.rExtrai(1, 'Alertas');
+        if (strAux <> '') then
+        begin
+          posI := pos('<Alerta>', strAux);
+
+          while ( posI > 0 ) do
+          begin
+            count := pos('</Alerta>', strAux) + 7;
+
+            FInfRec.FMsgRetorno.New;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
+            posI := pos('<Alerta>', strAux);
+          end;
+        end;
+      end;
+
+      if (leitor.rExtrai(1, 'Erros') <> '') then
+      begin
+        strAux := leitor.rExtrai(1, 'Erros');
+        if (strAux <> '') then
+        begin
+            //i := 0 ;
+          posI := pos('<Erro>', strAux);
+
+          while (posI > 0) do
+          begin
+            count := pos('</Erro>', strAux) + 6;
+
+            FInfRec.FMsgRetorno.New;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
+            posI := pos('<Erro>', strAux);
+          end;
+        end;
+      end;
+    end
+    else
+    begin
+      i := 0;
+      FInfRec.FMsgRetorno.New;
+      FInfRec.FMsgRetorno[i].FCodigo   := '';
+      FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
+      FInfRec.FMsgRetorno[i].FCorrecao := '';
+    end;
+  except
+    Result := False;
   end;
 end;
 

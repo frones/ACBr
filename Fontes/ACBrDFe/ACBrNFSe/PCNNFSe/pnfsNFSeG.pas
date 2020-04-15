@@ -351,7 +351,8 @@ begin
     proRLZ,
     proTinus,
     proSalvador,
-    proSimplISSv2: IdLote := 'lote' + NumeroLote;
+    proSimplISSv2,
+    proSiat: IdLote := 'lote' + NumeroLote;
 
     proSaatri: IdLote := 'Lote_' + NumeroLote + '_' + CNPJ;
 
@@ -618,7 +619,8 @@ begin
                   end;
 
     proISSDSF,
-    proCTA: begin
+    proCTA,
+    proSiat: begin 
               Gerador.Prefixo := '';
               Gerador.wGrupo('Cabecalho');
               if Provedor = proCTA then
@@ -887,9 +889,10 @@ begin
                     Gerador.wCampo(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
                   end;
 
-    proISSDSF: begin
-                 // Não possui 
-               end;
+    proISSDSF,
+    proSiat: begin 
+               // Não possui
+             end;
 
     proNFSEBrasil: begin
                      Gerador.ArquivoFormatoXML := Protocolo;
@@ -1056,7 +1059,8 @@ begin
                   end;
 
     proISSDSF,
-    proCTA: begin
+    proCTA,
+    proSiat: begin 
               Gerador.Prefixo := '';
               Gerador.wGrupo('Cabecalho');
               if Provedor = proCTA then
@@ -1248,7 +1252,8 @@ begin
            end;
 
     proISSDSF,
-    proCTA: begin
+    proCTA,
+    proSiat: begin 
               Gerador.Prefixo := '';
               Gerador.wGrupo('Cabecalho');
               if Provedor = proCTA then
@@ -1464,8 +1469,8 @@ begin
       end;
 
     proISSDSF,
-    proCTA:
-      begin
+    proCTA,
+    proSiat: begin 
         Gerador.Prefixo := '';
         Gerador.wGrupo('Cabecalho');
         if Provedor = proCTA then
@@ -1475,7 +1480,7 @@ begin
         Gerador.wCampo(tcStr, '#1', 'InscricaoMunicipalPrestador', 01, 15, 1, IM, '');
         Gerador.wCampo(tcDat, '#1', 'dtInicio', 10, 10, 1, DataInicial, '');
         Gerador.wCampo(tcDat, '#1', 'dtFim', 10, 10, 1, DataFinal, '');
-        if Provedor = proISSDSF then
+        if Provedor in [proISSDSF, proSiat] then
           Gerador.wCampo(tcStr, '#1', 'NotaInicial', 01, 15, 1, NumeroNFSe, '');
         Gerador.wCampo(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
         Gerador.wGrupo('/Cabecalho');
@@ -1791,7 +1796,8 @@ begin
       end;
 
     proISSDSF,
-    proCTA:
+    proCTA,
+    proSiat:
       begin
         Gerador.Prefixo := '';
         Gerador.wGrupo('Cabecalho');
@@ -1986,7 +1992,7 @@ begin
     proAssessorPublico, proEquiplano, proGinfes, proGoverna, proEGoverneISS,
     proISSDSF, proCTA, proCONAM, proEL, proInfisc, proInfiscv11, proSP,
     proNotaBlu, proSMARAPD, proGiap, proWEBFISCO,
-    proIPM:
+    proIPM, proSiat:
       begin
         TagI := '';
         TagF := '';
@@ -2045,9 +2051,10 @@ begin
 //        Gerador.ArquivoFormatoXML := Notas + Gerador.ArquivoFormatoXML;
 //      end;
 
-    proISSDSF: begin
-                 // Nao Possui
-               end;
+    proISSDSF,
+    proSiat: begin 
+               // Nao Possui
+             end;
 
     proBHISS,
     proWebISS: begin
@@ -2105,7 +2112,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan, proDSFSJC] then
+                  proTinus, proTiplan, proDSFSJC, proSiat] then 
     Result := '';
 end;
 
@@ -2168,7 +2175,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan, proDSFSJC] then
+                  proTinus, proTiplan, proDSFSJC, proSiat] then 
     Result := '';
 end;
 
@@ -2203,7 +2210,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan, proDSFSJC] then
+                  proTinus, proTiplan, proDSFSJC, proSiat] then 
     Result := '';
 end;
 

@@ -73,6 +73,7 @@ type
     function LerXML_proInfisc: Boolean;
     function LerXML_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proSiat: Boolean; 
     property Leitor: TLeitor                                 read FLeitor            write FLeitor;
     property MsgRetorno: TMsgRetornoSubsCollection           read FMsgRetorno        write SetMsgRetorno;
     property NotaSubstituidora: TNotaSubstituidoraCollection read FNotaSubstituidora write SetNotaSubstituidora;
@@ -217,6 +218,7 @@ begin
    proInfiscv11:  Result := LerXml_proInfisc;
    proEL:         Result := LerXML_proEL;
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
+   proSiat:       Result := LerXml_proSiat; 
  else
    Result := LerXml_ABRASF;
  end;
@@ -300,6 +302,11 @@ begin
 end;
 
 function TretSubsNFSe.LerXml_proNFSeBrasil: Boolean;
+begin
+  Result := False;
+end;
+
+function TretSubsNFSe.LerXml_proSiat: Boolean; 
 begin
   Result := False;
 end;

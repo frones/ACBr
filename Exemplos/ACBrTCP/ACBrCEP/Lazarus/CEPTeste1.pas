@@ -50,8 +50,8 @@ type
     bBuscarLogradouro : TButton ;
     bBuscarLogradouro1 : TButton ;
     btEstatisticas: TButton;
-    Button1: TButton;
     cbxWS : TComboBox ;
+    cbIgnorar: TCheckBox;
     edCEP : TEdit ;
     edIBGECod : TEdit ;
     edIBGENome : TEdit ;
@@ -99,11 +99,10 @@ type
     procedure bBuscarLogradouro1Click(Sender : TObject) ;
     procedure bBuscarLogradouroClick(Sender : TObject) ;
     procedure btEstatisticasClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure cbxWSChange(Sender : TObject) ;
     procedure FormCreate(Sender: TObject);
   private
-    procedure AjustaProxy ;
+    procedure ConfigurarComponente ;
     { private declarations }
   public
     { public declarations }
@@ -135,7 +134,7 @@ begin
      cbxWS.Items.Add( GetEnumName(TypeInfo(TACBrCEPWebService), integer(I) ) ) ;
 end;
 
-procedure TForm1.AjustaProxy ;
+procedure TForm1.ConfigurarComponente ;
 begin
   cbxWSChange(Self);
 
@@ -152,6 +151,7 @@ begin
   ACBrIBGE1.ProxyPort := edProxyPort.Text ;
   ACBrIBGE1.ProxyUser := edProxyUser.Text ;
   ACBrIBGE1.ProxyPass := edProxyPass.Text ;
+  ACBrIBGE1.IgnorarCaixaEAcentos := cbIgnorar.Checked;
 end ;
 
 procedure TForm1.ACBrCEP1BuscaEfetuada(Sender : TObject) ;
@@ -227,7 +227,7 @@ end;
 procedure TForm1.bBuscarCEP1Click(Sender : TObject) ;
 begin
   Memo1.Clear;
-  AjustaProxy ;
+  ConfigurarComponente ;
 
   try
      ACBrIBGE1.BuscarPorCodigo( StrToIntDef(edIBGECod.Text,0) );
@@ -250,7 +250,7 @@ end;
 
 procedure TForm1.bBuscarCEPClick(Sender : TObject) ;
 begin
-  AjustaProxy ;
+  ConfigurarComponente ;
 
   try
      ACBrCEP1.BuscarPorCEP(edCEP.Text);
@@ -265,7 +265,7 @@ end;
 procedure TForm1.bBuscarLogradouro1Click(Sender : TObject) ;
 begin
   Memo1.Clear;
-  AjustaProxy ;
+  ConfigurarComponente ;
 
   try
      ACBrIBGE1.BuscarPorNome( edIBGENome.Text );
@@ -279,7 +279,7 @@ end;
 
 procedure TForm1.bBuscarLogradouroClick(Sender : TObject) ;
 begin
-  AjustaProxy ;
+  ConfigurarComponente ;
 
   try
      ACBrCEP1.BuscarPorLogradouro( edCidade.Text, edTipo_Logradouro.Text,
@@ -295,12 +295,6 @@ end;
 procedure TForm1.btEstatisticasClick(Sender: TObject);
 begin
   ACBrIBGE1.ObterEstatisticasCidadesUF('SP');
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ACBrIBGE1.BuscarPorNome('Curitiba','PR',True);
-  ACBrIBGE1.SalvarCidades('c:\temp\cidades.txt');
 end;
 
 end.

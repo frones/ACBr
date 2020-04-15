@@ -412,6 +412,15 @@ object Form1: TForm1
           Text = 'Estat'#237'sticas'
           OnClick = btEstatisticasClick
         end
+        object cbIgnorar: TCheckBox
+          Position.X = 288.000000000000000000
+          Position.Y = 72.000000000000000000
+          Size.Width = 153.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = 'Ignorar caixa e Acentos'
+        end
       end
     end
   end

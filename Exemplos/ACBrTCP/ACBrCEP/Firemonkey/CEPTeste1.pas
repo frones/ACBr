@@ -131,6 +131,7 @@ type
     TabSheet2: TTabItem;
     tsIBGE: TTabItem;
     btEstatisticas: TButton;
+    cbIgnorar: TCheckBox;
     procedure ACBrCEP1AntesAbrirHTTP(var AURL : String) ;
     procedure ACBrCEP1BuscaEfetuada(Sender : TObject) ;
     procedure ACBrIBGE1AntesAbrirHTTP(var AURL : String) ;
@@ -174,6 +175,7 @@ begin
   ACBrIBGE1.ProxyPort := edProxyPort.Text ;
   ACBrIBGE1.ProxyUser := edProxyUser.Text ;
   ACBrIBGE1.ProxyPass := edProxyPass.Text ;
+  ACBrIBGE1.IgnorarCaixaEAcentos := cbIgnorar.IsChecked;
 end ;
 
 //******************************************************************************

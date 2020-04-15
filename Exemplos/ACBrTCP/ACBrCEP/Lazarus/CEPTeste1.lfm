@@ -2,18 +2,18 @@ object Form1: TForm1
   Left = 741
   Height = 320
   Top = 363
-  Width = 588
+  Width = 624
   ActiveControl = PageControl1
   Caption = 'Form1'
   ClientHeight = 320
-  ClientWidth = 588
+  ClientWidth = 624
   OnCreate = FormCreate
   LCLVersion = '2.0.6.0'
   object Memo1: TMemo
     Left = 0
     Height = 184
     Top = 136
-    Width = 588
+    Width = 624
     Align = alClient
     Lines.Strings = (
       ''
@@ -27,10 +27,10 @@ object Form1: TForm1
     Left = 0
     Height = 136
     Top = 0
-    Width = 588
-    ActivePage = TabSheet1
+    Width = 624
+    ActivePage = tsIBGE
     Align = alTop
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Configuração'
@@ -326,7 +326,7 @@ object Form1: TForm1
     object tsIBGE: TTabSheet
       Caption = 'Buscar IBGE'
       ClientHeight = 108
-      ClientWidth = 580
+      ClientWidth = 616
       object GroupBox5: TGroupBox
         Left = 0
         Height = 108
@@ -359,11 +359,11 @@ object Form1: TForm1
         Left = 164
         Height = 108
         Top = 0
-        Width = 416
+        Width = 452
         Align = alClient
         Caption = 'Por Nome'
         ClientHeight = 88
-        ClientWidth = 412
+        ClientWidth = 448
         TabOrder = 1
         object bBuscarLogradouro1: TButton
           Left = 38
@@ -378,19 +378,10 @@ object Form1: TForm1
           Left = 38
           Height = 23
           Top = 10
-          Width = 336
+          Width = 372
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
           Text = 'Bragança Paulista'
-        end
-        object Button1: TButton
-          Left = 322
-          Height = 25
-          Top = 57
-          Width = 75
-          Caption = 'Button1'
-          OnClick = Button1Click
-          TabOrder = 2
         end
         object btEstatisticas: TButton
           Left = 168
@@ -399,6 +390,14 @@ object Form1: TForm1
           Width = 112
           Caption = 'Estatísticas'
           OnClick = btEstatisticasClick
+          TabOrder = 2
+        end
+        object cbIgnorar: TCheckBox
+          Left = 290
+          Height = 19
+          Top = 52
+          Width = 144
+          Caption = 'Ignorar Caixa e Acentos'
           TabOrder = 3
         end
       end

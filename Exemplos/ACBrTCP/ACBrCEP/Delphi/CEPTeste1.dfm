@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 451
   Top = 163
-  Width = 616
-  Height = 489
   Caption = 'CEP Teste'
+  ClientHeight = 450
+  ClientWidth = 600
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,7 +60,6 @@ object Form1: TForm1
           Width = 156
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 0
         end
         object edChaveBuscarCEP: TEdit
@@ -332,6 +331,14 @@ object Form1: TForm1
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
           Text = 'Bragan'#231'a Paulista'
+        end
+        object cbIgnorar: TCheckBox
+          Left = 184
+          Top = 64
+          Width = 153
+          Height = 17
+          Caption = 'Ignorar Caixa e Acentos'
+          TabOrder = 2
         end
       end
     end

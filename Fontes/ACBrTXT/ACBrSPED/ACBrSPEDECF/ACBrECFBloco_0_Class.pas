@@ -311,7 +311,7 @@ begin
                LFill(OPT_EXT_RTT) +
                LFill(DIF_FCONT) );
 
-        ECFVersao300, ECFVersao400, ECFVersao500:
+        ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600:
           Add( LFill('0010') +
                LFill(HASH_ECF_ANTERIOR) +
                LFill(strOPT_REFIS) +
@@ -408,7 +408,7 @@ begin
                LFill(IND_AREA_COM) +
                LFill(IND_PAIS_A_PAIS));
 
-        ECFVersao400, ECFVersao500:
+        ECFVersao400, ECFVersao500,ECFVersao600 :
           Add( LFill('0020') +
                LFill(IND_ALIQ_CSLL) +
                LFill(IND_QTE_SCP, 3) +

@@ -961,7 +961,7 @@ begin
                   LFill(ARQ_RTF) +
                   LFill(IND_FIM_RTF));
 
-          ECFVersao300, ECFVersao400, ECFVersao500:
+          ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600 :
                Add( LFill('Y800') +
                     LFill(TIPO_DOC) +
                     LFill(DESC_RTF) +

@@ -1403,6 +1403,8 @@ begin
           RLFiltro.FileName := ChangeFileExt(RLFiltro.FileName, FileExt);
           RLFiltro.ShowProgress := RLLayout.ShowProgress;
           RLFiltro.FilterPages( RLLayout.Pages );
+
+          FPArquivoPDF := RLFiltro.FileName;
         end;
       end;
     end;

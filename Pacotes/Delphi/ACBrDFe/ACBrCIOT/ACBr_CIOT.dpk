@@ -60,21 +60,19 @@ package ACBr_CIOT;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - CIOT - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_DFeComum,
-  ACBr_PCNComum,
-  DCLACBr_Comum;
+  ACBr_PCNComum;
 
 contains
   ACBrCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOT.pas',
   ACBrCIOTConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTConfiguracoes.pas',
   ACBrCIOTContratos in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTContratos.pas',
-  ACBrCIOTReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTReg.pas',
   ACBrCIOTWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTWebServices.pas',
   pcnCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOT.pas',
   pcnCIOTR in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTR.pas',

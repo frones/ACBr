@@ -60,20 +60,18 @@ package ACBr_ONE;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Operador Nacional dos Estados - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
   ACBr_DFeComum,
-  ACBr_PCNComum,
-  DCLACBr_Comum;
+  ACBr_PCNComum;
 
 contains
   ACBrONE in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONE.pas',
   ACBrONEConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEConfiguracoes.pas',
-  ACBrONEReg in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEReg.pas',
   ACBrONEWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEWebServices.pas',
   pcnONEConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnONEConsts.pas',
   pcnConversaoONE in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConversaoONE.pas',

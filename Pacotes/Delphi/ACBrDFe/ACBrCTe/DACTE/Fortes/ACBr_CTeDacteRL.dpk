@@ -61,11 +61,11 @@ package ACBr_CTeDacteRL;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   dsnap,
   ACBr_CTe,
   ACBrDFeReportRL;
@@ -73,7 +73,6 @@ requires
 contains
   ACBrCTeDACTeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRL.pas' {frmDACTeRL},
   ACBrCTeDACTeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLClass.pas',
-  ACBrCTeDACTeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLReg.pas',
   ACBrCTeDACTeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetrato.pas' {frmDACTeRLRetrato},
   ACBrCTeDACTeRLRetratoA5 in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetratoA5.pas' {frmDACTeRLRetratoA5},
   ACBrCTeDAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRL.pas' {frmCTeDAEventoRL},

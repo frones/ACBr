@@ -656,8 +656,6 @@ begin
   FDescricaoPagamentos   := [icaTipo, icaBandeira];
   FImprimeEmUmaLinha     := False;
   FImprimeEmDuasLinhas   := False;
-
-  FormularioContinuo := True;
 end;
 
 function TACBrNFeDANFCEClass.ManterDescricaoPagamentos(aPagto: TpagCollectionItem

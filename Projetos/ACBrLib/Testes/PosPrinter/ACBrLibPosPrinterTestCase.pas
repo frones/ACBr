@@ -47,6 +47,11 @@ type
   { TTestACBrPosPrinterLib }
 
   TTestACBrPosPrinterLib = class(TTestCase)
+  private
+    procedure ConfigurarImpressora(APorta: String = ''; AModelo: String = '');
+    function GetPrinterPort: String;
+    function GetPrinterModel: String;
+    function GetPaginaCodigo: String;
   published
     procedure Test_POS_Inicializar_Com_DiretorioValido;
     procedure Test_POS_Inicializar_Com_DiretorioInvalido;
@@ -65,6 +70,7 @@ type
     procedure Test_POS_InicializarAtivarEFinalizar;
     procedure Test_POS_ImpressaoDeTags;
     procedure Test_POS_RetornarEInterpretarTags;
+    procedure Test_POS_ImprimirAcentos;
   end;
 
 implementation
@@ -72,11 +78,69 @@ implementation
 uses
   ACBrLibPosPrinterStaticImport, ACBrLibConsts, ACBrUtil;
 
+function TTestACBrPosPrinterLib.GetPrinterPort: String;
+begin
+  Result := 'COM21'; //ApplicationPath+'posprinter.txt';
+end;
+
+function TTestACBrPosPrinterLib.GetPrinterModel: String;
+begin
+  Result := '2';
+
+  //0 = ppTexto (Padrão)
+  //1 = ppEscPosEpson
+  //2 = ppEscBematec
+  //3 = ppEscDaruma
+  //4 = ppEscVox
+  //5 = ppEscDiebold
+  //6 = ppEscEpsonP2
+  //7 = ppCustomPos
+  //8 = ppEscPosStar
+  //9 = ppEscZJiang
+  //10 = ppEscGPrinter
+end;
+
+function TTestACBrPosPrinterLib.GetPaginaCodigo: String;
+begin
+  Result := '2';
+ //0 = pcNone
+ //1 = pc437
+ //2 = pc850 (Padrão)
+ //3 = pc852
+ //4 = pc860
+ //5 = pcUTF8
+ //6 = pc1252
+end;
+
+procedure TTestACBrPosPrinterLib.ConfigurarImpressora(APorta: String;
+  AModelo: String);
+var
+  SaidaImpressao, Modelo, PagCod: String;
+begin
+  if APorta <> '' then
+    SaidaImpressao := APorta
+  else
+    SaidaImpressao := GetPrinterPort;
+
+  if AModelo <> '' then
+    Modelo := AModelo
+  else
+    Modelo := GetPrinterModel;
+
+  PagCod := GetPaginaCodigo;
+
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, PChar(Modelo)));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao)));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePaginaDeCodigo, PChar(PagCod)));
+  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  AssertEquals(ErrOK, POS_ConfigLer(''));
+end;
+
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioValido;
 var
   fileName: String;
 begin
-  fileName := PathWithDelim(ApplicationPath)+'ACBrLib.ini';
+  fileName := ApplicationPath+'ACBrLib.ini';
   if FileExists(fileName) then
     DeleteFile(fileName);
 
@@ -211,11 +275,7 @@ end;
 procedure TTestACBrPosPrinterLib.Test_POS_InicializarConfigGravarValoresEFinalizar;
 begin
   AssertEquals(ErrOk, POS_Inicializar('',''));
-
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(ApplicationPath+'posprinter.txt')));
-  AssertEquals(ErrOK, POS_ConfigGravar(''));
-  AssertEquals(ErrOK, POS_ConfigLer(''));
+  ConfigurarImpressora;
   AssertEquals(ErrOK, POS_Ativar);
 
   AssertEquals(ErrOK, POS_Finalizar());
@@ -227,11 +287,7 @@ var
   AStr: String;
 begin
   AssertEquals(ErrOk, POS_Inicializar('',''));
-
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, ''));
-  AssertEquals(ErrOK, POS_ConfigGravar(''));
-  AssertEquals(ErrOK, POS_ConfigLer(''));
+  ConfigurarImpressora('COM99','');
   AssertEquals(ErrExecutandoMetodo, POS_Ativar);
 
   // Checando se é possivel pegar a descrição do erro //
@@ -244,14 +300,9 @@ begin
 end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ImpressaoDeTags;
-var
-  SaidaImpressao: String;
 begin
-  SaidaImpressao := ApplicationPath+'posprinter.txt';
   AssertEquals(ErrOk, POS_Inicializar('',''));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao) ));
-  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  ConfigurarImpressora;
   AssertEquals(ErrOK, POS_Ativar);
   AssertEquals(ErrOK, POS_ImprimirTags);
   AssertEquals(ErrOK, POS_Desativar);
@@ -262,21 +313,31 @@ procedure TTestACBrPosPrinterLib.Test_POS_RetornarEInterpretarTags;
 var
   Bufflen: Integer;
   AStr: String;
-  SaidaImpressao: String;
 begin
-  Bufflen := 0;
-  AStr := '';
-  SaidaImpressao := ApplicationPath+'posprinter.txt';
   AssertEquals(ErrOk, POS_Inicializar('',''));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao) ));
-  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  ConfigurarImpressora;
   AssertEquals(ErrOK, POS_Ativar);
+  Bufflen := 0;   // chama com Zero, para achar o tamanho do Buffer
+  AStr := '';
   AssertEquals(ErrOK, POS_RetornarTags(PChar(AStr), Bufflen, False));
   AStr := Space(Bufflen);
-  AssertEquals(ErrOK, POS_RetornarTags(PChar(AStr), Bufflen, False));
+  AssertEquals(ErrOK, POS_UltimoRetorno(PChar(AStr), Bufflen));  // Chama UltimoRetorno, Para não processar Tags novamente
   AssertEquals(copy(AStr,1,133), '<e>|</e>|<a>|</a>|<n>|</n>|<s>|</s>|<c>|</c>|<i>|</i>|</fn>|</fa>|</fb>|<in>|</in>|</ae>|</ce>|</ad>|</linha_simples>|</linha_dupla>|');
   AssertEquals(ErrOK, POS_Imprimir(PChar(AStr), True, True, True, 1));
+  AssertEquals(ErrOK, POS_Desativar);
+  AssertEquals(ErrOK, POS_Finalizar());
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_ImprimirAcentos;
+var
+  AStr: String;
+begin
+  AStr := 'Áá Éé Íí Óó Úú Çç Ââ Êê Îî Ôo Ûû';    // Essa UNIT está em UTF8
+  AssertEquals(ErrOk, POS_Inicializar('',''));
+  ConfigurarImpressora;
+  AssertEquals(ErrOK, POS_Ativar);
+  AssertEquals(ErrOK, POS_Imprimir(PChar(Astr), True, True, True, 1) );
+  AssertEquals(ErrOK, POS_PularLinhas(7) );
   AssertEquals(ErrOK, POS_Desativar);
   AssertEquals(ErrOK, POS_Finalizar());
 end;

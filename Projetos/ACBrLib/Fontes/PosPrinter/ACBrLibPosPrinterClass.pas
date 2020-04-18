@@ -128,7 +128,7 @@ function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -307,6 +307,7 @@ function POS_Imprimir(eString: PChar; PulaLinha, DecodificarTags,
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AString: AnsiString;
+  UTF8Str: String;
 begin
   try
     VerificarLibInicializada;
@@ -323,7 +324,8 @@ begin
     begin
       PosDM.Travar;
       try
-        PosDM.ACBrPosPrinter1.Imprimir(AString, PulaLinha, DecodificarTags, CodificarPagina, Copias);
+        UTF8Str := PosDM.ConverterAnsiParaUTF8(AString);
+        PosDM.ACBrPosPrinter1.Imprimir(UTF8Str, PulaLinha, DecodificarTags, CodificarPagina, Copias);
         Result := SetRetorno(ErrOK);
       finally
         PosDM.Destravar;
@@ -342,6 +344,7 @@ function POS_ImprimirLinha(eString: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AString: AnsiString;
+  UTF8Str: String;
 begin
   try
     VerificarLibInicializada;
@@ -356,7 +359,8 @@ begin
     begin
       PosDM.Travar;
       try
-        PosDM.ACBrPosPrinter1.ImprimirLinha(AString);
+        UTF8Str := PosDM.ConverterAnsiParaUTF8(AString);
+        PosDM.ACBrPosPrinter1.ImprimirLinha(UTF8Str);
         Result := SetRetorno(ErrOK);
       finally
         PosDM.Destravar;
@@ -840,8 +844,8 @@ begin
   end;
 end;
 
-function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint;
+  IncluiAjuda: Boolean): longint;  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Tags: TStringList;
   Resposta: string;

@@ -82,19 +82,10 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="1">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-      <Item4>
-        <Name Value="EAssertionFailedError"/>
-      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>

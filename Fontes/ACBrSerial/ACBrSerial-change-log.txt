@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/04/2020
+-- ACBrDevice --
+[-] Corrigido Bug em 02/04, onde TACBrTagProcessor.DecodificarTagsFormatacao, quebrava 
+    a Página de Código em Lazarus/FPC.
+    (por: DSA)	
+
 Data: 15/04/2020
 -- ACBrETQ --
 [-] Correção para que os parâmetros enviados no método "FinalizarEtiqueta", sejam 

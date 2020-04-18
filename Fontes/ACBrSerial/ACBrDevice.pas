@@ -528,12 +528,12 @@ begin
     Exit;
   end;
 
-  {$IfDef UNICODE}
-  CP := DefaultSystemCodePage;
+  {$IfDef POSIX}
+   CP := DefaultSystemCodePage;
   {$EndIf}
   try
-    {$IfDef UNICODE}
-    DefaultSystemCodePage := 437;  // DEFAULT ANSI
+    {$IfDef POSIX}
+     DefaultSystemCodePage := 437;  // DEFAULT ANSI
     {$EndIf}
     Result  := '';
     Tag1    := '';
@@ -590,8 +590,8 @@ begin
 
     Result := Result + copy(ABinaryString, FimTag+1, Length(ABinaryString));
   finally
-    {$IfDef UNICODE}
-    DefaultSystemCodePage := CP;
+    {$IfDef POSIX}
+     DefaultSystemCodePage := CP;
     {$EndIf}
   end;
 end;

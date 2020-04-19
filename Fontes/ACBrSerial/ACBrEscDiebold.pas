@@ -105,7 +105,7 @@ begin
 
     Result := Result +
               ESC + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
-              ESC + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
+              ESC + '(k' + #3 + #0 + '1E' + AnsiString(IntToStr(ErrorLevel)) + // Error Level
               ESC + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
               ESC + '(k' + #3 + #0 +'1Q0';  // Imprime
   end;

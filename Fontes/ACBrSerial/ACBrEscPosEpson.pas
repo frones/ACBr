@@ -398,9 +398,9 @@ function TACBrEscPosEpson.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin
-     Result := GS + '(k' + #4 + #0 + '1A' + IntToStr(Tipo) + #0 +  // Tipo
+     Result := GS + '(k' + #4 + #0 + '1A' + AnsiString(IntToStr(Tipo)) + #0 +  // Tipo
                GS + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
-               GS + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
+               GS + '(k' + #3 + #0 + '1E' + AnsiString(IntToStr(ErrorLevel)) + // Error Level
                GS + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
                GS + '(k' + #3 + #0 +'1Q0';  // Imprime
   end;

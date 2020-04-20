@@ -38,10 +38,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/04/2020
+-- ACBrDevice --
+[-] Corrigido Bugs em TACBrTagProcessor.DecodificarTagsFormatacao, para respeitar
+    o Encoding da Página de Código na String de Entrada, em Delphi Linux POSIX
+
+-- ACBrPosPrinter --
+[-] Corrigido Bugs nos métodos "Imprimir" e "TraduzirTagBloco", para respeitar
+    o Encoding da Página de Código na String de Entrada, em Delphi Linux POSIX
+    (por: DSA)
+
 Data: 18/04/2020
 -- ACBrDevice --
 [-] Corrigido Bug em 02/04, onde TACBrTagProcessor.DecodificarTagsFormatacao, quebrava 
     a Página de Código em Lazarus/FPC.
+[-] Corrigido processamento de Tag de QRCode, em Delphi Linux POSIX
     (por: DSA)	
 
 Data: 15/04/2020

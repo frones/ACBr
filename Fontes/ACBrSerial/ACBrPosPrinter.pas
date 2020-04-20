@@ -483,7 +483,7 @@ uses
     {$EndIf}
   {$EndIf}
   ACBrUtil, ACBrImage, ACBrConsts,
-  synacode,
+  synacode, synautil,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,
   ACBrEscZJiang, ACBrEscGPrinter
@@ -1467,20 +1467,20 @@ end;
 procedure TACBrPosPrinter.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
   var BlocoTraduzido: AnsiString);
 var
-  ACodBar: String;
+  ACodBar: AnsiString;
 begin
   BlocoTraduzido := FPosPrinterClass.TraduzirTagBloco(ATag, ConteudoBloco);
 
   if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
   begin
     if ATag = cTagAlinhadoEsquerda then
-      BlocoTraduzido := PadRight(ConteudoBloco,Colunas)
+      BlocoTraduzido := PadRightA(ConteudoBloco, Colunas)
 
     else if ATag = cTagAlinhadoDireita then
-      BlocoTraduzido := PadLeft(ConteudoBloco,Colunas)
+      BlocoTraduzido := PadLeftA(ConteudoBloco, Colunas)
 
     else if ATag = cTagAlinhadoCentro then
-      BlocoTraduzido := PadCenter(ConteudoBloco,Colunas)
+      BlocoTraduzido := PadCenterA(ConteudoBloco, Colunas)
 
     else if ATag = cTagAbreGavetaEsp then
       BlocoTraduzido := FPosPrinterClass.ComandoGaveta( StrToIntDef( ConteudoBloco, 1) )
@@ -1603,7 +1603,7 @@ begin
       // Ajustando os Códigos de Barras, conforme regras do Tipo do Código //
       if (ATag = cTagBarraUPCA) then
         // Apenas números, sempre 11 digitos, e 1 digito verificador
-        ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 11, '0')
+        ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 11, '0')
 
       else if (ATag = cTagBarraUPCE) then
         // EPC-A compactado, Apenas números, 6 ou 11 dígitos
@@ -1611,29 +1611,29 @@ begin
 
       else if ATag = cTagBarraEAN13 then
         // Apenas números, sempre 12 digitos, e 1 digito verificador
-        ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 12, '0')
+        ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 12, '0')
 
       else if ATag = cTagBarraEAN8 then
         // Apenas números, sempre 7 digitos, e 1 digito verificador
-        ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 7, '0')
+        ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 7, '0')
 
       else if ATag = cTagBarraCode128c then
         // Apenas números,
-        ACodBar := OnlyNumber(ConteudoBloco)
+        ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
 
       else if ATag = cTagBarraCode39 then
         // Qualquer tamanho.. Aceita: 0~9, A~Z, ' ', '$', '%', '*', '+', '-', '.', '/'
-        ACodBar := OnlyCharsInSet(ConteudoBloco,
-          ['0'..'9', 'A'..'Z', ' ', '$', '%', '*', '+', '-', '.', '/'])
+        ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco,
+          ['0'..'9', 'A'..'Z', ' ', '$', '%', '*', '+', '-', '.', '/']))
 
       else if ATag = cTagBarraCode93 then
         // Qualquer tamanho.. Aceita: #0~#127
-        ACodBar := OnlyCharsInSet(ConteudoBloco, [#0..#127])
+        ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco, [#0..#127]))
 
       else if ATag = cTagBarraInter then
       begin
         // Interleaved 2of5. Somente números, Tamanho deve ser PAR
-        ACodBar := OnlyNumber(ConteudoBloco);
+        ACodBar := AnsiString(OnlyNumber(ConteudoBloco));
 
         if (Length(ACodBar) mod 2) <> 0 then  // Tamanho é Par ?
           ACodBar := '0' + ACodBar;
@@ -1641,25 +1641,25 @@ begin
 
       else if ATag = cTagBarraStd then
         // Apenas números, Sem dígito verificador
-        ACodBar := OnlyNumber(ConteudoBloco)
+        ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
 
       else if ATag = cTagBarraCodaBar then
         // Qualquer tamanho.. Aceita: 0~9, A~D, a~d, $, +, -, ., /, :
-        ACodBar := OnlyCharsInSet(ConteudoBloco,
-          ['0'..'9', 'A'..'D', 'a'..'d', '$', '+', '-', '.', '/', ':'])
+        ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco,
+          ['0'..'9', 'A'..'D', 'a'..'d', '$', '+', '-', '.', '/', ':']))
 
       else if ATag = cTagBarraCode11 then
         // Apenas números, Qualquer tamanho, dois dígitos verificador
-        ACodBar := OnlyNumber(ConteudoBloco)
+        ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
 
       else if ATag = cTagBarraMSI then
         // Apenas números, 1 dígito verificador
-        ACodBar := OnlyNumber(ConteudoBloco)
+        ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
 
       else
         ACodBar := ConteudoBloco;
 
-      ACodBar := LeftStr(ACodBar, 255);  // Tamanho máximo para Cod.Barras é 255 caracteres
+      ACodBar:= LeftStr(ACodBar, 255);  // Tamanho máximo para Cod.Barras é 255 caracteres
 
       BlocoTraduzido := FPosPrinterClass.ComandoCodBarras(ATag, ACodBar);
     end;
@@ -2232,7 +2232,13 @@ begin
   //DEBUG
   //WriteLog('c:\temp\teste2.txt', StrToPrint, True);
 
-  StrToPrint := ChangeLineBreak(StrToPrint, FPosPrinterClass.Cmd.PuloDeLinha);
+  // Ajustando a Quebra de Linha, para a usada pela Impressora
+  if (FPosPrinterClass.Cmd.PuloDeLinha <> CRLF) then
+    StrToPrint := ReplaceString(StrToPrint, CRLF, FPosPrinterClass.Cmd.PuloDeLinha);
+  if (FPosPrinterClass.Cmd.PuloDeLinha <> CR) then
+    StrToPrint := ReplaceString(StrToPrint, CR, FPosPrinterClass.Cmd.PuloDeLinha);
+  if (FPosPrinterClass.Cmd.PuloDeLinha <> LF) then
+    StrToPrint := ReplaceString(StrToPrint, LF, FPosPrinterClass.Cmd.PuloDeLinha);
 
   if DecodificarTags then
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);

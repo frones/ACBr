@@ -514,8 +514,7 @@ end;
 function TACBrTagProcessor.DecodificarTagsFormatacao(const ABinaryString: AnsiString
   ): AnsiString;
 Var
-  Tag1, Tag2: String;
-  Cmd, LowerString : AnsiString ;
+  Cmd, LowerString, Tag1, Tag2 : AnsiString ;
   PosTag1, LenTag1, PosTag2, FimTag : Integer ;
   ATag: TACBrTag;
 begin
@@ -593,7 +592,7 @@ end;
 function TACBrTagProcessor.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString
   ): AnsiString;
 var
-  AString: String;
+  AStr: AnsiString;
 begin
   Result := ConteudoBloco;
   if (ATag = '') or IgnorarTags or (ATag = cTagIgnorarTags) then
@@ -601,10 +600,10 @@ begin
 
   { Chamada Recursiva, para no caso de "ConteudoBloco" ter TAGs não resolvidas
     dentro do Bloco }
-  AString := DecodificarTagsFormatacao( ConteudoBloco ) ;
+  AStr := DecodificarTagsFormatacao( ConteudoBloco ) ;
 
   if Assigned( FOnTraduzirTagBloco ) then
-    FOnTraduzirTagBloco( ATag, AString, Result);
+    FOnTraduzirTagBloco( ATag, AStr, Result);
 end;
 
 procedure TACBrTagProcessor.RetornarTags(AStringList: TStrings;

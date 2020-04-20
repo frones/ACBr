@@ -1064,6 +1064,21 @@ type
   end;
 
 
+  { RemoverQuebraLinhaFinal }
+  RemoverQuebraLinhaFinalTest = class(TTestCase)
+  private
+  published
+    procedure UmaLinhaComQuebraPadrao;
+    procedure UmaLinhaSemQuebraPadrao;
+    procedure UmaLinhaComQuebraDiferenciada;
+    procedure UmaLinhaSemQuebraDiferenciada;
+    procedure DuasLinhasComQuebraPadrao;
+    procedure DuasLinhasSemQuebraPadrao;
+    procedure DuasLinhasComQuebraDiferenciada;
+    procedure DuasLinhasSemQuebraDiferenciada;
+  end;
+
+
 implementation
 
 uses
@@ -4832,6 +4847,71 @@ begin
   CheckEquals(0, Length(Split(';','')));
 end;
 
+{ RemoverQuebraLinhaFinalTest }
+
+procedure RemoverQuebraLinhaFinalTest.DuasLinhasComQuebraDiferenciada;
+const
+  S = 'Projeto ACBr;www.projetoacbr.com.br;';
+begin
+  CheckEquals('Projeto ACBr;www.projetoacbr.com.br', RemoverQuebraLinhaFinal(S, ';'));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.DuasLinhasComQuebraPadrao;
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Add('Projeto ACBr');
+    SL.Add('www.projetoacbr.com.br');
+    CheckEquals('Projeto ACBr' + sLineBreak + 'www.projetoacbr.com.br', RemoverQuebraLinhaFinal(SL.Text));
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure RemoverQuebraLinhaFinalTest.DuasLinhasSemQuebraDiferenciada;
+const
+  S = 'Projeto ACBr;www.projetoacbr.com.br';
+begin
+  CheckEquals('Projeto ACBr;www.projetoacbr.com.br', RemoverQuebraLinhaFinal(S, ';'));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.DuasLinhasSemQuebraPadrao;
+const
+  S = 'Projeto ACBr' + sLineBreak + 'www.projetoacbr.com.br';
+begin
+  CheckEquals('Projeto ACBr' + sLineBreak + 'www.projetoacbr.com.br', RemoverQuebraLinhaFinal(S));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.UmaLinhaComQuebraDiferenciada;
+const
+  S = 'Projeto ACBr;';
+begin
+  CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S, ';'));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.UmaLinhaComQuebraPadrao;
+const
+  S = 'Projeto ACBr' + sLineBreak;
+begin
+  CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.UmaLinhaSemQuebraDiferenciada;
+const
+  S = 'Projeto ACBr';
+begin
+  CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S, ';'));
+end;
+
+procedure RemoverQuebraLinhaFinalTest.UmaLinhaSemQuebraPadrao;
+const
+  S = 'Projeto ACBr';
+begin
+  CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S));
+end;
+
 initialization
 
   RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste{$ifndef FPC}.Suite{$endif});
@@ -4928,6 +5008,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ZipUnzip{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', RemoverQuebraLinhaFinalTest{$ifndef FPC}.suite{$endif});
   //TODO: WriteToTXT, WriteLog,
 end.
 

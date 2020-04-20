@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/04/2020
+-- ACBrDeviceBlueTooth --
+[-] Melhoria para tratamento de erros de comunicação ex:"Broken Pipe", quando usando 
+    em Android
+[*] Ajuste nas Permissões solicitadas ao Android
+    (por: DSA)
+
 Data: 19/04/2020
 -- ACBrDevice --
 [-] Corrigido Bugs em TACBrTagProcessor.DecodificarTagsFormatacao, para respeitar

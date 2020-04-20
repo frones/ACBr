@@ -307,6 +307,7 @@ function AjustaLinhas(const Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
+function RemoverQuebraLinhaFinal(const ATexto: String; const AQuebraLinha: String = ''): String;
 
 function TraduzComando( const AString : String ) : AnsiString ;
 Function StringToAsc( const AString : AnsiString ) : String ;
@@ -2559,6 +2560,27 @@ begin
     Resp := StringReplace(Resp, LF, sLineBreak, [rfReplaceAll]);
 
   Result := ACBrStr(Resp);
+end;
+
+{-----------------------------------------------------------------------------
+  Remove a última quebra de linha caso seja a informada no parâmetro AQuebraLinha
+  ou a quebra de linha padrão do sistema
+ -----------------------------------------------------------------------------}
+function RemoverQuebraLinhaFinal(const ATexto: String; const AQuebraLinha: String = ''): String;
+var
+  StrQ: String;
+  LT, LQ: Integer;
+begin
+  Result := ATexto;
+  StrQ := AQuebraLinha;
+  if StrQ = '' then
+    StrQ := sLineBreak;
+  LT := Length(ATexto);
+  LQ := Length(StrQ);
+  if LT < LQ then
+    Exit;
+  if  Copy(ATexto, LT - LQ + 1, LQ) = StrQ then
+    Result := Copy(ATexto, 1, LT - LQ);
 end;
 
 {-----------------------------------------------------------------------------

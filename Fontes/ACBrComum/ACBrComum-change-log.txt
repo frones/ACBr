@@ -37,6 +37,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/04/2020
+-- ACBrUtil --
+[+] Adicionados novos métodos, para manipulação de Strings em AnsiString,
+    para evitar a perda do Encodig da Página de Código
+   function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
+     const Caracter : AnsiChar = ' ') : AnsiString;
+   function PadLeftA(const AAnsiString : AnsiString; const nLen : Integer;
+     const Caracter : AnsiChar = ' ') : AnsiString;
+   function PadCenterA(const AAnsiString : AnsiString; const nLen : Integer;
+     const Caracter : AnsiChar = ' ') : AnsiString;
+[-] Método "TranslateString", corrigido para trabalhar corretamente em Delphi,
+    Linux POSIX
+[*] Método "AcharProximaTag" modificado para trabalhar corretamente com
+    AnsiStrings
+    (por: DSA)
+
 Data: 15/04/2020
 -- ACBrBase -- 
 [-] Correção em Busca "bubble sort", de TACBrObjectList. 

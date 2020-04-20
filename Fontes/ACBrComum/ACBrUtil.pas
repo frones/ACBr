@@ -184,10 +184,16 @@ function StringToBinaryString(const AString: String): AnsiString;
 
 function PadRight(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
+function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
 function PadLeft(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
+function PadLeftA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
 function PadCenter(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
+function PadCenterA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
 function PadSpace(const AString : String; const nLen : Integer; Separador : String;
    const Caracter : Char = ' '; const RemoverEspacos: Boolean = True) : String ;
 
@@ -196,7 +202,7 @@ function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiSt
 function RemoverEspacosDuplos(const AString: String): String;
 function StripHTML(const AHTMLString : String) : String;
 procedure AcharProximaTag(const ABinaryString: AnsiString;
-  const PosIni: Integer; var ATag: String; var PosTag: Integer);
+  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
 
@@ -1135,7 +1141,7 @@ end;
   Retorna o numero de caracteres dentro de uma String, semelhante a Length()
   Porém Lenght() não funciona corretamente em FPC com UTF8 e acentos
  ---------------------------------------------------------------------------- }
-function LenghtNativeString(const AString: String): Integer;
+function LengthNativeString(const AString: String): Integer;
 begin
   {$IfDef FPC}
    Result := UTF8Length(AString);
@@ -1165,11 +1171,23 @@ function PadRight(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := LenghtNativeString( AString );
+  Tam := LengthNativeString( AString );
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
     Result := LeftStrNativeString(AString, nLen);
+end;
+
+function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+var
+  Tam: Integer;
+begin
+  Tam := Length( AAnsiString );
+  if Tam < nLen then
+    Result := AAnsiString + StringOfChar(Caracter, (nLen - Tam))
+  else
+    Result := LeftStr(AAnsiString, nLen);
 end;
 
 {-----------------------------------------------------------------------------
@@ -1181,11 +1199,23 @@ function PadLeft(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := LenghtNativeString( AString );
+  Tam := LengthNativeString( AString );
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
     Result := LeftStrNativeString(AString, nLen);  //RightStr(AString,nLen) ;
+end;
+
+function PadLeftA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+var
+  Tam: Integer;
+begin
+  Tam := Length( AAnsiString );
+  if Tam < nLen then
+    Result := StringOfChar(Caracter, (nLen - Tam)) + AAnsiString
+  else
+    Result := LeftStr(AAnsiString, nLen);  //RightStr(AString,nLen) ;
 end;
 
 {-----------------------------------------------------------------------------
@@ -1197,7 +1227,7 @@ var
   nCharLeft: Integer;
   Tam: integer;
 begin
-  Tam := LenghtNativeString( AString );
+  Tam := LengthNativeString( AString );
   if Tam < nLen then
   begin
     nCharLeft := Trunc( (nLen - Tam) / 2 ) ;
@@ -1205,6 +1235,22 @@ begin
   end
   else
     Result := LeftStrNativeString(AString, nLen);
+end;
+
+function PadCenterA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+var
+  nCharLeft: Integer;
+  Tam: integer;
+begin
+  Tam := Length( AAnsiString );
+  if (Tam < nLen) then
+  begin
+    nCharLeft := Trunc( (nLen - Tam) / 2 ) ;
+    Result    := PadRightA( StringOfChar(Caracter, nCharLeft) + AAnsiString, nLen, Caracter) ;
+  end
+  else
+    Result := LeftStr(AAnsiString, nLen);
 end;
 
 {-----------------------------------------------------------------------------
@@ -1235,9 +1281,9 @@ begin
   if RemoverEspacos then
     Result := Trim( Result ) ;
 
-  D        := (nLen - (LenghtNativeString(Result)-nSep)) / nSep ;
+  D        := (nLen - (LengthNativeString(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
-  nResto   := nLen - ( (LenghtNativeString(Result)-nSep) + (nCharSep*nSep) ) ;
+  nResto   := nLen - ( (LengthNativeString(Result)-nSep) + (nCharSep*nSep) ) ;
   nFeito   := nSep ;
   StuffStr := String( StringOfChar( Caracter, nCharSep ) ) ;
 
@@ -1309,7 +1355,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function StripHTML(const AHTMLString: String): String;
 var
-  ATag, VHTMLString: String;
+  ATag, VHTMLString: AnsiString;
   PosTag, LenTag: Integer;
 begin
   VHTMLString := AHTMLString;
@@ -1333,7 +1379,7 @@ end;
    Se encontrar uma Tag, Retorna a mesma em ATag, e a posição inicial dela em PosTag
  ---------------------------------------------------------------------------- }
 procedure AcharProximaTag(const ABinaryString: AnsiString;
-  const PosIni: Integer; var ATag: String; var PosTag: Integer);
+  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 var
    PosTagAux, FimTag, LenTag : Integer ;
 begin
@@ -3730,12 +3776,13 @@ function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word =
 var
   R: RawByteString;
 begin
-  R := S;
+  R := String(S);
   if CP_Atual = 0 then
     SetCodePage(R, CP_Destino, True)
   else
     SetCodePage(R, CP_ACP, True);
-  Result := R;
+
+  Result := AnsiString(R);
 end;
 {$ELSE}
 {$IfNDef MSWINDOWS}

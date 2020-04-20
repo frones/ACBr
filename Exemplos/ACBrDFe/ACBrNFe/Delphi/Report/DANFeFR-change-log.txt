@@ -52,6 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2020
+-- DANFePaisagem.fr3 --
+[-] Correção na impressão do nome no quadro "Local de entrega".
+    https://www.projetoacbr.com.br/forum/topic/57229-ajuste-no-layout-paisagem-danfe-nf-e-fast-report/
+  Por: Fabio Alecsandro
+
 17/02/2020
 -- DANFeNFCe5_00.fr3 --
 [*] Ajustes para formatação dos campos "quantidade" e "valor unitário" 

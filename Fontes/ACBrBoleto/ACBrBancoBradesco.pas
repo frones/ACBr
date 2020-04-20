@@ -318,12 +318,10 @@ begin
         PadLeft('',9, ' '));                                  //CNAB Uso Exclusivo FEBRABAN/CNAB 232 240 9 - Alfa Brancos G004
 
     end;
-
+    Result := RemoverQuebraLinhaFinal(ListTransacao.Text);
   finally
-    Result:= Trim(ListTransacao.Text);
     ListTransacao.Free;
   end;
-
 end;
 
 procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);

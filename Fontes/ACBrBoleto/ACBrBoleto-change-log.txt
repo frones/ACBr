@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2020
+-- ACBrBoleto, ACBrBancoBradesco --
+[-] Correção para não remover espaços em branco no final dos registros.
+    https://www.projetoacbr.com.br/forum/topic/57237-remessa-bradesco-com-quantidade-de-caracteres-por-linha-menor-que-240/
+  Por: BigWings
+
 13/04/2020
 -- ACBrBancoSafra --
 [*] Ajuste no Segmento R CNAB240 preenchendo campo Desconto

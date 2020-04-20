@@ -2913,8 +2913,8 @@ begin
 
     end;
 
+    Result := RemoverQuebraLinhaFinal(ListHeader.Text);
   finally
-    Result:= Trim(ListHeader.Text);
     ListHeader.Free;
   end;
 
@@ -2981,8 +2981,9 @@ begin
              IntToStrZero((3 * wQTDTitulos)+4, 6)                       + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
              Padleft('0',6,'0')                                         + //Uso exclusivo FEBRABAN/CNAB}
              PadRight('',205,' '));                                       //Uso exclusivo FEBRABAN/CNAB}
+
+    Result := RemoverQuebraLinhaFinal(ListTrailler.Text);
   finally
-    Result:= Trim(ListTrailler.Text);
     ListTrailler.Free;
   end;
 

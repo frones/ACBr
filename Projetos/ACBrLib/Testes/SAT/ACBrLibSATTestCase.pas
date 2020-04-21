@@ -338,7 +338,7 @@ var
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
-  PDFFile := ApplicationPath+'Vendas'+PathDelim+'35180911111111111111591234567890001684429520.pdf';
+  PDFFile := ApplicationPath+'pdf'+PathDelim+'CFe-3518_0911_1111_1111_1111_5912_3456_7890_0016_8442_9520.pdf';
   AssertEquals(ErrOk, SAT_Inicializar('',''));
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
@@ -395,8 +395,7 @@ begin
 
   AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
                 SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml',
-                                         'AD35180911111111111111591234567890001684429520.pdf',
-                                         PChar(AStr), Bufflen));
+                                         PChar(PDFFile), PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin

@@ -98,8 +98,12 @@ type
     ImageList1: TImageList;
     StyleBook1: TStyleBook;
     chbTodasBth: TCheckBox;
-    cbSuportaBMP: TCheckBox;
     cbxModelo: TComboBox;
+    cbControlePorta: TCheckBox;
+    btAcentos: TButton;
+    btBeep: TButton;
+    cbxPagCodigo: TComboBox;
+    cbSuportaBMP: TCheckBox;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -116,13 +120,15 @@ type
     procedure btnLerStatusClick(Sender: TObject);
     procedure btnLerInfoClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
+    procedure btAcentosClick(Sender: TObject);
+    procedure btBeepClick(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
 
     function CalcularNomeArqINI: String;
-    procedure LerINI;
-    procedure GravarINI;
+    procedure LerConfiguracao;
+    procedure GravarConfiguracao;
     procedure ConfigurarACBrPosPrinter;
     function PedirPermissoes: Boolean;
   public
@@ -146,7 +152,8 @@ uses
 
 procedure TPosPrinterAndroidTesteForm.FormCreate(Sender: TObject);
 var
-  I: TACBrPosPrinterModelo;
+  m: TACBrPosPrinterModelo;
+  p: TACBrPosPaginaCodigo;
 begin
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
 
@@ -159,13 +166,17 @@ begin
     cbxImpressorasBth.ItemIndex := 0;
 
   cbxModelo.Items.Clear ;
-  For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
-     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(I) ) ) ;
+  For m := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) ) ;
+
+  cbxPagCodigo.Items.Clear ;
+  For p := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
+    cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(p) ) ) ;
 
   if cbxModelo.Items.Count > 0 then
     cbxModelo.ItemIndex := 0;
 
-  LerINI;
+  LerConfiguracao;
 end;
 
 function TPosPrinterAndroidTesteForm.PedirPermissoes: Boolean;
@@ -198,6 +209,21 @@ begin
   {$EndIf}
 
   Result := Ok;
+end;
+
+procedure TPosPrinterAndroidTesteForm.btAcentosClick(Sender: TObject);
+begin
+  if cbxPagCodigo.ItemIndex < 0 then Exit;
+
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('Fonte tipo A com P·gina de CÛdigo ' + cbxPagCodigo.Selected.Text);
+  mImp.Lines.Add('¿ noite, vovÙ Kowalsky vÍ o Ìm„ cair no pÈ do ping¸im queixoso e vovÛ pıe aÁ˙car no ch· de t‚maras do jabuti feliz.');
+  mImp.Lines.Add('¡…Õ”⁄·ÈÌÛ˙Á«„ı√’ Í¬‚‘Ù¿‡');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('</FB>Fonte tipo B com P·gina de CÛdigo ' + cbxPagCodigo.Selected.Text);
+  mImp.Lines.Add('¿ noite, vovÙ Kowalsky vÍ o Ìm„ cair no pÈ do ping¸im queixoso e vovÛ pıe aÁ˙car no ch· de t‚maras do jabuti feliz.');
+  mImp.Lines.Add('¡…Õ”⁄·ÈÌÛ˙Á«„ı√’ Í¬‚‘Ù¿‡');
+  mImp.Lines.Add('</corte_total>');
 end;
 
 procedure TPosPrinterAndroidTesteForm.btAlinhamentoClick(Sender: TObject);
@@ -251,15 +277,19 @@ begin
   mImp.Lines.Add('</corte_total>');
 end;
 
+procedure TPosPrinterAndroidTesteForm.btBeepClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.Imprimir('</beep>');
+end;
+
 procedure TPosPrinterAndroidTesteForm.btLerConfigClick(Sender: TObject);
 begin
-  LerINI;
+  LerConfiguracao;
 end;
 
 procedure TPosPrinterAndroidTesteForm.btnAtivarClick(Sender: TObject);
 begin
   ConfigurarACBrPosPrinter;
-
   ACBrPosPrinter1.Ativar;
 
   lblTituloTestes.Text := 'Testes em: '+ACBrPosPrinter1.Porta;
@@ -454,7 +484,7 @@ end;
 
 procedure TPosPrinterAndroidTesteForm.btSalvarConfigClick(Sender: TObject);
 begin
-  GravarINI;
+  GravarConfiguracao;
 end;
 
 function TPosPrinterAndroidTesteForm.CalcularNomeArqINI: String;
@@ -473,11 +503,15 @@ begin
   if Assigned(cbxModelo.Selected) then
     ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
 
+  if Assigned(cbxPagCodigo.Selected) then
+    ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
+
   ACBrPosPrinter1.ColunasFonteNormal := Trunc(seColunas.Value);
   ACBrPosPrinter1.EspacoEntreLinhas := Trunc(seEspLinhas.Value);
   ACBrPosPrinter1.LinhasEntreCupons := Trunc(seLinhasPular.Value);
   ACBrPosPrinter1.ConfigLogo.KeyCode1 := 1;
   ACBrPosPrinter1.ConfigLogo.KeyCode2 := 0;
+  ACBrPosPrinter1.ControlePorta := cbControlePorta.IsChecked;
 end;
 
 procedure TPosPrinterAndroidTesteForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -521,7 +555,7 @@ begin
   end;
 end;
 
-procedure TPosPrinterAndroidTesteForm.GravarINI;
+procedure TPosPrinterAndroidTesteForm.GravarConfiguracao;
 Var
   ArqINI : String ;
   INI : TIniFile ;
@@ -531,6 +565,7 @@ begin
   INI := TIniFile.Create(ArqINI);
   try
     INI.WriteInteger('PosPrinter','Modelo', cbxModelo.ItemIndex);
+    INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     INI.WriteBool('Modelo','BMP',cbSuportaBMP.IsChecked);
     if Assigned(cbxImpressorasBth.Selected) then
       INI.WriteString('PosPrinter','Porta', cbxImpressorasBth.Selected.Text);
@@ -538,6 +573,7 @@ begin
     INI.WriteInteger('PosPrinter','Colunas', Trunc(seColunas.Value) );
     INI.WriteInteger('PosPrinter','EspacoEntreLinhas', Trunc(seEspLinhas.Value) );
     INI.WriteInteger('PosPrinter','LinhasPular', Trunc(seLinhasPular.Value) );
+    INI.WriteBool('PosPrinter','ControlePorta',cbControlePorta.IsChecked);
     INI.WriteInteger('Barras','Largura',Trunc(seBarrasLargura.Value));
     INI.WriteInteger('Barras','Altura',Trunc(seBarrasAltura.Value));
     INI.WriteBool('Barras','HRI',cbHRI.IsChecked);
@@ -546,7 +582,7 @@ begin
   end ;
 end;
 
-procedure TPosPrinterAndroidTesteForm.LerINI;
+procedure TPosPrinterAndroidTesteForm.LerConfiguracao;
 Var
   ArqINI : String ;
   INI : TIniFile ;
@@ -557,10 +593,12 @@ begin
   try
     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
     cbSuportaBMP.IsChecked := INI.ReadBool('Modelo','BMP',False);
+    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta));
     seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
     seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
     seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular',ACBrPosPrinter1.LinhasEntreCupons);
+    cbControlePorta.IsChecked := INI.ReadBool('PosPrinter','ControlePorta',True);
     seBarrasLargura.Value := INI.ReadInteger('Barras','Largura',ACBrPosPrinter1.ConfigBarras.LarguraLinha);
     seBarrasAltura.Value := INI.ReadInteger('Barras','Altura',ACBrPosPrinter1.ConfigBarras.Altura);
     cbHRI.IsChecked  := INI.ReadBool('Barras','HRI',ACBrPosPrinter1.ConfigBarras.MostrarCodigo);

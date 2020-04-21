@@ -1541,6 +1541,10 @@ begin
     ACBrNFSe1.DANFSe.MargemEsquerda := 5;
     ACBrNFSe1.DANFSe.MargemSuperior := 5;
     ACBrNFSe1.DANFSe.MargemInferior := 5;
+
+    // Para os provedores que possuem uma lista de serviços como é o caso do Infisc
+    // devemos atribuir o valor True a propriedade DetalharServico
+    ACBrNFSeDANFSeRL1.DetalharServico := (ACBrNFSe1.Configuracoes.Geral.Provedor = proInfisc);
   end;
 
   with ACBrNFSe1.MAIL do

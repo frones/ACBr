@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2020
+-- ACBrLibPosPrinterClass, ACBrLibPosPrinterDataModule --
+[-] Correção na ordem de passagem de parâmetros em 
+    function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+[+] Adicionada rotina de verificação do Encoding de Entrada. Para correta conversão da Página de código
+[-] Correções e Novos testes Unitários
+	(por: DSA)
+
 24/12/2019
 --- ACBrLibPosPrinter ---
 [-] Arrumado ordem dos parametos do metodo POS_RetornarTags.  Por: (Rafael Dias)

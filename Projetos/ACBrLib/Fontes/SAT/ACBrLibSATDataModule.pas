@@ -70,8 +70,9 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
-    procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring; aNomePDF: Ansistring = '');
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
+      NomeArqPDF: String = '');
+    procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring);
     procedure CarregarDadosCancelamento(aStr: String; aNomePDF: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
@@ -380,7 +381,7 @@ begin
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
-procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean);
+procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean; NomeArqPDF: String);
 var
   pLibConfig: TLibSATConfig;
 begin
@@ -395,15 +396,24 @@ begin
 
     pLibConfig.Extrato.Apply(ACBrSAT1.Extrato);
 
-    if NomeImpressora <> '' then
+    if(NomeImpressora <> '') then
       ACBrSAT1.Extrato.Impressora := NomeImpressora;
 
     if GerarPDF then
-      ACBrSAT1.Extrato.Filtro := fiPDF
+    begin
+      ACBrSAT1.Extrato.Filtro := fiPDF;
+
+      if (NomeArqPDF <> '') then
+        ACBrSAT1.Extrato.NomeDocumento := NomeArqPDF;
+
+      if (pLibConfig.Extrato.PathPDF <> '') then
+        if not DirectoryExists(PathWithDelim(pLibConfig.Extrato.PathPDF))then
+          ForceDirectories(PathWithDelim(pLibConfig.Extrato.PathPDF));
+    end;
   end;
 end;
 
-procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: Ansistring; aNomePDF: Ansistring);
+procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: Ansistring);
 begin
   if Trim(XmlArquivoOuString) = '' then exit;
 
@@ -417,10 +427,6 @@ begin
     GravarLog('Carregando xml string  [' + XmlArquivoOuString + ']', logParanoico);
     ACBrSAT1.CFe.AsXMLString := XmlArquivoOuString;
   end;
-
-  if Assigned(ACBrSAT1.Extrato) and (ACBrSAT1.Extrato.Filtro = fiPDF) then
-      ACBrSAT1.Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
-        ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda, ACBrSAT1.CFe.infCFe.ID,'','.pdf'));
 end;
 
 procedure TLibSatDM.CarregarDadosCancelamento(aStr: String; aNomePDF: String);
@@ -437,10 +443,6 @@ begin
     GravarLog('Carregando xml string de cancelamento  [' + aStr + ']', logParanoico);
     ACBrSAT1.CFeCanc.AsXMLString := aStr;
   end;
-
-  if Assigned(ACBrSAT1.Extrato) and (ACBrSAT1.Extrato.Filtro = fiPDF) then
-      ACBrSAT1.Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
-        ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeCancelamento, ACBrSAT1.CFeCanc.infCFe.ID,'','.pdf'));
 end;
 
 procedure TLibSatDM.Travar;

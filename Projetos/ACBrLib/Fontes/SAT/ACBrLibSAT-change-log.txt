@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/04/2020
+-- ACBrLibSATClass, ACBrLibSatDataModule --
+[-] Correções e ajustes nas rotinas de Geração de PDF.
+    - Nome do arquivo de Entrada não era respeitado
+    - Geração PDF padrão, com nomes diferentes dos Defaults de ACBrSAT
+    - Verificação do Path Destino do PDF, e criação se necessário
+    - Resposta com Path completo do PDF gerado
+[-] Correção na rotina de Envio do SAT por E-mail, para incluir o PDF, quando
+    o NomeDeArquivo for informado
+    (por: DSA)
+
 28/10/2019
 -- ACBrLibSATClass --
 [-] Corrigido erro ao carregar arquivo de venda no cancelamento em formato string.

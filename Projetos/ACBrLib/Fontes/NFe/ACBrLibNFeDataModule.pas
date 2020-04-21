@@ -318,8 +318,12 @@ begin
       ACBrNFe1.DANFE.Cancelada := False;
   end;
 
-  if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
-    ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
+  if GerarPDF then
+  begin
+    if (pLibConfig.DANFe.PathPDF <> '') then
+      if not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
+  end;
 
   pLibConfig.DANFe.Apply(ACBrNFe1.DANFE);
 

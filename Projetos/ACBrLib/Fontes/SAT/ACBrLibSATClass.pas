@@ -1206,7 +1206,7 @@ var
   Resp: TPadraoSATResposta;
   ArqXMLVenda, NomeArquivo, Resposta: String;
 begin
-   try
+  try
     VerificarLibInicializada;
     ArqXMLVenda := String(eArqXMLVenda);
     NomeArquivo := String(eNomeArquivo);
@@ -1222,12 +1222,12 @@ begin
       Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
-        SatDM.ConfigurarImpressao('', True);
-        SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.ConfigurarImpressao('', True, NomeArquivo);
 
         SatDM.ACBrSAT1.ImprimirExtrato;
 
-        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
+        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.ArquivoPDF;
         Resp.XML:= SatDM.ACBrSAT1.CFe.XMLOriginal;
         Resposta := Resp.Gerar;
 
@@ -1273,13 +1273,13 @@ begin
       Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.CodResposta);
       try
        Resposta := '';
-        SatDM.ConfigurarImpressao('', True);
         SatDM.CarregarDadosVenda(ArqXMLVenda);
-        SatDM.CarregarDadosCancelamento(ArqXMLCancelamento, NomeArquivo);
+        SatDM.CarregarDadosCancelamento(ArqXMLCancelamento);
+        SatDM.ConfigurarImpressao('', True, NomeArquivo);
 
         SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
 
-        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
+        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.ArquivoPDF;
         Resp.XML:= SatDM.ACBrSAT1.CFeCanc.XMLOriginal;
         Resposta := Resp.Gerar;
 
@@ -1334,8 +1334,14 @@ begin
         slCC.Text := CC;
         slAnexos.Text := Anexos;
 
-        SatDM.ConfigurarImpressao;
-        SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        if (NomeArquivo <> '') then
+        begin
+          SatDM.ConfigurarImpressao('', True, NomeArquivo);
+          SatDM.ACBrSAT1.ImprimirExtrato;
+          slAnexos.Add(SatDM.ACBrSAT1.Extrato.ArquivoPDF);
+        end;
+
         SatDM.ACBrSAT1.EnviarEmail(Para, Assunto, slMensagem, slCC, slAnexos);
         Result := SetRetorno(ErrOK);
       finally

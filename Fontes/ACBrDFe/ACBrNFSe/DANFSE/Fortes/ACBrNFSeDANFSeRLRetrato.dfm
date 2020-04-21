@@ -2302,7 +2302,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel67: TRLLabel
-        Left = 670
+        Left = 710
         Top = 1
         Width = 29
         Height = 14
@@ -2316,7 +2316,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel68: TRLLabel
-        Left = 611
+        Left = 640
         Top = 1
         Width = 28
         Height = 14

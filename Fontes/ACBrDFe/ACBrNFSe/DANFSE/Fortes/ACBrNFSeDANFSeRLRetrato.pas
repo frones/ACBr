@@ -404,6 +404,10 @@ begin
     rlmServicoDescricao.Lines.Clear;
     rlmServicoDescricao.Lines.Add( StringReplace( Descricao, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
     txtServicoUnitario.Caption := FormatFloatBr( ValorUnitario );
+
+    if ValorTotal = 0.0 then
+      ValorTotal := Quantidade * ValorUnitario;
+
     txtServicoTotal.Caption    := FormatFloatBr( ValorTotal );
   end;
 end;

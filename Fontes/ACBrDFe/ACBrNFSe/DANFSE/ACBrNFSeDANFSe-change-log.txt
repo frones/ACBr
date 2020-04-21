@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/04/2020
+-- ACBrNFSeDANFSeRLRetrato --
+[*] Melhorado a posição do cabeçalho dos itens de serviço.
+   Por: Italo Jurisato Junior
+
 14/04/2020
 -- ACBrNFSeDANFSeRLRetrato --
 [-] https://www.projetoacbr.com.br/forum/topic/57130-danfse-valor-total-da-nota/

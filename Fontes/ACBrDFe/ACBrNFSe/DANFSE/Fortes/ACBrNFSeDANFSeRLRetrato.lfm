@@ -1,9 +1,7 @@
 inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
-  Left = 284
-  Top = 113
+  Left = 267
+  Top = 115
   Caption = 'frlDANFSeRLRetrato'
-  ClientHeight = 537
-  ClientWidth = 850
   inherited RLNFSe: TRLReport
     Left = 8
     Top = 2
@@ -2778,7 +2776,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel67: TRLLabel
-        Left = 670
+        Left = 710
         Height = 14
         Top = 1
         Width = 29
@@ -2794,7 +2792,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel68: TRLLabel
-        Left = 611
+        Left = 640
         Height = 14
         Top = 1
         Width = 28
@@ -2904,5 +2902,8 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         end
       end
     end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    top = 72
   end
 end

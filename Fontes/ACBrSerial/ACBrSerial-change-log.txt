@@ -38,6 +38,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/04/2020
+-- ACBrPosPrinter, ACBrEscDatecs --
+[+] Adicionado novo modelo Datecs.  http://www.datecs.bg/en/
+
+-- ACBrPosPrinter --
+[*] Melhoria em TACBrPosComandos.Create para que conteúdo dos comandos, fique zerado
+
+-- ACBrEscPosEpson --
+[*] Tags de Ligar e Desligar Itálico, marcadas como não Suportadas
+
+-- ACBrEscDiebold, ACBrEscCustomPos --
+[*] Removendo Tags de Itálido como não suportadas, por herança de TACBrEscPosEpson
+    (por: DSA)
+
+
 Data: 20/04/2020
 -- ACBrDeviceBlueTooth --
 [-] Melhoria para tratamento de erros de comunicação ex:"Broken Pipe", quando usando 

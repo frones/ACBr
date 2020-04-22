@@ -45,8 +45,6 @@ uses
 
 type
 
-  { TACBrEscCustomPos }
-
   { TACBrEscZJiang }
 
   TACBrEscZJiang = class(TACBrEscPosEpson)

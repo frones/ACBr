@@ -156,7 +156,7 @@ type
 
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
                            ppEscVox, ppEscDiebold, ppEscEpsonP2, ppCustomPos,
-                           ppEscPosStar, ppEscZJiang, ppEscGPrinter);
+                           ppEscPosStar, ppEscZJiang, ppEscGPrinter, ppEscDatecs);
 
   { TACBrPosPrinterClass }
 
@@ -486,7 +486,7 @@ uses
   synacode, synautil,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,
-  ACBrEscZJiang, ACBrEscGPrinter
+  ACBrEscZJiang, ACBrEscGPrinter, ACBrEscDatecs
   {$IfDef MSWINDOWS}
   ,ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL
   {$EndIf};
@@ -510,7 +510,37 @@ end;
 constructor TACBrPosComandos.Create;
 begin
   inherited;
-  FPuloDeLinha := sLineBreak;
+  FPuloDeLinha := LF;
+  FBeep := '';
+  FAlinhadoCentro := '';
+  FAlinhadoDireita := '';
+  FAlinhadoEsquerda := '';
+  FCorteParcial := '';
+  FDesligaAlturaDupla := '';
+  FDesligaInvertido := '';
+  FDesligaModoPagina := '';
+  FEspacoEntreLinhasPadrao := '';
+  FImprimePagina := '';
+  FLigaAlturaDupla := '';
+  FLigaInvertido := '';
+  FFonteNormal := '';
+  FLigaCondensado := '';
+  FCorteTotal := '';
+  FEspacoEntreLinhas := '';
+  FLigaExpandido := '';
+  FDesligaCondensado := '';
+  FDesligaExpandido := '';
+  FDesligaItalico := '';
+  FDesligaNegrito := '';
+  FDesligaSublinhado := '';
+  FFonteA := '';
+  FFonteB := '';
+  FLigaItalico := '';
+  FLigaModoPagina := '';
+  FLigaNegrito := '';
+  FLigaSublinhado := '';
+  FPuloDeLinha := '';
+  FZera := '';
 end;
 
 { TACBrConfigGaveta }
@@ -1160,6 +1190,7 @@ begin
     ppEscPosStar: FPosPrinterClass := TACBrEscPosStar.Create(Self);
     ppEscZJiang: FPosPrinterClass := TACBrEscZJiang.Create(Self);
     ppEscGPrinter: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
+    ppEscDatecs: FPosPrinterClass := TACBrEscDatecs.Create(Self);
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   end;

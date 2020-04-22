@@ -64,13 +64,8 @@ begin
 
   with Cmd  do
   begin
-    LigaItalico    := '';
-    DesligaItalico := '';
-    Beep           := ESC + GS + BELL + #1 + #2 + #5;
+    Beep := ESC + GS + BELL + #1 + #2 + #5;
   end;
-
-  TagsNaoSuportadas.Add( cTagLigaItalico );
-  TagsNaoSuportadas.Add( cTagDesligaItalico );
 end;
 
 end.

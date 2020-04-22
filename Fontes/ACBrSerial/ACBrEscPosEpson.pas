@@ -320,8 +320,6 @@ begin
     DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := GS  + 'B' + #1;
     DesligaInvertido        := GS  + 'B' + #0;
-    LigaItalico             := ESC + '4';
-    DesligaItalico          := ESC + '5';
     LigaCondensado          := SI;
     DesligaCondensado       := DC2;
     AlinhadoEsquerda        := ESC + 'a' + #0;
@@ -337,6 +335,8 @@ begin
   {*)}
 
   TagsNaoSuportadas.Add( cTagBarraMSI );
+  TagsNaoSuportadas.Add( cTagLigaItalico );
+  TagsNaoSuportadas.Add( cTagDesligaItalico );
 end;
 
 function TACBrEscPosEpson.ComandoFonte(TipoFonte: TACBrPosTipoFonte;

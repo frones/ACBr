@@ -70,6 +70,8 @@ uses
 { TACBrEscDiebold }
 
 constructor TACBrEscDiebold.Create(AOwner: TACBrPosPrinter);
+var
+  i: Integer;
 begin
   inherited Create(AOwner);
 
@@ -85,6 +87,12 @@ begin
   {*)}
 
   TagsNaoSuportadas.Add( cTagBarraCode128c );
+  i := TagsNaoSuportadas.IndexOf( cTagLigaItalico );
+  if i >= 0 then
+    TagsNaoSuportadas.Delete(i);
+  i := TagsNaoSuportadas.IndexOf( cTagDesligaItalico );
+  if i >= 0 then
+    TagsNaoSuportadas.Delete(i);
 end;
 
 function TACBrEscDiebold.ComandoCodBarras(const ATag: String;

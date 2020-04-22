@@ -74,7 +74,8 @@ package DCLACBr_GNREGuiaFR;
 requires
   rtl,
   designide,
-  ACBr_GNREGuiaFR;
+  ACBr_GNREGuiaFR,
+  DCLACBr_Comum;
 
 contains
   ACBrGNREGuiaFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fast\ACBrGNREGuiaFRReg.pas';

@@ -26,8 +26,9 @@ uses
   ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, 
   ACBrECFVirtualNaoFiscal, ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, 
   ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, 
-  ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang, ACBrEscGPrinter, ACBrSMS, 
-  ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, LazarusPackageIntf;
+  ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang, ACBrEscGPrinter, 
+  ACBrEscDatecs, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
+  LazarusPackageIntf;
 
 implementation
 

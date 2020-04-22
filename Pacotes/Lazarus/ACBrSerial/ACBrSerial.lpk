@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="85">
+    <Files Count="86">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -355,21 +355,25 @@
         <UnitName Value="ACBrEscGPrinter"/>
       </Item81>
       <Item82>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
-        <UnitName Value="ACBrSMS"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDatecs.pas"/>
+        <UnitName Value="ACBrEscDatecs"/>
       </Item82>
       <Item83>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
-        <UnitName Value="ACBrSMSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
+        <UnitName Value="ACBrSMS"/>
       </Item83>
       <Item84>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
-        <UnitName Value="ACBrSMSDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <UnitName Value="ACBrSMSClass"/>
       </Item84>
       <Item85>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
+        <UnitName Value="ACBrSMSDaruma"/>
+      </Item85>
+      <Item86>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
         <UnitName Value="ACBrSMSZTE"/>
-      </Item85>
+      </Item86>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

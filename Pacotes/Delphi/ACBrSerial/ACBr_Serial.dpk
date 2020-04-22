@@ -145,6 +145,7 @@ contains
   ACBrEscPosStar in '..\..\..\Fontes\ACBrSerial\ACBrEscPosStar.pas',
   ACBrEscZJiang in '..\..\..\Fontes\ACBrSerial\ACBrEscZJiang.pas',
   ACBrEscGPrinter in '..\..\..\Fontes\ACBrSerial\ACBrEscGPrinter.pas',
+  ACBrEscDatecs in '..\..\..\Fontes\ACBrSerial\ACBrEscDatecs.pas',
   ACBrEscPosHook in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas',
   ACBrEscPosHookEpsonDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas',
   ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas',

@@ -60,11 +60,11 @@ package ACBr_NFSeDanfseRL;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   dsnap,
   ACBr_NFSe,
   ACBrDFeReportRL;
@@ -72,7 +72,6 @@ requires
 contains
   ACBrNFSeDANFSeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},
   ACBrNFSeDANFSeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLClass.pas',
-  ACBrNFSeDANFSeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLReg.pas',
   ACBrNFSeDANFSeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLRetrato.pas' {frlDANFSeRLRetrato};
 
 end.

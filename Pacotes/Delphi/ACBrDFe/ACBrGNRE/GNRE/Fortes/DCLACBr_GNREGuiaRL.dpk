@@ -1,11 +1,11 @@
-package ACBr_GNREGuiaRL;
+package DCLACBr_GNREGuiaRL;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -25,19 +25,15 @@ package ACBr_GNREGuiaRL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - GNRE Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
-{$RUNONLY}
+{$DESCRIPTION 'ACBr - (Designtime) GNRE Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
+{$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  dsnap,
-  ACBr_GNRE,
-  ACBrDFeReportRL;
+  designide,
+  ACBr_GNREGuiaRL;
 
 contains
-  ACBrGNReGuiaRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRL.pas',
-  ACBrGNReGuiaRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLRetrato.pas',
-  ACBrGNReGuiaRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLClass.pas';
-
+  ACBrGNREGuiaRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaRLReg.pas';
 end.

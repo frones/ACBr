@@ -67,20 +67,18 @@ package ACBr_GNRE;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide,
-  ACBr_DFeComum,
-  DCLACBr_Comum;
+  ACBr_DFeComum;
 
 contains
   ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',
   ACBrGNREConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREConfiguracoes.pas',
   ACBrGNREGuias in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuias.pas',
-  ACBrGNREReg in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas',
   ACBrGNREWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREWebServices.pas',
   pgnreConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConfigUF.pas',
   pgnreConsConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsConfigUF.pas',

@@ -191,7 +191,7 @@ begin
   FCTe     := AOwner;
   FGerador := TGerador.Create;
 
-  FGerador.FIgnorarTagNivel   := '|?xml version|CTe xmlns|infCTe versao|obsCont|obsFisco|';
+  FGerador.FIgnorarTagNivel   := '|?xml version|CTe xmlns|infCte versao|ObsCont|ObsFisco|';
   FGerador.Opcoes.QuebraLinha := ';';
 
   FOpcoes := TGeradorOpcoes.Create;

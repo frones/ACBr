@@ -90,11 +90,12 @@ function TACBrEscDatecs.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin
-     Result := GS + 'Q' +                       // 2-D Barcodes
-               #6 +                             // QRCode
+     Result := GS + 'S' + #0                  + // Set Cell size 3
+               GS + 'Q'                       + // 2-D Barcodes
+               #6                             + // QRCode
                AnsiChr(min(14,LarguraModulo)) + // Size 1,4,6,8,10,12,14
                AnsiChr(ErrorLevel+1)          + // ECCL 1-4
-               IntToLEStr(length(ACodigo))   +  // dL + dH
+               IntToLEStr(length(ACodigo))    + // nL + nH
                ACodigo;
   end;
 end;
@@ -119,13 +120,17 @@ begin
   AddInfo('Fabricante', 'Datecs');
 
   // Lendo Modelo e Firmware
-  Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 500, True );
-  AddInfo('Firmware', copy(Ret, 23, 3));
-  AddInfo('Modelo', copy(Ret,1 ,22));
+  Ret := fpPosPrinter.TxRx( ESC + 'Z', 32, 500, False );
+  AddInfo('Firmware', Trim(copy(Ret, 23, 3)));
+  AddInfo('Modelo', Trim(copy(Ret,1 ,22)));
 
   // Lendo o Número Serial
-  Ret := fpPosPrinter.TxRx( ESC + 'N', 0, 500, True );
-  AddInfo('Serial', Ret);
+  try
+    Ret := fpPosPrinter.TxRx( ESC + 'N', 13, 500, False );
+  except
+    Ret := '';
+  end;
+  AddInfo('Serial', Trim(Ret));
   AddInfo('Guilhotina', '0'); ;
 
   Result := Info;

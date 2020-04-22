@@ -52,7 +52,6 @@ Data: 22/04/2020
 [*] Removendo Tags de Itálido como não suportadas, por herança de TACBrEscPosEpson
     (por: DSA)
 
-
 Data: 20/04/2020
 -- ACBrDeviceBlueTooth --
 [-] Melhoria para tratamento de erros de comunicação ex:"Broken Pipe", quando usando 

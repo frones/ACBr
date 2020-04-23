@@ -11,7 +11,7 @@ uses
   FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
   ACBrMail, ACBrBase, ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
   ACBrNFeDANFeESCPOS, ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrIBGE, ACBrSocket,
-  ACBrCEP, FMX.Objects, FMX.Effects;
+  ACBrCEP, FMX.Objects, FMX.Effects, FMX.Ani;
 
 const
   VK_KEYBOARD_SISE = 250;
@@ -251,7 +251,33 @@ type
     imgErrorRazaoSocial: TImage;
     ListBoxGroupFooter1: TListBoxGroupFooter;
     tiStartUp: TTimer;
-    procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
+    tabMenu: TTabItem;
+    Image1: TImage;
+    ToolBar4: TToolBar;
+    Label26: TLabel;
+    ShadowEffect2: TShadowEffect;
+    GridPanelLayout1: TGridPanelLayout;
+    laBtnTestes: TLayout;
+    Image2: TImage;
+    ShadowEffect3: TShadowEffect;
+    Label27: TLabel;
+    laBtnConfiguracao: TLayout;
+    Image3: TImage;
+    ShadowEffect4: TShadowEffect;
+    Label32: TLabel;
+    laBtnLogs: TLayout;
+    Image4: TImage;
+    ShadowEffect5: TShadowEffect;
+    Label36: TLabel;
+    laBtnNotasEmtidas: TLayout;
+    Image5: TImage;
+    ShadowEffect6: TShadowEffect;
+    Label37: TLabel;
+    FloatAnimation1: TFloatAnimation;
+    FloatAnimation2: TFloatAnimation;
+    FloatAnimation3: TFloatAnimation;
+    FloatAnimation4: TFloatAnimation;
+    SpeedButton2: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -302,6 +328,10 @@ type
     procedure tiStartUpTimer(Sender: TObject);
     procedure edtEmitCNPJTyping(Sender: TObject);
     procedure edtConfCertURLTyping(Sender: TObject);
+    procedure laBtnTestesClick(Sender: TObject);
+    procedure laBtnConfiguracaoClick(Sender: TObject);
+    procedure laBtnLogsClick(Sender: TObject);
+    procedure laBtnNotasEmtidasClick(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -416,6 +446,7 @@ begin
   cbxWebServiceSSLType.ItemIndex := 0;
 
   tabsPrincipal.First;
+  tabsPrincipal.TabPosition := TTabPosition.None;
   ProgressBar1.Visible := False;
 end;
 
@@ -469,7 +500,7 @@ begin
   FrSlect := TFileSelectForm.Create(Self);
   FrSlect.InitialDir := ApplicationPath;
   FrSlect.ShowHidden := True;
-  FrSlect.FileMask := '*'; //'*.pfx';
+  FrSlect.FileMask := '*.pfx';
 
   FrSlect.ShowModal(
     procedure(ModalResult : TModalResult)
@@ -627,7 +658,7 @@ end;
 
 procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
 begin
-  tabsPrincipal.Previous;
+  tabsPrincipal.First;
 end;
 
 procedure TACBrNFCeTestForm.btnLimparClick(Sender: TObject);
@@ -1022,9 +1053,9 @@ begin
       end;
     end;
 
-    if (tabsPrincipal.ActiveTab = tabTeste) then
+    if (tabsPrincipal.ActiveTab <> tabMenu) then
     begin
-      tabsPrincipal.Previous;
+      tabsPrincipal.First;
       Key := 0;
     end;
   end;
@@ -1040,25 +1071,6 @@ begin
     
     FScrollBox.Margins.Bottom := 0;
     FScrollBox := nil;
-  end;
-end;
-
-procedure TACBrNFCeTestForm.GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
-begin
-  case EventInfo.GestureID of
-    sgiLeft:
-      begin
-        if tabsPrincipal.ActiveTab <> tabsPrincipal.Tabs[tabsPrincipal.TabCount - 1] then
-          tabsPrincipal.Next;
-        Handled := True;
-      end;
-
-    sgiRight:
-      begin
-        if tabsPrincipal.ActiveTab <> tabsPrincipal.Tabs[0] then
-          tabsPrincipal.Previous;
-        Handled := True;
-      end;
   end;
 end;
 
@@ -1144,8 +1156,30 @@ begin
 end;
 
 procedure TACBrNFCeTestForm.imgErrorCertClick(Sender: TObject);
+var
+  Pass, URL, PFX: string;
 begin
-  Toast('Configuração do Certificado incompleta');
+  Pass := edtConfCertSenha.Text;
+  URL := edtConfCertURL.Text;
+  PFX := edtConfCertPFX.Text;
+
+  if Pass.IsEmpty then
+    Toast('Senha do Certificado não informada')
+  else
+  begin
+    if (not URL.IsEmpty) then
+    begin
+      if PFX.IsEmpty then
+        Toast('Informe Arquivo, para Cache Local');
+    end
+    else
+    begin
+      if PFX.IsEmpty then
+        Toast('Informe Arquivo ou URL')
+      else if not FileExists(PFX) then
+        Toast('Arquivo: '+ExtractFileName(PFX)+' não existe');
+    end;
+  end;
 end;
 
 procedure TACBrNFCeTestForm.imgErrorCidadeClick(Sender: TObject);
@@ -1208,6 +1242,43 @@ begin
   lWait.BringToFront;
 end;
 
+procedure TACBrNFCeTestForm.laBtnConfiguracaoClick(Sender: TObject);
+begin
+  tabsPrincipal.SetActiveTabWithTransition(tabConfig, TTabTransition.Slide) ;
+end;
+
+procedure TACBrNFCeTestForm.laBtnLogsClick(Sender: TObject);
+begin
+  tabsPrincipal.SetActiveTabWithTransition(tabLog, TTabTransition.Slide) ;
+end;
+
+procedure TACBrNFCeTestForm.laBtnNotasEmtidasClick(Sender: TObject);
+var
+  FrSlect: TFileSelectForm;
+begin
+  FrSlect := TFileSelectForm.Create(Self);
+  FrSlect.InitialDir := ApplicationPath+'xml'+PathDelim;
+  FrSlect.ShowHidden := True;
+  FrSlect.FileMask := '*.xml';
+
+  FrSlect.ShowModal(
+    procedure(ModalResult : TModalResult)
+    var
+      AFile: string;
+    begin
+        if ModalResult = mrOK then
+        begin
+          // TODO: Ler e mostrar o XML
+        end
+      end
+    );
+end;
+
+procedure TACBrNFCeTestForm.laBtnTestesClick(Sender: TObject);
+begin
+  tabsPrincipal.SetActiveTabWithTransition(tabTeste, TTabTransition.Slide) ;
+end;
+
 procedure TACBrNFCeTestForm.TerminarTelaDeEspera;
 begin
   lWait.Visible := False;
@@ -1224,10 +1295,12 @@ function TACBrNFCeTestForm.ValidarEditsCertificado(const URL, PFX, Pass: String)
 begin
   Result := not Pass.IsEmpty;
   if Result then
-    Result := (not URL.IsEmpty) or (not PFX.IsEmpty);
-
-  if Result and (not PFX.IsEmpty) then
-    Result := (not URL.IsEmpty) or FileExists(PFX);
+  begin
+    if (not URL.IsEmpty) then
+      Result := (not PFX.IsEmpty)   // Precisa do PFX, para Cache Local
+    else
+      Result := (not PFX.IsEmpty) and FileExists(PFX);
+  end;
 end;
 
 procedure TACBrNFCeTestForm.LerConfiguracao;

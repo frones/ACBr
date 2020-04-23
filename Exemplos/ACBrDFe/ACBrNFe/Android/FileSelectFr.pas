@@ -42,7 +42,7 @@ type
     property IsDirectory: Boolean read FIsDirectory;
   end;
 
-  TFileList = class(TList<TFileInfo>)
+  TFileList = class(TObjectList<TFileInfo>)
   end;
 
   TFileSelectForm = class(TForm)

@@ -3,6 +3,613 @@
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/bpe" targetNamespace="http://www.portalfiscal.inf.br/bpe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralBPe_v1.00.xsd"/>
+	<xs:simpleType name="TIndPresRM">
+		<xs:annotation>
+			<xs:documentation>Tipo de Indicador de Presença Resumo</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TTipoBPeTM">
+		<xs:annotation>
+			<xs:documentation>Tipo de BP-e Transporte Metropolitano</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TBPeTM">
+		<xs:annotation>
+			<xs:documentation>Tipo Bilhete de Passagem Eletrônico Transporte Metropolitano</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infBPe">
+				<xs:annotation>
+					<xs:documentation>Informações do BPeTM</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ide">
+							<xs:annotation>
+								<xs:documentation>Identificação do BPe TM</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="cUF" type="TCodUfIBGE">
+										<xs:annotation>
+											<xs:documentation>Código da UF do emitente do BP-e</xs:documentation>
+											<xs:documentation>Código da UF do emitente do Documento Fiscal. Utilizar a
+Tabela do IBGE de código de unidades da federação.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="tpAmb" type="TAmb">
+										<xs:annotation>
+											<xs:documentation>Tipo do Ambiente</xs:documentation>
+											<xs:documentation>1 - Produção
+2 - Homologação</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="mod" type="TModBPe">
+										<xs:annotation>
+											<xs:documentation>Modelo do Bilhete de Passagem</xs:documentation>
+											<xs:documentation>Utilizar o código 63 para identificação do BP-e</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="serie">
+										<xs:annotation>
+											<xs:documentation>Série do documento fiscal</xs:documentation>
+											<xs:documentation>Informar a série do documento fiscal (informar zero se inexistente).</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TSerie"/>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="nBP" type="TNF">
+										<xs:annotation>
+											<xs:documentation>Número do bilhete de passagem</xs:documentation>
+											<xs:documentation>Número que identifica o bilhete 1 a 999999999.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="cBP">
+										<xs:annotation>
+											<xs:documentation>Código numérico que compõe a Chave de Acesso. </xs:documentation>
+											<xs:documentation>Código aleatório gerado pelo emitente, com o objetivo de evitar acessos indevidos ao documento.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:pattern value="[0-9]{8}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="cDV">
+										<xs:annotation>
+											<xs:documentation>Digito verificador da chave de acesso</xs:documentation>
+											<xs:documentation>Informar o dígito  de controle da chave de acesso do BP-e, que deve ser calculado com a aplicação do algoritmo módulo 11 (base 2,9) da chave de acesso. </xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:pattern value="[0-9]{1}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="modal">
+										<xs:annotation>
+											<xs:documentation>Modalidade de transporte</xs:documentation>
+											<xs:documentation>1 - Rodoviário; 3 - Aquaviário; 4 - Ferroviário.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TModal"/>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="dhEmi" type="TDateTimeUTC">
+										<xs:annotation>
+											<xs:documentation>Data e hora de emissão do Bilhete de Passagem </xs:documentation>
+											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dCompet" type="TData">
+										<xs:annotation>
+											<xs:documentation>Data da Competência a que se refere o Transporte Metropolitano</xs:documentation>
+											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="tpEmis">
+										<xs:annotation>
+											<xs:documentation>Forma de emissão do Bilhete (Normal ou Contingência Off-Line)</xs:documentation>
+											<xs:documentation>1 - Normal
+; 2 - Contingência Off-Line</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="1"/>
+												<xs:enumeration value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="verProc">
+										<xs:annotation>
+											<xs:documentation>Versão do processo de emissão</xs:documentation>
+											<xs:documentation>Informar a versão do aplicativo emissor de BP-e.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="20"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="tpBPe" type="TTipoBPeTM">
+										<xs:annotation>
+											<xs:documentation>Tipo do BP-e</xs:documentation>
+											<xs:documentation>4 - BP-e Transporte Metropolitano</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="CFOP" type="TCfop">
+										<xs:annotation>
+											<xs:documentation>Código Fiscal de Operações e Prestações</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informar apenas
+para tpEmis diferente de 1</xs:documentation>
+										</xs:annotation>
+										<xs:element name="dhCont" type="TDateTimeUTC">
+											<xs:annotation>
+												<xs:documentation>Data e Hora da entrada em contingência</xs:documentation>
+												<xs:documentation>Informar a data e hora no formato AAAA-MM-DDTHH:MM:SS</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="xJust">
+											<xs:annotation>
+												<xs:documentation>Justificativa da entrada em contingência</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TString">
+													<xs:minLength value="15"/>
+													<xs:maxLength value="256"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="emit">
+							<xs:annotation>
+								<xs:documentation>Identificação do Emitente do BPe TM</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CNPJ" type="TCnpj">
+										<xs:annotation>
+											<xs:documentation>CNPJ do emitente</xs:documentation>
+											<xs:documentation>Informar zeros não significativos</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IE">
+										<xs:annotation>
+											<xs:documentation>Inscrição Estadual do emitente</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TIe"/>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="IEST" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Inscrição Estadual do Substituto Tributário</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TIe"/>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="xNome">
+										<xs:annotation>
+											<xs:documentation>Razão social ou Nome do emitente</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:maxLength value="60"/>
+												<xs:minLength value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="xFant" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Nome fantasia do emitente</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:maxLength value="60"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Grupo de informações de interesse da Prefeitura</xs:documentation>
+											<xs:documentation>Este campo deve ser informado, quando ocorrer a emissão de BP-e conjugado, com prestação de serviços sujeitos ao ISSQN.</xs:documentation>
+										</xs:annotation>
+										<xs:element name="IM">
+											<xs:annotation>
+												<xs:documentation>Inscrição Municipal</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TString">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="15"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CNAE">
+											<xs:annotation>
+												<xs:documentation>CNAE Fiscal</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{7}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+									<xs:element name="CRT">
+										<xs:annotation>
+											<xs:documentation>Código de Regime Tributário. </xs:documentation>
+											<xs:documentation>Este campo será obrigatoriamente preenchido com:
+1 – Simples Nacional;
+2 – Simples Nacional – excesso de sublimite de receita bruta;
+3 – Regime Normal.
+</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="1"/>
+												<xs:enumeration value="2"/>
+												<xs:enumeration value="3"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="enderEmit" type="TEndeEmi">
+										<xs:annotation>
+											<xs:documentation>Endereço do emitente</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TAR" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Termo de Autorização de Serviço Regular</xs:documentation>
+											<xs:documentation>Registro obrigatório do emitente do BP-e junto à ANTT para exercer a atividade		</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:minLength value="1"/>
+												<xs:maxLength value="20"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="detBPeTM" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation>Grupo de informações detalhadas do BPe TM</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="UFIniViagem" type="TUf_sem_EX">
+										<xs:annotation>
+											<xs:documentation>Sigla da UF início da Viagem</xs:documentation>
+											<xs:documentation>Utilizar a Tabela do IBGE de código de unidades da federação</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="UFFimViagem" type="TUf_sem_EX" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Sigla da UF fim da Viagem</xs:documentation>
+											<xs:documentation>Utilizar a Tabela do IBGE de código de unidades da federação</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="placa" type="TPlaca" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Placa do coletivo</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="prefixo" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Prefixo da linha</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:minLength value="1"/>
+												<xs:maxLength value="20"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="det" maxOccurs="990">
+										<xs:annotation>
+											<xs:documentation>Datalhamento da viagem por trechos do BPeTM</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="cMunIni" type="TCodMunIBGE">
+													<xs:annotation>
+														<xs:documentation>Código do município do início da viagem</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="cMunFim" type="TCodMunIBGE" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Código do município do fim da viagem</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:sequence minOccurs="0">
+													<xs:element name="nContInicio">
+														<xs:annotation>
+															<xs:documentation>Contador início da viagem</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:whiteSpace value="preserve"/>
+																<xs:minLength value="1"/>
+																<xs:maxLength value="20"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="nContFim">
+														<xs:annotation>
+															<xs:documentation>Contador fim da viagem</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:whiteSpace value="preserve"/>
+																<xs:minLength value="1"/>
+																<xs:maxLength value="20"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+												<xs:element name="qPass">
+													<xs:annotation>
+														<xs:documentation>Quantidade de Passagens da viagem</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:minLength value="1"/>
+															<xs:maxLength value="20"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="vBP" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor da soma dos Bilhetes de Passagem da viagem</xs:documentation>
+														<xs:documentation>Pode conter zeros quando o BP-e for de complemento de ICMS</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="imp">
+													<xs:annotation>
+														<xs:documentation>Informações relativas aos Impostos</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="ICMS" type="TImp">
+																<xs:annotation>
+																	<xs:documentation>Informações relativas ao ICMS</xs:documentation>
+																	<xs:documentation/>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="infAdFisco" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
+																	<xs:documentation>Norma referenciada, informações complementares, etc</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="TString">
+																		<xs:maxLength value="2000"/>
+																		<xs:minLength value="1"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Comp" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>Componentes da viagem</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="xNome">
+																<xs:annotation>
+																	<xs:documentation>Nome do componente</xs:documentation>
+																	<xs:documentation>Exxemplos: ISENTOS, VT, CARTAO PRE-PAGO, IDOSOS</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="TString">
+																		<xs:maxLength value="15"/>
+																		<xs:minLength value="1"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="qComp">
+																<xs:annotation>
+																	<xs:documentation>Quantidade do componente</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:whiteSpace value="preserve"/>
+																		<xs:pattern value="[0-9]{5}"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="nViagem" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:whiteSpace value="preserve"/>
+														<xs:pattern value="[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="idEqpCont" use="required">
+									<xs:annotation>
+										<xs:documentation>Identificador do equipamento contador</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:whiteSpace value="preserve"/>
+											<xs:pattern value="[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="total">
+							<xs:annotation>
+								<xs:documentation>Informações dos totais do BPe TM</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="qPass">
+										<xs:annotation>
+											<xs:documentation>Quantidade total de passagens</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:pattern value="[0-9]{1,6}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="vBP" type="TDec_1302">
+										<xs:annotation>
+											<xs:documentation>Valor Total do Bilhete de Passagem Transporte Metropolitano</xs:documentation>
+											<xs:documentation>Pode conter zeros quando o BP-e for de complemento de ICMS</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ICMSTot">
+										<xs:annotation>
+											<xs:documentation>Totais referentes ao ICMS</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="vBC" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>BC do ICMS</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMS" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor Total do ICMS</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="autXML" minOccurs="0" maxOccurs="10">
+							<xs:annotation>
+								<xs:documentation>Autorizados para download do XML do DF-e</xs:documentation>
+								<xs:documentation>Informar CNPJ ou CPF. Preencher os zeros não significativos.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:choice>
+										<xs:element name="CNPJ" type="TCnpj">
+											<xs:annotation>
+												<xs:documentation>CNPJ do autorizado</xs:documentation>
+												<xs:documentation>Informar zeros não significativos</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="CPF" type="TCpf">
+											<xs:annotation>
+												<xs:documentation>CPF do autorizado</xs:documentation>
+												<xs:documentation>Informar zeros não significativos</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="infAdic" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Informações Adicionais</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="infAdFisco" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
+											<xs:documentation>Norma referenciada, informações complementares, etc</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:maxLength value="2000"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="infCpl" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informações complementares de interesse do Contribuinte</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="5000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="infRespTec" type="TRespTec" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Informações do Responsável Técnico pela emissão do DF-e</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="versao" type="TVerBPe" use="required">
+						<xs:annotation>
+							<xs:documentation>Versão do leiaute</xs:documentation>
+							<xs:documentation>Ex: "3.00"</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Id" use="required">
+						<xs:annotation>
+							<xs:documentation>Identificador da tag a ser assinada</xs:documentation>
+							<xs:documentation>Informar a chave de acesso do BP-e e precedida do literal "BPe"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:ID">
+								<xs:pattern value="BPe[0-9]{44}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+				<xs:unique name="pk_idEqpCont">
+					<xs:selector xpath="./*"/>
+					<xs:field xpath="@idEqpCont"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element ref="ds:Signature"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="TBPe">
 		<xs:annotation>
 			<xs:documentation>Tipo Bilhete de Passagem Eletrônico</xs:documentation>

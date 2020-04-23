@@ -521,10 +521,16 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 															<xs:documentation>Informar o CNPJ do emitente do Documento Fiscal</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:element name="serie" type="TSerie">
+													<xs:element name="serie">
 														<xs:annotation>
 															<xs:documentation>Serie do documento fiscal</xs:documentation>
 														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:minLength value="3"/>
+																<xs:maxLength value="3"/>
+															</xs:restriction>
+														</xs:simpleType>
 													</xs:element>
 													<xs:element name="nNF" type="TNF">
 														<xs:annotation>
@@ -832,11 +838,14 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="vItem" type="TDec_1302">
+																<xs:element name="vItem">
 																	<xs:annotation>
 																		<xs:documentation>Valor unitário do item</xs:documentation>
 																		<xs:documentation>Informar o valor sem a influência da decisão judicial/administrativa.</xs:documentation>
 																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="TDec_1302_1308"/>
+																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="qFaturada" type="TDec_1100_1104">
 																	<xs:annotation>
@@ -844,10 +853,13 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																		<xs:documentation>Informar a quantidade de comercialização do produto .</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element name="vProd" type="TDec_1302">
+																<xs:element name="vProd">
 																	<xs:annotation>
 																		<xs:documentation>Valor total do item</xs:documentation>
 																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="TDec_1302_1308"/>
+																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="cClass">
 																	<xs:annotation>
@@ -999,20 +1011,26 @@ Formato AAAA-MM-DD)</xs:documentation>
 																					</xs:restriction>
 																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element name="vTarifHom" type="TDec_0906">
+																			<xs:element name="vTarifHom">
 																				<xs:annotation>
 																					<xs:documentation>Valor da tarifa homologada pela ANEEL</xs:documentation>
 																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="TDec_0908"/>
+																				</xs:simpleType>
 																			</xs:element>
 																			<xs:sequence minOccurs="0">
 																				<xs:annotation>
 																					<xs:documentation>Sequencia XML</xs:documentation>
 																					<xs:documentation>Somente preenchido se a tarifa aplicada for diferente da homologada</xs:documentation>
 																				</xs:annotation>
-																				<xs:element name="vTarifAplic" type="TDec_0906">
+																				<xs:element name="vTarifAplic">
 																					<xs:annotation>
 																						<xs:documentation>Valor da tarifa aplicada</xs:documentation>
 																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="TDec_0908"/>
+																					</xs:simpleType>
 																				</xs:element>
 																				<xs:element name="motDifTarif">
 																					<xs:annotation>
@@ -1229,13 +1247,16 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 Este campo também corresponde ao preço médio efetivo relativo ao consumo ativo do período, quando aplicáveis os termos do inciso I da clausula primeira do Convênio ICMS 77/11 (DEVEC).</xs:documentation>
 																				</xs:annotation>
 																				<xs:simpleType>
-																					<xs:restriction base="TDec_1302_1306"/>
+																					<xs:restriction base="TDec_1302_1308"/>
 																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element name="vProd" type="TDec_1302_1306">
+																			<xs:element name="vProd">
 																				<xs:annotation>
 																					<xs:documentation>Valor total do item</xs:documentation>
 																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="TDec_1302_1308"/>
+																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="indDevolucao" minOccurs="0">
 																				<xs:annotation>
@@ -1707,11 +1728,14 @@ item.
 																	</xs:annotation>
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element name="vItem" type="TDec_1302_1306">
+																			<xs:element name="vItem">
 																				<xs:annotation>
 																					<xs:documentation>Valor unitário do item</xs:documentation>
 																					<xs:documentation>Informar o valor sem a influência da decisão judicial/administrativa.</xs:documentation>
 																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="TDec_1302_1308"/>
+																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="qFaturada" type="TDec_1100_1104">
 																				<xs:annotation>
@@ -1719,10 +1743,13 @@ item.
 																					<xs:documentation>Informar a quantidade de comercialização do produto .</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="vProd" type="TDec_1302_1306">
+																			<xs:element name="vProd">
 																				<xs:annotation>
 																					<xs:documentation>Valor total do item</xs:documentation>
 																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="TDec_1302_1308"/>
+																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="indDevolucao" minOccurs="0">
 																				<xs:annotation>
@@ -2808,6 +2835,11 @@ Não obrigatória, conforme item 2.3.2 da Seção 11.1 do Módulo 11 do PRODIST.
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
+			<xs:element name="vMedPerdaTec" type="TDec_1302_1304" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor medido após perda técnica</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TRespTec">

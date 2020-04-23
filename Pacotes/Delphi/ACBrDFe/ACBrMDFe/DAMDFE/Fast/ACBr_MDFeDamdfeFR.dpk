@@ -1,6 +1,7 @@
 package ACBr_MDFeDamdfeFR;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,12 +23,14 @@ package ACBr_MDFeDamdfeFR;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DAMDFe em FastReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
 {$IFDEF VER140} fs6, frx6, frxe6, frxDB6, {$ENDIF} // D6
 {$IFDEF VER150} fs7, frx7, frxe7, frxDB7, {$ENDIF} // D7
 {$IFDEF VER170} fs9, frx9, frxe9, frxDB9, {$ENDIF} // D2005
@@ -53,7 +56,6 @@ requires
    ACBr_MDFe;
 
 contains
-  ACBrMDFeDAMDFEFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fast\ACBrMDFeDAMDFEFRReg.pas',
   ACBrMDFeDAMDFEFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fast\ACBrMDFeDAMDFEFR.pas';
 
 end.

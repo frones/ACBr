@@ -29,6 +29,7 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
 package ACBr_MDFeDamdfeRL;
 
 {$R *.res}
@@ -36,7 +37,7 @@ package ACBr_MDFeDamdfeRL;
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -57,17 +58,16 @@ package ACBr_MDFeDamdfeRL;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   dsnap,
   ACBr_MDFe,
   ACBrDFeReportRL;
 
 contains
-  ACBrMDFeDAMDFeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLReg.pas',
   ACBrMDFeDAMDFeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLClass.pas',
   ACBrMDFeDAMDFeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRL.pas' {TfrlDAMDFeRL},
   ACBrMDFeDAMDFeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas' {TfrlDAMDFeRLRetrato},

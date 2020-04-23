@@ -32,14 +32,14 @@
 
 {$I ACBr.inc}
 
-package ACBr_MDFe;
+package DCLACBr_MDFe;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -49,7 +49,7 @@ package ACBr_MDFe;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$DEFINITIONINFO ON}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -59,35 +59,17 @@ package ACBr_MDFe;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
-{$RUNONLY}
+{$DESCRIPTION 'ACBr - (Designtime) Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
+{$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
-  vcl,
   rtl,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+  designide,
+  ACBr_MDFe,
+  DCLACBr_Comum;
 
 contains
-  ACBrMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas',
-  ACBrMDFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeConfiguracoes.pas',
-  ACBrMDFeManifestos in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeManifestos.pas',
-  ACBrMDFeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeWebServices.pas',
-  pmdfeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsts.pas',
-  pmdfeConsMDFeNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsMDFeNaoEnc.pas',
-  pmdfeConsSitMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsSitMDFe.pas',
-  pmdfeConversaoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConversaoMDFe.pas',
-  pmdfeEnvEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeEnvEventoMDFe.pas',
-  pmdfeEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeEventoMDFe.pas',
-  pmdfeMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas',
-  pmdfeMDFeR in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeR.pas',
-  pmdfeMDFeW in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeW.pas',
-  pmdfeProcMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas',
-  pmdfeRetConsMDFeNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetConsMDFeNaoEnc.pas',
-  pmdfeRetConsSitMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetConsSitMDFe.pas',
-  pmdfeRetEnvEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetEnvEventoMDFe.pas',
-  pmdfeRetEnvMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetEnvMDFe.pas',
-  ACBrMDFeDAMDFEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFEClass.pas';
+  ACBrMDFeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeReg.pas';
 
 end.

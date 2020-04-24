@@ -344,6 +344,7 @@ function TACBrEscPosEpson.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
 var
   NovoFonteStatus: TACBrPosFonte;
   AByte: Integer;
+  AChar: AnsiChar;
 begin
   Result := '';
   NovoFonteStatus := fpPosPrinter.FonteStatus;
@@ -371,7 +372,9 @@ begin
     if ftSublinhado in NovoFonteStatus then
       SetBit(AByte, 7);
 
-    Result := ESC + '!' + AnsiChr(Byte(AByte));
+    Result := ESC + '!';
+    AChar := AnsiChr(Byte(AByte));
+    Result := Result + AChar;
 
     // ESC ! desliga Invertido, enviando o comando novamente
     if ftInvertido in NovoFonteStatus then

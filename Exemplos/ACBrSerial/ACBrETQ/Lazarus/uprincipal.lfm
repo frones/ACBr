@@ -1,7 +1,7 @@
 object FPrincipal: TFPrincipal
-  Left = 395
+  Left = 523
   Height = 292
-  Top = 228
+  Top = 231
   Width = 740
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -69,7 +69,7 @@ object FPrincipal: TFPrincipal
       ItemHeight = 13
       OnChange = cbModeloChange
       Style = csDropDownList
-      TabOrder = 5
+      TabOrder = 1
     end
     object cbPorta: TComboBox
       Left = 10
@@ -96,7 +96,7 @@ object FPrincipal: TFPrincipal
       Top = 157
       Width = 112
       OnKeyPress = eCopiasKeyPress
-      TabOrder = 3
+      TabOrder = 6
     end
     object lbDPI: TLabel
       AnchorSideLeft.Control = cbDPI
@@ -116,7 +116,7 @@ object FPrincipal: TFPrincipal
       Width = 94
       ItemHeight = 13
       Style = csDropDownList
-      TabOrder = 6
+      TabOrder = 3
     end
     object lbTemperatura: TLabel
       AnchorSideLeft.Control = eTemperatura
@@ -135,7 +135,7 @@ object FPrincipal: TFPrincipal
       Top = 66
       Width = 113
       OnKeyPress = eCopiasKeyPress
-      TabOrder = 1
+      TabOrder = 2
       Text = '10'
     end
     object cbBackFeed: TComboBox
@@ -164,7 +164,7 @@ object FPrincipal: TFPrincipal
       Top = 111
       Width = 113
       OnKeyPress = eCopiasKeyPress
-      TabOrder = 2
+      TabOrder = 4
       Text = '10'
     end
     object lbMargem: TLabel
@@ -182,12 +182,12 @@ object FPrincipal: TFPrincipal
     object ckMemoria: TCheckBox
       Left = 10
       Height = 19
-      Top = 189
+      Top = 230
       Width = 94
       Caption = 'Limpar Memória'
       Checked = True
       State = cbChecked
-      TabOrder = 4
+      TabOrder = 10
     end
     object lbTemperatura2: TLabel
       AnchorSideLeft.Control = eVelocidade
@@ -208,7 +208,7 @@ object FPrincipal: TFPrincipal
       Top = 111
       Width = 94
       OnKeyPress = eCopiasKeyPress
-      TabOrder = 8
+      TabOrder = 5
       Text = '-1'
     end
     object lbBackFeed1: TLabel
@@ -230,6 +230,29 @@ object FPrincipal: TFPrincipal
       ItemHeight = 13
       Style = csDropDownList
       TabOrder = 9
+    end
+    object Label5: TLabel
+      AnchorSideLeft.Control = cbxPagCodigo
+      AnchorSideBottom.Control = cbxPagCodigo
+      Left = 10
+      Height = 13
+      Top = 188
+      Width = 54
+      Anchors = [akLeft, akBottom]
+      Caption = 'Pag.codigo'
+      ParentColor = False
+    end
+    object cbxPagCodigo: TComboBox
+      AnchorSideBottom.Side = asrBottom
+      Left = 10
+      Height = 21
+      Hint = 'Pagina de código usada pela Impressora POS'
+      Top = 201
+      Width = 112
+      Anchors = [akLeft, akBottom]
+      ItemHeight = 13
+      Style = csDropDownList
+      TabOrder = 8
     end
   end
   object gbImagem: TGroupBox

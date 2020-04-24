@@ -78,6 +78,9 @@ type
     cbOrigem: TComboBox;
     Label2: TLabel;
     bQRCode: TButton;
+    Label3: TLabel;
+    cbxPagCodigo: TComboBox;
+    Label4: TLabel;
     procedure bEtqBlocoClick(Sender: TObject);
     procedure bEtqSimplesClick(Sender: TObject);
     procedure bEtqCarreirasClick(Sender: TObject);
@@ -112,6 +115,7 @@ var
   L: TACBrETQBackFeed;
   M: Integer;
   N: TACBrETQOrigem;
+  O: TACBrETQPaginaCodigo;
 begin
   cbModelo.Items.Clear ;
   For I := Low(TACBrETQModelo) to High(TACBrETQModelo) do
@@ -128,6 +132,10 @@ begin
   cbOrigem.Items.Clear ;
   For N := Low(TACBrETQOrigem) to High(TACBrETQOrigem) do
      cbOrigem.Items.Add( GetEnumName(TypeInfo(TACBrETQOrigem), integer(N) ) ) ;
+
+  cbxPagCodigo.Items.Clear ;
+  For O := Low(TACBrETQPaginaCodigo) to High(TACBrETQPaginaCodigo) do
+     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrETQPaginaCodigo), integer(O) ) ) ;
 
   cbPorta.Items.Clear;
   ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
@@ -154,6 +162,7 @@ begin
   cbPorta.Items.Add('/tmp/ecf.txt') ;
   {$EndIf}
 
+  cbxPagCodigo.ItemIndex := 2;
   cbDPI.ItemIndex := 0;
   cbModelo.ItemIndex := 1;
   cbPorta.ItemIndex := 0;
@@ -167,8 +176,8 @@ begin
   begin
      if (Modelo <> etqZPLII) then
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
+        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
+        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'M…DIO PORTE');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
         ImprimirCaixa(10,32,56,13,1,1);
         ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
@@ -177,8 +186,8 @@ begin
       else
       begin
         ImprimirCaixa(3,3,90,5,5,0);
-        ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'CHOC BRANCO');
+        ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
+        ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'M…DIO PORTE');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
         ImprimirCaixa(13,32,56,17,1,1);
         ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
@@ -428,6 +437,7 @@ begin
      Unidade       := etqMilimetros; //etqDecimoDeMilimetros;
      MargemEsquerda:= StrToIntDef(eMargemEsquerda.Text, 0);
      Origem        := TACBrETQOrigem(cbOrigem.ItemIndex);
+     PaginaDeCodigo:= TACBrETQPaginaCodigo(cbxPagCodigo.ItemIndex);
 
      Ativar;
      cbPorta.Text := Porta;

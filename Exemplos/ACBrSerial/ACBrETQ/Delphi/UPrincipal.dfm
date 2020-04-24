@@ -19,6 +19,15 @@ object FPrincipal: TFPrincipal
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Label3: TLabel
+    Left = 136
+    Top = 208
+    Width = 36
+    Height = 13
+    Caption = 'Origem:'
+    Color = clBtnFace
+    ParentColor = False
+  end
   object gbConfiguracao: TGroupBox
     Left = 0
     Top = 0
@@ -107,6 +116,15 @@ object FPrincipal: TFPrincipal
       Width = 36
       Height = 13
       Caption = 'Origem:'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 11
+      Top = 208
+      Width = 84
+      Height = 13
+      Caption = 'P'#225'gina de C'#243'digo'
       Color = clBtnFace
       ParentColor = False
     end
@@ -205,7 +223,7 @@ object FPrincipal: TFPrincipal
     end
     object ckMemoria: TCheckBox
       Left = 10
-      Top = 213
+      Top = 261
       Width = 94
       Height = 19
       Caption = 'Limpar Mem'#243'ria'
@@ -485,6 +503,15 @@ object FPrincipal: TFPrincipal
       TabOrder = 5
       OnClick = bQRCodeClick
     end
+  end
+  object cbxPagCodigo: TComboBox
+    Left = 10
+    Top = 225
+    Width = 111
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 3
   end
   object ACBrETQ: TACBrETQ
     Porta = 'LPT1'

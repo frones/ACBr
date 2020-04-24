@@ -108,6 +108,8 @@ TACBrETQBackFeed = (bfNone, bfOn, bfOff);
 
 TACBrETQOrigem = (ogNone, ogTop, ogBottom);
 
+TACBrETQPaginaCodigo = (pceNone, pce437, pce850, pce852, pce860, pce1250, pce1252);
+
 {Criando o tipo enumerado para tipos de código de barras }
 TACBrTipoCodBarra =  ( barEAN13, barEAN8, barSTANDARD, barINTERLEAVED,
                        barCODE128, barCODE39, barCODE93, barUPCA,

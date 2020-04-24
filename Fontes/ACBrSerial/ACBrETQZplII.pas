@@ -67,10 +67,12 @@ type
     function ComandoLinhaCaixa(aAltura, aLargura, Espessura: Integer): String;
     function AjustarNomeArquivoImagem( const aNomeImagem: String): String;
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
+    function ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
   protected
     function ComandoAbertura: AnsiString; override;
     function ComandoUnidade: AnsiString; override;
     function ComandoTemperatura: AnsiString; override;
+    function ComandoPaginaDeCodigo: AnsiString; override;
     function ComandoOrigemCoordenadas: AnsiString; override;
     function ComandoResolucao: AnsiString; override;
     function ComandoVelocidade: AnsiString; override;
@@ -232,6 +234,18 @@ begin
   Result := IntToStr(aMultiplicador);
 end;
 
+function TACBrETQZplII.ConverterPaginaDeCodigo(
+  aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
+begin
+  case aPaginaDeCodigo of
+    pce437 : Result := '0';
+    pce850, pce852, pce860 : Result := '13';
+    pce1250, pce1252: Result := '27';
+  else
+    Result := '';;
+  end;
+end;
+
 function TACBrETQZplII.ConverterExibeCodigo(
   aExibeCodigo: TACBrETQBarraExibeCodigo): String;
 begin
@@ -296,6 +310,11 @@ begin
     raise Exception.Create('Temperatura deve ser de 0 a 30');
 
   Result := '~SD' + IntToStrZero(Temperatura, 2);
+end;
+
+function TACBrETQZplII.ComandoPaginaDeCodigo: AnsiString;
+begin
+  Result := '^CI' + ConverterPaginaDeCodigo(PaginaDeCodigo);
 end;
 
 function TACBrETQZplII.ComandoOrigemCoordenadas: AnsiString;

@@ -72,10 +72,12 @@ type
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
     function ConverterEspessura(aVertical, aHorizontal: Integer): String;
 
+    function ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
   protected
     function ComandoAbertura: AnsiString; override;
     function ComandoUnidade: AnsiString; override;
     function ComandoTemperatura: AnsiString; override;
+    function ComandoPaginaDeCodigo: AnsiString; override;
     function ComandoResolucao: AnsiString; override;
     function ComandoVelocidade: AnsiString; override;
 
@@ -211,6 +213,18 @@ begin
   Result := IntToStrZero(aHorizontal, 3) + IntToStrZero(aVertical, 3);
 end;
 
+function TACBrETQPpla.ConverterPaginaDeCodigo(
+  aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
+begin
+  case aPaginaDeCodigo of
+    pce437 : Result := '0';                   // 437=English -> 0-USASCII
+    pce850, pce852, pce860 : Result := '2';   // 850=Latin1, 852=Slavic, 860=Portugal -> 2-Spanish
+    pce1250, pce1252: Result := '2';          // 1250=Latin2, 1252=Latin1 -> 2-Spanish
+  else
+    Result := '';;
+  end;
+end;
+
 function TACBrETQPpla.ConverterDimensao(aAltura, aLargura: Integer): String;
 begin
   if (aLargura < 0) or (aLargura > 999) then
@@ -265,6 +279,11 @@ begin
     Result := 'H' + IntToStrZero(Temperatura, 2)
   else
     Result := EmptyStr;
+end;
+
+function TACBrETQPpla.ComandoPaginaDeCodigo: AnsiString;
+begin
+  Result := STX + 'KI' + '<' + ConverterPaginaDeCodigo(PaginaDeCodigo);
 end;
 
 function TACBrETQPpla.ComandoVelocidade: AnsiString;

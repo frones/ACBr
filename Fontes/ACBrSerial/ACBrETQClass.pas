@@ -56,6 +56,7 @@ type
 
 TACBrETQClass = class
   private
+    fPaginaDeCodigo: TACBrETQPaginaCodigo;
     fUnidade: TACBrETQUnidade;
     fTemperatura: Integer;
     fVelocidade: Integer;
@@ -82,6 +83,7 @@ TACBrETQClass = class
     function ComandoBackFeed: AnsiString; virtual;
     function ComandoUnidade: AnsiString; virtual;
     function ComandoTemperatura: AnsiString; virtual;
+    function ComandoPaginaDeCodigo: AnsiString; virtual;
     function ComandoResolucao: AnsiString; virtual;
     function ComandoOrigemCoordenadas: AnsiString; virtual;
     function ComandoVelocidade: AnsiString; virtual;
@@ -126,6 +128,7 @@ TACBrETQClass = class
       aFlipped: Boolean; aTipo: String): AnsiString; virtual;
 
     property ModeloStr:       String           read fpModeloStr;
+    property PaginaDeCodigo:  TACBrETQPaginaCodigo read fPaginaDeCodigo write fPaginaDeCodigo;
     property Temperatura:     Integer          read fTemperatura      write fTemperatura;
     property Velocidade:      Integer          read fVelocidade       write fVelocidade;
     property BackFeed:        TACBrETQBackFeed read fpBackFeed        write fpBackFeed;
@@ -148,6 +151,7 @@ begin
   if (not (AOwner is TACBrETQ)) then
     raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrETQ'));
 
+  fPaginaDeCodigo := pce850;
   fDPI            := dpi203;
   fpLimparMemoria := True;
   fAvanco         := 0;
@@ -246,6 +250,7 @@ var
 begin
   ListaComandos := '';
 
+  AdicionarComandos( ComandoPaginaDeCodigo, ListaComandos );
   AdicionarComandos( ComandoBackFeed, ListaComandos );
   AdicionarComandos( ComandoAbertura, ListaComandos );
   AdicionarComandos( ComandoUnidade, ListaComandos );
@@ -296,6 +301,11 @@ begin
 end;
 
 function TACBrETQClass.ComandoTemperatura: AnsiString;
+begin
+  Result := EmptyStr;
+end;
+
+function TACBrETQClass.ComandoPaginaDeCodigo: AnsiString;
 begin
   Result := EmptyStr;
 end;

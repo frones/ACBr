@@ -76,6 +76,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     function GetModeloStr: String;
     function GetBackFeed: TACBrETQBackFeed;
     function GetOrigem: TACBrETQOrigem;
+    function GetPaginaDeCodigo: TACBrETQPaginaCodigo;
     function GetUnidade: TACBrETQUnidade;
     function GetTemperatura: Integer;
     function GetVelocidade: Integer;
@@ -94,6 +95,9 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     procedure SetOrigem(AValue: TACBrETQOrigem);
     procedure SetAvanco(const AValue: Integer);
     procedure SetAtivo(const Value: Boolean);
+    procedure SetPaginaDeCodigo(AValue: TACBrETQPaginaCodigo);
+    function GetNumeroPaginaDeCodigo(APagCod: TACBrETQPaginaCodigo): word;
+    function CodificarPaginaDeCodigo(const ATexto: AnsiString): AnsiString;
 
     procedure AtivarSeNecessario;
   public
@@ -155,6 +159,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     property EtqInicializada: Boolean          read fsEtqInicializada;
 
   published
+    property PaginaDeCodigo:  TACBrETQPaginaCodigo read GetPaginaDeCodigo write SetPaginaDeCodigo default pce850;
     property Unidade:         TACBrETQUnidade  read GetUnidade       write SetUnidade default etqDecimoDeMilimetros;
     property Modelo:          TACBrETQModelo   read fsModelo         write SetModelo default etqNenhum;
     property BackFeed:        TACBrETQBackFeed read GetBackFeed      write SetBackFeed default bfNone;
@@ -267,6 +272,11 @@ begin
   Result := fsETQ.Origem;
 end;
 
+function TACBrETQ.GetPaginaDeCodigo: TACBrETQPaginaCodigo;
+begin
+  Result := fsETQ.PaginaDeCodigo;
+end;
+
 function TACBrETQ.GetUnidade: TACBrETQUnidade;
 begin
   Result := fsETQ.Unidade;
@@ -295,6 +305,44 @@ end;
 function TACBrETQ.GetAvanco: Integer;
 begin
   Result := fsETQ.Avanco;
+end;
+
+procedure TACBrETQ.SetPaginaDeCodigo(AValue: TACBrETQPaginaCodigo);
+begin
+  fsETQ.PaginaDeCodigo := AValue;
+end;
+
+function TACBrETQ.GetNumeroPaginaDeCodigo(APagCod: TACBrETQPaginaCodigo): word;
+begin
+  case APagCod of
+    pce437: Result := 437;
+    pce850: Result := 850;
+    pce852: Result := 852;
+    pce860: Result := 860;
+    pce1250: Result := 1250;
+    pce1252: Result := 1252;
+  else
+    Result := 0;
+  end;
+end;
+
+function TACBrETQ.CodificarPaginaDeCodigo(const ATexto: AnsiString): AnsiString;
+var
+  NumPagCod: word;
+begin
+  NumPagCod := GetNumeroPaginaDeCodigo(PaginaDeCodigo);
+  //GravarLog('CodificarPaginaDeCodigo: '+IntToStr(NumPagCod) );
+
+  if (NumPagCod > 0) then
+  begin
+    {$IfDef MSWINDOWS}
+    Result := TranslateString(ACBrStrToAnsi(ATexto), NumPagCod)
+    {$Else}
+    Result := TranslateString(ATexto, NumPagCod)
+    {$EndIf}
+  end
+  else
+    Result := TiraAcentos(ATexto);
 end;
 
 procedure TACBrETQ.SetUnidade(const AValue: TACBrETQUnidade);
@@ -587,8 +635,12 @@ begin
             ', SubFonte:'+IntToStr(SubFonte)+
             ', ImprimirReverso:'+BoolToStr(ImprimirReverso, True));
 
-  wCmd := fsETQ.ComandoImprimirTexto(Orientacao, Fonte, MultiplicadorH, MultiplicadorV,
-    Vertical, (Horizontal+MargemEsquerda), Texto, SubFonte, ImprimirReverso);
+  wCmd := fsETQ.ComandoImprimirTexto( Orientacao,
+                                      Fonte, MultiplicadorH, MultiplicadorV,
+                                      Vertical, (Horizontal+MargemEsquerda),
+                                      CodificarPaginaDeCodigo(Texto),
+                                      SubFonte,
+                                      ImprimirReverso);
 
   fsListaCmd.Add(wCmd);
 end;

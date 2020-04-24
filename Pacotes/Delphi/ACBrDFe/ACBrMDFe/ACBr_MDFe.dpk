@@ -61,7 +61,7 @@ package ACBr_MDFe;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   vcl,

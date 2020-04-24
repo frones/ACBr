@@ -42,6 +42,7 @@ VISIBLE:
     METHOD ImprimirLinha(Vertical, Horizontal, Largura, Altura)
     METHOD ImprimirCaixa(Vertical, Horizontal, Largura, Altura, EspessuraVertical, EspessuraHorizontal)
     METHOD ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal, eNomeImagem)
+    METHOD ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo)
 
 END CLASS
 
@@ -206,6 +207,12 @@ METHOD ImprimirCaixa(Vertical, Horizontal, Largura, Altura, EspessuraVertical, E
 METHOD ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal, eNomeImagem) CLASS ACBrETQ
     local hResult
     hResult := DllCall(::hHandle, DLL_OSAPI, "ETQ_ImprimirImagem", MultiplicadorImagem, Vertical, Horizontal, hb_StrToUTF8(eNomeImagem))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo) CLASS ACBrETQ
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "ETQ_ImprimirQRCode", Vertical, Horizontal, hb_StrToUTF8(Texto), LarguraModulo, ErrorLevel, Tipo)
     ::CheckResult(hResult)
     RETURN nil
     

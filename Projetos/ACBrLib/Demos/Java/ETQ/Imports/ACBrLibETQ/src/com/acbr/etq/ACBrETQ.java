@@ -82,6 +82,8 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
                 int EspessuraHorizontal);
 
         int ETQ_ImprimirImagem(int MultiplicadorImagem, int Vertical, int Horizontal, String eNomeImagem);
+        
+        int ETQ_ImprimirQRCode(int Vertical, int Horizontal, String Texto, int LarguraModulo, int ErrorLevel, int Tipo);
     }
 
     public ACBrETQ() throws Exception {
@@ -259,6 +261,11 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
 
     public void imprimirImagem(int multiplicadorImagem, int vertical, int horizontal, String eNomeImagem) throws Exception {
         int ret = ACBrETQLib.INSTANCE.ETQ_ImprimirImagem(multiplicadorImagem, vertical, horizontal, toUTF8(eNomeImagem));
+        checkResult(ret);
+    }
+    
+    public void imprimirQRCode(int vertical, int horizontal, String texto, int larguraModulo, int errorLevel, int tipo) throws Exception {
+        int ret = ACBrETQLib.INSTANCE.ETQ_ImprimirQRCode(vertical, horizontal, toUTF8(texto), larguraModulo, errorLevel, tipo);
         checkResult(ret);
     }
 

@@ -1155,7 +1155,7 @@ begin
   begin
     rlbDadosAdicionais.AutoExpand := True;
     rlmDadosAdicionais.AutoSize := True;
-    RLDraw50.Height := (rlmDadosAdicionais.Top + rlmDadosAdicionais.Height) - RLLabel77.Top + 2;
+    RLDraw50.Height := (rlmDadosAdicionais.Top + rlmDadosAdicionais.Height) - RLLabel77.Top + 10;
     RLDraw51.Height := RLDraw50.Height;
     rllSistema.Top  := RLDraw50.Top + RLDraw50.Height;
     rllUsuario.Top  := rllSistema.Top;

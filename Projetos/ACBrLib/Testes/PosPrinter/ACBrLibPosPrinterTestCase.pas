@@ -319,7 +319,7 @@ begin
   AssertEquals(ErrOK, POS_Ativar);
   Bufflen := 0;   // chama com Zero, para achar o tamanho do Buffer
   AStr := '';
-  AssertEquals(ErrOK, POS_RetornarTags(PChar(AStr), Bufflen, False));
+  AssertEquals(ErrOK, POS_RetornarTags(False, PChar(AStr), Bufflen));
   AStr := Space(Bufflen);
   AssertEquals(ErrOK, POS_UltimoRetorno(PChar(AStr), Bufflen));  // Chama UltimoRetorno, Para não processar Tags novamente
   AssertEquals(copy(AStr,1,133), '<e>|</e>|<a>|</a>|<n>|</n>|<s>|</s>|<c>|</c>|<i>|</i>|</fn>|</fa>|</fb>|<in>|</in>|</ae>|</ce>|</ad>|</linha_simples>|</linha_dupla>|');

@@ -95,6 +95,9 @@ type
       aBarraLarga, aBarraFina, aVertical, aHorizontal: Integer; aTexto: String;
       aAlturaBarras: Integer; aExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao
       ): AnsiString; override;
+    function ComandoImprimirQRCode(aVertical, aHorizontal: Integer;
+      const aTexto: String; aLarguraModulo: Integer; aErrorLevel: Integer;
+      aTipo: Integer): AnsiString; override;
 
     function ComandoImprimirLinha(aVertical, aHorizontal, aLargura, aAltura: Integer
       ): AnsiString; override;
@@ -406,6 +409,18 @@ begin
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
             ComandoBarras(aTipoBarras, aOrientacao, aAlturaBarras, aExibeCodigo ) +
             ComandoCampo(aTexto);
+end;
+
+function TACBrETQZplII.ComandoImprimirQRCode(aVertical, aHorizontal: Integer;
+  const aTexto: String; aLarguraModulo: Integer; aErrorLevel: Integer;
+  aTipo: Integer): AnsiString;
+begin
+  Result := ComandoCoordenadas(aVertical, aHorizontal) +
+            '^BQ'+
+            ConverterOrientacao(orNormal) + ',' +
+            IntToStr(aTipo) + ',' +
+            IntToStr(aLarguraModulo) + ',' +
+            ComandoCampo( ConverterQRCodeErrorLevel(aErrorLevel) +'A,'+ aTexto);
 end;
 
 function TACBrETQZplII.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,

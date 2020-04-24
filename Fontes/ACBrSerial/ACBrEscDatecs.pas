@@ -120,13 +120,13 @@ begin
   AddInfo('Fabricante', 'Datecs');
 
   // Lendo Modelo e Firmware
-  Ret := fpPosPrinter.TxRx( ESC + 'Z', 32, 500, False );
+  Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 800, False );
   AddInfo('Firmware', Trim(copy(Ret, 23, 3)));
   AddInfo('Modelo', Trim(copy(Ret,1 ,22)));
 
   // Lendo o Número Serial
   try
-    Ret := fpPosPrinter.TxRx( ESC + 'N', 13, 500, False );
+    Ret := fpPosPrinter.TxRx( ESC + 'N', 0, 500, False );
   except
     Ret := '';
   end;

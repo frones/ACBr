@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/04/2020
+-- ACBrETQ, ACBrETQClass, ACBrETQPpla, ACBrETQEpl2, ACBrETQZplII --
+[+] Implementado novo método para impressão de QRCodes
+    procedure ImprimirQRCode(Vertical, Horizontal: Integer; const Texto: String;
+         LarguraModulo: Integer = 4; ErrorLevel: Integer = 0; Tipo: Integer = 2);
+    (por: DSA)
+
 Data: 22/04/2020
 -- ACBrPosPrinter, ACBrEscDatecs --
 [+] Adicionado novo modelo Datecs.  http://www.datecs.bg/en/

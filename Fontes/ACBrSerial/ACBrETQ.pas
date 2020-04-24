@@ -129,6 +129,9 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
           const Texto: String; AlturaCodBarras: Integer = 0;
           ExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao); overload;
 
+    procedure ImprimirQRCode(Vertical, Horizontal: Integer; const Texto: String;
+          LarguraModulo: Integer = 4; ErrorLevel: Integer = 0; Tipo: Integer = 2);
+
     procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); overload;
 
     procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
@@ -630,6 +633,29 @@ begin
                   StrParamToInt(LarguraBarraLarga),
                   StrParamToInt(LarguraBarraFina),
                   Vertical, Horizontal, Texto, AlturaCodBarras, ExibeCodigo);
+end;
+
+procedure TACBrETQ.ImprimirQRCode(Vertical, Horizontal: Integer;
+  const Texto: String; LarguraModulo: Integer; ErrorLevel: Integer;
+  Tipo: Integer);
+var
+  wCmd: AnsiString;
+begin
+  Tipo := Min(Max(Tipo,1),2);
+  LarguraModulo := Max(1,LarguraModulo);
+
+  GravarLog('- ImprimirQRCode:'+
+            '  Vertical:'+IntToStr(Vertical)+
+            ', Horizontal:'+IntToStr(Horizontal)+
+            ', Texto:'+Texto+
+            ', LarguraModulo:'+IntToStr(LarguraModulo)+
+            ', ErrorLevel:'+IntToStr(ErrorLevel)+
+            ', Tipo:'+IntToStr(Tipo));
+
+  wCmd := fsETQ.ComandoImprimirQRCode( Vertical, (Horizontal+MargemEsquerda),
+                                       Texto, LarguraModulo, ErrorLevel, Tipo);
+
+  fsListaCmd.Add(wCmd);
 end;
 
 procedure TACBrETQ.ImprimirBarras(Orientacao: TACBrETQOrientacao;

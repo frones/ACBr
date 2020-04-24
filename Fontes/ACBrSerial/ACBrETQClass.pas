@@ -85,6 +85,8 @@ TACBrETQClass = class
     function ComandoResolucao: AnsiString; virtual;
     function ComandoOrigemCoordenadas: AnsiString; virtual;
     function ComandoVelocidade: AnsiString; virtual;
+
+    function ConverterQRCodeErrorLevel(aErrorLevel: Integer): String; virtual;
   public
     constructor Create(AOwner: TComponent);
 
@@ -107,6 +109,9 @@ TACBrETQClass = class
       aTipoBarras: String; aBarraLarga, aBarraFina, aVertical,
       aHorizontal: Integer; aTexto: String; aAlturaBarras: Integer;
       aExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao): AnsiString; virtual;
+    function ComandoImprimirQRCode(aVertical, aHorizontal: Integer;
+      const aTexto: String; aLarguraModulo: Integer; aErrorLevel: Integer;
+      aTipo: Integer): AnsiString; virtual;
 
     function ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
       aAltura: Integer): AnsiString; virtual;
@@ -310,6 +315,17 @@ begin
   Result := EmptyStr;
 end;
 
+function TACBrETQClass.ConverterQRCodeErrorLevel(aErrorLevel: Integer): String;
+begin
+  case aErrorLevel of
+    1: Result := 'M';
+    2: Result := 'Q';
+    3: Result := 'H';
+  else
+    Result := 'L';
+  end;
+end;
+
 function TACBrETQClass.ComandoCopias(const NumCopias: Integer): AnsiString;
 begin
   VerificarLimiteCopias(NumCopias);
@@ -354,6 +370,14 @@ function TACBrETQClass.ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
 begin
   Result := EmptyStr;
   ErroNaoImplementado('ComandoImprimirBarras');
+end;
+
+function TACBrETQClass.ComandoImprimirQRCode(aVertical, aHorizontal: Integer;
+  const aTexto: String; aLarguraModulo: Integer; aErrorLevel: Integer;
+  aTipo: Integer): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirQRCode');
 end;
 
 function TACBrETQClass.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,

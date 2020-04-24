@@ -135,7 +135,7 @@ function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): 
 function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 

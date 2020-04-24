@@ -1548,7 +1548,7 @@ begin
       while true do
       begin
         sSecao := 'infNFe'+IntToStrZero(I,3);
-        sFim   := INIRec.ReadString(sSecao,'Chave','FIM');
+        sFim   := INIRec.ReadString(sSecao,'chave','FIM');
         if sFim = 'FIM' then
           break;
 

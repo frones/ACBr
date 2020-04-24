@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2020
+-- ACBrCTeConhecimentos --
+[-] Correção o nome do campo não é Chave e sim chave na seção [infNFexxx].
+  Por: Italo Jurisato junior
+
 22/04/2020
 -- pcteCTeW --
 [-] Correção nas tags a ignorar na geração dos alertas.

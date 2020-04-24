@@ -140,6 +140,7 @@ function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
 
 function StringEhXML(AString: String): Boolean;
 function StringEhArquivo(AString: String): Boolean;
+function ConverterAnsiParaUTF8(AData: AnsiString): AnsiString;
 {%endregion}
 
 var
@@ -153,7 +154,7 @@ uses
   strutils, strings,
   synacode, synautil,
   ACBrConsts, ACBrUtil,
-  ACBrLibConsts;
+  ACBrLibConsts, ACBrLibResposta;
 
 { EACBrLibException }
 
@@ -628,6 +629,14 @@ begin
     (pos(LF, AString) = 0) and
     (pos('<', AString) = 0) and
     (pos('=', AString) = 0);
+end;
+
+function ConverterAnsiParaUTF8(AData: AnsiString): AnsiString;
+begin
+  if (pLib.Config.CodResposta = codANSI) then
+    Result := ACBrAnsiToUTF8(AData)
+  else
+    Result := AData;
 end;
 
 initialization

@@ -73,7 +73,8 @@ exports
   ETQ_ImprimirBarras,
   ETQ_ImprimirLinha,
   ETQ_ImprimirCaixa,
-  ETQ_ImprimirImagem;
+  ETQ_ImprimirImagem,
+  ETQ_ImprimirQRCode;
 
 begin
   {$IFDEF DEBUG}

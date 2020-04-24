@@ -324,7 +324,7 @@ begin
     begin
       PosDM.Travar;
       try
-        UTF8Str := PosDM.ConverterAnsiParaUTF8(AString);
+        UTF8Str := ConverterAnsiParaUTF8(AString);
         PosDM.ACBrPosPrinter1.Imprimir(UTF8Str, PulaLinha, DecodificarTags, CodificarPagina, Copias);
         Result := SetRetorno(ErrOK);
       finally
@@ -359,7 +359,7 @@ begin
     begin
       PosDM.Travar;
       try
-        UTF8Str := PosDM.ConverterAnsiParaUTF8(AString);
+        UTF8Str := ConverterAnsiParaUTF8(AString);
         PosDM.ACBrPosPrinter1.ImprimirLinha(UTF8Str);
         Result := SetRetorno(ErrOK);
       finally

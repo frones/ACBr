@@ -24,13 +24,12 @@ type
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
-    function ConverterAnsiParaUTF8(AData: AnsiString): AnsiString;
   end;
 
 implementation
 
 uses
-  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig, ACBrLibComum, ACBrLibResposta;
+  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig, ACBrLibComum;
 
 {$R *.lfm}
 
@@ -123,14 +122,6 @@ procedure TLibPosPrinterDM.Destravar;
 begin
   GravarLog('Destravar', logParanoico);
   FLock.Release;
-end;
-
-function TLibPosPrinterDM.ConverterAnsiParaUTF8(AData: AnsiString): AnsiString;
-begin
-  if (pLib.Config.CodResposta = codANSI) then
-    Result := ACBrAnsiToUTF8(AData)
-  else
-    Result := AData;
 end;
 
 end.

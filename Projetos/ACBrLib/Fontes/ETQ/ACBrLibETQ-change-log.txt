@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2020
+--- ACBrLibETQClass ---
+[+] Adicionado o metodo ETQ_ImprimirQRCode.
+   Por: Rafael Dias
+[*] Adicionado tratamento das strings para não tem problemas com acentuação.
+   Por: Rafael Dias
+   
+--- ACBrLibETQConfig ---
+[+] Adicionado nova propriedade PaginaDeCodigo.
+   Por: Rafael Dias
+
 03/01/2020
 --- ACBrLibETQClass ---
 [+] Adicionado o metodo ETQ_ImportarConfig.

@@ -123,6 +123,9 @@ function ETQ_ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
 function ETQ_ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
       const eNomeImagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
+          LarguraModulo, ErrorLevel, Tipo: Integer): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -412,7 +415,8 @@ function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-    ATexto: AnsiString;
+  ATexto: AnsiString;
+  UTF8Str: String;
 begin
   try
     VerificarLibInicializada;
@@ -431,8 +435,9 @@ begin
     begin
       ETQDM.Travar;
       try
+        UTF8Str := ConverterAnsiParaUTF8(ATexto);
         ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), Fonte, MultiplicadorH,
-              MultiplicadorV, Vertical, Horizontal, ATexto,
+              MultiplicadorV, Vertical, Horizontal, UTF8Str,
               SubFonte, ImprimirReverso);
         Result := SetRetorno(ErrOK);
       finally
@@ -453,7 +458,8 @@ function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; con
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-    ATexto, AFonte: AnsiString;
+  ATexto, AFonte: AnsiString;
+  UTF8Str: String;
 begin
   try
     VerificarLibInicializada;
@@ -473,8 +479,9 @@ begin
     begin
       ETQDM.Travar;
       try
+        UTF8Str := ConverterAnsiParaUTF8(ATexto);
         ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), AFonte, MultiplicadorH,
-              MultiplicadorV, Vertical, Horizontal, ATexto,
+              MultiplicadorV, Vertical, Horizontal, UTF8Str,
               SubFonte, ImprimirReverso);
         Result := SetRetorno(ErrOK);
       finally
@@ -496,6 +503,7 @@ function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   ATexto: AnsiString;
+  UTF8Str: String;
 begin
   try
     VerificarLibInicializada;
@@ -514,9 +522,10 @@ begin
     begin
       ETQDM.Travar;
       try
+        UTF8Str := ConverterAnsiParaUTF8(ATexto);
         ETQDM.ACBrETQ1.ImprimirBarras(TACBrETQOrientacao(Orientacao),
            TACBrTipoCodBarra(TipoBarras), LarguraBarraLarga, LarguraBarraFina,
-           Vertical, Horizontal, ATexto, AlturaCodBarras,
+           Vertical, Horizontal, UTF8Str, AlturaCodBarras,
            TACBrETQBarraExibeCodigo(ExibeCodigo));
         Result := SetRetorno(ErrOK);
       finally
@@ -635,6 +644,45 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function ETQ_ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
+          LarguraModulo, ErrorLevel, Tipo: Integer): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ATexto: string;
+  UTF8Str: String;
+begin
+  try
+    VerificarLibInicializada;
+    ATexto := AnsiString(Texto);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('ETQ_ImprimirQRCode( ' + IntToStr(Vertical) + ',' +
+        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(LarguraModulo)
+        + ',' + IntToStr(ErrorLevel) + ',' + IntToStr(Tipo) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('ETQ_ImprimirQRCode', logNormal);
+
+    with TACBrLibETQ(pLib) do
+    begin
+      ETQDM.Travar;
+      try
+        UTF8Str := ConverterAnsiParaUTF8(ATexto);
+        ETQDM.ACBrETQ1.ImprimirQRCode(Vertical, Horizontal, UTF8Str, LarguraModulo, ErrorLevel, Tipo);
+        Result := SetRetorno(ErrOK);
+      finally
+        ETQDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%endregion}

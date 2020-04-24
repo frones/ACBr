@@ -52,6 +52,7 @@ type
     FDPI: TACBrETQDPI;
     FLimparMemoria: Boolean;
     FMargemEsquerda: Integer;
+    FPaginaDeCodigo: TACBrETQPaginaCodigo;
     FModelo: TACBrETQModelo;
     FOrigem: TACBrETQOrigem;
     FPorta: String;
@@ -67,6 +68,7 @@ type
 
     property ArqLog: String read FArqLog write FArqLog;
     property Unidade: TACBrETQUnidade read FUnidade write FUnidade;
+    property PaginaDeCodigo: TACBrETQPaginaCodigo read FPaginaDeCodigo write FPaginaDeCodigo;
     property Modelo: TACBrETQModelo read FModelo write FModelo;
     property BackFeed: TACBrETQBackFeed read FBackFeed write FBackFeed;
     property LimparMemoria: Boolean read FLimparMemoria write FLimparMemoria;
@@ -114,6 +116,7 @@ uses
 
 constructor TETQConfig.Create;
 begin
+  FPaginaDeCodigo := pce850;
   FUnidade        := etqDecimoDeMilimetros;
   FModelo         := etqNenhum;
   FBackFeed       := bfNone;
@@ -144,6 +147,7 @@ begin
   FMargemEsquerda := AIni.ReadInteger(CSessaoETQ, CChaveMargemEsquerda, FMargemEsquerda);
   FLimparMemoria  := AIni.ReadBool(CSessaoETQ, CChaveLimparMemoria, FLimparMemoria);
   FAtivo          := AIni.ReadBool(CSessaoETQ, CChaveAtivo, FAtivo);
+  FPaginaDeCodigo := TACBrETQPaginaCodigo(AIni.ReadInteger(CSessaoETQ, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo)));
   FModelo         := TACBrETQModelo(AIni.ReadInteger(CSessaoETQ, CChaveModelo, Integer(FModelo)));
   FUnidade        := TACBrETQUnidade(AIni.ReadInteger(CSessaoETQ, CChaveUnidade, Integer(FUnidade)));
   FBackFeed       := TACBrETQBackFeed(AIni.ReadInteger(CSessaoETQ, CChaveBackFeed, Integer(FBackFeed)));
@@ -161,6 +165,7 @@ begin
   AIni.WriteInteger(CSessaoETQ, CChaveMargemEsquerda, FMargemEsquerda);
   AIni.WriteBool(CSessaoETQ, CChaveLimparMemoria, FLimparMemoria);
   AIni.WriteBool(CSessaoETQ, CChaveAtivo, FAtivo);
+  AIni.WriteInteger(CSessaoETQ, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
   AIni.WriteInteger(CSessaoETQ, CChaveModelo, Integer(FModelo));
   AIni.WriteInteger(CSessaoETQ, CChaveUnidade, Integer(FUnidade));
   AIni.WriteInteger(CSessaoETQ, CChaveBackFeed, Integer(FBackFeed));

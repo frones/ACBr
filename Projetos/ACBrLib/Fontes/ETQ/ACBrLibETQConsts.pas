@@ -50,7 +50,6 @@ const
   CChaveMargemEsquerda = 'MargemEsquerda';
   CChaveLimparMemoria = 'LimparMemoria';
   CChaveAtivo = 'Ativo';
-  CChaveModelo = 'Modelo';
   CChaveUnidade = 'Unidade';
   CChaveBackFeed = 'BackFeed';
   CChaveOrigem = 'Origem';

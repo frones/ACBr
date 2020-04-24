@@ -94,6 +94,7 @@ begin
     MargemEsquerda := pLibConfig.ETQConfig.MargemEsquerda;
     LimparMemoria  := pLibConfig.ETQConfig.LimparMemoria;
     Ativo          := pLibConfig.ETQConfig.Ativo;
+    PaginaDeCodigo := pLibConfig.ETQConfig.PaginaDeCodigo;
     Modelo         := pLibConfig.ETQConfig.Modelo;
     Unidade        := pLibConfig.ETQConfig.Unidade;
     BackFeed       := pLibConfig.ETQConfig.BackFeed;

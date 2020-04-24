@@ -1,12 +1,12 @@
 object FPrincipal: TFPrincipal
   Left = 395
-  Height = 275
+  Height = 292
   Top = 228
   Width = 740
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Impressão de Etiquetas'
-  ClientHeight = 275
+  ClientHeight = 292
   ClientWidth = 740
   Constraints.MinHeight = 275
   Constraints.MinWidth = 740
@@ -17,7 +17,7 @@ object FPrincipal: TFPrincipal
   LCLVersion = '2.0.6.0'
   object gbConfiguracao: TGroupBox
     Left = 10
-    Height = 255
+    Height = 272
     Top = 10
     Width = 246
     Align = alLeft
@@ -25,7 +25,7 @@ object FPrincipal: TFPrincipal
     BorderSpacing.Top = 10
     BorderSpacing.Bottom = 10
     Caption = 'Configurações da Impressora'
-    ClientHeight = 237
+    ClientHeight = 254
     ClientWidth = 242
     TabOrder = 0
     object lbModelo: TLabel
@@ -234,14 +234,14 @@ object FPrincipal: TFPrincipal
   end
   object gbImagem: TGroupBox
     Left = 256
-    Height = 255
+    Height = 272
     Top = 10
     Width = 289
     Align = alClient
     BorderSpacing.Top = 10
     BorderSpacing.Bottom = 10
     Caption = 'Carregar Imagem'
-    ClientHeight = 237
+    ClientHeight = 254
     ClientWidth = 285
     TabOrder = 1
     object Image1: TImage
@@ -414,7 +414,7 @@ object FPrincipal: TFPrincipal
   end
   object gbImpressao: TGroupBox
     Left = 545
-    Height = 255
+    Height = 272
     Top = 10
     Width = 185
     Align = alRight
@@ -422,7 +422,7 @@ object FPrincipal: TFPrincipal
     BorderSpacing.Right = 10
     BorderSpacing.Bottom = 10
     Caption = 'Impressão'
-    ClientHeight = 237
+    ClientHeight = 254
     ClientWidth = 181
     TabOrder = 2
     object lbCopias: TLabel
@@ -483,6 +483,16 @@ object FPrincipal: TFPrincipal
       Caption = 'Bloco de Etiquetas'
       OnClick = bEtqBlocoClick
       TabOrder = 3
+    end
+    object bQRCode: TButton
+      Left = 16
+      Height = 32
+      Top = 217
+      Width = 150
+      BorderSpacing.InnerBorder = 4
+      Caption = 'Imprimir QRCode'
+      OnClick = bQRCodeClick
+      TabOrder = 5
     end
   end
   object ACBrETQ: TACBrETQ

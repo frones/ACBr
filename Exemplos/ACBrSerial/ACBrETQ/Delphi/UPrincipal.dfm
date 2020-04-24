@@ -4,7 +4,7 @@ object FPrincipal: TFPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Impress'#227'o de Etiquetas'
-  ClientHeight = 276
+  ClientHeight = 289
   ClientWidth = 740
   Color = clBtnFace
   Constraints.MinHeight = 275
@@ -23,81 +23,90 @@ object FPrincipal: TFPrincipal
     Left = 0
     Top = 0
     Width = 246
-    Height = 276
+    Height = 289
     Align = alLeft
     Caption = 'Configura'#231#245'es da Impressora'
     TabOrder = 0
-    DesignSize = (
-      246
-      276)
     object lbModelo: TLabel
       Left = 136
-      Top = 33
+      Top = 32
       Width = 38
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Modelo:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbPorta: TLabel
       Left = 10
-      Top = 33
+      Top = 32
       Width = 28
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Porta:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbAvanco: TLabel
       Left = 10
-      Top = 169
+      Top = 168
       Width = 59
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Avan'#231'o Etq:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbDPI: TLabel
       Left = 136
-      Top = 78
+      Top = 77
       Width = 75
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'DPI Impressora:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbTemperatura: TLabel
       Left = 10
-      Top = 78
+      Top = 77
       Width = 63
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Temperatura:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbBackFeed: TLabel
       Left = 136
-      Top = 169
+      Top = 168
       Width = 52
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'BackFeed:'
       Color = clBtnFace
       ParentColor = False
     end
     object lbTemperatura1: TLabel
-      Left = 10
-      Top = 123
+      Left = 138
+      Top = 122
       Width = 56
       Height = 13
       Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
-      Anchors = [akLeft, akBottom]
       Caption = 'Velocidade:'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object Label1: TLabel
+      Left = 10
+      Top = 122
+      Width = 86
+      Height = 13
+      Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
+      Caption = 'Margem Esquerda'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 136
+      Top = 208
+      Width = 36
+      Height = 13
+      Caption = 'Origem:'
       Color = clBtnFace
       ParentColor = False
     end
@@ -109,7 +118,7 @@ object FPrincipal: TFPrincipal
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 3
-      TabOrder = 5
+      TabOrder = 1
       Text = 'etqZPLII'
       OnChange = cbModeloChange
       Items.Strings = (
@@ -142,7 +151,7 @@ object FPrincipal: TFPrincipal
       Top = 182
       Width = 112
       Height = 21
-      TabOrder = 3
+      TabOrder = 6
       OnKeyPress = eCopiasKeyPress
     end
     object cbDPI: TComboBox
@@ -153,7 +162,7 @@ object FPrincipal: TFPrincipal
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 6
+      TabOrder = 3
       Text = 'dpi203'
       Items.Strings = (
         'dpi203'
@@ -165,7 +174,7 @@ object FPrincipal: TFPrincipal
       Top = 91
       Width = 113
       Height = 21
-      TabOrder = 1
+      TabOrder = 2
       Text = '10'
       OnKeyPress = eCopiasKeyPress
     end
@@ -185,12 +194,12 @@ object FPrincipal: TFPrincipal
         'bfOff')
     end
     object eVelocidade: TEdit
-      Left = 10
+      Left = 138
       Top = 136
-      Width = 113
+      Width = 87
       Height = 21
       Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
-      TabOrder = 2
+      TabOrder = 5
       Text = '-1'
       OnKeyPress = eCopiasKeyPress
     end
@@ -202,20 +211,39 @@ object FPrincipal: TFPrincipal
       Caption = 'Limpar Mem'#243'ria'
       Checked = True
       State = cbChecked
+      TabOrder = 8
+    end
+    object eMargemEsquerda: TEdit
+      Left = 10
+      Top = 136
+      Width = 111
+      Height = 21
+      Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
       TabOrder = 4
+      Text = '10'
+      OnKeyPress = eCopiasKeyPress
+    end
+    object cbOrigem: TComboBox
+      Left = 136
+      Top = 225
+      Width = 94
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 9
     end
   end
   object gbImagem: TGroupBox
     Left = 246
     Top = 0
     Width = 309
-    Height = 276
+    Height = 289
     Align = alClient
     Caption = 'Carregar Imagem'
     TabOrder = 1
     DesignSize = (
       309
-      276)
+      289)
     object Image1: TImage
       Left = 15
       Top = 26
@@ -338,7 +366,7 @@ object FPrincipal: TFPrincipal
     end
     object lbNomeImg: TLabel
       Left = 15
-      Top = 164
+      Top = 177
       Width = 111
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -386,16 +414,16 @@ object FPrincipal: TFPrincipal
     Left = 555
     Top = 0
     Width = 185
-    Height = 276
+    Height = 289
     Align = alRight
     Caption = 'Impress'#227'o'
     TabOrder = 2
     DesignSize = (
       185
-      276)
+      289)
     object lbCopias: TLabel
       Left = 16
-      Top = 35
+      Top = 48
       Width = 47
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -447,6 +475,15 @@ object FPrincipal: TFPrincipal
       Caption = 'Bloco de Etiquetas'
       TabOrder = 3
       OnClick = bEtqBlocoClick
+    end
+    object bQRCode: TButton
+      Left = 16
+      Top = 244
+      Width = 150
+      Height = 32
+      Caption = 'Imprimir QRCode'
+      TabOrder = 5
+      OnClick = bQRCodeClick
     end
   end
   object ACBrETQ: TACBrETQ

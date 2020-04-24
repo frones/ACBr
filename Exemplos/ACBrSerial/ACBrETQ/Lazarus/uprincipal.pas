@@ -48,6 +48,7 @@ type
     bEtqBloco: TButton;
     bEtqCarreiras: TButton;
     bEtqSimples: TButton;
+    bQRCode: TButton;
     bImprimirImagem: TButton;
     cbBackFeed: TComboBox;
     cbOrigem: TComboBox;
@@ -80,6 +81,7 @@ type
     rbArquivo: TRadioButton;
     rbStream: TRadioButton;
     procedure bEtqBlocoClick(Sender: TObject);
+    procedure bQRCodeClick(Sender: TObject);
     procedure bEtqSimplesClick(Sender: TObject);
     procedure bEtqCarreirasClick(Sender: TObject);
     procedure bImprimirImagemClick(Sender : TObject);
@@ -160,7 +162,7 @@ begin
 
   cbDPI.ItemIndex := 0;
   cbModelo.ItemIndex := 1;
-  cbPorta.ItemIndex := 16;
+  cbPorta.ItemIndex := 0;
 end;
 
 procedure TFPrincipal.bEtqSimplesClick(Sender: TObject);
@@ -169,16 +171,16 @@ begin
 
   with ACBrETQ do
   begin
-     if Modelo in [etqPpla, etqPplb] then
+     if (Modelo <> etqZPLII) then
       begin
         ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(13,32,56,14,1,1);
-        ImprimirTexto(orNormal, 3, 3, 2, 18, 35, 'R$');
-        ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '20,59');
+        ImprimirCaixa(10,32,56,13,1,1);
+        ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
+        ImprimirTexto(orNormal, 3, 4, 4, 12, 50, '20,59');
       end
-      else  //if Modelo = etqZPLII then
+      else
       begin
         ImprimirCaixa(3,3,90,5,5,0);
         ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
@@ -211,7 +213,7 @@ begin
 
   with ACBrETQ do
   begin
-     if Modelo in [etqPpla, etqPplb] then
+     if (Modelo <> etqZPLII) then
      begin
        IniciarEtiqueta;
        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
@@ -237,7 +239,7 @@ begin
        ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '8,60');
        FinalizarEtiquetaComCopiasEAvanco;
      end
-     else //if Modelo = etqZPLII then
+     else
      begin
        IniciarEtiqueta;
        ImprimirCaixa(3,3,90,5,5,0);
@@ -272,13 +274,25 @@ begin
   end;
 end;
 
+procedure TFPrincipal.bQRCodeClick(Sender: TObject);
+begin
+  AtivarACBrETQ;
+  with ACBrETQ do
+  begin
+    ImprimirQRCode( 10, 10, 'https://www.projetoacbr.com.br' );
+    FinalizarEtiqueta;
+    ImprimirEtiquetaComCopiasEAvanco;
+    Desativar;
+  end;
+end;
+
 procedure TFPrincipal.bEtqCarreirasClick(Sender: TObject);
 begin
   AtivarACBrETQ;
 
   with ACBrETQ do
   begin
-     if Modelo in [etqPpla, etqPplb] then
+     if (Modelo <> etqZPLII) then
       begin
         ImprimirTexto(orNormal, 2, 1, 2, 2, 3, 'BISCOITO REC 33G');
         ImprimirTexto(orNormal, 2, 1, 1, 6, 3, 'CHOC BRANCO');
@@ -292,7 +306,7 @@ begin
         ImprimirTexto(orNormal, 2, 1, 1, 6, 61, 'CHOC BRANCO');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 61, '7896003701685', 10);
       end
-     else // if Modelo = etqZPLII then
+     else
       begin
          ImprimirTexto(orNormal, '0', 20, 30, 2, 3, 'BISCOITO REC 33G');
          ImprimirTexto(orNormal, '0', 20, 20, 6, 3, 'CHOC BRANCO');
@@ -306,6 +320,8 @@ begin
          ImprimirTexto(orNormal, '0', 20, 20, 6, 61, 'CHOC BRANCO');
          ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 61, '7896003701685', 10);
       end;
+
+      FinalizarEtiqueta;
 
       ImprimirEtiquetaComCopiasEAvanco;
       Desativar;
@@ -420,6 +436,8 @@ begin
      Origem        := TACBrETQOrigem(cbOrigem.ItemIndex);
 
      Ativar;
+     cbPorta.Text := Porta;
+     cbModelo.ItemIndex := Integer(Modelo);
   end;
 end;
 

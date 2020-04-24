@@ -79,6 +79,9 @@ namespace ACBrLib.ETQ
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int ETQ_ImprimirImagem(int multiplicadorImagem, int vertical, int horizontal, string eNomeImagem);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int ETQ_ImprimirQRCode(int vertical, int horizontal, string texto, int larguraModulo, int errorLevel, int tipo);
         }
 
         #endregion InnerTypes
@@ -288,6 +291,14 @@ namespace ACBrLib.ETQ
             CheckResult(ret);
         }
 
+        public void ImprimirQRCode(int vertical, int horizontal, string texto, int larguraModulo, int errorLevel, int tipo)
+        {
+            var method = GetMethod<Delegates.ETQ_ImprimirQRCode>();
+            var ret = ExecuteMethod(() => method(vertical, horizontal, ToUTF8(texto), larguraModulo, errorLevel, tipo));
+
+            CheckResult(ret);
+        }
+
         #region Private Methods
 
         protected override void FinalizeLib()
@@ -320,6 +331,7 @@ namespace ACBrLib.ETQ
             AddMethod<Delegates.ETQ_ImprimirLinha>("ETQ_ImprimirLinha");
             AddMethod<Delegates.ETQ_ImprimirCaixa>("ETQ_ImprimirCaixa");
             AddMethod<Delegates.ETQ_ImprimirImagem>("ETQ_ImprimirImagem");
+            AddMethod<Delegates.ETQ_ImprimirQRCode>("ETQ_ImprimirQRCode");
         }
 
         protected override string GetUltimoRetorno(int iniBufferLen = 0)

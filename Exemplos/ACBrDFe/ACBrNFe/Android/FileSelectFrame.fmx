@@ -1,0 +1,180 @@
+object FrameFileSelect: TFrameFileSelect
+  Size.Width = 362.000000000000000000
+  Size.Height = 463.000000000000000000
+  Size.PlatformDefault = False
+  object lvFileBrowse: TListView
+    ItemAppearanceClassName = 'TDynamicAppearance'
+    ItemEditAppearanceClassName = 'TDynamicAppearance'
+    HeaderAppearanceClassName = 'TListHeaderObjects'
+    FooterAppearanceClassName = 'TListHeaderObjects'
+    AllowSelection = False
+    Images = ImageList1
+    Align = Client
+    Size.Width = 362.000000000000000000
+    Size.Height = 423.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    ItemAppearance.ItemHeight = 50
+    ItemAppearance.ItemEditHeight = 20
+    ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
+      item
+        AppearanceObjectName = 'FileName'
+        AppearanceClassName = 'TTextObjectAppearance'
+        Appearance.Font.Size = 15.000000000000000000
+        Appearance.TextAlign = Leading
+        Appearance.WordWrap = True
+        Appearance.Height = 44.000000000000000000
+        Appearance.PlaceOffset.X = 30.000000000000000000
+      end
+      item
+        AppearanceObjectName = 'FileSize'
+        AppearanceClassName = 'TTextObjectAppearance'
+        Appearance.Font.Size = 11.000000000000000000
+        Appearance.WordWrap = True
+        Appearance.Width = 65.000000000000000000
+        Appearance.Align = Trailing
+        Appearance.PlaceOffset.X = -93.000000000000000000
+      end
+      item
+        AppearanceObjectName = 'DateTime'
+        AppearanceClassName = 'TTextObjectAppearance'
+        Appearance.Font.Size = 11.000000000000000000
+        Appearance.WordWrap = True
+        Appearance.Width = 70.000000000000000000
+        Appearance.Align = Trailing
+        Appearance.PlaceOffset.X = -20.000000000000000000
+      end
+      item
+        AppearanceObjectName = 'ImgFileDir'
+        AppearanceClassName = 'TImageObjectAppearance'
+        Appearance.Width = 31.000000000000000000
+        Appearance.Height = 23.000000000000000000
+        Appearance.VertAlign = Center
+      end
+      item
+        AppearanceObjectName = 'AccessSelect'
+        AppearanceClassName = 'TAccessoryObjectAppearance'
+        Appearance.Width = 20.000000000000000000
+        Appearance.Align = Trailing
+      end>
+    ItemAppearanceObjects.ItemEditObjects.ObjectsCollection = <
+      item
+        AppearanceObjectName = 'Text1'
+        AppearanceClassName = 'TTextObjectAppearance'
+      end>
+    ItemAppearanceObjects.HeaderObjects.Text.Visible = False
+    ItemAppearanceObjects.FooterObjects.Text.Visible = False
+    OnDblClick = lvFileBrowseDblClick
+    CanSwipeDelete = False
+    OnItemClickEx = lvFileBrowseItemClickEx
+    ShowSelection = False
+  end
+  object tbTop: TToolBar
+    Size.Width = 362.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object edDirectory: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 0
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 8.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 8.000000000000000000
+      Size.Width = 263.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object sbReload: TSpeedButton
+      Align = Right
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 322.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 35.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'refreshtoolbutton'
+      Text = 'sbReload'
+      OnClick = sbReloadClick
+    end
+    object lExt: TLabel
+      Align = Left
+      StyledSettings = [Family, Size, FontColor]
+      Size.Width = 49.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = '*.PDF'
+      TabOrder = 2
+      OnClick = lExtClick
+    end
+  end
+  object ImageList1: TImageList
+    Source = <
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              00A8494441545847ED98B10DC24010041FEA720F944229944442EE8002A01338
+              4B87649D0EEF9ABF970876A4D165DE49FD4D74309957F3B5D3B33984D9CC0619
+              874465438C17BFE5517188756148541C62FD501E158758D79446C521D6485954
+              1C62CD28898A43ACDFE88E8A43AC5BC0A883DF0CF4F15ED2EDA3DFBF41410805
+              2114845010424108052114845010424188ADA0A7DF11DCFCEEE2643ECCF51F45
+              85777379EA113FD0DA1BB15BB4FD6B96B5D00000000049454E44AE426082}
+            FileName = 'C:\temp\Logos\baseline_insert_drive_file_black_18dp.png'
+          end>
+        Name = 'baseline_insert_drive_file_black_18dp'
+      end
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              008C494441545847ED97B10D80300C0403F330023B300AC331000D1B30006C02
+              B6E482208B4F8103C59F747293C857268910F201BD388B47A1A318CA2A7A8B9F
+              0C8DF216961816E52D2B3524CA5B14E1247622C4BB1CA546653436AFE8C19A64
+              0DADCDDFC0200483100C423008C1200483100C427841BBCD1A2C361F19C44DBC
+              BFEEDE567F37FAE522845424A51358A0899FC96124CF0000000049454E44AE42
+              6082}
+            FileName = 'C:\temp\Logos\baseline_folder_black_18dp.png'
+          end>
+        Name = 'baseline_folder_black_18dp'
+      end>
+    Destination = <
+      item
+        Layers = <
+          item
+            Name = 'baseline_insert_drive_file_black_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'baseline_folder_black_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end>
+    Left = 48
+    Top = 176
+  end
+end

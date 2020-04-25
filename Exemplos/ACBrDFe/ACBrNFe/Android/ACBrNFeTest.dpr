@@ -4,7 +4,8 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   ACBrNFeTestFr in 'ACBrNFeTestFr.pas' {ACBrNFCeTestForm},
-  FileSelectFr in 'FileSelectFr.pas' {FileSelectForm};
+  FileSelectFr in 'FileSelectFr.pas' {FileSelectForm},
+  FileSelectFrame in 'FileSelectFrame.pas' {FrameFileSelect: TFrame};
 
 {$R *.res}
 

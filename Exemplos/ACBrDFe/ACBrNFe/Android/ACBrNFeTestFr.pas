@@ -4,14 +4,16 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl, FMX.StdCtrls, FMX.Controls.Presentation,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
+   FMX.StdCtrls, FMX.Controls.Presentation,
   FMX.Gestures, System.Actions, FMX.ActnList,
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
   FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
   ACBrMail, ACBrBase, ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
   ACBrNFeDANFeESCPOS, ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrIBGE, ACBrSocket,
-  ACBrCEP, FMX.Objects, FMX.Effects, FMX.Ani;
+  ACBrCEP, FMX.Objects, FMX.Effects, FMX.Ani,
+  System.Generics.Collections, FileSelectFrame;
 
 const
   VK_KEYBOARD_SISE = 250;
@@ -278,6 +280,18 @@ type
     FloatAnimation3: TFloatAnimation;
     FloatAnimation4: TFloatAnimation;
     SpeedButton2: TSpeedButton;
+    tabXMLs: TTabItem;
+    ToolBar5: TToolBar;
+    Label38: TLabel;
+    SpeedButton3: TSpeedButton;
+    ToolBar6: TToolBar;
+    GridPanelLayout2: TGridPanelLayout;
+    btPublic: TButton;
+    btTemp: TButton;
+    btDoctos: TButton;
+    btDown: TButton;
+    SpeedButton4: TSpeedButton;
+    fraXMLs: TFrameFileSelect;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -332,12 +346,17 @@ type
     procedure laBtnConfiguracaoClick(Sender: TObject);
     procedure laBtnLogsClick(Sender: TObject);
     procedure laBtnNotasEmtidasClick(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
     FcUF: Integer;
     FScrollBox: TCustomScrollBox;
+    FTabList: TList<TTabItem>;
+
+    procedure TabForward(ANewTab: TTabItem);
+    procedure TabBack;
 
     function CalcularNomeArqConfiguracao: String;
     procedure LerConfiguracao;
@@ -349,6 +368,7 @@ type
     procedure ConfigurarNFe;
 
     procedure CarregarImpressorasBth;
+    procedure CarregarNotas;
 
     procedure PedirPermissoesInternet;
     procedure IniciarTelaDeEspera(const AMsg: String = '');
@@ -368,7 +388,7 @@ var
 implementation
 
 uses
-  System.typinfo, System.IniFiles, System.StrUtils, System.Permissions,
+  System.typinfo, System.IniFiles, System.StrUtils, System.Permissions, System.IOUtils,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
   Androidapi.JNI.Widget, FMX.Helpers.Android,
@@ -403,6 +423,7 @@ var
   o: TACBrPosPaginaCodigo;
   p: TSSLType;
 begin
+  FTabList := TList<TTabItem>.Create;
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
   FcMunList := TStringList.Create;
   FcUF := 0;
@@ -453,6 +474,7 @@ end;
 procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
 begin
   FcMunList.Free;
+  FTabList.Free;
 end;
 
 procedure TACBrNFCeTestForm.PedirPermissoesInternet;
@@ -658,7 +680,7 @@ end;
 
 procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
 begin
-  tabsPrincipal.First;
+  TabBack;
 end;
 
 procedure TACBrNFCeTestForm.btnLimparClick(Sender: TObject);
@@ -676,6 +698,12 @@ procedure TACBrNFCeTestForm.btnVersaoOpenSSLClick(Sender: TObject);
 var
   AMsg: string;
 begin
+  if imgErrorCert.Visible then
+  begin
+    imgErrorCertClick(Sender);
+    Exit;
+  end;
+
   ConfigurarNFe;
   // Força novo Download, apaga Cache Local
   if not ACBrNFe1.Configuracoes.Certificados.URLPFX.IsEmpty then
@@ -692,7 +720,7 @@ begin
   mLog.Lines.Add('CNPJ/CPF: ' + ACBrNFe1.SSL.CertCNPJ);
   mLog.Lines.Add('Emissor: ' + ACBrNFe1.SSL.CertIssuerName);
   mLog.Lines.Add('Certificadora: ' + ACBrNFe1.SSL.CertCertificadora);
-  tabsPrincipal.ActiveTab := tabLog;
+  TabForward(tabLog);
 end;
 
 procedure TACBrNFCeTestForm.btSalvarConfigClick(Sender: TObject);
@@ -709,7 +737,10 @@ procedure TACBrNFCeTestForm.CarregarImpressorasBth;
 begin
   PedirPermissoesInternet;
   cbxImpressorasBth.Items.Clear;
-  ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+  try
+    ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+  except
+  end;
 end;
 
 procedure TACBrNFCeTestForm.CarregarListaDeCidades;
@@ -764,6 +795,13 @@ begin
   end;
 end;
 
+procedure TACBrNFCeTestForm.CarregarNotas;
+begin
+  fraXMLs.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
+  fraXMLs.FileMask := '*.xml';
+  fraXMLs.Execute;
+end;
+
 procedure TACBrNFCeTestForm.cbxEmitCidadeChange(Sender: TObject);
 var
   Ok: Boolean;
@@ -807,6 +845,11 @@ end;
 procedure TACBrNFCeTestForm.seProxyVerSenhaClick(Sender: TObject);
 begin
   edtProxyPass.Password := not seProxyVerSenha.IsPressed;
+end;
+
+procedure TACBrNFCeTestForm.SpeedButton4Click(Sender: TObject);
+begin
+  CarregarNotas;
 end;
 
 procedure TACBrNFCeTestForm.ConfigurarACBr;
@@ -863,6 +906,11 @@ begin
   ACBrNFe1.Configuracoes.WebServices.ProxyPort := Trunc(sbProxyPort.Value).ToString;
   ACBrNFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
   ACBrNFe1.Configuracoes.WebServices.ProxyPass := edtProxyPass.Text;
+
+  ACBrNFe1.Configuracoes.Arquivos.PathNFe := TPath.Combine(ApplicationPath, 'xml');
+  ACBrNFe1.Configuracoes.Arquivos.PathEvento := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
+  ACBrNFe1.Configuracoes.Arquivos.PathInu := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
+  ACBrNFe1.Configuracoes.Arquivos.PathSalvar := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
 end;
 
 procedure TACBrNFCeTestForm.ConfigurarPosPrinter;
@@ -1053,9 +1101,9 @@ begin
       end;
     end;
 
-    if (tabsPrincipal.ActiveTab <> tabMenu) then
+    if (FTabList.Count > 0) then
     begin
-      tabsPrincipal.First;
+      TabBack;
       Key := 0;
     end;
   end;
@@ -1244,39 +1292,47 @@ end;
 
 procedure TACBrNFCeTestForm.laBtnConfiguracaoClick(Sender: TObject);
 begin
-  tabsPrincipal.SetActiveTabWithTransition(tabConfig, TTabTransition.Slide) ;
+  TabForward(tabConfig) ;
 end;
 
 procedure TACBrNFCeTestForm.laBtnLogsClick(Sender: TObject);
 begin
-  tabsPrincipal.SetActiveTabWithTransition(tabLog, TTabTransition.Slide) ;
+  TabForward(tabLog) ;
 end;
 
 procedure TACBrNFCeTestForm.laBtnNotasEmtidasClick(Sender: TObject);
-var
-  FrSlect: TFileSelectForm;
 begin
-  FrSlect := TFileSelectForm.Create(Self);
-  FrSlect.InitialDir := ApplicationPath+'xml'+PathDelim;
-  FrSlect.ShowHidden := True;
-  FrSlect.FileMask := '*.xml';
-
-  FrSlect.ShowModal(
-    procedure(ModalResult : TModalResult)
-    var
-      AFile: string;
-    begin
-        if ModalResult = mrOK then
-        begin
-          // TODO: Ler e mostrar o XML
-        end
-      end
-    );
+  CarregarNotas;
+  TabForward(tabXMLs);
 end;
 
 procedure TACBrNFCeTestForm.laBtnTestesClick(Sender: TObject);
 begin
-  tabsPrincipal.SetActiveTabWithTransition(tabTeste, TTabTransition.Slide) ;
+  TabForward(tabTeste);
+end;
+
+procedure TACBrNFCeTestForm.TabForward(ANewTab: TTabItem);
+begin
+  FTabList.Add(tabsPrincipal.ActiveTab);
+  tabsPrincipal.SetActiveTabWithTransition( ANewTab,
+                                            TTabTransition.Slide) ;
+end;
+
+procedure TACBrNFCeTestForm.TabBack;
+var
+  OldTab: TTabItem;
+begin
+  if (FTabList.Count > 0) then
+  begin
+    OldTab := FTabList.Last;
+    FTabList.Delete(FTabList.Count-1);
+  end
+  else
+    OldTab := tabMenu;
+
+  tabsPrincipal.SetActiveTabWithTransition( OldTab,
+                                            TTabTransition.Slide,
+                                            TTabTransitionDirection.Reversed);
 end;
 
 procedure TACBrNFCeTestForm.TerminarTelaDeEspera;

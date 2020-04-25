@@ -2,8 +2,8 @@ object FileSelectForm: TFileSelectForm
   Left = 0
   Top = 0
   Caption = 'Selecione o Arquivo'
-  ClientHeight = 487
-  ClientWidth = 342
+  ClientHeight = 503
+  ClientWidth = 347
   Position = OwnerFormCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -11,305 +11,135 @@ object FileSelectForm: TFileSelectForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignerMasterStyle = 0
-  object ToolBar2: TToolBar
-    Size.Width = 342.000000000000000000
+  object tbBottom: TToolBar
+    Align = Bottom
+    Position.Y = 463.000000000000000000
+    Size.Width = 347.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
-    object btSelectDirectory: TCornerButton
-      Align = Left
-      Margins.Left = 5.000000000000000000
-      Margins.Top = 8.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 8.000000000000000000
-      Position.X = 5.000000000000000000
-      Position.Y = 8.000000000000000000
-      Sides = [Top, Left, Bottom, Right]
-      Size.Width = 30.000000000000000000
-      Size.Height = 24.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      Text = '...'
-      XRadius = 3.000000000000000000
-      YRadius = 3.000000000000000000
-      OnClick = btSelectDirectoryClick
-    end
-    object edDirectory: TEdit
-      Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 1
+    object GridPanelLayout1: TGridPanelLayout
       Align = Client
+      Size.Width = 347.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
       TabOrder = 1
-      Margins.Left = 5.000000000000000000
-      Margins.Top = 8.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 8.000000000000000000
-      Size.Width = 203.000000000000000000
-      Size.Height = 24.000000000000000000
-      Size.PlatformDefault = False
-    end
-    object SpeedButton1: TSpeedButton
-      Align = Right
-      Margins.Top = 5.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 5.000000000000000000
-      Position.X = 302.000000000000000000
-      Position.Y = 5.000000000000000000
-      Size.Width = 35.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'refreshtoolbutton'
-      Text = 'SpeedButton1'
-      OnClick = SpeedButton1Click
-    end
-    object lExt: TLabel
-      Align = Right
-      StyledSettings = [Family, Size, FontColor]
-      Position.X = 253.000000000000000000
-      Size.Width = 49.000000000000000000
-      Size.Height = 40.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.StyleExt = {00070000000000000004000000}
-      TextSettings.HorzAlign = Center
-      Text = '*.PDF'
-      TabOrder = 3
-    end
-  end
-  object lvFileBrowse: TListView
-    ItemAppearanceClassName = 'TDynamicAppearance'
-    ItemEditAppearanceClassName = 'TDynamicAppearance'
-    HeaderAppearanceClassName = 'TListHeaderObjects'
-    FooterAppearanceClassName = 'TListHeaderObjects'
-    AllowSelection = False
-    Images = ImageList1
-    Align = Client
-    Size.Width = 342.000000000000000000
-    Size.Height = 447.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 2
-    ItemAppearance.ItemHeight = 50
-    ItemAppearance.ItemEditHeight = 20
-    ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
-      item
-        AppearanceObjectName = 'FileName'
-        AppearanceClassName = 'TTextObjectAppearance'
-        Appearance.Font.Size = 15.000000000000000000
-        Appearance.TextAlign = Leading
-        Appearance.WordWrap = True
-        Appearance.Height = 44.000000000000000000
-        Appearance.PlaceOffset.X = 30.000000000000000000
-      end
-      item
-        AppearanceObjectName = 'FileSize'
-        AppearanceClassName = 'TTextObjectAppearance'
-        Appearance.Font.Size = 11.000000000000000000
-        Appearance.WordWrap = True
-        Appearance.Width = 65.000000000000000000
-        Appearance.Align = Trailing
-        Appearance.PlaceOffset.X = -93.000000000000000000
-      end
-      item
-        AppearanceObjectName = 'DateTime'
-        AppearanceClassName = 'TTextObjectAppearance'
-        Appearance.Font.Size = 11.000000000000000000
-        Appearance.WordWrap = True
-        Appearance.Width = 70.000000000000000000
-        Appearance.Align = Trailing
-        Appearance.PlaceOffset.X = -20.000000000000000000
-      end
-      item
-        AppearanceObjectName = 'ImgFileDir'
-        AppearanceClassName = 'TImageObjectAppearance'
-        Appearance.Width = 31.000000000000000000
-        Appearance.Height = 23.000000000000000000
-        Appearance.VertAlign = Center
-      end
-      item
-        AppearanceObjectName = 'AccessSelect'
-        AppearanceClassName = 'TAccessoryObjectAppearance'
-        Appearance.Width = 20.000000000000000000
-        Appearance.Align = Trailing
-      end>
-    ItemAppearanceObjects.ItemEditObjects.ObjectsCollection = <
-      item
-        AppearanceObjectName = 'Text1'
-        AppearanceClassName = 'TTextObjectAppearance'
-      end>
-    ItemAppearanceObjects.HeaderObjects.Text.Visible = False
-    ItemAppearanceObjects.FooterObjects.Text.Visible = False
-    OnDblClick = lvFileBrowseDblClick
-    CanSwipeDelete = False
-    OnItemClickEx = lvFileBrowseItemClickEx
-    ShowSelection = False
-    object ToolBar1: TToolBar
-      Align = Bottom
-      Position.Y = 407.000000000000000000
-      Size.Width = 342.000000000000000000
-      Size.Height = 40.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      object GridPanelLayout1: TGridPanelLayout
+      ColumnCollection = <
+        item
+          Value = 25.000000000000000000
+        end
+        item
+          Value = 25.000000000000000000
+        end
+        item
+          Value = 25.000000000000000000
+        end
+        item
+          Value = 25.000000000000000000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = btPublic
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = btTemp
+          Row = 0
+        end
+        item
+          Column = 2
+          Control = btDoctos
+          Row = 0
+        end
+        item
+          Column = 3
+          Control = btDown
+          Row = 0
+        end>
+      RowCollection = <
+        item
+          Value = 100.000000000000000000
+        end
+        item
+          SizeStyle = Auto
+        end>
+      object btPublic: TButton
         Align = Client
-        Size.Width = 342.000000000000000000
-        Size.Height = 40.000000000000000000
+        Margins.Left = 5.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 5.000000000000000000
+        Margins.Bottom = 5.000000000000000000
+        Size.Width = 76.750000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'P'#250'blico'
+        OnClick = btPublicClick
+      end
+      object btTemp: TButton
+        Align = Client
+        Margins.Left = 5.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 5.000000000000000000
+        Margins.Bottom = 5.000000000000000000
+        Size.Width = 76.750000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Temp'
+        OnClick = btTempClick
+      end
+      object btDoctos: TButton
+        Align = Client
+        Margins.Left = 5.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 5.000000000000000000
+        Margins.Bottom = 5.000000000000000000
+        Size.Width = 76.750000000000000000
+        Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
-        ColumnCollection = <
-          item
-            Value = 25.000000000000000000
-          end
-          item
-            Value = 25.000000000000000000
-          end
-          item
-            Value = 25.000000000000000000
-          end
-          item
-            Value = 25.000000000000000000
-          end>
-        ControlCollection = <
-          item
-            Column = 0
-            Control = btPublic
-            Row = 0
-          end
-          item
-            Column = 1
-            Control = btTemp
-            Row = 0
-          end
-          item
-            Column = 2
-            Control = btDoctos
-            Row = 0
-          end
-          item
-            Column = 3
-            Control = btDown
-            Row = 0
-          end>
-        RowCollection = <
-          item
-            Value = 100.000000000000000000
-          end
-          item
-            SizeStyle = Auto
-          end>
-        object btPublic: TButton
-          Align = Client
-          Margins.Left = 5.000000000000000000
-          Margins.Top = 5.000000000000000000
-          Margins.Right = 5.000000000000000000
-          Margins.Bottom = 5.000000000000000000
-          Size.Width = 75.500000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 3
-          Text = 'P'#250'blico'
-          OnClick = btPublicClick
-        end
-        object btTemp: TButton
-          Align = Client
-          Margins.Left = 5.000000000000000000
-          Margins.Top = 5.000000000000000000
-          Margins.Right = 5.000000000000000000
-          Margins.Bottom = 5.000000000000000000
-          Size.Width = 75.500000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 2
-          Text = 'Temp'
-          OnClick = btTempClick
-        end
-        object btDoctos: TButton
-          Align = Client
-          Margins.Left = 5.000000000000000000
-          Margins.Top = 5.000000000000000000
-          Margins.Right = 5.000000000000000000
-          Margins.Bottom = 5.000000000000000000
-          Size.Width = 75.500000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 1
-          Text = 'Doctos'
-          OnClick = btDoctosClick
-        end
-        object btDown: TButton
-          Align = Client
-          Margins.Left = 5.000000000000000000
-          Margins.Top = 5.000000000000000000
-          Margins.Right = 5.000000000000000000
-          Margins.Bottom = 5.000000000000000000
-          Size.Width = 75.500000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 0
-          Text = 'Download'
-          OnClick = btDownClick
-        end
+        Text = 'Doctos'
+        OnClick = btDoctosClick
+      end
+      object btDown: TButton
+        Align = Client
+        Margins.Left = 5.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 5.000000000000000000
+        Margins.Bottom = 5.000000000000000000
+        Size.Width = 76.750000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Download'
+        OnClick = btDownClick
       end
     end
   end
-  object ImageList1: TImageList
-    Source = <
-      item
-        MultiResBitmap.Height = 36
-        MultiResBitmap.Width = 36
-        MultiResBitmap.LoadSize = 0
-        MultiResBitmap = <
-          item
-            Width = 36
-            Height = 36
-            PNG = {
-              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
-              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              00A8494441545847ED98B10DC24010041FEA720F944229944442EE8002A01338
-              4B87649D0EEF9ABF970876A4D165DE49FD4D74309957F3B5D3B33984D9CC0619
-              874465438C17BFE5517188756148541C62FD501E158758D79446C521D6485954
-              1C62CD28898A43ACDFE88E8A43AC5BC0A883DF0CF4F15ED2EDA3DFBF41410805
-              2114845010424108052114845010424188ADA0A7DF11DCFCEEE2643ECCF51F45
-              85777379EA113FD0DA1BB15BB4FD6B96B5D00000000049454E44AE426082}
-            FileName = 'C:\temp\Logos\baseline_insert_drive_file_black_18dp.png'
-          end>
-        Name = 'baseline_insert_drive_file_black_18dp'
+  inline fraFileSelect: TFrameFileSelect
+    Align = Client
+    Size.Width = 347.000000000000000000
+    Size.Height = 463.000000000000000000
+    Size.PlatformDefault = False
+    inherited lvFileBrowse: TListView
+      Size.Width = 347.000000000000000000
+      OnItemClickEx = fraFileSelectlvFileBrowseItemClickEx
+    end
+    inherited tbTop: TToolBar
+      Size.Width = 347.000000000000000000
+      inherited edDirectory: TEdit
+        Size.Width = 248.000000000000000000
       end
-      item
-        MultiResBitmap.Height = 36
-        MultiResBitmap.Width = 36
-        MultiResBitmap.LoadSize = 0
-        MultiResBitmap = <
-          item
-            Width = 36
-            Height = 36
-            PNG = {
-              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
-              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              008C494441545847ED97B10D80300C0403F330023B300AC331000D1B30006C02
-              B6E482208B4F8103C59F747293C857268910F201BD388B47A1A318CA2A7A8B9F
-              0C8DF216961816E52D2B3524CA5B14E1247622C4BB1CA546653436AFE8C19A64
-              0DADCDDFC0200483100C423008C1200483100C427841BBCD1A2C361F19C44DBC
-              BFEEDE567F37FAE522845424A51358A0899FC96124CF0000000049454E44AE42
-              6082}
-            FileName = 'C:\temp\Logos\baseline_folder_black_18dp.png'
-          end>
-        Name = 'baseline_folder_black_18dp'
-      end>
-    Destination = <
-      item
-        Layers = <
-          item
-            Name = 'baseline_insert_drive_file_black_18dp'
-            SourceRect.Right = 36.000000000000000000
-            SourceRect.Bottom = 36.000000000000000000
-          end>
+      inherited sbReload: TSpeedButton
+        Position.X = 307.000000000000000000
+        OnClick = nil
       end
-      item
-        Layers = <
-          item
-            Name = 'baseline_folder_black_18dp'
-            SourceRect.Right = 36.000000000000000000
-            SourceRect.Bottom = 36.000000000000000000
-          end>
-      end>
-    Left = 48
-    Top = 176
+      inherited lExt: TLabel
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+    end
   end
 end

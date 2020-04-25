@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "ACBrLibBal Demo"
@@ -523,7 +523,7 @@ Private Sub Form_Load()
   End If
   
   
-  bal = CreateBAL(App.Path & "\ACBrLib.ini", "")
+  Set bal = CreateBAL(App.Path & "\ACBrLib.ini", "")
   bal.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", "4"
   bal.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
   bal.ConfigGravar
@@ -534,7 +534,7 @@ End Sub
 
 Private Sub Form_Terminate()
     Dim retorno As Long
-    retorno = bal.FinalizarLib
+    retorno = bal.FinalizarLib()
     CheckResult retorno
 End Sub
 
@@ -543,30 +543,30 @@ Private Sub LoadConfig()
   bal.ConfigLer
   ComModelo.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL, "Modelo"))
   ComPorta.Text = bal.ConfigLerValor(SESSAO_BAL, "Porta")
-  ComBaud.Text = bal.ConfigLerValor(SESSAO_BAL_Device, "Baud")
-  ComData.Text = bal.ConfigLerValor(SESSAO_BAL_Device, "Data")
-  ComParity.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "Parity"))
-  ComStop.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "Stop"))
-  updMaxBandwidth.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "MaxBandwidth"))
-  updSendBytesCount.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "SendBytesCount"))
-  updSendBytesInterval.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "SendBytesInterval"))
-  ComHandShake.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "HandShake"))
-  chkSoftFlow.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "SoftFlow"))
-  chkHardFlow.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_Device, "HardFlow"))
+  ComBaud.Text = bal.ConfigLerValor(SESSAO_BAL_DEVICE, "Baud")
+  ComData.Text = bal.ConfigLerValor(SESSAO_BAL_DEVICE, "Data")
+  ComParity.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "Parity"))
+  ComStop.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "Stop"))
+  updMaxBandwidth.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "MaxBandwidth"))
+  updSendBytesCount.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "SendBytesCount"))
+  updSendBytesInterval.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "SendBytesInterval"))
+  ComHandShake.ListIndex = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "HandShake"))
+  chkSoftFlow.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "SoftFlow"))
+  chkHardFlow.Value = CLng(bal.ConfigLerValor(SESSAO_BAL_DEVICE, "HardFlow"))
 End Sub
 
 Public Sub SaveConfig()
     bal.ConfigGravarValor SESSAO_BAL, "Modelo", CStr(ComModelo.ListIndex)
     bal.ConfigGravarValor SESSAO_BAL, "Porta", ComPorta.Text
-    bal.ConfigGravarValor SESSAO_BAL_Device, "Baud", ComBaud.Text
-    bal.ConfigGravarValor SESSAO_BAL_Device, "Data", ComDataText
-    bal.ConfigGravarValor SESSAO_BAL_Device, "Parity", CStr(ComParity.ListIndex)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "Stop", CStr(ComStop.ListIndex)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "MaxBandwidth", CStr(updMaxBandwidth.Value)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "SendBytesCount", CStr(updSendBytesCount.Value)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "SendBytesInterval", CStr(updSendBytesInterval.Value)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "HandShake", CStr(ComHandShake.ListIndex)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "SoftFlow", CStr(chkSoftFlow.Value)
-    bal.ConfigGravarValor SESSAO_BAL_Device, "HardFlow", CStr(chkHardFlow.Value)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Baud", ComBaud.Text
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Data", ComDataText
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Parity", CStr(ComParity.ListIndex)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Stop", CStr(ComStop.ListIndex)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "MaxBandwidth", CStr(updMaxBandwidth.Value)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "SendBytesCount", CStr(updSendBytesCount.Value)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "SendBytesInterval", CStr(updSendBytesInterval.Value)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "HandShake", CStr(ComHandShake.ListIndex)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "SoftFlow", CStr(chkSoftFlow.Value)
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "HardFlow", CStr(chkHardFlow.Value)
     bal.ConfigGravar
 End Sub

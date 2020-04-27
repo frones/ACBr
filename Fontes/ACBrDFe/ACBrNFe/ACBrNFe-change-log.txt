@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2020
+-- ACBrNFeServicos --
+[*] Correção da URL do QR-Code (NFC-e) do Distrito Federal.
+   Por: Big Wings
+
 13/04/2020
 -- Diversos --
 [*] Melhorias no método EnviarEmailEvento.

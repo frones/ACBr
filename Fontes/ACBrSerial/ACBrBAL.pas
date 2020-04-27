@@ -61,7 +61,7 @@ TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2090, balToledo218
                   balRinnert, balMuller, balSaturno, balAFTS, balGenerica, balLibratek,
                   balMicheletti, balAlfa, balToledo9091_8530_8540, balWeightechWT1000,
                   balMarelCG62XL, balWeightechWT3000_ABS, balToledo2090N, balToledoBCS21,
-                  balPrecision, balDigitron_UL, balLibratekWT3000IR);
+                  balPrecision, balDigitron_UL, balLibratekWT3000IR, balToledoTi420);
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { Componente ACBrBAL }
@@ -149,7 +149,7 @@ uses
   ACBrBALMicheletti, ACBrBALAlfa, ACBrBALToledo9091_8530_8540,
   ACBrBALWeightechWT1000, ACBrBALMarelCG62XL, ACBrBALWeightechWT3000_ABS,
   ACBrBALToledo2090N, ACBrBALToledoBCS21, ACBrBALPrecision,
-  ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR,
+  ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR, ACBrBALToledoTi420,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 
 { TACBrBAL }
@@ -244,13 +244,14 @@ begin
      balAlfa        : fsBAL := TACBrBALAlfa.Create(Self);
      balToledo2090N : fsBAL := TACBrBALToledo2090N.Create(Self);
      balToledoBCS21 : fsBAL := TACBrBALToledoBCS21.Create(Self);
-     balPrecision   : fsBAL := TACBrBALPrecision.Create(Self);	 
+     balPrecision   : fsBAL := TACBrBALPrecision.Create(Self);
      balToledo9091_8530_8540 : fsBAL := TACBrBALToledo9091_8530_8540.Create(Self);
      balWeightechWT1000      : fsBAL := TACBrBALWeightechWT1000.Create(Self);
      balMarelCG62XL          : fsBAL := TACBrBALMarelCG62XL.Create(Self);
      balWeightechWT3000_ABS  : fsBAL := TACBrBALWeightechWT3000_ABS.Create(Self);
      balDigitron_UL          : fsBAL := TACBrBALDigitron_UL.Create(Self);
      balLibratekWT3000IR     : fsBAL := TACBrBALLibratekWT3000IR.Create(Self);
+     balToledoTi420          : fsBAL := TACBrBALToledoTi420.Create(self);
   else
      fsBAL := TACBrBALClass.Create(Self);
   end;

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2020
+-- pcnConversao/pcnGerador/pcnLeitor --
+[+] Acrescentado o tipo de conversão tcDe8 que é utilizado em algumas tags do
+    NF3e.
+   Por: Italo Jurisato Junior
+
 23/03/2020
 -- pcnGerador --
 [*] Removido os métodos wGrupoNFSe e wCampoNFSe, agora os métodos wGrupo e wCampo,

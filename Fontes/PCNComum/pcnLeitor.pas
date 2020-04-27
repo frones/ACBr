@@ -279,7 +279,7 @@ begin
           result := 0;
       end;
 
-    tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe6, tcDe8, tcDe10:
       begin
         if length(ConteudoTag)>0 then
           result := StringToFloatDef(ConteudoTag, 0)

@@ -58,8 +58,10 @@ uses
 type
 
   TDetFormato   = (tdetInteger,tdetMascara);
-  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4, tcDe10,
-                   tcHor, tcDe6, tcDatCFe, tcHorCFe, tcDatVcto, tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr); // tcEsp = String: somente numeros;
+                  // tcEsp = String: somente numeros;
+  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
+                   tcDe6, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
+                   tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr);
   TpcnFormatoGravacao = (fgXML, fgTXT);
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);
 
@@ -133,7 +135,7 @@ type
                   teAutorizadoSubcontratacao, teautorizadoServMultimodal, teCancSubst,
                   teAlteracaoPoltrona, teComprEntrega, teCancComprEntrega,
                   teInclusaoDFe, teAutorizadoSubstituicao, teAutorizadoAjuste,
-                  teLiberacaoPrazoCancelado, tePagamentoOperacao);
+                  teLiberacaoPrazoCancelado, tePagamentoOperacao, teExcessoBagagem);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -197,7 +199,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..61] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..62] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -217,7 +219,7 @@ const
                                                 '440150', '440160', '110112',
                                                 '110116', '110180', '110181',
                                                 '110115', '240140', '240150',
-                                                '240170', '110116');
+                                                '240170', '110116', '110117');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1100,7 +1102,7 @@ begin
               'CTeAnulacao', 'LiberacaoEPEC', 'LiberacaoPrazoCanc',
               'AutorizadoRedespacho', 'AutorizadoRedespIntermed', 'AutorizadoSubcontratacao',
               'AutorizadoServMultimodal', 'CancelamentoPorSubstituicao',
-              'AlteracaoPoltrona'],
+              'AlteracaoPoltrona', 'ExcessoBagagem'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1118,7 +1120,8 @@ begin
               teCancCteComplementar, teCTeSubstituicao,
               teCTeAnulacao, teLiberacaoEPEC, teLiberacaoPrazoCanc,
               teAutorizadoRedespacho, teautorizadoRedespIntermed, teAutorizadoSubcontratacao,
-              teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona]);
+              teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
+              teExcessoBagagem]);
 end;
 
 

@@ -77,7 +77,7 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamCIOT: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function Enviar: Boolean;
+    function Enviar(const ANomePDF: String = ''): Boolean;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -300,7 +300,7 @@ begin
   end;
 end;
 
-function TACBrCIOT.Enviar: Boolean;
+function TACBrCIOT.Enviar(const ANomePDF: String = ''): Boolean;
 begin
   if Contratos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum CIOT adicionado'));
@@ -311,7 +311,7 @@ begin
 
   Contratos.Assinar;
 
-  Result := WebServices.Envia;
+  Result := WebServices.Envia(ANomePDF);
 end;
 
 end.

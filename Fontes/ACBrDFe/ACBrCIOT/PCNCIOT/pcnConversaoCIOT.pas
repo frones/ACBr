@@ -60,7 +60,7 @@ type
                 opCancelarPagamento, opEncerrar, opConsultarTipoCarga,
                 opAlterarDataLiberacaoPagamento);
 
-  tpTipoConta = (tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
+  tpTipoConta = (tcIndefinido, tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
 
   tpTipoEmbalagem = (teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
                      teSaco, teCaixa, teUnitario, teFardo, teTanque);
@@ -73,11 +73,15 @@ type
 
   TpTipoProporcao = (tpNenhum, tpPorcentagem, tpValorAbsoluto);
 
+  TpTipoTolerancia = (ttNenhum, ttPorcentagem, ttValorAbsoluto);
+
+  TpTipoAbono = (taNenhum, taPorcentagem, taValorAbsoluto, taPeso);
+
   TpDiferencaFrete = (SemDiferenca, SomenteUltrapassado, Integral);
 
   TpDiferencaFreteBaseCalculo = (QuantidadeDesembarque, QuantidadeMenor);
 
-  TpTipoPagamento = (TransferenciaBancaria, eFRETE);
+  TpTipoPagamento = (TransferenciaBancaria, eFRETE, Parceiro, Outros);
 
   TpTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao,
                               tcpSemCategoria, tcpFrota);
@@ -142,6 +146,12 @@ function StrToTpVgTipoCalculo(out ok: Boolean; const s: String): TpViagemTipoDeC
 
 function TpProporcaoToStr(const t: TpTipoProporcao): string;
 function StrToTpProporcao(out ok: Boolean; const s: String): TpTipoProporcao;
+
+function TpToleraciaToStr(const t: TpTipoTolerancia): string;
+function StrToTpTolerancia(out ok: Boolean; const s: String): TpTipoTolerancia;
+
+function TpAbonoToStr(const t: TpTipoAbono): string;
+function StrToTpAbono(out ok: Boolean; const s: String): TpTipoAbono;
 
 function TpDifFreteToStr(const t: TpDiferencaFrete): string;
 function StrToTpDifFrete(out ok: Boolean; const s: String): TpDiferencaFrete;
@@ -282,68 +292,68 @@ end;
 
 function TipoContaToStr(const t: tpTipoConta): string;
 begin
-  Result := EnumeradoToStr(t, ['ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
-                          [tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
+  Result := EnumeradoToStr(t, ['Indefinido', 'ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
+                          [tcIndefinido, tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
 end;
 
 function StrToTipoConta(out ok: Boolean; const s: String): tpTipoConta;
 begin
-  Result := StrToEnumerado(ok, s,  ['ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
-                           [tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
+  Result := StrToEnumerado(ok, s,  ['Indefinido', 'ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
+                           [tcIndefinido, tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
 end;
 
 function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
 begin
   Result := EnumeradoToStr(t, ['Indefinido', 'Bigbag', 'Pallet', 'Granel', 
                                'Container', 'Saco', 'Caixa', 'Unitario', 
-							   'Fardo', 'Tanque'],
-                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
+                               'Fardo', 'Tanque'],
+                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer,
                            teSaco, teCaixa, teUnitario, teFardo, teTanque]);
 end;
 
 function StrToTipoEmbalagem(out ok: Boolean; const s: String): tpTipoEmbalagem;
 begin
-  Result := StrToEnumerado(ok, s, ['Indefinido', 'Bigbag', 'Pallet', 'Granel', 
-                                   'Container', 'Saco', 'Caixa', 'Unitario', 
-							       'Fardo', 'Tanque'],
-                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer, 
+  Result := StrToEnumerado(ok, s, ['Indefinido', 'Bigbag', 'Pallet', 'Granel',
+                                   'Container', 'Saco', 'Caixa', 'Unitario',
+                                   'Fardo', 'Tanque'],
+                          [teIndefinido, teBigbag, tePallet, teGranel, teContainer,
                            teSaco, teCaixa, teUnitario, teFardo, teTanque]);
 end;
 
 function TipoViagemCIOTToStr(const t: TpTipoViagem): String;
 begin
-  Result := EnumeradoToStr(t, ['Padrao', 'TAC_Agregado', 'Frota'],
-                              [Padrao, TAC_Agregado, Frota]);
+  Result := EnumeradoToStr(t, ['Indefinido', 'Padrao', 'TAC_Agregado', 'Frota'],
+                              [Indefinido, Padrao, TAC_Agregado, Frota]);
 end;
 
 function StrToTipoViagemCIOT(out ok: Boolean; const s: String): TpTipoViagem;
 begin
-  result := StrToEnumerado(ok, s,  ['Padrao', 'TAC_Agregado', 'Frota'],
-                              [Padrao, TAC_Agregado, Frota]);
+  result := StrToEnumerado(ok, s,  ['Indefinido', 'Padrao', 'TAC_Agregado', 'Frota'],
+                              [Indefinido, Padrao, TAC_Agregado, Frota]);
 end;
 
 function TpPagamentoToStr(const t: TpTipoPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['TransferenciaBancaria', 'eFRETE'],
-                              [TransferenciaBancaria, eFRETE]);
+  result := EnumeradoToStr(t, ['TransferenciaBancaria', 'eFRETE', 'Parceiro', 'Outros'],
+                              [TransferenciaBancaria, eFRETE, Parceiro, Outros]);
 end;
 
 function StrToTpPagamento(out ok: Boolean; const s: String): TpTipoPagamento;
 begin
-  Result := StrToEnumerado(ok, s, ['TransferenciaBancaria', 'eFRETE'],
-                                  [TransferenciaBancaria, eFRETE]);
+  Result := StrToEnumerado(ok, s, ['TransferenciaBancaria', 'eFRETE', 'Parceiro', 'Outros'],
+                                  [TransferenciaBancaria, eFRETE, Parceiro, Outros]);
 end;
 
 function TpUnMedMercToStr(const t: TpUnidadeDeMedidaDaMercadoria): string;
 begin
-  result := EnumeradoToStr(t, ['Tonelada', 'Kg'],
-                              [umTonelada, umKg]);
+  result := EnumeradoToStr(t, ['Indefinido', 'Tonelada', 'Kg'],
+                              [umIndefinido, umTonelada, umKg]);
 end;
 
 function StrToTpUnMedMerc(out ok: Boolean; const s: String): TpUnidadeDeMedidaDaMercadoria;
 begin
-  result := StrToEnumerado(ok, s,['Tonelada', 'Kg'],
-                              [umTonelada, umKg]);
+  result := StrToEnumerado(ok, s,['Indefinido', 'Tonelada', 'Kg'],
+                              [umIndefinido, umTonelada, umKg]);
 end;
 
 function TpVgTipoCalculoToStr(const t: TpViagemTipoDeCalculo): string;
@@ -360,14 +370,38 @@ end;
 
 function TpProporcaoToStr(const t: TpTipoProporcao): string;
 begin
-  result := EnumeradoToStr(t, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
+  result := EnumeradoToStr(t, ['Nenhum', 'Porcentagem', 'Absoluto'],
                               [tpNenhum, tpPorcentagem, tpValorAbsoluto]);
 end;
 
 function StrToTpProporcao(out ok: Boolean; const s: String): TpTipoProporcao;
 begin
-  Result := StrToEnumerado(ok, s, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
+  Result := StrToEnumerado(ok, s, ['Nenhum', 'Porcentagem', 'Absoluto'],
                                   [tpNenhum, tpPorcentagem, tpValorAbsoluto]);
+end;
+
+function TpToleraciaToStr(const t: TpTipoTolerancia): string;
+begin
+  result := EnumeradoToStr(t, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
+                              [ttNenhum, ttPorcentagem, ttValorAbsoluto]);
+end;
+
+function StrToTpTolerancia(out ok: Boolean; const s: String): TpTipoTolerancia;
+begin
+  Result := StrToEnumerado(ok, s, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
+                                  [ttNenhum, ttPorcentagem, ttValorAbsoluto]);
+end;
+
+function TpAbonoToStr(const t: TpTipoAbono): string;
+begin
+  result := EnumeradoToStr(t, ['Nenhum', 'Porcentagem', 'ValorAbsoluto', 'Peso'],
+                              [taNenhum, taPorcentagem, taValorAbsoluto, taPeso]);
+end;
+
+function StrToTpAbono(out ok: Boolean; const s: String): TpTipoAbono;
+begin
+  Result := StrToEnumerado(ok, s, ['Nenhum', 'Porcentagem', 'ValorAbsoluto', 'Peso'],
+                                  [taNenhum, taPorcentagem, taValorAbsoluto, taPeso]);
 end;
 
 function TpDifFreteToStr(const t: TpDiferencaFrete): string;

@@ -79,6 +79,7 @@ type
     FContratos: TContratos;
     FRetornoEnvio: TRetornoEnvio;
     FCodRetorno: Integer;
+    FNomePDF: string;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -96,6 +97,7 @@ type
 
     property RetornoEnvio: TRetornoEnvio read FRetornoEnvio;
     property CodRetorno: Integer         read FCodRetorno     write FCodRetorno;
+    property NomePDF: string             read FNomePDF        write FNomePDF;
   end;
 
   { TCIOTEnvioWebService }
@@ -136,7 +138,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia: Boolean;
+    function Envia(const ANomePDF: String = ''): Boolean;
 
     property ACBrCIOT: TACBrDFe                   read FACBrCIOT         write FACBrCIOT;
     property CIOTEnviar: TCIOTEnviar              read FCIOTEnviar       write FCIOTEnviar;
@@ -373,8 +375,10 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia: Boolean;
+function TWebServices.Envia(const ANomePDF: String = ''): Boolean;
 begin
+  CIOTEnviar.NomePDF := ANomePDF;
+
   if not CIOTEnviar.Executar then
     CIOTEnviar.GerarException( CIOTEnviar.Msg );
 
@@ -671,7 +675,11 @@ begin
 
   if FRetornoEnvio.RetEnvio.PDF <> '' then
   begin
-    NomeArq := GerarPathDownload + FRetornoEnvio.RetEnvio.ProtocoloServico + '.pdf';
+    if FNomePDF = '' then
+      NomeArq := GerarPathDownload + FRetornoEnvio.RetEnvio.ProtocoloServico + '.pdf'
+    else
+      NomeArq := GerarPathDownload + FNomePDF + '.pdf';
+
     WriteToTXT(NomeArq, FRetornoEnvio.RetEnvio.PDF, False, False, True);
   end;
 

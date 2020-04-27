@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2020
+-- ACBrCIOT/ACBrCIOTWebServices --
+[+] Acrescentado o parâmetro: ANomePDF no método Enviar, com a finalidade de
+    podermos escolher com que nome desejamos salvar o PDF obtido através do
+    envio da operação para Obter o PDF da Operação do Transporte.
+    Se não for informado um nome o nome do PDF vai ser o numero do protocolo
+    do serviço. 
+   Por: Italo Jurisato Junior
+
 14/04/2020
 -- pcnConversaoCIOT --
 [+] Acrescentado novos enumeradores ao Tipo de Embalagem.

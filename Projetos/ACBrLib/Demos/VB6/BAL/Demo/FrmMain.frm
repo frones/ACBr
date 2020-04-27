@@ -533,9 +533,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Terminate()
-    Dim retorno As Long
-    retorno = bal.FinalizarLib()
-    CheckResult retorno
+    bal.FinalizarLib
 End Sub
 
 Private Sub LoadConfig()

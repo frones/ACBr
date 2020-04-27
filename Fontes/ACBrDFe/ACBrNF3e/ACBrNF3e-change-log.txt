@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2020
+-- Diversos --
+[*] Alterações para deixar o componente em conformidade com a NT 2020/002.
+   Por: Italo Jurisato Junior
+
 13/04/2020
 -- Diversos --
 [*] Melhorias no método EnviarEmailEvento.

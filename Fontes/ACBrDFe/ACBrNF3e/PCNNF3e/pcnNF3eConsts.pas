@@ -119,6 +119,7 @@ const
   DSC_VMED = 'Valor da Medição';
   DSC_PPERDATRAN = 'Percentual da Perda de Transformação';
   DSC_VMEDPERDATRAN = 'Valor Medido após perda de Transformação';
+  DSC_VMEDPERDATEC = 'Valor Medido após perda Técnica';
   DSC_TPMOTNAOLEITURA = 'Tipo do Motivo da não Leitura';
   DSC_PFCP = 'Percentual do Fundo de Combate a Pobreza';
   DSC_PICMSST = 'Percentual do ICMS ST';

@@ -191,7 +191,7 @@ begin
     if Leitor.rExtrai(2, 'gNF') <> '' then
     begin
       NF3e.gSub.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
-      NF3e.gSub.serie := Leitor.rCampo(tcInt, 'serie');
+      NF3e.gSub.serie := Leitor.rCampo(tcStr, 'serie');
       NF3e.gSub.nNF   := Leitor.rCampo(tcInt, 'nNF');
 
       xData := Leitor.rCampo(tcStr, 'CompetEmis');
@@ -380,6 +380,7 @@ begin
               NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMed            := Leitor.rCampo(tcDe2, 'vMed');
               NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.pPerdaTran      := Leitor.rCampo(tcDe2, 'pPerdaTran');
               NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedPerdaTran   := Leitor.rCampo(tcDe2, 'vMedPerdaTran');
+              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedPerdaTec    := Leitor.rCampo(tcDe2, 'vMedPerdaTec');
             end;
           end;
         end;

@@ -819,13 +819,16 @@ procedure TDFeSSLCryptClass.CarregarCertificadoDeURLPFX;
 var
   UsarCertificadoLocal, UsarCertificadoConexao: Boolean;
   DataArquivoPFX: TDateTime;
-  AArquivoPFX, AURLPFX: String;
-  ADadosPFX: AnsiString;
+  OldArquivoPFX, OldURLPFX, OldCNPJ: String;
+  OldDadosPFX, DownloadDadosPFX: AnsiString;
   DiasRestantes: Integer;
 begin
-  AArquivoPFX := FpDFeSSL.ArquivoPFX;
-  AURLPFX := FpDFeSSL.URLPFX;
-  UsarCertificadoLocal := (not EstaVazio(AArquivoPFX)) and FileExists(AArquivoPFX);
+  OldArquivoPFX := FpDFeSSL.ArquivoPFX;
+  OldURLPFX     := FpDFeSSL.URLPFX;
+  OldDadosPFX   := FpDFeSSL.DadosPFX;
+  DownloadDadosPFX := '';
+  OldCNPJ := '';
+  UsarCertificadoLocal := (not EstaVazio(OldArquivoPFX)) and FileExists(OldArquivoPFX);
 
   if UsarCertificadoLocal then
   begin
@@ -833,12 +836,13 @@ begin
     LerInfoCertificadoCarregado;
     // Verifica se Certificado está vencendo. Se estiver, deve tentar baixar outro //
     DiasRestantes := Trunc(CertDataVenc) - Trunc(Today);
+    OldCNPJ := CertCNPJ;
     UsarCertificadoLocal := (DiasRestantes > CDiasRestantesBuscarNovoCeriticado);
 
     // Verificando se já baixou Certitificado, hoje. Se SIM, não deve baixar novamente //
     if not UsarCertificadoLocal then
     begin
-      DataArquivoPFX := FileDateToDateTime(FileAge(AArquivoPFX));
+      DataArquivoPFX := FileDateToDateTime(FileAge(OldArquivoPFX));
       UsarCertificadoLocal := (DateOf(DataArquivoPFX) >= Today);
     end;
   end;
@@ -848,26 +852,35 @@ begin
     UsarCertificadoConexao := FpDFeSSL.UseCertificateHTTP;
     try
       FpDFeSSL.UseCertificateHTTP := False;
-      ADadosPFX := FpDFeSSL.HTTPGet(AURLPFX);  // Faz Download do PFX
+      DownloadDadosPFX := FpDFeSSL.HTTPGet(OldURLPFX);  // Faz Download do PFX
+      if not (FpDFeSSL.SSLHttpClass.HTTPResultCode in [200..202]) then  // Erro na resposta
+        raise EACBrDFeException.CreateFmt('Http erro %d, baixando Certificado de %s',
+                                         [FpDFeSSL.SSLHttpClass.HTTPResultCode,
+                                          OldURLPFX]);
     finally
       FpDFeSSL.UseCertificateHTTP := UsarCertificadoConexao;
     end;
 
-    if not EstaVazio(ADadosPFX) then
+    if EstaVazio(DownloadDadosPFX) then
+      raise EACBrDFeException.CreateFmt(ACBrStr('Certificado obtido de %s é inválido'),[OldURLPFX]);
+
+    // Testando se Certificado baixado, é válido...
+    try
+      FpDFeSSL.DadosPFX := DownloadDadosPFX;
+      DescarregarCertificado;
+      CarregarCertificadoDeDadosPFX;
+    except
+      raise EACBrDFeException.CreateFmt(ACBrStr('Certificado obtido de %s é inválido'),[OldURLPFX]);
+    end;
+
+    if (OldCNPJ <> '') and (CertCNPJ <> OldCNPJ) then
+      raise  EACBrDFeException.CreateFmt(ACBrStr('CNPJ do Certificado obtido de %s é diferente do CNPJ atual'),[OldURLPFX]);
+
+    // Certificado lido com sucesso... Devemos salvar uma Copia Local ?
+    if (not EstaVazio(DownloadDadosPFX)) and (not EstaVazio(OldArquivoPFX)) then
     begin
-      if not EstaVazio(AArquivoPFX) then   // Salva Copia Local ?
-      begin
-        SysUtils.DeleteFile(AArquivoPFX);
-        WriteToFile(AArquivoPFX, ADadosPFX, True);
-        DescarregarCertificado;
-        CarregarCertificadoDeArquivoPFX;
-      end
-      else
-      begin
-        FpDFeSSL.DadosPFX := ADadosPFX;
-        DescarregarCertificado;
-        CarregarCertificadoDeDadosPFX;
-      end;
+      SysUtils.DeleteFile(OldArquivoPFX);
+      WriteToFile(OldArquivoPFX, DownloadDadosPFX, True);
     end;
   end;
 end;
@@ -1036,7 +1049,7 @@ begin
 
   // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-  if not (FpHTTPResultCode in [200, 201, 202]) then
+  if not (FpHTTPResultCode in [200..202]) then
     raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
                                        [FpInternalErrorCode, FpHTTPResultCode, FURL] )
                                        + sLineBreak + LastErrorDesc);

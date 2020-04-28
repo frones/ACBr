@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2020
+-- ACBrDFeSSL --
+[*] Melhoria na rotina de Download do Certificado por URLPFX
+    - Adicionada verificação do código de retorno HTTP
+    - Adicionada verificação da integridade do Certificado baixado
+    - Adicionada verificação do CNPJ, do novo Certificado
+    O Certificado antigo, somente será substituido, se as condições acima foram
+    válidas e o Faltarem menos de 10 dias para o vencimento do Certificado em
+    ArquivoPFX
+    (por: DSA)
+
 13/04/2020
 -- ACBrXmlDocument --
 [-] Correção na passagem de parametros do método: AddChild.

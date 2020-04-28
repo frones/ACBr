@@ -3,7 +3,7 @@ object FileSelectForm: TFileSelectForm
   Top = 0
   Caption = 'Selecione o Arquivo'
   ClientHeight = 503
-  ClientWidth = 341
+  ClientWidth = 337
   Position = OwnerFormCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -14,13 +14,13 @@ object FileSelectForm: TFileSelectForm
   object tbBottom: TToolBar
     Align = Bottom
     Position.Y = 463.000000000000000000
-    Size.Width = 341.000000000000000000
+    Size.Width = 337.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     object GridPanelLayout1: TGridPanelLayout
       Align = Client
-      Size.Width = 341.000000000000000000
+      Size.Width = 337.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
@@ -71,7 +71,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 75.250000000000000000
+        Size.Width = 74.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 3
@@ -84,7 +84,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 75.250000000000000000
+        Size.Width = 74.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
@@ -97,7 +97,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 75.250000000000000000
+        Size.Width = 74.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
@@ -110,7 +110,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 75.250000000000000000
+        Size.Width = 74.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -121,24 +121,71 @@ object FileSelectForm: TFileSelectForm
   end
   inline fraFileSelect: TFrameFileSelect
     Align = Client
-    Size.Width = 341.000000000000000000
+    Size.Width = 337.000000000000000000
     Size.Height = 463.000000000000000000
     Size.PlatformDefault = False
     inherited lvFileBrowse: TListView
-      Size.Width = 341.000000000000000000
+      Size.Width = 337.000000000000000000
+      ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
+        item
+          AppearanceObjectName = 'FileName'
+          AppearanceClassName = 'TTextObjectAppearance'
+          Appearance.Font.Size = 15.000000000000000000
+          Appearance.TextAlign = Leading
+          Appearance.WordWrap = True
+          Appearance.Width = 265.000000000000000000
+          Appearance.Height = 50.000000000000000000
+          Appearance.PlaceOffset.X = 30.000000000000000000
+        end
+        item
+          AppearanceObjectName = 'FileSize'
+          AppearanceClassName = 'TTextObjectAppearance'
+          Appearance.Font.Size = 11.000000000000000000
+          Appearance.WordWrap = True
+          Appearance.Width = 65.000000000000000000
+          Appearance.Height = 50.000000000000000000
+          Appearance.Align = Trailing
+          Appearance.PlaceOffset.X = -69.000000000000000000
+        end
+        item
+          AppearanceObjectName = 'DateTime'
+          AppearanceClassName = 'TTextObjectAppearance'
+          Appearance.Font.Size = 11.000000000000000000
+          Appearance.WordWrap = True
+          Appearance.Width = 50.000000000000000000
+          Appearance.Height = 50.000000000000000000
+          Appearance.Align = Trailing
+          Appearance.PlaceOffset.X = -16.000000000000000000
+        end
+        item
+          AppearanceObjectName = 'ImgFileDir'
+          AppearanceClassName = 'TImageObjectAppearance'
+          Appearance.Width = 31.000000000000000000
+          Appearance.Height = 23.000000000000000000
+          Appearance.VertAlign = Center
+        end
+        item
+          AppearanceObjectName = 'AccessSelect'
+          AppearanceClassName = 'TAccessoryObjectAppearance'
+          Appearance.Width = 20.000000000000000000
+          Appearance.Align = Trailing
+        end>
       OnItemClickEx = fraFileSelectlvFileBrowseItemClickEx
     end
-    inherited tbTop: TToolBar
-      Size.Width = 341.000000000000000000
+    inherited tbPaths: TToolBar
+      Size.Width = 337.000000000000000000
       inherited lExt: TLabel
         Padding.Left = 5.000000000000000000
         Padding.Right = 5.000000000000000000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
       end
-      inherited hbPath: THorzScrollBox
-        Size.Width = 291.000000000000000000
-        Viewport.Width = 291.000000000000000000
+      inherited hScrollboxPath: THorzScrollBox
+        Size.Width = 245.000000000000000000
+        Viewport.Width = 245.000000000000000000
         Viewport.Height = 41.000000000000000000
+      end
+      inherited sbPathScrollRight: TSpeedButton
+        Position.X = 316.000000000000000000
       end
     end
   end

@@ -32,45 +32,11 @@ type
     ImageList1: TImageList;
     StyleBook1: TStyleBook;
     ACBrMail1: TACBrMail;
-    lbTestes: TListBox;
-    ListBoxGroupHeader5: TListBoxGroupHeader;
-    lbiOpcoes: TListBoxItem;
-    GridPanelLayout3: TGridPanelLayout;
-    cbUsarTXT: TCheckBox;
-    cbUsarHTML: TCheckBox;
-    cbAddImgHTML: TCheckBox;
-    cbAddImgAtt: TCheckBox;
-    cbAddPDF: TCheckBox;
-    cbAddXML: TCheckBox;
-    cbUsarThread: TCheckBox;
-    ListBoxGroupHeader7: TListBoxGroupHeader;
-    libDestinatarioAssunto: TListBoxItem;
-    GridPanelLayout4: TGridPanelLayout;
-    Label7: TLabel;
-    edtAddressEmail: TEdit;
-    Label12: TLabel;
-    edtAddressName: TEdit;
     tabLog: TTabItem;
     mLog: TMemo;
     ToolBar3: TToolBar;
     Label13: TLabel;
     SpeedButton1: TSpeedButton;
-    ListBoxGroupHeader8: TListBoxGroupHeader;
-    Label14: TLabel;
-    edSubject: TEdit;
-    libMensagens: TListBoxItem;
-    lbiBotoesTestes: TListBoxItem;
-    GridPanelLayout8: TGridPanelLayout;
-    bEnviar: TCornerButton;
-    bEnviarLote: TCornerButton;
-    tabsMensagen: TTabControl;
-    tabTexto: TTabItem;
-    tabHTML: TTabItem;
-    mAltBody: TMemo;
-    mBody: TMemo;
-    swHTML: TSwitch;
-    Label15: TLabel;
-    ProgressBar1: TProgressBar;
     GridPanelLayout9: TGridPanelLayout;
     btnLimpar: TCornerButton;
     btnVersaoOpenSSL: TCornerButton;
@@ -291,12 +257,19 @@ type
     btDoctos: TButton;
     btDown: TButton;
     fraXMLs: TFrameFileSelect;
+    lbTestes: TListBox;
+    lbhConsultas: TListBoxGroupHeader;
+    lbItensConsultas: TListBoxItem;
+    GridPanelLayout3: TGridPanelLayout;
+    btnStatusServico: TButton;
+    lbhXMLOps: TListBoxGroupHeader;
+    btnCadastro: TButton;
+    btnChave: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
     procedure btLerConfigClick(Sender: TObject);
     procedure btSalvarConfigClick(Sender: TObject);
-    procedure swHTMLSwitch(Sender: TObject);
     procedure ACBrMail1BeforeMailProcess(Sender: TObject);
     procedure ACBrMail1MailException(const AMail: TACBrMail; const E: Exception;
       var ThrowIt: Boolean);
@@ -305,11 +278,9 @@ type
     procedure sbEmailMostrarSenhaClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
     procedure btnVersaoOpenSSLClick(Sender: TObject);
-    procedure ACBrMail1AfterMailProcess(Sender: TObject);
     procedure sbCertAcharPFXClick(Sender: TObject);
     procedure sbCertVerSenhaClick(Sender: TObject);
     procedure seProxyVerSenhaClick(Sender: TObject);
-    procedure swWebServiceAmbienteSwitch(Sender: TObject);
     procedure sbAcharCEPClick(Sender: TObject);
     procedure cbxEmitUFChange(Sender: TObject);
     procedure cbxEmitCidadeChange(Sender: TObject);
@@ -346,6 +317,8 @@ type
     procedure laBtnLogsClick(Sender: TObject);
     procedure laBtnNotasEmtidasClick(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
+    procedure btnStatusServicoClick(Sender: TObject);
+    procedure ACBrMail1AfterMailProcess(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -360,14 +333,16 @@ type
     function CalcularNomeArqConfiguracao: String;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
+    procedure DescompactarSchemas;
+    procedure VerificarErrosDeConfiguracao;
     procedure ConfigurarACBr;
-    procedure ConfigurarMail;
-    procedure ConfigurarPosPrinter;
-    procedure ConfigurarDANFCe;
-    procedure ConfigurarNFe;
+    procedure ConfigurarACBrMail;
+    procedure ConfigurarACBrPosPrinter;
+    procedure ConfigurarACBrDANFCe;
+    procedure ConfigurarACBrNFe;
 
     procedure CarregarImpressorasBth;
-    procedure CarregarNotas;
+    procedure ExibirXMLsEmitidos;
 
     procedure PedirPermissoesInternet;
     procedure IniciarTelaDeEspera(const AMsg: String = '');
@@ -377,6 +352,7 @@ type
     function ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
 
     procedure AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
+    procedure CarregarNotas;
   public
     { Public declarations }
   end;
@@ -392,10 +368,10 @@ uses
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
   Androidapi.JNI.Widget, FMX.Helpers.Android,
   {$EndIf}
-  FMX.DialogService, FMX.Platform,
+  FMX.DialogService, FMX.Platform, Xml.XMLDoc, System.Zip,
   ssl_openssl_lib, blcksock,
   ACBrUtil, ACBrConsts, ACBrValidador, pcnConversao,
-  FileSelectFr, System.Math;
+  FileSelectFr, System.Math, ACBrDFeSSL;
 
 {$R *.fmx}
 
@@ -467,7 +443,6 @@ begin
 
   tabsPrincipal.First;
   tabsPrincipal.TabPosition := TTabPosition.None;
-  ProgressBar1.Visible := False;
 end;
 
 procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
@@ -545,78 +520,53 @@ begin
   edtConfCertSenha.Password := not sbCertVerSenha.IsPressed;
 end;
 
-procedure TACBrNFCeTestForm.swHTMLSwitch(Sender: TObject);
-begin
-  if swHTML.IsChecked then
-    tabsMensagen.ActiveTab := tabHTML
-  else
-    tabsMensagen.ActiveTab := tabTexto;
-end;
-
-procedure TACBrNFCeTestForm.swWebServiceAmbienteSwitch(Sender: TObject);
-begin
-  if swWebServiceAmbiente.IsChecked then
-    lAmbiente.Text := 'Produção'
-  else
-    lAmbiente.Text := 'Testes'
-end;
-
 procedure TACBrNFCeTestForm.ACBrMail1AfterMailProcess(Sender: TObject);
 begin
-  mLog.Lines.Add('Depois de Enviar o email: ' + TACBrMail(Sender).Subject);
-  ProgressBar1.Visible := False;
+  mLog.Lines.Add('ACBrMail.OnAfterMailProcess');
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1BeforeMailProcess(Sender: TObject);
 begin
-  mLog.Lines.Add('Antes de Enviar o email: ' + TACBrMail(Sender).Subject);
-  ProgressBar1.Visible := True;
+  mLog.Lines.Add('ACBrMail.OnBeforeMailProcess');
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1MailException(const AMail: TACBrMail;
   const E: Exception; var ThrowIt: Boolean);
 begin
-  ShowMessage(E.Message);
+  mLog.Lines.Add('----- ACBrMail.Error -----');
+  mLog.Lines.Add(E.Message);
+  mLog.Lines.Add('');
+  mLog.Lines.Add('Erro ao Enviar o EMail: ' + AMail.Subject);
   ThrowIt := False;
-  mLog.Lines.Add('*** Erro ao Enviar o email: ' + AMail.Subject);
-  ProgressBar1.Visible := False;
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1MailProcess(const AMail: TACBrMail;
   const aStatus: TMailStatus);
 begin
-  ProgressBar1.Value := Integer(aStatus);
-  ProgressBar1.Visible := True;
-
   case aStatus of
     pmsStartProcess:
-      mLog.Lines.Add('Iniciando processo de envio.');
+      mLog.Lines.Add('ACBrMail.pmsStartProcess');
     pmsConfigHeaders:
-      mLog.Lines.Add('Configurando o cabeçalho do e-mail.');
+      mLog.Lines.Add('ACBrMail.pmsConfigHeaders');
     pmsLoginSMTP:
-      mLog.Lines.Add('Logando no servidor de e-mail.');
+      mLog.Lines.Add('ACBrMail.pmsLoginSMTP');
     pmsStartSends:
-      mLog.Lines.Add('Iniciando os envios.');
+      mLog.Lines.Add('ACBrMail.pmsStartSends');
     pmsSendTo:
-      mLog.Lines.Add('Processando lista de destinatários.');
+      mLog.Lines.Add('ACBrMail.pmsSendTo');
     pmsSendCC:
-      mLog.Lines.Add('Processando lista CC.');
+      mLog.Lines.Add('ACBrMail.pmsSendCC');
     pmsSendBCC:
-      mLog.Lines.Add('Processando lista BCC.');
+      mLog.Lines.Add('ACBrMail.pmsSendBCC');
     pmsSendReplyTo:
-      mLog.Lines.Add('Processando lista ReplyTo.');
+      mLog.Lines.Add('ACBrMail.pmsSendReplyTo');
     pmsSendData:
-      mLog.Lines.Add('Enviando dados.');
+      mLog.Lines.Add('ACBrMail.pmsSendData');
     pmsLogoutSMTP:
-      mLog.Lines.Add('Fazendo Logout no servidor de e-mail.');
+      mLog.Lines.Add('ACBrMail.pmsLogoutSMTP');
     pmsDone:
-      begin
-        mLog.Lines.Add('Terminando e limpando.');
-        ProgressBar1.Value := ProgressBar1.Max;
-      end;
+      mLog.Lines.Add('ACBrMail.pmsDone');
   end;
-
-  mLog.Lines.Add('   ' + AMail.Subject);
 end;
 
 procedure TACBrNFCeTestForm.AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
@@ -693,6 +643,33 @@ begin
   cbxImpressorasBth.DropDown;
 end;
 
+procedure TACBrNFCeTestForm.btnStatusServicoClick(Sender: TObject);
+begin
+  ACBrNFe1.WebServices.StatusServico.Executar;
+
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- Status Serviço -----');
+  mLog.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
+  mLog.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.StatusServico.verAplic);
+  mLog.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.StatusServico.cStat));
+  mLog.Lines.Add('xMotivo: '  +ACBrNFe1.WebServices.StatusServico.xMotivo);
+  mLog.Lines.Add('cUF: '      +IntToStr(ACBrNFe1.WebServices.StatusServico.cUF));
+  mLog.Lines.Add('dhRecbto: ' +DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRecbto));
+  mLog.Lines.Add('tMed: '     +IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
+  mLog.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
+  mLog.Lines.Add('xObs: '     +ACBrNFe1.WebServices.StatusServico.xObs);
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.StatusServico.RetWS )));
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetornoWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString( 
+    ACBrNFe1.WebServices.StatusServico.RetornoWS )));
+
+  TabForward(tabLog);
+end;
+
 procedure TACBrNFCeTestForm.btnVersaoOpenSSLClick(Sender: TObject);
 var
   AMsg: string;
@@ -703,12 +680,7 @@ begin
     Exit;
   end;
 
-  ConfigurarNFe;
-  // Força novo Download, apaga Cache Local
-  if not ACBrNFe1.Configuracoes.Certificados.URLPFX.IsEmpty then
-    if not ACBrNFe1.Configuracoes.Certificados.ArquivoPFX.IsEmpty then
-      System.SysUtils.DeleteFile(ACBrNFe1.Configuracoes.Certificados.ArquivoPFX);
-
+  ConfigurarACBrNFe;
   ACBrNFe1.SSL.CarregarCertificado;
   mLog.Lines.Add('');
   mLog.Lines.Add('---- Informações do Certificado ----');
@@ -725,6 +697,7 @@ end;
 procedure TACBrNFCeTestForm.btSalvarConfigClick(Sender: TObject);
 begin
   GravarConfiguracao;
+  Toast('Configuração Salva com sucesso');
 end;
 
 function TACBrNFCeTestForm.CalcularNomeArqConfiguracao: String;
@@ -796,8 +769,10 @@ end;
 
 procedure TACBrNFCeTestForm.CarregarNotas;
 begin
+  ConfigurarACBrNFe;
   fraXMLs.ActualDir := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   fraXMLs.FileMask := '*.xml';
+  fraXMLs.CanChangeDir := False;
   fraXMLs.Execute;
 end;
 
@@ -853,13 +828,13 @@ end;
 
 procedure TACBrNFCeTestForm.ConfigurarACBr;
 begin
-  ConfigurarMail;
-  ConfigurarPosPrinter;
-  ConfigurarDANFCe;
-  ConfigurarNFe;
+  ConfigurarACBrMail;
+  ConfigurarACBrPosPrinter;
+  ConfigurarACBrDANFCe;
+  ConfigurarACBrNFe;
 end;
 
-procedure TACBrNFCeTestForm.ConfigurarMail;
+procedure TACBrNFCeTestForm.ConfigurarACBrMail;
 begin
   // Configurando o ACBrMail //
   ACBrMail1.From := edtEmailFrom.text;
@@ -874,7 +849,7 @@ begin
   ACBrMail1.IDECharset := TMailCharset(cbEmailIdeCharSet.ItemIndex);
 end;
 
-procedure TACBrNFCeTestForm.ConfigurarNFe;
+procedure TACBrNFCeTestForm.ConfigurarACBrNFe;
 var
   CertPFX: string;
 begin
@@ -895,6 +870,7 @@ begin
   ACBrNFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(IfThen(swWebServiceAmbiente.IsChecked, 0, 1));
   ACBrNFe1.Configuracoes.WebServices.TimeOut := Trunc(sbWebServiceTimeout.Value);
 
+  ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib.libOpenSSL;
   if Assigned(cbxWebServiceSSLType.Selected) then
     ACBrNFe1.Configuracoes.WebServices.SSLType := TSSLType(cbxWebServiceSSLType.ItemIndex);
 
@@ -912,7 +888,7 @@ begin
   ACBrNFe1.Configuracoes.Arquivos.PathSalvar := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
 end;
 
-procedure TACBrNFCeTestForm.ConfigurarPosPrinter;
+procedure TACBrNFCeTestForm.ConfigurarACBrPosPrinter;
 begin
   // Configurando o ACBrPosPrinter //
   if Assigned(cbxImpressorasBth.Selected) then
@@ -932,7 +908,7 @@ begin
   ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbImprimirLogo.IsChecked;
 end;
 
-procedure TACBrNFCeTestForm.ConfigurarDANFCe;
+procedure TACBrNFCeTestForm.ConfigurarACBrDANFCe;
 begin
   // Configurando ACBrNFeDANFeESCPOS //
   ACBrNFeDANFeESCPOS1.PosPrinter := ACBrPosPrinter1;
@@ -966,7 +942,7 @@ begin
     TThread.Synchronize(nil, procedure
     var
       EndAchado: TACBrCEPEndereco;
-    begin
+    begin  
       if (ACBrCEP1.Enderecos.Count > 0) then
       begin
         EndAchado := ACBrCEP1.Enderecos[0];
@@ -983,6 +959,43 @@ begin
 
       TerminarTelaDeEspera;
     end);
+  end;
+end;
+
+procedure TACBrNFCeTestForm.DescompactarSchemas;
+var
+  BasePathSchemas, SchemasZip, ArquivoControle: string;
+  ZipFile: TZipFile;
+  Descompactar: Boolean;
+begin
+  BasePathSchemas := ApplicationPath + 'Schemas';
+  ArquivoControle := TPath.Combine(BasePathSchemas, 'leiame.txt');
+  ACBrNFe1.Configuracoes.Arquivos.PathSchemas := TPath.Combine(BasePathSchemas, 'NFe');
+  {$IfDef MSWINDOWS}
+   SchemasZip := '..\..\..\..\Schemas.zip';
+  {$Else}
+   SchemasZip := TPath.Combine( TPath.GetDocumentsPath, 'Schemas.zip' );
+  {$EndIf}
+  if not FileExists(SchemasZip) then
+    Exit;
+
+  Descompactar := not FileExists( ArquivoControle );
+  if not (Descompactar) then
+    Descompactar := FileAge(SchemasZIP) > FileAge(ArquivoControle);
+
+  if Descompactar then
+  begin
+    ZipFile := TZipFile.Create;
+    try
+      ZipFile.Open(SchemasZip, zmReadWrite);
+      ZipFile.ExtractAll(TPath.Combine(BasePathSchemas,'..'));
+    finally
+      ZipFile.Free;
+    end;
+
+    // Criando arquivo de controle
+    System.SysUtils.DeleteFile(ArquivoControle);
+    WriteToFile(ArquivoControle,'https://www.projetoacbr.com.br/');
   end;
 end;
 
@@ -1084,6 +1097,11 @@ end;
 procedure TACBrNFCeTestForm.edtTokenIDTyping(Sender: TObject);
 begin
   imgErrorIDCSC.Visible := edtTokenID.Text.IsEmpty;
+end;
+
+procedure TACBrNFCeTestForm.ExibirXMLsEmitidos;
+begin
+
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -1307,6 +1325,9 @@ end;
 
 procedure TACBrNFCeTestForm.laBtnTestesClick(Sender: TObject);
 begin
+  VerificarErrosDeConfiguracao;
+  ConfigurarACBr;
+  DescompactarSchemas;
   TabForward(tabTeste);
 end;
 
@@ -1355,6 +1376,47 @@ begin
       Result := (not PFX.IsEmpty)   // Precisa do PFX, para Cache Local
     else
       Result := (not PFX.IsEmpty) and FileExists(PFX);
+  end;
+end;
+
+procedure TACBrNFCeTestForm.VerificarErrosDeConfiguracao;
+
+  function VerificarErrosDeConfiguracaoEmComponente(AControl: TFmxObject): Boolean;
+  var
+    i: Integer;
+    AChild: TFmxObject;
+  begin
+    Result := True;
+    i := 0;
+
+    while Result and (i < AControl.ChildrenCount) do
+    begin
+      AChild := AControl.Children[i];
+      if (AChild is TImage) and (LowerCase(LeftStr(AChild.Name,6)) = 'imgerr') then
+      begin
+        with (AChild as TImage) do
+        begin
+          if Visible then
+          begin
+            Result := False;
+            OnClick(nil);
+            Break;
+          end;
+        end;
+      end;
+
+      if Result then
+        Result := VerificarErrosDeConfiguracaoEmComponente(AChild);
+
+      inc(i);
+    end;
+  end;
+begin
+  if not VerificarErrosDeConfiguracaoEmComponente(tabConfigNFCe) then
+  begin
+    TabForward(tabConfig);
+    tabsConfig.ActiveTab := tabConfigNFCe;
+    Abort;
   end;
 end;
 
@@ -1444,6 +1506,8 @@ begin
   edtEmitCEPTyping(nil);
   edtEmitFoneTyping(nil);
   edtConfCertURLTyping(nil);
+  edtTokenIDTyping(nil);
+  edtTokenCSCTyping(nil);
 end;
 
 end.

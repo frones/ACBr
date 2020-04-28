@@ -1,5 +1,5 @@
 object FrameFileSelect: TFrameFileSelect
-  Size.Width = 352.000000000000000000
+  Size.Width = 358.000000000000000000
   Size.Height = 463.000000000000000000
   Size.PlatformDefault = False
   object lvFileBrowse: TListView
@@ -10,7 +10,7 @@ object FrameFileSelect: TFrameFileSelect
     AllowSelection = False
     Images = ImageList1
     Align = Client
-    Size.Width = 352.000000000000000000
+    Size.Width = 358.000000000000000000
     Size.Height = 422.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2
@@ -23,7 +23,8 @@ object FrameFileSelect: TFrameFileSelect
         Appearance.Font.Size = 15.000000000000000000
         Appearance.TextAlign = Leading
         Appearance.WordWrap = True
-        Appearance.Height = 44.000000000000000000
+        Appearance.Width = 289.000000000000000000
+        Appearance.Height = 50.000000000000000000
         Appearance.PlaceOffset.X = 30.000000000000000000
       end
       item
@@ -69,8 +70,8 @@ object FrameFileSelect: TFrameFileSelect
     OnItemClickEx = lvFileBrowseItemClickEx
     ShowSelection = False
   end
-  object tbTop: TToolBar
-    Size.Width = 352.000000000000000000
+  object tbPaths: TToolBar
+    Size.Width = 358.000000000000000000
     Size.Height = 41.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -95,14 +96,14 @@ object FrameFileSelect: TFrameFileSelect
     end
     object hScrollboxPath: THorzScrollBox
       Align = Client
-      Size.Width = 260.000000000000000000
+      Size.Width = 266.000000000000000000
       Size.Height = 41.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
-      OnResized = hScrollboxPathResized
+      OnResize = hScrollboxPathResize
       ShowScrollBars = False
       OnHScrollChange = hScrollboxPathHScrollChange
-      Viewport.Width = 260.000000000000000000
+      Viewport.Width = 266.000000000000000000
       Viewport.Height = 41.000000000000000000
     end
     object sbPathScrollLeft: TSpeedButton
@@ -117,7 +118,7 @@ object FrameFileSelect: TFrameFileSelect
     end
     object sbPathScrollRight: TSpeedButton
       Align = Right
-      Position.X = 331.000000000000000000
+      Position.X = 337.000000000000000000
       Size.Width = 21.000000000000000000
       Size.Height = 41.000000000000000000
       Size.PlatformDefault = False

@@ -1,5 +1,5 @@
 object FrameFileSelect: TFrameFileSelect
-  Size.Width = 362.000000000000000000
+  Size.Width = 352.000000000000000000
   Size.Height = 463.000000000000000000
   Size.PlatformDefault = False
   object lvFileBrowse: TListView
@@ -10,8 +10,8 @@ object FrameFileSelect: TFrameFileSelect
     AllowSelection = False
     Images = ImageList1
     Align = Client
-    Size.Width = 362.000000000000000000
-    Size.Height = 423.000000000000000000
+    Size.Width = 352.000000000000000000
+    Size.Height = 422.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2
     ItemAppearance.ItemHeight = 50
@@ -70,47 +70,60 @@ object FrameFileSelect: TFrameFileSelect
     ShowSelection = False
   end
   object tbTop: TToolBar
-    Size.Width = 362.000000000000000000
-    Size.Height = 40.000000000000000000
+    Size.Width = 352.000000000000000000
+    Size.Height = 41.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    object edDirectory: TEdit
-      Touch.InteractiveGestures = [LongTap, DoubleTap]
-      Align = Client
-      TabOrder = 0
-      Margins.Left = 5.000000000000000000
-      Margins.Top = 8.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 8.000000000000000000
-      Size.Width = 263.000000000000000000
-      Size.Height = 24.000000000000000000
-      Size.PlatformDefault = False
-    end
-    object sbReload: TSpeedButton
-      Align = Right
-      Margins.Top = 5.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 5.000000000000000000
-      Position.X = 322.000000000000000000
-      Position.Y = 5.000000000000000000
-      Size.Width = 35.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'refreshtoolbutton'
-      Text = 'sbReload'
-      OnClick = sbReloadClick
-    end
     object lExt: TLabel
-      Align = Left
-      StyledSettings = [Family, Size, FontColor]
-      Size.Width = 49.000000000000000000
-      Size.Height = 40.000000000000000000
+      Align = MostLeft
+      AutoSize = True
+      StyledSettings = [Family, FontColor]
+      HitTest = True
+      Margins.Left = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Position.X = 5.000000000000000000
+      Size.Width = 40.000000000000000000
+      Size.Height = 41.000000000000000000
       Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
       TextSettings.Font.StyleExt = {00070000000000000004000000}
       TextSettings.HorzAlign = Center
-      Text = '*.PDF'
-      TabOrder = 2
+      TextSettings.WordWrap = False
+      Text = '*.xml'
+      TabOrder = 1
       OnClick = lExtClick
+    end
+    object hScrollboxPath: THorzScrollBox
+      Align = Client
+      Size.Width = 260.000000000000000000
+      Size.Height = 41.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      OnResized = hScrollboxPathResized
+      ShowScrollBars = False
+      OnHScrollChange = hScrollboxPathHScrollChange
+      Viewport.Width = 260.000000000000000000
+      Viewport.Height = 41.000000000000000000
+    end
+    object sbPathScrollLeft: TSpeedButton
+      Align = Left
+      Position.X = 50.000000000000000000
+      Size.Width = 21.000000000000000000
+      Size.Height = 41.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'arrowlefttoolbutton'
+      Text = 'sbPathScrollLeft'
+      OnClick = sbPathScrollLeftClick
+    end
+    object sbPathScrollRight: TSpeedButton
+      Align = Right
+      Position.X = 331.000000000000000000
+      Size.Width = 21.000000000000000000
+      Size.Height = 41.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'arrowrighttoolbutton'
+      Text = 'SpeedButton1'
+      OnClick = sbPathScrollRightClick
     end
   end
   object ImageList1: TImageList

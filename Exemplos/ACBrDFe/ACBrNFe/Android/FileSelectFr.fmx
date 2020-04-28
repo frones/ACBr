@@ -3,7 +3,7 @@ object FileSelectForm: TFileSelectForm
   Top = 0
   Caption = 'Selecione o Arquivo'
   ClientHeight = 503
-  ClientWidth = 347
+  ClientWidth = 341
   Position = OwnerFormCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -14,13 +14,13 @@ object FileSelectForm: TFileSelectForm
   object tbBottom: TToolBar
     Align = Bottom
     Position.Y = 463.000000000000000000
-    Size.Width = 347.000000000000000000
+    Size.Width = 341.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
+    TabOrder = 0
     object GridPanelLayout1: TGridPanelLayout
       Align = Client
-      Size.Width = 347.000000000000000000
+      Size.Width = 341.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
@@ -71,7 +71,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 76.750000000000000000
+        Size.Width = 75.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 3
@@ -84,7 +84,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 76.750000000000000000
+        Size.Width = 75.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
@@ -97,7 +97,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 76.750000000000000000
+        Size.Width = 75.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
@@ -110,7 +110,7 @@ object FileSelectForm: TFileSelectForm
         Margins.Top = 5.000000000000000000
         Margins.Right = 5.000000000000000000
         Margins.Bottom = 5.000000000000000000
-        Size.Width = 76.750000000000000000
+        Size.Width = 75.250000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -121,24 +121,24 @@ object FileSelectForm: TFileSelectForm
   end
   inline fraFileSelect: TFrameFileSelect
     Align = Client
-    Size.Width = 347.000000000000000000
+    Size.Width = 341.000000000000000000
     Size.Height = 463.000000000000000000
     Size.PlatformDefault = False
     inherited lvFileBrowse: TListView
-      Size.Width = 347.000000000000000000
+      Size.Width = 341.000000000000000000
       OnItemClickEx = fraFileSelectlvFileBrowseItemClickEx
     end
     inherited tbTop: TToolBar
-      Size.Width = 347.000000000000000000
-      inherited edDirectory: TEdit
-        Size.Width = 248.000000000000000000
-      end
-      inherited sbReload: TSpeedButton
-        Position.X = 307.000000000000000000
-        OnClick = nil
-      end
+      Size.Width = 341.000000000000000000
       inherited lExt: TLabel
+        Padding.Left = 5.000000000000000000
+        Padding.Right = 5.000000000000000000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      inherited hbPath: THorzScrollBox
+        Size.Width = 291.000000000000000000
+        Viewport.Width = 291.000000000000000000
+        Viewport.Height = 41.000000000000000000
       end
     end
   end

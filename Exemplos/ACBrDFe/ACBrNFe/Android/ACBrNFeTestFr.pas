@@ -290,7 +290,6 @@ type
     btTemp: TButton;
     btDoctos: TButton;
     btDown: TButton;
-    SpeedButton4: TSpeedButton;
     fraXMLs: TFrameFileSelect;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -797,7 +796,7 @@ end;
 
 procedure TACBrNFCeTestForm.CarregarNotas;
 begin
-  fraXMLs.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
+  fraXMLs.ActualDir := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   fraXMLs.FileMask := '*.xml';
   fraXMLs.Execute;
 end;

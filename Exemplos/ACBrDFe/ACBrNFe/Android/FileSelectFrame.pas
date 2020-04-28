@@ -14,7 +14,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   System.ImageList, FMX.ImgList, FMX.Edit, FMX.Controls.Presentation,
-  FMX.ListView;
+  FMX.ListView, FMX.Layouts, FMX.Gestures, FMX.ScrollBox;
 
 const
 {$IfDef MSWINDOWS}
@@ -52,25 +52,37 @@ type
   TFrameFileSelect = class(TFrame)
     lvFileBrowse: TListView;
     tbTop: TToolBar;
-    edDirectory: TEdit;
-    sbReload: TSpeedButton;
     lExt: TLabel;
     ImageList1: TImageList;
+    hScrollboxPath: THorzScrollBox;
+    sbPathScrollLeft: TSpeedButton;
+    sbPathScrollRight: TSpeedButton;
     procedure lExtClick(Sender: TObject);
-    procedure sbReloadClick(Sender: TObject);
     procedure lvFileBrowseDblClick(Sender: TObject);
     procedure lvFileBrowseItemClickEx(const Sender: TObject; ItemIndex: Integer;
       const LocalClickPos: TPointF; const ItemObject: TListItemDrawable);
+    procedure sbPathScrollLeftClick(Sender: TObject);
+    procedure sbPathScrollRightClick(Sender: TObject);
+    procedure hScrollboxPathHScrollChange(Sender: TObject);
+    procedure hScrollboxPathResized(Sender: TObject);
   private
     { Private declarations }
-    FInitialDir: String;
+    FExecuted: Boolean;
+    FActualDir: String;
     FFileName: String;
     FShowHidden: Boolean;
     FFileMask: String;
 
-    procedure SetInitialDir(const Value: String);
+    procedure SetActualDir(const Value: String);
 
     procedure SetFileMask(const Value: String);
+    procedure SetShowHidden(const Value: Boolean);
+
+  protected
+    procedure CreateButtonsPath(const APath: String);
+    function CreateAButtomPath(const ADir: String; Aparent: TFmxObject): TButton;
+    procedure lButtomPathClick(Sender: TObject);
+    procedure ShowNavigateButtonsPath;
 
   public
     { Public declarations }
@@ -79,9 +91,9 @@ type
     function ChangeDirectory(const ADirectory: String): Boolean;
     procedure SelectItem(const AItem: Integer);
 
-    property InitialDir: String read FInitialDir write SetInitialDir;
+    property ActualDir: String read FActualDir write SetActualDir;
     property FileName: String read FFileName write FFileName;
-    property ShowHidden: Boolean read FShowHidden write FShowHidden;
+    property ShowHidden: Boolean read FShowHidden write SetShowHidden;
     property FileMask: String read FFileMask write SetFileMask;
   end;
 
@@ -186,10 +198,15 @@ end;
 
 { TFrameFileSelect }
 
-procedure TFrameFileSelect.SetInitialDir(const Value: String);
+constructor TFrameFileSelect.Create(AOwner: TComponent);
 begin
-  if Visible then
-    ChangeDirectory(Value);
+  inherited;
+
+  FExecuted := False;
+  FFileName := '';
+  FActualDir := TPath.GetHomePath;
+  FShowHidden := False;
+  FFileMask := CAllFiles;
 end;
 
 function TFrameFileSelect.ChangeDirectory(const ADirectory: String): Boolean;
@@ -197,19 +214,14 @@ var
   FI: TFileInfo;
   FL: TFileList;
   LVI: TListViewItem;
+  OldDir: String;
 begin
   Result := False;
   if (ADirectory = EmptyStr) or (not DirectoryExists(ADirectory)) then
     Exit;
 
-  edDirectory.Text := ADirectory;
-  FInitialDir := ADirectory;
-
-  lvFileBrowse.BeginUpdate;
   FL := TFileList.Create;
   try
-    lvFileBrowse.Items.Clear;
-
     //CapDir := ReverseString(ADirectory);
     //D Caption := ReverseString(copy(CapDir, 1, pos(PathDelim, CapDir)));
 
@@ -217,53 +229,149 @@ begin
       FFileMask := CAllFiles;
 
     if FFileMask = CAllFiles then
-      FL.AddFilesToList(TPath.Combine(FInitialDir, CAllFiles))
+      FL.AddFilesToList(TPath.Combine(ADirectory, CAllFiles))
     else
     begin
-      FL.AddFilesToList(TPath.Combine(FInitialDir, CAllFiles), faDirectory);
-      FL.AddFilesToList(TPath.Combine(FInitialDir, FFileMask), (faAnyFile - faDirectory));
+      FL.AddFilesToList(TPath.Combine(ADirectory, CAllFiles), faDirectory);
+      FL.AddFilesToList(TPath.Combine(ADirectory, FFileMask), (faAnyFile - faDirectory));
     end;
+
+    if FL.Count < 1 then
+      Exit;
 
     FL.Sort();
 
-    for FI in FL do
-    begin
-      LVI := lvFileBrowse.Items.Add;
-      LVI.Data['FileName'] := FI.Name;
-      LVI.Data['FileSize'] := FI.FormatByteSize;
-      LVI.Data['DateTime'] := FI.FormatDateTime;
-      LVI.Data['ImgFileDir'] := ifthen(FI.IsDirectory, 1, 0);
-    end;
+    lvFileBrowse.BeginUpdate;
+    try
+      lvFileBrowse.Items.Clear;
 
+      for FI in FL do
+      begin
+        LVI := lvFileBrowse.Items.Add;
+        LVI.Data['FileName'] := FI.Name;
+        LVI.Data['FileSize'] := FI.FormatByteSize;
+        LVI.Data['DateTime'] := FI.FormatDateTime;
+        LVI.Data['ImgFileDir'] := ifthen(FI.IsDirectory, 1, 0);
+      end;
+    finally
+      lvFileBrowse.EndUpdate;
+    end;
   finally
-    lvFileBrowse.EndUpdate;
     FL.Free;
   end;
 
+  FActualDir := ADirectory;
+  CreateButtonsPath( ADirectory );
   Result := True;
 end;
 
-constructor TFrameFileSelect.Create(AOwner: TComponent);
+function TFrameFileSelect.CreateAButtomPath(const ADir: String; Aparent: TFmxObject): TButton;
+var
+  Num: Integer;
 begin
-  inherited;
+  Num := Aparent.ComponentCount;
+  Result := TButton.Create(Aparent);
+  //Result.Name := 'bDir'+Num.ToString;
+  Result.StyleLookup := 'speedbuttonstyle';
+  Result.CanFocus := False;
+  Result.OnClick := lButtomPathClick;
+  Result.Text := ADir + PathDelim;
+  Result.Width := 60;
+  Result.TextSettings.Font.Style := [TFontStyle.fsBold];
+  Result.Margins.Top := 5;
+  Result.Margins.Bottom := 5;
+  Result.Margins.Left := 5;
+  Result.Align := TAlignLayout.Left;
+  Result.Parent := Aparent;
+  Result.Width := Result.Canvas.TextWidth(ADir)+20;
+end;
 
-  FFileName := '';
-  FInitialDir := TPath.GetHomePath;
-  FShowHidden := False;
-  FFileMask := CAllFiles;
+procedure TFrameFileSelect.CreateButtonsPath(const APath: String);
+var
+  SL: TStringList;
+  i, x: Integer;
+begin
+  hScrollboxPath.BeginUpdate;
+  SL := TStringList.Create;
+  try
+    i := 0;
+    while (i < hScrollboxPath.ComponentCount) do
+    begin
+      if (hScrollboxPath.Components[i] is TButton) then
+        hScrollboxPath.Components[i].DisposeOf
+      else
+        Inc(i);
+    end;
+
+    SL.Delimiter := PathDelim;
+    SL.StrictDelimiter := True;
+    SL.DelimitedText := ExcludeTrailingPathDelimiter(APath);
+    i := 0;
+    x := 0;
+    while (i < SL.Count) do
+    begin
+      CreateAButtomPath(SL[i], hScrollboxPath);
+      Inc(i);
+    end;
+
+    hScrollboxPath.RealignContent;
+  finally
+    SL.Free;
+    hScrollboxPath.EndUpdate;
+    hScrollboxPath.ScrollBy(-hScrollboxPath.ContentBounds.Width,0);  // Vai para o final
+  end;
+
+end;
+
+procedure TFrameFileSelect.ShowNavigateButtonsPath;
+var
+  x, w: Integer;
+begin
+  exit;
+
+  sbPathScrollLeft.Visible  := (hScrollboxPath.ViewportPosition.X > 0);
+  x := Round(hScrollboxPath.ViewportPosition.X + hScrollboxPath.Width);
+  w := Round(hScrollboxPath.ContentBounds.Width);
+  sbPathScrollRight.Visible := (x < w);
 end;
 
 procedure TFrameFileSelect.Execute;
 begin
-  if not ChangeDirectory(FInitialDir) then
+  if not ChangeDirectory(FActualDir) then
     ChangeDirectory(TPath.GetHomePath);
+
+  FExecuted := True;
+end;
+
+procedure TFrameFileSelect.hScrollboxPathHScrollChange(Sender: TObject);
+begin
+//  ShowNavigateButtonsPath;
+end;
+
+procedure TFrameFileSelect.hScrollboxPathResized(Sender: TObject);
+begin
+//  ShowNavigateButtonsPath;
+end;
+
+procedure TFrameFileSelect.lButtomPathClick(Sender: TObject);
+var
+  APath: string;
+  p: Integer;
+begin
+  if not (Sender is TButton) then
+    Exit;
+
+  APath := TButton(Sender).Text;
+  p := Pos(Trim(APath), FActualDir);
+  if (p > 0) then
+    ChangeDirectory( copy(FActualDir, 1, p+APath.Length-1) );
 end;
 
 procedure TFrameFileSelect.lExtClick(Sender: TObject);
 var
   NewDir: String;
 begin
-  if SelectDirectory('Select Directory', FInitialDir, NewDir) then
+  if SelectDirectory('Select Directory', FActualDir, NewDir) then
     ChangeDirectory(NewDir);
 end;
 
@@ -285,10 +393,14 @@ begin
   SelectItem(ItemIndex);
 end;
 
-procedure TFrameFileSelect.sbReloadClick(Sender: TObject);
+procedure TFrameFileSelect.sbPathScrollLeftClick(Sender: TObject);
 begin
-  if ChangeDirectory(edDirectory.Text) then
-    edDirectory.Text := FInitialDir;
+  hScrollboxPath.ScrollBy(30,0);
+end;
+
+procedure TFrameFileSelect.sbPathScrollRightClick(Sender: TObject);
+begin
+  hScrollboxPath.ScrollBy(-30,0);
 end;
 
 procedure TFrameFileSelect.SelectItem(const AItem: Integer);
@@ -304,10 +416,10 @@ begin
     if (Data['ImgFileDir'].AsInteger = 1) then
     begin
       if (ItemText = '.') then
-        NewDir := FInitialDir
+        NewDir := FActualDir
       else if (ItemText = '..') then
       begin
-        NewDir := ReverseString(FInitialDir);
+        NewDir := ReverseString(FActualDir);
         NewDir := ReverseString(copy(NewDir, pos(PathDelim, NewDir)+1));
       end
       else
@@ -320,10 +432,33 @@ begin
   end;
 end;
 
+procedure TFrameFileSelect.SetActualDir(const Value: String);
+begin
+  FActualDir := Value;
+  if FExecuted then
+    ChangeDirectory(Value);
+end;
+
 procedure TFrameFileSelect.SetFileMask(const Value: String);
 begin
+  if Value = FFileMask then
+    Exit;
+
   FFileMask := Value;
   lExt.Text := FFileMask;
+  lExt.Visible := not Value.IsEmpty;
+  if FExecuted then
+    ChangeDirectory(FActualDir);
+end;
+
+procedure TFrameFileSelect.SetShowHidden(const Value: Boolean);
+begin
+  if Value = FShowHidden then
+    Exit;
+
+  FShowHidden := Value;
+  if FExecuted then
+    ChangeDirectory(FActualDir);
 end;
 
 end.

@@ -77,13 +77,8 @@ begin
     Left := TForm(AOwner).Left;
     Width := TForm(AOwner).Width;
     Height := TForm(AOwner).Height;
-
     StyleBook := TForm(AOwner).StyleBook;
   end;
-
-  {$IfDef ANDROID}
-    btSelectDirectory.Visible := False;
-  {$EndIf}
 end;
 
 destructor TFileSelectForm.Destroy;
@@ -124,7 +119,7 @@ end;
 
 function TFileSelectForm.GetInitialDir: String;
 begin
-  Result := fraFileSelect.InitialDir;
+  Result := fraFileSelect.ActualDir;
 end;
 
 function TFileSelectForm.GetShowHidden: Boolean;
@@ -144,7 +139,7 @@ end;
 
 procedure TFileSelectForm.SetInitialDir(const Value: String);
 begin
-  fraFileSelect.InitialDir := Value;
+  fraFileSelect.ActualDir := Value;
 end;
 
 procedure TFileSelectForm.SetShowHidden(const Value: Boolean);

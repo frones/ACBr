@@ -557,7 +557,7 @@ Public Sub SaveConfig()
     bal.ConfigGravarValor SESSAO_BAL, "Modelo", CStr(ComModelo.ListIndex)
     bal.ConfigGravarValor SESSAO_BAL, "Porta", ComPorta.Text
     bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Baud", ComBaud.Text
-    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Data", ComDataText
+    bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Data", ComData.Text
     bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Parity", CStr(ComParity.ListIndex)
     bal.ConfigGravarValor SESSAO_BAL_DEVICE, "Stop", CStr(ComStop.ListIndex)
     bal.ConfigGravarValor SESSAO_BAL_DEVICE, "MaxBandwidth", CStr(updMaxBandwidth.Value)

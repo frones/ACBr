@@ -506,7 +506,7 @@ begin
       sSecao := 'horContratual';
       if INIRec.ReadString(sSecao, 'qtdHrsSem', '') <> '' then
       begin
-        altContratual.infoContrato.horContratual.QtdHrsSem := INIRec.ReadInteger(sSecao, 'qtdHrsSem', 0);
+        altContratual.infoContrato.horContratual.QtdHrsSem := StrtoFloatDef(IniRec.ReadString(sSecao,'qtdHrsSem','0'),0);
         altContratual.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
         altContratual.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
         altContratual.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));

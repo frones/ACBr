@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2020
+-- pcesS2206 --
+[*] https://www.projetoacbr.com.br/forum/topic/57378-qtdhrssem-no-s-2206/
+   Por: Keli Diego Santos
+
 14/04/2020
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/57153-evento-2230-calamidade-pública/

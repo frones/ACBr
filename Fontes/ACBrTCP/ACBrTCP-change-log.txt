@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2020
+-- ACBrSocket --
+[-] Acerto para não perder os cabeçalhos quando ocorre redirecionamento
+    (por: regys.silveira)
+
 06/04/2020
 -- ACBrIBGE --
 [+] Adicionado os métodos:

@@ -871,6 +871,7 @@ var
    CT, Location, HtmlHead: String ;
    RespIsUTF8, AddUTF8InHeader: Boolean;
    ContaRedirecionamentos: Integer;
+   HeadersOld: string;
 begin
   {$IFDEF UPDATE_SCREEN_CURSOR}
    OldCursor := Screen.Cursor ;
@@ -909,6 +910,7 @@ begin
       end;
     end;
 
+    HeadersOld := HTTPSend.Headers.Text;
     HTTPSend.HTTPMethod(Method, fURL);
 
     while ContaRedirecionamentos <= 10 do
@@ -930,6 +932,7 @@ begin
             fURL := GetURLBasePath( fURL ) + Location;
 
           HTTPSend.Clear;
+          HTTPSend.Headers.Text := HeadersOld;
 
           // Tipo de método usado não deveria ser trocado...
           // https://tools.ietf.org/html/rfc2616#page-62

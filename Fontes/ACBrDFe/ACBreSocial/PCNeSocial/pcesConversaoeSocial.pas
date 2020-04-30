@@ -401,7 +401,7 @@ type
                               mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
                               mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
                               mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao,
-                              mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020);
+                              mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020, mtvImpedimentoConcorrenciaEscalaTrabalhoAvulso);
 
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros, tpatNao);
 
@@ -932,13 +932,13 @@ const
 
   TMotivoAlteracaoCargoFuncao: array[0..3] of string = ('1', '2', '3', '9');
 
-  TMotivoAfastamento: array[0..31] of string = ('01', '03', '05', '06', '07',
+  TMotivoAfastamento: array[0..32] of string = ('01', '03', '05', '06', '07',
                                                 '08', '10', '11', '12', '13',
                                                 '14', '15', '16', '17', '18',
                                                 '19', '20', '21', '22', '23',
                                                 '24', '25', '26', '27', '28',
                                                 '29', '30', '31', '33', '34',
-                                                '35', '37');
+                                                '35', '37', '38');
 
   TGenericosString0_1 : array[0..1] of string = ('0','1' );
   TGenericosString0_2 : array[0..2] of string = ('0','1','2' );
@@ -2412,7 +2412,7 @@ end;
 
 function eSStrTotpMotivosAfastamento(var ok: boolean; const s: string): tpMotivosAfastamento;
 begin
-   result := tpMotivosAfastamento(StrToEnumerado2(ok , s, TMotivoAfastamento));
+  result := tpMotivosAfastamento(StrToEnumerado2(ok , s, TMotivoAfastamento));
 end;
 
 function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;

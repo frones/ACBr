@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2020
+-- Diversos --
+[*] Alterações no modal ferroviário para deixar em conformidade com o manual.
+  Por: Italo Jurisato junior
+
 24/04/2020
 -- ACBrCTeConhecimentos --
 [-] Correção o nome do campo não é Chave e sim chave na seção [infNFexxx].

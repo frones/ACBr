@@ -2303,17 +2303,45 @@ begin
   Gerador.wGrupo('ferrov', '#01');
   Gerador.wCampo(tcStr, '#02', 'tpTraf', 01, 01, 1, TpTrafegoToStr(CTe.infCTeNorm.ferrov.tpTraf), DSC_TPTRAF);
 
-  Gerador.wGrupo('trafMut', '#03');
-  Gerador.wCampo(tcStr, '#04', 'respFat', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.respFat), DSC_RESPFAT);
-  Gerador.wCampo(tcStr, '#05', 'ferrEmi', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.ferrEmi), DSC_FERREMI);
-  Gerador.wGrupo('/trafMut');
+  if CTe.infCTe.versao >= 3 then
+  begin
+    if CTe.infCTeNorm.ferrov.tpTraf = ttMutuo then
+    begin
+      Gerador.wGrupo('trafMut', '#03');
+      Gerador.wCampo(tcStr, '#04', 'respFat', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.respFat), DSC_RESPFAT);
+      Gerador.wCampo(tcStr, '#05', 'ferrEmi', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.ferrEmi), DSC_FERREMI);
+      Gerador.wCampo(tcDe2, '#06', 'vFrete ', 01, 15, 1, CTe.infCTeNorm.ferrov.vFrete, DSC_VFRETE);
 
-  Gerador.wCampo(tcStr, '#06', 'fluxo ', 01, 10, 1, CTe.infCTeNorm.ferrov.fluxo, DSC_FLUXO);
-  Gerador.wCampo(tcStr, '#07', 'idTrem', 01, 07, 0, CTe.infCTeNorm.ferrov.idTrem, DSC_IDTREM);
-  Gerador.wCampo(tcDe2, '#08', 'vFrete', 01, 15, 1, CTe.infCTeNorm.ferrov.vFrete, DSC_VFRETE);
+      Gerador.wCampo(tcStr, '#07', 'chCTeFerroOrigem', 44, 44, 0, CTe.infCTeNorm.ferrov.trafMut.chCTeFerroOrigem, DSC_CHAVE);
 
-  GerarFerroEnv;
-  GerardetVag;
+      if OnlyNumber(CTe.infCTeNorm.ferrov.trafMut.chCTeFerroOrigem) <> '' then
+        if not ValidarChave(CTe.infCTeNorm.ferrov.trafMut.chCTeFerroOrigem) then
+          Gerador.wAlerta('#07', 'chCTeFerroOrigem', DSC_CHAVE, ERR_MSG_INVALIDO);
+
+      GerarFerroEnv;
+
+      Gerador.wGrupo('/trafMut');
+    end;
+
+    Gerador.wCampo(tcStr, '#22', 'fluxo ', 01, 10, 1, CTe.infCTeNorm.ferrov.fluxo, DSC_FLUXO);
+  end
+  else
+  begin
+    if CTe.infCTeNorm.ferrov.tpTraf = ttMutuo then
+    begin
+      Gerador.wGrupo('trafMut', '#03');
+      Gerador.wCampo(tcStr, '#04', 'respFat', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.respFat), DSC_RESPFAT);
+      Gerador.wCampo(tcStr, '#05', 'ferrEmi', 01, 01, 1, TrafegoMutuoToStr(CTe.infCTeNorm.ferrov.trafMut.ferrEmi), DSC_FERREMI);
+      Gerador.wGrupo('/trafMut');
+    end;
+
+    Gerador.wCampo(tcStr, '#22', 'fluxo ', 01, 10, 1, CTe.infCTeNorm.ferrov.fluxo, DSC_FLUXO);
+    Gerador.wCampo(tcStr, '#07', 'idTrem', 01, 07, 0, CTe.infCTeNorm.ferrov.idTrem, DSC_IDTREM);
+    Gerador.wCampo(tcDe2, '#08', 'vFrete', 01, 15, 1, CTe.infCTeNorm.ferrov.vFrete, DSC_VFRETE);
+
+    GerarFerroEnv;
+    GerardetVag;
+  end;
 
   Gerador.wGrupo('/ferrov');
 end;

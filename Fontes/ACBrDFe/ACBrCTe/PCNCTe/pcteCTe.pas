@@ -2045,9 +2045,11 @@ type
   private
     FrespFat : TpcteTrafegoMutuo;
     FferrEmi : TpcteTrafegoMutuo;
+    FchCTeFerroOrigem: string;
   public
-    property respFat: TpcteTrafegoMutuo read FrespFat write FrespFat;
-    property ferrEmi: TpcteTrafegoMutuo read FferrEmi write FferrEmi;
+    property respFat: TpcteTrafegoMutuo read FrespFat          write FrespFat;
+    property ferrEmi: TpcteTrafegoMutuo read FferrEmi          write FferrEmi;
+    property chCTeFerroOrigem: string   read FchCTeFerroOrigem write FchCTeFerroOrigem;
   end;
 
   TFerroEnvCollection = class(TACBrObjectList)

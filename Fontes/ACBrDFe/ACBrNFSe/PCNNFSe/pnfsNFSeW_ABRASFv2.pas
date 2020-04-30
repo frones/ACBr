@@ -413,7 +413,7 @@ begin
         end;
       end;
 
-      if not (FProvedor in [proCenti, proProdata, proGoiania, proSigep, proSimplISSv2, proMegaSoft]) then
+      if not (FProvedor in [proCenti, proProdata, proGoiania, proSigep, proSimplISSv2, proMegaSoft, proDeISS]) then
       begin
         if FProvedor in [pro4R, proISSDigital, proISSe, proSystemPro, proFiorilli,
             proSaatri, proCoplan, proLink3, proTecnos, proNEAInformatica, proSH3] then
@@ -424,11 +424,13 @@ begin
     end;
   end;
 
-  if FProvedor in [proSimplISSv2, proDeISS] then
+  if FProvedor = proSimplISSv2 then
   begin
     Gerador.wCampo(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 1, NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES);
     Gerador.wCampo(tcDe2, '#22', 'ValTotTributos ', 01, 15, 1, NFSe.Servico.Valores.ValorTotalTributos);
-  end;
+  end
+  else if FProvedor = proDeISS then
+    Gerador.wCampo(tcDe2, '#22', 'ValTotTributos ', 01, 15, 0, NFSe.Servico.Valores.ValorTotalTributos);
 
   if FProvedor in [proActcon, proAgili, proTecnos] then
     Gerador.wCampo(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS);
@@ -436,7 +438,7 @@ begin
   if FProvedor in [proABase, proActcon, proPronimv2, proVirtual, proVersaTecnologia,
                    proSimplISSv2] then
     Gerador.wCampo(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, DSC_VINSS)
-  else if FProvedor in [proCoplan] then
+  else if FProvedor in [proCoplan, proDeISS] then
     Gerador.wCampo(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, DSC_VINSS);
 
   case FProvedor of

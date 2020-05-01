@@ -15,9 +15,6 @@ uses
   ACBrCEP, FMX.Objects, FMX.Effects, FMX.Ani,
   System.Generics.Collections, FileSelectFrame;
 
-const
-  VK_KEYBOARD_SISE = 250;
-
 type
   TACBrNFCeTestForm = class(TForm)
     GestureManager1: TGestureManager;
@@ -319,12 +316,15 @@ type
     procedure SpeedButton4Click(Sender: TObject);
     procedure btnStatusServicoClick(Sender: TObject);
     procedure ACBrMail1AfterMailProcess(Sender: TObject);
+    procedure FormVirtualKeyboardShown(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
     FcUF: Integer;
     FScrollBox: TCustomScrollBox;
+    FControlToCenter: TControl;
     FTabList: TList<TTabItem>;
 
     procedure TabForward(ANewTab: TTabItem);
@@ -403,6 +403,7 @@ begin
   FcMunList := TStringList.Create;
   FcUF := 0;
   FScrollBox := nil;
+  FControlToCenter := nil;
 
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
@@ -571,10 +572,7 @@ end;
 
 procedure TACBrNFCeTestForm.AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
 var
-  OffSet, ControlSize, KeyBoardScreenTop, ControlScreenBottom: Extended;
-  AParent: TControl;
   AVirtualKeyboard: IVirtualKeyboardControl;
-  Y: Extended;
 begin
   // Não chamou com parâmetros corretos
   if (not Assigned(AControl)) or (not Assigned(AScrollBox)) then
@@ -584,42 +582,11 @@ begin
   if not Supports(AControl, IVirtualKeyboardControl, AVirtualKeyboard) then
     Exit;
 
-  // Verificando se precisa fazer o Scroll
-  KeyBoardScreenTop := Self.Height - VK_KEYBOARD_SISE;
-  ControlSize := AControl.Position.Y + AControl.Height + 10;
-  ControlScreenBottom := AScrollBox.LocalToAbsolute(TPointF.Zero).Y +
-                         AControl.LocalToAbsolute(TPointF.Zero).Y +
-                         (ControlSize*2);
+  FScrollBox := AScrollBox;
+  FControlToCenter := AControl;
 
-  // Verificando se precisa Reposicionar o Scroll...
-  if (ControlScreenBottom > KeyBoardScreenTop) then
-  begin
-    // Ajusta o Scroll, para que o Teclado não fique sobre ele
-    FScrollBox := AScrollBox;  // Salva o Scroll ajustado, para que o mesmo seja retornado em OnVirtualKeyboardHidden
-    //FScrollBox.Margins.Bottom := VK_KEYBOARD_SISE;
-
-    // Calculando o OffSet, de onde está o AControl, até o Topo do AScrollBox
-    OffSet := 0;
-    AParent := TControl(AControl.Parent);
-    while Assigned(AParent) and (AParent <> AScrollBox) do
-    begin
-      OffSet := OffSet + AParent.Position.Y;
-      AParent := TControl(AParent.Parent);
-    end;
-
-    // Humm... O AControl não está dentro do ScrollBox informado...
-    if (not Assigned(AParent)) or (AParent <> AScrollBox) then
-      raise Exception.CreateFmt('Controle %s não está em: %s',[AControl.Name, AScrollBox.Name]);
-
-    // Reposiciona o Scroll, de acordo com o Offset calculado
-    Y := OffSet + AScrollBox.ViewportPosition.Y + ControlSize - VK_KEYBOARD_SISE;
-    AScrollBox.ViewportPosition := PointF(AScrollBox.ViewportPosition.X, Y);
-    if AScrollBox.ViewportPosition.Y < Y then
-    begin
-      AScrollBox.Margins.Bottom := Y - AScrollBox.ViewportPosition.Y;
-      AScrollBox.ViewportPosition := PointF(AScrollBox.ViewportPosition.X, Y);
-    end;
-  end;
+  { Ok, agora que salvamos o Scroll e o Controle a ser centralizado, vamos
+    deixar a mágica ocorrer em OnVirtualKeyboardShow }
 end;
 
 procedure TACBrNFCeTestForm.btLerConfigClick(Sender: TObject);
@@ -967,12 +934,13 @@ var
   BasePathSchemas, SchemasZip, ArquivoControle: string;
   ZipFile: TZipFile;
   Descompactar: Boolean;
+  dtSchema, dtControle: TDateTime;
 begin
   BasePathSchemas := ApplicationPath + 'Schemas';
   ArquivoControle := TPath.Combine(BasePathSchemas, 'leiame.txt');
   ACBrNFe1.Configuracoes.Arquivos.PathSchemas := TPath.Combine(BasePathSchemas, 'NFe');
   {$IfDef MSWINDOWS}
-   SchemasZip := '..\..\..\..\Schemas.zip';
+   SchemasZip := '..\..\Schemas.zip';
   {$Else}
    SchemasZip := TPath.Combine( TPath.GetDocumentsPath, 'Schemas.zip' );
   {$EndIf}
@@ -981,14 +949,18 @@ begin
 
   Descompactar := not FileExists( ArquivoControle );
   if not (Descompactar) then
-    Descompactar := FileAge(SchemasZIP) > FileAge(ArquivoControle);
+  begin
+    FileAge(SchemasZIP, dtSchema);
+    FileAge(ArquivoControle, dtControle);
+    Descompactar := (dtSchema > dtControle);
+  end;
 
   if Descompactar then
   begin
     ZipFile := TZipFile.Create;
     try
       ZipFile.Open(SchemasZip, zmReadWrite);
-      ZipFile.ExtractAll(TPath.Combine(BasePathSchemas,'..'));
+      ZipFile.ExtractAll(BasePathSchemas);
     finally
       ZipFile.Free;
     end;
@@ -1131,11 +1103,61 @@ procedure TACBrNFCeTestForm.FormVirtualKeyboardHidden(Sender: TObject;
 begin
   if Assigned(FScrollBox) then
   begin
-    if FScrollBox.ContainsObject(Self.ActiveControl) then  // Se proximo controle é do mesmo Scroll, não retorne deslocamento
-      Exit;
-    
     FScrollBox.Margins.Bottom := 0;
     FScrollBox := nil;
+  end;
+end;
+
+procedure TACBrNFCeTestForm.FormVirtualKeyboardShown(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+var
+  KeyBoardScreenTop, ControlScreenBottom, PosicaoIdeal,
+  OffSet, NovoY: Extended;
+  AParent: TControl;
+begin
+  if not Assigned(FControlToCenter) then
+    Exit;
+
+  if (FScrollBox = nil) then  // Se não tem o FScrollBox, tenta deduzir
+  begin
+    AParent := TControl(FControlToCenter.Parent);
+    while (AParent <> nil) do
+    begin
+      if (AParent is TCustomScrollBox) then  // Achei um scrollBox Pai
+      begin
+        FScrollBox := TCustomScrollBox(AParent);
+        if (FScrollBox.ContentBounds.Height > FScrollBox.Height) then  // Essa Caixa faz Scroll ?
+          Break;
+      end;
+
+      AParent := TControl(AParent.Parent);
+    end;
+
+    if not Assigned(FScrollBox)  then
+      Exit;
+  end;
+
+  // Verificando se precisa fazer o Scroll
+  KeyBoardScreenTop := Bounds.Top;
+  ControlScreenBottom := FControlToCenter.LocalToAbsolute(TPointF.Zero).Y +
+                         (FControlToCenter.Height*2);
+
+  // Verificando se precisa Reposicionar o Scroll...
+  if (ControlScreenBottom > KeyBoardScreenTop) then
+  begin
+    PosicaoIdeal := FScrollBox.LocalToAbsolute(TPointF.Zero).Y +
+                    Trunc(KeyBoardScreenTop/2);  // Meio da Area Livre do Scroll
+    OffSet := ControlScreenBottom - PosicaoIdeal;
+
+    // Reposiciona o Scroll, de acordo com o Offset calculado
+    NovoY := OffSet + FScrollBox.ViewportPosition.Y;
+    FScrollBox.ViewportPosition := PointF(FScrollBox.ViewportPosition.X, NovoY);
+    if (FScrollBox.ViewportPosition.Y < NovoY) then
+    begin
+      // Não conseguiu rolar o suficiente, vamos ativar as Margens
+      FScrollBox.Margins.Bottom := NovoY - FScrollBox.ViewportPosition.Y;
+      FScrollBox.ViewportPosition := PointF(FScrollBox.ViewportPosition.X, NovoY);
+    end;
   end;
 end;
 
@@ -1180,6 +1202,7 @@ begin
     // Configurações de ACBrNFe //
     Ini.WriteString( 'Certificado', 'URL', edtConfCertURL.Text);
     Ini.WriteString( 'Certificado', 'Caminho', edtConfCertPFX.Text);
+    Ini.WriteString('Certificado', 'URL', edtConfCertURL.Text);
     Ini.WriteString( 'Certificado', 'Senha', edtConfCertSenha.Text);
 
     if cbxWebServiceUF.ItemIndex >= 0  then
@@ -1464,6 +1487,7 @@ begin
     // Configurações de ACBrNFe //
     edtConfCertURL.Text := Ini.ReadString('Certificado', 'URL', ACBrNFe1.SSL.URLPFX);
     edtConfCertPFX.Text  := Ini.ReadString('Certificado', 'Caminho', ACBrNFe1.SSL.ArquivoPFX);
+    edtConfCertURL.Text  := Ini.ReadString('Certificado', 'URL', ACBrNFe1.SSL.URLPFX);
     edtConfCertSenha.Text := Ini.ReadString('Certificado', 'Senha', ACBrNFe1.SSL.Senha);
 
     cbxWebServiceUF.ItemIndex := cbxWebServiceUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', ACBrNFe1.Configuracoes.WebServices.UF));

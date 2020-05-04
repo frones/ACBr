@@ -575,7 +575,7 @@ begin
      end;
 
      BoletoEmail:= ACBrTitulo.CarteiraEnvio = tceBancoEmail;
-     if (BoletoEmail) or (Mensagem.Count > 1) then
+     if BoletoEmail then
       begin
        QtdRegTitulo:= 4;
        GeraSegS    := True;
@@ -1988,7 +1988,11 @@ begin
        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
        Carteira             := Copy(Linha,107,2);
-       NossoNumero          := Copy(Linha,69,5);
+	   
+       case CalcularTamMaximoNossoNumero(Carteira, '', rConvenioCedente) of
+         11: NossoNumero := Copy(Linha,63,11);
+         else NossoNumero := Copy(Linha,69,5);
+       end;
 
        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,07),0)/100;
        ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;

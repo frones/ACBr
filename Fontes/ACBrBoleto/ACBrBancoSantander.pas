@@ -1024,6 +1024,8 @@ begin
                          Copy(ARetorno[0], 97, 2) + '/' +
                          Copy(ARetorno[0], 99, 2), 0, 'dd/mm/yy');
 
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],392,3),0);
+
    ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin

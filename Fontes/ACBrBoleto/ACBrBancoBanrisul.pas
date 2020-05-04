@@ -567,7 +567,7 @@ function TACBrBanrisul.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
     aAceite, DiasProt, Juros, TipoInscSacado, Ocorrencia: String;
-    sDiasBaixaDevol, ACaracTitulo: String;
+    sDiasBaixaDevol, ACaracTitulo, ATipoBoleto : String;
 begin
    with ACBrTitulo do begin
       case Aceite of
@@ -626,6 +626,13 @@ begin
          Ocorrencia := '01'; {Remessa}
       end;
 
+     {Pegando Tipo de Boleto}
+     ATipoBoleto := '1';
+     case ACBrBoleto.Cedente.ResponEmissao of
+       tbCliEmite : ATipoBoleto := '2';
+       tbBancoEmite : ATipoBoleto := '1';
+     end;
+
       ACaracTitulo := '1';
       case CaracTitulo of
         tcSimples     : ACaracTitulo  := '1';
@@ -654,7 +661,7 @@ begin
                 PadLeft(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 10, '0') +
                 DupeString(' ', 10) +
                 ACaracTitulo +
-                '1020' +
+                '10' + ATipoBoleto + '0' +
                 PadRight(NumeroDocumento, 15) +
                 FormatDateTime('ddmmyyyy', Vencimento) +
                 PadLeft(StringReplace(FormatFloat('#####0.00', ValorDocumento), ',', '', []), 15, '0') +

@@ -981,7 +981,8 @@ begin
     CreateDataSet;
 
     // verificar se e DANFE detalhado
-    if ((FDANFEClassOwner is TACBrNFeDANFCEClass) and not TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeItens) then
+    if ((FDANFEClassOwner is TACBrNFeDANFCEClass) and not
+       TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeItens) then
       Exit;
 
     for inItem := 0 to (NFe.Det.Count - 1) do
@@ -1240,7 +1241,8 @@ begin
     Close;
     CreateDataSet;
 
-    if (FDANFEClassOwner is TACBrNFeDANFEClass) and TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoFatura then
+    if (FDANFEClassOwner is TACBrNFeDANFEClass) and
+       TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoFatura then
     begin
       Append;
 
@@ -1268,7 +1270,8 @@ begin
         end;
       end;
 
-      if ((FNFe.infNFe.Versao >= 4) or (FNFe.Ide.indPag = ipOutras)) and EstaVazio(FNFe.Cobr.Fat.nFat) then
+      if ((FNFe.infNFe.Versao >= 4) or (FNFe.Ide.indPag = ipOutras)) and
+         EstaVazio(FNFe.Cobr.Fat.nFat) then
         Cancel
       else
         Post;
@@ -1285,8 +1288,8 @@ begin
   cdsPagamento.Close;
   cdsPagamento.CreateDataSet;
 
-  if (FDANFEClassOwner is TACBrNFeDANFEFR)
-    and (TACBrNFeDANFEFR(FDANFEClassOwner).ExibeCampoDePagamento <> eipQuadro) then
+  if (FDANFEClassOwner is TACBrNFeDANFEFR) and
+     (TACBrNFeDANFEFR(FDANFEClassOwner).ExibeCampoDePagamento <> eipQuadro) then
   begin
     Exit;
   end;
@@ -1901,8 +1904,9 @@ begin
           CondicoesUso := StringReplace(CondicoesUso, 'com: I', 'com:'+#13+' I', [rfReplaceAll]);
           CondicoesUso := StringReplace(CondicoesUso, ';', ';' + #13, [rfReplaceAll]);
 
-//          Correcao := InfEvento.detEvento.xCorrecao;
-          Correcao := StringReplace(InfEvento.detEvento.xCorrecao, ';', #13, [rfReplaceAll]);
+          Correcao := StringReplace(InfEvento.detEvento.xCorrecao,
+            TACBrNFe(DANFEClassOwner.ACBrNFe).Configuracoes.WebServices.QuebradeLinha, #13,
+             [rfReplaceAll]);
 
           FieldByName('xCondUso').AsString  := CondicoesUso;
           FieldByName('xCorrecao').AsString := Correcao;

@@ -2530,15 +2530,16 @@ procedure TNFeInutilizacao.Clear;
 begin
   inherited Clear;
 
-  FPStatus := stNFeInutilizacao;
-  FPLayout := LayNfeInutilizacao;
-  FPArqEnv := 'ped-inu';
-  FPArqResp := 'inu';
+  FPStatus    := stNFeInutilizacao;
+  FPLayout    := LayNfeInutilizacao;
+  FPArqEnv    := 'ped-inu';
+  FPArqResp   := 'inu';
+  FProtocolo  := '';
 
   FverAplic := '';
-  FcStat := 0;
-  FxMotivo := '';
-  Fversao := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+  Fversao   := '';
   FdhRecbto := 0;
   FXML_ProcInutNFe := '';
 

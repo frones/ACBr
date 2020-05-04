@@ -43,6 +43,8 @@ type
 
   TACBrBancoDaycoval = class(TACBrBancoClass)
   protected
+  private
+    procedure GerarRegistrosNFe(ACBrTitulo : TACBrTitulo; aRemessa: TStringList);
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override ;
@@ -389,6 +391,46 @@ begin
   end;
 end;
 
+procedure TACBrBancoDaycoval.GerarRegistrosNFe(ACBrTitulo: TACBrTitulo;  aRemessa: TStringList);
+var
+  wQtdRegNFes, J, I, wQtdNFeNaLinha: Integer;
+  wLinha, NFeSemDados: String;
+  Continua: Boolean;
+begin  // Obrigatorio o envio da linha referente a nota fiscal 
+  NFeSemDados:= StringOfChar(' ',15) + StringOfChar('0', 65);
+  wQtdRegNFes:= trunc(ACBrTitulo.ListaDadosNFe.Count / 3);
+
+  if (ACBrTitulo.ListaDadosNFe.Count mod 3) <> 0 then
+     Inc(wQtdRegNFes);
+
+  J:= 0;
+  I:= 0;
+  repeat
+   begin
+      Continua:=  true;
+
+      wLinha:= '4';
+      wQtdNFeNaLinha:= 0;
+      while (Continua) and (J < ACBrTitulo.ListaDadosNFe.Count) do
+      begin
+         wLinha:= wLinha +
+                  PadRight(ACBrTitulo.ListaDadosNFe[J].NumNFe,15) +
+                  IntToStrZero( round(ACBrTitulo.ListaDadosNFe[J].ValorNFe  * 100 ), 13) +
+                  FormatDateTime('ddmmyyyy',ACBrTitulo.ListaDadosNFe[J].EmissaoNFe)      +
+                  PadLeft(ACBrTitulo.ListaDadosNFe[J].ChaveNFe, 44, '0');
+
+         Inc(J);
+         Inc(wQtdNFeNaLinha);
+         Continua:= (J mod 3) <> 0 ;
+      end;
+	  
+      wLinha:= PadRight(wLinha,81) + StringOfChar(' ', 313) +  IntToStrZero(aRemessa.Count + 1, 6);
+      aRemessa.Add(wLinha);
+      Inc(I);
+   end;
+  until (I = wQtdRegNFes) ;
+end;
+
 procedure TACBrBancoDaycoval.GerarRegistroTransacao400( ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ATipoOcorrencia, AEspecieDoc, ACodigoRemessa : String;
@@ -499,6 +541,9 @@ begin
       ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
     end;
   end;
+
+  if ACBrTitulo.ListaDadosNFe.Count > 0 then  //Informações da nota fiscal 
+    GerarRegistrosNFe(ACBrTitulo, aRemessa);
 end;
 
 procedure TACBrBancoDaycoval.GerarRegistroTrailler400(

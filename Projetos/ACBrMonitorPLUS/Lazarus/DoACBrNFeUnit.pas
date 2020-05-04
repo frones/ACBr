@@ -664,7 +664,8 @@ begin
               'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
-          DoConfiguraDANFe(False, Trim(pPreview) );
+          if ( pImprimir or StrToBoolDef( pPreview, False ) or pPDF ) then
+            DoConfiguraDANFe(False, Trim(pPreview) );
 
           if NaoEstaVazio(pImpressora) then
             DANFe.Impressora := pImpressora;
@@ -1712,7 +1713,6 @@ begin
        finally
          RespRetorno.Free;
        end;
-
        RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
 
     end
@@ -1952,7 +1952,6 @@ begin
         finally
            RespRetorno.Free;
         end;
-
         RespostaImpressao(AImprime, AImpressora, '' , 0, False);
       end
       else

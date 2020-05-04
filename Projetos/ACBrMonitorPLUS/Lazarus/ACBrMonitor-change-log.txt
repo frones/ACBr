@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] DoSATUnit
+Ajuste na validação do XML passado como parâmetro no método EnviarCFe
+
+[*] DoACBrNFeUnit
+Adicionado validação na função de configuração de impressão
+
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado propriedade para RemoverEspaços do XML
 

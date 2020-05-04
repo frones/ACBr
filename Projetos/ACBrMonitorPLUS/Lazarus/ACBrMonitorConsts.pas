@@ -342,7 +342,7 @@ const
   CMetodoECFConsultarHistoricoArq =                      'consultarhistoricoarq';
   CMetodoECFConsultarPendenciasContrib =                 'consultarpendenciascontrib';
   CMetodoECFConsultarPendenciasDevPAFECF =               'consultarpendenciasdevpafecf';
-  CMetodoECFDownloadArquivo =                            'dowloadarquivo';
+  CMetodoECFDownloadArquivo =                            'downloadarquivo';
   CMetodoECFListarArquivos =                             'listararquivos';
   CMetodoECFReprocessarArquivo =                         'reprocessararquivo';
 

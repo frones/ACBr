@@ -790,6 +790,7 @@ type
     function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; virtual;      //Utilizado para definir o Codigo Multa na Remessa
     function DefineDataMulta(const ACBrTitulo: TACBrTitulo): String; virtual;        //Utilizado para definir data multa na Remessa
     function DefineTamanhoContaRemessa: Integer; virtual;     //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
+    function DefinePosicaoNossoNumeroRetorno400: Integer; virtual;     //Define posição para leitura de Retorno CNAB400 campo: NossoNumero
 
     function DefineTipoInscricao: String; virtual; //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual; //Utilizado para definir Responsável Emissão na Remessa
@@ -3160,7 +3161,7 @@ begin
         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        NossoNumero          := Copy(Linha,71,11);
+        NossoNumero          := Copy(Linha,DefinePosicaoNossoNumeroRetorno400,11);
         Carteira             := Copy(Linha,22,3);
         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
@@ -3898,6 +3899,11 @@ end;
 function TACBrBancoClass.DefineTamanhoContaRemessa: Integer;
 begin
   Result:= ACBrBanco.TamanhoConta;
+end;
+
+function TACBrBancoClass.DefinePosicaoNossoNumeroRetorno400: Integer;
+begin
+  Result := 71;
 end;
 
 function TACBrBancoClass.InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;

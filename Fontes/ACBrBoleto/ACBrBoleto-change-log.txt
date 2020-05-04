@@ -49,6 +49,39 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+ATipoBoleto
+
+30/04/2020
+
+-- ACBrBoleto, ACBrBancoUnicredES --
+[*] Criado função DefinePosicaoNossoNumeroRetorno400 para definir leitura de NossoNumero fora do padrão para CNAB400
+https://www.projetoacbr.com.br/forum/topic/57230-arquivo-de-retorno-unicred-136/
+
+-- ACBrBancoBrasil --
+
+[*] Validação da propriedade CarteiraEnvio para geração do segmento S na remessa
+https://www.projetoacbr.com.br/forum/topic/57056-ajuste-segmento-s-banco-do-brasil-cnab-240/
+
+[*] Ajuste na leitura CNAB400 referente campo NossoNumero de 11 dígitos
+https://www.projetoacbr.com.br/forum/topic/57227-erro-em-layout-de-retorno-do-banco-do-brasil-quando-o-nosso-n%C3%BAmero-possui-tamanho-11/
+
+-- ACBrBancoCresol --
+[*] Adicionado campo nome e data no cabeçalho da remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/56851-boleto-cresol-e-safra-altera%C3%A7oes/
+
+-- ACBrBancoBanrisul --
+[*] Adicionado validação do campo tipoBoleto na remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/57225-cnab-240-banrisul-tipo-de-emitente-do-boleto/
+
+-- ACBrBancoSantander --
+[*] Adicionado campo NumeroArquivo na leitura retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/57209-numeroarquivo-no-retorno-cnab400-do-santander/
+
+-- ACBrBancoDaycoval --
+[*] Adicionado geração do registor NFe na remessa
+https://www.projetoacbr.com.br/forum/topic/57110-banco-daycoval-nfe/
+
+
 20/04/2020
 -- ACBrBoleto, ACBrBancoBradesco --
 [-] Correção para não remover espaços em branco no final dos registros.

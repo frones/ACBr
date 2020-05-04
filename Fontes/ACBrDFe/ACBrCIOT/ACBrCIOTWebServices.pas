@@ -678,7 +678,7 @@ begin
     if FNomePDF = '' then
       NomeArq := GerarPathDownload + FRetornoEnvio.RetEnvio.ProtocoloServico + '.pdf'
     else
-      NomeArq := GerarPathDownload + FNomePDF + '.pdf';
+      NomeArq := PathWithDelim(GerarPathDownload) + FNomePDF + '.pdf';
 
     WriteToTXT(NomeArq, FRetornoEnvio.RetEnvio.PDF, False, False, True);
   end;

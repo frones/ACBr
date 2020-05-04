@@ -146,9 +146,10 @@ begin
                '01'                                            + // Código do Tipo de Serviço
                PadRight( 'COBRANCA', 15 )                      + // Descrição do tipo de serviço
                PadLeft( Convenio, 20, '0')                     + // Codigo da Empresa no Banco
-               space(30)                                       + // Nome da Empresa
+               PadLeft( Copy(Nome,1,30) , 30)                  + // Nome da Empresa                                17/04/2020
                IntToStr( Numero )+ PadRight('BRADESCO', 15)    + // Código e Nome do Banco(237 - Bradesco)
-               Space(06) + Space(08) + Space(02)               + // Data de geração do arquivo + brancos
+               FormatDateTime('DDMMYY',Now)                    + // Data de geração do arquivo                     17/04/2020
+               Space(08) + Space(02)                           + // brancos
                IntToStrZero(NumeroRemessa, 7) + Space(277)     + // Nr. Sequencial de Remessa + brancos
                IntToStrZero(1, 6);                               // Nr. Sequencial de Remessa + brancos + Contador
 

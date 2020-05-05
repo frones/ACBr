@@ -585,15 +585,15 @@ end;
 function IntegradoraToStr(const t: TCIOTIntegradora): string;
 begin
   Result := EnumeradoToStr(t,
-                          ['ieFrete', 'iRepom', 'iPamcard'],
-                          [ieFrete, iRepom, iPamcard]);
+                          ['iNone', 'ieFrete', 'iRepom', 'iPamcard'],
+                          [iNone, ieFrete, iRepom, iPamcard]);
 end;
 
 function StrToIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 begin
   Result := StrToEnumerado(ok, s,
-                          ['ieFrete', 'iRepom', 'iPamcard'],
-                          [ieFrete, iRepom, iPamcard]);
+                          ['iNone', 'ieFrete', 'iRepom', 'iPamcard'],
+                          [iNone, ieFrete, iRepom, iPamcard]);
 end;
 
 end.

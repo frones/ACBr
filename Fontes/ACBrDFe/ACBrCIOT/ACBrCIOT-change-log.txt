@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2020
+-- pcnConversaoCIOT --
+[-] Realizado uma correção para a verificação do tipo de Integrador selecionado.
+   Por: Italo Jurisato Junior
+
 04/05/2020
 -- ACBrCIOTWebServices --
 [-] https://www.projetoacbr.com.br/forum/topic/57336-pdf-ciot-efrete/?do=findComment&comment=376222

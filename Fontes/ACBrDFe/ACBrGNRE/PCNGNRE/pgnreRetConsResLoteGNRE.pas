@@ -216,7 +216,7 @@ type
     property resultado: string read Fresultado write Fresultado;
     property resInfoCabec: TInfoCabec read FresInfoCabec write FresInfoCabec;
     property resGuia: TGuiaCollection read FresGuia write FresGuia;
-    property resRejeicaGuia: TRejeicaoGuiaCollection read FresRejeicaoGuia write FresRejeicaoGuia;
+    property resRejeicaoGuia: TRejeicaoGuiaCollection read FresRejeicaoGuia write FresRejeicaoGuia;
   end;
 
 implementation
@@ -321,18 +321,29 @@ begin
   begin
     FAmbiente     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ambiente'));
     FnumeroRecibo := Leitor.rCampo(tcStr, 'numeroRecibo');
-    Fresultado    := Leitor.rCampo(tcStr, 'resultado');
 
-    if Leitor.rExtrai(2, 'situacaoProcess') <> '' then
+    if (Pos('versao="2.00"', Leitor.Grupo) > 0) then
     begin
-      Fcodigo    := Leitor.rCampo(tcInt, 'codigo');
-      Fdescricao := Leitor.rCampo(tcStr, 'descricao');
-    end;
+      if Leitor.rExtrai(2, 'situacaoProcess') <> '' then
+      begin
+        Fcodigo    := Leitor.rCampo(tcInt, 'codigo');
+        Fdescricao := Leitor.rCampo(tcStr, 'descricao');
+      end;
 
-    if (Fresultado <> '') and (Pos('versao="2.00"', Fresultado) > 0) then
-      Result := Ler_Versao_2
+      Result := Ler_Versao_2;
+    end
     else
+    begin
+      Fresultado    := Leitor.rCampo(tcStr, 'resultado');
+
+      if Leitor.rExtrai(2, 'situacaoProcess') <> '' then
+      begin
+        Fcodigo    := Leitor.rCampo(tcInt, 'codigo');
+        Fdescricao := Leitor.rCampo(tcStr, 'descricao');
+      end;
+
       Result := Ler_Versao_1;
+    end;
   end;
 end;
 
@@ -405,14 +416,14 @@ begin
 
       if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '2') then
       begin
-        resRejeicaGuia.New;
+        resRejeicaoGuia.New;
         Inc(k);
 
-        resRejeicaGuia.Items[k].Identificador      := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
-        resRejeicaGuia.Items[k].SequencialGuia     := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
-        resRejeicaGuia.Items[k].NomeCampo          := Copy(SLResultGuia.Strings[i], 6, 30);
-        resRejeicaGuia.Items[k].CodMotivoRejeicao  := StrToInt(Copy(SLResultGuia.Strings[i], 36, 3));
-        resRejeicaGuia.Items[k].DescMotivoRejeicao := Copy(SLResultGuia.Strings[i], 39, 355);
+        resRejeicaoGuia.Items[k].Identificador      := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
+        resRejeicaoGuia.Items[k].SequencialGuia     := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
+        resRejeicaoGuia.Items[k].NomeCampo          := Copy(SLResultGuia.Strings[i], 6, 30);
+        resRejeicaoGuia.Items[k].CodMotivoRejeicao  := StrToInt(Copy(SLResultGuia.Strings[i], 36, 3));
+        resRejeicaoGuia.Items[k].DescMotivoRejeicao := Copy(SLResultGuia.Strings[i], 39, 355);
       end;
     end;
 

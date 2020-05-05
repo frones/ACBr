@@ -691,8 +691,8 @@ begin
   // Para aparecer as exceções que ocorreram / caso haja alguma
   SL := TStringList.Create;
   SL.Clear;
-  for I := 0 to GNRERetorno.resRejeicaGuia.Count - 1 do
-   SL.Add(Trim(GNRERetorno.resRejeicaGuia.Items[I].DescMotivoRejeicao)+#13);
+  for I := 0 to GNRERetorno.resRejeicaoGuia.Count - 1 do
+   SL.Add(Trim(GNRERetorno.resRejeicaoGuia.Items[I].DescMotivoRejeicao)+#13);
   FPMsg      := FGNRERetorno.descricao + #13 + Trim(SL.Text);
   SL.Free;
   //

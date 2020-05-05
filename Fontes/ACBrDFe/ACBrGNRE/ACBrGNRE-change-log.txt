@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2020
+-- Diversos --
+[-] Possível correção na leitura do retorno do envio do GNRE.
+    Não estava separando corretamente as guias.
+  Por: Italo Jurisato Junior
+
 16/03/2020
 -- Diversos --
 [+] Acrescentado novos campos especificos da versão 2.00

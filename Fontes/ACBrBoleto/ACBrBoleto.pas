@@ -723,16 +723,32 @@ type
     toRetornoEmTransito
   );
 
+  //Complemento de instrução para alterar outros dados
+  TACBrComplementoOcorrenciaOutrosDados =
+  (
+    TCompDesconto,
+    TCompJurosDia,
+    TCompDescontoDiasAntecipacao,
+    TCompDataLimiteDesconto,
+    TCompCancelaProtestoAutomatico,
+    TCompCarteiraCobranca, //Segundo Manual ainda não disponivel
+    TCompCancelaNegativacaoAutomatica
+  );
+  
+
   {TACBrOcorrencia}
   TACBrOcorrencia = class
   private
      fTipo: TACBrTipoOcorrencia;
      fpAOwner: TACBrTitulo;
+     fComplementoOutrosDados: TACBrComplementoOcorrenciaOutrosDados;
      function GetCodigoBanco: String;
      function GetDescricao: String;
   public
      constructor Create(AOwner: TACBrTitulo);
      property Tipo: TACBrTipoOcorrencia read fTipo write fTipo;
+     property ComplementoOutrosDados: TACBrComplementoOcorrenciaOutrosDados
+      read fComplementoOutrosDados write fComplementoOutrosDados;
      property Descricao  : String  read GetDescricao;
      property CodigoBanco: String  read GetCodigoBanco;
   end;
@@ -831,6 +847,9 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; overload; virtual;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; overload; virtual;
 
+    function CompOcorrenciaOutrosDadosToDescricao(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; virtual;
+    function CompOcorrenciaOutrosDadosToCodigo(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; virtual;
+
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
 
@@ -912,6 +931,9 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String;
+
+    function CompOcorrenciaOutrosDadosToDescricao(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; virtual;
+    function CompOcorrenciaOutrosDadosToCodigo(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ): String;
@@ -2672,6 +2694,18 @@ begin
    Result:= BancoClass.TipoOCorrenciaToCod(TipoOcorrencia);
 end;
 
+function TACBrBanco.CompOcorrenciaOutrosDadosToDescricao(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result:= BancoClass.CompOcorrenciaOutrosDadosToDescricao(CompOcorrencia);
+end;
+
+function TACBrBanco.CompOcorrenciaOutrosDadosToCodigo(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result:= BancoClass.CompOcorrenciaOutrosDadosToCodigo(CompOcorrencia);
+end;
+
 function TACBrBanco.CodMotivoRejeicaoToDescricao( const TipoOcorrencia:
    TACBrTipoOcorrencia;CodMotivo: Integer) : String;
 begin
@@ -3352,6 +3386,18 @@ function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
 begin
   Result := '';
 end ;
+
+function TACBrBancoClass.CompOcorrenciaOutrosDadosToDescricao(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result := '';
+end;
+
+function TACBrBancoClass.CompOcorrenciaOutrosDadosToCodigo(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result := '';
+end;
 
 function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
 const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;

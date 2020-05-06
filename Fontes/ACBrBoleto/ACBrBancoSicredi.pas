@@ -73,6 +73,10 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo:String): String; override;
 
+    function CompOcorrenciaOutrosDadosToDescricao(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; override;
+    function CompOcorrenciaOutrosDadosToCodigo(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; override;
+
+
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
@@ -207,7 +211,7 @@ end;
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   wNossoNumeroCompleto, CodProtesto, DiasProtesto, CodNegativacao, DiasNegativacao: String;
-  TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto   : String;
+  TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto, CompOcorrenciaOutrosDados  : String;
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
 begin
@@ -231,6 +235,11 @@ begin
          toRemessaExcluirNegativacaoSerasaBaixar : Ocorrencia := '76'; {Excluir Negativação Serasa e Baixar}
       else
          Ocorrencia := '01';                                          {Remessa}
+      end;
+
+      if(OcorrenciaOriginal.Tipo = toRemessaOutrasOcorrencias)Then
+      begin
+        CompOcorrenciaOutrosDados := CompOcorrenciaOutrosDadosToCodigo(OcorrenciaOriginal.ComplementoOutrosDados);
       end;
 
       {Pegando Tipo de Boleto}
@@ -329,7 +338,7 @@ begin
             wLinha:= wLinha +
                      Space(6)                                                           +  // 057 a 062 - Filler - Brancos
                      FormatDateTime( 'yyyymmdd', date)                                  +  // 063 a 070 - Data da instrução
-                     Space(1)                                                           +  // 071 a 071 - Campo alterado, quando instrução "31" Conforme tabela de instruções
+                     IfThen(Ocorrencia = '31', CompOcorrenciaOutrosDados, Space(1))     +  // 071 a 071 - Campo alterado, quando instrução "31" Conforme tabela de instruções
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(1)                                                           +  // 073 a 073 - Filler Brancos
                      TipoBoleto                                                         +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
@@ -2083,6 +2092,36 @@ begin
       end;
    end;
    ACBrBanco.TamanhoMaximoNossoNum := 5;
+end;
+
+function TACBrBancoSicredi.CompOcorrenciaOutrosDadosToCodigo(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result := ' ';
+  case CompOcorrencia of
+  TCompDesconto:                      Result := 'A';
+  TCompJurosDia:                      Result := 'B';
+  TCompDescontoDiasAntecipacao:       Result := 'C';
+  TCompDataLimiteDesconto:            Result := 'D';
+  TCompCancelaProtestoAutomatico:     Result := 'E';
+  TCompCarteiraCobranca:              Result := 'F';
+  TCompCancelaNegativacaoAutomatica:  Result := 'G';
+  end;
+end;
+
+function TACBrBancoSicredi.CompOcorrenciaOutrosDadosToDescricao(
+  const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
+begin
+  Result := '';
+  case CompOcorrencia of
+  TCompDesconto:                      Result := 'Desconto';
+  TCompJurosDia:                      Result := 'Juros por dia';
+  TCompDescontoDiasAntecipacao:       Result := 'Desconto por dia de antecipação ';
+  TCompDataLimiteDesconto:            Result := 'Data limite para concessão de desconto';
+  TCompCancelaProtestoAutomatico:     Result := 'Cancelamento de protesto automático ';
+  TCompCarteiraCobranca:              Result := 'Carteira de cobrança';
+  TCompCancelaNegativacaoAutomatica:  Result := 'Cancelamento de negativação automática';
+  end;
 end;
 
 end.

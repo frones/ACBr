@@ -51,7 +51,15 @@ Símbolo : Significado
 
 ATipoBoleto
 
-30/04/2020
+05/05/2020
+
+-- ACBrBancoSicred, ACBrBoleto --
+[+] Adicionado Classe Ocorrência de Complemento de Outros Dados (TACBrComplementoOcorrenciaOutrosDados)
+https://www.projetoacbr.com.br/forum/topic/56614-cancelar-negativa%C3%A7%C3%A3o-autom%C3%A1tica-sicredi/
+
+-- ACBrBancoUniprime --
+[*] Ajustes na geração da Remessa CNAB400 conforme manual 2.0
+https://www.projetoacbr.com.br/forum/topic/56770-altera%C3%A7%C3%A3o-remessa-banco-uniprime-norte-do-paran%C3%A1/?tab=comments#comment-372032
 
 -- ACBrBoleto, ACBrBancoUnicredES --
 [*] Criado função DefinePosicaoNossoNumeroRetorno400 para definir leitura de NossoNumero fora do padrão para CNAB400

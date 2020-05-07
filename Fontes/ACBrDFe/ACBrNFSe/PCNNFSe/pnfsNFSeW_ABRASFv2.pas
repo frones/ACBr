@@ -182,14 +182,16 @@ begin
       Gerador.wGrupo('/IdentificacaoTomador');
     end;
 
-    if (NFSe.Tomador.Endereco.UF = 'EX') and (FProvedor = proISSJoinville) then
+    if (NFSe.Tomador.Endereco.UF = 'EX') and
+       (FProvedor in [proISSJoinville, proSmarAPDABRASF]) then
       Gerador.wCampo(tcStr, '#38', 'NifTomador', 001, 40, 0, NFSe.Tomador.NifTomador);
 
     Gerador.wCampo(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, DSC_XNOME);
 
     if NFSe.Tomador.Endereco.Endereco <> '' then
     begin
-      if (NFSe.Tomador.Endereco.UF = 'EX') and (FProvedor = proISSJoinville) then
+      if (NFSe.Tomador.Endereco.UF = 'EX') and
+         (FProvedor in [proISSJoinville, proSmarAPDABRASF]) then
         GerarEnderecoExterior
       else
       begin

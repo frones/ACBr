@@ -18,6 +18,7 @@ begin
    SetHeapTraceOutput( 'c:\temp\heaptrclog.trc');
   {$ENDIF}
   RequireDerivedFormResource := True;
+  Application.Scaled := True;
   Application.Initialize;
   Application.CreateForm(TFrPosPrinterTeste, FrPosPrinterTeste);
   Application.Run;

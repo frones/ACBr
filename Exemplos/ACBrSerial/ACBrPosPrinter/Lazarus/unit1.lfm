@@ -1,33 +1,33 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 286
-  Height = 552
-  Top = 10
-  Width = 926
+  Left = 346
+  Height = 631
+  Top = 82
+  Width = 1048
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 552
-  ClientWidth = 926
+  ClientHeight = 631
+  ClientWidth = 1048
   Constraints.MinHeight = 535
   Constraints.MinWidth = 838
   OnClose = FormClose
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.4.0'
+  LCLVersion = '2.0.8.0'
   object Panel1: TPanel
     Left = 256
-    Height = 552
+    Height = 631
     Top = 0
-    Width = 670
+    Width = 792
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 552
-    ClientWidth = 670
+    ClientHeight = 631
+    ClientWidth = 792
     TabOrder = 0
-    object Panel3: TPanel
+    object pBotoes2: TPanel
       Left = 1
       Height = 135
-      Top = 368
-      Width = 668
+      Top = 447
+      Width = 790
       Align = alBottom
       ChildSizing.LeftRightSpacing = 4
       ChildSizing.TopBottomSpacing = 4
@@ -40,153 +40,205 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       ChildSizing.Layout = cclTopToBottomThenLeftToRight
       ChildSizing.ControlsPerLine = 4
       ClientHeight = 135
-      ClientWidth = 668
+      ClientWidth = 790
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
-        Left = 4
+        Left = 0
         Height = 31
         Top = 4
-        Width = 158
+        Width = 152
         Caption = 'Formatação de Caracter'
         OnClick = bTagFormtacaoCaracterClick
         TabOrder = 0
       end
       object bTagsAlinhamento: TButton
-        Left = 4
+        Left = 0
         Height = 31
         Top = 37
-        Width = 158
+        Width = 152
         Caption = 'Alinhamento'
         OnClick = bTagsAlinhamentoClick
         TabOrder = 1
       end
       object bTagsCodBarras: TButton
-        Left = 4
+        Left = 0
         Height = 31
         Top = 70
-        Width = 158
+        Width = 152
         Caption = 'Codigos de Barras'
         OnClick = bTagsCodBarrasClick
         TabOrder = 2
       end
       object bTagQRCode: TButton
-        Left = 4
+        Left = 0
         Height = 28
         Top = 103
-        Width = 158
+        Width = 152
         Caption = 'QRCode'
         OnClick = bTagQRCodeClick
         TabOrder = 3
       end
       object bTagsTestePagCodigo: TButton
-        Left = 166
+        Left = 152
         Height = 31
         Top = 4
-        Width = 189
+        Width = 184
         Caption = 'Teste de Página de Código'
         OnClick = bTagsTestePagCodigoClick
         TabOrder = 4
       end
       object bTagsTestePageMode: TButton
-        Left = 166
+        Left = 152
         Height = 31
         Top = 37
-        Width = 189
+        Width = 184
         Caption = 'Teste de Page Mode'
         OnClick = bTagsTestePageModeClick
         TabOrder = 5
       end
       object bTagGaveta: TButton
-        Left = 166
+        Left = 152
         Height = 31
         Top = 70
-        Width = 189
+        Width = 184
         Caption = 'Testes de Gaveta'
         OnClick = bTagGavetaClick
         TabOrder = 6
       end
       object bImpLinhaALinha: TButton
-        Left = 166
+        Left = 152
         Height = 28
         Top = 103
-        Width = 189
+        Width = 184
         Caption = 'Teste Impressão Linha a Linha'
         OnClick = bImpLinhaALinhaClick
         TabOrder = 7
       end
       object btInfoUSB: TButton
-        Left = 359
+        Left = 340
         Height = 31
         Top = 4
-        Width = 151
+        Width = 147
         Caption = 'Informações USB'
         OnClick = btInfoUSBClick
         TabOrder = 8
       end
       object bImpTagsValidas: TButton
-        Left = 359
+        Left = 340
         Height = 31
         Top = 37
-        Width = 151
+        Width = 147
         Caption = 'Mostrar TODAS TAGS'
         OnClick = bImpTagsValidasClick
         TabOrder = 9
       end
       object bTagsTesteInvalidas: TButton
-        Left = 359
+        Left = 340
         Height = 31
         Top = 70
-        Width = 151
+        Width = 147
         Caption = 'Teste de Tags Invalidas'
         OnClick = bTagsTesteInvalidasClick
         TabOrder = 10
       end
       object Button1: TButton
-        Left = 359
+        Left = 340
         Height = 28
         Top = 103
-        Width = 151
+        Width = 147
         Caption = 'Teste de Senha'
         OnClick = Button1Click
         TabOrder = 11
       end
       object bLerStatus: TButton
-        Left = 514
+        Left = 491
         Height = 31
         Top = 4
-        Width = 150
+        Width = 147
         Caption = 'Leitura de Status'
         OnClick = bLerStatusClick
         TabOrder = 12
       end
       object bLerInfo: TButton
-        Left = 514
+        Left = 491
         Height = 31
         Top = 37
-        Width = 150
+        Width = 147
         Caption = 'Leitura de Informações'
         OnClick = bLerInfoClick
         TabOrder = 13
       end
+      object btImprimirCheque: TButton
+        Left = 491
+        Height = 31
+        Top = 70
+        Width = 147
+        Caption = 'Imprimir Cheque'
+        OnClick = btImprimirChequeClick
+        TabOrder = 14
+      end
+      object btLerCheque: TButton
+        Left = 491
+        Height = 28
+        Top = 103
+        Width = 147
+        Caption = 'Ler Cheque'
+        OnClick = btLerChequeClick
+        TabOrder = 15
+      end
+      object Label21: TLabel
+        Left = 642
+        Height = 31
+        Top = 4
+        Width = 148
+        ParentColor = False
+      end
+      object btEjetarCheque: TButton
+        Left = 642
+        Height = 31
+        Top = 37
+        Width = 148
+        Caption = 'Ejetar Cheque'
+        OnClick = btEjetarChequeClick
+        TabOrder = 16
+      end
+      object btImprimirTextoCheque: TButton
+        Left = 642
+        Height = 31
+        Top = 70
+        Width = 148
+        Caption = 'Imprimir Texto Cheque'
+        OnClick = btImprimirTextoChequeClick
+        TabOrder = 17
+      end
+      object btResultadoLeitura: TButton
+        Left = 642
+        Height = 28
+        Top = 103
+        Width = 148
+        Caption = 'Resultado Leitura'
+        OnClick = btResultadoLeituraClick
+        TabOrder = 18
+      end
     end
-    object PageControl1: TPageControl
+    object pgAbas: TPageControl
       Left = 1
-      Height = 367
+      Height = 446
       Top = 1
-      Width = 668
-      ActivePage = tsImagens
+      Width = 790
+      ActivePage = tsImprimir
       Align = alClient
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
-        ClientHeight = 387
-        ClientWidth = 660
+        ClientHeight = 418
+        ClientWidth = 782
         object mImp: TMemo
           Left = 0
-          Height = 387
+          Height = 418
           Top = 0
-          Width = 660
+          Width = 782
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -210,16 +262,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object tsImagens: TTabSheet
         Caption = 'Imagens e Logo'
         ClientHeight = 339
-        ClientWidth = 660
+        ClientWidth = 765
         object gbCodBarrasConfig2: TGroupBox
           Left = 0
           Height = 107
           Top = 232
-          Width = 660
+          Width = 765
           Align = alClient
           Caption = 'LogoTipo'
           ClientHeight = 87
-          ClientWidth = 656
+          ClientWidth = 761
           TabOrder = 0
           object Label14: TLabel
             AnchorSideLeft.Control = seLogoKC1
@@ -325,7 +377,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             Left = 240
             Height = 25
             Top = 36
-            Width = 117
+            Width = 118
             AutoSize = True
             Caption = 'Tags de Logotipo'
             OnClick = bTagLogoClick
@@ -356,12 +408,12 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Left = 0
           Height = 77
           Top = 155
-          Width = 660
+          Width = 765
           Align = alTop
           BevelInner = bvRaised
           BevelOuter = bvLowered
           ClientHeight = 77
-          ClientWidth = 660
+          ClientWidth = 765
           TabOrder = 1
           object bCaregarImagem: TButton
             Left = 8
@@ -375,7 +427,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           end
           object bImprimirImagem: TButton
             AnchorSideRight.Control = bConverter
-            Left = 327
+            Left = 431
             Height = 25
             Top = 40
             Width = 72
@@ -387,10 +439,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             TabOrder = 2
           end
           object bTagBMP: TButton
-            Left = 485
+            Left = 589
             Height = 25
             Top = 40
-            Width = 167
+            Width = 168
             Anchors = [akTop, akRight]
             AutoSize = True
             Caption = 'Tags de Impressão de BMP'
@@ -401,7 +453,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             Left = 131
             Height = 23
             Top = 4
-            Width = 510
+            Width = 615
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -428,7 +480,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           end
           object bConverter: TButton
             AnchorSideRight.Control = bTagBMP
-            Left = 403
+            Left = 507
             Height = 25
             Top = 40
             Width = 78
@@ -445,7 +497,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Left = 0
           Height = 5
           Top = 150
-          Width = 660
+          Width = 765
           Align = alTop
           ResizeAnchor = akTop
         end
@@ -453,18 +505,18 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Left = 0
           Height = 150
           Top = 0
-          Width = 660
+          Width = 765
           HorzScrollBar.Page = 250
           VertScrollBar.Page = 109
           Align = alTop
           ClientHeight = 146
-          ClientWidth = 656
+          ClientWidth = 761
           TabOrder = 3
           object Image1: TImage
             Left = 0
             Height = 146
             Top = 0
-            Width = 656
+            Width = 761
             Align = alClient
             Center = True
             Picture.Data = {
@@ -585,22 +637,22 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         end
       end
     end
-    object Panel4: TPanel
+    object pFundo: TPanel
       Left = 1
       Height = 48
-      Top = 503
-      Width = 668
+      Top = 582
+      Width = 790
       Align = alBottom
       BevelInner = bvRaised
       BevelOuter = bvLowered
       ClientHeight = 48
-      ClientWidth = 668
+      ClientWidth = 790
       TabOrder = 2
       object bLimpar: TBitBtn
-        AnchorSideTop.Control = Panel4
+        AnchorSideTop.Control = pFundo
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = bImprimir
-        Left = 479
+        Left = 601
         Height = 26
         Top = 11
         Width = 83
@@ -648,9 +700,9 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 1
       end
       object bImprimir: TBitBtn
-        AnchorSideTop.Control = Panel4
+        AnchorSideTop.Control = pFundo
         AnchorSideTop.Side = asrCenter
-        Left = 566
+        Left = 688
         Height = 26
         Top = 11
         Width = 92
@@ -697,24 +749,76 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 2
       end
       object cbxLimparTexto: TCheckBox
-        AnchorSideTop.Control = Panel4
+        AnchorSideTop.Control = pFundo
         AnchorSideTop.Side = asrCenter
         Left = 16
         Height = 19
         Top = 15
-        Width = 218
+        Width = 217
         Caption = 'Limpar texto a cada teste selecionado'
         TabOrder = 0
       end
+      object bCancelarCheque: TBitBtn
+        AnchorSideTop.Control = pFundo
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = bLimpar
+        Left = 408
+        Height = 26
+        Top = 11
+        Width = 189
+        Anchors = [akTop, akLeft, akRight]
+        AutoSize = True
+        BorderSpacing.Right = 4
+        Caption = 'Cancelar carga do Cheque'
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000FF00FF00FF00
+          FF00101073FF000029FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00000431FF10106BFFFF00FF00FF00FF00FF00FF000000
+          8CFF3134F7FF0808CEFF000031FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000039FF080CCEFF3130EFFF00007BFFFF00FF00000063FF0808
+          E7FF4A49F7FF4A4DF7FF0000C6FF000039FFFF00FF00FF00FF00FF00FF00FF00
+          FF0000004AFF0004CEFF5A59EFFF5A59F7FF0808DEFF00004AFF000484FF2120
+          FFFF3134FFFF5A59FFFF4A49EFFF0004C6FF000042FFFF00FF00FF00FF000000
+          52FF0808CEFF5A59EFFF7371FFFF5255FFFF3134FFFF00046BFF000473FF181C
+          FFFF2928FFFF3938FFFF5255FFFF4245EFFF0004C6FF00004AFF00005AFF0808
+          CEFF5255EFFF6B69FFFF5251FFFF4241FFFF3130FFFF080C52FFFF00FF000808
+          7BFF181CFFFF2928FFFF3134FFFF4A49FFFF3134EFFF0000BDFF0004C6FF4245
+          EFFF5A59FFFF4245FFFF393CFFFF292CFFFF080C63FFFF00FF00FF00FF00FF00
+          FF0008086BFF1818FFFF292CFFFF393CFFFF4A4DFFFF3130EFFF3134EFFF4A49
+          FFFF3938FFFF3130FFFF2124F7FF08084AFFFF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000452FF393CEFFF6361FFFF6361FFFF6361FFFF6361FFFF6361
+          FFFF5A59FFFF2928DEFF000439FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0000048CFF393CF7FF6361FFFF6361FFFF6365FFFF6365
+          FFFF3134EFFF000463FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF0000005AFF0000A5FF3130F7FF6B69FFFF6B69FFFF6B69FFFF6B69
+          FFFF2120E7FF00009CFF000042FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000052FF0000A5FF3134F7FF7B79FFFF7B79FFFF7B79FFFF7B79FFFF7B79
+          FFFF7375FFFF2124E7FF000094FF000039FFFF00FF00FF00FF00FF00FF000000
+          52FF00009CFF4241F7FF8C8AFFFF8C8AFFFF8C8AFFFF3130C6FF4A49DEFF8C8E
+          FFFF8C8AFFFF8486FFFF2928E7FF00008CFF000039FFFF00FF00000018FF0000
+          9CFF4A49F7FF9C9AFFFF9C9AFFFF9C9AFFFF3134BDFFFF00FF00000021FF5255
+          E7FF9C9EFFFF9C9AFFFF9496FFFF292CE7FF00007BFFFF00FF00000029FF5255
+          FFFFADAEFFFFADAAFFFFADAAFFFF393CBDFFFF00FF00FF00FF00FF00FF000000
+          29FF5A5DE7FFADAEFFFFADAAFFFFADAAFFFF3130DEFFFF00FF00FF00FF004245
+          BDFFBDBAFFFFBDBAFFFF393CBDFFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000029FF6B69E7FFCECBFFFFA5A6FFFF21248CFFFF00FF00FF00FF00FF00
+          FF00393CBDFF4241C6FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00
+        }
+        OnClick = bCancelarChequeClick
+        TabOrder = 3
+        Visible = False
+      end
     end
   end
-  object Panel2: TPanel
+  object pConfig: TPanel
     Left = 0
-    Height = 552
+    Height = 631
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 552
+    ClientHeight = 631
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -732,7 +836,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 19
         Hint = 'Traduz as Tags de Formatação e Cod.Barras'
         Top = 253
-        Width = 86
+        Width = 88
         Caption = 'TraduzirTags'
         Checked = True
         OnChange = cbTraduzirTagsChange
@@ -744,7 +848,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 19
         Hint = 'Não processa as Tags, imprime-as como texto normal'
         Top = 273
-        Width = 82
+        Width = 83
         Caption = 'IgnorarTags'
         OnChange = cbIgnorarTagsChange
         TabOrder = 1
@@ -1163,13 +1267,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 23
         Hint = 'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Porta Serial após o envio'
         Top = 15
-        Width = 95
+        Width = 94
         Caption = 'Exibe Numero'
         OnChange = cbHRIChange
         TabOrder = 2
       end
     end
-    object gbCodBarrasConfig1: TGroupBox
+    object gbQRCodeConfig: TGroupBox
       Left = 1
       Height = 72
       Top = 392
@@ -1187,10 +1291,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         AnchorSideLeft.Control = seQRCodeTipo
         AnchorSideLeft.Side = asrCenter
         AnchorSideBottom.Control = seQRCodeTipo
-        Left = 39
+        Left = 38
         Height = 15
         Top = 0
-        Width = 23
+        Width = 24
         Anchors = [akLeft, akBottom]
         Caption = 'Tipo'
         ParentColor = False
@@ -1347,6 +1451,31 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 3
       end
     end
+    object gbChequeConfig: TGroupBox
+      Left = 1
+      Height = 56
+      Top = 536
+      Width = 254
+      Align = alTop
+      Caption = 'Cheques'
+      ChildSizing.EnlargeHorizontal = crsHomogenousSpaceResize
+      ChildSizing.EnlargeVertical = crsHomogenousSpaceResize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 36
+      ClientWidth = 250
+      TabOrder = 4
+      object cbAguardarCheque: TCheckBox
+        Left = 51
+        Height = 19
+        Top = 9
+        Width = 148
+        Caption = 'Aguardar Inserir Cheque'
+        Checked = True
+        State = cbChecked
+        TabOrder = 0
+      end
+    end
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -1360,11 +1489,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     OnGravarLog = ACBrPosPrinter1GravarLog
-    left = 760
-    top = 72
+    OnAguardarCheque = ACBrPosPrinter1AguardarCheque
+    left = 568
+    top = 512
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 656
-    top = 64
+    left = 504
+    top = 512
+  end
+  object ACBrCMC7_1: TACBrCMC7
+    left = 632
+    top = 512
   end
 end

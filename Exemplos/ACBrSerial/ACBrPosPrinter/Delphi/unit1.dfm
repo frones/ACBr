@@ -1,10 +1,10 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 536
   Top = 240
+  Width = 1022
+  Height = 592
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 531
-  ClientWidth = 844
   Color = clBtnFace
   Constraints.MinHeight = 570
   Constraints.MinWidth = 860
@@ -22,30 +22,21 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 588
-    Height = 531
+    Width = 750
+    Height = 553
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
-    object Panel3: TPanel
+    object pBotoes2: TPanel
       Left = 1
-      Top = 357
-      Width = 586
-      Height = 173
+      Top = 379
+      Width = 748
+      Height = 134
       Align = alBottom
       TabOrder = 0
-      object bTagQRCode: TButton
-        Left = 200
-        Top = 68
-        Width = 183
-        Height = 25
-        Caption = 'Tags de QRCode'
-        TabOrder = 6
-        OnClick = bTagQRCodeClick
-      end
       object bTagFormtacaoCaracter: TButton
         Left = 8
-        Top = 44
+        Top = 5
         Width = 183
         Height = 25
         Caption = 'Tags de Format. de Caracter'
@@ -54,7 +45,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsAlinhamento: TButton
         Left = 8
-        Top = 68
+        Top = 29
         Width = 183
         Height = 25
         Caption = 'Tags de Alinhamento'
@@ -63,7 +54,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsCodBarras: TButton
         Left = 200
-        Top = 44
+        Top = 5
         Width = 183
         Height = 25
         Caption = 'Tags de Codigo de Barras'
@@ -72,7 +63,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsTesteInvalidas: TButton
         Left = 8
-        Top = 92
+        Top = 53
         Width = 183
         Height = 25
         Caption = 'Teste de Tags Invalidas'
@@ -81,7 +72,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsTestePagCodigo: TButton
         Left = 8
-        Top = 116
+        Top = 77
         Width = 183
         Height = 25
         Caption = 'Teste de P'#225'gina de C'#243'digo'
@@ -90,7 +81,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bImpLinhaALinha: TButton
         Left = 200
-        Top = 116
+        Top = 77
         Width = 183
         Height = 25
         Caption = 'Teste Impress'#227'o Linha a Linha'
@@ -99,145 +90,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bImpTagsValidas: TButton
         Left = 392
-        Top = 44
+        Top = 5
         Width = 183
         Height = 25
         Caption = 'Ajuda - Tags Validas'
         TabOrder = 9
         OnClick = bImpTagsValidasClick
       end
-      object bLerStatus: TButton
-        Left = 392
-        Top = 116
-        Width = 183
-        Height = 25
-        Caption = 'Leitura de Status'
-        TabOrder = 12
-        OnClick = bLerStatusClick
-      end
-      object bLerInfo: TButton
-        Left = 392
-        Top = 92
-        Width = 183
-        Height = 25
-        Caption = 'Leitura de Informa'#231#245'es'
-        TabOrder = 11
-        OnClick = bLerInfoClick
-      end
-      object Panel4: TPanel
-        Left = 1
-        Top = 1
-        Width = 584
-        Height = 39
-        Align = alTop
-        BevelInner = bvRaised
-        BevelOuter = bvLowered
-        TabOrder = 13
-        DesignSize = (
-          584
-          39)
-        object bLimpar: TBitBtn
-          Left = 387
-          Top = 7
-          Width = 83
-          Height = 26
-          Anchors = [akTop, akRight]
-          Caption = 'Limpar'
-          TabOrder = 1
-          OnClick = bLimparClick
-          Glyph.Data = {
-            36040000424D3604000000000000360000002800000010000000100000000100
-            2000000000000004000000000000000000000000000000000000FF00FF00FF00
-            FF00101073FF000029FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00000431FF10106BFFFF00FF00FF00FF00FF00FF000000
-            8CFF3134F7FF0808CEFF000031FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00000039FF080CCEFF3130EFFF00007BFFFF00FF00000063FF0808
-            E7FF4A49F7FF4A4DF7FF0000C6FF000039FFFF00FF00FF00FF00FF00FF00FF00
-            FF0000004AFF0004CEFF5A59EFFF5A59F7FF0808DEFF00004AFF000484FF2120
-            FFFF3134FFFF5A59FFFF4A49EFFF0004C6FF000042FFFF00FF00FF00FF000000
-            52FF0808CEFF5A59EFFF7371FFFF5255FFFF3134FFFF00046BFF000473FF181C
-            FFFF2928FFFF3938FFFF5255FFFF4245EFFF0004C6FF00004AFF00005AFF0808
-            CEFF5255EFFF6B69FFFF5251FFFF4241FFFF3130FFFF080C52FFFF00FF000808
-            7BFF181CFFFF2928FFFF3134FFFF4A49FFFF3134EFFF0000BDFF0004C6FF4245
-            EFFF5A59FFFF4245FFFF393CFFFF292CFFFF080C63FFFF00FF00FF00FF00FF00
-            FF0008086BFF1818FFFF292CFFFF393CFFFF4A4DFFFF3130EFFF3134EFFF4A49
-            FFFF3938FFFF3130FFFF2124F7FF08084AFFFF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00000452FF393CEFFF6361FFFF6361FFFF6361FFFF6361FFFF6361
-            FFFF5A59FFFF2928DEFF000439FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF0000048CFF393CF7FF6361FFFF6361FFFF6365FFFF6365
-            FFFF3134EFFF000463FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF0000005AFF0000A5FF3130F7FF6B69FFFF6B69FFFF6B69FFFF6B69
-            FFFF2120E7FF00009CFF000042FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00000052FF0000A5FF3134F7FF7B79FFFF7B79FFFF7B79FFFF7B79FFFF7B79
-            FFFF7375FFFF2124E7FF000094FF000039FFFF00FF00FF00FF00FF00FF000000
-            52FF00009CFF4241F7FF8C8AFFFF8C8AFFFF8C8AFFFF3130C6FF4A49DEFF8C8E
-            FFFF8C8AFFFF8486FFFF2928E7FF00008CFF000039FFFF00FF00000018FF0000
-            9CFF4A49F7FF9C9AFFFF9C9AFFFF9C9AFFFF3134BDFFFF00FF00000021FF5255
-            E7FF9C9EFFFF9C9AFFFF9496FFFF292CE7FF00007BFFFF00FF00000029FF5255
-            FFFFADAEFFFFADAAFFFFADAAFFFF393CBDFFFF00FF00FF00FF00FF00FF000000
-            29FF5A5DE7FFADAEFFFFADAAFFFFADAAFFFF3130DEFFFF00FF00FF00FF004245
-            BDFFBDBAFFFFBDBAFFFF393CBDFFFF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00000029FF6B69E7FFCECBFFFFA5A6FFFF21248CFFFF00FF00FF00FF00FF00
-            FF00393CBDFF4241C6FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
-        end
-        object bImprimir: TBitBtn
-          Left = 482
-          Top = 7
-          Width = 92
-          Height = 26
-          Anchors = [akTop, akRight]
-          Caption = 'Imprimir'
-          TabOrder = 2
-          OnClick = bImprimirClick
-          Glyph.Data = {
-            36040000424D3604000000000000360000002800000010000000100000000100
-            2000000000000004000064000000640000000000000000000000000000000000
-            00000000000000000000000000007F7F7FFF4F4F4FFF5F5F5FFFBFBFBFFF0000
-            0000000000000000000000000000000000000000000000000000000000000000
-            0000000000007F7F7FFF5F5F5FFFBFBFBFFF6F6F6FFF5F5F5FFF5F5F5FFF5F5F
-            5FFFBFBFBFFF0000000000000000000000000000000000000000000000007F7F
-            7FFF5F5F5FFFBFBFBFFF9F9F9FFF8F8F8FFF9F9F9FFF5F5F5FFF3F3F3FFF5F5F
-            5FFF5F5F5FFF5F5F5FFFBFBFBFFF0000000000000000000000009F9F9FFFBFBF
-            BFFF9F9F9FFF9F9F9FFFBFBFBFFF9F9F9FFF9F9F9FFF7F7F7FFF7F7F7FFF5F5F
-            5FFF3F3F3FFF5F5F5FFF5F5F5FFF5F5F5FFF00000000000000009F9F9FFF8F8F
-            8FFFBFBFBFFFBFBFBFFFBFBFBFFF9F9F9FFF9F9F9FFF7F7F7FFF7F7F7FFF7F7F
-            7FFF7F7F7FFF5F5F5FFF3F3F3FFF1F1F1FFF0000000000000000BFBFBFFF9F9F
-            9FFFBFBFBFFFBFBFBFFFBFBFBFFFAFAFAFFFAFAFAFFF8F8F8FFF7F7F7FFF7F7F
-            7FFF7F7F7FFF7F7F7FFF7F7F7FFF5F5F5FFF3F3F3FFF00000000BFBFBFFF9F9F
-            9FFFBFBFBFFFDFDFDFFFDFDFDFFFBFBFBFFFAFAFAFFF9F9F9FFF9F9F9FFF8F8F
-            8FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF4F4F4FFF5F5F5FFFBFBFBFFFAFAF
-            AFFFCFCFCFFF8FCF8FFF5F9F9FFF7F7FBFFF9F9F9FFFAFAFAFFFAFAFAFFF6F6F
-            6FFF9F9F9FFF8F8F8FFF7F7F7FFF7F7F7FFF4F4F4FFFBFBFBFFFBFBFBFFFAFAF
-            AFFFBFBFBFFF9F9F9FFF8F8F8FFF9F9F9FFFBFBFBFFF5F5F5FFF7F7F7FFFEFEF
-            EFFF4F4F4FFF9F9F9FFF9F9F9FFF8F8F8FFF7F7F7FFF00000000000000000000
-            0000BFBFBFFFAFAFAFFFBFBFBFFF8F8F8FFF5F5F5FFFFFBFBFFFFF7F7FFFFFBF
-            BFFF6F6F6FFF8F8F8FFFAFAFAFFFDFDFDFFF0000000000000000000000000000
-            00000000000000000000BFBFBFFFAFAFAFFFAFAFAFFFFFFFFFFFFF7F7FFFFF7F
-            7FFFEFEFEFFF6F6F6FFF00000000000000000000000000000000000000000000
-            000000000000000000000000000000000000BFBFBFFFBFBFBFFFFFBFBFFFFF7F
-            7FFFFFBFBFFFEFEFEFFF6F6F6FFF000000000000000000000000000000000000
-            00000000000000000000000000000000000000000000DFDFDFFFDFDFDFFFFFBF
-            BFFFFF7F7FFFFFBFBFFFEFEFEFFF3F3F3FFF0000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000DFDFDFFFDFDF
-            DFFFFFFFFFFFBFBFBFFFBFBFBFFF000000000000000000000000000000000000
-            000000000000000000000000000000000000000000000000000000000000DFDF
-            DFFFBFBFBFFF0000000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000}
-        end
-        object cbxLimparTexto: TCheckBox
-          Left = 16
-          Top = 8
-          Width = 217
-          Height = 19
-          Caption = 'Limpar texto a cada teste selecionado'
-          TabOrder = 0
-        end
-      end
       object bTagGaveta: TButton
         Left = 392
-        Top = 68
+        Top = 29
         Width = 183
         Height = 25
         Caption = 'Tag de Gaveta'
@@ -246,7 +108,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsTestePageMode: TButton
         Left = 8
-        Top = 140
+        Top = 101
         Width = 183
         Height = 25
         Caption = 'Teste de Page Mode'
@@ -255,28 +117,100 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object Button1: TButton
         Left = 200
-        Top = 140
+        Top = 101
         Width = 183
         Height = 25
         Caption = 'Senha'
         TabOrder = 8
         OnClick = Button1Click
       end
+      object btImprimirCheque: TButton
+        Left = 585
+        Top = 5
+        Width = 147
+        Height = 25
+        Caption = 'Imprimir Cheque'
+        TabOrder = 14
+        OnClick = btImprimirChequeClick
+      end
+      object btImprimirTextoCheque: TButton
+        Left = 585
+        Top = 29
+        Width = 147
+        Height = 25
+        Caption = 'Imprimir Texto Cheque'
+        TabOrder = 15
+        OnClick = btImprimirTextoChequeClick
+      end
+      object bTagQRCode: TButton
+        Left = 200
+        Top = 29
+        Width = 183
+        Height = 25
+        Caption = 'Tags de QRCode'
+        TabOrder = 6
+        OnClick = bTagQRCodeClick
+      end
+      object TButton
+        Left = 392
+        Top = 53
+        Width = 183
+        Height = 25
+        Caption = 'Leitura de Informa'#231#245'es'
+        TabOrder = 11
+        OnClick = bLerInfoClick
+      end
+      object bLerStatus: TButton
+        Left = 392
+        Top = 77
+        Width = 183
+        Height = 25
+        Caption = 'Leitura de Status'
+        TabOrder = 12
+        OnClick = bLerStatusClick
+      end
       object btInfoUSB: TButton
         Left = 392
-        Top = 140
+        Top = 101
         Width = 183
         Height = 25
         Caption = 'Informa'#231#245'es USB'
-        TabOrder = 14
+        TabOrder = 13
         OnClick = btInfoUSBClick
+      end
+      object btLerCheque: TButton
+        Left = 585
+        Top = 53
+        Width = 147
+        Height = 25
+        Caption = 'Ler Cheque'
+        TabOrder = 16
+        OnClick = btLerChequeClick
+      end
+      object btResultadoLeitura: TButton
+        Left = 585
+        Top = 77
+        Width = 147
+        Height = 25
+        Caption = 'Resultado Leitura'
+        TabOrder = 17
+        OnClick = btResultadoLeituraClick
+      end
+      object btEjetarCheque: TButton
+        Left = 585
+        Top = 101
+        Width = 147
+        Height = 25
+        Caption = 'Ejetar Cheque'
+        TabOrder = 18
+        OnClick = btEjetarChequeClick
       end
     end
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 586
-      Height = 356
+      Width = 748
+      Height = 378
       ActivePage = tsImagens
       Align = alClient
       TabHeight = 40
@@ -286,8 +220,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 578
-          Height = 306
+          Width = 740
+          Height = 328
           Align = alClient
           ScrollBars = ssBoth
           TabOrder = 0
@@ -299,8 +233,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mLog: TMemo
           Left = 0
           Top = 0
-          Width = 578
-          Height = 306
+          Width = 740
+          Height = 328
           Align = alClient
           TabOrder = 0
         end
@@ -310,7 +244,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object Splitter1: TSplitter
           Left = 0
           Top = 137
-          Width = 578
+          Width = 740
           Height = 5
           Cursor = crVSplit
           Align = alTop
@@ -318,7 +252,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object gbCodBarrasConfig2: TGroupBox
           Left = 0
           Top = 208
-          Width = 578
+          Width = 740
           Height = 88
           Align = alTop
           Caption = 'LogoTipo'
@@ -443,7 +377,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object Panel5: TPanel
           Left = 0
           Top = 142
-          Width = 578
+          Width = 740
           Height = 66
           Align = alTop
           BevelInner = bvRaised
@@ -514,14 +448,14 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object ScrollBox1: TScrollBox
           Left = 0
           Top = 0
-          Width = 578
+          Width = 740
           Height = 137
           Align = alTop
           TabOrder = 2
           object Image1: TImage
             Left = 0
             Top = 0
-            Width = 574
+            Width = 736
             Height = 126
             Align = alTop
             Center = True
@@ -642,12 +576,168 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         end
       end
     end
+    object Panel4: TPanel
+      Left = 1
+      Top = 513
+      Width = 748
+      Height = 39
+      Align = alBottom
+      BevelInner = bvRaised
+      BevelOuter = bvLowered
+      TabOrder = 2
+      DesignSize = (
+        748
+        39)
+      object bLimpar: TBitBtn
+        Left = 549
+        Top = 7
+        Width = 83
+        Height = 26
+        Anchors = [akTop, akRight]
+        Caption = 'Limpar'
+        TabOrder = 1
+        OnClick = bLimparClick
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000FF00FF00FF00
+          FF00101073FF000029FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00000431FF10106BFFFF00FF00FF00FF00FF00FF000000
+          8CFF3134F7FF0808CEFF000031FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000039FF080CCEFF3130EFFF00007BFFFF00FF00000063FF0808
+          E7FF4A49F7FF4A4DF7FF0000C6FF000039FFFF00FF00FF00FF00FF00FF00FF00
+          FF0000004AFF0004CEFF5A59EFFF5A59F7FF0808DEFF00004AFF000484FF2120
+          FFFF3134FFFF5A59FFFF4A49EFFF0004C6FF000042FFFF00FF00FF00FF000000
+          52FF0808CEFF5A59EFFF7371FFFF5255FFFF3134FFFF00046BFF000473FF181C
+          FFFF2928FFFF3938FFFF5255FFFF4245EFFF0004C6FF00004AFF00005AFF0808
+          CEFF5255EFFF6B69FFFF5251FFFF4241FFFF3130FFFF080C52FFFF00FF000808
+          7BFF181CFFFF2928FFFF3134FFFF4A49FFFF3134EFFF0000BDFF0004C6FF4245
+          EFFF5A59FFFF4245FFFF393CFFFF292CFFFF080C63FFFF00FF00FF00FF00FF00
+          FF0008086BFF1818FFFF292CFFFF393CFFFF4A4DFFFF3130EFFF3134EFFF4A49
+          FFFF3938FFFF3130FFFF2124F7FF08084AFFFF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000452FF393CEFFF6361FFFF6361FFFF6361FFFF6361FFFF6361
+          FFFF5A59FFFF2928DEFF000439FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0000048CFF393CF7FF6361FFFF6361FFFF6365FFFF6365
+          FFFF3134EFFF000463FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF0000005AFF0000A5FF3130F7FF6B69FFFF6B69FFFF6B69FFFF6B69
+          FFFF2120E7FF00009CFF000042FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000052FF0000A5FF3134F7FF7B79FFFF7B79FFFF7B79FFFF7B79FFFF7B79
+          FFFF7375FFFF2124E7FF000094FF000039FFFF00FF00FF00FF00FF00FF000000
+          52FF00009CFF4241F7FF8C8AFFFF8C8AFFFF8C8AFFFF3130C6FF4A49DEFF8C8E
+          FFFF8C8AFFFF8486FFFF2928E7FF00008CFF000039FFFF00FF00000018FF0000
+          9CFF4A49F7FF9C9AFFFF9C9AFFFF9C9AFFFF3134BDFFFF00FF00000021FF5255
+          E7FF9C9EFFFF9C9AFFFF9496FFFF292CE7FF00007BFFFF00FF00000029FF5255
+          FFFFADAEFFFFADAAFFFFADAAFFFF393CBDFFFF00FF00FF00FF00FF00FF000000
+          29FF5A5DE7FFADAEFFFFADAAFFFFADAAFFFF3130DEFFFF00FF00FF00FF004245
+          BDFFBDBAFFFFBDBAFFFF393CBDFFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000029FF6B69E7FFCECBFFFFA5A6FFFF21248CFFFF00FF00FF00FF00FF00
+          FF00393CBDFF4241C6FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
+      end
+      object bImprimir: TBitBtn
+        Left = 644
+        Top = 7
+        Width = 92
+        Height = 26
+        Anchors = [akTop, akRight]
+        Caption = 'Imprimir'
+        TabOrder = 2
+        OnClick = bImprimirClick
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000000000000000
+          00000000000000000000000000007F7F7FFF4F4F4FFF5F5F5FFFBFBFBFFF0000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000007F7F7FFF5F5F5FFFBFBFBFFF6F6F6FFF5F5F5FFF5F5F5FFF5F5F
+          5FFFBFBFBFFF0000000000000000000000000000000000000000000000007F7F
+          7FFF5F5F5FFFBFBFBFFF9F9F9FFF8F8F8FFF9F9F9FFF5F5F5FFF3F3F3FFF5F5F
+          5FFF5F5F5FFF5F5F5FFFBFBFBFFF0000000000000000000000009F9F9FFFBFBF
+          BFFF9F9F9FFF9F9F9FFFBFBFBFFF9F9F9FFF9F9F9FFF7F7F7FFF7F7F7FFF5F5F
+          5FFF3F3F3FFF5F5F5FFF5F5F5FFF5F5F5FFF00000000000000009F9F9FFF8F8F
+          8FFFBFBFBFFFBFBFBFFFBFBFBFFF9F9F9FFF9F9F9FFF7F7F7FFF7F7F7FFF7F7F
+          7FFF7F7F7FFF5F5F5FFF3F3F3FFF1F1F1FFF0000000000000000BFBFBFFF9F9F
+          9FFFBFBFBFFFBFBFBFFFBFBFBFFFAFAFAFFFAFAFAFFF8F8F8FFF7F7F7FFF7F7F
+          7FFF7F7F7FFF7F7F7FFF7F7F7FFF5F5F5FFF3F3F3FFF00000000BFBFBFFF9F9F
+          9FFFBFBFBFFFDFDFDFFFDFDFDFFFBFBFBFFFAFAFAFFF9F9F9FFF9F9F9FFF8F8F
+          8FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF4F4F4FFF5F5F5FFFBFBFBFFFAFAF
+          AFFFCFCFCFFF8FCF8FFF5F9F9FFF7F7FBFFF9F9F9FFFAFAFAFFFAFAFAFFF6F6F
+          6FFF9F9F9FFF8F8F8FFF7F7F7FFF7F7F7FFF4F4F4FFFBFBFBFFFBFBFBFFFAFAF
+          AFFFBFBFBFFF9F9F9FFF8F8F8FFF9F9F9FFFBFBFBFFF5F5F5FFF7F7F7FFFEFEF
+          EFFF4F4F4FFF9F9F9FFF9F9F9FFF8F8F8FFF7F7F7FFF00000000000000000000
+          0000BFBFBFFFAFAFAFFFBFBFBFFF8F8F8FFF5F5F5FFFFFBFBFFFFF7F7FFFFFBF
+          BFFF6F6F6FFF8F8F8FFFAFAFAFFFDFDFDFFF0000000000000000000000000000
+          00000000000000000000BFBFBFFFAFAFAFFFAFAFAFFFFFFFFFFFFF7F7FFFFF7F
+          7FFFEFEFEFFF6F6F6FFF00000000000000000000000000000000000000000000
+          000000000000000000000000000000000000BFBFBFFFBFBFBFFFFFBFBFFFFF7F
+          7FFFFFBFBFFFEFEFEFFF6F6F6FFF000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000DFDFDFFFDFDFDFFFFFBF
+          BFFFFF7F7FFFFFBFBFFFEFEFEFFF3F3F3FFF0000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000DFDFDFFFDFDF
+          DFFFFFFFFFFFBFBFBFFFBFBFBFFF000000000000000000000000000000000000
+          000000000000000000000000000000000000000000000000000000000000DFDF
+          DFFFBFBFBFFF0000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+      end
+      object cbxLimparTexto: TCheckBox
+        Left = 16
+        Top = 8
+        Width = 217
+        Height = 19
+        Caption = 'Limpar texto a cada teste selecionado'
+        TabOrder = 0
+      end
+      object bCancelarCheque: TBitBtn
+        Left = 354
+        Top = 7
+        Width = 185
+        Height = 26
+        Caption = 'Cancelar carga do Cheque'
+        TabOrder = 3
+        Visible = False
+        OnClick = bCancelarChequeClick
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000FF00FF00FF00
+          FF00101073FF000029FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00000431FF10106BFFFF00FF00FF00FF00FF00FF000000
+          8CFF3134F7FF0808CEFF000031FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000039FF080CCEFF3130EFFF00007BFFFF00FF00000063FF0808
+          E7FF4A49F7FF4A4DF7FF0000C6FF000039FFFF00FF00FF00FF00FF00FF00FF00
+          FF0000004AFF0004CEFF5A59EFFF5A59F7FF0808DEFF00004AFF000484FF2120
+          FFFF3134FFFF5A59FFFF4A49EFFF0004C6FF000042FFFF00FF00FF00FF000000
+          52FF0808CEFF5A59EFFF7371FFFF5255FFFF3134FFFF00046BFF000473FF181C
+          FFFF2928FFFF3938FFFF5255FFFF4245EFFF0004C6FF00004AFF00005AFF0808
+          CEFF5255EFFF6B69FFFF5251FFFF4241FFFF3130FFFF080C52FFFF00FF000808
+          7BFF181CFFFF2928FFFF3134FFFF4A49FFFF3134EFFF0000BDFF0004C6FF4245
+          EFFF5A59FFFF4245FFFF393CFFFF292CFFFF080C63FFFF00FF00FF00FF00FF00
+          FF0008086BFF1818FFFF292CFFFF393CFFFF4A4DFFFF3130EFFF3134EFFF4A49
+          FFFF3938FFFF3130FFFF2124F7FF08084AFFFF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000452FF393CEFFF6361FFFF6361FFFF6361FFFF6361FFFF6361
+          FFFF5A59FFFF2928DEFF000439FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0000048CFF393CF7FF6361FFFF6361FFFF6365FFFF6365
+          FFFF3134EFFF000463FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF0000005AFF0000A5FF3130F7FF6B69FFFF6B69FFFF6B69FFFF6B69
+          FFFF2120E7FF00009CFF000042FFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000052FF0000A5FF3134F7FF7B79FFFF7B79FFFF7B79FFFF7B79FFFF7B79
+          FFFF7375FFFF2124E7FF000094FF000039FFFF00FF00FF00FF00FF00FF000000
+          52FF00009CFF4241F7FF8C8AFFFF8C8AFFFF8C8AFFFF3130C6FF4A49DEFF8C8E
+          FFFF8C8AFFFF8486FFFF2928E7FF00008CFF000039FFFF00FF00000018FF0000
+          9CFF4A49F7FF9C9AFFFF9C9AFFFF9C9AFFFF3134BDFFFF00FF00000021FF5255
+          E7FF9C9EFFFF9C9AFFFF9496FFFF292CE7FF00007BFFFF00FF00000029FF5255
+          FFFFADAEFFFFADAAFFFFADAAFFFF393CBDFFFF00FF00FF00FF00FF00FF000000
+          29FF5A5DE7FFADAEFFFFADAAFFFFADAAFFFF3130DEFFFF00FF00FF00FF004245
+          BDFFBDBAFFFFBDBAFFFF393CBDFFFF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00000029FF6B69E7FFCECBFFFFA5A6FFFF21248CFFFF00FF00FF00FF00FF00
+          FF00393CBDFF4241C6FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
+      end
+    end
   end
-  object Panel2: TPanel
+  object pConfig: TPanel
     Left = 0
     Top = 0
     Width = 256
-    Height = 531
+    Height = 553
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -1057,7 +1147,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 2
       end
     end
-    object gbCodBarrasConfig1: TGroupBox
+    object gbQRCodeConfig: TGroupBox
       Left = 1
       Top = 312
       Width = 254
@@ -1126,6 +1216,25 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seQRCodeErrorLevelChange
       end
     end
+    object gbChequeConfig: TGroupBox
+      Left = 1
+      Top = 440
+      Width = 254
+      Height = 49
+      Align = alTop
+      Caption = 'Cheque'
+      TabOrder = 3
+      object cbAguardarCheque: TCheckBox
+        Left = 51
+        Top = 17
+        Width = 148
+        Height = 19
+        Caption = 'Aguardar Inserir Cheque'
+        Checked = True
+        State = cbChecked
+        TabOrder = 0
+      end
+    end
     object gbGavetaConfig: TGroupBox
       Left = 1
       Top = 376
@@ -1133,8 +1242,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Height = 64
       Align = alTop
       Caption = 'Gaveta'
-      TabOrder = 3
-      object Label18: TLabel
+      TabOrder = 4
+      object Label21: TLabel
         Left = 63
         Top = 16
         Width = 16
@@ -1143,7 +1252,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Color = clBtnFace
         ParentColor = False
       end
-      object Label19: TLabel
+      object Label22: TLabel
         Left = 112
         Top = 16
         Width = 20
@@ -1152,7 +1261,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Color = clBtnFace
         ParentColor = False
       end
-      object Label20: TLabel
+      object Label23: TLabel
         Left = 16
         Top = 16
         Width = 35
@@ -1207,8 +1316,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 16
-    Top = 448
+    Left = 24
+    Top = 504
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
@@ -1219,7 +1328,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    Left = 184
-    Top = 448
+    Left = 72
+    Top = 504
+  end
+  object ACBrCMC71: TACBrCMC7
+    Left = 128
+    Top = 504
   end
 end

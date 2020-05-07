@@ -253,7 +253,7 @@ begin
   Result  := 'Erro: '+IntToStr(ErrorCode);
 
   WinINetHandle := GetModuleHandle('wininet.dll');
-  SetLength(ErrorMsg, 1024);
+  ErrorMsg := Space(1024);
   Len := FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM or
                         FORMAT_MESSAGE_FROM_HMODULE or
                         FORMAT_MESSAGE_IGNORE_INSERTS or
@@ -291,6 +291,8 @@ begin
          ErrorMsg := 'O contexto para o certificado de cliente SSL não tem uma chave privada associada a ele. O certificado de cliente pode ter sido importado para o computador sem a chave privada';
        ERROR_WINHTTP_CLIENT_CERT_NO_ACCESS_PRIVATE_KEY:
          ErrorMsg := 'Falha ao obter a Chave Privada do Certificado para comunicação segura';
+    else
+      ErrorMsg := '';
     end;
   end;
 

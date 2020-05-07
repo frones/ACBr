@@ -311,6 +311,12 @@ type
 
 implementation
 
+{$IFDEF FPC}
+ {$R ACBrUSBID.rc}
+{$ELSE}
+ {$R ACBrUSBID.res}
+{$ENDIF}
+
 uses
   Types, dateutils, strutils, math, 
   ACBrConsts;
@@ -325,13 +331,6 @@ begin
     Result := '';
   end;
 end;
-
-{$IFDEF FPC}
- {$R ACBrUSBID.rc}
-{$ELSE}
- {$R ACBrUSBID.res}
-{$ENDIF}
-
 
 { TACBrUSBIDDataBase }
 
@@ -423,7 +422,6 @@ begin
     RS.Free;
     SL.Free;
   end;
-
 end;
 
 function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out

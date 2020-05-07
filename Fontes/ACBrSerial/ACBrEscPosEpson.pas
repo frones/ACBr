@@ -37,7 +37,7 @@ unit ACBrEscPosEpson;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Types,
   ACBrPosPrinter, ACBrBase;
 
 const
@@ -48,8 +48,12 @@ type
   { TACBrEscPosEpson }
 
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
+  private
+    FInfo: String;
   protected
+    function ComandoEsperaCheque(const SegundosEspera: Byte): AnsiString;
     procedure VerificarKeyCodes; virtual;
+
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
@@ -62,9 +66,14 @@ type
       override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
     function ComandoConfiguraModoPagina: AnsiString; override;
+    function ComandoPosicionaModoPagina(APoint: TPoint): AnsiString; override;
+    function ComandoCarregaCheque(LerCMC7: Boolean=True; SegundosEspera: Byte=5): AnsiString; override;
+    function ComandoEjetarCheque: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
+    function ComandoLerCMC7(SegundosEspera: Byte = 0): AnsiString; override;
+    function LeituraCheque: AnsiString; override;
 
     function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer): AnsiString; override;
@@ -305,6 +314,7 @@ begin
   begin
     Zera                    := ESC + '@';
     PuloDeLinha             := LF;
+    PuloDePagina            := FF;
     EspacoEntreLinhasPadrao := ESC + '2';
     EspacoEntreLinhas       := ESC + '3';
     FonteNormal             := ESC + '!' + #0;
@@ -576,11 +586,99 @@ begin
 
     Result := ESC + 'T' + CharDir +                  // Ajusta a Direcao
               ComandoEspacoEntreLinhas(EspacoEntreLinhas) +
-              {GS + '$' + AnsiChr(0)+ AnsiChr(0) +}  // Ajusta posição Vertical Absoluta em 0
               ESC + 'W' + IntToLEStr(Esquerda) +     // Ajusta a Regiao
                           IntToLEStr(Topo) +
                           IntToLEStr(Largura) +
                           IntToLEStr(Altura);
+  end;
+end;
+
+function TACBrEscPosEpson.ComandoPosicionaModoPagina(APoint: TPoint): AnsiString;
+begin
+  Result := ESC + '$' + IntToLEStr(APoint.x)+
+            GS  + '$' + IntToLEStr(APoint.y);
+end;
+
+function TACBrEscPosEpson.ComandoEsperaCheque(const SegundosEspera: Byte): AnsiString;
+begin
+  Result := ESC + '=' + #1 +                                 // ESC = n - Select peripheral device, n = 1 Specifies printer only
+            ESC + 'f' + #0 + AnsiChr(SegundosEspera * 10) +  // ESC f t1 t2 - Set cut sheet wait time
+            ESC + 'J' + #0;                                  // ESC J n - Print and feed paper
+end;
+
+function TACBrEscPosEpson.ComandoCarregaCheque(LerCMC7: Boolean; SegundosEspera: Byte): AnsiString;
+begin
+  if LerCMC7 then
+    Result := ComandoLerCMC7
+  else
+    Result := ComandoEsperaCheque(SegundosEspera);
+
+  Result := Result +
+            GS + '(G' +#2+#0+ #48+#4 +    //GS ( G pL pH fn m - <Function 48> - Select the side of the slip (#4 = face or #68 = back).
+            GS + '(G' +#2+#0+ #84+#1;     //GS ( G pL pH fn m - <Function 84> - Feed to the print starting position for the slip.;
+end;
+
+function TACBrEscPosEpson.ComandoEjetarCheque: AnsiString;
+begin
+  Result := DLE + ENQ + #3 +   // Real-time request to printer; 3=Cancels the slip waiting status after clearing the receive and print buffers
+            #24 +              // CAN Cancel print data in page mode
+            Cmd.DesligaModoPagina +
+            FS  + 'a2'+        // Ejects check paper in MICR mode
+            Cmd.PuloDePagina;  // FF - Eject
+end;
+
+function TACBrEscPosEpson.ComandoLerCMC7(SegundosEspera: Byte): AnsiString;
+begin
+  // FS ( f pL pH [n m]1...[n m]k - Select MICR data handling
+  //              #3+#0 -> Header = '_'
+  Result := ComandoEsperaCheque(SegundosEspera) +
+            FS  + '(f' +#8+#0+ #0+#255 +#1+#1 +#2+#1 + #3+#0 +
+            FS  + 'a0' +#1;  // FS a 0 n - Read check paper - #1 = CMC7
+end;
+
+function TACBrEscPosEpson.LeituraCheque: AnsiString;
+var
+  Resp: AnsiString;
+  B: Byte;
+  P: Integer;
+begin
+  Result := '';
+  Resp := fpPosPrinter.TxRx( FS + 'b', 0, 2000, True );
+
+  // Verificando o Header
+  if copy(Resp,1,1) = '_' then        // Header formarto 1
+    P := 2
+  else if copy(Resp,1,2) = '7*' then  // Header formarto 2
+    P := 3
+  else if copy(Resp,1,1) = '=' then   // Resposta por Hook da DLL
+    P := 1
+  else
+    P := 0;
+
+  // Verificando o Byte de Status
+  if (P > 0) and (P <= Length(Resp)) then
+  begin
+    if P > 1 then
+    begin
+      B := Ord(Resp[P]);
+      if not TestBit(B, 5) then   // Reading normal ?
+        Result := Trim(copy(Resp, P+1, Length(Resp)));  // Remove Header e Status
+    end
+    else
+      Result := Trim(Resp);   // Resposta por Hook da DLL
+  end;
+
+  if (Result <> '') then
+  begin
+    // Remove espaços dos blocos
+    Result := StringReplace(Result,' ','',[rfReplaceAll]);
+
+    // Acha Inicio do Bloco CMC7
+    P := pos('=', Result);
+    if (P < 0) then
+      P := 1;
+
+    Result := Copy(Result, P, Length(Result));
   end;
 end;
 
@@ -629,6 +727,38 @@ begin
       if TestBit(B, 5) and TestBit(B, 6) then
         AStatus := AStatus + [stSemPapel];
     end;
+
+    if (fpPosPrinter.TemCheque = 1) then
+    begin
+      C := fpPosPrinter.TxRx( DLE + EOT + #5 );
+      if (Length(C) > 0) then
+      begin
+        B := Ord(C[1]);
+        if not TestBit(B, 2) then
+          AStatus := AStatus + [stSlip];
+        if TestBit(B, 3) then
+          AStatus := AStatus + [stAguardandoSlip];
+        if not TestBit(B, 5) then
+          AStatus := AStatus + [stTOF];
+        if not TestBit(B, 6) then
+          AStatus := AStatus + [stBOF];
+      end;
+
+      C := fpPosPrinter.TxRx( DLE + EOT + BS + #1 );
+      if (Length(C) > 0) then
+      begin
+        B := Ord(C[1]);
+        if not TestBit(B, 2) then
+          AStatus := AStatus + [stMICR];
+        if TestBit(B, 3) then
+          AStatus := AStatus + [stAguardandoSlip];
+        if not TestBit(B, 5) then
+          AStatus := AStatus + [stTOF];
+        if not TestBit(B, 6) then
+          AStatus := AStatus + [stBOF];
+      end;
+    end;
+
   except
     AStatus := AStatus + [stErroLeitura];
   end;
@@ -647,6 +777,14 @@ var
       AInfo := copy(AInfo, 2, Length(AInfo));
 
     Info := Info + Titulo+'='+AInfo + sLineBreak;
+  end;
+
+  function BoolToChar(ABool: Boolean): AnsiChar;
+  begin
+    if ABool then
+      Result := '1'
+    else
+      Result := '0';
   end;
 
 begin
@@ -682,9 +820,13 @@ begin
   if Length(Ret) > 0 then
   begin
     B := Ord(Ret[1]);
-    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
+    AddInfo(cKeyGuilhotina, BoolToChar(TestBit(B, 1)) );
+    AddInfo(cKeyCheque, BoolToChar(TestBit(B, 3)) );
+    AddInfo(cKeyMICR, BoolToChar(TestBit(B, 3)) );
+    AddInfo(cKeyAutenticacao, BoolToChar(TestBit(B, 6)) );
   end;
 
+  FInfo  := Info;
   Result := Info;
 end;
 

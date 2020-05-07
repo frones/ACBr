@@ -38,6 +38,71 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/05/2020
+-- ACBrPosPrinter --
+[+] Adicionada funcionalidades de Impressão e Leitura de Cheques, para impressoras
+    híbridas, como a Epson TM-H6000IV.
+    Novos métodos:
+    procedure ImprimirCheque(CodBanco: Integer; AValor: Double; ADataEmissao: TDateTime;
+      const AFavorecido, ACidade, AComplemento: String; LerCMC7: Boolean = False;
+      SegundosEspera: Integer = 5);
+      - Se a Leitura de CMC7 estiver ativada, ela será efetuada antes da Impressão
+        do Cheque, e nesse caso, será usado como CodBanco, o valor lido do CMC7
+      - Após a impressão do Cheque, use a propriedade "LeituraCheque", para obter
+        o Resultado obtido na leitura de CMC7
+    procedure ImprimirTextoCheque(const X, Y: Integer; const AString: AnsiString;
+      AguardaCheque: Boolean = False; SegundosEspera: Integer = 5);
+      - Pode ser usada para imprimir um texto genêrico, no verso do Cheque
+    procedure EjetarCheque;
+      - Também pode ser usada para Cancelar o estado de Espera do Cheqeue
+    procedure LerCMC7(AguardaCheque: Boolean = False; SegundosEspera: Integer = 5);
+      - Após a leitura do Cheque, use a propriedade "LeituraCheque", para obter
+        o Resultado obtido na leitura
+
+[+] Adicionada a propriedade "LeituraCheque". Contendo Sting com o resultado da
+    última operação de Leitura do CMC7.
+
+[+] Adicionado novo evento: OnAguardarCheque: TACBrPosOnAguardarCheque
+    TACBrPosOnAguardarCheque = procedure(const AStatus: TACBrPosPrinterStatus;
+      Operacao: TACBrPosOperacaoCheque; var CancelarEspera: Boolean) of object ;
+    Chamado em Loop, quando o ACBrPosPrinter está aguardando a inserção do cheque,
+     permitindo Cancelar a Operação, do lado da aplicação
+
+[+] Adicionado novo arquivo de Resource, "ACBrPosCheque.ini", contendo as
+    coordenadas dos Cheques, por Banco.
+    Esse arquivo é adicionado internamente ao componente ABCrPosPrinter por
+    resource (ACBrPosCheque.res), mas se o "ACBrPosCheque.ini" estiver na mesma
+    pasta do .EXE, ele será usado
+
+[+] Adicionados novos Status, no retorno de "LerStatusImpressora".
+    stSlip -> Impressora de Cheques selecionada
+    stMICR -> Leitura do MICR ativada
+    stAguardandoSlip -> Aguardando a inserção do Cheque
+    stBOF -> Cheque presente no Inicio do Berço
+    stTOF -> Cheque no Topo do berço. Pronto para iniciar impressão
+
+[+] Adicionado nova Tag </ff>, Comando "PuloDePagina"
+[+] Adicionada nova Tag de Bloco <mp_pos>, permitindo Posicionar o cursor, em
+    uma nova coordenada, dentro do Modo Página.
+    Exemplo: <mp_pos>X,Y</mp_pos>
+
+[+] Adicionadas novas propriedades, ReadOnly, para detectar características do equipanmento
+    function PodeLerDaPorta: Boolean;    // Se False, não há como ler informações da Impressora
+    property TemGuilhotina: Integer;     // -1=Indefinido, 0=NaoTem, 1=Tem
+    property TemCheque: Integer;         // -1=Indefinido, 0=NaoTem, 1=Tem
+    property TemAutenticacao: Integer;   // -1=Indefinido, 0=NaoTem, 1=Tem
+    property TemMICR: Integer;           // -1=Indefinido, 0=NaoTem, 1=Tem
+    property LeituraCheque: AnsiString;  // Retorna o conteúdo do último CMC7 lido
+
+[+] Correção em "CalcularAlturaTexto", para calcular corretamente a altura, quando
+    EspacoEntreLinhas = 0.
+
+[*] Demos do ACBrPosPrinter em Delphi e Lazarus, modificados, para demonstrar as
+    novas funcionalidades...
+
+-- ACBrCHQImpressoraComum --
+[*] Constante com nome dos meses, foi movida para a ACBrConsts.pas
+
 Data: 23/04/2020
 -- ACBrETQ, ACBrETQClass, ACBrETQPpla, ACBrETQEpl2, ACBrETQZplII --
 [+] Implementado novo método para impressão de QRCodes

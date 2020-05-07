@@ -558,6 +558,9 @@ begin
     FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
   end;
 
+  if Assigned(FGNRERetorno) then
+    FGNRERetorno.Free;
+    
   FGNRERetorno := TTResultLote_GNRE.Create;
 end;
 

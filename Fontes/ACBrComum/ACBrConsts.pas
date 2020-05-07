@@ -101,6 +101,11 @@ const
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
   CDotsMM = 8;  // 203dpi
 
+
+  const cMesDescricao : array[1..12] of string =
+        ('Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto',
+         'Setembro','Outubro','Novembro','Dezembro') ;
+
   cTagLigaExpandido         = '<e>';
   cTagDesligaExpandido      = '</e>';
   cTagLigaAlturaDupla       = '<a>';
@@ -165,6 +170,7 @@ const
   cTagZera = '</zera>';
   cTagReset = '</reset>';
   cTagPulodeLinha = '</lf>';
+  cTagPulodePagina = '</ff>';
   cTagRetornoDeCarro = '</cr>';
 
   cTAGS_FUNCOES: array[0..9] of String = (
@@ -231,6 +237,7 @@ const
   cTagModoPaginaAltura     = '<mp_altura>';
   cTagModoPaginaEspaco     = '<mp_espaco>';
   cTagModoPaginaConfigurar = '</mp_configurar>';
+  cTagModoPaginaPosiciona  = '<mp_pos>';
 
   cTAGS_BARRAS: array[0..15] of String = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,

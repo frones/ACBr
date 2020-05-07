@@ -843,7 +843,7 @@ begin
   Result := '';
   l := GetCount-1;
   for i := 0 to l do
-    Result := Result + GetItem(i)
+    Result := Result + GetItem(i);
 end;
 
 

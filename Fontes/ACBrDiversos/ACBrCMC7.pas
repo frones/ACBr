@@ -272,7 +272,9 @@ begin
 end;
 
 procedure TACBrCMC7.SetCMC7(Banda: String);
-Const  vDigitos = '<99999999<9999999999>999999999999:' ;
+Const
+  vDigitos1 = '<99999999<9999999999>999999999999:' ;
+  vDigitos2 = '=99999999=9999999999^999999999999/' ;  // EPSON Printers
 var
   Ignorar : Integer;
   I : Integer ;
@@ -291,14 +293,14 @@ begin
 
   for I := 1 to 33 do // Desprezando último caracter
   begin
-    if vDigitos[I] = '9' then
+    if vDigitos1[I] = '9' then
      begin
        if not CharIsNum(Banda[I]) then
            raise Exception.CreateFmt(ACBrStr('Caracter da posição %d da Banda deve ser numérico'),[I]);
      end
     else
-       if vDigitos[I] <> Banda[I] then
-          raise Exception.CreateFmt(ACBrStr('Caracter da posição %d da Banda deve ser %s'),[I,vDigitos[I]]);
+       if (vDigitos1[I] <> Banda[I]) and (vDigitos2[I] <> Banda[I]) then
+          raise Exception.CreateFmt(ACBrStr('Caracter da posição %d da Banda deve ser %s ou %s'),[I, vDigitos1[I], vDigitos2[I]]);
 
   end ;
 

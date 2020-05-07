@@ -401,7 +401,7 @@ begin
   if (docElement <> '') then
     I := Pos('<'+docElement, AXML)
   else
-    I := 0;
+    I := 1;
 
   I := PosEx(IdAttr+'=', AXML, I);
   if I = 0 then       // XML não tem URI

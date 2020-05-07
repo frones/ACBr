@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/05/2020
+-- ACBrDFeUtil --
+[-] Correçao no método: "EncontrarURI", quando "docElement", não for informado
+    https://www.projetoacbr.com.br/forum/topic/57466-erro-cancelamento-nfs-betha/
+
 28/04/2020
 -- ACBrDFeSSL --
 [*] Melhoria na rotina de Download do Certificado por URLPFX

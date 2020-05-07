@@ -1747,6 +1747,9 @@ procedure TDFeSSL.SetArquivoPFX(const AValue: String);
 begin
   if FArquivoPFX = AValue then Exit;
   FArquivoPFX := AValue;
+
+  if FArquivoPFX = '' then Exit;
+ 
   FNumeroSerie := ''; // Evitar erro ao trocar o tipo de certificado;
   FDadosPFX := '';    // Força a releitura de DadosPFX;
   if CertificadoLido then
@@ -1757,6 +1760,9 @@ procedure TDFeSSL.SetDadosPFX(const AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
   FDadosPFX := AValue;
+
+  if FDadosPFX = '' then Exit;
+
   FArquivoPFX := '';  // Evitar erro ao trocar o tipo de certificado;
   FURLPFX := '';
   FNumeroSerie := '';
@@ -1768,6 +1774,8 @@ procedure TDFeSSL.SetURLPFX(AValue: String);
 begin
   if FURLPFX = AValue then Exit;
   FURLPFX := AValue;
+  if FURLPFX = '' then Exit;
+  
   // Não Zera ArquivoPFX, pois se ele estiver preenchido (recomendado), será usado como Cache Local
   FNumeroSerie := ''; // Evitar erro ao trocar o tipo de certificado;
   FDadosPFX := '';    // Força a releitura de DadosPFX;
@@ -1779,6 +1787,8 @@ procedure TDFeSSL.SetNumeroSerie(const AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
+  if FNumeroSerie = '' then Exit;
+  
   FArquivoPFX := '';   // Evitar erro ao trocar o tipo de certificado;
   FDadosPFX := '';
   FURLPFX := '';

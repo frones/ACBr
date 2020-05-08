@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/57528-lerxml-provedor-issintel/
+  Por: Patrick Alves
 -- pnfsConversao --
 [*] Inclusão do prefixo p no método RetirarPrefixos.
   Por: Italo Jurisato Junior

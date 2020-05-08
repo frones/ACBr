@@ -1639,7 +1639,7 @@ begin
     NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
     case FProvedor of
-     proBetha: begin
+     proBetha, proISSIntel: begin
                  if NFSe.NfseCancelamento.DataHora <> 0 then
                  begin
                    NFSe.Cancelada := snSim;

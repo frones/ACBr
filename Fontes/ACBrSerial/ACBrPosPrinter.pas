@@ -370,7 +370,7 @@ type
   public
     constructor Create(APosChequeIni: String = ''; AResourceName: String = '');
     destructor Destroy; override;
-    procedure Clear; override;
+    procedure Clear; {$IfNDef NEXTGEN}override;{$EndIf}
 
     procedure Load;
     function FindPosCheque(ACodBanco: Integer; UsaPadraoSeNaoAchar: Boolean = True): TACBrPosCheque;
@@ -2349,6 +2349,7 @@ begin
   if Assigned(FHook) then
      Retorno := FHook.ReadData(NumBytes, ATimeOut);
 end;
+{$EndIf}
 
 function TACBrPosPrinter.AguardarCheque(Operacao: TACBrPosOperacaoCheque): Boolean;
 var
@@ -2400,8 +2401,6 @@ begin
 
   FCancelarEsperaCheque := False ;
 end;
-
-{$EndIf}
 
 procedure TACBrPosPrinter.EnviarStringDevice(AString: AnsiString);
 var

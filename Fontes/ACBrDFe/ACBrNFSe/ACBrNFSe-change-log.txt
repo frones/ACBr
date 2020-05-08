@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2020
+-- pnfsConversao --
+[*] Inclusão do prefixo p no método RetirarPrefixos.
+  Por: Italo Jurisato Junior
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/57476-nfse-saatri-iss-retido-consulta-impressão-xml/
   Por: Theiller

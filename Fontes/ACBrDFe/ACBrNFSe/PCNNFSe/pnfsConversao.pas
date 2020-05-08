@@ -18160,6 +18160,7 @@ begin
   XML := StrReplace( XML, 'a:' );
   XML := StrReplace( XML, 'b:' );
   XML := StrReplace( XML, 's:' );
+  XML := StrReplace( XML, 'p:' );
   XML := StrReplace( XML, 'tipos:' );
 
   if AProvedor in [proNFSeBrasil, proSigCorp, proMegasoft] then

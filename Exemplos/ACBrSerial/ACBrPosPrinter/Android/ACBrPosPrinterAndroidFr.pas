@@ -245,8 +245,8 @@ begin
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
-  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
-  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA');
+  mImp.Lines.Add('</in><S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
 
   mImp.Lines.Add('</fn></ce>ALINHADO NO CENTRO');
@@ -257,8 +257,8 @@ begin
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
-  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
-  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA');
+  mImp.Lines.Add('</in><S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
 
   mImp.Lines.Add('</fn></ad>ALINHADO A DIREITA');
@@ -269,8 +269,8 @@ begin
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
-  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
-  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA');
+  mImp.Lines.Add('</in><S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
 
   mImp.Lines.Add('</ae></fn>TEXTO NORMAL');
@@ -409,7 +409,10 @@ begin
     exit;
 
   cbxImpressorasBth.Items.Clear;
-  ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+  try
+    ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+  except
+  end;
 end;
 
 procedure TPosPrinterAndroidTesteForm.btnTiposLetraClick(Sender: TObject);
@@ -423,8 +426,8 @@ begin
   mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
   mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
   mImp.Lines.Add('</c><n>FONTE NEGRITO</N>');
-  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
-  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA');
+  mImp.Lines.Add('</in><S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
   mImp.Lines.Add('FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
@@ -440,17 +443,13 @@ begin
   mImp.Lines.Add('<c><n>NEGRITO E CONDENSADA</n></c>');
   mImp.Lines.Add('<e><a>EXPANDIDA E ALT.DUPLA</a></e>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
-  mImp.Lines.Add('<in><e>INVERTIDA E EXPANDIDA</e></in>');
-  mImp.Lines.Add('<in><c>INVERTIDA E CONDENSADA</c></in>');
-  mImp.Lines.Add('<in><a>INVERTIDA E ALT.DUPLA</a></in>');
-  mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('</FB>FONTE TIPO B');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
-  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
-  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA');
+  mImp.Lines.Add('</in><S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
   mImp.Lines.Add('</FA>FONTE TIPO A');
   mImp.Lines.Add('</FN>FONTE NORMAL');

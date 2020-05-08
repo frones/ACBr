@@ -79,8 +79,8 @@ end;
 
 function TACBrEscPosStar.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo
   ): AnsiString;
-var
-  CmdPag: Integer;
+//var
+//  CmdPag: Integer;
 begin
   Result := inherited ComandoPaginaCodigo(APagCodigo);
 

@@ -407,7 +407,7 @@ type
     FControlePorta: Boolean;
     FDevice: TACBrDevice;
     FAtivo: Boolean;
-    FEspacoEntreLinhas: byte;
+    FEspacoEntreLinhas: Byte;
     FConfigGaveta: TACBrConfigGaveta;
     FModelo: TACBrPosPrinterModelo;
     FOnAguardarCheque: TACBrPosOnAguardarCheque;
@@ -805,7 +805,7 @@ function TACBrPosCheques.LoadFromFile: Boolean;
 var
   SL: TStringList;
 begin
-  {$IfDef FPC}Result := False;{$EndIf}
+  Result := False;
   if (FFileName <> '') and FileExists(FFileName) then
   begin
     SL := TStringList.Create;
@@ -2841,7 +2841,7 @@ begin
   if EspLin = 0 then
     EspLin := 60;
 
-  Result := (FEspacoEntreLinhas+2) * ALinhas;
+  Result := (EspLin+2) * ALinhas;
 end;
 
 function TACBrPosPrinter.CalcularLinhasAltura(AAltura: Integer): Integer;

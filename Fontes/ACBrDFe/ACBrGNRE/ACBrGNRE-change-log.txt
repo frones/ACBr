@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2020
+-- ACBrGNREWebServices --
+[*] Ao realizar a consulta automatica verifica se o tempo de estimativa de 
+    retorno é maior o que esta configurado no componente.
+  Por: Italo Jurisato Junior
+
 05/05/2020
 -- Diversos --
 [-] Possível correção na leitura do retorno do envio do GNRE.

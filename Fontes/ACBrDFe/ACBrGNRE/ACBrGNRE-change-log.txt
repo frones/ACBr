@@ -47,6 +47,11 @@ Símbolo : Significado
 
 08/05/2020
 -- ACBrGNREWebServices --
+[*] No método TGNRERecepcao.DefinirDadosMsg foi trocado a propriedade XML por
+    XMLAssinado, desta forma o componente consegue gerar e assinar o XML 
+    automaticamente antes do seu envio.
+  Por: Italo Jurisato Junior
+-- ACBrGNREWebServices --
 [*] Ao realizar a consulta automatica verifica se o tempo de estimativa de 
     retorno é maior o que esta configurado no componente.
   Por: Italo Jurisato Junior

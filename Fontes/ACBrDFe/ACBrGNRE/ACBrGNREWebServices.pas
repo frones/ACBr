@@ -412,7 +412,7 @@ var
 begin
   vGuias := '';
   for i := 0 to FGuias.Count - 1 do
-    vGuias := vGuias + FGuias.Items[i].XML;
+    vGuias := vGuias + FGuias.Items[i].XMLAssinado;
 
   if FPConfiguracoesGNRE.Geral.VersaoDF = ve200 then
     Versao := 'versao="2.00" '

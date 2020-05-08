@@ -1120,7 +1120,7 @@ end;
 
 procedure TFrPosPrinterTeste.bLerInfoClick(Sender: TObject);
 begin
-  PageControl1.ActivePage := tsImprimir;
+  pgAbas.ActivePage := tsImprimir;
   mImp.Lines.Add( ACBrPosPrinter1.LerInfoImpressora );
   mImp.Lines.Add( 'TemGuilhotina: '+IntToStr(ACBrPosPrinter1.TemGuilhotina) );
   mImp.Lines.Add( 'TemCheque: '+IntToStr(ACBrPosPrinter1.TemCheque) );

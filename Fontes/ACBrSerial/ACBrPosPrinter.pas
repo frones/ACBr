@@ -57,6 +57,9 @@ uses
 const
   CACBrPosChequeINI = 'ACBrPosCheque.ini';
   CACBrPosChequeResource = 'ACBrPosCheque';
+  cKeyFabricante = 'Fabricante';
+  cKeyFirmware = 'Firmware';
+  cKeyModelo = 'Modelo';
   cKeyGuilhotina = 'Guilhotina';
   cKeyCheque = 'Cheque';
   cKeyAutenticacao = 'Autenticacao';

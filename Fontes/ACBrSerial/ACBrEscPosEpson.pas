@@ -90,7 +90,8 @@ type
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
 
   function ComandoImprimirImagemColumnStr(APosPrinter: TACBrPosPrinter;
-    const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+    const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer;
+    AddLF: Boolean = True): AnsiString;
   function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
   function ComandoGravarLogoColumnStr(const RasterStr: AnsiString; AWidth: Integer;
     AHeight: Integer; KeyCode: Byte): AnsiString;
@@ -217,7 +218,8 @@ end;
 
 //https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
 function ComandoImprimirImagemColumnStr( APosPrinter: TACBrPosPrinter;
-  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer;
+  AddLF: Boolean): AnsiString;
 var
   Slices: TAnsiStringList;
   i: Integer;
@@ -238,8 +240,9 @@ begin
                            '*' + // Bit image mode
                            #33 + // 24-dot double density
                            IntToLEStr(AWidth) +
-                           ASlice +
-                           LF;
+                           ASlice;
+        if AddLF then
+          Result := Result + LF;
       end;
     finally
       Slices.Free;
@@ -792,15 +795,15 @@ begin
 
   // Lendo o Fabricante
   Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
-  AddInfo('Fabricante', Ret);
+  AddInfo(cKeyFabricante, Ret);
 
   // Lendo a versão do Firmware
   Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
-  AddInfo('Firmware', Ret);
+  AddInfo(cKeyFirmware, Ret);
 
   // Lendo o Modelo
   Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
-  AddInfo('Modelo', Ret);
+  AddInfo(cKeyModelo, Ret);
 
   // Lendo o Número Serial
   Ret := '';

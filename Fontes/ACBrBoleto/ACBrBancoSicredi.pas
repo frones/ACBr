@@ -2047,7 +2047,11 @@ begin
         NumeroDocumento      := Trim(Copy(SegT,59,15));
         SeuNumero            := Trim(Copy(SegT,106,25));
         Carteira             := Copy(SegT,58,1);
-        NossoNumero          := Trim(Copy(SegT,38, 8));
+        if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+          NossoNumero          := Trim(Copy(SegT,38, TamanhoMaximoNossoNum))
+        else
+          NossoNumero          := Trim(Copy(SegT,38, 8));
+
         Vencimento           := StringToDateTimeDef( Copy(SegT,74,2) +'/'+
                                                      Copy(SegT,76,2) +'/'+
                                                      Copy(SegT,78,4),

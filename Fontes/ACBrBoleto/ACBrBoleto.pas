@@ -1445,6 +1445,8 @@ type
     fLeCedenteRetorno: boolean;
     fHomologacao: Boolean;
     fRemoveAcentosArqRemessa: Boolean;
+    fLerNossoNumeroCompleto: Boolean;
+
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
   protected
@@ -1496,6 +1498,7 @@ type
     property ImprimirMensagemPadrao : Boolean    read fImprimirMensagemPadrao write fImprimirMensagemPadrao default True;
     property ACBrBoletoFC : TACBrBoletoFCClass   read fACBrBoletoFC           write SetACBrBoletoFC;
     property RemoveAcentosArqRemessa: Boolean    read fRemoveAcentosArqRemessa write fRemoveAcentosArqRemessa default False;
+    property LerNossoNumeroCompleto : Boolean    read fLerNossoNumeroCompleto write fLerNossoNumeroCompleto default False;
   end;
 
  {TACBrBoletoFCClass}

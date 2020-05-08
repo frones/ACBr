@@ -49,7 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-ATipoBoleto
+06/05/2020
+-- ACBrBancoSantander--
+[*] Ajuste baseado no manual na Remessa CNAB240 Segmento P Posicao 61
+
+-- ACBrBancoSicred, ACBrBoleto --
+[+] Adicionado propriedade LerNossoNumeroCompleto para leitura de Retorno
+https://www.projetoacbr.com.br/forum/topic/57289-nosso-n%C3%BAmero-sicredi-ler-retorno-240/
 
 05/05/2020
 

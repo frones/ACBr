@@ -52,7 +52,10 @@ var
   I: Integer;
 begin
   Result := '';
-  SSL.LerCertificadosStore;
+  If SSL.SSLCryptLib in [cryCapicom, cryWinCrypt] then
+    SSL.LerCertificadosStore
+  else
+    SSL.CarregarCertificado;
 
   for I := 0 to SSL.ListaCertificados.Count-1 do
   begin

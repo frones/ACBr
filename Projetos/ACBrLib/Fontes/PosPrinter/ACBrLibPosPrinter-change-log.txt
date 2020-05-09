@@ -42,10 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2020
+-- ACBrLibPosPrinterClass --
+[+] Adiciona os metodos POS_ImprimirCheque, POS_ImprimirTextoCheque, 
+    POS_LeituraCheque, POS_LerCMC7, POS_EjetarCheque, POS_PodeLerDaPorta e POS_LerCaracteristicas.
+    (Por: Rafael Dias)
+
 18/04/2020
 -- ACBrLibPosPrinterClass, ACBrLibPosPrinterDataModule --
 [-] Correção na ordem de passagem de parâmetros em 
-    function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+    function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
 [+] Adicionada rotina de verificação do Encoding de Entrada. Para correta conversão da Página de código
 [-] Correções e Novos testes Unitários
 	(por: DSA)

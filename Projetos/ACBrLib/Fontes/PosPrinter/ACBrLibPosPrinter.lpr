@@ -38,9 +38,9 @@ exports
   POS_ImprimirCmd,
   POS_ImprimirTags,
   POS_ImprimirImagemArquivo,
-  POS_GravarLogoArquivo,
   POS_ImprimirLogo,
-  POS_ApagarLogo,
+  POS_ImprimirCheque,
+  POS_ImprimirTextoCheque,
 
   //Diversos
   POS_TxRx,
@@ -54,6 +54,13 @@ exports
   POS_LerStatusImpressora,
   POS_RetornarTags,
   POS_AcharPortas,
+  POS_GravarLogoArquivo,
+  POS_ApagarLogo,
+  POS_LeituraCheque,
+  POS_LerCMC7,
+  POS_EjetarCheque,
+  POS_PodeLerDaPorta,
+  POS_LerCaracteristicas,
 
   // Componente Handler
   POS_GetPosPrinter;

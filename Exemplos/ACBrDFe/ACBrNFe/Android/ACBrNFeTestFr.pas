@@ -370,6 +370,7 @@ type
     procedure btnEnviarEmailClick(Sender: TObject);
     procedure edtAddressEmailEnter(Sender: TObject);
     procedure btnVerLogsClick(Sender: TObject);
+    procedure seColunasEnter(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -1091,6 +1092,12 @@ end;
 procedure TACBrNFCeTestForm.sbEmailMostrarSenhaClick(Sender: TObject);
 begin
   edtEmailPassword.Password := not sbEmailMostrarSenha.IsPressed;
+end;
+
+procedure TACBrNFCeTestForm.seColunasEnter(Sender: TObject);
+begin
+  if (Sender is TControl) then
+    AjustarScroll(TControl(Sender), lbConfigImpressora);
 end;
 
 procedure TACBrNFCeTestForm.seProxyVerSenhaClick(Sender: TObject);

@@ -23,7 +23,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
     Size.Height = 612.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 50.000000000000000000
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -41,7 +41,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 76.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
@@ -3932,7 +3932,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 5
       Size.Width = 76.000000000000000000
       Size.Height = 50.000000000000000000
@@ -3979,7 +3979,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         Size.Height = 472.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 50.000000000000000000
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 2
         TabPosition = Top
         Sizes = (
@@ -5409,6 +5409,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Text = 'NFCe'
             end
             object lbiConfigNFCe: TListBoxItem
+              Selectable = False
               Position.Y = 909.000000000000000000
               Size.Width = 362.000000000000000000
               Size.Height = 75.000000000000000000
@@ -5563,7 +5564,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           ImageIndex = 10
           Size.Width = 127.000000000000000000
           Size.Height = 50.000000000000000000
@@ -6161,7 +6162,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           ImageIndex = 4
           Size.Width = 128.000000000000000000
           Size.Height = 50.000000000000000000
@@ -6189,7 +6190,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 7
+              TabOrder = 8
               TabStop = False
               Text = 'Remetente'
             end
@@ -6299,7 +6300,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 6
+              TabOrder = 7
               TabStop = False
               Text = 'Servidor SMTP'
             end
@@ -6483,7 +6484,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 8
+              TabOrder = 9
               TabStop = False
               Text = 'Usu'#225'rio / Login'
             end
@@ -6492,7 +6493,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 3
+              TabOrder = 4
               object gpEmailUsuarioLogin: TGridPanelLayout
                 Align = Client
                 Size.Width = 362.000000000000000000
@@ -6618,7 +6619,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 9
+              TabOrder = 10
               TabStop = False
               Text = 'Charset'
             end
@@ -6627,7 +6628,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 5
+              TabOrder = 6
               object gpEmailCharset: TGridPanelLayout
                 Align = Client
                 Size.Width = 362.000000000000000000
@@ -6722,7 +6723,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Width = 362.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 4
+              TabOrder = 5
               Text = 'Destinat'#225'rio e Assunto'
             end
             object libDestinatarioAssunto: TListBoxItem
@@ -6851,7 +6852,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 7
-                  Text = 'Envio de NFCe'
+                  Text = 'NF-e emitida pela empresa [EmitFantasia]'
                   Margins.Left = 4.000000000000000000
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
@@ -6861,6 +6862,41 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
                 end
+              end
+            end
+            object ListBoxGroupHeader8: TListBoxGroupHeader
+              Position.Y = 527.000000000000000000
+              Size.Width = 362.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = 'Mensagem'
+            end
+            object lbiMensagem: TListBoxItem
+              Position.Y = 557.000000000000000000
+              Size.Width = 362.000000000000000000
+              Size.Height = 132.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 11
+              object mAltBody: TMemo
+                Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                DataDetectorTypes = []
+                Lines.Strings = (
+                  'Voc'#234' est'#225' recebendo uma NF-e.'
+                  ''
+                  'Emitida pela empresa [EmitFantasia] '
+                  'Data de Emiss'#227'o [dEmissao] '
+                  'Chave de acesso: [ChaveDFe]'
+                  ''
+                  'XML est'#225' em anexo')
+                Align = Client
+                Size.Width = 362.000000000000000000
+                Size.Height = 132.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 4
+                OnEnter = edtAddressEmailEnter
+                Viewport.Width = 357.000000000000000000
+                Viewport.Height = 127.000000000000000000
               end
             end
           end
@@ -6954,7 +6990,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         Size.Width = 386.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 1
+        TabOrder = 0
         object lblTituloTestes: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
@@ -6980,17 +7016,17 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end
       end
       object lbTestes: TListBox
-        Align = Client
+        Position.Y = 48.000000000000000000
         Size.Width = 386.000000000000000000
-        Size.Height = 461.000000000000000000
+        Size.Height = 353.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 11
+        TabOrder = 10
         DisableFocusEffect = True
         DefaultItemStyles.ItemStyle = ''
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
         Viewport.Width = 382.000000000000000000
-        Viewport.Height = 457.000000000000000000
+        Viewport.Height = 349.000000000000000000
         object lbhConsultas: TListBoxGroupHeader
           Size.Width = 382.000000000000000000
           Size.Height = 30.000000000000000000
@@ -7201,23 +7237,70 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           end
         end
       end
-      object btnVerNotas: TButton
+      object GridPanelLayout7: TGridPanelLayout
         Align = Bottom
-        Images = ImageList1
-        ImageIndex = 15
-        Margins.Left = 2.000000000000000000
-        Margins.Top = 2.000000000000000000
-        Margins.Right = 2.000000000000000000
-        Margins.Bottom = 2.000000000000000000
-        Position.X = 2.000000000000000000
-        Position.Y = 511.000000000000000000
-        Size.Width = 382.000000000000000000
-        Size.Height = 45.000000000000000000
+        Position.Y = 508.000000000000000000
+        Size.Width = 386.000000000000000000
+        Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
-        Text = 'Ver Notas'
-        TextSettings.WordWrap = True
-        OnClick = btnVerNotasClick
+        TabOrder = 11
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = btnVerNotas
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = btnVerLogs
+            Row = 0
+          end>
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end
+          item
+            SizeStyle = Auto
+          end>
+        object btnVerNotas: TButton
+          Align = Client
+          Images = ImageList1
+          ImageIndex = 15
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 189.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Ver Notas'
+          TextSettings.WordWrap = True
+          OnClick = btnVerNotasClick
+        end
+        object btnVerLogs: TButton
+          Align = Client
+          Images = ImageList1
+          ImageIndex = 6
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 189.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Ver Logs'
+          TextSettings.WordWrap = True
+          OnClick = btnVerLogsClick
+        end
       end
     end
     object tabLog: TTabItem
@@ -7347,7 +7430,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
-          Text = 'Vers'#227'o OpenSSL'
+          Text = ' OpenSSL'
           XRadius = 3.000000000000000000
           YRadius = 3.000000000000000000
           OnClick = btnVersaoOpenSSLClick

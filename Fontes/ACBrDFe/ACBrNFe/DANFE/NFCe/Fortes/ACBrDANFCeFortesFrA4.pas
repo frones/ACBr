@@ -773,6 +773,7 @@ var
   frACBrNFeDANFCeFortesFr: TfrmACBrDANFCeFortesFrA4;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
+  NFeID: string;
 begin
 
   frACBrNFeDANFCeFortesFr := TfrmACBrDANFCeFortesFrA4.Create(Self);
@@ -797,6 +798,12 @@ begin
       if FACBrNFeDANFCeFortesA4.Impressora <> '' then
         RLPrinter.PrinterName := FACBrNFeDANFCeFortesA4.Impressora;
 
+      NFeID := OnlyNumber(FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID);
+
+      RLLayout.JobTitle := NomeDocumento;
+      if (RLLayout.JobTitle = '') then
+        RLLayout.JobTitle := NFeID + '-nfe.xml';
+
       RLLayout.PrintDialog := FACBrNFeDANFCeFortesA4.MostraPreview;
       RLLayout.ShowProgress:= False ;
 
@@ -819,7 +826,8 @@ begin
           end ;
 
           RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostraStatus;
-          RLFiltro.FileName := FACBrNFeDANFCeFortesA4.PathPDF + OnlyNumber(FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID) + '-nfe.pdf';
+          RLFiltro.FileName := PathWithDelim(FACBrNFeDANFCeFortesA4.PathPDF) +
+                               ChangeFileExt( RLLayout.JobTitle, '.pdf');
           RLFiltro.FilterPages( RLLayout.Pages );
           FACBrNFeDANFCeFortesA4.FPArquivoPDF := RLFiltro.FileName;
         end;

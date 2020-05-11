@@ -49,6 +49,8 @@ type
       Attr: Integer = faAnyFile; ShowHidden: Boolean = False);
   end;
 
+  TFileListSort = (flsName, flsDate);
+
   TFrameFileSelect = class(TFrame)
     lvFileBrowse: TListView;
     tbPaths: TToolBar;
@@ -73,6 +75,7 @@ type
     FShowHidden: Boolean;
     FFileMask: String;
     FCanChangeDir: Boolean;
+    FSortType: TFileListSort;
 
     procedure SetActualDir(const Value: String);
 
@@ -100,9 +103,11 @@ type
     property FileName: String read FFileName write FFileName;
     property ShowHidden: Boolean read FShowHidden write SetShowHidden;
     property FileMask: String read FFileMask write SetFileMask;
+    property SortType: TFileListSort read FSortType write FSortType;
   end;
 
-function CompareDirFiles(const Left, Right: TFileInfo): Integer;
+function SortByName(const Left, Right: TFileInfo): Integer;
+function SortByDate(const Left, Right: TFileInfo): Integer;
 
 
 implementation
@@ -112,16 +117,31 @@ uses
 
 {$R *.fmx}
 
-function CompareDirFiles(const Left, Right: TFileInfo): Integer;
+function SortByName(const Left, Right: TFileInfo): Integer;
 var
-  Nome1, Nome2: String;
+  Str1, Str2: String;
 begin
-  Nome1 := ifthen(Left.IsDirectory,'0','1')+Left.Name.ToUpper;
-  Nome2 := ifthen(Right.IsDirectory,'0','1')+Right.Name.ToUpper;
+  Str1 := ifthen(Left.IsDirectory,'0','1')+Left.Name.ToUpper;
+  Str2 := ifthen(Right.IsDirectory,'0','1')+Right.Name.ToUpper;
 
-  if Nome1 > Nome2 then
+  if Str1 > Str2 then
     Result := 1
-  else if Nome1 < Nome2 then
+  else if Str1 < Str2 then
+    Result := -1
+  else
+    Result := 0;
+end;
+
+function SortByDate(const Left, Right: TFileInfo): Integer;
+var
+  Str1, Str2: String;
+begin
+  Str1 := ifthen(Left.IsDirectory,'0','1')+FormatDateTime('yyyymmddhhnnss', Left.Data);
+  Str2 := ifthen(Right.IsDirectory,'0','1')+FormatDateTime('yyyymmddhhnnss', Right.Data);
+
+  if Str1 > Str2 then
+    Result := 1
+  else if Str1 < Str2 then
     Result := -1
   else
     Result := 0;
@@ -159,9 +179,15 @@ begin
 end;
 
 function TFileInfo.FormatDateTime: String;
+var
+  AFormatSettings: TFormatSettings;
 begin
   if Data <> 0 then
-    Result := DateTimeToStr( Data )
+  begin
+    AFormatSettings := TFormatSettings.Create;
+    AFormatSettings.ShortDateFormat := 'dd/mm/yy';
+    Result := DateTimeToStr(Data, AFormatSettings);
+  end
   else
     Result := 'n/d';
 end;
@@ -170,7 +196,7 @@ end;
 
 constructor TFileList.Create;
 begin
-  inherited Create(TComparer<TFileInfo>.Construct( CompareDirFiles ), True)
+  inherited Create(True)
 end;
 
 procedure TFileList.AddFilesToList(APath: String; Attr: Integer; ShowHidden: Boolean);
@@ -213,6 +239,7 @@ begin
   FShowHidden := False;
   FFileMask := CAllFiles;
   FCanChangeDir := True;
+  FSortType := flsName;
 end;
 
 function TFrameFileSelect.ChangeDirectory(const ADirectory: String): Boolean;
@@ -254,7 +281,10 @@ begin
     if FCanChangeDir and (FL.Count < 1) then
       Exit;
 
-    FL.Sort();
+    if FSortType = flsDate then
+      FL.Sort(TComparer<TFileInfo>.Construct( SortByDate) )
+    else
+      FL.Sort(TComparer<TFileInfo>.Construct( SortByName ) );
 
     lvFileBrowse.BeginUpdate;
     try
@@ -430,6 +460,12 @@ var
   ItemText, NewDir: String;
 begin
   FFileName := '';
+  if (AItem < 0) or (AItem >= lvFileBrowse.ItemCount) then
+    Exit;
+
+  lvFileBrowse.ItemIndex := AItem;
+  if lvFileBrowse.Selected = nil then
+    Exit;
 
   with lvFileBrowse.Items[AItem] do
   begin

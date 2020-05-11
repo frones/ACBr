@@ -38,7 +38,7 @@ type
     SpeedButton1: TSpeedButton;
     GridPanelLayout9: TGridPanelLayout;
     btnLimpar: TCornerButton;
-    btnVersaoOpenSSL: TCornerButton;
+    btnSobre: TCornerButton;
     ACBrNFe1: TACBrNFe;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
@@ -269,7 +269,6 @@ type
     btnValidarAssinatura: TButton;
     btnEnviarEmail: TButton;
     btnVerificarSchema: TButton;
-    btnVerXML: TButton;
     cbEnviarEmailNFCe: TCheckBox;
     libDestinatarioAssunto: TListBoxItem;
     GridPanelLayout6: TGridPanelLayout;
@@ -299,6 +298,9 @@ type
     edtConsultaParametro: TEdit;
     ListBoxItem13: TListBoxItem;
     cbxTipoEmpresa: TComboBox;
+    btnApagarXML: TButton;
+    btnVerXML: TButton;
+    btnLogs: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -362,7 +364,7 @@ type
     procedure btnValidarAssinaturaClick(Sender: TObject);
     procedure btnVerificarSchemaClick(Sender: TObject);
     procedure btnCertInfoClick(Sender: TObject);
-    procedure btnVersaoOpenSSLClick(Sender: TObject);
+    procedure btnSobreClick(Sender: TObject);
     procedure btnVerXMLClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure swOnLineSwitch(Sender: TObject);
@@ -374,6 +376,8 @@ type
     procedure seColunasEnter(Sender: TObject);
     procedure fraXMLslvFileBrowseDeletingItem(Sender: TObject; AIndex: Integer;
       var ACanDelete: Boolean);
+    procedure btnLogsClick(Sender: TObject);
+    procedure btnApagarXMLClick(Sender: TObject);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -417,6 +421,7 @@ type
     procedure EnviarXMLNFCe(const ArquivoXML: String);
     procedure ImprimirXMLNFCe(const ArquivoXML: String);
     procedure EnviarEmailXMLNFCe(const ArquivoXML: String);
+    function SubstituirVariaveisEmail(const AText: String): String;
 
     procedure AppExceptionHandle(Sender: TObject; E: Exception);
   public
@@ -436,7 +441,7 @@ uses
   {$EndIf}
   FMX.DialogService.Async, FMX.Platform, Xml.XMLDoc, System.Zip, System.Math,
   FileSelectFr,
-  ssl_openssl_lib, blcksock,
+  ssl_openssl_lib, blcksock, ACBrLibXml2,
   pcnConversao, pcnConversaoNFe,
   ACBrUtil, ACBrConsts, ACBrValidador,
   ACBrDFeSSL, ACBrDFeUtil;
@@ -609,7 +614,8 @@ end;
 
 procedure TACBrNFCeTestForm.ACBrMail1AfterMailProcess(Sender: TObject);
 begin
-  mLog.Lines.Add('ACBrMail.OnAfterMailProcess');
+  mLog.Lines.Add('EMail ['+Trim(TACBrMail(Sender).Subject)+']');
+  mLog.Lines.Add('  Enviado com sucesso');
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1BeforeMailProcess(Sender: TObject);
@@ -621,10 +627,8 @@ procedure TACBrNFCeTestForm.ACBrMail1MailException(const AMail: TACBrMail;
   const E: Exception; var ThrowIt: Boolean);
 begin
   mLog.Lines.Add('----- ACBrMail.Error -----');
-  mLog.Lines.Add(E.Message);
-  mLog.Lines.Add('');
   mLog.Lines.Add('Erro ao Enviar o EMail: ' + AMail.Subject);
-  ThrowIt := False;
+  ThrowIt := True;
 end;
 
 procedure TACBrNFCeTestForm.ACBrMail1MailProcess(const AMail: TACBrMail;
@@ -681,11 +685,6 @@ begin
   Toast('Configuração carregada');
 end;
 
-procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
-begin
-  TabBack;
-end;
-
 procedure TACBrNFCeTestForm.btnCadastroClick(Sender: TObject);
 var
   Documento: String;
@@ -708,6 +707,14 @@ begin
   ACBrNFe1.WebServices.ConsultaCadastro.Executar;
 
   mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.ConsultaCadastro.RetWS )));
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetornoWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.ConsultaCadastro.RetornoWS )));
+  mLog.Lines.Add('');
   mLog.Lines.Add('----- Consulta Cadastro -----');
   mLog.Lines.Add('versao: '+ACBrNFe1.WebServices.ConsultaCadastro.versao);
   mLog.Lines.Add('verAplic: '+ACBrNFe1.WebServices.ConsultaCadastro.verAplic);
@@ -720,14 +727,6 @@ begin
   mLog.Lines.Add('CNPJ: '+ACBrNFe1.WebServices.ConsultaCadastro.CNPJ);
   mLog.Lines.Add('CPF: '+ACBrNFe1.WebServices.ConsultaCadastro.CPF);
 
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.ConsultaCadastro.RetWS )));
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetornoWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.ConsultaCadastro.RetornoWS )));
 
   ExibirLogs;
 end;
@@ -773,6 +772,14 @@ begin
   ACBrNFe1.WebServices.Consulta.Executar;
 
   mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.Consulta.RetWS )));
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetornoWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.Consulta.RetornoWS )));
+  mLog.Lines.Add('');
   mLog.Lines.Add('----- Consulta Chave -----');
   mLog.Lines.Add('NFeChave: '+ACBrNFe1.WebServices.Consulta.NFeChave);
   mLog.Lines.Add('Protocolo: '+ACBrNFe1.WebServices.Consulta.Protocolo);
@@ -791,15 +798,6 @@ begin
   mLog.Lines.Add('protNFe.xMotivo: '+ACBrNFe1.WebServices.Consulta.protNFe.xMotivo);
   mLog.Lines.Add('protNFe.cMsg: '+IntToStr(ACBrNFe1.WebServices.Consulta.protNFe.cMsg));
   mLog.Lines.Add('protNFe.xMsg: '+ACBrNFe1.WebServices.Consulta.protNFe.xMsg);
-
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.Consulta.RetWS )));
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetornoWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.Consulta.RetornoWS )));
 
   ExibirLogs;
 end;
@@ -837,11 +835,11 @@ begin
   if swOnLine.IsChecked and cbEnviarNFCe.IsChecked then
     EnviarXMLNFCe(NomeArqXML);
 
-  if cbEnviarEmailNFCe.IsChecked then
-    EnviarEmailXMLNFCe(NomeArqXML);
-
   if cbImprimirNFCe.IsChecked then
     ImprimirXMLNFCe(NomeArqXML);
+
+  if cbEnviarEmailNFCe.IsChecked then
+    EnviarEmailXMLNFCe(NomeArqXML);
 
   ExibirLogs;
 end;
@@ -870,6 +868,7 @@ begin
 
   EnviarXMLNFCe(fraXMLs.FileName);
   ExibirLogs;
+  Toast('Email enviado com sucesso');
 end;
 
 procedure TACBrNFCeTestForm.btnValidarAssinaturaClick(Sender: TObject);
@@ -881,6 +880,9 @@ begin
 
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(fraXMLs.FileName);
+  if (ACBrNFe1.NotasFiscais.Count < 1) then
+    Exit;
+
   mLog.Lines.Add('');
   mLog.Lines.Add('---- ASSINATURA ----');
 
@@ -915,6 +917,8 @@ begin
 
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(fraXMLs.FileName, True);
+  if (ACBrNFe1.NotasFiscais.Count < 1) then
+    Exit;
 
   mLog.Lines.Add('');
   mLog.Lines.Add('---- VALIDAÇÃO DO XML ----');
@@ -939,9 +943,30 @@ begin
   Toast(MsgRes);
 end;
 
+procedure TACBrNFCeTestForm.btnApagarXMLClick(Sender: TObject);
+begin
+  if fraXMLs.FileName = '' then
+    Exit;
+
+  TDialogServiceAsync.MessageDialog('Apagar arquivo ?',
+    TMsgDlgType.mtConfirmation,
+    [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], TMsgDlgBtn.mbYes, 0,
+    procedure(const AResult: TModalResult)
+    begin
+      if (AResult = mrYes) then
+        if System.SysUtils.DeleteFile(fraXMLs.FileName) then
+          fraXMLs.Reload;
+    end);
+end;
+
 procedure TACBrNFCeTestForm.btnVerLogsClick(Sender: TObject);
 begin
   ExibirLogs;
+end;
+
+procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
+begin
+  TabBack;
 end;
 
 procedure TACBrNFCeTestForm.btnVerXMLClick(Sender: TObject);
@@ -951,6 +976,8 @@ begin
 
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(fraXMLs.FileName, True);
+  if (ACBrNFe1.NotasFiscais.Count < 1) then
+    Exit;
 
   mLog.Lines.Add('');
   mLog.Lines.Add('----- VER XML -----');
@@ -964,6 +991,11 @@ begin
   mLog.Lines.Clear;
 end;
 
+procedure TACBrNFCeTestForm.btnLogsClick(Sender: TObject);
+begin
+  ExibirLogs;
+end;
+
 procedure TACBrNFCeTestForm.btnProcurarBthClick(Sender: TObject);
 begin
   CarregarImpressorasBth;
@@ -974,6 +1006,14 @@ procedure TACBrNFCeTestForm.btnStatusServicoClick(Sender: TObject);
 begin
   ACBrNFe1.WebServices.StatusServico.Executar;
 
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.StatusServico.RetWS )));
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- RetornoWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.StatusServico.RetornoWS )));
   mLog.Lines.Add('');
   mLog.Lines.Add('----- Status Serviço -----');
   mLog.Lines.Add('versao: ' + ACBrNFe1.WebServices.StatusServico.versao);
@@ -986,14 +1026,6 @@ begin
   mLog.Lines.Add('tMed: '     +IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
   mLog.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
   mLog.Lines.Add('xObs: '     +ACBrNFe1.WebServices.StatusServico.xObs);
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.StatusServico.RetWS )));
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetornoWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.StatusServico.RetornoWS )));
 
   ExibirLogs;
 end;
@@ -1003,8 +1035,12 @@ begin
   ExibirXMLs;
 end;
 
-procedure TACBrNFCeTestForm.btnVersaoOpenSSLClick(Sender: TObject);
+procedure TACBrNFCeTestForm.btnSobreClick(Sender: TObject);
 begin
+  mLog.Lines.Add('');
+  mLog.Lines.Add('Projeto ACBr - DSA');
+  mLog.Lines.Add('https://projetoacbr.com.br/');
+  mLog.Lines.Add('');
   mLog.Lines.Add('Versão do OpenSSL:');
   mLog.Lines.Add(ssl_openssl_lib.OpenSSLVersion(0));
 end;
@@ -1088,8 +1124,12 @@ begin
   fraXMLs.ActualDir := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   fraXMLs.FileMask := '*.xml';
   fraXMLs.CanChangeDir := False;
+  fraXMLs.SortType := flsDate;
   fraXMLs.Execute;
   TabForward(tabXMLs);
+  // Vai para o último XML emitido
+  fraXMLs.lvFileBrowse.ScrollTo(fraXMLs.lvFileBrowse.ItemCount-1);
+  fraXMLs.SelectItem(fraXMLs.lvFileBrowse.ItemCount-1);
 end;
 
 procedure TACBrNFCeTestForm.cbxEmitCidadeChange(Sender: TObject);
@@ -1146,6 +1186,17 @@ end;
 procedure TACBrNFCeTestForm.SpeedButton4Click(Sender: TObject);
 begin
   ExibirXMLs;
+end;
+
+function TACBrNFCeTestForm.SubstituirVariaveisEmail(const AText: String): String;
+begin
+  Result := AText;
+  Result := StringReplace(Result, '[EmitFantasia]',
+                         ACBrNFe1.NotasFiscais[0].NFe.Emit.xFant, [rfReplaceAll]);
+  Result := StringReplace(Result, '[dEmissao]',
+                         DateToStr(ACBrNFe1.NotasFiscais[0].NFe.Ide.dEmi), [rfReplaceAll]);
+  Result := StringReplace(Result, '[ChaveDFe]',
+                         ACBrNFe1.NotasFiscais[0].NFe.infNFe.ID, [rfReplaceAll]);
 end;
 
 procedure TACBrNFCeTestForm.swOnLineSwitch(Sender: TObject);
@@ -1231,6 +1282,8 @@ begin
   ACBrNFe1.Configuracoes.Arquivos.PathEvento := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   ACBrNFe1.Configuracoes.Arquivos.PathInu := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   ACBrNFe1.Configuracoes.Arquivos.PathSalvar := TPath.Combine(TPath.Combine(ApplicationPath, 'xml'), 'soap');
+
+  DescompactarSchemas;
 end;
 
 procedure TACBrNFCeTestForm.ConfigurarACBrPosPrinter;
@@ -1464,34 +1517,54 @@ begin
 end;
 
 procedure TACBrNFCeTestForm.EnviarEmailXMLNFCe(const ArquivoXML: String);
+var
+  SL: TStringList;
+  ASubject: String;
 begin
   VerificarErrosDeConfiguracaoEmail;
 
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoXML);
+  if (ACBrNFe1.NotasFiscais.Count < 1) then
+    Exit;
 
-  ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
-    edtAddressEmail.Text,
-    edtSubject.Text,
-    mAltBody.Lines,
-    False,  // PDF ainda  não suportdo
-    nil,    // Lista com emails copias - TStrings
-    nil     // Lista de anexos - TStrings
-  );
+  SL := TStringList.Create;
+  try
+    SL.Text := SubstituirVariaveisEmail(mAltBody.Lines.Text);
+    ASubject := SubstituirVariaveisEmail(edtSubject.Text);
+
+    ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
+      edtAddressEmail.Text,
+      ASubject,
+      SL,
+      False,  // PDF ainda  não suportdo
+      nil,    // Lista com emails copias - TStrings
+      nil     // Lista de anexos - TStrings
+    );
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TACBrNFCeTestForm.EnviarXMLNFCe(const ArquivoXML: String);
 begin
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoXML, True);
+  if (ACBrNFe1.NotasFiscais.Count < 1) then
+    Exit;
+
   ACBrNFe1.Enviar(IntToStr(Trunc(sbLote.Value)), False, True, False);  // NãoImprimir, Sincrono
 
   mLog.Lines.Add('');
-  mLog.Lines.Add('---- ENVIAR XML ----');
-
+  mLog.Lines.Add('----- RetWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.Enviar.RetWS )));
   mLog.Lines.Add('');
-  mLog.Lines.Add('----- Consulta Chave -----');
-
+  mLog.Lines.Add('----- RetornoWS -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.WebServices.Enviar.RetornoWS )));
+  mLog.Lines.Add('');
+  mLog.Lines.Add('---- ENVIAR XML ----');
   mLog.Lines.Add('Recibo: '+ ACBrNFe1.WebServices.Enviar.Recibo);
   mLog.Lines.Add('versao: '+ACBrNFe1.WebServices.Enviar.versao);
   mLog.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNFe1.WebServices.Enviar.TpAmb));
@@ -1503,14 +1576,7 @@ begin
   mLog.Lines.Add('TMed: ' + IntToStr(ACBrNFe1.WebServices.Enviar.TMed));
   mLog.Lines.Add('Protocolo: '+ACBrNFe1.WebServices.Enviar.Protocolo);
   mLog.Lines.Add('Lote: ' + ACBrNFe1.WebServices.Enviar.Lote);
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.Enviar.RetWS )));
-  mLog.Lines.Add('');
-  mLog.Lines.Add('----- RetornoWS -----');
-  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
-    ACBrNFe1.WebServices.Enviar.RetornoWS )));
+    
 end;
 
 procedure TACBrNFCeTestForm.ExibirLogs;
@@ -1802,7 +1868,8 @@ begin
   try
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoXML);
-    ACBrNFe1.NotasFiscais.Imprimir;
+    if (ACBrNFe1.NotasFiscais.Count > 0) then
+      ACBrNFe1.NotasFiscais.Imprimir;
   finally
     ACBrPosPrinter1.Desativar;
   end;
@@ -1832,7 +1899,7 @@ end;
 
 procedure TACBrNFCeTestForm.laBtnNotasEmtidasClick(Sender: TObject);
 begin
-  ConfigurarACBrNFe;
+  ConfigurarACBr;
   ExibirXMLs;
 end;
 
@@ -1840,7 +1907,6 @@ procedure TACBrNFCeTestForm.laBtnTestesClick(Sender: TObject);
 begin
   VerificarErrosDeConfiguracao;
   ConfigurarACBr;
-  DescompactarSchemas;
   TabForward(tabTeste);
 end;
 
@@ -2083,6 +2149,8 @@ end;
 procedure TACBrNFCeTestForm.AlimentarNFCe(NumDFe: Integer);
 var
   Ok: Boolean;
+  BaseCalculo,
+  ValorICMS: Double;
 begin
   with ACBrNFe1.NotasFiscais.Add.NFe do
   begin
@@ -2108,7 +2176,7 @@ begin
     if not swOnLine.IsChecked then
     begin
       Ide.dhCont := date;
-      Ide.xJust  := 'Teste de NFCe Emitida em Contingencia';
+      Ide.xJust  := 'Justificativa Contingencia';
     end;
 
     Emit.CNPJCPF           := OnlyNumber(edtEmitCNPJ.Text);
@@ -2129,8 +2197,10 @@ begin
     Emit.enderEmit.xPais   := 'BRASIL';
 
     Emit.IEST := '';
-    // TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
-    Emit.CRT  := TpcnCRT(cbxTipoEmpresa.ItemIndex);
+    // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
+    // passar os valores 1, 2 ou 3
+    // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+    Emit.CRT  := StrToCRT(Ok, IntToStr(cbxTipoEmpresa.ItemIndex + 1));
 
     // Na NFC-e o Destinatário é opcional
     {
@@ -2228,13 +2298,22 @@ begin
           if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
             CST := cst00
           else
-            CSOSN := csosn101;
+            CSOSN := csosn102;
 
           orig    := oeNacional;
           modBC   := dbiValorOperacao;
-          vBC     := 100;
+
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            BaseCalculo := 100
+          else
+            BaseCalculo := 0;
+
+          vBC     := BaseCalculo;
           pICMS   := 18;
-          vICMS   := 18;
+
+          ValorICMS := vBC * pICMS;
+
+          vICMS   := ValorICMS;
           modBCST := dbisMargemValorAgregado;
           pMVAST  := 0;
           pRedBCST:= 0;
@@ -2317,8 +2396,8 @@ begin
       end;
     end;
 
-    Total.ICMSTot.vBC     := 100;
-    Total.ICMSTot.vICMS   := 18;
+    Total.ICMSTot.vBC     := BaseCalculo;
+    Total.ICMSTot.vICMS   := ValorICMS;
     Total.ICMSTot.vBCST   := 0;
     Total.ICMSTot.vST     := 0;
     Total.ICMSTot.vProd   := 100;

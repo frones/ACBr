@@ -520,6 +520,8 @@ end;
 procedure TfrmACBrNFe.AlimentarNFCe(NumDFe: String);
 var
   Ok: Boolean;
+  BaseCalculo,
+  ValorICMS: Double;
 begin
   with ACBrNFe1.NotasFiscais.Add.NFe do
   begin
@@ -664,13 +666,22 @@ begin
           if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
             CST := cst00
           else
-            CSOSN := csosn101;
+            CSOSN := csosn102;
 
           orig    := oeNacional;
           modBC   := dbiValorOperacao;
-          vBC     := 100;
+
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            BaseCalculo := 100
+          else
+            BaseCalculo := 0;
+
+          vBC     := BaseCalculo;
           pICMS   := 18;
-          vICMS   := 18;
+
+          ValorICMS := vBC * pICMS;
+
+          vICMS   := ValorICMS;
           modBCST := dbisMargemValorAgregado;
           pMVAST  := 0;
           pRedBCST:= 0;
@@ -753,8 +764,8 @@ begin
       end;
     end;
 
-    Total.ICMSTot.vBC     := 100;
-    Total.ICMSTot.vICMS   := 18;
+    Total.ICMSTot.vBC     := BaseCalculo;
+    Total.ICMSTot.vICMS   := ValorICMS;
     Total.ICMSTot.vBCST   := 0;
     Total.ICMSTot.vST     := 0;
     Total.ICMSTot.vProd   := 100;

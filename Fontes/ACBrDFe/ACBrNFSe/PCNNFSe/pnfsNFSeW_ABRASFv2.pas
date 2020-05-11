@@ -214,6 +214,9 @@ begin
 
         Gerador.wCampo(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
 
+        if (FProvedor = proMegaSoft) then
+            Gerador.wCampo(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+
         Gerador.wCampo(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
         if (FProvedor <> proMegaSoft) then
           Gerador.wCampo(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
@@ -395,7 +398,8 @@ begin
             Gerador.wCampo(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES);
           end;
 
-        proSimplISSv2:
+        proSimplISSv2, 
+		proMegaSoft:
         begin
           Gerador.wCampo(tcDe2, '#15', 'ValorPis       ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, DSC_VPIS);
           Gerador.wCampo(tcDe2, '#16', 'ValorCofins    ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS);
@@ -536,7 +540,8 @@ begin
           Gerador.wCampo(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, DSC_VDESCCOND);
       end;
 
-    proProdata: Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
+    proProdata, 
+	proMegaSoft: Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
 
   else
     begin
@@ -605,7 +610,7 @@ begin
 
   if (FProvedor = proMegaSoft) then
   begin
-    Gerador.wCampo(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 20, 0, OnlyNumber(NFSe.Servico.CodigoTributacaoMunicipio), DSC_CSERVTRIBMUN);
+    Gerador.wCampo(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 20, 0, NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN);
     Gerador.wCampo(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
       StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase]), DSC_DISCR);
   end;

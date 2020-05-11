@@ -1327,8 +1327,12 @@ begin
 
       Gerador.Prefixo := Prefixo4;
       Gerador.wCampo(tcStr, '#1', 'Numero', 01, 15, 1, NumeroRps, '');
-      Gerador.wCampo(tcStr, '#2', 'Serie', 01, 05, 1, SerieRps, '');
-      Gerador.wCampo(tcStr, '#3', 'Tipo', 01, 01, 1, TipoRps, '');
+
+      if Provedor <> proMegaSoft then
+      begin
+        Gerador.wCampo(tcStr, '#2', 'Serie', 01, 05, 1, SerieRps, '');
+        Gerador.wCampo(tcStr, '#3', 'Tipo', 01, 01, 1, TipoRps, '');
+      end;
 
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupo('/IdentificacaoRps');

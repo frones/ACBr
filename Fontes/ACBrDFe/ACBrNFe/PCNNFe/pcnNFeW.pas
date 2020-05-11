@@ -1052,7 +1052,7 @@ begin
     Gerador.wCampo(tcStr, 'J11', 'tpComb  ', 02, 02, 1, nfe.Det[i].Prod.veicProd.tpComb, DSC_TPCOMB);
     Gerador.wCampo(tcStr, 'J12', 'nMotor  ', 00, 21, 1, nfe.Det[i].Prod.veicProd.nMotor, DSC_NMOTOR);
     if NFe.infNFe.Versao >= 2 then
-       Gerador.wCampo(tcStr, 'J13', 'CMT     ', 09, 09, 1, nfe.Det[i].Prod.veicProd.CMT, DSC_CMT)
+       Gerador.wCampo(tcStr, 'J13', 'CMT     ', 01, 09, 1, nfe.Det[i].Prod.veicProd.CMT, DSC_CMT)
     else
        Gerador.wCampo(tcStr, 'J13', 'CMKG    ', 09, 09, 1, nfe.Det[i].Prod.veicProd.CMT, DSC_CMT);
     Gerador.wCampo(tcStr, 'J14', 'dist    ', 00, 04, 1, nfe.Det[i].Prod.veicProd.dist, DSC_DIST);

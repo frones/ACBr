@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   System.ImageList, System.Actions, System.Generics.Collections,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.TabControl,
   FMX.StdCtrls, FMX.Controls.Presentation,
   FMX.ImgList, FMX.Gestures, FMX.Objects, FMX.ScrollBox,
   FMX.Memo, FMX.ListBox, FMX.EditBox, FMX.SpinBox, FMX.Edit, FMX.Layouts,
@@ -254,7 +254,6 @@ type
     lbTestesConsultas: TListBoxItem;
     GridPanelLayout3: TGridPanelLayout;
     btnStatusServico: TButton;
-    lbhXMLOps: TListBoxGroupHeader;
     btnCadastro: TButton;
     btnChave: TButton;
     lbiTestesXML: TListBoxItem;
@@ -264,16 +263,6 @@ type
     GridPanelLayout4: TGridPanelLayout;
     Button1: TButton;
     btnEnviar: TButton;
-    lbiHeaderNFCe: TListBoxGroupHeader;
-    lbiConfigNFCe: TListBoxItem;
-    GridPanelLayout5: TGridPanelLayout;
-    Label7: TLabel;
-    Label12: TLabel;
-    Label14: TLabel;
-    sbProximaNFCe: TSpinBox;
-    sbLote: TSpinBox;
-    swOffLine: TSwitch;
-    lOffLine: TLabel;
     cbEnviarNFCe: TCheckBox;
     cbImprimirNFCe: TCheckBox;
     btnImprimir: TButton;
@@ -297,6 +286,19 @@ type
     GridPanelLayout7: TGridPanelLayout;
     btnVerNotas: TButton;
     btnVerLogs: TButton;
+    lbiHeaderNFCe: TListBoxGroupHeader;
+    lbiConfigNFCe: TListBoxItem;
+    GridPanelLayout5: TGridPanelLayout;
+    Label7: TLabel;
+    Label12: TLabel;
+    Label14: TLabel;
+    sbProximaNFCe: TSpinBox;
+    sbLote: TSpinBox;
+    swOffLine: TSwitch;
+    lOffLine: TLabel;
+    edtConsultaParametro: TEdit;
+    ListBoxItem13: TListBoxItem;
+    cbxTipoEmpresa: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -461,6 +463,7 @@ var
   n: TACBrPosPrinterModelo;
   o: TACBrPosPaginaCodigo;
   p: TSSLType;
+  q: TpcnCRT;
 begin
   FTabList := TList<TTabItem>.Create;
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
@@ -505,6 +508,10 @@ begin
   for p := Low(TSSLType) to High(TSSLType) do
     cbxWebServiceSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(p) ) );
   cbxWebServiceSSLType.ItemIndex := 0;
+
+  cbxTipoEmpresa.Items.Clear ;
+  For q := Low(TpcnCRT) to High(TpcnCRT) do
+    cbxTipoEmpresa.Items.Add( GetEnumName(TypeInfo(TpcnCRT), integer(q) ) ) ;
 
   tabsConfig.First;
   tabsPrincipal.First;
@@ -668,11 +675,13 @@ procedure TACBrNFCeTestForm.btnCadastroClick(Sender: TObject);
 var
   Documento: String;
 begin
-  Documento := '';
-  if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento)) then
-    exit;
-
-  Documento := Trim(OnlyNumber(Documento));
+  Documento := Trim(OnlyNumber(edtConsultaParametro.Text));
+  if Documento.IsEmpty then
+  begin
+    Toast('Informe um CPF ou CNPJ');
+    edtConsultaParametro.SetFocus;
+    Exit;
+  end;
 
   ACBrNFe1.WebServices.ConsultaCadastro.UF := cbxEmitUF.Selected.Text;
 
@@ -736,9 +745,13 @@ procedure TACBrNFCeTestForm.btnChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
-  vChave := '';
-  if not(InputQuery('WebServices Consultar', 'Chave da NF-e:', vChave)) then
-    exit;
+  vChave := Trim(OnlyNumber(edtConsultaParametro.Text));
+  if vChave.IsEmpty then
+  begin
+    Toast('Informe uma Chave de NFe');
+    edtConsultaParametro.SetFocus;
+    Exit;
+  end;
 
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.WebServices.Consulta.NFeChave := vChave;
@@ -788,6 +801,9 @@ begin
 
   ACBrNFe1.NotasFiscais.Clear;
   AlimentarNFCe(Trunc(sbProximaNFCe.Value));
+  
+  sbProximaNFCe.ValueInc;
+  GravarConfiguracao;
 
   ACBrNFe1.NotasFiscais.Assinar;
   ACBrNFe1.NotasFiscais.GravarXML;
@@ -982,6 +998,7 @@ procedure TACBrNFCeTestForm.btSalvarConfigClick(Sender: TObject);
 begin
   GravarConfiguracao;
   Toast('Configuração Salva com sucesso');
+  TabBack;
 end;
 
 function TACBrNFCeTestForm.CalcularNomeArqConfiguracao: String;
@@ -1125,7 +1142,9 @@ begin
 
   cbEnviarNFCe.Enabled := swOffLine.IsChecked;
   if not cbEnviarNFCe.Enabled then
-    cbEnviarNFCe.IsChecked := False;
+    cbEnviarNFCe.IsChecked := False
+  else
+    cbEnviarNFCe.IsChecked := True;
 end;
 
 procedure TACBrNFCeTestForm.swWebServiceAmbienteSwitch(Sender: TObject);
@@ -1664,6 +1683,7 @@ begin
     Ini.WriteString('Emitente', 'Bairro', edtEmitBairro.Text);
     Ini.WriteInteger('Emitente', 'cUF', StrToIntDef(lEmitcUF.Text,0));
     Ini.WriteInteger('Emitente', 'cMun', StrToIntDef(lEmitcMun.Text,0));
+    INI.WriteInteger('Emitente','CRT', cbxTipoEmpresa.ItemIndex);
 
     // Configurações do Proxy //
     Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
@@ -2014,6 +2034,7 @@ begin
     edtEmitComp.Text := Ini.ReadString('Emitente', 'Complemento', '');
     edtEmitBairro.Text := Ini.ReadString('Emitente', 'Bairro', '');
     cUF := Ini.ReadInteger('Emitente', 'cUF', 0);
+    cbxTipoEmpresa.ItemIndex := INI.ReadInteger('Emitente','CRT', 0);
     lEmitcUF.Text := IntToStr(cUF);
     CarregarListaDeCidades;
     cbxEmitUF.ItemIndex := cbxEmitUF.Items.IndexOf(CUFtoUF(cUF));
@@ -2069,8 +2090,11 @@ begin
     Ide.indFinal  := cfConsumidorFinal;
     Ide.indPres   := pcPresencial;
 
-//     Ide.dhCont := date;
-//     Ide.xJust  := 'Justificativa Contingencia';
+    if swOffLine.IsChecked then
+    begin
+      Ide.dhCont := date;
+      Ide.xJust  := 'Teste de NFCe Emitida em Contingencia';
+    end;
 
     Emit.CNPJCPF           := OnlyNumber(edtEmitCNPJ.Text);
     Emit.IE                := OnlyNumber(edtEmitIE.Text);
@@ -2090,10 +2114,8 @@ begin
     Emit.enderEmit.xPais   := 'BRASIL';
 
     Emit.IEST := '';
-    // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
-    // passar os valores 1, 2 ou 3
-    // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
-    Emit.CRT  := crtSimplesNacional;
+    // TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
+    Emit.CRT  := TpcnCRT(cbxTipoEmpresa.ItemIndex);
 
     // Na NFC-e o Destinatário é opcional
     {

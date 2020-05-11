@@ -294,8 +294,8 @@ type
     Label14: TLabel;
     sbProximaNFCe: TSpinBox;
     sbLote: TSpinBox;
-    swOffLine: TSwitch;
-    lOffLine: TLabel;
+    swOnLine: TSwitch;
+    lOnLine: TLabel;
     edtConsultaParametro: TEdit;
     ListBoxItem13: TListBoxItem;
     cbxTipoEmpresa: TComboBox;
@@ -365,7 +365,7 @@ type
     procedure btnVersaoOpenSSLClick(Sender: TObject);
     procedure btnVerXMLClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
-    procedure swOffLineSwitch(Sender: TObject);
+    procedure swOnLineSwitch(Sender: TObject);
     procedure swWebServiceAmbienteSwitch(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btnEnviarEmailClick(Sender: TObject);
@@ -417,6 +417,8 @@ type
     procedure EnviarXMLNFCe(const ArquivoXML: String);
     procedure ImprimirXMLNFCe(const ArquivoXML: String);
     procedure EnviarEmailXMLNFCe(const ArquivoXML: String);
+
+    procedure AppExceptionHandle(Sender: TObject; E: Exception);
   public
     { Public declarations }
   end;
@@ -516,12 +518,24 @@ begin
   tabsConfig.First;
   tabsPrincipal.First;
   tabsPrincipal.TabPosition := TTabPosition.None;
+
+  Application.OnException := AppExceptionHandle;
 end;
 
 procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
 begin
   FcMunList.Free;
   FTabList.Free;
+end;
+
+procedure TACBrNFCeTestForm.AppExceptionHandle(Sender: TObject; E: Exception);
+begin
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- '+E.ClassName+' -----');
+  mLog.Lines.Add(E.Message);
+  mLog.Lines.Add('');
+  Toast(E.Message);
+  ExibirLogs;
 end;
 
 procedure TACBrNFCeTestForm.PedirPermissoesInternet;
@@ -664,6 +678,7 @@ end;
 procedure TACBrNFCeTestForm.btLerConfigClick(Sender: TObject);
 begin
   LerConfiguracao;
+  Toast('Configuração carregada');
 end;
 
 procedure TACBrNFCeTestForm.btnBackClick(Sender: TObject);
@@ -819,7 +834,7 @@ begin
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.NotasFiscais.Items[0].XMLAssinado )));
 
-  if swOffLine.IsChecked and cbEnviarNFCe.IsChecked then
+  if swOnLine.IsChecked and cbEnviarNFCe.IsChecked then
     EnviarXMLNFCe(NomeArqXML);
 
   if cbEnviarEmailNFCe.IsChecked then
@@ -1133,14 +1148,14 @@ begin
   ExibirXMLs;
 end;
 
-procedure TACBrNFCeTestForm.swOffLineSwitch(Sender: TObject);
+procedure TACBrNFCeTestForm.swOnLineSwitch(Sender: TObject);
 begin
-  if swOffLine.IsChecked then
-    lOffLine.Text := 'On-Line'
+  if swOnLine.IsChecked then
+    lOnLine.Text := 'On-Line'
   else
-    lOffLine.Text := 'Off-Line';
+    lOnLine.Text := 'Off-Line';
 
-  cbEnviarNFCe.Enabled := swOffLine.IsChecked;
+  cbEnviarNFCe.Enabled := swOnLine.IsChecked;
   if not cbEnviarNFCe.Enabled then
     cbEnviarNFCe.IsChecked := False
   else
@@ -1469,7 +1484,7 @@ procedure TACBrNFCeTestForm.EnviarXMLNFCe(const ArquivoXML: String);
 begin
   ACBrNFe1.NotasFiscais.Clear;
   ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoXML, True);
-  ACBrNFe1.Enviar(IntToStr(Trunc(sbLote.Value)), False, True);  // NãoImprimir, Sincrono
+  ACBrNFe1.Enviar(IntToStr(Trunc(sbLote.Value)), False, True, False);  // NãoImprimir, Sincrono
 
   mLog.Lines.Add('');
   mLog.Lines.Add('---- ENVIAR XML ----');
@@ -1691,7 +1706,7 @@ begin
     Ini.WriteString('Proxy', 'User', edtProxyUser.Text);
     Ini.WriteString('Proxy', 'Pass', edtProxyPass.Text);
 
-    Ini.WriteInteger('NFCe', 'TipoEmissao', ifthen( swOffLine.IsChecked, 0, 8) );  // segue TpcnTipoEmissao
+    Ini.WriteInteger('NFCe', 'TipoEmissao', ifthen( swOnLine.IsChecked, 0, 8) );  // segue TpcnTipoEmissao
     Ini.WriteInteger('NFCe', 'ProximoNumero', Trunc(sbProximaNFCe.Value));
     Ini.WriteInteger('NFCe', 'Lote', Trunc(sbLote.Value));
   finally
@@ -2046,7 +2061,7 @@ begin
     edtProxyUser.Text := Ini.ReadString('Proxy', 'User', ACBrNFe1.Configuracoes.WebServices.ProxyUser);
     edtProxyPass.Text := Ini.ReadString('Proxy', 'Pass', ACBrNFe1.Configuracoes.WebServices.ProxyPass);
 
-    swOffLine.IsChecked := (Ini.ReadInteger('NFCe', 'TipoEmissao', 0) = 0);
+    swOnLine.IsChecked := (Ini.ReadInteger('NFCe', 'TipoEmissao', 0) = 0);
     sbProximaNFCe.Value := Ini.ReadInteger('NFCe', 'ProximoNumero', 1);
     sbLote.Value := Ini.ReadInteger('NFCe', 'Lote', 1);
   finally
@@ -2062,7 +2077,7 @@ begin
   edtTokenIDTyping(nil);
   edtTokenCSCTyping(nil);
   swWebServiceAmbienteSwitch(nil);
-  swOffLineSwitch(nil);
+  swOnLineSwitch(nil);
 end;
 
 procedure TACBrNFCeTestForm.AlimentarNFCe(NumDFe: Integer);
@@ -2081,7 +2096,7 @@ begin
     Ide.dSaiEnt   := now;
     Ide.hSaiEnt   := now;
     Ide.tpNF      := tnSaida;
-    Ide.tpEmis    := TpcnTipoEmissao( IfThen(swOffLine.IsChecked, 0, 8) );
+    Ide.tpEmis    := TpcnTipoEmissao( IfThen(swOnLine.IsChecked, 0, 8) );
     Ide.tpAmb     := TpcnTipoAmbiente( IfThen(swWebServiceAmbiente.IsChecked, 0, 1) );
     Ide.cUF       := StrToInt(lEmitcUF.Text);
     Ide.cMunFG    := StrToInt(lEmitcMun.Text);
@@ -2090,7 +2105,7 @@ begin
     Ide.indFinal  := cfConsumidorFinal;
     Ide.indPres   := pcPresencial;
 
-    if swOffLine.IsChecked then
+    if not swOnLine.IsChecked then
     begin
       Ide.dhCont := date;
       Ide.xJust  := 'Teste de NFCe Emitida em Contingencia';

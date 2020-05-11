@@ -23,7 +23,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
     Size.Height = 640.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 50.000000000000000000
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -3932,7 +3932,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 5
       Size.Width = 70.000000000000000000
       Size.Height = 50.000000000000000000
@@ -6844,7 +6844,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 11
       Size.Width = 70.000000000000000000
       Size.Height = 50.000000000000000000
@@ -7078,7 +7078,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               end
               item
                 Column = 2
-                Control = swOffLine
+                Control = swOnLine
                 Row = 1
               end>
             RowCollection = <
@@ -7148,7 +7148,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Height = 32.000000000000000000
               Size.PlatformDefault = False
             end
-            object swOffLine: TSwitch
+            object swOnLine: TSwitch
               Align = Client
               IsChecked = True
               Margins.Left = 8.000000000000000000
@@ -7159,8 +7159,8 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 10
-              OnSwitch = swOffLineSwitch
-              object lOffLine: TLabel
+              OnSwitch = swOnLineSwitch
+              object lOnLine: TLabel
                 Align = Client
                 Margins.Right = 4.000000000000000000
                 Size.Width = 97.333328247070310000
@@ -11571,6 +11571,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.Geral.ModeloDF = moNFCe
     Configuracoes.Geral.VersaoQRCode = veqr200
     Configuracoes.Arquivos.OrdenacaoPath = <>

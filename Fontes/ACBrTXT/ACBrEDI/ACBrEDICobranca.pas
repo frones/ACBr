@@ -283,6 +283,15 @@ type
       procedure GerarDocCob        ( Registro: TCobranca ) ;
       procedure GerarImpostos      ( Registro: TImpostos ) ;
       procedure GerarNotasFiscais  ( Registro: TNotasFiscais ) ;
+
+      procedure LerCabecalho ;
+      function  LerCabecalhoDocto( Registro: TInfoDocCob;     nRow: Integer ): Integer ;
+      function  LerTransportadora( Registro: TTransportadora; nRow: Integer ): Integer ;
+      function  LerDoctoCobranca ( Registro: TDoctoCobranca;  nRow: Integer ): Integer ;
+      function  LerConhectos     ( Registro: TConhectos;      nRow: Integer ): Integer ;
+      function  LerTotCobranca   ( Registro: TTotCobranca;    nRow: Integer ): Integer ;
+      function  LerImpostos      ( Registro: TImpostos;       nRow: Integer ): Integer ;
+      function  LerNotasFiscais  ( Registro: TNotasFiscais;   nRow: Integer ): Integer ;
    public
      constructor Create(AOwner: TComponent); Override ;
      destructor  Destroy; Override ;
@@ -293,18 +302,20 @@ type
      property Versao    : tveEdi         read FVersao      write FVersao ;
 
      procedure GravarArquivo(const xArquivo: String);
+     procedure LerArquivo(const xArquivo: String);
+
      procedure LimpaRegistros;
    end;
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil ;
+uses pcnAuxiliar, ACBrUtil;
 
 { TDoctoCobranca }
 
 function TDoctoCobranca.New: TCobranca;
 begin
-  Result := TCobranca.Create;
+  Result              := TCobranca.Create;
   Result.Impostos     := TImpostos.Create ;
   Result.Conhectos    := TConhectos.Create ;
   Result.NotasFiscais := TNotasFiscais.Create ;
@@ -364,17 +375,15 @@ var
   i: Integer ;
 begin
   case FVersao of
-     ve30,
-    ve30a,
-     ve31: if Cabecalho.Id = '' then
+    ve50: if Cabecalho.Id = '' then
+               Cabecalho.Id := 'COB50'+
+                     Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyy', false),1,4) +
+                     FTxt.VLFill(Cabecalho.Sequencia, 3, 0, '0') ;
+    else  if Cabecalho.Id = '' then
              Cabecalho.Id := 'COB' +
                      Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyy', false),1,4) +
                      Copy(OnlyNumber(TimeToStr(Cabecalho.Hora)),1,4)       +
                      IntToStr(Cabecalho.Sequencia) ;
-     ve50: if Cabecalho.Id = '' then
-               Cabecalho.Id := 'COB50'+
-                     Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyy', false),1,4) +
-                     FTxt.VLFill(Cabecalho.Sequencia, 3, 0, '0') ;
   end;
 
   Conteudo.Add( Cabecalho.IdRegistro +
@@ -396,62 +405,31 @@ end;
 
 procedure TACBrEDICobranca.GerarCabecalhoDocto( Registro: TDocCob ) ;
 begin
-  case Versao of
-     ve30,
-    ve30a,
-     ve31: if Registro.IdDocto = '' then
+  if Registro.IdRegistro = '' then
+    raise Exception.Create('Nenhum Registro de Identificação informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
+   case Versao of
+    ve50: if Registro.IdDocto = '' then
+             Registro.IdDocto := 'COBRA50'+
+                     Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyyyy', false),1,4) +
+                     FTxt.VLFill(Cabecalho.Sequencia, 3, 0, '0') ;
+    else  if Registro.IdDocto = '' then
              Registro.IdDocto := 'COBRA' +
                      Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyyyy', false),1,4) +
                      Copy(OnlyNumber(TimeToStr(Cabecalho.Hora)),1,4)         +
                      IntToStr(Cabecalho.Sequencia) ;
-     ve50: if Registro.IdDocto = '' then
-             Registro.IdDocto := 'COBRA50'+
-                     Copy(FTxt.LFill(Cabecalho.Data, 'ddmmyyyy', false),1,4) +
-                     FTxt.VLFill(Cabecalho.Sequencia, 3, 0, '0') ;
   end;
   Conteudo.Add( Registro.IdRegistro + FTxt.RFill(Registro.IdDocto,14) +
                 FTxt.RFill(Registro.Filler, iif( Versao = ve50, 263, 153)) ) ;
 end;
 
-procedure TACBrEDICobranca.GerarConhectos( Registro: TConhectos );
-var
-  xTexto: String ;
-  i: Integer ;
-begin
-  for i := 0 to Registro.Count - 1 do
-  begin
-    xTexto := Registro.Items[i].IdRegistro +
-              FTxt.RFill(Registro.Items[i].EmissorCTe, 10)                   +
-              FTxt.RFill(Registro.Items[i].SerieCTe, 5)                      +
-              FTxt.LFill(Registro.Items[i].FnCTe, 12)                        +
-              FTxt.VLFill(Registro.Items[i].vFrete  , 15, 2, '0')            +
-              FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)     +
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJRemetente)   , 14)+
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJDestinatario), 14)+
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJEmissorCTe)  , 14);
-   if Versao = ve50 then
-     xTexto := xTexto +
-              FTxt.RFill(Registro.Items[i].UFEmbarcador, 2)              +
-              FTxt.RFill(Registro.Items[i].UFEmissorCTe, 2)              +
-              FTxt.RFill(Registro.Items[i].UFDestinatario, 2)            +
-              FTxt.RFill(Registro.Items[i].ContaRazao, 10)               +
-              FTxt.RFill(Registro.Items[i].cIVA, 2)                      +
-              FTxt.RFill(Registro.Items[i].Romaneio, 20)                 +
-              FTxt.RFill(Registro.Items[i].NumeroSAP1, 20)               +
-              FTxt.RFill(Registro.Items[i].NumeroSAP2, 20)               +
-              FTxt.RFill(Registro.Items[i].NumeroSAP3, 20)               +
-              SimNaoEdiToStr(Registro.Items[i].CTDevolucao)              ;
-
-    Conteudo.Add( xTexto + FTxt.RFill(Registro.Items[i].Filler,
-                           iif( Versao = ve50, 86, 75)) ) ;
-  end;
-  if Registro.Count = 0 then
-    raise Exception.Create('Nenhum Registro de Conhecimentos informado...,'+#13+
-                           'É Obrigatório o preenchimento deste registro.' );
-end;
-
 procedure TACBrEDICobranca.GerarTransportadora( Registro: TTransportadora ) ;
 begin
+  if Registro.IdRegistro = '' then
+    raise Exception.Create('Nenhum Registro de Transportadora informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.LFill(OnlyNumber(Registro.CNPJ), 14)                +
                 FTxt.RFill(Registro.Razao, iif( Versao = ve50, 50, 40) ) +
@@ -468,7 +446,7 @@ begin
             FTxt.RFill(Registro.EmissorDocto, 10 )                 +
             FTxt.RFill(DocCobrancaToStr(Registro.TipoDocto), 1,'0')+
             FTxt.RFill(Registro.SerieDocto  ,  3)                  +
-            FTxt.LFill(Registro.NumeroDocto, 10)                   +
+            FTxt.LFill(Registro.NumeroDocto , 10)                  +
             FTxt.LFill(Registro.dtFatura    , 'ddmmyyyy', false)   +
             FTxt.LFill(Registro.dtVencimento, 'ddmmyyyy', false)   +
             FTxt.VLFill(Registro.FvDocto    , 15, 2, '0')          +
@@ -480,13 +458,16 @@ begin
             FTxt.VLFill(Registro.vJurosDiario, 15, 2, '0')        +
             FTxt.LFill(Registro.dtLimetePag , 'ddmmyyyy', false)  +
             FTxt.VLFill(Registro.vDescto    , 15, 2, '0')         +
+
             iif(Versao = ve50, FTxt.LFill(Registro.cBanco, 5, 0, false, '0'),'') +
+
             FTxt.RFill(Registro.xBanco,iif(Versao = ve50, 30, 35))+
             FTxt.LFill(Registro.nAgencia , 4, 0, false, '0')      +
             FTxt.RFill(Registro.dvAgencia, 1)                     +
             FTxt.LFill(Registro.nConta   , 10, 0, false, '0')     +
             FTxt.RFill(Registro.dvConta  , 2)                     +
             FTxt.RFill(AcaoEdiToStr(Registro.Acao),1,'I')         ;
+
    if Versao = ve50 then
      xTexto := xTexto +
             FTxt.LFill(Registro.idPreFatura, 10)                  +
@@ -501,7 +482,9 @@ end;
 
 procedure TACBrEDICobranca.GerarImpostos( Registro: TImpostos );
 begin
-  Conteudo.Add( Registro.IdRegistro +
+  if (Versao = ve50) and (Registro.IdRegistro <> '') then
+  begin
+    Conteudo.Add( Registro.IdRegistro +
                 FTxt.VLFill(Registro.vIcms      , 15, 2, '0') +
                 FTxt.VLFill(Registro.pAliqIcms  ,  5, 2, '0') +
                 FTxt.VLFill(Registro.vBCIcms    , 15, 2, '0') +
@@ -513,6 +496,45 @@ begin
                 FTxt.VLFill(Registro.vBcISS     , 15, 2, '0') +
                 FTxt.VLFill(Registro.vIR        , 15, 2, '0') +
                 FTxt.RFill(Registro.Filler, 157) );
+  end;
+end;
+
+procedure TACBrEDICobranca.GerarConhectos( Registro: TConhectos );
+var
+  xTexto: String ;
+  i: Integer ;
+begin
+  if Registro.Count = 0 then
+    raise Exception.Create('Nenhum Registro de Conhecimentos informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
+  for i := 0 to Registro.Count - 1 do
+  begin
+    xTexto := Registro.Items[i].IdRegistro +
+              FTxt.RFill(Registro.Items[i].EmissorCTe, 10)                   +
+              FTxt.RFill(Registro.Items[i].SerieCTe, 5)                      +
+              FTxt.RFill(Registro.Items[i].FnCTe, 12)                        +
+              FTxt.VLFill(Registro.Items[i].vFrete  , 15, 2, '0')            +
+              FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)     +
+              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJRemetente)   , 14)+
+              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJDestinatario), 14)+
+              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJEmissorCTe)  , 14);
+   if Versao = ve50 then
+     xTexto := xTexto +
+              FTxt.RFill(Registro.Items[i].UFEmbarcador  ,  2) +
+              FTxt.RFill(Registro.Items[i].UFEmissorCTe  ,  2) +
+              FTxt.RFill(Registro.Items[i].UFDestinatario,  2) +
+              FTxt.RFill(Registro.Items[i].ContaRazao    , 10) +
+              FTxt.RFill(Registro.Items[i].cIVA          ,  2) +
+              FTxt.RFill(Registro.Items[i].Romaneio      , 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP1    , 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP2    , 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP3    , 20) +
+              SimNaoEdiToStr(Registro.Items[i].CTDevolucao)   ;
+
+    Conteudo.Add( xTexto + FTxt.RFill(Registro.Items[i].Filler,
+                           iif( Versao = ve50, 86, 75)) ) ;
+  end;
 end;
 
 procedure TACBrEDICobranca.GerarNotasFiscais( Registro: TNotasFiscais ) ;
@@ -523,19 +545,19 @@ begin
   for i := 0 to Registro.Count - 1 do
   begin
     xTexto := Registro.Items[i].IdRegistro +
-              FTxt.RFill(Registro.Items[i].xSerie, 3)                      +
-              FTxt.LFill(Registro.Items[i].xNumero, iif(Versao = ve50,9,8))+
+              FTxt.RFill(Registro.Items[i].xSerie   , 3)                     +
+              FTxt.LFill(Registro.Items[i].xNumero  , iif(Versao = ve50, 9, 8))+
               FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)   +
               FTxt.VLFill(Registro.Items[i].qPesoNF ,  7, 2, '0')          +
               FTxt.VLFill(Registro.Items[i].vNF     , 15, 2, '0')          +
               FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJEmissor), 14) ;
     if Versao = ve50 then
       xTexto := xTexto +
-              FTxt.RFill(Registro.Items[i].Romaneio  , 20)                 +
-              FTxt.RFill(Registro.Items[i].NumeroSAP1, 20)                 +
-              FTxt.RFill(Registro.Items[i].NumeroSAP2, 20)                 +
-              FTxt.RFill(Registro.Items[i].NumeroSAP3, 20)                 +
-              SimNaoEDIToStr(Registro.Items[i].Devolucao)          ;
+              FTxt.RFill(Registro.Items[i].Romaneio  , 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP1, 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP2, 20) +
+              FTxt.RFill(Registro.Items[i].NumeroSAP3, 20) +
+              SimNaoEDIToStr(Registro.Items[i].Devolucao) ;
 
     Conteudo.Add( xTexto + FTxt.RFill(Registro.Items[i].Filler,
                            iif( Versao = ve50, 140, 112)) ) ;
@@ -546,6 +568,10 @@ procedure TACBrEDICobranca.GerarDoctoCobranca( Registro: TDoctoCobranca ) ;
 var
   c: Integer ;
 begin
+  if Registro.Count = 0 then
+    raise Exception.Create('Nenhum Registro de Docto. de Cobrança não informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
   for c := 0 to Registro.Count - 1 do
   begin
 
@@ -556,17 +582,18 @@ begin
     GerarNotasFiscais( Registro.Items[c].NotasFiscais ) ;
 
   end;
-
-  if Registro.Count = 0 then
-    raise Exception.Create('Nenhum Registro de Docto. de Cobrança informado...,'+#13+
-                           'É Obrigatório o preenchimento deste registro.' );
 end;
 
 procedure TACBrEDICobranca.GerarTotCobranca( Registro: TTotCobranca );
 begin
-  Conteudo.Add( Registro.IdRegistro + FormatFloat('0000', Registro.nQtde) +
+  if Registro.IdRegistro = '' then
+    raise Exception.Create('Nenhum Registro Totalizador da Cobrança não informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
+  Conteudo.Add( Registro.IdRegistro +
+                FormatFloat('0000', Registro.nQtde) +
                 FTxt.VLFill(Registro.vTotal, 15, 2, '0') +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 258, 658)) ) ;
+                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 258, 148)) ) ;
 end;
 
 constructor TACBrEDICobranca.Create(AOwner: TComponent) ;
@@ -596,6 +623,19 @@ begin
 
   GerarCabecalho ;
   Conteudo.SaveToFile( xArquivo ) ;
+
+  Conteudo.Clear ;
+end;
+
+procedure TACBrEDICobranca.LerArquivo(const xArquivo: String ) ;
+begin
+  Conteudo.Clear ;
+
+  if not FileExists(xArquivo) then
+    raise Exception.Create('Erro: Arquivo especificado não encontrado !!');
+
+  Conteudo.LoadFromFile( xArquivo ) ;
+  LerCabecalho ;
 
   Conteudo.Clear ;
 end;
@@ -637,6 +677,287 @@ destructor TTransportadora.Destroy;
 begin
   FDoctoCobranca.Free ;
   inherited;
+end;
+
+procedure TACBrEDICobranca.LerCabecalho ;
+var
+  nRow: Integer ;
+begin
+  nRow := 0 ;
+
+  Cabecalho.IdRegistro   := Copy(Conteudo.Strings[nRow],  1, 3) ;
+  Cabecalho.Remetente    := Copy(Conteudo.Strings[nRow],  4, 35) ;
+  Cabecalho.Destinatario := Copy(Conteudo.Strings[nRow], 39, 35) ;
+  Cabecalho.Data         := StringToDate(Copy(Conteudo.Strings[nRow], 74,  6)) ;
+  Cabecalho.Hora         := StringToTime(Copy(Conteudo.Strings[nRow], 80,  4)) ;
+  Cabecalho.Id           := Copy(Conteudo.Strings[nRow], 84, 12) ;
+  case Versao of
+    ve50: Cabecalho.Filler := Copy(Conteudo.Strings[nRow], 96, 185) ;
+    else  Cabecalho.Filler := Copy(Conteudo.Strings[nRow], 96,  75) ;
+  end;
+
+  Inc(nRow) ;
+
+  LerCabecalhoDocto( InfoDocCob, nRow ) ;
+end;
+
+function TACBrEDICobranca.LerCabecalhoDocto( Registro: TInfoDocCob; nRow: Integer ): Integer ;
+var
+  cReg: string ;
+begin
+  cReg := iif( Versao = ve50, '550', '350') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro.New do
+    begin
+      IdRegistro := cReg ;
+      IdDocto    := Copy(Conteudo.Strings[nRow], 4, 14) ;
+      case Versao of
+        ve50: Filler := Copy(Conteudo.Strings[nRow], 18, 263) ;
+        else  Filler := Copy(Conteudo.Strings[nRow], 18, 153) ;
+      end;
+
+      Inc(nRow) ;
+      nRow := LerTotCobranca( TotCobranca, LerTransportadora( Transportadora, nRow ) ) ;
+    end;
+    if nRow > Conteudo.Count - 1 then
+      Break ;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerTransportadora( Registro: TTransportadora; nRow: Integer ): Integer ;
+var
+  cReg: string ;
+begin
+  cReg := iif( Versao = ve50, '551', '351') ;
+
+  if Copy(Conteudo.Strings[nRow], 1, 3) = cReg then
+  begin
+    with Registro do
+    begin
+      IdRegistro := cReg ;
+      CNPJ       := Copy(Conteudo.Strings[nRow],  4, 14) ;
+      case Versao of
+        ve50: begin
+                Razao  := Copy(Conteudo.Strings[nRow], 18,  50) ;
+                Filler := Copy(Conteudo.Strings[nRow], 68, 213) ;
+              end ;
+        else  begin
+                Razao  := Copy(Conteudo.Strings[nRow], 18,  40) ;
+                Filler := Copy(Conteudo.Strings[nRow], 58, 113) ;
+              end ;
+      end;
+      inc(nRow) ;
+      nRow := LerDoctoCobranca( DoctoCobranca, nRow ) ;
+    end;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerDoctoCobranca( Registro: TDoctoCobranca; nRow: Integer ): Integer ;
+var
+  cReg: string ;
+  ok  : Boolean ;
+begin
+  cReg := iif( Versao = ve50, '552', '352') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro.New do
+    begin
+      IdRegistro   := cReg ;
+      EmissorDocto := Copy(Conteudo.Strings[nRow]                     ,   4, 10) ;
+      TipoDocto    := StrToDocCobranca(ok, Copy(Conteudo.Strings[nRow],  14,  1));
+      SerieDocto   := Copy(Conteudo.Strings[nRow]                     ,  15,  3) ;
+      NumeroDocto  := Copy(Conteudo.Strings[nRow]                     ,  18, 10) ;
+      dtFatura     := StringToDate(Copy(Conteudo.Strings[nRow]        ,  28,  8)) ;
+      dtVencimento := StringToDate(Copy(Conteudo.Strings[nRow]        ,  36,  8)) ;
+      vDocto       := StringToDouble(Copy(Conteudo.Strings[nRow]      ,  44, 15), 13, 2);
+      TipoCobranca := StrToTipoCobranca(ok,Copy(Conteudo.Strings[nRow],  59,  3));
+      case Versao of
+        ve50: begin
+                cBanco        := StrToInt(Copy(Conteudo.Strings[nRow]        , 104,  5)) ;
+                xBanco        := Copy(Conteudo.Strings[nRow]                 , 109, 30) ;
+                pMulta        := StringToDouble(Copy(Conteudo.Strings[nRow]  ,  62,  4), 2, 2) ;
+                vJurosDiario  := StringToDouble(Copy(Conteudo.Strings[nRow]  ,  66, 15), 13, 2);
+                dtLimetePag   := StringToDate(Copy(Conteudo.Strings[nRow]    ,  81,  8)) ;
+                vDescto       := StringToDouble(Copy(Conteudo.Strings[nRow]  ,  89, 15), 13, 2);
+                nAgencia      := StrToInt(Copy(Conteudo.Strings[nRow]        , 139,  4)) ;
+                dvAgencia     := Copy(Conteudo.Strings[nRow]                 , 143,  1) ;
+                nConta        := StrToInt(Copy(Conteudo.Strings[nRow]        , 144, 10)) ;
+                dvConta       := Copy(Conteudo.Strings[nRow]                 , 154,  2) ;
+                Acao          := StrToAcaoEdi(ok, Copy(Conteudo.Strings[nRow], 156,  1));
+                IdPreFatura   := StrToInt(Copy(Conteudo.Strings[nRow]        , 157, 10)) ;
+                IdComplFatura := Copy(Conteudo.Strings[nRow]                 , 167, 20) ;
+                CFOP          := Copy(Conteudo.Strings[nRow]                 , 187,  5) ;
+                cNFe          := StrToInt(Copy(Conteudo.Strings[nRow]        , 192,  9)) ;
+                chNFe         := Copy(Conteudo.Strings[nRow]                 , 201, 45) ;
+                xProtocoloNFe := Copy(Conteudo.Strings[nRow]                 , 246, 15) ;
+                Filler        := Copy(Conteudo.Strings[nRow]                 , 261, 20) ;
+              end ;
+        else  begin
+                vICMS         := StringToDouble(Copy(Conteudo.Strings[nRow]  ,  62, 15), 13, 2);
+                vJurosDiario  := StringToDouble(Copy(Conteudo.Strings[nRow]  ,  77, 15), 13, 2);
+                dtLimetePag   := StringToDate(Copy(Conteudo.Strings[nRow]    ,  92,  8)) ;
+                vDescto       := StringToDouble(Copy(Conteudo.Strings[nRow]  , 100, 15), 13, 2);
+                xBanco        := Copy(Conteudo.Strings[nRow]                 , 115, 35) ;
+                nAgencia      := StrToInt(Copy(Conteudo.Strings[nRow]        , 150,  4)) ;
+                dvAgencia     := Copy(Conteudo.Strings[nRow]                 , 154,  1) ;
+                nConta        := StrToInt(Copy(Conteudo.Strings[nRow]        , 155, 10)) ;
+                dvConta       := Copy(Conteudo.Strings[nRow]                 , 165,  2) ;
+                Acao          := StrToAcaoEdi(ok, Copy(Conteudo.Strings[nRow], 167,  1));
+                Filler        := Copy(Conteudo.Strings[nRow]                 , 168,  3) ;
+              end;
+      end;
+      Inc(nRow) ;
+      nRow := LerNotasFiscais( NotasFiscais, LerConhectos( Conhectos,
+                                             LerImpostos( Impostos, nRow ) ) ) ;
+    end;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerImpostos( Registro: TImpostos; nRow: Integer ): Integer;
+var
+  cReg: string ;
+begin
+  cReg := '553' ;
+
+  if (Versao = ve50) and (Copy(Conteudo.Strings[nRow], 1, 3) = cReg) then
+  begin
+    with Registro do
+    begin
+      IdRegistro  := cReg ;
+      vIcms       := StringToDouble(Copy(Conteudo.Strings[nRow],   4, 15), 13, 2) ;
+      pAliqIcms   := StringToDouble(Copy(Conteudo.Strings[nRow],  19,  5),  3, 2) ;
+      vBCIcms     := StringToDouble(Copy(Conteudo.Strings[nRow],  24, 15), 13, 2) ;
+      vISS        := StringToDouble(Copy(Conteudo.Strings[nRow],  39, 15), 13, 2) ;
+      pAliqISS    := StringToDouble(Copy(Conteudo.Strings[nRow],  54,  5),  3, 2) ;
+      vIcmsST     := StringToDouble(Copy(Conteudo.Strings[nRow],  59, 15), 13, 2) ;
+      vBCIcmsST   := StringToDouble(Copy(Conteudo.Strings[nRow],  74, 15), 13, 2) ;
+      pAliqIcmsST := StringToDouble(Copy(Conteudo.Strings[nRow],  89,  5),  3, 2) ;
+      vBcISS      := StringToDouble(Copy(Conteudo.Strings[nRow],  94, 15), 13, 2) ;
+      vIR         := StringToDouble(Copy(Conteudo.Strings[nRow], 109, 15), 13, 2) ;
+      Filler      := Copy(Conteudo.Strings[nRow]               , 124, 157) ;
+      Inc(nRow) ;
+    end;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerConhectos( Registro: TConhectos; nRow: Integer ): Integer;
+var
+  ok  : Boolean ;
+  cReg: string ;
+begin
+  cReg := iif( Versao = ve50, '555', '353') ;
+
+  if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
+    raise Exception.Create('Nenhum Registro de Conhecimentos informado...,'+#13+
+                           'É Obrigatório o preenchimento deste registro.' );
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro.New do
+    begin
+      IdRegistro       := Copy(Conteudo.Strings[nRow]               ,  1,  3) ;
+      EmissorCTe       := Copy(Conteudo.Strings[nRow]               ,  4, 10) ;
+      SerieCTe         := Copy(Conteudo.Strings[nRow]               , 14,  5) ;
+      nCTe             := Copy(Conteudo.Strings[nRow]               , 19, 12) ;
+      vFrete           := StringToDouble(Copy(Conteudo.Strings[nRow], 31, 15), 13, 2) ;
+      dtEmissao        := StringToDate(Copy(Conteudo.Strings[nRow]  , 46,  8));
+      CNPJRemetente    := Copy(Conteudo.Strings[nRow]               , 54, 14) ;
+      CNPJDestinatario := Copy(Conteudo.Strings[nRow]               , 68, 14) ;
+      CNPJEmissorCTe   := Copy(Conteudo.Strings[nRow]               , 82, 14) ;
+
+      if Versao = ve50 then
+      begin
+        UFEmbarcador   := Copy(Conteudo.Strings[nRow]               ,  96,  2) ;
+        UFEmissorCTe   := Copy(Conteudo.Strings[nRow]               ,  98,  2) ;
+        UFDestinatario := Copy(Conteudo.Strings[nRow]               , 100,  2) ;
+        ContaRazao     := Copy(Conteudo.Strings[nRow]               , 102, 10) ;
+        cIVA           := Copy(Conteudo.Strings[nRow]               , 112,  2) ;
+        Romaneio       := Copy(Conteudo.Strings[nRow]               , 114, 20) ;
+        NumeroSAP1     := Copy(Conteudo.Strings[nRow]               , 134, 20) ;
+        NumeroSAP2     := Copy(Conteudo.Strings[nRow]               , 154, 20) ;
+        NumeroSAP3     := Copy(Conteudo.Strings[nRow]               , 174, 20) ;
+        CTDevolucao    := StrToSimNaoEdi(ok, Copy(Conteudo.Strings[nRow], 194, 1)) ;
+        Filler         := Copy(Conteudo.Strings[nRow], 195, 86) ;
+      end
+      else
+        Filler         := Copy(Conteudo.Strings[nRow], 96, 75) ;
+    end;
+    Inc(nRow) ;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerNotasFiscais( Registro: TNotasFiscais; nRow: Integer ): Integer ;
+var
+  ok: boolean ;
+  cReg: string ;
+begin
+  cReg := iif( Versao = ve50, '556', '354') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro.New do
+    begin
+      IdRegistro := cReg ;
+      xSerie     := Copy(Conteudo.Strings[nRow], 4, 3) ;
+      if Versao = ve50 then
+      begin
+        xNumero     := Copy(Conteudo.Strings[nRow]               ,   7,  9) ;
+        dtEmissao   := StringToDate(Copy(Conteudo.Strings[nRow]  ,  16,  8)) ;
+        qPesoNF     := StringToDouble(Copy(Conteudo.Strings[nRow],  24,  7),  5, 2) ;
+        vNF         := StringToDouble(Copy(Conteudo.Strings[nRow],  31, 15), 13, 2) ;
+        CNPJEmissor := Copy(Conteudo.Strings[nRow]               ,  46, 14) ;
+        Romaneio    := Copy(Conteudo.Strings[nRow]               ,  60, 20) ;
+        NumeroSAP1  := Copy(Conteudo.Strings[nRow]               ,  80, 20) ;
+        NumeroSAP2  := Copy(Conteudo.Strings[nRow]               , 100, 20) ;
+        NumeroSAP3  := Copy(Conteudo.Strings[nRow]               , 120, 20) ;
+        Devolucao   := StrToSimNaoEDI(ok, Copy(Conteudo.Strings[nRow], 140, 1)) ;
+        Filler      := Copy(Conteudo.Strings[nRow]                   , 141, 140) ;
+      end
+      else
+      begin
+        xNumero     := Copy(Conteudo.Strings[nRow]               ,  7,   8) ;
+        dtEmissao   := StringToDate(Copy(Conteudo.Strings[nRow]  , 15,   8)) ;
+        qPesoNF     := StringToDouble(Copy(Conteudo.Strings[nRow], 23,   7),  5, 2) ;
+        vNF         := StringToDouble(Copy(Conteudo.Strings[nRow], 30,  15), 13, 2) ;
+        CNPJEmissor := Copy(Conteudo.Strings[nRow]               , 45,  14) ;
+        Filler      := Copy(Conteudo.Strings[nRow]               , 59, 112) ;
+      end;
+      Inc(nRow) ;
+    end;
+  end;
+  result := nRow ;
+end;
+
+function TACBrEDICobranca.LerTotCobranca( Registro: TTotCobranca; nRow: Integer ): Integer;
+var
+  cReg: string ;
+begin
+  cReg := iif( Versao = ve50, '559', '355') ;
+
+  if Copy(Conteudo.Strings[nRow], 1,  3) = cReg then
+  begin
+    with Registro do
+    begin
+      IdRegistro := Copy(Conteudo.Strings[nRow]               , 1,  3) ;
+      nQtde      := StrToInt(Copy(Conteudo.Strings[nRow]      , 4,  4)) ;
+      vTotal     := StringToDouble(Copy(Conteudo.Strings[nRow], 8,  15), 13, 2) ;
+      case Versao of
+        ve50: Filler := Copy(Conteudo.Strings[nRow], 23, 258) ;
+        else  Filler := Copy(Conteudo.Strings[nRow], 23, 148) ;
+      end;
+
+      Inc(nRow) ;
+    end;
+  end;
+  result := nRow ;
 end;
 
 end.

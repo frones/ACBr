@@ -35,7 +35,7 @@ unit ACBrEDIReg;
 interface
 
 uses SysUtils, Classes, ACBrEDIConhectos, ACBrEDIOcorrencia, ACBrEDINotaFiscal,
-     ACBrEDICobranca;
+     ACBrEDICobranca, ACBrEDIPreFatura;
 
 //type
 
@@ -43,16 +43,15 @@ procedure Register;
 
 implementation
 
-{$IFNDEF FPC}            // Necessário para carregar as imagens dos componentes
+{$IFNDEF FPC}
  {$R ACBr_EDI.dcr}
-// {$R ACBrEDICobranca.dcr}
-// {$R ACBrEDINotaFiscais.dcr}
-// {$R ACBrEDIOcorrencia.dcr}
 {$ENDIF}
 
 procedure Register;
 begin
-  RegisterComponents('ACBrEDI', [TACBrEDIConhectos, TACBrEDICobranca, TACBrEDINotaFiscais, TACBrEDIOcorrencia]);
+  RegisterComponents('ACBrEDI', [TACBrEDIConhectos, TACBrEDICobranca,
+                                 TACBrEDINotaFiscais, TACBrEDIOcorrencia,
+                                 TACBrEDIPreFatura]);
 end;
 
 end.

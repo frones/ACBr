@@ -46,6 +46,8 @@ type
 
 
   tveEdi            = (ve30, ve30a, ve31, ve50) ;
+  tediOperacao      = (toLeitura, toGravacao) ;
+
   tediSimNao        = (tediSim,tediNao) ;
   tSimNaoST         = (tstSim, tstNao, tstIsento) ;
   tIncideICMS       = (ticSim, ticNao, ticIsento, ticDiferido, ticReduzido, ticPresumido,
@@ -127,7 +129,7 @@ function StrToDocCobranca(out ok: boolean; const s: String ): tpDocCobranca ;
 function DocCobrancaToStr(const t: tpDocCobranca ): String ;
 
 // funções para conversão de valores e datas
-function StringToDouble( const xStr: String ): Double ;
+function StringToDouble( const xStr: String; Inteiro, Decimal: Integer ): Double ;
 function StringToDate( xStr: String ): TDate ;
 function StringToTime( xStr: String ): TTime ;
 
@@ -341,9 +343,12 @@ begin
                                tpcComplementarDeSaida, tpcComplementarDeTransferenciaInterna]);
 end;
 
-function StringToDouble( const xStr: String ): Double ;
+function StringToDouble( const xStr: String; Inteiro, Decimal: Integer ): Double ;
+var
+  i: integer ;
 begin
-  result := StrToFloat(Copy(xStr,1,13)+','+Copy(xStr,14,2)) ;
+  i := Length(Copy(xStr,1,Inteiro))+1 ;
+  result := StrToFloat(Copy(xStr,1,Inteiro)+','+Copy(xStr,i,Decimal)) ;
 end;
 
 function StringToDate( xStr: String ): TDate ;

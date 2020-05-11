@@ -110,8 +110,8 @@ type
      FIdRegistro       : String ;
      FCNPJEmissorNF    : String ;
      FSerieNF          : String ;
-     FnNF              : String ;
-     FcOcorrencia      : Integer ;
+     FnNF              : Integer ;
+     FcOcorrencia      : String ;
      FdtOcorrencia     : TDate ;
      FhrOcorrencia     : TTime ;
      FcObsOcorrencia   : Integer ;
@@ -148,8 +148,8 @@ type
      property IdRegistro       : String      read FIdRegistro         write FIdRegistro ;
      property CNPJEmissorNF    : String      read FCNPJEmissorNF      write FCNPJEmissorNF ;
      property SerieNF          : String      read FSerieNF            write FSerieNF;
-     property nNF              : String      read FnNF                write FnNF;
-     property cOcorrencia      : Integer     read FcOcorrencia        write FcOcorrencia ;
+     property nNF              : Integer     read FnNF                write FnNF;
+     property cOcorrencia      : String      read FcOcorrencia        write FcOcorrencia ;
      property dtOcorrencia     : TDate       read FdtOcorrencia       write FdtOcorrencia ;
      property hrOcorrencia     : TTime       read FhrOcorrencia       write FhrOcorrencia ;
      property cObsOcorrencia   : Integer     read FcObsOcorrencia     write FcObsOcorrencia ;
@@ -240,6 +240,7 @@ type
    private
       FTxt      : TACBrTxtClass ;
       FVersao   : tveEdi ;
+
       FConteudo : TStringList ;
       FCabecalho: TCabecalhoEdi ;
       FInfoOcor : TInfoOcor ;
@@ -253,6 +254,16 @@ type
       procedure GerarInfoComplementar( Registro: TInfoCompl ) ;
       procedure GerarItensNF         ( Registro: TInfoItemNF ) ;
       procedure GerarRedespacho      ( Registro: TRedespacho ) ;
+
+      procedure LerCabecalho ;
+      function  LerCabecalhoDocto ( nRow: Integer ): Integer ;
+      function  LerTransportadora ( Registro: TTransportadora; nRow: Integer ): Integer ;
+      function  LerOcorrencias    ( Registro: TOcorEntrega   ; nRow: Integer ): Integer ;
+      function  LerComplementos   ( Registro: TInfoCompl     ; nRow: Integer ): Integer ;
+      function  LerItensNF        ( Registro: TInfoItemNF    ; nRow: Integer ): Integer ;
+      function  LerRedespacho     ( Registro: TRedespacho    ; nRow: Integer ): Integer ;
+      function  LerTotalOcorrencia( Registro: TTotOcorrencias; nRow: Integer ): Integer ;
+
    public
      constructor Create(AOwner: TComponent); Override ;
      destructor  Destroy; Override ;
@@ -263,6 +274,8 @@ type
      property Versao   : tveEdi         read FVersao      write FVersao ;
 
      procedure GravarArquivo(const xArquivo: String);
+     procedure LerArquivo(const xArquivo: String);
+
      procedure LimpaRegistros ;
    end;
 
@@ -368,7 +381,8 @@ end;
 
 procedure TACBrEDIOcorrencia.GerarTransportadora( Registro: TTransportadora ) ;
 begin
-  Conteudo.Add( Registro.IdRegistro + OnlyNumber( Registro.CNPJ )    +
+  Conteudo.Add( Registro.IdRegistro +
+                FTxt.RFill( OnlyNumber( Registro.CNPJ ), 14) +
                 FTxt.RFill( Registro.Razao, iif( Versao = ve50, 50, 40)) +
                 FTxt.RFill( Registro.Filler, iif( Versao = ve50, 183, 63) ) ) ;
 
@@ -430,9 +444,9 @@ begin
     Conteudo.Add( Registro.Items[i].IdRegistro                         +
                   FTxt.VLFill(Registro.Items[i].qVolumeNF , 8, 2, '0') +
                   FTxt.VLFill(Registro.Items[i].qVolEntreg, 8, 2, '0') +
-                  FTxt.RFill(Registro.Items[i].cItem, 20)              +
-                  FTxt.RFill(Registro.Items[i].xDescricao, 50)         +
-                  FTxt.RFill(Registro.Items[i].Filler, 161) ) ;
+                  FTxt.RFill(Registro.Items[i].cItem      , 20)        +
+                  FTxt.RFill(Registro.Items[i].xDescricao , 50)        +
+                  FTxt.RFill(Registro.Items[i].Filler     , 161) ) ;
   end;
 end;
 
@@ -440,10 +454,10 @@ procedure TACBrEDIOcorrencia.GerarRedespacho( Registro: TRedespacho );
 var
   xTexto: String ;
 begin
-  if Registro.FCNPJContratante <> '' then
+  if Registro.CNPJContratante <> '' then
   begin
-    xTexto := Registro.IdRegistro + OnlyNumber(Registro.CNPJContratante) +
-                iif(Versao = ve50, OnlyNumber(Registro.CNPJEmissor), '') +
+    xTexto := Registro.IdRegistro + FTxt.RFill(OnlyNumber(Registro.CNPJContratante), 14) +
+                iif(Versao = ve50, FTxt.RFill(OnlyNumber(Registro.CNPJEmissor),14), '') +
                                    FTxt.LFill(Registro.FilialEmissor, 10)+
                                    FTxt.RFill(Registro.Serie, 5)         +
                                    FTxt.RFill(Registro.nCTe, 12)         +
@@ -485,7 +499,7 @@ procedure TACBrEDIOcorrencia.GerarTotalOcorrencia( Registro: TTotOcorrencias ) ;
 begin
   if Registro.IdRegistro = '' then
   begin
-    raise Exception.Create('Registro para finalizar o Documento de Ocorrências...,'+#13+
+    raise Exception.Create('Registro Totalizador do Documento de Ocorrências...,'+#13+
                            'não Informado esta informação é obrigatória !!') ;
   end ;
 
@@ -528,6 +542,19 @@ begin
 
   GerarCabecalho ;
   Conteudo.SaveToFile( xArquivo ) ;
+
+  Conteudo.Clear ;
+end;
+
+procedure TACBrEDIOcorrencia.LerArquivo(const xArquivo: String ) ;
+begin
+  Conteudo.Clear ;
+
+  if not FileExists(xArquivo) then
+    raise Exception.Create('Erro: Arquivo especificado não encontrado !!');
+
+  Conteudo.LoadFromFile( xArquivo ) ;
+  LerCabecalho ;
 
   Conteudo.Clear ;
 end;
@@ -588,5 +615,232 @@ begin
   OcorEntrega.Free ;
   inherited;
 end;
+
+procedure TACBrEDIOcorrencia.LerCabecalho;
+var
+  nRow: Integer ;
+begin
+  nRow                   := 0 ;
+  Cabecalho.IdRegistro   := Copy(Conteudo.Strings[nRow],  1,  3) ;
+  Cabecalho.Remetente    := Copy(Conteudo.Strings[nRow],  4, 35) ;
+  Cabecalho.Destinatario := Copy(Conteudo.Strings[nRow], 39, 35) ;
+  Cabecalho.Data         := StringToDate(Copy(Conteudo.Strings[nRow], 74,  6)) ;
+  Cabecalho.Hora         := StringToTime(Copy(Conteudo.Strings[nRow], 80,  4)) ;
+  Cabecalho.Id           := Copy(Conteudo.Strings[nRow], 84, 12) ;
+  case Versao of
+     ve50: Cabecalho.Filler := Copy(Conteudo.Strings[nRow], 96, 225) ;
+     else  Cabecalho.Filler := Copy(Conteudo.Strings[nRow], 96,  25) ;
+  end;
+
+  Inc(nRow) ;
+  LerCabecalhoDocto( nRow ) ;
+end;
+
+function TACBrEDIOcorrencia.LerCabecalhoDocto( nRow: Integer ): Integer ;
+var
+  cReg: String ;
+begin
+  cReg := iif( Versao = ve50, '540', '340') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with InfoOcor.New do
+    begin
+      IdRegistro := Copy(Conteudo.Strings[nRow],  1,  3) ;
+      IdDocto    := Copy(Conteudo.Strings[nRow],  4, 14) ;
+      case Versao of
+        ve50: Filler := Copy(Conteudo.Strings[nRow], 18, 303) ;
+        else  Filler := Copy(Conteudo.Strings[nRow], 18, 103) ;
+      end;
+      inc(nRow) ;
+      nRow := LerTotalOcorrencia( TotOcorrencias ,
+                                  LerTransportadora( Transportadora, nRow ) );
+    end;
+    if nRow > (Conteudo.Count - 1) then
+      Break ;
+  end ;
+  result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerTransportadora( Registro: TTransportadora; nRow: Integer ): Integer ;
+var
+  cReg: String ;
+begin
+  cReg := iif( Versao = ve50, '541', '341') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro do
+    begin
+      IdRegistro := Copy(Conteudo.Strings[nRow],  1,  3) ;
+      CNPJ       := Copy(Conteudo.Strings[nRow],  4, 14) ;
+      case Versao of
+        ve50: begin
+                Razao  := Copy(Conteudo.Strings[nRow], 18,  50) ;
+                Filler := Copy(Conteudo.Strings[nRow], 68, 153) ;
+              end
+        else
+        begin
+          Razao  := Copy(Conteudo.Strings[nRow], 18, 40) ;
+          Filler := Copy(Conteudo.Strings[nRow], 58, 63) ;
+        end;
+      end;
+      inc(nRow) ;
+      nRow := LerOCorrencias( Registro.OcorEntrega, nRow ) ;
+    end;
+  end ;
+  result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerOcorrencias( Registro: TOcorEntrega ; nRow: Integer ): Integer ;
+var
+  cReg: String ;
+begin
+  cReg := iif( Versao = ve50, '542', '342') ;
+
+  while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
+  begin
+    with Registro.New do
+    begin
+      IdRegistro       := Copy(Conteudo.Strings[nRow],   1,  3) ;
+      CNPJEmissorNF    := Copy(Conteudo.Strings[nRow],  14,  4) ;
+      SerieNF          := Copy(Conteudo.Strings[nRow],  18,  3) ;
+      case Versao of
+        ve50: begin
+                nNF              := StrToInt(Copy(Conteudo.Strings[nRow]    ,  21,  9));
+                cOcorrencia      := Copy(Conteudo.Strings[nRow]             ,  30,  3) ;
+                dtOcorrencia     := StringToDate(Copy(Conteudo.Strings[nRow],  33,  8));
+                hrOcorrencia     := StringToTime(Copy(Conteudo.Strings[nRow],  41,  4));
+                cObsOcorrencia   := StrToInt(Copy(Conteudo.Strings[nRow]    ,  45,  2)) ;
+                Romaneio         := Copy(Conteudo.Strings[nRow]             ,  47, 20) ;
+                NumeroSAP1       := Copy(Conteudo.Strings[nRow]             ,  67, 20) ;
+                NumeroSAP2       := Copy(Conteudo.Strings[nRow]             ,  87, 20) ;
+                NumeroSAP3       := Copy(Conteudo.Strings[nRow]             , 107, 20) ;
+                FilialEmissorCT  := Copy(Conteudo.Strings[nRow]             , 127, 10) ;
+                SerieCT          := Copy(Conteudo.Strings[nRow]             , 137,  5) ;
+                nCT              := Copy(Conteudo.Strings[nRow]             , 142, 12) ;
+                indTipoEntrega   := StrToInt(Copy(Conteudo.Strings[nRow]    , 154,  1)) ;
+                codEmissorNF     := Copy(Conteudo.Strings[nRow]             , 155,  5) ;
+                cFilialEmissorNF := Copy(Conteudo.Strings[nRow]             , 160,  5) ;
+                dtChegadaDestino := StringToDate(Copy(Conteudo.Strings[nRow], 165,  8));
+                hrChegadaDestino := StringToTime(Copy(Conteudo.Strings[nRow], 173,  4));
+                dtInicioDescarga := StringToDate(Copy(Conteudo.Strings[nRow], 177,  8));
+                hrInicioDescarga := StringToTime(Copy(Conteudo.Strings[nRow], 185,  4));
+                dtTerminoDescarga:= StringToDate(Copy(Conteudo.Strings[nRow], 189,  8));
+                hrTerminoDescarga:= StringToTime(Copy(Conteudo.Strings[nRow], 197,  4));
+                dtSaidaDestino   := StringToDate(Copy(Conteudo.Strings[nRow], 201,  8));
+                hrSaidaDestino   := StringToTime(Copy(Conteudo.Strings[nRow], 209,  4));
+                CNPJDevolucao    := Copy(Conteudo.Strings[nRow]             , 213, 14) ;
+                SerieNFDevolucao := Copy(Conteudo.Strings[nRow]             , 227,  3) ;
+                nNFDevolucao     := Copy(Conteudo.Strings[nRow]             , 230,  9) ;
+                Filler           := Copy(Conteudo.Strings[nRow]             , 239, 12) ;
+              end ;
+        else
+        begin
+          nNF              := StrToInt(Copy(Conteudo.Strings[nRow]    ,  21,  8));
+          cOcorrencia      := Copy(Conteudo.Strings[nRow]             ,  29,  2) ;
+          dtOcorrencia     := StringToDate(Copy(Conteudo.Strings[nRow],  31,  8));
+          hrOcorrencia     := StringToTime(Copy(Conteudo.Strings[nRow],  39,  4));
+          cObsOcorrencia   := StrToInt(Copy(Conteudo.Strings[nRow]    ,  43,  2)) ;
+          TextoLivre       := Copy(Conteudo.Strings[nRow]             ,  45, 70) ;
+          Filler           := Copy(Conteudo.Strings[nRow]             , 115,  6) ;
+        end;
+      end;
+      inc(nRow) ;
+      nRow := LerRedespacho( Redespacho, LerItensNF( InfoItemNF,
+                                         LerComplementos( InfoCompl, nRow ) ) ) ;
+    end;
+  end ;
+  result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerComplementos( Registro: TInfoCompl; nRow: Integer ): Integer ;
+begin
+  if (Versao = ve50) and (Copy(Conteudo.Strings[nRow], 1, 3) = '543') then
+  begin
+    with Registro do
+    begin
+      IdRegistro := Copy(Conteudo.Strings[nRow],   1,  3) ;
+      xMotivo1   := Copy(Conteudo.Strings[nRow],   4, 70) ;
+      xMotivo2   := Copy(Conteudo.Strings[nRow],  74, 70) ;
+      xMotivo3   := Copy(Conteudo.Strings[nRow], 144, 70) ;
+      Filler     := Copy(Conteudo.Strings[nRow], 214, 37) ;
+      inc(nRow) ;
+    end;
+  end ;
+  result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerItensNF( Registro: TInfoItemNF; nRow: Integer ): Integer ;
+begin
+   if Versao = ve50 then
+   begin
+     while Copy(Conteudo.Strings[nRow], 1, 3) = '544' do
+     begin
+       with Registro.New do
+       begin
+         IdRegistro := Copy(Conteudo.Strings[nRow],  1,   3) ;
+         qVolumeNF  := StringToDouble(Copy(Conteudo.Strings[nRow],  4, 8), 6, 2) ;
+         qVolEntreg := StringToDouble(Copy(Conteudo.Strings[nRow], 12, 8), 6, 2) ;
+         cItem      := Copy(Conteudo.Strings[nRow], 20,  20) ;
+         xDescricao := Copy(Conteudo.Strings[nRow], 40,  50) ;
+         Filler     := Copy(Conteudo.Strings[nRow], 90, 161) ;
+         inc(nRow) ;
+       end;
+     end ;
+   end;
+   result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerRedespacho( Registro: TRedespacho; nRow: Integer ): Integer ;
+var
+  cReg: String ;
+begin
+  cReg := Copy(Conteudo.Strings[nRow], 1, 3) ;
+
+  if (cReg = '545') or (cReg = '343') then
+  begin
+    case Versao of
+      ve50: begin
+              with Registro do
+              begin
+                IdRegistro      := cReg ;
+                CNPJContratante := Copy(Conteudo.Strings[nRow],  4,  14) ;
+                CNPJEmissor     := Copy(Conteudo.Strings[nRow], 18,  14) ;
+                FilialEmissor   := Copy(Conteudo.Strings[nRow], 32,  10) ;
+                Serie           := Copy(Conteudo.Strings[nRow], 42,   5) ;
+                nCTe            := Copy(Conteudo.Strings[nRow], 47,  12) ;
+                Filler          := Copy(Conteudo.Strings[nRow], 59, 192) ;
+              end;
+            end;
+      else  begin
+              with Registro do
+              begin
+                IdRegistro      := cReg ;
+                CNPJContratante := Copy(Conteudo.Strings[nRow],  4, 14) ;
+                FilialEmissor   := Copy(Conteudo.Strings[nRow], 18, 10) ;
+                Serie           := Copy(Conteudo.Strings[nRow], 28,  5) ;
+                nCTe            := Copy(Conteudo.Strings[nRow], 33, 12) ;
+                Filler          := Copy(Conteudo.Strings[nRow], 45, 76) ;
+              end;
+            end;
+    end;
+    inc(nRow) ;
+  end ;
+  result := nRow ;
+end;
+
+function TACBrEDIOcorrencia.LerTotalOcorrencia( Registro: TTotOcorrencias; nRow: Integer ): Integer ;
+begin
+  if (Versao = ve50) and (Copy(Conteudo.Strings[nRow], 1, 3) = '549') then
+  begin
+    Registro.IdRegistro := Copy(Conteudo.Strings[nRow]         , 1,   3) ;
+    Registro.nQtde      := StrToInt(Copy(Conteudo.Strings[nRow], 4,   4)) ;
+    Registro.Filler     := Copy(Conteudo.Strings[nRow]         , 8, 262) ;
+    inc(nRow) ;
+  end;
+  result := nRow ;
+end;
+
 
 end.

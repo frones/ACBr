@@ -119,6 +119,7 @@ type
      FId          : String ;  // Identificação do Intercâmbio caso não seja informado
                               // será gerado o formato sugerido pelo manual
      FSequencia   : Integer ; // Número de Controle Sequencial do Arquivo
+     FCNPJTransp  : string ;  // Usado nas versões 3.0 e 3.0a
      FFiller      : String ;  // Espaços em branco para uso futuro
   public
      property IdRegistro  : String    read FIdRegistro   write FIdRegistro ;
@@ -128,6 +129,7 @@ type
      property Hora        : TTime     read FHora         write FHora ;
      property Id          : String    read FId           write FId ;
      property Sequencia   : Integer   read FSequencia    write FSequencia ;
+     property CNPJTransp  : String    read FCNPJTransp   write FCNPJTransp ;
      property Filler      : String    read FFiller       write FFiller ;
   end;
 

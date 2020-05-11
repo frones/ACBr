@@ -719,15 +719,18 @@ begin
     Exit;
   end;
 
-  if not (FileExists(PathDestino)) then
+  if (FileExists(PathDestino)) then
   begin
-    if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
-    begin
-      raise EFilerError.CreateFmt(
-        'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [
-        ANomeArquivo, GetLastError, SysErrorMessage(GetLastError)
-      ]);
-    end;
+    InformaSituacao(Format('AVISO: Arquivo já se encontra no destino. Não sobrescrito: "%s"', [PathDestino]));
+    Exit;
+  end;
+
+  if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
+  begin
+    raise EFilerError.CreateFmt(
+      'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [
+      ANomeArquivo, GetLastError, SysErrorMessage(GetLastError)
+    ]);
   end;
 end;
 

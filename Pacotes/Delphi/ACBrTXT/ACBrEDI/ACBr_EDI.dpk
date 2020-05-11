@@ -25,6 +25,7 @@ package ACBr_EDI;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - EDI - Intercâmbio de Arquivos para Transportadora - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -41,7 +42,8 @@ contains
   ACBrEDINotaFiscal in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas',
   ACBrEDIOcorrencia in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIOcorrencia.pas',
   pediConversao in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas',
-  ACBrEDIClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas';
+  ACBrEDIClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas',
+  ACBrEDIPreFatura in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIPreFatura.pas';
 
 end.
 

@@ -93,6 +93,7 @@ type
     procedure Execute;
     function ChangeDirectory(const ADirectory: String): Boolean;
     procedure SelectItem(const AItem: Integer);
+    procedure Reload;
 
     property CanChangeDir: Boolean read FCanChangeDir write SetCanChangeDir;
     property ActualDir: String read FActualDir write SetActualDir;
@@ -400,6 +401,11 @@ begin
   SelectItem(ItemIndex);
 end;
 
+procedure TFrameFileSelect.Reload;
+begin
+  ChangeDirectory(FActualDir);
+end;
+
 procedure TFrameFileSelect.sbPathScrollLeftClick(Sender: TObject);
 begin
   hScrollboxPath.ScrollBy(50,0);
@@ -429,7 +435,7 @@ begin
   begin
     ItemText := Data['FileName'].ToString;
 
-    if (Data['ImgFileDir'].AsInteger = 1) then
+    if (Data['ImgFileDir'].AsInteger = 1) then    // É diretório ?
     begin
       if (ItemText = '.') then
         NewDir := FActualDir

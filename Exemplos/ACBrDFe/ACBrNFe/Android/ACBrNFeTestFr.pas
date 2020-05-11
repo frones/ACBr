@@ -280,7 +280,7 @@ type
     btnValidarAssinatura: TButton;
     btnEnviarEmail: TButton;
     btnVerificarSchema: TButton;
-    btnApagar: TButton;
+    btnVerXML: TButton;
     cbEnviarEmailNFCe: TCheckBox;
     libDestinatarioAssunto: TListBoxItem;
     GridPanelLayout6: TGridPanelLayout;
@@ -361,16 +361,17 @@ type
     procedure btnVerificarSchemaClick(Sender: TObject);
     procedure btnCertInfoClick(Sender: TObject);
     procedure btnVersaoOpenSSLClick(Sender: TObject);
-    procedure btnApagarClick(Sender: TObject);
+    procedure btnVerXMLClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure swOffLineSwitch(Sender: TObject);
     procedure swWebServiceAmbienteSwitch(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
-    procedure fraXMLslvFileBrowseDeleteItem(Sender: TObject; AIndex: Integer);
     procedure btnEnviarEmailClick(Sender: TObject);
     procedure edtAddressEmailEnter(Sender: TObject);
     procedure btnVerLogsClick(Sender: TObject);
     procedure seColunasEnter(Sender: TObject);
+    procedure fraXMLslvFileBrowseDeletingItem(Sender: TObject; AIndex: Integer;
+      var ACanDelete: Boolean);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
@@ -414,7 +415,6 @@ type
     procedure EnviarXMLNFCe(const ArquivoXML: String);
     procedure ImprimirXMLNFCe(const ArquivoXML: String);
     procedure EnviarEmailXMLNFCe(const ArquivoXML: String);
-    procedure ApagarXMLNFCe(const ArquivoXML: String);
   public
     { Public declarations }
   end;
@@ -430,7 +430,7 @@ uses
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
   Androidapi.JNI.Widget, FMX.Helpers.Android,
   {$EndIf}
-  FMX.DialogService, FMX.Platform, Xml.XMLDoc, System.Zip, System.Math,
+  FMX.DialogService.Async, FMX.Platform, Xml.XMLDoc, System.Zip, System.Math,
   FileSelectFr,
   ssl_openssl_lib, blcksock,
   pcnConversao, pcnConversaoNFe,
@@ -444,7 +444,7 @@ var
   ToastLength: Integer;
 begin
   {$IfDef MSWINDOWS}
-   TDialogService.ShowMessage(AMsg);
+   TDialogServiceAsync.ShowMessage(AMsg);
   {$Else}
    if ShortDuration then
      ToastLength := TJToast.JavaClass.LENGTH_SHORT
@@ -547,7 +547,7 @@ var
 begin
   if imgErrorCep.Visible then
   begin
-    TDialogService.ShowMessage('CEP inválido');
+    imgErrorCepClick(Sender);
     Exit;
   end;
 
@@ -913,13 +913,19 @@ begin
   ExibirLogs;
 end;
 
-procedure TACBrNFCeTestForm.btnApagarClick(Sender: TObject);
+procedure TACBrNFCeTestForm.btnVerXMLClick(Sender: TObject);
 begin
   if (fraXMLs.FileName = '') then
     Exit;
 
-  ApagarXMLNFCe(fraXMLs.FileName);
-  fraXMLs.ActualDir := fraXMLs.ActualDir;  // Reload Dir
+  ACBrNFe1.NotasFiscais.Clear;
+  ACBrNFe1.NotasFiscais.LoadFromFile(fraXMLs.FileName, True);
+
+  mLog.Lines.Add('');
+  mLog.Lines.Add('----- VER XML -----');
+  mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
+    ACBrNFe1.NotasFiscais.Items[0].XML )));
+  ExibirLogs;
 end;
 
 procedure TACBrNFCeTestForm.btnLimparClick(Sender: TObject);
@@ -1569,10 +1575,21 @@ begin
   end;
 end;
 
-procedure TACBrNFCeTestForm.fraXMLslvFileBrowseDeleteItem(Sender: TObject;
-  AIndex: Integer);
+procedure TACBrNFCeTestForm.fraXMLslvFileBrowseDeletingItem(Sender: TObject;
+  AIndex: Integer; var ACanDelete: Boolean);
 begin
-  btnApagarClick(Sender);
+  fraXMLs.SelectItem(AIndex);
+  if (fraXMLs.FileName = '') then
+  begin
+    ACanDelete := False;
+    Exit;
+  end;
+
+  if System.SysUtils.DeleteFile(fraXMLs.FileName) then
+  begin
+    ACanDelete := True;
+    fraXMLs.Reload;
+  end;
 end;
 
 procedure TACBrNFCeTestForm.GravarConfiguracao;
@@ -2322,16 +2339,6 @@ begin
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
-end;
-
-
-procedure TACBrNFCeTestForm.ApagarXMLNFCe(const ArquivoXML: String);
-begin
-  if (MessageDlg( 'Confirma Exclusão ?', TMsgDlgType.mtConfirmation,
-                  [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes) then
-  begin
-    System.SysUtils.DeleteFile(ArquivoXML);
-  end;
 end;
 
 end.

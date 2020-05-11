@@ -125,6 +125,8 @@ object FileSelectForm: TFileSelectForm
     Size.Height = 463.000000000000000000
     Size.PlatformDefault = False
     inherited lvFileBrowse: TListView
+      AllowSelection = True
+      AlternatingColors = True
       Size.Width = 337.000000000000000000
       ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
         item

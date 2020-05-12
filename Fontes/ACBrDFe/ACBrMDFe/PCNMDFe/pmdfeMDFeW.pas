@@ -1173,7 +1173,7 @@ begin
 
     Gerador.wGrupo('/infResp');
 
-    if MDFe.seg[i].xSeg <> '' then
+    if MDFe.seg[i].respSeg = rsTomadorServico {MDFe.seg[i].xSeg <> ''} then
     begin
       Gerador.wGrupo('infSeg', '#123');
       Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);
@@ -1292,7 +1292,7 @@ begin
   begin
     Gerador.wGrupo('prodPred', '#');
     Gerador.wCampo(tcStr, '#', 'tpCarga', 02, 002, 1, TCargaToStr(MDFe.prodPred.tpCarga), DSC_TPCARGA);
-    Gerador.wCampo(tcStr, '#', 'xProd  ', 06, 120, 1, MDFe.prodPred.xProd, DSC_XPROD);
+    Gerador.wCampo(tcStr, '#', 'xProd  ', 01, 120, 1, MDFe.prodPred.xProd, DSC_XPROD);
     Gerador.wCampo(tcStr, '#', 'cEAN   ', 00, 014, 0, MDFe.prodPred.cEAN, DSC_CEAN);
     Gerador.wCampo(tcStr, '#', 'NCM    ', 02, 008, 0, MDFe.prodPred.NCM, DSC_NCM);
 

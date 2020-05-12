@@ -337,7 +337,7 @@
     <PropertyGroup Condition="'$(Cfg_2_Android)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Keys>package=br.com.projetoacbr.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
-        <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\;C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\ACBrNFe\;C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Android64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>

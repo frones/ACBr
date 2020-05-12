@@ -509,7 +509,7 @@ begin
   fAttachments.Clear;
   SetPriority(MP_normal);
   fDefaultCharsetCode := UTF_8;
-  fIDECharsetCode := {$IfDef FPC}UTF_8{$Else}{$IfDef MSWINDOWS}CP1252{$Else}UTF_8{$EndIf}{$EndIf};
+  fIDECharsetCode := {$IfDef USE_UTF8}UTF_8{$Else}{$IfDef MSWINDOWS}CP1252{$Else}UTF_8{$EndIf}{$EndIf};
   fReadingConfirmation := False;
   fDeliveryConfirmation := False;
   fIsHTML := False;

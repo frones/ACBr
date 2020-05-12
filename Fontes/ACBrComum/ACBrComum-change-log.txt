@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 12/05/2020
+-- ACBrUtil --
+[+] Ajustes para use de UTF8 por padrão, em NEXTGEN, Android, e POSIX, Linux
+    (por: DSA)
+
 Data: 20/04/2020
 -- ACBrUtil --
 [+] Adicionado método "RemoverQuebraLinhaFinal" para tratar retornos de 

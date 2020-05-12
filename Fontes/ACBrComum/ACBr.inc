@@ -98,6 +98,7 @@
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
+  {$DEFINE USE_UTF8}
   {$UNDEF BORLAND}
   {$DEFINE DFE_SEM_INDY}
   {$DEFINE VCL}
@@ -186,6 +187,7 @@
 
 {$IFDEF DELPHILANGUAGE}
   {$IFDEF POSIX}
+    {$DEFINE USE_UTF8}
     {$DEFINE FMX}
     {$UNDEF CLX}
     {$UNDEF VisualCLX}
@@ -198,6 +200,7 @@
   {$ENDIF}
 
   {$IFDEF NEXTGEN}
+    {$DEFINE USE_UTF8}
     {$DEFINE HAS_BLUETOOTH}
     {$LEGACYIFEND ON}
     //http://riversoftavg.com/blogs/index.php/2015/01/17/zerobasedstrings-just-dont/

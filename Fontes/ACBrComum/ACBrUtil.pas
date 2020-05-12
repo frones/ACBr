@@ -558,8 +558,8 @@ function NativeStringToUTF8(const AString : String ) : AnsiString;
  {$ENDIF}
 {$ENDIF}
 begin
-  {$IFDEF FPC}
-    Result := AString;  // FPC usa UTF8 de forma nativa
+  {$IFDEF USE_UTF8}
+    Result := AString;  // FPC, NEXTGEN usam UTF8 de forma nativa
   {$ELSE}
     {$IFDEF UNICODE}
       RBS := UTF8Encode(AString);
@@ -573,8 +573,8 @@ end;
 
 function UTF8ToNativeString(const AUTF8String: AnsiString): String;
 begin
-  {$IfDef FPC}
-   Result := AUTF8String;  // FPC usa UTF8 de forma nativa
+  {$IfDef USE_UTF8}
+   Result := AUTF8String;  // FPC, NEXTGEN usam UTF8 de forma nativa
   {$Else}
    {$IfDef UNICODE}
     {$IfDef DELPHI12_UP}  // delphi 2009 em diante
@@ -593,7 +593,7 @@ end;
 
 function NativeStringToAnsi(const AString: String): AnsiString;
 begin
-  {$IfDef FPC}
+  {$IfDef USE_UTF8}
     Result := ACBrUTF8ToAnsi(AString);
   {$Else}
     Result := AnsiString(AString);
@@ -602,7 +602,7 @@ end;
 
 function AnsiToNativeString(const AAnsiString: AnsiString): String;
 begin
-  {$IfDef FPC}
+  {$IfDef USE_UTF8}
     Result := ACBrAnsiToUTF8(AAnsiString);
   {$Else}
     Result := String(AAnsiString);

@@ -727,11 +727,11 @@ begin
 
   Result := WebServices.Envia(ALote, Sincrono, Zipado);
 
-  if DANFE <> nil then
+  if Imprimir and (DANFE <> nil) then
   begin
     for i := 0 to NotasFiscais.Count - 1 do
     begin
-      if NotasFiscais.Items[i].Confirmada and Imprimir then
+      if NotasFiscais.Items[i].Confirmada then
         NotasFiscais.Items[i].Imprimir;
     end;
   end;

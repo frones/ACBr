@@ -517,7 +517,7 @@ begin
                     FPosPrinter.ColunasFonteExpandida)+'</n></e>');
 
       if CaracterDestaque <> #0 then
-        MsgContingencia.Add(ACBrStr('<c><n>'+PadCenter('Pendente de autorização',FPosPrinter.ColunasFonteCondensada, CaracterDestaque)+'</n>'))
+        MsgContingencia.Add(ACBrStr('<c><n>'+PadCenter(' Pendente de autorização ',FPosPrinter.ColunasFonteCondensada, CaracterDestaque)+'</n>'))
       else
         MsgContingencia.Add(ACBrStr('</ce><c><n>Pendente de autorização</n>'));
     end;

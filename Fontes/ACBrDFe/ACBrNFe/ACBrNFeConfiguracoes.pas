@@ -75,7 +75,7 @@ type
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
+    property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr200;
     property CamposFatObrigatorios: Boolean
       read FCamposFatObrigatorios write FCamposFatObrigatorios default True;
     property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938 default fgtNunca;
@@ -197,7 +197,7 @@ begin
   FAtualizarXMLCancelado     := False;
   FIdCSC                     := '';
   FCSC                       := '';
-  FVersaoQRCode              := veqr000;
+  FVersaoQRCode              := veqr200;
   FCamposFatObrigatorios     := True;
   FForcarGerarTagRejeicao938 := fgtNunca;
 end;

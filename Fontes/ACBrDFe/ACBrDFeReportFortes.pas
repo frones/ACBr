@@ -69,8 +69,9 @@ begin
   FReport.ShowProgress := AConfig.MostraStatus;
   FReport.PrintDialog := AConfig.MostraSetup and (not AConfig.MostraPreview);
 
-  if RLPrinter.PrinterName <> AConfig.Impressora then
-    RLPrinter.PrinterName := AConfig.Impressora;
+  if NaoEstaVazio(AConfig.Impressora) then
+    if RLPrinter.PrinterName <> AConfig.Impressora then
+      RLPrinter.PrinterName := AConfig.Impressora;
 
   if RLPrinter.SupportsDuplex Then
      RLPrinter.Duplex := false;

@@ -112,15 +112,16 @@ Série na faixa [920-969]: Reservada para emissão por contribuinte pessoa físi
 									</xs:element>
 									<xs:element name="tpEmis">
 										<xs:annotation>
-											<xs:documentation>Forma de emissão do Manifesto (Normal ou Contingência)</xs:documentation>
+											<xs:documentation>Forma de emissão do Manifesto</xs:documentation>
 											<xs:documentation>1 - Normal
-; 2 - Contingência</xs:documentation>
+; 2 - Contingência; 3-Regime Especial NFF</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
 												<xs:whiteSpace value="preserve"/>
 												<xs:enumeration value="1"/>
 												<xs:enumeration value="2"/>
+												<xs:enumeration value="3"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -246,11 +247,12 @@ Informar 'EX' para operações com o exterior.</xs:documentation>
 												<xs:documentation>CPF do emitente</xs:documentation>
 												<xs:documentation>Informar zeros não significativos.
 
-Usar com série específica 920-969 para emitente pessoa física com inscrição estadual</xs:documentation>
+Usar com série específica 920-969 para emitente pessoa física com inscrição estadual.
+Poderá ser usado também para emissão do Regime Especial da Nota Fiscal Fácil</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 									</xs:choice>
-									<xs:element name="IE">
+									<xs:element name="IE" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição Estadual do emitemte</xs:documentation>
 										</xs:annotation>
@@ -1125,6 +1127,27 @@ Dados obrigatórios apenas no modal Rodoviário, depois da lei 11.442/07. Para o
 							<xs:annotation>
 								<xs:documentation>Informações do Responsável Técnico pela emissão do DF-e</xs:documentation>
 							</xs:annotation>
+						</xs:element>
+						<xs:element name="infSolicNFF" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Grupo de informações do pedido de emissão da Nota Fiscal Fácil</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="xSolic">
+										<xs:annotation>
+											<xs:documentation>Solicitação do pedido de emissão da NFF.</xs:documentation>
+											<xs:documentation>Será preenchido com a totalidade de campos informados no aplicativo emissor serializado.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:minLength value="2"/>
+												<xs:maxLength value="2000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="versao" type="TVerMDe" use="required">

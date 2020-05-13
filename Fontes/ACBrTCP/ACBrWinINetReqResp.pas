@@ -115,6 +115,9 @@ begin
                              PChar(ProxyHostAndPort),
                              nil, 0);
   Result := Assigned(FpSession);
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.InternalOpenConnection: Boolean;
@@ -126,6 +129,9 @@ begin
                                   INTERNET_SERVICE_HTTP,
                                   0, 0 {cardinal(Self)} );
   Result := Assigned(FpConnection);
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.InternalOpenRequest: Boolean;
@@ -153,6 +159,9 @@ begin
                                 PChar(Method), PChar(URI),
                                 nil, nil, nil, RequestFlags, 0);
   Result:= Assigned(FpRequest);
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SetConnectionTimeOut: Boolean;
@@ -165,6 +174,9 @@ begin
               InternetSetOption(FpSession, INTERNET_OPTION_SEND_TIMEOUT, @TimeOut, SizeOf(TimeOut))    and
               InternetSetOption(FpSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @TimeOut, SizeOf(TimeOut));
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SetConnectionSSL: Boolean;
@@ -181,6 +193,8 @@ begin
     Result := InternetSetOption( FpRequest,
                                  INTERNET_OPTION_CLIENT_CERT_CONTEXT,
                                  CertContext, SizeOf(CERT_CONTEXT) );
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SetConnectionSecurityFlags: Boolean;
@@ -211,6 +225,9 @@ begin
                                    @SecurityFlags, FlagsLen );
     end;
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SetProxyUser: Boolean;
@@ -226,6 +243,9 @@ begin
       Result := InternetSetOption( FpRequest, INTERNET_OPTION_PROXY_PASSWORD,
                                    PChar(ProxyPass), Length(ProxyPass));
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SetHeaderReq: Boolean;
@@ -239,6 +259,9 @@ begin
     AHeader := CalculateHeaderReq;
     Result := HttpAddRequestHeaders(FpRequest, PChar(AHeader), Length(AHeader), HTTP_ADDREQ_FLAG_ADD);
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.SendData(const AData: AnsiString): Boolean;
@@ -246,6 +269,9 @@ begin
   Result := inherited SendData(AData);
   if Result then
     Result := HttpSendRequest(FpRequest, nil, 0, Pointer(AData), Length(AData));
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.ReceiveResponse: Boolean;
@@ -292,6 +318,9 @@ begin
       HeaderResp.Text := HeaderStr;
     end;
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinINetReqResp.ReadData(ABuffer: Pointer; BufferSize: Integer
@@ -305,8 +334,13 @@ begin
   begin
     BytesRead := 0;
     if InternetReadFile(FpRequest, ABuffer, BufferSize, BytesRead) then
-      Result := BytesRead;
+      Result := BytesRead
+    else
+      Result := -1;
   end;
+
+  if (Result < 0) then
+    UpdateResultCodes;
 end;
 
 procedure TACBrWinINetReqResp.CloseConnection;

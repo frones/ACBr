@@ -249,8 +249,7 @@ var
   Len: DWORD;
   WinINetHandle: HMODULE;
 begin
-  ErrorMsg := '';
-  Result  := 'Erro: '+IntToStr(ErrorCode);
+  Result := '';
 
   WinINetHandle := GetModuleHandle('wininet.dll');
   ErrorMsg := Space(1024);
@@ -297,7 +296,14 @@ begin
   end;
 
   if (ErrorMsg <> '') then
-    Result := Result + ' - '+ ACBrStr(ErrorMsg);
+    Result := ACBrStr(ErrorMsg);
+
+  if (ErrorCode > 0) then
+    Result := IntToStr(ErrorCode) + ' - ' + Result;
+
+  if (Result <> '') then
+    Result := 'Erro: ' + Result;
+
 end;
 
 procedure TACBrWinReqResp.SetURL(AValue: String);
@@ -363,15 +369,12 @@ end;
 function TACBrWinReqResp.IsHttpRedirection: Boolean;
 begin
   // Note: apparently, WinHTTP and WinINet already take care of redirects
-
-  UpdateResultCodes;
-
   // https://tools.ietf.org/html/rfc2616#page-62
   case FHttpResultCode of
     301,  // Moved Permanently
     302,  // Found
     303,  // See Other
-    307:  // Temporary Redirec
+    307:  // Temporary Redirect
       Result := True;
   else
     Result := False;
@@ -517,17 +520,14 @@ begin
   CheckProxyParams;
 
   Ok := InternalOpenSession;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrOpenHTTP), [GetWinInetError(FInternalErrorCode)] );
 
   Ok := SetConnectionTimeOut;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetTimeOut), [GetWinInetError(FInternalErrorCode)]);
 
   Ok := SetConnectionSSL;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetSSL), [GetWinInetError(FInternalErrorCode)]);
 end;
@@ -545,7 +545,6 @@ begin
   DoLog('OpenConnection, Port: '+FPort+', Host: '+FHost);
 
   Ok := InternalOpenConnection;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrOpenConnect), [GetWinInetError(FInternalErrorCode)] );
 end;
@@ -563,22 +562,18 @@ begin
   DoLog('OpenRequest, Method: '+FMethod+', URI: '+FURI+', UseSSL: '+BoolToStr(UseSSL, True));
 
   Ok := InternalOpenRequest;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrOpenRequest), [GetWinInetError(FInternalErrorCode)] );
 
   Ok := SetConnectionCertificate;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetCertificate), [GetWinInetError(FInternalErrorCode)]);
 
   Ok := SetConnectionSecurityFlags;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetSecurityFlags), [GetWinInetError(FInternalErrorCode)]);
 
   Ok := SetProxyUser;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetProxyUser), [GetWinInetError(FInternalErrorCode)] );
 end;
@@ -597,7 +592,6 @@ begin
   DoLog('Send');
 
   Ok := SetHeaderReq;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSetHeader), [GetWinInetError(FInternalErrorCode)] );
 
@@ -607,7 +601,6 @@ begin
     DataToSend := Data;
 
   Ok := SendData(DataToSend);
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrSentData), [GetWinInetError(FInternalErrorCode)] );
 
@@ -643,7 +636,6 @@ begin
   DoLog('Receive');
 
   Ok := ReceiveResponse;
-  UpdateResultCodes;
   if not Ok then
     raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrReceiveResponse), [GetWinInetError(FInternalErrorCode)] );
 
@@ -658,18 +650,13 @@ begin
     repeat
       BytesRead := ReadData(ABuffer, CBufferSize);
       if (BytesRead < 0) then
-      begin
-        UpdateResultCodes;
         raise EACBrWinReqResp.CreateFmt(ACBrStr(sErrReadData), [GetWinInetError(FInternalErrorCode)] );
-      end;
 
       DoLog('  BytesRead: '+IntToStr(BytesRead));
-
       if (BytesRead > 0) then
         Resp.Write(ABuffer^, BytesRead);
     until (BytesRead = 0);
 
-    UpdateResultCodes;
     if HasLogFile and (Resp.Size > 0) then
     begin
       Resp.Position := 0;
@@ -770,6 +757,7 @@ begin
     repeat
       Send;
       Receive(Resp);
+      UpdateResultCodes;
     until (not IsHttpRedirection) ;
   finally
     CloseConnection;

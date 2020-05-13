@@ -123,6 +123,9 @@ begin
                             AccessType,
                             HttpProxyHostName, HttpProxyByPass, 0 );
   Result := Assigned(FpSession);
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.InternalOpenConnection: Boolean;
@@ -136,6 +139,9 @@ begin
                                     WORD(PortNumber), 0);
     Result := Assigned(FpConnection);
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.InternalOpenRequest: Boolean;
@@ -160,6 +166,9 @@ begin
                                      RequestFlags);
     Result := Assigned(FpRequest);
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetConnectionTimeOut: Boolean;
@@ -174,6 +183,9 @@ begin
     //                            SizeOf(TimeOut));
     Result := WinHttpSetTimeouts( FpSession, TimeOut, TimeOut, TimeOut, TimeOut);
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetConnectionSSL: Boolean;
@@ -202,6 +214,9 @@ begin
     FlagsLen := SizeOf(Flags);
     Result := WinHttpSetOption(FpSession, WINHTTP_OPTION_SECURE_PROTOCOLS, @Flags, FlagsLen);
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetConnectionCertificate: Boolean;
@@ -209,9 +224,14 @@ begin
   Result := inherited SetConnectionCertificate;
 
   if Result and UseCertificate then
+  begin
     Result := WinHttpSetOption( FpRequest,
                                 WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
                                 CertContext, SizeOf(CERT_CONTEXT));
+  end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetConnectionSecurityFlags: Boolean;
@@ -239,6 +259,9 @@ begin
                                   @SecurityFlags, FlagsLen);
     end;
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetProxyUser: Boolean;
@@ -254,6 +277,9 @@ begin
       Result := WinHttpSetOption( FpRequest, WINHTTP_OPTION_PROXY_PASSWORD,
                                   @ProxyPass, Length(ProxyPass));
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.SetHeaderReq: Boolean;
@@ -288,6 +314,9 @@ begin
                                     @BytesWrite );
     end;
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.ReceiveResponse: Boolean;
@@ -340,6 +369,9 @@ begin
       end;
     end;
   end;
+
+  if not Result then
+    UpdateResultCodes;
 end;
 
 function TACBrWinHTTPReqResp.ReadData(ABuffer: Pointer; BufferSize: Integer
@@ -353,8 +385,13 @@ begin
   begin
     BytesRead := 0;
     if WinHttpReadData( FpRequest, ABuffer, BufferSize, @BytesRead) then
-      Result := BytesRead;
+      Result := BytesRead
+    else
+      Result := -1;
   end;
+
+  if (Result < 0) then
+    UpdateResultCodes;
 end;
 
 procedure TACBrWinHTTPReqResp.CloseConnection;

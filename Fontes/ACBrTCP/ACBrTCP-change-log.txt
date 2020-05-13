@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2020
+-- ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp --
+[-] Ajustes para correta leitura de GetLastError
+    (por: BigWings e DSA)
+
 07/05/2020
 -- ACBrWinReqRespClass --
 [-] Ajuste em "GetWinInetError", quando não é possível capturar o Código de Erro

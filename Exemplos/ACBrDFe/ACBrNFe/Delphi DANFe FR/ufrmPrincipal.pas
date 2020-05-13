@@ -32,13 +32,17 @@
 
 unit ufrmPrincipal;
 
+{$I ACBr_jedi.inc}
+
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils, pcnConversao,
-  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass, AcbrUtil,
-  Vcl.ComCtrls, ACBrDFeReport, ACBrDFeDANFeReport;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls,
+  ACBrUtil, ACBrBase, ACBrDFe, ACBrNFe,
+  ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrNFeDANFEFRDM,
+  frxClass
+  ;
 
 type
   TfrmPrincipal = class(TForm)
@@ -115,7 +119,7 @@ var
 implementation
 
 uses
-  pcnConversaoNFe;
+  pcnConversao, pcnConversaoNFe;
 
 {$R *.dfm}
 
@@ -189,11 +193,27 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
+  {$IFDEF DELPHIXE6_UP}
   fsFiles: string;
+  {$ELSE}
+  SR: TSearchRec;
+  {$ENDIF}
 begin
+  {$IFDEF DELPHIXE6_UP}
   for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
     if Pos('.fr3', LowerCase(fsFiles)) > 0 then
       lstbxFR3.AddItem(fsFiles, nil);
+  {$ELSE}
+  if FindFirst('..\Delphi\Report\*.fr3', faArchive, SR) = 0 then
+    try
+      repeat
+        if (SR.Attr and faDirectory) = 0 then
+          lstbxFR3.AddItem('..\Delphi\Report\' + SR.Name, nil)
+      until FindNext(SR) <> 0;
+    finally
+      FindClose(SR);
+    end;
+  {$ENDIF}
 
   Initializao;
 end;

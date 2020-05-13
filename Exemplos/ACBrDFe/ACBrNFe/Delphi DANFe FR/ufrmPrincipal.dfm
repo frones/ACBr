@@ -389,6 +389,7 @@ object frmPrincipal: TfrmPrincipal
             Width = 185
             Height = 21
             AutoCloseUp = True
+            Style = csDropDownList
             ItemIndex = 0
             TabOrder = 0
             Text = '#,###,##0.##########'
@@ -411,6 +412,7 @@ object frmPrincipal: TfrmPrincipal
             Width = 185
             Height = 21
             AutoCloseUp = True
+            Style = csDropDownList
             TabOrder = 1
             Items.Strings = (
               '#,###,##0.##########'

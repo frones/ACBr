@@ -35,7 +35,7 @@
 program DemoDANFeFR;
 
 uses
-  Vcl.Forms,
+  Forms,
   ufrmPrincipal in 'ufrmPrincipal.pas' {frmPrincipal};
 
 {$R *.res}

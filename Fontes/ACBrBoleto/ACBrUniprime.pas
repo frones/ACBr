@@ -304,7 +304,7 @@ begin
          
          
                   wLinha:= '1'                                            +  // 001 a 001 - ID Registro
-                  StringOfChar( '0', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
+                  StringOfChar( ' ', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
                   '0'+ aCarteira                                          +
                   aAgencia                                                +
                   aConta                                                  +

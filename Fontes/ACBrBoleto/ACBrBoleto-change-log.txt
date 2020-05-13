@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2020
+-- ACBrUniprime--
+[*] Ajuste Remessa CNAB400 posição 02 - 20 caracteres em branco
+
 06/05/2020
 -- ACBrBancoSantander--
 [*] Ajuste baseado no manual na Remessa CNAB240 Segmento P Posicao 61

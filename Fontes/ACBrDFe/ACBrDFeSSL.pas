@@ -1042,17 +1042,27 @@ begin
   HeaderReq.Clear; // Para informar Haders na requisição, use HTTPMethod();
   FSoapAction := ASoapAction;
   FMimeType := AMimeType;
-  HTTPMethod( AMethod, AURL ) ;
+  try
+    HTTPMethod( AMethod, AURL ) ;
 
-  FDataResp.Position := 0;
-  Result := ReadStrFromStream(FDataResp, FDataResp.Size);
+    FDataResp.Position := 0;
+    Result := ReadStrFromStream(FDataResp, FDataResp.Size);
 
-  // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
-  // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-  if not (FpHTTPResultCode in [200..202]) then
-    raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
-                                       [FpInternalErrorCode, FpHTTPResultCode, FURL] )
-                                       + sLineBreak + LastErrorDesc);
+    // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
+    // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    if not (FpHTTPResultCode in [200..202]) then
+      raise EACBrDFeException.Create('');
+  except
+//    on E:EACBrDFeException do
+//      raise;
+    on E:Exception do
+    begin
+      raise EACBrDFeException.CreateDef( Format(ACBrStr(cACBrDFeSSLEnviarException),
+                                         [FpInternalErrorCode, FpHTTPResultCode, FURL] )
+                                         + sLineBreak + LastErrorDesc);
+    end;
+  end;
+
 end;
 
 procedure TDFeSSLHttpClass.HTTPMethod(const AMethod, AURL: String);

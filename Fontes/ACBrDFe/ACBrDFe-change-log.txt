@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2020
+-- ACBrDFeHttpOpenSSL, ACBrDFeSSL --
+[-] Correção para exibir Erros não relacionados a transmissão
+    (por: Bigwings e DSA)
+
 07/05/2020
 -- ACBrDFeUtil --
 [-] Correçao no método: "EncontrarURI", quando "docElement", não for informado

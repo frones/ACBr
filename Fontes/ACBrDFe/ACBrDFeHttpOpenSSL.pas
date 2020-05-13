@@ -51,10 +51,13 @@ type
   TDFeHttpOpenSSL = class(TDFeSSLHttpClass)
   private
     FHTTP: THTTPSend;
+    FLastErrorMsg: String;
+
     {$IfDef SYNADEBUG}
      FSynaDebug: TSynaDebug;
     {$EndIf}
     procedure CheckSSLType(AValue: TSSLType);
+    procedure DoException(AMessage: String);
 
   protected
     procedure ConfigConnection; override;
@@ -82,6 +85,7 @@ constructor TDFeHttpOpenSSL.Create(ADFeSSL: TDFeSSL);
 begin
   inherited;
   FHTTP := THTTPSend.Create;
+  FLastErrorMsg := '';
 
   {$IfDef SYNADEBUG}
   FSynaDebug := TsynaDebug.Create;
@@ -115,16 +119,19 @@ begin
   //FHTTP.Headers.SaveToFile( 'c:\temp\HttpSendHeader.xml' );
 
   // Transmitindo //
-  OK := FHTTP.HTTPMethod(Method, URL);
-  FpHTTPResultCode := FHTTP.ResultCode;
-  FpInternalErrorCode := FHTTP.Sock.LastError;
+  try
+    OK := FHTTP.HTTPMethod(Method, URL);
+    if not OK then
+      DoException( Format( ACBrStr(cACBrDFeSSLEnviarException),
+                           [FpInternalErrorCode, FpHTTPResultCode, URL] ) +
+                           sLineBreak + LastErrorDesc);
+
+  finally
+    FpHTTPResultCode := FHTTP.ResultCode;
+    FpInternalErrorCode := FHTTP.Sock.LastError;
+  end;
 
   // Lendo a resposta //
-  if not OK then
-    raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
-                                           [FpInternalErrorCode, FpHTTPResultCode, URL] ) +
-                                    sLineBreak + LastErrorDesc);
-
   // DEBUG //
   //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
   FHTTP.Document.Position := 0;
@@ -135,7 +142,9 @@ end;
 procedure TDFeHttpOpenSSL.ConfigConnection;
 begin
   inherited;
+
   FHTTP.Clear;
+  FLastErrorMsg := '';
 
   // Proxy //
   FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
@@ -194,6 +203,8 @@ end;
 function TDFeHttpOpenSSL.GetLastErrorDesc: String;
 begin
   Result := FHTTP.Sock.LastErrorDesc;
+  if Result = '' then
+    Result := FLastErrorMsg;
 end;
 
 procedure TDFeHttpOpenSSL.CheckSSLType(AValue: TSSLType);
@@ -227,10 +238,15 @@ begin
   if not Assigned(SSLMethod) then
   begin
     OpenSSLVersion := String(ssl_openssl_lib.OpenSSLVersion( 0 ));
-
-    raise EACBrDFeException.CreateFmt(ACBrStr('%s, não suporta %s'),
-          [OpenSSLVersion, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]);
+    DoException( Format( ACBrStr('%s, não suporta %s'),
+                         [OpenSSLVersion, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]));
   end;
+end;
+
+procedure TDFeHttpOpenSSL.DoException(AMessage: String);
+begin
+  FLastErrorMsg := AMessage;
+  raise EACBrDFeException.Create(AMessage);
 end;
 
 end.

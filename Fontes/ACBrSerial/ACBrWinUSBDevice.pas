@@ -119,6 +119,7 @@ type
 
     function GetDeviceKind: TACBrUSBHardwareType;
     function GetDeviceName: String;
+    function GetDeviceACBrName: String;
     function GetProductModel: String;
     function GetVendorName: String;
     procedure SetClassGUID(AValue: String);
@@ -131,6 +132,7 @@ type
     procedure Clear;
 
     property DeviceKind: TACBrUSBHardwareType read GetDeviceKind;
+    property DeviceACBrName: String read GetDeviceACBrName;
     property DeviceName: String read GetDeviceName;
     property VendorID: String read FVendorID write SetVendorID;
     property VendorName: String read GetVendorName;
@@ -153,15 +155,15 @@ type
 
     function GetItem(Index: Integer): TACBrUSBWinDevice;
   public
-    constructor Create(ADataBaseFileName: String = '');
+    constructor Create(const ADataBaseFileName: String = '');
     destructor Destroy; override;
 
-    function New(AVendorID, AProductID: String): TACBrUSBWinDevice;
+    function New(const AVendorID, AProductID: String): TACBrUSBWinDevice;
     property Items[Index: Integer]: TACBrUSBWinDevice read GetItem;
     property Database: TACBrUSBIDDataBase read FDataBase;
 
-    function FindDeviceByGUID(AGUID: String): Integer;
-    function FindDeviceByDescription(ADeviceName: String): Integer;
+    function FindDeviceByGUID(const AGUID: String): Integer;
+    function FindDeviceByDescription(const ADeviceName: String): Integer;
   end;
 
 
@@ -264,7 +266,7 @@ type
     xSetupDiDestroyDeviceInfoList: function(DeviceInfoSet: HDEVINFO): BOOL; stdcall;
 
   private
-    procedure ExtractVidAndPid( ADeviceInterface: String; out AVid: String; out APid: String);
+    procedure ExtractVidAndPid(const ADeviceInterface: String; out AVid: String; out APid: String);
     function GetActive: Boolean;
     function GetDataBase: TACBrUSBIDDataBase;
 
@@ -296,18 +298,20 @@ type
 
     procedure Connect(AInterfaceName: String);
     procedure Close;
-    function SendData(AData: AnsiString; ATimeout: Integer = 0): Integer;
+    function SendData(const AData: AnsiString; ATimeout: Integer = 0): Integer;
     function ReceiveNumBytes(BytesToRead: Integer; ATimeout: Integer = 0): AnsiString;
-    function ReceiveTerminated(ATerminator: AnsiString; ATimeOut: Integer = 0): AnsiString;
+    function ReceiveTerminated(const ATerminator: AnsiString; ATimeOut: Integer = 0): AnsiString;
     function ReceivePacket(ATimeOut: Integer = 0): AnsiString;
 
     property OnLog: TACBrGravarLog read FOnLog write FOnLog;
     property LogFile: String read FLogFile write FLogFile;
-    procedure DoLog(AMessage: AnsiString; Translate: Boolean = False;
+    procedure DoLog(const AMessage: AnsiString; Translate: Boolean = False;
       AddTimeStamp: Boolean = True);
   end;
 
   function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
+  function FindCOMPortInDeviceName(ADeviceName: String): String;
+  function DeviceNameWithoutCOMPort(ADeviceName: String): String;
 
 implementation
 
@@ -331,6 +335,32 @@ begin
     Result := '';
   end;
 end;
+
+function FindCOMPortInDeviceName(ADeviceName: String): String;
+var
+  i, f: Integer;
+begin
+  Result := '';
+  i := pos('(COM', ADeviceName);
+  if (i > 0) then
+  begin
+    f := PosEx(')', ADeviceName, i + 1);
+    if (f > 0) then
+      Result := copy(ADeviceName, i + 1, f - i - 1);
+  end;
+end;
+
+function DeviceNameWithoutCOMPort(ADeviceName: String): String;
+var
+  VCOMPort: String;
+begin
+  VCOMPort := FindCOMPortInDeviceName(ADeviceName);
+  if (VCOMPort <> '') then
+    Result := StringReplace(ADeviceName, VCOMPort, 'VCOM', [rfReplaceAll])
+  else
+    Result := ADeviceName;
+end;
+
 
 { TACBrUSBIDDataBase }
 
@@ -495,6 +525,14 @@ begin
 end;
 
 function TACBrUSBWinDevice.GetDeviceName: String;
+begin
+  if (FrendlyName <> '') then
+    Result := FrendlyName
+  else
+    Result := DeviceACBrName;;
+end;
+
+function TACBrUSBWinDevice.GetDeviceACBrName: String;
 
   function ConcatDescription(ActualDescription, AddDescription: String): String;
   begin
@@ -507,24 +545,21 @@ function TACBrUSBWinDevice.GetDeviceName: String;
 
     Result := Result + AddDescription;
   end;
+
 begin
-  if (FrendlyName <> '') then
-    Result := FrendlyName
-  else
-  begin
-    Result := '';
-    LoadDescriptions;
-    if (pos(',',ProductModel) = 0) then
-      Result := ConcatDescription(Result, VendorName);
+  Result := '';
+  LoadDescriptions;
+  if (pos(',',ProductModel) = 0) then
+    Result := ConcatDescription(Result, VendorName);
 
-    Result := ConcatDescription(Result, ProductModel);
+  Result := ConcatDescription(Result, ProductModel);
 
-    if (Result = '') then
-      Result := VendorID + ', '+ ProductID;
+  if (Result = '') then
+    Result := VendorID + ', '+ ProductID;
 
-    //Result := ConcatDescription(Result, DeviceKindDescription(DeviceKind));
-  end;
+  //Result := ConcatDescription(Result, DeviceKindDescription(DeviceKind));
 end;
+
 
 function TACBrUSBWinDevice.GetDeviceKind: TACBrUSBHardwareType;
 begin
@@ -596,7 +631,7 @@ begin
   Result := TACBrUSBWinDevice(inherited Items[Index]);
 end;
 
-constructor TACBrUSBWinDeviceList.Create(ADataBaseFileName: String);
+constructor TACBrUSBWinDeviceList.Create(const ADataBaseFileName: String);
 begin
   inherited Create(True);
   FDataBase := TACBrUSBIDDataBase.Create(ADataBaseFileName);
@@ -608,7 +643,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrUSBWinDeviceList.New(AVendorID, AProductID: String
+function TACBrUSBWinDeviceList.New(const AVendorID, AProductID: String
   ): TACBrUSBWinDevice;
 begin
   Result := TACBrUSBWinDevice.Create(Self);
@@ -622,7 +657,7 @@ begin
   end;
 end;
 
-function TACBrUSBWinDeviceList.FindDeviceByGUID(AGUID: String): Integer;
+function TACBrUSBWinDeviceList.FindDeviceByGUID(const AGUID: String): Integer;
 var
   i: Integer;
   LGUID: String;
@@ -641,27 +676,28 @@ begin
   end;
 end;
 
-function TACBrUSBWinDeviceList.FindDeviceByDescription(ADeviceName: String
-  ): Integer;
+function TACBrUSBWinDeviceList.FindDeviceByDescription(const ADeviceName: String): Integer;
 var
   i, s: Integer;
-  LDeviceName: String;
+  UDeviceName1, UDeviceName2: String;
 begin
   // Partial Search and Ignore Case
   Result := -1;
   if Count < 1 then Exit;
 
   s := Length(ADeviceName);
-  if (s = 0) then
+  if (s = 0) then  // No DeviceName informed, get the first one
   begin
     Result := 0;
     Exit;
   end;
 
-  LDeviceName := LowerCase(ADeviceName);
-  for i := 0 to Count-1 do
+  UDeviceName1 := UpperCase(DeviceNameWithoutCOMPort(ADeviceName));
+
+  for i := 0 to Count - 1 do
   begin
-    if (LDeviceName = LowerCase(copy(Items[i].DeviceName, 1, s))) then
+    UDeviceName2 := UpperCase(copy(DeviceNameWithoutCOMPort(Items[i].DeviceName), 1, s));
+    if (UDeviceName1 = UDeviceName2) then
     begin
       Result := i;
       Break;
@@ -737,7 +773,7 @@ begin
   FLoaded := False;
 end;
 
-procedure TACBrUSBWinDeviceAPI.ExtractVidAndPid(ADeviceInterface: String; out
+procedure TACBrUSBWinDeviceAPI.ExtractVidAndPid(const ADeviceInterface: String; out
   AVid: String; out APid: String);
 var
   lowInt: String;
@@ -1037,7 +1073,7 @@ begin
   FInterfaceName := '';
 end;
 
-function TACBrUSBWinDeviceAPI.SendData(AData: AnsiString; ATimeout: Integer
+function TACBrUSBWinDeviceAPI.SendData(const AData: AnsiString; ATimeout: Integer
   ): Integer;
 var
   x, BytesWritten, Err: DWORD;
@@ -1098,7 +1134,7 @@ begin
     Delete(FInternalBuffer, 1, Length(Result));
 end;
 
-function TACBrUSBWinDeviceAPI.ReceiveTerminated(ATerminator: AnsiString;
+function TACBrUSBWinDeviceAPI.ReceiveTerminated(const ATerminator: AnsiString;
   ATimeOut: Integer): AnsiString;
 var
   TimeoutTime: TDateTime;
@@ -1187,7 +1223,7 @@ begin
   until (BytesReaded > 0) or (now > TimeoutTime);
 end;
 
-procedure TACBrUSBWinDeviceAPI.DoLog(AMessage: AnsiString; Translate: Boolean;
+procedure TACBrUSBWinDeviceAPI.DoLog(const AMessage: AnsiString; Translate: Boolean;
   AddTimeStamp: Boolean);
 var
   Handled: Boolean;

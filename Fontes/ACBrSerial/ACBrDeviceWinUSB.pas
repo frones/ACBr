@@ -167,10 +167,10 @@ end;
 procedure TACBrDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(const APorta: String;
   var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
 var
-  i, f: Integer;
-  uPorta, TipoPorta, DescPorta: String;
+  uPorta, TipoPorta, DescPorta1, DescPorta2, PortaCOM: String;
   DispositivoUSB: TACBrUSBWinDevice;
   Achou: Boolean;
+  i: Integer;
 begin
   if (WinUSB.DeviceList.Count < 1) then
     WinUSB.FindUSBPrinters;
@@ -181,7 +181,7 @@ begin
   DispositivoUSB := nil;
   uPorta := UpperCase(APorta);
   TipoPorta := copy(uPorta, 1, 3);
-  DescPorta := copy(uPorta, 5, Length(uPorta));
+  DescPorta1 := DeviceNameWithoutCOMPort(copy(uPorta, 5, Length(uPorta)));
 
   i := 0;
   Achou := False;
@@ -194,7 +194,10 @@ begin
     else if (TipoPorta = '\\?') then
       Achou := (uPorta = UpperCase(copy(DispositivoUSB.DeviceInterface, 1, Length(uPorta))))
     else if (TipoPorta = 'USB') then
-      Achou := (DescPorta = UpperCase(copy(DispositivoUSB.DeviceName, 1, Length(DescPorta))));
+    begin
+      DescPorta2 := DeviceNameWithoutCOMPort(DispositivoUSB.DeviceName);
+      Achou := (DescPorta1 = UpperCase(copy(DescPorta2, 1, Length(DescPorta1))));
+    end;
 
     Inc(i);
   end;
@@ -209,13 +212,9 @@ begin
       if (DeviceType = dtUSB) then
       begin
         // Se dispositivo Usa COM Virtual, prefira ela...
-        i := pos('(COM', DispositivoUSB.FrendlyName);
-        if (i > 0) then
-        begin
-          f := PosEx(')', DispositivoUSB.FrendlyName, i + 1);
-          if (f > 0) then
-            Porta := copy(DispositivoUSB.FrendlyName, i + 1, f - i - 1);
-        end;
+        PortaCOM := FindCOMPortInDeviceName(DispositivoUSB.DeviceName);
+        if (PortaCOM <> '') then
+          Porta := PortaCOM;
       end;
     end;
   end;

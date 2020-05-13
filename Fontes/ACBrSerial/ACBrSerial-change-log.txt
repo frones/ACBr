@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/05/2020
+-- ACBrDeviceWinUSB, ACBrWinUSBDevice --
+[*] Ajuste para detecção do DeviceName, quando a VCOM mudar de Nome.
+    Isso pode ocorrer quando o dispositivo é plugado em outra porta USB
+    (por: DSA)
+
 Data: 07/05/2020
 -- ACBrPosPrinter --
 [+] Adicionada funcionalidades de Impressão e Leitura de Cheques, para impressoras

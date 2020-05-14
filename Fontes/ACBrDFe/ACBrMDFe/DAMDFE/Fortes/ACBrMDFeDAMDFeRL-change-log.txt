@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2020
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] A variável CarregouLogo estava sendo atribuida mas não estava sendo
+    utilizada. Incluido as linhas que estavam faltando.
+   Por: Italo Jurisato Junior
+
 09/04/2020
 -- ACBrMDFeDAEventoRLRetrato --
 [-] https://www.projetoacbr.com.br/forum/topic/56891-impressão-mdfe-fortes/

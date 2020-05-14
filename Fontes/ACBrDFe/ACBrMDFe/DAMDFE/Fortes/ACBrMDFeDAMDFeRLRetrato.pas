@@ -237,6 +237,12 @@ begin
 
   CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDAMDFe.Logo);
 
+  if not CarregouLogo then
+  begin
+    rlmDadosEmitente.Left := rlmEmitente.Left;
+    rlmDadosEmitente.Width := rlmEmitente.Width;
+  end;
+
   if fpDAMDFe.ExpandeLogoMarca then
   begin
     rliLogo.top     := 3;

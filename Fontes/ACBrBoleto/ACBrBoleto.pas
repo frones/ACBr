@@ -3203,6 +3203,11 @@ begin
         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
+        // informações do local de pagamento
+        Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+        Liquidacao.Agencia    := Copy(Linha,169,4);
+        Liquidacao.Origem     := '';
+
         if (StrToIntDef(Copy(Linha,296,6),0) > 0) then
            DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
                                               Copy(Linha,298,2)+'/'+
@@ -3276,9 +3281,17 @@ begin
      begin
         if copy(Linha, 14, 1) = 'T' then
         begin
-           SeuNumero       := copy(Linha, 106, 25);
-           NumeroDocumento := copy(Linha, 59, 15);
-           Carteira        := copy(Linha, 58, 1);
+          SeuNumero := copy(Linha, 106, 25);
+          NumeroDocumento := copy(Linha, 59, 15);
+          Carteira := copy(Linha, 39, 2);
+
+          case strtoint(copy(Linha, 58, 1)) of
+            1: CaracTitulo := tcSimples;
+            2: CaracTitulo := tcVinculada;
+            3: CaracTitulo := tcCaucionada;
+            4: CaracTitulo := tcDescontada;
+            5: CaracTitulo := tcVendor;
+          end;
 
            TempData := copy(Linha, 74, 2) + '/'+copy(Linha, 76, 2)+'/'+copy(Linha, 78, 4);
            if TempData <> '00/00/0000' then

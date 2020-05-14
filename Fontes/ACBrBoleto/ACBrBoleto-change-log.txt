@@ -50,6 +50,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2020
+
+-- ACBrBancoBancoob--
+[*] Ajuste no Header CNAB240 informando número do convenio.
+https://www.projetoacbr.com.br/forum/topic/57503-corre%C3%A7%C3%A3o-acbrbancobancoobpas/
+
+-- ACBrBoleto--
+[+] Retorno CNAB400 - Adicionado Leitura do Banco e Agencia Cobradora
+https://www.projetoacbr.com.br/forum/topic/57423-campo-acbr-boleto-lerretorno400/
+
+-- ACBrBancoBradesco--
+[*] Ajuste leitura CNAB240 - referente código de Carteira e Número de Carteira.
+https://www.projetoacbr.com.br/forum/topic/57323-refactory-acbrboleto/
+
+-- ACBrBancoUnicredES--
+[*] Ajuste Remessa CNAB400 adicionado validação de Código de Protesto e Dias para Protesto
+https://www.projetoacbr.com.br/forum/topic/57323-refactory-acbrboleto
+
 -- ACBrUniprime--
 [*] Ajuste Remessa CNAB400 posição 02 - 20 caracteres em branco
 

@@ -393,7 +393,7 @@ end;
 
 procedure TACBrBancoDaycoval.GerarRegistrosNFe(ACBrTitulo: TACBrTitulo;  aRemessa: TStringList);
 var
-  wQtdRegNFes, J, I, wQtdNFeNaLinha: Integer;
+  wQtdRegNFes, J, I: Integer;
   wLinha, NFeSemDados: String;
   Continua: Boolean;
 begin  // Obrigatorio o envio da linha referente a nota fiscal 
@@ -410,7 +410,6 @@ begin  // Obrigatorio o envio da linha referente a nota fiscal
       Continua:=  true;
 
       wLinha:= '4';
-      wQtdNFeNaLinha:= 0;
       while (Continua) and (J < ACBrTitulo.ListaDadosNFe.Count) do
       begin
          wLinha:= wLinha +
@@ -420,7 +419,6 @@ begin  // Obrigatorio o envio da linha referente a nota fiscal
                   PadLeft(ACBrTitulo.ListaDadosNFe[J].ChaveNFe, 44, '0');
 
          Inc(J);
-         Inc(wQtdNFeNaLinha);
          Continua:= (J mod 3) <> 0 ;
       end;
 	  

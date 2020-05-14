@@ -104,7 +104,7 @@ begin
     sTipoSacado := DefineTipoSacado(ACBrTitulo);
 
     {Pegando campo Intruções}
-    sProtesto:= InstrucoesProtesto(ACBrTitulo);
+    sProtesto:= DefineTipoDiasProtesto(ACBrTitulo); //InstrucoesProtesto(ACBrTitulo);
 
     with ACBrBoleto do
     begin
@@ -127,7 +127,7 @@ begin
                 sTipoMulta                                                    +{ 094 a 094	  Código da Multa	001}
                 IntToStrZero(Round(PercentualMulta * 100), 10)                +{ 095 a 104	  Valor/Percentual da Multa	010 }
                 CodJurosToStr(CodigoMoraJuros,ValorMoraJuros)                 +{ 105 a 105	  Tipo de Valor Mora	001}
-                '0'                                                           +{ 106 a 106	  Filler	001 }
+                'N'                                                           +{ 106 a 106	  Filler	001 }
                 Space(2)                                                      +{ 107 a 108	  Branco	002	Branco }
                 TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo)           +{ 109 a 110	  Identificação da Ocorrência	002 }
                 PadRight(ACBrTitulo.SeuNumero, 10)                            +{ 111 a 120	  Nº do Documento (Seu número)	010 }
@@ -138,7 +138,11 @@ begin
                 StringOfChar('0', 2)                                          +{ 148 a 149	  Filler	002	Zeros}
                 CodDescontoToStr(CodigoDesconto)                              +{ 150 a 150	  Código do desconto	001}
                 FormatDateTime('ddmmyy', DataDocumento)                       +{ 151 a 156	  Data de emissão do Título	006 }
-                sProtesto                                                     +{ 157 a 160	  Filler	004 }
+                '0'                                                           +{ 157 a 157	  Filler	004 }
+                IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
+                        sProtesto, '3')                                       +{ 158 a 158	  TipoDiasProtesto }
+                IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
+                        PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')      +{ 159 a 160      Número de Dias para Protesto }
                 IntToStrZero(Round(ValorMoraJuros * 100), 13)                 +{ 161 a 173  	Valor de Mora  	013 }
                 IfThen(DataDesconto < EncodeDate(2000,01,01), '000000',
                        FormatDateTime('ddmmyy', DataDesconto))                +{ 174 a 179  	Data Limite P/Concessão de Desconto  	006 }

@@ -10,7 +10,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   TextHeight = 10
   inherited RLCTe: TRLReport
     Left = 8
-    Top = -500
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000

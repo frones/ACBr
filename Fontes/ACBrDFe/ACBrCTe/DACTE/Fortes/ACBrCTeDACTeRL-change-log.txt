@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2020
+-- ACBrCTeDACTeRLRetrato --
+[*] A variável CarregouLogo estava sendo atribuida mas não estava sendo
+    utilizada. Incluido as linhas que estavam faltando.
+   Por: Italo Jurisato Junior
+
 01/04/2020
 -- ACBrCTeDAEventoRLRetrato --
 [+] Inclusão dos eventos novos.

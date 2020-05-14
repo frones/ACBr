@@ -1081,15 +1081,11 @@ var
 begin
   inherited;
 
-  if (fpDACTe.Logo <> '') then
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDACTe.Logo);
+  if not CarregouLogo then
   begin
-    CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDACTe.Logo);
-  end
-  else
-  begin
-    rlmDadosEmitente.Left := 7;
-    rlmDadosEmitente.Width := 302;
-    rlmDadosEmitente.Alignment := taCenter;
+    rlmDadosEmitente.Left := rlmEmitente.Left;
+    rlmDadosEmitente.Width := rlmEmitente.Width;
   end;
 
   if fpDACTe.ExpandeLogoMarca then

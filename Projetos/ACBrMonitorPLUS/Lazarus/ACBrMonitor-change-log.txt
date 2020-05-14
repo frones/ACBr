@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] DoACBrUnit
+Adicionado os métodos EncodeBase64 e DecodeBase64, como estes métodos é possível transferir arquivos binários utilizando
+comunicação TCP/IP, pode ser útil para transferir arquivos .pdf que são gerados no Servidor para ser emitidos na estação Client
+
 [*] DoSATUnit
 Ajuste na validação do XML passado como parâmetro no método EnviarCFe
 

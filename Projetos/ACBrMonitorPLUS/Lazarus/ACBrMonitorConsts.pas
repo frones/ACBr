@@ -405,6 +405,8 @@ const
   CMetodoDeleteFiles =                 'deletefiles';
   CMetodoAjustaLnhasLog =              'ajustalinhaslog';
   CMetodoSetWebservice =               'setwebservice';
+  CMetodoEncodeBase64 =                'encodebase64';
+  CMetodoDecodeBase64 =                'decodebase64';
 
   CMetodoValidarnfe =                  'validarnfe';
   CMetodoAssinarnfe =                  'assinarnfe';

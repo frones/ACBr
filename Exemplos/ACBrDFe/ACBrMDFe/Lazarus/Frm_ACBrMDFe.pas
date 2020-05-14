@@ -1660,8 +1660,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    ACBrMDFe1.Conhecimentos.Clear;
-    ACBrMDFe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
   end;
 
   OpenDialog1.Title := 'Selecione o evento';

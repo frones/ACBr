@@ -1,34 +1,34 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Juliomar Marchetti                              }
 {                              Claudemir Vitor Pereira                         }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -71,7 +71,7 @@ type
     function GetItem(Index: Integer): TRejeicaoGuiaCollectionItem;
     procedure SetItem(Index: Integer; Value: TRejeicaoGuiaCollectionItem);
   public
-    function Add: TRejeicaoGuiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a funÁ„o New'{$EndIf};
+    function Add: TRejeicaoGuiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a fun√ß√£o New'{$EndIf};
     function New: TRejeicaoGuiaCollectionItem;
     property Items[Index: Integer]: TRejeicaoGuiaCollectionItem read GetItem write SetItem; default;
   end;
@@ -168,7 +168,7 @@ type
     function GetItem(Index: Integer): TGuiaCollectionItem;
     procedure SetItem(Index: Integer; Value: TGuiaCollectionItem);
   public
-    function Add: TGuiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a funÁ„o New'{$EndIf};
+    function Add: TGuiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a fun√ß√£o New'{$EndIf};
     function New: TGuiaCollectionItem;
     property Items[Index: Integer]: TGuiaCollectionItem read GetItem write SetItem; default;
   end;
@@ -529,8 +529,8 @@ begin
             32 - Valor Multa FP
             41 - Valor Juros ICMS
             42 - Valor Juros FP
-            51 - Valor AtualizaÁ„o Monetaria ICMS
-            52 - Valor AtualizaÁ„o Monetaria FP
+            51 - Valor Atualiza√ß√£o Monetaria ICMS
+            52 - Valor Atualiza√ß√£o Monetaria FP
             }
             if Leitor.rAtributo('tipo=', 'valor') = '11' then
               resGuia.Items[i].ValorPrincipal := Leitor.rCampo(tcDe2, 'valor');
@@ -550,6 +550,19 @@ begin
             Inc(k);
           end;
 
+          Inc(j);
+        end;
+      end;
+
+      if Leitor.rExtrai(4, 'motivosRejeicao') <> '' then
+      begin
+        j:=0;
+        while Leitor.rExtrai(5, 'motivo', '', j + 1) <> '' do
+        begin
+          resRejeicaoGuia.New;
+          resRejeicaoGuia.Items[j].CodMotivoRejeicao  := Leitor.rCampo(tcInt, 'codigo');
+          resRejeicaoGuia.Items[j].DescMotivoRejeicao := Leitor.rCampo(tcStr, 'descricao');
+          resRejeicaoGuia.Items[j].NomeCampo          := Leitor.rCampo(tcStr, 'campo');
           Inc(j);
         end;
       end;

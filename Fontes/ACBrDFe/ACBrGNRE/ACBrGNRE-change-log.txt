@@ -45,6 +45,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2020
+-- ACBrGNREWebServices --
+[*] No método TGNRERecepcao.DefinirDadosMsg foi incluido a chamada ao 
+    método RemoverDeclaracaoXML pois estava duplicando.
+  Por: Italo Jurisato Junior
+-- pgnreRetConsResLoteGNRE --
+[*] Incluido a leitura do grupo <motivosRejeicao>.
+  Por: RP Info Sistemas
+
 08/05/2020
 -- ACBrGNREWebServices --
 [*] No método TGNRERecepcao.DefinirDadosMsg foi trocado a propriedade XML por

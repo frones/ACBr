@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2020
+-- ACBrDFeXsMsXmlCapicom --
+[-] Correção para erro 'Conjunto de chaves não está definido' quando usando
+    certificados A3.
+    (por: BigWings)
+
 13/05/2020
 -- ACBrDFeHttpOpenSSL, ACBrDFeSSL --
 [-] Correção para exibir Erros não relacionados a transmissão

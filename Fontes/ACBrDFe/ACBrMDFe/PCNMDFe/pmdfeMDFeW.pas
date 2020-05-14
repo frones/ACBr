@@ -1173,7 +1173,8 @@ begin
 
     Gerador.wGrupo('/infResp');
 
-    if MDFe.seg[i].respSeg = rsTomadorServico {MDFe.seg[i].xSeg <> ''} then
+    if MDFe.Ide.tpEmit in [teTransportadora, teTranspCTeGlobalizado] then
+//    if MDFe.seg[i].respSeg = rsTomadorServico {MDFe.seg[i].xSeg <> ''} then
     begin
       Gerador.wGrupo('infSeg', '#123');
       Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);

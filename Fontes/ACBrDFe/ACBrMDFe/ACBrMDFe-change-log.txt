@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2020
+-- pmdfeMDFeW--
+[*] Corrigido a condição para definir se o grupo <infSeg> vai ser gerado ou não.
+   Por: Italo Jurisato Junior
+
 12/05/2020
 -- pmdfeMDFeW--
 [*] Alterado a condição para definir se o grupo <infSeg> vai ser gerado ou não.

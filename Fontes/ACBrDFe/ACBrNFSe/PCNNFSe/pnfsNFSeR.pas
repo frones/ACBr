@@ -2065,14 +2065,13 @@ begin
     NFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
 
   end; // fim EnderecoPrestadorServico
-  (*
-  if (Leitor.rExtrai(3, 'ContatoPrestadorServico') <> '') or
-     (Leitor.rExtrai(3, 'Contato') <> '') then
+
+  if (Leitor.rExtrai(3, 'ContatoPrestadorServico') <> '') then
   begin
     NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'Telefone');
     NFSe.PrestadorServico.Contato.Email    := Leitor.rCampo(tcStr, 'Email');
   end; // fim ContatoPrestadorServico
-  *)
+
   if Leitor.rExtrai(3, 'OrgaoGerador') <> '' then
   begin
     NFSe.OrgaoGerador.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');

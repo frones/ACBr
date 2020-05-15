@@ -51,7 +51,7 @@ Private Declare Function POS_ConfigLerValor _
 Private Declare Function POS_ConfigGravarValor _
                 Lib "ACBrPosPrinter32.dll" (ByVal eSessao As String, _
                                             ByVal eChave As String, _
-                                            ByVal valor As String) As Long
+                                            ByVal Valor As String) As Long
                     
 Private Declare Function POS_Ativar Lib "ACBrPosPrinter32.dll" () As Long
 
@@ -74,18 +74,27 @@ Private Declare Function POS_ImprimirTags Lib "ACBrPosPrinter32.dll" () As Long
 
 Private Declare Function POS_ImprimirImagemArquivo Lib "ACBrPosPrinter32.dll" (ByVal aPath As String) As Long
 
-Private Declare Function POS_GravarLogoArquivo Lib "ACBrPosPrinter32.dll" (ByVal aPath As String, _
-                                                                           ByVal nAKC1 As Long, _
-                                                                           ByVal nAKC2 As Long) As Long
-                                                                           
+                                                                          
 Private Declare Function POS_ImprimirLogo Lib "ACBrPosPrinter32.dll" (ByVal nAKC1 As Long, _
                                                                            ByVal nAKC2 As Long, _
                                                                            ByVal nFatorX As Long, _
                                                                            ByVal nFatorY As Long) As Long
                                                                            
-Private Declare Function POS_ApagarLogo Lib "ACBrPosPrinter32.dll" (ByVal nAKC1 As Long, _
-                                                                      ByVal nAKC2 As Long) As Long
-
+Private Declare Function POS_ImprimirCheque Lib "ACBrPosPrinter32.dll" (ByVal CodBanco As Long, _
+                                                                        ByVal AValor As String, _
+                                                                        ByVal ADataEmissao As String, _
+                                                                        ByVal AFavorecido As String, _
+                                                                        ByVal ACidade As String, _
+                                                                        ByVal AComplemento As String, _
+                                                                        ByVal LerCMC7 As Boolean, _
+                                                                        ByVal SegundosEspera As Long) As Long
+                                                                        
+Private Declare Function POS_ImprimirTextoCheque Lib "ACBrPosPrinter32.dll" (ByVal x As Long, _
+                                                                             ByVal y As Long, _
+                                                                             ByVal Texto As String, _
+                                                                             ByVal AguardaCheque As Boolean, _
+                                                                             ByVal SegundosEspera As Long) As Long
+                                                                           
 Private Declare Function POS_TxRx _
                 Lib "ACBrPosPrinter32.dll" (ByVal aString As String, _
                                             ByVal bytesToRead As Byte, _
@@ -124,6 +133,28 @@ Private Declare Function POS_RetornarTags _
 Private Declare Function POS_AcharPortas _
                 Lib "ACBrPosPrinter32.dll" (ByVal buffer As String, _
                                             ByRef bufferLen As Long) As Long
+                                            
+Private Declare Function POS_GravarLogoArquivo Lib "ACBrPosPrinter32.dll" (ByVal aPath As String, _
+                                                                           ByVal nAKC1 As Long, _
+                                                                           ByVal nAKC2 As Long) As Long
+                                                                           
+Private Declare Function POS_ApagarLogo Lib "ACBrPosPrinter32.dll" (ByVal nAKC1 As Long, _
+                                                                    ByVal nAKC2 As Long) As Long
+                                                                    
+Private Declare Function POS_LeituraCheque Lib "ACBrPosPrinter32.dll" (ByVal buffer As String, _
+                                                                       ByRef bufferLen As Long) As Long
+                                                                       
+Private Declare Function POS_LerCMC7 Lib "ACBrPosPrinter32.dll" (ByVal AguardaCheque As Boolean, _
+                                                                 ByVal SegundosEspera As Long, _
+                                                                 ByVal buffer As String, _
+                                                                 ByRef bufferLen As Long) As Long
+                                                                 
+Private Declare Function POS_EjetarCheque Lib "ACBrPosPrinter32.dll" () As Long
+
+Private Declare Function POS_PodeLerDaPorta Lib "ACBrPosPrinter32.dll" () As Long
+
+Private Declare Function POS_LerCaracteristicas Lib "ACBrPosPrinter32.dll" (ByVal buffer As String, _
+                                                                            ByRef bufferLen As Long) As Long
                    
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
@@ -188,11 +219,11 @@ End Function
 
 Public Sub ConfigGravarValor(ByVal eSessao As String, _
                              ByVal eChave As String, _
-                             ByVal valor As String)
+                             ByVal Valor As String)
 
     Dim retorno As Long
     
-    retorno = POS_ConfigGravarValor(eSessao, eChave, valor)
+    retorno = POS_ConfigGravarValor(eSessao, eChave, Valor)
     CheckResult (retorno)
 End Sub
 
@@ -288,16 +319,6 @@ Public Sub ImprimirImagemArquivo(ByVal aPath As String)
     CheckResult (retorno)
 End Sub
 
-Public Sub GravarLogoArquivo(ByVal aPath As String, _
-                             Optional ByVal nAKC1 As Long = -1, _
-                             Optional ByVal nAKC2 As Long = -1)
-
-    Dim retorno As Long
-
-    retorno = POS_GravarLogoArquivo(aPath, nAKC1, nAKC2)
-    CheckResult (retorno)
-End Sub
-
 Public Sub ImprimirLogo(Optional ByVal nAKC1 As Long = -1, _
                             Optional ByVal nAKC2 As Long = -1, _
                             Optional ByVal nFatorX As Long = -1, _
@@ -309,12 +330,34 @@ Public Sub ImprimirLogo(Optional ByVal nAKC1 As Long = -1, _
     CheckResult (retorno)
 End Sub
 
-Public Sub ApagarLogo(Optional ByVal nAKC1 As Long = -1, _
-                            Optional ByVal nAKC2 As Long = -1)
+Public Sub ImprimirCheque(ByVal CodBanco As Long, _
+                          ByVal AValor As Double, _
+                          ByVal ADataEmissao As Date, _
+                          ByVal AFavorecido As String, _
+                          ByVal ACidade As String, _
+                          ByVal AComplemento As String, _
+                          ByVal LerCMC7 As Boolean, _
+                          ByVal SegundosEspera As Long)
 
     Dim retorno As Long
+    Dim Data, Valor As String
+    
+    Data = Format(ADataEmissao, "dd/mm/yyyy")
+    Valor = CStr(AValor)
 
-    retorno = POS_ApagarLogo(nAKC1, nAKC2)
+    retorno = POS_ImprimirCheque(CodBanco, Valor, Data, AFavorecido, ACidade, AComplemento, LerCMC7, SegundosEspera)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ImprimirTextoCheque(ByVal x As Long, _
+                               ByVal y As Long, _
+                               ByVal Texto As String, _
+                               ByVal AguardaCheque As Boolean, _
+                               ByVal SegundosEspera As Long)
+
+    Dim retorno As Long
+    
+    retorno = POS_ImprimirTextoCheque(x, y, Texto, AguardaCheque, SegundosEspera)
     CheckResult (retorno)
 End Sub
 
@@ -426,7 +469,7 @@ Public Function RetornarTags(Optional ByVal InclueAjuda As Boolean = True) As St
     retorno = POS_RetornarTags(InclueAjuda, buffer, bufferLen)
     CheckResult (retorno)
     
-    RetornarTags = Split(Trim$(FromUTF8(buffer)), "|")
+    RetornarTags = Split(processResult(buffer, bufferLen), "|")
 End Function
 
 Public Function AcharPortas() As String()
@@ -436,13 +479,94 @@ Public Function AcharPortas() As String()
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
-    
     buffer = String$(bufferLen, " ")
 
     retorno = POS_AcharPortas(buffer, bufferLen)
     CheckResult (retorno)
     
-    AcharPortas = Split(Trim$(FromUTF8(buffer)), "|")
+    AcharPortas = Split(processResult(buffer, bufferLen), "|")
+End Function
+
+Public Sub GravarLogoArquivo(ByVal aPath As String, _
+                             Optional ByVal nAKC1 As Long = -1, _
+                             Optional ByVal nAKC2 As Long = -1)
+
+    Dim retorno As Long
+
+    retorno = POS_GravarLogoArquivo(aPath, nAKC1, nAKC2)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ApagarLogo(Optional ByVal nAKC1 As Long = -1, _
+                      Optional ByVal nAKC2 As Long = -1)
+
+    Dim retorno As Long
+
+    retorno = POS_ApagarLogo(nAKC1, nAKC2)
+    CheckResult (retorno)
+End Sub
+
+Public Function LeituraCheque() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+
+    retorno = POS_LeituraCheque(buffer, bufferLen)
+    CheckResult (retorno)
+    
+    LeituraCheque = processResult(buffer, bufferLen)
+End Function
+
+Public Function LerCMC7(ByVal AguardaCheque As Boolean, _
+                              ByVal SegundosEspera As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+
+    retorno = POS_LerCMC7(AguardaCheque, SegundosEspera, buffer, bufferLen)
+    CheckResult (retorno)
+    
+    LeituraCheque = processResult(buffer, bufferLen)
+End Function
+
+Public Sub EjetarCheque()
+
+    Dim retorno As Long
+
+    retorno = POS_EjetarCheque()
+    CheckResult (retorno)
+End Sub
+
+Public Function PodeLerDaPorta() As Boolean
+    Dim retorno   As Long
+
+    retorno = POS_PodeLerDaPorta()
+    CheckResult (retorno)
+    
+    PodeLerDaPorta = retorno = 1
+End Function
+
+Public Function LerCaracteristicas() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+
+    retorno = POS_LerCaracteristicas(buffer, bufferLen)
+    CheckResult (retorno)
+    
+    LerCaracteristicas = processResult(buffer, bufferLen)
 End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)

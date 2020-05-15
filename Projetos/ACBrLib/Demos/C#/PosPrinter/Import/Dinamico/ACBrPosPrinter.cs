@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -63,6 +64,19 @@ namespace ACBrLibPosPrinter
             public delegate int POS_ImprimirTags();
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ImprimirImagemArquivo(string aPath);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ImprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ImprimirCheque(int CodBanco, string AValor, string ADataEmissao, string AFavorecido,
+               string ACidade, string AComplemento, bool LerCMC7, int SegundosEspera);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ImprimirTextoCheque(int X, int Y, string AString, bool AguardaCheque, int SegundosEspera);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int POS_TxRx(string aString, byte bytesToRead, int aTimeOut, bool waitForTerminator, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -94,6 +108,27 @@ namespace ACBrLibPosPrinter
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int POS_AcharPortas(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_GravarLogoArquivo(string aPath, int nAKC1, int nAKC2);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ApagarLogo(int nAKC1, int nAKC2);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_LeituraCheque(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_LerCMC7(bool AguardaCheque, int SegundosEspera, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_EjetarCheque();
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_PodeLerDaPorta();
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_LerCaracteristicas(StringBuilder buffer, ref int bufferSize);
         }
 
         #endregion InnerTypes
@@ -326,6 +361,79 @@ namespace ACBrLibPosPrinter
             return ProcessResult(buffer, bufferLen).Split('|');
         }
 
+        public void GravarLogoArquivo(string aPath, int nAKC1, int nAKC2)
+        {
+            var method = GetMethod<Delegates.POS_GravarLogoArquivo>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aPath), nAKC1, nAKC2));
+
+            CheckResult(ret);
+        }
+
+        public void ApagarLogo(int nAKC1, int nAKC2)
+        {
+            var method = GetMethod<Delegates.POS_ApagarLogo>();
+            var ret = ExecuteMethod(() => method(nAKC1, nAKC2));
+
+            CheckResult(ret);
+        }
+
+        public string LeituraCheque()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.POS_LeituraCheque>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public string LerCMC7(bool AguardaCheque, int SegundosEspera)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.POS_LerCMC7>();
+            var ret = ExecuteMethod(() => method(AguardaCheque, SegundosEspera, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void EjetarCheque()
+        {
+            var method = GetMethod<Delegates.POS_EjetarCheque>();
+            var ret = ExecuteMethod(() => method());
+
+            CheckResult(ret);
+        }
+
+        public bool PodeLerDaPorta()
+        {
+            var method = GetMethod<Delegates.POS_PodeLerDaPorta>();
+            var ret = ExecuteMethod(() => method());
+
+            CheckResult(ret);
+
+            return ret == 1;
+        }
+
+        public string LerCaracteristicas()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.POS_LerCaracteristicas>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         #endregion Diversos
 
         #region Imprimir
@@ -358,6 +466,44 @@ namespace ACBrLibPosPrinter
         {
             var method = GetMethod<Delegates.POS_ImprimirTags>();
             var ret = ExecuteMethod(() => method());
+
+            CheckResult(ret);
+        }
+
+        public void ImprimirImagemArquivo(string aPath)
+        {
+            var method = GetMethod<Delegates.POS_ImprimirImagemArquivo>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aPath)));
+
+            CheckResult(ret);
+        }
+
+        public void ImprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY)
+        {
+            var method = GetMethod<Delegates.POS_ImprimirLogo>();
+            var ret = ExecuteMethod(() => method(nAKC1, nAKC2, nFatorX, nFatorY));
+
+            CheckResult(ret);
+        }
+
+        public void ImprimirCheque(int CodBanco, decimal AValor, DateTime ADataEmissao, string AFavorecido,
+            string ACidade, string AComplemento, bool LerCMC7, int SegundosEspera)
+        {
+            var method = GetMethod<Delegates.POS_ImprimirCheque>();
+
+            var valor = AValor.ToString("N2", CultureInfo.CreateSpecificCulture("pt-BR"));
+            var data = ADataEmissao.ToString("dd/MM/yyyy");
+
+            var ret = ExecuteMethod(() => method(CodBanco, ToUTF8(valor), ToUTF8(data), ToUTF8(AFavorecido), ToUTF8(ACidade),
+                                                 ToUTF8(AComplemento), LerCMC7, SegundosEspera));
+
+            CheckResult(ret);
+        }
+
+        public void ImprimirTextoCheque(int X, int Y, string AString, bool AguardaCheque, int SegundosEspera)
+        {
+            var method = GetMethod<Delegates.POS_ImprimirTextoCheque>();
+            var ret = ExecuteMethod(() => method(X, Y, ToUTF8(AString), AguardaCheque, SegundosEspera));
 
             CheckResult(ret);
         }
@@ -404,6 +550,10 @@ namespace ACBrLibPosPrinter
             AddMethod<Delegates.POS_ImprimirLinha>("POS_ImprimirLinha");
             AddMethod<Delegates.POS_ImprimirCmd>("POS_ImprimirCmd");
             AddMethod<Delegates.POS_ImprimirTags>("POS_ImprimirTags");
+            AddMethod<Delegates.POS_ImprimirImagemArquivo>("POS_ImprimirImagemArquivo");
+            AddMethod<Delegates.POS_ImprimirLogo>("POS_ImprimirLogo");
+            AddMethod<Delegates.POS_ImprimirCheque>("POS_ImprimirCheque");
+            AddMethod<Delegates.POS_ImprimirTextoCheque>("POS_ImprimirTextoCheque");
             AddMethod<Delegates.POS_TxRx>("POS_TxRx");
             AddMethod<Delegates.POS_Zerar>("POS_Zerar");
             AddMethod<Delegates.POS_InicializarPos>("POS_InicializarPos");
@@ -415,6 +565,13 @@ namespace ACBrLibPosPrinter
             AddMethod<Delegates.POS_LerStatusImpressora>("POS_LerStatusImpressora");
             AddMethod<Delegates.POS_RetornarTags>("POS_RetornarTags");
             AddMethod<Delegates.POS_AcharPortas>("POS_AcharPortas");
+            AddMethod<Delegates.POS_GravarLogoArquivo>("POS_GravarLogoArquivo");
+            AddMethod<Delegates.POS_ApagarLogo>("POS_ApagarLogo");
+            AddMethod<Delegates.POS_LeituraCheque>("POS_LeituraCheque");
+            AddMethod<Delegates.POS_LerCMC7>("POS_LerCMC7");
+            AddMethod<Delegates.POS_EjetarCheque>("POS_EjetarCheque");
+            AddMethod<Delegates.POS_PodeLerDaPorta>("POS_PodeLerDaPorta");
+            AddMethod<Delegates.POS_LerCaracteristicas>("POS_LerCaracteristicas");
         }
 
         protected override string GetUltimoRetorno(int iniBufferLen = 0)

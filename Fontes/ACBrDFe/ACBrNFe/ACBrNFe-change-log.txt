@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2020
+-- ACBrNFeWebServices --
+[*] Realizado uma alteração no método: TDistribuicaoDFe.DefinirURL para 
+    que o modelo a ser utilizado seja obtido da chave da NF-e caso tenha 
+    sido informada, caso contrario utilizar a configuração do componente
+   Por: Italo Jurisato Junior
+
 11/05/2020
 -- pcnNFeW --
 [-] Correção na quantidade minima de caracteres do campo CMT de 9 para 1.

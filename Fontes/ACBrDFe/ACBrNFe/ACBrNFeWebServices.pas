@@ -2534,13 +2534,13 @@ begin
   FPLayout    := LayNfeInutilizacao;
   FPArqEnv    := 'ped-inu';
   FPArqResp   := 'inu';
-  FProtocolo  := '';
 
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
   Fversao   := '';
   FdhRecbto := 0;
+  FProtocolo := '';
   FXML_ProcInutNFe := '';
 
   if Assigned(FPConfiguracoesNFe) then
@@ -3579,10 +3579,16 @@ end;
 
 procedure TDistribuicaoDFe.DefinirURL;
 var
-  UF : String;
+  UF, Modelo: String;
   Versao: Double;
+  Ok: Boolean;
 begin
   { Esse método é tratado diretamente pela RFB }
+
+  if FchNFe <> '' then
+    Modelo := ModeloDFToPrefixo(StrToModeloDF(ok, ExtrairModeloChaveAcesso(FchNFe)))
+  else
+    Modelo := TACBrNFe(FPDFeOwner).GetNomeModeloDFe;
 
   UF := 'AN';
 
@@ -3592,7 +3598,7 @@ begin
   Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
+    Modelo,
     UF ,
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),

@@ -12,7 +12,7 @@ uses
 type
 
   TProximaOperacao = (popLivre, popCancelarOperacao, popIrParaPagamentos, popIniciarNovaOperacao);
-  TStatusOperacao = (stsLivre, stsIniciada, stsEmPagamento, stFinalizada);
+  TStatusOperacao = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada);
 
   { TFormPrincipal }
 
@@ -20,7 +20,10 @@ type
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrTEFD1: TACBrTEFD;
     btConfiguracoes: TBitBtn;
+    btAdministrativo: TBitBtn;
+    btIncluirPagamentos: TBitBtn;
     btImprimir: TBitBtn;
+    btExcluirPagamento: TBitBtn;
     btLerParametros: TBitBtn;
     btLimparImpressao: TBitBtn;
     btLimparLog: TBitBtn;
@@ -41,14 +44,22 @@ type
     cbAutoAtivar: TCheckBox;
     cbMultiplosCartoes: TCheckBox;
     cbSuportaDesconto: TCheckBox;
+    cbSimularErroNoDoctoFiscal: TCheckBox;
     gbPagamentos: TGroupBox;
     Label14: TLabel;
+    Label15: TLabel;
+    Label17: TLabel;
     mImpressao: TMemo;
     mLog: TMemo;
+    Panel1: TPanel;
+    pgOperacoes: TPageControl;
     pBotoesPagamentos: TPanel;
     pBotoesImpressora: TPanel;
     pBotoesMemo: TPanel;
     pImpressao: TPanel;
+    pMensagem: TPanel;
+    pMensagemCliente: TPanel;
+    pMensagemOperador: TPanel;
     pStatus: TPanel;
     seEsperaSleep: TSpinEdit;
     seMaxCartoes: TSpinEdit;
@@ -92,6 +103,8 @@ type
     seValorOperacao: TFloatSpinEdit;
     Splitter1: TSplitter;
     sgPagamentos: TStringGrid;
+    tsMensagens: TTabSheet;
+    tsLog: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
     procedure btEfetuarPagamentosClick(Sender: TObject);
@@ -195,6 +208,7 @@ begin
 
   pgPrincipal.ShowTabs := False;
   pgPrincipal.ActivePageIndex := 0;
+  pgOperacoes.ActivePageIndex := 0;
 
   LerConfiguracao;
   FStatusOperacao := High(TStatusOperacao);  // Força atualização
@@ -347,7 +361,7 @@ begin
 
   FProximaOperacao := AValue;
 
-  btEfetuarPagamentos.Visible := (FProximaOperacao in [popIrParaPagamentos]);
+  btEfetuarPagamentos.Enabled := (FProximaOperacao in [popIrParaPagamentos]);
   btOperacao.Visible := (MsgOperacao <> '');
   btOperacao.Caption := MsgOperacao;
 end;
@@ -375,7 +389,7 @@ begin
       sgPagamentos.SetFocus;
     end;
 
-    stFinalizada:
+    stsFinalizada:
     begin
       MsgStatus := 'FINALIZADA';
       ProximaOperacao := popIniciarNovaOperacao;

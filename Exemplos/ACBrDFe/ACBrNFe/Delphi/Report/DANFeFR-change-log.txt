@@ -52,6 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2020
+-- DANFeNFCe5_00.fr3 --
+[-] Correção para exibir o acréscimo por item.
+    https://www.projetoacbr.com.br/forum/topic/57631-danfe-nfc-e-n%C3%A3o-mostra-acr%C3%A9scimo/
+  Por: BigWings
+
 20/04/2020
 -- DANFePaisagem.fr3 --
 [-] Correção na impressão do nome no quadro "Local de entrega".

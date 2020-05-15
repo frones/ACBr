@@ -46,8 +46,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos,
-  pcesConversaoeSocial;
+  ACBrBase, pcesIniciais, pcesTabelas,
+  pcesNaoPeriodicos, pcesPeriodicos, pcesConversaoeSocial;
 
 type
 
@@ -83,6 +83,7 @@ type
     FTipoEmpregador: TEmpregador;
     FGerados: TGeradosCollection;
     FOwner: TComponent;
+
     procedure SetNaoPeriodicos(const Value: TNaoPeriodicos);
     procedure SetPeriodicos(const Value: TPeriodicos);
     procedure SetTabelas(const Value: TTabelas);
@@ -158,6 +159,7 @@ end;
 constructor TEventos.Create(AOwner: TComponent);
 begin
   inherited Create;
+
   FOwner         := AOwner;
   FIniciais      := TIniciais.Create(AOwner);
   FTabelas       := TTabelas.Create(AOwner);
@@ -311,7 +313,8 @@ begin
     Result := Self.NaoPeriodicos.LoadFromString(AXML) or Result;
     Result := Self.Periodicos.LoadFromString(AXML) or Result;
 
-    SaveToFiles;
+    if TACBreSocial(Self.FOwner).Configuracoes.Arquivos.Salvar then
+      SaveToFiles;
 
     P := PoseSocial;
   end;
@@ -324,7 +327,8 @@ begin
   Result := Self.NaoPeriodicos.LoadFromIni(AIniString) or Result;
   Result := Self.Periodicos.LoadFromIni(AIniString) or Result;
 
-  SaveToFiles;
+  if TACBreSocial(Self.FOwner).Configuracoes.Arquivos.Salvar then
+    SaveToFiles;
 end;
 
 function TEventos.LoadFromIni(const AIniString: String): Boolean;

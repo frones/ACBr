@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2020
+-- ACBreSocialEventos --
+[*] https://www.projetoacbr.com.br/forum/topic/57602-teventosloadfromstring/
+   Por: Alex Camilo / Italo Jurisato Junior
+
 30/04/2020
 -- pcesS5001 --
 [*] https://www.projetoacbr.com.br/forum/topic/57419-s5001-campo-infoperref/

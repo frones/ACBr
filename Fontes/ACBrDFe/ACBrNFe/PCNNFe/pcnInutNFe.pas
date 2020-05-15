@@ -82,6 +82,7 @@ type
     FVersao: String;
     FRetInutNFe: TRetInutNFe;
     Fsignature: Tsignature;
+    FXML: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -105,6 +106,7 @@ type
     property Versao: String          read FVersao     write FVersao;
     property RetInutNFe: TRetInutNFe read FRetInutNFe write FRetInutNFe;
     property signature: Tsignature   read Fsignature  write Fsignature;
+    property XML: String             read FXML        write FXML;
   end;
 
 implementation
@@ -209,6 +211,7 @@ begin
     Result := ( leitor.rExtrai(1, 'infInut') <> '');
     if Result then
     begin
+         XML             := AXML;
          FIDInutilizacao := Leitor.rAtributo('Id=');
                Fversao   := Leitor.rAtributo('versao');
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));

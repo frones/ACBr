@@ -80,6 +80,7 @@ type
     FInfEvento: TInfEvento;
     Fsignature: Tsignature;
     FRetInfEvento: TRetInfEvento;
+    FXML: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -87,6 +88,7 @@ type
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
+    property XML: String                 read FXML          write FXML;
   end;
 
   { TEventoNFe }
@@ -409,6 +411,7 @@ begin
      Result := RetEventoNFe.LerXml;
      with FEvento.New do
       begin
+        XML                     := AXML;
         infEvento.ID            := RetEventoNFe.InfEvento.id;
         infEvento.cOrgao        := RetEventoNFe.InfEvento.cOrgao;
         infEvento.tpAmb         := RetEventoNFe.InfEvento.tpAmb;

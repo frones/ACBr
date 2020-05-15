@@ -1,0 +1,1156 @@
+object FormPrincipal: TFormPrincipal
+  Left = 480
+  Height = 530
+  Top = 165
+  Width = 742
+  Caption = 'ACBrTEFD - Demo não fiscal'
+  ClientHeight = 530
+  ClientWidth = 742
+  Constraints.MinWidth = 700
+  OnCreate = FormCreate
+  ParentFont = True
+  LCLVersion = '2.0.8.0'
+  object pgPrincipal: TPageControl
+    Left = 0
+    Height = 530
+    Top = 0
+    Width = 742
+    ActivePage = tsOperacao
+    Align = alClient
+    Images = ImageList1
+    TabIndex = 1
+    TabOrder = 0
+    object tsConfiguracao: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 502
+      ClientWidth = 734
+      ImageIndex = 0
+      object gbConfigTEF: TGroupBox
+        Left = 10
+        Height = 158
+        Top = 10
+        Width = 714
+        Align = alTop
+        BorderSpacing.Around = 10
+        Caption = 'TEF'
+        ClientHeight = 138
+        ClientWidth = 710
+        TabOrder = 0
+        object cbAutoAtivar: TCheckBox
+          Left = 224
+          Height = 19
+          Top = 20
+          Width = 104
+          Caption = 'Auto Ativar G.P.'
+          TabOrder = 4
+        end
+        object cbxGP: TComboBox
+          Left = 9
+          Height = 23
+          Top = 20
+          Width = 163
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object Label1: TLabel
+          Left = 9
+          Height = 15
+          Top = 0
+          Width = 86
+          Caption = 'Gerenciador TEF'
+          ParentColor = False
+        end
+        object cbMultiplosCartoes: TCheckBox
+          Left = 224
+          Height = 19
+          Top = 68
+          Width = 113
+          Caption = 'Multiplos Cartões'
+          Checked = True
+          State = cbChecked
+          TabOrder = 6
+        end
+        object Label8: TLabel
+          Left = 9
+          Height = 15
+          Top = 93
+          Width = 28
+          Caption = 'Sleep'
+          ParentColor = False
+        end
+        object Label9: TLabel
+          Left = 116
+          Height = 15
+          Top = 93
+          Width = 53
+          Caption = 'EsperaSTS'
+          ParentColor = False
+        end
+        object cbSuportaDesconto: TCheckBox
+          Left = 376
+          Height = 19
+          Top = 20
+          Width = 114
+          Caption = 'Suporta Desconto'
+          Checked = True
+          State = cbChecked
+          TabOrder = 8
+        end
+        object cbSuportaSaque: TCheckBox
+          Left = 376
+          Height = 19
+          Top = 44
+          Width = 96
+          Caption = 'Suporta Saque'
+          Checked = True
+          State = cbChecked
+          TabOrder = 9
+        end
+        object seEsperaSleep: TSpinEdit
+          Left = 9
+          Height = 23
+          Top = 110
+          Width = 56
+          Alignment = taCenter
+          MaxValue = 10000
+          TabOrder = 2
+          Value = 250
+        end
+        object seEsperaSTS: TSpinEdit
+          Left = 116
+          Height = 23
+          Top = 110
+          Width = 56
+          Alignment = taCenter
+          MaxValue = 30
+          TabOrder = 3
+          Value = 7
+        end
+        object Label10: TLabel
+          Left = 224
+          Height = 15
+          Top = 93
+          Width = 65
+          Caption = 'Máx.Cartões'
+          ParentColor = False
+        end
+        object seMaxCartoes: TSpinEdit
+          Left = 224
+          Height = 23
+          Top = 110
+          Width = 56
+          Alignment = taCenter
+          MaxValue = 20
+          TabOrder = 7
+          Value = 5
+        end
+        object cbIMprimirViaReduzida: TCheckBox
+          Left = 224
+          Height = 19
+          Top = 44
+          Width = 136
+          Caption = 'Imprimir Via Reduzida'
+          TabOrder = 5
+        end
+        object Label11: TLabel
+          Left = 9
+          Height = 15
+          Top = 48
+          Width = 45
+          Alignment = taRightJustify
+          Caption = 'Arq.Log:'
+          ParentColor = False
+        end
+        object edLog: TEdit
+          Cursor = crIBeam
+          Left = 9
+          Height = 23
+          Top = 65
+          Width = 163
+          TabOrder = 1
+        end
+        object SbArqLog: TSpeedButton
+          Left = 176
+          Height = 22
+          Top = 65
+          Width = 24
+          Caption = '...'
+          ParentFont = False
+        end
+        object Label12: TLabel
+          Left = 376
+          Height = 15
+          Top = 93
+          Width = 76
+          Caption = 'Troco Máximo'
+          ParentColor = False
+        end
+        object seTrocoMaximo: TFloatSpinEdit
+          Left = 376
+          Height = 23
+          Top = 110
+          Width = 112
+          Alignment = taCenter
+          MaxValue = 100000
+          MinValue = 0
+          TabOrder = 11
+          Value = 100
+        end
+        object cbSuportaReajusteValor: TCheckBox
+          Left = 376
+          Height = 19
+          Top = 68
+          Width = 138
+          Caption = 'Suporta Reajuste Valor'
+          Checked = True
+          State = cbChecked
+          TabOrder = 10
+        end
+        object btTestarTEF: TBitBtn
+          Left = 561
+          Height = 49
+          Top = 48
+          Width = 128
+          Anchors = [akTop, akRight]
+          Caption = 'Testar (ATV)'
+          Images = ImageList1
+          ImageIndex = 5
+          TabOrder = 12
+        end
+      end
+      object gbConfigImpressora: TGroupBox
+        Left = 10
+        Height = 114
+        Top = 178
+        Width = 714
+        Align = alTop
+        BorderSpacing.Around = 10
+        Caption = 'Impressora'
+        ClientHeight = 94
+        ClientWidth = 710
+        TabOrder = 1
+        object Label25: TLabel
+          AnchorSideBottom.Side = asrCenter
+          Left = 176
+          Height = 15
+          Top = 48
+          Width = 73
+          Caption = 'Linhas à pular'
+          ParentColor = False
+        end
+        object seLinhasPular: TSpinEdit
+          Left = 176
+          Height = 23
+          Top = 65
+          Width = 75
+          Alignment = taCenter
+          MaxValue = 255
+          TabOrder = 4
+        end
+        object Label26: TLabel
+          AnchorSideBottom.Side = asrCenter
+          Left = 9
+          Height = 15
+          Top = 48
+          Width = 106
+          Caption = 'Espaços entre linhas'
+          ParentColor = False
+        end
+        object seEspLinhas: TSpinEdit
+          Left = 9
+          Height = 23
+          Top = 65
+          Width = 75
+          Alignment = taCenter
+          MaxValue = 255
+          TabOrder = 3
+        end
+        object Label27: TLabel
+          AnchorSideBottom.Side = asrCenter
+          Left = 376
+          Height = 15
+          Top = 48
+          Width = 43
+          Caption = 'Colunas'
+          ParentColor = False
+        end
+        object seColunas: TSpinEdit
+          Left = 376
+          Height = 23
+          Top = 65
+          Width = 75
+          Alignment = taCenter
+          MaxValue = 999
+          MinValue = 1
+          TabOrder = 5
+          Value = 48
+        end
+        object Label28: TLabel
+          AnchorSideTop.Side = asrBottom
+          Left = 9
+          Height = 15
+          Top = 1
+          Width = 41
+          Caption = 'Modelo'
+          Color = clDefault
+          ParentColor = False
+          Transparent = False
+        end
+        object cbxModeloPosPrinter: TComboBox
+          Left = 9
+          Height = 23
+          Top = 16
+          Width = 145
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object Label7: TLabel
+          Left = 176
+          Height = 15
+          Top = 1
+          Width = 28
+          Caption = 'Porta'
+          ParentColor = False
+        end
+        object cbxPorta: TComboBox
+          Left = 176
+          Height = 23
+          Top = 16
+          Width = 136
+          ItemHeight = 15
+          TabOrder = 1
+        end
+        object Label29: TLabel
+          AnchorSideLeft.Side = asrCenter
+          Left = 376
+          Height = 15
+          Top = -1
+          Width = 79
+          BorderSpacing.Bottom = 2
+          Caption = 'Pág. de código'
+          Color = clDefault
+          ParentColor = False
+          Transparent = False
+        end
+        object cbxPagCodigo: TComboBox
+          Left = 376
+          Height = 23
+          Hint = 'Pagina de código usada pela Impressora POS'
+          Top = 16
+          Width = 76
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 2
+        end
+        object btSerial: TSpeedButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 320
+          Height = 23
+          Top = 16
+          Width = 25
+          Glyph.Data = {
+            36030000424D3603000000000000360000002800000010000000100000000100
+            1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+            3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+            000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+            6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+            008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+            56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+            FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+            008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+            6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+            008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+            3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+            00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          }
+          Images = ImageList1
+          ImageIndex = 6
+          OnClick = btSerialClick
+        end
+        object btTestarPosPrinter: TBitBtn
+          Left = 561
+          Height = 49
+          Top = 16
+          Width = 128
+          Anchors = [akTop, akRight]
+          Caption = 'Testar Impressora'
+          Images = ImageList1
+          ImageIndex = 4
+          TabOrder = 6
+        end
+      end
+      object pBotoesConfig: TPanel
+        Left = 0
+        Height = 34
+        Top = 468
+        Width = 734
+        Align = alBottom
+        BevelInner = bvSpace
+        BevelOuter = bvLowered
+        ClientHeight = 34
+        ClientWidth = 734
+        TabOrder = 2
+        object btLerParametros: TBitBtn
+          Left = 160
+          Height = 28
+          Top = 5
+          Width = 136
+          Caption = 'Ler Parâmetros'
+          Images = ImageList1
+          ImageIndex = 3
+          OnClick = btLerParametrosClick
+          TabOrder = 0
+        end
+        object btSalvarParametros: TBitBtn
+          Left = 8
+          Height = 28
+          Top = 5
+          Width = 136
+          Caption = 'Salvar Parâmetros'
+          Images = ImageList1
+          ImageIndex = 2
+          OnClick = btSalvarParametrosClick
+          TabOrder = 1
+        end
+        object btOperacaoTEF: TBitBtn
+          Left = 573
+          Height = 28
+          Top = 5
+          Width = 128
+          Anchors = [akTop, akRight]
+          Caption = 'Operaçoes'
+          Images = ImageList1
+          ImageIndex = 1
+          OnClick = btOperacaoTEFClick
+          TabOrder = 2
+        end
+      end
+    end
+    object tsOperacao: TTabSheet
+      Caption = 'Operação'
+      ClientHeight = 502
+      ClientWidth = 734
+      ImageIndex = 1
+      object pStatus: TPanel
+        Left = 3
+        Height = 50
+        Top = 3
+        Width = 728
+        Align = alTop
+        BorderSpacing.Around = 3
+        BevelInner = bvLowered
+        BevelWidth = 2
+        Caption = 'CAIXA LIVRE'
+        ClientHeight = 50
+        ClientWidth = 728
+        Font.Height = -24
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+        object btOperacao: TBitBtn
+          Left = 8
+          Height = 28
+          Top = 11
+          Width = 120
+          Caption = 'Cancelar Operação'
+          Images = ImageList1
+          OnClick = btOperacaoClick
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+      object pOperacao: TPanel
+        Left = 0
+        Height = 446
+        Top = 56
+        Width = 499
+        Align = alClient
+        BevelOuter = bvNone
+        ClientHeight = 446
+        ClientWidth = 499
+        Constraints.MinWidth = 460
+        TabOrder = 0
+        object gbValorOperacao: TGroupBox
+          Left = 3
+          Height = 136
+          Top = 3
+          Width = 493
+          Align = alTop
+          BorderSpacing.Around = 3
+          Caption = 'Valores da Operação'
+          ClientHeight = 116
+          ClientWidth = 489
+          TabOrder = 0
+          object Label2: TLabel
+            Left = 33
+            Height = 15
+            Top = 8
+            Width = 60
+            Caption = 'Valor Inicial'
+            ParentColor = False
+          end
+          object seValorOperacao: TFloatSpinEdit
+            Left = 32
+            Height = 23
+            Top = 24
+            Width = 89
+            Alignment = taRightJustify
+            MaxValue = 100000
+            MinValue = 0
+            OnChange = seValorOperacaoChange
+            TabOrder = 0
+            Value = 0
+          end
+          object Label3: TLabel
+            Left = 148
+            Height = 15
+            Top = 8
+            Width = 50
+            Caption = 'Desconto'
+            ParentColor = False
+          end
+          object seTotalDesconto: TFloatSpinEdit
+            Left = 149
+            Height = 23
+            Top = 24
+            Width = 89
+            Alignment = taRightJustify
+            MaxValue = 100000
+            MinValue = 0
+            OnChange = seTotalOperacaoChange
+            TabOrder = 1
+            Value = 0
+          end
+          object Label4: TLabel
+            Left = 264
+            Height = 15
+            Top = 8
+            Width = 56
+            Caption = 'Acréscimo'
+            ParentColor = False
+          end
+          object seTotalAcrescimo: TFloatSpinEdit
+            Left = 264
+            Height = 23
+            Top = 24
+            Width = 89
+            Alignment = taRightJustify
+            MaxValue = 100000
+            MinValue = 0
+            OnChange = seTotalOperacaoChange
+            TabOrder = 2
+            Value = 0
+          end
+          object Label5: TLabel
+            Left = 33
+            Height = 15
+            Top = 64
+            Width = 80
+            Caption = 'Total Operação'
+            ParentColor = False
+          end
+          object Label6: TLabel
+            Left = 149
+            Height = 15
+            Top = 64
+            Width = 56
+            Caption = 'Total Pago'
+            ParentColor = False
+          end
+          object Label13: TLabel
+            Left = 266
+            Height = 15
+            Top = 64
+            Width = 30
+            Caption = 'Troco'
+            ParentColor = False
+          end
+          object edTotalOperacao: TEdit
+            Left = 33
+            Height = 25
+            Top = 80
+            Width = 89
+            Alignment = taRightJustify
+            Font.Height = -13
+            Font.Style = [fsBold]
+            ParentFont = False
+            ReadOnly = True
+            TabStop = False
+            TabOrder = 5
+            Text = '0.00'
+          end
+          object edTotalPago: TEdit
+            Left = 149
+            Height = 25
+            Top = 80
+            Width = 89
+            Alignment = taRightJustify
+            Font.Height = -13
+            Font.Style = [fsBold]
+            ParentFont = False
+            ReadOnly = True
+            TabStop = False
+            TabOrder = 4
+            Text = '0.00'
+          end
+          object edTroco: TEdit
+            Left = 266
+            Height = 25
+            Top = 80
+            Width = 89
+            Alignment = taRightJustify
+            Font.Height = -13
+            Font.Style = [fsBold]
+            ParentFont = False
+            ReadOnly = True
+            TabStop = False
+            TabOrder = 3
+            Text = '0.00'
+          end
+          object btEfetuarPagamentos: TBitBtn
+            Left = 383
+            Height = 28
+            Top = 77
+            Width = 88
+            Anchors = [akTop, akRight]
+            Caption = 'Pagamentos'
+            Images = ImageList1
+            OnClick = btEfetuarPagamentosClick
+            ParentFont = False
+            TabOrder = 6
+          end
+        end
+        object mLog: TMemo
+          Left = 3
+          Height = 150
+          Top = 259
+          Width = 493
+          Align = alBottom
+          BorderSpacing.Around = 3
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 1
+          WordWrap = False
+        end
+        object pBotoesMemo: TPanel
+          Left = 0
+          Height = 34
+          Top = 412
+          Width = 499
+          Align = alBottom
+          BevelInner = bvSpace
+          BevelOuter = bvLowered
+          ClientHeight = 34
+          ClientWidth = 499
+          TabOrder = 2
+          object btConfiguracoes: TBitBtn
+            Left = 8
+            Height = 28
+            Top = 5
+            Width = 136
+            Caption = 'Configurações'
+            Images = ImageList1
+            ImageIndex = 0
+            OnClick = btConfiguracoesClick
+            TabOrder = 0
+          end
+          object btLimparLog: TBitBtn
+            Left = 389
+            Height = 28
+            Top = 5
+            Width = 96
+            Anchors = [akTop, akRight]
+            Caption = 'Limpar'
+            Images = ImageList1
+            ImageIndex = 7
+            OnClick = btLimparLogClick
+            TabOrder = 1
+          end
+        end
+        object gbPagamentos: TGroupBox
+          Left = 3
+          Height = 114
+          Top = 142
+          Width = 493
+          Align = alClient
+          BorderSpacing.Around = 3
+          Caption = 'Pagamentos'
+          ClientHeight = 94
+          ClientWidth = 489
+          TabOrder = 3
+          object sgPagamentos: TStringGrid
+            Left = 0
+            Height = 94
+            Top = 0
+            Width = 383
+            Align = alClient
+            TabOrder = 0
+          end
+          object pBotoesPagamentos: TPanel
+            Left = 383
+            Height = 94
+            Top = 0
+            Width = 106
+            Align = alRight
+            BevelOuter = bvNone
+            TabOrder = 1
+          end
+        end
+      end
+      object pImpressao: TPanel
+        Left = 504
+        Height = 446
+        Top = 56
+        Width = 230
+        Align = alRight
+        BevelOuter = bvNone
+        ClientHeight = 446
+        ClientWidth = 230
+        Constraints.MinWidth = 230
+        TabOrder = 1
+        object mImpressao: TMemo
+          Left = 0
+          Height = 381
+          Top = 31
+          Width = 230
+          Align = alClient
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Lucida Console'
+          Font.Pitch = fpFixed
+          Font.Quality = fqDraft
+          ParentFont = False
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+          WordWrap = False
+        end
+        object pBotoesImpressora: TPanel
+          Left = 0
+          Height = 34
+          Top = 412
+          Width = 230
+          Align = alBottom
+          BevelInner = bvSpace
+          BevelOuter = bvLowered
+          ClientHeight = 34
+          ClientWidth = 230
+          TabOrder = 1
+          object btImprimir: TBitBtn
+            Left = 8
+            Height = 28
+            Top = 5
+            Width = 96
+            Caption = 'Imprimir'
+            Images = ImageList1
+            ImageIndex = 4
+            OnClick = btConfiguracoesClick
+            TabOrder = 0
+          end
+          object btLimparImpressao: TBitBtn
+            Left = 120
+            Height = 28
+            Top = 5
+            Width = 96
+            Anchors = [akTop, akRight]
+            Caption = 'Limpar'
+            Images = ImageList1
+            ImageIndex = 7
+            OnClick = btLimparImpressaoClick
+            TabOrder = 1
+          end
+        end
+        object Label14: TLabel
+          Left = 5
+          Height = 21
+          Top = 5
+          Width = 220
+          Align = alTop
+          Alignment = taCenter
+          BorderSpacing.Around = 5
+          Caption = 'Saída de Impressão'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Splitter1: TSplitter
+        Left = 499
+        Height = 446
+        Top = 56
+        Width = 5
+        Align = alRight
+        ResizeAnchor = akRight
+      end
+    end
+  end
+  object ACBrTEFD1: TACBrTEFD
+    EsperaSTS = 7
+    TrocoMaximo = 0
+    TEFDial.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
+    TEFDial.ArqReq = 'C:\TEF_DIAL\req\intpos.001'
+    TEFDial.ArqSTS = 'C:\TEF_DIAL\resp\intpos.sts'
+    TEFDial.ArqResp = 'C:\TEF_DIAL\resp\intpos.001'
+    TEFDial.GPExeName = 'C:\TEF_DIAL\tef_dial.exe'
+    TEFDisc.ArqTemp = 'C:\TEF_Disc\req\intpos.tmp'
+    TEFDisc.ArqReq = 'C:\TEF_Disc\req\intpos.001'
+    TEFDisc.ArqSTS = 'C:\TEF_Disc\resp\intpos.sts'
+    TEFDisc.ArqResp = 'C:\TEF_Disc\resp\intpos.001'
+    TEFDisc.GPExeName = 'C:\TEF_Disc\tef_Disc.exe'
+    TEFHiper.ArqTemp = 'c:\HiperTEF\req\IntPos.tmp'
+    TEFHiper.ArqReq = 'C:\HiperTEF\req\IntPos.001'
+    TEFHiper.ArqSTS = 'C:\HiperTEF\resp\IntPos.sts'
+    TEFHiper.ArqResp = 'C:\HiperTEF\resp\IntPos.001'
+    TEFHiper.GPExeName = 'C:\HiperTEF\HiperTEF.exe'
+    TEFCliSiTef.DataHoraFiscal = 0
+    TEFVeSPague.EnderecoIP = 'localhost'
+    TEFVeSPague.Porta = '60906'
+    TEFVeSPague.TemPendencias = False
+    TEFVeSPague.TransacaoCRT = 'Cartao Vender'
+    TEFVeSPague.TransacaoCHQ = 'Cheque Consultar'
+    TEFVeSPague.TransacaoCNC = 'Administracao Cancelar'
+    TEFVeSPague.TransacaoReImpressao = 'Administracao Reimprimir'
+    TEFVeSPague.TransacaoPendente = 'Administracao Pendente'
+    TEFGPU.ArqTemp = 'C:\TEF_GPU\req\intpos.tmp'
+    TEFGPU.ArqReq = 'C:\TEF_GPU\req\intpos.001'
+    TEFGPU.ArqSTS = 'C:\TEF_GPU\resp\intpos.sts'
+    TEFGPU.ArqResp = 'C:\TEF_GPU\resp\intpos.001'
+    TEFGPU.GPExeName = 'C:\TEF_GPU\GPU.exe'
+    TEFBanese.ArqTemp = 'C:\bcard\req\pergunta.tmp'
+    TEFBanese.ArqReq = 'C:\bcard\req\pergunta.txt'
+    TEFBanese.ArqSTS = 'C:\bcard\resp\status.txt'
+    TEFBanese.ArqResp = 'C:\bcard\resp\resposta.txt'
+    TEFBanese.ArqRespBkp = 'C:\bcard\resposta.txt'
+    TEFBanese.ArqRespMovBkp = 'C:\bcard\copiamovimento.txt'
+    TEFAuttar.ArqTemp = 'C:\Auttar_TefIP\req\intpos.tmp'
+    TEFAuttar.ArqReq = 'C:\Auttar_TefIP\req\intpos.001'
+    TEFAuttar.ArqSTS = 'C:\Auttar_TefIP\resp\intpos.sts'
+    TEFAuttar.ArqResp = 'C:\Auttar_TefIP\resp\intpos.001'
+    TEFAuttar.GPExeName = 'C:\Program Files (x86)\Auttar\IntegradorTEF-IP.exe'
+    TEFGood.ArqTemp = 'C:\good\gettemp.dat'
+    TEFGood.ArqReq = 'C:\good\getreq.dat'
+    TEFGood.ArqSTS = 'C:\good\getstat.dat'
+    TEFGood.ArqResp = 'C:\good\getresp.dat'
+    TEFGood.GPExeName = 'C:\good\GETGoodMed.exe'
+    TEFFoxWin.ArqTemp = 'C:\FwTEF\req\intpos.tmp'
+    TEFFoxWin.ArqReq = 'C:\FwTEF\req\intpos.001'
+    TEFFoxWin.ArqSTS = 'C:\FwTEF\rsp\intpos.sts'
+    TEFFoxWin.ArqResp = 'C:\FwTEF\rsp\intpos.001'
+    TEFFoxWin.GPExeName = 'C:\FwTEF\bin\FwTEF.exe'
+    TEFPetrocard.ArqTemp = 'C:\CardTech\req\intpos.tmp'
+    TEFPetrocard.ArqReq = 'C:\CardTech\req\intpos.001'
+    TEFPetrocard.ArqSTS = 'C:\CardTech\resp\intpos.sts'
+    TEFPetrocard.ArqResp = 'C:\CardTech\resp\intpos.001'
+    TEFPetrocard.GPExeName = 'C:\CardTech\sac.exe'
+    TEFCrediShop.ArqTemp = 'C:\tef_cshp\req\intpos.tmp'
+    TEFCrediShop.ArqReq = 'C:\tef_cshp\req\intpos.001'
+    TEFCrediShop.ArqSTS = 'C:\tef_cshp\resp\intpos.sts'
+    TEFCrediShop.ArqResp = 'C:\tef_cshp\resp\intpos.001'
+    TEFCrediShop.GPExeName = 'C:\tef_cshp\vpos_tef.exe'
+    TEFTicketCar.ArqTemp = 'C:\TCS\TX\INTTCS.tmp'
+    TEFTicketCar.ArqReq = 'C:\TCS\TX\INTTCS.001'
+    TEFTicketCar.ArqSTS = 'C:\TCS\RX\INTTCS.RET'
+    TEFTicketCar.ArqResp = 'C:\TCS\RX\INTTCS.001'
+    TEFTicketCar.GPExeName = 'C:\TCS\tcs.exe'
+    TEFTicketCar.NumLoja = 0
+    TEFTicketCar.NumCaixa = 0
+    TEFTicketCar.AtualizaPrecos = False
+    TEFConvCard.ArqTemp = 'C:\ger_convenio\tx\crtsol.tmp'
+    TEFConvCard.ArqReq = 'C:\ger_convenio\tx\crtsol.001'
+    TEFConvCard.ArqSTS = 'C:\ger_convenio\rx\crtsol.ok'
+    TEFConvCard.ArqResp = 'C:\ger_convenio\rx\crtsol.001'
+    TEFConvCard.GPExeName = 'C:\ger_convcard\convcard.exe'
+    left = 552
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    left = 504
+  end
+  object ImageList1: TImageList
+    left = 384
+    top = 8
+    Bitmap = {
+      4C69080000001000000010000000000000000000000000000000000000110000
+      00330000002E0000001100000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000000000006E0000
+      00FD000000FF000000DD0000006B000000030000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000030000
+      0087000000FD000000FF000000FC0000006B0000000000000000000000000000
+      00000000000000000000000000000000001D0000006100000001000000000000
+      000600000087000000FD000000FF000000E50000001700000000000000000000
+      000000000000000000000000000000000057000000FA00000071000000030000
+      00050000007C000000FC000000FF000000FC0000004900000000000000000000
+      000000000000000000000000000000000056000000FF000000F9000000720000
+      007C000000FB000000FF000000FF000000FD0000004D00000000000000000000
+      000000000000000000000000000000000025000000F4000000FF000000FA0000
+      00FC000000FF000000FF000000FF000000F60000003B00000000000000000000
+      00000000000000000000000000000000000300000090000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000C90000001C000000000000
+      000000000000000000000000000000000000000000090000008E000000EE0000
+      00FF000000FE000000F9000000FF000000FF000000FF000000CF0000001F0000
+      0000000000000000000000000000000000000000000000000000000000270000
+      0059000000560000004D000000DE000000FF000000FF000000FF000000CF0000
+      001C000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000031000000E5000000FF000000FF000000FF0000
+      00C90000001F0000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000034000000E5000000FF000000FF0000
+      00FF000000C90000001C00000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000031000000DE000000FF0000
+      00FF000000FF000000CF00000014000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000034000000DE0000
+      00FF000000FF000000E900000023000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000310000
+      00E5000000EA0000004800000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00220000002B0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000A00000045000000550000
+      0055000000550000005500000055000000550000005500000055000000550000
+      00550000003C00000005000000000000000000000074000000FA000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000F7000000740000000000000000000000AA000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000AA0000000000000000000000AA000000E3000000AA0000
+      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
+      00AA000000E3000000AA0000000000000000000000AA000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000AA0000000000000000000000AA000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000AA000000000000000000000087000000FB000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FC0000006E00000000000000000000000A00000046000000550000
+      0055000000550000005500000055000000550000005500000055000000550000
+      00550000004A0000000B00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000004000000190000
+      001C0000001C0000001C0000001C0000001C0000001C0000001C0000000B0000
+      000000000000000000000000000000000000000000020000008D000000E00000
+      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000B60000
+      00100000000000000000000000000000000000000019000000E00000008D0000
+      00550000005500000055000000550000005500000068000000EC000000FF0000
+      00B8000000100000000000000000000000000000001C000000E3000000550000
+      0000000000000000000000000000000000000000001C000000E3000000FF0000
+      00FF000000B60000000B00000000000000000000001C000000E3000000680000
+      001C0000001C0000001C0000001C0000001C00000035000000E6000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000EC0000
+      00E3000000E3000000E3000000E3000000E3000000E6000000FC000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000F9000000CC000000CF000000FA000000FF000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000FD00000075000000030000000400000080000000FE000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000E900000022000000000000000000000029000000F0000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000F60000003B000000000000000000000045000000FA000000FF0000
+      00FF000000E30000001C00000000000000000000001B000000E2000000FF0000
+      00FF000000FF000000DE0000006C00000071000000E4000000FF000000FF0000
+      00FF000000DE0000001800000000000000000000000600000095000000E00000
+      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
+      00E20000008B0000000100000000000000000000000000000003000000190000
+      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
+      001B000000050000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000001000000000000000000000000000000000000000000000
+      00100000004A000000840000009B000000920000005E0000001E000000000000
+      00000000003F0000008F00000000000000000000000000000000000000480000
+      00D0000000FC000000FE000000F6000000FB000000FF000000E4000000780000
+      0042000000E4000000AA0000000000000000000000000000005F000000F20000
+      00EE0000007F0000002E000000190000002100000064000000D9000000FD0000
+      00F4000000FF000000AA00000000000000000000003A000000F1000000D90000
+      0021000000000000000000000000000000000000000000000053000000F80000
+      00FF000000FF000000AA0000000000000005000000B1000000F2000000380000
+      00000000000000000000000000000000000000000048000000EA000000FF0000
+      00FF000000FF000000AA0000000000000003000000510000006F000000030000
+      00000000000000000000000000000000001400000094000000AA000000AA0000
+      00AA000000AA0000007100000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
+      0000000000000000000000000000000000000000000A00000067000000A40000
+      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
+      00A3000000610000000800000000000000000000006E000000FC000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00CC000000F1000000610000000000000000000000A8000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      002F000000CC000000A30000000000000000000000AA000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
+      00FF0000008E000000550000005500000055000000550000008E000000FF0000
+      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
+      00FF000000550000000000000000000000000000000000000055000000FF0000
+      00FF000000FF000000AA00000000000000000000003800000055000000550000
+      00FF000000550000000000000000000000000000000000000055000000FF0000
+      0055000000550000003800000000000000000000000000000000000000000000
+      00FF0000008E000000550000005500000055000000550000008E000000FF0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
+      0000000000000000000000000000000000000000000000000000000000000000
+      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0003000000300000007000000095000000940000006D0000002C000000020000
+      0000000000000000000000000000000000000000000000000000000000120000
+      00A0000000F2000000FF000000FF000000FF000000FF000000F0000000980000
+      000E000000000000000000000000000000000000000000000014000000C60000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00BD0000000E00000000000000000000000000000003000000A4000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FD000000B20000
+      00EF0000009800000002000000000000000000000036000000F4000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FD0000009B0000000C0000
+      00A2000000F00000002C00000000000000000000007B000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FD0000009B0000000E000000780000
+      00FC000000FF0000006D0000000000000000000000A2000000FF000000CB0000
+      006F000000FA000000FF000000FF0000009E0000000C00000078000000F90000
+      00FF000000FF000000940000000000000000000000A3000000FF000000C20000
+      001100000062000000F20000009E000000070000007C000000FC000000FF0000
+      00FF000000FF0000009600000000000000000000007F000000FF000000FF0000
+      00B9000000170000003E0000000C0000007C000000FB000000FF000000FF0000
+      00FF000000FF00000070000000000000000000000039000000F6000000FF0000
+      00FF000000B70000001800000078000000FC000000FF000000FF000000FF0000
+      00FF000000F200000030000000000000000000000005000000AC000000FF0000
+      00FF000000FF000000DD000000F9000000FF000000FF000000FF000000FF0000
+      00FF000000A00000000300000000000000000000000000000018000000CE0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00C6000000120000000000000000000000000000000000000000000000180000
+      00AC000000F6000000FF000000FF000000FF000000FF000000F4000000A40000
+      0014000000000000000000000000000000000000000000000000000000000000
+      0005000000390000007F000000A3000000A20000007B00000036000000030000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      004E000000A4000000AA000000AA000000AA000000AA0000009F000000410000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00E8000000C7000000AA000000AA000000AA000000AA000000C7000000E70000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00FF000000550000003800000038000000380000003800000055000000FF0000
+      0000000000000000000000000000000000000000000000000000000000380000
+      00FF0000008E0000008E0000008D0000008D0000008E0000008E000000FF0000
+      0038000000000000000000000000000000000000000000000000000000AA0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00AA000000000000000000000000000000000000000000000000000000AA0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00AA000000000000000000000000000000000000000000000000000000AA0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00AA000000000000000000000000000000000000000000000000000000A30000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00A0000000000000000000000000000000000000000000000000000000470000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FE0000
+      0040000000000000000000000000000000000000000000000000000000020000
+      00C5000000FF000000FF000000FF000000FF000000FF000000FF000000BF0000
+      0001000000000000000000000000000000000000000000000000000000000000
+      004A000000FE000000FF000000FF000000FF000000FF000000FD000000440000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0008000000C3000000FF000000FF000000FF000000FF000000BF000000070000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000AA000000FF000000FF000000FF000000FF000000AA000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000071000000AA000000AA000000AA000000AA00000071000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000100000
+      0055000000550000004500000004000000000000000000000000000000000000
+      00000000000000000000000000000000000000000071000000AA000000CE0000
+      00FF000000FF000000FA000000B6000000AA0000003800000000000000000000
+      00000000000000000000000000000000000000000071000000AA000000AA0000
+      00AA000000AA000000AA000000AA000000AA0000003800000000000000000000
+      0000000000000000000000000000000000000000001200000097000000AA0000
+      00AA000000AA000000AA000000AA000000710000001200000097000000AA0000
+      00AA000000AA0000007100000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA0000001200000097000000AA0000
+      00AA000000AA0000007100000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA0000000000000000000000000000
+      0000000000000000000000000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA0000001C000000E3000000FF0000
+      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA000000090000004B000000550000
+      00550000004B0000000900000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA000000090000004B000000550000
+      0038000000000000000000000000000000000000001C000000E3000000FF0000
+      00FF000000FF000000FF000000FF000000AA0000001C000000E3000000FF0000
+      00AA000000000000000000000000000000000000000F000000C8000000FE0000
+      00FF000000FF000000FF000000FD0000006D0000000000000000000000000000
+      000000000000000000000000000000000000000000000000001B000000510000
+      005500000055000000550000004D000000070000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000
+    }
+  end
+end

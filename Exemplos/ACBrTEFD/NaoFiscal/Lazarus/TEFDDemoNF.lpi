@@ -125,7 +125,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
+    <Exceptions Count="6">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -135,6 +135,15 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
+      <Item4>
+        <Name Value="EACBrTEFDGPNaoInicializado"/>
+      </Item4>
+      <Item5>
+        <Name Value="Exception"/>
+      </Item5>
+      <Item6>
+        <Name Value="EACBrTEFDErro"/>
+      </Item6>
     </Exceptions>
   </Debugging>
 </CONFIG>

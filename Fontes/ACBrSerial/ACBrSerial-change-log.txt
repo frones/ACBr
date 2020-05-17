@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/05/2020
+-- ACBrPosPrinter --
+[*] Ajuste no método "TxRx", para usar SendBytesInterval=0, para agilizar a
+    comunicação
+    (por: DSA)
+
 Data: 13/05/2020
 -- ACBrDeviceWinUSB, ACBrWinUSBDevice --
 [*] Ajuste para detecção do DeviceName, quando a VCOM mudar de Nome.

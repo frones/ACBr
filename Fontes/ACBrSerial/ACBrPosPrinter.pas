@@ -2619,15 +2619,17 @@ end;
 function TACBrPosPrinter.TxRx(const ACmd: AnsiString; BytesToRead: Byte;
   ATimeOut: Integer; WaitForTerminator: Boolean): AnsiString;
 var
-  OldTimeOut: Integer;
+  OldTimeOut, OldSendBytesInterval: Integer;
 begin
   FDevice.Limpar;
 
   GravarLog('TX -> '+ACmd, True);
 
   OldTimeOut := FDevice.TimeOutMilissegundos;
+  OldSendBytesInterval := FDevice.SendBytesInterval;
   try
     FDevice.TimeOutMilissegundos := ATimeOut;
+    FDevice.SendBytesInterval := 0;
     FDevice.EnviaString( ACmd );
 
     Sleep(10);  // Aguarda equipamento ficar pronto para responder
@@ -2638,6 +2640,7 @@ begin
       Result := FDevice.LeString(ATimeOut, BytesToRead);
   finally
     FDevice.TimeOutMilissegundos := OldTimeOut;
+    FDevice.SendBytesInterval := OldSendBytesInterval;
   end;
 
   GravarLog('RX <- '+Result, True);

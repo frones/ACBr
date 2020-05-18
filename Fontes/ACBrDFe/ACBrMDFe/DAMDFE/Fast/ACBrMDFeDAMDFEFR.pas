@@ -725,22 +725,20 @@ end;
 
 procedure TACBrMDFeDAMDFEFR.AjustaMargensReports;
 var
-  i: Integer;
+  Page: TfrxReportPage;
+  I: Integer;
 begin
-  for i := 0 to frxReport.PagesCount -1 do
+  for I := 0 to (frxReport.PreviewPages.Count - 1) do
   begin
-    if frxReport.Pages[i] is TfrxReportPage then
-      with frxReport.Pages[i] as TfrxReportPage do
-      begin
-        if MargemSuperior > 0 then
-          TopMargin := MargemSuperior;
-        if MargemInferior > 0 then
-          BottomMargin := MargemInferior;
-        if MargemEsquerda > 0 then
-          LeftMargin := MargemEsquerda;
-        if MargemDireita > 0 then
-          RightMargin := MargemDireita;
-      end;
+    Page := frxReport.PreviewPages.Page[I];
+    if (MargemSuperior > 0) then
+      Page.TopMargin := MargemSuperior;
+    if (MargemInferior > 0) then
+      Page.BottomMargin := MargemInferior;
+    if (MargemEsquerda > 0) then
+      Page.LeftMargin := MargemEsquerda;
+    if (MargemDireita > 0) then
+      Page.RightMargin := MargemDireita;
   end;
 end;
 

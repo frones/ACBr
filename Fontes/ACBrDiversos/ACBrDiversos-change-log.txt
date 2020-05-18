@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2020
+-- ACBrEnterTab --
+[*] Ajustes para compatabilização com FMX
+    (por: DSA)
+
 07/05/2020
 -- ACBrCMC7 --
 [*] Ajustes para permitir o parser de CMC7, lidos pela Impressora EPSON TM-H6000IV

@@ -340,7 +340,7 @@ begin
                 AddCampo('0045') +
                 AddCampo(IntToStr(Bloco0040.Blocos[i].Bloco0040.COD_IMOVEL)) +
                 AddCampo(TipoContraparteToStr(TIPO_CONTRAPARTE)) +
-                AddCampo(CPF_CONTRAPARTE) +
+                AddCampo(ID_CONTRAPARTE) +
                 AddCampo(NOME_CONTRAPARTE) +
                 AddCampo(formatNumeric(PERC_CONTRAPARTE, 5), False)
               );

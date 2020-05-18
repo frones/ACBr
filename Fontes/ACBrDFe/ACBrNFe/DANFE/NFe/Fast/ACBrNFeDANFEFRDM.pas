@@ -2473,21 +2473,22 @@ end;
 
 procedure TACBrNFeFRClass.AjustaMargensReports;
 var
-  Page: TfrxReportPage;
-  I: Integer;
+  i: Integer;
 begin
-  for I := 0 to (frxReport.PreviewPages.Count - 1) do
+  for i := 0 to frxReport.PagesCount -1 do
   begin
-    Page := frxReport.PreviewPages.Page[I];
-    if (DANFEClassOwner.MargemSuperior > 0) then
-      Page.TopMargin := DANFEClassOwner.MargemSuperior;
-    if (DANFEClassOwner.MargemInferior > 0) then
-      Page.BottomMargin := DANFEClassOwner.MargemInferior;
-    if (DANFEClassOwner.MargemEsquerda > 0) then
-      Page.LeftMargin := DANFEClassOwner.MargemEsquerda;
-    if (DANFEClassOwner.MargemDireita > 0) then
-      Page.RightMargin := DANFEClassOwner.MargemDireita;
-    frxReport.PreviewPages.ModifyPage(I, Page);
+    if frxReport.Pages[i] is TfrxReportPage then
+      with frxReport.Pages[i] as TfrxReportPage do
+      begin
+        if DANFEClassOwner.MargemSuperior > 0 then
+          TopMargin := DANFEClassOwner.MargemSuperior;
+        if DANFEClassOwner.MargemInferior > 0 then
+          BottomMargin := DANFEClassOwner.MargemInferior;
+        if DANFEClassOwner.MargemEsquerda > 0 then
+          LeftMargin := DANFEClassOwner.MargemEsquerda;
+        if DANFEClassOwner.MargemDireita > 0 then
+          RightMargin := DANFEClassOwner.MargemDireita;
+      end;
   end;
 end;
 

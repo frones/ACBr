@@ -170,7 +170,7 @@ const
   TITULO_PDF = 'Nota Fiscal de Serviço Eletrônica';
 var
   I         : Integer;
-  NomeArqXML: string;
+  NomeArq: string;
   OldShowDialog: Boolean;
 begin
   if PrepareReport(NFSe) then
@@ -186,14 +186,14 @@ begin
       frxPDFExport.ShowDialog := False;
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-        with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
-        begin
-//         NomeArqXML := TACBrNFSe(ACBrNFSe).NumID[TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe];
-         NomeArqXML := TACBrNFSe(ACBrNFSe).NumID[NFSe];
-        end;
 
-        // Correção aplicada do nome do arquivo para o envio de e-mail
-        frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf';
+        NomeArq := Trim(DANFSEClassOwner.NomeDocumento);
+        if EstaVazio(NomeArq) then
+          with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
+          begin
+            NomeArq :=  TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
+          end;
+        frxPDFExport.FileName := PathWithDelim(DANFSEClassOwner.PathPDF) + NomeArq;
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -311,7 +311,7 @@ begin
   frxReport := TfrxReport.Create(nil);
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
-	frxReport.EngineOptions.UseGlobalDataSetList := False; 
+	frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
     Tag := 1;
@@ -1061,7 +1061,7 @@ begin
       FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
       FieldByName('Descricao').AsString                 := Descricao;
       FieldByName('ResponsavelRetencao').AsString       := ResponsavelRetencaoToStr(ResponsavelRetencao);
-      FieldByName('Tributacao').AsString                := TributacaoToStr(Tributacao); 
+      FieldByName('Tributacao').AsString                := TributacaoToStr(Tributacao);
 
       with Valores do
       begin

@@ -391,6 +391,7 @@ begin
     Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
     Add('QrCodeCarregado', ftGraphic, 1000);
+    Add('LogoCarregado', ftBlob);
     CreateDataSet;
   end;
 
@@ -724,21 +725,22 @@ end;
 
 procedure TACBrMDFeDAMDFEFR.AjustaMargensReports;
 var
-  Page: TfrxReportPage;
-  I: Integer;
+  i: Integer;
 begin
-  for I := 0 to (frxReport.PreviewPages.Count - 1) do
+  for i := 0 to frxReport.PagesCount -1 do
   begin
-    Page := frxReport.PreviewPages.Page[I];
-    if (MargemSuperior > 0) then
-      Page.TopMargin := MargemSuperior;
-    if (MargemInferior > 0) then
-      Page.BottomMargin := MargemInferior;
-    if (MargemEsquerda > 0) then
-      Page.LeftMargin := MargemEsquerda;
-    if (MargemDireita > 0) then
-      Page.RightMargin := MargemDireita;
-    frxReport.PreviewPages.ModifyPage(I, Page);
+    if frxReport.Pages[i] is TfrxReportPage then
+      with frxReport.Pages[i] as TfrxReportPage do
+      begin
+        if MargemSuperior > 0 then
+          TopMargin := MargemSuperior;
+        if MargemInferior > 0 then
+          BottomMargin := MargemInferior;
+        if MargemEsquerda > 0 then
+          LeftMargin := MargemEsquerda;
+        if MargemDireita > 0 then
+          RightMargin := MargemDireita;
+      end;
   end;
 end;
 
@@ -780,17 +782,17 @@ begin
 end;
 
 procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFePDF(AMDFe: TMDFe);
+const
+  TITULO_PDF = 'Manifesto de Documento Eletrônico';
 var
   I:          Integer;
-  TITULO_PDF: string;
   OldShowDialog : Boolean;
+  NomeArq:string;
 begin
   if PrepareReport(AMDFe) then
   begin
     for I := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
     begin
-      TITULO_PDF := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID);
-
       frxPDFExport.Author     := Sistema;
       frxPDFExport.Creator    := Sistema;
       frxPDFExport.Producer   := Sistema;
@@ -800,7 +802,10 @@ begin
       OldShowDialog := frxPDFExport.ShowDialog;
       try
         frxPDFExport.ShowDialog := False;
-        frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '-mdfe.pdf';
+	      NomeArq := Trim(DAMDFEClassOwner.NomeDocumento);
+	      if EstaVazio(NomeArq) then
+	        NomeArq := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID) + '-mdfe.pdf';
+	      frxPDFExport.FileName := PathWithDelim(DAMDFEClassOwner.PathPDF) + NomeArq;
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -843,8 +848,10 @@ begin
     OldShowDialog := frxPDFExport.ShowDialog;
     try
       frxPDFExport.ShowDialog := False;
-      NomeArq                 := StringReplace(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[0].InfEvento.Id, 'ID', '', [rfIgnoreCase]);
-      frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + NomeArq + '-procEventoMDFe.pdf';
+      NomeArq := Trim(DAMDFEClassOwner.NomeDocumento);
+      if EstaVazio(NomeArq) then
+        NomeArq := OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[0].InfEvento.Id) + '-procEventoMDFe.pdf';
+      frxPDFExport.FileName := PathWithDelim(DAMDFEClassOwner.PathPDF) + NomeArq;
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -1116,15 +1123,35 @@ begin
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaParametros;
+var
+  LogoStream: TStringStream;
 begin
   with cdsParametros do
   begin
     Append;
 
-    FieldByName('Versao').AsString := FloatToString(FMDFe.infMDFe.Versao,'.','#0.00');
-
     // Carregamento da imagem
-    FieldByName('Imagem').AsString := Ifthen(DAMDFEClassOwner.Logo <> '', DAMDFEClassOwner.Logo,'');
+    if DAMDFEClassOwner.Logo <> '' then
+    begin
+      FieldByName('Imagem').AsString := DAMDFEClassOwner.Logo;
+
+      if not FileExists(DAMDFEClassOwner.Logo) then
+        LogoStream := TStringStream.Create(DAMDFEClassOwner.Logo)
+      else
+      begin
+        LogoStream := TStringStream.Create('');
+        LogoStream.LoadFromFile(DAMDFEClassOwner.Logo);
+      end;
+
+      try
+        LogoStream.Position := 0;
+        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(LogoStream);
+      finally
+        LogoStream.Free;
+      end;
+    end;
+
+    FieldByName('Versao').AsString  := FloatToString(FMDFe.infMDFe.Versao,'.','#0.00');
     FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '', DAMDFEClassOwner.Usuario,'');
     Post;

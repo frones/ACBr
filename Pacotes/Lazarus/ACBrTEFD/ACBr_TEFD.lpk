@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTEFD"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTEFD;..\..\..\Fontes\ACBrPicPay"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTEFD\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -26,7 +26,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="10">
+    <Files Count="11">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
         <UnitName Value="ACBrTEFD"/>
@@ -68,11 +68,21 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrTEFDReg"/>
       </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas"/>
+        <UnitName Value="ACBrPicpay"/>
+      </Item11>
     </Files>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item1>
+      <Item2>
+        <PackageName Value="ACBrDiversos"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="ACBrComum"/>
+      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

@@ -32,7 +32,8 @@ package DCLACBr_TEFD;
 requires
   rtl,
   ACBr_TEFD,
-  designide;
+  designide,
+  ACBr_TCP;
 
 contains
   ACBrTEFDReg in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas';

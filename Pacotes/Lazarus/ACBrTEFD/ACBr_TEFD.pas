@@ -10,7 +10,7 @@ interface
 uses
   ACBrTEFD, ACBrTEFDClass, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, 
   ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDCappta, 
-  ACBrTEFDReg, LazarusPackageIntf;
+  ACBrTEFDReg, ACBrPicpay, LazarusPackageIntf;
 
 implementation
 

@@ -32,7 +32,10 @@ package ACBr_TEFD;
 requires
   rtl,
   vcl,
-  ACBr_Comum;
+  ACBr_Comum,
+  soaprtl,
+  ACBr_Diversos,
+  acbr_TCP;
 
 contains
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',
@@ -52,6 +55,7 @@ contains
   ACBrTEFDAuttar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDAuttar.pas',
   ACBrTEFDTicketCar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDTicketCar.pas',
   ACBrTEFDCappta in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas',
-  ACBrTEFDConvCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDConvCard.pas';
+  ACBrTEFDConvCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDConvCard.pas',
+  ACBrPicpay in '..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas';
 
 end.

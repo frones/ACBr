@@ -185,7 +185,7 @@ begin
       // Busca diretório do pacote
       sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if Trim(sDirPackage) = '' then
-        raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
+        raise Exception.Create('Não foi possível encontrar o diretório do pacote "' + NomePacote +'" no caminho: '+ PastaACBr);
       if IsDelphiPackage(NomePacote) then
       begin
         if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then

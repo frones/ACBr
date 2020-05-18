@@ -636,6 +636,7 @@ type
       const ValueLbl1, ValueLbl2: String;
       const ValueLbl3: String = 'VAZIO');
     procedure AdicionarInformacoesPagamento;
+    procedure AjustaFontesReport;
   end;
 
 implementation
@@ -682,8 +683,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.InicializarDados;
 var
-  i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux, iAlturaMinLinha: Integer;
-  vAutoSizeAux: Boolean;
+  h, iAlturaCanhoto, vWidthAux, vLeftAux, iAlturaMinLinha: Integer;
   CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
@@ -958,105 +958,7 @@ begin
     end;
   end;
 
-  // Altera a fonte da Razão Social do DefinirEmitente
-  rlmEmitente.Font.Size := fpDANFe.Fonte.TamanhoFonteRazaoSocial;
-
-  for b := 0 to (RLNFe.ControlCount - 1) do
-  begin
-    for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
-    begin
-      //Altera o tamanho da fonte dos demais campos
-      if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag in [3, 70]) or
-        ( (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Parent = rlbFatura) and
-          (fpDANFe <> nil) and
-          (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size > fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1)
-        ) then
-      begin
-        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Style := [];
-        if fpDANFe.Fonte.Negrito then// Dados em negrito
-          TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Style := [fsBold];
-        if (fpDANFe <> nil) then
-          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-            fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1;
-      end;
-
-      // Altera a fonde do fpDANFe
-      case fpDANFe.Fonte.Nome of
-        nfArial:
-        begin
-          for j := 0 to (TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount - 1) do
-            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Arial';
-
-          if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20) then
-            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name := 'Arial';
-
-          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
-            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
-              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
-        end;
-
-        nfCourierNew:
-        begin
-          for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-          begin
-            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Courier New';
-
-            if TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Tag = 0 then
-              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size :=
-                (TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size - 1);
-
-          end;
-
-          TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Name := 'Courier New';
-          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 0) or
-             (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
-            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
-              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
-
-          if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40) then
-            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top - 1;
-        end;
-
-        nfTimesNewRoman:
-        begin
-          for j := 0 to (TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount - 1) do
-            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Times New Roman';
-          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag <> 20) then
-            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Name := 'Times New Roman';
-
-          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
-            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
-              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
-        end;
-      end;
-
-      //copia o left e width do componente, alterar o size do fonte, com o autosize ajusta o height, depois retorna como estava
-      if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag in [3, 70]) then
-      begin
-        vWidthAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Width;
-        vLeftAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left;
-        vAutoSizeAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize;
-//        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := True;
-        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := vAutoSizeAux;
-        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left := vLeftAux;
-        if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Alignment = taLeftJustify) then
-          vWidthAux := vWidthAux - fpAuxDiferencaPDF;//na hora de gerar o PDF vai ficar correto.
-        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Width := vWidthAux;
-      end;
-    end;
-  end;
-
-  if (fpDANFe.Fonte.Nome = nfCourierNew) then
-  begin
-    rllNumNF1.Font.Size := rllNumNF1.Font.Size - 2;
-    rllNumNF1.Top := rllNumNF1.Top + 1;
-  end;
-
-  if (fpDANFe.Fonte.TamanhoFonteEndereco > 0) then
-    RLMEndereco.Font.Size := fpDANFe.Fonte.TamanhoFonteEndereco
-  else
-    RLMEndereco.Font.Size := 7;
+  AjustaFontesReport;
 
   AplicarParametros; // Aplica os parâmetros escolhidos
 
@@ -2366,6 +2268,108 @@ begin
     {=============== Centraliza o label "DUPLICATA" ===============}
     rllPagamento.Top := (rlbPagamentoReal.Height - rllPagamento.Height) div 2;
   end;
+end;
+
+procedure TfrlDANFeRLPaisagem.AjustaFontesReport;
+var
+  vWidthAux: Integer;
+  vLeftAux: Integer;
+  b: Integer;
+  i: Integer;
+  j: Integer;
+  vAutoSizeAux: Boolean;
+  UmaBand: TRLBand;
+begin
+  // Altera a fonte da Razão Social do DefinirEmitente
+  rlmEmitente.Font.Size := fpDANFe.Fonte.TamanhoFonteRazaoSocial;
+  for b := 0 to (RLNFe.ControlCount - 1) do
+  begin
+    //percorrendo todos os controls do report.
+    UmaBand := TRLBand(RLNFe.Controls[b]);
+    for i := 0 to (UmaBand.ControlCount - 1) do
+    begin
+      // percorrendo os subcontrols...
+      //Altera o tamanho da fonte dos demais campos
+      if (UmaBand.Controls[i].Tag in [3, 70]) or
+         ((TRLLabel(UmaBand.Controls[i]).Parent = rlbFatura) and
+          (fpDANFe <> nil) and
+          (TRLLabel(UmaBand.Controls[i]).Font.Size > fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1)) then
+      begin
+        TRLLabel(UmaBand.Controls[i]).Font.Style := [];
+        if fpDANFe.Fonte.Negrito then
+          // Dados em negrito
+          TRLLabel(UmaBand.Controls[i]).Font.Style := [fsBold];
+        if (fpDANFe <> nil) then
+          TRLLabel(UmaBand.Controls[i]).Font.Size := fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1;
+      end;
+
+      if (UmaBand.Controls[i].Tag = 20) then
+      begin
+        TRLLabel(UmaBand.Controls[i]).Font.Size := fpDANFe.Fonte.TamanhoFonteInformacoesComplementares;
+      end;
+
+      // Altera a fonde do fpDANFe
+      case fpDANFe.Fonte.Nome of
+        nfArial:
+          begin
+            for j := 0 to (TRLPanel(UmaBand.Controls[i]).ControlCount - 1) do
+              TRLLabel(TRLPanel(UmaBand.Controls[i]).Controls[j]).Font.Name := 'Arial';
+            if (UmaBand.Controls[i].Tag <> 20) then
+              TRLLabel(UmaBand.Controls[i]).Font.Name := 'Arial';
+            if (UmaBand.Controls[i].Tag = 3) then
+              TRLLabel(UmaBand.Controls[i]).Font.Size := TRLLabel(UmaBand.Controls[i]).Font.Size - 1;
+          end;
+        nfCourierNew:
+          begin
+            for j := 0 to ((TRLPanel(UmaBand.Controls[i]).ControlCount) - 1) do
+            begin
+              TRLLabel(TRLPanel(UmaBand.Controls[i]).Controls[j]).Font.Name := 'Courier New';
+              if TRLPanel(UmaBand.Controls[i]).Controls[j].Tag = 0 then
+                TRLLabel(TRLPanel(UmaBand.Controls[i]).Controls[j]).Font.Size := (TRLLabel(TRLPanel(UmaBand.Controls[i]).Controls[j]).Font.Size - 1);
+            end;
+            TRLLabel(UmaBand.Controls[i]).Font.Name := 'Courier New';
+            if (UmaBand.Controls[i].Tag = 0) or (UmaBand.Controls[i].Tag = 3) then
+              TRLLabel(UmaBand.Controls[i]).Font.Size := TRLLabel(UmaBand.Controls[i]).Font.Size - 1;
+            if (UmaBand.Controls[i].Tag = 40) then
+              TRLLabel((UmaBand).Controls[i]).Top := TRLLabel((UmaBand).Controls[i]).Top - 1;
+          end;
+        nfTimesNewRoman:
+          begin
+            for j := 0 to (TRLPanel(UmaBand.Controls[i]).ControlCount - 1) do
+              TRLLabel(TRLPanel(UmaBand.Controls[i]).Controls[j]).Font.Name := 'Times New Roman';
+            if (UmaBand.Controls[i].Tag <> 20) then
+              TRLLabel(UmaBand.Controls[i]).Font.Name := 'Times New Roman';
+            if (UmaBand.Controls[i].Tag = 3) then
+              TRLLabel(UmaBand.Controls[i]).Font.Size := TRLLabel(UmaBand.Controls[i]).Font.Size - 1;
+          end;
+      end;
+      //copia o left e width do componente, alterar o size do fonte, com o autosize ajusta o height, depois retorna como estava
+      if (UmaBand.Controls[i].Tag in [3, 70]) then
+      begin
+        vWidthAux    := TRLLabel(UmaBand.Controls[i]).Width;
+        vLeftAux     := TRLLabel(UmaBand.Controls[i]).Left;
+        vAutoSizeAux := TRLLabel(UmaBand.Controls[i]).AutoSize;
+        //        TRLLabel(UmaBand.Controls[i]).AutoSize := True;
+        TRLLabel(UmaBand.Controls[i]).AutoSize := vAutoSizeAux;
+        TRLLabel(UmaBand.Controls[i]).Left     := vLeftAux;
+        if (TRLLabel(UmaBand.Controls[i]).Alignment = taLeftJustify) then
+          vWidthAux := vWidthAux - fpAuxDiferencaPDF;
+        //na hora de gerar o PDF vai ficar correto.
+        TRLLabel(UmaBand.Controls[i]).Width := vWidthAux;
+      end;
+    end;
+  end;
+
+  if (fpDANFe.Fonte.Nome = nfCourierNew) then
+  begin
+    rllNumNF1.Font.Size := rllNumNF1.Font.Size - 2;
+    rllNumNF1.Top := rllNumNF1.Top + 1;
+  end;
+
+  if (fpDANFe.Fonte.TamanhoFonteEndereco > 0) then
+    RLMEndereco.Font.Size := fpDANFe.Fonte.TamanhoFonteEndereco
+  else
+    RLMEndereco.Font.Size := 7;
 end;
 
 

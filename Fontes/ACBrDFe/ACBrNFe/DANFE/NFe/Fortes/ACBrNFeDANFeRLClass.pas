@@ -56,6 +56,7 @@ type
     FNegrito: Boolean;
     FTamanhoFonteRazaoSocial: Integer;
     FTamanhoFonteEndereco: Integer;
+    FTamanhoFonteInformacoesComplementares: Integer;
     FTamanhoFonteDemaisCampos: Integer;
 
   public
@@ -66,6 +67,7 @@ type
     property Negrito: Boolean read FNegrito write FNegrito default False;
     property TamanhoFonteRazaoSocial: Integer read FTamanhoFonteRazaoSocial write FTamanhoFonteRazaoSocial default 8;
     property TamanhoFonteEndereco: Integer read FTamanhoFonteEndereco write FTamanhoFonteEndereco default 0;
+    property TamanhoFonteInformacoesComplementares: Integer read FTamanhoFonteInformacoesComplementares write FTamanhoFonteInformacoesComplementares default 8;
     property TamanhoFonteDemaisCampos: Integer read FTamanhoFonteDemaisCampos write FTamanhoFonteDemaisCampos default 8;
   end;
 
@@ -153,6 +155,7 @@ begin
   FTamanhoFonteRazaoSocial := 8;
   FTamanhoFonteEndereco := 0;
   FTamanhoFonteDemaisCampos := 8;
+  FTamanhoFonteInformacoesComplementares := 8;
 end;
 
 { TACBrNFeDANFeRL }

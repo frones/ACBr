@@ -116,9 +116,9 @@ begin
 
     with ACBrBoleto1.Banco do
     begin
-      Digito := pLibConfig.BoletoBancoConfig.Digito;
       LayoutVersaoArquivo := pLibConfig.BoletoBancoConfig.LayoutVersaoArquivo;
       LayoutVersaoLote := pLibConfig.BoletoBancoConfig.LayoutVersaoLote;
+      Digito := pLibConfig.BoletoBancoConfig.Digito;
       LocalPagamento := pLibConfig.BoletoBancoConfig.LocalPagamento;
       Numero := pLibConfig.BoletoBancoConfig.Numero;
       NumeroCorrespondente := pLibConfig.BoletoBancoConfig.NumeroCorrespondente;
@@ -128,6 +128,9 @@ begin
 
     with ACBrBoleto1.Cedente do
     begin
+      TipoCarteira := pLibConfig.BoletoCedenteConfig.TipoCarteira;
+      TipoDocumento := pLibConfig.BoletoCedenteConfig.TipoDocumento;
+      TipoInscricao := pLibConfig.BoletoCedenteConfig.TipoInscricao;
       Agencia := pLibConfig.BoletoCedenteConfig.Agencia;
       AgenciaDigito := pLibConfig.BoletoCedenteConfig.AgenciaDigito;
       Bairro := pLibConfig.BoletoCedenteConfig.Bairro;
@@ -147,9 +150,6 @@ begin
       NumeroRes := pLibConfig.BoletoCedenteConfig.NumeroRes;
       ResponEmissao := pLibConfig.BoletoCedenteConfig.ResponEmissao;
       Telefone := pLibConfig.BoletoCedenteConfig.Telefone;
-      TipoCarteira := pLibConfig.BoletoCedenteConfig.TipoCarteira;
-      TipoDocumento := pLibConfig.BoletoCedenteConfig.TipoDocumento;
-      TipoInscricao := pLibConfig.BoletoCedenteConfig.TipoInscricao;
       UF := pLibConfig.BoletoCedenteConfig.UF;
       DigitoVerificadorAgenciaConta := pLibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
     end;

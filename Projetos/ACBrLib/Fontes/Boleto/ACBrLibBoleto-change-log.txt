@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2020
+--- ACBrLibBoletoDataModule --
+[-] Corrigido erro ao configurar o cedente como pessoa fisica.
+    (Por: Rafael Dias)
+
 27/02/2020
 --- ACBrLibBoletoConfig --
 [-] Removido a propriedade TamanhoMaximoNossoNumero, pois a mesma causava erro na geração dos boletos.

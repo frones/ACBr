@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2020
+-- ACBrNFeDANFeRLClass --
+[-] Correção para gravar as informações da propriedade "Fonte" no DFM.
+  Por: BigWings / DSA
+
 17/01/2020
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [+] Adicionado configuração para a propriedade "EspacoEntreProdutos" no DANFe

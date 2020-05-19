@@ -167,6 +167,10 @@ begin
   FFonte      := TFonte.Create(self);
   FFonte.Name := 'Fonte';
 
+  {$IFDEF COMPILER6_UP}
+  FFonte.SetSubComponent(True);{ para gravar no DFM/XFM }
+  {$ENDIF}
+
   FLarguraCodProd       := 54;
   FExibeEAN             := False;
   FAltLinhaComun        := 30;

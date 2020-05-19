@@ -156,7 +156,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig,
-  ACBrLibDeviceUtils;
+  ACBrLibDeviceUtils, ACBrUtil;
 
 { TACBrLibPosPrinter }
 
@@ -527,7 +527,7 @@ begin
   try
     VerificarLibInicializada;
 
-    Valor := StrToFloat(AValor);
+    Valor := StringToFloatDef(AValor, 0);
     DataEmissao := StrToDate(ADataEmissao);
     Favorecido := ConverterAnsiParaUTF8(ansistring(AFavorecido));
     Cidade := ConverterAnsiParaUTF8(ansistring(ACidade));

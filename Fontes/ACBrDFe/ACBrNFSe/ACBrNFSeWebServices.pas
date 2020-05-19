@@ -1084,7 +1084,8 @@ begin
       proWEBFISCO: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"';
 
-      else begin
+    else
+      begin
         if (FSeparador = '') then
         begin
           FNameSpaceDad := xmlns3 + FNameSpace + FSeparador + FxsdServico + '"';

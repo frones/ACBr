@@ -419,24 +419,6 @@ begin
 
       inc(i);
     end;
-    {
-    i := 0;
-    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
-    begin
-      InfRec.FMsgRetorno.New;
-      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
-      if InfRec.FMsgRetorno[i].FCodigo = '' then
-        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Code');
-
-      InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-      if InfRec.FMsgRetorno[i].FMensagem = '' then
-        InfRec.FMsgRetorno[i].FMensagem   := Leitor.rCampo(tcStr, 'Reason');
-
-      InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Detail');
-
-      inc(i);
-    end;
-    }
   except
     Result := False;
   end;

@@ -526,7 +526,7 @@ begin
 
       with IdentificacaoPrestador do
       begin
-        rllPrestCNPJ.Caption          := FormatarCNPJ( Cnpj );
+        rllPrestCNPJ.Caption          := FormatarCNPJouCPF( Cnpj );
         rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.InscMunicipal);
       end;
 

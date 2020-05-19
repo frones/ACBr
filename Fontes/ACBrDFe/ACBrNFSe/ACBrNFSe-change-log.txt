@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2020
+-- ACBrNFSeDANFSeRLRetrato --
+[*] https://www.projetoacbr.com.br/forum/topic/57639-danfse-com-prestador-pessoa-física/
+  Por: Ederts / Italo Jurisato Junior
+
 14/05/2020
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/57611-correção-em-tnfserlernfse_abrasf_v2-provedor-systempro/

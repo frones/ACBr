@@ -150,7 +150,7 @@ METHOD LePeso(MillisecTimeOut) CLASS ACBrBAL
 
     hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_LePesoStr", MillisecTimeOut, @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN val(StrTran(AllTrim(::ProcessResult(buffer, bufferLen)),",","."))
 
 METHOD SolicitarPeso() CLASS ACBrBAL
     local hResult
@@ -165,7 +165,7 @@ METHOD UltimoPesoLido() CLASS ACBrBAL
 
     hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_UltimoPesoLidoStr", @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN val(StrTran(AllTrim(::ProcessResult(buffer, bufferLen)),",","."))
 
 METHOD InterpretarRespostaPeso(Resposta) CLASS ACBrBAL
     local hResult, buffer, bufferLen
@@ -174,4 +174,4 @@ METHOD InterpretarRespostaPeso(Resposta) CLASS ACBrBAL
 
     hResult := DllCall(::hHandle, DLL_OSAPI, "BAL_InterpretarRespostaPesoStr", hb_StrToUTF8(Resposta), @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN val(StrTran(AllTrim(::ProcessResult(buffer, bufferLen)),",","."))

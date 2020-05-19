@@ -1369,7 +1369,10 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", Integer.toString(cmbBanco.getSelectedIndex())) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento", txtLocalPagamento.getText()) ;
-            
+                         
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", Integer.toString(cmbTipoCarteira.getSelectedIndex())) ; 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", Integer.toString(cmbTipoDocumento.getSelectedIndex())) ; 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", Integer.toString(cmbTipoInscricao.getSelectedIndex())) ; 
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Agencia", txtAgencia.getText()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito", txtDigAgencia.getText()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Conta", txtConta.getText()) ;               
@@ -1388,10 +1391,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Nome", txtNomeRes.getText()) ; 
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes", txtNumeroRes.getText()) ; 
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Telefone", txtTelefone.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "UF", cmbUF.getSelectedItem().toString() ) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", Integer.toString(cmbTipoCarteira.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", Integer.toString(cmbTipoDocumento.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", Integer.toString(cmbTipoInscricao.getSelectedIndex())) ; 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "UF", cmbUF.getSelectedItem().toString() );
             
             acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa", txtDirRemessa.getText()) ; 
             acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno", txtDirRetorno.getText()) ; 

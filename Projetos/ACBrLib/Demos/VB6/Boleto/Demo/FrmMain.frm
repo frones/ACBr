@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibBoleto Demo"
@@ -167,79 +167,79 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Layout"
       TabPicture(1)   =   "FrmMain.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "lblImpressora"
-      Tab(1).Control(1)=   "lblModelo"
-      Tab(1).Control(2)=   "lblDiretórioLogotipo"
-      Tab(1).Control(3)=   "lblCopias"
-      Tab(1).Control(4)=   "lblNomeArquivo"
-      Tab(1).Control(5)=   "cmbImpressora"
-      Tab(1).Control(6)=   "cmbModeloImpressao"
+      Tab(1).Control(0)=   "chkProgresso"
+      Tab(1).Control(1)=   "chkSetup"
+      Tab(1).Control(2)=   "chkPreview"
+      Tab(1).Control(3)=   "txtNomeArquivo"
+      Tab(1).Control(4)=   "nudCopias"
+      Tab(1).Control(5)=   "txtCopias"
+      Tab(1).Control(6)=   "btnDirLogo"
       Tab(1).Control(7)=   "txtDirLogo"
-      Tab(1).Control(8)=   "btnDirLogo"
-      Tab(1).Control(9)=   "txtCopias"
-      Tab(1).Control(10)=   "nudCopias"
-      Tab(1).Control(11)=   "txtNomeArquivo"
-      Tab(1).Control(12)=   "chkPreview"
-      Tab(1).Control(13)=   "chkSetup"
-      Tab(1).Control(14)=   "chkProgresso"
+      Tab(1).Control(8)=   "cmbModeloImpressao"
+      Tab(1).Control(9)=   "cmbImpressora"
+      Tab(1).Control(10)=   "lblNomeArquivo"
+      Tab(1).Control(11)=   "lblCopias"
+      Tab(1).Control(12)=   "lblDiretórioLogotipo"
+      Tab(1).Control(13)=   "lblModelo"
+      Tab(1).Control(14)=   "lblImpressora"
       Tab(1).ControlCount=   15
       TabCaption(2)   =   "Conta Bancária"
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lblBanco"
-      Tab(2).Control(1)=   "lblAgência"
-      Tab(2).Control(2)=   "lblConta"
-      Tab(2).Control(3)=   "lblRespEmissão"
-      Tab(2).Control(4)=   "lblCodTransmissão"
-      Tab(2).Control(5)=   "lblConvenio"
-      Tab(2).Control(6)=   "lblModalidade"
-      Tab(2).Control(7)=   "lblCodCedente"
-      Tab(2).Control(8)=   "cmbBanco"
-      Tab(2).Control(9)=   "txtAgencia"
-      Tab(2).Control(10)=   "txtConta"
-      Tab(2).Control(11)=   "txtDigConta"
-      Tab(2).Control(12)=   "cmbRespEmissao"
-      Tab(2).Control(13)=   "txtDigAgencia"
-      Tab(2).Control(14)=   "txtCodTransmissao"
-      Tab(2).Control(15)=   "txtModalidade"
-      Tab(2).Control(16)=   "txtCodCedente"
-      Tab(2).Control(17)=   "txtConvenio"
+      Tab(2).Control(0)=   "txtConvenio"
+      Tab(2).Control(1)=   "txtCodCedente"
+      Tab(2).Control(2)=   "txtModalidade"
+      Tab(2).Control(3)=   "txtCodTransmissao"
+      Tab(2).Control(4)=   "txtDigAgencia"
+      Tab(2).Control(5)=   "cmbRespEmissao"
+      Tab(2).Control(6)=   "txtDigConta"
+      Tab(2).Control(7)=   "txtConta"
+      Tab(2).Control(8)=   "txtAgencia"
+      Tab(2).Control(9)=   "cmbBanco"
+      Tab(2).Control(10)=   "lblCodCedente"
+      Tab(2).Control(11)=   "lblModalidade"
+      Tab(2).Control(12)=   "lblConvenio"
+      Tab(2).Control(13)=   "lblCodTransmissão"
+      Tab(2).Control(14)=   "lblRespEmissão"
+      Tab(2).Control(15)=   "lblConta"
+      Tab(2).Control(16)=   "lblAgência"
+      Tab(2).Control(17)=   "lblBanco"
       Tab(2).ControlCount=   18
       TabCaption(3)   =   "Remessa/Retorno"
       TabPicture(3)   =   "FrmMain.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "lblLayoutCNAB"
-      Tab(3).Control(1)=   "lblDiretórioArquivo"
-      Tab(3).Control(2)=   "lblDirArquivoRetorno"
-      Tab(3).Control(3)=   "lblNomeArquivoRemessa"
-      Tab(3).Control(4)=   "lblNomeArquivoRetorno"
-      Tab(3).Control(5)=   "cmbLayoutCNAB"
+      Tab(3).Control(0)=   "txtNomeRetorno"
+      Tab(3).Control(1)=   "txtNomeRemessa"
+      Tab(3).Control(2)=   "txtDirRetorno"
+      Tab(3).Control(3)=   "btnDirRetorno"
+      Tab(3).Control(4)=   "ckbCedenteRetorno"
+      Tab(3).Control(5)=   "txtDirRemessa"
       Tab(3).Control(6)=   "btnDirRemessa"
-      Tab(3).Control(7)=   "txtDirRemessa"
-      Tab(3).Control(8)=   "ckbCedenteRetorno"
-      Tab(3).Control(9)=   "btnDirRetorno"
-      Tab(3).Control(10)=   "txtDirRetorno"
-      Tab(3).Control(11)=   "txtNomeRemessa"
-      Tab(3).Control(12)=   "txtNomeRetorno"
+      Tab(3).Control(7)=   "cmbLayoutCNAB"
+      Tab(3).Control(8)=   "lblNomeArquivoRetorno"
+      Tab(3).Control(9)=   "lblNomeArquivoRemessa"
+      Tab(3).Control(10)=   "lblDirArquivoRetorno"
+      Tab(3).Control(11)=   "lblDiretórioArquivo"
+      Tab(3).Control(12)=   "lblLayoutCNAB"
       Tab(3).ControlCount=   13
       TabCaption(4)   =   "Email"
       TabPicture(4)   =   "FrmMain.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblPorta"
-      Tab(4).Control(1)=   "lblHostSMTP"
-      Tab(4).Control(2)=   "lblSenha"
-      Tab(4).Control(3)=   "lblUsuário"
-      Tab(4).Control(4)=   "lblEmail"
-      Tab(4).Control(5)=   "lblNome"
-      Tab(4).Control(6)=   "nudPorta"
+      Tab(4).Control(0)=   "txtUsuario"
+      Tab(4).Control(1)=   "txtNome"
+      Tab(4).Control(2)=   "txtEmail"
+      Tab(4).Control(3)=   "txtSenha"
+      Tab(4).Control(4)=   "txtHost"
+      Tab(4).Control(5)=   "txt"
+      Tab(4).Control(6)=   "chkSSL"
       Tab(4).Control(7)=   "chkTLS"
-      Tab(4).Control(8)=   "chkSSL"
-      Tab(4).Control(9)=   "txt"
-      Tab(4).Control(10)=   "txtHost"
-      Tab(4).Control(11)=   "txtSenha"
-      Tab(4).Control(12)=   "txtEmail"
-      Tab(4).Control(13)=   "txtNome"
-      Tab(4).Control(14)=   "txtUsuario"
+      Tab(4).Control(8)=   "nudPorta"
+      Tab(4).Control(9)=   "lblNome"
+      Tab(4).Control(10)=   "lblEmail"
+      Tab(4).Control(11)=   "lblUsuário"
+      Tab(4).Control(12)=   "lblSenha"
+      Tab(4).Control(13)=   "lblHostSMTP"
+      Tab(4).Control(14)=   "lblPorta"
       Tab(4).ControlCount=   15
       Begin VB.TextBox txtUsuario 
          Height          =   315
@@ -1512,11 +1512,11 @@ Private Sub LoadConfig()
     boleto.ConfigLer
     
     cmbModeloImpressao.ListIndex = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "Layout"))
-    chkPreview.value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarPreview"))
-    chkProgresso.value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarProgresso"))
-    chkSetup.value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarSetup"))
+    chkPreview.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarPreview"))
+    chkProgresso.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarProgresso"))
+    chkSetup.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarSetup"))
     txtNomeArquivo.Text = boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "NomeArquivo")
-    nudCopias.value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "NumeroCopias"))
+    nudCopias.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "NumeroCopias"))
     cmbImpressora.Text = boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "PrinterName")
     txtDirLogo.Text = boleto.ConfigLerValor(SESSAO_BOLETOBANCOFCFORTESCONFIG, "DirLogo")
     cmbBanco.ListIndex = CLng(boleto.ConfigLerValor(SESSAO_BOLETOBANCOCONFIG, "TipoCobranca"))
@@ -1547,22 +1547,25 @@ Private Sub LoadConfig()
     cmbLayoutCNAB.ListIndex = CLng(boleto.ConfigLerValor(SESSAO_BOLETODIRETORIOCONFIG, "LayoutRemessa"))
     txtNomeRemessa.Text = boleto.ConfigLerValor(SESSAO_BOLETODIRETORIOCONFIG, "NomeArqRemessa")
     txtNomeRetorno.Text = boleto.ConfigLerValor(SESSAO_BOLETODIRETORIOCONFIG, "NomeArqRetorno")
-    ckbCedenteRetorno.value = CLng(boleto.ConfigLerValor(SESSAO_BOLETODIRETORIOCONFIG, "LeCedenteRetorno"))
+    ckbCedenteRetorno.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETODIRETORIOCONFIG, "LeCedenteRetorno"))
     txtNome.Text = boleto.ConfigLerValor(SESSAO_EMAIL, "Nome")
     txtEmail.Text = boleto.ConfigLerValor(SESSAO_EMAIL, "Conta")
     txtUsuario.Text = boleto.ConfigLerValor(SESSAO_EMAIL, "Usuario")
     txtSenha.Text = boleto.ConfigLerValor(SESSAO_EMAIL, "Senha")
     txtHost.Text = boleto.ConfigLerValor(SESSAO_EMAIL, "Servidor")
-    nudPorta.value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "Porta"))
-    chkSSL.value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "SSL"))
-    chkTLS.value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "TLS"))
+    nudPorta.Value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "Porta"))
+    chkSSL.Value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "SSL"))
+    chkTLS.Value = CLng(boleto.ConfigLerValor(SESSAO_EMAIL, "TLS"))
 End Sub
 
 Private Sub SaveConfig()
+    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoCarteira", CStr(cmbTipoCarteira.ListIndex)
+    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoDocumento", CStr(cmbTipoDocumento.ListIndex)
+    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoInscricao", CStr(cmbTipoInscricao.ListIndex)
     boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "Layout", CStr(cmbModeloImpressao.ListIndex)
-    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarPreview", CStr(chkPreview.value)
-    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarProgresso", CStr(chkProgresso.value)
-    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarSetup", CStr(chkSetup.value)
+    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarPreview", CStr(chkPreview.Value)
+    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarProgresso", CStr(chkProgresso.Value)
+    boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "MostrarSetup", CStr(chkSetup.Value)
     boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "NomeArquivo", txtNomeArquivo.Text
     boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "NumeroCopias", txtCopias.Text
     boleto.ConfigGravarValor SESSAO_BOLETOBANCOFCFORTESCONFIG, "PrinterName", cmbImpressora.Text
@@ -1587,23 +1590,20 @@ Private Sub SaveConfig()
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "NumeroRes", txtNumeroRes.Text
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "Telefone", txtTelefone.Text
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "UF", cmbUF.Text
-    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoCarteira", CStr(cmbTipoCarteira.ListIndex)
-    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoDocumento", CStr(cmbTipoDocumento.ListIndex)
-    boleto.ConfigGravarValor SESSAO_BOLETOCEDENTECONFIG, "TipoInscricao", CStr(cmbTipoInscricao.ListIndex)
     boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "DirArqRemessa", txtDirRemessa.Text
     boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "DirArqRetorno", txtDirRetorno.Text
     boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "LayoutRemessa", CStr(cmbLayoutCNAB.ListIndex)
     boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "NomeArqRemessa", txtNomeRemessa.Text
     boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "NomeArqRetorno", txtNomeRetorno.Text
-    boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "LeCedenteRetorno", CStr(ckbCedenteRetorno.value)
+    boleto.ConfigGravarValor SESSAO_BOLETODIRETORIOCONFIG, "LeCedenteRetorno", CStr(ckbCedenteRetorno.Value)
     boleto.ConfigGravarValor SESSAO_EMAIL, "Nome", txtNome.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Conta", txtEmail.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Usuario", txtUsuario.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Senha", txtSenha.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Servidor", txtHost.Text
-    boleto.ConfigGravarValor SESSAO_EMAIL, "Porta", CStr(nudPorta.value)
-    boleto.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(chkSSL.value)
-    boleto.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(chkTLS.value)
+    boleto.ConfigGravarValor SESSAO_EMAIL, "Porta", CStr(nudPorta.Value)
+    boleto.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(chkSSL.Value)
+    boleto.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(chkTLS.Value)
     
     boleto.ConfigGravar
     

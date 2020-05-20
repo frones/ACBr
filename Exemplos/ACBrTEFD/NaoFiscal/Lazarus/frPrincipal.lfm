@@ -36,10 +36,10 @@ object FormPrincipal: TFormPrincipal
       Height = 376
       Top = 0
       Width = 690
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
@@ -934,6 +934,7 @@ object FormPrincipal: TFormPrincipal
         ClientWidth = 317
         TabOrder = 0
         Visible = False
+        Wordwrap = True
         object Label15: TLabel
           Left = 1
           Height = 13
@@ -957,6 +958,7 @@ object FormPrincipal: TFormPrincipal
         ClientWidth = 317
         TabOrder = 1
         Visible = False
+        Wordwrap = True
         object Label17: TLabel
           Left = 1
           Height = 13
@@ -1035,6 +1037,10 @@ object FormPrincipal: TFormPrincipal
     TEFHiper.ArqSTS = 'C:\HiperTEF\resp\IntPos.sts'
     TEFHiper.ArqResp = 'C:\HiperTEF\resp\IntPos.001'
     TEFHiper.GPExeName = 'C:\HiperTEF\HiperTEF.exe'
+    TEFCliSiTef.ArqLOG = 'CliSiTef.log'
+    TEFCliSiTef.EnderecoIP = 'localhost'
+    TEFCliSiTef.CodigoLoja = '00000000'
+    TEFCliSiTef.NumeroTerminal = 'SE000001'
     TEFCliSiTef.DataHoraFiscal = 0
     TEFCliSiTef.OnExibeMenu = CliSiTefExibeMenu
     TEFCliSiTef.OnObtemCampo = CliSiTefObtemCampo
@@ -1095,13 +1101,16 @@ object FormPrincipal: TFormPrincipal
     TEFConvCard.ArqSTS = 'C:\ger_convenio\rx\crtsol.ok'
     TEFConvCard.ArqResp = 'C:\ger_convenio\rx\crtsol.001'
     TEFConvCard.GPExeName = 'C:\ger_convcard\convcard.exe'
+    OnAguardaResp = ACBrTEFD1AguardaResp
     OnExibeMsg = ACBrTEFD1ExibeMsg
+    OnBloqueiaMouseTeclado = ACBrTEFD1BloqueiaMouseTeclado
     OnComandaECF = ACBrTEFD1ComandaECF
     OnComandaECFSubtotaliza = ACBrTEFD1ComandaECFSubtotaliza
     OnComandaECFPagamento = ACBrTEFD1ComandaECFPagamento
     OnComandaECFAbreVinculado = ACBrTEFD1ComandaECFAbreVinculado
     OnComandaECFImprimeVia = ACBrTEFD1ComandaECFImprimeVia
     OnInfoECF = ACBrTEFD1InfoECF
+    OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
     OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
     OnGravarLog = ACBrTEFD1GravarLog
     left = 552

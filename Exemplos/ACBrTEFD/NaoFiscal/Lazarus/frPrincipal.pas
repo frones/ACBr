@@ -41,7 +41,7 @@ uses
 
 type
 
-  TTipoBotaoOperacao = (bopNaoExibir, bopCancelarVenda, bopCancelarPIN, bopLiberarCaixa);
+  TTipoBotaoOperacao = (bopNaoExibir, bopCancelarVenda, bopLiberarCaixa, bopCancelarEsperaTEF);
 
   { TFormPrincipal }
 
@@ -138,6 +138,11 @@ type
     Splitter3: TSplitter;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
+    procedure ACBrTEFD1AguardaResp(Arquivo: String; SegundosTimeOut: Integer;
+      var Interromper: Boolean);
+    procedure ACBrTEFD1AntesFinalizarRequisicao(Req: TACBrTEFDReq);
+    procedure ACBrTEFD1BloqueiaMouseTeclado(Bloqueia: Boolean;
+      var Tratado: Boolean);
     procedure ACBrTEFD1ComandaECF(Operacao: TACBrTEFDOperacaoECF;
       Resp: TACBrTEFDResp; var RetornoECF: Integer);
     procedure ACBrTEFD1ComandaECFAbreVinculado(COO, IndiceECF: String;
@@ -185,6 +190,8 @@ type
   private
     FVenda: TVenda;
     FTipoBotaoOperacao: TTipoBotaoOperacao;
+    FCanceladoPeloOperador: Boolean;
+    FTempoDeEspera: TDateTime;
 
     function GetNomeArquivoConfiguracao: String;
     function GetNomeArquivoVenda: String;
@@ -216,6 +223,7 @@ type
     procedure AtualizarVendaNaInterface;
     procedure AtualizarTotaisVendaNaInterface;
     procedure AtualizarPagamentosVendaNaInterface;
+    procedure MensagemTEF(const MsgOperador, MsgCliente: String);
     procedure LimparMensagensTEF;
 
     procedure AdicionarLinhaLog(AMensagem: String);
@@ -291,6 +299,8 @@ begin
   LimparMensagensTEF;
   FTipoBotaoOperacao := High(TTipoBotaoOperacao);    // Força atualizar tela
   Venda.Status := High(TStatusVenda);                // Força atualizar tela
+  FCanceladoPeloOperador := False;
+  FTempoDeEspera := 0;
 
   Application.OnException := @TratarException;
 end;
@@ -346,8 +356,15 @@ begin
   case TipoBotaoOperacao of
     bopLiberarCaixa:
       StatusVenda := stsLivre;
+
     bopCancelarVenda:
       CancelarVenda;
+
+    bopCancelarEsperaTEF:
+    begin
+      FCanceladoPeloOperador := True;
+      FTipoBotaoOperacao := bopLiberarCaixa;
+    end;
   end;
 end;
 
@@ -378,44 +395,39 @@ var
 begin
   case Operacao of
 
-    opmOK :
+    opmOK:
        AModalResult := MessageDlg( Mensagem, mtInformation, [mbOK], 0);
 
-    opmYesNo :
+    opmYesNo:
        AModalResult := MessageDlg( Mensagem, mtConfirmation, [mbYes, mbNo], 0);
 
-    opmExibirMsgOperador, opmRemoverMsgOperador :
-         pMensagemOperador.Caption := Mensagem ;
+    opmExibirMsgOperador:
+      MensagemTEF(Mensagem,'') ;
 
-    opmExibirMsgCliente, opmRemoverMsgCliente :
-         pMensagemCliente.Caption := Mensagem ;
+    opmRemoverMsgOperador:
+      MensagemTEF(' ','') ;
 
-    opmDestaqueVia :
-       begin
-         OldMensagem := pMensagemOperador.Caption ;
-         try
-            pMensagemOperador.Caption := Mensagem ;
-            pMensagemOperador.Visible := True ;
-            pMensagem.Visible         := True ;
+    opmExibirMsgCliente:
+      MensagemTEF('', Mensagem) ;
 
-            { Aguardando 3 segundos }
-            Fim := IncSecond(now, 3)  ;
-            repeat
-               sleep(200) ;
-               pMensagemOperador.Caption := Mensagem + ' ' + IntToStr(SecondsBetween(Fim,now));
-               Application.ProcessMessages;
-            until (now > Fim) ;
-         finally
-            pMensagemOperador.Caption := OldMensagem ;
-         end;
-       end;
+    opmRemoverMsgCliente:
+      MensagemTEF('', ' ') ;
+
+    opmDestaqueVia:
+      begin
+        OldMensagem := pMensagemOperador.Caption ;
+        try
+          { Aguardando 3 segundos }
+          Fim := IncSecond(now, 3)  ;
+          repeat
+            MensagemTEF(Mensagem + ' ' + IntToStr(SecondsBetween(Fim,now)), '');
+            Sleep(200) ;
+          until (now > Fim) ;
+        finally
+          MensagemTEF(OldMensagem, '');
+        end;
+      end;
   end;
-
-  pMensagemOperador.Visible := (pMensagemOperador.Caption <> '') ;
-  pMensagemCliente.Visible  := (pMensagemCliente.Caption <> '') ;
-
-  pMensagem.Visible := pMensagemOperador.Visible or pMensagemCliente.Visible;
-  Application.ProcessMessages;
 end;
 
 procedure TFormPrincipal.ACBrTEFD1DepoisConfirmarTransacoes(
@@ -487,6 +499,65 @@ begin
   except
     RetornoECF := 0 ;
   end;
+end;
+
+procedure TFormPrincipal.ACBrTEFD1AntesFinalizarRequisicao(Req: TACBrTEFDReq);
+begin
+  FCanceladoPeloOperador := False;
+  FTempoDeEspera := 0;
+  // Use esse evento, para inserir campos personalizados, ou modificar o arquivo
+  // de requisião, que será criado e envido para o Gerenciador Padrão
+
+  // Exemplo, adicionando o campo 777-777, caso seja uma transação de Cartão (CRT)
+  //if Req.Header = 'CRT' then
+  //   Req.GravaInformacao(777,777,'TESTE REDECARD');
+  //AdicionarLinhaLog('Enviando: '+Req.Header+' ID: '+IntToStr( Req.ID ) );
+end;
+
+procedure TFormPrincipal.ACBrTEFD1AguardaResp(Arquivo: String;
+  SegundosTimeOut: Integer; var Interromper: Boolean);
+var
+  Msg : String ;
+begin
+  if FCanceladoPeloOperador then
+  begin
+    Interromper := True ;
+    Exit;
+  end;
+
+  Msg := '' ;
+  if (ACBrTEFD1.GPAtual in [gpCliSiTef, gpVeSPague]) then   // É TEF dedicado ?
+   begin
+     if (Arquivo = '23') and (TipoBotaoOperacao <> bopCancelarEsperaTEF) then  // Está aguardando Pin-Pad ?
+     begin
+       if ACBrTEFD1.TecladoBloqueado then
+           ACBrTEFD1.BloquearMouseTeclado(False);  // Desbloqueia o Teclado
+
+       TipoBotaoOperacao := bopCancelarEsperaTEF;  // Liga Botão de Cancelamento
+       pImpressao.Enabled := False;                // Desliga demais componentes da Interface
+       gbTotaisVenda.Enabled := False;
+       gbPagamentos.Enabled := False;
+
+       Msg := 'Aguardando Resposta do Pinpad';
+       FCanceladoPeloOperador := False;
+       Application.ProcessMessages;
+     end;
+   end
+  else if FTempoDeEspera <> SegundosTimeOut then
+  begin
+     Msg := 'Aguardando: '+Arquivo+' '+IntToStr(SegundosTimeOut) ;
+     FTempoDeEspera := SegundosTimeOut;
+  end;
+
+  if Msg <> '' then
+    AdicionarLinhaLog(Msg);
+end;
+
+procedure TFormPrincipal.ACBrTEFD1BloqueiaMouseTeclado(Bloqueia: Boolean; var Tratado: Boolean);
+begin
+  Self.Enabled := not Bloqueia ;
+  AdicionarLinhaLog('BloqueiaMouseTeclado = '+IfThen(Bloqueia,'SIM', 'NAO'));
+  Tratado := False ;  { Deixa executar o código de Bloqueio do ACBrTEFD }
 end;
 
 procedure TFormPrincipal.ACBrTEFD1ComandaECFAbreVinculado(COO,
@@ -725,7 +796,7 @@ begin
   MsgOperacao := '';
 
   case AValue of
-    bopCancelarVenda:
+    bopCancelarVenda, bopCancelarEsperaTEF:
       MsgOperacao := 'Cancelar Operacao';
 
     bopLiberarCaixa:
@@ -750,7 +821,7 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
-  btMudaPagina.Enabled := not (AValue in [stsIniciada, stsEmPagamento]);
+  pImpressao.Enabled := not (AValue in [stsIniciada, stsEmPagamento]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
   lNumOperacao.Visible := (AValue <> stsLivre);
 
@@ -871,6 +942,7 @@ begin
   AdicionarLinhaLog('- btTestarTEFClick: '+NomeTEF);
   try
     AtivarTEF;
+    ACBrTEFD1.ATV;
     MessageDlg(Format('TEF %S ATIVO', [NomeTEF]), mtInformation, [mbOK], 0);
   except
     On E: Exception do
@@ -1013,7 +1085,10 @@ end;
 
 procedure TFormPrincipal.CancelarVenda;
 begin
-  AdicionarLinhaLog('- CancelarOperacao');
+  AdicionarLinhaLog('- CancelarVenda');
+  // AQUI você deve cancelar a sua venda no Banco de Dados, desfazendo baixa de
+  // estoque ou outras operações que ocorreram durante a venda.
+
   ACBrTEFD1.CancelarTransacoesPendentes;
   StatusVenda := stsCancelada;
 end;
@@ -1111,13 +1186,23 @@ begin
   AtualizarTotaisVendaNaInterface;
 end;
 
+procedure TFormPrincipal.MensagemTEF(const MsgOperador, MsgCliente: String);
+begin
+  if (MsgOperador <> '') then
+    pMensagemOperador.Caption := MsgOperador;
+
+  if (MsgCliente <> '') then
+    pMensagemCliente.Caption := MsgCliente;
+
+  pMensagemOperador.Visible := (Trim(pMensagemOperador.Caption) <> '');
+  pMensagemCliente.Visible := (Trim(pMensagemCliente.Caption) <> '');
+  pMensagem.Visible := pMensagemOperador.Visible or pMensagemCliente.Visible;
+  Application.ProcessMessages;
+end;
+
 procedure TFormPrincipal.LimparMensagensTEF;
 begin
-  pMensagemOperador.Caption := '';
-  pMensagemCliente.Caption := '';
-  pMensagem.Visible := False;
-  pMensagemOperador.Visible := False;
-  pMensagemCliente.Visible := False;
+  MensagemTEF(' ',' ');
 end;
 
 procedure TFormPrincipal.ConfigurarTEF;
@@ -1145,7 +1230,6 @@ begin
   AdicionarLinhaLog('- AtivarTEF');
   ConfigurarTEF;
   ACBrTEFD1.Inicializar(TACBrTEFDTipo(cbxGP.ItemIndex));
-  ACBrTEFD1.ATV;
 end;
 
 procedure TFormPrincipal.ConfigurarPosPrinter;

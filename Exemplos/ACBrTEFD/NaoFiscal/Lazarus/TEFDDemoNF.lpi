@@ -110,7 +110,9 @@
       <Unit6>
         <Filename Value="frObtemCampo.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormObtemCampo"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit6>
     </Units>
   </ProjectOptions>

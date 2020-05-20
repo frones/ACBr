@@ -183,6 +183,7 @@ type
     procedure btImprimirClick(Sender: TObject);
     procedure btLimparImpressoraClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sbLimparLogClick(Sender: TObject);
     procedure seTotalAcrescimoChange(Sender: TObject);
     procedure seTotalDescontoChange(Sender: TObject);
@@ -244,8 +245,8 @@ var
 implementation
 
 uses
+  IniFiles, typinfo, dateutils, math, strutils, LCLType,
   frIncluirPagamento, frMenuTEF, frObtemCampo,
-  IniFiles, typinfo, dateutils, math, strutils,
   configuraserial,
   ACBrUtil;
 
@@ -310,6 +311,16 @@ begin
   FVenda.Free;
 end;
 
+procedure TFormPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = VK_ESCAPE) and (btOperacao.Visible and btOperacao.Enabled) then
+  begin
+    btOperacao.Click;
+    Key := 0;
+  end;
+end;
+
 procedure TFormPrincipal.btImprimirClick(Sender: TObject);
 begin
   ACBrPosPrinter1.Buffer.Assign(mImpressao.Lines);
@@ -353,6 +364,8 @@ end;
 
 procedure TFormPrincipal.btOperacaoClick(Sender: TObject);
 begin
+  AdicionarLinhaLog('- btOperacaoClick');
+
   case TipoBotaoOperacao of
     bopLiberarCaixa:
       StatusVenda := stsLivre;
@@ -361,10 +374,7 @@ begin
       CancelarVenda;
 
     bopCancelarEsperaTEF:
-    begin
       FCanceladoPeloOperador := True;
-      FTipoBotaoOperacao := bopLiberarCaixa;
-    end;
   end;
 end;
 
@@ -521,6 +531,7 @@ var
 begin
   if FCanceladoPeloOperador then
   begin
+    FCanceladoPeloOperador := False;
     Interromper := True ;
     Exit;
   end;
@@ -528,19 +539,15 @@ begin
   Msg := '' ;
   if (ACBrTEFD1.GPAtual in [gpCliSiTef, gpVeSPague]) then   // É TEF dedicado ?
    begin
-     if (Arquivo = '23') and (TipoBotaoOperacao <> bopCancelarEsperaTEF) then  // Está aguardando Pin-Pad ?
+     if (Arquivo = '23') and ACBrTEFD1.TecladoBloqueado then  // Está aguardando Pin-Pad ?
      begin
-       if ACBrTEFD1.TecladoBloqueado then
-           ACBrTEFD1.BloquearMouseTeclado(False);  // Desbloqueia o Teclado
+       // Desbloqueia o Teclado
+       ACBrTEFD1.BloquearMouseTeclado(False);
+       // Ajusta Interface para Espera do TEF, com opçao de cancelamento pelo Operador
+       StatusVenda := stsAguardandoTEF;
 
-       TipoBotaoOperacao := bopCancelarEsperaTEF;  // Liga Botão de Cancelamento
-       pImpressao.Enabled := False;                // Desliga demais componentes da Interface
-       gbTotaisVenda.Enabled := False;
-       gbPagamentos.Enabled := False;
-
-       Msg := 'Aguardando Resposta do Pinpad';
+       Msg := 'Aguardando Resposta do Pinpad.  Pressione <ESC> para Cancelar';
        FCanceladoPeloOperador := False;
-       Application.ProcessMessages;
      end;
    end
   else if FTempoDeEspera <> SegundosTimeOut then
@@ -551,6 +558,8 @@ begin
 
   if Msg <> '' then
     AdicionarLinhaLog(Msg);
+
+  Application.ProcessMessages;
 end;
 
 procedure TFormPrincipal.ACBrTEFD1BloqueiaMouseTeclado(Bloqueia: Boolean; var Tratado: Boolean);
@@ -661,10 +670,8 @@ end;
 procedure TFormPrincipal.btAdministrativoClick(Sender: TObject);
 begin
   AdicionarLinhaLog('- btAdministrativoClick');
-  if ACBrTEFD1.ADM then
-    StatusVenda := stsFinalizada
-  else
-    StatusVenda := stsLivre;
+  ACBrTEFD1.ADM;
+  StatusVenda := stsFinalizada;
 end;
 
 procedure TFormPrincipal.btSalvarParametrosClick(Sender: TObject);
@@ -797,16 +804,16 @@ begin
 
   case AValue of
     bopCancelarVenda, bopCancelarEsperaTEF:
-      MsgOperacao := 'Cancelar Operacao';
+      MsgOperacao := 'Cancelar';
 
     bopLiberarCaixa:
-      MsgOperacao := 'Liberar Caixa';
+      MsgOperacao := 'Liberar';
   end;
 
   FTipoBotaoOperacao := AValue;
 
   btOperacao.Visible := (MsgOperacao <> '');
-  btOperacao.Caption := MsgOperacao;
+  btOperacao.Caption := 'ESC - '+MsgOperacao;
 end;
 
 procedure TFormPrincipal.SetStatusVenda(AValue: TStatusVenda);
@@ -821,7 +828,7 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
-  pImpressao.Enabled := not (AValue in [stsIniciada, stsEmPagamento]);
+  pImpressao.Enabled := not (AValue in [stsIniciada, stsEmPagamento, stsAguardandoTEF]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
   lNumOperacao.Visible := (AValue <> stsLivre);
 
@@ -851,6 +858,12 @@ begin
       MsgStatus := 'CANCELADA';
       TipoBotaoOperacao := bopLiberarCaixa;
     end;
+
+    stsAguardandoTEF:
+    begin
+      MsgStatus := 'TRANSACAO TEF';
+      TipoBotaoOperacao := bopCancelarEsperaTEF;
+    end
 
   else
     MsgStatus := 'CAIXA LIVRE';
@@ -1029,6 +1042,8 @@ begin
   mImpressao.Clear;
   Venda.Clear;
   AtualizarVendaNaInterface;
+  FCanceladoPeloOperador := False;
+  FTempoDeEspera := 0;
 end;
 
 procedure TFormPrincipal.IniciarVenda;
@@ -1041,8 +1056,9 @@ begin
   Venda.Clear;
   Venda.NumOperacao := ProxVenda;
   Venda.DHInicio := Now;
+  FCanceladoPeloOperador := False;
+  FTempoDeEspera := 0;
 end;
-
 
 procedure TFormPrincipal.AdicionarPagamento(const Indice: String; AValor: Double
   );

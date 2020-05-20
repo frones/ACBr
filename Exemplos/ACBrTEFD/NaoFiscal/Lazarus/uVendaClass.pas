@@ -46,7 +46,7 @@ const
        ('99','Outros') );
 
 type
-  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada, stsCancelada);
+  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada, stsCancelada, stsAguardandoTEF);
 
   { TPagamento }
 

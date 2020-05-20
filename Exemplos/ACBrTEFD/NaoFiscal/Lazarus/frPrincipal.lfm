@@ -8,8 +8,10 @@ object FormPrincipal: TFormPrincipal
   ClientWidth = 1024
   Constraints.MinHeight = 500
   Constraints.MinWidth = 1024
+  KeyPreview = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   ParentFont = True
   Position = poDefaultSizeOnly
   LCLVersion = '2.0.8.0'
@@ -767,6 +769,7 @@ object FormPrincipal: TFormPrincipal
               Height = 28
               Top = 11
               Width = 120
+              Cancel = True
               Caption = 'Cancelar Operação'
               Images = ImageList1
               OnClick = btOperacaoClick

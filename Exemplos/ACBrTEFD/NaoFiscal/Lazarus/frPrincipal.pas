@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD,
-  ACBrPosPrinter, ACBrTEFDClass, ACBrTEFComum, uVendaClass, frIncluirPagamento;
+  ACBrPosPrinter, ACBrTEFDClass, uVendaClass, frIncluirPagamento;
 
 type
 
@@ -394,8 +394,8 @@ begin
 
         // Lendo os campos mapeados //
         AdicionarLinhaLog('- Rede: '  + Rede + ', NSU: '  + NSU );
-        AdicionarLinhaLog('- Parcelas: '+ IntToStr(QtdParcelas) +
-                          ', parcelado por: '+ GetEnumName(TypeInfo(TACBrTEFRespParceladoPor), integer(ParceladoPor) ));
+        //AdicionarLinhaLog('- Parcelas: '+ IntToStr(QtdParcelas) +
+        //                  ', parcelado por: '+ GetEnumName(TypeInfo(TACBrTEFRespParceladoPor), integer(ParceladoPor) ));
         AdicionarLinhaLog('- É Débito: '+BoolToStr(Debito)+
                           ', É Crédito: '+BoolToStr(Credito)+
                           ', Valor: '+ FormatFloat('###,###,##0.00',ValorTotal)) ;

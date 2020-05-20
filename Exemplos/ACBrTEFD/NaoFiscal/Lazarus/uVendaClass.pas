@@ -23,7 +23,9 @@ type
   TPagamento = class
   private
     FConfirmada: Boolean;
+    FDesconto: Double;
     FHora: TDateTime;
+    FNomeAdministradora: String;
     FNSU: String;
     FRede: String;
     FTipoPagamento: String;
@@ -38,6 +40,8 @@ type
     property Hora: TDateTime read FHora write FHora;
     property NSU: String read FNSU write FNSU;
     property Rede: String read FRede write FRede;
+    property NomeAdministradora: String read FNomeAdministradora write FNomeAdministradora;
+    property Desconto: Double read FDesconto write FDesconto;
     property Confirmada: Boolean read FConfirmada write FConfirmada;
   end;
 
@@ -138,6 +142,8 @@ begin
   FNSU := '';
   FRede := '';
   FConfirmada := False;
+  FNomeAdministradora := '';
+  FDesconto := 0;
 end;
 
 { TListaPagamentos }
@@ -222,6 +228,7 @@ var
 begin
   Ini := TMemIniFile.Create(FArqVenda);
   try
+    Ini.Clear;
     Ini.WriteInteger('Venda','NumOperacao', FNumOperacao);
     Ini.WriteDateTime('Venda','DHInicio', FDHInicio);
     Ini.WriteInteger('Venda','Status', Integer(FStatus));
@@ -229,7 +236,8 @@ begin
     Ini.WriteFloat('Valores','TotalAcrescimo', FTotalAcrescimo);
     Ini.WriteFloat('Valores','TotalDesconto', FTotalDesconto);
 
-    For i := 0 to Pagamentos.Count-1 do
+    i := 0;
+    while i < Pagamentos.Count do
     begin
       ASecPag := SecPag(i);
       Ini.WriteString(ASecPag,'TipoPagamento',Pagamentos[i].TipoPagamento);
@@ -237,7 +245,10 @@ begin
       Ini.WriteDateTime(ASecPag,'Hora', Pagamentos[i].Hora);
       Ini.WriteString(ASecPag,'NSU', Pagamentos[i].NSU);
       Ini.WriteString(ASecPag,'Rede', Pagamentos[i].Rede);
+      Ini.WriteString(ASecPag,'NomeAdministradora', Pagamentos[i].NomeAdministradora);
+      Ini.WriteFloat(ASecPag,'Desconto', Pagamentos[i].Desconto);
       Ini.WriteBool(ASecPag,'Confirmada', Pagamentos[i].Confirmada);
+      Inc(i);
     end;
   finally
     Ini.Free;
@@ -271,6 +282,8 @@ begin
       APag.Hora := Ini.ReadDateTime(ASecPag,'Hora', 0);
       APag.NSU := Ini.ReadString(ASecPag,'NSU', '');
       APag.Rede := Ini.ReadString(ASecPag,'Rede', '');
+      APag.NomeAdministradora := Ini.ReadString(ASecPag,'NomeAdministradora', '');
+      APag.Desconto := Ini.ReadFloat(ASecPag,'Desconto', 0);
       APag.Confirmada := Ini.ReadBool(ASecPag,'Confirmada', False);
 
       Pagamentos.Add(APag);

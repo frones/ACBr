@@ -28,59 +28,90 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit frIncluirPagamento;
+unit frObtemCampo; 
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin,
-  Buttons, uVendaClass;
+  Classes, SysUtils, 
+   Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons, ExtCtrls,
+  ACBrTEFDCliSiTef;
 
 type
 
-  { TFormIncluirPagamento }
+{$R *.lfm}
 
-  TFormIncluirPagamento = class(TForm)
-    btGravar: TBitBtn;
-    btCancelar: TBitBtn;
-    cbFormaPagamento: TComboBox;
-    Label14: TLabel;
-    Label16: TLabel;
-    seValorPago: TFloatSpinEdit;
-    procedure FormCreate(Sender: TObject);
-    procedure seValorPagoChange(Sender: TObject);
+{ TFormObtemCampo }
+
+  TFormObtemCampo = class(TForm)
+     BitBtn1 : TBitBtn;
+     BitBtn2 : TBitBtn;
+     BitBtn3: TBitBtn;
+     Edit1 : TEdit;
+     Panel1 : TPanel;
+     procedure Edit1KeyPress(Sender : TObject; var Key : char);
+     procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
+     procedure FormCreate(Sender : TObject);
+     procedure FormShow(Sender : TObject);
   private
-
+    { private declarations }
   public
-
-  end;
+    { public declarations }
+    TipoCampo : Integer;
+    Operacao  : TACBrTEFDCliSiTefOperacaoCampo;
+    TamanhoMinimo, TamanhoMaximo : Integer ;
+  end; 
 
 var
-  FormIncluirPagamento: TFormIncluirPagamento;
+  FormObtemCampo : TFormObtemCampo; 
 
 implementation
 
-{$R *.lfm}
+uses
+  ACBrConsts;
 
-{ TFormIncluirPagamento }
+{ TFormObtemCampo }
 
-procedure TFormIncluirPagamento.FormCreate(Sender: TObject);
-var
-  l, i: Integer;
+procedure TFormObtemCampo.FormCreate(Sender : TObject);
 begin
-  cbFormaPagamento.Clear;
-  l := Length(cPagamentos)-1;
-  for i := 0 to l do
-    cbFormaPagamento.Items.Add(cPagamentos[i,0] + ' - ' + cPagamentos[i,1]);
-
-  cbFormaPagamento.ItemIndex := 0;
+  TamanhoMinimo := 0 ;
+  TamanhoMaximo := 0 ;
+  Operacao      := tcString;
+  TipoCampo     := 0 ;
 end;
 
-procedure TFormIncluirPagamento.seValorPagoChange(Sender: TObject);
+procedure TFormObtemCampo.Edit1KeyPress(Sender : TObject; var Key : char);
 begin
-  btGravar.Enabled := (seValorPago.Value > 0) and (cbFormaPagamento.ItemIndex >= 0);
+   if Key in [#13,#8] then exit ;  { Enter e BackSpace, OK }
+
+   if Operacao in [tcDouble, tcCMC7] then
+      if not (Key in ['0'..'9', DecimalSeparator]) then    { Apenas números }
+         Key := #0 ;
+
+   if (TamanhoMaximo > 0) and (Length( Edit1.Text ) >= TamanhoMaximo) then
+      Key := #0 ;
+end;
+
+procedure TFormObtemCampo.FormCloseQuery(Sender : TObject; var CanClose : boolean);
+begin
+   if (ModalResult = mrOK) and (TamanhoMinimo > 0) then
+   begin
+      if Length( Edit1.Text ) < TamanhoMinimo then
+      begin
+         ShowMessage('O Tamanho Mínimo para este campo e: '+IntToStr(TamanhoMinimo) );
+         CanClose := False ;
+         Edit1.SetFocus;
+      end;
+   end;
+end;
+
+procedure TFormObtemCampo.FormShow(Sender : TObject);
+begin
+   if Operacao = tcDouble then
+      Edit1.Text := '0,00' ;
+   Edit1.SetFocus;
 end;
 
 end.

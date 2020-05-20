@@ -28,59 +28,59 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit frIncluirPagamento;
+unit frMenuTEF; 
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin,
-  Buttons, uVendaClass;
+  Classes, SysUtils,
+  Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Buttons;
 
 type
 
-  { TFormIncluirPagamento }
+{$R *.lfm}
 
-  TFormIncluirPagamento = class(TForm)
-    btGravar: TBitBtn;
-    btCancelar: TBitBtn;
-    cbFormaPagamento: TComboBox;
-    Label14: TLabel;
-    Label16: TLabel;
-    seValorPago: TFloatSpinEdit;
-    procedure FormCreate(Sender: TObject);
-    procedure seValorPagoChange(Sender: TObject);
+  { TForm4 }
+
+  TFormMenuTEF = class(TForm)
+     BitBtn1 : TBitBtn;
+     BitBtn2 : TBitBtn;
+     BitBtn3: TBitBtn;
+     ListBox1 : TListBox;
+     Memo1 : TMemo ;
+     Panel1 : TPanel;
+     Panel2 : TPanel;
+     Splitter1 : TSplitter ;
+     procedure FormShow(Sender: TObject);
   private
-
+    { private declarations }
   public
-
-  end;
+    { public declarations }
+  end; 
 
 var
-  FormIncluirPagamento: TFormIncluirPagamento;
+  FormMenuTEF : TFormMenuTEF; 
 
 implementation
 
-{$R *.lfm}
+{ TFormMenuTEF }
 
-{ TFormIncluirPagamento }
-
-procedure TFormIncluirPagamento.FormCreate(Sender: TObject);
-var
-  l, i: Integer;
+procedure TFormMenuTEF.FormShow(Sender: TObject);
 begin
-  cbFormaPagamento.Clear;
-  l := Length(cPagamentos)-1;
-  for i := 0 to l do
-    cbFormaPagamento.Items.Add(cPagamentos[i,0] + ' - ' + cPagamentos[i,1]);
+   if Memo1.Lines.Count > 0 then
+   begin
+     Memo1.Width   := Trunc(Width/2)-10;
+     Memo1.Visible := True ;
+     Splitter1.Visible := True ;
+   end ;
 
-  cbFormaPagamento.ItemIndex := 0;
-end;
+   ListBox1.SetFocus;
+   if ListBox1.Items.Count > 0 then
+      ListBox1.ItemIndex := 0 ;
 
-procedure TFormIncluirPagamento.seValorPagoChange(Sender: TObject);
-begin
-  btGravar.Enabled := (seValorPago.Value > 0) and (cbFormaPagamento.ItemIndex >= 0);
+
 end;
 
 end.

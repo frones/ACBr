@@ -1,3 +1,33 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{																			   }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
 unit frPrincipal;
 
 {$mode objfpc}{$H+}
@@ -7,7 +37,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD,
-  ACBrPosPrinter, ACBrTEFDClass, uVendaClass, frIncluirPagamento;
+  ACBrPosPrinter, ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef;
 
 type
 
@@ -138,6 +168,12 @@ type
     procedure btTestarPosPrinterClick(Sender: TObject);
     procedure btTestarTEFClick(Sender: TObject);
     procedure cbEnviarImpressoraChange(Sender: TObject);
+    procedure CliSiTefExibeMenu(Titulo: String; Opcoes: TStringList;
+      var ItemSelecionado: Integer; var VoltarMenu: Boolean);
+    procedure CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
+      TamanhoMaximo: Integer; TipoCampo: Integer;
+      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
+      var Digitado: Boolean; var VoltarMenu: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure btImprimirClick(Sender: TObject);
     procedure btLimparImpressoraClick(Sender: TObject);
@@ -200,6 +236,7 @@ var
 implementation
 
 uses
+  frIncluirPagamento, frMenuTEF, frObtemCampo,
   IniFiles, typinfo, dateutils, math, strutils,
   configuraserial,
   ACBrUtil;
@@ -362,7 +399,7 @@ begin
             pMensagem.Visible         := True ;
 
             { Aguardando 3 segundos }
-            Fim := IncSecond( now, 6)  ;
+            Fim := IncSecond(now, 3)  ;
             repeat
                sleep(200) ;
                pMensagemOperador.Caption := Mensagem + ' ' + IntToStr(SecondsBetween(Fim,now));
@@ -467,7 +504,7 @@ procedure TFormPrincipal.ACBrTEFD1ComandaECFImprimeVia(
   ImagemComprovante: TStringList; var RetornoECF: Integer);
 begin
   AdicionarLinhaLog( 'ACBrTEFD1ComandaECFImprimeVia: '+IntToStr(Via) );
-  mImpressao.Lines.AddStrings( ImagemComprovante );
+  AdicionarLinhaImpressao( ImagemComprovante.Text );
   RetornoECF := 1 ;
 end;
 
@@ -760,7 +797,7 @@ end;
 procedure TFormPrincipal.TratarException(Sender: TObject; E: Exception);
 begin
   AdicionarLinhaLog('');
-  AdicionarLinhaLog(E.ClassName);
+  AdicionarLinhaLog('***************' + E.ClassName + '***************');
   AdicionarLinhaLog(E.Message);
   AdicionarLinhaLog('');
 end;
@@ -846,6 +883,55 @@ end;
 procedure TFormPrincipal.cbEnviarImpressoraChange(Sender: TObject);
 begin
   btImprimir.Enabled := ACBrPosPrinter1.Ativo and (not cbEnviarImpressora.Checked);
+end;
+
+procedure TFormPrincipal.CliSiTefExibeMenu(Titulo: String; Opcoes: TStringList;
+  var ItemSelecionado: Integer; var VoltarMenu: Boolean);
+Var
+  MR: TModalResult ;
+begin
+  FormMenuTEF := TFormMenuTEF.Create(self);
+  try
+    FormMenuTEF.Panel1.Caption := Titulo;
+    FormMenuTEF.ListBox1.Items.AddStrings(Opcoes);
+
+    MR := FormMenuTEF.ShowModal ;
+
+    VoltarMenu := (MR = mrRetry) ;
+
+    if (MR = mrOK) then
+      ItemSelecionado := FormMenuTEF.ListBox1.ItemIndex;
+  finally
+    FormMenuTEF.Free;
+  end;
+end;
+
+procedure TFormPrincipal.CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
+  TamanhoMaximo: Integer; TipoCampo: Integer;
+  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
+  var Digitado: Boolean; var VoltarMenu: Boolean);
+Var
+  MR: TModalResult ;
+begin
+  FormObtemCampo := TFormObtemCampo.Create(self);
+  try
+    FormObtemCampo.Panel1.Caption := Titulo;
+    FormObtemCampo.TamanhoMaximo  := TamanhoMaximo;
+    FormObtemCampo.TamanhoMinimo  := TamanhoMinimo;
+    FormObtemCampo.Operacao       := Operacao;
+    FormObtemCampo.TipoCampo      := TipoCampo;
+    FormObtemCampo.Edit1.Text     := Resposta; { Para usar Valores Previamente informados }
+
+    MR := FormObtemCampo.ShowModal ;
+
+    Digitado   := (MR = mrOK) ;
+    VoltarMenu := (MR = mrRetry) ;
+
+    if Digitado then
+       Resposta := FormObtemCampo.Edit1.Text;
+  finally
+    FormObtemCampo.Free;
+  end;
 end;
 
 procedure TFormPrincipal.seValorInicialVendaChange(Sender: TObject);
@@ -935,6 +1021,7 @@ end;
 procedure TFormPrincipal.FinalizarVenda;
 var
   SL: TStringList;
+  i: Integer;
 begin
   // AQUI você deve Gerar e Transmitir o Documento Fiscal (NFCe ou SAT)
 
@@ -944,7 +1031,7 @@ begin
 
     SL := TStringList.Create;
     try
-      SL.Add('--- COMPROVANTE DE OPERAÇÃO ---');
+      SL.Add(PadCenter( ' COMPROVANTE DE OPERAÇÃO ', ACBrPosPrinter1.Colunas, '-'));
       SL.Add('Número: <n>' + FormatFloat('000000',Venda.NumOperacao) + '</n>');
       SL.Add('Data/Hora: <n>' + FormatDateTimeBr(Venda.DHInicio) + '</n>');
       SL.Add('</linha_simples>');
@@ -953,10 +1040,23 @@ begin
       SL.Add('Total Acréscimos: <n>' + FormatFloatBr(Venda.TotalAcrescimo) + '</n>');
       SL.Add('Total Operação..: <n>' + FormatFloatBr(Venda.TotalVenda) + '</n>');
       SL.Add('');
+      SL.Add(PadCenter( ' Pagamentos ', ACBrPosPrinter1.Colunas, '-'));
+      for i := 0 to Venda.Pagamentos.Count-1 do
+      begin
+        with Venda.Pagamentos[i] do
+        begin
+          SL.Add(PadSpace( TipoPagamento+' - '+DescricaoTipoPagamento(TipoPagamento)+'|'+
+                           FormatFloatBr(Valor)+'|'+Rede, ACBrPosPrinter1.Colunas, '|') );
+        end;
+      end;
+      SL.Add('</linha_simples>');
+
       SL.Add('Total Pago......: <n>' + FormatFloatBr(Venda.TotalPago) + '</n>');
       if (Venda.Troco > 0) then
         SL.Add('Troco...........: <n>' + FormatFloatBr(Venda.Troco) + '</n>');
 
+      SL.Add('</linha_dupla>');
+      SL.Add('</corte>');
       AdicionarLinhaImpressao(SL.Text);
     finally
       SL.Free;
@@ -1073,6 +1173,7 @@ end;
 procedure TFormPrincipal.Ativar;
 begin
   AdicionarLinhaLog('- Ativar');
+  GravarConfiguracao;
   AtivarTEF;
   try
     AtivarPosPrinter;

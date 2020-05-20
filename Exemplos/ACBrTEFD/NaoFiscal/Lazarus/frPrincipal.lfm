@@ -36,10 +36,10 @@ object FormPrincipal: TFormPrincipal
       Height = 376
       Top = 0
       Width = 690
-      ActivePage = tsOperacao
+      ActivePage = tsConfiguracao
       Align = alTop
       Images = ImageList1
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
@@ -275,8 +275,6 @@ object FormPrincipal: TFormPrincipal
               Top = 68
               Width = 113
               Caption = 'Multiplos Cartões'
-              Checked = True
-              State = cbChecked
               TabOrder = 4
             end
             object Label8: TLabel
@@ -301,8 +299,6 @@ object FormPrincipal: TFormPrincipal
               Top = 20
               Width = 114
               Caption = 'Suporta Desconto'
-              Checked = True
-              State = cbChecked
               TabOrder = 5
             end
             object cbSuportaSaque: TCheckBox
@@ -311,8 +307,6 @@ object FormPrincipal: TFormPrincipal
               Top = 44
               Width = 96
               Caption = 'Suporta Saque'
-              Checked = True
-              State = cbChecked
               TabOrder = 6
             end
             object seEsperaSleep: TSpinEdit
@@ -351,7 +345,6 @@ object FormPrincipal: TFormPrincipal
               Alignment = taCenter
               MaxValue = 20
               TabOrder = 10
-              Value = 5
             end
             object cbIMprimirViaReduzida: TCheckBox
               Left = 224
@@ -403,7 +396,7 @@ object FormPrincipal: TFormPrincipal
               MaxValue = 100000
               MinValue = 0
               TabOrder = 11
-              Value = 100
+              Value = 0
             end
             object cbSuportaReajusteValor: TCheckBox
               Left = 376
@@ -411,8 +404,6 @@ object FormPrincipal: TFormPrincipal
               Top = 68
               Width = 138
               Caption = 'Suporta Reajuste Valor'
-              Checked = True
-              State = cbChecked
               TabOrder = 7
             end
             object btTestarTEF: TBitBtn
@@ -1045,6 +1036,8 @@ object FormPrincipal: TFormPrincipal
     TEFHiper.ArqResp = 'C:\HiperTEF\resp\IntPos.001'
     TEFHiper.GPExeName = 'C:\HiperTEF\HiperTEF.exe'
     TEFCliSiTef.DataHoraFiscal = 0
+    TEFCliSiTef.OnExibeMenu = CliSiTefExibeMenu
+    TEFCliSiTef.OnObtemCampo = CliSiTefObtemCampo
     TEFVeSPague.EnderecoIP = 'localhost'
     TEFVeSPague.Porta = '60906'
     TEFVeSPague.TemPendencias = False

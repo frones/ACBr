@@ -71,7 +71,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="TEFDDemoNF.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -100,6 +100,18 @@
         <ComponentName Value="FormIncluirPagamento"/>
         <ResourceBaseClass Value="Form"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="frMenuTEF.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormMenuTEF"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="frObtemCampo.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

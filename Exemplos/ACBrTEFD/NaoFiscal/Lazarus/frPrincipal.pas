@@ -6,13 +6,12 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  Spin, Buttons, DBCtrls, ExtCtrls, PairSplitter, Grids, ACBrTEFD,
-  ACBrPosPrinter, ACBrTEFDClass;
+  Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD,
+  ACBrPosPrinter, ACBrTEFDClass, ACBrTEFComum, uVendaClass, frIncluirPagamento;
 
 type
 
-  TProximaOperacao = (popLivre, popCancelarOperacao, popIrParaPagamentos, popIniciarNovaOperacao);
-  TStatusOperacao = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada);
+  TTipoBotaoOperacao = (bopNaoExibir, bopCancelarVenda, bopCancelarPIN, bopLiberarCaixa);
 
   { TFormPrincipal }
 
@@ -20,13 +19,14 @@ type
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrTEFD1: TACBrTEFD;
     btAdministrativo: TBitBtn;
-    btConfiguracoes: TBitBtn;
+    btImprimir: TBitBtn;
     btIncluirPagamentos: TBitBtn;
     btExcluirPagamento: TBitBtn;
     btLerParametros: TBitBtn;
+    btLimparImpressora: TBitBtn;
+    btMudaPagina: TBitBtn;
     btOperacao: TBitBtn;
     btEfetuarPagamentos: TBitBtn;
-    btOperacaoTEF: TBitBtn;
     btSalvarParametros: TBitBtn;
     btSerial: TSpeedButton;
     btTestarPosPrinter: TBitBtn;
@@ -42,6 +42,7 @@ type
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
+    cbEnviarImpressora: TCheckBox;
     edLog: TEdit;
     gbConfigImpressora: TGroupBox;
     gbConfigTEF: TGroupBox;
@@ -50,6 +51,7 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    lNumOperacao: TLabel;
     Label15: TLabel;
     Label17: TLabel;
     Label25: TLabel;
@@ -63,22 +65,22 @@ type
     lSaidaImpressao: TLabel;
     mImpressao: TMemo;
     mLog: TMemo;
-    pBotoesConfiguracao: TPanel;
-    pBotaoOperacao: TPanel;
-    pConfiguracao: TPanel;
-    pLogs: TPanel;
-    pLogMsgs: TPanel;
+    pImpressoraBotes: TPanel;
+    pImpressao: TPanel;
     pMensagem: TPanel;
     pMensagemCliente: TPanel;
     pMensagemOperador: TPanel;
+    pPrincipal: TPanel;
+    pBotoesConfiguracao: TPanel;
+    pConfiguracao: TPanel;
+    pLogs: TPanel;
     pBotoesPagamentos: TPanel;
-    pImpressao: TPanel;
     pSimulador: TPanel;
     pStatus: TPanel;
-    edTotalOperacao: TEdit;
+    edTotalVenda: TEdit;
     edTotalPago: TEdit;
     edTroco: TEdit;
-    gbValorOperacao: TGroupBox;
+    gbTotaisVenda: TGroupBox;
     Label13: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -89,7 +91,6 @@ type
     pOperacao: TPanel;
     pgPrincipal: TPageControl;
     SbArqLog: TSpeedButton;
-    sbImprimir: TSpeedButton;
     seColunas: TSpinEdit;
     seEsperaSleep: TSpinEdit;
     seEsperaSTS: TSpinEdit;
@@ -99,12 +100,12 @@ type
     seTotalAcrescimo: TFloatSpinEdit;
     seTotalDesconto: TFloatSpinEdit;
     seTrocoMaximo: TFloatSpinEdit;
-    seValorOperacao: TFloatSpinEdit;
+    seValorInicialVenda: TFloatSpinEdit;
     sbLimparLog: TSpeedButton;
-    sbLimparImpressora: TSpeedButton;
     Splitter1: TSplitter;
     sgPagamentos: TStringGrid;
     Splitter2: TSplitter;
+    Splitter3: TSplitter;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
     procedure ACBrTEFD1ComandaECF(Operacao: TACBrTEFDOperacaoECF;
@@ -126,38 +127,42 @@ type
       var Tratado: Boolean);
     procedure ACBrTEFD1InfoECF(Operacao: TACBrTEFDInfoECF;
       var RetornoECF: String);
+    procedure btAdministrativoClick(Sender: TObject);
     procedure btEfetuarPagamentosClick(Sender: TObject);
+    procedure btIncluirPagamentosClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
-    procedure btConfiguracoesClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
-    procedure btOperacaoTEFClick(Sender: TObject);
+    procedure btMudaPaginaClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
     procedure btSerialClick(Sender: TObject);
     procedure btTestarPosPrinterClick(Sender: TObject);
     procedure btTestarTEFClick(Sender: TObject);
+    procedure cbEnviarImpressoraChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure sbImprimirClick(Sender: TObject);
-    procedure sbLimparImpressoraClick(Sender: TObject);
+    procedure btImprimirClick(Sender: TObject);
+    procedure btLimparImpressoraClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure sbLimparLogClick(Sender: TObject);
-    procedure seTotalOperacaoChange(Sender: TObject);
-    procedure seValorOperacaoChange(Sender: TObject);
+    procedure seTotalAcrescimoChange(Sender: TObject);
+    procedure seTotalDescontoChange(Sender: TObject);
+    procedure seValorInicialVendaChange(Sender: TObject);
   private
-    FProximaOperacao: TProximaOperacao;
-    FStatusOperacao: TStatusOperacao;
-    FTotalOperacao: Double;
-    FTotalPago: Double;
+    FVenda: TVenda;
+    FTipoBotaoOperacao: TTipoBotaoOperacao;
 
     function GetNomeArquivoConfiguracao: String;
-    procedure SetProximaOperacao(AValue: TProximaOperacao);
-    procedure SetStatusOperacao(AValue: TStatusOperacao);
-    procedure SetTotalOperacao(AValue: Double);
-    procedure SetTotalPago(AValue: Double);
+    function GetNomeArquivoVenda: String;
+    function GetStatusVenda: TStatusVenda;
+    procedure SetTipoBotaoOperacao(AValue: TTipoBotaoOperacao);
+    procedure SetStatusVenda(AValue: TStatusVenda);
 
     procedure TratarException(Sender : TObject; E : Exception);
-
   protected
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
+
+    procedure IrParaOperacaoTEF;
+    procedure IrParaConfiguracao;
 
     procedure ConfigurarTEF;
     procedure AtivarTEF;
@@ -166,24 +171,27 @@ type
     procedure Ativar;
     procedure Desativar;
 
-    procedure CalcularTotalOperacao;
-    procedure PrepararNovaOperacao;
-    procedure CancelarOperacao;
-    procedure CancelarTodosPagamentos;
+    procedure IniciarVenda;
+    procedure AdicionarPagamento(const Indice: String; AValor: Double);
+    procedure CancelarVenda;
+    procedure FinalizarVenda; // Em caso de Venda, Gere e transmita seu Documento Fiscal
 
-    procedure FinalizarOperacao; // Em caso de Venda, Gere e transmita seu Documento Fiscal
-
+    procedure AtualizarCaixaLivreNaInterface;
+    procedure AtualizarVendaNaInterface;
+    procedure AtualizarTotaisVendaNaInterface;
+    procedure AtualizarPagamentosVendaNaInterface;
+    procedure LimparMensagensTEF;
 
     procedure AdicionarLinhaLog(AMensagem: String);
     procedure AdicionarLinhaImpressao(ALinha: String);
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
+    property NomeArquivoVenda: String read GetNomeArquivoVenda;
 
-    property StatusOperacao: TStatusOperacao read FStatusOperacao write SetStatusOperacao;
-    property ProximaOperacao: TProximaOperacao read FProximaOperacao write SetProximaOperacao;
-    property TotalOperacao: Double read FTotalOperacao write SetTotalOperacao;
-    property TotalPago: Double read FTotalPago write SetTotalPago;
+    property StatusVenda: TStatusVenda read GetStatusVenda write SetStatusVenda;
+    property TipoBotaoOperacao: TTipoBotaoOperacao read FTipoBotaoOperacao write SetTipoBotaoOperacao;
 
+    property Venda: TVenda read FVenda;
   end;
 
 var
@@ -192,9 +200,9 @@ var
 implementation
 
 uses
-  IniFiles, typinfo, dateutils,
+  IniFiles, typinfo, dateutils, math, strutils,
   configuraserial,
-  ACBrUtil, ACBrTEFComum;
+  ACBrUtil;
 
 {$R *.lfm}
 
@@ -206,6 +214,8 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
 begin
+  FVenda := TVenda.Create(NomeArquivoVenda);
+
   cbxGP.Items.Clear ;
   For I := Low(TACBrTEFDTipo) to High(TACBrTEFDTipo) do
      cbxGP.Items.Add( GetEnumName(TypeInfo(TACBrTEFDTipo), integer(I) ) ) ;
@@ -241,19 +251,25 @@ begin
   pgPrincipal.ActivePageIndex := 0;
 
   LerConfiguracao;
-  FStatusOperacao := High(TStatusOperacao);  // Força atualização
-  FProximaOperacao := High(TProximaOperacao);
+  LimparMensagensTEF;
+  FTipoBotaoOperacao := High(TTipoBotaoOperacao);    // Força atualizar tela
+  Venda.Status := High(TStatusVenda);                // Força atualizar tela
 
   Application.OnException := @TratarException;
 end;
 
-procedure TFormPrincipal.sbImprimirClick(Sender: TObject);
+procedure TFormPrincipal.FormDestroy(Sender: TObject);
+begin
+  FVenda.Free;
+end;
+
+procedure TFormPrincipal.btImprimirClick(Sender: TObject);
 begin
   ACBrPosPrinter1.Buffer.Assign(mImpressao.Lines);
   ACBrPosPrinter1.Imprimir;
 end;
 
-procedure TFormPrincipal.sbLimparImpressoraClick(Sender: TObject);
+procedure TFormPrincipal.btLimparImpressoraClick(Sender: TObject);
 begin
   mImpressao.Lines.Clear;
 end;
@@ -263,12 +279,24 @@ begin
   mLog.Lines.Clear;
 end;
 
-procedure TFormPrincipal.btOperacaoTEFClick(Sender: TObject);
+procedure TFormPrincipal.seTotalAcrescimoChange(Sender: TObject);
 begin
-  AdicionarLinhaLog('- btOperacaoTEFClick');
-  Ativar;
-  pgPrincipal.ActivePage := tsOperacao;
-  PrepararNovaOperacao;
+  Venda.TotalAcrescimo := seTotalAcrescimo.Value;
+  AtualizarTotaisVendaNaInterface;
+end;
+
+procedure TFormPrincipal.seTotalDescontoChange(Sender: TObject);
+begin
+  Venda.TotalDesconto := seTotalDesconto.Value;
+  AtualizarTotaisVendaNaInterface;
+end;
+
+procedure TFormPrincipal.btMudaPaginaClick(Sender: TObject);
+begin
+  if pgPrincipal.ActivePage = tsConfiguracao then
+    IrParaOperacaoTEF
+  else
+    IrParaConfiguracao;
 end;
 
 procedure TFormPrincipal.btLerParametrosClick(Sender: TObject);
@@ -276,24 +304,33 @@ begin
   LerConfiguracao;
 end;
 
-procedure TFormPrincipal.btConfiguracoesClick(Sender: TObject);
-begin
-  AdicionarLinhaLog('- btConfiguracoesClick');
-  Desativar;
-  pgPrincipal.ActivePage := tsConfiguracao;
-end;
-
 procedure TFormPrincipal.btOperacaoClick(Sender: TObject);
 begin
-  if ProximaOperacao = popIniciarNovaOperacao then
-    PrepararNovaOperacao
-  else
-    CancelarOperacao;
+  case TipoBotaoOperacao of
+    bopLiberarCaixa:
+      StatusVenda := stsLivre;
+    bopCancelarVenda:
+      CancelarVenda;
+  end;
 end;
 
 procedure TFormPrincipal.btEfetuarPagamentosClick(Sender: TObject);
 begin
-  StatusOperacao := stsEmPagamento;
+  StatusVenda := stsEmPagamento;
+  btIncluirPagamentos.Click;
+end;
+
+procedure TFormPrincipal.btIncluirPagamentosClick(Sender: TObject);
+begin
+  FormIncluirPagamento := TFormIncluirPagamento.Create(Self);
+
+  FormIncluirPagamento.cbFormaPagamento.ItemIndex := 2;
+  FormIncluirPagamento.seValorPago.Value := -Venda.Troco;
+  if (FormIncluirPagamento.ShowModal = mrOK) then
+  begin
+    AdicionarPagamento( cPagamentos[FormIncluirPagamento.cbFormaPagamento.ItemIndex, 0],
+                        FormIncluirPagamento.seValorPago.Value );
+  end;
 end;
 
 procedure TFormPrincipal.ACBrTEFD1ExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
@@ -325,7 +362,7 @@ begin
             pMensagem.Visible         := True ;
 
             { Aguardando 3 segundos }
-            Fim := IncSecond( now, 3)  ;
+            Fim := IncSecond( now, 6)  ;
             repeat
                sleep(200) ;
                pMensagemOperador.Caption := Mensagem + ' ' + IntToStr(SecondsBetween(Fim,now));
@@ -347,11 +384,11 @@ end;
 procedure TFormPrincipal.ACBrTEFD1DepoisConfirmarTransacoes(
   RespostasPendentes: TACBrTEFDRespostasPendentes);
 var
-  I : Integer;
+  i , j: Integer;
 begin
-  for I := 0 to RespostasPendentes.Count-1  do
+  for i := 0 to RespostasPendentes.Count-1  do
   begin
-     with RespostasPendentes[I] do
+     with RespostasPendentes[i] do
      begin
         AdicionarLinhaLog('Confirmado: '+Header+' ID: '+IntToStr( ID ) );
 
@@ -364,9 +401,20 @@ begin
                           ', Valor: '+ FormatFloat('###,###,##0.00',ValorTotal)) ;
 
         // Lendo um Campo Específico //
-        AdicionarLinhaLog('- Campo 11: ' + LeInformacao(11,0).AsString );
+        //AdicionarLinhaLog('- Campo 11: ' + LeInformacao(11,0).AsString );
+
+        for j := 0 to Venda.Pagamentos.Count-1 do
+        begin
+          if NSU = Venda.Pagamentos[j].NSU then
+          begin
+            Venda.Pagamentos[j].Confirmada := True;
+            Break;
+          end;
+        end;
      end;
   end;
+
+  AtualizarPagamentosVendaNaInterface;
 end;
 
 procedure TFormPrincipal.ACBrTEFD1ComandaECF(Operacao: TACBrTEFDOperacaoECF;
@@ -381,15 +429,15 @@ begin
 
       opeSubTotalizaCupom:
         begin
-          if StatusOperacao = stsIniciada then
-            StatusOperacao := stsEmPagamento;
+          if StatusVenda = stsIniciada then
+            StatusVenda := stsEmPagamento;
         end;
 
       opeCancelaCupom:
-         CancelarOperacao;
+         CancelarVenda;
 
       opeFechaCupom:
-         FinalizarOperacao;
+         FinalizarVenda;
 
       opePulaLinhas, opeFechaGerencial, opeFechaVinculado:
         begin
@@ -434,8 +482,8 @@ procedure TFormPrincipal.ACBrTEFD1ComandaECFSubtotaliza(DescAcre: Double;
   var RetornoECF: Integer);
 begin
   AdicionarLinhaLog('ACBrTEFD1ComandaECFSubtotaliza: DescAcre: ' + FormatFloatBr(DescAcre));
-  if StatusOperacao = stsIniciada then
-    StatusOperacao := stsEmPagamento;
+  if StatusVenda = stsIniciada then
+    StatusVenda := stsEmPagamento;
 end;
 
 procedure TFormPrincipal.ACBrTEFD1GravarLog(const GP: TACBrTEFDTipo;
@@ -481,22 +529,34 @@ begin
 
    case Operacao of
      ineSubTotal :
-       RetornoECF := FloatToStr( TotalOperacao - TotalPago ) ;
+       RetornoECF := FloatToStr( Venda.TotalVenda - Venda.TotalPago ) ;
 
      ineTotalAPagar :
-       RetornoECF := FloatToStr( TotalPago ) ;
+       RetornoECF := FloatToStr( Venda.TotalPago ) ;
 
      ineEstadoECF :
        begin
-         Case StatusOperacao of
-           stsLivre: RetornoECF := 'L' ;
-           stsIniciada: RetornoECF := 'V' ;
-           stsEmPagamento: RetornoECF := 'P' ;
+         Case StatusVenda of
+           stsIniciada:
+             RetornoECF := 'V' ;
+           stsEmPagamento:
+             RetornoECF := 'P' ;
+           stsLivre, stsFinalizada, stsCancelada:
+             RetornoECF := 'L' ;
          else
            RetornoECF := 'O' ;
          end;
        end;
    end;
+end;
+
+procedure TFormPrincipal.btAdministrativoClick(Sender: TObject);
+begin
+  AdicionarLinhaLog('- btAdministrativoClick');
+  if ACBrTEFD1.ADM then
+    StatusVenda := stsFinalizada
+  else
+    StatusVenda := stsLivre;
 end;
 
 procedure TFormPrincipal.btSalvarParametrosClick(Sender: TObject);
@@ -507,6 +567,16 @@ end;
 function TFormPrincipal.GetNomeArquivoConfiguracao: String;
 begin
   Result := ChangeFileExt( Application.ExeName,'.ini' ) ;
+end;
+
+function TFormPrincipal.GetNomeArquivoVenda: String;
+begin
+  Result := ApplicationPath+'Venda.ini' ;
+end;
+
+function TFormPrincipal.GetStatusVenda: TStatusVenda;
+begin
+  Result := Venda.Status;
 end;
 
 procedure TFormPrincipal.LerConfiguracao;
@@ -575,6 +645,28 @@ begin
   end ;
 end;
 
+procedure TFormPrincipal.IrParaOperacaoTEF;
+begin
+  AdicionarLinhaLog('- IrParaOperacaoTEF');
+  Ativar;
+  btMudaPagina.Caption := 'Configuração';
+  btMudaPagina.ImageIndex := 0;
+  pgPrincipal.ActivePage := tsOperacao;
+  btImprimir.Enabled := ACBrPosPrinter1.Ativo;
+  cbEnviarImpressora.Enabled := ACBrPosPrinter1.Ativo;
+  cbEnviarImpressora.Checked := cbEnviarImpressora.Enabled;
+  StatusVenda := stsLivre;
+end;
+
+procedure TFormPrincipal.IrParaConfiguracao;
+begin
+  AdicionarLinhaLog('- IrParaConfiguracao');
+  Desativar;
+  btMudaPagina.Caption := 'Operação TEF';
+  btMudaPagina.ImageIndex := 1;
+  pgPrincipal.ActivePage := tsConfiguracao;
+end;
+
 procedure TFormPrincipal.AdicionarLinhaLog(AMensagem: String);
 begin
   mLog.Lines.Add(AMensagem);
@@ -583,87 +675,86 @@ end;
 procedure TFormPrincipal.AdicionarLinhaImpressao(ALinha: String);
 begin
   mImpressao.Lines.Add(ALinha);
+  if cbEnviarImpressora.Checked then
+    ACBrPosPrinter1.Imprimir(ALinha);
 end;
 
-procedure TFormPrincipal.SetProximaOperacao(AValue: TProximaOperacao);
+procedure TFormPrincipal.SetTipoBotaoOperacao(AValue: TTipoBotaoOperacao);
 var
   MsgOperacao: String;
 begin
-  if FProximaOperacao = AValue then Exit;
+  if FTipoBotaoOperacao = AValue then Exit;
 
   MsgOperacao := '';
 
   case AValue of
-    popCancelarOperacao, popIrParaPagamentos:
+    bopCancelarVenda:
       MsgOperacao := 'Cancelar Operacao';
 
-    popIniciarNovaOperacao:
-      MsgOperacao := 'Nova Operacao';
+    bopLiberarCaixa:
+      MsgOperacao := 'Liberar Caixa';
   end;
 
-  FProximaOperacao := AValue;
+  FTipoBotaoOperacao := AValue;
 
-  btEfetuarPagamentos.Enabled := (FProximaOperacao in [popIrParaPagamentos]);
   btOperacao.Visible := (MsgOperacao <> '');
   btOperacao.Caption := MsgOperacao;
 end;
 
-procedure TFormPrincipal.SetStatusOperacao(AValue: TStatusOperacao);
+procedure TFormPrincipal.SetStatusVenda(AValue: TStatusVenda);
 var
   MsgStatus: String;
 begin
-  if FStatusOperacao = AValue then Exit;
-  AdicionarLinhaLog('- StatusOperacao: '+GetEnumName(TypeInfo(TStatusOperacao), integer(AValue) ));
+  if StatusVenda = AValue then
+    Exit;
 
-  gbValorOperacao.Enabled := (AValue in [stsLivre, stsIniciada]);
+  AdicionarLinhaLog('- StatusOperacao: '+GetEnumName(TypeInfo(TStatusVenda), integer(AValue) ));
+
+  gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
-  btConfiguracoes.Enabled := (AValue = stsLivre);
+  btMudaPagina.Enabled := not (AValue in [stsIniciada, stsEmPagamento]);
+  btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
+  lNumOperacao.Visible := (AValue <> stsLivre);
 
   case AValue of
     stsIniciada:
     begin
       MsgStatus := 'EM VENDA';
-      ProximaOperacao := popIrParaPagamentos;
+      TipoBotaoOperacao := bopCancelarVenda;
+      AtualizarVendaNaInterface;
     end;
 
     stsEmPagamento:
     begin
       MsgStatus := 'EM PAGAMENTO';
-      ProximaOperacao := popCancelarOperacao;
+      TipoBotaoOperacao := bopCancelarVenda;
       sgPagamentos.SetFocus;
     end;
 
     stsFinalizada:
     begin
       MsgStatus := 'FINALIZADA';
-      ProximaOperacao := popIniciarNovaOperacao;
+      TipoBotaoOperacao := bopLiberarCaixa;
+    end;
+
+    stsCancelada:
+    begin
+      MsgStatus := 'CANCELADA';
+      TipoBotaoOperacao := bopLiberarCaixa;
     end;
 
   else
     MsgStatus := 'CAIXA LIVRE';
-    ProximaOperacao := popLivre;
+    TipoBotaoOperacao := bopNaoExibir;
+    seValorInicialVenda.SetFocus;
+    AtualizarCaixaLivreNaInterface;
   end;
 
   pStatus.Caption := MsgStatus;
-  FStatusOperacao := AValue;
-end;
-
-procedure TFormPrincipal.SetTotalOperacao(AValue: Double);
-begin
-  edTotalOperacao.Text := FormatFloatBr(AValue);
-  FTotalOperacao := AValue;
-
-  if (FTotalOperacao > 0) then
-    StatusOperacao := stsIniciada
-  else
-    StatusOperacao := stsLivre;
-end;
-
-procedure TFormPrincipal.SetTotalPago(AValue: Double);
-begin
-  edTotalPago.Text := FormatFloatBr(AValue);
-  FTotalPago := AValue;
+  Venda.Status := AValue;
+  if (AValue <> stsLivre) then
+    Venda.Gravar;
 end;
 
 procedure TFormPrincipal.TratarException(Sender: TObject; E: Exception);
@@ -686,7 +777,7 @@ begin
 
     if frConfiguraSerial.ShowModal = mrOk then
     begin
-       cbxPorta.Text := frConfiguraSerial.Device.Porta ;
+       cbxPorta.Text := frConfiguraSerial.cmbPortaSerial.Text ;
        ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
     end ;
   finally
@@ -695,31 +786,38 @@ begin
 end;
 
 procedure TFormPrincipal.btTestarPosPrinterClick(Sender: TObject);
+var
+  SL: TStringList;
 begin
   AdicionarLinhaLog('- btTestarPosPrinterClick');
   try
     AtivarPosPrinter;
 
-    ACBrPosPrinter1.Buffer.Clear;
-    with ACBrPosPrinter1.Buffer do
-    begin
-      Add('</zera>');
-      Add('</linha_dupla>');
-      Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
-      Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
-      Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
-      Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
-      Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
-      Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
-      Add('</c><n>FONTE NEGRITO</N>');
-      Add('<in>FONTE INVERTIDA</in>');
-      Add('<S>FONTE SUBLINHADA</s>');
-      Add('<i>FONTE ITALICO</i>');
-      Add('FONTE NORMAL');
-      Add('</corte_total>');
-    end;
+    SL := TStringList.Create;
+    try
+      SL.Add('</zera>');
+      SL.Add('</linha_dupla>');
+      SL.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
+      SL.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+      SL.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
+      SL.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+      SL.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
+      SL.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+      SL.Add('</c><n>FONTE NEGRITO</N>');
+      SL.Add('<in>FONTE INVERTIDA</in>');
+      SL.Add('<S>FONTE SUBLINHADA</s>');
+      SL.Add('<i>FONTE ITALICO</i>');
+      SL.Add('FONTE NORMAL');
+      SL.Add('');
+      SL.Add('TESTE DE ACENTOS. ÁÉÍÓÚáéíóú');
+      SL.Add('');
+      SL.Add('</corte_total>');
 
-    ACBrPosPrinter1.Imprimir;
+      cbEnviarImpressora.Checked := True;
+      AdicionarLinhaImpressao(SL.Text);
+    finally
+       SL.Free;
+    end;
   except
     On E: Exception do
     begin
@@ -745,51 +843,181 @@ begin
   end;
 end;
 
-procedure TFormPrincipal.seTotalOperacaoChange(Sender: TObject);
+procedure TFormPrincipal.cbEnviarImpressoraChange(Sender: TObject);
 begin
-  CalcularTotalOperacao;
+  btImprimir.Enabled := ACBrPosPrinter1.Ativo and (not cbEnviarImpressora.Checked);
 end;
 
-procedure TFormPrincipal.seValorOperacaoChange(Sender: TObject);
+procedure TFormPrincipal.seValorInicialVendaChange(Sender: TObject);
 begin
-  seTotalDesconto.MaxValue := seValorOperacao.Value;
-  CalcularTotalOperacao;
+  seTotalDesconto.MaxValue := seValorInicialVenda.Value;
+  if (seValorInicialVenda.Value <> 0) and (StatusVenda = stsLivre) then
+  begin
+    IniciarVenda;
+    Venda.ValorInicial := seValorInicialVenda.Value;
+    StatusVenda := stsIniciada;
+  end
+  else
+  begin
+    Venda.ValorInicial := seValorInicialVenda.Value;
+    AtualizarTotaisVendaNaInterface;
+  end;
 end;
 
-procedure TFormPrincipal.CalcularTotalOperacao;
+procedure TFormPrincipal.AtualizarCaixaLivreNaInterface;
 begin
-  TotalOperacao := seValorOperacao.Value - seTotalDesconto.Value + seTotalAcrescimo.Value;
+  AdicionarLinhaLog('- AtualizarCaixaLivreNaInterface');
+  LimparMensagensTEF;
+  mImpressao.Clear;
+  Venda.Clear;
+  AtualizarVendaNaInterface;
 end;
 
-procedure TFormPrincipal.PrepararNovaOperacao;
+procedure TFormPrincipal.IniciarVenda;
+var
+  ProxVenda: Integer;
 begin
-  AdicionarLinhaLog('- PrepararNovaOperacao');
-  seValorOperacao.Value := 0;
-  seTotalDesconto.Value := 0;
-  seTotalAcrescimo.Value := 0;
-  seValorOperacao.SetFocus;
-  sgPagamentos.Clear;
-  StatusOperacao := stsLivre;
+  Venda.Ler;
+  ProxVenda := Venda.NumOperacao+1;
+
+  Venda.Clear;
+  Venda.NumOperacao := ProxVenda;
+  Venda.DHInicio := Now;
 end;
 
-procedure TFormPrincipal.CancelarOperacao;
+
+procedure TFormPrincipal.AdicionarPagamento(const Indice: String; AValor: Double
+  );
+var
+  Ok, TemTEF: Boolean;
+begin
+  Ok := True;
+  TemTEF := False;
+
+  if (Indice = '02') then
+  begin
+    Ok := ACBrTEFD1.CHQ(AValor, Indice);
+    TemTEF := True;
+  end
+  else if (Indice = '03') or (Indice = '04') then
+  begin
+    Ok := ACBrTEFD1.CRT(AValor, Indice);
+    TemTEF := True;
+  end;
+
+  if Ok then
+  begin
+     with Venda.Pagamentos.New do
+     begin
+       TipoPagamento := Indice;
+       Valor := AValor;
+       if TemTEF then
+       begin
+         NSU := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NSU;
+         Rede := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Rede;
+       end;
+     end;
+
+     AtualizarPagamentosVendaNaInterface;
+
+     if (Venda.TotalPago >= Venda.TotalVenda) then
+       FinalizarVenda;
+  end;
+end;
+
+procedure TFormPrincipal.CancelarVenda;
 begin
   AdicionarLinhaLog('- CancelarOperacao');
-  CancelarTodosPagamentos;
-  PrepararNovaOperacao;
+  ACBrTEFD1.CancelarTransacoesPendentes;
+  StatusVenda := stsCancelada;
 end;
 
-procedure TFormPrincipal.CancelarTodosPagamentos;
-begin
-  AdicionarLinhaLog('- CancelarTodosPagamentos');
-end;
-
-procedure TFormPrincipal.FinalizarOperacao;
+procedure TFormPrincipal.FinalizarVenda;
+var
+  SL: TStringList;
 begin
   // AQUI você deve Gerar e Transmitir o Documento Fiscal (NFCe ou SAT)
 
-  AdicionarLinhaImpressao('--- COMPROVANTE ---');
-  //TODO
+  try
+    if cbSimularErroNoDoctoFiscal.Checked then
+      raise Exception.Create('Erro na geração do Comprovante de Venda');
+
+    SL := TStringList.Create;
+    try
+      SL.Add('--- COMPROVANTE DE OPERAÇÃO ---');
+      SL.Add('Número: <n>' + FormatFloat('000000',Venda.NumOperacao) + '</n>');
+      SL.Add('Data/Hora: <n>' + FormatDateTimeBr(Venda.DHInicio) + '</n>');
+      SL.Add('</linha_simples>');
+      SL.Add('Valor Inicial...: <n>' + FormatFloatBr(Venda.ValorInicial) + '</n>');
+      SL.Add('Total Descontos.: <n>' + FormatFloatBr(Venda.TotalDesconto) + '</n>');
+      SL.Add('Total Acréscimos: <n>' + FormatFloatBr(Venda.TotalAcrescimo) + '</n>');
+      SL.Add('Total Operação..: <n>' + FormatFloatBr(Venda.TotalVenda) + '</n>');
+      SL.Add('');
+      SL.Add('Total Pago......: <n>' + FormatFloatBr(Venda.TotalPago) + '</n>');
+      if (Venda.Troco > 0) then
+        SL.Add('Troco...........: <n>' + FormatFloatBr(Venda.Troco) + '</n>');
+
+      AdicionarLinhaImpressao(SL.Text);
+    finally
+      SL.Free;
+    end;
+
+    StatusVenda := stsFinalizada;
+    ACBrTEFD1.ImprimirTransacoesPendentes();
+  except
+    CancelarVenda;
+
+  end;
+
+end;
+
+procedure TFormPrincipal.AtualizarVendaNaInterface;
+begin
+  lNumOperacao.Caption := FormatFloat('000000',Venda.NumOperacao);
+  seValorInicialVenda.Value := Venda.ValorInicial;
+  seTotalDesconto.Value := Venda.TotalDesconto;
+  seTotalAcrescimo.Value := Venda.TotalAcrescimo;
+  AtualizarPagamentosVendaNaInterface;
+end;
+
+procedure TFormPrincipal.AtualizarTotaisVendaNaInterface;
+begin
+  edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
+  edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
+  edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
+end;
+
+procedure TFormPrincipal.AtualizarPagamentosVendaNaInterface;
+var
+  i, ARow: Integer;
+begin
+  sgPagamentos.RowCount := 1;
+  for i := 0 to Venda.Pagamentos.Count-1 do
+  begin
+    ARow := sgPagamentos.RowCount;
+    sgPagamentos.RowCount := sgPagamentos.RowCount + 1;
+
+    with Venda.Pagamentos[i] do
+    begin
+      sgPagamentos.Cells[0, ARow] := FormatFloat('000', ARow);
+      sgPagamentos.Cells[1, ARow] := TipoPagamento + ' - ' + DescricaoTipoPagamento(TipoPagamento);
+      sgPagamentos.Cells[2, ARow] := FormatFloatBr(Valor);
+      sgPagamentos.Cells[3, ARow] := NSU;
+      sgPagamentos.Cells[4, ARow] := Rede;
+      sgPagamentos.Cells[5, ARow] := ifthen(Confirmada, 'Sim', 'Não');
+    end;
+  end;
+
+  AtualizarTotaisVendaNaInterface;
+end;
+
+procedure TFormPrincipal.LimparMensagensTEF;
+begin
+  pMensagemOperador.Caption := '';
+  pMensagemCliente.Caption := '';
+  pMensagem.Visible := False;
+  pMensagemOperador.Visible := False;
+  pMensagemCliente.Visible := False;
 end;
 
 procedure TFormPrincipal.ConfigurarTEF;
@@ -837,10 +1065,7 @@ begin
   AdicionarLinhaLog('- AtivarPosPrinter');
   ConfigurarPosPrinter;
   if (ACBrPosPrinter1.Porta <> '') then
-  begin
-    ACBrPosPrinter1.Ativar;
-    sbImprimir.Enabled := ACBrPosPrinter1.Ativo;
-  end
+    ACBrPosPrinter1.Ativar
   else
     raise Exception.Create('Porta não definida');
 end;
@@ -855,7 +1080,6 @@ begin
     On E: Exception do
     begin
       TratarException(nil, E);
-      sbImprimir.Enabled := False;
     end;
   end;
 end;
@@ -868,5 +1092,24 @@ begin
 end;
 
 end.
+
+
+
+procedure TFormPrincipal.SetTotalOperacao(AValue: Double);
+begin
+  edTotalVenda.Text := FormatFloatBr(AValue);
+  FTotalOperacao := AValue;
+
+  if (FTotalOperacao > 0) then
+    StatusOperacao := stsIniciada
+  else
+    StatusOperacao := stsLivre;
+end;
+
+procedure TFormPrincipal.SetTotalPago(AValue: Double);
+begin
+  edTotalPago.Text := FormatFloatBr(AValue);
+  FTotalPago := AValue;
+end;
 
 

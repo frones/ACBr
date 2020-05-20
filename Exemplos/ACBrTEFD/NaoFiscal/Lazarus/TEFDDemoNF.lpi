@@ -57,18 +57,21 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_TEFD"/>
+        <PackageName Value="ACBrSerial"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_TEFD"/>
       </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="TEFDDemoNF.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -83,8 +86,20 @@
       <Unit2>
         <Filename Value="configuraserial.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguraSerial"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="uVendaClass.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="frIncluirPagamento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormIncluirPagamento"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -125,7 +140,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="6">
+    <Exceptions Count="7">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -144,6 +159,9 @@
       <Item6>
         <Name Value="EACBrTEFDErro"/>
       </Item6>
+      <Item7>
+        <Name Value="ESynaSerError"/>
+      </Item7>
     </Exceptions>
   </Debugging>
 </CONFIG>

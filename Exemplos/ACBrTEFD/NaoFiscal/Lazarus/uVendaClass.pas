@@ -297,7 +297,7 @@ begin
   try
     FNumOperacao := Ini.ReadInteger('Venda','NumOperacao', 0);
     FDHInicio := Ini.ReadDateTime('Venda','DHInicio', Now);
-    FStatus := TStatusVenda(Ini.WriteInteger('Venda','Status', 0));
+    FStatus := TStatusVenda(Ini.ReadInteger('Venda','Status', 0));
     FValorInicial := Ini.ReadFloat('Valores','ValorInicial', 0);
     FTotalAcrescimo := Ini.ReadFloat('Valores','TotalAcrescimo', 0);
     FTotalDesconto := Ini.ReadFloat('Valores','TotalDesconto', 0);

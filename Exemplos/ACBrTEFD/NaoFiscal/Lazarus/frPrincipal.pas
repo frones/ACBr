@@ -1294,23 +1294,3 @@ end;
 
 end.
 
-
-
-procedure TFormPrincipal.SetTotalOperacao(AValue: Double);
-begin
-  edTotalVenda.Text := FormatFloatBr(AValue);
-  FTotalOperacao := AValue;
-
-  if (FTotalOperacao > 0) then
-    StatusOperacao := stsIniciada
-  else
-    StatusOperacao := stsLivre;
-end;
-
-procedure TFormPrincipal.SetTotalPago(AValue: Double);
-begin
-  edTotalPago.Text := FormatFloatBr(AValue);
-  FTotalPago := AValue;
-end;
-
-

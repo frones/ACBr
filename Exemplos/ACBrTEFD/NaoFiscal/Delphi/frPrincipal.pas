@@ -177,17 +177,10 @@ type
     procedure cbEnviarImpressoraChange(Sender: TObject);
     procedure CliSiTefExibeMenu(Titulo: String; Opcoes: TStringList;
       var ItemSelecionado: Integer; var VoltarMenu: Boolean);
-    {$IFDEF DELPHI9_UP}     
     procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
-      TamanhoMaximo: Integer; TipoCampo: Integer; 
+      TamanhoMaximo: Integer; TipoCampo: Integer;
       Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
       var Digitado: Boolean; var VoltarMenu: Boolean);
-    {$ELSE}
-    procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
-      TamanhoMaximo, TipoCampo: Integer;
-      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String;
-      var Digitado, VoltarMenu: Boolean);
-    {$ENDIF}
     procedure FormCreate(Sender: TObject);
     procedure btImprimirClick(Sender: TObject);
     procedure btLimparImpressoraClick(Sender: TObject);
@@ -197,7 +190,6 @@ type
     procedure seTotalAcrescimoChange(Sender: TObject);
     procedure seTotalDescontoChange(Sender: TObject);
     procedure seValorInicialVendaChange(Sender: TObject);
-    procedure sgPagamentosClick(Sender: TObject);
   private
     FVenda: TVenda;
     FTipoBotaoOperacao: TTipoBotaoOperacao;
@@ -348,6 +340,7 @@ begin
   FTempoDeEspera := 0;
 
   Application.OnException := TratarException;
+  ACBrTEFD1.TEFCliSiTef.OnObtemCampo := ACBrTEFD1CliSiTefObtemCampo;
 end;
 
 procedure TFormPrincipal.FormDestroy(Sender: TObject);
@@ -1037,17 +1030,10 @@ begin
   end;
 end;
 
-{$IFDEF DELPHI9_UP}
 procedure TFormPrincipal.ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
   TamanhoMaximo: Integer; TipoCampo: Integer;
   Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
   var Digitado: Boolean; var VoltarMenu: Boolean);
-{$ELSE}
-procedure TFormPrincipal.ACBrTEFD1CliSiTefObtemCampo(Titulo: String;
-  TamanhoMinimo, TamanhoMaximo, TipoCampo: Integer;
-  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String;
-  var Digitado, VoltarMenu: Boolean);
-{$ENDIF}
 Var
   MR: TModalResult ;
 begin
@@ -1236,11 +1222,12 @@ var
   i, ARow: Integer;
 begin
   sgPagamentos.RowCount := 2;
-  
+  ARow := sgPagamentos.RowCount-1;
+
   for i := 0 to Venda.Pagamentos.Count-1 do
   begin
-    ARow := sgPagamentos.RowCount;
-    sgPagamentos.RowCount := sgPagamentos.RowCount + 1;
+    if (ARow > 1) then
+      sgPagamentos.RowCount := sgPagamentos.RowCount + 1;
 
     with Venda.Pagamentos[i] do
     begin
@@ -1251,6 +1238,8 @@ begin
       sgPagamentos.Cells[4, ARow] := Rede;
       sgPagamentos.Cells[5, ARow] := ifthen(Confirmada, 'Sim', 'Não');
     end;
+
+    Inc(ARow);
   end;
 
   AtualizarTotaisVendaNaInterface;
@@ -1346,11 +1335,6 @@ begin
   ACBrTEFD1.DesInicializar(TACBrTEFDTipo(cbxGP.ItemIndex));
 end;
 
-
-procedure TFormPrincipal.sgPagamentosClick(Sender: TObject);
-begin
-
-end;
 
 end.
 

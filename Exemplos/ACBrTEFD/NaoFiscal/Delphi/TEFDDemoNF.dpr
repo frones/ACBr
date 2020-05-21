@@ -13,6 +13,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'ACBrTEFDemoNF';
   Application.CreateForm(TFormPrincipal, FormPrincipal);
   Application.Run;
 end.

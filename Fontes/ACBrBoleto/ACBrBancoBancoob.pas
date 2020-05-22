@@ -1036,7 +1036,8 @@ begin
                          '0'                                              + // 224 - Código de Baixa
                          space(3)                                         + // 225 A 227 - Dias para baixa
                          '09'                                             + //
-                         '0000000000'                                     + // Numero contrato da operação
+                                                              
+                         PadLeft(OnlyNumber(ACBrBoleto.Cedente.Operacao), 10, '0') + // Numero contrato da operação
                          ' ';
         Inc(FNumeroSequencialRegistroNoLote);
       {SEGMENTO Q}

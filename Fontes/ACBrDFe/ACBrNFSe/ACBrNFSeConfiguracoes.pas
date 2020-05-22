@@ -715,7 +715,8 @@ begin
     FConfigXML.VersaoAtrib := FPIniParams.ReadString('XML', 'VersaoAtrib', '');
 
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
-  FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
+  FConfigXML.NameSpace := StringReplace(StringReplace(Trim(FPIniParams.ReadString('XML', 'NameSpace', '')), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]),
+    '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);
   FConfigXML.DadosStr := FPIniParams.ReadBool('XML', 'Dados', False);
 

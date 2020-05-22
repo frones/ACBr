@@ -603,7 +603,8 @@ begin
   case FProvedor of
 //    proAbaco,
     proRecife,
-    proSalvador: FNFSe.InfID.ID := 'rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+    proSalvador,
+    proSmarAPDv1: FNFSe.InfID.ID := 'rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
   else
     FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;

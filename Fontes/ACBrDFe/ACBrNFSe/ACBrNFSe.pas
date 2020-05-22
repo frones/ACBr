@@ -547,8 +547,9 @@ end;
 function TACBrNFSe.ConsultarNFSeporRps(const ANumero, ASerie, ATipo: String;
                                        const ANumLote: String = ''): Boolean;
 begin
-  if NotasFiscais.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
+//Removido por não ter necessidade de preencher o componente.
+//  if NotasFiscais.Count <= 0 then
+//    GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
   Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ANumLote);
 end;

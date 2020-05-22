@@ -151,8 +151,8 @@ begin
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
-        proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2]) or
-       ((FProvedor in [proActconv201, proActconv2, profintelISS]) and (FVersaoDados = '2.01')) then
+        proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2, profintelISS]) or
+       ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupo('TomadorServico')
     else
       Gerador.wGrupo('Tomador');
@@ -275,8 +275,8 @@ begin
     end;
 
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
-        proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2]) or
-        ((FProvedor in [proActconv201, proActconv2, profintelISS]) and (FVersaoDados = '2.01')) then
+        proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2, profintelISS]) or
+        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupo('/TomadorServico')
     else
       Gerador.wGrupo('/Tomador');
@@ -764,8 +764,8 @@ begin
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
     proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, 
-    proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft, proModernizacaoPublica:
-         Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+    proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft, proModernizacaoPublica, proVitoria:
+      Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
     proDeISS,
     proRLZ,
@@ -804,8 +804,8 @@ begin
       proABase, proDigifred, proBethav2, proEReceita, proFiorilli, proGovDigital,
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
       proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proTiplanv2,
-      proSigep, proDesenvolve, proCenti, proMegaSoft:
-          Gerador.wGrupo('Rps');
+      proSigep, proDesenvolve, proCenti, proMegaSoft, proVitoria:
+        Gerador.wGrupo('Rps');
 
       proISSDigital:
           Gerador.wGrupo('Rps ' + FIdentificador + '="' +

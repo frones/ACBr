@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2020
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/57707-erro-retorno-provedor-issnet/
+  Por: Maiquel
+-- Diversos --
+[+] Inicio da implementação do provedor proSmarAPDv1 (segue a versão 1 da ABRASF).
+  Por: Italo Jurisato Junior
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/57741-atualizações-para-o-provedor-finteliss-e-novas-cidades/
+  Por: Rodrigo Crovador
+
 19/05/2020
 -- ACBrNFSeDANFSeRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/57639-danfse-com-prestador-pessoa-física/

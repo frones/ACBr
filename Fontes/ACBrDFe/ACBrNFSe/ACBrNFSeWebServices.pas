@@ -1135,15 +1135,15 @@ begin
     Result := FastStringReplace(Result, '&#xD;', '', [rfReplaceAll]);
     Result := FastStringReplace(Result, '&#xd;', '', [rfReplaceAll]);
   end;
-
-  if FPConfiguracoesNFSe.Geral.ConfigRemover.EComercial then
-    Result := FastStringReplace(Result, '&amp;', '', [rfReplaceAll]);
-
   if FPConfiguracoesNFSe.Geral.ConfigRemover.TagQuebradeLinhaUnica then
   begin
+    result := FastStringReplace(Result, '<br&amp;>', '', [rfReplaceAll]);
     Result := FastStringReplace(Result, 'lt;brgt;', '', [rfReplaceAll]);
     Result := FastStringReplace(Result, '</>', '', [rfReplaceAll]);
   end;
+
+  if FPConfiguracoesNFSe.Geral.ConfigRemover.EComercial then
+    Result := FastStringReplace(Result, '&amp;', '', [rfReplaceAll]);
 
   // Remover o CDATA
   Result := FastStringReplace(Result, '<![CDATA[', '', [rfReplaceAll]);

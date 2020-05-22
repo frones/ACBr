@@ -352,6 +352,7 @@ begin
     proTinus,
     proSalvador,
     proSimplISSv2,
+    proSmarAPDv1,
     proSiat: IdLote := 'lote' + NumeroLote;
 
     proSaatri: IdLote := 'Lote_' + NumeroLote + '_' + CNPJ;

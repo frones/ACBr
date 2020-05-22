@@ -125,14 +125,17 @@ var
     {$ENDIF OS2}
    {$ENDIF}
   {$ELSE}
-   DLLSSLNames: array[1..4] of string = ({$IfDef CPU64}'libssl-1_1-x64.dll'{$Else}'libssl-1_1.dll'{$EndIf},
+   DLLSSLNames: array[1..4] of string = ({$IfDef WIN64}'libssl-1_1-x64.dll'{$Else}'libssl-1_1.dll'{$EndIf},
                                          'ssleay32.dll', 'libssl32.dll', 'libssl.dll');
-   DLLUtilNames: array[1..4] of string = ({$IfDef CPU64}'libcrypto-1_1-x64.dll'{$Else}'libcrypto-1_1.dll'{$EndIf},
+   DLLUtilNames: array[1..4] of string = ({$IfDef WIN64}'libcrypto-1_1-x64.dll'{$Else}'libcrypto-1_1.dll'{$EndIf},
                                           'libeay32.dll', 'libcrypto.dll', 'libeay.dll');
   {$ENDIF}
 
 
 {$IfNDef FPC}
+ {$IfDef CPUX64}
+  {$Define CPU64}
+ {$EndIf}
  // Converting FPC CTypes to Delphi
  type
    {$If not DECLARED(DWord)}

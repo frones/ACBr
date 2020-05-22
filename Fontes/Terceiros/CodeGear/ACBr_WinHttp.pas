@@ -38,7 +38,7 @@ type
 {$IFEND}
 
 {$IFNDEF FPC}
-  {$IFDEF CPU64}
+  {$IFDEF WIN64}
    PtrUInt = Int64{QWord};
   {$ELSE}
    PtrUInt = DWord;

@@ -81,7 +81,7 @@ Uses
   {$EndIf} ;
 
 const
-{$IFDEF CPU64}
+{$IFDEF WIN64}
   CINPOUTDLL = 'inpoutx64.dll';
 {$ELSE}
   CINPOUTDLL = 'inpout32.dll';

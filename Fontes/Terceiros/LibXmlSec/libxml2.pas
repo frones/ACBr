@@ -30,7 +30,7 @@ const
 type
 
       {$IFNDEF FPC}
-        {$IFDEF CPU64}
+        {$IFDEF CPUX64}
           SizeInt = Int64;
         {$ELSE}
           SizeInt = LongInt;

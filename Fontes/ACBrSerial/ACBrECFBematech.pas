@@ -307,7 +307,7 @@ const
 {$IFNDEF MSWINDOWS}
  cLIB_Bema = 'libbemafiscal.so';
 {$ELSE}
- {$IFDEF CPU64}
+ {$IFDEF WIN64}
   cLIB_Bema = 'Bemafi64.dll';
  {$ELSE}
   cLIB_Bema = 'Bemafi32.dll';
@@ -3759,7 +3759,7 @@ begin
    if PathIni = '' then
      PathIni := ApplicationPath;
 
-   {$IFDEF CPU64}
+   {$IFDEF WIN64}
     IniFile := PathIni+'BemaFi64.INI' ;
    {$ELSE}
     IniFile := PathIni+'BemaFi32.INI' ;

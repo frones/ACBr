@@ -53,6 +53,10 @@ Símbolo : Significado
 -- ACBrBancoBancoob--
 [*] Ajuste no registro P CNAB240 informando o código da operação. (Joas Vilas Boas Fernandes)
 https://www.projetoacbr.com.br/forum/topic/49599-remessa-cnab240-n%C2%BA-do-contrato-da-opera%C3%A7%C3%A3o-de-cr%C3%A9dito/
+-- ACBrBancoCaixa--
+[-] Ajuste para leitura correta do SeuNumero no retorno CNAB400. (FrancinaldoAC)
+https://www.projetoacbr.com.br/forum/topic/57759-erro-no-campo-seunumero-no-retorno-da-caixa/
+
 
 13/05/2020
 -- ACBrBancoBancoob--

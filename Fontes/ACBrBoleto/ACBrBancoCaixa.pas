@@ -1851,7 +1851,7 @@ begin
 
      with Titulo do
      begin
-       SeuNumero                   := copy(Linha,59,15);
+       SeuNumero                   := copy(Linha,32,25);
        NumeroDocumento             := copy(Linha,117,10);
        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));

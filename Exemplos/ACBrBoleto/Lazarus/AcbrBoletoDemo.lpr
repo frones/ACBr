@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, lazreport, ACBr_Boleto, uDemo, ACBr_BoletoFC_LazReport,
+  Forms, lazreport, ACBr_Boleto, uDemo,
   ACBr_BoletoFC_Fortes;
 
 {$R *.res}

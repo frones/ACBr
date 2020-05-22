@@ -1557,6 +1557,8 @@ begin
 end;
 
 procedure TfrmACBrNFe.btnCarregarXMLEnviarClick(Sender: TObject);
+var
+  Ok: Boolean;
 begin
   OpenDialog1.Title := 'Selecione a NFe';
   OpenDialog1.DefaultExt := '*-nfe.XML';
@@ -1592,7 +1594,7 @@ begin
       Emit.IM                := ''; // Preencher no caso de existir serviços na nota
       Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se é permitido
                                     // a inclusão de serviços na NFe
-      Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+      Emit.CRT               := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
     end;
 
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 55 then

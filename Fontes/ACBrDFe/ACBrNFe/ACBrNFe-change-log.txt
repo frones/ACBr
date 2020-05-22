@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2020
+-- pcnNFeW --
+[*] Descomentado as linhas que verificam o valor de cEAN e cEANTrib.
+    Na versão 4.00 se o produto não possui o GTIM deve ser informado
+    o literam "SEMGTIM".
+   Por: Italo Jurisato Junior
+
 15/05/2020
 -- ACBrNFeWebServices --
 [*] Realizado uma alteração no método: TDistribuicaoDFe.DefinirURL para 

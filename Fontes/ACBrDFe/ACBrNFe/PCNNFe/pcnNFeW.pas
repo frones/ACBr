@@ -826,9 +826,8 @@ begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, nfe.Det[i].Prod.cProd, DSC_CPROD);
 
-  // Implementação futura - regra de validação somente em 01/12/2018
-//  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEAN) = '') then
-//    nfe.Det[i].Prod.cEAN := SEMGTIN;
+  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEAN) = '') then
+    nfe.Det[i].Prod.cEAN := SEMGTIN;
 
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
 
@@ -867,9 +866,8 @@ begin
   Gerador.wCampo(IIf(NFe.infNFe.Versao >= 2,tcDe10,tcDe4),'I10a', 'vUnCom  ', 00, 21, 1, nfe.Det[i].Prod.vUnCom, DSC_VUNCOM);
   Gerador.wCampo(tcDe2, 'I11 ', 'vProd   ', 00, 15, 1, nfe.Det[i].Prod.vProd, DSC_VPROD);
 
-  // Implementação futura - regra de validação somente em 01/12/2018
-//  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEANTrib) = '') then
-//    nfe.Det[i].Prod.cEANTrib := SEMGTIN;
+  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEANTrib) = '') then
+    nfe.Det[i].Prod.cEANTrib := SEMGTIN;
 
   Gerador.wCampo(tcStr, 'I12 ', 'cEANTrib', 00, 14, 1, nfe.Det[i].Prod.cEANTrib, DSC_CEANTRIB);
 

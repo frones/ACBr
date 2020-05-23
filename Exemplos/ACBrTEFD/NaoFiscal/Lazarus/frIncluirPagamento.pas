@@ -57,9 +57,6 @@ type
 
   end;
 
-var
-  FormIncluirPagamento: TFormIncluirPagamento;
-
 implementation
 
 {$R *.lfm}

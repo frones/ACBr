@@ -98,6 +98,7 @@
         <Filename Value="frIncluirPagamento.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormIncluirPagamento"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit4>
       <Unit5>

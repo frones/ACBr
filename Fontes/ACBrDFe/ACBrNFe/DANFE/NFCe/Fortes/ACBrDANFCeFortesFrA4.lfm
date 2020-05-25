@@ -1,7 +1,7 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 0
+  Left = 534
   Height = 745
-  Top = 0
+  Top = 94
   Width = 1012
   Caption = 'frmACBrDANFCeFortesFrA4'
   ClientHeight = 745
@@ -11,7 +11,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.8.0'
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
@@ -263,7 +263,8 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 320
         Height = 16
         Top = 0
-        Width = 74
+        Width = 92
+        Alignment = taRightJustify
         Caption = 'Quantidade'
         Font.Color = clBlack
         Font.Height = -13
@@ -276,7 +277,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Height = 0
       end
       object RLLabel11: TRLLabel
-        Left = 400
+        Left = 418
         Height = 16
         Top = 0
         Width = 72
@@ -308,7 +309,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Height = 0
       end
       object RLLabel14: TRLLabel
-        Left = 480
+        Left = 498
         Height = 16
         Top = 0
         Width = 63
@@ -325,7 +326,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
-        Left = 552
+        Left = 569
         Height = 16
         Top = 0
         Width = 70
@@ -401,7 +402,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Left = 320
           Height = 16
           Top = 0
-          Width = 74
+          Width = 91
           Alignment = taRightJustify
           AutoSize = False
           Caption = 'Quantidade'
@@ -417,7 +418,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel16BeforePrint
         end
         object RLLabel17: TRLLabel
-          Left = 400
+          Left = 417
           Height = 16
           Top = 0
           Width = 72
@@ -436,7 +437,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel17BeforePrint
         end
         object RLLabel18: TRLLabel
-          Left = 480
+          Left = 497
           Height = 16
           Top = 0
           Width = 63
@@ -455,7 +456,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel18BeforePrint
         end
         object RLLabel19: TRLLabel
-          Left = 552
+          Left = 569
           Height = 16
           Top = 0
           Width = 70

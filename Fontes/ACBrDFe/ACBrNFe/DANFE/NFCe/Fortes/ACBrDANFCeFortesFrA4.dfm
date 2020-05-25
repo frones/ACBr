@@ -222,8 +222,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLLabel10: TRLLabel
         Left = 320
         Top = 0
-        Width = 74
+        Width = 92
         Height = 16
+        Alignment = taRightJustify
         Caption = 'Quantidade'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -234,7 +235,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         ParentFont = False
       end
       object RLLabel11: TRLLabel
-        Left = 400
+        Left = 418
         Top = 0
         Width = 72
         Height = 16
@@ -262,7 +263,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         ParentFont = False
       end
       object RLLabel14: TRLLabel
-        Left = 480
+        Left = 498
         Top = 0
         Width = 63
         Height = 16
@@ -277,7 +278,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
-        Left = 552
+        Left = 570
         Top = 0
         Width = 70
         Height = 16
@@ -336,7 +337,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel16: TRLLabel
           Left = 320
           Top = 0
-          Width = 74
+          Width = 91
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -351,7 +352,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel16BeforePrint
         end
         object RLLabel17: TRLLabel
-          Left = 400
+          Left = 417
           Top = 0
           Width = 72
           Height = 16
@@ -368,7 +369,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel17BeforePrint
         end
         object RLLabel18: TRLLabel
-          Left = 480
+          Left = 497
           Top = 0
           Width = 63
           Height = 16
@@ -385,7 +386,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel18BeforePrint
         end
         object RLLabel19: TRLLabel
-          Left = 552
+          Left = 569
           Top = 0
           Width = 70
           Height = 16

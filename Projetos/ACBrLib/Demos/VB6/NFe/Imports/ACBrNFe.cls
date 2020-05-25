@@ -200,7 +200,7 @@ Private Declare Function NFE_DistribuicaoDFePorChave _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function NFE_EnviarEmail _
-                Lib "ACBrNFE32.dll" (ByVal ePara As Long, _
+                Lib "ACBrNFE32.dll" (ByVal ePara As String, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -209,7 +209,7 @@ Private Declare Function NFE_EnviarEmail _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function NFE_EnviarEmailEvento _
-                Lib "ACBrNFE32.dll" (ByVal ePara As Long, _
+                Lib "ACBrNFE32.dll" (ByVal ePara As String, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _

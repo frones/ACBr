@@ -86,7 +86,7 @@ type
   TpTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao,
                               tcpSemCategoria, tcpFrota);
 
-  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
+  TpEntregaDocumentacao = (edNenhum, edRedeCredenciada, edCliente);
 
   TpTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavalo);
 
@@ -480,14 +480,14 @@ end;
 
 function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 begin
-  result := EnumeradoToStr(t, ['RedeCredenciada', 'Cliente'],
-                              [edRedeCredenciada, edCliente]);
+  result := EnumeradoToStr(t, ['', 'RedeCredenciada', 'Cliente'],
+                              [edNenhum, edRedeCredenciada, edCliente]);
 end;
 
 function StrToEntregaDocumentacao(out ok: Boolean; const s: String): TpEntregaDocumentacao;
 begin
-  result := StrToEnumerado(ok, s, ['RedeCredenciada', 'Cliente'],
-                              [edRedeCredenciada, edCliente]);
+  result := StrToEnumerado(ok, s, ['', 'RedeCredenciada', 'Cliente'],
+                              [edNenhum, edRedeCredenciada, edCliente]);
 end;
 
 function TipoRodadoToStr(const t: TpTipoRodado): string;

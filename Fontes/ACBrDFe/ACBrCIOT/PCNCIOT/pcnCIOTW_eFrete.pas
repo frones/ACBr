@@ -1818,7 +1818,9 @@ begin
             Gerador.wGrupo('/ObservacoesAoCredenciado');
           end;
 
-          Gerador.wCampo(tcStr, 'AP253', 'EntregaDocumentacao     ', 01, 01, 1, EntregaDocumentacaoToStr(EntregaDocumentacao));
+          if EntregaDocumentacao <> edNenhum then
+            Gerador.wCampo(tcStr, 'AP253', 'EntregaDocumentacao', 01, 01, 1, EntregaDocumentacaoToStr(EntregaDocumentacao));
+
           Gerador.wCampo(tcInt, 'AP254', 'QuantidadeSaques        ', 01, 01, 1, QuantidadeSaques);
           Gerador.wCampo(tcInt, 'AP255', 'QuantidadeTransferencias', 01, 01, 1, QuantidadeTransferencias);
           Gerador.wCampo(tcDe2, 'AP256', 'ValorSaques             ', 01, 01, 1, ValorSaques);

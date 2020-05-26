@@ -35,13 +35,14 @@ requires
   ACBr_Comum,
   soaprtl,
   ACBr_Diversos,
-  acbr_TCP;
+  ACBr_TCP;
 
 contains
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',
   ACBrTEFDClass in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas',
   ACBrTEFDCliSiTef in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas',
   ACBrTEFDDial in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas',
+  ACBrTEFDPayGo in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDPayGo.pas',
   ACBrTEFDDisc in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas',
   ACBrTEFDGpu in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDGpu.pas',
   ACBrTEFDHiper in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas',

@@ -26,63 +26,77 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="11">
+    <Files Count="16">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
-        <UnitName Value="ACBrTEFD"/>
-      </Item1>
-      <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
-        <UnitName Value="ACBrTEFDClass"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
-        <UnitName Value="ACBrTEFDDial"/>
-      </Item3>
-      <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
-        <UnitName Value="ACBrTEFDDisc"/>
-      </Item4>
-      <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
-        <UnitName Value="ACBrTEFDHiper"/>
-      </Item5>
-      <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
-        <UnitName Value="ACBrTEFDCliSiTef"/>
-      </Item6>
-      <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
-        <UnitName Value="ACBrTEFDVeSPague"/>
-      </Item7>
-      <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
-        <UnitName Value="ACBrTEFDBanese"/>
-      </Item8>
-      <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
-        <UnitName Value="ACBrTEFDCappta"/>
-      </Item9>
-      <Item10>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrTEFDReg"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
+        <UnitName Value="ACBrTEFD"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
+        <UnitName Value="ACBrTEFDClass"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFComum.pas"/>
+        <UnitName Value="ACBrTEFComum"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIClass.pas"/>
+        <UnitName Value="ACBrTEFAPIClass"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPI.pas"/>
+        <UnitName Value="ACBrTEFAPI"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
+        <UnitName Value="ACBrTEFDDial"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDPayGo.pas"/>
+        <UnitName Value="ACBrTEFDPayGo"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
+        <UnitName Value="ACBrTEFDDisc"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
+        <UnitName Value="ACBrTEFDHiper"/>
       </Item10>
       <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
+        <UnitName Value="ACBrTEFDCliSiTef"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
+        <UnitName Value="ACBrTEFDVeSPague"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
+        <UnitName Value="ACBrTEFDBanese"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
+        <UnitName Value="ACBrTEFDCappta"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFCliSiTefComum.pas"/>
+        <UnitName Value="ACBrTEFCliSiTefComum"/>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas"/>
         <UnitName Value="ACBrPicpay"/>
-      </Item11>
+      </Item16>
     </Files>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrTCP"/>
       </Item1>
-      <Item2>
-        <PackageName Value="ACBrDiversos"/>
-      </Item2>
-      <Item3>
-        <PackageName Value="ACBrComum"/>
-      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

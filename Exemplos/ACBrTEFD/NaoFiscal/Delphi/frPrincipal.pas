@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			                                         }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD,
-  ACBrPosPrinter, ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef, ACBrTEFComum,
+  ACBrPosPrinter, ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef,
   ImgList, ACBrBase;
 
 type
@@ -1201,7 +1201,6 @@ procedure TFormPrincipal.AdicionarPagamento(const Indice: String; AValor: Double
   );
 var
   Ok, TemTEF: Boolean;
-  RespTEF: TACBrTEFResp;
   ReajusteValor: Double;
 begin
   Ok := True;
@@ -1233,16 +1232,14 @@ begin
 
       if TemTEF then
       begin
-        RespTEF := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1];
-
-        NSU := RespTEF.NSU;
-        Rede := RespTEF.Rede;
+        NSU := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NSU;
+        Rede := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Rede;
 
         // Calcula a Diferença do Valor Retornado pela Operação TEF do Valor que
         //   Informamos no CRT/CHQ
-        ReajusteValor := RoundTo(RespTEF.ValorTotal - ValorPago, -2);
+        ReajusteValor := RoundTo(ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].ValorTotal - ValorPago, -2);
 
-        Saque := RespTEF.Saque;
+        Saque := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Saque;
         if (Saque > 0) then
         begin
           // Se houve Saque na operação TEF, devemos adicionar no ValorPago Pago,
@@ -1256,7 +1253,7 @@ begin
           Venda.TotalAcrescimo := Venda.TotalAcrescimo + ReajusteValor;
         end;
 
-        Desconto := RespTEF.Desconto;
+        Desconto := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Desconto;
         if Desconto > 0 then
         begin
           // Se houve Desconto na Operação TEF, devemos subtrair do ValorPago Pago

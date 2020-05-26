@@ -244,8 +244,8 @@ implementation
 
 Uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
-  DateUtils, Math, StrUtils,
-  ACBrTEFD, ACBrUtil;
+  strutils, math, dateutils,
+  ACBrTEFD, ACBrUtil, ACBrTEFComum;
 
 { TACBrTEFDRespCliDTEF }
 
@@ -256,9 +256,9 @@ end;
 
 procedure TACBrTEFDRespCliDTEF.ConteudoToProperty;
 var
-   Linha : TACBrTEFDLinha ;
+   Linha : TACBrTEFLinha ;
    I     : Integer;
-   Parc  : TACBrTEFDRespParcela;
+   Parc  : TACBrTEFRespParcela;
    LinStr: AnsiString ;
 begin
    fpValorTotal := 0 ;
@@ -314,30 +314,15 @@ begin
        629 : fpConta                       := LinStr;
        630 : fpContaDC                     := LinStr;
        527 : fpDataVencimento              := Linha.Informacao.AsDate ; {Data Vencimento}
-
-       //
-
-       899 :  // Tipos de Uso Interno do ACBrTEFD
-        begin
-          case Linha.Sequencia of
-              1 : fpCNFEnviado         := (UpperCase( Linha.Informacao.AsString ) = 'S' );
-              2 : fpIndiceFPG_ECF      := Linha.Informacao.AsString ;
-              3 : fpOrdemPagamento     := Linha.Informacao.AsInteger ;
-            100 : fpHeader             := LinStr;
-            101 : fpID                 := Linha.Informacao.AsInteger;
-            102 : fpDocumentoVinculado := LinStr;
-            103 : fpValorTotal         := fpValorTotal + Linha.Informacao.AsFloat;
-            104 : fpRede               := Linha.Informacao.AsString ;
-            130 : fpTextoEspecialOperador := Linha.Informacao.AsString;            
-          end;
-        end;
+     else
+       ProcessarTipoInterno(Linha);
      end;
    end ;
 
    fpParcelas.Clear;
    for I := 1 to fpQtdParcelas do
    begin
-      Parc := TACBrTEFDRespParcela.create;
+      Parc := TACBrTEFRespParcela.create;
       Parc.Vencimento := LeInformacao( 141, I).AsDate ;
       Parc.Valor      := LeInformacao( 142, I).AsFloat ;
 

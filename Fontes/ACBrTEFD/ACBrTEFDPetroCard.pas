@@ -58,8 +58,6 @@ type
 
 implementation
 
-Uses dateutils;
-
 { TACBrTEFDClass }
 
 constructor TACBrTEFDPetroCard.Create(AOwner : TComponent);

@@ -40,7 +40,7 @@ uses
   {$IFDEF MSWINDOWS}
   Windows,
   {$ENDIF}
-  Classes, SysUtils, ACBrTEFDClass
+  Classes, SysUtils, ACBrTEFDClass, ACBrTEFComum
   {$IfNDef NOGUI}
     {$If DEFINED(VisualCLX)}
       ,QControls, QForms
@@ -69,6 +69,7 @@ type
   TACBrTEFDRespBanese = class( TACBrTEFDResp )
   protected
     function GetTransacaoAprovada : Boolean; override;
+    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
   public
     procedure ConteudoToProperty; override;
     procedure GravaInformacao( const Identificacao : Integer;
@@ -150,7 +151,8 @@ type
 
 implementation
 
-Uses dateutils, strutils, math,
+Uses
+  strutils, math, dateutils,
   ACBrTEFD, ACBrUtil;
 
 { TACBrTEFDRespBanese }
@@ -160,11 +162,19 @@ begin
    Result := True ;
 end;
 
+procedure TACBrTEFDRespBanese.ProcessarTipoInterno(ALinha: TACBrTEFLinha);
+begin
+  if (ALinha.Identificacao = 899) and (ALinha.Sequencia = 130) then
+    fpTextoEspecialOperador := ALinha.Informacao.AsString
+  else
+    inherited ProcessarTipoInterno(ALinha);
+end;
+
 procedure TACBrTEFDRespBanese.ConteudoToProperty;
 var
-   Linha : TACBrTEFDLinha ;
+   Linha : TACBrTEFLinha ;
    I     : Integer;
-   Parc  : TACBrTEFDRespParcela;
+   Parc  : TACBrTEFRespParcela;
    LinStr: AnsiString ;
 begin
    fpValorTotal := 0 ;
@@ -174,7 +184,7 @@ begin
    for I := 0 to Conteudo.Count - 1 do
    begin
      Linha  := Conteudo.Linha[I];
-     LinStr := StringToBinaryString( Linha.Informacao.AsString );
+     LinStr := Linha.Informacao.AsBinary;
 
      case Linha.Identificacao of
        100 :fpModalidadePagto              := LinStr;
@@ -214,23 +224,8 @@ begin
        629 : fpConta                       := LinStr;
        630 : fpContaDC                     := LinStr;
        527 : fpDataVencimento              := Linha.Informacao.AsDate ; {Data Vencimento}
-
-       //
-
-       899 :  // Tipos de Uso Interno do ACBrTEFD
-        begin
-          case Linha.Sequencia of
-              1 : fpCNFEnviado         := (UpperCase( Linha.Informacao.AsString ) = 'S' );
-              2 : fpIndiceFPG_ECF      := Linha.Informacao.AsString ;
-              3 : fpOrdemPagamento     := Linha.Informacao.AsInteger ;
-            100 : fpHeader             := LinStr;
-            101 : fpID                 := Linha.Informacao.AsInteger;
-            102 : fpDocumentoVinculado := LinStr;
-            103 : fpValorTotal         := fpValorTotal + Linha.Informacao.AsFloat;
-            104 : fpRede               := Linha.Informacao.AsString ;
-            130 : fpTextoEspecialOperador := Linha.Informacao.AsString;
-          end;
-        end;
+     else
+       ProcessarTipoInterno(Linha);
      end;
    end ;
 
@@ -240,7 +235,7 @@ begin
    fpParcelas.Clear;
    for I := 1 to fpQtdParcelas do
    begin
-      Parc := TACBrTEFDRespParcela.create;
+      Parc := TACBrTEFRespParcela.create;
       Parc.Vencimento := LeInformacao( 141, I).AsDate ;
       Parc.Valor      := LeInformacao( 142, I).AsFloat ;
 

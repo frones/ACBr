@@ -46,6 +46,77 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2019
+-- ACBrTEFD --
+[+] Adicionado nova classe de TEF, "TEFPayGo", modelo gpPayGo
+[*] Devido não mais existir o Gerenciador Padrão, TEF_Dial, "gpPayGo" passa a ser
+    o TEF padrão.
+[*] Propriedades "SuportaReajusteValor" e "SuportaNSUEstendido", removidas de
+    "TACBrTEFD" e movidas para "TACBrTEFDRespPayGo", pois são de uso exclusivo
+    do TEFPayGo. Para acessa-las use:
+    ACBrTEFD1.TEFPayGo.SuportaReajusteValor
+    ACBrTEFD1.TEFPayGo.SuportaNSUEstendido
+[*] Diversos ajustes após refatoração em ACBrTEFDClass e ACBrTEFComum
+
+-- ACBrTEFDClass, ACBrTEFComum --
+[*] Refatoração, para preparação de novo componente ACBrTEFAPI, separando Classes
+    em comum a ambos os componentes, em ACBrTEFComum
+
+-- ACBrTEFDClass --
+[*] Ajuste em método: TACBrTEFDRespTXT.ConteudoToProperty, para simplificação da
+    detecção das vias de comprovantes.
+[*] Verificação de Campos específicos do PayGo foram movidos para "ACBrTEFDPayGo"
+
+-- ACBrTEFDPayGo --
+[+] Nova classe de TEF "TACBrTEFDPayGo", criando requisições e respostas em
+    "C:\PAYGO\".
+[+] Adicionada a propriedade "SuportaViasDiferenciadas: Boolean default True"
+[+] Implementada sobrearga nos métodos: "TACBrTEFDRespPayGo.ConteudoToProperty" e
+    "TACBrTEFDRespPayGo.ProcessarTipoInterno", para processar mapeamento de tipos
+    específicos do PayGo, como:
+    707-000 Valor original
+    708-000 Valor do troco
+    709-000 Valor do desconto
+    710-000 Linhas Via Reduzida Cliente
+    711-xxx Cupom reduzido
+    712-000 Tamanho Via Cliente
+    713-xxx Via Cliente do comprovante
+    714-000 Linhas Via Estabelecimento;
+    715-xxx Via Estabelecimento do comprovante
+    727-000 Taxa de serviço
+    731-000 Tipo de cartão
+    732-000 Tipo de financiamento
+    737-000 Vias de Comprovante
+    739-000 Índice da Rede Adquirente
+    740-000 Número do cartão, mascarado
+    741-000 Nome do Cliente, extraído do cartão ou informado pelo emissor.
+    747-000 Data de vencimento do cartão (MMAA)
+    748-000 Nome do cartão padronizado. Se existir, substitui o 040-000
+
+[+] Método "TACBrTEFDPayGo.AdicionarIdentificacao", modificado, para processar
+    todas as características do campo:    "706-000 Capacidades da Automação"
+    1: funcionalidade de troco (ver campo 708-000)
+    2: funcionalidade de desconto (ver campo 709-000)
+    4: valor fixo, sempre incluir
+    8: vias diferenciadas do comprovante para Cliente/Estabelecimento (campos 712-000 a 715-000)
+    16: cupom reduzido (campos 710-000 e 711-000)
+    32: funcionalidade de valor devido (ver campo 743-000)
+    64: funcionalidade de valor reajustado (ver campo 744-000)
+    128: suporta NSU com tamanho de até 40 caracteres (campos 012-000 e 025-000)
+
+-- ACBrTEFDCliSitef, ACBrTEFCliSiTefComum --
+[*] Refatoração, para preparação de novo componente ACBrTEFAPI, separando Classes
+    em comum a ambos os componentes, em ACBrTEFCliSiTefComum
+
+-- ACBrTEFDVeSPague, ACBrTEFDTicketCar, ACBrTEFDCliDTEF, ACBrTEFDBanese --
+[*] Diversos ajustes após refatoração em ACBrTEFDClass e ACBrTEFComum
+
+-- ACBrTEFDPetroCard, ACBrTEFDHiper, ACbrTEFDGpu, ACBrTEFDGoodCard,
+   ACBrTEFDFoxWin, ACBrTEFDDisc, ACBrTEFDDial, ACBrTEFDCrediShop,
+   ACBrTEFDConvCard, ACBrTEFDCappta, ACBrTEFDAuttar --
+[*] Remoção de Units não utilizadas
+    (por: DSA)
+
 23/04/2019
 -- ACBrTEFDCliSitef --
 [*] Chamada ao Método "FinalizaTransacaoSiTefInterativo" que está depreciado,

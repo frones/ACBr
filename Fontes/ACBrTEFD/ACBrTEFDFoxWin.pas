@@ -57,8 +57,6 @@ type
 
 implementation
 
-Uses dateutils;
-
 { TACBrTEFDClass }
 
 constructor TACBrTEFDFoxWin.Create(AOwner : TComponent);

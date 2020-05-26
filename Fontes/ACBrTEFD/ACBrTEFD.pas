@@ -37,7 +37,7 @@ unit ACBrTEFD;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrTEFDClass, ACBrTEFDAuttar,
+  Classes, SysUtils, ACBrBase, ACBrTEFDClass, ACBrTEFDPayGo, ACBrTEFDAuttar,
   ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef, ACBrTEFDGpu,
   ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
@@ -134,12 +134,11 @@ type
      fTecladoBloqueado : Boolean;
      fSuportaDesconto : Boolean;
      fSuportaSaque : Boolean;
-     fSuportaReajusteValor : Boolean;
-     fSuportaNSUEstendido: Boolean;
      fTempoInicialMensagemOperador: TDateTime;
      fTempoInicialMensagemCliente: TDateTime;
 
      fTefClass     : TACBrTEFDClass ;
+     fTefPayGo     : TACBrTEFDPayGo ;
      fTefDial      : TACBrTEFDDial ;
      fTefGPU       : TACBrTEFDGpu ;
      fTefCliSiTef  : TACBrTEFDCliSiTef;
@@ -292,20 +291,14 @@ type
         write fEsperaMinimaMensagemFinal default CACBrTEFD_EsperaMinimaMensagemFinal;
      property PathBackup : String read GetPathBackup write SetPathBackup ;
      property ArqLOG : String read fArqLOG write SetArqLOG ;
-     property CHQEmGerencial : Boolean read fCHQEmGerencial
-        write fCHQEmGerencial default False ;
+     property CHQEmGerencial : Boolean read fCHQEmGerencial write fCHQEmGerencial default False ;
      property TrocoMaximo : Double read fTrocoMaximo write fTrocoMaximo ;
-     Property SuportaSaque : Boolean read fSuportaSaque write fSuportaSaque
-       default True;
-     Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto
-       default True;
-     Property SuportaReajusteValor : Boolean read fSuportaReajusteValor write fSuportaReajusteValor
-       default False;
-     Property SuportaNSUEstendido : Boolean read fSuportaNSUEstendido write fSuportaNSUEstendido
-       default False;
+     Property SuportaSaque : Boolean read fSuportaSaque write fSuportaSaque default True;
+     Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto default True;
      property ConfirmarAntesDosComprovantes: Boolean read fConfirmarAntesDosComprovantes
        write fConfirmarAntesDosComprovantes default False;
 
+     property TEFPayGo   : TACBrTEFDPayGo    read fTefPayGo ;
      property TEFDial    : TACBrTEFDDial     read fTefDial ;
      property TEFDisc    : TACBrTEFDDisc     read fTefDisc ;
      property TEFHiper   : TACBrTEFDHiper    read fTefHiper ;
@@ -364,7 +357,9 @@ procedure ApagaEVerifica( const Arquivo : String ) ;
 
 implementation
 
-Uses ACBrUtil, dateutils, TypInfo, StrUtils, Math;
+Uses
+  dateutils, TypInfo, StrUtils, Math,
+  ACBrUtil, ACBrTEFComum;
 
 {$IFNDEF FPC}
    {$R ACBrTEFD.dcr}
@@ -376,7 +371,7 @@ begin
 
   SysUtils.DeleteFile( Arquivo );
   if FileExists( Arquivo ) then
-     raise EACBrTEFDArquivo.Create( ACBrStr( 'Erro ao apagar o arquivo:' + sLineBreak + Arquivo ) );
+     raise EACBrTEFArquivo.Create( ACBrStr( 'Erro ao apagar o arquivo:' + sLineBreak + Arquivo ) );
 end;
 
 { TACBrTEFDIdentificacao }
@@ -436,8 +431,6 @@ begin
   fTrocoMaximo          := 0;
   fSuportaDesconto      := True;
   fSuportaSaque         := True;
-  fSuportaReajusteValor := False;
-  fSuportaNSUEstendido  := False;
 
   fTempoInicialMensagemCliente  := 0;
   fTempoInicialMensagemOperador := 0;
@@ -466,6 +459,13 @@ begin
   fTEFList := TACBrTEFDClassList.create(True);
   { Lista de Objetos TACBrTEFDresp com todas as Respostas Pendentes para Impressao }
   fpRespostasPendentes := TACBrTEFDRespostasPendentes.create(True);
+
+  { Criando Classe TEF_DIAL }
+  fTefPayGo := TACBrTEFDPayGo.Create(self);
+  fTEFList.Add(fTefPayGo);     // Adicionando "fTefPayGo" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefPayGo.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
 
   { Criando Classe TEF_DIAL }
   fTefDial := TACBrTEFDDial.Create(self);
@@ -579,7 +579,7 @@ begin
    fTefCappta.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
 
-  GPAtual := gpTefDial;
+  GPAtual := gpPayGo;
 end;
 
 destructor TACBrTEFD.Destroy;
@@ -603,7 +603,7 @@ begin
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
 
   if not Assigned( OnAguardaResp) and (GP = gpCliSiTef) then
-	raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
 
   if not Assigned( OnComandaECFAbreVinculado )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;
@@ -680,6 +680,7 @@ begin
   if AValue = fGPAtual then exit ;
 
   case AValue of
+    gpPayGo     : fTefClass := fTefPayGo ;
     gpTefDial   : fTefClass := fTefDial ;
     gpTefDisc   : fTefClass := fTefDisc ;
     gpHiperTef  : fTefClass := fTefHiper ;
@@ -837,7 +838,7 @@ begin
   while I < RespostasPendentes.Count do
   begin
     try
-      with RespostasPendentes[I] do
+      with TACBrTEFDResp(RespostasPendentes[I]) do
       begin
         GPAtual := TipoGP;   // Seleciona a Classe do GP
 
@@ -937,7 +938,7 @@ begin
 
                  For J := 0 to RespostasPendentes.Count-1 do
                  begin
-                    with RespostasPendentes[J] do
+                    with TACBrTEFDResp(RespostasPendentes[J]) do
                     begin
                        GPAtual := TipoGP;  // Seleciona a Classe do GP
 
@@ -945,9 +946,9 @@ begin
 
                        // Calcula numero de vias //
                        NVias := fTefClass.NumVias ;
-                       if ImagemComprovante2aVia.Text = '' then   // Tem 2a via ?
+                       if (ImagemComprovante2aVia.Count = 0) then   // Tem 2a via ?
                           NVias := 1 ;
-                       if ImagemComprovante1aVia.Text = '' then   // Tem alguma via ?
+                       if (ImagemComprovante1aVia.Count = 0) then   // Tem alguma via ?
                           NVias := 0 ;
 
                        if NVias > 0 then   // Com Impressao, deixe a MSG na Tela
@@ -1036,7 +1037,7 @@ begin
 
                     For J := 0 to RespostasPendentes.Count-1 do
                     begin
-                       with RespostasPendentes[J] do
+                       with TACBrTEFDResp(RespostasPendentes[J]) do
                        begin
                           if GrupoVinc[K].OrdemPagamento <> OrdemPagamento then
                              continue ;
@@ -1047,9 +1048,9 @@ begin
 
                           // Calcula numero de vias //
                           NVias := fTefClass.NumVias ;
-                          if ImagemComprovante2aVia.Text = '' then   // Tem 2a via ?
+                          if (ImagemComprovante2aVia.Count = 0) then   // Tem 2a via ?
                              NVias := 1 ;
-                          if ImagemComprovante1aVia.Text = '' then   // Tem alguma via ?
+                          if (ImagemComprovante1aVia.Count = 0) then   // Tem alguma via ?
                              NVias := 0 ;
 
                           if NVias > 0 then   // Com Impressao, deixe a MSG na Tela
@@ -1430,16 +1431,19 @@ begin
                                       ECFPagamento( GrupoFPG[I].IndiceFPG_ECF, GrupoFPG[I].Total );
 
                                    For J := 0 to RespostasPendentes.Count-1 do
-                                      if RespostasPendentes[J].IndiceFPG_ECF = GrupoFPG[I].IndiceFPG_ECF then
+                                   with TACBrTEFDResp(RespostasPendentes[J]) do
+                                   begin
+                                      if IndiceFPG_ECF = GrupoFPG[I].IndiceFPG_ECF then
                                       begin
-                                        if (RespostasPendentes[J].Header = 'CHQ') and CHQEmGerencial then
+                                        if (Header = 'CHQ') and CHQEmGerencial then
                                          begin
-                                           RespostasPendentes[J].OrdemPagamento := 999;
+                                           OrdemPagamento := 999;
                                            Dec( Ordem ) ;
                                          end
                                         else
-                                           RespostasPendentes[J].OrdemPagamento := Ordem;
+                                           OrdemPagamento := Ordem;
                                       end;
+                                   end;
                                  end
                                 else
                                    Ordem := GrupoFPG[I].OrdemPagamento ;
@@ -1544,8 +1548,11 @@ begin
 
   For I := 0 to RespostasPendentes.Count-1 do
   begin
-     IndiceFPG := RespostasPendentes[I].IndiceFPG_ECF ;
-     Ordem     := RespostasPendentes[I].OrdemPagamento ;
+     with TACBrTEFDResp(RespostasPendentes[I]) do
+     begin
+       IndiceFPG := IndiceFPG_ECF ;
+       Ordem     := OrdemPagamento ;
+     end;
 
      J := 0 ;
      LenArr := Length( Grupo ) ;

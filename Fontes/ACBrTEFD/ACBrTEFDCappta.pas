@@ -160,7 +160,7 @@ implementation
 
 uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
-  dateutils, Math, StrUtils, ACBrUtil;
+  ACBrUtil;
 
 { TACBrTEFDCappta }
 

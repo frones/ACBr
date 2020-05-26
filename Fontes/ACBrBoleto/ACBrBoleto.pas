@@ -1325,7 +1325,7 @@ type
      property Carteira          : String      read fCarteira          write SetCarteira;
      property CarteiraEnvio     : TACBrCarteiraEnvio read fCarteiraEnvio write fCarteiraEnvio default tceCedente;
      property CodigoDesconto    : TACBrCodigoDesconto    read fCodigoDesconto    write fCodigoDesconto;
-     property CodigoMoraJuros   : TACBrCodigoJuros       read fCodigoMoraJuros   write fCodigoMoraJuros;
+     property CodigoMoraJuros   : TACBrCodigoJuros       read fCodigoMoraJuros   write fCodigoMoraJuros default cjIsento;
      property CodigoMulta       : TACBrCodigoMulta       read fCodigoMulta       write fCodigoMulta;
      property CodigoNegativacao : TACBrCodigoNegativacao read fCodigoNegativacao write fCodigoNegativacao default cnNaoProtestar;
 
@@ -2411,14 +2411,14 @@ begin
       begin
          if DataMoraJuros <> 0 then
             AStringList.Add(ACBrStr('Cobrar juros de '                        +
-                            ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
+                            ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
                                    FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
                              ' de atraso para pagamento '+
                              ifthen(Vencimento = DataMoraJuros, 'após o vencimento.',
                                     'a partir de '+FormatDateTime('dd/mm/yyyy',DataMoraJuros))))
          else
             AStringList.Add(ACBrStr('Cobrar juros de '                +
-                                    ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
+                                    ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
                                            FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
                              ' de atraso'));
       end;
@@ -3871,7 +3871,13 @@ begin
     else
     begin
       if (ValorMoraJuros > 0) then
-        Result := '1'
+      begin
+        case CodigoMoraJuros of
+          cjTaxaMensal, cjValorMensal   : Result := '2';
+        else
+          Result := '1';
+        end;
+      end
       else
         Result := '3';
     end

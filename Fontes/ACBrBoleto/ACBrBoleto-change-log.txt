@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2020
+
+-- ACBrBoleto --
+[*] Ajustes na validação do campo CodigoMoraJuros, utilização na função DefineCodigoMoraJuros 
+e para impressão de Mensagem do boleto
+
+22/05/2020
 -- ACBrBancoBancoob--
 [*] Ajuste no registro P CNAB240 informando o código da operação. (Joas Vilas Boas Fernandes)
 https://www.projetoacbr.com.br/forum/topic/49599-remessa-cnab240-n%C2%BA-do-contrato-da-opera%C3%A7%C3%A3o-de-cr%C3%A9dito/

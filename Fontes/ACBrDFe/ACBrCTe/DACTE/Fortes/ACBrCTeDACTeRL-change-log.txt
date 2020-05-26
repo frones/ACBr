@@ -46,6 +46,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/05/2020
+-- ACBrCTeDACTeRLClass --
+[*] Corrigido o nome do PDF de eventos.
+   Por: Italo Jurisato Junior
+
+14/05/2020
 -- ACBrCTeDACTeRLRetrato --
 [*] A variável CarregouLogo estava sendo atribuida mas não estava sendo
     utilizada. Incluido as linhas que estavam faltando.

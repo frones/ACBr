@@ -185,7 +185,7 @@ var
 
   function ImprimirEVENTOPDFTipo(EventoNFeItem: TInfEventoCollectionItem; ACTe: TCTe): String;
   begin
-    Result := Self.PathPDF + OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoNFe.pdf';
+    Result := Self.PathPDF + OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoCTe.pdf';
 
     // TipoDANFE ainda não está sendo utilizado no momento
     TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoNFeItem, Result, ACTe);

@@ -36,40 +36,45 @@ uses
   Classes, SysUtils, contnrs, IniFiles;
 
 const
-  cPagamentos: array[0..4] of array [0..1] of String =
+  cPagamentos: array[0..5] of array [0..1] of String =
      ( ('01','Dinheiro'),
        ('02','Cheque'),
        ('03','Cartão de Crédito'),
        ('04','Cartão de Débito'),
+       ('05','Carteira Digital'),
        ('99','Outros') );
 
 type
-  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada, stsCancelada, stsAguardandoTEF);
+  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsCancelada, stsAguardandoTEF, stsOperacaoTEF, stsFinalizada);
 
   { TPagamento }
 
   TPagamento = class
   private
+    FAcrescimo: Double;
     FConfirmada: Boolean;
     FDesconto: Double;
     FHora: TDateTime;
     FNomeAdministradora: String;
     FNSU: String;
     FRede: String;
+    FSaque: Double;
     FTipoPagamento: String;
-    FValor: Currency;
+    FValorPago: Currency;
 
   public
     constructor Create;
     procedure Clear;
 
     property TipoPagamento: String read FTipoPagamento write FTipoPagamento;
-    property Valor: Currency read FValor write FValor;
+    property ValorPago: Currency read FValorPago write FValorPago;
     property Hora: TDateTime read FHora write FHora;
     property NSU: String read FNSU write FNSU;
     property Rede: String read FRede write FRede;
     property NomeAdministradora: String read FNomeAdministradora write FNomeAdministradora;
+    property Acrescimo: Double read FAcrescimo write FAcrescimo;
     property Desconto: Double read FDesconto write FDesconto;
+    property Saque: Double read FSaque write FSaque;
     property Confirmada: Boolean read FConfirmada write FConfirmada;
   end;
 
@@ -166,12 +171,14 @@ procedure TPagamento.Clear;
 begin
   FTipoPagamento := cPagamentos[0,0];
   FHora := 0;
-  FValor := 0;
+  FValorPago := 0;
   FNSU := '';
   FRede := '';
   FConfirmada := False;
   FNomeAdministradora := '';
   FDesconto := 0;
+  FAcrescimo := 0;
+  FSaque := 0;
 end;
 
 { TListaPagamentos }
@@ -184,7 +191,7 @@ begin
   for I := 0 to Count-1 do
   begin
     with Objects[I] do
-      Result := Result + Valor;
+      Result := Result + ValorPago;
   end;
 
   Result := RoundTo(Result, -2);
@@ -269,12 +276,14 @@ begin
     begin
       ASecPag := SecPag(i);
       Ini.WriteString(ASecPag,'TipoPagamento',Pagamentos[i].TipoPagamento);
-      Ini.WriteFloat(ASecPag,'Valor', Pagamentos[i].Valor);
+      Ini.WriteFloat(ASecPag,'Valor', Pagamentos[i].ValorPago);
       Ini.WriteDateTime(ASecPag,'Hora', Pagamentos[i].Hora);
       Ini.WriteString(ASecPag,'NSU', Pagamentos[i].NSU);
       Ini.WriteString(ASecPag,'Rede', Pagamentos[i].Rede);
       Ini.WriteString(ASecPag,'NomeAdministradora', Pagamentos[i].NomeAdministradora);
+      Ini.WriteFloat(ASecPag,'Acrescimo', Pagamentos[i].Acrescimo);
       Ini.WriteFloat(ASecPag,'Desconto', Pagamentos[i].Desconto);
+      Ini.WriteFloat(ASecPag,'Saque', Pagamentos[i].Saque);
       Ini.WriteBool(ASecPag,'Confirmada', Pagamentos[i].Confirmada);
       Inc(i);
     end;
@@ -306,12 +315,14 @@ begin
     begin
       APag := TPagamento.Create;
       APag.TipoPagamento := Ini.ReadString(ASecPag,'TipoPagamento','99');
-      APag.Valor := Ini.ReadFloat(ASecPag,'Valor', 0);
+      APag.ValorPago := Ini.ReadFloat(ASecPag,'Valor', 0);
       APag.Hora := Ini.ReadDateTime(ASecPag,'Hora', 0);
       APag.NSU := Ini.ReadString(ASecPag,'NSU', '');
       APag.Rede := Ini.ReadString(ASecPag,'Rede', '');
       APag.NomeAdministradora := Ini.ReadString(ASecPag,'NomeAdministradora', '');
+      APag.Acrescimo := Ini.ReadFloat(ASecPag,'Acrescimo', 0);
       APag.Desconto := Ini.ReadFloat(ASecPag,'Desconto', 0);
+      APag.Saque := Ini.ReadFloat(ASecPag,'Saque', 0);
       APag.Confirmada := Ini.ReadBool(ASecPag,'Confirmada', False);
 
       Pagamentos.Add(APag);

@@ -86,9 +86,6 @@ type
     Device : TACBrDevice ;
   end;
 
-var
-  frConfiguraSerial: TfrConfiguraSerial;
-
 implementation
 
 {$R *.dfm}

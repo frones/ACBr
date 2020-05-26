@@ -55,9 +55,6 @@ type
 
   end;
 
-var
-  FormIncluirPagamento: TFormIncluirPagamento;
-
 implementation
 
 uses

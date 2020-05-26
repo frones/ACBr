@@ -1250,7 +1250,6 @@ object Form1: TForm1
     TEFCliSiTef.CodigoLoja = '00000000'
     TEFCliSiTef.NumeroTerminal = 'SE000001'
     TEFCliSiTef.OnExibeMenu = ACBrTEFD1CliSiTefExibeMenu
-    TEFCliSiTef.OnObtemCampo = ACBrTEFD1CliSiTefObtemCampo
     TEFVeSPague.ArqLOG = 'VeSPague.log'
     TEFVeSPague.Aplicacao = 'ACBr_TEFDDemo'
     TEFVeSPague.AplicacaoVersao = '1.0'

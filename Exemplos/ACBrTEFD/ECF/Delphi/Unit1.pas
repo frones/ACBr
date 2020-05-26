@@ -241,7 +241,7 @@ type
       var ItemSelecionado: Integer; var VoltarMenu: Boolean);
     procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
       TamanhoMaximo, TipoCampo: Integer;
-      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$ENDIF};
+      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
       var Digitado, VoltarMenu: Boolean);
     procedure PageControl1Change(Sender: TObject);
     procedure ckViaClienteReduzidaClick(Sender: TObject);
@@ -303,6 +303,8 @@ begin
 
   pMensagem.Visible := False ;
   pMensagem.Align   := alClient ;
+
+  ACBrTEFD1.TEFCliSiTef.OnObtemCampo := ACBrTEFD1CliSiTefObtemCampo;
 end;
 
 procedure TForm1.ckTEFDIALChange(Sender : TObject);
@@ -1454,7 +1456,7 @@ end;
 
 procedure TForm1.ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
   TamanhoMaximo, TipoCampo: Integer;
-  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$ENDIF};
+  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
   var Digitado, VoltarMenu: Boolean);
 Var
   AForm : TForm5 ;

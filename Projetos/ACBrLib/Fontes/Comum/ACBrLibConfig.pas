@@ -302,7 +302,7 @@ type
     procedure INIParaClasse; virtual;
     procedure ClasseParaINI; virtual;
     procedure ClasseParaComponentes; virtual; abstract;
-    procedure ImportarIni(FIni: TCustomIniFile); virtual; abstract;
+    procedure ImportarIni(FIni: TCustomIniFile); virtual;
 
     procedure Travar; virtual;
     procedure Destravar; virtual;
@@ -928,6 +928,10 @@ begin
   FProxyInfo.GravarIni(FIni);
   FSoftwareHouse.GravarIni(FIni);
   FEmissor.GravarIni(FIni);
+end;
+
+procedure TLibConfig.ImportarIni(FIni: TCustomIniFile);
+begin
 end;
 
 procedure TLibConfig.Travar;

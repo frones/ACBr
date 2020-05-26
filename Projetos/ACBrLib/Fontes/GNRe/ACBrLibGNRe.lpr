@@ -16,27 +16,28 @@ var
 
 exports
   // Importadas de ACBrLibComum
-  GNRe_Inicializar,
-  GNRe_Finalizar,
-  GNRe_Nome,
-  GNRe_Versao,
-  GNRe_UltimoRetorno,
-  GNRe_ConfigLer,
-  GNRe_ConfigGravar,
-  GNRe_ConfigLerValor,
-  GNRe_ConfigGravarValor,
+  GNRE_Inicializar,
+  GNRE_Finalizar,
+  GNRE_Nome,
+  GNRE_Versao,
+  GNRE_UltimoRetorno,
+  GNRE_ConfigLer,
+  GNRE_ConfigGravar,
+  GNRE_ConfigLerValor,
+  GNRE_ConfigGravarValor,
 
   // Servicos
-  GNRe_Enviar,
-  GNRe_Consultar,
-  GNRe_EnviarEmail,
-  GNRe_Imprimir,
-  GNRe_ImprimirPDF,
+  GNRE_Enviar,
+  GNRE_Consultar,
+  GNRE_EnviarEmail,
+  GNRE_Imprimir,
+  GNRE_ImprimirPDF,
 
   // Arquivos
-  GNRe_LimparLista,
-  GNRe_CarregarINI,
-  GNRe_LimparListaGuiaRetorno,
+  GNRE_LimparLista,
+  GNRE_CarregarXML,
+  GNRE_CarregarINI,
+  GNRE_LimparListaGuiaRetorno,
   GNRe_CarregarGuiaRetorno;
 
 begin

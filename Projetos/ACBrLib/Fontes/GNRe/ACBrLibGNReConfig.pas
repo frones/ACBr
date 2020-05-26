@@ -55,8 +55,8 @@ type
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
-    FMostraPreview: Boolean;
-    FMostraStatus: Boolean;
+    FMostrarPreview: Boolean;
+    FMostrarStatus: Boolean;
     FNumCopias: Integer;
     FPathPDF: String;
     FPrintDialog: Boolean;
@@ -64,7 +64,6 @@ type
     FSite: String;
     FTamanhoPapel: TpcnTamanhoPapel;
     FUsuario: String;
-    FUsarSeparadorPathPDF: Boolean;
   public
     constructor Create;
     procedure DefinirValoresPadroes;
@@ -78,8 +77,8 @@ type
     property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
     property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
-    property MostraPreview: Boolean read FMostraPreview write FMostraPreview;
-    property MostraStatus: Boolean read FMostraStatus write FMostraStatus;
+    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
+    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
     property NumCopias: Integer read FNumCopias write FNumCopias;
     property PathPDF: String read FPathPDF write FPathPDF;
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
@@ -87,7 +86,6 @@ type
     property Site: String read FSite write FSite;
     property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
     property Usuario: String read FUsuario write FUsuario;
-    property UsarSeparadorPathPDF: Boolean read FUsarSeparadorPathPDF write FUsarSeparadorPathPDF;
   end;
 
   { TLibGNReConfig }
@@ -137,8 +135,8 @@ begin
   FMargemSuperior := 0.7;
   FMargemEsquerda := 0.7;
   FMargemDireita := 0.7;
-  FMostraPreview := True;
-  FMostraStatus := True;
+  FMostrarPreview := True;
+  FMostrarStatus := True;
   FNumCopias := 1;
   FPathPDF := '';
   FPrintDialog := False;
@@ -146,7 +144,6 @@ begin
   FSite := '';
   FTamanhoPapel := tpA4;
   FUsuario := '';
-  FUsarSeparadorPathPDF := False;
 end;
 
 procedure TGuiaConfig.LerIni(const AIni: TCustomIniFile);
@@ -158,8 +155,8 @@ begin
   FMargemSuperior := AIni.ReadFloat(CSessaoGuia, CChaveMargemSuperior, FMargemSuperior);
   FMargemEsquerda := AIni.ReadFloat(CSessaoGuia, CChaveMargemEsquerda, FMargemEsquerda);
   FMargemDireita := AIni.ReadFloat(CSessaoGuia, CChaveMargemDireita, FMargemDireita);
-  FMostraPreview := AIni.ReadBool(CSessaoGuia, CChaveMostraPreview, FMostraPreview);
-  FMostraStatus := AIni.ReadBool(CSessaoGuia, CChaveMostraStatus, FMostraStatus);
+  FMostrarPreview := AIni.ReadBool(CSessaoGuia, CChaveMostraPreview, FMostrarPreview);
+  FMostrarStatus := AIni.ReadBool(CSessaoGuia, CChaveMostraStatus, FMostrarStatus);
   FNumCopias := AIni.ReadInteger(CSessaoGuia, CChaveCopias, FNumCopias);
   FPathPDF := AIni.ReadString(CSessaoGuia, CChavePathPDF, FPathPDF);
   FPrintDialog := AIni.ReadBool(CSessaoGuia, CChavePrintDialog, FPrintDialog);
@@ -167,7 +164,6 @@ begin
   FSite := AIni.ReadString(CSessaoGuia, CChaveSite, FSite);
   FTamanhoPapel := TpcnTamanhoPapel(AIni.ReadInteger(CSessaoGuia, CChaveTamanhoPapel, Integer(FTamanhoPapel)));
   FUsuario := AIni.ReadString(CSessaoGuia, CChaveUsuario, FUsuario);
-  FUsarSeparadorPathPDF := AIni.ReadBool(CSessaoGuia, CChaveUsarSeparadorPathPDF, FUsarSeparadorPathPDF);
 end;
 
 procedure TGuiaConfig.GravarIni(const AIni: TCustomIniFile);
@@ -179,8 +175,8 @@ begin
   AIni.WriteFloat(CSessaoGuia, CChaveMargemSuperior, FMargemSuperior);
   AIni.WriteFloat(CSessaoGuia, CChaveMargemEsquerda, FMargemEsquerda);
   AIni.WriteFloat(CSessaoGuia, CChaveMargemDireita, FMargemDireita);
-  AIni.WriteBool(CSessaoGuia, CChaveMostraPreview, FMostraPreview);
-  AIni.WriteBool(CSessaoGuia, CChaveMostraStatus, FMostraStatus);
+  AIni.WriteBool(CSessaoGuia, CChaveMostraPreview, FMostrarPreview);
+  AIni.WriteBool(CSessaoGuia, CChaveMostraStatus, FMostrarStatus);
   AIni.WriteInteger(CSessaoGuia, CChaveCopias, FNumCopias);
   AIni.WriteString(CSessaoGuia, CChavePathPDF, FPathPDF);
   AIni.WriteBool(CSessaoGuia, CChavePrintDialog, FPrintDialog);
@@ -188,7 +184,6 @@ begin
   AIni.WriteString(CSessaoGuia, CChaveSite, FSite);
   AIni.WriteInteger(CSessaoGuia, CChaveTamanhoPapel, Integer(FTamanhoPapel));
   AIni.WriteString(CSessaoGuia, CChaveUsuario, FUsuario);
-  AIni.WriteBool(CSessaoGuia, CChaveUsarSeparadorPathPDF, FUsarSeparadorPathPDF);
 end;
 
 { TLibGNReConfig }

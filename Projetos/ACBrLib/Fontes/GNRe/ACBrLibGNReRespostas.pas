@@ -37,12 +37,12 @@ unit ACBrLibGNReRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes, ACBrLibResposta, ACBrGNRE2;
 
 type
 
   { TLibGNReEnvio }
-  TLibGNReEnvio = class(TACBrLibRespostaBase)
+  TLibGNReEnvio = class(TACBrLibResposta<TACBrGNRE>)
   private
     FAmbiente: string;
     FCodigo: string;
@@ -51,6 +51,8 @@ type
     FRecibo: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrGNRE); override;
 
   published
     property Ambiente: string read FAmbiente write FAmbiente;
@@ -62,7 +64,7 @@ type
 
   { TLibGNReConsulta }
 
-  TLibGNReConsulta = class(TACBrLibRespostaBase)
+  TLibGNReConsulta = class(TACBrLibResposta<TACBrGNRE>)
   private
     FAmbiente: string;
     FCodigo: string;
@@ -72,6 +74,8 @@ type
     FUF: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrGNRE); override;
 
   published
     property Ambiente: string read FAmbiente write FAmbiente;
@@ -85,7 +89,8 @@ type
 implementation
 
 uses
-  ACBrLibGNReConsts;
+  strutils,
+  ACBrLibGNReConsts, pcnConversao;
 
 { TLibGNReConsulta }
 
@@ -94,11 +99,36 @@ begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
 
+procedure TLibGNReConsulta.Processar(const Control: TACBrGNRE);
+begin
+  with Control.WebServices.ConsultaUF do
+  begin
+    Self.Ambiente := TpAmbToStr(ambiente);
+    Self.Codigo := IntToStr(codigo);
+    Self.Descricao := Descricao;
+    Self.UF := Uf;
+    Self.ExigeUfFavorecida := IfThen(exigeUfFavorecida = 'S', 'SIM', 'NÃO');
+    Self.ExigeReceita := IfThen(exigeReceita = 'S', 'SIM', 'NÃO');
+  end;
+end;
+
 { TLibGNReEnvio }
 
 constructor TLibGNReEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+end;
+
+procedure TLibGNReEnvio.Processar(const Control: TACBrGNRE);
+begin
+  with Control.WebServices.Retorno do
+  begin
+    Self.Ambiente := TpAmbToStr(ambiente);
+    Self.Codigo := IntToStr(codigo);
+    Self.Descricao := Descricao;
+    Self.Recibo := numeroRecibo;
+    Self.Protocolo := Protocolo;
+  end;
 end;
 
 end.

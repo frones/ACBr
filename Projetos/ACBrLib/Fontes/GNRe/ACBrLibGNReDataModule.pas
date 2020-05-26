@@ -29,6 +29,7 @@ type
 
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
+    procedure ConfigurarImpressao(GerarPDF: Boolean; NomeImpressora: String = ''; MostrarPreview: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -123,6 +124,51 @@ begin
     Username := pLib.Config.Email.Usuario;
     UseThread := pLib.Config.Email.SegundoPlano;
   end;
+end;
+
+procedure TLibGNReDM.ConfigurarImpressao(GerarPDF: Boolean; NomeImpressora, MostrarPreview: String);
+var
+  pLibConfig: TLibGNReConfig;
+begin
+  GravarLog('ConfigurarImpressao - Iniciado', logNormal);
+
+  pLibConfig := TLibGNReConfig(pLib.Config);
+  ACBrGNRE1.GNREGuia := ACBrGNREGuiaRL1;
+
+  with ACBrGNREGuiaRL1 do
+  begin
+    eMail := pLibConfig.GuiaConfig.eMail;
+    Fax := pLibConfig.GuiaConfig.Fax;
+    Impressora := pLibConfig.GuiaConfig.Impressora;
+    MargemInferior := pLibConfig.GuiaConfig.MargemInferior;
+    MargemSuperior := pLibConfig.GuiaConfig.MargemSuperior;
+    MargemEsquerda := pLibConfig.GuiaConfig.MargemEsquerda;
+    MargemDireita := pLibConfig.GuiaConfig.MargemDireita;
+    MostrarPreview := pLibConfig.GuiaConfig.MostrarPreview;
+    MostrarStatus := pLibConfig.GuiaConfig.MostrarStatus;
+    NumCopias := pLibConfig.GuiaConfig.NumCopias;
+    PathPDF := pLibConfig.GuiaConfig.PathPDF;
+    PrintDialog := pLibConfig.GuiaConfig.PrintDialog;
+    Sistema := pLibConfig.GuiaConfig.Sistema;
+    Site := pLibConfig.GuiaConfig.Site;
+    TamanhoPapel := pLibConfig.GuiaConfig.TamanhoPapel;
+    Usuario := pLibConfig.GuiaConfig.Usuario;
+  end;
+
+  if GerarPDF then
+  begin
+    if (pLibConfig.GuiaConfig.PathPDF <> '') then
+      if not DirectoryExists(PathWithDelim(pLibConfig.GuiaConfig.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.GuiaConfig.PathPDF));
+  end;
+
+  if NaoEstaVazio(NomeImpressora) then
+    ACBrGNREGuiaRL1.Impressora := NomeImpressora;
+
+  if NaoEstaVazio(MostrarPreview) then
+    ACBrGNREGuiaRL1.MostrarPreview := StrToBoolDef(MostrarPreview, False);
+
+  GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 
 procedure TLibGNReDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

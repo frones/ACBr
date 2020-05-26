@@ -38,15 +38,16 @@ uses
   Classes, SysUtils, contnrs, IniFiles;
 
 const
-  cPagamentos: array[0..4] of array [0..1] of String =
+  cPagamentos: array[0..5] of array [0..1] of String =
      ( ('01','Dinheiro'),
        ('02','Cheque'),
        ('03','Cartão de Crédito'),
        ('04','Cartão de Débito'),
+       ('05','Carteira Digital'),
        ('99','Outros') );
 
 type
-  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsFinalizada, stsCancelada, stsAguardandoTEF);
+  TStatusVenda = (stsLivre, stsIniciada, stsEmPagamento, stsCancelada, stsAguardandoTEF, stsOperacaoTEF, stsFinalizada);
 
   { TPagamento }
 

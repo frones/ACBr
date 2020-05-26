@@ -665,6 +665,32 @@ object FormPrincipal: TFormPrincipal
               Caption = 'Simular Erro Docto Fiscal'
               TabOrder = 8
             end
+            object cbTestePayGo: TComboBox
+              Left = 360
+              Height = 23
+              Top = 24
+              Width = 137
+              ItemHeight = 15
+              Items.Strings = (
+                '00 - Livre'
+                '02 - CRT - Venda à vista aprovada com pré-seleção de parâmetros'
+                '03 - CRT - Venda parcelada aprovada com pré-seleção de parâmetros'
+                '04 - CRT - Venda aprovada em moeda estrangeira'
+                '27 - CRT - Venda aprovada com pré-seleção de parâmetros de carteira digital'
+                '31 - ADM - Operação bem sucedida com valor pré-definido'
+              )
+              ItemWidth = 500
+              Style = csDropDownList
+              TabOrder = 9
+            end
+            object Label8: TLabel
+              Left = 360
+              Height = 15
+              Top = 8
+              Width = 64
+              Caption = 'Teste PayGo'
+              ParentColor = False
+            end
           end
           object gbPagamentos: TGroupBox
             Left = 3

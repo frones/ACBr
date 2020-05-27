@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2020
+-- ACBrDFeWinCrypt --
+[-] Correção para remover o terminador #0 no retorno dos métodos "CertSubjectName" 
+    e "CertIssuerName".
+  Por: BigWings / DSA
+
+-- ACBrDFeOpenSSL --
+[*] Ajuste para que o método "CertDataVenc" retorne a hora ajustada para o
+    fuso horário da máquina.
+  Por: BigWings
+
 14/05/2020
 -- ACBrDFeXsMsXmlCapicom --
 [-] Correção para erro 'Conjunto de chaves não está definido' quando usando

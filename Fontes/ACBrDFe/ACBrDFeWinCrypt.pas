@@ -225,7 +225,7 @@ begin
                       {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(CertName),
                       1024);
     if BytesRead > 0 then
-      SetLength(CertName, BytesRead)
+      SetLength(CertName, BytesRead-1)
     else
       raise EACBrDFeException.Create( 'Falha ao executar "CertNameToStr" em "GetSubjectName". Erro:'+GetLastErrorAsHexaStr);
 
@@ -248,7 +248,7 @@ begin
                       {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(CertName),
                       1024);
     if BytesRead > 0 then
-      SetLength(CertName, BytesRead)
+      SetLength(CertName, BytesRead-1)
     else
       raise EACBrDFeException.Create( 'Falha ao executar "CertNameToStr" em "GetIssuerName". Erro:'+GetLastErrorAsHexaStr);
 

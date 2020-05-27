@@ -37,10 +37,9 @@ unit ACBrDFeWinCrypt;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Windows,
   ACBrDFeSSL, ACBrDFeException,
-  ACBr_WinCrypt, ACBr_NCrypt,
-  Windows;
+  ACBr_WinCrypt, ACBr_NCrypt ;
 
 const
   sz_CERT_STORE_PROV_PKCS12 = 'PKCS12';

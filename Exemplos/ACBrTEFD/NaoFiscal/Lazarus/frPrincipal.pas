@@ -718,10 +718,13 @@ begin
 
    case Operacao of
      ineSubTotal :
-       RetornoECF := FloatToStr( Venda.TotalVenda - Venda.TotalPago ) ;
+       RetornoECF := FloatToStr( Venda.TotalVenda ) ;
 
      ineTotalAPagar :
-       RetornoECF := FloatToStr( Venda.TotalPago ) ;
+     begin
+       // ACBrTEFD1.RespostasPendentes.TotalPago  deve ser subtraido, pois ACBrTEFD já subtrai o total dos pagamentos em TEF internamente
+       RetornoECF := FloatToStr( RoundTo(Venda.TotalPago - ACBrTEFD1.RespostasPendentes.TotalPago, -2) );
+     end;
 
      ineEstadoECF :
        begin
@@ -878,7 +881,7 @@ end;
 procedure TFormPrincipal.AdicionarLinhaImpressao(ALinha: String);
 begin
   mImpressao.Lines.Add(ALinha);
-  if cbEnviarImpressora.Checked then
+  if ACBrPosPrinter1.Ativo then
     ACBrPosPrinter1.Imprimir(ALinha);
 end;
 
@@ -1202,7 +1205,7 @@ begin
         Saque := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Saque;
         if (Saque > 0) then
         begin
-          // Se houve Saque na operação TEF, devemos adicionar no ValorPago Pago,
+          // Se houve Saque na operação TEF, devemos adicionar no ValorPago,
           //   para que o Saque conste como Troco
           ValorPago := ValorPago + Saque
         end
@@ -1216,7 +1219,7 @@ begin
         Desconto := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Desconto;
         if Desconto > 0 then
         begin
-          // Se houve Desconto na Operação TEF, devemos subtrair do ValorPago Pago
+          // Se houve Desconto na Operação TEF, devemos subtrair do ValorPago
           //   e lançar um Desconto no Total da Transacao
           ValorPago := ValorPago - Desconto;
           Venda.TotalDesconto := Venda.TotalDesconto + Desconto;
@@ -1444,7 +1447,6 @@ procedure TFormPrincipal.Ativar;
 begin
   AdicionarLinhaLog('- Ativar');
   GravarConfiguracao;
-  AtivarTEF;
   try
     AtivarPosPrinter;
   except
@@ -1453,6 +1455,7 @@ begin
       TratarException(nil, E);
     end;
   end;
+  AtivarTEF;
 end;
 
 procedure TFormPrincipal.Desativar;

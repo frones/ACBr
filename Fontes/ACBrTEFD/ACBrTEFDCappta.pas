@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Juliomar Marchetti                              }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -41,37 +41,41 @@ uses
   Classes, SysUtils, ACBrTEFDClass
   {$IfNDef NOGUI}
     {$If DEFINED(VisualCLX)}
-  , QControls
-   {$Else}
-  , Controls
+      , QControls
+    {$Else}
+       {$If DEFINED(FMX)}
+         , FMX.Controls
+       {$Else}
+         , Controls
+       {$IfEnd}
     {$IfEnd}
   {$EndIf};
 
 const
   CACBrTEFD_Cappta_ImprimeGerencialConcomitante = False ;
   CACBrTEFD_Cappta_PressioneEnter = 'PRESSIONE <ENTER>' ;
-  CACBrTEFD_Cappta_TransacaoNaoEfetuada = 'Transa√ß√£o n√£o efetuada.' ;
+  CACBrTEFD_Cappta_TransacaoNaoEfetuada = 'TransaÁ„o n„o efetuada.' ;
   CACBrTEFD_Cappta_TransacaoNaoEfetuadaReterCupom =
-     'Transa√ß√£o n√£o efetuada.'+sLineBreak+'Favor reter o Cupom' ;
+     'TransaÁ„o n„o efetuada.'+sLineBreak+'Favor reter o Cupom' ;
   CACBrTEFD_Cappta_TransacaoEfetuadaReImprimir =
-     'Transa√ß√£o TEF efetuada.'        + sLineBreak+
-     'Favor reimprimir √∫ltimo Cupom.' + sLineBreak +
+     'TransaÁ„o TEF efetuada.'        + sLineBreak+
+     'Favor reimprimir ˙ltimo Cupom.' + sLineBreak +
      '%s'                             + sLineBreak +
-     '(Para Cielo utilizar os 6 √∫ltimos d√≠gitos.)';
-  CACBrTEFD_Cappta_NaoInicializado = 'Cappta n√£o inicializado' ;
-  CACBrTEFD_Cappta_NaoConcluido = 'Requisi√ß√£o anterior n√£o concluida' ;
-  CACBrTEFD_Cappta_Erro1  = 'N√£o autenticado/Alguma das informa√ß√µes fornecidas para autentica√ß√£o n√£o √© v√°lida' ;
-  CACBrTEFD_Cappta_Erro2  = 'CapptaGpPlus est√° sendo inicializado' ;
-  CACBrTEFD_Cappta_Erro3  = 'C√≥digo de terminal inv√°lido' ;
-  CACBrTEFD_Cappta_Erro6  = 'Erro na inicializa√ß√£o do TCP/IP' ;
+     '(Para Cielo utilizar os 6 ˙ltimos dÌgitos.)';
+  CACBrTEFD_Cappta_NaoInicializado = 'Cappta n„o inicializado' ;
+  CACBrTEFD_Cappta_NaoConcluido = 'RequisiÁ„o anterior n„o concluida' ;
+  CACBrTEFD_Cappta_Erro1  = 'N„o autenticado/Alguma das informaÁıes fornecidas para autenticaÁ„o n„o È v·lida' ;
+  CACBrTEFD_Cappta_Erro2  = 'CapptaGpPlus est· sendo inicializado' ;
+  CACBrTEFD_Cappta_Erro3  = 'CÛdigo de terminal inv·lido' ;
+  CACBrTEFD_Cappta_Erro6  = 'Erro na inicializaÁ„o do TCP/IP' ;
   CACBrTEFD_Cappta_Erro7  = 'Erro interno no CapptaGpPlus' ;
-  CACBrTEFD_Cappta_Erro8  = 'Erro na comunica√ß√£o entre a CappAPI e o CapptaGpPlus' ;
-  CACBrTEFD_Cappta_Erro9  = 'Ocorre quando qualquer opera√ß√£o √© realizada sem que se tenha finalizado o √∫ltimo pagamento';
-  CACBrTEFD_Cappta_Erro10 = 'Uma reimpress√£o ou cancelamento foi executada dentro de uma sess√£o multi-cart√µes';
-  CACBrTEFD_Cappta_Erro11 = 'Dados inv√°lidos passados pela automa√ß√£o.';
-  CACBrTEFD_Cappta_Erro12 = 'Modo seguro n√£o ativo (poss√≠vel falta de configura√ß√£o no servidor SiTef do arquivo .cha).';
-  CACBrTEFD_Cappta_Erro13 = 'Caminho da DLL inv√°lido (o caminho completo das bibliotecas est√° muito grande).';
-  CACBrTEFD_Cappta_Erro14 = 'Valor digitado no pinpad √© inv√°lido.';
+  CACBrTEFD_Cappta_Erro8  = 'Erro na comunicaÁ„o entre a CappAPI e o CapptaGpPlus' ;
+  CACBrTEFD_Cappta_Erro9  = 'Ocorre quando qualquer operaÁ„o È realizada sem que se tenha finalizado o ˙ltimo pagamento';
+  CACBrTEFD_Cappta_Erro10 = 'Uma reimpress„o ou cancelamento foi executada dentro de uma sess„o multi-cartıes';
+  CACBrTEFD_Cappta_Erro11 = 'Dados inv·lidos passados pela automaÁ„o.';
+  CACBrTEFD_Cappta_Erro12 = 'Modo seguro n„o ativo (possÌvel falta de configuraÁ„o no servidor SiTef do arquivo .cha).';
+  CACBrTEFD_Cappta_Erro13 = 'Caminho da DLL inv·lido (o caminho completo das bibliotecas est· muito grande).';
+  CACBrTEFD_Cappta_Erro14 = 'Valor digitado no pinpad È inv·lido.';
 
 
   {$IFDEF LINUX}
@@ -182,7 +186,7 @@ procedure TACBrTEFDCappta.LoadDLLFunctions;
        if not FunctionDetect( sLibName, FuncName, LibPointer) then
        begin
           LibPointer := NIL ;
-          raise EACBrTEFDErro.Create( ACBrStr( 'Erro ao carregar a fun√ß√£o:'+FuncName+
+          raise EACBrTEFDErro.Create( ACBrStr( 'Erro ao carregar a funÁ„o:'+FuncName+
                                            ' de: '+CACBrTEFD_Cappta_Lib ) ) ;
        end ;
      end ;
@@ -314,7 +318,7 @@ end;
 
 procedure TACBrTEFDCappta.AtivarGP;
 begin
-  raise EACBrTEFDErro.Create( ACBrStr( 'Cappta n√£o pode ser ativado localmente' )) ;
+  raise EACBrTEFDErro.Create( ACBrStr( 'Cappta n„o pode ser ativado localmente' )) ;
 end;
 
 procedure TACBrTEFDCappta.VerificaAtivo;

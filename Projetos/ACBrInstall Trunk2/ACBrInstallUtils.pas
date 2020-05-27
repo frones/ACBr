@@ -295,6 +295,8 @@ begin
     Result := 'Delphi 10.2 Tokyo'
   else if AVersionStr = 'd26' then
     Result := 'Delphi 10.3 Rio'
+  else if AVersionStr = 'd27' then
+    Result := 'Delphi 10.4 Sydney'
   else
     Result := '';
 end;

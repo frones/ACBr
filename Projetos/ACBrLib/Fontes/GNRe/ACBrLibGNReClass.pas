@@ -91,7 +91,10 @@ function GNRE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRe_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
+function GNRE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRe_LimparListaGuiaRetorno: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRe_CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
@@ -315,6 +318,84 @@ begin
       try
         GNReDM.ACBrGNRe1.Guias.LoadFromIni(ArquivoOuINI);
         Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: String;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('GNRE_ObterXml(' + IntToStr(AIndex) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('GNRE_ObterXml', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+      try
+        if (GNReDM.ACBrGNRe1.Guias.Count < 1) or (AIndex < 0) or (AIndex >= GNReDM.ACBrGNRe1.Guias.Count) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        if EstaVazio(GNReDM.ACBrGNRe1.Guias.Items[AIndex].XMLOriginal) then
+          GNReDM.ACBrGNRe1.Guias.Items[AIndex].GerarXML;
+
+        Resposta := GNReDM.ACBrGNRe1.Guias.Items[AIndex].XMLOriginal;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ANomeArquivo, APathArquivo: String;
+begin
+  try
+    VerificarLibInicializada;
+    ANomeArquivo := String(eNomeArquivo);
+    APathArquivo := String(ePathArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('GNRE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('GNRE_GravarXml', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+      try
+        if (GNReDM.ACBrGNRe1.Guias.Count < 1) or (AIndex < 0) or (AIndex >= GNReDM.ACBrGNRe1.Guias.Count) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        if GNReDM.ACBrGNRe1.Guias.Items[AIndex].GravarXML(ANomeArquivo, APathArquivo) then
+          Result := SetRetorno(ErrOK)
+        else
+          Result := SetRetorno(ErrGerarXml);
       finally
         GNReDM.Destravar;
       end;

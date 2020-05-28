@@ -137,8 +137,6 @@ begin
 
   with ACBrGNREGuiaRL1 do
   begin
-    eMail := pLibConfig.GuiaConfig.eMail;
-    Fax := pLibConfig.GuiaConfig.Fax;
     Impressora := pLibConfig.GuiaConfig.Impressora;
     MargemInferior := pLibConfig.GuiaConfig.MargemInferior;
     MargemSuperior := pLibConfig.GuiaConfig.MargemSuperior;
@@ -149,9 +147,11 @@ begin
     NumCopias := pLibConfig.GuiaConfig.NumCopias;
     PathPDF := pLibConfig.GuiaConfig.PathPDF;
     PrintDialog := pLibConfig.GuiaConfig.PrintDialog;
-    Sistema := pLibConfig.GuiaConfig.Sistema;
-    Site := pLibConfig.GuiaConfig.Site;
     TamanhoPapel := pLibConfig.GuiaConfig.TamanhoPapel;
+    Sistema := pLib.Config.Sistema.Nome;
+    Site := pLib.Config.Emissor.WebSite;
+    Email := pLib.Config.Emissor.Email;
+    Fax := pLib.Config.Emissor.Telefone;
     Usuario := pLibConfig.GuiaConfig.Usuario;
   end;
 

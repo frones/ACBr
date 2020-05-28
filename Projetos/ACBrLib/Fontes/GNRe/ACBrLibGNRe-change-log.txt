@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2020
+--- ACBrLibGNRe ---
+[+] Adicionado os metodos GNRE_ObterXml e GNRE_GravarXml.
+   Por: Rafael Dias
+[*] Ajustado campos de impressão para ler a informação do local correto do ini.
+   Por: Rafael Dias
+   
+23/05/2020
+--- ACBrLibGNRe ---
+[*] Projeto finalizado.
+   Por: Rafael Dias
+
 26/10/2018
 --- ACBrLibGNRe ---
 [+] Inicio do projeto.

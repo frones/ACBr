@@ -37,6 +37,8 @@ exports
   GNRE_LimparLista,
   GNRE_CarregarXML,
   GNRE_CarregarINI,
+  GNRE_ObterXml,
+  GNRE_GravarXml,
   GNRE_LimparListaGuiaRetorno,
   GNRe_CarregarGuiaRetorno;
 

@@ -1178,7 +1178,7 @@ begin
     begin
       Gerador.wGrupo('infSeg', '#123');
       Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);
-      Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, False);
+      Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, True);
       Gerador.wGrupo('/infSeg');
     end;
 

@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/05/2020
+-- ACBrNFeServicos --
+[*] Alteração nas URL do QR-Code de homologação e produção da SEFAZ-PB
+   Por: Italo Jurisato Junior
+
+28/05/2020
 -- ACBrNFeWebServices --
 [*] Removido a condição que define a versão da Consulta ao Cadastro,
     esse tipo de consulta se encontra na versão 2.00

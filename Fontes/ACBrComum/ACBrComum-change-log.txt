@@ -38,6 +38,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 27/05/2020
+-- ACBr.inc --
+[-] Ajuste para compilação em Android FMX, com Delphi 10.4 Sidney
+    (por: DSA)
+
 Data: 12/05/2020
 -- ACBrUtil --
 [+] Ajustes para use de UTF8 por padrão, em NEXTGEN, Android, e POSIX, Linux

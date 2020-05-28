@@ -1124,23 +1124,18 @@ procedure TACBrMDFeDAMDFEFR.CarregaParametros;
 var
   LogoStream: TStringStream;
 begin
-  with cdsParametros do
+  cdsParametros.Append;
+
+  // Carregamento da imagem
+  if NaoEstaVazio(FDAMDFEClassOwner.Logo) then
   begin
-    Append;
+    cdsParametros.FieldByName('Imagem').AsString := DAMDFEClassOwner.Logo;
 
-    // Carregamento da imagem
-    if DAMDFEClassOwner.Logo <> '' then
+    if FileExists(FDAMDFEClassOwner.Logo) then
+      TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromFile(DAMDFEClassOwner.Logo)
+    else
     begin
-      FieldByName('Imagem').AsString := DAMDFEClassOwner.Logo;
-
-      if not FileExists(DAMDFEClassOwner.Logo) then
-        LogoStream := TStringStream.Create(DAMDFEClassOwner.Logo)
-      else
-      begin
-        LogoStream := TStringStream.Create('');
-        LogoStream.LoadFromFile(DAMDFEClassOwner.Logo);
-      end;
-
+      LogoStream := TStringStream.Create(FDAMDFEClassOwner.Logo);
       try
         LogoStream.Position := 0;
         TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(LogoStream);
@@ -1148,13 +1143,12 @@ begin
         LogoStream.Free;
       end;
     end;
-
-    FieldByName('Versao').AsString  := FloatToString(FMDFe.infMDFe.Versao,'.','#0.00');
-    FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
-    FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '', DAMDFEClassOwner.Usuario,'');
-    Post;
-
   end;
+
+  cdsParametros.FieldByName('Versao').AsString  := FloatToString(FMDFe.infMDFe.Versao,'.','#0.00');
+  cdsParametros.FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
+  cdsParametros.FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '', DAMDFEClassOwner.Usuario,'');
+  cdsParametros.Post;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaIdentificacao;

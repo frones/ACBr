@@ -170,7 +170,7 @@ const
   TITULO_PDF = 'Nota Fiscal de Serviço Eletrônica';
 var
   I         : Integer;
-  NomeArq: string;
+  NomeArqXML: string;
   OldShowDialog: Boolean;
 begin
   if PrepareReport(NFSe) then
@@ -187,13 +187,13 @@ begin
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
 
-        NomeArq := Trim(DANFSEClassOwner.NomeDocumento);
-        if EstaVazio(NomeArq) then
+        NomeArqXML := Trim(DANFSEClassOwner.NomeDocumento);
+        if EstaVazio(NomeArqXML) then
           with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
           begin
-            NomeArq :=  TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
+            NomeArqXML :=  TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
           end;
-        frxPDFExport.FileName := PathWithDelim(DANFSEClassOwner.PathPDF) + NomeArq;
+        frxPDFExport.FileName := PathWithDelim(DANFSEClassOwner.PathPDF) + NomeArqXML;
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));

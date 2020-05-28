@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2020
+-- ACBrNFeWebServices --
+[*] Removido a condição que define a versão da Consulta ao Cadastro,
+    esse tipo de consulta se encontra na versão 2.00
+   Por: Italo Jurisato Junior
+
 22/05/2020
 -- pcnNFeW --
 [*] Descomentado as linhas que verificam o valor de cEAN e cEANTrib.

@@ -168,7 +168,7 @@ object FormPrincipal: TFormPrincipal
               Width = 145
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 0
             end
             object cbxPorta: TComboBox
@@ -176,7 +176,7 @@ object FormPrincipal: TFormPrincipal
               Top = 32
               Width = 161
               Height = 21
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 1
             end
             object cbxPagCodigo: TComboBox
@@ -186,7 +186,7 @@ object FormPrincipal: TFormPrincipal
               Height = 21
               Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
             end
             object btTestarPosPrinter: TBitBtn
@@ -264,7 +264,7 @@ object FormPrincipal: TFormPrincipal
               Width = 135
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 0
             end
             object cbMultiplosCartoes: TCheckBox
@@ -704,6 +704,16 @@ object FormPrincipal: TFormPrincipal
                   'ira digital'
                 '31 - ADM - Opera'#231#227'o bem sucedida com valor pr'#233'-definido')
             end
+            object btObterCPF: TButton
+              Left = 545
+              Top = 14
+              Width = 113
+              Height = 25
+              Anchors = [akTop, akRight]
+              Caption = 'Solicita CPF'
+              TabOrder = 10
+              OnClick = btObterCPFClick
+            end
           end
           object gbPagamentos: TGroupBox
             Left = 0
@@ -1021,6 +1031,7 @@ object FormPrincipal: TFormPrincipal
         Checked = True
         State = cbChecked
         TabOrder = 2
+        OnClick = cbEnviarImpressoraChange
       end
     end
   end

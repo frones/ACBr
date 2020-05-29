@@ -62,6 +62,7 @@ type
     btProcuraImpressoras: TSpeedButton;
     btTestarPosPrinter: TBitBtn;
     btTestarTEF: TBitBtn;
+    btObterCPF: TButton;
     cbTestePayGo: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
     cbMultiplosCartoes: TCheckBox;
@@ -180,6 +181,7 @@ type
     procedure btSerialClick(Sender: TObject);
     procedure btTestarPosPrinterClick(Sender: TObject);
     procedure btTestarTEFClick(Sender: TObject);
+    procedure btObterCPFClick(Sender: TObject);
     procedure cbEnviarImpressoraChange(Sender: TObject);
     procedure CliSiTefExibeMenu(Titulo: String; Opcoes: TStringList;
       var ItemSelecionado: Integer; var VoltarMenu: Boolean);
@@ -1064,6 +1066,25 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.btObterCPFClick(Sender: TObject);
+var
+  Saida: AnsiString;
+begin
+  Saida := '';
+  if ACBrTEFD1.GPAtual = gpCliSiTef then
+  begin
+    // SiTef precisa de parâmetros extras, vamos informar...
+    ACBrTEFD1.TEFCliSiTef.PinPadIdentificador := '01.123.456/0001-07';
+    ACBrTEFD1.TEFCliSiTef.PinPadChaveAcesso := 'Chave Fornecida pela Software Express, eclusiva para o Identificador acima';
+  end;
+
+  ACBrTEFD1.CDP('F', Saida);  // F=CPF
+  if (Saida <> '') then
+    ShowMessage(Saida)
+  else
+    ShowMessage('Falha ao Obter CPF no PinPad');
+end;
+
 procedure TFormPrincipal.cbEnviarImpressoraChange(Sender: TObject);
 begin
   btImprimir.Enabled := ACBrPosPrinter1.Ativo and (not cbEnviarImpressora.Checked);
@@ -1185,6 +1206,8 @@ begin
     Ok := ACBrTEFD1.CRT(AValor, Indice);
     TemTEF := True;
   end;
+
+  StatusVenda := stsEmPagamento;
 
   if Ok then
   begin

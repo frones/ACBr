@@ -691,6 +691,16 @@ object FormPrincipal: TFormPrincipal
               Caption = 'Teste PayGo'
               ParentColor = False
             end
+            object btObterCPF: TButton
+              Left = 545
+              Height = 25
+              Top = -2
+              Width = 110
+              Anchors = [akTop, akRight]
+              Caption = 'Solicita CPF'
+              OnClick = btObterCPFClick
+              TabOrder = 10
+            end
           end
           object gbPagamentos: TGroupBox
             Left = 3

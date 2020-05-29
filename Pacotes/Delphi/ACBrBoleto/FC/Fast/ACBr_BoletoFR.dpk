@@ -30,7 +30,7 @@ package ACBr_BoletoFR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,  
+  rtl,
 {$IFDEF COMPILER7_UP}
   vclx,
 {$ENDIF}
@@ -59,7 +59,8 @@ requires
 {$IFDEF VER310} fs24, frx24, frxe24, frxDB24, dsnap, {$ENDIF} // Berlin
 {$IFDEF VER320} fs25, frx25, frxe25, frxDB25, dsnap, {$ENDIF} // Tokyo
 {$IFDEF VER330} fs26, frx26, frxe26, frxDB26, dsnap, {$ENDIF} // Rio
-  ACBr_Boleto;  
+{$IFDEF VER340} fs27, frx27, frxe27, frxDB27, dsnap, {$ENDIF} // Sydney
+  ACBr_Boleto;
 
 contains
   ACBrBoletoFCFR in '..\..\..\..\..\Fontes\ACBrBoleto\FC\Fast\ACBrBoletoFCFR.pas' {dmACBrBoletoFCFR: TDataModule};

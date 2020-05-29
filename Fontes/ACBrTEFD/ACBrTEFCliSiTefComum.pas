@@ -752,7 +752,7 @@ begin
       else
         DocLen := 14;
 
-      Result := copy(TrimRight(Saida), 4, DocLen);
+      Result := copy(TrimRight(Saida), 5, DocLen);
     end;
   end;
 end;

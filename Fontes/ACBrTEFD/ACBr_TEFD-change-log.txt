@@ -46,6 +46,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2019
+-- ACBrTEFDCliSitef, ACBrTEFCliSiTefComum --
+[*] Refactoring, movendo toda carga de DLL e uso da API do SiTef, para
+    ACBrTEFCliSiTefComum
+[+] Novas propriedades, para permitir o uso do método "CDP"
+     property PinPadChaveAcesso: AnsiString
+     property PinPadIdentificador: AnsiString
+[+] Método "TACBrTEFDCliSiTef.CDP", implementado, em modo de compatibilidade.
+[*] Simplificação na implementação do método "ObtemDadoPinPadDiretoEx"
+    (por: DSA)
+
 26/05/2019
 -- ACBrTEFD --
 [+] Adicionado nova classe de TEF, "TEFPayGo", modelo gpPayGo

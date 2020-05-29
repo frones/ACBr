@@ -76,6 +76,9 @@ type
 
    TACBrTEFDCliSiTef = class( TACBrTEFDClass )
    private
+      fPinPadChaveAcesso: AnsiString;
+      fPinPadIdentificador: AnsiString;
+      fSiTefAPI: TACBrTEFCliSiTefAPI;
       fExibirErroRetorno: Boolean;
       fIniciouRequisicao: Boolean;
       fReimpressao: Boolean; {Indica se foi selecionado uma reimpressão no ADM}
@@ -101,90 +104,15 @@ type
       fDocumentoFiscal: AnsiString;
       fDataHoraFiscal: TDateTime;
       fDocumentosProcessados : AnsiString ;
-      fPathDLL: string;
       fPortaPinPad: Integer;
       fUsaUTF8: Boolean;
       fArqBackUp: String;
 
-     xConfiguraIntSiTefInterativoEx : function (
-                pEnderecoIP: PAnsiChar;
-                pCodigoLoja: PAnsiChar;
-                pNumeroTerminal: PAnsiChar;
-                ConfiguraResultado: smallint;
-                pParametrosAdicionais: PAnsiChar): integer;
-               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-     xIniciaFuncaoSiTefInterativo : function (
-                Modalidade: integer;
-                pValor: PAnsiChar;
-                pNumeroCuponFiscal: PAnsiChar;
-                pDataFiscal: PAnsiChar;
-                pHorario: PAnsiChar;
-                pOperador: PAnsiChar;
-                pRestricoes: PAnsiChar ): integer;
-                {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-
-     xFinalizaFuncaoSiTefInterativo : procedure (
-                 pConfirma: SmallInt;
-                 pCupomFiscal: PAnsiChar;
-                 pDataFiscal: PAnsiChar;
-                 pHoraFiscal: PAnsiChar;
-                 pParamAdic: PAnsiChar);
-                 {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-
-     xContinuaFuncaoSiTefInterativo : function (
-                var ProximoComando: SmallInt;
-                var TipoCampo: LongInt;
-                var TamanhoMinimo: SmallInt;
-                var TamanhoMaximo: SmallInt;
-                pBuffer: PAnsiChar;
-                TamMaxBuffer: Integer;
-                ContinuaNavegacao: Integer ): integer;
-                {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-     xEscreveMensagemPermanentePinPad: function(Mensagem:PAnsiChar):Integer;
-        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-     xObtemQuantidadeTransacoesPendentes: function(
-        DataFiscal:AnsiString;
-        NumeroCupon:AnsiString):Integer;
-        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-     xEnviaRecebeSiTefDireto : function (
-        RedeDestino: SmallInt;
-        FuncaoSiTef: SmallInt;
-        OffsetCartao: SmallInt;
-        DadosTx: AnsiString;
-        TamDadosTx: SmallInt;
-        DadosRx: PAnsiChar;
-        TamMaxDadosRx: SmallInt;
-        var CodigoResposta: SmallInt;
-        TempoEsperaRx: SmallInt;
-        CuponFiscal: AnsiString;
-        DataFiscal: AnsiString;
-        Horario: AnsiString;
-        Operador: AnsiString;
-        TipoTransacao: SmallInt): Integer;
-        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
-     xValidaCampoCodigoEmBarras: function(
-        Dados: AnsiString;
-        var Tipo: SmallInt): Integer;
-        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
-
-     xVerificaPresencaPinPad: function(): Integer
-     {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
-
-     xObtemDadoPinPadDiretoEx: function(ChaveAcesso: PAnsiChar; Identificador: PAnsiChar; Entrada: PAnsiChar; var Saida: array of Byte): Integer;
-     {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
-
      procedure AvaliaErro(Sts : Integer);
      function GetDataHoraFiscal: TDateTime;
      function GetDocumentoFiscal: AnsiString;
-     procedure LoadDLLFunctions;
-     procedure UnLoadDLLFunctions;
+     function GetPathDLL: string;
+     procedure SetPathDLL(AValue: string);
      procedure SetParametrosAdicionais(const AValue : TStringList) ;
    protected
      procedure SetNumVias(const AValue : Integer); override;
@@ -206,7 +134,9 @@ type
      function CopiarResposta: string; override;
    public
      property Respostas : TStringList read fRespostas ;
-     property PathDLL: string read fPathDLL write fPathDLL;
+     property PathDLL: string read GetPathDLL write SetPathDLL;
+     property PinPadChaveAcesso: AnsiString read fPinPadChaveAcesso write fPinPadChaveAcesso;
+     property PinPadIdentificador: AnsiString read fPinPadIdentificador write fPinPadIdentificador;
 
      constructor Create( AOwner : TComponent ) ; override;
      destructor Destroy ; override;
@@ -239,20 +169,21 @@ type
         Moeda : Integer = 0) : Boolean; override;
      function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
 
+     procedure FinalizarTransacao( Confirma : Boolean;
+        DocumentoVinculado : AnsiString; ParamAdic: AnsiString = '');
+
      Function DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
      Function ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
         CupomFiscal:AnsiString):Integer;
-     Function EnviaRecebeSiTefDireto( RedeDestino: SmallInt;
-        FuncaoSiTef: SmallInt; OffsetCartao: SmallInt; DadosTx: AnsiString;
-        var DadosRx: AnsiString; var CodigoResposta: SmallInt;
-        TempoEsperaRx: SmallInt; CuponFiscal: AnsiString;
-        Confirmar: Boolean): Integer;
-     procedure FinalizarTransacao( Confirma : Boolean;
-        DocumentoVinculado : AnsiString; ParamAdic: AnsiString = '');
+     function EnviaRecebeSiTefDireto(RedeDestino: SmallInt; FuncaoSiTef: SmallInt;
+       OffsetCartao: SmallInt; DadosTx: AnsiString; var DadosRx: AnsiString;
+       var CodigoResposta: SmallInt; TempoEsperaRx: SmallInt;
+       CupomFiscal: AnsiString; Confirmar: Boolean; Operador: AnsiString): Integer;
      function ValidaCampoCodigoEmBarras(Dados: AnsiString;
         var Tipo: SmallInt): Integer;
      function VerificaPresencaPinPad: Boolean;
-     function ObtemDadoPinPadDiretoEx(Tipo_Doc: Integer; ChaveAcesso: PAnsiChar; Identificador: PAnsiChar): AnsiString;
+     function ObtemDadoPinPadDiretoEx(TipoDocumento: Integer; ChaveAcesso,
+       Identificador: AnsiString): AnsiString;
 
    published
      property EnderecoIP: AnsiString                    read fEnderecoIP           write fEnderecoIP;
@@ -322,6 +253,8 @@ constructor TACBrTEFDCliSiTef.Create(AOwner : TComponent);
 begin
   inherited Create(AOwner);
 
+  fSiTefAPI := TACBrTEFCliSiTefAPI.Create;
+
   fIniciouRequisicao := False;
   fReimpressao       := False;
   fCancelamento      := False;
@@ -333,13 +266,15 @@ begin
   fpTipo    := gpCliSiTef;
   Name      := 'CliSiTef' ;
 
-  fEnderecoIP     := '' ;
-  fCodigoLoja     := '' ;
+  fEnderecoIP := '' ;
+  fCodigoLoja := '' ;
   fNumeroTerminal := '' ;
   fCNPJEstabelecimento := '';
-  fCNPJSoftwareHouse   := '';
-  fOperador       := '' ;
-  fRestricoes     := '' ;
+  fCNPJSoftwareHouse := '';
+  fOperador := '' ;
+  fRestricoes := '' ;
+  fPinPadChaveAcesso := '';
+  fPinPadIdentificador := '';
 
   fDocumentoFiscal := '';
   fDataHoraFiscal  := 0;
@@ -362,17 +297,6 @@ begin
   fParametrosAdicionais := TStringList.Create;
   fRespostas            := TStringList.Create;
 
-  xConfiguraIntSiTefInterativoEx      := nil;
-  xIniciaFuncaoSiTefInterativo        := nil;
-  xContinuaFuncaoSiTefInterativo      := nil;
-  xFinalizaFuncaoSiTefInterativo      := nil;
-  xEscreveMensagemPermanentePinPad    := nil;
-  xObtemQuantidadeTransacoesPendentes := nil;
-  xValidaCampoCodigoEmBarras          := nil;
-  xEnviaRecebeSiTefDireto             := nil;
-  xVerificaPresencaPinPad             := nil;
-  xObtemDadoPinPadDiretoEx            := nil;
-
   fOnExibeMenu  := nil ;
   fOnObtemCampo := nil ;
 
@@ -383,78 +307,13 @@ begin
   fpResp.TipoGP := fpTipo;
 end;
 
-function TACBrTEFDCliSiTef.DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
-begin
-   if Assigned(xEscreveMensagemPermanentePinPad) then
-      Result := xEscreveMensagemPermanentePinPad(PAnsiChar(Mensagem))
-   else
-      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFCliSiTef_NaoInicializado ) ) ;
-end;
-
 destructor TACBrTEFDCliSiTef.Destroy;
 begin
+   fSiTefAPI.Free;
    fParametrosAdicionais.Free ;
    fRespostas.Free ;
 
    inherited Destroy;
-end;
-
-procedure TACBrTEFDCliSiTef.LoadDLLFunctions ;
- procedure CliSiTefFunctionDetect( FuncName: AnsiString; var LibPointer: Pointer ) ;
- var
- sLibName: string;
- begin
-   if not Assigned( LibPointer )  then
-   begin
-     // Verifica se exite o caminho das DLLs
-     sLibName := '';
-     if Length(PathDLL) > 0 then
-        sLibName := PathWithDelim(PathDLL);
-
-     // Concatena o caminho se exitir mais o nome da DLL.
-     sLibName := sLibName + CACBrTEFCliSiTef_Lib;
-
-     if not FunctionDetect( sLibName, FuncName, LibPointer) then
-     begin
-        LibPointer := NIL ;
-        raise EACBrTEFDErro.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+
-                                         ' de: '+CACBrTEFCliSiTef_Lib ) ) ;
-     end ;
-   end ;
- end ;
-begin
-   CliSiTefFunctionDetect('ConfiguraIntSiTefInterativoEx', @xConfiguraIntSiTefInterativoEx);
-   CliSiTefFunctionDetect('IniciaFuncaoSiTefInterativo', @xIniciaFuncaoSiTefInterativo);
-   CliSiTefFunctionDetect('ContinuaFuncaoSiTefInterativo', @xContinuaFuncaoSiTefInterativo);
-   CliSiTefFunctionDetect('FinalizaFuncaoSiTefInterativo', @xFinalizaFuncaoSiTefInterativo);
-   CliSiTefFunctionDetect('EscreveMensagemPermanentePinPad',@xEscreveMensagemPermanentePinPad);
-   CliSiTefFunctionDetect('ObtemQuantidadeTransacoesPendentes',@xObtemQuantidadeTransacoesPendentes);
-   CliSiTefFunctionDetect('ValidaCampoCodigoEmBarras',@xValidaCampoCodigoEmBarras);
-   CliSiTefFunctionDetect('EnviaRecebeSiTefDireto',@xEnviaRecebeSiTefDireto);
-   CliSiTefFunctionDetect('VerificaPresencaPinPad',@xVerificaPresencaPinPad);
-   CliSiTefFunctionDetect('ObtemDadoPinPadDiretoEx', @xObtemDadoPinPadDiretoEx);
-end ;
-
-procedure TACBrTEFDCliSiTef.UnLoadDLLFunctions;
-var
-   sLibName: String;
-begin
-  sLibName := '';
-  if Length(PathDLL) > 0 then
-     sLibName := PathWithDelim(PathDLL);
-
-  UnLoadLibrary( sLibName + CACBrTEFCliSiTef_Lib );
-
-  xConfiguraIntSiTefInterativoEx      := Nil;
-  xIniciaFuncaoSiTefInterativo        := Nil;
-  xContinuaFuncaoSiTefInterativo      := Nil;
-  xFinalizaFuncaoSiTefInterativo      := Nil;
-  xEscreveMensagemPermanentePinPad    := Nil;
-  xObtemQuantidadeTransacoesPendentes := Nil;
-  xValidaCampoCodigoEmBarras          := Nil;
-  xEnviaRecebeSiTefDireto             := Nil;
-  xVerificaPresencaPinPad             := Nil;
-  xObtemDadoPinPadDiretoEx            := Nil;
 end;
 
 procedure TACBrTEFDCliSiTef.SetParametrosAdicionais(const AValue : TStringList
@@ -462,6 +321,11 @@ procedure TACBrTEFDCliSiTef.SetParametrosAdicionais(const AValue : TStringList
 begin
    fParametrosAdicionais.Assign( AValue ) ;
 end ;
+
+procedure TACBrTEFDCliSiTef.SetPathDLL(AValue: string);
+begin
+  fSiTefAPI.PathDLL := AValue;
+end;
 
 procedure TACBrTEFDCliSiTef.SetNumVias(const AValue : Integer);
 begin
@@ -482,7 +346,7 @@ begin
   if not Assigned( OnObtemCampo ) then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnObtemCampo" não programado' ) ) ;
 
-  LoadDLLFunctions;
+  fSiTefAPI.Inicializada := True;
 
   // configuração da porta do pin-pad
   if PortaPinPad > 0 then
@@ -513,11 +377,11 @@ begin
                                             ' Resultado: 0'     +
                                             ' ParametrosAdicionais: '+ParamAdic ) ;
 
-  Sts := xConfiguraIntSiTefInterativoEx( PAnsiChar(fEnderecoIP),
-                                         PAnsiChar(fCodigoLoja),
-                                         PAnsiChar(fNumeroTerminal),
-                                         0,
-                                         PAnsiChar(ParamAdic) );
+  Sts := fSiTefAPI.ConfiguraIntSiTefInterativo( PAnsiChar(fEnderecoIP),
+                                                PAnsiChar(fCodigoLoja),
+                                                PAnsiChar(fNumeroTerminal),
+                                                0,
+                                                PAnsiChar(ParamAdic) );
   Erro := '' ;
   Case Sts of
     1 :	Erro := CACBrTEFCliSiTef_Erro1;
@@ -543,7 +407,7 @@ end;
 
 procedure TACBrTEFDCliSiTef.DesInicializar;
 begin
-   UnLoadDLLFunctions ;
+   fSiTefAPI.Inicializada := False; ;
 
    inherited DesInicializar;
 end;
@@ -737,133 +601,6 @@ begin
   FinalizarTransacao( False, DocumentoVinculado, Finalizacao );
 end;
 
-function TACBrTEFDCliSiTef.ObtemDadoPinPadDiretoEx(Tipo_Doc: Integer; ChaveAcesso,
-  Identificador: PAnsiChar): AnsiString;
- var
-  Saida   : array of Byte;
-  Retorno : Integer;
-  Caracter: Char;
-  sSaida  : string;
-  I       : Integer;
-
- const
-  EntradaCelular = '011111NUMERO CELULAR                  CONFIRME NUMERO |(xx) xxxxx-xxxx  ';
-  EntradaCPF     = '011111DIGITE O CPF                    CONFIRME O CPF  |xxx.xxx.xxx-xx  ';
-  EntradaCNPJ    =                                                             //
-   '020808INFORME CNPJ P1                 CONFIRME P1     |xx.xxx.xxx      ' + //
-   '0606INFORME CNPJ P2                 CONFIRME P2     |xxxx-xx         ';
-
- begin
-  if Assigned(xObtemDadoPinPadDiretoEx) then
-   begin
-    Result := '';
-    SetLength(Saida, 15);
-
-    case Tipo_Doc of
-     1:
-      begin
-       Retorno := xObtemDadoPinPadDiretoEx(PAnsiChar(ChaveAcesso), PAnsiChar(Identificador), PAnsiChar(EntradaCPF), Saida);
-      end;
-     2:
-      begin
-       Retorno := xObtemDadoPinPadDiretoEx(PAnsiChar(ChaveAcesso), PAnsiChar(Identificador), PAnsiChar(EntradaCNPJ), Saida);
-      end;
-     3:
-      begin
-       Retorno := xObtemDadoPinPadDiretoEx(PAnsiChar(ChaveAcesso), PAnsiChar(Identificador), PAnsiChar(EntradaCelular), Saida);
-      end;
-    else
-      Retorno := -1;
-    end;
-    if Retorno = 0 then
-     begin
-      sSaida := '';
-      case Tipo_Doc of
-       1:
-        begin
-         for I := 4 to 14 do
-          begin
-           Caracter := Char(Saida[I]);
-           sSaida   := sSaida + Caracter;
-          end;
-        end;
-       2:
-        begin
-         for I := 4 to 19 do
-          begin
-           Caracter := Char(Saida[I]);
-           sSaida   := sSaida + Caracter;
-          end;
-         Delete(sSaida, 9, 2);
-        end;
-       3:
-        begin
-         for I := 4 to 14 do
-          begin
-           Caracter := Char(Saida[I]);
-           sSaida   := sSaida + Caracter;
-          end;
-        end;
-
-      end;
-      Result := sSaida;
-     end;
-    Saida := nil;
-   end
-  else
-   begin
-    raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFCliSiTef_NaoInicializado));
-   end;
-end;
-
-function TACBrTEFDCliSiTef.ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
-  CupomFiscal: AnsiString): Integer;
-var
-  sDate:AnsiString;
-begin
-   sDate:= FormatDateTime('yyyymmdd',Data);
-   if Assigned(xObtemQuantidadeTransacoesPendentes) then
-      Result := xObtemQuantidadeTransacoesPendentes(sDate,CupomFiscal)
-   else
-      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFCliSiTef_NaoInicializado ) ) ;
-end;
-
-function TACBrTEFDCliSiTef.EnviaRecebeSiTefDireto(RedeDestino: SmallInt;
-  FuncaoSiTef: SmallInt; OffsetCartao: SmallInt; DadosTx: AnsiString;
-  var DadosRx: AnsiString; var CodigoResposta: SmallInt;
-  TempoEsperaRx: SmallInt; CuponFiscal: AnsiString; Confirmar: Boolean
-  ): Integer;
-var
-  Buffer: array [0..20000] of AnsiChar;
-  ANow: TDateTime;
-  DataStr, HoraStr: String;
-begin
-  ANow    := Now ;
-  DataStr := FormatDateTime('YYYYMMDD', ANow );
-  HoraStr := FormatDateTime('HHNNSS', ANow );
-  Buffer := #0;
-  FillChar(Buffer, SizeOf(Buffer), 0);
-
-  GravaLog( 'EnviaRecebeSiTefDireto -> Rede:' +IntToStr(RedeDestino) +', Funcao:'+
-            IntToStr(FuncaoSiTef)+', OffSetCartao:'+IntToStr(OffsetCartao)+', DadosTX:'+
-            DadosTx+', TimeOut'+IntToStr(TempoEsperaRx)+' Cupom:'+CuponFiscal+', '+
-            ifthen(Confirmar,'Confirmar','NAO Confirmar'), True );
-
-  Result := xEnviaRecebeSiTefDireto( RedeDestino,
-                           FuncaoSiTef,
-                           OffsetCartao,
-                           DadosTx,
-                           Length(DadosTx)+1,
-                           Buffer,
-                           SizeOf(Buffer),
-                           CodigoResposta,
-                           TempoEsperaRx,
-                           CuponFiscal, DataStr, HoraStr, fOperador,
-                           IfThen(Confirmar,1,0) );
-
-  DadosRx := TrimRight( LeftStr(Buffer,max(Result,0)) ) ;
-end;
-
 function TACBrTEFDCliSiTef.FazerRequisicao(Funcao: Integer;
   AHeader: AnsiString; Valor: Double; Documento: AnsiString;
   ListaRestricoes: AnsiString): Integer;
@@ -871,7 +608,7 @@ Var
   ValorStr, DataStr, HoraStr : AnsiString;
   DataHora : TDateTime ;
 begin
-   if not Assigned(xIniciaFuncaoSiTefInterativo) then
+   if not fSiTefAPI.Inicializada then
       raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFCliSiTef_NaoInicializado));
 
    if Documento = '' then
@@ -906,13 +643,13 @@ begin
                                              ' Operador: '  +fOperador+
                                              ' Restricoes: '+ListaRestricoes ) ;
 
-   Result := xIniciaFuncaoSiTefInterativo( Funcao,
-                                           PAnsiChar( ValorStr ),
-                                           PAnsiChar( Documento ),
-                                           PAnsiChar( DataStr ),
-                                           PAnsiChar( HoraStr ),
-                                           PAnsiChar( fOperador ),
-                                           PAnsiChar( ListaRestricoes ) ) ;
+   Result := fSiTefAPI.IniciaFuncaoSiTefInterativo( Funcao,
+                                                    PAnsiChar( ValorStr ),
+                                                    PAnsiChar( Documento ),
+                                                    PAnsiChar( DataStr ),
+                                                    PAnsiChar( HoraStr ),
+                                                    PAnsiChar( fOperador ),
+                                                    PAnsiChar( ListaRestricoes ) ) ;
 
    { Adiciona Campos já conhecidos em Resp, para processa-los em
      métodos que manipulam "RespostasPendentes" (usa códigos do G.P.)  }
@@ -985,11 +722,12 @@ begin
             GravaLog( 'ContinuaFuncaoSiTefInterativo, Chamando: Continua = '+
                       IntToStr(Continua)+' Buffer = '+Resposta ) ;
 
-            Result := xContinuaFuncaoSiTefInterativo( ProximoComando,
-                                                      TipoCampo,
-                                                      TamanhoMinimo, TamanhoMaximo,
-                                                      Buffer, sizeof(Buffer),
-                                                      Continua );
+            Result := fSiTefAPI.ContinuaFuncaoSiTefInterativo( ProximoComando,
+                                                               TipoCampo,
+                                                               TamanhoMinimo,
+                                                               TamanhoMaximo,
+                                                               Buffer, sizeof(Buffer),
+                                                               Continua );
             Continua := 0;
             Mensagem := TrimRight( Buffer ) ;
             Resposta := '' ;
@@ -1329,6 +1067,18 @@ begin
   Result := inherited CopiarResposta;
 end;
 
+procedure TACBrTEFDCliSiTef.AvaliaErro( Sts : Integer );
+var
+   Erro : String;
+begin
+   if not fExibirErroRetorno then
+     Exit;
+
+   Erro := fSiTefAPI.TraduzirErro(Sts);
+   if Erro <> '' then
+      TACBrTEFD(Owner).DoExibeMsg( opmOK, Erro );
+end ;
+
 procedure TACBrTEFDCliSiTef.ProcessarResposta;
 var
    RespostaPendente: TACBrTEFDRespCliSiTef;
@@ -1400,11 +1150,11 @@ begin
                                           ' Data: '      +DataStr+
                                           ' Hora: '      +HoraStr ) ;
 
-  xFinalizaFuncaoSiTefInterativo( Finalizacao,
-                                  PAnsiChar( DocumentoVinculado ),
-                                  PAnsiChar( DataStr ),
-                                  PAnsiChar( HoraStr ),
-                                  PAnsiChar( ParamAdic ) ) ;
+  fSiTefAPI.FinalizaFuncaoSiTefInterativo( Finalizacao,
+                                           PAnsiChar( DocumentoVinculado ),
+                                           PAnsiChar( DataStr ),
+                                           PAnsiChar( HoraStr ),
+                                           PAnsiChar( ParamAdic ) ) ;
 
   if not Confirma then
   begin
@@ -1428,56 +1178,52 @@ begin
   end;
 end;
 
-{ Valores de Retorno:
-  0 - se o código estiver correto;
-  1 a 4 - Indicando qual o bloco que está com erro
-  5 - Um ou mais blocos com erro
+function TACBrTEFDCliSiTef.DefineMensagemPermanentePinPad(Mensagem: AnsiString): Integer;
+begin
+  Result := fSiTefAPI.DefineMensagemPermanentePinPad(Mensagem);
+end;
 
-  Tipo: tipo de documento sendo coletado:
-        -1: Ainda não identificado
-        0: Arrecadação
-        1: Titulo
-}
+function TACBrTEFDCliSiTef.ObtemQuantidadeTransacoesPendentes(Data: TDateTime;
+  CupomFiscal: AnsiString): Integer;
+begin
+  Result := fSiTefAPI.ObtemQuantidadeTransacoesPendentes(Data, CupomFiscal);
+end;
+
+function TACBrTEFDCliSiTef.EnviaRecebeSiTefDireto(RedeDestino: SmallInt;
+  FuncaoSiTef: SmallInt; OffsetCartao: SmallInt; DadosTx: AnsiString;
+  var DadosRx: AnsiString; var CodigoResposta: SmallInt;
+  TempoEsperaRx: SmallInt; CupomFiscal: AnsiString; Confirmar: Boolean;
+  Operador: AnsiString): Integer;
+begin
+  GravaLog( 'EnviaRecebeSiTefDireto -> Rede:' +IntToStr(RedeDestino) +', Funcao:'+
+            IntToStr(FuncaoSiTef)+', OffSetCartao:'+IntToStr(OffsetCartao)+', DadosTX:'+
+            DadosTx+', TimeOut'+IntToStr(TempoEsperaRx)+' Cupom:'+CupomFiscal+', '+
+            ifthen(Confirmar,'Confirmar','NAO Confirmar'), True );
+
+  Result := fSiTefAPI.EnviaRecebeSiTefDireto( RedeDestino, FuncaoSiTef, OffsetCartao,
+                                              DadosTx, DadosRx, CodigoResposta,
+                                              TempoEsperaRx, CupomFiscal,
+                                              Confirmar, Operador);
+end;
+
 function TACBrTEFDCliSiTef.ValidaCampoCodigoEmBarras(Dados: AnsiString;
   var Tipo: SmallInt): Integer;
 begin
-  GravaLog('ValidaCodigoEmBarras -> Dados:' + Dados, True);
-
-  if Assigned(xValidaCampoCodigoEmBarras) then
-    Result := xValidaCampoCodigoEmBarras(Dados,Tipo)
-  else
-    raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFCliSiTef_NaoInicializado));
+  GravaLog('ValidaCampoCodigoEmBarras -> Dados:' + Dados, True);
+  Result := fSiTefAPI.ValidaCampoCodigoEmBarras(Dados, Tipo);
 end;
 
-procedure TACBrTEFDCliSiTef.AvaliaErro( Sts : Integer );
-var
-   Erro : String;
+function TACBrTEFDCliSiTef.VerificaPresencaPinPad: Boolean;
 begin
-   if not fExibirErroRetorno then
-     Exit;
+  GravaLog('VerificaPresencaPinpad', True);
+  Result := fSiTefAPI.VerificaPresencaPinPad;
+end;
 
-   Erro := '' ;
-   Case Sts of
-        -1 : Erro := 'Módulo não inicializado' ;
-        -2 : Erro := 'Operação cancelada pelo operador' ;
-        -3 : Erro := 'Fornecido um código de função inválido' ;
-        -4 : Erro := 'Falta de memória para rodar a função' ;
-        -5 : Erro := '' ; // 'Sem comunicação com o SiTef' ; // Comentado pois SiTEF já envia a msg de Erro
-        -6 : Erro := 'Operação cancelada pelo usuário' ;
-        -40: Erro := 'Transação negada pelo SiTef';
-        -43: Erro := 'Falha no pinpad';
-        -50: Erro := 'Transação não segura';
-        -100: Erro := 'Erro interno do módulo';
-   else
-      if Sts < 0 then
-         Erro := 'Erros detectados internamente pela rotina ('+IntToStr(Sts)+')'
-      else
-         Erro := 'Negada pelo autorizador ('+IntToStr(Sts)+')' ;
-   end;
-
-   if Erro <> '' then
-      TACBrTEFD(Owner).DoExibeMsg( opmOK, Erro );
-end ;
+function TACBrTEFDCliSiTef.ObtemDadoPinPadDiretoEx(TipoDocumento: Integer;
+  ChaveAcesso, Identificador: AnsiString): AnsiString;
+begin
+  Result := fSiTefAPI.ObtemDadoPinPadDiretoEx(TipoDocumento, ChaveAcesso, Identificador);
+end;
 
 function TACBrTEFDCliSiTef.GetDataHoraFiscal: TDateTime;
 begin
@@ -1499,6 +1245,11 @@ begin
         Result := HMS
      else
         Result := fDocumentoFiscal;
+end;
+
+function TACBrTEFDCliSiTef.GetPathDLL: string;
+begin
+  Result := fSiTefAPI.PathDLL;
 end;
 
 
@@ -1588,26 +1339,22 @@ begin
    Result := FormatDateTime('hhmmss',Now);
 end;
 
-function TACBrTEFDCliSiTef.VerificaPresencaPinPad: Boolean;
-begin
-  GravaLog('VerificaPresencaPinpad', True);
-
-  {
-   Retornos:
-      1: Existe um PinPad operacional conectado ao micro;
-      0: Nao Existe um PinPad conectado ao micro;
-     -1: Biblioteca de acesso ao PinPad não encontrada }
-
-  if Assigned(xVerificaPresencaPinPad) then
-    Result := ( xVerificaPresencaPinPad() = 1 )
-  else
-    raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFCliSiTef_NaoInicializado));
-end;
-
-
 function TACBrTEFDCliSiTef.CDP(const EntidadeCliente: string; out Resposta: string): Boolean;
+var
+  ATipo: Integer;
 begin
-  raise EACBrTEFDErro.Create( ACBrStr('Não implementado para SiTef no momento. Use a função "ObtemDadoPinPadDiretoEx".') ) ;
+  if (PinPadChaveAcesso = '') or (PinPadIdentificador = '') then
+    raise EACBrTEFDErro.Create( 'PinPadChaveAcesso e PinPadIdentificador devem ser informados' ) ;
+
+  if EntidadeCliente = 'F' then
+    ATipo := 1
+  else if EntidadeCliente = 'J' then
+    ATipo := 2
+  else
+    ATipo := 3;
+
+  Resposta := ObtemDadoPinPadDiretoEx(ATipo, PinPadChaveAcesso, PinPadIdentificador);
+  Result := (Resposta <> '');
 end;
 
 end.

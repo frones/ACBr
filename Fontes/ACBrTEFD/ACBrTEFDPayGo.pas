@@ -90,7 +90,7 @@ uses
 procedure TACBrTEFDRespPayGo.ConteudoToProperty;
 var
   IndiceViaCliente, Linhas, I: Integer;
-  ViasDeComprovante, TipoDeCartao, TipoDeFinanciamento, AString: String;
+  ViasDeComprovante, TipoDeCartao, TipoDeFinanciamento: String;
   ImprimirViaCliente, ImprimirViaEstabelecimento: Boolean;
 begin
   inherited ConteudoToProperty;

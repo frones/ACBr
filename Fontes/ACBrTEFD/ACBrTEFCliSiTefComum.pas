@@ -728,7 +728,7 @@ var
   Retorno: Integer;
   DocLen: Integer;
 const
-  EntradaCPF      = '011111DIGITE O CPF                    CONFIRME O CPF  ';//|xxx.xxx.xxx-xx  ';
+  EntradaCPF      = '011111DIGITE O CPF                    CONFIRME O CPF  |xxx.xxx.xxx-xx  ';
   EntradaCNPJ     = '020808INFORME CNPJ P1                 CONFIRME P1     |xx.xxx.xxx      '+
                       '0606INFORME CNPJ P2                 CONFIRME P2     |xxxx-xx         ';
   EntradaCelular  = '011111NUMERO CELULAR                  CONFIRME NUMERO |(xx) xxxxx-xxxx  ';

@@ -1,4 +1,17 @@
 [History]
-1=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107150140	#P7#=0	#P8#=-1	.
-2=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191226001747	#P7#=0	#P8#=10	.
-3=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibPosPrinterDemo/ACBrComum/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20191226001535	#P7#=-2147483640	#P8#=12	.
+1=#P0#=mb	#P1#=LerCaracteristicas	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/LerCaracteristicas	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194400	#P7#=0	#P8#=0	.
+2=#P0#=mb	#P1#=LerCMC7	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/LerCMC7	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194316	#P7#=0	#P8#=-1	.
+3=#P0#=mb	#P1#=PodeLerDaPorta	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/PodeLerDaPorta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194314	#P7#=0	#P8#=-1	.
+4=#P0#=mb	#P1#=EjetarCheque	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/EjetarCheque	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194212	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=AcharPortas	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/AcharPortas	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515193814	#P7#=0	#P8#=12	.
+6=#P0#=mb	#P1#=LeituraCheque	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/LeituraCheque	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194229	#P7#=0	#P8#=-1	.
+7=#P0#=mb	#P1#=ImprimirTextoCheque	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/ImprimirTextoCheque	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515193525	#P7#=0	#P8#=3	.
+8=#P0#=mb	#P1#=ImprimirCheque	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/ImprimirCheque	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515193219	#P7#=0	#P8#=4	.
+9=#P0#=mb	#P1#=TxRx	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/TxRx	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515193138	#P7#=0	#P8#=3	.
+10=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194334	#P7#=0	#P8#=0	.
+11=#P0#=mb	#P1#=ImprimirLogo	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/ImprimirLogo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515192708	#P7#=0	#P8#=0	.
+12=#P0#=mb	#P1#=ApagarLogo	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/ApagarLogo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515194156	#P7#=0	#P8#=-1	.
+13=#P0#=mb	#P1#=ImprimirImagemArquivo	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/ImprimirImagemArquivo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515192112	#P7#=0	#P8#=-1	.
+14=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200515142623	#P7#=0	#P8#=-2	.
+15=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191226001747	#P7#=0	#P8#=10	.
+16=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibPosPrinterDemo/ACBrComum/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20191226001535	#P7#=-2147483640	#P8#=12	.

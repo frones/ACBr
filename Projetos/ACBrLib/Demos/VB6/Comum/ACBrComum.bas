@@ -52,6 +52,8 @@ Public Const SESSAO_BOLETODIRETORIOCONFIG     As String = "BoletoDiretorioConfig
 Public Const SESSAO_BOLETOBANCOFCFORTESCONFIG As String = "BoletoBancoFCFortesConfig"
 Public Const SESSAO_BAL                       As String = "BAL"
 Public Const SESSAO_BAL_DEVICE                As String = "BAL_Device"
+Public Const SESSAO_GNRE                      As String = "GNRe"
+Public Const SESSAO_GUIA                      As String = "Guia"
 
 Public Enum NivelLog
     logNenhum = 0

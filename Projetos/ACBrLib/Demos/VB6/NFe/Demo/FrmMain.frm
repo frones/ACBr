@@ -172,7 +172,7 @@ Begin VB.Form FrmMain
       _Version        =   393216
       Style           =   1
       Tabs            =   4
-      Tab             =   3
+      Tab             =   1
       TabsPerRow      =   4
       TabHeight       =   520
       WordWrap        =   0   'False
@@ -188,43 +188,52 @@ Begin VB.Form FrmMain
       TabCaption(0)   =   "Configurações"
       TabPicture(0)   =   "FrmMain.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "btnSelectSchema"
-      Tab(0).Control(1)=   "txtSchemaPath"
-      Tab(0).Control(2)=   "txtCSC"
-      Tab(0).Control(3)=   "txtIdCSC"
+      Tab(0).Control(0)=   "lblModeloDocumento"
+      Tab(0).Control(1)=   "lblIdCSC"
+      Tab(0).Control(2)=   "Label1"
+      Tab(0).Control(3)=   "Label2"
       Tab(0).Control(4)=   "cmbModeloDocumento"
-      Tab(0).Control(5)=   "Label2"
-      Tab(0).Control(6)=   "Label1"
-      Tab(0).Control(7)=   "lblIdCSC"
-      Tab(0).Control(8)=   "lblModeloDocumento"
+      Tab(0).Control(5)=   "txtIdCSC"
+      Tab(0).Control(6)=   "txtCSC"
+      Tab(0).Control(7)=   "txtSchemaPath"
+      Tab(0).Control(8)=   "btnSelectSchema"
       Tab(0).ControlCount=   9
       TabCaption(1)   =   "Webservice"
       TabPicture(1)   =   "FrmMain.frx":001C
-      Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "FraProxy"
-      Tab(1).Control(1)=   "FraAmbiente"
-      Tab(1).Control(2)=   "nudTimeOut"
-      Tab(1).Control(3)=   "txtTimeOut"
+      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).Control(0)=   "Label3"
+      Tab(1).Control(0).Enabled=   0   'False
+      Tab(1).Control(1)=   "Label4"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "lblTimeOut"
+      Tab(1).Control(2).Enabled=   0   'False
+      Tab(1).Control(3)=   "cmbUfDestino"
+      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "cmbSSlType"
-      Tab(1).Control(5)=   "cmbUfDestino"
-      Tab(1).Control(6)=   "lblTimeOut"
-      Tab(1).Control(7)=   "Label4"
-      Tab(1).Control(8)=   "Label3"
+      Tab(1).Control(4).Enabled=   0   'False
+      Tab(1).Control(5)=   "txtTimeOut"
+      Tab(1).Control(5).Enabled=   0   'False
+      Tab(1).Control(6)=   "nudTimeOut"
+      Tab(1).Control(6).Enabled=   0   'False
+      Tab(1).Control(7)=   "FraAmbiente"
+      Tab(1).Control(7).Enabled=   0   'False
+      Tab(1).Control(8)=   "FraProxy"
+      Tab(1).Control(8).Enabled=   0   'False
       Tab(1).ControlCount=   9
       TabCaption(2)   =   "Certificados"
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "FraCertificados"
-      Tab(2).Control(1)=   "cmbXmlSign"
-      Tab(2).Control(2)=   "cmbHttp"
+      Tab(2).Control(0)=   "Label8"
+      Tab(2).Control(1)=   "Label9"
+      Tab(2).Control(2)=   "Label10"
       Tab(2).Control(3)=   "cmbCrypt"
-      Tab(2).Control(4)=   "Label10"
-      Tab(2).Control(5)=   "Label9"
-      Tab(2).Control(6)=   "Label8"
+      Tab(2).Control(4)=   "cmbHttp"
+      Tab(2).Control(5)=   "cmbXmlSign"
+      Tab(2).Control(6)=   "FraCertificados"
       Tab(2).ControlCount=   7
       TabCaption(3)   =   "Email"
       TabPicture(3)   =   "FrmMain.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Label20"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "Label21"
@@ -239,7 +248,7 @@ Begin VB.Form FrmMain
       Begin VB.TextBox txtMensagem 
          Height          =   1365
          IMEMode         =   3  'DISABLE
-         Left            =   120
+         Left            =   -74880
          MultiLine       =   -1  'True
          ScrollBars      =   3  'Both
          TabIndex        =   66
@@ -249,7 +258,7 @@ Begin VB.Form FrmMain
       Begin VB.TextBox txtAssunto 
          Height          =   285
          IMEMode         =   3  'DISABLE
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   64
          Top             =   4680
          Width           =   4155
@@ -266,7 +275,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   3855
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   48
          Top             =   480
          Width           =   4215
@@ -637,7 +646,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   2055
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   24
          Top             =   1920
          Width           =   4215
@@ -783,7 +792,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   735
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   21
          Top             =   1080
          Width           =   4215
@@ -825,7 +834,7 @@ Begin VB.Form FrmMain
       End
       Begin MSComCtl2.UpDown nudTimeOut 
          Height          =   285
-         Left            =   -71040
+         Left            =   3960
          TabIndex        =   19
          Top             =   720
          Width           =   255
@@ -848,7 +857,7 @@ Begin VB.Form FrmMain
       Begin VB.TextBox txtTimeOut 
          Alignment       =   1  'Right Justify
          Height          =   285
-         Left            =   -72000
+         Left            =   3000
          TabIndex        =   18
          Text            =   "5000"
          Top             =   720
@@ -857,7 +866,7 @@ Begin VB.Form FrmMain
       Begin VB.ComboBox cmbSSlType 
          Height          =   315
          ItemData        =   "FrmMain.frx":0151
-         Left            =   -73800
+         Left            =   1200
          List            =   "FrmMain.frx":016A
          Style           =   2  'Dropdown List
          TabIndex        =   12
@@ -867,7 +876,7 @@ Begin VB.Form FrmMain
       Begin VB.ComboBox cmbUfDestino 
          Height          =   315
          ItemData        =   "FrmMain.frx":01B6
-         Left            =   -74880
+         Left            =   120
          List            =   "FrmMain.frx":020B
          Style           =   2  'Dropdown List
          TabIndex        =   10
@@ -927,7 +936,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   67
          Top             =   5040
          Width           =   930
@@ -946,7 +955,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   65
          Top             =   4440
          Width           =   690
@@ -1022,7 +1031,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   -72000
+         Left            =   3000
          TabIndex        =   20
          Top             =   480
          Width           =   765
@@ -1041,7 +1050,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   -73800
+         Left            =   1200
          TabIndex        =   13
          Top             =   480
          Width           =   765
@@ -1060,7 +1069,7 @@ Begin VB.Form FrmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   11
          Top             =   480
          Width           =   870
@@ -1404,7 +1413,6 @@ Private Sub SetResposta(ByRef resposta As String)
 End Sub
 
 Private Sub LoadConfig()
-    Dim retorno As Long
     Dim buffer As String
     Dim bufferLen As Long
     
@@ -1452,8 +1460,6 @@ Private Sub LoadConfig()
 End Sub
 
 Private Sub SalvarConfig()
-    Dim retorno As Long
-    
     nfe.ConfigGravarValor SESSAO_NFE, "ModeloDF", CStr(cmbModeloDocumento.ListIndex)
     nfe.ConfigGravarValor SESSAO_NFE, "IdCSC", txtIdCSC.Text
     nfe.ConfigGravarValor SESSAO_NFE, "CSC", txtCSC.Text

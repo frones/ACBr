@@ -1,5 +1,5 @@
 [History]
-1=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibETQ/ACBrETQ/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107144917	#P7#=0	#P8#=3	.
+1=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibETQ/ACBrETQ/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200424192744	#P7#=0	#P8#=-3	.
 2=#P0#=mb	#P1#=processResult	#P2#=ACBrLibETQ/ACBrETQ/processResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107144910	#P7#=0	#P8#=8	.
 3=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibETQ/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20181109090929	#P7#=0	#P8#=36	.
 4=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibETQ/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016181936	#P7#=0	#P8#=4	.
@@ -7,13 +7,13 @@
 6=#P0#=mb	#P1#=cmdBlocoDe_Click	#P2#=ACBrLibETQ/FrmMain/cmdBlocoDe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20181016174933	#P7#=0	#P8#=19	.
 7=#P0#=mb	#P1#=cmdEtiquetaSimples_Click	#P2#=ACBrLibETQ/FrmMain/cmdEtiquetaSimples_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20181016173928	#P7#=0	#P8#=2	.
 8=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibETQ/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016173416	#P7#=0	#P8#=6	.
-9=#P0#=mb	#P1#=ImprimirImagem	#P2#=ACBrLibETQ/ACBrETQ/ImprimirImagem	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016164422	#P7#=0	#P8#=4	.
+9=#P0#=mb	#P1#=ImprimirImagem	#P2#=ACBrLibETQ/ACBrETQ/ImprimirImagem	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200424192930	#P7#=0	#P8#=10	.
 10=#P0#=mb	#P1#=ImprimirCaixa	#P2#=ACBrLibETQ/ACBrETQ/ImprimirCaixa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016164359	#P7#=0	#P8#=15	.
-11=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibETQ/ACBrETQ/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016164312	#P7#=0	#P8#=-2	.
+11=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibETQ/ACBrETQ/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200424192821	#P7#=0	#P8#=-2	.
 12=#P0#=mb	#P1#=ImprimirLinha	#P2#=ACBrLibETQ/ACBrETQ/ImprimirLinha	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016164152	#P7#=0	#P8#=-1	.
 13=#P0#=mb	#P1#=ImprimirBarras	#P2#=ACBrLibETQ/ACBrETQ/ImprimirBarras	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016164102	#P7#=0	#P8#=3	.
 14=#P0#=mb	#P1#=ImprimirTextoStr	#P2#=ACBrLibETQ/ACBrETQ/ImprimirTextoStr	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181016163757	#P7#=0	#P8#=14	.
-15=#P0#=mb	#P1#=ImprimirTexto	#P2#=ACBrLibETQ/ACBrETQ/ImprimirTexto	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181015170246	#P7#=0	#P8#=5	.
+15=#P0#=mb	#P1#=ImprimirTexto	#P2#=ACBrLibETQ/ACBrETQ/ImprimirTexto	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181015170246	#P7#=0	#P8#=4	.
 16=#P0#=mb	#P1#=Imprimir	#P2#=ACBrLibETQ/ACBrETQ/Imprimir	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181015165830	#P7#=0	#P8#=8	.
 17=#P0#=mb	#P1#=FinalizarEtiqueta	#P2#=ACBrLibETQ/ACBrETQ/FinalizarEtiqueta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181015165138	#P7#=0	#P8#=1	.
 18=#P0#=mb	#P1#=CarregarImagem	#P2#=ACBrLibETQ/ACBrETQ/CarregarImagem	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181015165127	#P7#=0	#P8#=2	.

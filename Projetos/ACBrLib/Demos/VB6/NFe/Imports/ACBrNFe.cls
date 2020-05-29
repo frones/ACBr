@@ -672,12 +672,12 @@ Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcp
     DistribuicaoDFePorChave = processResult(buffer, bufferLen)
 End Function
 
-Public Sub EnviarEmail(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+Public Sub EnviarEmail(ByVal ePara As String, ByVal eArquivoOuXml As String, ByVal aEnviaPDF As Boolean, _
                        ByVal eAssunto As String, ByVal eMensagem As String, _
                        Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
     Dim retorno   As Long
     
-    retorno = NFE_EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    retorno = NFE_EnviarEmail(ePara, eArquivoOuXml, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
     CheckResult retorno
 End Sub
 

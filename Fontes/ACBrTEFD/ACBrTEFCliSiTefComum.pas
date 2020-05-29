@@ -728,10 +728,10 @@ var
   Retorno: Integer;
   DocLen: Integer;
 const
-  EntradaCPF      = '011111DIGITE O CPF                    CONFIRME O CPF  |xxx.xxx.xxx-xx  ';
-  EntradaCNPJ     = '020808INFORME CNPJ P1                 CONFIRME P1     |xx.xxx.xxx      '+
-                      '0606INFORME CNPJ P2                 CONFIRME P2     |xxxx-xx         ';
-  EntradaCelular  = '011111NUMERO CELULAR                  CONFIRME NUMERO |(xx) xxxxx-xxxx  ';
+  EntradaCelular = '011111NUMERO CELULAR                  CONFIRME NUMERO |(xx) xxxxx-xxxx  ';
+  EntradaCPF     = '011111DIGITE O CPF                    CONFIRME O CPF  |xxx.xxx.xxx-xx  ';
+  EntradaCNPJ    = '020808CNPJ Entre os 8 digitos iniciais Confirma os 8 ?|xx.xxx.xxx/     ' +
+                     '0606CNPJ Entre os 6 digitos finais  Confirma os 6 ? |xxxx-xx         ';
 begin
   Result := '';
 
@@ -747,12 +747,14 @@ begin
 
     if Retorno = 0 then
     begin
-      if TipoDocumento = 2 then
+      if (TipoDocumento = 2) then
         DocLen := 19
       else
         DocLen := 14;
 
       Result := copy(TrimRight(Saida), 5, DocLen);
+      if (TipoDocumento = 2) then
+        Delete(Result, 9, 2);
     end;
   end;
 end;

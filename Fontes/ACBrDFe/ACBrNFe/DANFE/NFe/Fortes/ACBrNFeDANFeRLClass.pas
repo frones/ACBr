@@ -251,7 +251,7 @@ var
   function ImprimirDANFEPDFTipo(ANFe: TNFe): String;
   begin
     if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-      Result := Self.NomeDocumento
+      Result := Self.PathPDF + Self.NomeDocumento
     else
       Result := Self.PathPDF + OnlyNumber(ANFe.infNFe.ID) + '-nfe.pdf';
 
@@ -328,7 +328,7 @@ var
   function ImprimirEVENTOPDFTipo(EventoNFeItem: TInfEventoCollectionItem; ANFe: TNFe): String;
   begin
     if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-      Result := Self.NomeDocumento
+      Result := Self.PathPDF + Self.NomeDocumento
     else
       Result := Self.PathPDF + OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoNFe.pdf';
 
@@ -387,7 +387,7 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirINUTILIZACAOPDF(ANFe: TNFe);
 begin
   if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-    FPArquivoPDF := Self.NomeDocumento
+    FPArquivoPDF := Self.PathPDF + Self.NomeDocumento
   else
     FPArquivoPDF := Self.PathPDF + OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.ID) + '-procInutNFe.pdf';
   TfrmNFeDAInutRLRetrato.SalvarPDF(Self, TACBrNFe(ACBrNFe).InutNFe, FPArquivoPDF, ANFe);

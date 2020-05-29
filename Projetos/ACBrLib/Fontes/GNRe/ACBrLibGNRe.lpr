@@ -40,7 +40,11 @@ exports
   GNRE_ObterXml,
   GNRE_GravarXml,
   GNRE_LimparListaGuiaRetorno,
-  GNRe_CarregarGuiaRetorno;
+  GNRe_CarregarGuiaRetorno,
+  GNRE_Assinar,
+  GNRE_Validar,
+  GNRE_VerificarAssinatura,
+  GNRE_ObterCertificados;
 
 begin
   {$IFDEF DEBUG}

@@ -63,7 +63,7 @@ type
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function GNRe_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRe_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -80,43 +80,45 @@ function GNRe_ConfigGravar(const eArqConfig: PChar): longint;
 function GNRe_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function GNRE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region GNRe}
-function GNRe_LimparLista: longint;
+function GNRE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_CarregarINI(const eArquivoOuINI: PChar): longint;
+function GNRE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_LimparListaGuiaRetorno: longint;
+function GNRE_LimparListaGuiaRetorno: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
+function GNRE_CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Assinar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Validar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
-function GNRe_Enviar(const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Enviar(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function GNRe_Consultar(const eUF: PChar; const AReceita: Integer;
+function GNRE_Consultar(const eUF: PChar; const AReceita: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function GNRe_EnviarEmail(const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
+function GNRE_EnviarEmail(const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function GNRe_Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
+function GNRE_Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function GNRe_ImprimirPDF: longint;
+function GNRE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -127,7 +129,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibGNReConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibGNReConfig, ACBrLibGNReRespostas, ACBrGNRE2, ACBrMail,
-  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
+  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil, ACBrLibCertUtils;
 
 { TACBrLibGNRe }
 
@@ -170,31 +172,31 @@ end;
 {%region GNRe}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function GNRe_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
 end;
 
-function GNRe_Finalizar: longint;
+function GNRE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar;
 end;
 
-function GNRe_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function GNRE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(sNome, esTamanho);
 end;
 
-function GNRe_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function GNRE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(sVersao, esTamanho);
 end;
 
-function GNRe_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(sMensagem, esTamanho);
@@ -435,7 +437,7 @@ begin
   end;
 end;
 
-function GNRe_CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
+function GNRE_CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
@@ -463,6 +465,130 @@ begin
         else
           GNReDM.ACBrGNRe1.GuiasRetorno.LoadFromString(ArquivoOuXml);
         Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.GuiasRetorno.Count);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_Assinar: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('GNRE_Assinar', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+      try
+        try
+          GNReDM.ACBrGNRe1.Guias.Assinar;
+        except
+          on E: EACBrGNReException do
+            Result := SetRetorno(ErrAssinarGNRe, E.Message);
+        end;
+        Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_Validar: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('GNRE_Validar', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+      try
+        try
+          GNReDM.ACBrGNRe1.Guias.Validar;
+        except
+          on E: EACBrGNReException do
+            Result := SetRetorno(ErrValidacaoGNRe, E.Message);
+        end;
+        Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Erros: string;
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('GNRE_VerificarAssinatura', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+      try
+        Erros := '';
+        GNReDM.ACBrGNRe1.Guias.VerificarAssinatura(Erros);
+        MoverStringParaPChar(Erros, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Erros);
+      finally
+        GNReDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function GNRE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('GNRE_ObterCertificados', logNormal);
+
+    with TACBrLibGNRe(pLib) do
+    begin
+      GNReDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := ObterCerticados(GNReDM.ACBrGNRe1.SSL);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         GNReDM.Destravar;
       end;
@@ -672,7 +798,7 @@ begin
   end;
 end;
 
-function GNRe_Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
+function GNRE_Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   NomeImpressora, MostrarPreview: string;
@@ -684,9 +810,9 @@ begin
     MostrarPreview := string(eMostrarPreview);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('GNRe_Imprimir(' + NomeImpressora + ',' + MostrarPreview + ' )', logCompleto, True)
+      pLib.GravarLog('GNRE_Imprimir(' + NomeImpressora + ',' + MostrarPreview + ' )', logCompleto, True)
     else
-      pLib.GravarLog('GNRe_Imprimir', logNormal);
+      pLib.GravarLog('GNRE_Imprimir', logNormal);
 
     with TACBrLibGNRe(pLib) do
     begin

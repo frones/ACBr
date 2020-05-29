@@ -54,8 +54,10 @@ const
   CChaveSite = 'Site';
   CChaveTamanhoPapel = 'TamanhoPapel';
 
+  ErrValidacaoGNRe = -11;
   ErrRetorno = -16;
   ErrEnvio = -17;
+  ErrAssinarGNRe = -13;
 
 Resourcestring
   SInfGNReCarregados = '%d GNRe(s) Carregado(s)';

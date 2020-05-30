@@ -921,6 +921,7 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
+  btObterCPF.Enabled := btAdministrativo.Enabled;
   pImpressao.Enabled := (AValue in [stsLivre, stsFinalizada, stsCancelada]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
   lNumOperacao.Visible := (AValue <> stsLivre);
@@ -1220,6 +1221,7 @@ begin
       begin
         NSU := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NSU;
         Rede := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Rede;
+        RedeCNPJ := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NFCeSAT.CNPJCredenciadora;
 
         // Calcula a Diferença do Valor Retornado pela Operação TEF do Valor que
         //   Informamos no CRT/CHQ
@@ -1387,6 +1389,7 @@ begin
       sgPagamentos.Cells[3, ARow] := NSU;
       sgPagamentos.Cells[4, ARow] := Rede;
       sgPagamentos.Cells[5, ARow] := ifthen(Confirmada, 'Sim', 'Não');
+      sgPagamentos.Cells[6, ARow] := RedeCNPJ;
     end;
   end;
 

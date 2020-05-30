@@ -749,7 +749,7 @@ object FormPrincipal: TFormPrincipal
                 end              
                 item
                   Title.Caption = 'CNPJ Credenciadora'
-                  Width = 100
+                  Width = 140
                 end>
               DefaultColWidth = 30
               FixedCols = 0

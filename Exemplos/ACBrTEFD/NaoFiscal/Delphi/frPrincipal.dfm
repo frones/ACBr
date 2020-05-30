@@ -1,7 +1,7 @@
 object FormPrincipal: TFormPrincipal
-  Left = 447
-  Top = 184
-  Width = 1040
+  Left = 435
+  Top = 182
+  Width = 1024
   Height = 539
   Caption = 'ACBrTEFD - Demo n'#227'o fiscal'
   Color = clBtnFace
@@ -17,7 +17,7 @@ object FormPrincipal: TFormPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter2: TSplitter
-    Left = 690
+    Left = 674
     Top = 0
     Width = 5
     Height = 500
@@ -26,7 +26,7 @@ object FormPrincipal: TFormPrincipal
   object pPrincipal: TPanel
     Left = 0
     Top = 0
-    Width = 690
+    Width = 674
     Height = 500
     Align = alClient
     BevelOuter = bvNone
@@ -34,7 +34,7 @@ object FormPrincipal: TFormPrincipal
     object Splitter3: TSplitter
       Left = 0
       Top = 495
-      Width = 690
+      Width = 674
       Height = 5
       Cursor = crVSplit
       Align = alBottom
@@ -42,7 +42,7 @@ object FormPrincipal: TFormPrincipal
     object pgPrincipal: TPageControl
       Left = 0
       Top = 0
-      Width = 690
+      Width = 674
       Height = 376
       ActivePage = tsOperacao
       Align = alTop
@@ -53,7 +53,7 @@ object FormPrincipal: TFormPrincipal
         object pConfiguracao: TPanel
           Left = 0
           Top = 0
-          Width = 682
+          Width = 666
           Height = 347
           Align = alClient
           BevelOuter = bvNone
@@ -61,7 +61,7 @@ object FormPrincipal: TFormPrincipal
           object gbConfigImpressora: TGroupBox
             Left = 0
             Top = 166
-            Width = 682
+            Width = 666
             Height = 115
             Align = alTop
             Caption = 'Impressora'
@@ -203,7 +203,7 @@ object FormPrincipal: TFormPrincipal
           object gbConfigTEF: TGroupBox
             Left = 0
             Top = 0
-            Width = 682
+            Width = 666
             Height = 166
             Align = alTop
             Caption = 'TEF'
@@ -424,7 +424,7 @@ object FormPrincipal: TFormPrincipal
           object pBotoesConfiguracao: TPanel
             Left = 0
             Top = 281
-            Width = 682
+            Width = 666
             Height = 39
             Align = alTop
             TabOrder = 2
@@ -453,7 +453,7 @@ object FormPrincipal: TFormPrincipal
         Caption = 'Opera'#231#227'o'
         ImageIndex = 1
         object Splitter1: TSplitter
-          Left = 677
+          Left = 661
           Top = 0
           Width = 5
           Height = 347
@@ -462,7 +462,7 @@ object FormPrincipal: TFormPrincipal
         object pOperacao: TPanel
           Left = 0
           Top = 0
-          Width = 677
+          Width = 661
           Height = 347
           Align = alClient
           BevelOuter = bvNone
@@ -471,13 +471,13 @@ object FormPrincipal: TFormPrincipal
           object gbTotaisVenda: TGroupBox
             Left = 0
             Top = 50
-            Width = 677
+            Width = 661
             Height = 136
             Align = alTop
             Caption = 'Valores da Opera'#231#227'o'
             TabOrder = 0
             DesignSize = (
-              677
+              661
               136)
             object Label2: TLabel
               Left = 25
@@ -642,7 +642,7 @@ object FormPrincipal: TFormPrincipal
               Text = '0.00'
             end
             object btEfetuarPagamentos: TBitBtn
-              Left = 545
+              Left = 529
               Top = 93
               Width = 113
               Height = 28
@@ -660,7 +660,7 @@ object FormPrincipal: TFormPrincipal
               OnClick = btEfetuarPagamentosClick
             end
             object btAdministrativo: TBitBtn
-              Left = 545
+              Left = 529
               Top = 53
               Width = 113
               Height = 28
@@ -705,7 +705,7 @@ object FormPrincipal: TFormPrincipal
                 '31 - ADM - Opera'#231#227'o bem sucedida com valor pr'#233'-definido')
             end
             object btObterCPF: TButton
-              Left = 545
+              Left = 529
               Top = 14
               Width = 113
               Height = 25
@@ -718,7 +718,7 @@ object FormPrincipal: TFormPrincipal
           object gbPagamentos: TGroupBox
             Left = 0
             Top = 186
-            Width = 677
+            Width = 661
             Height = 161
             Align = alClient
             Caption = 'Pagamentos'
@@ -726,7 +726,7 @@ object FormPrincipal: TFormPrincipal
             object sgPagamentos: TStringGrid
               Left = 2
               Top = 15
-              Width = 567
+              Width = 551
               Height = 144
               Align = alClient
               ColCount = 7
@@ -737,7 +737,7 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 0
             end
             object pBotoesPagamentos: TPanel
-              Left = 569
+              Left = 553
               Top = 15
               Width = 106
               Height = 144
@@ -784,7 +784,7 @@ object FormPrincipal: TFormPrincipal
           object pStatus: TPanel
             Left = 0
             Top = 0
-            Width = 677
+            Width = 661
             Height = 50
             Align = alTop
             BevelInner = bvLowered
@@ -798,7 +798,7 @@ object FormPrincipal: TFormPrincipal
             ParentFont = False
             TabOrder = 2
             object lNumOperacao: TLabel
-              Left = 588
+              Left = 572
               Top = 4
               Width = 85
               Height = 42
@@ -833,7 +833,7 @@ object FormPrincipal: TFormPrincipal
     object pLogs: TPanel
       Left = 0
       Top = 376
-      Width = 690
+      Width = 674
       Height = 119
       Align = alClient
       TabOrder = 1
@@ -847,7 +847,7 @@ object FormPrincipal: TFormPrincipal
       object mLog: TMemo
         Left = 1
         Top = 1
-        Width = 688
+        Width = 672
         Height = 117
         Align = alClient
         ReadOnly = True
@@ -857,7 +857,7 @@ object FormPrincipal: TFormPrincipal
     end
   end
   object pImpressao: TPanel
-    Left = 695
+    Left = 679
     Top = 0
     Width = 329
     Height = 500

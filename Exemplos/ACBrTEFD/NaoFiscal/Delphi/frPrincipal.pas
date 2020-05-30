@@ -63,6 +63,7 @@ type
     btProcuraImpressoras: TSpeedButton;
     btTestarPosPrinter: TBitBtn;
     btTestarTEF: TBitBtn;
+    btObterCPF: TButton;
     cbTestePayGo: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
     cbMultiplosCartoes: TCheckBox;
@@ -146,7 +147,6 @@ type
     Splitter3: TSplitter;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
-    btObterCPF: TButton;
     procedure ACBrTEFD1AguardaResp(Arquivo: String; SegundosTimeOut: Integer;
       var Interromper: Boolean);
     procedure ACBrTEFD1AntesFinalizarRequisicao(Req: TACBrTEFDReq);
@@ -312,7 +312,7 @@ begin
     ColWidths[3] := 110;
     ColWidths[4] := 110;
     ColWidths[5] := 50;
-    ColWidths[6] := 110;
+    ColWidths[6] := 140;
 
     Cells[0, 0] := 'Item';
     Cells[1, 0] := 'Forma de Pagamento';
@@ -961,6 +961,7 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
+  btObterCPF.Enabled := btAdministrativo.Enabled;
   pImpressao.Enabled := (AValue in [stsLivre, stsFinalizada, stsCancelada]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
   lNumOperacao.Visible := (AValue <> stsLivre);
@@ -1260,6 +1261,7 @@ begin
       begin
         NSU := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NSU;
         Rede := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].Rede;
+        RedeCNPJ := ACBrTEFD1.RespostasPendentes[ACBrTEFD1.RespostasPendentes.Count-1].NFCeSAT.CNPJCredenciadora;
 
         // Calcula a Diferença do Valor Retornado pela Operação TEF do Valor que
         //   Informamos no CRT/CHQ
@@ -1429,6 +1431,7 @@ begin
       sgPagamentos.Cells[3, ARow] := NSU;
       sgPagamentos.Cells[4, ARow] := Rede;
       sgPagamentos.Cells[5, ARow] := ifthen(Confirmada, 'Sim', 'Não');
+      sgPagamentos.Cells[6, ARow] := RedeCNPJ;
     end;
 
     Inc(ARow);

@@ -44,7 +44,11 @@ const
   CACBrTEFDPayGo_ArqReq  = 'C:\PAYGO\REQ\intpos.001';
   CACBrTEFDPayGo_ArqResp = 'C:\PAYGO\RESP\intpos.001';
   CACBrTEFDPayGo_ArqSTS  = 'C:\PAYGO\RESP\intpos.sts';
-
+  CACBrTEFDDial_ArqTemp   = 'C:\TEF_DIAL\req\intpos.tmp';
+  CACBrTEFDDial_ArqReq    = 'C:\TEF_DIAL\req\intpos.001';
+  CACBrTEFDDial_ArqResp   = 'C:\TEF_DIAL\resp\intpos.001';
+  CACBrTEFDDial_ArqSTS    = 'C:\TEF_DIAL\resp\intpos.sts';
+  CACBrTEFDDial_GPExeName = 'C:\TEF_DIAL\tef_dial.exe';
 
 type
 
@@ -72,6 +76,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
+    procedure Inicializar; override;
 
   published
     Property SuportaReajusteValor: Boolean read fSuportaReajusteValor write fSuportaReajusteValor default False;
@@ -270,6 +275,32 @@ begin
 
   fpResp := TACBrTEFDRespPayGo.Create;
   fpResp.TipoGP := fpTipo;
+end;
+
+procedure TACBrTEFDPayGo.Inicializar;
+var
+  DirPayGo, DirTefDial: String;
+begin
+  if Inicializado then exit ;
+
+  // Verificando se Diretório "C:\PAYGO" existe.
+  //  Se não existir usa em modo de compatibilidade "C:\TEF_DIAL"
+  if (ArqReq = CACBrTEFDPayGo_ArqReq) then
+  begin
+    DirPayGo := ExtractFileDir(CACBrTEFDPayGo_ArqReq);
+    DirTefDial := ExtractFileDir(CACBrTEFDDial_ArqReq);
+
+    if (not DirectoryExists(DirPayGo)) and DirectoryExists(DirTefDial) then
+    begin
+      ArqReq    := CACBrTEFDDial_ArqReq;
+      ArqResp   := CACBrTEFDDial_ArqResp;
+      ArqSTS    := CACBrTEFDDial_ArqSTS;
+      ArqTemp   := CACBrTEFDDial_ArqTemp;
+      GPExeName := CACBrTEFDDial_GPExeName;
+    end;
+  end;
+
+  inherited Inicializar;
 end;
 
 procedure TACBrTEFDPayGo.AdicionarIdentificacao;

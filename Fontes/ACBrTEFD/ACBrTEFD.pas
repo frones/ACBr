@@ -460,7 +460,7 @@ begin
   { Lista de Objetos TACBrTEFDresp com todas as Respostas Pendentes para Impressao }
   fpRespostasPendentes := TACBrTEFDRespostasPendentes.create(True);
 
-  { Criando Classe TEF_DIAL }
+  { Criando Classe TEF_PayGo }
   fTefPayGo := TACBrTEFDPayGo.Create(self);
   fTEFList.Add(fTefPayGo);     // Adicionando "fTefPayGo" na Lista Objetos de Classes de TEF
   {$IFDEF COMPILER6_UP}

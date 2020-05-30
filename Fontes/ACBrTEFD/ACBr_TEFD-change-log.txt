@@ -46,7 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-29/05/2019
+30/05/2020
+-- TACBrTEFDPayGo --
+[+] Adicionada verificação na Inicialização, se o diretório C:\PAYGO existe.
+    Caso não exista, o diretório C:\TEF_DIAL, passa a ser usado em modo de
+    compatibilidade
+    (por: DSA)
+
+29/05/2020
 -- ACBrTEFDCliSitef, ACBrTEFCliSiTefComum --
 [*] Refactoring, movendo toda carga de DLL e uso da API do SiTef, para
     ACBrTEFCliSiTefComum
@@ -57,7 +64,7 @@ Símbolo : Significado
 [*] Simplificação na implementação do método "ObtemDadoPinPadDiretoEx"
     (por: DSA)
 
-26/05/2019
+26/05/2020
 -- ACBrTEFD --
 [+] Adicionado nova classe de TEF, "TEFPayGo", modelo gpPayGo
 [*] Devido não mais existir o Gerenciador Padrão, TEF_Dial, "gpPayGo" passa a ser

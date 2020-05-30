@@ -37,9 +37,19 @@ unit ACBrTEFDPayGo;
 interface
 
 uses
-  Classes, SysUtils, ACBrTEFDClass, ACBrTEFComum;
+  Classes, SysUtils,
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrTEFDClass, ACBrTEFComum;
 
 const
+  CACBrTEFPayGoRedesTxt = 'RedesPayGo.txt';
+  CACBrTEFPayGoRedesRes = 'RedesPayGo';
   CACBrTEFDPayGo_ArqTemp = 'C:\PAYGO\REQ\intpos.tmp';
   CACBrTEFDPayGo_ArqReq  = 'C:\PAYGO\REQ\intpos.001';
   CACBrTEFDPayGo_ArqResp = 'C:\PAYGO\RESP\intpos.001';
@@ -51,6 +61,54 @@ const
   CACBrTEFDDial_GPExeName = 'C:\TEF_DIAL\tef_dial.exe';
 
 type
+
+  { TACBrTEFPayGoRede }
+
+  TACBrTEFPayGoRede = class
+  private
+    FCNPJ: String;
+    FCodRede: Integer;
+    FCodSATCFe: Integer;
+    FNome: String;
+  public
+    constructor Create;
+    procedure Clear;
+
+    property Codigo: Integer read FCodRede write FCodRede;
+    property Nome: String read FNome write FNome;
+    property CodSATCFe: Integer read FCodSATCFe write FCodSATCFe;
+    property CNPJ: String read FCNPJ write FCNPJ;
+  end;
+
+  { TACBrTEFPayGoTabelaRedes }
+
+  TACBrTEFPayGoTabelaRedes = class(TObjectList{$IfDef NEXTGEN}<TACBrTEFPayGoRede>{$EndIf})
+  private
+    procedure LoadFromStringList(AStringList: TStrings);
+
+  protected
+    FFileName: String;
+    FResourceName: String;
+    FLoaded: Boolean;
+    function LoadFromFile: Boolean;
+    function LoadFromResource: Boolean;
+    procedure SetFileName(AValue: String);
+
+    procedure SetObject (Index: Integer; Item: TACBrTEFPayGoRede);
+    function GetObject (Index: Integer): TACBrTEFPayGoRede;
+    procedure Insert (Index: Integer; Obj: TACBrTEFPayGoRede);
+  public
+    constructor Create(AFileName: String = ''; AResourceName: String = '');
+
+    procedure Load;
+    function Find(ACodigo: Integer): TACBrTEFPayGoRede;
+
+    property FileName: String read FFileName write SetFileName;
+    property ResourceName: String read FResourceName;
+
+    function Add(Obj: TACBrTEFPayGoRede): Integer;
+    property Objects [Index: Integer]: TACBrTEFPayGoRede read GetObject write SetObject; default;
+  end;
 
   { TACBrTEFDRespPayGo }
 
@@ -86,9 +144,181 @@ type
 
 implementation
 
+{$IFDEF FPC}
+ {$R ACBrTEFPayGo.rc}
+{$ELSE}
+ {$R ACBrTEFPayGo.res}
+{$ENDIF}
+
 uses
-  math,
-  ACBrTEFD;
+  math, Types,
+  ACBrTEFD, ACBrUtil, ACBrConsts;
+
+var
+  TabelaRedes: TACBrTEFPayGoTabelaRedes;
+
+{ TACBrTEFPayGoRede }
+
+constructor TACBrTEFPayGoRede.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TACBrTEFPayGoRede.Clear;
+begin
+  FCNPJ := '';
+  FNome := '';
+  FCodRede := 0;
+  FCodSATCFe := 0;
+end;
+
+{ TACBrTEFPayGoTabelaRedes }
+
+constructor TACBrTEFPayGoTabelaRedes.Create(AFileName: String; AResourceName: String);
+begin
+  inherited Create(True);
+
+  if AFileName = '' then
+    FFileName := ApplicationPath + CACBrTEFPayGoRedesTxt
+  else
+    FFileName := AFileName;
+
+  if AResourceName = '' then
+    FResourceName := CACBrTEFPayGoRedesRes
+  else
+    FResourceName := AResourceName;
+
+  Clear;
+end;
+
+procedure TACBrTEFPayGoTabelaRedes.Load;
+begin
+  Clear;
+  FLoaded := LoadFromFile or LoadFromResource;
+end;
+
+procedure TACBrTEFPayGoTabelaRedes.LoadFromStringList(AStringList: TStrings);
+var
+  Lin: String;
+  i: Integer;
+  Colunas: TSplitResult;
+  ARede: TACBrTEFPayGoRede;
+begin
+  i := 0;
+  while i < AStringList.Count do
+  begin
+    Lin := AStringList[i];
+    if copy(Lin,1,1) <> '#' then
+    begin
+      Colunas := Split('|', Lin);
+      if Length(Colunas) > 3 then
+      begin
+        ARede := TACBrTEFPayGoRede.Create;
+        try
+          ARede.Codigo := StrToInt(Colunas[0]);
+          ARede.Nome := Colunas[1];
+          ARede.CodSATCFe := StrToIntDef(Colunas[2], 999);  // 999 = Outros
+          ARede.CNPJ := Colunas[3];
+          Add(ARede);
+        except
+          ARede.Free;
+        end;
+      end;
+    end;
+
+    Inc(i);
+  end;
+end;
+
+function TACBrTEFPayGoTabelaRedes.LoadFromFile: Boolean;
+var
+  SL: TStringList;
+begin
+  Result := False;
+  if (FFileName <> '') and FileExists(FFileName) then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(FFileName);
+      LoadFromStringList(SL);
+      Result := True;
+    finally
+      SL.Free;
+    end;
+  end;
+end;
+
+function TACBrTEFPayGoTabelaRedes.LoadFromResource: Boolean;
+var
+  RS: TResourceStream;
+  SL: TStringList;
+begin
+  {$IfDef FPC}Result := False;{$EndIf}
+
+  RS := TResourceStream.Create(HInstance, FResourceName, RT_RCDATA);
+  SL := TStringList.Create;
+  try
+    // Leitura do Resource pode falhar
+    RS.Position := 0;
+    SL.LoadFromStream(RS);
+    LoadFromStringList(SL);
+    Result := True;
+  finally
+    RS.Free;
+    SL.Free;
+  end;
+end;
+
+procedure TACBrTEFPayGoTabelaRedes.SetFileName(AValue: String);
+begin
+  if (FFileName = AValue) then
+    Exit;
+
+  if (AValue <> '') and (not FileExists(AValue)) then
+    raise Exception.CreateFmt(ACBrStr(cACBrArquivoNaoEncontrado), [AValue]);
+
+  FFileName := AValue;
+  FLoaded := False;
+end;
+
+function TACBrTEFPayGoTabelaRedes.Find(ACodigo: Integer): TACBrTEFPayGoRede;
+var
+  i: Integer;
+begin
+  if not FLoaded then
+    Load;
+
+  Result := Nil;
+  for i := 0 to Count-1 do
+  begin
+    if Objects[i].Codigo = ACodigo then
+    begin
+      Result := Objects[i];
+      Break;
+    end;
+  end;
+end;
+
+procedure TACBrTEFPayGoTabelaRedes.SetObject(Index: Integer; Item: TACBrTEFPayGoRede);
+begin
+  inherited Items[Index] := Item;
+end;
+
+function TACBrTEFPayGoTabelaRedes.GetObject(Index: Integer): TACBrTEFPayGoRede;
+begin
+  Result := TACBrTEFPayGoRede(inherited Items[Index]);
+end;
+
+procedure TACBrTEFPayGoTabelaRedes.Insert(Index: Integer; Obj: TACBrTEFPayGoRede);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TACBrTEFPayGoTabelaRedes.Add(Obj: TACBrTEFPayGoRede): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
 
 { TACBrTEFDRespPayGo }
 
@@ -212,6 +442,9 @@ begin
 end;
 
 procedure TACBrTEFDRespPayGo.ProcessarTipoInterno(ALinha: TACBrTEFLinha);
+var
+  ARede: TACBrTEFPayGoRede;
+  CodRede: Integer;
 begin
   case ALinha.Identificacao of
     707 : fpValorOriginal := ALinha.Informacao.AsFloat;
@@ -223,7 +456,17 @@ begin
       // 739-000 Índice da Rede Adquirente
       fpCodigoRedeAutorizada := ALinha.Informacao.AsString;
       fpNFCeSAT.CodCredenciadora := fpCodigoRedeAutorizada;
-      //TODO: Criar tabela interna -> fpNFCeSAT.CNPJCredenciadora := LinStr;
+      CodRede := StrToIntDef(fpCodigoRedeAutorizada, 0);
+      if (CodRede > 0) then
+      begin
+        ARede := TabelaRedes.Find(CodRede);
+        if Assigned(ARede) then
+        begin
+          fpNFCeSAT.Bandeira := ARede.Nome;
+          fpNFCeSAT.CNPJCredenciadora := ARede.CNPJ;
+          fpNFCeSAT.CodCredenciadora := IntToStrZero(ARede.CodSATCFe, 3);
+        end;
+      end;
     end;
     740 :
     begin
@@ -393,9 +636,13 @@ begin
   inherited FinalizarRequisicao;
 end;
 
+initialization
+  TabelaRedes := TACBrTEFPayGoTabelaRedes.Create();
+
+finalization
+  if Assigned(TabelaRedes) then
+    FreeAndNil(TabelaRedes);
 
 end.
-
-
 
 

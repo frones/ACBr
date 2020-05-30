@@ -51,6 +51,9 @@ Símbolo : Significado
 [+] Adicionada verificação na Inicialização, se o diretório C:\PAYGO existe.
     Caso não exista, o diretório C:\TEF_DIAL, passa a ser usado em modo de
     compatibilidade
+[+] Implementada Tabela de Redes, com CNPJ da Credenciadora, para ser informado
+    no grupo de Pagamentos da NFCe e Cod.Credenciadora para ser informado na
+    Tag "cAdmC" do grupo "MP" do SAT CFe
     (por: DSA)
 
 29/05/2020

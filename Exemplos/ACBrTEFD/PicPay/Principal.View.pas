@@ -146,8 +146,8 @@ begin
 
   //Crie sua conta em https://ecommerce.picpay.com/ para gerar o token e sellertoken
   ACBrPicpay1.Lojista.PicpayToken :=  'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
-  ACBrPicpay1.Lojista.URLCallBack := 'http://www.projetoacbr.com.br/callback';
-  ACBrPicpay1.Lojista.URLReturn := 'http://www.projetoacbr.com.br/cliente/pedido/102030';
+  ACBrPicpay1.Lojista.URLCallBack := 'http://www.exemplo.com.br/callback';
+  ACBrPicpay1.Lojista.URLReturn := 'http://www.exemplo.com.br/cliente/pedido/102030';
 
   ACBrPicpay1.Comprador.Nome := txt_FirstName.Text;
   ACBrPicpay1.Comprador.SobreNome := txt_LastName.Text;

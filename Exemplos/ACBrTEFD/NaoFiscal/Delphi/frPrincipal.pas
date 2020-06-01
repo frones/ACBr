@@ -1109,7 +1109,7 @@ end;
 
 procedure TFormPrincipal.btObterCPFClick(Sender: TObject);
 var
-  Saida: AnsiString;
+  Saida: String;
 begin
   Saida := '';
   if ACBrTEFD1.GPAtual = gpCliSiTef then

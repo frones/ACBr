@@ -40,9 +40,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibGNReNome = 'ACBrLibGNRe';
-  CLibGNReVersao = '0.0.1';
-
   CSessaoRespConsulta = 'STATUS';
   CSessaoRespEnvio    = 'ENVIO';
 

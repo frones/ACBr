@@ -64,19 +64,19 @@ const
 {%region Constructor/Destructor}
 function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_Finalizar: longint;
+function GNRE_Finalizar: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function GNRE_Nome(const sNome: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function GNRE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_ConfigLer(const eArqConfig: PChar): longint;
+function GNRE_ConfigLer(const eArqConfig: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_ConfigGravar(const eArqConfig: PChar): longint;
+function GNRE_ConfigGravar(const eArqConfig: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRe_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function GNRE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
 function GNRE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;

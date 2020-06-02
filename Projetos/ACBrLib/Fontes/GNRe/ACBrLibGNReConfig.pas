@@ -87,8 +87,6 @@ type
     FGuiaConfig: TGuiaConfig;
     FGNReConfig: TConfiguracoesGNRe;
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -184,15 +182,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibGNReConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibGNReNome, '0');
-  Result := (CompareVersions(CLibGNReVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibGNReConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -204,8 +193,6 @@ end;
 procedure TLibGNReConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibGNReNome, CLibGNReVersao);
 
   FGNReConfig.GravarIni(Ini);
   FGuiaConfig.GravarIni(Ini);

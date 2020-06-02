@@ -768,6 +768,7 @@ type
     fpTamanhoConta: Integer;
     fpAOwner: TACBrBanco;
     fpTamanhoMaximoNossoNum: Integer;
+    fpTamanhoNumeroDocumento: Integer;
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
     fpCodigosGeracaoAceitos: String;
@@ -777,8 +778,12 @@ type
     fpCasasDecimaisMoraJuros: Integer;
     fpModuloMultiplicadorInicial: Integer;
     fpModuloMultiplicadorFinal: Integer;
+    fpModuloMultiplicadorAtual: Integer;
     fpCodParametroMovimento: String;
     fpDensidadeGravacao: String;
+    fpQtdRegsLote: Integer;
+    fpQtdRegsCobranca: Integer;
+    fpVlrRegsCobranca: Double;
 
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
@@ -787,29 +792,37 @@ type
        ;const ACBrTitulo: TACBrTitulo):String; Virtual;
 
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para método CalculaDigitoVerificador
-    function ConverterDigitoModuloFinal(): String; virtual;      //Utilizado para método CalculaDigitoVerificador
-    function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para o método MontarCodigoBarras
+    function ConverterDigitoModuloFinal(): String; virtual;                                //Utilizado para método CalculaDigitoVerificador
+    function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; virtual; //Utilizado para o método MontarCodigoBarras
     procedure ValidaNossoNumeroResponsavel(out ANossoNumero: String;
-      out ADigVerificador: String; const ACBrTitulo :TACBrTitulo); virtual;   //Utilizado para validar Nosso número na geraçao Remessa e Retorno CNAB400
+      out ADigVerificador: String; const ACBrTitulo :TACBrTitulo); virtual;                //Utilizado para validar Nosso número na geraçao Remessa e Retorno CNAB400
     function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; virtual;   //Utilizado para Montar Instruções CNAB 400
-    function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir Especie na geração Remessa
-    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir Tipo do Sacado na geração Remessa
-    function DefineTipoBoleto(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir Tipo do Boleto na Remessa
-    function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String; virtual; //Utilizado para definir Instruções de Protesto para Remessa
-    function DefineCaracTitulo(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para definir caracteristica do título na remessa
-    function DefineTipoDiasProtesto(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para definir Tipo de Dias Protesto na remessa
-    function DefineAceite(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir o tipo de aceite na geração da remessa
+    function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; virtual;       //Utilizado para definir Especie na geração Remessa
+    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; virtual;       //Utilizado para definir Tipo do Sacado na geração Remessa
+    function DefineTipoSacadoAvalista(const ACBrTitulo: TACBrTitulo): String; virtual;//Utilizado para definir Tipo do Sacado avalista na geração Remessa
+    function DefineTipoBoleto(const ACBrTitulo: TACBrTitulo): String; virtual;       //Utilizado para definir Tipo do Boleto na Remessa
+    function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String; virtual;     //Utilizado para definir Instruções de Protesto para Remessa
+    function DefineCaracTitulo(const ACBrTitulo: TACBrTitulo): String; virtual;      //Utilizado para definir caracteristica do título na remessa
+    function DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir Código Protesto do título na remessa
+    function DefineTipoDiasProtesto(const ACBrTitulo: TACBrTitulo): String; virtual; //Utilizado para definir Tipo de Dias Protesto na remessa
+    function DefineAceite(const ACBrTitulo: TACBrTitulo): String; virtual;           //Utilizado para definir o tipo de aceite na geração da remessa
     function DefineCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String; virtual; //Utilizado para definir o Código de Mora na Remessa.
-    function DefineDataMoraJuros(const ACBrTitulo: TACBrTitulo): String; virtual;   //Utilizado para definir a Data de Mora Juros na Remessa.
+    function DefineDataMoraJuros(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;   //Utilizado para definir a Data de Mora Juros na Remessa.
     function DefineCodigoDesconto(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizando para definir Código de Desconto na Remessa
-    function DefineDataDesconto(const ACBrTitulo: TACBrTitulo): String; virtual;    //Utilizado para definir a Data de Desconto na Remessa
-    function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; virtual;      //Utilizado para definir o Codigo Multa na Remessa
-    function DefineDataMulta(const ACBrTitulo: TACBrTitulo): String; virtual;        //Utilizado para definir data multa na Remessa
-    function DefineTamanhoContaRemessa: Integer; virtual;     //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
-    function DefinePosicaoNossoNumeroRetorno400: Integer; virtual;     //Define posição para leitura de Retorno CNAB400 campo: NossoNumero
+    function DefineDataDesconto(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;    //Utilizado para definir a Data de Desconto na Remessa
+    function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; virtual;     //Utilizado para definir o Codigo Multa na Remessa
+    function DefineDataMulta(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;       //Utilizado para definir data multa na Remessa
+    function DefineTamanhoContaRemessa: Integer; virtual;                           //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
+    function DefinePosicaoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
+    function DefinePosicaoCarteiraRetorno:Integer; virtual;                          //Define posição para leitura de Retorno campo: NumeroDocumento
 
-    function DefineTipoInscricao: String; virtual; //Utilizado para definir Tipo de Inscrição na Remessa
-    function DefineResponsEmissao: String; virtual; //Utilizado para definir Responsável Emissão na Remessa
+    function DefineTipoInscricao: String; virtual;                            //Utilizado para definir Tipo de Inscrição na Remessa
+    function DefineResponsEmissao: String; virtual;                           //Utilizado para definir Responsável Emissão na Remessa
+    function DefineCampoConvenio(const ATam: Integer = 20): String; virtual;  //Utilizado para definir campo convenio na Remessa
+    function DefineCampoDigitoAgencia: String; virtual;                       //Utilizado para definir Digito da Agencia na Remessa
+    function DefineCampoDigitoConta: String; virtual;                         //Utilizado para definir Digito da Conta na Remessa
+    function DefineCampoDigitoAgenciaConta: String; virtual;                  //Utilizado para definir Digito da Agencia / Conta na Remessa
+    function DefinePosicaoUsoExclusivo: String; virtual;                      //Utilizado para definir Posições de uso exclusivo FEBRABAN na Remessa
 
   public
     Constructor create(AOwner: TACBrBanco);
@@ -821,6 +834,7 @@ type
     property Nome      : String          read fpNome;
     Property Modulo    : TACBrCalcDigito read fpModulo;
     property TamanhoMaximoNossoNum: Integer    read fpTamanhoMaximoNossoNum;
+    property TamanhoNumeroDocumento: Integer   read fpTamanhoNumeroDocumento;
     property TamanhoAgencia  :Integer read fpTamanhoAgencia;
     property TamanhoConta    :Integer read fpTamanhoConta;
     property TamanhoCarteira :Integer read fpTamanhoCarteira;
@@ -834,8 +848,12 @@ type
     property CasasDecimaisMoraJuros: Integer read fpCasasDecimaisMoraJuros;
     property ModuloMultiplicadorInicial: Integer read fpModuloMultiplicadorInicial;
     property ModuloMultiplicadorFinal: Integer read fpModuloMultiplicadorFinal;
+    property ModuloMultiplicadorAtual: Integer read fpModuloMultiplicadorAtual;
     property CodParametroMovimento: String read fpCodParametroMovimento;
     property DensidadeGravacao: String read fpDensidadeGravacao;
+    property QtdRegsLote: Integer read fpQtdRegsLote write fpQtdRegsLote;
+    property QtdRegsCobranca: Integer read fpQtdRegsCobranca write fpQtdRegsCobranca;
+    property VlrRegsCobranca: Double read fpVlrRegsCobranca write fpVlrRegsCobranca;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; virtual;
@@ -894,6 +912,7 @@ type
     function GetTamanhoCarteira: Integer;
     function GetTamanhoConta: Integer;
     function GetTamanhoMaximoNossoNum : Integer;
+    function GetTamanhoNumeroDocumento : Integer;
     function GetCodigosMoraAceitos: String;
     function GetCodigosGeracaoAceitos: string;
     function GetLocalPagamento: String;
@@ -926,6 +945,7 @@ type
     property TamanhoCarteira       :Integer read GetTamanhoCarteira;
     property CodigosMoraAceitos    :String  read GetCodigosMoraAceitos;
     property CodigosGeracaoAceitos :String  read GetCodigosGeracaoAceitos;
+    property TamanhoNumeroDocumento:Integer  read GetTamanhoNumeroDocumento;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
@@ -2528,6 +2548,11 @@ begin
    Result := BancoClass.TamanhoMaximoNossoNum;
 end;
 
+function TACBrBanco.GetTamanhoNumeroDocumento: Integer;
+begin
+  Result:= BancoClass.TamanhoNumeroDocumento;
+end;
+
 function TACBrBanco.GetCodigosMoraAceitos: String;
 begin
   Result := BancoClass.CodigosMoraAceitos;
@@ -2828,6 +2853,7 @@ begin
    fpTamanhoMaximoNossoNum := 10;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 10;
+   fpTamanhoNumeroDocumento:= 15;
    fpCodigosMoraAceitos    := '12';
    fpCodigosGeracaoAceitos := '0123456789';
    fpNumeroCorrespondente  := 0;
@@ -2836,8 +2862,12 @@ begin
    fpCasasDecimaisMoraJuros:= 2;
    fpModuloMultiplicadorInicial:= 0;
    fpModuloMultiplicadorFinal:= 0;
+   fpModuloMultiplicadorAtual:=0;
    fpCodParametroMovimento  := '';
-   fpDensidadeGravacao     := '';
+   fpDensidadeGravacao      := '';
+   fpQtdRegsLote            := 0;
+   fpQtdRegsCobranca        := 0;
+   fpVlrRegsCobranca        := 0;
    fpModulo                := TACBrCalcDigito.Create;
    fpOrientacoesBanco      := TStringList.Create;
 end;
@@ -2904,12 +2934,12 @@ begin
       PadRight('', 9, ' ')                             + //9 a 17 Uso exclusivo FEBRABAN/CNAB
       DefineTipoInscricao                              + //18 - Tipo de inscrição do cedente
       PadLeft(OnlyNumber(CNPJCPF), 14, '0')            + //19 a 32 -Número de inscrição do cedente
-      PadLeft(Convenio,20, '0')                        + //33 a 52 - Código do convênio no banco-Alfa
+      DefineCampoConvenio(20)                          + //33 a 52 - Código do convênio no banco-Alfa
       PadLeft(OnlyNumber(Agencia), 5, '0')             + //53 a 57 - Código da agência do cedente-Numero
-      PadRight(AgenciaDigito, 1 , ' ')                 + //58 - Dígito da agência do cedente -Alfa
+      DefineCampoDigitoAgencia                         + //58 - Dígito da agência do cedente -Alfa
       Padleft(Conta, 12 , '0')                         + //59-70 - Número da Conta Corrente -Numero
-      PadLeft(ContaDigito, 1, '0')                     + //71-71 -Dígito Verificador da Conta -Alfa
-      ' '                                              + //BANCO RETORNOU QUE DEVE GRAVAR VAZIO CONTRARIO AO LAYOUT
+      DefineCampoDigitoConta                           + //71-71 -Dígito Verificador da Conta -Alfa
+      DefineCampoDigitoAgenciaConta                    + //BANCO RETORNOU QUE DEVE GRAVAR VAZIO CONTRARIO AO LAYOUT
       PadRight(nome, 30, ' ')                          + //73 102 - Nome da Empresa-Alfa
       PadRight(fpNome, 30, ' ')                        + //103 a 132 -Nome do banco-Alfa
       PadRight('', 10, ' ')                            + //133 a 142 - Uso exclusivo FEBRABAN/CNAB  -Alfa
@@ -2919,9 +2949,7 @@ begin
       PadLeft(IntToStr(NumeroRemessa), 6, '0')         + //158 a 163 - Número seqüencial do arquivo
       PadLeft(IntToStr(fpLayoutVersaoArquivo), 3, '0') + //164 a 166 - Número da versão do layout do arquivo
       PadLeft(fpDensidadeGravacao, 5, '0')             + //167 a 171 - Densidade de gravação do arquivo (BPI)  fixo 06250
-      Space(20)                                        + // 172 a 191 - Uso reservado do banco
-      PadRight('REMESSA-PRODUCAO', 20, ' ')            + // 192 a 211 - Uso reservado da empresa
-      PadRight('', 29, ' '));                             // 212 a 240 - Uso Exclusivo FEBRABAN / CNAB
+      DefinePosicaoUsoExclusivo                        ); // 172 a 240 - Uso Exclusivo FEBRABAN / CNAB
 
       { GERAR REGISTRO HEADER DO LOTE }
 
@@ -2935,12 +2963,12 @@ begin
       ' '                                        + //17 - Uso exclusivo FEBRABAN/CNAB
       DefineTipoInscricao                        + //18 - Tipo de inscrição do cedente
       PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
-      PadLeft(Convenio,20, '0')                  + //33 a 52 - Código do convênio no banco-Alfa
+      DefineCampoConvenio(20)                    + //33 a 52 - Código do convênio no banco-Alfa
       Padleft(Agencia, 5, '0')                   + //54 a 58 - Agência Mantenedora da Conta
-      PadLeft(OnlyNumber(AgenciaDigito), 1, '0') + //59 - Dígito da agência do cedente
+      DefineCampoDigitoAgencia                   + //59 - Dígito da agência do cedente
       Padleft(Conta, 12 , '0')                   + //60 -71 Número da Conta Corrente
-      PadLeft(ContaDigito, 1, '0')               + //72 a 72 - Dígito Verificador da Conta
-      Padleft(DigitoVerificadorAgenciaConta,1,' ')+ //73 a 73 - Dígito Verificador da Ag/Conta
+      DefineCampoDigitoConta                     + //72 a 72 - Dígito Verificador da Conta
+      DefineCampoDigitoAgenciaConta              + //73 a 73 - Dígito Verificador da Ag/Conta
       PadRight(Nome, 30, ' ')                    + //74 a 103 - Nome do cedente
       PadRight('', 40, ' ')                      + //104 a 143 - Mensagem 1
       PadRight('', 40, ' ')                      + //144 a 183 - Mensagen 2
@@ -2983,12 +3011,13 @@ end;
 
 function TACBrBancoClass.GerarRegistroTrailler240 ( ARemessa: TStringList) : String;
 var
-  wQTDTitulos: Integer;
   ListTrailler: TStringList;
 begin
   Result:= '';
 
-  wQTDTitulos := ARemessa.Count - 1;
+  if (fpQtdRegsLote = 0) then
+    fpQtdRegsLote := 3 * ( ARemessa.Count - 1 ); //Corresponde a qtd linhas da remessa * qdt Segmentos do arquivo (3 é o padrão)
+
   {REGISTRO TRAILER DO LOTE}
 
   ListTrailler:= TStringList.Create;
@@ -2997,9 +3026,9 @@ begin
              '0001'                                                     + //Lote Lote de Serviço 4 7 4 - Num *G002
              '5'                                                        + //Tipo de Registro 8 8 1 - Num ‘5’ *G003
              Space(9)                                                   + //CNAB Uso Exclusivo FEBRABAN/CNAB 9 17 9 - Alfa Brancos G004
-             IntToStrZero((3 * wQTDTitulos + 2 ), 6)                    + //Qtde de Registros Quantidade de Registros no Lote 18 23 6 - Num *G057
-             IntToStrZero((0), 6)                                       + //Quantidade de Títulos em Cobrança 24 29 6 - Num *C070  INFORMAR ZERO SEGUNDO O BANCO
-             IntToStrZero( 0, 17)                                       + //Valor Total dosTítulos em Carteiras 30 46 15 2 Num *C071     //ZERO SEGUNDO O BANCO
+             IntToStrZero((fpQtdRegsLote + 2 ), 6)                      + //Qtde de Registros Quantidade de Registros no Lote 18 23 6 - Num *G057
+             IntToStrZero((fpQtdRegsCobranca), 6)                       + //Quantidade de Títulos em Cobrança 24 29 6 - Num *C070  INFORMAR ZERO SEGUNDO O BANCO
+             IntToStrZero( round( fpVlrRegsCobranca * 100), 17)         + //Valor Total dosTítulos em Carteiras 30 46 15 2 Num *C071     //ZERO SEGUNDO O BANCO
              PadRight('', 6, '0')                                       + //Quantidade de Títulos em Cobrança 47 52 6 - Num *C070
              PadRight('',17, '0')                                       + //Valor Total dosTítulos em Carteiras 53 69 15 2 Num *C071
              PadRight('',6,  '0')                                       + //Quantidade de Títulos em Cobrança 70 75 6 - Num *C070
@@ -3016,12 +3045,16 @@ begin
              '9'                                                        + //Tipo do registro: Registro trailer do arquivo
              PadRight('',9,' ')                                         + //Uso exclusivo FEBRABAN/CNAB}
              '000001'                                                   + //Quantidade de lotes do arquivo (Registros P,Q,R, header e trailer do lote e do arquivo)
-             IntToStrZero((3 * wQTDTitulos)+4, 6)                       + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
+             IntToStrZero((fpQtdRegsLote + 4), 6)                       + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
              Padleft('0',6,'0')                                         + //Uso exclusivo FEBRABAN/CNAB}
              PadRight('',205,' '));                                       //Uso exclusivo FEBRABAN/CNAB}
 
     Result := RemoverQuebraLinhaFinal(ListTrailler.Text);
+
   finally
+    fpQtdRegsLote      := 0;
+    fpQtdRegsCobranca  := 0;
+    fpVlrRegsCobranca  := 0;
     ListTrailler.Free;
   end;
 
@@ -3198,8 +3231,9 @@ begin
         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        NossoNumero          := Copy(Linha,DefinePosicaoNossoNumeroRetorno400,11);
-        Carteira             := Copy(Linha,22,3);
+        ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
+        NossoNumero          := Copy(Linha,DefinePosicaoNossoNumeroRetorno,11);
+        Carteira             := Copy(Linha,DefinePosicaoCarteiraRetorno,3);
         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
@@ -3251,6 +3285,10 @@ begin
        Cedente.Nome     := rCedente;
        Cedente.CNPJCPF  := rCNPJCPF;
        Cedente.Convenio := rConvenioCedente;
+       Cedente.Agencia       := trim(copy(ARetorno[0], 53, 5));
+       Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
+       Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
+       Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
      end;
 
      case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
@@ -3282,8 +3320,8 @@ begin
         if copy(Linha, 14, 1) = 'T' then
         begin
           SeuNumero := copy(Linha, 106, 25);
-          NumeroDocumento := copy(Linha, 59, 15);
-          Carteira := copy(Linha, 39, 2);
+          NumeroDocumento := copy(Linha, 59, fpTamanhoNumeroDocumento);
+          Carteira := copy(Linha, DefinePosicaoCarteiraRetorno, TamanhoCarteira);
 
           case strtoint(copy(Linha, 58, 1)) of
             1: CaracTitulo := tcSimples;
@@ -3299,7 +3337,7 @@ begin
 
            ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
 
-           NossoNumero    := copy(Linha, 46, 11);
+           NossoNumero    := Copy(Linha,DefinePosicaoNossoNumeroRetorno, TamanhoMaximoNossoNum);
            ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
 
            OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));
@@ -3308,7 +3346,7 @@ begin
 
            while (IdxMotivo < 223) do
            begin
-              if (trim(Copy(Linha, IdxMotivo, 2)) <> '') then
+              if (trim(Copy(Linha, IdxMotivo, 2)) <> '')  and (trim(Copy(Linha, IdxMotivo, 2)) <> '00') then
               begin
                  MotivoRejeicaoComando.Add(Copy(Linha, IdxMotivo, 2));
                  DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, StrToIntDef(Copy(Linha, IdxMotivo, 2), 0)));
@@ -3364,6 +3402,8 @@ begin
     Modulo.MultiplicadorInicial := fpModuloMultiplicadorInicial;
   if fpModuloMultiplicadorFinal > 0 then
     Modulo.MultiplicadorFinal := fpModuloMultiplicadorFinal;
+  if fpModuloMultiplicadorAtual > 0 then
+    Modulo.MultiplicadorAtual := fpModuloMultiplicadorAtual;
 
   Modulo.Documento := DefineNumeroDocumentoModulo(ACBrTitulo);
 
@@ -3778,6 +3818,22 @@ begin
   end;
 end;
 
+function TACBrBancoClass.DefineTipoSacadoAvalista(const ACBrTitulo: TACBrTitulo
+  ): String;
+begin
+  with ACBrTitulo do
+  begin
+    case Sacado.SacadoAvalista.Pessoa of
+        pFisica   : Result := '1';
+        pJuridica : Result := '2';
+        pOutras   : Result := '9';
+     else
+        Result := '0';
+     end;
+
+  end;
+end;
+
 function TACBrBancoClass.DefineTipoBoleto(const ACBrTitulo: TACBrTitulo
   ): String;
 begin
@@ -3835,6 +3891,23 @@ begin
 
 end;
 
+function TACBrBancoClass.DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    case CodigoNegativacao of
+        cnNenhum           :  Result := '0';
+        cnProtestarCorrido :  Result := '1';
+        cnProtestarUteis   :  Result := '2';
+        cnNaoProtestar     :  Result := '3';
+        cnNegativar        :  Result := '7';
+        cnNaoNegativar     :  Result := '8';
+       else
+        Result := '0';
+      end;
+  end;
+end;
+
 function TACBrBancoClass.DefineTipoDiasProtesto(const ACBrTitulo: TACBrTitulo): String;
 begin
   with ACBrTitulo do
@@ -3885,19 +3958,19 @@ begin
 
 end;
 
-function TACBrBancoClass.DefineDataMoraJuros(const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoClass.DefineDataMoraJuros(const ACBrTitulo: TACBrTitulo; AFormat: String): String;
 begin
   with ACBrTitulo do
   begin
     if (ValorMoraJuros > 0) then
     begin
       if DataMoraJuros > 0 then
-        Result := FormatDateTime('ddmmyyyy', DataMoraJuros)
+        Result := FormatDateTime(AFormat, DataMoraJuros)
       else
-        Result := PadRight('', 8, '0');
+        Result := PadRight('', Length(AFormat), '0');
     end
     else
-      Result := PadRight('', 8, '0');
+      Result := PadRight('', Length(AFormat), '0');
   end;
 
 end;
@@ -3923,19 +3996,19 @@ begin
 
 end;
 
-function TACBrBancoClass.DefineDataDesconto(const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoClass.DefineDataDesconto(const ACBrTitulo: TACBrTitulo; AFormat: String): String;
 begin
   with ACBrTitulo do
   begin
     if (ValorDesconto > 0) then
     begin
       if (DataDesconto > 0) then
-        Result := FormatDateTime('ddmmyyyy', DataDesconto)
+        Result := FormatDateTime(AFormat, DataDesconto)
       else
-        Result := PadRight('', 8, '0');
+        Result := PadRight('', Length(AFormat), '0');
     end
     else
-      Result := PadRight('', 8, '0');
+      Result := PadRight('', Length(AFormat), '0');
 
   end;
 
@@ -3953,15 +4026,53 @@ begin
   end;
 end;
 
-function TACBrBancoClass.DefineDataMulta(const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoClass.DefineDataMulta(const ACBrTitulo: TACBrTitulo; AFormat: String): String;
 begin
   with ACBrTitulo do
   begin
     if (PercentualMulta > 0) then
-      Result :=  IfThen(DataMulta > 0,FormatDateTime('ddmmyyyy', DataMulta),FormatDateTime('ddmmyyyy', Vencimento + 1))
+      Result :=  IfThen(DataMulta > 0,FormatDateTime(AFormat, DataMulta),FormatDateTime(AFormat, Vencimento + 1))
     else
-      Result := PadRight('', 8, '0');
+      Result := PadRight('', Length(AFormat), '0');
   end;
+end;
+
+function TACBrBancoClass.DefineCampoDigitoConta: String;
+begin
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    Result :=  PadLeft(ContaDigito, 1, '0');
+  end;
+
+end;
+
+function TACBrBancoClass.DefineCampoDigitoAgenciaConta: String;
+begin
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    Result :=  PadLeft(DigitoVerificadorAgenciaConta, 1, ' ');
+  end;
+end;
+
+function TACBrBancoClass.DefinePosicaoUsoExclusivo: String;
+begin
+  Result := Space(20)                                        + // 172 a 191 - Uso reservado do banco
+            PadRight('REMESSA-PRODUCAO', 20, ' ')            + // 192 a 211 - Uso reservado da empresa
+            PadRight('', 29, ' ');                            // 212 a 240 - Uso Exclusivo FEBRABAN / CNAB
+end;
+
+function TACBrBancoClass.DefineCampoConvenio(const ATam: Integer): String;
+begin
+  Result := PadLeft(ACBrBanco.ACBrBoleto.Cedente.Convenio, ATam, '0');
+end;
+
+function TACBrBancoClass.DefineCampoDigitoAgencia: String;
+begin
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    Result :=  PadLeft(AgenciaDigito, 1, '0');
+  end;
+
 end;
 
 function TACBrBancoClass.DefineTamanhoContaRemessa: Integer;
@@ -3969,9 +4080,20 @@ begin
   Result:= ACBrBanco.TamanhoConta;
 end;
 
-function TACBrBancoClass.DefinePosicaoNossoNumeroRetorno400: Integer;
+function TACBrBancoClass.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
-  Result := 71;
+  if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
+    Result := 46
+  else
+    Result := 71;
+end;
+
+function TACBrBancoClass.DefinePosicaoCarteiraRetorno: Integer;
+begin
+  if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
+    Result := 39
+  else
+    Result := 22;
 end;
 
 function TACBrBancoClass.InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;
@@ -4012,7 +4134,7 @@ begin
   end;
 
   { Insere o digito verificador calculado no código de barras }
-  Result := IntToStrZero(Numero, 3) + '9' + sDigitoCodBarras + Copy(sCodigoBarras, 5, 39);
+  Result := copy( sCodigoBarras, 1, 4) + sDigitoCodBarras + Copy(sCodigoBarras, 5, 39);
 
 end;
 

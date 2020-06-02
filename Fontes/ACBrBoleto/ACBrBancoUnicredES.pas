@@ -50,7 +50,7 @@ type
     function CodDescontoToStr(const pCodigoDesconto : TACBrCodigoDesconto): String;
   protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
-    function DefinePosicaoNossoNumeroRetorno400: Integer; override;
+    function DefinePosicaoNossoNumeroRetorno: Integer; override;
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -184,7 +184,7 @@ begin
   Result:= ACBrTitulo.NossoNumero;
 end;
 
-function TACBrBancoUnicredES.DefinePosicaoNossoNumeroRetorno400: Integer;
+function TACBrBancoUnicredES.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
   Result := 51;
 end;

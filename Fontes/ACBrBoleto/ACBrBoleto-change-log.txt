@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/06/2020
+-- ACBrBoleto, ACBrBancoItau --
+[*] Realizado Refatoração na Classe Banco Itau e Criação de Testes Unitários para a classe
+
 22/05/2020
 
 -- ACBrBoleto --

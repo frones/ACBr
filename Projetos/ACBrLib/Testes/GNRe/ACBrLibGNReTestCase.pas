@@ -39,6 +39,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibGNReNome = 'ACBrLibGNRe';
+
 type
 
   { TTestACBrGNReLib }
@@ -149,13 +152,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, GNRe_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibGNReVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, GNRe_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibGNReVersao), Bufflen);
-  AssertEquals(CLibGNReVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrGNReLib.Test_GNRe_ConfigLerValor;
@@ -166,9 +169,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GNRe_ConfigLerValor(CSessaoVersao, CLibGNReNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, GNRE_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibGNReVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrGNReLib.Test_GNRe_ConfigGravarValor;

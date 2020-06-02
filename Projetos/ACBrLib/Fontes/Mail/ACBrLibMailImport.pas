@@ -49,9 +49,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrMailLIBName = 'ACBrMail64.so';
+  CACBrMailLIBName = 'acbrmail64.so';
   {$Else}
-  CACBrMailLIBName = 'ACBrMail32.so';
+  CACBrMailLIBName = 'acbrmail32.so';
   {$EndIf}
  {$EndIf}
 

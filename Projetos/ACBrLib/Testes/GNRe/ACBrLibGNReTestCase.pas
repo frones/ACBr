@@ -62,15 +62,6 @@ type
     procedure Test_GNRe_CarregarINI;
 
     procedure Test_GNRe_Enviar;
-
-//    procedure Test_GNRe_LimparListaGuiaRetorno;
-//    procedure Test_GNRe_CarregarGuiaRetorno;
-
-//    procedure Test_GNRe_Imprimir;
-//    procedure Test_GNRe_ImprimirPDF;
-
-//    procedure Test_GNRe_Consultar;
-//    procedure Test_GNRe_EnviarEmail;
   end;
 
 implementation
@@ -230,68 +221,7 @@ begin
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 end;
-(*
-procedure TTestACBrGNReLib.Test_GNRe_LimparListaGuiaRetorno;
-begin
-  // Iniciando a Limpeza da Lista de Guia Retorno
-  AssertEquals('Erro ao limpar a lista de Guia Retorno', ErrOk, GNRe_LimparListaGuiaRetorno);
-end;
 
-procedure TTestACBrGNReLib.Test_GNRe_CarregarGuiaRetorno;
-var
-  Path, NomeTXT: String;
-begin
-  Test_GNRe_LimparListaGuiaRetorno;
-
-  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\GNRe\bin\';
-  NomeTXT := '858000000011773803021828990100000021739916043002-gnre.txt';
-  Path := Path + NomeTXT;
-
-  // Iniciando o Carregamento do TXT da Guia Retorno
-  AssertEquals('Erro ao carregar o TXT da Guia Retorno', ErrOk,
-    GNRe_CarregarGuiaRetorno(PChar(Path)));
-end;
-
-procedure TTestACBrGNReLib.Test_GNRe_Imprimir;
-begin
-  // Iniciando a Impressão do Guia
-  AssertEquals('Erro ao Imprimir o Guia', ErrOk, GNRe_Imprimir);
-end;
-
-procedure TTestACBrGNReLib.Test_GNRe_ImprimirPDF;
-begin
-  // Iniciando a geração do PDF do Guia
-  AssertEquals('Erro ao gerar o PDF do Guia', ErrOk, GNRe_ImprimirPDF);
-end;
-
-procedure TTestACBrGNReLib.Test_GNRe_Consultar;
-var
-  Resposta: PChar;
-  Tamanho: Longint;
-begin
-  // Iniciando a Consulta
-  Resposta := '';
-  Tamanho := 0;
-
-  AssertEquals('Erro ao Consultar a UF', ErrOk, GNRe_Consultar('PE', 1500, Resposta, Tamanho));
-
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-end;
-
-procedure TTestACBrGNReLib.Test_GNRe_EnviarEmail;
-var
-  Path, ArqGNRe: String;
-begin
-  // Iniciando o envio do e-mail
-  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\GNRe\bin\';
-  ArqGNRe := Path + '28140417957142000144580170000000031895518397-GNRe.xml';
-
-  AssertEquals('Erro ao enviar o e-mail', ErrOk,
-    GNRe_EnviarEmail('italo.jurisato@gmail.com', PChar(ArqGNRe), True,
-      'Teste de envio', '', '', 'Em anexo o GNRe') );
-end;
-*)
 initialization
   RegisterTest(TTestACBrGNReLib);
 

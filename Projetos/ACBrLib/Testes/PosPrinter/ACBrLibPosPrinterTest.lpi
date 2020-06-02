@@ -67,7 +67,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
-      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\PosPrinter"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

@@ -51,20 +51,18 @@
 |*    Régys Borges da Silveira
 ******************************************************************************}
 
-// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC,
+// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC, (NÃO RECOMENDADO)
 {.$DEFINE DFE_SEM_OPENSSL}
-// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXMLSEC, mas continue suportando a LibXML2
+// Comente a linha abaixo, se você quer que seu Executável dependa das DLLs LibXMLSEC (NAO RECOMENDADO)
 {$DEFINE DFE_SEM_XMLSEC}
-// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, mas continue suportando LibXMLSEC
+// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2. (NAO RECOMENDADO)
 {.$DEFINE DFE_SEM_LIBXML2}
-// Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (recomendado)
+// Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (RECOMENDADO)
 {.$DEFINE DFE_SEM_CAPICOM}
-// Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML(recomendado)
+// Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML (RECOMENDADO)
 {.$DEFINE DFE_SEM_MSXML}
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
 {.$DEFINE DFE_SEM_INDY}
-// Descomente a linha abaixo, se você deseja utilizar a libxml2 para ler e gerar os arquivos xml
-{.$DEFINE DFE_ACBR_LIBXML2}
 
 {$IfDef DFE_SEM_OPENSSL}
   {$Define DFE_SEM_XMLSEC}

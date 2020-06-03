@@ -149,11 +149,11 @@ begin
   ACBrPicpay1.Lojista.URLCallBack := 'http://www.exemplo.com.br/callback';
   ACBrPicpay1.Lojista.URLReturn := 'http://www.exemplo.com.br/cliente/pedido/102030';
 
-  ACBrPicpay1.Comprador.Nome := txt_FirstName.Text;
+  ACBrPicpay1.Comprador.Nome      := txt_FirstName.Text;
   ACBrPicpay1.Comprador.SobreNome := txt_LastName.Text;
   ACBrPicpay1.Comprador.Documento :=  txt_Document.Text;
-  ACBrPicpay1.Comprador.Email := txt_email.Text;
-  ACBrPicpay1.Comprador.Telefone := txt_Phone.Text;
+  ACBrPicpay1.Comprador.Email     := txt_email.Text;
+  ACBrPicpay1.Comprador.Telefone  := txt_Phone.Text;
 
   ACBrPicpay1.Enviar;
 

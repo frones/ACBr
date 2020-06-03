@@ -50,18 +50,22 @@ unit ACBrPicpay;
 interface
 
 uses
-  ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket,
+  Classes, SysUtils,
   {$IFDEF FPC}
   base64,
   {$ELSE}
   EncdDecd,
   {$ENDIF}
-  Classes, SysUtils, Jsons, httpsend, synautil, StrUtils;
+  Jsons, httpsend, synautil, StrUtils,
+   ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket
+   , SyncObjs
+   //, ACBrPicpayThreadCallback
+   ;
 
 const
-  PICPAY_URL_CANCELAMENTO = 'https://appws.picpay.com/ecommerce/public/payments/{referenceId}/cancellations';
-  PICPAY_URL_ENVIO = 'https://appws.picpay.com/ecommerce/public/payments';
-  PICPAY_URL_RETORNO = 'https://appws.picpay.com/ecommerce/public/payments/{referenceId}/status';
+  PICPAY_URL_REQUISICAO_PAG   = 'https://appws.picpay.com/ecommerce/public/payments';
+  PICPAY_URL_CANCELAMENTO_REQ = 'https://appws.picpay.com/ecommerce/public/payments/{referenceId}/cancellations';
+  PICPAY_URL_STATUS_REQ       = 'https://appws.picpay.com/ecommerce/public/payments/{referenceId}/status';
 
 type
   EACBrPicpayError = class( Exception ) ;
@@ -72,28 +76,31 @@ type
 
   TErrorPayment = procedure (Error : String) of Object;
 
-//  TACBrPicPayPessoa = (pFisica, pJuridica, pOutras);
   TACBrPicPayPessoa = (pFisica, pJuridica);
 
-//  TACBrTipoRetorno = (trThread, trCallback);
-//  TACBrTipoRetornoPicpay = trThread..trCallback;
-  TACBrTipoRetornoPicpay = (trThread, trCallback);
+  TACBrTipoRetornoPicpay = (trNenhum, trThread, trCallback);
 
-
-  TACBrPicPayComprador = class;
   TACBrPicPay = class;
-  TACBrPicPayLojista = class;
 
   { TACBrThread }
   TACBrPicPayThread = class(TThread)
   private
+    fAcordaEvt: TEvent;
+    fPausado: Boolean;
     fACBrPicpay: TACBrPicPay;
+    fUltimoTempoAguardo: Integer;
+    function getPausado: Boolean;
+    procedure setPausado(const Value: Boolean);
     procedure StatusPayment;
+    procedure FazWaitingPayment;
+    procedure FazConsulta;
   protected
     procedure Execute; override;
   public
-    constructor Create ( AOwner: TComponent );
+    constructor Create ( AOwner: TACBrPicPay );
     destructor Destroy; override;
+
+    property Pausado: Boolean read getPausado write setPausado;
   end;
 
   { TACBrLojista }
@@ -151,6 +158,7 @@ type
     property TipoInscricao: TACBrPicPayPessoa  read fTipoInscricao write  SetTipoInscricao;
   end;
 
+
   { TACBrPicpay }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -176,7 +184,7 @@ type
 
     fLojista: TACBrPicPayLojista;
     fComprador: TACBrPicPayComprador;
-    fThread: TACBrPicPayThread;
+    fThreadAguardaRetorno: TACBrPicPayThread;
 
     procedure AguardarRetorno;
 
@@ -191,7 +199,7 @@ type
     property Status: string read fStatus;
     procedure Enviar;
     procedure Consultar;
-    property CancelarAguardoRetorno: Boolean write fCancelarAguardoRetorno;
+    procedure CancelarAguardoRetorno;
     function Cancelar(const aAuthorizationId: string): Boolean;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -216,9 +224,27 @@ type
 
 implementation
 
-{ *** TACBrThread *** }
+{ *** TACBrPicPayThread *** }
 
 { Private }
+
+
+function TACBrPicPayThread.getPausado: Boolean;
+begin
+  Result := fPausado;
+end;
+
+procedure TACBrPicPayThread.setPausado(const Value: Boolean);
+begin
+  if (not Terminated) and (fPausado <> Value) then
+  begin
+    fPausado := Value;
+    if fPausado then
+      fAcordaEvt.ResetEvent
+    else
+      fAcordaEvt.SetEvent;
+  end;
+end;
 
 procedure TACBrPicPayThread.StatusPayment;
 begin
@@ -231,34 +257,65 @@ end;
 
 procedure TACBrPicPayThread.Execute;
 begin
-  repeat
-    Sleep(1000);
-    Dec(fACBrPicpay.fTempoRetorno);
+  while (not Terminated) do
+  begin
+    Pausado := True;
+    fAcordaEvt.WaitFor(INFINITE);
+    // Foi acordado para terminar?
+    if not Terminated then FazConsulta;
+  end;
+end;
 
-    if fACBrPicpay.fQRCode <> '' then
-      fACBrPicpay.Consultar;
-
-    if Assigned(fACBrPicpay.fOnWaitingPayment) then
-      fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status);
-
-  until (fACBrPicpay.fStatus = 'paid') or fACBrPicpay.fCancelarAguardoRetorno or (fACBrPicpay.fTempoRetorno <= 0);
-  Synchronize(StatusPayment);
+procedure TACBrPicPayThread.FazWaitingPayment;
+begin
+  if Assigned(fACBrPicpay.fOnWaitingPayment) then
+    fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status)
 end;
 
 { Public }
 
-constructor TACBrPicPayThread.Create(AOwner: TComponent);
+constructor TACBrPicPayThread.Create(AOwner: TACBrPicPay);
 begin
   inherited Create(True);
-  if not (AOwner is TACBrPicPay) then
-    EACBrPicpayError.Create('Owner não é do tipo: TACBrPicpay');
-
   fACBrPicpay := TACBrPicPay(AOwner);
+
+  fPausado := True;
+  fAcordaEvt := TEvent.Create(nil, False, False, '');
 end;
 
 destructor TACBrPicPayThread.Destroy;
 begin
+  Terminate;
+  fAcordaEvt.SetEvent;
+  WaitFor;
+  fAcordaEvt.Free;
   inherited;
+end;
+
+procedure TACBrPicPayThread.FazConsulta;
+begin
+  fUltimoTempoAguardo := fACBrPicpay.fTempoRetorno;
+  while not Terminated do
+  begin
+    Sleep(1000);
+    Dec(fUltimoTempoAguardo);
+
+    if fACBrPicpay.fQRCode <> '' then
+      Synchronize(fACBrPicpay.Consultar);
+
+    if fACBrPicpay.fStatus = 'paid' then
+    begin
+      Synchronize(StatusPayment);
+      Break
+    end;
+
+    Synchronize(FazWaitingPayment);
+
+    if fACBrPicpay.fCancelarAguardoRetorno or (fUltimoTempoAguardo <= 0) then
+    begin
+      Break;
+    end;
+  end;
 end;
 
 
@@ -299,27 +356,27 @@ begin
       Exit;
    end;
 
+   if fDocumento = ADocto then
+     Exit;
+
    ACBrVal := TACBrValidador.Create(Self);
    try
-     with ACBrVal do
+     if fTipoInscricao = pFisica then
      begin
-       if fTipoInscricao = pFisica then
-       begin
-         TipoDocto := docCPF;
-         Documento := RightStr(ADocto,11);
-       end
-       else
-       begin
-         TipoDocto := docCNPJ;
-         Documento := RightStr(ADocto,14);
-       end;
-
-       IgnorarChar := './-';
-       RaiseExcept := True;
-       Validar;    // Dispara Exception se Documento estiver errado
-
-       fDocumento := Formatar;
+       ACBrVal.TipoDocto := docCPF;
+       ACBrVal.Documento := RightStr(ADocto,11);
+     end
+     else
+     begin
+       ACBrVal.TipoDocto := docCNPJ;
+       ACBrVal.Documento := RightStr(ADocto,14);
      end;
+
+     ACBrVal.IgnorarChar := './-';
+     ACBrVal.RaiseExcept := True;
+     ACBrVal.Validar;    // Dispara Exception se Documento estiver errado
+
+     fDocumento := ACBrVal.Formatar;
    finally
      ACBrVal.Free;
    end;
@@ -342,10 +399,10 @@ end;
 
 procedure TACBrPicPay.SetTipoRetorno ( const AValue: TACBrTipoRetornoPicpay ) ;
 begin
-   if fTipoRetorno = AValue then
-      exit;
+  if fTipoRetorno = AValue then
+    Exit;
 
-   fTipoRetorno := AValue;
+  fTipoRetorno := AValue;
 end;
 
 
@@ -364,23 +421,45 @@ procedure TACBrPicPay.SetReferenceId(const AValue: String);
 var
   aId: Integer;
 begin
-   if fReferenceId = AValue then
-      exit;
+  if fReferenceId = AValue then
+    Exit;
 
-   fReferenceId:= AValue;
-   aId:= StrToIntDef(trim(AValue),0);
+  fReferenceId := AValue;
+  aId := StrToIntDef(Trim(AValue), 0);
 
-   if aId = 0 then
-      exit;
+  if aId = 0 then
+    Exit;
 
-   fReferenceId:= IntToStrZero(aId, 6 );
+  fReferenceId := IntToStrZero(aId, 6 );
 end;
 
 function TACBrPicPay.GetQRCode: TStringStream;
-var
-  Input: TStringStream;
-///  s: TMemoryStream;
-///  bb: TBytes;
+
+{$IFDEF FPC}
+  procedure DecodeQRCodeLazarusFPC;
+  var
+    vData: Ansistring;
+  begin
+    vData := DecodeStringBase64(fQRCode);
+    Result := TStringStream.Create(vData);
+    Result.Position := 0;
+  end;
+{$ELSE}
+  procedure DecodeQRCodeDelphi;
+  var
+    Input: TStringStream;
+  begin
+    Input := TStringStream.Create(fQRCode);
+    try
+      Result := TStringStream.Create(fQRCode);
+      DecodeStream(Input, Result);
+      Result.Position := 0;
+    finally
+      Input.Free;
+    end;
+  end;
+{$ENDIF}
+
 begin
   if fQRCode = ''  then
   begin
@@ -391,67 +470,26 @@ begin
   fQRCode := StringReplace(fQRCode, 'data:image/png;base64,', '', [rfReplaceAll]);
 
   {$IFDEF FPC}
-  EACBrPicpayError.Create('Ainda não implementado leitra QRCode para FPC/Lazarus.');
-  (*
-    s := TMemoryStream.Create;
-    try
-      bb := EncdDecd.decodebase64(fQRCode);
-      if Length(bb) > 0 then
-      begin
-        s.WriteData(bb, Length(bb));
-        s.position := 0;
-        Result := TPngImage.Create;
-        Result.LoadFromStream(s);
-      end;
-    finally
-      s.free;
-    end;
-
-    *)
+    DecodeQRCodeLazarusFPC;
   {$ELSE}
-  Input := TStringStream.Create(fQRCode);
-  try
-    Result := TStringStream.Create(fQRCode);
-    DecodeStream(Input, Result);
-    Result.Position := 0;
-  finally
-    Input.Free;
-  end;
+    DecodeQRCodeDelphi;
   {$ENDIF}
 end;
 
 procedure TACBrPicPay.AguardarRetorno;
 begin
-  if fTipoRetorno = trThread then
-    fThread.Resume;
-end;
-
-(*
-  TThread.CreateAnonymousThread(
-    procedure
+  fCancelarAguardoRetorno := False;
+  case fTipoRetorno of
+    trThread:
     begin
-      repeat
-        Sleep(1000);
-        Dec(fTempoRetorno);
-
-        if fQRCode <> '' then
-          Consultar;
-
-        if Assigned(fOnWaitingPayment) then
-          fOnWaitingPayment(Status);
-
-      until (fStatus = 'paid') or fCancelarAguardoRetorno or (fTempoRetorno <= 0);
-
-
-      TThread.Synchronize(nil, procedure
-      begin
-        if Assigned(fOnStatusPayment) then
-          fOnStatusPayment(fAuthorizationId, fStatus);
-      end);
-    end).Start;
+      fThreadAguardaRetorno.Pausado := False;
+    end;
+    trCallback:
+    begin
+      EACBrPicpayError.Create('Tem que implementar o servidor HTTP.');
+    end;
+  end;
 end;
-
-*)
 
 { Public }
 
@@ -461,7 +499,7 @@ var
   Url: string;
   I: Integer;
 begin
-  Url := StringReplace(PICPAY_URL_RETORNO, '{referenceId}', fReferenceId, [rfReplaceAll]);
+  Url := StringReplace(PICPAY_URL_STATUS_REQ, '{referenceId}', fReferenceId, [rfReplaceAll]);
 
   Self.HTTPSend.Headers.Clear;
   Self.HTTPSend.UserAgent := 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV2';
@@ -502,22 +540,21 @@ var
   JsonResponse: TJson;
   I: Integer;
   J: Integer;
-
 begin
   Json := TJsonObject.Create;
   try
     Json.Add('referenceId').Value.AsString := fReferenceId;
     Json.Add('callbackUrl').Value.AsString := fLojista.fURLCallBack;
-    Json.Add('returnUrl').Value.AsString := fLojista.fURLReturn;
+    Json.Add('returnUrl').Value.AsString   := fLojista.fURLReturn;
     Json.Add('productName').Value.AsString := fProduto;
-    Json.Add('value').Value.AsNumber := fValor;
+    Json.Add('value').Value.AsNumber       := fValor;
     JsonCliente := TJSONObject.Create;
     try
       JsonCliente.Add('firstName').Value.AsString := fComprador.fNome;
-      JsonCliente.Add('lastName').Value.AsString := fComprador.fSobreNome;
-      JsonCliente.Add('document').Value.AsString := fComprador.fDocumento;
-      JsonCliente.Add('email').Value.AsString := fComprador.fEmail;
-      JsonCliente.Add('phone').Value.AsString := fComprador.fTelefone;
+      JsonCliente.Add('lastName').Value.AsString  := fComprador.fSobreNome;
+      JsonCliente.Add('document').Value.AsString  := fComprador.fDocumento;
+      JsonCliente.Add('email').Value.AsString     := fComprador.fEmail;
+      JsonCliente.Add('phone').Value.AsString     := fComprador.fTelefone;
 
       JsonBuyer := TJsonPair.Create(Json, 'buyer');
       try
@@ -547,42 +584,35 @@ begin
     Self.HTTPSend.Protocol := '1.1';
     Self.HTTPSend.Status100 := True;
     Self.HTTPSend.Document.LoadFromStream(DataToSend);
-
-
-    Self.HTTPMethod('POST', PICPAY_URL_ENVIO);
-
-
-    { Convertendo uma string para json object }
-    JsonResponse := TJSon.Create;
-    try
-      JsonResponse.Parse(Self.RespHTTP.Text);
-      for I := 0 to JsonResponse.Count - 1 do
-      begin
-
-        fReferenceId := JsonResponse.Values['referenceId'].AsString;
-
-        for J := 0 to TJsonObject(JsonResponse.Values['qrcode'].AsObject).Count - 1 do
-        begin
-          fQrCode := TJsonObject(JsonResponse.Values['qrcode'].AsObject).Values['base64'].AsString;
-        end;
-      end;
-
-
-      if fQRCode <> '' then
-      begin
-        case fTipoRetorno of
-          trThread: AguardarRetorno;
-          trCallback: EACBrPicpayError.Create('Tem que implementar o servidor HTTP.');
-        end;
-      end;
-
-    finally
-      JsonResponse.Free;
-    end;
-
   finally
     DataToSend.Free;
   end;
+
+  Self.HTTPMethod('POST', PICPAY_URL_REQUISICAO_PAG);
+
+  { Convertendo uma string para json object }
+  JsonResponse := TJSon.Create;
+  try
+    JsonResponse.Parse(Self.RespHTTP.Text);
+    for I := 0 to JsonResponse.Count - 1 do
+    begin
+
+      fReferenceId := JsonResponse.Values['referenceId'].AsString;
+
+      for J := 0 to TJsonObject(JsonResponse.Values['qrcode'].AsObject).Count - 1 do
+      begin
+        fQrCode := TJsonObject(JsonResponse.Values['qrcode'].AsObject).Values['base64'].AsString;
+      end;
+    end;
+  finally
+    JsonResponse.Free;
+  end;
+
+  if fQRCode <> '' then
+  begin
+    AguardarRetorno;
+  end;
+
 end;
 
 function TACBrPicPay.Cancelar(const aAuthorizationId: string): Boolean;
@@ -609,7 +639,7 @@ begin
     JsonPicPay.Free;
   end;
 
-  Url := StringReplace(PICPAY_URL_CANCELAMENTO, '{referenceId}', fReferenceId, [rfReplaceAll]);
+  Url := StringReplace(PICPAY_URL_CANCELAMENTO_REQ, '{referenceId}', fReferenceId, [rfReplaceAll]);
 
   data := UTF8ToNativeString(data);
 
@@ -651,17 +681,18 @@ begin
   end;
 end;
 
+procedure TACBrPicPay.CancelarAguardoRetorno;
+begin
+  fCancelarAguardoRetorno := True;
+end;
+
 constructor TACBrPicPay.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  fTipoRetorno := trThread;
-
   fCancelarAguardoRetorno := False;
 
-  fThread := TACBrPicPayThread.Create(Self);
-
-  fLojista      := TACBrPicPayLojista.Create(self);
+  fLojista      := TACBrPicPayLojista.Create(Self);
   fLojista.Name := 'Lojista';
   {$IFDEF COMPILER6_UP}
    fLojista.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
@@ -672,13 +703,18 @@ begin
   {$IFDEF COMPILER6_UP}
    fComprador.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
+
+  fTipoRetorno := trThread;
+  fThreadAguardaRetorno := TACBrPicPayThread.Create(Self);
+  fThreadAguardaRetorno.Start;
 end;
 
 destructor TACBrPicPay.Destroy;
 begin
   fComprador.Free;
   fLojista.Free;
-  fThread.Free;
+  fThreadAguardaRetorno.Terminate;
+  fThreadAguardaRetorno.Free;
   inherited;
 end;
 

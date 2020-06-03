@@ -1883,6 +1883,10 @@ begin
           begin
             sSecao := 'detExport'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
             sFim     := INIRec.ReadString(sSecao,'nRE','FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              sFim :=  INIRec.ReadString( sSecao,'chNFe','FIM');
+
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
             begin
               sFim     := INIRec.ReadString(sSecao,'nDraw','FIM');

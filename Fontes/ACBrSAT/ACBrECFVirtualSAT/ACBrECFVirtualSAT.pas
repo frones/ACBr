@@ -643,8 +643,11 @@ procedure TACBrECFVirtualSATClass.LeArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se o cupom está aberto, deve ler conteudo temporário do XML
   if (fpEstado in estCupomAberto) then
+  begin
     if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
       fsACBrSAT.CFe.LoadFromFile( fsNomeArqTempXML );
+    fsEhVenda := True;
+  end;
 
   inherited LeArqINIVirtual(ConteudoINI);
 end;

@@ -812,9 +812,11 @@ type
     function DefineDataDesconto(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;    //Utilizado para definir a Data de Desconto na Remessa
     function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; virtual;     //Utilizado para definir o Codigo Multa na Remessa
     function DefineDataMulta(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;       //Utilizado para definir data multa na Remessa
+    function DefineNossoNumeroRetorno(const Retorno: String): String; virtual;      //Define a leitura do Nosso Número no Retorno
     function DefineTamanhoContaRemessa: Integer; virtual;                           //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
     function DefinePosicaoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
-    function DefinePosicaoCarteiraRetorno:Integer; virtual;                          //Define posição para leitura de Retorno campo: NumeroDocumento
+    function DefineTamanhoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
+    function DefinePosicaoCarteiraRetorno:Integer; virtual;                         //Define posição para leitura de Retorno campo: NumeroDocumento
 
     function DefineTipoInscricao: String; virtual;                            //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual;                           //Utilizado para definir Responsável Emissão na Remessa
@@ -3232,7 +3234,7 @@ begin
         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
         ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        NossoNumero          := Copy(Linha,DefinePosicaoNossoNumeroRetorno,11);
+        NossoNumero          := DefineNossoNumeroRetorno(Linha);
         Carteira             := Copy(Linha,DefinePosicaoCarteiraRetorno,3);
         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
@@ -3336,8 +3338,7 @@ begin
               Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
 
            ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
-
-           NossoNumero    := Copy(Linha,DefinePosicaoNossoNumeroRetorno, TamanhoMaximoNossoNum);
+           NossoNumero    := DefineNossoNumeroRetorno(Linha);
            ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
 
            OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));
@@ -4088,12 +4089,26 @@ begin
     Result := 71;
 end;
 
+function TACBrBancoClass.DefineTamanhoNossoNumeroRetorno: Integer;
+begin
+  Result := TamanhoMaximoNossoNum;
+end;
+
 function TACBrBancoClass.DefinePosicaoCarteiraRetorno: Integer;
 begin
   if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
     Result := 39
   else
     Result := 22;
+end;
+
+function TACBrBancoClass.DefineNossoNumeroRetorno(const Retorno: String): String;
+begin
+  if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,TamanhoMaximoNossoNum)
+  else
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,DefineTamanhoNossoNumeroRetorno);
+
 end;
 
 function TACBrBancoClass.InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;

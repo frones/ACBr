@@ -134,7 +134,26 @@ end;
 procedure TNFSeW_Equiplano.GerarListaServicos;
 var
   iAux, iSerItem, iSerSubItem, i: Integer;
+  itemServico: TItemServicoCollectionItem;
+
+  //----------------------------------------------------------------------------
+  procedure tratarSerItem(AItemServico: string);
+  begin
+    iAux := StrToInt(OnlyNumber(AItemServico)); //Ex.: 1402, 901
+    if (iAux > 999) then //Ex.: 1402
+    begin
+      iSerItem    := StrToInt(Copy(IntToStr(iAux), 1, 2)); //14
+      iSerSubItem := StrToInt(Copy(IntToStr(iAux), 3, 2)); //2
+    end
+    else begin //Ex.: 901
+      iSerItem    := StrToInt(Copy(IntToStr(iAux), 1, 1)); //9
+      iSerSubItem := StrToInt(Copy(IntToStr(iAux), 2, 2)); //1
+    end;
+  end;
+  //----------------------------------------------------------------------------
+
 begin
+  {
   iAux := StrToInt(OnlyNumber(NFSe.Servico.ItemListaServico)); //Ex.: 1402, 901
   if (iAux > 999) then //Ex.: 1402
   begin
@@ -145,7 +164,8 @@ begin
     iSerItem    := StrToInt(Copy(IntToStr(iAux), 1, 1)); //9
     iSerSubItem := StrToInt(Copy(IntToStr(iAux), 2, 2)); //1
   end;
-
+  }
+  tratarSerItem(NFSe.Servico.ItemListaServico);
   Gerador.wGrupo('listaServicos');
 
 
@@ -153,11 +173,17 @@ begin
   begin
     for i:=0 to NFSe.Servico.ItemServico.Count-1 do
     begin
+      itemServico := NFSe.Servico.ItemServico[i];
+      if itemServico.CodServ <> '' then
+        tratarSerItem(itemServico.CodServ)
+      else
+        tratarSerItem(NFSe.Servico.ItemListaServico);
+
       Gerador.wGrupo('servico');
       Gerador.wCampo(tcStr, '', 'nrServicoItem   ', 01, 02, 1, iSerItem, '');
       Gerador.wCampo(tcStr, '', 'nrServicoSubItem', 01, 02, 1, iSerSubItem, '');
       Gerador.wCampo(tcDe2, '', 'vlServico       ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario, '');
-      Gerador.wCampo(tcDe2, '', 'vlAliquota      ', 01, 02, 1, NFSe.Servico.Valores.Aliquota, '');
+      Gerador.wCampo(tcDe2, '', 'vlAliquota      ', 01, 02, 1, NFSe.Servico.ItemServico.Items[i].Aliquota, '');
 
       if (NFSe.Servico.Valores.ValorDeducoes > 0) then
       begin

@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -43,28 +43,28 @@ uses
 const
   CACBrTEFCliSiTef_ImprimeGerencialConcomitante = False;
   CACBrTEFCliSiTef_PressioneEnter = 'PRESSIONE <ENTER>';
-  CACBrTEFCliSiTef_TransacaoNaoEfetuada = 'Transa√ß√£o n√£o efetuada.';
+  CACBrTEFCliSiTef_TransacaoNaoEfetuada = 'TransaÁ„o n„o efetuada.';
   CACBrTEFCliSiTef_TransacaoNaoEfetuadaReterCupom =
-    'Transa√ß√£o n√£o efetuada.' + sLineBreak + 'Favor reter o Cupom';
+    'TransaÁ„o n„o efetuada.' + sLineBreak + 'Favor reter o Cupom';
   CACBrTEFCliSiTef_TransacaoEfetuadaReImprimir =
-    'Transa√ß√£o TEF efetuada.' + sLineBreak +
-    'Favor reimprimir √∫ltimo Cupom.' + sLineBreak +
+    'TransaÁ„o TEF efetuada.' + sLineBreak +
+    'Favor reimprimir ˙ltimo Cupom.' + sLineBreak +
     '%s' + sLineBreak +
-    '(Para Cielo utilizar os 6 √∫ltimos d√≠gitos.)';
-  CACBrTEFCliSiTef_NaoInicializado = 'CliSiTEF n√£o inicializado';
-  CACBrTEFCliSiTef_NaoConcluido = 'Requisi√ß√£o anterior n√£o concluida';
-  CACBrTEFCliSiTef_Erro1 = 'Endere√ßo IP inv√°lido ou n√£o resolvido';
-  CACBrTEFCliSiTef_Erro2 = 'C√≥digo da loja inv√°lido';
-  CACBrTEFCliSiTef_Erro3 = 'C√≥digo de terminal inv√°lido';
-  CACBrTEFCliSiTef_Erro6 = 'Erro na inicializa√ß√£o do TCP/IP';
-  CACBrTEFCliSiTef_Erro7 = 'Falta de mem√≥ria';
-  CACBrTEFCliSiTef_Erro8 = 'N√£o encontrou a CliSiTef ou ela est√° com problemas';
-  CACBrTEFCliSiTef_Erro10 = 'Erro de acesso na pasta CliSiTef (poss√≠vel falta de permiss√£o para escrita) ' + sLineBreak +
-    'ou o PinPad n√£o est√° devidamente configurado no arquivo CliSiTef.ini ' + sLineBreak +
-    'ou par√¢metros IdLoja e IdTerminal inv√°lidos';
-  CACBrTEFCliSiTef_Erro11 = 'Dados inv√°lidos passados pela automa√ß√£o.';
-  CACBrTEFCliSiTef_Erro12 = 'Modo seguro n√£o ativo (poss√≠vel falta de configura√ß√£o no servidor SiTef do arquivo .cha).';
-  CACBrTEFCliSiTef_Erro13 = 'Caminho da DLL inv√°lido (o caminho completo das bibliotecas est√° muito grande).';
+    '(Para Cielo utilizar os 6 ˙ltimos dÌgitos.)';
+  CACBrTEFCliSiTef_NaoInicializado = 'CliSiTEF n„o inicializado';
+  CACBrTEFCliSiTef_NaoConcluido = 'RequisiÁ„o anterior n„o concluida';
+  CACBrTEFCliSiTef_Erro1 = 'EndereÁo IP inv·lido ou n„o resolvido';
+  CACBrTEFCliSiTef_Erro2 = 'CÛdigo da loja inv·lido';
+  CACBrTEFCliSiTef_Erro3 = 'CÛdigo de terminal inv·lido';
+  CACBrTEFCliSiTef_Erro6 = 'Erro na inicializaÁ„o do TCP/IP';
+  CACBrTEFCliSiTef_Erro7 = 'Falta de memÛria';
+  CACBrTEFCliSiTef_Erro8 = 'N„o encontrou a CliSiTef ou ela est· com problemas';
+  CACBrTEFCliSiTef_Erro10 = 'Erro de acesso na pasta CliSiTef (possÌvel falta de permiss„o para escrita) ' + sLineBreak +
+    'ou o PinPad n„o est· devidamente configurado no arquivo CliSiTef.ini ' + sLineBreak +
+    'ou par‚metros IdLoja e IdTerminal inv·lidos';
+  CACBrTEFCliSiTef_Erro11 = 'Dados inv·lidos passados pela automaÁ„o.';
+  CACBrTEFCliSiTef_Erro12 = 'Modo seguro n„o ativo (possÌvel falta de configuraÁ„o no servidor SiTef do arquivo .cha).';
+  CACBrTEFCliSiTef_Erro13 = 'Caminho da DLL inv·lido (o caminho completo das bibliotecas est· muito grande).';
 
 {$IFDEF LINUX}
   CACBrTEFCliSiTef_Lib = 'libclisitef.so';
@@ -315,16 +315,16 @@ begin
         504: fpTaxaServico := Linha.Informacao.AsFloat;
         505: fpQtdParcelas := Linha.Informacao.AsInteger;
         506: fpDataPreDatado := Linha.Informacao.AsDate;
-        511: fpQtdParcelas := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 n√£o √© retornado}
+        511: fpQtdParcelas := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 n„o È retornado}
         515: fpDataHoraTransacaoCancelada := Linha.Informacao.AsDate;
         516: fpNSUTransacaoCancelada := LinStr;
         527: fpDataVencimento := Linha.Informacao.AsDate;         { Data Vencimento do Cheque }
-        589: fpCodigoOperadoraCelular := LinStr;                  { C√≥digo da Operadora de Celular }
+        589: fpCodigoOperadoraCelular := LinStr;                  { CÛdigo da Operadora de Celular }
         590: fpNomeOperadoraCelular := LinStr;                    { Nome da Operadora de Celular }
         591: fpValorRecargaCelular := Linha.Informacao.AsFloat;   { Valor selecionado para a Recarga }
         592: fpNumeroRecargaCelular := LinStr;                    { Numero de Celular informado para Recarda }
 
-        607:  // Indice do Correspondente Banc√°rio
+        607:  // Indice do Correspondente Banc·rio
         begin
           wNumCB := Linha.Informacao.AsInteger;
 
@@ -332,22 +332,22 @@ begin
             fpCorrespBancarios.Clear;
 
           CB := TACBrTEFRespCB.Create;
-          CB.DataVencimento := LeInformacao(600, wNumCB).AsDate;   { Data Vencimento do t√≠tulo - CB }
-          CB.ValorPago := LeInformacao(601, wNumCB).AsFloat;       { Valor Pago do t√≠tulo - CB }
-          CB.ValorOriginal := LeInformacao(602, wNumCB).AsFloat;   { Valor Original do t√≠tulo - CB }
-          CB.Acrescimo := LeInformacao(603, wNumCB).AsFloat;       { Valor do Acr√©scimo - CB }
+          CB.DataVencimento := LeInformacao(600, wNumCB).AsDate;   { Data Vencimento do tÌtulo - CB }
+          CB.ValorPago := LeInformacao(601, wNumCB).AsFloat;       { Valor Pago do tÌtulo - CB }
+          CB.ValorOriginal := LeInformacao(602, wNumCB).AsFloat;   { Valor Original do tÌtulo - CB }
+          CB.Acrescimo := LeInformacao(603, wNumCB).AsFloat;       { Valor do AcrÈscimo - CB }
           CB.Desconto := LeInformacao(604, wNumCB).AsFloat;        { Valor do Desconto - CB }
-          CB.DataPagamento := LeInformacao(605, wNumCB).AsDate;    { Data cont√°bil do Pagamento - CB }
-          CB.NSUTransacaoCB := LeInformacao(611, wNumCB).AsString; { NSU da Transa√ß√£o CB }
-          CB.TipoDocumento := LeInformacao(612, wNumCB).AsInteger; { Tipo Docto CB - 0:Arrecada√ß√£o/ 1:T√≠tulo/ 2:Tributo }
+          CB.DataPagamento := LeInformacao(605, wNumCB).AsDate;    { Data cont·bil do Pagamento - CB }
+          CB.NSUTransacaoCB := LeInformacao(611, wNumCB).AsString; { NSU da TransaÁ„o CB }
+          CB.TipoDocumento := LeInformacao(612, wNumCB).AsInteger; { Tipo Docto CB - 0:ArrecadaÁ„o/ 1:TÌtulo/ 2:Tributo }
           CB.NSUCancelamento := LeInformacao(623, wNumCB).AsString;{ NSU para cancelamento - CB }
-          CB.Documento := LeInformacao(624, wNumCB).AsString;      { Linha Digit√°vel/C√≥digo de Barras do documento pago}
+          CB.Documento := LeInformacao(624, wNumCB).AsString;      { Linha Digit·vel/CÛdigo de Barras do documento pago}
 
           fpCorrespBancarios.Add(CB);
         end;
 
-        609: fpCorrespBancarios.TotalTitulos := Linha.Informacao.AsFloat;       { Valor total dos t√≠tulos efetivamente pagos no caso de pagamento em lote }
-        610: fpCorrespBancarios.TotalTitulosNaoPago := Linha.Informacao.AsFloat;{ Valor total dos t√≠tulos N√ÉO pagos no caso de pagamento em lote }
+        609: fpCorrespBancarios.TotalTitulos := Linha.Informacao.AsFloat;       { Valor total dos tÌtulos efetivamente pagos no caso de pagamento em lote }
+        610: fpCorrespBancarios.TotalTitulosNaoPago := Linha.Informacao.AsFloat;{ Valor total dos tÌtulos N√O pagos no caso de pagamento em lote }
         613:
         begin
           fpCheque := copy(LinStr, 21, 6);
@@ -380,7 +380,7 @@ begin
 
     fpQtdLinhasComprovante := max(fpImagemComprovante1aVia.Count, fpImagemComprovante2aVia.Count);
 
-    // leitura de parcelas conforme nova documenta√ß√£o
+    // leitura de parcelas conforme nova documentaÁ„o
     // 141 e 142 foram removidos em Setembro de 2014
     fpParcelas.Clear;
     if (fpQtdParcelas > 0) then
@@ -402,7 +402,7 @@ begin
           Parc.Valor := LeInformacao(525, I).AsFloat;
         end;
 
-        // caso n√£o retorne os dados acima prencher com os defaults
+        // caso n„o retorne os dados acima prencher com os defaults
         if Trim(Parc.NSUParcela) = '' then
           Parc.NSUParcela := NSU;
 
@@ -439,11 +439,11 @@ var
 begin
   Sequencia := 0;
 
-  { Os Tipos abaixo, devem ter a Sequencia incrementada, se j√° foram salvos antes,
-    pois o SiTef retorna o mesmo Tipo, para v√°rias ocorr√™ncias do campo }
+  { Os Tipos abaixo, devem ter a Sequencia incrementada, se j· foram salvos antes,
+    pois o SiTef retorna o mesmo Tipo, para v·rias ocorrÍncias do campo }
   case Identificacao of
     141, 142,            // 141 - Data Parcela, 142 - Valor Parcela
-    600..607, 611..624:  // Dados do Corresp. Banc√°rio
+    600..607, 611..624:  // Dados do Corresp. Banc·rio
     begin
       Sequencia := 1;
       while (Trim(LeInformacao(Identificacao, Sequencia).AsString) <> '') do
@@ -509,7 +509,7 @@ procedure TACBrTEFCliSiTefAPI.LoadDLLFunctions ;
      if not FunctionDetect( sLibName, FuncName, LibPointer) then
      begin
        LibPointer := NIL ;
-       raise EACBrTEFErro.Create( ACBrStr( 'Erro ao carregar a fun√ß√£o:'+FuncName+
+       raise EACBrTEFErro.Create( ACBrStr( 'Erro ao carregar a funÁ„o:'+FuncName+
                                            ' de: '+CACBrTEFCliSiTef_Lib ) ) ;
      end ;
    end ;
@@ -563,16 +563,16 @@ function TACBrTEFCliSiTefAPI.TraduzirErro(Sts: Integer): String;
 begin
    Result := '' ;
    Case Sts of
-     -1 : Result := 'M√≥dulo n√£o inicializado' ;
-     -2 : Result := 'Opera√ß√£o cancelada pelo operador' ;
-     -3 : Result := 'Fornecido um c√≥digo de fun√ß√£o inv√°lido' ;
-     -4 : Result := 'Falta de mem√≥ria para rodar a fun√ß√£o' ;
-     -5 : Result := '' ; // 'Sem comunica√ß√£o com o SiTef' ; // Comentado pois SiTEF j√° envia a msg de Result
-     -6 : Result := 'Opera√ß√£o cancelada pelo usu√°rio' ;
-     -40: Result := 'Transa√ß√£o negada pelo SiTef';
+     -1 : Result := 'MÛdulo n„o inicializado' ;
+     -2 : Result := 'OperaÁ„o cancelada pelo operador' ;
+     -3 : Result := 'Fornecido um cÛdigo de funÁ„o inv·lido' ;
+     -4 : Result := 'Falta de memÛria para rodar a funÁ„o' ;
+     -5 : Result := '' ; // 'Sem comunicaÁ„o com o SiTef' ; // Comentado pois SiTEF j· envia a msg de Result
+     -6 : Result := 'OperaÁ„o cancelada pelo usu·rio' ;
+     -40: Result := 'TransaÁ„o negada pelo SiTef';
      -43: Result := 'Falha no pinpad';
-     -50: Result := 'Transa√ß√£o n√£o segura';
-     -100: Result := 'Result interno do m√≥dulo';
+     -50: Result := 'TransaÁ„o n„o segura';
+     -100: Result := 'Result interno do mÛdulo';
    else
      if Sts < 0 then
        Result := 'Erros detectados internamente pela rotina ('+IntToStr(Sts)+')'
@@ -690,13 +690,13 @@ function TACBrTEFCliSiTefAPI.ValidaCampoCodigoEmBarras(Dados: AnsiString;
   var Tipo: SmallInt): Integer;
 begin
   { Valores de Retorno:
-    0 - se o c√≥digo estiver correto;
-    1 a 4 - Indicando qual o bloco que est√° com erro
+    0 - se o cÛdigo estiver correto;
+    1 a 4 - Indicando qual o bloco que est· com erro
     5 - Um ou mais blocos com erro
 
     Tipo: tipo de documento sendo coletado:
-          -1: Ainda n√£o identificado
-          0: Arrecada√ß√£o
+          -1: Ainda n„o identificado
+          0: ArrecadaÁ„o
           1: Titulo
   }
   LoadDLLFunctions;
@@ -712,7 +712,7 @@ begin
    Retornos:
       1: Existe um PinPad operacional conectado ao micro;
       0: Nao Existe um PinPad conectado ao micro;
-     -1: Biblioteca de acesso ao PinPad n√£o encontrada }
+     -1: Biblioteca de acesso ao PinPad n„o encontrada }
 
   LoadDLLFunctions;
   if Assigned(xVerificaPresencaPinPad) then

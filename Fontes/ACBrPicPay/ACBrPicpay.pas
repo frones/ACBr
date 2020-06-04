@@ -85,7 +85,7 @@ type
   { TACBrThread }
   TACBrPicPayThread = class(TThread)
   private
-    fAcordaEvt: TEvent;
+    fAcordaEvt: TSimpleEvent;
     fPausado: Boolean;
     fACBrPicpay: TACBrPicPay;
     fUltimoTempoAguardo: Integer;
@@ -260,9 +260,11 @@ begin
   while (not Terminated) do
   begin
     Pausado := True;
-    fAcordaEvt.WaitFor(INFINITE);
+    fAcordaEvt.WaitFor(Cardinal(-1));
+    
     // Foi acordado para terminar?
-    if not Terminated then FazConsulta;
+    if not Terminated then
+      FazConsulta;
   end;
 end;
 
@@ -276,18 +278,21 @@ end;
 
 constructor TACBrPicPayThread.Create(AOwner: TACBrPicPay);
 begin
-  inherited Create(True);
   fACBrPicpay := TACBrPicPay(AOwner);
-
   fPausado := True;
-  fAcordaEvt := TEvent.Create(nil, False, False, '');
+  fAcordaEvt := TSimpleEvent.Create;
+  
+  inherited Create(False);
 end;
 
 destructor TACBrPicPayThread.Destroy;
 begin
+  fPausado := True;
   Terminate;
   fAcordaEvt.SetEvent;
-  WaitFor;
+  if not Terminated then
+    WaitFor;
+    
   fAcordaEvt.Free;
   inherited;
 end;
@@ -312,9 +317,7 @@ begin
     Synchronize(FazWaitingPayment);
 
     if fACBrPicpay.fCancelarAguardoRetorno or (fUltimoTempoAguardo <= 0) then
-    begin
       Break;
-    end;
   end;
 end;
 
@@ -706,7 +709,6 @@ begin
 
   fTipoRetorno := trThread;
   fThreadAguardaRetorno := TACBrPicPayThread.Create(Self);
-  fThreadAguardaRetorno.Start;
 end;
 
 destructor TACBrPicPay.Destroy;

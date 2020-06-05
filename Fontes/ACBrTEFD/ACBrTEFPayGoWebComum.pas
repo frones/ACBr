@@ -48,7 +48,9 @@ resourcestring
   sErrPWRET_NODATA = 'A informação solicitada não está disponível';
   sErrPWRET_BUFOVFLW = 'O valor da informação solicitada não cabe no Buffer alocado';
   sErrPWRET_DLLNOTINIT = 'Biblioteca PGWebLib não foi inicializada';
+  sErrPWRET_TRNINIT = 'Já foi iniciada uma Transação';
   sErrPWRET_TRNNOTINIT = 'Não foi iniciada uma Transação';
+  sErrPWRET_INVALIDTRN = 'A transação informada para confirmação não existe ou já foi confirmada anteriormente';
   sErrPWRET_NOTINST = 'É necessário efetuar uma transação de Instalação';
   sErrPWRET_INVPARAM = 'Valor %s Inválido para parâmetro %s';
   sErrPWRET_NOMANDATORY = 'Parâmetros obrigatórios não informados';
@@ -61,6 +63,7 @@ const
   {$ENDIF}
 
   CSleepNothing = 100;
+  CMilissegundosMensagem = 3000;
 
 //==========================================================================================
 // Número maximo de itens em um menu de seleção
@@ -401,14 +404,60 @@ type
 
   PW_Operations = Array[0..9] of TPW_Operations;
 
-  TACBrTEFPGWebAPIExibeMenu = procedure(Titulo: String; Opcoes: TStringList;
-    var ItemSelecionado: Integer) of object ;
+  TACBrTEFPGWebAPITiposEntrada =
+    (pgtNumerico = 1,
+     pgtAlfabetico = 2,
+     pgtAlfaNum = 3,
+     pgtAlfaNumEsp = 7);
 
-  TACBrTEFPGWebAPIObtemCampo = procedure(Titulo: String;
-    TamanhoMinimo, TamanhoMaximo: Integer ;
-    TipoCampo: Integer; Operacao : TACBrTEFDCliSiTefOperacaoCampo;
-    var Resposta : AnsiString)
-    of object ;
+  TACBrTEFPGWebAPIValidacaoDado =
+    (pgvNenhuma = 0,
+     pgvNaoVazio = 1,
+     pgvDigMod10 = 2,
+     pgvCPF_CNPJ = 3,
+     pgvMMAA = 4,
+     pgvDDMMAA = 5,
+     pgvDuplaDigitacao = 6);
+
+  TACBrTEFPGWebAPITipoBarras =
+    (pgbDigitado = 1,
+     pgbLeitor = 2,
+     pgbDigitadoOuLeitor = 3);
+
+  TACBrTEFPGWebAPIExibeMenu = procedure(
+    Titulo: String;
+    Opcoes: TStringList;
+    var ItemSelecionado: Integer;
+    var Cancelado: Boolean) of object ;
+
+  TACBrTEFPGWebAPIDefinicaoCampo = record
+    Titulo: String;
+    MascaraDeCaptura: String;
+    TiposEntradaPermitidos: TACBrTEFPGWebAPITiposEntrada;
+    TamanhoMinimo: Integer;
+    TamanhoMaximo: Integer;
+    ValorMinimo : Integer;
+    ValorMaximo : Integer;
+    OcultarDadosDigitados: Boolean;
+    ValidacaoDado: TACBrTEFPGWebAPIValidacaoDado;
+    AceitaNulo: Boolean;
+    ValorInicial: String;
+    bTeclasDeAtalho: Boolean;
+    MsgValidacao: String;
+    MsgConfirmacao: String;
+    MsgDadoMaior: String;
+    MsgDadoMenor: String;
+    TipoEntradaCodigoBarras: TACBrTEFPGWebAPITipoBarras;
+  end;
+
+  TACBrTEFPGWebAPIObtemCampo = procedure(
+    DefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo;
+    var Resposta: String;
+    var Validado: Boolean;
+    var Cancelado: Boolean) of object ;
+
+  TACBrTEFPGWebAPIExibeMensagem = procedure(
+    Mensagem: String; MilissegundosExibicao: Integer);
 
   { TACBrTEFPGWebAPI }
 
@@ -417,9 +466,12 @@ type
     fDiretorioTrabalho: String;
     fImprimirViaClienteReduzida: Boolean;
     fInicializada: Boolean;
+    fEmTransacao: Boolean;
     fNomeAplicacao: String;
+    fOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     fOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
     fOnGravarLog: TACBrGravarLog;
+    fOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
     fPathDLL: String;
     fSoftwareHouse: String;
     fSuportaDesconto: Boolean;
@@ -504,6 +556,19 @@ type
     procedure ObterDados(ArrGetData: PW_GetData; ArrLen: SmallInt);
     procedure ObterDadoMenu(AGetData: TPW_GetData);
     procedure ObterDadoDigitado(AGetData: TPW_GetData);
+    procedure ObterDadoCodBarra(AGetData: TPW_GetData);
+    procedure ObterDadoCartao(AGetData: TPW_GetData);
+    procedure ObterDadoCartaoDigitado(AGetData: TPW_GetData);
+    procedure ObterDadoCartaoPinPad(AGetData: TPW_GetData);
+    procedure ExibirMensagem(const AMsg: String; TempoEspera: Integer = 0);
+
+    function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
+
+    procedure LogPWGetData(AGetData: TPW_GetData);
+
+    function ValidarDDMM(AString: String): Boolean;
+    function ValidarDDMMAA(AString: String): Boolean;
+    function ValidarModulo10(AString: String): Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -511,16 +576,21 @@ type
     procedure Inicializar;
     procedure DesInicializar;
 
-    function ObterResultado(iINFO: SmallInt): String;
+    function ObterInfo(iINFO: SmallInt): String;
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
 
     procedure IniciarTransacao(iOPER: SmallInt);
+    procedure AbortarTransacao;
     procedure AdicionarParametro(iINFO: Word; const AValor: AnsiString);
     procedure ExcutarTransacao;
+    procedure FinalizarTrancao(Status: LongWord);
+
+    function ValidarRespostaCampo(AResposta: String; ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 
     property PathDLL: String read fPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Inicializada: Boolean read fInicializada write SetInicializada;
+    property EmTransacao: Boolean read fEmTransacao;
 
     property SoftwareHouse: String read fSoftwareHouse write SetSoftwareHouse;
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
@@ -537,6 +607,8 @@ type
 
     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
     property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read fOnExibeMenu write fOnExibeMenu;
+    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read fOnObtemCampo write fOnObtemCampo;
+    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read fOnExibeMensagem write fOnExibeMensagem;
   end;
 
 function PWINFOToString(iINFO: SmallInt): String;
@@ -546,7 +618,8 @@ function PWOPERToString(iOPER: SmallInt): String;
 implementation
 
 uses
-  ACBrUtil;
+  StrUtils, dateutils,
+  ACBrUtil, ACBrValidador;
 
 function PWINFOToString(iINFO: SmallInt): String;
 begin
@@ -634,8 +707,8 @@ begin
     PWINFO_LOCALINFO1:      Result := 'PWINFO_LOCALINFO1';
     PWINFO_SERVERPND:       Result := 'PWINFO_SERVERPND';
     PWINFO_PPINFO:          Result := 'PWINFO_PPINFO';
-    PWINFO_DUEAMNT:         Result := 'PWINFO_DUEAMNT';
-    PWINFO_READJUSTEDAMNT:  Result := 'PWINFO_READJUSTEDAMNT';
+    //PWINFO_DUEAMNT:         Result := 'PWINFO_DUEAMNT';
+    //PWINFO_READJUSTEDAMNT:  Result := 'PWINFO_READJUSTEDAMNT';
   else
     Result := 'PWINFO_'+IntToStr(iINFO);
   end;
@@ -751,11 +824,13 @@ begin
   fImprimirViaClienteReduzida := False;
   fUtilizaSaldoTotalVoucher := False;
   fInicializada := False;
+  fEmTransacao := False;
   fDiretorioTrabalho := '';
   ClearMethodPointers;
 
   fOnGravarLog := Nil;
   fOnExibeMenu := Nil;
+  fOnObtemCampo := Nil;
 end;
 
 destructor TACBrTEFPGWebAPI.Destroy;
@@ -774,6 +849,14 @@ begin
     Exit;
 
   GravarLog('TACBrTEFPGWebAPI.Inicializar');
+
+  if not Assigned(fOnObtemCampo) then
+    raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnObtemCampo']);
+  if not Assigned(fOnExibeMenu) then
+    raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMenu']);
+  if not Assigned(fOnExibeMensagem) then
+    raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMensagem']);
+
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
 
@@ -844,7 +927,7 @@ begin
     raise EACBrTEFPayGoWeb.CreateFmt('%s (%s)', [ACBrStr(MsgErro), PWRETToString(iRET)]);
 end;
 
-function TACBrTEFPGWebAPI.ObterResultado(iINFO: SmallInt): String;
+function TACBrTEFPGWebAPI.ObterInfo(iINFO: SmallInt): String;
 var
   pszData: PAnsiChar;
   ulDataSize: LongWord;
@@ -881,7 +964,7 @@ end;
 
 function TACBrTEFPGWebAPI.ObterUltimoErro: String;
 begin
-  Result := ObterResultado(PWINFO_RESULTMSG);
+  Result := ObterInfo(PWINFO_RESULTMSG);
 end;
 
 procedure TACBrTEFPGWebAPI.GravarLog(const AString: AnsiString; Traduz: Boolean);
@@ -906,6 +989,9 @@ var
   iRet: SmallInt;
   MsgErro: String;
 begin
+  if fEmTransacao then
+    raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_TRNINIT));
+
   iRet := xPW_iNewTransac(iOPER);
   if (iRet <> PWRET_OK) then
   begin
@@ -919,7 +1005,17 @@ begin
     raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
   end;
 
-  AdicionarDadosObrigatorios
+  AdicionarDadosObrigatorios;
+  fEmTransacao := True;
+end;
+
+procedure TACBrTEFPGWebAPI.AbortarTransacao;
+begin
+  if not fEmTransacao then
+    Exit;
+
+  FinalizarTrancao(PWCNF_REV_ABORT);
+  fEmTransacao := False;
 end;
 
 procedure TACBrTEFPGWebAPI.AdicionarParametro(iINFO: Word;
@@ -947,7 +1043,6 @@ end;
 procedure TACBrTEFPGWebAPI.ExcutarTransacao;
 var
   iRet: SmallInt;
-  MsgErro: String;
   ArrParams: PW_GetData;
   NumParams: SmallInt;
 begin
@@ -982,31 +1077,111 @@ begin
   until (iRet = PWRET_OK);
 end;
 
+procedure TACBrTEFPGWebAPI.FinalizarTrancao(Status: LongWord);
+var
+  bConfirma: Boolean;
+  pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst, MsgErro: String;
+  iRet: SmallInt;
+begin
+  bConfirma := (Trim(ObterInfo(PWINFO_CNFREQ)) = '1');
+  if not bConfirma then
+    Exit;
+
+  pszReqNum := Trim(ObterInfo(PWINFO_REQNUM));
+  pszLocRef := Trim(ObterInfo(PWINFO_AUTLOCREF));
+  pszExtRef := Trim(ObterInfo(PWINFO_AUTEXTREF));
+  pszVirtMerch := Trim(ObterInfo(PWINFO_VIRTMERCH));
+  pszAuthSyst := Trim(ObterInfo(PWINFO_AUTHSYST));
+
+  iRet := xPW_iConfirmation( Status, PAnsiChar(pszReqNum), PAnsiChar(pszLocRef),
+                             PAnsiChar(pszExtRef), PAnsiChar(pszVirtMerch),
+                             PAnsiChar(pszAuthSyst));
+  if (iRet <> PWRET_OK) then
+  begin
+    case iRet of
+      PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgErro := sErrPWRET_NOTINST;
+      PWRET_INVALIDTRN: MsgErro := sErrPWRET_INVALIDTRN;
+    else
+      MsgErro := ObterUltimoErro;
+    end;
+
+    raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
+  end;
+end;
+
+function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
+  ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
+var
+  ARespInt: Integer;
+  Valido: Boolean;
+begin
+  Valido := True;
+  Result := '';
+  if (ADefinicaoCampo.TiposEntradaPermitidos = pgtNumerico) then
+  begin
+    ARespInt := StrToIntDef(AResposta, -1);
+    if ARespInt > ADefinicaoCampo.ValorMaximo then
+      Result := Trim(ADefinicaoCampo.MsgDadoMaior)
+    else if ARespInt < ADefinicaoCampo.ValorMinimo then
+      Result := Trim(ADefinicaoCampo.MsgDadoMenor);
+  end
+  else
+  case ADefinicaoCampo.ValidacaoDado of
+    pgvNaoVazio:
+      Valido := (AResposta <> '');
+    pgvDigMod10:
+      Valido := ValidarModulo10(AResposta);
+    pgvCPF_CNPJ:
+      Valido := (ACBrValidador.ValidarCNPJouCPF(AResposta) = '');
+    pgvMMAA:
+      Valido := ValidarDDMM(AResposta);
+    pgvDDMMAA:
+      Valido := ValidarDDMMAA(AResposta);
+  end;
+
+  if not Valido then
+    Result := ADefinicaoCampo.MsgValidacao;
+end;
+
 procedure TACBrTEFPGWebAPI.ObterDados(ArrGetData: PW_GetData; ArrLen: SmallInt);
 var
   AGetData: TPW_GetData;
-  i: Integer;
+  i, j: Integer;
+  MsgPrevia: String;
 begin
+  GravarLog('TACBrTEFPGWebAPI.ObterDados( '+IntToStr(ArrLen)+' )');
+
   for i := 0 to ArrLen-1 do
   begin
     AGetData := ArrGetData[i];
+    LogPWGetData(AGetData);
 
-    case AGetData.bTipoDeDado of
-      PWDAT_MENU:
-        ObterDadoMenu(AGetData);
-      PWDAT_TYPED:
-        ObterDadoDigitado(AGetData);
-      PWDAT_CARDINF:;
-      PWDAT_PPENTRY:;
-      PWDAT_PPENCPIN:;
-      PWDAT_CARDOFF:;
-      PWDAT_CARDONL:;
-      PWDAT_PPCONF:;
-      PWDAT_BARCODE:;
-      PWDAT_PPREMCRD:;
-      PWDAT_PPGENCMD:;
-      PWDAT_PPDATAPOSCNF:;
-      PWDAT_USERAUTH:;
+    MsgPrevia := Trim(AGetData.szMsgPrevia);
+    if (MsgPrevia <> '') then
+      ExibirMensagem(MsgPrevia, CMilissegundosMensagem);
+
+    for j := 1 to AGetData.bNumeroCapturas do
+    begin
+      case AGetData.bTipoDeDado of
+        PWDAT_MENU:
+          ObterDadoMenu(AGetData);
+        PWDAT_TYPED:
+          ObterDadoDigitado(AGetData);
+        PWDAT_CARDINF:
+          ObterDadoCartao(AGetData);
+        PWDAT_PPENTRY:;
+        PWDAT_PPENCPIN:;
+        PWDAT_CARDOFF:;
+        PWDAT_CARDONL:;
+        PWDAT_PPCONF:;
+        PWDAT_BARCODE:
+          ObterDadoCodBarra(AGetData);
+        PWDAT_PPREMCRD:;
+        PWDAT_PPGENCMD:;
+        PWDAT_PPDATAPOSCNF:;
+        PWDAT_USERAUTH:;
+      end;
     end;
   end;
 end;
@@ -1016,10 +1191,8 @@ var
   SL: TStringList;
   ItemSelecionado, i: Integer;
   AOpcao: String;
+  Cancelado: Boolean;
 begin
-  if not Assigned(fOnExibeMenu) then
-    raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMenu']);
-
   SL := TStringList.Create;
   try
     for i := 0 to AGetData.bNumOpcoesMenu-1 do
@@ -1032,29 +1205,244 @@ begin
     end;
 
     ItemSelecionado := AGetData.bItemInicial;
-    fOnExibeMenu(Trim(AGetData.szPrompt), SL, ItemSelecionado);
+    Cancelado := False;
+    GravarLog(' OnExibeMenu');
+    fOnExibeMenu(Trim(AGetData.szPrompt), SL, ItemSelecionado, Cancelado);
+    Cancelado := Cancelado or (ItemSelecionado < 0) or (ItemSelecionado > AGetData.bNumOpcoesMenu);
 
-    if (ItemSelecionado > 0) and (ItemSelecionado <= SL.Count) then
-      AdicionarParametro(wIdentificador, AGetData.vszValorMenu[ItemSelecionado-1]);
+    if Cancelado then
+      AbortarTransacao
+    else
+      AdicionarParametro(AGetData.wIdentificador, AGetData.vszValorMenu[ItemSelecionado-1]);
   finally
     SL.Free;
   end;
 end;
 
 procedure TACBrTEFPGWebAPI.ObterDadoDigitado(AGetData: TPW_GetData);
+var
+  AResposta, ARespostaAnterior, MsgValidacao: String;
+  Validado, Cancelado: Boolean;
+  ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo;
 begin
-//  AGetData.bValidacaoDado
-//0: sem validação
-//1: o dado não pode ser vazio
-//2: (último) dígito verificador, algoritmo módulo 10
-//3: CPF ou CNPJ
-//4: data no formato “MMAA”
-//5: data no formato “DDMMAA”
-//6: solicitar a digitação duas vezes iguais (confirmação)
+  ADefinicaoCampo := PW_GetDataToDefinicaoCampo(AGetData);
+
+  AResposta := ADefinicaoCampo.ValorInicial;
+  ARespostaAnterior := '';
+  Validado := False;
+  Cancelado := False;
+
+  repeat
+    GravarLog(' OnObtemCampo');
+    fOnObtemCampo(ADefinicaoCampo, AResposta, Validado, Cancelado);
+
+    if not (Validado or Cancelado) then
+    begin
+      AResposta := Trim(AResposta);
+      MsgValidacao := '';
+      if (ADefinicaoCampo.ValidacaoDado = pgvDuplaDigitacao) then
+      begin
+        if (ARespostaAnterior = '') then
+        begin
+          ARespostaAnterior := AResposta;
+          ADefinicaoCampo.Titulo := Trim(AGetData.szMsgConfirmacao);
+          AResposta := ADefinicaoCampo.ValorInicial;
+          Continue;
+        end
+        else
+        begin
+          if (AResposta <> ARespostaAnterior)then
+            MsgValidacao := ADefinicaoCampo.MsgValidacao;
+        end
+      end
+      else
+        MsgValidacao := ValidarRespostaCampo(AResposta, ADefinicaoCampo);
+
+      Validado := (MsgValidacao = '');
+
+      if not Validado then
+        ExibirMensagem(MsgValidacao, CMilissegundosMensagem);
+    end;
+  until (Validado or Cancelado);
+
+  if Cancelado then
+    AbortarTransacao
+  else
+    AdicionarParametro(AGetData.wIdentificador, AResposta);
+end;
+
+procedure TACBrTEFPGWebAPI.ObterDadoCodBarra(AGetData: TPW_GetData);
+var
+  ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo;
+  AResposta: String;
+  Validado, Cancelado: Boolean;
+begin
+  ADefinicaoCampo := PW_GetDataToDefinicaoCampo(AGetData);
+
+  AResposta := ADefinicaoCampo.ValorInicial;
+  Validado := False;
+  Cancelado := False;
+
+  fOnObtemCampo(ADefinicaoCampo, AResposta, Validado, Cancelado);
+  AResposta := Trim(AResposta);
+
+  if Cancelado then
+    AbortarTransacao
+  else
+  begin
+    AdicionarParametro(PWINFO_BARCODE, AResposta);
+    AdicionarParametro(PWINFO_BARCODENTMODE, IntToStr(Integer(ADefinicaoCampo.TipoEntradaCodigoBarras)));
+  end;
+end;
+
+procedure TACBrTEFPGWebAPI.ObterDadoCartao(AGetData: TPW_GetData);
+begin
+  case AGetData.ulTipoEntradaCartao of
+    1: ObterDadoCartaoDigitado(AGetData);
+    2: ObterDadoCartaoPinPad(AGetData);
+  end;
+end;
+
+procedure TACBrTEFPGWebAPI.ObterDadoCartaoDigitado(AGetData: TPW_GetData);
+begin
+
+end;
+
+procedure TACBrTEFPGWebAPI.ObterDadoCartaoPinPad(AGetData: TPW_GetData);
+begin
+
+end;
+
+procedure TACBrTEFPGWebAPI.ExibirMensagem(const AMsg: String;
+  TempoEspera: Integer);
+begin
+  GravarLog(' OnExibeMensagem( '+AMsg+', '+IntToStr(TempoEspera)+' )');
+  fOnExibeMensagem(AMsg, TempoEspera);
+end;
+
+function TACBrTEFPGWebAPI.PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData
+  ): TACBrTEFPGWebAPIDefinicaoCampo;
+begin
+  Result.Titulo := Trim(AGetData.szPrompt);
+  Result.MascaraDeCaptura := Trim(AGetData.szMascaraDeCaptura);
+  Result.TiposEntradaPermitidos := TACBrTEFPGWebAPITiposEntrada(AGetData.bTiposEntradaPermitidos);
+  Result.TamanhoMinimo := AGetData.bTamanhoMinimo;
+  Result.TamanhoMaximo := AGetData.bTamanhoMaximo;
+  Result.ValorMinimo := AGetData.ulValorMinimo;
+  Result.ValorMaximo := AGetData.ulValorMaximo;
+  Result.OcultarDadosDigitados := (AGetData.bOcultarDadosDigitados = 1);
+  Result.ValidacaoDado := TACBrTEFPGWebAPIValidacaoDado(AGetData.bValidacaoDado);
+  Result.AceitaNulo := (AGetData.bAceitaNulo = 1);
+  Result.ValorInicial := Trim(AGetData.szValorInicial);
+  Result.bTeclasDeAtalho := (AGetData.bTeclasDeAtalho = 1);
+  Result.MsgValidacao := Trim(AGetData.szMsgValidacao);
+  Result.MsgConfirmacao := Trim(AGetData.szMsgConfirmacao);
+  Result.MsgDadoMaior := Trim(AGetData.szMsgDadoMaior);
+  Result.MsgDadoMenor := Trim(AGetData.szMsgDadoMenor);
+  Result.TipoEntradaCodigoBarras := TACBrTEFPGWebAPITipoBarras(AGetData.bTipoEntradaCodigoBarras);
+end;
+
+procedure TACBrTEFPGWebAPI.LogPWGetData(AGetData: TPW_GetData);
+var
+  SL: TStringList;
+  i: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Add(' PW_GetData');
+    SL.Add('  swIdentificador: ' + IntToStr(AGetData.wIdentificador));
+    SL.Add('  bTipoDeDado: ' + IntToStr(AGetData.bTipoDeDado));
+    SL.Add('  szPrompt: ' + AGetData.szPrompt);
+    SL.Add('  bNumOpcoesMenu: ' + IntToStr(AGetData.bNumOpcoesMenu));
+    for i := 0 to AGetData.bNumOpcoesMenu-1 do
+    begin
+      SL.Add('  vszTextoMenu: '+AGetData.vszTextoMenu[i]);
+      SL.Add('  vszValorMenu: '+AGetData.vszValorMenu[i]);
+    end;
+    SL.Add('  szMascaraDeCaptura: '+AGetData.szMascaraDeCaptura);
+    SL.Add('  bTiposEntradaPermitidos: '+IntToStr(AGetData.bTiposEntradaPermitidos));
+    SL.Add('  bTamanhoMinimo: '+IntToStr(AGetData.bTamanhoMinimo));
+    SL.Add('  bTamanhoMaximo: '+IntToStr(AGetData.bTamanhoMaximo));
+    SL.Add('  ulValorMinimo: '+IntToStr(AGetData.ulValorMinimo));
+    SL.Add('  ulValorMaximo: '+IntToStr(AGetData.ulValorMaximo));
+    SL.Add('  bOcultarDadosDigitados: '+IntToStr(AGetData.bOcultarDadosDigitados));
+    SL.Add('  bValidacaoDado: '+IntToStr(AGetData.bValidacaoDado));
+    SL.Add('  bAceitaNulo: '+IntToStr(AGetData.bAceitaNulo));
+    SL.Add('  szValorInicial: '+AGetData.szValorInicial);
+    SL.Add('  bTeclasDeAtalho: '+IntToStr(AGetData.bTeclasDeAtalho));
+    SL.Add('  szMsgValidacao: '+AGetData.szMsgValidacao);
+    SL.Add('  szMsgConfirmacao: '+AGetData.szMsgConfirmacao);
+    SL.Add('  szMsgDadoMaior: '+AGetData.szMsgDadoMaior);
+    SL.Add('  szMsgDadoMenor: '+AGetData.szMsgDadoMenor);
+    SL.Add('  bCapturarDataVencCartao: '+IntToStr(AGetData.bCapturarDataVencCartao));
+    SL.Add('  ulTipoEntradaCartao: '+IntToStr(AGetData.ulTipoEntradaCartao));
+    SL.Add('  bItemInicial: '+IntToStr(AGetData.bItemInicial));
+    SL.Add('  bNumeroCapturas: '+IntToStr(AGetData.bNumeroCapturas));
+    SL.Add('  szMsgPrevia: '+AGetData.szMsgPrevia);
+    SL.Add('  bTipoEntradaCodigoBarras: '+IntToStr(AGetData.bTipoEntradaCodigoBarras));
+    SL.Add('  bOmiteMsgAlerta: '+IntToStr(AGetData.bOmiteMsgAlerta));
+    SL.Add('  bIniciaPelaEsquerda: '+IntToStr(AGetData.bIniciaPelaEsquerda));
+    SL.Add('  bNotificarCancelamento: '+IntToStr(AGetData.bNotificarCancelamento));
+    SL.Add('  bAlinhaPelaDireita: '+IntToStr(AGetData.bAlinhaPelaDireita));
+
+    GravarLog( SL.Text);
+  finally
+    SL.Free;
+  end;
+end;
+
+function TACBrTEFPGWebAPI.ValidarDDMM(AString: String): Boolean;
+begin
+  Result := False;
+  if Length(AString) <> 4 then
+    Exit;
+
+  Result := ValidarDDMMAA(AString + '00');
+end;
+
+function TACBrTEFPGWebAPI.ValidarDDMMAA(AString: String): Boolean;
+var
+  AnoStr: String;
+begin
+  Result := False;
+  if (Length(AString) <> 6) then
+    Exit;
+  if not StrIsNumber(AString) then
+    Exit;
+
+  AnoStr := IntToStr(YearOf(Today));
+  try
+    EncodeDate( StrToInt( Copy(AnoStr , 1, 2) + Copy(AString, 5, 2) ),
+                StrToInt( Copy(AString, 3, 2) ),
+                StrToInt( Copy(AString, 1, 2) ) );
+    Result := True;
+  except
+  end;
+end;
+
+function TACBrTEFPGWebAPI.ValidarModulo10(AString: String): Boolean;
+var
+  AModulo: TACBrCalcDigito;
+begin
+  Result := False;
+  if not StrIsNumber(AString) then
+    Exit;
+
+  AModulo := TACBrCalcDigito.Create;
+  try
+    AModulo.CalculoPadrao;
+    AModulo.FormulaDigito := frModulo10;
+    AModulo.Documento := copy(AString, 1, Length(AString)-1);
+    AModulo.Calcular;
+    Result := (AModulo.DigitoFinal = StrToInt(RightStr(AString,1)));
+  finally
+    AModulo.Free;
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.AdicionarDadosObrigatorios;
 begin
+  GravarLog('TACBrTEFPGWebAPI.AdicionarDadosObrigatorios');
   AdicionarParametro(PWINFO_AUTNAME, NomeAplicacao);
   AdicionarParametro(PWINFO_AUTVER, VersaoAplicacao);
   AdicionarParametro(PWINFO_AUTDEV, SoftwareHouse);

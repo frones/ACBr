@@ -32,14 +32,13 @@
 program DemoDANFSeFR;
 
 uses
-  Vcl.Forms,
+  Forms,
   ufrmPrincipal in 'ufrmPrincipal.pas' {frmPrincipal};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
   Application.Title := 'Demo DANF-e em Fast Report';
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.Run;

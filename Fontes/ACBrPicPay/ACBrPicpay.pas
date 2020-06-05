@@ -56,7 +56,7 @@ uses
   {$ELSE}
   EncdDecd,
   {$ENDIF}
-  Jsons, httpsend, synautil, StrUtils,
+  Jsons, httpsend, synautil,
    ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket
    , SyncObjs
    //, ACBrPicpayThreadCallback
@@ -70,7 +70,9 @@ const
 type
   EACBrPicpayError = class( Exception ) ;
 
-  TWaitingPayment = procedure (Status: String) of Object;
+  TWaitingPayment = procedure (const Status: String; const TempoRestante: Integer) of Object;
+
+  TWaitingTimeout = procedure (var Retry: Boolean) of object;
 
   TStatusPayment = procedure (AuthorizationId, Status : String) of Object;
 
@@ -94,6 +96,7 @@ type
     procedure StatusPayment;
     procedure FazWaitingPayment;
     procedure FazConsulta;
+    procedure FazWaitingTimeout;
   protected
     procedure Execute; override;
   public
@@ -185,6 +188,7 @@ type
     fLojista: TACBrPicPayLojista;
     fComprador: TACBrPicPayComprador;
     fThreadAguardaRetorno: TACBrPicPayThread;
+    fOnWaitingTimeout: TWaitingTimeout;
 
     procedure AguardarRetorno;
 
@@ -220,9 +224,16 @@ type
     property OnStatusPayment: TStatusPayment read FOnStatusPayment write FOnStatusPayment;
     property OnWaitingPayment: TWaitingPayment read fOnWaitingPayment write fOnWaitingPayment;
     property OnErrorPayment: TErrorPayment read fOnErrorPayment write fOnErrorPayment;
+    property OnWaitingTimeout: TWaitingTimeout read fOnWaitingTimeout write fOnWaitingTimeout;
   end;
 
 implementation
+
+uses
+  {$IFDEF DELPHIXE8_UP}
+    System.NetEncoding,
+  {$ENDIF}
+  StrUtils;
 
 { *** TACBrPicPayThread *** }
 
@@ -271,7 +282,20 @@ end;
 procedure TACBrPicPayThread.FazWaitingPayment;
 begin
   if Assigned(fACBrPicpay.fOnWaitingPayment) then
-    fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status)
+    fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status, fUltimoTempoAguardo);
+end;
+
+procedure TACBrPicPayThread.FazWaitingTimeout;
+var
+  Retry: Boolean;
+begin
+  Retry := False;
+  if Assigned(fACBrPicpay.fOnWaitingTimeout) then
+    fACBrPicpay.fOnWaitingTimeout(Retry);
+  if Retry then
+    fUltimoTempoAguardo := fACBrPicpay.fTempoRetorno
+  else
+    fACBrPicpay.fCancelarAguardoRetorno := True;
 end;
 
 { Public }
@@ -300,7 +324,7 @@ end;
 procedure TACBrPicPayThread.FazConsulta;
 begin
   fUltimoTempoAguardo := fACBrPicpay.fTempoRetorno;
-  while not Terminated do
+  while not (Terminated or fACBrPicpay.fCancelarAguardoRetorno) do
   begin
     Sleep(1000);
     Dec(fUltimoTempoAguardo);
@@ -311,13 +335,13 @@ begin
     if fACBrPicpay.fStatus = 'paid' then
     begin
       Synchronize(StatusPayment);
-      Break
+      Break;
     end;
 
-    Synchronize(FazWaitingPayment);
-
-    if fACBrPicpay.fCancelarAguardoRetorno or (fUltimoTempoAguardo <= 0) then
-      Break;
+    if (fUltimoTempoAguardo <= 0) then
+      Synchronize(FazWaitingTimeout)
+    else
+      Synchronize(FazWaitingPayment);
   end;
 end;
 

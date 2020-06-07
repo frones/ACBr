@@ -46,6 +46,7 @@ resourcestring
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrPWRET_WRITERR = 'Falha de gravação no diretório %s';
   sErrPWRET_INVCALL = 'Já foi efetuada uma chamada à função PW_iInit';
+  sErrPWRET_INVCALL2 = 'Não há captura de dados no PIN-pad em curso.';
   sErrPWRET_NODATA = 'A informação solicitada não está disponível';
   sErrPWRET_BUFOVFLW = 'O valor da informação solicitada não cabe no Buffer alocado';
   sErrPWRET_DLLNOTINIT = 'Biblioteca PGWebLib não foi inicializada';
@@ -54,7 +55,9 @@ resourcestring
   sErrPWRET_INVALIDTRN = 'A transação informada para confirmação não existe ou já foi confirmada anteriormente';
   sErrPWRET_NOTINST = 'É necessário efetuar uma transação de Instalação';
   sErrPWRET_INVPARAM = 'Valor %s Inválido para parâmetro %s';
+  sErrPWRET_INVPARAM2 = 'O valor de uiIndex informado não corresponde a uma captura de dados deste tipo.';
   sErrPWRET_NOMANDATORY = 'Parâmetros obrigatórios não informados';
+  sErrPWRET_PPCOMERR = 'Falha na comunicação com o PIN-pad.';
 
 const
   {$IFDEF LINUX}
@@ -419,7 +422,9 @@ type
      pgvCPF_CNPJ = 3,
      pgvMMAA = 4,
      pgvDDMMAA = 5,
-     pgvDuplaDigitacao = 6);
+     pgvDuplaDigitacao = 6,
+     pgvSenhaLojista = 100,
+     pgvSenhaTecnica = 101);
 
   TACBrTEFPGWebAPITipoBarras =
     (pgbDigitado = 1,
@@ -461,6 +466,15 @@ type
   TACBrTEFPGWebAPIExibeMensagem = procedure(
     Mensagem: String; MilissegundosExibicao: Integer);
 
+
+  TACBrTEFPGWebAPIOperacaoPinPad = (ppGetCard, ppGetPIN, ppGetData, ppGoOnChip,
+    ppFinishChip, ppConfirmData, ppGenericCMD, ppDataConfirmation, ppDisplay,
+    ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock);
+
+  TACBrTEFPGWebAPIAguardaPinPad = procedure(
+    OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean);
+
+
   { TACBrTEFPGWebAPI }
 
   TACBrTEFPGWebAPI = class
@@ -470,6 +484,7 @@ type
     fInicializada: Boolean;
     fEmTransacao: Boolean;
     fNomeAplicacao: String;
+    fOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
     fOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     fOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
     fOnGravarLog: TACBrGravarLog;
@@ -481,6 +496,7 @@ type
     fSuportaViasDiferenciadas: Boolean;
     fUtilizaSaldoTotalVoucher: Boolean;
     fVersaoAplicacao: String;
+    fTempoTarefasAutomaticas: String;
 
     xPW_iInit: function (const pszWorkingDir: PAnsiChar): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -555,15 +571,19 @@ type
     procedure AdicionarDadosObrigatorios;
     function CalcularCapacidadesDaAutomacao: Integer;
 
-    procedure ObterDados(ArrGetData: TArrPW_GetData; ArrLen: SmallInt);
-    procedure ObterDadoMenu(AGetData: TPW_GetData);
-    procedure ObterDadoDigitado(AGetData: TPW_GetData);
+    function ObterDados(ArrGetData: TArrPW_GetData; ArrLen: SmallInt): SmallInt;
+    function ObterDadoMenu(AGetData: TPW_GetData): SmallInt;
+    function ObterDadoDigitado(AGetData: TPW_GetData): SmallInt;
     function ObterDadoDigitadoGenerico(AGetData: TPW_GetData; var AResposta: String): Boolean;
-    procedure ObterDadoCodBarra(AGetData: TPW_GetData);
-    procedure ObterDadoCartao(AGetData: TPW_GetData);
-    procedure ObterDadoCartaoDigitado(AGetData: TPW_GetData);
-    function ObterDadoCartaoPinPad(AGetData: TPW_GetData): SmallInt;
+    function ObterDadoCodBarra(AGetData: TPW_GetData): SmallInt;
+    function ObterDadoCartao(AGetData: TPW_GetData): SmallInt;
+    function ObterDadoCartaoDigitado(AGetData: TPW_GetData): SmallInt;
+
+    function RealizarOperacaoPinPad(AGetData: TPW_GetData; OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
+    function AguardarOperacaoPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
+
     procedure ExibirMensagem(const AMsg: String; TempoEspera: Integer = 0);
+    procedure AtualizarTempoTarefasAutomaticas;
 
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
 
@@ -583,12 +603,13 @@ type
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
 
     procedure IniciarTransacao(iOPER: SmallInt);
-    procedure AbortarTransacao;
     procedure AdicionarParametro(iINFO: Word; const AValor: AnsiString);
-    procedure ExcutarTransacao;
+    function ExcutarTransacao: Boolean;
     procedure FinalizarTrancao(Status: LongWord);
+    procedure AbortarTransacao;
 
-    function ValidarRespostaCampo(AResposta: String; ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
+    function ValidarRespostaCampo(AResposta: String;
+      ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 
     property PathDLL: String read fPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
@@ -609,14 +630,20 @@ type
       write fUtilizaSaldoTotalVoucher;
 
     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
-    property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read fOnExibeMenu write fOnExibeMenu;
-    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read fOnObtemCampo write fOnObtemCampo;
-    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read fOnExibeMensagem write fOnExibeMensagem;
+    property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read fOnExibeMenu
+      write fOnExibeMenu;
+    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read fOnObtemCampo
+      write fOnObtemCampo;
+    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read fOnExibeMensagem
+      write fOnExibeMensagem;
+    property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read fOnAguardaPinPad
+      write fOnAguardaPinPad;
   end;
 
 function PWINFOToString(iINFO: SmallInt): String;
 function PWRETToString(iRET: SmallInt): String;
 function PWOPERToString(iOPER: SmallInt): String;
+function PWCNFToString(iCNF: LongWord): String;
 
 implementation
 
@@ -808,6 +835,24 @@ begin
   end;
 end;
 
+function PWCNFToString(iCNF: LongWord): String;
+begin
+  case iCNF of
+    PWCNF_CNF_AUTO:      Result := 'PWCNF_CNF_AUTO';
+    PWCNF_CNF_MANU_AUT:  Result := 'PWCNF_CNF_MANU_AUT';
+    PWCNF_REV_MANU_AUT:  Result := 'PWCNF_REV_MANU_AUT';
+    PWCNF_REV_PRN_AUT:   Result := 'PWCNF_REV_PRN_AUT';
+    PWCNF_REV_DISP_AUT:  Result := 'PWCNF_REV_DISP_AUT';
+    PWCNF_REV_COMM_AUT:  Result := 'PWCNF_REV_COMM_AUT';
+    PWCNF_REV_ABORT:     Result := 'PWCNF_REV_ABORT';
+    PWCNF_REV_OTHER_AUT: Result := 'PWCNF_REV_OTHER_AUT';
+    PWCNF_REV_PWR_AUT:   Result := 'PWCNF_REV_PWR_AUT';
+    PWCNF_REV_FISC_AUT:  Result := 'PWCNF_REV_FISC_AUT';
+  else
+    Result := 'PWCNF_'+IntToStr(iCNF);
+  end;
+end;
+
 { TACBrTEFRespPGWeb }
 
 procedure TACBrTEFRespPGWeb.ConteudoToProperty;
@@ -830,10 +875,13 @@ begin
   fEmTransacao := False;
   fDiretorioTrabalho := '';
   ClearMethodPointers;
+  fTempoTarefasAutomaticas := '';
 
   fOnGravarLog := Nil;
   fOnExibeMenu := Nil;
   fOnObtemCampo := Nil;
+  fOnExibeMensagem := Nil;
+  fOnAguardaPinPad := Nil;
 end;
 
 destructor TACBrTEFPGWebAPI.Destroy;
@@ -859,6 +907,8 @@ begin
     raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMenu']);
   if not Assigned(fOnExibeMensagem) then
     raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMensagem']);
+  if not Assigned(fOnAguardaPinPad) then
+    raise EACBrTEFPayGoWeb.CreateFmt(ACBrStr(sErrEventoNaoAtribuido), ['OnAguardaPinPad']);
 
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
@@ -869,6 +919,7 @@ begin
 
   GravarLog('PW_iInit( '+fDiretorioTrabalho+' )');
   iRet := xPW_iInit(PAnsiChar(fDiretorioTrabalho));
+  GravarLog('  '+PWRETToString(iRet));
   case iRet of
     PWRET_OK: MsgErro := '';
     PWRET_WRITERR: MsgErro := Format(sErrPWRET_WRITERR, [fDiretorioTrabalho]);
@@ -944,6 +995,7 @@ begin
   try
     GravarLog('PW_iGetResult( '+ PWINFOToString(iINFO)+' )');
     iRet := xPW_iGetResult(iINFO, pszData, ulDataSize);
+    GravarLog('  '+PWRETToString(iRet));
     if (iRet = PWRET_OK) then
       Result := String(pszData)
     else
@@ -995,7 +1047,9 @@ begin
   if fEmTransacao then
     raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_TRNINIT));
 
+  GravarLog('PW_iNewTransac( '+PWOPERToString(iOPER)+' )');
   iRet := xPW_iNewTransac(iOPER);
+  GravarLog('  '+PWRETToString(iRet));
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
@@ -1008,17 +1062,13 @@ begin
     raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
   end;
 
-  AdicionarDadosObrigatorios;
   fEmTransacao := True;
-end;
-
-procedure TACBrTEFPGWebAPI.AbortarTransacao;
-begin
-  if not fEmTransacao then
-    Exit;
-
-  FinalizarTrancao(PWCNF_REV_ABORT);
-  fEmTransacao := False;
+  try
+    AdicionarDadosObrigatorios;
+  except
+    AbortarTransacao;
+    raise;
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.AdicionarParametro(iINFO: Word;
@@ -1027,7 +1077,9 @@ var
   iRet: SmallInt;
   MsgErro: String;
 begin
+  GravarLog('PW_iAddParam( '+PWINFOToString(iINFO)+', '+AValor+' )');
   iRet := xPW_iAddParam(iINFO, PAnsiChar(AValor));
+  GravarLog('  '+PWRETToString(iRet));
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
@@ -1043,47 +1095,63 @@ begin
   end;
 end;
 
-procedure TACBrTEFPGWebAPI.ExcutarTransacao;
+function TACBrTEFPGWebAPI.ExcutarTransacao: Boolean;
 var
   iRet: SmallInt;
   ArrParams: TArrPW_GetData;
   NumParams: SmallInt;
 begin
-  NumParams := Length(ArrParams);
-  repeat
-    iRet := xPW_iExecTransac(ArrParams, NumParams);
-    case iRet of
-      PWRET_OK:
-        Break;
+  try
+    NumParams := Length(ArrParams);
+    repeat
+      GravarLog('xPW_iExecTransac( '+IntToStr(NumParams)+' )');
+      iRet := xPW_iExecTransac(ArrParams, NumParams);
+      GravarLog('  '+PWRETToString(iRet));
+      case iRet of
+        PWRET_OK:
+          Break;
 
-      PWRET_NOTHING:
-        Sleep(CSleepNothing);
+        PWRET_NOTHING:
+          Sleep(CSleepNothing);
 
-      PWRET_MOREDATA:
-        ObterDados(ArrParams, NumParams) ;
+        PWRET_MOREDATA:
+          begin
+            if (ObterDados(ArrParams, NumParams) <> PWRET_OK) then
+            begin
+              AbortarTransacao;
+              iRet := PWRET_CANCEL;
+            end;
+          end;
 
-      PWRET_NOMANDATORY:
-        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_NOMANDATORY));
+        PWRET_NOMANDATORY:
+          raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_NOMANDATORY));
 
-      PWRET_DLLNOTINIT:
-        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_DLLNOTINIT));
+        PWRET_DLLNOTINIT:
+          raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_DLLNOTINIT));
 
-      PWRET_NOTINST:
-        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_NOTINST));
+        PWRET_NOTINST:
+          raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_NOTINST));
 
-      PWRET_TRNNOTINIT:
-        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_TRNNOTINIT));
+        PWRET_TRNNOTINIT:
+          raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_TRNNOTINIT));
 
-    else
-      raise EACBrTEFPayGoWeb.Create(ACBrStr(ObterUltimoErro));
-    end;
-  until (iRet = PWRET_OK);
+      else
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(ObterUltimoErro));
+      end;
+    until (iRet = PWRET_OK) or (iRet = PWRET_CANCEL);
+  except
+    AbortarTransacao;
+    raise
+  end;
+
+  Result := (iRet = PWRET_OK);
 end;
 
 procedure TACBrTEFPGWebAPI.FinalizarTrancao(Status: LongWord);
 var
   bConfirma: Boolean;
-  pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst, MsgErro: String;
+  MsgErro: String;
+  pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst: AnsiString;
   iRet: SmallInt;
 begin
   bConfirma := (Trim(ObterInfo(PWINFO_CNFREQ)) = '1');
@@ -1096,9 +1164,20 @@ begin
   pszVirtMerch := Trim(ObterInfo(PWINFO_VIRTMERCH));
   pszAuthSyst := Trim(ObterInfo(PWINFO_AUTHSYST));
 
-  iRet := xPW_iConfirmation( Status, PAnsiChar(pszReqNum), PAnsiChar(pszLocRef),
-                             PAnsiChar(pszExtRef), PAnsiChar(pszVirtMerch),
-                             PAnsiChar(pszAuthSyst));
+  GravarLog('xPW_iConfirmation( '+PWCNFToString(Status)+', '+
+                                  pszReqNum+', '+
+                                  pszLocRef+', '+
+                                  pszExtRef+', '+
+                                  pszVirtMerch+', '+
+                                  pszAuthSyst+' ) ');
+  iRet := xPW_iConfirmation( Status,
+                             PAnsiChar(pszReqNum),
+                             PAnsiChar(pszLocRef),
+                             PAnsiChar(pszExtRef),
+                             PAnsiChar(pszVirtMerch),
+                             PAnsiChar(pszAuthSyst) );
+  GravarLog('  '+PWRETToString(iRet));
+  fEmTransacao := False;
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
@@ -1111,6 +1190,12 @@ begin
 
     raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
   end;
+end;
+
+procedure TACBrTEFPGWebAPI.AbortarTransacao;
+begin
+  if fEmTransacao then
+    FinalizarTrancao(PWCNF_REV_ABORT);
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
@@ -1147,15 +1232,18 @@ begin
     Result := ADefinicaoCampo.MsgValidacao;
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDados(ArrGetData: TArrPW_GetData; ArrLen: SmallInt);
+function TACBrTEFPGWebAPI.ObterDados(ArrGetData: TArrPW_GetData;
+  ArrLen: SmallInt): SmallInt;
 var
   AGetData: TPW_GetData;
   i, j: Integer;
   MsgPrevia: String;
+  iRet: SmallInt;
 begin
   GravarLog('TACBrTEFPGWebAPI.ObterDados( '+IntToStr(ArrLen)+' )');
 
-  for i := 0 to ArrLen-1 do
+  iRet := PWRET_OK;
+  while (iRet = PWRET_OK) and (i < ArrLen) do
   begin
     AGetData := ArrGetData[i];
     AGetData.bIndice := i;
@@ -1165,38 +1253,52 @@ begin
     if (MsgPrevia <> '') then
       ExibirMensagem(MsgPrevia, CMilissegundosMensagem);
 
-    for j := 1 to AGetData.bNumeroCapturas do
+    while (iRet = PWRET_OK) and (j <= AGetData.bNumeroCapturas) do
     begin
       case AGetData.bTipoDeDado of
         PWDAT_MENU:
-          ObterDadoMenu(AGetData);
-        PWDAT_TYPED:
-          ObterDadoDigitado(AGetData);
+          iRet := ObterDadoMenu(AGetData);
+        PWDAT_TYPED, PWDAT_USERAUTH:
+          iRet := ObterDadoDigitado(AGetData);
         PWDAT_CARDINF:
-          ObterDadoCartao(AGetData);
-        PWDAT_PPENTRY:;
-        PWDAT_PPENCPIN:;
-        PWDAT_CARDOFF:;
-        PWDAT_CARDONL:;
-        PWDAT_PPCONF:;
+          iRet := ObterDadoCartao(AGetData);
+        PWDAT_PPENTRY:
+          iRet := RealizarOperacaoPinPad(AGetData, ppGetData);
+        PWDAT_PPENCPIN:
+          iRet := RealizarOperacaoPinPad(AGetData, ppGetPIN);
+        PWDAT_CARDOFF:
+          iRet := RealizarOperacaoPinPad(AGetData, ppGoOnChip);
+        PWDAT_CARDONL:
+          iRet := RealizarOperacaoPinPad(AGetData, ppFinishChip);
+        PWDAT_PPCONF:
+          iRet := RealizarOperacaoPinPad(AGetData, ppConfirmData);
         PWDAT_BARCODE:
-          ObterDadoCodBarra(AGetData);
-        PWDAT_PPREMCRD:;
-        PWDAT_PPGENCMD:;
-        PWDAT_PPDATAPOSCNF:;
-        PWDAT_USERAUTH:;
+          iRet := ObterDadoCodBarra(AGetData);
+        PWDAT_PPREMCRD:
+          iRet := RealizarOperacaoPinPad(AGetData, ppRemoveCard);
+        PWDAT_PPGENCMD:
+          iRet := RealizarOperacaoPinPad(AGetData, ppGenericCMD);
+        //PWDAT_PPDATAPOSCNF:
+        //  iRet := RealizarOperacaoPinPad(AGetData, ppDataConfirmation);
       end;
+
+      Inc(j);
     end;
+
+    Inc(i);
   end;
+
+  Result := iRet;
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDadoMenu(AGetData: TPW_GetData);
+function TACBrTEFPGWebAPI.ObterDadoMenu(AGetData: TPW_GetData): SmallInt;
 var
   SL: TStringList;
   ItemSelecionado, i: Integer;
   AOpcao: String;
   Cancelado: Boolean;
 begin
+  Cancelado := False;
   SL := TStringList.Create;
   try
     for i := 0 to AGetData.bNumOpcoesMenu-1 do
@@ -1209,27 +1311,31 @@ begin
     end;
 
     ItemSelecionado := AGetData.bItemInicial;
-    Cancelado := False;
     GravarLog(' OnExibeMenu');
     fOnExibeMenu(Trim(AGetData.szPrompt), SL, ItemSelecionado, Cancelado);
     Cancelado := Cancelado or (ItemSelecionado < 0) or (ItemSelecionado > AGetData.bNumOpcoesMenu);
 
-    if Cancelado then
-      AbortarTransacao
-    else
+    if not Cancelado then
       AdicionarParametro(AGetData.wIdentificador, AGetData.vszValorMenu[ItemSelecionado-1]);
   finally
     SL.Free;
   end;
+
+  Result := IfThen(Cancelado, PWRET_CANCEL, PWRET_OK);
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDadoDigitado(AGetData: TPW_GetData);
+function TACBrTEFPGWebAPI.ObterDadoDigitado(AGetData: TPW_GetData): SmallInt;
 var
   AResposta: String;
 begin
   AResposta := '';
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
+  begin
+    Result := PWRET_OK;
     AdicionarParametro(AGetData.wIdentificador, AResposta);
+  end
+  else
+    Result := PWRET_CANCEL;
 end;
 
 function TACBrTEFPGWebAPI.ObterDadoDigitadoGenerico(AGetData: TPW_GetData;
@@ -1285,19 +1391,22 @@ begin
   Result := not Cancelado;
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDadoCodBarra(AGetData: TPW_GetData);
+function TACBrTEFPGWebAPI.ObterDadoCodBarra(AGetData: TPW_GetData): SmallInt;
 var
   AResposta: String;
 begin
   AResposta := '';
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
   begin
+    Result := PWRET_OK;
     AdicionarParametro(PWINFO_BARCODE, AResposta);
     AdicionarParametro(PWINFO_BARCODENTMODE, IntToStr(AGetData.bTipoEntradaCodigoBarras));
-  end;
+  end
+  else
+    Result := PWRET_CANCEL;
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDadoCartao(AGetData: TPW_GetData);
+function TACBrTEFPGWebAPI.ObterDadoCartao(AGetData: TPW_GetData): SmallInt;
 var
   ObterDigitado: Boolean;
   iRet: SmallInt;
@@ -1307,58 +1416,162 @@ begin
   case AGetData.ulTipoEntradaCartao of
     2:
     begin
-      iRet := ObterDadoCartaoPinPad(AGetData);
+      iRet := RealizarOperacaoPinPad(AGetData, ppGetCard);
       ObterDigitado := (iRet = PWRET_FALLBACK);
     end;
 
     3:
     begin
-      iRet := ObterDadoCartaoPinPad(AGetData);
-      ObterDigitado := (iRet <> PWRET_OK);
+      iRet := RealizarOperacaoPinPad(AGetData, ppGetCard);
+      ObterDigitado := (iRet = PWRET_CANCEL) or (iRet = PWRET_FALLBACK);
     end;
   end;
 
   if ObterDigitado then
-    ObterDadoCartaoDigitado(AGetData);
+    Result := ObterDadoCartaoDigitado(AGetData)
+  else
+    Result := iRet;
 end;
 
-function TACBrTEFPGWebAPI.ObterDadoCartaoPinPad(AGetData: TPW_GetData): SmallInt;
+function TACBrTEFPGWebAPI.RealizarOperacaoPinPad(AGetData: TPW_GetData;
+  OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
 var
   iRet: SmallInt;
-  pszDisplay: AnsiString;
 begin
-  iRet := xPW_iPPGetCard(AGetData.bIndice);
-  if (iRet = PWRET_OK) then
-  begin
-    repeat
-      pszDisplay := Space(100);
-      iRet := xPW_iPPEventLoop( PAnsiChar(pszDisplay), 100);
+  case OperacaoPinPad of
+    ppGetCard:
+    begin
+      GravarLog('xPW_iPPGetCard( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPGetCard(AGetData.bIndice);
+    end;
+    ppGetData:
+    begin
+      GravarLog('xPW_iPPGetData( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPGetData(AGetData.bIndice);
+    end;
+    ppGetPIN:
+    begin
+      GravarLog('xPW_iPPGetPIN( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPGetPIN(AGetData.bIndice);
+    end;
+    ppGoOnChip:
+    begin
+      GravarLog('xPW_iPPGoOnChip( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPGoOnChip(AGetData.bIndice);
+    end;
+    ppFinishChip:
+    begin
+      GravarLog('xPW_iPPFinishChip( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPFinishChip(AGetData.bIndice);
+    end;
+    ppConfirmData:
+    begin
+      GravarLog('xPW_iPPConfirmData( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPConfirmData(AGetData.bIndice);
+    end;
+    ppRemoveCard:
+    begin
+      GravarLog('xPW_iPPRemoveCard');
+      iRet := xPW_iPPRemoveCard();
+    end;
+    ppGenericCMD:
+    begin
+      GravarLog('xPW_iPPGenericCMD( '+IntToStr(AGetData.bIndice)+' )');
+      iRet := xPW_iPPGenericCMD(AGetData.bIndice);
+    end;
+    //ppDataConfirmation:
+    //begin
+    //  GravarLog('xPW_iPPDataConfirmation( '+IntToStr(AGetData.bIndice)+' )');
+    //  iRet := xPW_iPPDataConfirmation(AGetData.bIndice);
+    //end
+  else
+    raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_NOMANDATORY));
+  end;
 
-      case iRet of
-        PWRET_NOTHING:
-          Sleep(CSleepNothing);
+  GravarLog('  '+PWRETToString(iRet));
+  case iRet of
+    PWRET_OK:
+      iRet := AguardarOperacaoPinPad(OperacaoPinPad);
 
-        PWRET_DISPLAY:
-          ExibirMensagem(String(pszDisplay));
+    PWRET_DLLNOTINIT:
+      raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_DLLNOTINIT));
 
-      end;
+    PWRET_INVPARAM:
+      raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_INVPARAM2));
 
-      //PWRET_OK..............Captura de dados realizada com êxito, prosseguir com a transação.
-      //PWRET_CANCEL..........A operação foi cancelada pelo Cliente no PIN-pad (tecla [CANCEL]).
-      //PWRET_TIMEOUT.........O Cliente não realizou a captura no tempo limite.
-      //PWRET_FALLBACK .......Ocorreu um erro na leitura do cartão, passar a aceitar a digitação do número do cartão, caso já não esteja aceitando.
-      //PWRET_PPCOMERR........Falha na comunicação com o PIN-pad.
-      //PWRET_DLLNOTINIT......Não foi executado PW_iInit.
-      //PWRET_INVCALL.........Não há captura de dados no PIN-pad em curso.
-      //Outro................. Outro erro de execução (ver “10. Códigos de retorno”, página 78). Uma mensagem de erro pode ser obtida através da função PW_iGetResult
-      //(PWINFO_RESULTMSG)
-    until (iRet = PWRET_OK) or (iRet = PWRET_CANCEL)
+  else
+    raise EACBrTEFPayGoWeb.Create(ACBrStr(ObterUltimoErro));
   end;
 
   Result := iRet;
 end;
 
-procedure TACBrTEFPGWebAPI.ObterDadoCartaoDigitado(AGetData: TPW_GetData);
+function TACBrTEFPGWebAPI.AguardarOperacaoPinPad(
+  OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
+var
+  iRet: SmallInt;
+  pszDisplay: AnsiString;
+  Cancelado: Boolean;
+begin
+  Cancelado := False;
+  while not Cancelado do
+  begin
+    pszDisplay := Space(100);
+    GravarLog('xPW_iPPEventLoop');
+    iRet := xPW_iPPEventLoop( PAnsiChar(pszDisplay), 100);
+    GravarLog('  '+PWRETToString(iRet));
+
+    case iRet of
+      PWRET_NOTHING:
+        Sleep(CSleepNothing);
+
+      PWRET_DISPLAY:
+        ExibirMensagem(String(pszDisplay));
+
+      PWRET_OK, PWRET_CANCEL, PWRET_TIMEOUT, PWRET_FALLBACK:
+        Break;
+
+      PWRET_PPCOMERR:
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_PPCOMERR));
+
+      PWRET_DLLNOTINIT:
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_DLLNOTINIT));
+
+      PWRET_INVCALL:
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_INVCALL2));
+
+    else
+      raise EACBrTEFPayGoWeb.Create(ACBrStr(ObterUltimoErro));
+    end;
+
+    fOnAguardaPinPad(OperacaoPinPad, Cancelado);
+  end;
+
+  if Cancelado then
+  begin
+    GravarLog('PW_iPPAbort');
+    iRet := xPW_iPPAbort;
+    GravarLog('  '+PWRETToString(iRet));
+    case iRet of
+      PWRET_OK:
+        iRet := PWRET_CANCEL;  // Sinaliza Cancelado, para função chamadora
+
+      PWRET_PPCOMERR:
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_PPCOMERR));
+
+      PWRET_DLLNOTINIT:
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_DLLNOTINIT));
+
+    else
+      raise EACBrTEFPayGoWeb.Create(ACBrStr(ObterUltimoErro));
+    end;
+  end;
+
+  Result := iRet;
+end;
+
+function TACBrTEFPGWebAPI.ObterDadoCartaoDigitado(AGetData: TPW_GetData
+  ): SmallInt;
 var
   AResposta: String;
   AStr: AnsiString;
@@ -1366,28 +1579,38 @@ begin
   AResposta := '';
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
   begin
+    Result := PWRET_OK;
     AdicionarParametro(PWINFO_CARDFULLPAN, AResposta);
 
     if (AGetData.bCapturarDataVencCartao = 0) then
     begin
       AStr := sPerVenctoCartao + NUL;
-      Move(AStr[1], AGetData.szPrompt[0], min(Length(AGetData.szPrompt), Length(AStr)));
+      Move(AStr[1], AGetData.szPrompt[0], Length(AStr));
       AStr := '@@/@@' + NUL;
-      Move(AStr[1], AGetData.szMascaraDeCaptura[0], min(Length(AGetData.szMascaraDeCaptura), Length(AStr)));
+      Move(AStr[1], AGetData.szMascaraDeCaptura[0], Length(AStr));
       AGetData.bValidacaoDado := 4; // MMAA
       AGetData.szValorInicial[0] := NUL;
 
       AResposta := '';
       if ObterDadoDigitadoGenerico(AGetData, AResposta) then
-        AdicionarParametro(PWINFO_CARDEXPDATE, AResposta);
+        AdicionarParametro(PWINFO_CARDEXPDATE, AResposta)
+      else
+        Result := PWRET_CANCEL;
     end;
-  end;
+  end
+  else
+    Result := PWRET_CANCEL;
 end;
 
 procedure TACBrTEFPGWebAPI.ExibirMensagem(const AMsg: String; TempoEspera: Integer);
 begin
   GravarLog(' OnExibeMensagem( '+AMsg+', '+IntToStr(TempoEspera)+' )');
   fOnExibeMensagem(AMsg, TempoEspera);
+end;
+
+procedure TACBrTEFPGWebAPI.AtualizarTempoTarefasAutomaticas;
+begin
+  fTempoTarefasAutomaticas := ObterInfo(PWINFO_IDLEPROCTIME);
 end;
 
 function TACBrTEFPGWebAPI.PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData
@@ -1410,6 +1633,11 @@ begin
   Result.MsgDadoMaior := Trim(AGetData.szMsgDadoMaior);
   Result.MsgDadoMenor := Trim(AGetData.szMsgDadoMenor);
   Result.TipoEntradaCodigoBarras := TACBrTEFPGWebAPITipoBarras(AGetData.bTipoEntradaCodigoBarras);
+
+  case AGetData.wIdentificador of
+    PWINFO_AUTHMNGTUSER: Result.ValidacaoDado := pgvSenhaLojista;
+    PWINFO_AUTHTECHUSER: Result.ValidacaoDado := pgvSenhaTecnica;
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.LogPWGetData(AGetData: TPW_GetData);

@@ -67,7 +67,9 @@ const
   {$ENDIF}
 
   CSleepNothing = 100;
-  CMilissegundosMensagem = 3000;
+  CMilissegundosMensagem = 3000;  // 3 seg
+  CMilissegundosOcioso = 300000;  // 5 min
+
 
 //==========================================================================================
 // Número maximo de itens em um menu de seleção
@@ -464,15 +466,14 @@ type
     var Cancelado: Boolean) of object ;
 
   TACBrTEFPGWebAPIExibeMensagem = procedure(
-    Mensagem: String; MilissegundosExibicao: Integer);
-
+    Mensagem: String; MilissegundosExibicao: Integer) of object;
 
   TACBrTEFPGWebAPIOperacaoPinPad = (ppGetCard, ppGetPIN, ppGetData, ppGoOnChip,
     ppFinishChip, ppConfirmData, ppGenericCMD, ppDataConfirmation, ppDisplay,
     ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock);
 
   TACBrTEFPGWebAPIAguardaPinPad = procedure(
-    OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean);
+    OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean) of object;
 
 
   { TACBrTEFPGWebAPI }
@@ -496,6 +497,8 @@ type
     fSuportaViasDiferenciadas: Boolean;
     fUtilizaSaldoTotalVoucher: Boolean;
     fVersaoAplicacao: String;
+    fTimerOcioso: TACBrThreadTimer;
+
     fTempoTarefasAutomaticas: String;
 
     xPW_iInit: function (const pszWorkingDir: PAnsiChar): SmallInt;
@@ -560,6 +563,9 @@ type
     procedure SetPathDLL(AValue: String);
     procedure SetSoftwareHouse(AValue: String);
     procedure SetVersaoAplicacao(AValue: String);
+
+    procedure SetEmTransacao(AValue: Boolean);
+    procedure OnTimerOcioso(Sender: TObject);
   protected
     procedure LoadDLLFunctions;
     procedure UnLoadDLLFunctions;
@@ -581,12 +587,9 @@ type
 
     function RealizarOperacaoPinPad(AGetData: TPW_GetData; OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
     function AguardarOperacaoPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
-
     procedure ExibirMensagem(const AMsg: String; TempoEspera: Integer = 0);
-    procedure AtualizarTempoTarefasAutomaticas;
 
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
-
     procedure LogPWGetData(AGetData: TPW_GetData);
 
     function ValidarDDMM(AString: String): Boolean;
@@ -872,9 +875,9 @@ begin
   fImprimirViaClienteReduzida := False;
   fUtilizaSaldoTotalVoucher := False;
   fInicializada := False;
-  fEmTransacao := False;
   fDiretorioTrabalho := '';
   ClearMethodPointers;
+  fEmTransacao := False;
   fTempoTarefasAutomaticas := '';
 
   fOnGravarLog := Nil;
@@ -882,11 +885,18 @@ begin
   fOnObtemCampo := Nil;
   fOnExibeMensagem := Nil;
   fOnAguardaPinPad := Nil;
+
+  fTimerOcioso := TACBrThreadTimer.Create;
+  fTimerOcioso.OnTimer := OnTimerOcioso;
+  fTimerOcioso.Interval := CMilissegundosOcioso;
+  fTimerOcioso.Enabled := False;
 end;
 
 destructor TACBrTEFPGWebAPI.Destroy;
 begin
   GravarLog('TACBrTEFPGWebAPI.Destroy');
+  fTimerOcioso.Enabled := False;
+  fTimerOcioso.Free;
   UnLoadDLLFunctions;
   inherited Destroy;
 end;
@@ -929,9 +939,10 @@ begin
   end;
 
   if (MsgErro <> '') then
-    raise EACBrTEFPayGoWeb.Create(MsgErro);
+    raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
 
   fInicializada := True;
+  SetEmTransacao(False);
 end;
 
 procedure TACBrTEFPGWebAPI.DesInicializar;
@@ -1001,7 +1012,7 @@ begin
     else
     begin
       case iRet of
-        PWRET_NODATA: MsgErro := sErrPWRET_NODATA;
+        PWRET_NODATA: MsgErro := ''; //sErrPWRET_NODATA;
         PWRET_BUFOVFLW: MsgErro := sErrPWRET_BUFOVFLW;
         PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
         PWRET_TRNNOTINIT: MsgErro := sErrPWRET_TRNNOTINIT;
@@ -1010,7 +1021,8 @@ begin
         MsgErro := PWRETToString(iRet);
       end;
 
-      raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
+      if (MsgErro <> '') then
+        raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
     end;
   finally
     Freemem(pszData);
@@ -1044,7 +1056,7 @@ var
   iRet: SmallInt;
   MsgErro: String;
 begin
-  if fEmTransacao then
+  if EmTransacao then
     raise EACBrTEFPayGoWeb.Create(ACBrStr(sErrPWRET_TRNINIT));
 
   GravarLog('PW_iNewTransac( '+PWOPERToString(iOPER)+' )');
@@ -1062,7 +1074,7 @@ begin
     raise EACBrTEFPayGoWeb.Create(ACBrStr(MsgErro));
   end;
 
-  fEmTransacao := True;
+  SetEmTransacao(True);
   try
     AdicionarDadosObrigatorios;
   except
@@ -1177,7 +1189,7 @@ begin
                              PAnsiChar(pszVirtMerch),
                              PAnsiChar(pszAuthSyst) );
   GravarLog('  '+PWRETToString(iRet));
-  fEmTransacao := False;
+  SetEmTransacao(False);
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
@@ -1194,7 +1206,7 @@ end;
 
 procedure TACBrTEFPGWebAPI.AbortarTransacao;
 begin
-  if fEmTransacao then
+  if EmTransacao then
     FinalizarTrancao(PWCNF_REV_ABORT);
 end;
 
@@ -1608,11 +1620,6 @@ begin
   fOnExibeMensagem(AMsg, TempoEspera);
 end;
 
-procedure TACBrTEFPGWebAPI.AtualizarTempoTarefasAutomaticas;
-begin
-  fTempoTarefasAutomaticas := ObterInfo(PWINFO_IDLEPROCTIME);
-end;
-
 function TACBrTEFPGWebAPI.PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData
   ): TACBrTEFPGWebAPIDefinicaoCampo;
 begin
@@ -1803,6 +1810,34 @@ procedure TACBrTEFPGWebAPI.SetVersaoAplicacao(AValue: String);
 begin
   if fVersaoAplicacao = AValue then Exit;
   fVersaoAplicacao := LeftStr(Trim(AValue),128);
+end;
+
+procedure TACBrTEFPGWebAPI.SetEmTransacao(AValue: Boolean);
+var
+  TempoTarefasAutomaticas: String;
+  ANow: TDateTime;
+begin
+  fEmTransacao := AValue;
+  if not AValue then
+  begin
+    TempoTarefasAutomaticas := Trim(ObterInfo(PWINFO_IDLEPROCTIME));
+    if (TempoTarefasAutomaticas <> '') then
+    begin
+      ANow := Now;
+      if (StrToDateTimeDef(TempoTarefasAutomaticas, ANow) < ANow) then
+        OnTimerOcioso(nil);
+    end;
+  end;
+  fTimerOcioso.Enabled := not AValue;
+end;
+
+procedure TACBrTEFPGWebAPI.OnTimerOcioso(Sender: TObject);
+var
+  iRet: SmallInt;
+begin
+  GravarLog('PW_iIdleProc');
+  iRet := xPW_iIdleProc();
+  GravarLog('  '+PWRETToString(iRet));
 end;
 
 procedure TACBrTEFPGWebAPI.SetDiretorioTrabalho(AValue: String);

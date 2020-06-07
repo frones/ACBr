@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrTEFDClass, ACBrTEFPayGoWebComum;
+  ACBrBase, ACBrTEFDClass, ACBrTEFPayGoWebComum;
 
 type
 
@@ -56,8 +56,16 @@ type
     fsPGWebAPI: TACBrTEFPGWebAPI;
 
     function GetDiretorioTrabalho: String;
+    function GetOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
+    function GetOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
+    function GetOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
+    function GetOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
     function GetPathDLL: string;
     procedure SetDiretorioTrabalho(AValue: String);
+    procedure SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
+    procedure SetOnExibeMensagem(AValue: TACBrTEFPGWebAPIExibeMensagem);
+    procedure SetOnExibeMenu(AValue: TACBrTEFPGWebAPIExibeMenu);
+    procedure SetOnObtemCampo(AValue: TACBrTEFPGWebAPIObtemCampo);
     procedure SetPathDLL(AValue: string);
 
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
@@ -97,7 +105,10 @@ type
        Moeda : Integer = 0) : Boolean; override;
     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
   published
-
+    property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read GetOnExibeMenu write SetOnExibeMenu;
+    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read GetOnObtemCampo write SetOnObtemCampo;
+    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read GetOnExibeMensagem write SetOnExibeMensagem;
+    property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read GetOnAguardaPinPad write SetOnAguardaPinPad;
   end;
 
 implementation
@@ -179,9 +190,49 @@ begin
   Result := fsPGWebAPI.DiretorioTrabalho;
 end;
 
+function TACBrTEFDPayGoWeb.GetOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
+begin
+  Result := fsPGWebAPI.OnAguardaPinPad;
+end;
+
+function TACBrTEFDPayGoWeb.GetOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
+begin
+  Result := fsPGWebAPI.OnExibeMensagem;
+end;
+
+function TACBrTEFDPayGoWeb.GetOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
+begin
+  Result := fsPGWebAPI.OnExibeMenu;
+end;
+
+function TACBrTEFDPayGoWeb.GetOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
+begin
+  Result := fsPGWebAPI.OnObtemCampo;
+end;
+
 procedure TACBrTEFDPayGoWeb.SetDiretorioTrabalho(AValue: String);
 begin
   fsPGWebAPI.DiretorioTrabalho := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
+begin
+  fsPGWebAPI.OnAguardaPinPad := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetOnExibeMensagem(AValue: TACBrTEFPGWebAPIExibeMensagem);
+begin
+  fsPGWebAPI.OnExibeMensagem := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetOnExibeMenu(AValue: TACBrTEFPGWebAPIExibeMenu);
+begin
+  fsPGWebAPI.OnExibeMenu := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetOnObtemCampo(AValue: TACBrTEFPGWebAPIObtemCampo);
+begin
+  fsPGWebAPI.OnObtemCampo := AValue;
 end;
 
 procedure TACBrTEFDPayGoWeb.SetPathDLL(AValue: string);
@@ -202,7 +253,13 @@ end;
 
 function TACBrTEFDPayGoWeb.ADM: Boolean;
 begin
-  Result := inherited ADM;
+  fsPGWebAPI.IniciarTransacao(PWOPER_ADMIN);
+  Result := fsPGWebAPI.ExcutarTransacao;
+  if Result then
+  begin
+    fsPGWebAPI.FinalizarTrancao(PWCNF_CNF_AUTO);
+    ProcessarResposta;
+  end;
 end;
 
 function TACBrTEFDPayGoWeb.CRT(Valor: Double; IndiceFPG_ECF: String;

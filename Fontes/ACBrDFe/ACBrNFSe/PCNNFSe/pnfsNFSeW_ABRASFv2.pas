@@ -448,7 +448,6 @@ begin
     Gerador.wCampo(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, DSC_VINSS);
 
   case FProvedor of
-    proActconv2,
     proCoplan,
     proDigifred,
     proELv2,

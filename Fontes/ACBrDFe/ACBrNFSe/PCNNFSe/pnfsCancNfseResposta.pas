@@ -318,7 +318,7 @@ end;
 
 function TretCancNFSe.LerXml_ABRASF: Boolean;
 var
-  i: Integer;
+  i, iNivel: Integer;
 begin
   Result := True;
 
@@ -441,6 +441,56 @@ begin
                        end;
                      end;
                    end;
+                 end;
+     proElotech: begin
+                   if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+                   begin
+                     if (Leitor.rExtrai(2, 'tcRetCancelamento') <> '') then
+                     begin
+                       if (Leitor.rExtrai(3, 'NfseCancelamento') <> '') then
+                       begin
+                         if (Leitor.rExtrai(4, 'ConfirmacaoCancelamento') <> '') then
+                         begin
+                           if (Leitor.rExtrai(5, 'Pedido') <> '') then
+                           begin
+                             if (Leitor.rExtrai(6, 'InfPedidoCancelamento') <> '') then
+                             begin
+                               if (Leitor.rExtrai(7, 'IdentificacaoNfse') <> '') then
+                               begin
+                                 InfCanc.FPedido.IdentificacaoNfse.Numero             := Leitor.rCampo(tcStr, 'Numero');
+                                 InfCanc.FPedido.IdentificacaoNfse.Cnpj               := Leitor.rCampo(tcStr, 'Cnpj');
+                                 InfCanc.FPedido.IdentificacaoNfse.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+                                 InfCanc.FPedido.IdentificacaoNfse.CodigoMunicipio    := Leitor.rCampo(tcStr, 'CodigoMunicipio');                               end;
+                             end;
+                           end;
+                           infCanc.DataHora := Leitor.rCampo(tcDatHorCFe, 'DataHora');
+                           if infCanc.DataHora > 0 then
+                            InfCanc.Sucesso  := 'S';
+                         end;
+                       end;
+                     end;
+                     iNivel := 1;
+                     if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
+                         (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') then
+                        iNivel := 3
+                     else
+                     if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+                           (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
+                          iNivel := 2;
+
+                     i := 0;
+                     while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
+                     begin
+                        InfCanc.FMsgRetorno.New;
+                        InfCanc.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+                        InfCanc.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+                        InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+                        InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+                        InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+                        inc(i);
+                     end;
+                   end
                  end;
     else
       begin

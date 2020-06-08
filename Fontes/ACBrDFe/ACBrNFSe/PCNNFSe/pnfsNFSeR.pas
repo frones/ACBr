@@ -182,6 +182,9 @@ begin
   if NFSe.Servico.ItemListaServico = '' then
     NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico'));
 
+  if FProvedor = proMegaSoft then
+    NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio'));
+
   Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
   if Item < 100 then
     Item := Item * 100 + 1;

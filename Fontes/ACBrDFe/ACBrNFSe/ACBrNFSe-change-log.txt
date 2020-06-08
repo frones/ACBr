@@ -42,6 +42,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/57619-nfse-prefeitura-matias-barbosamg-provedor-futurize/?tab=comments#comment-378290
+  Por: Wilchaia
+[*] https://www.projetoacbr.com.br/forum/topic/57975-erro-schemas-megasoft-revisão-20051/
+  Por: Haroldo 
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/57619-nfse-prefeitura-matias-barbosamg-provedor-futurize/?tab=comments#comment-378290
+  Por: Wilchaia
+-- pnfsEnvLoteRpsResposta/pnfsCancNfseResposta --
+[*] https://www.projetoacbr.com.br/forum/topic/57800-nfse-elotech/?tab=comments
+  Por: Giovane Mazzotti Bortolato
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/57927-código-do-serviço-provedor-megasoft/
+  Por: Haroldo
+
 04/06/2020
 -- pnfsNFSeW_Equiplano --
 [*]  Alteração para permitir a emissão de multiplos serviços na mesma nota, 

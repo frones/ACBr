@@ -398,6 +398,17 @@ begin
       end;
     end;
 
+    if Provedor in [proElotech] then
+    begin
+      i := 0;
+      while (Leitor.rExtrai(1, 'InfNfse', '', i + 1) <> '') do
+      begin
+        InfRec.FListaChaveNFeRPS.New;
+        infRec.FListaChaveNFeRPS[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'ChaveAcesso');
+        inc(i);
+      end;
+    end;
+
     i := 0;
     while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
     begin

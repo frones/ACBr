@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrBoleto, ACBrLibConfig;
+  ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig;
 
 type
 

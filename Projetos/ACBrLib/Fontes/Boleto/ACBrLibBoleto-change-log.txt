@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2020
+--- ACBrLibBoletoClass, ACBrLibBoletoConfig --
+[-] Ajuste de declaração de USES
+    (Por: José M S Junior)	
+
 19/05/2020
 --- ACBrLibBoletoDataModule --
 [-] Corrigido erro ao configurar o cedente como pessoa fisica.

@@ -181,7 +181,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
-  ACBrBoleto, ACBrLibBoletoConfig, ACBrMail;
+  ACBrBoleto, ACBrBoletoConversao, ACBrLibBoletoConfig, ACBrMail;
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 

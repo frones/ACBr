@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
   StdCtrls, EditBtn, ACBrBoleto, ACBrBoletoFCFortesFr,
-  ExtCtrls, MaskEdit, Buttons, ACBrUtil, ACBrMail;
+  ExtCtrls, MaskEdit, Buttons, ACBrUtil, ACBrMail, ACBrBoletoConversao;
 
 type
 
@@ -57,6 +57,7 @@ type
      Button2: TButton;
      Button3: TButton;
      Button4: TButton;
+     btnRegistro: TButton;
      cbxAceite: TComboBox;
      cbxLayOut : TComboBox ;
      edtInstrucoes1: TEdit;
@@ -132,6 +133,7 @@ type
      procedure btnIncluiBoletoClick ( Sender: TObject ) ;
      procedure btnIncluir10BoletosClick ( Sender: TObject ) ;
      procedure btnImprimirClick ( Sender: TObject ) ;
+     procedure btnRegistroClick(Sender: TObject);
      procedure btnZerarClick ( Sender: TObject ) ;
      procedure Button1Click ( Sender: TObject ) ;
      procedure Button2Click ( Sender: TObject ) ;
@@ -139,7 +141,6 @@ type
      procedure Button4Click(Sender: TObject);
      procedure cbxLayOutChange(Sender : TObject) ;
      procedure FormCreate ( Sender: TObject ) ;
-     procedure Label32Click(Sender: TObject);
   private
     { private declarations }
   public
@@ -227,6 +228,80 @@ begin
 
 end;
 
+{
+--Utiliza WebService dos Bancos para realizar o Registro dos Boletos--
+Até o momento disponível para Caixa Economica e Banco do Brasil
+É necessario realizar a configuração previa para acesso ao WebService
+No Object Inspector verifique as propriedades: CedenteWS e Configuracoes/WebService
+Verifique no arquivo "configWebService.txt" quais as configurações necessárias para cada Banco
+}
+procedure TfrmDemo.btnRegistroClick(Sender: TObject);
+var
+  SLRemessa: TStringList;
+  i: Integer;
+begin
+  with ACBrBoleto1 do
+  begin
+    //Função de Envio
+    EnviarBoleto;
+
+    //Verifica Lista com os retornos
+    if ListaRetornoWeb.Count > 0 then
+    begin
+      SLRemessa := TStringList.Create;
+      try
+        for i:= 0 to ListaRetornoWeb.Count -1 do
+        begin
+          //Ler todos os campos da classe Retorno
+           SLRemessa.Add('Cod_Retorno='+ ListaRetornoWeb[i].CodRetorno + sLineBreak +
+                       'Msg_Retorno='+ ListaRetornoWeb[i].MsgRetorno + sLineBreak +
+                       'Ori_Retorno='+ ListaRetornoWeb[i].OriRetorno + sLineBreak +
+                       'HEADER' + sLineBreak +
+                       'Versao='+ ListaRetornoWeb[i].Header.Versao + sLineBreak +
+                       'Autenticacao=' + ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
+                       'Usuario_Servico=' + ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
+                       'Usuario=' + ListaRetornoWeb[i].Header.Usuario + sLineBreak +
+                       'Operacao='  + TipoOperacaoToStr(ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
+                       'Indice=' + IntToStr(ListaRetornoWeb[i].Header.Indice) + sLineBreak +
+                       'Sistema_Origem=' + ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
+                       'Agencia=' + IntToStr(ListaRetornoWeb[i].Header.Agencia) + sLineBreak +
+                       'ID_Origem=' + ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
+                       'Data_Hora=' +FormatDateTime('dd/mm/yyyy hh:nn:ss',ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
+                       'ID_Processo=' + ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+                       'DADOS' + sLineBreak +
+                       'Excessao=' +ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
+                       'CONTROLE_NEGOCIAL' + sLineBreak +
+                       'Origem_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
+                       'NSU=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
+                       'Cod_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
+                       'Msg_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
+                       'COMPROVANTE' + sLineBreak +
+                       'Data=' +  FormatDateTime('dd/mm/yyyy', ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
+                       'Hora=' +  ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
+                       'ID_BOLETO' + sLineBreak +
+                       'Codigo_Barras=' + ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
+                       'Linha_Digitavel=' + ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
+                       'Nosso_Numero=' + ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
+                       'URL=' + ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
+                       'CONSULTA_BOLETO' + sLineBreak +
+                       'Numero_Documento=' + ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
+                       'Data_Vencimento=' + FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
+                       'Valor=' + CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
+                        );
+        end;
+
+        SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
+      finally
+        SLRemessa.Free;
+      end;
+      ShowMessage('Retorno Envio gerado em: '+ PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
+
+    end;
+
+
+  end;
+end;
+
 procedure TfrmDemo.btnZerarClick ( Sender: TObject ) ;
 begin
    ACBrBoleto1.ListadeBoletos.Clear;
@@ -247,17 +322,13 @@ begin
    cbxLayOut.ItemIndex := 0;
 end;
 
-procedure TfrmDemo.Label32Click(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmDemo.btnIncluiBoletoClick ( Sender: TObject ) ;
 var
   Titulo : TACBrTitulo;
   DadosNFe: TACBrDadosNFe;
-  Z, I: integer;
+  I: integer;
 begin
+
      Titulo := ACBrBoleto1.CriarTituloNaLista;
 
      with Titulo do
@@ -298,6 +369,13 @@ begin
         Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
         Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
 
+        QtdePagamentoParcial:= 1;
+        TipoPagamento:= tpNao_Aceita_Valor_Divergente;
+        PercentualMinPagamento:= 0;
+        PercentualMaxPagamento:= 0;
+        ValorMinPagamento:= 0;
+        ValorMaxPagamento:= 0;
+
         for I:= 0 to 4 do
         begin
          DadosNFe:= Titulo.CriarNFeNaLista;
@@ -308,10 +386,11 @@ begin
         end;
 
 
-         with Sacado.SacadoAvalista do
+         with Sacado.SacadoAvalista  do
          begin
+          Pessoa:= pJuridica;
           NomeAvalista:= 'RIAADE SUPRIMENTOS MEDICOS LTDA';
-          CNPJCPF:= '15.037.934/0001-75';
+          CNPJCPF:= '18.760.540.0001-39';
           Logradouro:= 'Rua XI de Agosto';
           Numero:= '100';
           Bairro:= 'Centro';

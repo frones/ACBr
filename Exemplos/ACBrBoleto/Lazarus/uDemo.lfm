@@ -8,7 +8,7 @@ object frmDemo: TfrmDemo
   ClientWidth = 811
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.4.0'
+  LCLVersion = '2.0.6.0'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
@@ -267,7 +267,6 @@ object frmDemo: TfrmDemo
       Width = 40
       Caption = 'Label32'
       ParentColor = False
-      OnClick = Label32Click
     end
   end
   object GroupBox1: TGroupBox
@@ -706,6 +705,16 @@ object frmDemo: TfrmDemo
       Text = '5'
     end
   end
+  object btnRegistro: TButton
+    Left = 624
+    Height = 33
+    Top = 512
+    Width = 176
+    Anchors = [akTop, akRight]
+    Caption = 'Registrar  Boleto On-Line'
+    OnClick = btnRegistroClick
+    TabOrder = 6
+  end
   object ACBrBoleto1: TACBrBoleto
     MAIL = ACBrMail1
     Banco.Numero = 237
@@ -718,7 +727,7 @@ object frmDemo: TfrmDemo
     Cedente.CodigoCedente = '511935'
     Cedente.Agencia = '03161'
     Cedente.AgenciaDigito = '5'
-    Cedente.Conta = '000000017598'
+    Cedente.Conta = '0017598'
     Cedente.ContaDigito = '6'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
@@ -733,6 +742,7 @@ object frmDemo: TfrmDemo
     Cedente.Cidade = 'Sao Paulo'
     Cedente.UF = 'SP'
     Cedente.CEP = '18270000'
+    Cedente.CedenteWS.ClientID = 'SGCBS02P'
     Cedente.IdentDistribuicao = tbBancoDistribui
     Cedente.Operacao = '0008426'
     DirArqRemessa = 'c:\temp'
@@ -743,6 +753,15 @@ object frmDemo: TfrmDemo
     DataCreditoLanc = 0
     LeCedenteRetorno = True
     ACBrBoletoFC = ACBrBoletoFCFortes1
+    Configuracoes.Arquivos.LogRegistro = True
+    Configuracoes.WebService.SSLHttpLib = httpOpenSSL
+    Configuracoes.WebService.SSLType = LT_TLSv1_2
+    Configuracoes.WebService.StoreName = 'My'
+    Configuracoes.WebService.TimeOut = 30000
+    Configuracoes.WebService.UseCertificateHTTP = False
+    Configuracoes.WebService.Ambiente = taHomologacao
+    Configuracoes.WebService.Operacao = tpInclui
+    Configuracoes.WebService.VersaoDF = '1.2'
     left = 160
     top = 216
   end

@@ -30,10 +30,10 @@ package ACBr_Boleto;
 {$IMPLICITBUILD OFF}
 
 requires
+  ACBr_DFeComum,
   rtl,
   vcl,
-  designide,
-  ACBr_TCP;
+  designide;
 
 contains
   ACBrBancoBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas',
@@ -69,7 +69,15 @@ contains
   ACBrBancoDaycoval in '..\..\..\Fontes\ACBrBoleto\ACBrBancoDaycoval.pas',
   ACBrUniprimeNortePR in '..\..\..\Fontes\ACBrBoleto\ACBrUniprimeNortePR.pas',
   ACBrBancoPine in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPine.pas',
-  ACBrBancoPineBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPineBradesco.pas';
+  ACBrBancoPineBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPineBradesco.pas',
+  ACBrBoletoWS in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.pas',
+  ACBrBoletoConversao in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoConversao.pas',
+  ACBrBoletoPcnConsts in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoPcnConsts.pas',
+  ACBrBoletoRetorno in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRetorno.pas',
+  ACBrBoletoW_Caixa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Caixa.pas',
+  ACBrBoletoRet_Caixa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Caixa.pas',
+  ACBrBoletoW_BancoBrasil in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BancoBrasil.pas',
+  ACBrBoletoRet_BancoBrasil in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil.pas';
 
 end.
 

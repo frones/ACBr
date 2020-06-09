@@ -13,7 +13,10 @@ uses
   ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
   ACBrBancoBic, ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, 
   ACBrBancoCaixaSICOB, ACBrBancoBrasilSicoob, ACBrBancoCitiBank, 
-  ACBrBancoPine, ACBrBancoPineBradesco, ACBrBoletoReg, LazarusPackageIntf;
+  ACBrBancoPine, ACBrBancoPineBradesco, ACBrBoletoReg, ACBrBoletoWS, 
+  ACBrBoletoConversao, ACBrBoletoPcnConsts, ACBrBoletoW_Caixa, 
+  ACBrBoletoRet_Caixa, ACBrBoletoRetorno, ACBrBoletoW_BancoBrasil, 
+  ACBrBoletoRet_BancoBrasil, LazarusPackageIntf;
 
 implementation
 

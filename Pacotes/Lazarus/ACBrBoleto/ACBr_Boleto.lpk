@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrBoleto"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrBoleto;..\..\..\Fontes\ACBrBoleto\WS"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrBoleto\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="22">
+    <Files Count="30">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -111,10 +111,42 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrBoletoReg"/>
       </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.pas"/>
+        <UnitName Value="ACBrBoletoWS"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoConversao.pas"/>
+        <UnitName Value="ACBrBoletoConversao"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoPcnConsts.pas"/>
+        <UnitName Value="ACBrBoletoPCNConsts"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Caixa.pas"/>
+        <UnitName Value="ACBrBoletoW_Caixa"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Caixa.pas"/>
+        <UnitName Value="ACBrBoletoRet_Caixa"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRetorno.pas"/>
+        <UnitName Value="ACBrBoletoRetorno"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BancoBrasil.pas"/>
+        <UnitName Value="ACBrBoletoW_BancoBrasil"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil.pas"/>
+        <UnitName Value="ACBrBoletoRet_BancoBrasil"/>
+      </Item30>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item1>
     </RequiredPkgs>
     <UsageOptions>

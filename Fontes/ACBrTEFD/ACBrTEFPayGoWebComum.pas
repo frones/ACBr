@@ -228,6 +228,9 @@ const
   PWINFO_AUTHTECHUSER   = 246;    // Identificador do usuário autenticado com a senha técnica.
   PWINFO_PAYMNTTYPE     = 7969;   // Modalidade de pagamento: 1: cartão 2: dinheiro 3: cheque
   PWINFO_CHOLDERNAME    = 7992;   // Nome do portador do cartão utilizado, o tamanho segue o mesmo padrão da tag 5F20 EMV.
+  PWINFO_MERCHNAMEPDC   = 7993;   // Nome do estabelecimento em que o ponto de captura está cadastrado. (até 100)
+  PWINFO_DEFAULTCARDPARCPAN = 8002; // Número do cartão mascarado no formato BIN + *** + 4 últimos dígitos. Ex: 543211******987
+  PWINFO_AUTHPOSQRCODE  = 8055;   // Conteúdo do QR Code identificando o checkout para o autorizador.
   PWINFO_USINGPINPAD    = 32513;  // Indica se o ponto de captura faz ou não o uso de PIN-pad: 0: Não utiliza PIN-pad; 1: Utiliza PIN-pad.
   PWINFO_PPCOMMPORT     = 32514;  // Número da porta serial à qual o PIN-pad está conectado. O valor 0 (zero) indica uma busca automática desta porta
   PWINFO_IDLEPROCTIME   = 32516;  // Próxima data e horário em que a função PW_iIdleProc deve ser chamada pela Automação. Formato “AAMMDDHHMMSS”
@@ -489,6 +492,7 @@ type
     fInicializada: Boolean;
     fEmTransacao: Boolean;
     fNomeAplicacao: String;
+    fNomeEstabelecimento: String;
     fOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
     fOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     fOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
@@ -568,6 +572,7 @@ type
     procedure SetEnderecoIP(AValue: String);
     procedure SetInicializada(AValue: Boolean);
     procedure SetNomeAplicacao(AValue: String);
+    procedure SetNomeEstabelecimento(AValue: String);
     procedure SetPathDLL(AValue: String);
     procedure SetPontoCaptura(AValue: String);
     procedure SetPortaTCP(AValue: String);
@@ -637,6 +642,7 @@ type
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
     property VersaoAplicacao: String read fVersaoAplicacao write SetVersaoAplicacao ;
 
+    Property NomeEstabelecimento: String read fNomeEstabelecimento write SetNomeEstabelecimento;
     property CNPJEstabelecimento: String read fCNPJEstabelecimento write SetCNPJEstabelecimento;
     property PontoCaptura: String read fPontoCaptura write SetPontoCaptura;
     property EnderecoIP: String  read fEnderecoIP write SetEnderecoIP;
@@ -663,7 +669,6 @@ type
   end;
 
 function PWINFOToString(iINFO: Word): String;
-function StringToPWINFO(PWINFO: String): Word;
 function PWRETToString(iRET: SmallInt): String;
 function PWOPERToString(iOPER: SmallInt): String;
 function PWCNFToString(iCNF: LongWord): String;
@@ -749,6 +754,9 @@ begin
     PWINFO_AUTHTECHUSER:    Result := 'PWINFO_AUTHTECHUSER';
     PWINFO_PAYMNTTYPE:      Result := 'PWINFO_PAYMNTTYPE';
     PWINFO_CHOLDERNAME:     Result := 'PWINFO_CHOLDERNAME';
+    PWINFO_MERCHNAMEPDC:    Result := 'PWINFO_MERCHNAMEPDC';
+    PWINFO_DEFAULTCARDPARCPAN: Result := 'PWINFO_DEFAULTCARDPARCPAN';
+    PWINFO_AUTHPOSQRCODE:   Result := 'PWINFO_AUTHPOSQRCODE';
     PWINFO_USINGPINPAD:     Result := 'PWINFO_USINGPINPAD';
     PWINFO_PPCOMMPORT:      Result := 'PWINFO_PPCOMMPORT';
     PWINFO_IDLEPROCTIME:    Result := 'PWINFO_IDLEPROCTIME';
@@ -765,182 +773,6 @@ begin
   else
     Result := 'PWINFO_'+IntToStr(iINFO);
   end;
-end;
-
-function StringToPWINFO(PWINFO: String): Word;
-begin
-  if PWINFO = 'PWINFO_OPERATION' then
-    Result := PWINFO_OPERATION
-  else if PWINFO = 'PWINFO_POSID' then
-    Result := PWINFO_POSID
-  else if PWINFO = 'PWINFO_AUTNAME' then
-    Result := PWINFO_AUTNAME
-  else if PWINFO = 'PWINFO_AUTVER' then
-    Result := PWINFO_AUTVER
-  else if PWINFO = 'PWINFO_AUTDEV' then
-    Result := PWINFO_AUTDEV
-  else if PWINFO = 'PWINFO_DESTTCPIP' then
-    Result := PWINFO_DESTTCPIP
-  else if PWINFO = 'PWINFO_MERCHCNPJCPF' then
-    Result := PWINFO_MERCHCNPJCPF
-  else if PWINFO = 'PWINFO_AUTCAP' then
-    Result := PWINFO_AUTCAP
-  else if PWINFO = 'PWINFO_TOTAMNT' then
-    Result := PWINFO_TOTAMNT
-  else if PWINFO = 'PWINFO_CURRENCY' then
-    Result := PWINFO_CURRENCY
-  else if PWINFO = 'PWINFO_CURREXP' then
-    Result := PWINFO_CURREXP
-  else if PWINFO = 'PWINFO_FISCALREF' then
-    Result := PWINFO_FISCALREF
-  else if PWINFO = 'PWINFO_CARDTYPE' then
-    Result := PWINFO_CARDTYPE
-  else if PWINFO = 'PWINFO_PRODUCTNAME' then
-    Result := PWINFO_PRODUCTNAME
-  else if PWINFO = 'PWINFO_DATETIME' then
-    Result := PWINFO_DATETIME
-  else if PWINFO = 'PWINFO_REQNUM' then
-    Result := PWINFO_REQNUM
-  else if PWINFO = 'PWINFO_AUTHSYST' then
-    Result := PWINFO_AUTHSYST
-  else if PWINFO = 'PWINFO_VIRTMERCH' then
-    Result := PWINFO_VIRTMERCH
-  else if PWINFO = 'PWINFO_AUTMERCHID' then
-    Result := PWINFO_AUTMERCHID
-  else if PWINFO = 'PWINFO_PHONEFULLNO' then
-    Result := PWINFO_PHONEFULLNO
-  else if PWINFO = 'PWINFO_FINTYPE' then
-    Result := PWINFO_FINTYPE
-  else if PWINFO = 'PWINFO_INSTALLMENTS' then
-    Result := PWINFO_INSTALLMENTS
-  else if PWINFO = 'PWINFO_INSTALLMDATE' then
-    Result := PWINFO_INSTALLMDATE
-  else if PWINFO = 'PWINFO_PRODUCTID' then
-    Result := PWINFO_PRODUCTID
-  else if PWINFO = 'PWINFO_RESULTMSG' then
-    Result := PWINFO_RESULTMSG
-  else if PWINFO = 'PWINFO_CNFREQ' then
-    Result := PWINFO_CNFREQ
-  else if PWINFO = 'PWINFO_AUTLOCREF' then
-    Result := PWINFO_AUTLOCREF
-  else if PWINFO = 'PWINFO_AUTEXTREF' then
-    Result := PWINFO_AUTEXTREF
-  else if PWINFO = 'PWINFO_AUTHCODE' then
-    Result := PWINFO_AUTHCODE
-  else if PWINFO = 'PWINFO_AUTRESPCODE' then
-    Result := PWINFO_AUTRESPCODE
-  else if PWINFO = 'PWINFO_AUTDATETIME' then
-    Result := PWINFO_AUTDATETIME
-  else if PWINFO = 'PWINFO_DISCOUNTAMT' then
-    Result := PWINFO_DISCOUNTAMT
-  else if PWINFO = 'PWINFO_CASHBACKAMT' then
-    Result := PWINFO_CASHBACKAMT
-  else if PWINFO = 'PWINFO_CARDNAME' then
-    Result := PWINFO_CARDNAME
-  else if PWINFO = 'PWINFO_ONOFF' then
-    Result := PWINFO_ONOFF
-  else if PWINFO = 'PWINFO_BOARDINGTAX' then
-    Result := PWINFO_BOARDINGTAX
-  else if PWINFO = 'PWINFO_TIPAMOUNT' then
-    Result := PWINFO_TIPAMOUNT
-  else if PWINFO = 'PWINFO_INSTALLM1AMT' then
-    Result := PWINFO_INSTALLM1AMT
-  else if PWINFO = 'PWINFO_INSTALLMAMNT' then
-    Result := PWINFO_INSTALLMAMNT
-  else if PWINFO = 'PWINFO_RCPTFULL' then
-    Result := PWINFO_RCPTFULL
-  else if PWINFO = 'PWINFO_RCPTMERCH' then
-    Result := PWINFO_RCPTMERCH
-  else if PWINFO = 'PWINFO_RCPTCHOLDER' then
-    Result := PWINFO_RCPTCHOLDER
-  else if PWINFO = 'PWINFO_RCPTCHSHORT' then
-    Result := PWINFO_RCPTCHSHORT
-  else if PWINFO = 'PWINFO_TRNORIGDATE' then
-    Result := PWINFO_TRNORIGDATE
-  else if PWINFO = 'PWINFO_TRNORIGNSU' then
-    Result := PWINFO_TRNORIGNSU
-  else if PWINFO = 'PWINFO_SALDOVOUCHER' then
-    Result := PWINFO_SALDOVOUCHER
-  else if PWINFO = 'PWINFO_TRNORIGAMNT' then
-    Result := PWINFO_TRNORIGAMNT
-  else if PWINFO = 'PWINFO_TRNORIGAUTH' then
-    Result := PWINFO_TRNORIGAUTH
-  else if PWINFO = 'PWINFO_LANGUAGE' then
-    Result := PWINFO_LANGUAGE
-  else if PWINFO = 'PWINFO_PROCESSMSG' then
-    Result := PWINFO_PROCESSMSG
-  else if PWINFO = 'PWINFO_TRNORIGREQNUM' then
-    Result := PWINFO_TRNORIGREQNUM
-  else if PWINFO = 'PWINFO_TRNORIGTIME' then
-    Result := PWINFO_TRNORIGTIME
-  else if PWINFO = 'PWINFO_CNCDSPMSG' then
-    Result := PWINFO_CNCDSPMSG
-  else if PWINFO = 'PWINFO_CNCPPMSG' then
-    Result := PWINFO_CNCPPMSG
-  else if PWINFO = 'PWINFO_CARDENTMODE' then
-    Result := PWINFO_CARDENTMODE
-  else if PWINFO = 'PWINFO_CARDFULLPAN' then
-    Result := PWINFO_CARDFULLPAN
-  else if PWINFO = 'PWINFO_CARDEXPDATE' then
-    Result := PWINFO_CARDEXPDATE
-  else if PWINFO = 'PWINFO_CARDNAMESTD' then
-    Result := PWINFO_CARDNAMESTD
-  else if PWINFO = 'PWINFO_CARDPARCPAN' then
-    Result := PWINFO_CARDPARCPAN
-  else if PWINFO = 'PWINFO_CHOLDVERIF' then
-    Result := PWINFO_CHOLDVERIF
-  else if PWINFO = 'PWINFO_AID' then
-    Result := PWINFO_AID
-  else if PWINFO = 'PWINFO_BARCODENTMODE' then
-    Result := PWINFO_BARCODENTMODE
-  else if PWINFO = 'PWINFO_BARCODE' then
-    Result := PWINFO_BARCODE
-  else if PWINFO = 'PWINFO_MERCHADDDATA1' then
-    Result := PWINFO_MERCHADDDATA1
-  else if PWINFO = 'PWINFO_MERCHADDDATA2' then
-    Result := PWINFO_MERCHADDDATA2
-  else if PWINFO = 'PWINFO_MERCHADDDATA3' then
-    Result := PWINFO_MERCHADDDATA3
-  else if PWINFO = 'PWINFO_MERCHADDDATA4' then
-    Result := PWINFO_MERCHADDDATA4
-  else if PWINFO = 'PWINFO_RCPTPRN' then
-    Result := PWINFO_RCPTPRN
-  else if PWINFO = 'PWINFO_AUTHMNGTUSER' then
-    Result := PWINFO_AUTHMNGTUSER
-  else if PWINFO = 'PWINFO_AUTHTECHUSER' then
-    Result := PWINFO_AUTHTECHUSER
-  else if PWINFO = 'PWINFO_PAYMNTTYPE' then
-    Result := PWINFO_PAYMNTTYPE
-  else if PWINFO = 'PWINFO_CHOLDERNAME' then
-    Result := PWINFO_CHOLDERNAME
-  else if PWINFO = 'PWINFO_USINGPINPAD' then
-    Result := PWINFO_USINGPINPAD
-  else if PWINFO = 'PWINFO_PPCOMMPORT' then
-    Result := PWINFO_PPCOMMPORT
-  else if PWINFO = 'PWINFO_IDLEPROCTIME' then
-    Result := PWINFO_IDLEPROCTIME
-  else if PWINFO = 'PWINFO_PNDAUTHSYST' then
-    Result := PWINFO_PNDAUTHSYST
-  else if PWINFO = 'PWINFO_PNDVIRTMERCH' then
-    Result := PWINFO_PNDVIRTMERCH
-  else if PWINFO = 'PWINFO_PNDREQNUM' then
-    Result := PWINFO_PNDREQNUM
-  else if PWINFO = 'PWINFO_PNDAUTLOCREF' then
-    Result := PWINFO_PNDAUTLOCREF
-  else if PWINFO = 'PWINFO_PNDAUTEXTREF' then
-    Result := PWINFO_PNDAUTEXTREF
-  else if PWINFO = 'PWINFO_LOCALINFO1' then
-    Result := PWINFO_LOCALINFO1
-  else if PWINFO = 'PWINFO_SERVERPND' then
-    Result := PWINFO_SERVERPND
-  else if PWINFO = 'PWINFO_PPINFO' then
-    Result := PWINFO_PPINFO
-  else if PWINFO = 'PWINFO_DUEAMNT' then
-    Result := PWINFO_DUEAMNT
-  else if PWINFO = 'PWINFO_READJUSTEDAMNT' then
-    Result := PWINFO_READJUSTEDAMNT
-  else
-    Result := StrToInt(OnlyNumber(PWINFO));
 end;
 
 function PWRETToString(iRET: SmallInt): String;
@@ -1324,57 +1156,67 @@ var
   iRet: SmallInt;
   ArrParams: TArrPW_GetData;
   NumParams: SmallInt;
+  ProcessMsg: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.ExecutarTransacao');
   iRet := PWRET_CANCEL;
   try
-    repeat
-      NumParams := Length(ArrParams);
-      GravarLog('PW_iExecTransac( '+IntToStr(NumParams)+' )');
-      {$warnings off}
-      iRet := xPW_iExecTransac(ArrParams, NumParams);
-      {$warnings on}
-      GravarLog('  '+PWRETToString(iRet));
-      case iRet of
-        PWRET_OK:
-          Break;
+    try
+      repeat
+        NumParams := Length(ArrParams);
+        GravarLog('PW_iExecTransac( '+IntToStr(NumParams)+' )');
+        {$warnings off}
+        iRet := xPW_iExecTransac(ArrParams, NumParams);
+        {$warnings on}
+        GravarLog('  '+PWRETToString(iRet));
 
-        PWRET_NOTHING:
-          Sleep(CSleepNothing);
+        ProcessMsg := Trim(ObterInfo(PWINFO_PROCESSMSG));
+        if (ProcessMsg <> '') then
+          ExibirMensagem(ProcessMsg);
 
-        PWRET_MOREDATA:
-          begin
-            if (ObterDados(ArrParams, NumParams) <> PWRET_OK) then
+        case iRet of
+          PWRET_OK:
+            Break;
+
+          PWRET_NOTHING:
+            Sleep(CSleepNothing);
+
+          PWRET_MOREDATA:
             begin
-              AbortarTransacao;
-              iRet := PWRET_CANCEL;
+              if (ObterDados(ArrParams, NumParams) <> PWRET_OK) then
+              begin
+                AbortarTransacao;
+                iRet := PWRET_CANCEL;
+              end;
             end;
-          end;
 
-        PWRET_NOMANDATORY:
-          raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOMANDATORY);
+          PWRET_NOMANDATORY:
+            raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOMANDATORY);
 
-        PWRET_DLLNOTINIT:
-          raise EACBrTEFPayGoWeb.Create(sErrPWRET_DLLNOTINIT);
+          PWRET_DLLNOTINIT:
+            raise EACBrTEFPayGoWeb.Create(sErrPWRET_DLLNOTINIT);
 
-        PWRET_NOTINST:
-          raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOTINST);
+          PWRET_NOTINST:
+            raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOTINST);
 
-        PWRET_TRNNOTINIT:
-          raise EACBrTEFPayGoWeb.Create(sErrPWRET_TRNNOTINIT);
+          PWRET_TRNNOTINIT:
+            raise EACBrTEFPayGoWeb.Create(sErrPWRET_TRNNOTINIT);
 
-      else
-        raise EACBrTEFPayGoWeb.Create(ObterUltimoErro);
+        else
+          raise EACBrTEFPayGoWeb.Create(ObterUltimoErro);
 
+        end;
+
+      until (iRet = PWRET_OK) or (iRet = PWRET_CANCEL);
+    except
+      On E: Exception do
+      begin
+        AbortarTransacao;
+        DoException(E.Message);
       end;
-
-    until (iRet = PWRET_OK) or (iRet = PWRET_CANCEL);
-  except
-    On E: Exception do
-    begin
-      AbortarTransacao;
-      DoException(E.Message);
     end;
+  finally
+    SetEmTransacao(False);
   end;
 
   Result := (iRet = PWRET_OK);
@@ -1387,6 +1229,7 @@ var
   iRet: SmallInt;
   i: Word;
   NullChr: AnsiChar;
+  ALine: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.ObterDadosTransacao');
   fDadosTransacao.Clear;
@@ -1399,7 +1242,12 @@ begin
       Move(NullChr, pszData, 1);
       iRet := xPW_iGetResult(i, pszData, ulDataSize);
       if (iRet = PWRET_OK) then
-        fDadosTransacao.Add(Format('%s(%d)=%s', [PWINFOToString(i), i, String(pszData)]));
+      begin
+        ALine := String(pszData);
+        ALine := Format('%d=%s', [i, BinaryStringToString(ALine)]);
+        fDadosTransacao.Add(ALine);
+        GravarLog('  '+ALine);
+      end;
     end;
   finally
     Freemem(pszData);
@@ -1416,10 +1264,7 @@ begin
   GravarLog('TACBrTEFPGWebAPI.FinalizarTrancao');
   bConfirma := (Trim(ObterInfo(PWINFO_CNFREQ)) = '1');
   if not bConfirma then
-  begin
-    SetEmTransacao(False);
     Exit;
-  end;
 
   pszReqNum := Trim(ObterInfo(PWINFO_REQNUM));
   pszLocRef := Trim(ObterInfo(PWINFO_AUTLOCREF));
@@ -1440,7 +1285,6 @@ begin
                              PAnsiChar(pszVirtMerch),
                              PAnsiChar(pszAuthSyst) );
   GravarLog('  '+PWRETToString(iRet));
-  SetEmTransacao(False);
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
@@ -2011,6 +1855,9 @@ begin
   AdicionarParametro(PWINFO_AUTVER, VersaoAplicacao);
   AdicionarParametro(PWINFO_AUTDEV, SoftwareHouse);
   AdicionarParametro(PWINFO_AUTCAP, IntToStr(CalcularCapacidadesDaAutomacao));
+
+  if (NomeEstabelecimento <> '') then
+    AdicionarParametro(PWINFO_MERCHNAMEPDC, NomeEstabelecimento);
   if (CNPJEstabelecimento <> '') then
     AdicionarParametro(PWINFO_MERCHCNPJCPF, CNPJEstabelecimento);
   if (PontoCaptura <> '') then
@@ -2086,6 +1933,12 @@ procedure TACBrTEFPGWebAPI.SetNomeAplicacao(AValue: String);
 begin
   if fNomeAplicacao = AValue then Exit;
   fNomeAplicacao := LeftStr(Trim(AValue),128);
+end;
+
+procedure TACBrTEFPGWebAPI.SetNomeEstabelecimento(AValue: String);
+begin
+  if fNomeEstabelecimento = AValue then Exit;
+  fNomeEstabelecimento := LeftStr(Trim(AValue),100);
 end;
 
 procedure TACBrTEFPGWebAPI.SetVersaoAplicacao(AValue: String);
@@ -2249,3 +2102,186 @@ end;
 
 end.
 
+(*
+function StringToPWINFO(PWINFO: String): Word;
+begin
+  if PWINFO = 'PWINFO_OPERATION' then
+    Result := PWINFO_OPERATION
+  else if PWINFO = 'PWINFO_POSID' then
+    Result := PWINFO_POSID
+  else if PWINFO = 'PWINFO_AUTNAME' then
+    Result := PWINFO_AUTNAME
+  else if PWINFO = 'PWINFO_AUTVER' then
+    Result := PWINFO_AUTVER
+  else if PWINFO = 'PWINFO_AUTDEV' then
+    Result := PWINFO_AUTDEV
+  else if PWINFO = 'PWINFO_DESTTCPIP' then
+    Result := PWINFO_DESTTCPIP
+  else if PWINFO = 'PWINFO_MERCHCNPJCPF' then
+    Result := PWINFO_MERCHCNPJCPF
+  else if PWINFO = 'PWINFO_AUTCAP' then
+    Result := PWINFO_AUTCAP
+  else if PWINFO = 'PWINFO_TOTAMNT' then
+    Result := PWINFO_TOTAMNT
+  else if PWINFO = 'PWINFO_CURRENCY' then
+    Result := PWINFO_CURRENCY
+  else if PWINFO = 'PWINFO_CURREXP' then
+    Result := PWINFO_CURREXP
+  else if PWINFO = 'PWINFO_FISCALREF' then
+    Result := PWINFO_FISCALREF
+  else if PWINFO = 'PWINFO_CARDTYPE' then
+    Result := PWINFO_CARDTYPE
+  else if PWINFO = 'PWINFO_PRODUCTNAME' then
+    Result := PWINFO_PRODUCTNAME
+  else if PWINFO = 'PWINFO_DATETIME' then
+    Result := PWINFO_DATETIME
+  else if PWINFO = 'PWINFO_REQNUM' then
+    Result := PWINFO_REQNUM
+  else if PWINFO = 'PWINFO_AUTHSYST' then
+    Result := PWINFO_AUTHSYST
+  else if PWINFO = 'PWINFO_VIRTMERCH' then
+    Result := PWINFO_VIRTMERCH
+  else if PWINFO = 'PWINFO_AUTMERCHID' then
+    Result := PWINFO_AUTMERCHID
+  else if PWINFO = 'PWINFO_PHONEFULLNO' then
+    Result := PWINFO_PHONEFULLNO
+  else if PWINFO = 'PWINFO_FINTYPE' then
+    Result := PWINFO_FINTYPE
+  else if PWINFO = 'PWINFO_INSTALLMENTS' then
+    Result := PWINFO_INSTALLMENTS
+  else if PWINFO = 'PWINFO_INSTALLMDATE' then
+    Result := PWINFO_INSTALLMDATE
+  else if PWINFO = 'PWINFO_PRODUCTID' then
+    Result := PWINFO_PRODUCTID
+  else if PWINFO = 'PWINFO_RESULTMSG' then
+    Result := PWINFO_RESULTMSG
+  else if PWINFO = 'PWINFO_CNFREQ' then
+    Result := PWINFO_CNFREQ
+  else if PWINFO = 'PWINFO_AUTLOCREF' then
+    Result := PWINFO_AUTLOCREF
+  else if PWINFO = 'PWINFO_AUTEXTREF' then
+    Result := PWINFO_AUTEXTREF
+  else if PWINFO = 'PWINFO_AUTHCODE' then
+    Result := PWINFO_AUTHCODE
+  else if PWINFO = 'PWINFO_AUTRESPCODE' then
+    Result := PWINFO_AUTRESPCODE
+  else if PWINFO = 'PWINFO_AUTDATETIME' then
+    Result := PWINFO_AUTDATETIME
+  else if PWINFO = 'PWINFO_DISCOUNTAMT' then
+    Result := PWINFO_DISCOUNTAMT
+  else if PWINFO = 'PWINFO_CASHBACKAMT' then
+    Result := PWINFO_CASHBACKAMT
+  else if PWINFO = 'PWINFO_CARDNAME' then
+    Result := PWINFO_CARDNAME
+  else if PWINFO = 'PWINFO_ONOFF' then
+    Result := PWINFO_ONOFF
+  else if PWINFO = 'PWINFO_BOARDINGTAX' then
+    Result := PWINFO_BOARDINGTAX
+  else if PWINFO = 'PWINFO_TIPAMOUNT' then
+    Result := PWINFO_TIPAMOUNT
+  else if PWINFO = 'PWINFO_INSTALLM1AMT' then
+    Result := PWINFO_INSTALLM1AMT
+  else if PWINFO = 'PWINFO_INSTALLMAMNT' then
+    Result := PWINFO_INSTALLMAMNT
+  else if PWINFO = 'PWINFO_RCPTFULL' then
+    Result := PWINFO_RCPTFULL
+  else if PWINFO = 'PWINFO_RCPTMERCH' then
+    Result := PWINFO_RCPTMERCH
+  else if PWINFO = 'PWINFO_RCPTCHOLDER' then
+    Result := PWINFO_RCPTCHOLDER
+  else if PWINFO = 'PWINFO_RCPTCHSHORT' then
+    Result := PWINFO_RCPTCHSHORT
+  else if PWINFO = 'PWINFO_TRNORIGDATE' then
+    Result := PWINFO_TRNORIGDATE
+  else if PWINFO = 'PWINFO_TRNORIGNSU' then
+    Result := PWINFO_TRNORIGNSU
+  else if PWINFO = 'PWINFO_SALDOVOUCHER' then
+    Result := PWINFO_SALDOVOUCHER
+  else if PWINFO = 'PWINFO_TRNORIGAMNT' then
+    Result := PWINFO_TRNORIGAMNT
+  else if PWINFO = 'PWINFO_TRNORIGAUTH' then
+    Result := PWINFO_TRNORIGAUTH
+  else if PWINFO = 'PWINFO_LANGUAGE' then
+    Result := PWINFO_LANGUAGE
+  else if PWINFO = 'PWINFO_PROCESSMSG' then
+    Result := PWINFO_PROCESSMSG
+  else if PWINFO = 'PWINFO_TRNORIGREQNUM' then
+    Result := PWINFO_TRNORIGREQNUM
+  else if PWINFO = 'PWINFO_TRNORIGTIME' then
+    Result := PWINFO_TRNORIGTIME
+  else if PWINFO = 'PWINFO_CNCDSPMSG' then
+    Result := PWINFO_CNCDSPMSG
+  else if PWINFO = 'PWINFO_CNCPPMSG' then
+    Result := PWINFO_CNCPPMSG
+  else if PWINFO = 'PWINFO_CARDENTMODE' then
+    Result := PWINFO_CARDENTMODE
+  else if PWINFO = 'PWINFO_CARDFULLPAN' then
+    Result := PWINFO_CARDFULLPAN
+  else if PWINFO = 'PWINFO_CARDEXPDATE' then
+    Result := PWINFO_CARDEXPDATE
+  else if PWINFO = 'PWINFO_CARDNAMESTD' then
+    Result := PWINFO_CARDNAMESTD
+  else if PWINFO = 'PWINFO_CARDPARCPAN' then
+    Result := PWINFO_CARDPARCPAN
+  else if PWINFO = 'PWINFO_CHOLDVERIF' then
+    Result := PWINFO_CHOLDVERIF
+  else if PWINFO = 'PWINFO_AID' then
+    Result := PWINFO_AID
+  else if PWINFO = 'PWINFO_BARCODENTMODE' then
+    Result := PWINFO_BARCODENTMODE
+  else if PWINFO = 'PWINFO_BARCODE' then
+    Result := PWINFO_BARCODE
+  else if PWINFO = 'PWINFO_MERCHADDDATA1' then
+    Result := PWINFO_MERCHADDDATA1
+  else if PWINFO = 'PWINFO_MERCHADDDATA2' then
+    Result := PWINFO_MERCHADDDATA2
+  else if PWINFO = 'PWINFO_MERCHADDDATA3' then
+    Result := PWINFO_MERCHADDDATA3
+  else if PWINFO = 'PWINFO_MERCHADDDATA4' then
+    Result := PWINFO_MERCHADDDATA4
+  else if PWINFO = 'PWINFO_RCPTPRN' then
+    Result := PWINFO_RCPTPRN
+  else if PWINFO = 'PWINFO_AUTHMNGTUSER' then
+    Result := PWINFO_AUTHMNGTUSER
+  else if PWINFO = 'PWINFO_AUTHTECHUSER' then
+    Result := PWINFO_AUTHTECHUSER
+  else if PWINFO = 'PWINFO_PAYMNTTYPE' then
+    Result := PWINFO_PAYMNTTYPE
+  else if PWINFO = 'PWINFO_CHOLDERNAME' then
+    Result := PWINFO_CHOLDERNAME
+  else if PWINFO = 'PWINFO_MERCHNAMEPDC' then
+    Result := PWINFO_MERCHNAMEPDC
+  else if PWINFO = 'PWINFO_DEFAULTCARDPARCPAN' then
+    Result := PWINFO_DEFAULTCARDPARCPAN
+  else if PWINFO = 'PWINFO_AUTHPOSQRCODE' then
+    Result := PWINFO_AUTHPOSQRCODE
+  else if PWINFO = 'PWINFO_USINGPINPAD' then
+    Result := PWINFO_USINGPINPAD
+  else if PWINFO = 'PWINFO_PPCOMMPORT' then
+    Result := PWINFO_PPCOMMPORT
+  else if PWINFO = 'PWINFO_IDLEPROCTIME' then
+    Result := PWINFO_IDLEPROCTIME
+  else if PWINFO = 'PWINFO_PNDAUTHSYST' then
+    Result := PWINFO_PNDAUTHSYST
+  else if PWINFO = 'PWINFO_PNDVIRTMERCH' then
+    Result := PWINFO_PNDVIRTMERCH
+  else if PWINFO = 'PWINFO_PNDREQNUM' then
+    Result := PWINFO_PNDREQNUM
+  else if PWINFO = 'PWINFO_PNDAUTLOCREF' then
+    Result := PWINFO_PNDAUTLOCREF
+  else if PWINFO = 'PWINFO_PNDAUTEXTREF' then
+    Result := PWINFO_PNDAUTEXTREF
+  else if PWINFO = 'PWINFO_LOCALINFO1' then
+    Result := PWINFO_LOCALINFO1
+  else if PWINFO = 'PWINFO_SERVERPND' then
+    Result := PWINFO_SERVERPND
+  else if PWINFO = 'PWINFO_PPINFO' then
+    Result := PWINFO_PPINFO
+  else if PWINFO = 'PWINFO_DUEAMNT' then
+    Result := PWINFO_DUEAMNT
+  else if PWINFO = 'PWINFO_READJUSTEDAMNT' then
+    Result := PWINFO_READJUSTEDAMNT
+  else
+    Result := StrToInt(OnlyNumber(PWINFO));
+end;
+*)

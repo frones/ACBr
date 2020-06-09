@@ -36,7 +36,7 @@ unit ACBrBancoAmazonia;
 interface
 
 uses
-     Classes, SysUtils, Contnrs, ACBrBoleto;
+     Classes, SysUtils, Contnrs, ACBrBoleto, ACBrBoletoConversao;
 
 const
      CACBrBancoAmazonia_Versao = '0.0.1';

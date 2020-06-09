@@ -37,7 +37,7 @@ unit ACBrUniprime;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoConversao;
 
 type
 

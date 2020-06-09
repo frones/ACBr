@@ -39,7 +39,7 @@ unit ACBrBancoSafra;
 
 interface
 
-uses Classes, SysUtils, StrUtils, ACBrBoleto, DateUtils, Math;
+uses Classes, SysUtils, StrUtils, ACBrBoleto, DateUtils, Math, ACBrBoletoConversao;
 
 type
 

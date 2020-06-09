@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, Contnrs,
-  ACBrBoleto;
+  ACBrBoleto, ACBrBoletoConversao;
 
 const
   CACBrBancoBrasil_Versao = '0.0.1';

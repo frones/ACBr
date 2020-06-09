@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, Contnrs,
-  ACBrBoleto;
+  ACBrBoleto, ACBrBoletoConversao;
 
 type
 

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2020
+--ACBrBoleto, ACBrBoletoWS, ACBRBoletoConversao--
+--ACBrBoletoRetorno, ACBrBoletoPcnConsts, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa--
+[+] Adicionado Classes implementadas para integração via WebService
+
 03/06/2020
 -- ACBrBoleto --
 [*] Ajuste na função de leitura NossoNumero no Retorno da classe principal

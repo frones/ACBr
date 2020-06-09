@@ -37,7 +37,7 @@ unit ACBrBancoUnicredRS;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoConversao;
 
 type
 

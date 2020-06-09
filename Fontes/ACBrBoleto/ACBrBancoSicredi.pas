@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, Contnrs,
-  ACBrBoleto;
+  ACBrBoleto, ACBrBoletoConversao;
 
 const
   CInstrucaoPagamentoCooperativa = 'Pagável preferencialmente nas cooperativas de crédito do %s';

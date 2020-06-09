@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBoleto;
+  ACBrBoleto, ACBrBoletoConversao;
 
 type
   TACBrBancoSafraBradesco = class(TACBrBancoClass)

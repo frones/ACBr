@@ -37,7 +37,7 @@ unit ACBrBancoPine;
 interface
 
 uses
-  Classes, Contnrs, SysUtils, ACBrBoleto;
+  Classes, Contnrs, SysUtils, ACBrBoleto, ACBrBoletoConversao;
 
 type
 

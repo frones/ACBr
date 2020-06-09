@@ -36,7 +36,7 @@ unit ACBrBancoDaycoval;
 interface
 
 uses
-  Classes, SysUtils, Contnrs, ACBrBoleto;
+  Classes, SysUtils, Contnrs, ACBrBoleto, ACBrBoletoConversao;
 
 type
   { TACBrBancoDaycoval }

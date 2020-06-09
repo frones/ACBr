@@ -37,7 +37,7 @@ unit ACBrBancoBancoob;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoConversao;
 
 type
 

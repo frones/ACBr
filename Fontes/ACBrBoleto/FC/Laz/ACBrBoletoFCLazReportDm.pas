@@ -45,7 +45,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ACBrBoleto, LR_Class, LR_DSet, LR_BarC, LR_Shape, LR_RRect, LR_E_HTM,
-  lr_e_pdf, PrintersDlgs, Printers, strutils, LResources, PReport ;
+  lr_e_pdf, PrintersDlgs, Printers, strutils, LResources, PReport, ACBrBoletoConversao;
 
 type
 

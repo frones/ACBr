@@ -48,7 +48,7 @@ uses
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto, RLRichText , ACBrBase;
+  ACBrBoleto, RLRichText , ACBrBase, ACBrBoletoConversao;
 
 type
 

@@ -37,7 +37,7 @@ unit ACBrBancoBrasilSicoob;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, Contnrs,
+  Classes, SysUtils, ACBrBoleto, Contnrs, ACBrBoletoConversao,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 const

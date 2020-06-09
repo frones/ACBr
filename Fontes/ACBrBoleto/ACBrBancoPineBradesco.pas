@@ -37,7 +37,7 @@ unit ACBrBancoPineBradesco;
 interface
 
 uses
-  Classes, Contnrs, SysUtils, ACBrBoleto, ACBrBancoPine;
+  Classes, Contnrs, SysUtils, ACBrBoleto, ACBrBancoPine, ACBrBoletoConversao;
 
 type
 

@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, SysUtils, CmdUnit, ACBrBoleto,
-  ACBrMonitorConfig, ACBrMonitorConsts;
+  ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao;
 
 type
 

@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2020
+
+-- DoBoletoUnit, ACBrMonitor1 --
+[*] Ajustes nas declaraçoes de Uses referente ao componente Boleto
+
+-- DoACBrUnit, ACBrMonitorConsts --
+[+] Adicionado o método ACBr.RoundABNT para facilitar o arredondamento de valores seguindo a especificação da SEFAZ
+
 [+] DoACBrUnit
 Adicionado os métodos EncodeBase64 e DecodeBase64, como estes métodos é possível transferir arquivos binários utilizando
 comunicação TCP/IP, pode ser útil para transferir arquivos .pdf que são gerados no Servidor para ser emitidos na estação Client

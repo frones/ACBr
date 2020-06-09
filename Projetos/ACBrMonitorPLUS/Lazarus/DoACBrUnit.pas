@@ -203,6 +203,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoRoundABNT}
+
+TMetodoRoundABNT= class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoVersao }
 
 TMetodoVersao = class(TACBrMetodo)
@@ -332,6 +339,22 @@ procedure TMetodoVersao.Executar;
 begin
   with TACBrObjetoACBr(fpObjetoDono) do
     fpCmd.Resposta := VersaoACBr
+end;
+
+{ TMetodoRoundABNT }
+
+{ Params: 0 - Double: Valor para arredondamento
+          1 - integer: Digitos de Decimais p/ Arredondamento}
+procedure TMetodoRoundABNT.Executar;
+var
+   AValue: Double;
+   ADigitos: Integer;
+begin
+  AValue := StrToFloatDef(fpCmd.Params(0),0);
+  ADigitos := StrToIntDef(fpCmd.Params(1),2);
+
+  with TACBrObjetoACBr(fpObjetoDono) do
+    fpcmd.Resposta := FloatToStr(RoundABNT( AValue, ADigitos));
 end;
 
 { TMetodoEncodeBase64 }
@@ -898,6 +921,7 @@ begin
   ListaDeMetodos.Add(CMetodoAjustaLnhasLog);
   ListaDeMetodos.Add(CMetodoEncodeBase64);
   ListaDeMetodos.Add(CMetodoDecodeBase64);
+  ListaDeMetodos.Add(CMetodoRoundABNT);
   ListaDeMetodos.Add(CMetodoVersao);
   ListaDeMetodos.Add(CMetodoDatahora);
   ListaDeMetodos.Add(CMetodoData);
@@ -942,14 +966,15 @@ begin
     18  : AMetodoClass := TMetodoAjustaLnhasLog;
     19  : AMetodoClass := TMetodoEncodeBase64;
     20  : AMetodoClass := TMetodoDecodeBase64;
-    21  : AMetodoClass := TMetodoVersao;
-    22  : AMetodoClass := TMetodoDatahora;
-    23  : AMetodoClass := TMetodoData;
-    24  : AMetodoClass := TMetodoHora;
-    25  : AMetodoClass := TMetodoExit;
-    26  : AMetodoClass := TMetodoBye;
-    27  : AMetodoClass := TMetodoSair;
-    28  : AMetodoClass := TMetodoFim;
+    21  : AMetodoClass := TMetodoRoundABNT;
+    22  : AMetodoClass := TMetodoVersao;
+    23  : AMetodoClass := TMetodoDatahora;
+    24  : AMetodoClass := TMetodoData;
+    25  : AMetodoClass := TMetodoHora;
+    26  : AMetodoClass := TMetodoExit;
+    27  : AMetodoClass := TMetodoBye;
+    28  : AMetodoClass := TMetodoSair;
+    29  : AMetodoClass := TMetodoFim;
 
     else
       raise Exception.Create('Comando inválido ('+ copy(ACmd.Comando,6,length(ACmd.Comando))+')') ;

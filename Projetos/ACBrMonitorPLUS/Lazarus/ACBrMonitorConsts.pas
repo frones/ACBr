@@ -407,6 +407,7 @@ const
   CMetodoSetWebservice =               'setwebservice';
   CMetodoEncodeBase64 =                'encodebase64';
   CMetodoDecodeBase64 =                'decodebase64';
+  CMetodoRoundABNT =                   'roundabnt';
 
   CMetodoValidarnfe =                  'validarnfe';
   CMetodoAssinarnfe =                  'assinarnfe';

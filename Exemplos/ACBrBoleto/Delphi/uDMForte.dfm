@@ -16,6 +16,8 @@ object dmForte: TdmForte
     Banco.TipoCobranca = cobItau
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Banco.CasasDecimaisMoraJuros = 2
+    Banco.DensidadeGravacao = '0'
     Cedente.Nome = 'TodaObra Materias p/ Construcao'
     Cedente.CodigoCedente = '4266443'
     Cedente.Agencia = '0284'
@@ -24,9 +26,20 @@ object dmForte: TdmForte
     Cedente.ContaDigito = '9'
     Cedente.CNPJCPF = '05.481.336/0001-37'
     Cedente.TipoInscricao = pJuridica
+    Cedente.CedenteWS.ClientID = 'SGCBS02P'
+    Cedente.IdentDistribuicao = tbBancoDistribui
     DirArqRemessa = 'c:\temp'
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoReport
+    Configuracoes.Arquivos.LogRegistro = True
+    Configuracoes.WebService.SSLHttpLib = httpOpenSSL
+    Configuracoes.WebService.SSLType = LT_TLSv1_2
+    Configuracoes.WebService.StoreName = 'My'
+    Configuracoes.WebService.TimeOut = 30000
+    Configuracoes.WebService.UseCertificateHTTP = False
+    Configuracoes.WebService.Ambiente = taHomologacao
+    Configuracoes.WebService.Operacao = tpInclui
+    Configuracoes.WebService.VersaoDF = '1.2'
     Left = 32
     Top = 30
   end

@@ -1,9 +1,9 @@
 object frmDemo: TfrmDemo
   Left = 288
   Top = 133
-  Width = 827
-  Height = 577
   Caption = 'Demo ACBrBoleto '
+  ClientHeight = 570
+  ClientWidth = 811
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -93,7 +93,6 @@ object frmDemo: TfrmDemo
       Top = 32
       Width = 73
       Height = 21
-      ItemHeight = 13
       TabOrder = 3
       Text = 'Sim'
       Items.Strings = (
@@ -555,7 +554,6 @@ object frmDemo: TfrmDemo
       Width = 161
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
       TabOrder = 10
       OnChange = cbxLayOutChange
     end
@@ -580,7 +578,7 @@ object frmDemo: TfrmDemo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 488
+    Top = 520
     Width = 811
     Height = 50
     Align = alBottom
@@ -657,5 +655,14 @@ object frmDemo: TfrmDemo
       TabOrder = 7
       OnClick = Button8Click
     end
+  end
+  object btnRegistro: TButton
+    Left = 648
+    Top = 489
+    Width = 145
+    Height = 25
+    Caption = 'Registrar Boleto On Line'
+    TabOrder = 6
+    OnClick = btnRegistroClick
   end
 end

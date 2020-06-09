@@ -53,23 +53,40 @@ type
 
   TACBrTEFDPayGoWeb = class( TACBrTEFDClass )
   private
+    fOperacaoADM: Word;
+    fOperacaoATV: Word;
+    fOperacaoCHQ: Word;
+    fOperacaoCNC: Word;
+    fOperacaoCRT: Word;
+    fOperacaoPRE: Word;
     fsPGWebAPI: TACBrTEFPGWebAPI;
+    procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
 
+    function GetCNPJEstabelecimento: String;
     function GetDiretorioTrabalho: String;
     function GetOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
     function GetOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     function GetOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
     function GetOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
     function GetPathDLL: string;
+    function GetPontoCaptura: String;
+    function GetSuportaViasDiferenciadas: Boolean;
+    function GetUtilizaSaldoTotalVoucher: Boolean;
+    procedure SetCNPJEstabelecimento(AValue: String);
     procedure SetDiretorioTrabalho(AValue: String);
     procedure SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
     procedure SetOnExibeMensagem(AValue: TACBrTEFPGWebAPIExibeMensagem);
     procedure SetOnExibeMenu(AValue: TACBrTEFPGWebAPIExibeMenu);
     procedure SetOnObtemCampo(AValue: TACBrTEFPGWebAPIObtemCampo);
     procedure SetPathDLL(AValue: string);
-
-    procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
+    procedure SetPontoCaptura(AValue: String);
+    procedure SetSuportaViasDiferenciadas(AValue: Boolean);
+    procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
   protected
+    procedure FazerRequisicao(PWOPER: Word; AHeader: String = '';
+        Valor: Double = 0; Documento: String = '');
+    function ContinuarRequisicao: Boolean;
+    procedure ObterDadosTransacao;
   public
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
@@ -105,6 +122,20 @@ type
        Moeda : Integer = 0) : Boolean; override;
     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
   published
+    property CNPJEstabelecimento: String read GetCNPJEstabelecimento write SetCNPJEstabelecimento;
+    property PontoCaptura: String read GetPontoCaptura write SetPontoCaptura;
+    property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas
+      write SetSuportaViasDiferenciadas;
+    property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher
+      write SetUtilizaSaldoTotalVoucher;
+
+    property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_INITIALIZ;
+    property OperacaoADM: Word read fOperacaoADM write fOperacaoADM default PWOPER_ADMIN;
+    property OperacaoCRT: Word read fOperacaoCRT write fOperacaoCRT default PWOPER_SALE;
+    property OperacaoCHQ: Word read fOperacaoCHQ write fOperacaoCHQ default PWOPER_CHECKINQ;
+    property OperacaoCNC: Word read fOperacaoCNC write fOperacaoCNC default PWOPER_SALEVOID;
+    property OperacaoPRE: Word read fOperacaoPRE write fOperacaoPRE default PWOPER_PREPAID;
+
     property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read GetOnExibeMenu write SetOnExibeMenu;
     property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read GetOnObtemCampo write SetOnObtemCampo;
     property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read GetOnExibeMensagem write SetOnExibeMensagem;
@@ -114,7 +145,8 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  strutils, math,
+  ACBrTEFD, ACBrUtil;
 
 { TACBrTEFDRespPayGoWeb }
 
@@ -136,8 +168,15 @@ begin
   ArqSTS := '';
   ArqTemp := '';
   GPExeName := '';
-  fpTipo := gpCliSiTef;
+  fpTipo := gpPayGoWeb;
   Name := 'PayGoWeb';
+
+  fOperacaoATV := PWOPER_INITIALIZ;
+  fOperacaoADM := PWOPER_ADMIN;
+  fOperacaoCRT := PWOPER_SALE;
+  fOperacaoCHQ := PWOPER_CHECKINQ;
+  fOperacaoCNC := PWOPER_SALEVOID;
+  fOperacaoPRE := PWOPER_PREPAID;
 
   if Assigned(fpResp) then
     fpResp.Free ;
@@ -156,6 +195,13 @@ procedure TACBrTEFDPayGoWeb.Inicializar;
 begin
   if Inicializado then
     Exit;
+
+  fsPGWebAPI.SoftwareHouse := TACBrTEFD(Owner).Identificacao.SoftwareHouse;
+  fsPGWebAPI.NomeAplicacao := TACBrTEFD(Owner).Identificacao.NomeAplicacao;
+  fsPGWebAPI.VersaoAplicacao := TACBrTEFD(Owner).Identificacao.VersaoAplicacao;
+  fsPGWebAPI.SuportaDesconto := TACBrTEFD(Owner).SuportaDesconto;
+  fsPGWebAPI.SuportaSaque := TACBrTEFD(Owner).SuportaSaque;
+  fsPGWebAPI.ImprimirViaClienteReduzida := TACBrTEFD(Owner).ImprimirViaClienteReduzida;
 
   fsPGWebAPI.Inicializada := True;
   GravaLog( Name +' Inicializado '+Name );
@@ -180,14 +226,100 @@ begin
   inherited VerificaAtivo;
 end;
 
+procedure TACBrTEFDPayGoWeb.ATV;
+begin
+  FazerRequisicao(fOperacaoADM, 'ATV');
+  if ContinuarRequisicao then
+    ProcessarResposta;
+end;
+
+function TACBrTEFDPayGoWeb.ADM: Boolean;
+begin
+  FazerRequisicao(fOperacaoADM, 'ADM');
+  if ContinuarRequisicao then
+    ProcessarResposta;
+end;
+
+function TACBrTEFDPayGoWeb.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
+begin
+  Result := inherited CRT(Valor, IndiceFPG_ECF, DocumentoVinculado, Moeda);
+end;
+
+function TACBrTEFDPayGoWeb.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
+begin
+  Result := inherited CHQ(Valor, IndiceFPG_ECF, DocumentoVinculado, CMC7,
+    TipoPessoa, DocumentoPessoa, DataCheque, Banco, Agencia, AgenciaDC, Conta,
+    ContaDC, Cheque, ChequeDC, Compensacao);
+end;
+
+procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
+begin
+  inherited NCN(Rede, NSU, Finalizacao, Valor, DocumentoVinculado);
+end;
+
+procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
+begin
+  inherited CNF(Rede, NSU, Finalizacao, DocumentoVinculado);
+end;
+
+function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double): Boolean;
+begin
+  Result := inherited CNC(Rede, NSU, DataHoraTransacao, Valor);
+end;
+
+function TACBrTEFDPayGoWeb.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+begin
+  Result := inherited PRE(Valor, DocumentoVinculado, Moeda);
+end;
+
+function TACBrTEFDPayGoWeb.CDP(const EntidadeCliente: string; out
+  Resposta: string): Boolean;
+begin
+  Result := inherited CDP(EntidadeCliente, Resposta);
+end;
+
 function TACBrTEFDPayGoWeb.GetPathDLL: string;
 begin
   Result := fsPGWebAPI.PathDLL;
 end;
 
+function TACBrTEFDPayGoWeb.GetPontoCaptura: String;
+begin
+  Result := fsPGWebAPI.PontoCaptura;
+end;
+
+function TACBrTEFDPayGoWeb.GetSuportaViasDiferenciadas: Boolean;
+begin
+  Result := fsPGWebAPI.SuportaViasDiferenciadas;
+end;
+
+function TACBrTEFDPayGoWeb.GetUtilizaSaldoTotalVoucher: Boolean;
+begin
+  Result := fsPGWebAPI.UtilizaSaldoTotalVoucher;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetCNPJEstabelecimento(AValue: String);
+begin
+  fsPGWebAPI.CNPJEstabelecimento := AValue;
+end;
+
 function TACBrTEFDPayGoWeb.GetDiretorioTrabalho: String;
 begin
   Result := fsPGWebAPI.DiretorioTrabalho;
+end;
+
+function TACBrTEFDPayGoWeb.GetCNPJEstabelecimento: String;
+begin
+  Result := fsPGWebAPI.CNPJEstabelecimento;
 end;
 
 function TACBrTEFDPayGoWeb.GetOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
@@ -246,67 +378,79 @@ begin
   GravaLog(ALogLine);
 end;
 
-procedure TACBrTEFDPayGoWeb.ATV;
+procedure TACBrTEFDPayGoWeb.SetSuportaViasDiferenciadas(AValue: Boolean);
 begin
-  inherited ATV;
+  fsPGWebAPI.SuportaViasDiferenciadas := AValue;
 end;
 
-function TACBrTEFDPayGoWeb.ADM: Boolean;
+procedure TACBrTEFDPayGoWeb.SetUtilizaSaldoTotalVoucher(AValue: Boolean);
 begin
-  fsPGWebAPI.IniciarTransacao(PWOPER_ADMIN);
-  Result := fsPGWebAPI.ExcutarTransacao;
-  if Result then
+  fsPGWebAPI.UtilizaSaldoTotalVoucher := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetPontoCaptura(AValue: String);
+begin
+  fsPGWebAPI.PontoCaptura := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
+  Valor: Double; Documento: String);
+begin
+  GravaLog('FazerRequisicao: Oper:'+PWINFOToString(PWOPER)+', Header'+AHeader+
+           ', Valor:'+FloatToStr(Valor)+', Documento:'+Documento);
+
+  fsPGWebAPI.IniciarTransacao(PWOPER);
+
+  { Adiciona Campos já conhecidos em Resp, para processa-los em
+    métodos que manipulam "RespostasPendentes" (usa códigos do G.P.)  }
+  Resp.Clear;
+  with TACBrTEFDRespPayGoWeb( Resp ) do
   begin
-    fsPGWebAPI.FinalizarTrancao(PWCNF_CNF_AUTO);
-    ProcessarResposta;
+    fpIDSeq := fpIDSeq + 1 ;
+    if Documento = '' then
+      Documento := IntToStr(fpIDSeq) ;
+
+    Conteudo.GravaInformacao(899,100, AHeader ) ;
+    Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
+    Conteudo.GravaInformacao(899,102, Documento ) ;
+    Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
+
+    Resp.TipoGP := fpTipo;
   end;
 end;
 
-function TACBrTEFDPayGoWeb.CRT(Valor: Double; IndiceFPG_ECF: String;
-  DocumentoVinculado: String; Moeda: Integer): Boolean;
+function TACBrTEFDPayGoWeb.ContinuarRequisicao: Boolean;
 begin
-  Result := inherited CRT(Valor, IndiceFPG_ECF, DocumentoVinculado, Moeda);
+  Result := fsPGWebAPI.ExecutarTransacao;
+  if Result then
+    ObterDadosTransacao;
 end;
 
-function TACBrTEFDPayGoWeb.CHQ(Valor: Double; IndiceFPG_ECF: String;
-  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
-  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
-  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
-  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
+procedure TACBrTEFDPayGoWeb.ObterDadosTransacao;
+var
+  i, P1,p2, Ainfo: Integer;
+  Lin, AValue: String;
 begin
-  Result := inherited CHQ(Valor, IndiceFPG_ECF, DocumentoVinculado, CMC7,
-    TipoPessoa, DocumentoPessoa, DataCheque, Banco, Agencia, AgenciaDC, Conta,
-    ContaDC, Cheque, ChequeDC, Compensacao);
-end;
+  fsPGWebAPI.ObterDadosDaTransacao;
 
-procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
-  DocumentoVinculado: String);
-begin
-  inherited NCN(Rede, NSU, Finalizacao, Valor, DocumentoVinculado);
-end;
+  with TACBrTEFDRespPayGoWeb(Resp) do
+  begin
+    for i := 0 to fsPGWebAPI.DadosDaTransacao.Count-1 do
+    begin
+      Lin := fsPGWebAPI.DadosDaTransacao[i];
+      p1 := pos('=', Lin);
+      if (p1 > 0) then
+      begin
+        AValue := copy(Lin, P1+1, Length(Lin));
+        p1 := pos('(', Lin);
+        p2 := PosEx(')', Lin, p1);
+        Ainfo := StrToInt(copy(Lin, p1+1, p2-p1-1));
+        Conteudo.GravaInformacao(Ainfo, 0, AValue);
+      end;
+    end;
 
-procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
-  DocumentoVinculado: String);
-begin
-  inherited CNF(Rede, NSU, Finalizacao, DocumentoVinculado);
-end;
-
-function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
-  Valor: Double): Boolean;
-begin
-  Result := inherited CNC(Rede, NSU, DataHoraTransacao, Valor);
-end;
-
-function TACBrTEFDPayGoWeb.PRE(Valor: Double; DocumentoVinculado: String;
-  Moeda: Integer): Boolean;
-begin
-  Result := inherited PRE(Valor, DocumentoVinculado, Moeda);
-end;
-
-function TACBrTEFDPayGoWeb.CDP(const EntidadeCliente: string; out
-  Resposta: string): Boolean;
-begin
-  Result := inherited CDP(EntidadeCliente, Resposta);
+    ConteudoToProperty;
+  end;
 end;
 
 end.

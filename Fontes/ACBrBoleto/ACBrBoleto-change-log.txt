@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2020
+--ACBrBoleto, ACBrBoletoWS, ACBrBoletoW_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoPcnConsts
+[*] Correções e ajustes referente integração WebService
+
 09/06/2020
 --ACBrBoleto, ACBrBoletoWS, ACBRBoletoConversao--
 --ACBrBoletoRetorno, ACBrBoletoPcnConsts, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa--

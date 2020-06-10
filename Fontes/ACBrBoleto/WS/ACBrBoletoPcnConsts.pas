@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBoletoPCNConsts;
+unit ACBrBoletoPcnConsts;
 
 interface
 

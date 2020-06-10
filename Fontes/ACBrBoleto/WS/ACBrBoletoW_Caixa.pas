@@ -79,20 +79,16 @@ type
 
   end;
 
-ResourceString
-  S_URL = 'https://barramento.caixa.gov.br/sibar/';
-  S_SERVICO_MANUTENCAO = 'ManutencaoCobrancaBancaria/Boleto/Externo' ;
-  S_SERVICO_CONSULTA = 'ConsultaCobrancaBancaria/Boleto';
-  S_NAMESPACE_MANUTENCAO = 'xmlns:manutencaocobrancabancaria="http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo"';
-  S_NAMESPACE_CONSULTA = 'xmlns:consultacobrancabancaria="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto"';
-  S_NAMESPACE_BASE = 'xmlns:sib="http://caixa.gov.br/sibar"';
-  S_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"';
-  S_SISTEMA_ORIGEM  = 'SIGCB';
-  S_USUARIO_SERVICO = 'SGCBS02P';
-
-
 const
-
+  C_URL = 'https://barramento.caixa.gov.br/sibar/';
+  C_SERVICO_MANUTENCAO = 'ManutencaoCobrancaBancaria/Boleto/Externo' ;
+  C_SERVICO_CONSULTA = 'ConsultaCobrancaBancaria/Boleto';
+  C_NAMESPACE_MANUTENCAO = 'xmlns:manutencaocobrancabancaria="http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo"';
+  C_NAMESPACE_CONSULTA = 'xmlns:consultacobrancabancaria="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto"';
+  C_NAMESPACE_BASE = 'xmlns:sib="http://caixa.gov.br/sibar"';
+  C_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"';
+  C_SISTEMA_ORIGEM  = 'SIGCB';
+  C_USUARIO_SERVICO = 'SGCBS02P';
   C_MANUTENCAO_COBRANCA_BANCARIA = 'manutencaocobrancabancaria:';
   C_CONSULTA_COBRANCA_BANCARIA = 'consultacobrancabancaria:';
   C_SERVICO_ENTRADA = 'SERVICO_ENTRADA';
@@ -100,7 +96,7 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPCNConsts;
+  ACBrUtil, synacode, ACBrBoletoPcnConsts;
 
 { TBoletoW_Caixa }
 
@@ -137,7 +133,7 @@ procedure TBoletoW_Caixa.DefinirServicoEAction;
 var
   Servico, Acao: String;
 begin
-  Servico  := S_SERVICO_MANUTENCAO;
+  Servico  := C_SERVICO_MANUTENCAO;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:   Acao := TipoOperacaoToStr( tpInclui );
@@ -146,11 +142,11 @@ begin
     tpConsulta:
                begin
                  Acao     := TipoOperacaoToStr( tpConsulta );
-                 Servico  := S_SERVICO_CONSULTA;
+                 Servico  := C_SERVICO_CONSULTA;
                end;
   end;
 
-  FPServico := S_URL + Servico;
+  FPServico := C_URL + Servico;
   FPURL := FPServico;
   FPSoapAction := Acao;
 end;
@@ -165,17 +161,17 @@ begin
     tpBaixa:
       begin
         Prefixo := C_MANUTENCAO_COBRANCA_BANCARIA;
-        NameSpaceServico := S_NAMESPACE_MANUTENCAO;
+        NameSpaceServico := C_NAMESPACE_MANUTENCAO;
       end;
 
     tpConsulta:
       begin
         Prefixo := C_CONSULTA_COBRANCA_BANCARIA;
-        NameSpaceServico := S_NAMESPACE_CONSULTA;
+        NameSpaceServico := C_NAMESPACE_CONSULTA;
       end;
   end;
 
-  NameSpaceBase := S_NAMESPACE_BASE;
+  NameSpaceBase := C_NAMESPACE_BASE;
 
   FPRootElement:= Prefixo + C_SERVICO_ENTRADA + ' ' + NameSpaceServico + ' ' + NameSpaceBase;
   FPCloseRootElement:= Prefixo + C_SERVICO_ENTRADA ;
@@ -229,7 +225,7 @@ begin
   if NaoEstaVazio( Boleto.Cedente.CedenteWS.ClientID ) then
     sUsuarioServico:= Boleto.Cedente.CedenteWS.ClientID
   else
-    sUsuarioServico:= S_USUARIO_SERVICO;
+    sUsuarioServico:= C_USUARIO_SERVICO;
 
   with Boleto do
   begin
@@ -244,7 +240,7 @@ begin
                                                                                   Titulos.Vencimento), DSC_AUTENTICACAO);
     Gerador.wCampo(tcStr, '#3', 'USUARIO_SERVICO', 01, 08, 1, sUsuarioServico, DSC_USUARIO_SERVICO);
     Gerador.wCampo(tcStr, '#4', 'OPERACAO       ', 01, 50, 1, TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ), DSC_TIPO_SERVICO);
-    Gerador.wCampo(tcStr, '#5', 'SISTEMA_ORIGEM ', 01, 05, 1, S_SISTEMA_ORIGEM, DSC_SISTEMA_ORIGEM);
+    Gerador.wCampo(tcStr, '#5', 'SISTEMA_ORIGEM ', 01, 05, 1, C_SISTEMA_ORIGEM, DSC_SISTEMA_ORIGEM);
     Gerador.wCampo(tcStr, '#6', 'UNIDADE        ', 01, 04, 1, Cedente.Agencia, DSC_AGENCIA);
     Gerador.wCampo(tcStr, '#7', 'DATA_HORA      ', 14, 14, 1, FormatDateTime('YYYYMMDDHHMMSS', Now), DSC_DATA_HORA);
     Gerador.wGrupo('/sib:HEADER');

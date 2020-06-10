@@ -69,22 +69,22 @@ type
 
   end;
 
-ResourceString
-  S_URL = 'https://cobranca.bb.com.br:7101/registrarBoleto';
-  S_URL_HOM = 'https://cobranca.homologa.bb.com.br:7101/';
-  S_URL_OAUTH_HOM = 'https://oauth.hm.bb.com.br/oauth/token';
-  S_URL_OAUTH_PROD = 'https://oauth.bb.com.br/oauth/token';
-  S_SERVICO_MANUTENCAO = 'registrarBoleto';
-  S_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
-                     'xmlns:sch="http://www.tibco.com/schemas/bws_registro_cbr/Recursos/XSD/Schema.xsd"';
-  S_KEYUSER = 'J1234567';
-  S_CHANNEL = '5';
-  S_PREFIX = 'sch:';
+const
+  C_URL = 'https://cobranca.bb.com.br:7101/registrarBoleto';
+  C_URL_HOM = 'https://cobranca.homologa.bb.com.br:7101/';
+  C_URL_OAUTH_HOM = 'https://oauth.hm.bb.com.br/oauth/token';
+  C_URL_OAUTH_PROD = 'https://oauth.bb.com.br/oauth/token';
+  C_SERVICO_MANUTENCAO = 'registrarBoleto';
+  C_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                    'xmlns:sch="http://www.tibco.com/schemas/bws_registro_cbr/Recursos/XSD/Schema.xsd"';
+  C_KEYUSER = 'J1234567';
+  C_CHANNEL = '5';
+  C_PREFIX = 'sch:';
 
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPCNConsts, strutils;
+  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils;
 
 { TBoletoW_BancoBrasil }
 
@@ -123,13 +123,13 @@ var
   Servico: String;
 begin
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui:   Servico  := S_SERVICO_MANUTENCAO;
+    tpInclui:   Servico  := C_SERVICO_MANUTENCAO;
   else
     raise EACBrBoletoWSException.Create(ClassName + Format( S_OPERACAO_NAO_IMPLEMENTADO, [
                                                   TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ) ] ));
   end;
 
-  FPServico := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, S_URL, S_URL_HOM) + Servico;
+  FPServico := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM) + Servico;
   FPURL := FPServico;
 
   FPSoapAction := Servico;
@@ -273,7 +273,8 @@ begin
     Gerador.wCampo(tcStr, '#25', PrefixTag('textoNumeroTituloBeneficiario'         ), 01, 15, 1, SeuNumero, DSC_NOSSO_NUMERO);
     Gerador.wCampo(tcStr, '#26', PrefixTag('textoCampoUtilizacaoBeneficiario'      ), 01, 25, 1, Boleto.Cedente.CodigoCedente, DSC_CODIGO_CEDENTE);
     Gerador.wCampo(tcStr, '#27', PrefixTag('codigoTipoContaCaucao'                 ), 01, 01, 1, '0', DSC_NOSSO_NUMERO);
-    Gerador.wCampo(tcStr, '#28', PrefixTag('textoNumeroTituloCliente'              ), 01, 20, 1, NossoNumero, DSC_NOSSO_NUMERO);
+    Gerador.wCampo(tcStr, '#28', PrefixTag('textoNumeroTituloCliente'              ), 01, 20, 1, '000' + ACBrUtil.PadLeft(Boleto.Cedente.Convenio, 7, '0')
+                                                                                                       + ACBrUtil.PadLeft(NossoNumero, 10, '0'), DSC_NOSSO_NUMERO);
 
     if (Mensagem.Count > 0) then
       Gerador.wCampo(tcStr, '#29', PrefixTag('textoMensagemBloquetoOcorrencia'  ), 00, 220, 1, Mensagem.Text, DSC_MENSAGEM);
@@ -303,9 +304,9 @@ begin
     if NaoEstaVazio( Boleto.Cedente.CedenteWS.KeyUser ) then
       lCodigoChaveUsuario:= Boleto.Cedente.CedenteWS.KeyUser
     else
-      lCodigoChaveUsuario:=  S_KEYUSER;
+      lCodigoChaveUsuario:=  C_KEYUSER;
     Gerador.wCampo(tcStr, '#42', PrefixTag('codigoChaveUsuario'       ), 01, 08, 1, lCodigoChaveUsuario, DSC_KEYUSER);
-    Gerador.wCampo(tcStr, '#43', PrefixTag('codigoTipoCanalSolicitacao'       ), 01, 01, 1, S_CHANNEL, DSC_CANAL_SOLICITACAO);
+    Gerador.wCampo(tcStr, '#43', PrefixTag('codigoTipoCanalSolicitacao'       ), 01, 01, 1, C_CHANNEL, DSC_CANAL_SOLICITACAO);
 
   end;
 
@@ -313,7 +314,7 @@ end;
 
 function TBoletoW_BancoBrasil.PrefixTag(AValue: String): String;
 begin
-  Result := S_PREFIX + trim(AValue);
+  Result := C_PREFIX + trim(AValue);
 end;
 
 constructor TBoletoW_BancoBrasil.Create(ABoletoWS: TBoletoWS);
@@ -323,9 +324,9 @@ begin
   if Assigned(OAuth) then
   begin
     if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := S_URL_OAUTH_HOM
+      OAuth.URL := C_URL_OAUTH_HOM
     else
-      OAuth.URL := S_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_PROD;
   end;
 
 end;

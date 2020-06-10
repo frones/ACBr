@@ -681,7 +681,7 @@ begin
   FPServico := '';
   FPAuthorization:= '';
   FPSoapAction := TipoOperacaoToStr(tpInclui);
-  FPSoapEnvelopeAtributtes := S_SOAP_ATTRIBUTTES;
+  FPSoapEnvelopeAtributtes := C_SOAP_ATTRIBUTTES;
 end;
 
 function TBoletoWSSOAP.GerarRemessa: String;

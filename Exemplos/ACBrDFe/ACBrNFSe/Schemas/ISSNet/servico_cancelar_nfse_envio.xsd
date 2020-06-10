@@ -5,13 +5,10 @@
 	targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd"
 	xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-	attributeFormDefault="unqualified" elementFormDefault="unqualified">
-	<xsd:import schemaLocation="tipos_simples.xsd"
-		namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" />
-	<xsd:import schemaLocation="tipos_complexos.xsd"
-		namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" />
-	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
-		schemaLocation="xmldsig-core-schema20020212.xsd" />
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xsd:import schemaLocation="tipos_simples.xsd" namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" />
+	<xsd:import schemaLocation="tipos_complexos.xsd" namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd" />
 	<xsd:element name="CancelarNfseEnvio">
 		<xsd:complexType>
 			<xsd:all>

@@ -4,7 +4,7 @@
 	targetNamespace="http://ws.speedgov.com.br/cancelar_nfse_envio_v1.xsd"
 	xmlns="http://ws.speedgov.com.br/cancelar_nfse_envio_v1.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
-	elementFormDefault="unqualified">
+	elementFormDefault="qualified">
 	<xsd:import schemaLocation="tipos_v1.xsd"	namespace="http://ws.speedgov.com.br/tipos_v1.xsd" />
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
 		schemaLocation="xmldsig-core-schema20020212_v1.xsd" />

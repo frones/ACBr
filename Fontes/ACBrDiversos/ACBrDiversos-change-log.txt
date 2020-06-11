@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2020
+-- ACBrValidador --
+[+] Adicionado o método "RemoverMascara"
+    Function RemoverMascara(const AValue: String; const Mascara: String): String;
+    Útil para Remover macaras criadas com FormatarMascaraDinamica
+
 18/05/2020
 -- ACBrEnterTab --
 [*] Ajustes para compatabilização com FMX
@@ -52,8 +58,8 @@ Símbolo : Significado
 06/04/2020
 -- ACBrValidador --
 [+] Adicionado o método "FormatarMascaraDinamica"
-   Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
-   Útil para criar rotinas de Formatação de Mascara durante OnTyping, OnChange
+    Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
+    Útil para criar rotinas de Formatação de Mascara durante OnTyping, OnChange
 
 -- ACBrCargaBal, ACBrTroco --
 [*] Ajustes para compilação em Android NEXTGEN

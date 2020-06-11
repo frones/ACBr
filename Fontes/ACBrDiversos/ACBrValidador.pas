@@ -184,6 +184,7 @@ function FormatarSUFRAMA( const AValue: String ) : String ;
 
 Function FormatarMascaraNumerica(const ANumValue: string; const Mascara: String): String;
 Function FormatarMascaraDinamica(const AValue: String; const Mascara: String): String;
+Function RemoverMascara(const AValue: String; const Mascara: String): String;
 
 Function OnlyCNPJorCPF( const Documento : String ) : String ;
 
@@ -583,6 +584,28 @@ begin
     end;
 
     Result := Result + c;
+    Inc(i);
+  end;
+end;
+
+function RemoverMascara(const AValue: String; const Mascara: String): String;
+var
+  i, m: Integer;
+  cm, cv: Char;
+  wValue: String;
+begin
+  Result := '';
+  wValue := Trim(AValue);
+  m := min(Length(Mascara), Length(wValue));
+
+  i := 1;
+  while (i <= m) do
+  begin
+    cm := Mascara[i];
+    cv := wValue[i];
+    if (cm = '*') or (cm <> cv) then
+      Result := Result + cv;
+
     Inc(i);
   end;
 end;

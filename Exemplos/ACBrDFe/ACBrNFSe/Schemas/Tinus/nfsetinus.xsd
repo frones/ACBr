@@ -441,7 +441,7 @@
             <xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag"/>
+        <xsd:attribute name="id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcPedidoCancelamento">
         <xsd:sequence>

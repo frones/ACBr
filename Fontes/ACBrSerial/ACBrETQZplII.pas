@@ -313,8 +313,14 @@ begin
 end;
 
 function TACBrETQZplII.ComandoPaginaDeCodigo: AnsiString;
+var
+  APagCod: String;
 begin
-  Result := '^CI' + ConverterPaginaDeCodigo(PaginaDeCodigo);
+  APagCod := ConverterPaginaDeCodigo(PaginaDeCodigo);
+  if (APagCod <> '') then
+    Result := '^CI' + APagCod
+  else
+    Result := '';
 end;
 
 function TACBrETQZplII.ComandoOrigemCoordenadas: AnsiString;

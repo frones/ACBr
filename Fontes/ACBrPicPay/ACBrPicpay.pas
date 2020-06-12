@@ -184,6 +184,7 @@ type
     fTempoRetorno: Integer;
 
     fQRCode: string;
+    fUltimoQRCodeStream: TStringStream;
 
     fLojista: TACBrPicPayLojista;
     fComprador: TACBrPicPayComprador;
@@ -501,6 +502,12 @@ begin
   {$ELSE}
     DecodeQRCodeDelphi;
   {$ENDIF}
+
+  if Assigned(fUltimoQRCodeStream) then
+  begin
+    FreeAndNil(fUltimoQRCodeStream);
+  end;
+  fUltimoQRCodeStream := Result;
 end;
 
 procedure TACBrPicPay.AguardarRetorno;
@@ -737,6 +744,8 @@ end;
 
 destructor TACBrPicPay.Destroy;
 begin
+  if Assigned(fUltimoQRCodeStream) then
+    FreeAndNil(fUltimoQRCodeStream);
   fComprador.Free;
   fLojista.Free;
   fThreadAguardaRetorno.Terminate;

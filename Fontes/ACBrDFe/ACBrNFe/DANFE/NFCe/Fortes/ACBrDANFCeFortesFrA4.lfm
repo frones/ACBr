@@ -28,7 +28,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand1: TRLBand
       Left = 38
       Height = 80
-      Top = 38
+      Top = 112
       Width = 718
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -165,7 +165,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand2: TRLBand
       Left = 38
       Height = 36
-      Top = 118
+      Top = 192
       Width = 718
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -215,7 +215,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand3: TRLBand
       Left = 38
       Height = 18
-      Top = 154
+      Top = 228
       Width = 718
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -346,7 +346,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object subItens: TRLSubDetail
       Left = 38
       Height = 58
-      Top = 172
+      Top = 246
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -498,7 +498,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand5: TRLBand
       Left = 38
       Height = 18
-      Top = 230
+      Top = 304
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -586,7 +586,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLSubDetail1: TRLSubDetail
       Left = 38
       Height = 59
-      Top = 320
+      Top = 394
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -771,7 +771,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLSubDetail2: TRLSubDetail
       Left = 38
       Height = 446
-      Top = 379
+      Top = 453
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1397,7 +1397,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand12: TRLBand
       Left = 38
       Height = 18
-      Top = 248
+      Top = 322
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1451,7 +1451,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand13: TRLBand
       Left = 38
       Height = 18
-      Top = 266
+      Top = 340
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1505,7 +1505,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand14: TRLBand
       Left = 38
       Height = 18
-      Top = 302
+      Top = 376
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1560,7 +1560,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand17: TRLBand
       Left = 38
       Height = 18
-      Top = 284
+      Top = 358
       Width = 718
       BandType = btSummary
       RealBounds.Left = 0
@@ -1605,6 +1605,207 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Width = 0
         RealBounds.Height = 0
         BeforePrint = RLLabel52BeforePrint
+      end
+    end
+    object rlbDivisaoRecibo: TRLBand
+      Left = 38
+      Height = 16
+      Top = 96
+      Width = 718
+      BandType = btHeader
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlbDivisaoReciboBeforePrint
+      object rliDivisao: TRLDraw
+        Left = 0
+        Height = 8
+        Top = 6
+        Width = 741
+        Angle = 0
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+        Pen.Style = psDot
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+    object rlbReciboHeader: TRLBand
+      Left = 38
+      Height = 58
+      Top = 38
+      Width = 718
+      AutoSize = True
+      BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlbReciboHeaderBeforePrint
+      object rliCanhoto1: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 25
+        Width = 603
+        Angle = 0
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliCanhoto2: TRLDraw
+        Left = 102
+        Height = 32
+        Top = 25
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllRecebemosDe: TRLLabel
+        Tag = 1
+        Left = 4
+        Height = 7
+        Top = 4
+        Width = 350
+        Caption = 'RECEBEMOS DE %s OS PRODUTOS / SERVIÇOS CONSTANTES DA NOTA FISCAL INDICADO AO LADO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rllRecebemosDeBeforePrint
+      end
+      object rllDataRecebimento: TRLLabel
+        Tag = 10
+        Left = 3
+        Height = 7
+        Top = 28
+        Width = 88
+        Caption = 'DATA DE RECEBIMENTO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllIdentificacao: TRLLabel
+        Tag = 10
+        Left = 105
+        Height = 7
+        Top = 28
+        Width = 172
+        Caption = 'IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliCanhoto3: TRLDraw
+        Left = 602
+        Height = 57
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllNFe: TRLLabel
+        Left = 608
+        Height = 16
+        Top = 2
+        Width = 106
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'NFC-e'
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllNumNF0: TRLLabel
+        Left = 617
+        Height = 16
+        Top = 20
+        Width = 94
+        Alignment = taCenter
+        Caption = 'Nº 000.000.000'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rllNumNF0BeforePrint
+      end
+      object rllSERIE0: TRLLabel
+        Left = 631
+        Height = 16
+        Top = 37
+        Width = 68
+        Alignment = taCenter
+        Caption = 'SÉRIE 000'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rllSERIE0BeforePrint
+      end
+      object rllResumo: TRLLabel
+        Left = 60
+        Height = 10
+        Top = 14
+        Width = 486
+        Alignment = taCenter
+        Caption = 'DATA DE EMISSÃO: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rllResumoBeforePrint
       end
     end
   end

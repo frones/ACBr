@@ -1363,6 +1363,170 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel52BeforePrint
       end
     end
+    object rlbDivisaoRecibo: TRLBand
+      Left = 38
+      Top = 96
+      Width = 718
+      Height = 16
+      BandType = btHeader
+      BeforePrint = rlbDivisaoReciboBeforePrint
+      object rliDivisao: TRLDraw
+        Left = 0
+        Top = 6
+        Width = 741
+        Height = 8
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+        Pen.Style = psDot
+      end
+    end
+    object rlbReciboHeader: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 58
+      AutoSize = True
+      BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      BeforePrint = rlbReciboHeaderBeforePrint
+      object rliCanhoto1: TRLDraw
+        Left = 0
+        Top = 25
+        Width = 603
+        Height = 1
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+      end
+      object rliCanhoto2: TRLDraw
+        Left = 102
+        Top = 25
+        Width = 1
+        Height = 32
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rllRecebemosDe: TRLLabel
+        Tag = 1
+        Left = 4
+        Top = 4
+        Width = 350
+        Height = 7
+        Caption = 
+          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
+          ' INDICADO AO LADO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = rllRecebemosDeBeforePrint
+      end
+      object rllDataRecebimento: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 28
+        Width = 88
+        Height = 7
+        Caption = 'DATA DE RECEBIMENTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllIdentificacao: TRLLabel
+        Tag = 10
+        Left = 105
+        Top = 28
+        Width = 172
+        Height = 7
+        Caption = 'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rliCanhoto3: TRLDraw
+        Left = 602
+        Top = 0
+        Width = 1
+        Height = 57
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rllNFe: TRLLabel
+        Left = 608
+        Top = 2
+        Width = 106
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'NFC-e'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllNumNF0: TRLLabel
+        Left = 617
+        Top = 20
+        Width = 94
+        Height = 16
+        Alignment = taCenter
+        Caption = 'N'#186' 000.000.000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        BeforePrint = rllNumNF0BeforePrint
+      end
+      object rllSERIE0: TRLLabel
+        Left = 631
+        Top = 37
+        Width = 68
+        Height = 16
+        Alignment = taCenter
+        Caption = 'S'#201'RIE 000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = rllSERIE0BeforePrint
+      end
+      object rllResumo: TRLLabel
+        Left = 60
+        Top = 14
+        Width = 486
+        Height = 10
+        Alignment = taCenter
+        Caption = 
+          'DATA DE EMISS'#195'O: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXX' +
+          'XXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = rllResumoBeforePrint
+      end
+    end
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'Projeto ACBr'

@@ -161,6 +161,19 @@ type
     RLBand17: TRLBand;
     RLLabel43: TRLLabel;
     RLLabel52: TRLLabel;
+    rlbDivisaoRecibo: TRLBand;
+    rlbReciboHeader: TRLBand;
+    rliCanhoto1: TRLDraw;
+    rliCanhoto2: TRLDraw;
+    rllRecebemosDe: TRLLabel;
+    rllDataRecebimento: TRLLabel;
+    rllIdentificacao: TRLLabel;
+    rliCanhoto3: TRLDraw;
+    rllNFe: TRLLabel;
+    rllNumNF0: TRLLabel;
+    rllSERIE0: TRLLabel;
+    rllResumo: TRLLabel;
+    rliDivisao: TRLDraw;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLBand9BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -255,12 +268,24 @@ type
     procedure RLLabel52BeforePrint(Sender: TObject; var AText: string;
       var PrintIt: Boolean);
     procedure RLBand17BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rllResumoBeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure rllRecebemosDeBeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure rllNumNF0BeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure rllSERIE0BeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure rlbDivisaoReciboBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
     FNumItem: Integer;
     FNumPag: Integer;
     FACBrNFeDANFCeFortesA4: TACBrNFeDANFCeFortesA4;
     FFiltro: TACBrNFeDANFCeFortesA4Filtro;
     FResumido: Boolean;
+    FRecebemoDe :String;
     function CompoemEnderecoCFe: String ;
   protected
     property Filtro   : TACBrNFeDANFCeFortesA4Filtro read FFiltro write FFiltro default fiNenhum ;
@@ -318,6 +343,8 @@ begin
 
   //Pega as marges que for defina na classe pai.
   TDFeReportFortes.AjustarMargem(rlReportA4, FACBrNFeDANFCeFortesA4);
+
+  FRecebemoDe := rllRecebemosDe.Caption;
 
 end;
 
@@ -464,6 +491,18 @@ begin
                                        Trim(Dest.EnderDest.xBairro)+' '+
                                        Trim(Dest.EnderDest.xMun);
   end;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.rlbDivisaoReciboBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (rlReportA4.PageNumber = 1) and (Trim(self.FACBrNFeDANFCeFortesA4.fpNFe.Dest.xNome) <> '');
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.rlbReciboHeaderBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (rlReportA4.PageNumber = 1) and (Trim(self.FACBrNFeDANFCeFortesA4.fpNFe.Dest.xNome) <> '');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.rlbRodapeBeforePrint(Sender: TObject;
@@ -688,6 +727,32 @@ begin
   Text    := ACBrStr('Inscrição Estadual: ') + self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.IE;
 end;
 
+procedure TfrmACBrDANFCeFortesFrA4.rllNumNF0BeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  AText := ACBrStr('Nº ')   + FormatFloat(',0', FACBrNFeDANFCeFortesA4.FpNFe.Ide.nNF)
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.rllRecebemosDeBeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+    Atext := Format(FRecebemoDe, [Self.FACBrNFeDANFCeFortesA4.fpNFe.Emit.XNome]);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.rllResumoBeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  AText := ACBrStr('EMISSÃO: ') + FormatDateBr(self.FACBrNFeDANFCeFortesA4.fpNFe.Ide.dEmi) +
+    '  -  ' + 'DEST. / REM.: ' + self.FACBrNFeDANFCeFortesA4.fpNFe.Dest.xNome +
+    '  -  ' + 'VALOR TOTAL: R$ ' + FormatFloatBr(self.FACBrNFeDANFCeFortesA4.fpNFe.Total.ICMSTot.vNF);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.rllSERIE0BeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  AText := ACBrStr(' Série ') + FormatFloat('000', FACBrNFeDANFCeFortesA4.FpNFe.Ide.serie);
+end;
+
 procedure TfrmACBrDANFCeFortesFrA4.RLMemo1BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
@@ -773,7 +838,6 @@ var
   frACBrNFeDANFCeFortesFr: TfrmACBrDANFCeFortesFrA4;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
-  NFeID: string;
 begin
 
   frACBrNFeDANFCeFortesFr := TfrmACBrDANFCeFortesFrA4.Create(Self);
@@ -797,12 +861,6 @@ begin
 
       if FACBrNFeDANFCeFortesA4.Impressora <> '' then
         RLPrinter.PrinterName := FACBrNFeDANFCeFortesA4.Impressora;
-
-      NFeID := OnlyNumber(FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID);
-
-      RLLayout.JobTitle := NomeDocumento;
-      if (RLLayout.JobTitle = '') then
-        RLLayout.JobTitle := NFeID + '-nfe.xml';
 
       RLLayout.PrintDialog := FACBrNFeDANFCeFortesA4.MostraPreview;
       RLLayout.ShowProgress:= False ;

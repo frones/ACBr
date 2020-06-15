@@ -125,7 +125,7 @@ begin
                     begin
                       COD_IMOVEL := I;
                       TIPO_CONTRAPARTE := tpcArrendante;
-                      CPF_CONTRAPARTE := '000.000.000-00';
+                      ID_CONTRAPARTE := '000.000.000-00';
                       NOME_CONTRAPARTE := 'Willian Aparecido Hübner do Nascimento';
                       PERC_CONTRAPARTE := 10;
                     end;

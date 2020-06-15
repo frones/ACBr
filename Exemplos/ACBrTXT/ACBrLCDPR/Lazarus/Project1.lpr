@@ -3,7 +3,7 @@ program Project1;
 {$MODE Delphi}
 
 uses
-  Forms,
+  Forms, Interfaces,
   Unit2 in 'Unit2.pas' {Form2};
 
 {.$R *.res}

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/58082-valorissretido-provedor-sh3/
+  Por: Jeanny Paiva
+
 08/06/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/57510-correção-arquivo-pnfsnfsew_abrasfv2pas-provedor-proactconv2/

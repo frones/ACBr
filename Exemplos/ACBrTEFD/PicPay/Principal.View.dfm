@@ -205,6 +205,7 @@ object PrincipalView: TPrincipalView
     TipoRetorno = trThread
     OnStatusPayment = ACBrPicpay1StatusPayment
     OnWaitingPayment = ACBrPicpay1WaitingPayment
+    OnWaitingTimeout = ACBrPicpay1WaitingTimeout
     Left = 232
     Top = 280
   end

@@ -1401,7 +1401,7 @@ begin
   wLinhasObs  := 0;
   BufferInfCpl:= '';
   vTemp       := TStringList.Create;
-  
+
   try
     if (FDANFEClassOwner is TACBrNFeDANFEClass) then
     begin
@@ -1422,7 +1422,7 @@ begin
               FDANFEClassOwner.ManterInfContr(FNFe) +
               FDANFEClassOwner.ManterInfCompl(FNFe);
     end;
-	
+
     if Trim(wObs) <> '' then
     begin
       Campos := Split(';', wObs);
@@ -1432,7 +1432,7 @@ begin
       wLinhasObs    := 1; //TotalObS(vTemp.Text);
       BufferInfCpl  := vTemp.Text;
     end;
-	
+
     with cdsInformacoesAdicionais do
     begin
       Close;
@@ -1443,7 +1443,7 @@ begin
       FieldByName('MensagemSEFAZ').AsString := FNFe.procNFe.xMsg;
       Post;
     end;
-	
+
   finally
     vTemp.Free;
   end;
@@ -2487,6 +2487,7 @@ begin
       Page.LeftMargin := DANFEClassOwner.MargemEsquerda;
     if (DANFEClassOwner.MargemDireita > 0) then
       Page.RightMargin := DANFEClassOwner.MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
   end;
 end;
 

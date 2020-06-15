@@ -1198,7 +1198,7 @@ begin
   if DetailData <> nil then
     DetailData.Visible := TipoEvento = teCCe;
 
-  
+
   if cdsModalRodoviario.FieldByName('LOTACAO').AsString = 'Não' then
   begin
     Child := frxReport.FindObject('ChildRodoviarioLotacao') as TfrxChild;
@@ -1287,7 +1287,7 @@ begin
       if EstaVazio(NomeArq) then
         NomeArq := OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
       frxPDFExport.FileName := PathWithDelim(DACTEClassOwner.PathPDF) + NomeArq;
-      
+
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
@@ -1332,7 +1332,7 @@ begin
       if EstaVazio(NomeArq) then
         NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[0].InfEvento.Id) + '-procEventoCTe.pdf';
       frxPDFExport.FileName := PathWithDelim(DACTEClassOwner.PathPDF) + NomeArq;
-            
+
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
@@ -1377,7 +1377,7 @@ begin
       if EstaVazio(NomeArq) then
         NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).InutCTe.RetInutCTe.Id) + '-procInutCTe.pdf';
       frxPDFExport.FileName := PathWithDelim(DACTEClassOwner.PathPDF) + NomeArq;
-            
+
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -1406,6 +1406,7 @@ begin
       Page.LeftMargin := MargemEsquerda;
     if (MargemDireita > 0) then
       Page.RightMargin := MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
   end;
 end;
 

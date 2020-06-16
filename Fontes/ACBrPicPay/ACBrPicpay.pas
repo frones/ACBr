@@ -87,10 +87,11 @@ type
   { TACBrThread }
   TACBrPicPayThread = class(TThread)
   private
+    fevCancelarConsulta: TSimpleEvent;
     fAcordaEvt: TSimpleEvent;
     fPausado: Boolean;
     fACBrPicpay: TACBrPicPay;
-    fUltimoTempoAguardo: Integer;
+    fTempoRestante: Integer;
     function getPausado: Boolean;
     procedure setPausado(const Value: Boolean);
     procedure StatusPayment;
@@ -273,7 +274,7 @@ begin
   begin
     Pausado := True;
     fAcordaEvt.WaitFor(Cardinal(-1));
-    
+
     // Foi acordado para terminar?
     if not Terminated then
       FazConsulta;
@@ -283,7 +284,7 @@ end;
 procedure TACBrPicPayThread.FazWaitingPayment;
 begin
   if Assigned(fACBrPicpay.fOnWaitingPayment) then
-    fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status, fUltimoTempoAguardo);
+    fACBrPicpay.fOnWaitingPayment(fACBrPicpay.Status, fTempoRestante);
 end;
 
 procedure TACBrPicPayThread.FazWaitingTimeout;
@@ -294,9 +295,9 @@ begin
   if Assigned(fACBrPicpay.fOnWaitingTimeout) then
     fACBrPicpay.fOnWaitingTimeout(Retry);
   if Retry then
-    fUltimoTempoAguardo := fACBrPicpay.fTempoRetorno
+    fTempoRestante := fACBrPicpay.fTempoRetorno
   else
-    fACBrPicpay.fCancelarAguardoRetorno := True;
+    fACBrPicpay.CancelarAguardoRetorno;
 end;
 
 { Public }
@@ -306,7 +307,7 @@ begin
   fACBrPicpay := TACBrPicPay(AOwner);
   fPausado := True;
   fAcordaEvt := TSimpleEvent.Create;
-  
+  fevCancelarConsulta := TSimpleEvent.Create;
   inherited Create(False);
 end;
 
@@ -314,22 +315,23 @@ destructor TACBrPicPayThread.Destroy;
 begin
   fPausado := True;
   Terminate;
+  fevCancelarConsulta.SetEvent;
   fAcordaEvt.SetEvent;
   if not Terminated then
     WaitFor;
-    
+
   fAcordaEvt.Free;
+  fevCancelarConsulta.Free;
   inherited;
 end;
 
 procedure TACBrPicPayThread.FazConsulta;
 begin
-  fUltimoTempoAguardo := fACBrPicpay.fTempoRetorno;
-  while not (Terminated or fACBrPicpay.fCancelarAguardoRetorno) do
-  begin
-    Sleep(1000);
-    Dec(fUltimoTempoAguardo);
+  fTempoRestante  := fACBrPicpay.fTempoRetorno;
 
+  while (fevCancelarConsulta.WaitFor(1000) <> wrSignaled) and (not Terminated) do
+  begin
+    Dec(fTempoRestante);
     if fACBrPicpay.fQRCode <> '' then
       Synchronize(fACBrPicpay.Consultar);
 
@@ -339,7 +341,7 @@ begin
       Break;
     end;
 
-    if (fUltimoTempoAguardo <= 0) then
+    if (fTempoRestante <= 0) then
       Synchronize(FazWaitingTimeout)
     else
       Synchronize(FazWaitingPayment);
@@ -516,6 +518,7 @@ begin
   case fTipoRetorno of
     trThread:
     begin
+      fThreadAguardaRetorno.fevCancelarConsulta.ResetEvent;
       fThreadAguardaRetorno.Pausado := False;
     end;
     trCallback:
@@ -718,6 +721,11 @@ end;
 procedure TACBrPicPay.CancelarAguardoRetorno;
 begin
   fCancelarAguardoRetorno := True;
+  if TipoRetorno = trThread then
+  begin
+    fThreadAguardaRetorno.fevCancelarConsulta.SetEvent;
+  end;
+
 end;
 
 constructor TACBrPicPay.Create(AOwner: TComponent);

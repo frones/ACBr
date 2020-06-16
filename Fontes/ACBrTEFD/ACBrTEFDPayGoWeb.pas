@@ -63,6 +63,7 @@ type
     fOperacaoCRT: Word;
     fOperacaoPRE: Word;
     fsPGWebAPI: TACBrTEFPGWebAPI;
+    function GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
 
     function GetCNPJEstabelecimento: String;
@@ -87,12 +88,14 @@ type
     procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
   protected
     procedure FazerRequisicao(PWOPER: Word; AHeader: String = '';
-        Valor: Double = 0; Documento: String = '');
+        AValor: Double = 0; ADocumentoVinculado: String = ''; AMoeda : Integer = 0;
+         ParametrosAdicionaisTransacao: TStrings = nil);
     function ContinuarRequisicao: Boolean;
     procedure ObterDadosTransacao;
   public
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
+    property ParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais read GetParametrosAdicionais;
 
     constructor Create( AOwner : TComponent ) ; override;
     destructor Destroy ; override;
@@ -145,11 +148,36 @@ type
     property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read GetOnAguardaPinPad write SetOnAguardaPinPad;
   end;
 
+function MoedaToISO4217(AMoeda: Byte): Word;
+function ISO4217ToMoeda(AIso4217: Word): Byte;
+
 implementation
 
 uses
   strutils, math, dateutils,
-  ACBrTEFD, ACBrUtil;
+  ACBrTEFD, ACBrUtil, ACBrConsts;
+
+function MoedaToISO4217(AMoeda: Byte): Word;
+begin
+  case AMoeda of
+    0: Result := 986;    // BRL
+    1: Result := 840;    // USD
+    2: Result := 978;    // EUR
+  else
+    Result := AMoeda;
+  end;
+end;
+
+function ISO4217ToMoeda(AIso4217: Word): Byte;
+begin
+  case AIso4217 of
+    986: Result := 0;    // BRL
+    840: Result := 1;    // USD
+    978: Result := 2;    // EUR
+  else
+    Result := AIso4217;
+  end;
+end;
 
 { TACBrTEFDRespPayGoWeb }
 
@@ -177,13 +205,13 @@ begin
   ImprimirViaCliente := (ViasDeComprovante = 1) or (ViasDeComprovante = 3);
   ImprimirViaEstabelecimento := (ViasDeComprovante = 2) or (ViasDeComprovante = 3);
 
-  ViaCompleta := LeInformacao(PWINFO_RCPTFULL, 0).AsString;
+  ViaCompleta := LeInformacao(PWINFO_RCPTFULL, 0).AsBinary;
 
   // Verificando Via do Estabelecimento
   if ImprimirViaEstabelecimento then
   begin
-    ViaDiferenciada := LeInformacao(PWINFO_RCPTMERCH, 0).AsString;
-    if (ViaDiferenciada <> '') then
+    ViaDiferenciada := LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary;
+    if (Trim(ViaDiferenciada) <> '') then
       fpImagemComprovante2aVia.Text := ViaDiferenciada
     else
       fpImagemComprovante2aVia.Text := ViaCompleta;
@@ -194,11 +222,11 @@ begin
   // Verificando Via do Cliente
   if ImprimirViaCliente then
   begin
-    ViaDiferenciada := LeInformacao(PWINFO_RCPTCHSHORT, 0).AsString;
-    if (ViaDiferenciada = '') then
-      ViaDiferenciada := LeInformacao(PWINFO_RCPTCHOLDER, 0).AsString;
+    ViaDiferenciada := LeInformacao(PWINFO_RCPTCHSHORT, 0).AsBinary;
+    if (Trim(ViaDiferenciada) = '') then
+      ViaDiferenciada := LeInformacao(PWINFO_RCPTCHOLDER, 0).AsBinary;
 
-    if (ViaDiferenciada = '') then
+    if (Trim(ViaDiferenciada) <> '') then
       fpImagemComprovante1aVia.Text := ViaDiferenciada
     else
       fpImagemComprovante1aVia.Text := ViaCompleta;
@@ -255,7 +283,7 @@ begin
   for I := 0 to Conteudo.Count - 1 do
   begin
     Linha := Conteudo.Linha[I];
-    LinStr := StringToBinaryString(Linha.Informacao.AsString);
+    LinStr := Linha.Informacao.AsBinary;
 
     case Linha.Identificacao of
       PWINFO_TOTAMNT:
@@ -270,14 +298,7 @@ begin
       PWINFO_CURRENCY:
       begin
         AInt := Linha.Informacao.AsInteger;
-        if AInt = 986 then
-          fpMoeda := 0
-        else if AInt = 840 then
-          fpMoeda := 2
-        else if AInt = 978 then
-          fpMoeda := 2
-        else
-          fpMoeda := AInt;
+        fpMoeda := ISO4217ToMoeda(AInt);
       end;
 
       PWINFO_CNFREQ:
@@ -329,7 +350,7 @@ begin
         fpDataHoraTransacaoHost :=  Linha.Informacao.AsTimeStampSQL;
 
       PWINFO_AUTHSYST:
-        fpNomeAdministradora := LinStr;
+        fpRede := LinStr;
 
       PWINFO_CARDNAME:
       begin
@@ -340,7 +361,7 @@ begin
 
       PWINFO_CARDNAMESTD:
       begin
-        fpRede := LinStr;
+        fpNomeAdministradora := LinStr;
         fpNFCeSAT.Bandeira := LinStr;
       end;
 
@@ -356,8 +377,11 @@ begin
         fpNFCeSAT.Autorizacao := fpNSU;
       end;
 
-      PWINFO_AUTHCODE:
+      PWINFO_REQNUM:
         fpCodigoAutorizacaoTransacao := LinStr;
+
+      //PWINFO_AUTHCODE:
+      //  fpCodigoAutorizacaoTransacao := LinStr;
 
       PWINFO_AUTRESPCODE:
         fpAutenticacao := LinStr;
@@ -414,6 +438,12 @@ begin
       PWINFO_AUTHPOSQRCODE:
         fpQRCode := LinStr;
 
+      //PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
+      //PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
+      //PWINFO_REQNUM      32h até 10 Referência local da transação
+      //PWINFO_VIRTMERCH   36h até 9 Identificador do Estabelecimento.
+      //PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
+      //PWINFO_TRANSACDESCRIPT 1F40h Até 80 Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
     else
       ProcessarTipoInterno(Linha);
     end;
@@ -424,6 +454,16 @@ begin
 
   if (fpTipoOperacao <> opPreDatado) then
     fpDataPreDatado := 0;
+
+  if (LeInformacao(PWINFO_RET, 0).AsInteger = PWRET_OK) then
+    fpTextoEspecialOperador := LeInformacao(PWINFO_RESULTMSG, 0).AsBinary
+  else
+    fpTextoEspecialOperador := LeInformacao(PWINFO_CNCDSPMSG, 0).AsBinary;
+
+  if (Trim(fpTextoEspecialOperador) = '') then
+    fpTextoEspecialOperador := 'TRANSACAO FINALIZADA'
+  else if (copy(fpTextoEspecialOperador,1,1) = CR) then
+    fpTextoEspecialOperador := copy(fpTextoEspecialOperador, 2, Length(fpTextoEspecialOperador));
 end;
 
 { TACBrTEFDPayGoWeb }
@@ -499,7 +539,7 @@ end;
 
 procedure TACBrTEFDPayGoWeb.ATV;
 begin
-  FazerRequisicao(fOperacaoADM, 'ATV');
+  FazerRequisicao(fOperacaoATV, 'ATV');
   if ContinuarRequisicao then
     ProcessarResposta;
 end;
@@ -507,14 +547,20 @@ end;
 function TACBrTEFDPayGoWeb.ADM: Boolean;
 begin
   FazerRequisicao(fOperacaoADM, 'ADM');
-  if ContinuarRequisicao then
+  Result := ContinuarRequisicao;
+  if Result then
     ProcessarResposta;
 end;
 
 function TACBrTEFDPayGoWeb.CRT(Valor: Double; IndiceFPG_ECF: String;
   DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
-  Result := inherited CRT(Valor, IndiceFPG_ECF, DocumentoVinculado, Moeda);
+  if (Valor <> 0) then
+    VerificarTransacaoPagamento( Valor );
+
+  FazerRequisicao(fOperacaoCRT, 'CRT', Valor, DocumentoVinculado, Moeda);
+  Result := ContinuarRequisicao and
+            ProcessarRespostaPagamento(IndiceFPG_ECF, Valor);
 end;
 
 function TACBrTEFDPayGoWeb.CHQ(Valor: Double; IndiceFPG_ECF: String;
@@ -523,39 +569,157 @@ function TACBrTEFDPayGoWeb.CHQ(Valor: Double; IndiceFPG_ECF: String;
   Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
   Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 begin
-  Result := inherited CHQ(Valor, IndiceFPG_ECF, DocumentoVinculado, CMC7,
-    TipoPessoa, DocumentoPessoa, DataCheque, Banco, Agencia, AgenciaDC, Conta,
-    ContaDC, Cheque, ChequeDC, Compensacao);
+  if (Valor <> 0) then
+    VerificarTransacaoPagamento( Valor );
+
+  FazerRequisicao(fOperacaoCHQ, 'CHQ', Valor, DocumentoVinculado);
+  Result := ContinuarRequisicao and
+            ProcessarRespostaPagamento(IndiceFPG_ECF, Valor);
 end;
 
 procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
-  inherited NCN(Rede, NSU, Finalizacao, Valor, DocumentoVinculado);
+  fsPGWebAPI.FinalizarTrancao( PWCNF_REV_PWR_AUT,
+                               Resp.CodigoAutorizacaoTransacao,
+                               Finalizacao,
+                               NSU, '', Rede);
 end;
 
 procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
   DocumentoVinculado: String);
 begin
-  inherited CNF(Rede, NSU, Finalizacao, DocumentoVinculado);
+  fsPGWebAPI.FinalizarTrancao( PWCNF_CNF_AUTO,
+                               Resp.CodigoAutorizacaoTransacao,
+                               Finalizacao,
+                               NSU, '', Rede);
 end;
 
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
+var
+  PA: TACBrTEFPGWebAPIParametrosAdicionais;
 begin
-  Result := inherited CNC(Rede, NSU, DataHoraTransacao, Valor);
+  PA := TACBrTEFPGWebAPIParametrosAdicionais.Create;
+  try
+    PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMAA', DataHoraTransacao);
+    PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);
+    PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
+    PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));
+    PA.ValueInfo[PWINFO_TRNORIGAUTH] := ''; // Código de autorização da transação original.
+
+    FazerRequisicao(fOperacaoCNC, 'CNC', 0, '', 0, PA);
+  finally
+    PA.Free;
+  end;
+
+  Result := ContinuarRequisicao;
+  if Result then
+    ProcessarResposta;
 end;
 
 function TACBrTEFDPayGoWeb.PRE(Valor: Double; DocumentoVinculado: String;
   Moeda: Integer): Boolean;
 begin
-  Result := inherited PRE(Valor, DocumentoVinculado, Moeda);
+  FazerRequisicao(fOperacaoPRE, 'PRE', Valor, DocumentoVinculado, Moeda);
+  Result := ContinuarRequisicao;
+  if Result then
+    ProcessarResposta;
 end;
 
 function TACBrTEFDPayGoWeb.CDP(const EntidadeCliente: string; out
   Resposta: string): Boolean;
 begin
   Result := inherited CDP(EntidadeCliente, Resposta);
+end;
+
+procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
+  AValor: Double; ADocumentoVinculado: String; AMoeda: Integer;
+  ParametrosAdicionaisTransacao: TStrings);
+var
+  PA: TACBrTEFPGWebAPIParametrosAdicionais;
+begin
+  GravaLog('FazerRequisicao: Oper:'+PWINFOToString(PWOPER)+', Header'+AHeader+
+           ', Valor:'+FloatToStr(AValor)+', Documento:'+ADocumentoVinculado);
+
+  Req.Header := AHeader;
+  Req.DocumentoVinculado := ADocumentoVinculado;
+  Req.ValorTotal := AValor;
+
+  PA := TACBrTEFPGWebAPIParametrosAdicionais.Create;
+  try
+    if (AValor > 0) then
+    begin
+      PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
+      PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(AValor * 100,-2)));
+      PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(MoedaToISO4217(AMoeda));
+    end;
+
+    if (ADocumentoVinculado <> '') then
+      PA.ValueInfo[PWINFO_FISCALREF] := Trim(ADocumentoVinculado);
+
+    if Assigned(ParametrosAdicionaisTransacao) then
+      PA.AddStrings(ParametrosAdicionaisTransacao);
+
+    fsPGWebAPI.IniciarTransacao(PWOPER, PA);
+  finally
+    PA.Free;
+  end;
+
+  { Adiciona Campos já conhecidos em Resp, para processa-los em
+    métodos que manipulam "RespostasPendentes" (usa códigos do G.P.)  }
+  Resp.Clear;
+  with TACBrTEFDRespPayGoWeb( Resp ) do
+  begin
+    fpIDSeq := fpIDSeq + 1 ;
+    if ADocumentoVinculado = '' then
+      ADocumentoVinculado := IntToStr(fpIDSeq) ;
+
+    Conteudo.GravaInformacao(899,100, AHeader ) ;
+    Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
+    Conteudo.GravaInformacao(899,102, ADocumentoVinculado ) ;
+    Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( AValor * 100 ,0))) );
+
+    Resp.TipoGP := fpTipo;
+  end;
+end;
+
+function TACBrTEFDPayGoWeb.ContinuarRequisicao: Boolean;
+begin
+  Result := fsPGWebAPI.ExecutarTransacao;
+  if Result then
+    ObterDadosTransacao;
+end;
+
+procedure TACBrTEFDPayGoWeb.ObterDadosTransacao;
+var
+  i, p, AInfo: Integer;
+  Lin, AValue: String;
+begin
+  if (fsPGWebAPI.DadosDaTransacao.Count = 0) then
+    fsPGWebAPI.ObterDadosDaTransacao;
+
+  with TACBrTEFDRespPayGoWeb(Resp) do
+  begin
+    for i := 0 to fsPGWebAPI.DadosDaTransacao.Count-1 do
+    begin
+      Lin := fsPGWebAPI.DadosDaTransacao[i];
+      p := pos('=', Lin);
+      if (p > 0) then
+      begin
+        AInfo := StrToIntDef(copy(Lin, 1, p-1), -1);
+        if (AInfo >= 0) then
+        begin
+          AValue := copy(Lin, P+1, Length(Lin));
+          Conteudo.GravaInformacao(Ainfo, 0, AValue);
+        end;
+      end;
+    end;
+    
+    //DEBUG
+    //Conteudo.Conteudo.SaveToFile('c:\temp\PGWeb.txt');
+    ConteudoToProperty;
+  end;
 end;
 
 function TACBrTEFDPayGoWeb.GetPathDLL: string;
@@ -649,6 +813,11 @@ begin
   GravaLog(ALogLine);
 end;
 
+function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
+begin
+  Result := fsPGWebAPI.ParametrosAdicionais;
+end;
+
 procedure TACBrTEFDPayGoWeb.SetSuportaViasDiferenciadas(AValue: Boolean);
 begin
   fsPGWebAPI.SuportaViasDiferenciadas := AValue;
@@ -664,80 +833,5 @@ begin
   fsPGWebAPI.PontoCaptura := AValue;
 end;
 
-procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
-  Valor: Double; Documento: String);
-begin
-  GravaLog('FazerRequisicao: Oper:'+PWINFOToString(PWOPER)+', Header'+AHeader+
-           ', Valor:'+FloatToStr(Valor)+', Documento:'+Documento);
-
-  fsPGWebAPI.IniciarTransacao(PWOPER);
-
-  { Adiciona Campos já conhecidos em Resp, para processa-los em
-    métodos que manipulam "RespostasPendentes" (usa códigos do G.P.)  }
-  Resp.Clear;
-  with TACBrTEFDRespPayGoWeb( Resp ) do
-  begin
-    fpIDSeq := fpIDSeq + 1 ;
-    if Documento = '' then
-      Documento := IntToStr(fpIDSeq) ;
-
-    Conteudo.GravaInformacao(899,100, AHeader ) ;
-    Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
-    Conteudo.GravaInformacao(899,102, Documento ) ;
-    Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
-
-    Resp.TipoGP := fpTipo;
-  end;
-end;
-
-function TACBrTEFDPayGoWeb.ContinuarRequisicao: Boolean;
-begin
-  Result := fsPGWebAPI.ExecutarTransacao;
-  if Result then
-    ObterDadosTransacao;
-end;
-
-procedure TACBrTEFDPayGoWeb.ObterDadosTransacao;
-var
-  i, p, AInfo: Integer;
-  Lin, AValue: String;
-begin
-  fsPGWebAPI.ObterDadosDaTransacao;
-
-  with TACBrTEFDRespPayGoWeb(Resp) do
-  begin
-    for i := 0 to fsPGWebAPI.DadosDaTransacao.Count-1 do
-    begin
-      Lin := fsPGWebAPI.DadosDaTransacao[i];
-      p := pos('=', Lin);
-      if (p > 0) then
-      begin
-        AInfo := StrToIntDef(copy(Lin, 1, p-1), -1);
-        if (AInfo >= 0) then
-        begin
-          AValue := copy(Lin, P+1, Length(Lin));
-          Conteudo.GravaInformacao(Ainfo, 0, AValue);
-        end;
-      end;
-    end;
-    
-    //DEBUG
-    //Conteudo.Conteudo.SaveToFile('c:\temp\PGWeb.txt');
-    ConteudoToProperty;
-  end;
-end;
-
 end.
 
-(* 
-PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
-PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
-PWINFO_REQNUM      32h até 10 Referência local da transação
-
-PWINFO_VIRTMERCH   36h até 9 Identificador do Estabelecimento.
-PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
-
-
-PWINFO_RESULTMSG
-PWINFO_TRANSACDESCRIPT 1F40h Até 80 Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
-*)

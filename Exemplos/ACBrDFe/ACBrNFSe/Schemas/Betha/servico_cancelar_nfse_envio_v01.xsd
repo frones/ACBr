@@ -9,7 +9,7 @@
   <xs:element name="CancelarNfseEnvio">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Pedido" type="tipos:tcPedidoCancelamento"/>
+        <xs:element name="Pedido" type="tipos:tcPedidoCancelamento" minOccurs="1" maxOccurs="1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

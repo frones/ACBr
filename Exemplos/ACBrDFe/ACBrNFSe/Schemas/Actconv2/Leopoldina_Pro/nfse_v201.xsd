@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="http://nfeleopoldina.portalfacil.com.br/nfseserv/schema/nfse_v201.xsd" targetNamespace="http://nfeleopoldina.portalfacil.com.br/nfseserv/schema/nfse_v201.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:import schemaLocation="xmldsig-core-schema20020212.xsd" namespace="http://www.w3.org/2000/09/xmldsig#"/>
+<!-- definition of simple elements -->
+<xsd:simpleType name="tsNumeroNfse">
+<xsd:restriction base="xsd:nonNegativeInteger">
+<xsd:totalDigits value="15"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoVerificacao">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="9"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsStatusRps">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsStatusNfse">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsExigibilidadeISS">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2|3|4|5|6|7"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNumeroProcesso">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsRegimeEspecialTributacao">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2|3|4|5|6"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsSimNao">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsResponsavelRetencao">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsPagina">
+<xsd:restriction base="xsd:nonNegativeInteger">
+<xsd:minInclusive value="1"/>
+<xsd:maxInclusive value="999999"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNumeroRps">
+<xsd:restriction base="xsd:nonNegativeInteger">
+<xsd:totalDigits value="15"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsSerieRps">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="5"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsTipoRps">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2|3"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsOutrasInformacoes">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="255"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsValor">
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="15"/>
+<xsd:fractionDigits value="2" fixed="true"/>
+<xsd:minInclusive value="0"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsItemListaServico">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="5"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoCnae">
+<xsd:restriction base="xsd:int">
+<xsd:totalDigits value="7"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoTributacao">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsAliquota">
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="6"/>
+<xsd:fractionDigits value="4"/>
+<xsd:minInclusive value="0"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsDiscriminacao">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2000"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoMunicipioIbge">
+<xsd:restriction base="xsd:int">
+<xsd:totalDigits value="7"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsInscricaoMunicipal">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="15"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsRazaoSocial">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="150"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNomeFantasia">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCnpj">
+<xsd:restriction base="xsd:string">
+<xsd:length value="14" fixed="true"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsEndereco">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="125"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNumeroEndereco">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsComplementoEndereco">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsBairro">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsUf">
+<xsd:restriction base="xsd:string">
+<xsd:length value="2" fixed="true"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoPaisBacen">
+<xsd:restriction base="xsd:string">
+<xsd:length value="4"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCep">
+<xsd:restriction base="xsd:string">
+<xsd:length value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsEmail">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsTelefone">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCpf">
+<xsd:restriction base="xsd:string">
+<xsd:length value="11" fixed="true"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoObra">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="15"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsArt">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="15"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNumeroLote">
+<xsd:restriction base="xsd:nonNegativeInteger">
+<xsd:totalDigits value="15"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsNumeroProtocolo">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="50"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsSituacaoLoteRps">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2|3|4"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsQuantidadeRps">
+<xsd:restriction base="xsd:int"> </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoMensagemAlerta">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsDescricaoMensagemAlerta">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="200"/>
+<xsd:minLength value="1"/>
+<xsd:whiteSpace value="collapse"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsCodigoCancelamentoNfse">
+<xsd:restriction base="xsd:byte">
+<xsd:pattern value="1|2|3|4|5"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsIdTag">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="255"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tsVersao">
+<xsd:restriction base="xsd:token">
+<xsd:pattern value="[1-9]{1}[0-9]{0,1}\.[0-9]{2}"/>
+</xsd:restriction>
+</xsd:simpleType>
+<!-- definition of complex elements -->
+<xsd:complexType name="tcCpfCnpj">
+<xsd:choice>
+<xsd:element name="Cpf" maxOccurs="1" minOccurs="1" type="tsCpf"/>
+<xsd:element name="Cnpj" maxOccurs="1" minOccurs="1" type="tsCnpj"/>
+</xsd:choice>
+</xsd:complexType>
+<xsd:complexType name="tcEndereco">
+<xsd:sequence>
+<xsd:element name="Endereco" maxOccurs="1" minOccurs="0" type="tsEndereco"/>
+<xsd:element name="Numero" maxOccurs="1" minOccurs="0" type="tsNumeroEndereco"/>
+<xsd:element name="Complemento" maxOccurs="1" minOccurs="0" type="tsComplementoEndereco"/>
+<xsd:element name="Bairro" maxOccurs="1" minOccurs="0" type="tsBairro"/>
+<xsd:element name="CodigoMunicipio" maxOccurs="1" minOccurs="0" type="tsCodigoMunicipioIbge"/>
+<xsd:element name="Uf" maxOccurs="1" minOccurs="0" type="tsUf"/>
+<xsd:element name="CodigoPais" maxOccurs="1" minOccurs="0" type="tsCodigoPaisBacen"/>
+<xsd:element name="Cep" maxOccurs="1" minOccurs="0" type="tsCep"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcContato">
+<xsd:sequence>
+<xsd:element name="Telefone" maxOccurs="1" minOccurs="0" type="tsTelefone"/>
+<xsd:element name="Email" maxOccurs="1" minOccurs="0" type="tsEmail"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoOrgaoGerador">
+<xsd:sequence>
+<xsd:element name="CodigoMunicipio" maxOccurs="1" minOccurs="1" type="tsCodigoMunicipioIbge"/>
+<xsd:element name="Uf" maxOccurs="1" minOccurs="1" type="tsUf"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoRps">
+<xsd:sequence>
+<xsd:element name="Numero" maxOccurs="1" minOccurs="1" type="tsNumeroRps"/>
+<xsd:element name="Serie" maxOccurs="1" minOccurs="1" type="tsSerieRps"/>
+<xsd:element name="Tipo" maxOccurs="1" minOccurs="1" type="tsTipoRps"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoPrestador">
+<xsd:sequence>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="0" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoTomador">
+<xsd:sequence>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="0" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoConsulente">
+<xsd:sequence>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="1" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoIntermediario">
+<xsd:sequence>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="0" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcDadosTomador">
+<xsd:sequence>
+<xsd:element name="IdentificacaoTomador" maxOccurs="1" minOccurs="0" type="tcIdentificacaoTomador"/>
+<xsd:element name="RazaoSocial" maxOccurs="1" minOccurs="0" type="tsRazaoSocial"/>
+<xsd:element name="Endereco" maxOccurs="1" minOccurs="0" type="tcEndereco"/>
+<xsd:element name="Contato" maxOccurs="1" minOccurs="0" type="tcContato"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcDadosIntermediario">
+<xsd:sequence>
+<xsd:element name="IdentificacaoIntermediario" maxOccurs="1" minOccurs="1" type="tcIdentificacaoIntermediario"/>
+<xsd:element name="RazaoSocial" maxOccurs="1" minOccurs="1" type="tsRazaoSocial"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcValoresDeclaracaoServico">
+<xsd:sequence>
+<xsd:element name="ValorServicos" maxOccurs="1" minOccurs="1" type="tsValor"/>
+<xsd:element name="ValorDeducoes" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorPis" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorCofins" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorInss" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorIr" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorCsll" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="OutrasRetencoes" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorIss" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="Aliquota" maxOccurs="1" minOccurs="0" type="tsAliquota"/>
+<xsd:element name="DescontoIncondicionado" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="DescontoCondicionado" maxOccurs="1" minOccurs="0" type="tsValor"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcValoresNfse">
+<xsd:sequence>
+<xsd:element name="BaseCalculo" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="Aliquota" maxOccurs="1" minOccurs="0" type="tsAliquota"/>
+<xsd:element name="ValorIss" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="ValorLiquidoNfse" maxOccurs="1" minOccurs="1" type="tsValor"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcDadosServico">
+<xsd:sequence>
+<xsd:element name="Valores" maxOccurs="1" minOccurs="1" type="tcValoresDeclaracaoServico"/>
+<xsd:element name="IssRetido" maxOccurs="1" minOccurs="1" type="tsSimNao"/>
+<xsd:element name="ResponsavelRetencao" maxOccurs="1" minOccurs="0" type="tsResponsavelRetencao"/>
+<xsd:element name="ItemListaServico" maxOccurs="1" minOccurs="1" type="tsItemListaServico"/>
+<xsd:element name="CodigoCnae" maxOccurs="1" minOccurs="0" type="tsCodigoCnae"/>
+<xsd:element name="CodigoTributacaoMunicipio" maxOccurs="1" minOccurs="0" type="tsCodigoTributacao"/>
+<xsd:element name="Discriminacao" maxOccurs="1" minOccurs="1" type="tsDiscriminacao"/>
+<xsd:element name="CodigoMunicipio" maxOccurs="1" minOccurs="1" type="tsCodigoMunicipioIbge"/>
+<xsd:element name="CodigoPais" maxOccurs="1" minOccurs="0" type="tsCodigoPaisBacen"/>
+<xsd:element name="ExigibilidadeISS" maxOccurs="1" minOccurs="1" type="tsExigibilidadeISS"/>
+<xsd:element name="MunicipioIncidencia" maxOccurs="1" minOccurs="0" type="tsCodigoMunicipioIbge"/>
+<xsd:element name="NumeroProcesso" maxOccurs="1" minOccurs="0" type="tsNumeroProcesso"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcDadosConstrucaoCivil">
+<xsd:sequence>
+<xsd:element name="CodigoObra" maxOccurs="1" minOccurs="0" type="tsCodigoObra"/>
+<xsd:element name="Art" maxOccurs="1" minOccurs="1" type="tsArt"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcDadosPrestador">
+<xsd:sequence>
+<xsd:element name="IdentificacaoPrestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+<xsd:element name="RazaoSocial" maxOccurs="1" minOccurs="1" type="tsRazaoSocial"/>
+<xsd:element name="NomeFantasia" maxOccurs="1" minOccurs="0" type="tsNomeFantasia"/>
+<xsd:element name="Endereco" maxOccurs="1" minOccurs="1" type="tcEndereco"/>
+<xsd:element name="Contato" maxOccurs="1" minOccurs="0" type="tcContato"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcInfRps">
+<xsd:sequence>
+<xsd:element name="IdentificacaoRps" maxOccurs="1" minOccurs="1" type="tcIdentificacaoRps"/>
+<xsd:element name="DataEmissao" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="Status" maxOccurs="1" minOccurs="1" type="tsStatusRps"/>
+<xsd:element name="RpsSubstituido" maxOccurs="1" minOccurs="0" type="tcIdentificacaoRps"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcInfDeclaracaoPrestacaoServico">
+<xsd:sequence>
+<xsd:element name="Rps" maxOccurs="1" minOccurs="0" type="tcInfRps"/>
+<xsd:element name="Competencia" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="Servico" maxOccurs="1" minOccurs="1" type="tcDadosServico"/>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+<xsd:element name="TomadorServico" maxOccurs="1" minOccurs="0" type="tcDadosTomador"/>
+<xsd:element name="Intermediario" maxOccurs="1" minOccurs="0" type="tcDadosIntermediario"/>
+<xsd:element name="ConstrucaoCivil" maxOccurs="1" minOccurs="0" type="tcDadosConstrucaoCivil"/>
+<xsd:element name="RegimeEspecialTributacao" maxOccurs="1" minOccurs="0" type="tsRegimeEspecialTributacao"/>
+<xsd:element name="OptanteSimplesNacional" maxOccurs="1" minOccurs="1" type="tsSimNao"/>
+<xsd:element name="IncentivoFiscal" maxOccurs="1" minOccurs="1" type="tsSimNao"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcDeclaracaoPrestacaoServico">
+<xsd:sequence>
+<xsd:element name="InfDeclaracaoPrestacaoServico" maxOccurs="1" minOccurs="1" type="tcInfDeclaracaoPrestacaoServico"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcIdentificacaoNfse">
+<xsd:sequence>
+<xsd:element name="Numero" maxOccurs="1" minOccurs="1" type="tsNumeroNfse"/>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="1" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+<xsd:element name="CodigoMunicipio" maxOccurs="1" minOccurs="1" type="tsCodigoMunicipioIbge"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcInfNfse">
+<xsd:sequence>
+<xsd:element name="Numero" maxOccurs="1" minOccurs="1" type="tsNumeroNfse"/>
+<xsd:element name="CodigoVerificacao" maxOccurs="1" minOccurs="1" type="tsCodigoVerificacao"/>
+<xsd:element name="DataEmissao" maxOccurs="1" minOccurs="1" type="xsd:dateTime"/>
+<xsd:element name="NfseSubstituida" maxOccurs="1" minOccurs="0" type="tsNumeroNfse"/>
+<xsd:element name="OutrasInformacoes" maxOccurs="1" minOccurs="0" type="tsOutrasInformacoes"/>
+<xsd:element name="ValoresNfse" maxOccurs="1" minOccurs="1" type="tcValoresNfse"/>
+<xsd:element name="ValorCredito" maxOccurs="1" minOccurs="0" type="tsValor"/>
+<xsd:element name="PrestadorServico" maxOccurs="1" minOccurs="1" type="tcDadosPrestador"/>
+<xsd:element name="OrgaoGerador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoOrgaoGerador"/>
+<xsd:element name="DeclaracaoPrestacaoServico" maxOccurs="1" minOccurs="1" type="tcDeclaracaoPrestacaoServico"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcNfse">
+<xsd:sequence>
+<xsd:element name="InfNfse" maxOccurs="1" minOccurs="1" type="tcInfNfse"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+<xsd:attribute name="versao" type="tsVersao" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="tcInfPedidoCancelamento">
+<xsd:sequence>
+<xsd:element name="IdentificacaoNfse" maxOccurs="1" minOccurs="1" type="tcIdentificacaoNfse"/>
+<xsd:element name="CodigoCancelamento" maxOccurs="1" minOccurs="0" type="tsCodigoCancelamentoNfse"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcPedidoCancelamento">
+<xsd:sequence>
+<xsd:element name="InfPedidoCancelamento" maxOccurs="1" minOccurs="1" type="tcInfPedidoCancelamento"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcConfirmacaoCancelamento">
+<xsd:sequence>
+<xsd:element name="Pedido" maxOccurs="1" minOccurs="1" type="tcPedidoCancelamento"/>
+<xsd:element name="DataHora" maxOccurs="1" minOccurs="1" type="xsd:dateTime"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcCancelamentoNfse">
+<xsd:sequence>
+<xsd:element name="Confirmacao" maxOccurs="1" minOccurs="1" type="tcConfirmacaoCancelamento"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+<xsd:attribute name="versao" type="tsVersao" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="tcRetCancelamento">
+<xsd:sequence>
+<xsd:element name="NfseCancelamento" maxOccurs="1" minOccurs="1" type="tcCancelamentoNfse"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcInfSubstituicaoNfse">
+<xsd:sequence>
+<xsd:element name="NfseSubstituidora" maxOccurs="1" minOccurs="1" type="tsNumeroNfse"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+<xsd:complexType name="tcSubstituicaoNfse">
+<xsd:sequence>
+<xsd:element name="SubstituicaoNfse" maxOccurs="1" minOccurs="1" type="tcInfSubstituicaoNfse"/>
+<xsd:element maxOccurs="2" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+<xsd:attribute name="versao" type="tsVersao" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="tcCompNfse">
+<xsd:sequence>
+<xsd:element name="Nfse" maxOccurs="1" minOccurs="1" type="tcNfse"/>
+<xsd:element name="NfseCancelamento" maxOccurs="1" minOccurs="0" type="tcCancelamentoNfse"/>
+<xsd:element name="NfseSubstituicao" maxOccurs="1" minOccurs="0" type="tcSubstituicaoNfse"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcMensagemRetorno">
+<xsd:sequence>
+<xsd:element name="Codigo" maxOccurs="1" minOccurs="1" type="tsCodigoMensagemAlerta"/>
+<xsd:element name="Mensagem" maxOccurs="1" minOccurs="1" type="tsDescricaoMensagemAlerta"/>
+<xsd:element name="Correcao" minOccurs="0" type="tsDescricaoMensagemAlerta"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcMensagemRetornoLote">
+<xsd:sequence>
+<xsd:element name="IdentificacaoRps" maxOccurs="1" minOccurs="1" type="tcIdentificacaoRps"/>
+<xsd:element name="Codigo" maxOccurs="1" minOccurs="1" type="tsCodigoMensagemAlerta"/>
+<xsd:element name="Mensagem" maxOccurs="1" minOccurs="1" type="tsDescricaoMensagemAlerta"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tcLoteRps">
+<xsd:sequence>
+<xsd:element name="NumeroLote" maxOccurs="1" minOccurs="1" type="tsNumeroLote"/>
+<xsd:element name="CpfCnpj" maxOccurs="1" minOccurs="1" type="tcCpfCnpj"/>
+<xsd:element name="InscricaoMunicipal" maxOccurs="1" minOccurs="0" type="tsInscricaoMunicipal"/>
+<xsd:element name="QuantidadeRps" maxOccurs="1" minOccurs="1" type="tsQuantidadeRps"/>
+<xsd:element name="ListaRps" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Rps" maxOccurs="unbounded" minOccurs="1" type="tcDeclaracaoPrestacaoServico"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+<xsd:attribute name="versao" type="tsVersao" use="required"/>
+</xsd:complexType>
+<xsd:element name="ListaMensagemRetornoLote">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="MensagemRetorno" maxOccurs="unbounded" minOccurs="1" type="tcMensagemRetornoLote"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ListaMensagemRetorno">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="MensagemRetorno" maxOccurs="unbounded" minOccurs="1" type="tcMensagemRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ListaMensagemAlertaRetorno">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="MensagemRetorno" maxOccurs="unbounded" minOccurs="1" type="tcMensagemRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="cabecalho">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="versaoDados" maxOccurs="1" minOccurs="1" type="tsVersao"/>
+</xsd:sequence>
+<xsd:attribute name="versao" type="tsVersao" use="required"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CompNfse" type="tcCompNfse"/>
+<xsd:element name="EnviarLoteRpsEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="LoteRps" type="tcLoteRps"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EnviarLoteRpsResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:sequence>
+<xsd:element name="NumeroLote" maxOccurs="1" minOccurs="1" type="tsNumeroLote"/>
+<xsd:element name="DataRecebimento" maxOccurs="1" minOccurs="1" type="xsd:dateTime"/>
+<xsd:element name="Protocolo" maxOccurs="1" minOccurs="1" type="tsNumeroProtocolo"/>
+</xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EnviarLoteRpsSincronoEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="LoteRps" type="tcLoteRps"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EnviarLoteRpsSincronoResposta">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="NumeroLote" maxOccurs="1" minOccurs="0" type="tsNumeroLote"/>
+<xsd:element name="DataRecebimento" maxOccurs="1" minOccurs="0" type="xsd:dateTime"/>
+<xsd:element name="Protocolo" maxOccurs="1" minOccurs="0" type="tsNumeroProtocolo"/>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="1" ref="CompNfse"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="ListaMensagemAlertaRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetornoLote"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="GerarNfseEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Rps" type="tcDeclaracaoPrestacaoServico"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="GerarNfseResposta">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="1" ref="CompNfse"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="ListaMensagemAlertaRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CancelarNfseEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Pedido" type="tcPedidoCancelamento"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CancelarNfseResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element name="RetCancelamento" maxOccurs="1" minOccurs="1" type="tcRetCancelamento"/>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SubstituirNfseEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="SubstituicaoNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Pedido" type="tcPedidoCancelamento"/>
+<xsd:element name="Rps" type="tcDeclaracaoPrestacaoServico"/>
+</xsd:sequence>
+<xsd:attribute name="Id" type="tsIdTag"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" ref="dsig:Signature"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SubstituirNfseResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element name="RetSubstituicao">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="NfseSubstituida">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" ref="CompNfse"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="ListaMensagemAlertaRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NfseSubstituidora">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" ref="CompNfse"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarLoteRpsEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+<xsd:element name="Protocolo" maxOccurs="1" minOccurs="1" type="tsNumeroProtocolo"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarLoteRpsResposta">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Situacao" maxOccurs="1" minOccurs="1" type="tsSituacaoLoteRps"/>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="50" minOccurs="1" ref="CompNfse"/>
+<xsd:element maxOccurs="1" minOccurs="0" ref="ListaMensagemAlertaRetorno"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetornoLote"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseRpsEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="IdentificacaoRps" maxOccurs="1" minOccurs="1" type="tcIdentificacaoRps"/>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseRpsResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element maxOccurs="1" minOccurs="1" ref="CompNfse"/>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseServicoPrestadoEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+<xsd:element name="NumeroNfse" maxOccurs="1" minOccurs="0" type="tsNumeroNfse"/>
+<xsd:choice>
+<xsd:element name="PeriodoEmissao" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="DataInicial" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="DataFinal" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PeriodoCompetencia" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="DataInicial" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="DataFinal" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:element name="Tomador" maxOccurs="1" minOccurs="0" type="tcIdentificacaoTomador"/>
+<xsd:element name="Intermediario" maxOccurs="1" minOccurs="0" type="tcIdentificacaoIntermediario"/>
+<xsd:element name="Pagina" maxOccurs="1" minOccurs="1" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseServicoPrestadoResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="50" minOccurs="1" ref="CompNfse"/>
+<xsd:element name="ProximaPagina" maxOccurs="1" minOccurs="0" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseServicoTomadoEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Consulente" maxOccurs="1" minOccurs="1" type="tcIdentificacaoConsulente"/>
+<xsd:element name="NumeroNfse" maxOccurs="1" minOccurs="0" type="tsNumeroNfse"/>
+<xsd:choice>
+<xsd:element name="PeriodoEmissao" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="DataInicial" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="DataFinal" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PeriodoCompetencia" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="DataInicial" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+<xsd:element name="DataFinal" maxOccurs="1" minOccurs="1" type="xsd:date"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="0" type="tcIdentificacaoPrestador"/>
+<xsd:element name="Tomador" maxOccurs="1" minOccurs="0" type="tcIdentificacaoTomador"/>
+<xsd:element name="Intermediario" maxOccurs="1" minOccurs="0" type="tcIdentificacaoIntermediario"/>
+<xsd:element name="Pagina" maxOccurs="1" minOccurs="1" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseServicoTomadoResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="50" minOccurs="1" ref="CompNfse"/>
+<xsd:element name="ProximaPagina" maxOccurs="1" minOccurs="0" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseFaixaEnvio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Prestador" maxOccurs="1" minOccurs="1" type="tcIdentificacaoPrestador"/>
+<xsd:element name="Faixa" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="NumeroNfseInicial" maxOccurs="1" minOccurs="1" type="tsNumeroNfse"/>
+<xsd:element name="NumeroNfseFinal" maxOccurs="1" minOccurs="0" type="tsNumeroNfse"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="Pagina" maxOccurs="1" minOccurs="1" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultarNfseFaixaResposta">
+<xsd:complexType>
+<xsd:choice>
+<xsd:element name="ListaNfse" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="50" minOccurs="1" ref="CompNfse"/>
+<xsd:element name="Pagina" maxOccurs="1" minOccurs="0" type="tsPagina"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="1" minOccurs="1" ref="ListaMensagemRetorno"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

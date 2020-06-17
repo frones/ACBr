@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2020
+-- pnfsNFSeW_ABRASFv1 --
+[*] https://www.projetoacbr.com.br/forum/topic/58037-correção-de-alíquota-para-ginfes/
+  Por: Maiquel
+
 15/06/2020
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/58082-valorissretido-provedor-sh3/

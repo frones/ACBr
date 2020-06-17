@@ -298,12 +298,12 @@ begin
   end;
 
   case FProvedor of
-    proThema,
-    proGINFES:  Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
+    proThema :  Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proRJ,
     proPublica,
     proBHISS,
+    proGINFES,
     proAbaco:   Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proGovBR,

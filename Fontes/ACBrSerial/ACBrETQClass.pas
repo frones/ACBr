@@ -250,7 +250,6 @@ var
 begin
   ListaComandos := '';
 
-  AdicionarComandos( ComandoPaginaDeCodigo, ListaComandos );
   AdicionarComandos( ComandoBackFeed, ListaComandos );
   AdicionarComandos( ComandoAbertura, ListaComandos );
   AdicionarComandos( ComandoUnidade, ListaComandos );
@@ -261,6 +260,7 @@ begin
   AdicionarComandos( ComandoResolucao, ListaComandos );
   AdicionarComandos( ComandoOrigemCoordenadas, ListaComandos );
   AdicionarComandos( ComandoVelocidade, ListaComandos );
+  AdicionarComandos( ComandoPaginaDeCodigo, ListaComandos );
 
   Result := ListaComandos;
 end;

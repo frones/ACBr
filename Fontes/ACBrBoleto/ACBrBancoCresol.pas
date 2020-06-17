@@ -79,6 +79,7 @@ begin
    fpDigito                 := 2;
    fpNome                   := 'Bradesco';
    fpNumero                 := 237;
+   fpNumeroCorrespondente   := 133;
    fpTamanhoMaximoNossoNum  := 11;   
    fpTamanhoAgencia         := 5;
    fpTamanhoConta           := 7;

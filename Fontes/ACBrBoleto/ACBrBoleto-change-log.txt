@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2020
+-- ACBrBancoCresol --
+[*] Setado no create o correspondente 133.
+https://www.projetoacbr.com.br/forum/topic/57935-cooperativa-cresol-acrescentar-informa%C3%A7%C3%A3o-referente-ao-c%C3%B3digo-da-cresol/
+
 10/06/2020
 --ACBrBoleto, ACBrBoletoWS, ACBrBoletoW_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoPcnConsts
 [*] Correções e ajustes referente integração WebService

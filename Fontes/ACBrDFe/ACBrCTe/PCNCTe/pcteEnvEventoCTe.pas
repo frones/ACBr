@@ -393,8 +393,8 @@ begin
                                   Evento.Items[0].InfEvento.detEvento.dhEntrega), DSC_DEMI);
        Gerador.wCampo(tcStr, 'EP04', 'nDoc         ', 02, 20, 1, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wCampo(tcStr, 'EP06', 'xNome        ', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.xNome);
-       Gerador.wCampo(tcDe6, 'EP07', 'latitude     ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.latitude);
-       Gerador.wCampo(tcDe6, 'EP08', 'longitude    ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.longitude);
+       Gerador.wCampo(tcDe6, 'EP07', 'latitude     ', 01, 10, 0, Evento.Items[0].InfEvento.detEvento.latitude);
+       Gerador.wCampo(tcDe6, 'EP08', 'longitude    ', 01, 11, 0, Evento.Items[0].InfEvento.detEvento.longitude);
        Gerador.wCampo(tcStr, 'EP09', 'hashEntrega  ', 28, 28, 1, Evento.Items[0].InfEvento.detEvento.hashEntrega);
        Gerador.wCampo(tcStr, 'EP10', 'dhHashEntrega', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhHashEntrega) +
                                   GetUTC(Evento.Items[0].InfEvento.detEvento.UF,

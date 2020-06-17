@@ -162,6 +162,15 @@ const
   DSC_DHVIAGEM         = 'Data / Hora da Viagem';
   DSC_INFQRCODCTE      = 'Texto com o QR-Code impresso no DACTE';
 
+  DSC_CHBPE       = 'Chave do BP-e';
+  DSC_INFGTVE     = 'Informações do GTVe';
+  DSC_TPCOMP      = 'Tipo de Componente';
+  DSC_XCOMP       = 'Descrição do Componente';
+  DSC_TPESPECIE   = 'Tipo de Espécie';
+  DSC_VESPECIE    = 'Valor em Espécie';
+  DSC_TPNUMERARIO = 'Tipo de Numerário';
+  DSC_XMOEDAESTR  = 'Nome da Moeda Estrangeira';
+
 implementation
 
 end.

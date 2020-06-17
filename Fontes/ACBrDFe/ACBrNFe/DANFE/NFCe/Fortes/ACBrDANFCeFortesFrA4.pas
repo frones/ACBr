@@ -883,6 +883,10 @@ begin
             exit ;
           end ;
 
+          RLLayout.JobTitle := NomeDocumento;
+          if (RLLayout.JobTitle = '') then
+            RLLayout.JobTitle := OnlyNumber(FpNFe.infNFe.ID) + IfThen(Cancelada, '-cancelado', '')+'-nfe.xml';
+
           RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostraStatus;
           RLFiltro.FileName := PathWithDelim(FACBrNFeDANFCeFortesA4.PathPDF) +
                                ChangeFileExt( RLLayout.JobTitle, '.pdf');

@@ -1343,7 +1343,6 @@ var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
-  NFeID: String;
 begin
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
   try
@@ -1371,11 +1370,9 @@ begin
       if not EstaVazio(Impressora) then
         RLPrinter.PrinterName := Impressora;
 
-      NFeID := OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID);
-
       RLLayout.JobTitle := NomeDocumento;
       if (RLLayout.JobTitle = '') then
-        RLLayout.JobTitle := NFeID + IfThen(Cancelado, '-cancelado', '')+'-nfe.xml';
+        RLLayout.JobTitle := OnlyNumber(FpNFe.infNFe.ID) + IfThen(Cancelado, '-cancelado', '')+'-nfe.xml';
 
       RLLayout.ShowProgress := MostraStatus;
       RLLayout.PrintDialog  := (not MostraPreview) and EstaVazio(Impressora);

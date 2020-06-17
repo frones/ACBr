@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/06/2020
+-- ACBrNFSeWebServices --
+[*] Possivel melhoria no tratamento de retorno do método EnviarLoteRpsSincrono.
+  Por: Eric Helfenstens
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/58037-correção-de-alíquota-para-ginfes/
   Por: Maiquel

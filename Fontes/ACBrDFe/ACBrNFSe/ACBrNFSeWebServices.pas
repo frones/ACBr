@@ -3519,7 +3519,7 @@ begin
       end;
     end;
 
-    Result := (RetEnvLote.InfRec.Protocolo <> '');
+    Result := (RetEnvLote.InfRec.Protocolo <> '') and (FPMsg = '');
   end;
 end;
 

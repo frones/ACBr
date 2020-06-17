@@ -1173,8 +1173,8 @@ begin
 
     Gerador.wGrupo('/infResp');
 
-    if MDFe.Ide.tpEmit in [teTransportadora, teTranspCTeGlobalizado] then
-//    if MDFe.seg[i].respSeg = rsTomadorServico {MDFe.seg[i].xSeg <> ''} then
+    if (MDFe.Ide.tpEmit in [teTransportadora, teTranspCTeGlobalizado]) or
+       ((MDFe.seg[i].xSeg <> '') and (MDFe.seg[i].CNPJ <> '')) then
     begin
       Gerador.wGrupo('infSeg', '#123');
       Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);
@@ -1311,8 +1311,8 @@ begin
       else
         if (MDFe.prodPred.infLocalCarrega.latitude <> 0) or (MDFe.prodPred.infLocalCarrega.Longitude <> 0) then
         begin
-          Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 06, 1, MDFe.prodPred.infLocalCarrega.latitude, DSC_LATITUDE);
-          Gerador.wCampo(tcDe6, '#', 'longitude', 01, 06, 1, MDFe.prodPred.infLocalCarrega.Longitude, DSC_LONGITUDE);
+          Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 10, 1, MDFe.prodPred.infLocalCarrega.latitude, DSC_LATITUDE);
+          Gerador.wCampo(tcDe6, '#', 'longitude', 01, 11, 1, MDFe.prodPred.infLocalCarrega.Longitude, DSC_LONGITUDE);
         end;
 
       Gerador.wGrupo('/infLocalCarrega');
@@ -1324,8 +1324,8 @@ begin
       else
         if (MDFe.prodPred.infLocalDescarrega.latitude <> 0) or (MDFe.prodPred.infLocalDescarrega.Longitude <> 0) then
         begin
-          Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 06, 1, MDFe.prodPred.infLocalDescarrega.latitude, DSC_LATITUDE);
-          Gerador.wCampo(tcDe6, '#', 'longitude', 01, 06, 1, MDFe.prodPred.infLocalDescarrega.Longitude, DSC_LONGITUDE);
+          Gerador.wCampo(tcDe6, '#', 'latitude ', 01, 10, 1, MDFe.prodPred.infLocalDescarrega.latitude, DSC_LATITUDE);
+          Gerador.wCampo(tcDe6, '#', 'longitude', 01, 11, 1, MDFe.prodPred.infLocalDescarrega.Longitude, DSC_LONGITUDE);
         end;
 
       Gerador.wGrupo('/infLocalDescarrega');

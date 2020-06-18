@@ -87,6 +87,9 @@ type
     procedure SetSuportaViasDiferenciadas(AValue: Boolean);
     procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
   protected
+    Procedure LerRespostaRequisicao; override;
+    procedure FinalizarResposta( ApagarArqResp : Boolean ); override;
+
     procedure FazerRequisicao(PWOPER: Word; AHeader: String = '';
         AValor: Double = 0; ADocumentoVinculado: String = ''; AMoeda : Integer = 0;
          ParametrosAdicionaisTransacao: TStrings = nil);
@@ -135,7 +138,7 @@ type
     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher
       write SetUtilizaSaldoTotalVoucher;
 
-    property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_INITIALIZ;
+    property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_NULL;
     property OperacaoADM: Word read fOperacaoADM write fOperacaoADM default PWOPER_ADMIN;
     property OperacaoCRT: Word read fOperacaoCRT write fOperacaoCRT default PWOPER_SALE;
     property OperacaoCHQ: Word read fOperacaoCHQ write fOperacaoCHQ default PWOPER_CHECKINQ;
@@ -380,11 +383,14 @@ begin
       PWINFO_REQNUM:
         fpCodigoAutorizacaoTransacao := LinStr;
 
+      PWINFO_VIRTMERCH:
+        fpEstabelecimento := LinStr;
+
       //PWINFO_AUTHCODE:
       //  fpCodigoAutorizacaoTransacao := LinStr;
 
-      PWINFO_AUTRESPCODE:
-        fpAutenticacao := LinStr;
+      //PWINFO_AUTRESPCODE:
+      //  fpAutenticacao := LinStr;
 
       PWINFO_FINTYPE:
       begin
@@ -440,8 +446,6 @@ begin
 
       //PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
       //PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
-      //PWINFO_REQNUM      32h até 10 Referência local da transação
-      //PWINFO_VIRTMERCH   36h até 9 Identificador do Estabelecimento.
       //PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
       //PWINFO_TRANSACDESCRIPT 1F40h Até 80 Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
     else
@@ -482,7 +486,7 @@ begin
   fpTipo := gpPayGoWeb;
   Name := 'PayGoWeb';
 
-  fOperacaoATV := PWOPER_INITIALIZ;
+  fOperacaoATV := PWOPER_NULL;
   fOperacaoADM := PWOPER_ADMIN;
   fOperacaoCRT := PWOPER_SALE;
   fOperacaoCHQ := PWOPER_CHECKINQ;
@@ -532,9 +536,19 @@ begin
   raise EACBrTEFDErro.Create( ACBrStr( 'AtivarGP não se aplica a '+Name )) ;
 end;
 
+procedure TACBrTEFDPayGoWeb.LerRespostaRequisicao;
+begin
+  {Nada a Fazer}
+end;
+
+procedure TACBrTEFDPayGoWeb.FinalizarResposta(ApagarArqResp: Boolean);
+begin
+  {Nada a Fazer}
+end;
+
 procedure TACBrTEFDPayGoWeb.VerificaAtivo;
 begin
-  inherited VerificaAtivo;
+  {Nada a Fazer}
 end;
 
 procedure TACBrTEFDPayGoWeb.ATV;
@@ -580,10 +594,12 @@ end;
 procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
-  fsPGWebAPI.FinalizarTrancao( PWCNF_REV_PWR_AUT,
+  fsPGWebAPI.FinalizarTrancao( PWCNF_REV_FISC_AUT,
                                Resp.CodigoAutorizacaoTransacao,
                                Finalizacao,
-                               NSU, '', Rede);
+                               NSU,
+                               Resp.Estabelecimento,
+                               Rede);
 end;
 
 procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
@@ -592,7 +608,9 @@ begin
   fsPGWebAPI.FinalizarTrancao( PWCNF_CNF_AUTO,
                                Resp.CodigoAutorizacaoTransacao,
                                Finalizacao,
-                               NSU, '', Rede);
+                               NSU,
+                               Resp.Estabelecimento,
+                               Rede);
 end;
 
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
@@ -639,8 +657,17 @@ procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
 var
   PA: TACBrTEFPGWebAPIParametrosAdicionais;
 begin
-  GravaLog('FazerRequisicao: Oper:'+PWINFOToString(PWOPER)+', Header'+AHeader+
+  GravaLog('FazerRequisicao: Oper:'+PWOPERToString(PWOPER)+', Header:'+AHeader+
            ', Valor:'+FloatToStr(AValor)+', Documento:'+ADocumentoVinculado);
+
+  { Transação a ser enviada é pagamento ? (CRT ou CHQ) }
+  if TransacaoEPagamento(AHeader) then
+  begin
+     { PayGo não permite multiplas transações Pendentes... precisamos confirma a
+       transação anterior antes de enviar uma nova }
+     if TACBrTEFD(Owner).MultiplosCartoes then      // É multiplos cartoes ?
+        ConfirmarTransacoesAnteriores;
+  end;
 
   Req.Header := AHeader;
   Req.DocumentoVinculado := ADocumentoVinculado;
@@ -678,7 +705,6 @@ begin
     Conteudo.GravaInformacao(899,100, AHeader ) ;
     Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
     Conteudo.GravaInformacao(899,102, ADocumentoVinculado ) ;
-    Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( AValor * 100 ,0))) );
 
     Resp.TipoGP := fpTipo;
   end;
@@ -686,9 +712,11 @@ end;
 
 function TACBrTEFDPayGoWeb.ContinuarRequisicao: Boolean;
 begin
-  Result := fsPGWebAPI.ExecutarTransacao;
-  if Result then
+  try
+    Result := fsPGWebAPI.ExecutarTransacao;
+  finally
     ObterDadosTransacao;
+  end;
 end;
 
 procedure TACBrTEFDPayGoWeb.ObterDadosTransacao;

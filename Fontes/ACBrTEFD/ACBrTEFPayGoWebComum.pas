@@ -675,9 +675,9 @@ type
     procedure AdicionarParametro(AKeyValueStr: String); overload;
     function ExecutarTransacao: Boolean;
     procedure ObterDadosDaTransacao;
-    procedure FinalizarTrancao(Status: LongWord; pszReqNum: String = '';
-      pszLocRef: String = ''; pszExtRef: String = ''; pszVirtMerch: String = '';
-      pszAuthSyst: String = '');
+    procedure FinalizarTrancao(Status: LongWord; pszReqNum: String;
+      pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
+      pszAuthSyst: String);
     procedure AbortarTransacao;
 
     function ValidarRespostaCampo(AResposta: String;
@@ -1083,7 +1083,7 @@ end;
 procedure TACBrTEFPGWebAPI.Inicializar;
 var
   iRet: SmallInt;
-  MsgErro: String;
+  MsgError: String;
 begin
   if fInicializada then
     Exit;
@@ -1110,15 +1110,15 @@ begin
   iRet := xPW_iInit(PAnsiChar(fDiretorioTrabalho));
   GravarLog('  '+PWRETToString(iRet));
   case iRet of
-    PWRET_OK: MsgErro := '';
-    PWRET_WRITERR: MsgErro := Format(sErrPWRET_WRITERR, [fDiretorioTrabalho]);
-    PWRET_INVCALL: MsgErro := '';  //sErrPWRET_INVCALL;
+    PWRET_OK: MsgError := '';
+    PWRET_WRITERR: MsgError := Format(sErrPWRET_WRITERR, [fDiretorioTrabalho]);
+    PWRET_INVCALL: MsgError := '';  //sErrPWRET_INVCALL;
   else
-    MsgErro := ObterUltimoRetorno;
+    MsgError := ObterUltimoRetorno;
   end;
 
-  if (MsgErro <> '') then
-    DoException(ACBrStr(MsgErro));
+  if (MsgError <> '') then
+    DoException(ACBrStr(MsgError));
 
   fInicializada := True;
   SetEmTransacao(False);
@@ -1170,14 +1170,14 @@ end;
 
 procedure TACBrTEFPGWebAPI.VerificarOK(iRET: SmallInt);
 var
-  MsgErro: String;
+  MsgError: String;
 begin
   if (iRET = PWRET_OK) then
     Exit;
 
-  MsgErro := ObterUltimoRetorno;
-  if (MsgErro <> '') then
-    DoException(Format('%s (%s)', [ACBrStr(MsgErro), PWRETToString(iRET)]));
+  MsgError := ObterUltimoRetorno;
+  if (MsgError <> '') then
+    DoException(Format('%s (%s)', [ACBrStr(MsgError), PWRETToString(iRET)]));
 end;
 
 function TACBrTEFPGWebAPI.ObterInfo(iINFO: Word): String;
@@ -1185,7 +1185,7 @@ var
   pszData: PAnsiChar;
   ulDataSize: LongWord;
   iRet: SmallInt;
-  MsgErro: String;
+  MsgError: String;
 begin
   LoadDLLFunctions;
   Result := #0;
@@ -1203,17 +1203,17 @@ begin
     begin
       GravarLog('  '+PWRETToString(iRet));
       case iRet of
-        PWRET_NODATA: MsgErro := ''; //sErrPWRET_NODATA;
-        PWRET_BUFOVFLW: MsgErro := sErrPWRET_BUFOVFLW;
-        PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
-        PWRET_TRNNOTINIT: MsgErro := sErrPWRET_TRNNOTINIT;
-        PWRET_NOTINST: MsgErro := sErrPWRET_NOTINST;
+        PWRET_NODATA: MsgError := ''; //sErrPWRET_NODATA;
+        PWRET_BUFOVFLW: MsgError := sErrPWRET_BUFOVFLW;
+        PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+        PWRET_TRNNOTINIT: MsgError := sErrPWRET_TRNNOTINIT;
+        PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
       else
-        MsgErro := PWRETToString(iRet);
+        MsgError := PWRETToString(iRet);
       end;
 
-      if (MsgErro <> '') then
-        DoException(ACBrStr(MsgErro));
+      if (MsgError <> '') then
+        DoException(ACBrStr(MsgError));
     end;
   finally
     Freemem(pszData);
@@ -1286,7 +1286,7 @@ procedure TACBrTEFPGWebAPI.IniciarTransacao(iOPER: SmallInt;
   ParametrosAdicionaisTransacao: TStrings);
 var
   iRet: SmallInt;
-  MsgErro: String;
+  MsgError: String;
   i: Integer;
 begin
   if EmTransacao then
@@ -1298,13 +1298,13 @@ begin
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
-      PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
-      PWRET_NOTINST: MsgErro := sErrPWRET_NOTINST;
+      PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
     else
-      MsgErro := ObterUltimoRetorno;
+      MsgError := ObterUltimoRetorno;
     end;
 
-    DoException(ACBrStr(MsgErro));
+    DoException(ACBrStr(MsgError));
   end;
 
   SetEmTransacao(True);
@@ -1332,7 +1332,7 @@ end;
 procedure TACBrTEFPGWebAPI.AdicionarParametro(iINFO: Word; const AValor: AnsiString);
 var
   iRet: SmallInt;
-  MsgErro: String;
+  MsgError: String;
 begin
   GravarLog('PW_iAddParam( '+PWINFOToString(iINFO)+', '+AValor+' )');
   iRet := xPW_iAddParam(iINFO, PAnsiChar(AValor));
@@ -1340,15 +1340,15 @@ begin
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
-      PWRET_INVPARAM: MsgErro := Format(sErrPWRET_INVPARAM, [AValor, PWINFOToString(iINFO)]);
-      PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
-      PWRET_NOTINST: MsgErro := sErrPWRET_NOTINST;
-      PWRET_TRNNOTINIT: MsgErro := sErrPWRET_TRNNOTINIT;
+      PWRET_INVPARAM: MsgError := Format(sErrPWRET_INVPARAM, [AValor, PWINFOToString(iINFO)]);
+      PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+      PWRET_TRNNOTINIT: MsgError := sErrPWRET_TRNNOTINIT;
     else
-      MsgErro := ObterUltimoRetorno;
+      MsgError := ObterUltimoRetorno;
     end;
 
-    DoException(ACBrStr(MsgErro));
+    DoException(ACBrStr(MsgError));
   end;
 end;
 
@@ -1370,17 +1370,19 @@ var
   iRet, iRetPP: SmallInt;
   ArrParams: TArrPW_GetData;
   NumParams: SmallInt;
-  AMsg: String;
+  MsgError, MsgProcess, MsgPinPad: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.ExecutarTransacao');
   iRet := PWRET_CANCEL;
   try
     try
-      AMsg := Trim(ObterInfo(PWINFO_PROCESSMSG));
-      if (AMsg <> '') then
-        ExibirMensagem(AMsg, tmCliente);
+      MsgProcess := Trim(ObterInfo(PWINFO_PROCESSMSG));
+      if (MsgProcess <> '') then
+        ExibirMensagem(MsgProcess, tmCliente);
 
-      repeat
+      iRet := PWRET_OK;
+      while (iRet = PWRET_OK) or (iRet = PWRET_NOTHING) or (iRet = PWRET_MOREDATA) do
+      begin
         NumParams := Length(ArrParams);
         GravarLog('PW_iExecTransac()');
         {$warnings off}
@@ -1396,58 +1398,44 @@ begin
             Sleep(CSleepNothing);
 
           PWRET_MOREDATA:
-            begin
-              if (ObterDados(ArrParams, NumParams) <> PWRET_OK) then
-              begin
-                AbortarTransacao;
-                iRet := PWRET_CANCEL;
-              end;
-            end;
-
-          PWRET_NOMANDATORY:
-            raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOMANDATORY);
-
-          PWRET_DLLNOTINIT:
-            raise EACBrTEFPayGoWeb.Create(sErrPWRET_DLLNOTINIT);
-
-          PWRET_NOTINST:
-            raise EACBrTEFPayGoWeb.Create(sErrPWRET_NOTINST);
-
-          PWRET_TRNNOTINIT:
-            raise EACBrTEFPayGoWeb.Create(sErrPWRET_TRNNOTINIT);
-
-        else
-          raise EACBrTEFPayGoWeb.Create(ObterUltimoRetorno);
-
+            iRet := ObterDados(ArrParams, NumParams);
         end;
+      end;
 
-      until (iRet = PWRET_OK) or (iRet = PWRET_CANCEL);
+      case iRet of
+        PWRET_OK: MsgError := '';
+        PWRET_CANCEL: MsgError := ObterInfo(PWINFO_CNCDSPMSG);
+        PWRET_NOMANDATORY: MsgError := sErrPWRET_NOMANDATORY;
+        PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+        PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+        PWRET_TRNNOTINIT: MsgError := sErrPWRET_TRNNOTINIT;
+      else
+        MsgError := ObterUltimoRetorno;
+      end;
     except
       On E: Exception do
-      begin
-        AbortarTransacao;
-        DoException(E.Message);
-      end;
+        MsgError := E.Message;
     end;
 
-    if (iRet = PWRET_CANCEL) then
+    if (Trim(MsgError) <> '') then
     begin
-      AMsg := ObterInfo(PWINFO_CNCPPMSG);
-      if (Trim(AMsg) <> '') then
+      ExibirMensagem(MsgError, tmOperador, CMilissegundosMensagem);
+
+      MsgPinPad := ObterInfo(PWINFO_CNCPPMSG);
+      if (Trim(MsgPinPad) <> '') then
       begin
-        GravarLog('xPW_iPPDisplay( '+AMsg+' )');
-        iRetPP := xPW_iPPDisplay( PAnsiChar(AnsiString(AMsg)) );
+        GravarLog('xPW_iPPDisplay( '+MsgPinPad+' )');
+        iRetPP := xPW_iPPDisplay( PAnsiChar(AnsiString(MsgPinPad)) );
         GravarLog('  '+PWRETToString(iRetPP));
       end;
 
-      AMsg := ObterInfo(PWINFO_CNCDSPMSG);
-      if (Trim(AMsg) <> '') then
-        ExibirMensagem(AMsg, tmOperador, CMilissegundosMensagem);
+      AbortarTransacao;
+      if (iRet = PWRET_OK) then
+        iRet := PWRET_INVCALL;
     end;
-
-    ObterDadosDaTransacao;
-    fDadosTransacao.Add('0='+IntToStr(iRet));  // 0 = PWINFO_RET (último retorno)
   finally
+    fDadosTransacao.Add('0='+IntToStr(iRet));  // 0 = PWINFO_RET (último retorno)
+    ObterDadosDaTransacao;
     SetEmTransacao(False);
   end;
 
@@ -1460,27 +1448,37 @@ var
   ulDataSize: LongWord;
   iRet: SmallInt;
   i: Word;
-  AData: String;
+  AData, InfoStr, TempoOcioso: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.ObterDadosTransacao');
+  TempoOcioso := '';
   fDadosTransacao.Clear;
   ulDataSize := 10240;   // 10K
   pszData := AllocMem(ulDataSize);
   try
     For i := MIN_PWINFO to MAX_PWINFO do
     begin
-      iRet := xPW_iGetResult(i, pszData, ulDataSize);
-      if (iRet = PWRET_OK) then
+      InfoStr := PWINFOToString(i);
+      if (i <> PWINFO_PPINFO) and  // Ler PWINFO_PPINFO é lento (e desnecessário)
+         (pos(IntToStr(i), InfoStr) = 0) then  // i equivale a um PWINFO_ conhecido ?
       begin
-        AData := BinaryStringToString(AnsiString(pszData));
-        fDadosTransacao.Add(Format('%d=%s', [i, Adata]));
-        GravarLog('  '+Format('%s=%s', [PWINFOToString(i), AData]));
-        if (i = PWINFO_IDLEPROCTIME) then
-          AjustarTempoOcioso(AData);
+        //GravarLog('- '+InfoStr);
+        iRet := xPW_iGetResult(i, pszData, ulDataSize);
+        if (iRet = PWRET_OK) then
+        begin
+          AData := BinaryStringToString(AnsiString(pszData));
+          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));
+          GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
+          if (i = PWINFO_IDLEPROCTIME) then
+            TempoOcioso := AData;
+        end;
       end;
     end;
   finally
     Freemem(pszData);
+    GravarLog('  Done');
+    if (TempoOcioso <> '') then
+      AjustarTempoOcioso(TempoOcioso);
   end;
 end;
 
@@ -1488,30 +1486,9 @@ procedure TACBrTEFPGWebAPI.FinalizarTrancao(Status: LongWord;
   pszReqNum: String; pszLocRef: String; pszExtRef: String;
   pszVirtMerch: String; pszAuthSyst: String);
 var
-  bConfirma: Boolean;
-  MsgErro: String;
+  MsgError: String;
   iRet: SmallInt;
 begin
-  GravarLog('TACBrTEFPGWebAPI.FinalizarTrancao');
-  bConfirma := (Trim(ObterInfo(PWINFO_CNFREQ)) = '1');
-  if not bConfirma then
-    Exit;
-
-  if (pszReqNum = '') then
-    pszReqNum := Trim(ObterInfo(PWINFO_REQNUM));
-
-  if (pszLocRef = '') then
-    pszLocRef := Trim(ObterInfo(PWINFO_AUTLOCREF));
-
-  if (pszExtRef = '') then
-    pszExtRef := Trim(ObterInfo(PWINFO_AUTEXTREF));
-
-  if (pszVirtMerch = '') then
-    pszVirtMerch := Trim(ObterInfo(PWINFO_VIRTMERCH));
-
-  if (pszAuthSyst = '') then
-    pszAuthSyst := Trim(ObterInfo(PWINFO_AUTHSYST));
-
   GravarLog('PW_iConfirmation( '+PWCNFToString(Status)+', '+
                                  pszReqNum+', '+
                                  pszLocRef+', '+
@@ -1528,22 +1505,33 @@ begin
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
-      PWRET_DLLNOTINIT: MsgErro := sErrPWRET_DLLNOTINIT;
-      PWRET_NOTINST: MsgErro := sErrPWRET_NOTINST;
-      PWRET_INVALIDTRN: MsgErro := sErrPWRET_INVALIDTRN;
+      PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+      PWRET_INVALIDTRN: MsgError := sErrPWRET_INVALIDTRN;
     else
-      MsgErro := ObterUltimoRetorno;
+      MsgError := ObterUltimoRetorno;
     end;
 
-    DoException(ACBrStr(MsgErro));
+    DoException(ACBrStr(MsgError));
   end;
 end;
 
 procedure TACBrTEFPGWebAPI.AbortarTransacao;
+var
+  pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.AbortarTransacao');
-  if EmTransacao then
-    FinalizarTrancao(PWCNF_REV_ABORT);
+  if EmTransacao and (Trim(ObterInfo(PWINFO_CNFREQ)) = '1') then
+  begin
+    pszReqNum := Trim(ObterInfo(PWINFO_REQNUM));
+    pszLocRef := Trim(ObterInfo(PWINFO_AUTLOCREF));
+    pszExtRef := Trim(ObterInfo(PWINFO_AUTEXTREF));
+    pszVirtMerch := Trim(ObterInfo(PWINFO_VIRTMERCH));
+    pszAuthSyst := Trim(ObterInfo(PWINFO_AUTHSYST));
+
+    FinalizarTrancao(PWCNF_REV_ABORT, pszReqNum, pszLocRef, pszExtRef,
+                                      pszVirtMerch, pszAuthSyst);
+  end;
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
@@ -2288,7 +2276,13 @@ begin
   if fEmTransacao then
     fDadosTransacao.Clear
   else
+  begin
     AjustarTempoOcioso;
+
+    // Limpando mensagens do Operador e Cliente
+    ExibirMensagem('', tmOperador);
+    ExibirMensagem('', tmCliente);
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.OnTimerOcioso(Sender: TObject);

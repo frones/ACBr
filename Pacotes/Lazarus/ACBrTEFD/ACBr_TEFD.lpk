@@ -26,7 +26,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -61,37 +61,45 @@
         <UnitName Value="ACBrTEFDPayGo"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
-        <UnitName Value="ACBrTEFDDisc"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDPayGoWeb.pas"/>
+        <UnitName Value="ACBrTEFDPayGoWeb"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
-        <UnitName Value="ACBrTEFDHiper"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
+        <UnitName Value="ACBrTEFDDisc"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
-        <UnitName Value="ACBrTEFDCliSiTef"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
+        <UnitName Value="ACBrTEFDHiper"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
-        <UnitName Value="ACBrTEFDVeSPague"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
+        <UnitName Value="ACBrTEFDCliSiTef"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
-        <UnitName Value="ACBrTEFDBanese"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
+        <UnitName Value="ACBrTEFDVeSPague"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
-        <UnitName Value="ACBrTEFDCappta"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
+        <UnitName Value="ACBrTEFDBanese"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFCliSiTefComum.pas"/>
-        <UnitName Value="ACBrTEFCliSiTefComum"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
+        <UnitName Value="ACBrTEFDCappta"/>
       </Item15>
       <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFCliSiTefComum.pas"/>
+        <UnitName Value="ACBrTEFCliSiTefComum"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoWebComum.pas"/>
+        <UnitName Value="ACBrTEFPayGoWebComum"/>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas"/>
         <UnitName Value="ACBrPicpay"/>
-      </Item16>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

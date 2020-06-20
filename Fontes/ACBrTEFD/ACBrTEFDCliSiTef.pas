@@ -37,18 +37,19 @@ unit ACBrTEFDCliSiTef;
 interface
 
 uses
-  Classes, SysUtils, ACBrTEFDClass, ACBrTEFCliSiTefComum
+  Classes, SysUtils,
   {$IfNDef NOGUI}
     {$If DEFINED(VisualCLX)}
-      ,QControls
+      QControls,
     {$ElseIf DEFINED(FMX)}
-      ,System.UITypes
+      System.UITypes,
     {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
-      ,System.UITypes
+      System.UITypes,
     {$Else}
-      ,Controls
+      Controls,
     {$IfEnd}
-  {$EndIf};
+  {$EndIf}
+  ACBrTEFDClass, ACBrTEFCliSiTefComum;
 
 
 type
@@ -407,9 +408,8 @@ end;
 
 procedure TACBrTEFDCliSiTef.DesInicializar;
 begin
-   fSiTefAPI.Inicializada := False; ;
-
-   inherited DesInicializar;
+  fSiTefAPI.Inicializada := False; ;
+  inherited DesInicializar;
 end;
 
 procedure TACBrTEFDCliSiTef.AtivarGP;
@@ -1287,7 +1287,8 @@ begin
                  RespostaPendente.OrdemPagamento := RespostasPendentes.Count + 1 ;
                  ImpressaoOk := True ;
               except
-                 on EACBrTEFDECF do ImpressaoOk := False ;
+                 on EACBrTEFDECF do
+                    ImpressaoOk := False ;
                  else
                     raise ;
               end;

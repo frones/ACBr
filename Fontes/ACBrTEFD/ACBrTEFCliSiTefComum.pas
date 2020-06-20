@@ -98,7 +98,7 @@ type
                pNumeroTerminal: PAnsiChar;
                ConfiguraResultado: smallint;
                pParametrosAdicionais: PAnsiChar): integer;
-              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xIniciaFuncaoSiTefInterativo : function (
                Modalidade: integer;
@@ -108,7 +108,7 @@ type
                pHorario: PAnsiChar;
                pOperador: PAnsiChar;
                pRestricoes: PAnsiChar ): integer;
-               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xFinalizaFuncaoSiTefInterativo : procedure (
                 pConfirma: SmallInt;
@@ -116,7 +116,7 @@ type
                 pDataFiscal: PAnsiChar;
                 pHoraFiscal: PAnsiChar;
                 pParamAdic: PAnsiChar);
-                {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+                {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xContinuaFuncaoSiTefInterativo : function (
                var ProximoComando: SmallInt;
@@ -126,44 +126,44 @@ type
                pBuffer: PAnsiChar;
                TamMaxBuffer: Integer;
                ContinuaNavegacao: Integer ): integer;
-               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xEscreveMensagemPermanentePinPad: function(Mensagem:PAnsiChar):Integer;
-       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xObtemQuantidadeTransacoesPendentes: function(
-       DataFiscal:AnsiString;
-       NumeroCupon:AnsiString):Integer;
-       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               DataFiscal:AnsiString;
+               NumeroCupon:AnsiString):Integer;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xEnviaRecebeSiTefDireto : function (
-       RedeDestino: SmallInt;
-       FuncaoSiTef: SmallInt;
-       OffsetCartao: SmallInt;
-       DadosTx: AnsiString;
-       TamDadosTx: SmallInt;
-       DadosRx: PAnsiChar;
-       TamMaxDadosRx: SmallInt;
-       var CodigoResposta: SmallInt;
-       TempoEsperaRx: SmallInt;
-       CuponFiscal: AnsiString;
-       DataFiscal: AnsiString;
-       Horario: AnsiString;
-       Operador: AnsiString;
-       TipoTransacao: SmallInt): Integer;
-       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+               RedeDestino: SmallInt;
+               FuncaoSiTef: SmallInt;
+               OffsetCartao: SmallInt;
+               DadosTx: AnsiString;
+               TamDadosTx: SmallInt;
+               DadosRx: PAnsiChar;
+               TamMaxDadosRx: SmallInt;
+               var CodigoResposta: SmallInt;
+               TempoEsperaRx: SmallInt;
+               CuponFiscal: AnsiString;
+               DataFiscal: AnsiString;
+               Horario: AnsiString;
+               Operador: AnsiString;
+               TipoTransacao: SmallInt): Integer;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xValidaCampoCodigoEmBarras: function(
-       Dados: AnsiString;
-       var Tipo: SmallInt): Integer;
-       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+               Dados: AnsiString;
+               var Tipo: SmallInt): Integer;
+               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xVerificaPresencaPinPad: function(): Integer
-    {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     xObtemDadoPinPadDiretoEx: function(ChaveAcesso: PAnsiChar;
-       Identificador: PAnsiChar; Entrada: PAnsiChar; Saida: PAnsiChar): Integer;
-    {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+              Identificador: PAnsiChar; Entrada: PAnsiChar; Saida: PAnsiChar): Integer;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     procedure SetInicializada(AValue: Boolean);
 

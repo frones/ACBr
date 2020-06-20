@@ -1789,11 +1789,11 @@ begin
                                  pszVirtMerch+', '+
                                  pszAuthSyst+' ) ');
   iRet := xPW_iConfirmation( Status,
-                             PAnsiChar(pszReqNum),
-                             PAnsiChar(pszLocRef),
-                             PAnsiChar(pszExtRef),
-                             PAnsiChar(pszVirtMerch),
-                             PAnsiChar(pszAuthSyst) );
+                             PAnsiChar(AnsiString(pszReqNum)),
+                             PAnsiChar(AnsiString(pszLocRef)),
+                             PAnsiChar(AnsiString(pszExtRef)),
+                             PAnsiChar(AnsiString(pszVirtMerch)),
+                             PAnsiChar(AnsiString(pszAuthSyst)) );
   GravarLog('  '+PWRETToString(iRet));
   if (iRet <> PWRET_OK) then
   begin

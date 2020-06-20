@@ -742,19 +742,26 @@ begin
           AResposta.Assign(Resp);
 
           if Confirmar then
+            CNF
+          else
           begin
-            CNF;
+            if Resp.CNFEnviado then
+            begin
+              if not CNC then
+                Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
+            end
+            else
+              NCN;
+          end;
+
+          if Confirmar then
+          begin
             RespostasConfirmadas.Add(AResposta);
             if (Trim(AResposta.NSU) <> '') then
               NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
           end
           else
           begin
-            if Resp.CNFEnviado then
-              CNC
-            else
-              NCN;
-
             RespostasCanceladas.Add(AResposta);
             if (Trim(AResposta.NSU) <> '') then
               NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
@@ -903,7 +910,7 @@ begin
   if Assigned(fOnAvaliarTransacaoPendente) then
     fOnAvaliarTransacaoPendente( Confirmar,
                                  Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendenteAPI),
-                                         [Resp.Rede, Resp.NSU] ), Resp);
+                                         [pszAuthSyst, pszExtRef] ), Resp);
   if Confirmar then
     Status := PWCNF_CNF_MANU_AUT
   else

@@ -42,6 +42,7 @@ uses
 
 resourcestring
   sPerVenctoCartao = 'VENCIMENTO CARTAO';
+  sInfoRemovaCartao = 'REMOVER O CARTAO';
   sErrLibJaInicializda = 'PW_iInit já executado';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrPWRET_WRITERR = 'Falha de gravação no diretório %s';
@@ -282,6 +283,27 @@ const
   PWRET_SSLCERTERR         = -2577;  // Falha no certificado SSL
   PWRET_SSLNCONN           = -2576;  // Falha ao tentar estabelecer conexão SSL
   PWRET_GPRSATTACHFAILED   = -2575;  // Falha no registro GPRS.
+  PWRET_EMVDENIEDCARD      = -2574;  // Transação EMV negada pelo cartão.
+  PWRET_EMVDENIEDHOST      = -2573;  // Transação EMV negada pelo host.
+  PWRET_NOLINE             = -2572;  // Sem tom de linha.
+  PWRET_NOANSWER           = -2571;  // Sem resposta (Linha não atende).
+  PWRET_SYNCERROR          = -2570;  // Falha de sincronismo.
+  PWRET_CRCERR             = -2569;  // Falha no CRC da mensagem.
+  PWRET_DECOMPERR          = -2568;  // Falha na descompressão da mensagem.
+  PWRET_PROTERR            = -2567;  // Falha no protocolo de conexão.
+  PWRET_NOSIM              = -2566;  // SIM Card não encontrado.
+  PWRET_SIMERROR           = -2565;  // Erro no SIM Card.
+  PWRET_SIMBLOCKED         = -2564;  // SIM Card está bloqueado.
+  PWRET_PPPNEGFAILED       = -2563;  // Falha na autenticação PPP.
+  PWRET_WIFICONNERR        = -2562;  // Falha de comunicação WiFi.
+  PWRET_WIFINOTFOUND       = -2561;  // Falha rede WiFi não encontrada.
+  PWRET_COMPERR            = -2560;  // Falha na compactação da mensagem.
+  PWRET_INVALIDCPFCNPJ     = -2559;  // Erro CPF ou CNPJ inválido.
+  PWRET_APNERROR           = -2558;  // Erro de falha na APN do SIM Card.
+  PWRET_WIFIAUTHERROR      = -2557;  // Erro na autenticação da rede WIFi.
+  PWRET_QRCODEERR          = -2556;  // Erro no processamento do QR Code.
+  PWRET_QRCODENOTSUPPORTED = -2555;  // Erro QR Code não suportado pelo terminal.
+  PWRET_QRCODENOTFOUND     = -2554;  // Erro QR Code não encontrado.
   PWRET_INVPARAM           = -2499;  // Parâmetro inválido passado à função
   PWRET_NOTINST            = -2498;  // Ponto de Captura não instalado. É necessário acionar a função de Instalação.
   PWRET_MOREDATA           = -2497;  // Ainda existem dados que precisam ser capturados para a transação poder ser realizada
@@ -300,6 +322,123 @@ const
   PWRET_PPCOMERR           = -2484;  // Falha na comunicação com o PIN-pad (protocolo).
   PWRET_NOMANDATORY        = -2483;  // Algum dos parâmetros obrigatórios não foi adicionado
   PWRET_INVALIDTRN         = -2482;  // A transação informada para confirmação não existe ou já foi confirmada anteriormente.
+  PWRET_OFFINVCAP          = -2481;  // Falha onde contenha um número diferente de itens de menu e texto a exibir.
+  PWRET_OFFNOCARDENTMODE   = -2480;  // Falha caso não tenha nenhum meio de captura habilitado.
+  PWRET_OFFINVCARDENTMODE  = -2479;  // Falha onde o meio de captura utilizado não esteja habilitado.
+  PWRET_OFFNOTABLECARDRANGE= -2478;  // Falha quando não existir tabela de cartão para o range inserido.
+  PWRET_OFFNOTABLEPRODUCT  = -2477;  // Falha quando não existir tabela de produto para a transação em execução.
+  PWRET_OFFNOCARDFULLPAN   = -2475;  // Falha obtendo o número do cartão.
+  PWRET_OFFCARDEXP         = -2473;  // Falha cartão expirado.
+  PWRET_OFFNOTRACKS        = -2472;  // Falha cartão sem trilha.
+  PWRET_OFFTRACKERR        = -2471;  // Falha erro na leitura da trilha do cartão.
+  PWRET_OFFCHIPMANDATORY   = -2470;  // Falha transação com chip é mandatória.
+  PWRET_OFFINVCARD         = -2469;  // Falha cartão inválido.
+  PWRET_OFFINVCURR         = -2468;  // Falha moeda inválida.
+  PWRET_OFFINVAMOUNT       = -2467;  // Falha valor inválido.
+  PWRET_OFFGREATERAMNT     = -2466;  // Falha valor excede o máximo permitido.
+  PWRET_OFFLOWERAMNT       = -2465;  // Falha valor não atinge o mínimo permitido.
+  PWRET_OFFGREATERINST     = -2464;  // Falha valor da parcela excede o valor permitido.
+  PWRET_OFFLOWERINST       = -2463;  // Falha valor da parcela não atinge o mínimo permitido.
+  PWRET_OFFINVINST         = -2460;  // Falha número de parcelas inválida.
+  PWRET_OFFGREATERINSTNUM  = -2459;  // Falha número de parcelas excede o máximo permitido.
+  PWRET_OFFLOWERINSTNUM    = -2458;  // Falha número de parcelas não atinge o mínimo permitido.
+  PWRET_OFFMANDATORYCVV    = -2457;  // Falha código de segurança do cartão obrigatório.
+  PWRET_OFFINVLASTFOUR     = -2456;  // Falha 4 últimos dígitos do cartão inválidos.
+  PWRET_OFFNOAID           = -2455;  // Falha AID do cartão não se encontra nas tabelas de inicialização.
+  PWRET_OFFNOFALLBACK      = -2454;  // Falha fallback não permitido.
+  PWRET_OFFNOPINPAD        = -2453;  // Falha PIN-Pad não encontrado.
+  PWRET_OFFNOAPOFF         = -2452;  // Falha transação offline não permitida.
+  PWRET_OFFTRNNEEDPP       = -2451;  // Falha transação necessita de PIN-pad.
+  PWRET_OFFCARDNACCEPT     = -2450;  // Falha cartão não aceito.
+  PWRET_OFFTABLEERR        = -2449;  // Falha nas tabelas de inicialização.
+  PWOFF_OFFMAXTABERR       = -2448;  // Falha número de tabelas excede o máximo.
+  PWRET_OFFINTERNAL1       = -2447;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFINTERNAL2       = -2446;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFINTERNAL3       = -2445;  // Falha caso não exista no buffer a tag MUXTAG_CARDFULLPAN.
+  PWRET_OFFINTERNAL4       = -2444;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFINTERNAL5       = -2443;  // Falha na recuperação de valor da tag MUXTAG_EMVRESOFF.
+  PWRET_OFFINTERNAL6       = -2442;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFINTERNAL7       = -2441;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFINTERNAL8       = -2440;  // Falha na obtenção e validação da trilha 2.
+  PWRET_OFFINTERNAL9       = -2439;  // Falha no tamanho da trilha 2 do cartão.
+  PWRET_OFFINTERNAL10      = -2438;  // Falha na obtenção e validação da trilha 1.
+  PWRET_OFFINTERNAL11      = -2437;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_OFFNOPRODUCT       = -2436;  // Falha para quando não existir produtos compatíveis nas tabelas para a transação em execução.
+  PWRET_OFFINTERNAL12      = -2435;  // Falha na obtenção e validação do PAN do cartão.
+  PWRET_OFFINTERNAL13      = -2434;  // Falha na criptografia genérica da transação.
+  PWRET_OFFINTERNAL14      = -2433;  // Falha na criptografia genérica da transação.
+  PWRET_NOPINPAD           = -2432;  // Falha PIN-Pad não encontrado.
+  PWRET_OFFINTERNAL15      = -2431;  // Falha na obtenção da informação de valor da parcela.
+  PWRET_OFFINTERNAL16      = -2430;  // Falha trilha do cartão fora do formato padrão.
+  PWRET_ABECSERRCOM        = -2429;  // Falha PIN-Pad incompatível.
+  PWRET_OFFCFGNOCARDRANGE  = -2428;  // Falha inconsistência nas informações de cartão recebidas.
+  PWRET_OFFCFGNOPRODUCT    = -2427;  // Falha inconsistência nas informações de produto recebidas.
+  PWRET_OFFCFGNOTRANSACTION= -2426;  // Falha inconsistência nas informações de transação recebidas.
+  PWRET_OFFINTERNAL17      = -2425;  // Falha na criptografia genérica da transação.
+  PWRET_OFFINTERNAL18      = -2424;  // Falha processamento offline da PGWebLib.
+  PWRET_PPABORT            = -2423;  // Falha abortar comando PIN-Pad.
+  PWRET_OFFINTERNAL19      = -2422;  // Falha caso exista mais do que uma tabela de produto para a transação em execução.
+  PWRET_PPERRTREATMENT     = -2421;  // Erro de tratamento PIN-Pad.
+  PWRET_INVPAYMENTMODE     = -2420;  // Falha modalidade de pagamento inválida.
+  PWRET_OFFINVALIDOPER     = -2419;  // Operação selecionada não está disponível.
+  PWRET_OFFINTERNAL20      = -2418;  // Falha processamento offline tag EMV.
+  PWRET_OFFINTERNAL21      = -2417;  // Erro processamento offline do QR Code
+  PWRET_PPS_OK             = -2100;  // PIN-pad não encontrado na busca efetuada.
+  PWRET_PPS_PROCESSING     = -2101;  // Não foi chamada a função PW_iNewTransac.
+  PWRET_PPS_NOTIFY         = -2102;  // Não foi chamada a função PW_iInit.
+  PWRET_PPS_F1             = -2104;  // Ocorreu um erro no cartão magnético, passar a aceitar o cartão digitado, caso já não esteja sendo aceito.
+  PWRET_PPS_F2             = -2105;  // Pressionada tecla de função #3.
+  PWRET_PPS_F3             = -2106;  // Falha na comunicação com o PIN-pad (protocolo).
+  PWRET_PPS_F4             = -2107;  // Pressionada tecla de função #4.
+  PWRET_PPS_BACKSP         = -2108;  // Pressionada tecla de apagar (backspace)
+  PWRET_PPS_INVCALL        = -2110;  // Chamada inválida à função. Operações prévias são necessárias
+  PWRET_PPS_INVPARM        = -2111;  // Parâmetro inválido passado a função.
+  PWRET_PPS_TIMEOUT        = -2112;  // Esgotado o tempo máximo estipulado para a operação.
+  PWRET_PPS_CANCEL         = -2113;  // Operação cancelada pelo operador.
+  PWRET_PPS_ALREADYOPEN    = -2114;  // Pinpad já aberto.
+  PWRET_PPS_NOTOPEN        = -2115;  // Pinpad não foi aberto.
+  PWRET_PPS_EXECERR        = -2116;  // Erro interno de execução - problema de implementação da biblioteca (software).
+  PWRET_PPS_INVMODEL       = -2117;  // Função não suportada pelo modelo de pinpad.
+  PWRET_PPS_NOFUNC         = -2118;  // Função não disponível na Biblioteca do pinpad.
+  PWRET_PPS_TABEXP         = -2120;  // Tabelas expiradas (pelo “time-stamp”).
+  PWRET_PPS_TABERR         = -2121;  // Erro ao tentar gravar tabelas (falta de espaço, por exemplo)
+  PWRET_PPS_NOAPPSLIC      = -2122;  // Aplicação da rede adquirente não existe no pinpad.
+  PWRET_PPS_PORTERR        = -2130;  // Erro de comunicação: porta serial do pinpad provavelmente ocupada
+  PWRET_PPS_COMMERR        = -2131;  // Erro de comunicação: pinpad provavelmente desconectado ou problemas com a interface serial.
+  PWRET_PPS_UNKNOWNSTAT    = -2132;  // Status informado pelo pinpad não é conhecido.
+  PWRET_PPS_RSPERR         = -2133;  // Mensagem recebida do pinpad possui formato inválido.
+  PWRET_PPS_COMMTOUT       = -2134;  // Tempo esgotado ao esperar pela resposta do pinpad (no caso de comandos não blocantes).
+  PWRET_PPS_INTERR         = -2140;  // Erro interno do pinpad.
+  PWRET_PPS_MCDATAERR      = -2141;  // Erro de leitura do cartão magnético.
+  PWRET_PPS_ERRPIN         = -2142;  // Erro na captura do PIN - Master Key pode não estar presente.
+  PWRET_PPS_NOCARD         = -2143;  // Não há cartão com chip presente no acoplador.
+  PWRET_PPS_PINBUSY        = -2144;  // Pinpad não pode processar a captura de PIN temporariamente devido a questões de segurança (como quando é atingido o limite de capturas dentro de um intervalo de tempo).
+  PWRET_PPS_SAMERR         = -2150;  // Erro genérico no módulo SAM.
+  PWRET_PPS_NOSAM          = -2151;  // SAM ausente, “mudo”, ou com erro de comunicação.
+  PWRET_PPS_SAMINV         = -2152;  // SAM inválido, desconhecido ou com problemas.
+  PWRET_PPS_DUMBCARD       = -2160;  // Cartão não responde (“mudo”) ou chip não presente.
+  PWRET_PPS_ERRCARD        = -2161;  // Erro de comunicação do pinpad com o cartão com chip.
+  PWRET_PPS_CARDINV        = -2162;  // Cartão do tipo inválido ou desconhecido, não pode ser tratado (não é EMV nem TIBC v1).
+  PWRET_PPS_CARDBLOCKED    = -2163;  // Cartão bloqueado por número excessivo de senhas incorretas (somente para Easy-Entry TIBC v1 e moedeiro VISA Cash).
+  PWRET_PPS_CARDNAUTH      = -2164;  // Cartão TIBC v1 não autenticado pelo módulo SAM (somente para Easy-Entry TIBC v1 e moedeiro VISA Cash).
+  PWRET_PPS_CARDEXPIRED    = -2165;  // Cartão TIBC v1 expirado (somente para Easy-Entry TIBC v1 e moedeiro VISA Cash).
+  PWRET_PPS_CARDERRSTRUCT  = -2166;  // Cartão com erro de estrutura - arquivos estão faltando.
+  PWRET_PPS_CARDINVALIDAT  = -2167;  // Cartão foi invalidado. Se o cartão for TIBC v1, quando seleção de arquivo ou ATR retornar status ‘6284’. Se o cartão for EMV, quando seleção de aplicação retornar status ‘6A81’.
+  PWRET_PPS_CARDPROBLEMS   = -2168;  // Cartão com problemas. Esse status é válido para muitas ocorrências no processamento de cartões TIBC v1 e EMV onde o cartão não se comporta conforme o esperado e a transação deve ser finalizada.
+  PWRET_PPS_CARDINVDATA    = -2169;  // O cartão, seja TIBC v1 ou EMV, comporta-se corretamente porém possui dados inválidos ou inconsistentes.
+  PWRET_PPS_CARDAPPNAV     = -2170;  // Cartão sem nenhuma aplicação disponível para as condições pedidas (ou cartão é reconhecido como TIBC v1 ou EMV mas não possui nenhuma aplicação compatível com a requerida).
+  PWRET_PPS_CARDAPPNAUT    = -2171;  // Somente para cartão EMV. A aplicação selecionada não pode ser utilizada (o Get Processing Options retornou status ‘6985’ ou houve erro no comando Select final), e não há outra aplicação compatível na lista de candidatas.
+  PWRET_PPS_NOBALANCE      = -2172;  // Somente para aplicação de moedeiro. O saldo do moedeiro é insuficiente para a operação.
+  PWRET_PPS_LIMITEXC       = -2173;  // Somente para aplicação de moedeiro. O limite máximo para a operação foi excedido.
+  PWRET_PPS_CARDNOTEFFECT  = -2174;  // Cartão ainda não efetivo, data de ativação posterior à data atual (somente para moedeiro VISA Cash sobre TIBCv3).
+  PWRET_PPS_VCINVCURR      = -2175;  // Moeda inválida (somente para moedeiro VISA Cash).
+  PWRET_PPS_ERRFALLBACK    = -2176;  // Erro de alto nível no cartão EMV que é passível de “fallback” para tarja magnética.
+  PWRET_PPS_CTLSSMULTIPLE  = -2180;  // Mais de um cartão sem contato foi apresentado ao leitor (este código de retorno é opcional e depende da capacidade do equipamento em detectar esta situação).
+  PWRET_PPS_CTLSSCOMMERR   = -2181;  // Erro de comunicação entre o terminal (antena) e o cartão com chip sem contato.
+  PWRET_PPS_CTLSSINVALIDAT = -2182;  // Cartão foi invalidado (seleção de aplicação retornou status ‘6A81’).
+  PWRET_PPS_CTLSSPROBLEMS  = -2183;  // Cartão com problemas. Esse status é válido para muitas ocorrências no processamento de cartões sem contato em que o cartão não se comporta conforme o esperado e a transação deve ser finalizada.
+  PWRET_PPS_CTLSSAPPNAV    = -2184;  // Cartão sem nenhuma aplicação disponível para as condições pedidas (nenhum AID encontrado).
+  PWRET_PPS_CTLSSAPPNAUT   = -2185;  // A aplicação selecionada não pode ser utilizada (o Get Processing Options retornou status ‘6985’ ou houve erro no comando Select final), e não há outra aplicação compatível na lista de candidatas.
   PWRET_PPS_XXX            = -2200;  // Erros retornados pelo PIN-pad, conforme seção 10.2
 
 //==========================================================================================
@@ -512,7 +651,12 @@ type
     ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock);
 
   TACBrTEFPGWebAPIAguardaPinPad = procedure(
-    OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean) of object;
+    OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean)
+     of object;
+
+  TACBrTEFPGWebAPIAvaliarTransacaoPendente = procedure(var Status: LongWord;
+    pszReqNum: String; pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
+    pszAuthSyst: String) of object;
 
   { TACBrTEFPGWebAPIParametrosAdicionais }
 
@@ -529,7 +673,8 @@ type
   TACBrTEFPGWebAPI = class
   private
     fCNPJEstabelecimento: String;
-    fDadosTransacao: TStringList;
+    fConfirmarTransacoesPendentesNoHost: Boolean;
+    fDadosTransacao: TACBrTEFPGWebAPIParametrosAdicionais;
     fDiretorioTrabalho: String;
     fEnderecoIP: String;
     fImprimirViaClienteReduzida: Boolean;
@@ -538,6 +683,7 @@ type
     fNomeAplicacao: String;
     fNomeEstabelecimento: String;
     fOnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad;
+    fOnAvaliarTransacaoPendente: TACBrTEFPGWebAPIAvaliarTransacaoPendente;
     fOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     fOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
     fOnGravarLog: TACBrGravarLog;
@@ -679,6 +825,7 @@ type
       pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
       pszAuthSyst: String);
     procedure AbortarTransacao;
+    procedure TratarTransacaoPendente;
 
     function ValidarRespostaCampo(AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
@@ -688,7 +835,7 @@ type
     property Inicializada: Boolean read fInicializada write SetInicializada;
 
     property EmTransacao: Boolean read fEmTransacao;
-    property DadosDaTransacao: TStringList read fDadosTransacao;
+    property DadosDaTransacao: TACBrTEFPGWebAPIParametrosAdicionais read fDadosTransacao;
 
     property SoftwareHouse: String read fSoftwareHouse write SetSoftwareHouse;
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
@@ -711,6 +858,8 @@ type
     property UtilizaSaldoTotalVoucher: Boolean read fUtilizaSaldoTotalVoucher
       write fUtilizaSaldoTotalVoucher;
 
+    property ConfirmarTransacoesPendentesNoHost: Boolean read fConfirmarTransacoesPendentesNoHost
+      write fConfirmarTransacoesPendentesNoHost;
     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
     property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read fOnExibeMenu
       write fOnExibeMenu;
@@ -720,6 +869,8 @@ type
       write fOnExibeMensagem;
     property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read fOnAguardaPinPad
       write fOnAguardaPinPad;
+    property OnAvaliarTransacaoPendente: TACBrTEFPGWebAPIAvaliarTransacaoPendente
+      read fOnAvaliarTransacaoPendente write fOnAvaliarTransacaoPendente;
   end;
 
 function ParseKeyValue(AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
@@ -880,6 +1031,27 @@ begin
     PWRET_SSLCERTERR:           Result := 'PWRET_SSLCERTERR';
     PWRET_SSLNCONN:             Result := 'PWRET_SSLNCONN';
     PWRET_GPRSATTACHFAILED:     Result := 'PWRET_GPRSATTACHFAILED';
+    PWRET_EMVDENIEDCARD:        Result := 'PWRET_EMVDENIEDCARD';
+    PWRET_EMVDENIEDHOST:        Result := 'PWRET_EMVDENIEDHOST';
+    PWRET_NOLINE:               Result := 'PWRET_NOLINE';
+    PWRET_NOANSWER:             Result := 'PWRET_NOANSWER';
+    PWRET_SYNCERROR:            Result := 'PWRET_SYNCERROR';
+    PWRET_CRCERR:               Result := 'PWRET_CRCERR';
+    PWRET_DECOMPERR:            Result := 'PWRET_DECOMPERR';
+    PWRET_PROTERR:              Result := 'PWRET_PROTERR';
+    PWRET_NOSIM:                Result := 'PWRET_NOSIM';
+    PWRET_SIMERROR:             Result := 'PWRET_SIMERROR';
+    PWRET_SIMBLOCKED:           Result := 'PWRET_SIMBLOCKED';
+    PWRET_PPPNEGFAILED:         Result := 'PWRET_PPPNEGFAILED';
+    PWRET_WIFICONNERR:          Result := 'PWRET_WIFICONNERR';
+    PWRET_WIFINOTFOUND:         Result := 'PWRET_WIFINOTFOUND';
+    PWRET_COMPERR:              Result := 'PWRET_COMPERR';
+    PWRET_INVALIDCPFCNPJ:       Result := 'PWRET_INVALIDCPFCNPJ';
+    PWRET_APNERROR:             Result := 'PWRET_APNERROR';
+    PWRET_WIFIAUTHERROR:        Result := 'PWRET_WIFIAUTHERROR';
+    PWRET_QRCODEERR:            Result := 'PWRET_QRCODEERR';
+    PWRET_QRCODENOTSUPPORTED:   Result := 'PWRET_QRCODENOTSUPPORTED';
+    PWRET_QRCODENOTFOUND:       Result := 'PWRET_QRCODENOTFOUND';
     PWRET_INVPARAM:             Result := 'PWRET_INVPARAM';
     PWRET_NOTINST:              Result := 'PWRET_NOTINST';
     PWRET_MOREDATA:             Result := 'PWRET_MOREDATA';
@@ -898,6 +1070,123 @@ begin
     PWRET_PPCOMERR:             Result := 'PWRET_PPCOMERR';
     PWRET_NOMANDATORY:          Result := 'PWRET_NOMANDATORY';
     PWRET_INVALIDTRN:           Result := 'PWRET_INVALIDTRN';
+    PWRET_OFFINVCAP:            Result := 'PWRET_OFFINVCAP';
+    PWRET_OFFNOCARDENTMODE:     Result := 'PWRET_OFFNOCARDENTMODE';
+    PWRET_OFFINVCARDENTMODE:    Result := 'PWRET_OFFINVCARDENTMODE';
+    PWRET_OFFNOTABLECARDRANGE:  Result := 'PWRET_OFFNOTABLECARDRANGE';
+    PWRET_OFFNOTABLEPRODUCT:    Result := 'PWRET_OFFNOTABLEPRODUCT';
+    PWRET_OFFNOCARDFULLPAN:     Result := 'PWRET_OFFNOCARDFULLPAN';
+    PWRET_OFFCARDEXP:           Result := 'PWRET_OFFCARDEXP';
+    PWRET_OFFNOTRACKS:          Result := 'PWRET_OFFNOTRACKS';
+    PWRET_OFFTRACKERR:          Result := 'PWRET_OFFTRACKERR';
+    PWRET_OFFCHIPMANDATORY:     Result := 'PWRET_OFFCHIPMANDATORY';
+    PWRET_OFFINVCARD:           Result := 'PWRET_OFFINVCARD';
+    PWRET_OFFINVCURR:           Result := 'PWRET_OFFINVCURR';
+    PWRET_OFFINVAMOUNT:         Result := 'PWRET_OFFINVAMOUNT';
+    PWRET_OFFGREATERAMNT:       Result := 'PWRET_OFFGREATERAMNT';
+    PWRET_OFFLOWERAMNT:         Result := 'PWRET_OFFLOWERAMNT';
+    PWRET_OFFGREATERINST:       Result := 'PWRET_OFFGREATERINST';
+    PWRET_OFFLOWERINST:         Result := 'PWRET_OFFLOWERINST';
+    PWRET_OFFINVINST:           Result := 'PWRET_OFFINVINST';
+    PWRET_OFFGREATERINSTNUM:    Result := 'PWRET_OFFGREATERINSTNUM';
+    PWRET_OFFLOWERINSTNUM:      Result := 'PWRET_OFFLOWERINSTNUM';
+    PWRET_OFFMANDATORYCVV:      Result := 'PWRET_OFFMANDATORYCVV';
+    PWRET_OFFINVLASTFOUR:       Result := 'PWRET_OFFINVLASTFOUR';
+    PWRET_OFFNOAID:             Result := 'PWRET_OFFNOAID';
+    PWRET_OFFNOFALLBACK:        Result := 'PWRET_OFFNOFALLBACK';
+    PWRET_OFFNOPINPAD:          Result := 'PWRET_OFFNOPINPAD';
+    PWRET_OFFNOAPOFF:           Result := 'PWRET_OFFNOAPOFF';
+    PWRET_OFFTRNNEEDPP:         Result := 'PWRET_OFFTRNNEEDPP';
+    PWRET_OFFCARDNACCEPT:       Result := 'PWRET_OFFCARDNACCEPT';
+    PWRET_OFFTABLEERR:          Result := 'PWRET_OFFTABLEERR';
+    PWOFF_OFFMAXTABERR:         Result := 'PWOFF_OFFMAXTABERR';
+    PWRET_OFFINTERNAL1:         Result := 'PWRET_OFFINTERNAL1';
+    PWRET_OFFINTERNAL2:         Result := 'PWRET_OFFINTERNAL2';
+    PWRET_OFFINTERNAL3:         Result := 'PWRET_OFFINTERNAL3';
+    PWRET_OFFINTERNAL4:         Result := 'PWRET_OFFINTERNAL4';
+    PWRET_OFFINTERNAL5:         Result := 'PWRET_OFFINTERNAL5';
+    PWRET_OFFINTERNAL6:         Result := 'PWRET_OFFINTERNAL6';
+    PWRET_OFFINTERNAL7:         Result := 'PWRET_OFFINTERNAL7';
+    PWRET_OFFINTERNAL8:         Result := 'PWRET_OFFINTERNAL8';
+    PWRET_OFFINTERNAL9:         Result := 'PWRET_OFFINTERNAL9';
+    PWRET_OFFINTERNAL10:        Result := 'PWRET_OFFINTERNAL10';
+    PWRET_OFFINTERNAL11:        Result := 'PWRET_OFFINTERNAL11';
+    PWRET_OFFNOPRODUCT:         Result := 'PWRET_OFFNOPRODUCT';
+    PWRET_OFFINTERNAL12:        Result := 'PWRET_OFFINTERNAL12';
+    PWRET_OFFINTERNAL13:        Result := 'PWRET_OFFINTERNAL13';
+    PWRET_OFFINTERNAL14:        Result := 'PWRET_OFFINTERNAL14';
+    PWRET_NOPINPAD:             Result := 'PWRET_NOPINPAD';
+    PWRET_OFFINTERNAL15:        Result := 'PWRET_OFFINTERNAL15';
+    PWRET_OFFINTERNAL16:        Result := 'PWRET_OFFINTERNAL16';
+    PWRET_ABECSERRCOM:          Result := 'PWRET_ABECSERRCOM';
+    PWRET_OFFCFGNOCARDRANGE:    Result := 'PWRET_OFFCFGNOCARDRANGE';
+    PWRET_OFFCFGNOPRODUCT:      Result := 'PWRET_OFFCFGNOPRODUCT';
+    PWRET_OFFCFGNOTRANSACTION:  Result := 'PWRET_OFFCFGNOTRANSACTION';
+    PWRET_OFFINTERNAL17:        Result := 'PWRET_OFFINTERNAL17';
+    PWRET_OFFINTERNAL18:        Result := 'PWRET_OFFINTERNAL18';
+    PWRET_PPABORT:              Result := 'PWRET_PPABORT';
+    PWRET_OFFINTERNAL19:        Result := 'PWRET_OFFINTERNAL19';
+    PWRET_PPERRTREATMENT:       Result := 'PWRET_PPERRTREATMENT';
+    PWRET_INVPAYMENTMODE:       Result := 'PWRET_INVPAYMENTMODE';
+    PWRET_OFFINVALIDOPER:       Result := 'PWRET_OFFINVALIDOPER';
+    PWRET_OFFINTERNAL20:        Result := 'PWRET_OFFINTERNAL20';
+    PWRET_OFFINTERNAL21:        Result := 'PWRET_OFFINTERNAL21';
+    PWRET_PPS_OK:               Result := 'PWRET_PPS_OK';
+    PWRET_PPS_PROCESSING:       Result := 'PWRET_PPS_PROCESSING';
+    PWRET_PPS_NOTIFY:           Result := 'PWRET_PPS_NOTIFY';
+    PWRET_PPS_F1:               Result := 'PWRET_PPS_F1';
+    PWRET_PPS_F2:               Result := 'PWRET_PPS_F2';
+    PWRET_PPS_F3:               Result := 'PWRET_PPS_F3';
+    PWRET_PPS_F4:               Result := 'PWRET_PPS_F4';
+    PWRET_PPS_BACKSP:           Result := 'PWRET_PPS_BACKSP';
+    PWRET_PPS_INVCALL:          Result := 'PWRET_PPS_INVCALL';
+    PWRET_PPS_INVPARM:          Result := 'PWRET_PPS_INVPARM';
+    PWRET_PPS_TIMEOUT:          Result := 'PWRET_PPS_TIMEOUT';
+    PWRET_PPS_CANCEL:           Result := 'PWRET_PPS_CANCEL';
+    PWRET_PPS_ALREADYOPEN:      Result := 'PWRET_PPS_ALREADYOPEN';
+    PWRET_PPS_NOTOPEN:          Result := 'PWRET_PPS_NOTOPEN';
+    PWRET_PPS_EXECERR:          Result := 'PWRET_PPS_EXECERR';
+    PWRET_PPS_INVMODEL:         Result := 'PWRET_PPS_INVMODEL';
+    PWRET_PPS_NOFUNC:           Result := 'PWRET_PPS_NOFUNC';
+    PWRET_PPS_TABEXP:           Result := 'PWRET_PPS_TABEXP';
+    PWRET_PPS_TABERR:           Result := 'PWRET_PPS_TABERR';
+    PWRET_PPS_NOAPPSLIC:        Result := 'PWRET_PPS_NOAPPSLIC';
+    PWRET_PPS_PORTERR:          Result := 'PWRET_PPS_PORTERR';
+    PWRET_PPS_COMMERR:          Result := 'PWRET_PPS_COMMERR';
+    PWRET_PPS_UNKNOWNSTAT:      Result := 'PWRET_PPS_UNKNOWNSTAT';
+    PWRET_PPS_RSPERR:           Result := 'PWRET_PPS_RSPERR';
+    PWRET_PPS_COMMTOUT:         Result := 'PWRET_PPS_COMMTOUT';
+    PWRET_PPS_INTERR:           Result := 'PWRET_PPS_INTERR';
+    PWRET_PPS_MCDATAERR:        Result := 'PWRET_PPS_MCDATAERR';
+    PWRET_PPS_ERRPIN:           Result := 'PWRET_PPS_ERRPIN';
+    PWRET_PPS_NOCARD:           Result := 'PWRET_PPS_NOCARD';
+    PWRET_PPS_PINBUSY:          Result := 'PWRET_PPS_PINBUSY';
+    PWRET_PPS_SAMERR:           Result := 'PWRET_PPS_SAMERR';
+    PWRET_PPS_NOSAM:            Result := 'PWRET_PPS_NOSAM';
+    PWRET_PPS_SAMINV:           Result := 'PWRET_PPS_SAMINV';
+    PWRET_PPS_DUMBCARD:         Result := 'PWRET_PPS_DUMBCARD';
+    PWRET_PPS_ERRCARD:          Result := 'PWRET_PPS_ERRCARD';
+    PWRET_PPS_CARDINV:          Result := 'PWRET_PPS_CARDINV';
+    PWRET_PPS_CARDBLOCKED:      Result := 'PWRET_PPS_CARDBLOCKED';
+    PWRET_PPS_CARDNAUTH:        Result := 'PWRET_PPS_CARDNAUTH';
+    PWRET_PPS_CARDEXPIRED:      Result := 'PWRET_PPS_CARDEXPIRED';
+    PWRET_PPS_CARDERRSTRUCT:    Result := 'PWRET_PPS_CARDERRSTRUCT';
+    PWRET_PPS_CARDINVALIDAT:    Result := 'PWRET_PPS_CARDINVALIDAT';
+    PWRET_PPS_CARDPROBLEMS:     Result := 'PWRET_PPS_CARDPROBLEMS';
+    PWRET_PPS_CARDINVDATA:      Result := 'PWRET_PPS_CARDINVDATA';
+    PWRET_PPS_CARDAPPNAV:       Result := 'PWRET_PPS_CARDAPPNAV';
+    PWRET_PPS_CARDAPPNAUT:      Result := 'PWRET_PPS_CARDAPPNAUT';
+    PWRET_PPS_NOBALANCE:        Result := 'PWRET_PPS_NOBALANCE';
+    PWRET_PPS_LIMITEXC:         Result := 'PWRET_PPS_LIMITEXC';
+    PWRET_PPS_CARDNOTEFFECT:    Result := 'PWRET_PPS_CARDNOTEFFECT';
+    PWRET_PPS_VCINVCURR:        Result := 'PWRET_PPS_VCINVCURR';
+    PWRET_PPS_ERRFALLBACK:      Result := 'PWRET_PPS_ERRFALLBACK';
+    PWRET_PPS_CTLSSMULTIPLE:    Result := 'PWRET_PPS_CTLSSMULTIPLE';
+    PWRET_PPS_CTLSSCOMMERR:     Result := 'PWRET_PPS_CTLSSCOMMERR';
+    PWRET_PPS_CTLSSINVALIDAT:   Result := 'PWRET_PPS_CTLSSINVALIDAT';
+    PWRET_PPS_CTLSSPROBLEMS:    Result := 'PWRET_PPS_CTLSSPROBLEMS';
+    PWRET_PPS_CTLSSAPPNAV:      Result := 'PWRET_PPS_CTLSSAPPNAV';
+    PWRET_PPS_CTLSSAPPNAUT:     Result := 'PWRET_PPS_CTLSSAPPNAUT';
     PWRET_PPS_XXX:              Result := 'PWRET_PPS_XXX';
   else
     Result := 'PWRET_'+IntToStr(iRET);
@@ -1043,7 +1332,7 @@ begin
   fDiretorioTrabalho := '';
   ClearMethodPointers;
   fEmTransacao := False;
-  fDadosTransacao := TStringList.Create;
+  fDadosTransacao := TACBrTEFPGWebAPIParametrosAdicionais.Create;
   fTempoTarefasAutomaticas := '';
 
   fSoftwareHouse := '';
@@ -1054,6 +1343,7 @@ begin
   fEnderecoIP := '';
   fPortaTCP := '';
   fPortaPinPad := 0;
+  fConfirmarTransacoesPendentesNoHost := True;
   fParametrosAdicionais := TACBrTEFPGWebAPIParametrosAdicionais.Create;
 
   fOnGravarLog := Nil;
@@ -1061,6 +1351,7 @@ begin
   fOnObtemCampo := Nil;
   fOnExibeMensagem := Nil;
   fOnAguardaPinPad := Nil;
+  fOnAvaliarTransacaoPendente := Nil;
 
   fTempoOcioso := 0;
   fTimerOcioso := TACBrThreadTimer.Create;
@@ -1393,10 +1684,8 @@ begin
         case iRet of
           PWRET_OK:
             Break;
-
           PWRET_NOTHING:
             Sleep(CSleepNothing);
-
           PWRET_MOREDATA:
             iRet := ObterDados(ArrParams, NumParams);
         end;
@@ -1417,6 +1706,7 @@ begin
         MsgError := E.Message;
     end;
 
+    // ERRO //
     if (Trim(MsgError) <> '') then
     begin
       ExibirMensagem(MsgError, tmOperador, CMilissegundosMensagem);
@@ -1434,10 +1724,13 @@ begin
         iRet := PWRET_INVCALL;
     end;
   finally
-    fDadosTransacao.Add('0='+IntToStr(iRet));  // 0 = PWINFO_RET (último retorno)
+    fDadosTransacao.ValueInfo[PWINFO_RET] := IntToStr(iRet);
     ObterDadosDaTransacao;
     SetEmTransacao(False);
   end;
+
+  if (iRet = PWRET_FROMHOSTPENDTRN) then
+    TratarTransacaoPendente;
 
   Result := (iRet = PWRET_OK);
 end;
@@ -1467,7 +1760,7 @@ begin
         if (iRet = PWRET_OK) then
         begin
           AData := BinaryStringToString(AnsiString(pszData));
-          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));
+          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));  // Add é mais rápido que usar "ValueInfo[i]"
           GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
           if (i = PWINFO_IDLEPROCTIME) then
             TempoOcioso := AData;
@@ -1532,6 +1825,37 @@ begin
     FinalizarTrancao(PWCNF_REV_ABORT, pszReqNum, pszLocRef, pszExtRef,
                                       pszVirtMerch, pszAuthSyst);
   end;
+end;
+
+procedure TACBrTEFPGWebAPI.TratarTransacaoPendente;
+var
+  pszAuthSyst, pszVirtMerch, pszReqNum, pszLocRef, pszExtRef: String;
+  AStatus: LongWord;
+
+  function ObterDadoTransacao(iINFO: Word): String;
+  begin
+    Result := fDadosTransacao.ValueInfo[iINFO];
+    if (Result = '') then
+      Result := Trim(ObterInfo(iINFO));
+  end;
+
+begin
+  pszAuthSyst := ObterDadoTransacao(PWINFO_PNDAUTHSYST);
+  pszVirtMerch := ObterDadoTransacao(PWINFO_PNDVIRTMERCH);
+  pszReqNum := ObterDadoTransacao(PWINFO_PNDREQNUM);
+  pszLocRef := ObterDadoTransacao(PWINFO_PNDAUTLOCREF);
+  pszExtRef := ObterDadoTransacao(PWINFO_PNDAUTEXTREF);
+  AStatus := PWCNF_CNF_MANU_AUT;
+
+  if Assigned(fOnAvaliarTransacaoPendente) then
+    fOnAvaliarTransacaoPendente(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst)
+  else
+  begin
+    if not fConfirmarTransacoesPendentesNoHost then
+      AStatus := PWCNF_REV_MANU_AUT;
+  end;
+
+  FinalizarTrancao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
@@ -1615,11 +1939,14 @@ begin
           PWDAT_BARCODE:
             iRet := ObterDadoCodBarra(AGetData);
           PWDAT_PPREMCRD:
+          begin
+            ExibirMensagem(sInfoRemovaCartao);
             iRet := RealizarOperacaoPinPad(AGetData, ppRemoveCard);
+          end;
           PWDAT_PPGENCMD:
             iRet := RealizarOperacaoPinPad(AGetData, ppGenericCMD);
-          //PWDAT_PPDATAPOSCNF:
-          //  iRet := RealizarOperacaoPinPad(AGetData, ppDataConfirmation);
+        //PWDAT_PPDATAPOSCNF:
+        //  iRet := RealizarOperacaoPinPad(AGetData, ppDataConfirmation);
         else
           DoException(Format(ACBrStr(sErrPWDAT_UNKNOWN), [AGetData.bTipoDeDado]));
         end;
@@ -1793,9 +2120,6 @@ begin
     end;
   until (Valido or Cancelado);
 
-  if Cancelado then
-    AbortarTransacao;
-
   Result := not Cancelado;
 end;
 
@@ -1943,7 +2267,7 @@ begin
         PWRET_DISPLAY:
         begin
           AMsg := String(pszDisplay);
-          ExibirMensagem(AMsg, tmOperador);
+          ExibirMensagem(AMsg);
         end;
 
         PWRET_OK, PWRET_CANCEL, PWRET_TIMEOUT, PWRET_FALLBACK:

@@ -40,6 +40,29 @@ uses
   Classes, SysUtils,
   ACBrBase, ACBrTEFDClass, ACBrTEFPayGoWebComum, ACBrTEFComum;
 
+resourcestring
+  SACBrTEFDPayGoWeb_TransacaoPendente =
+    'Transação Pendente.' + sLineBreak +
+    '%s' + sLineBreak +
+    'R$ %s' + sLineBreak +
+    '%s' + sLineBreak +
+    'NSU: %s';
+
+  SACBrTEFDPayGoWeb_TransacaoPendenteAPI =
+    'Transação Pendente.' + sLineBreak +
+    '%s' + sLineBreak +
+    'NSU: %s';
+
+  SACBrTEFDPayGoWeb_TransacaoConfirmadaReImprimir =
+    'Transação TEF Confirmada.' + sLineBreak +
+    'Favor reimprimir último Comprovante.' + sLineBreak +
+    '%s';
+
+  SACBrTEFDPayGoWeb_TransacaoCancelada =
+    'Transação TEF Cancelada.' + sLineBreak +
+    '%s';
+
+
 type
 
   { TACBrTEFDRespPayGoWeb }
@@ -52,10 +75,14 @@ type
     procedure ConteudoToProperty; override;
   end;
 
+  TACBrTEFDAvaliarTransacaoPendente = procedure(var Confirmar: Boolean;
+    const Mensagem: String; Resp: TACBrTEFDResp) of object;
+
   { TACBrTEFDPayGoWeb }
 
   TACBrTEFDPayGoWeb = class( TACBrTEFDClass )
   private
+    fOnAvaliarTransacaoPendente: TACBrTEFDAvaliarTransacaoPendente;
     fOperacaoADM: Word;
     fOperacaoATV: Word;
     fOperacaoCHQ: Word;
@@ -63,6 +90,7 @@ type
     fOperacaoCRT: Word;
     fOperacaoPRE: Word;
     fsPGWebAPI: TACBrTEFPGWebAPI;
+    function GetConfirmarTransacoesPendentes: Boolean;
     function GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
 
@@ -77,6 +105,7 @@ type
     function GetSuportaViasDiferenciadas: Boolean;
     function GetUtilizaSaldoTotalVoucher: Boolean;
     procedure SetCNPJEstabelecimento(AValue: String);
+    procedure SetConfirmarTransacoesPendentes(AValue: Boolean);
     procedure SetDiretorioTrabalho(AValue: String);
     procedure SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
     procedure SetOnExibeMensagem(AValue: TACBrTEFPGWebAPIExibeMensagem);
@@ -95,6 +124,10 @@ type
          ParametrosAdicionaisTransacao: TStrings = nil);
     function ContinuarRequisicao: Boolean;
     procedure ObterDadosTransacao;
+
+    procedure AvaliarTransacaoPendenteAPI(var Status: LongWord;
+      pszReqNum: String; pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
+      pszAuthSyst: String);
   public
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
@@ -130,6 +163,8 @@ type
     Function PRE(Valor : Double; DocumentoVinculado : String = '';
        Moeda : Integer = 0) : Boolean; override;
     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
+
+    procedure VerificarTransacoesPendentesClass(aVerificarCupom: Boolean); override;
   published
     property CNPJEstabelecimento: String read GetCNPJEstabelecimento write SetCNPJEstabelecimento;
     property PontoCaptura: String read GetPontoCaptura write SetPontoCaptura;
@@ -137,6 +172,8 @@ type
       write SetSuportaViasDiferenciadas;
     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher
       write SetUtilizaSaldoTotalVoucher;
+    property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes
+      write SetConfirmarTransacoesPendentes;
 
     property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_NULL;
     property OperacaoADM: Word read fOperacaoADM write fOperacaoADM default PWOPER_ADMIN;
@@ -145,10 +182,16 @@ type
     property OperacaoCNC: Word read fOperacaoCNC write fOperacaoCNC default PWOPER_SALEVOID;
     property OperacaoPRE: Word read fOperacaoPRE write fOperacaoPRE default PWOPER_PREPAID;
 
-    property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read GetOnExibeMenu write SetOnExibeMenu;
-    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read GetOnObtemCampo write SetOnObtemCampo;
-    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read GetOnExibeMensagem write SetOnExibeMensagem;
-    property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read GetOnAguardaPinPad write SetOnAguardaPinPad;
+    property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read GetOnExibeMenu
+      write SetOnExibeMenu;
+    property OnObtemCampo: TACBrTEFPGWebAPIObtemCampo read GetOnObtemCampo
+      write SetOnObtemCampo;
+    property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read GetOnExibeMensagem
+      write SetOnExibeMensagem;
+    property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read GetOnAguardaPinPad
+      write SetOnAguardaPinPad;
+    property OnAvaliarTransacaoPendente: TACBrTEFDAvaliarTransacaoPendente
+      read fOnAvaliarTransacaoPendente write fOnAvaliarTransacaoPendente;
   end;
 
 function MoedaToISO4217(AMoeda: Byte): Word;
@@ -477,6 +520,7 @@ begin
   inherited Create(AOwner);
   fsPGWebAPI := TACBrTEFPGWebAPI.Create;
   fsPGWebAPI.OnGravarLog := GravaLogAPI;
+  fsPGWebAPI.OnAvaliarTransacaoPendente := AvaliarTransacaoPendenteAPI;
 
   ArqReq := '';
   ArqResp := '';
@@ -498,6 +542,7 @@ begin
 
   fpResp := TACBrTEFDRespPayGoWeb.Create;
   fpResp.TipoGP := fpTipo;
+  FOnAvaliarTransacaoPendente := Nil;
 end;
 
 destructor TACBrTEFDPayGoWeb.Destroy;
@@ -626,7 +671,7 @@ begin
     PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));
     PA.ValueInfo[PWINFO_TRNORIGAUTH] := ''; // Código de autorização da transação original.
 
-    FazerRequisicao(fOperacaoCNC, 'CNC', 0, '', 0, PA);
+    FazerRequisicao(fOperacaoCNC, 'CNC', Valor, '', 0, PA);
   finally
     PA.Free;
   end;
@@ -649,6 +694,104 @@ function TACBrTEFDPayGoWeb.CDP(const EntidadeCliente: string; out
   Resposta: string): Boolean;
 begin
   Result := inherited CDP(EntidadeCliente, Resposta);
+end;
+
+procedure TACBrTEFDPayGoWeb.VerificarTransacoesPendentesClass(
+  aVerificarCupom: Boolean);
+Var
+  ArquivosVerficar: TStringList;
+  ArqMask, NomeArqTEF, NSUsConf, NSUsCanc: String;
+  AResposta: TACBrTEFDResp;
+  Confirmar: Boolean;
+  RespostasCanceladas, RespostasConfirmadas: TACBrTEFDRespostasPendentes;
+begin
+  ArquivosVerficar := TStringList.Create;
+  RespostasCanceladas := TACBrTEFDRespostasPendentes.create(True);
+  RespostasConfirmadas := TACBrTEFDRespostasPendentes.create(True);
+  try
+    TACBrTEFD(Owner).RespostasPendentes.Clear;
+    NSUsConf := '';
+    NSUsCanc := '';
+    { Achando Arquivos de Backup deste GP }
+    ArqMask := TACBrTEFD(Owner).PathBackup + PathDelim + 'ACBr_' + Self.Name + '_*.tef';
+    FindFiles(ArqMask, ArquivosVerficar, True);
+
+    { Enviando CNF, NCN ou CNC para todos os arquivos encontrados, conforme valores da
+      Propriedade "ConfirmarTransacoesPendentes" ou evento "OnAvaliarTransacaoPendente" }
+    while ArquivosVerficar.Count > 0 do
+    begin
+      NomeArqTEF := ArquivosVerficar[0];
+
+      if FileExists(NomeArqTEF) then
+      begin
+        Resp.LeArquivo(NomeArqTEF);
+
+        try
+          Confirmar := ConfirmarTransacoesPendentes;
+          if Assigned(fOnAvaliarTransacaoPendente) then
+            fOnAvaliarTransacaoPendente( Confirmar,
+                                         Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
+                                                 [FormatDateTimeBr(Resp.DataHoraTransacaoHost),
+                                                  FormatFloatBr(Resp.ValorTotal),
+                                                  Resp.Rede,
+                                                  Resp.NSU] ),
+                                         Resp);
+
+          { Criando cópia da Resposta Atual }
+          AResposta := TACBrTEFDRespPayGoWeb.Create;
+          AResposta.Assign(Resp);
+
+          if Confirmar then
+          begin
+            CNF;
+            RespostasConfirmadas.Add(AResposta);
+            if (Trim(AResposta.NSU) <> '') then
+              NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
+          end
+          else
+          begin
+            if Resp.CNFEnviado then
+              CNC
+            else
+              NCN;
+
+            RespostasCanceladas.Add(AResposta);
+            if (Trim(AResposta.NSU) <> '') then
+              NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
+          end;
+
+          SysUtils.DeleteFile(NomeArqTEF);
+        except
+        end;
+
+        ArquivosVerficar.Delete(0);
+      end;
+    end;
+
+    // Chamando evento de Confirmação/Cancelamento das Respostas //
+    with TACBrTEFD(Owner) do
+    begin
+      if (RespostasConfirmadas.Count > 0) then
+      begin
+        if Assigned(OnDepoisConfirmarTransacoes) then
+          OnDepoisConfirmarTransacoes( RespostasConfirmadas )
+        else if (NSUsConf <> '') then
+          TACBrTEFD(Owner).DoExibeMsg(opmOK, Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoConfirmadaReImprimir), [NSUsConf]));
+      end;
+
+      if (RespostasCanceladas.Count > 0) then
+      begin
+        if Assigned(OnDepoisCancelarTransacoes) then
+          OnDepoisCancelarTransacoes( RespostasCanceladas )
+        else if (NSUsCanc <> '') then
+          TACBrTEFD(Owner).DoExibeMsg(opmOK, Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoCancelada), [NSUsCanc]));
+      end;
+    end;
+  finally
+    ArquivosVerficar.Free;
+    RespostasCanceladas.Free;
+    RespostasConfirmadas.Free;
+  end;
 end;
 
 procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
@@ -750,6 +893,23 @@ begin
   end;
 end;
 
+procedure TACBrTEFDPayGoWeb.AvaliarTransacaoPendenteAPI(var Status: LongWord;
+  pszReqNum: String; pszLocRef: String; pszExtRef: String;
+  pszVirtMerch: String; pszAuthSyst: String);
+var
+  Confirmar: Boolean;
+begin
+  Confirmar := ConfirmarTransacoesPendentes;
+  if Assigned(fOnAvaliarTransacaoPendente) then
+    fOnAvaliarTransacaoPendente( Confirmar,
+                                 Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendenteAPI),
+                                         [Resp.Rede, Resp.NSU] ), Resp);
+  if Confirmar then
+    Status := PWCNF_CNF_MANU_AUT
+  else
+    Status := PWCNF_REV_MANU_AUT;
+end;
+
 function TACBrTEFDPayGoWeb.GetPathDLL: string;
 begin
   Result := fsPGWebAPI.PathDLL;
@@ -773,6 +933,11 @@ end;
 procedure TACBrTEFDPayGoWeb.SetCNPJEstabelecimento(AValue: String);
 begin
   fsPGWebAPI.CNPJEstabelecimento := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetConfirmarTransacoesPendentes(AValue: Boolean);
+begin
+  fsPGWebAPI.ConfirmarTransacoesPendentesNoHost := AValue;
 end;
 
 function TACBrTEFDPayGoWeb.GetDiretorioTrabalho: String;
@@ -844,6 +1009,11 @@ end;
 function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
 begin
   Result := fsPGWebAPI.ParametrosAdicionais;
+end;
+
+function TACBrTEFDPayGoWeb.GetConfirmarTransacoesPendentes: Boolean;
+begin
+  Result := fsPGWebAPI.ConfirmarTransacoesPendentesNoHost;
 end;
 
 procedure TACBrTEFDPayGoWeb.SetSuportaViasDiferenciadas(AValue: Boolean);

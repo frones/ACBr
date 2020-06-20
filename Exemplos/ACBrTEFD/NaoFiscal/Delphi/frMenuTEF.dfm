@@ -1,9 +1,9 @@
 object FormMenuTEF: TFormMenuTEF
-  Left = 564
-  Top = 307
+  Left = 563
+  Top = 293
   Width = 624
   Height = 400
-  Caption = 'OnExibeMenu'
+  Caption = 'Selecione uma op'#231#227'o'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,12 +23,13 @@ object FormMenuTEF: TFormMenuTEF
     Align = alRight
     Visible = False
   end
-  object ListBox1: TListBox
+  object lbOpcoes: TListBox
     Left = 0
     Top = 50
     Width = 283
     Height = 261
     Align = alClient
+    ExtendedSelect = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -19
@@ -37,14 +38,16 @@ object FormMenuTEF: TFormMenuTEF
     ItemHeight = 24
     ParentFont = False
     TabOrder = 0
+    OnClick = lbOpcoesClick
+    OnKeyPress = lbOpcoesKeyPress
   end
-  object Panel1: TPanel
+  object pTitulo: TPanel
     Left = 0
     Top = 0
     Width = 608
     Height = 50
     Align = alTop
-    Caption = 'Panel1'
+    Caption = 'pTitulo'
     TabOrder = 1
   end
   object Panel2: TPanel
@@ -57,9 +60,9 @@ object FormMenuTEF: TFormMenuTEF
     DesignSize = (
       608
       50)
-    object BitBtn1: TBitBtn
-      Left = 104
-      Top = 9
+    object btOK: TBitBtn
+      Left = 512
+      Top = 8
       Width = 71
       Height = 35
       Anchors = [akTop]
@@ -67,26 +70,28 @@ object FormMenuTEF: TFormMenuTEF
       TabOrder = 0
       Kind = bkOK
     end
-    object BitBtn2: TBitBtn
-      Left = 238
-      Top = 9
-      Width = 103
+    object btCancel: TBitBtn
+      Left = 360
+      Top = 8
+      Width = 120
       Height = 35
       Anchors = [akTop]
-      TabOrder = 1
+      Caption = 'Cancelar'
+      TabOrder = 2
       Kind = bkCancel
     end
-    object BitBtn3: TBitBtn
-      Left = 408
-      Top = 9
-      Width = 89
+    object btVoltar: TBitBtn
+      Left = 24
+      Top = 8
+      Width = 97
       Height = 35
       Anchors = [akTop]
-      TabOrder = 2
+      Caption = 'Voltar'
+      TabOrder = 1
       Kind = bkRetry
     end
   end
-  object Memo1: TMemo
+  object mOpcao: TMemo
     Left = 288
     Top = 50
     Width = 320

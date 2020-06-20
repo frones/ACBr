@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -40,45 +40,100 @@ type
 
 {$R *.dfm}
 
-  { TForm4 }
+  { TFormMenuTEF }
 
   TFormMenuTEF = class(TForm)
-     BitBtn1 : TBitBtn;
-     BitBtn2 : TBitBtn;
-     BitBtn3: TBitBtn;
-     ListBox1 : TListBox;
-     Memo1 : TMemo ;
-     Panel1 : TPanel;
+     btOK : TBitBtn;
+     btCancel : TBitBtn;
+     btVoltar: TBitBtn;
+     lbOpcoes : TListBox;
+     mOpcao : TMemo ;
+     pTitulo : TPanel;
      Panel2 : TPanel;
      Splitter1 : TSplitter ;
      procedure FormShow(Sender: TObject);
+     procedure lbOpcoesClick(Sender: TObject);
+     procedure lbOpcoesKeyPress(Sender: TObject; var Key: char);
   private
     { private declarations }
+    FUsaTeclasDeAtalho: Boolean;
+    FNumeroPressionado: Boolean;
+    function GetItemSelecionado: Integer;
+    function GetOpcoes: TStrings;
+    function GetTitulo: String;
+    procedure SetItemSelecionado(AValue: Integer);
+    procedure SetOpcoes(AValue: TStrings);
+    procedure SetTitulo(AValue: String);
   public
     { public declarations }
+    property Titulo: String read GetTitulo write SetTitulo;
+    property Opcoes: TStrings read GetOpcoes write SetOpcoes;
+    property ItemSelecionado: Integer read GetItemSelecionado write SetItemSelecionado;
+    property UsaTeclasDeAtalho: Boolean read FUsaTeclasDeAtalho write FUsaTeclasDeAtalho;
   end; 
 
-var
-  FormMenuTEF : TFormMenuTEF; 
-
 implementation
+
+uses
+  ACBrUtil;
 
 { TFormMenuTEF }
 
 procedure TFormMenuTEF.FormShow(Sender: TObject);
 begin
-   if Memo1.Lines.Count > 0 then
+   if mOpcao.Lines.Count > 0 then
    begin
-     Memo1.Width   := Trunc(Width/2)-10;
-     Memo1.Visible := True ;
+     mOpcao.Width   := Trunc(Width/2)-10;
+     mOpcao.Visible := True ;
      Splitter1.Visible := True ;
    end ;
 
-   ListBox1.SetFocus;
-   if ListBox1.Items.Count > 0 then
-      ListBox1.ItemIndex := 0 ;
+   lbOpcoes.SetFocus;
+   if lbOpcoes.Items.Count > 0 then
+      lbOpcoes.ItemIndex := 0 ;
 
+   FNumeroPressionado := False;
+end;
 
+procedure TFormMenuTEF.lbOpcoesClick(Sender: TObject);
+begin
+  if FUsaTeclasDeAtalho and FNumeroPressionado then
+    ModalResult := mrOK;
+end;
+
+procedure TFormMenuTEF.lbOpcoesKeyPress(Sender: TObject; var Key: char);
+begin
+  FNumeroPressionado := CharIsNum(Key);
+end;
+
+function TFormMenuTEF.GetTitulo: String;
+begin
+  Result := pTitulo.Caption;
+end;
+
+procedure TFormMenuTEF.SetItemSelecionado(AValue: Integer);
+begin
+  lbOpcoes.ItemIndex := AValue;
+end;
+
+function TFormMenuTEF.GetOpcoes: TStrings;
+begin
+  Result := lbOpcoes.Items;
+end;
+
+function TFormMenuTEF.GetItemSelecionado: Integer;
+begin
+  Result := lbOpcoes.ItemIndex;
+end;
+
+procedure TFormMenuTEF.SetOpcoes(AValue: TStrings);
+begin
+  lbOpcoes.Items.Assign(AValue);
+end;
+
+procedure TFormMenuTEF.SetTitulo(AValue: String);
+begin
+  pTitulo.Caption := AValue;
 end;
 
 end.

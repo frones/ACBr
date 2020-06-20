@@ -1,10 +1,13 @@
 object FormObtemCampo: TFormObtemCampo
-  Left = 634
+  Left = 644
   Top = 278
-  Width = 612
-  Height = 211
-  Caption = 'OnObtemCampo'
+  BorderStyle = bsDialog
+  Caption = 'Entre com a Informa'#231#227'o'
+  ClientHeight = 170
+  ClientWidth = 422
   Color = clBtnFace
+  Constraints.MinHeight = 170
+  Constraints.MinWidth = 420
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -19
@@ -16,54 +19,67 @@ object FormObtemCampo: TFormObtemCampo
   OnCreate = FormCreate
   OnShow = FormShow
   DesignSize = (
-    596
-    172)
+    422
+    170)
   PixelsPerInch = 96
   TextHeight = 24
-  object Edit1: TEdit
+  object edtResposta: TEdit
     Left = 32
-    Top = 72
-    Width = 513
+    Top = 80
+    Width = 356
     Height = 32
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akLeft, akRight, akBottom]
     TabOrder = 0
-    OnKeyPress = Edit1KeyPress
+    OnChange = edtRespostaChange
+    OnKeyPress = edtRespostaKeyPress
   end
-  object BitBtn1: TBitBtn
-    Left = 100
-    Top = 119
+  object btOk: TBitBtn
+    Left = 317
+    Top = 127
     Width = 71
     Height = 35
-    Anchors = [akTop]
+    Anchors = [akRight, akBottom]
     Caption = '&OK'
     TabOrder = 1
     Kind = bkOK
   end
-  object BitBtn2: TBitBtn
-    Left = 225
-    Top = 119
+  object btCancel: TBitBtn
+    Left = 187
+    Top = 127
     Width = 103
     Height = 35
-    Anchors = [akTop]
-    TabOrder = 2
+    Anchors = [akRight, akBottom]
+    TabOrder = 3
     Kind = bkCancel
   end
-  object Panel1: TPanel
+  object pTitulo: TPanel
     Left = 0
     Top = 0
-    Width = 596
-    Height = 50
+    Width = 422
+    Height = 56
     Align = alTop
-    Caption = 'Panel1'
-    TabOrder = 3
-  end
-  object BitBtn3: TBitBtn
-    Left = 386
-    Top = 120
-    Width = 89
-    Height = 35
-    Anchors = [akTop]
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 4
+    object lTitulo: TLabel
+      Left = 1
+      Top = 1
+      Width = 420
+      Height = 54
+      Align = alClient
+      Alignment = taCenter
+      Caption = 'lTitulo'
+      Layout = tlCenter
+      WordWrap = True
+    end
+  end
+  object btVoltar: TBitBtn
+    Left = 32
+    Top = 127
+    Width = 97
+    Height = 35
+    Anchors = [akLeft, akBottom]
+    Caption = 'Voltar'
+    TabOrder = 2
     Kind = bkRetry
   end
 end

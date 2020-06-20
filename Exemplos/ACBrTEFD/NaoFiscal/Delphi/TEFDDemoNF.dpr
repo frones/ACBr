@@ -7,7 +7,8 @@ uses
   frMenuTEF in 'frMenuTEF.pas' {FormMenuTEF},
   frObtemCampo in 'frObtemCampo.pas' {FormObtemCampo},
   frPrincipal in 'frPrincipal.pas' {FormPrincipal},
-  uVendaClass in 'uVendaClass.pas';
+  uVendaClass in 'uVendaClass.pas',
+  frExibeMensagem in 'frExibeMensagem.pas';
 
 {$R *.res}
 

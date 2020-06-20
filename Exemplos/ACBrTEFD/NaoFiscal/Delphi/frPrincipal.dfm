@@ -168,7 +168,7 @@ object FormPrincipal: TFormPrincipal
               Width = 145
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 0
             end
             object cbxPorta: TComboBox
@@ -176,7 +176,7 @@ object FormPrincipal: TFormPrincipal
               Top = 32
               Width = 161
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 1
             end
             object cbxPagCodigo: TComboBox
@@ -186,7 +186,7 @@ object FormPrincipal: TFormPrincipal
               Height = 21
               Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 2
             end
             object btTestarPosPrinter: TBitBtn
@@ -264,7 +264,7 @@ object FormPrincipal: TFormPrincipal
               Width = 135
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 0
             end
             object cbMultiplosCartoes: TCheckBox
@@ -867,7 +867,7 @@ object FormPrincipal: TFormPrincipal
     TabOrder = 0
     object lSaidaImpressao: TLabel
       Left = 0
-      Top = 125
+      Top = 145
       Width = 329
       Height = 20
       Align = alTop
@@ -882,11 +882,31 @@ object FormPrincipal: TFormPrincipal
       ParentColor = False
       ParentFont = False
     end
+    object lURLTEF: TLabel
+      Left = 0
+      Top = 0
+      Width = 329
+      Height = 20
+      Cursor = crHandPoint
+      Align = alTop
+      Alignment = taCenter
+      Caption = 'projetoacbr.com.br/tef'
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      OnClick = lURLTEFClick
+    end
     object mImpressao: TMemo
       Left = 0
-      Top = 145
+      Top = 165
       Width = 329
-      Height = 253
+      Height = 233
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -923,7 +943,7 @@ object FormPrincipal: TFormPrincipal
     end
     object pMensagem: TPanel
       Left = 0
-      Top = 0
+      Top = 20
       Width = 329
       Height = 125
       Align = alTop
@@ -1043,6 +1063,14 @@ object FormPrincipal: TFormPrincipal
     TEFPayGo.ArqReq = 'C:\PAYGO\REQ\intpos.001'
     TEFPayGo.ArqSTS = 'C:\PAYGO\RESP\intpos.sts'
     TEFPayGo.ArqResp = 'C:\PAYGO\RESP\intpos.001'
+    TEFPayGoWeb.SuportaViasDiferenciadas = True
+    TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
+    TEFPayGoWeb.ConfirmarTransacoesPendentes = True
+    TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
+    TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
+    TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem
+    TEFPayGoWeb.OnAguardaPinPad = PayGoWebAguardaPinPad
+    TEFPayGoWeb.OnAvaliarTransacaoPendente = PayGoWebAvaliarTransacaoPendente
     TEFDial.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
     TEFDial.ArqReq = 'C:\TEF_DIAL\req\intpos.001'
     TEFDial.ArqSTS = 'C:\TEF_DIAL\resp\intpos.sts'
@@ -1132,7 +1160,8 @@ object FormPrincipal: TFormPrincipal
     OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
     OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
     OnGravarLog = ACBrTEFD1GravarLog
-    Left = 552
+    Left = 968
+    Top = 184
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
@@ -1143,11 +1172,12 @@ object FormPrincipal: TFormPrincipal
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    Left = 504
+    Left = 968
+    Top = 224
   end
   object ImageList1: TImageList
-    Left = 384
-    Top = 8
+    Left = 968
+    Top = 264
     Bitmap = {
       494C01010D000E00040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040

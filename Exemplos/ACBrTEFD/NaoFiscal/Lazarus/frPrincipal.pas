@@ -345,7 +345,6 @@ begin
    AdicionarLinhaLog( 'PayGoWebAguardaPinPad: '+
                       GetEnumName(TypeInfo(TACBrTEFPGWebAPIOperacaoPinPad), integer(OperacaoPinPad) ) );
 
-
    if FCanceladoPeloOperador then
    begin
      FCanceladoPeloOperador := False;

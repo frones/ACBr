@@ -83,7 +83,7 @@ type
   TACBrTEFDTipo = ( gpNenhum, gpTefDial, gpTefDisc, gpHiperTef, gpCliSiTef,
                     gpTefGpu, gpVeSPague, gpBanese, gpTefAuttar, gpGoodCard,
                     gpFoxWin, gpCliDTEF, gpPetrocard, gpCrediShop, gpTicketCar,
-                    gpConvCard, gpCappta, gpPayGo ) ;
+                    gpConvCard, gpCappta, gpPayGo, gpPayGoWeb ) ;
 
   TACBrTEFDReqEstado = ( reqNenhum,             // Nennhuma Requisição em andamento
                          reqIniciando,          // Iniciando uma nova Requisicao
@@ -475,7 +475,8 @@ implementation
 
 Uses
   dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
-  ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFCliSiTefComum, ACBrTEFDVeSPague, ACBrTEFDPayGo,
+  ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFCliSiTefComum, ACBrTEFDVeSPague,
+  ACBrTEFDPayGo, ACBrTEFDPayGoWeb,
   ACBrUtil;
 
 { TACBrTEFDRespostasPendentes }
@@ -792,7 +793,7 @@ begin
        39  : fpChequeDC  := Linha.Informacao.AsString;
        40  : fpNomeAdministradora := Linha.Informacao.AsString;
        131 : fpInstituicao := Linha.Informacao.AsString;
-       132 : fpCodigoBandeiraPadrao  := Linha.Informacao.AsString;
+       132 : fpCodigoBandeiraPadrao := Linha.Informacao.AsString;
        136 : fpBin := Linha.Informacao.AsString;
 
        300 :
@@ -830,7 +831,12 @@ begin
        Inc(I);
        LinhaComprovante := Trim(LeInformacao(29 , I).AsString);
      end;
+
+     if (fpImagemComprovante2aVia.Count = 0) then
+        fpImagemComprovante2aVia.Text := fpImagemComprovante1aVia.Text;
    end;
+
+   fpConfirmar := (fpQtdLinhasComprovante > 0);
 
    fpParcelas.Clear;
    if TemParcelas then
@@ -2196,6 +2202,7 @@ begin
     gpCliSiTef: Result := TACBrTEFDRespCliSiTef.Create;
     gpVeSPague: Result := TACBrTEFDRespVeSPague.Create;
     gpPayGo: Result := TACBrTEFDRespPayGo.Create;
+    gpPayGoWeb: Result := TACBrTEFDRespPayGoWeb.Create;
   else
     Result := TACBrTEFDRespTXT.Create;
   end;

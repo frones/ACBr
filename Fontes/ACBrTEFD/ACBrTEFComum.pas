@@ -224,7 +224,7 @@ type
     fpChequeDC: String;
     fpCMC7: String;
     fpCNFEnviado: Boolean;
-    fpCodigoAutorizacaoTransacao: String;
+    fpCodigoAutorizacaoTransacao: String;  // Dial-13, SiTef-135. Contém o Código de Autorização para as transações de crédito (15 posições no máximo)
     fpCodigoOperadoraCelular: String;
     fpConta: String;
     fpContaDC: String;
@@ -240,7 +240,7 @@ type
     fpFinalizacao: String;
     fpHeader: String;
     fpID: Integer;
-    fpMoeda: Integer;
+    fpMoeda: Integer;     //  0: Real, 1: Dólar americano, 2: Euro
     fpNomeAdministradora: String;
     fpNomeOperadoraCelular: String;
     fpNSU: String;
@@ -257,36 +257,38 @@ type
     fpTipoTransacao: Integer;
     fpTrailer: String;
     fpBin: String;
-    fpValorTotal: Double;
+    fpValorTotal: Double;     // Valor Total da Transação, já considerando Descontos/ Acréscimos e Saque
     fpValorOriginal: Double;
     fpValorRecargaCelular: Double;
     fpSaque: Double;
     fpDesconto: Double;
     fpTaxaServico: Double;
-    fpDocumentoVinculado: String;
+    fpDocumentoVinculado: String;    // Número do documento fiscal ao qual a operação de TEF está vinculada.
     fpTipoParcelamento: Integer;
     fpParcelas: TACBrTEFRespParcelas;
     fpImagemComprovante1aVia: TStringList;
     fpImagemComprovante2aVia: TStringList;
-    fpDataVencimento: TDateTime;
-    fpInstituicao: String;
+    fpDataVencimento: TDateTime;     // Data Vencimento do Cheque
+    fpInstituicao: String;     // Sitef-131, Contém um índice que indica qual a instituição que irá processar a transação segundo a tabela presente no final do documento (até 5 dígitos significativos)
     fpModalidadePagto: String;
     fpModalidadePagtoDescrita: String;
     fpModalidadePagtoExtenso: String;
-    fpCodigoRedeAutorizada: String;
-    fpDebito: Boolean;
-    fpCredito: Boolean;
-    fpDigitado: Boolean;
+    fpCodigoRedeAutorizada: String;     // 739-000 Índice da Rede Adquirente
+    fpDebito: Boolean;      // Se True, foi usado Cartão de Débito
+    fpCredito: Boolean;     // Se True, foi usado Cartão de Crédito
+    fpDigitado: Boolean;    // Se True, foi Digitado o número do Cartão de Débito
     fpParceladoPor: TACBrTEFRespParceladoPor;
     fpValorEntradaCDC: Double;
     fpDataEntradaCDC: TDateTime;
     fpTipoOperacao: TACBrTEFRespTipoOperacao;
     fpNFCeSAT: TACBrTEFRespNFCeSAT;
-    fpIdPagamento: longint;
-    fpIdRespostaFiscal: longint;
-    fpSerialPOS: String;
-    fpCodigoBandeiraPadrao: String;
-    fpEstabelecimento: String;
+    fpIdPagamento: Integer;          // 899-500 - VFP Integrador CE
+    fpIdRespostaFiscal: Integer;     // 899-501 - VFP Integrador CE
+    fpSerialPOS: String;             // 899-502 - VFP Integrador CE
+    fpEstabelecimento: String;       // 899-503  - VFP Integrador CE
+    fpCodigoBandeiraPadrao: String;  // SiTef-132, Contém um índice que indica qual o tipo do cartão quando esse tipo for identificável, segundo uma tabela a ser fornecida (5 posições)
+    fpConfirmar: Boolean;     // Se Verdadeiro, deve confirmar essa transação
+    fpQRCode: String;       // String com o Conteúdo do QRCode
 
     procedure SetCNFEnviado(const AValue: Boolean);
     procedure SetArqBackup(const AValue: String);
@@ -366,6 +368,7 @@ type
     property ArqBackup: String read fpArqBackup write SetArqBackup;
     property ArqRespPendente: String read fpArqRespPendente write fpArqRespPendente;
 
+    property Confirmar: Boolean read fpConfirmar;
     property CNFEnviado: Boolean read fpCNFEnviado write SetCNFEnviado;
 
     property ViaClienteReduzida: Boolean read fpViaClienteReduzida write fpViaClienteReduzida;
@@ -383,6 +386,7 @@ type
     property ValorEntradaCDC: Double read fpValorEntradaCDC;
     property DataEntradaCDC: TDateTime read fpDataEntradaCDC;
     property TipoOperacao: TACBrTEFRespTipoOperacao read fpTipoOperacao;
+    property QRCode: String read fpQRCode;
 
     property NFCeSAT: TACBrTEFRespNFCeSAT read fpNFCeSAT;
 
@@ -839,6 +843,7 @@ begin
   fpValorEntradaCDC := 0;
   fpDataEntradaCDC := 0;
   fpCodigoBandeiraPadrao := '';
+  fpQRCode := '';
 
   fpCodigoOperadoraCelular := '';
   fpNomeOperadoraCelular := '';
@@ -852,6 +857,7 @@ begin
   fpDebito := False;
   fpDigitado := False;
 
+  fpConfirmar := False;
   fpCNFEnviado := False;
 
   fpArqBackup := '';

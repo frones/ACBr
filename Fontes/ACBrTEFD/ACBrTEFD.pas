@@ -37,9 +37,9 @@ unit ACBrTEFD;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrTEFDClass, ACBrTEFDPayGo, ACBrTEFDAuttar,
-  ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef, ACBrTEFDGpu,
-  ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
+  Classes, SysUtils, ACBrBase, ACBrTEFDClass, ACBrTEFDPayGo, ACBrTEFDPayGoWeb,
+  ACBrTEFDAuttar, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef,
+  ACBrTEFDGpu, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
   ACBrTEFDConvCard, ACBrTEFDCappta
   {$IfNDef NOGUI}
@@ -139,6 +139,7 @@ type
 
      fTefClass     : TACBrTEFDClass ;
      fTefPayGo     : TACBrTEFDPayGo ;
+     fTefPayGoWeb  : TACBrTEFDPayGoWeb ;
      fTefDial      : TACBrTEFDDial ;
      fTefGPU       : TACBrTEFDGpu ;
      fTefCliSiTef  : TACBrTEFDCliSiTef;
@@ -299,6 +300,7 @@ type
        write fConfirmarAntesDosComprovantes default False;
 
      property TEFPayGo   : TACBrTEFDPayGo    read fTefPayGo ;
+     property TEFPayGoWeb: TACBrTEFDPayGoWeb read FTEFPayGoWeb ;
      property TEFDial    : TACBrTEFDDial     read fTefDial ;
      property TEFDisc    : TACBrTEFDDisc     read fTefDisc ;
      property TEFHiper   : TACBrTEFDHiper    read fTefHiper ;
@@ -465,6 +467,13 @@ begin
   fTEFList.Add(fTefPayGo);     // Adicionando "fTefPayGo" na Lista Objetos de Classes de TEF
   {$IFDEF COMPILER6_UP}
    fTefPayGo.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
+
+  { Criando Classe TEF_PayGo }
+  fTefPayGoWeb := TACBrTEFDPayGoWeb.Create(self);
+  fTEFList.Add(fTefPayGoWeb);     // Adicionando "fTefPayGoWeb" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefPayGoWeb.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
 
   { Criando Classe TEF_DIAL }
@@ -681,6 +690,7 @@ begin
 
   case AValue of
     gpPayGo     : fTefClass := fTefPayGo ;
+    gpPayGoWeb  : fTefClass := fTefPayGoWeb ;
     gpTefDial   : fTefClass := fTefDial ;
     gpTefDisc   : fTefClass := fTefDisc ;
     gpHiperTef  : fTefClass := fTefHiper ;

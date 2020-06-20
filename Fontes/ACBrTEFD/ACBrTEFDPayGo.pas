@@ -48,6 +48,9 @@ uses
   ACBrTEFDClass, ACBrTEFComum;
 
 const
+  CACBrTEFDPayGoNome = 'ACBrTEFDPayGo';
+  CACBrTEFDPayGoVersao = '1.0.2';
+
   CACBrTEFPayGoRedesTxt = 'RedesPayGo.txt';
   CACBrTEFPayGoRedesRes = 'RedesPayGo';
   CACBrTEFDPayGo_ArqTemp = 'C:\PAYGO\REQ\intpos.tmp';
@@ -151,7 +154,7 @@ implementation
 {$ENDIF}
 
 uses
-  math, Types,
+  math, Types, strutils,
   ACBrTEFD, ACBrUtil, ACBrConsts;
 
 var
@@ -325,7 +328,7 @@ end;
 procedure TACBrTEFDRespPayGo.ConteudoToProperty;
 var
   IndiceViaCliente, Linhas, I: Integer;
-  ViasDeComprovante, TipoDeCartao, TipoDeFinanciamento: String;
+  ViasDeComprovante, TipoDeCartao, TipoDeFinanciamento, StatusConfirmacao: String;
   ImprimirViaCliente, ImprimirViaEstabelecimento: Boolean;
 begin
   inherited ConteudoToProperty;
@@ -435,10 +438,17 @@ begin
 
     else if (TipoDeFinanciamento = '4') or (TipoDeFinanciamento = '5') then
       fpTipoOperacao := opPreDatado;
-
   end;
 
   fpNFCeSAT.Autorizacao := fpNSU;
+
+  // 729-000 - Status da confirmação
+  //    1: transação não requer confirmação, ou já confirmada
+  //    2: transação requer confirmação
+  //    Se não encontrado, assumir que a transação requer confirmação se houver comprovantes a serem impressos.
+  StatusConfirmacao := Trim(LeInformacao(729,0).AsString);
+  if (StatusConfirmacao <> '') then
+    fpConfirmar := (StatusConfirmacao = '2');
 end;
 
 procedure TACBrTEFDRespPayGo.ProcessarTipoInterno(ALinha: TACBrTEFLinha);
@@ -472,7 +482,7 @@ begin
     begin
       // 740-000 - Número do cartão, mascarado
       fpBin := ALinha.Informacao.AsString;
-      fpNFCeSAT.UltimosQuatroDigitos := fpBin;
+      fpNFCeSAT.UltimosQuatroDigitos := RightStr(fpBin,4);
     end;
     741 :
     begin
@@ -605,22 +615,8 @@ begin
 end;
 
 procedure TACBrTEFDPayGo.ProcessarResposta;
-var
-  StatusConfirmacao: String;
 begin
-  StatusConfirmacao := Trim(Resp.LeInformacao(729,0).AsString);
-  // 729-000 - Status da confirmação
-  //    1: transação não requer confirmação, ou já confirmada
-  //    2: transação requer confirmação
-  //    Se não encontrado c
-
-  if (StatusConfirmacao = '1') then
-    fpSalvarArquivoBackup := False
-  else if (StatusConfirmacao = '2') then
-    fpSalvarArquivoBackup := True
-  else
-    fpSalvarArquivoBackup := (Resp.QtdLinhasComprovante > 0);
-
+  fpSalvarArquivoBackup := Resp.Confirmar;
   inherited ProcessarResposta;
 end;
 
@@ -632,6 +628,9 @@ begin
   if Trim(Req.Conteudo.LeInformacao(22,0).AsString) <> '' then
     if (pos(Req.Header, 'CRT,CHQ,ADM,CNC,CNF,NCN') > 0) then
       Req.GravaInformacao(717,0, FormatDateTime('YYMMDDhhnnss', Req.DataHoraTransacaoComprovante) );
+
+  if (pos(Req.Header, 'CRT,ADM,CNC') > 0) then
+    Req.GravaInformacao(725,0, CACBrTEFDPayGoNome+' '+CACBrTEFDPayGoVersao );  // 725-000 Dados adicionais #4
 
   inherited FinalizarRequisicao;
 end;

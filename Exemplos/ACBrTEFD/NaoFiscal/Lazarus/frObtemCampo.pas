@@ -36,82 +36,215 @@ interface
 
 uses
   Classes, SysUtils, 
-   Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons, ExtCtrls,
-  ACBrTEFDCliSiTef;
+  Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons, ExtCtrls;
 
 type
 
 {$R *.lfm}
 
+  TTipoCampo = (tcoString, tcoNumeric, tcoCurrency, tcoAlfa, tcoAlfaNum) ;
+
 { TFormObtemCampo }
 
   TFormObtemCampo = class(TForm)
-     BitBtn1 : TBitBtn;
-     BitBtn2 : TBitBtn;
-     BitBtn3: TBitBtn;
-     Edit1 : TEdit;
-     Panel1 : TPanel;
-     procedure Edit1KeyPress(Sender : TObject; var Key : char);
-     procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
-     procedure FormCreate(Sender : TObject);
-     procedure FormShow(Sender : TObject);
+    btOk : TBitBtn;
+    btCancel : TBitBtn;
+    btVoltar: TBitBtn;
+    edtResposta : TEdit;
+    pTitulo : TPanel;
+    procedure edtRespostaChange(Sender: TObject);
+    procedure edtRespostaKeyPress(Sender : TObject; var Key : char);
+    procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
+    procedure FormCreate(Sender : TObject);
+    procedure FormShow(Sender : TObject);
   private
     { private declarations }
+    fMascara: String;
+    FTamanhoMaximo: Integer;
+    FTamanhoMinimo: Integer;
+    fTipoCampo: TTipoCampo;
+    function GetOcultar: Boolean;
+    function GetResposta: String;
+    function GetTitulo: String;
+    procedure SetMascara(AValue: String);
+    procedure SetOcultar(AValue: Boolean);
+    procedure SetResposta(AValue: String);
+    procedure SetTitulo(AValue: String);
   public
     { public declarations }
-    TipoCampo : Integer;
-    Operacao  : TACBrTEFDCliSiTefOperacaoCampo;
-    TamanhoMinimo, TamanhoMaximo : Integer ;
-  end; 
-
-var
-  FormObtemCampo : TFormObtemCampo; 
+    property TipoCampo: TTipoCampo read fTipoCampo write FTipoCampo;
+    property TamanhoMinimo: Integer read FTamanhoMinimo write FTamanhoMinimo;
+    property TamanhoMaximo: Integer read FTamanhoMaximo write FTamanhoMaximo;
+    property Mascara: String read fMascara write SetMascara;
+    property Titulo: String read GetTitulo write SetTitulo;
+    property Resposta: String read GetResposta write SetResposta;
+    property Ocultar: Boolean read GetOcultar write SetOcultar;
+  end;
 
 implementation
 
 uses
-  ACBrConsts;
+  ACBrConsts, ACBrUtil, ACBrValidador;
 
 { TFormObtemCampo }
 
 procedure TFormObtemCampo.FormCreate(Sender : TObject);
 begin
-  TamanhoMinimo := 0 ;
-  TamanhoMaximo := 0 ;
-  Operacao      := tcString;
-  TipoCampo     := 0 ;
-end;
-
-procedure TFormObtemCampo.Edit1KeyPress(Sender : TObject; var Key : char);
-begin
-   if Key in [#13,#8] then exit ;  { Enter e BackSpace, OK }
-
-   if Operacao in [tcDouble, tcCMC7] then
-      if not (Key in ['0'..'9', DecimalSeparator]) then    { Apenas números }
-         Key := #0 ;
-
-   if (TamanhoMaximo > 0) and (Length( Edit1.Text ) >= TamanhoMaximo) then
-      Key := #0 ;
-end;
-
-procedure TFormObtemCampo.FormCloseQuery(Sender : TObject; var CanClose : boolean);
-begin
-   if (ModalResult = mrOK) and (TamanhoMinimo > 0) then
-   begin
-      if Length( Edit1.Text ) < TamanhoMinimo then
-      begin
-         ShowMessage('O Tamanho Mínimo para este campo e: '+IntToStr(TamanhoMinimo) );
-         CanClose := False ;
-         Edit1.SetFocus;
-      end;
-   end;
+  fTamanhoMinimo := 0;
+  fTamanhoMaximo := 0;
+  fTipoCampo := tcoString;
+  fMascara := '';
 end;
 
 procedure TFormObtemCampo.FormShow(Sender : TObject);
 begin
-   if Operacao = tcDouble then
-      Edit1.Text := '0,00' ;
-   Edit1.SetFocus;
+   if (fTipoCampo = tcoCurrency) then
+   begin
+     edtResposta.AutoSelect := False;
+     edtResposta.Text := 'R$ 0,00';
+     edtResposta.SelStart := Length(edtResposta.Text);
+   end
+   else
+     edtResposta.SetFocus;
+end;
+
+procedure TFormObtemCampo.FormCloseQuery(Sender : TObject; var CanClose : boolean);
+begin
+  if (ModalResult = mrOK) then
+  begin
+    if (TamanhoMinimo > 0) and (Length(Resposta) < TamanhoMinimo) then
+    begin
+      ShowMessage('O Tamanho Mínimo para este campo e: '+IntToStr(TamanhoMinimo) );
+      CanClose := False;
+      edtResposta.SetFocus;
+    end
+    else if (TamanhoMaximo > 0) and (Length(Resposta) > TamanhoMaximo) then
+    begin
+      ShowMessage('O Tamanho Maximo para este campo e: '+IntToStr(TamanhoMaximo) );
+      CanClose := False;
+      edtResposta.SetFocus;
+    end
+  end;
+end;
+
+procedure TFormObtemCampo.edtRespostaKeyPress(Sender : TObject; var Key : char);
+var
+  Ok: Boolean;
+begin
+   if (Key in [#13,#8]) then  { Enter e BackSpace, OK }
+     Exit;
+
+   case fTipoCampo of
+     tcoNumeric, tcoCurrency:
+       Ok := CharIsNum(Key);
+
+     tcoAlfa:
+     begin
+       Key := upcase(Key);
+       Ok := CharIsAlpha(Key);
+     end;
+
+     tcoAlfaNum:
+     begin
+       Ok := CharIsNum(Key);
+       if not Ok then
+       begin
+         Key := upcase(Key);
+         Ok := CharIsAlpha(Key);
+       end;
+     end;
+
+   else
+     Ok := True;
+   end;
+
+   if (not Ok) then
+   begin
+     Key := #0;
+     Exit;
+   end;
+
+   if (TamanhoMaximo > 0) and (Length(Resposta) >= TamanhoMaximo) then
+     Key := #0;
+end;
+
+procedure TFormObtemCampo.edtRespostaChange(Sender: TObject);
+var
+  AValor: Int64;
+begin
+  if (TipoCampo = tcoCurrency) then
+  begin
+    AValor := StrToIntDef(OnlyNumber(edtResposta.Text), 0);
+    edtResposta.Text := 'R$ '+FormatFloatBr(AValor/100);
+    edtResposta.SelStart := Length(edtResposta.Text);
+  end
+  else if (fMascara <> '') then
+  begin
+    edtResposta.Text := FormatarMascaraDinamica( RemoverMascara(edtResposta.Text, fMascara), fMascara);
+    edtResposta.SelStart := Length(edtResposta.Text);
+  end;
+end;
+
+function TFormObtemCampo.GetResposta: String;
+var
+  AValor: Int64;
+begin
+  if (TipoCampo = tcoCurrency) then
+  begin
+    AValor := StrToIntDef(OnlyNumber(edtResposta.Text), 0);
+    Result := FloatToString(AValor/100, '.', '0.00');
+  end
+  else if (fMascara <> '') then
+    Result := ACBrValidador.RemoverMascara(edtResposta.Text, fMascara)
+  else
+    Result := edtResposta.Text;
+end;
+
+procedure TFormObtemCampo.SetResposta(AValue: String);
+begin
+  edtResposta.Text := AValue;
+end;
+
+function TFormObtemCampo.GetTitulo: String;
+begin
+  Result := pTitulo.Caption;
+end;
+
+procedure TFormObtemCampo.SetTitulo(AValue: String);
+var
+  NumLin, AltLin: Integer;
+begin
+  pTitulo.Caption := AValue;
+
+  // Se houver quebra de linhas na msg, aumente o formulário...
+  NumLin := CountStr(AValue, CR);
+  if (NumLin > 0) then
+  begin
+    AltLin := pTitulo.Canvas.GetTextHeight('H');
+    Height := Height + (NumLin * AltLin);
+  end;
+end;
+
+procedure TFormObtemCampo.SetMascara(AValue: String);
+begin
+  if fMascara = AValue then
+    Exit;
+
+  fMascara := StringReplace(AValue, '@', '*', [rfReplaceAll]);
+end;
+
+function TFormObtemCampo.GetOcultar: Boolean;
+begin
+  Result := (edtResposta.PasswordChar <> #0);
+end;
+
+
+procedure TFormObtemCampo.SetOcultar(AValue: Boolean);
+begin
+  if AValue then
+    edtResposta.PasswordChar := '*'
+  else
+    edtResposta.PasswordChar := #0;
 end;
 
 end.

@@ -1,33 +1,37 @@
 object FormObtemCampo: TFormObtemCampo
   Left = 644
-  Height = 172
+  Height = 170
   Top = 278
-  Width = 579
-  Caption = 'OnObtemCampo'
-  ClientHeight = 172
-  ClientWidth = 579
+  Width = 422
+  BorderStyle = bsDialog
+  Caption = 'Entre com a Informação'
+  ClientHeight = 170
+  ClientWidth = 422
+  Constraints.MinHeight = 170
+  Constraints.MinWidth = 420
   Font.Height = -19
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '2.0.6.0'
-  object Edit1: TEdit
+  LCLVersion = '2.0.8.0'
+  object edtResposta: TEdit
     Left = 32
     Height = 33
-    Top = 72
-    Width = 513
+    Top = 80
+    Width = 356
     Alignment = taCenter
-    Anchors = [akTop, akLeft, akRight]
-    OnKeyPress = Edit1KeyPress
+    Anchors = [akLeft, akRight, akBottom]
+    OnChange = edtRespostaChange
+    OnKeyPress = edtRespostaKeyPress
     TabOrder = 0
   end
-  object BitBtn1: TBitBtn
-    Left = 100
+  object btOk: TBitBtn
+    Left = 317
     Height = 35
-    Top = 119
+    Top = 127
     Width = 71
-    Anchors = [akTop]
+    Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = '&OK'
     Default = True
@@ -35,38 +39,40 @@ object FormObtemCampo: TFormObtemCampo
     ModalResult = 1
     TabOrder = 1
   end
-  object BitBtn2: TBitBtn
-    Left = 225
+  object btCancel: TBitBtn
+    Left = 187
     Height = 35
-    Top = 119
+    Top = 127
     Width = 103
-    Anchors = [akTop]
+    Anchors = [akRight, akBottom]
     AutoSize = True
     Cancel = True
     Caption = 'Cancel'
     Kind = bkCancel
     ModalResult = 2
-    TabOrder = 2
-  end
-  object Panel1: TPanel
-    Left = 0
-    Height = 50
-    Top = 0
-    Width = 579
-    Align = alTop
-    Caption = 'Panel1'
     TabOrder = 3
   end
-  object BitBtn3: TBitBtn
-    Left = 386
+  object pTitulo: TPanel
+    Left = 0
+    Height = 56
+    Top = 0
+    Width = 422
+    Align = alTop
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Caption = 'pTitulo'
+    TabOrder = 4
+    Wordwrap = True
+  end
+  object btVoltar: TBitBtn
+    Left = 32
     Height = 35
-    Top = 120
-    Width = 89
-    Anchors = [akTop]
+    Top = 127
+    Width = 97
+    Anchors = [akLeft, akBottom]
     AutoSize = True
-    Caption = '&Retry'
+    Caption = 'Voltar'
     Kind = bkRetry
     ModalResult = 4
-    TabOrder = 4
+    TabOrder = 2
   end
 end

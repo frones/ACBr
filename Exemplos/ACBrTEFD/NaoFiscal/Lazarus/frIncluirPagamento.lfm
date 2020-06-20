@@ -16,18 +16,9 @@ object FormIncluirPagamento: TFormIncluirPagamento
     Top = 24
     Width = 189
     ItemHeight = 15
-    ItemIndex = 0
-    Items.Strings = (
-      '01 - Dinheiro'
-      '02 - Cheque'
-      '03 - Cartão de Crédito'
-      '04 - Cartão de Débito'
-      '99 - Outros'
-    )
     OnChange = seValorPagoChange
     Style = csDropDownList
     TabOrder = 0
-    Text = '01 - Dinheiro'
   end
   object Label14: TLabel
     Left = 16

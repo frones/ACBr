@@ -695,7 +695,7 @@ object FormPrincipal: TFormPrincipal
               Left = 545
               Height = 25
               Top = -2
-              Width = 110
+              Width = 113
               Anchors = [akTop, akRight]
               Caption = 'Solicita CPF'
               OnClick = btObterCPFClick
@@ -904,8 +904,8 @@ object FormPrincipal: TFormPrincipal
     TabOrder = 2
     object mImpressao: TMemo
       Left = 0
-      Height = 242
-      Top = 156
+      Height = 211
+      Top = 187
       Width = 329
       Align = alClient
       Font.CharSet = ANSI_CHARSET
@@ -923,7 +923,7 @@ object FormPrincipal: TFormPrincipal
     object lSaidaImpressao: TLabel
       Left = 5
       Height = 21
-      Top = 130
+      Top = 161
       Width = 319
       Align = alTop
       Alignment = taCenter
@@ -943,7 +943,7 @@ object FormPrincipal: TFormPrincipal
       ClientWidth = 329
       TabOrder = 1
       object btMudaPagina: TBitBtn
-        Left = 108
+        Left = 112
         Height = 52
         Top = 8
         Width = 112
@@ -960,7 +960,7 @@ object FormPrincipal: TFormPrincipal
     object pMensagem: TPanel
       Left = 0
       Height = 125
-      Top = 0
+      Top = 31
       Width = 329
       Align = alTop
       Anchors = []
@@ -1068,6 +1068,25 @@ object FormPrincipal: TFormPrincipal
         TabOrder = 2
       end
     end
+    object lURLTEF: TLabel
+      Cursor = crHandPoint
+      Left = 5
+      Height = 21
+      Top = 5
+      Width = 319
+      Align = alTop
+      Alignment = taCenter
+      BorderSpacing.Around = 5
+      Caption = 'projetoacbr.com.br/tef'
+      Color = clBlack
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      OnClick = lURLTEFClick
+    end
   end
   object ACBrTEFD1: TACBrTEFD
     AutoFinalizarCupom = False
@@ -1078,6 +1097,14 @@ object FormPrincipal: TFormPrincipal
     TEFPayGo.ArqReq = 'C:\PAYGO\REQ\intpos.001'
     TEFPayGo.ArqSTS = 'C:\PAYGO\RESP\intpos.sts'
     TEFPayGo.ArqResp = 'C:\PAYGO\RESP\intpos.001'
+    TEFPayGoWeb.SuportaViasDiferenciadas = True
+    TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
+    TEFPayGoWeb.ConfirmarTransacoesPendentes = True
+    TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
+    TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
+    TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem
+    TEFPayGoWeb.OnAguardaPinPad = PayGoWebAguardaPinPad
+    TEFPayGoWeb.OnAvaliarTransacaoPendente = PayGoWebAvaliarTransacaoPendente
     TEFDial.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
     TEFDial.ArqReq = 'C:\TEF_DIAL\req\intpos.001'
     TEFDial.ArqSTS = 'C:\TEF_DIAL\resp\intpos.sts'
@@ -1169,7 +1196,8 @@ object FormPrincipal: TFormPrincipal
     OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
     OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
     OnGravarLog = ACBrTEFD1GravarLog
-    left = 552
+    left = 960
+    top = 296
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
@@ -1180,11 +1208,12 @@ object FormPrincipal: TFormPrincipal
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    left = 504
+    left = 960
+    top = 248
   end
   object ImageList1: TImageList
-    left = 384
-    top = 8
+    left = 960
+    top = 200
     Bitmap = {
       4C690D0000001000000010000000000000000000000000000000000000110000
       00330000002E0000001100000000000000000000000000000000000000000000

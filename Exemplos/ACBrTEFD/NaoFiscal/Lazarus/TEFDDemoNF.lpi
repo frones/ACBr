@@ -15,6 +15,10 @@
       </XPManifest>
       <Icon Value="0"/>
     </General>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="po"/>
+    </i18n>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">
@@ -71,7 +75,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="8">
       <Unit0>
         <Filename Value="TEFDDemoNF.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -115,6 +119,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="frExibeMensagem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormExibeMensagem"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -155,7 +166,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="8">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -163,23 +174,14 @@
         <Name Value="ECodetoolError"/>
       </Item2>
       <Item3>
-        <Name Value="EFOpenError"/>
+        <Name Value="Exception"/>
       </Item3>
       <Item4>
-        <Name Value="EACBrTEFDGPNaoInicializado"/>
+        <Name Value="EACBrTEFDErro"/>
       </Item4>
       <Item5>
-        <Name Value="Exception"/>
+        <Name Value="EACBrTEFPayGoWeb"/>
       </Item5>
-      <Item6>
-        <Name Value="EACBrTEFDErro"/>
-      </Item6>
-      <Item7>
-        <Name Value="ESynaSerError"/>
-      </Item7>
-      <Item8>
-        <Name Value="EACBrTEFDGPNaoResponde"/>
-      </Item8>
     </Exceptions>
   </Debugging>
 </CONFIG>

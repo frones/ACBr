@@ -46,6 +46,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2020
+-- ACBrTEFD, ACBrTEFDClass --
+[+] Adicionado novo modelo de TEF Dedicado, para suportar "TEF PayGo Web Libc"
+    Modelo: gpPayGoWeb,  Classe: TEFPayGoWeb: TACBrTEFDPayGoWeb;
+
+-- ACBrTEFDClass --
+[-] Correção para preencher a Segunda Via, quando apenas a Via Completa é informada
+
+-- TACBrTEFDPayGoWeb --
+[+] Nova classe, para suportar TEF Dedicado, "TEF PayGo Web Libc"
+    - Necessita da Biblioteca 'PGWebLib.dll' (Windows) ou 'PGWebLib.so' (Linux)
+    - Download da Biblioteca e Manuais em: https://www.paygo.com.br/links-e-manuais/
+[*] Projeto "TEFDDemoNF", modificado para suportar e demonstrar o novo Modelo de TEF
+
+-- ACBrTEFPayGo --
+[+] Mapeamento do campo "729" para "Resp.Confirmar"
+[-] Correção para que Resp.NFCeSAT.UltimosQuatroDigitos contenha apenas os 4 últimos digitos do BIN
+
+-- ACBrTEFComum --
+[+] Classe "TACBrTEFResp". Adição de comentários nos fontes, para melhor descrição
+    de algumas propriedades
+[+] Classe "TACBrTEFResp". Adição das propriedades:
+    Confirmar: Boolean -> Se True, a Resposta requer uma Confirmação (CNF)
+    QRCode: String -> Com Conteúdo do QRCode a ser exibido, quando usando carteiras Digitais
+    (por: DSA)
+
 30/05/2020
 -- TACBrTEFDPayGo --
 [+] Adicionada verificação na Inicialização, se o diretório C:\PAYGO existe.

@@ -1398,7 +1398,7 @@ begin
     ForceDirectories(fDiretorioTrabalho);
 
   GravarLog('PW_iInit( '+fDiretorioTrabalho+' )');
-  iRet := xPW_iInit(PAnsiChar(fDiretorioTrabalho));
+  iRet := xPW_iInit(PAnsiChar(AnsiString(fDiretorioTrabalho)));
   GravarLog('  '+PWRETToString(iRet));
   case iRet of
     PWRET_OK: MsgError := '';
@@ -2059,7 +2059,6 @@ end;
 function TACBrTEFPGWebAPI.ObterDadoDigitado(AGetData: TPW_GetData): SmallInt;
 var
   AResposta: String;
-  i: Integer;
 begin
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
   begin
@@ -2724,7 +2723,7 @@ begin
   if not fInicializada then
     Exit;
 
-  GravarLog('TACBrTEFPGWebAPI.UnLoadDLLFunctions');
+  //GravarLog('TACBrTEFPGWebAPI.UnLoadDLLFunctions');
 
   sLibName := '';
   if Length(PathDLL) > 0 then

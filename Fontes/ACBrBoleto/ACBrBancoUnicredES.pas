@@ -50,12 +50,13 @@ type
     function CodDescontoToStr(const pCodigoDesconto : TACBrCodigoDesconto): String;
   protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
-    function DefinePosicaoNossoNumeroRetorno: Integer; override;
+    //function DefinePosicaoNossoNumeroRetorno: Integer; override;
   public
     Constructor create(AOwner: TACBrBanco);
 
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
+    Procedure LerRetorno400(ARetorno:TStringList); override;
 
   end;
 
@@ -168,6 +169,118 @@ begin
   end;
 end;
 
+procedure TACBrBancoUnicredES.LerRetorno400(ARetorno: TStringList);
+var
+  Titulo : TACBrTitulo;
+  ContLinha : Integer;
+  rAgencia    :String;
+  rConta, rDigitoConta      :String;
+  Linha, rCedente, rCNPJCPF :String;
+  rCodEmpresa               :String;
+begin
+
+  if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
+    raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                             'não é um arquivo de retorno do '+ Nome));
+
+  rCodEmpresa:= trim(Copy(ARetorno[0],108,14));
+  rCedente   := trim(Copy(ARetorno[0],47,30));
+
+  if (StrToIntDef( Copy(ARetorno[0], 95, 6 ), 0) > 0) then
+    ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
+                                                            Copy(ARetorno[0],97,2)+'/'+
+                                                            Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
+
+  rAgencia := trim(Copy(ARetorno[1], 18, ACBrBanco.TamanhoAgencia));
+  rConta   := trim(Copy(ARetorno[1], 23, 8));
+  rDigitoConta := Copy(ARetorno[1], 31 ,1);
+
+  case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+     1: rCNPJCPF := Copy(ARetorno[1],7,11);
+     2: rCNPJCPF := Copy(ARetorno[1],4,14);
+  else
+    rCNPJCPF := Copy(ARetorno[1],4,14);
+  end;
+
+  ValidarDadosRetorno(rAgencia, rConta);
+  with ACBrBanco.ACBrBoleto do
+  begin
+    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
+       raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
+
+    case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+       1: Cedente.TipoInscricao:= pFisica;
+       2: Cedente.TipoInscricao:= pJuridica;
+    else
+       Cedente.TipoInscricao := pJuridica;
+    end;
+
+    if LeCedenteRetorno then
+    begin
+       try
+         Cedente.CNPJCPF := rCNPJCPF;
+       except
+         // Retorno quando é CPF está vindo errado por isso ignora erro na atribuição
+       end;
+
+       Cedente.CodigoCedente:= rCodEmpresa;
+       Cedente.Nome         := rCedente;
+       Cedente.Agencia      := rAgencia;
+       Cedente.AgenciaDigito:= '0';
+       Cedente.Conta        := rConta;
+       Cedente.ContaDigito  := rDigitoConta;
+    end;
+
+    ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+  end;
+
+  for ContLinha := 1 to ARetorno.Count - 2 do
+  begin
+     Linha := ARetorno[ContLinha] ;
+
+     if Copy(Linha,1,1)<> '1' then
+        Continue;
+
+     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+     with Titulo do
+     begin
+        SeuNumero                   := copy(Linha,280,26);
+        NumeroDocumento             := copy(Linha,117,10);
+        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
+                                       copy(Linha,109,2),0));
+
+        if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
+          DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                               Copy(Linha,113,2)+'/'+
+                                               Copy(Linha,115,2),0, 'DD/MM/YY' );
+        if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
+           Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                              Copy(Linha,149,2)+'/'+
+                                              Copy(Linha,151,2),0, 'DD/MM/YY' );
+
+        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+        ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+        ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+        ValorRecebido        := StrToFloatDef(Copy(Linha,306,13),0)/100;
+        ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
+        NossoNumero          := Copy(Linha,46, fpTamanhoMaximoNossoNum);
+
+        // informações do local de pagamento
+        Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+        Liquidacao.Agencia    := Copy(Linha,169,4);
+        Liquidacao.Origem     := '';
+
+        if (StrToIntDef(Copy(Linha,176,6),0) > 0) then
+           DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
+                                              Copy(Linha,298,2)+'/'+
+                                              Copy(Linha,300,2),0, 'DD/MM/YY' );
+     end;
+  end;
+
+end;
+
 function TACBrBancoUnicredES.CodDescontoToStr(
   const pCodigoDesconto: TACBrCodigoDesconto): String;
 begin
@@ -184,10 +297,10 @@ begin
   Result:= ACBrTitulo.NossoNumero;
 end;
 
-function TACBrBancoUnicredES.DefinePosicaoNossoNumeroRetorno: Integer;
+{function TACBrBancoUnicredES.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
   Result := 51;
-end;
+end; }
 
 function TACBrBancoUnicredES.CodJurosToStr(const pCodigoJuros : TACBrCodigoJuros; ValorMoraJuros : Currency): String;
 begin

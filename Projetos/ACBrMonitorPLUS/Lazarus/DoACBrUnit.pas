@@ -271,7 +271,7 @@ implementation
 Uses ACBrUtil, DateUtils, pcnConversao, utilUnit,
   {$IFDEF MSWINDOWS}sndkey32, Windows,{$ENDIF}
   {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF},
-  FileUtil;
+  FileUtil, ACBrDFeSSL;
 
 { TMetodoFim }
 
@@ -465,7 +465,12 @@ end;
 procedure TMetodoObterCertificados.Executar;
 begin
   with TACBrObjetoACBr(fpObjetoDono) do
-    fpcmd.Resposta := ObterCerticados(frmACBrMonitor.ACBrNFe1.SSL);
+  begin
+    if (frmACBrMonitor.ACBrNFe1.SSL.SSLCryptLib in [cryCapicom, cryWinCrypt]) then
+      fpcmd.Resposta := ObterCerticados(frmACBrMonitor.ACBrNFe1.SSL)
+    else
+      Raise Exception.Create( 'Método disponivel apenas para WinCrypt ou Capicom.' );
+  end;
 end;
 
 { TMetodoSetWebservice }

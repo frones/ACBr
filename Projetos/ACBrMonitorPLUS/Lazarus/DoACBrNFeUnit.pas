@@ -442,7 +442,7 @@ uses
   ACBrDFeConfiguracoes, ACBrNFeDANFEClass,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   pcnConversao, pcnConversaoNFe,
-  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, pcnNFe, DoACBrUnit;
+  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, pcnNFe, DoACBrUnit, ACBrDFeSSL;
 
 { TACBrObjetoNFe }
 
@@ -2243,7 +2243,10 @@ procedure TMetodoCNPJCertificado.Executar;
 begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrNFe.SSL.CertCNPJ;
+    if ACBrNFe.SSL.SSLCryptLib in [cryCapicom, cryWinCrypt] then
+      fpCmd.Resposta := ACBrNFe.SSL.CertCNPJ
+    else
+      fpCmd.Resposta := 'Método disponivel apenas para WinCrypt ou Capicom.'
   end;
 end;
 

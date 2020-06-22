@@ -52,6 +52,7 @@ type
     function RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function RetornaCodCarteira(const Carteira: string; const ACBrTitulo : TACBrTitulo): integer;
+    function DefineCodigoCedente(const ACBrCedente :TACBrCedente): String;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -139,9 +140,10 @@ end;
 
 function TACBrCaixaEconomica.CalcularDVCedente(const ACBrTitulo: TACBrTitulo): String;
 var
-  Num, Res: string;
-begin 
-    Num := RightStr(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,6);
+  Num, Res, codCedente: string;
+begin
+    codCedente := DefineCodigoCedente(ACBrTitulo.ACBrBoleto.Cedente);
+    Num := RightStr(codCedente,Length(codCedente));
     Modulo.CalculoPadrao;
     Modulo.MultiplicadorFinal   := 2;
     Modulo.MultiplicadorInicial := 9;
@@ -218,17 +220,18 @@ end;
 function TACBrCaixaEconomica.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras :String;
-  CampoLivre,DVCampoLivre, ANossoNumero : String;
+  CampoLivre,DVCampoLivre, ANossoNumero, ACodCedente : String;
 begin
 
     FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
     
     ANossoNumero := FormataNossoNumero(ACBrTitulo);
-
+    ACodCedente := DefineCodigoCedente(ACBrTitulo.ACBrBoleto.Cedente);
     {Montando Campo Livre}
-    CampoLivre := PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,6,'0') +
-                  CalcularDVCedente(ACBrTitulo) + Copy(ANossoNumero,3,3)  +
-                  Copy(ANossoNumero,1,1) + Copy(ANossoNumero,6,3)         +
+    CampoLivre := IfThen(Length(ACodCedente)= 7, ACodCedente,
+                  PadLeft(ACodCedente,6,'0') + CalcularDVCedente(ACBrTitulo)) +
+                  Copy(ANossoNumero,3,3)  +
+                  Copy(ANossoNumero,1,1) + Copy(ANossoNumero,6,3) +
                   Copy(ANossoNumero,2,1) + Copy(ANossoNumero,9,9);
 
     Modulo.CalculoPadrao;
@@ -277,7 +280,15 @@ begin
     else
        raise Exception.Create(ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"'));
 
+end;
 
+function TACBrCaixaEconomica.DefineCodigoCedente(const ACBrCedente: TACBrCedente): String;
+begin
+  if ((fpLayoutVersaoArquivo = 107) and (fpLayoutVersaoLote = 67))
+     or (fpLayoutVersaoArquivo = 007) then
+    Result := PadLeft(  ACBrCedente.CodigoCedente, 7, '0')
+  else
+    Result := PadLeft(  ACBrCedente.CodigoCedente, 6, '0');
 end;
 
 function TACBrCaixaEconomica.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
@@ -379,6 +390,7 @@ function TACBrCaixaEconomica.GerarRegistroHeader240(NumeroRemessa : Integer): St
 var
   ATipoInscricao: string;
   AMensagemReservada: String;
+  ACodCedente: String;
 begin
 
    with ACBrBanco.ACBrBoleto.Cedente do
@@ -393,6 +405,8 @@ begin
       else
         AMensagemReservada := 'REMESSA-PRODUCAO';
 
+      ACodCedente := DefineCodigoCedente(ACBrBanco.ACBrBoleto.Cedente);
+
           { GERAR REGISTRO-HEADER DO ARQUIVO }
 
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                + //1 a 3 - Código do banco
@@ -404,8 +418,8 @@ begin
                PadRight('',20, '0')                             + //33 a 52 - Código do convênio no banco  [ Alterado conforme instruções da CSO Brasília ] 27-07-09
                PadLeft(OnlyNumber(Agencia), 5, '0')             + //53 a 57 - Código da agência do cedente
                PadRight(AgenciaDigito, 1 , '0')                 + //58 - Dígito da agência do cedente
-               PadLeft(CodigoCedente, 6, '0')                   + //59 a 64 - Código Cedente (Código do Convênio no Banco)
-               PadRight('', 7, '0')                             + //65 a 71 - Uso Exclusivo CAIXA
+               PadRight(ACodCedente, 7, '0')                    + //59 a 65 - Código Cedente (Código do Convênio no Banco)
+               PadRight('', 6, '0')                             + //66 a 71 - Uso Exclusivo CAIXA
                '0'                                              + //72 - Uso Exclusivo CAIXA
                PadRight(Nome, 30, ' ')                          + //73 a 102 - Nome do cedente
                PadRight('CAIXA ECONOMICA FEDERAL', 30, ' ')     + //103 a 132 - Nome do banco
@@ -434,11 +448,12 @@ begin
                ' '                                          +//17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                               +//18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 15, '0')        +//19 a 33 -Número de inscrição do cedente
-               PadLeft(CodigoCedente, 6, '0')               +//34 a 39 - Código do convênio no banco (código do cedente)
-               PadRight('', 14, '0')                        +//40 a 53 - Uso Exclusivo Caixa
+               PadRight(ACodCedente, 7, '0')                +//34 a 40 - Código do convênio no banco (código do cedente)
+               PadRight('', 13, '0')                        +//41 a 53 - Uso Exclusivo Caixa
                PadLeft(OnlyNumber(Agencia), 5 , '0')        +//54 a 58 - Dígito da agência do cedente
                PadRight(AgenciaDigito, 1 , '0')             +//59 - Dígito da agência do cedente
-               PadLeft(CodigoCedente, 6, '0')               +//60 a 65 - Código do convênio no banco (código do cedente)
+               IfThen(Length(ACodCedente)= 6, ACodCedente,
+                            PadRight('',6,'0') )            +//60 a 65 - Código do convênio no banco (código do cedente)
                PadRight('',7,'0')                           +//66 a 72 - Código do Modelo Personalizado (Código fornecido pela CAIXA/gráfica, utilizado somente quando o modelo do bloqueto for personalizado)
                '0'                                          +//73 - Uso Exclusivo Caixa
                PadRight(Nome, 30, ' ')                      +//74 a 103 - Nome do cedente
@@ -454,11 +469,12 @@ end;
 procedure TACBrCaixaEconomica.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList);
 var
   wLinha: String;
+  ACodCedente: String;
 begin
 
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
-
+      ACodCedente := DefineCodigoCedente(ACBrBanco.ACBrBoleto.Cedente);
       { GERAR REGISTRO-HEADER DO ARQUIVO }
 
       wLinha:= '0'                                     + // 1 ate 1     - Código Identificador do tipo de Registro no Arquivo
@@ -467,8 +483,8 @@ begin
                '01'                                    + // 10 ate 11   - Código Identificador do Tipo de Serviço
                PadRight('COBRANCA', 15 )               + // 12 ate 26   - Literal correspondente ao códigode Serviço (COBRANÇA)
                RightStr(Agencia,4)                     + // 27 ate 30   - código agência
-               PadLeft(CodigoCedente, 6, '0')          + // 31 ate 36   - Código Identificador da Empresa na CAIXA (CEDENTE)
-               Space(10)                               + // 37 ate 46   - brancos
+               PadRight(ACodCedente, 7, '0')           + // 31 ate 37   - Código Identificador da Empresa na CAIXA (CEDENTE)
+               Space(9)                                + // 38 ate 46   - brancos
                PadRight(Nome, 30)                      + // 47 ate 76   - Nome da Empresa
                '104'                                   + // 77 ate 79   - Código do Banco (104)
                PadRight('C ECON FEDERAL', 15)          + // 80 ate 94   - Nome do Banco(C ECON FEDERAL)
@@ -485,6 +501,7 @@ var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade        : String;
   ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String;
   ACodigoDesconto                                                  : String;
+  ACodCedente: String;
 
   function MontarInstrucoes2: string;
   begin
@@ -659,6 +676,8 @@ begin
       else
         ADataMulta := PadLeft('', 8, '0');
 
+      ACodCedente := DefineCodigoCedente(ACBrTitulo.ACBrBoleto.Cedente);
+
       fValorTotalDocs:= fValorTotalDocs  + ValorDocumento;
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
@@ -667,23 +686,23 @@ begin
                'P'                                                        + //14 - Código do segmento do registro detalhe
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
-               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia), 5, '0')       + //18 a 22 - Agência mantenedora da conta
-               PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')            + //23 -Dígito verificador da agência
-               PadRight(ACBrBoleto.Cedente.CodigoCedente, 6, '0')             + //24 a 29 - Código do Convênio no Banco (Codigo do cedente)
-               PadRight('', 11, '0')                                          + //30 a 40 - Uso Exclusivo da CAIXA
+               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia), 5, '0')    + //18 a 22 - Agência mantenedora da conta
+               PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')        + //23 -Dígito verificador da agência
+               PadRight(ACodCedente, 7, '0')                              + //24 a 30 - Código do Convênio no Banco (Codigo do cedente)
+               PadRight('', 10, '0')                                      + //31 a 40 - Uso Exclusivo da CAIXA
                PadRight(Copy(AModalidade,1,2), 2, '0')                    + //41 a 42 - Modalidade da Carteira
-               PadLeft(Copy(ANossoNumero,3,17), 15, '0')                     + //43 a 57 - Nosso número - identificação do título no banco
+               PadLeft(Copy(ANossoNumero,3,17), 15, '0')                  + //43 a 57 - Nosso número - identificação do título no banco
                '1'                                                        + //58 - Cobrança Simples
                '1'                                                        + //59 - Forma de cadastramento do título no banco: com cadastramento  1-cobrança Registrada
                '2'                                                        + //60 - Tipo de documento: Tradicional
                ATipoBoleto                                                + //61 e 62(juntos)- Quem emite e quem distribui o boleto?
-               PadRight(NumeroDocumento, 11, ' ')                             + //63 a 73 - Número que identifica o título na empresa
-               PadRight('', 4, ' ')                                           + //74 a 77 - Uso Exclusivo Caixa
+               PadRight(NumeroDocumento, 11, ' ')                         + //63 a 73 - Número que identifica o título na empresa
+               PadRight('', 4, ' ')                                       + //74 a 77 - Uso Exclusivo Caixa
                FormatDateTime('ddmmyyyy', Vencimento)                     + //78 a 85 - Data de vencimento do título
                IntToStrZero( round( ValorDocumento * 100), 15)            + //86 a 100 - Valor nominal do título
-               PadRight('', 5, '0')                                           + //101 a 105 - Agência cobradora. Se ficar em branco, a caixa determina automaticamente pelo CEP do sacado
+               PadRight('', 5, '0')                                       + //101 a 105 - Agência cobradora. Se ficar em branco, a caixa determina automaticamente pelo CEP do sacado
                '0'                                                        + //106 - Dígito da agência cobradora
-               PadRight(AEspecieDoc, 2)                                       + // 107 a 108 - Espécie do documento
+               PadRight(AEspecieDoc, 2)                                   + // 107 a 108 - Espécie do documento
                ATipoAceite                                                + //109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                  + //110 a 117 - Data da emissão do documento
                IfThen( (ValorMoraJuros > 0) and (CodigoMora= ''), '1', PadRight(CodigoMora, 1, '3') )   + //118 - Código de juros de mora: Valor por dia
@@ -808,6 +827,7 @@ var
   TamConvenioMaior6                                          :Boolean;
   wCarteira                                                  :Integer;
   ACodigoDesconto, ADataMulta : String;
+  ACodCedente : String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -826,8 +846,8 @@ var
                   ATipoCendente                                                  + //    2 até 3 - Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')         + //   4 até 17 - Numero de Inscrição Empresa
                   RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )           + //  18 até 21 - Código da Agência
-                  PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 6, '0')  + //  22 até 27 - Código do Cedente
-                  Space(4)                                                       + //  28 até 31 - Uso Exclusivo CAIXA
+                  PadRight(ACodCedente, 7, '0')                                  + //  22 até 28 - Código do Cedente
+                  Space(3)                                                       + //  29 até 31 - Uso Exclusivo CAIXA
                   Space(25)                                                      + //  32 até 56 - Campo em Branco
                   PadRight(Copy(AModalidade,1,2), 2, '0')                        + //  57 até 58 - Modalidade
                   PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                    + //  59 até 73 - Nosso Numero
@@ -1003,6 +1023,9 @@ begin
          pJuridica : ATipoCendente := '02';
       end;
 
+      {Codigo do Cedente}
+      ACodCedente := DefineCodigoCedente(ACBrTitulo.ACBrBoleto.Cedente);
+
       with ACBrBoleto do
       begin
          if TamConvenioMaior6 then
@@ -1014,7 +1037,10 @@ begin
                   ATipoCendente                                                    + //  2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')           + //  4  até 17 - Inscrição da empresa
                   RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )             + // 18 até 21  - Código da Agência
-                  PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 6, '0')    + // 22 até 27  - Código do Cedente
+                  ifthen(Length(ACodCedente) > 6, '000',
+                         RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 ))     +
+                  ifthen(Length(ACodCedente) > 6, PadRight(ACodCedente, 7, '0'),
+                         ACodCedente )                                             + // 22 até 27  - Código do Cedente
                   ATipoBoleto                                                      + // 28 a 29    - Quem emite e quem distribui
                   '00'                                                             + // 30 a 31    - Comissão de permanência - informar 00
                   PadLeft(OnlyNumber(ACBrTitulo.SeuNumero), 25)                    + // 32 até 56  - Seu numero
@@ -1054,7 +1080,7 @@ begin
                   PadRight(Sacado.UF, 2 )                                          + // 350 até 351  - UF da cidade do sacado
                   ADataMulta                                                       + //352 até 357  - Data Multa
                   IntToStrZero(round((ValorDocumento* (PercentualMulta*100) )/100), 10)    + //358 até 367 - Valor nominal da multa
-                  PadRight(Sacado.NomeSacado, 22)                                  + // 368 até 389 - Nome do Sacador Avalista
+                  PadRight(Sacado.SacadoAvalista.NomeAvalista, 22)                 + // 368 até 389 - Nome do Sacador Avalista
                   '00'                                                             + // 390  391 - Terceira instrução de Cobrança Default '00'
                    IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                              PadLeft(IntToStr(DaysBetween(DataProtesto,Vencimento)), 2, '0'),
@@ -1814,7 +1840,7 @@ begin
 
    rCedente := trim(Copy(ARetorno[0],47,30));
    rAgencia := Copy(ARetorno[0],27,4);
-   rCodCedente := trim(Copy(ARetorno[0],31,6));
+   rCodCedente := trim(Copy(ARetorno[0],31,7));
 
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],390,5),0);

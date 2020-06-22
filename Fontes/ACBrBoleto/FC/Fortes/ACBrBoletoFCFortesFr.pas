@@ -1403,6 +1403,7 @@ begin
      txtNomeSacadorAval3.Caption     := txtNomeSacadorAval2.Caption;
      txtEndSacadorAval3.Caption      := txtEndSacadorAval2.Caption;
      imgCodigoBarra.Caption          := CodBarras;
+	 imgCodigoBarra.Margins.LeftMargin := 5; 
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
      txtInstrucoes3.Lines.Text       := txtInstrucoes2.Lines.Text;
    end;
@@ -1635,6 +1636,7 @@ begin
       txtLinhaDigitavelRecTop.Caption  := LinhaDigitavel;
       txtLinhaDigitavelRecTopRecPag.Caption  := LinhaDigitavel;
       imgBarrasRecTop1.Caption         := CodBarras;
+	  imgBarrasRecTop1.Margins.LeftMargin := 5; 
    end;
 end;
 

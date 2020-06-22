@@ -774,7 +774,7 @@ begin
                  PadRight(ACBrTitulo.SeuNumero, 25)                                    + // 196-220 / Identificação do título na empresa
                  PadLeft(ACBrTitulo.Instrucao1, 1)                                     + // 221-221 / Código para protesto
                  sDiasProtesto                                                         + // 222-223 / Número de dias para protesto
-                 PadLeft(ACBrTitulo.Instrucao2, 1)                                     + // 224-224 / Código para Baixa/Devolução
+                 PadLeft(Trim(ACBrTitulo.Instrucao2), 1)                               + // 224-224 / Código para Baixa/Devolução
                  sDiasBaixaDevol                                                       + // 225-227 / Número de Dias para Baixa/Devolução
                  '09'                                                                  + // 228-229 / Código da moeda
                  PadLeft('0', 10, '0')                                                 + // 230-239 / Nº do Contrato da Operação de Créd.

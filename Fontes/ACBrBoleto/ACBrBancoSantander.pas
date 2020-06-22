@@ -47,6 +47,7 @@ type
   TACBrBancoSantander = class(TACBrBancoClass)
   private
     FvTotalTitulos : Double;
+    iSegmentos : integer;
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
@@ -222,7 +223,7 @@ end;
 
 function TACBrBancoSantander.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String;
 var
-  ISequencia: Integer;
+  ISequencia : Integer;
   sCodMovimento, sAgencia, sCCorrente: String;
   sDigitoNossoNumero, sTipoCobranca, sTipoDocto, sTipoCarteira: String;
   sEspecie, sDataMoraJuros, sDataDesconto: String;
@@ -491,7 +492,11 @@ begin
                       Sacado.Numero + ' ' +
                       Sacado.Complemento , 40, ' ');
 
-    ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * 4) + 1;
+    iSegmentos := 1;
+    if sCodMovimento = '01' then
+      iSegmentos := 4;
+
+    ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * iSegmentos) + 1;
     {SEGMENTO P}
     Result := '033'                                                                                        + // 001 - 003 / Código do Banco na compensação
               '0001'                                                                                       + // 004 - 007 / Numero do lote remessa
@@ -511,8 +516,7 @@ begin
               sTipoCobranca                                                                                + // 058 - 058 / Tipo de cobrança
               sTipoCarteira                                                                                + // 059 - 059 / Forma de Cadastramento = 1 Registrada / 2 Sem Registro
               sTipoDocto                                                                                   + // 060 - 060 / Tipo de documento
-              //IfThen( ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite ,'1','2' )                           + // 061 - 061 / Quem emite boleto 1 = Banco / 2 = Cliente
-              Space(1)                                                                                     + //061 - 061 / Quem emite boleto 1 = Banco / 2 = Cliente
+              Space(1)                                                                                     + // 061 - 061 / Reservado (uso Banco)
               Space(1)                                                                                     + // 062 - 062 / Reservado (uso Banco)
               PadRight(Copy(NumeroDocumento, 1, 15), 15, ' ')                                              + // 063 - 077 / Nº do documento
               FormatDateTime('ddmmyyyy',Vencimento)                                                        + // 078 - 085 / Data de vencimento do título
@@ -782,7 +786,7 @@ begin
             '0001'                                                     + // 004 - 007 / Numero do lote remessa
             '5'                                                        + // 008 - 008 / Tipo de registro
             Space(9)                                                   + // 009 - 017 / Reservado (uso Banco)
-            IntToStrZero((4 * (ARemessa.Count -1)) + 2, 6)             + // 018 - 023 / Quantidade de registros do lote
+            IntToStrZero((iSegmentos * (ARemessa.Count -1)) + 2, 6)    + // 018 - 023 / Quantidade de registros do lote
             space(217)                                                 ; // 024 - 240 / Reservado (uso Banco)
 
    {GERAR REGISTRO TRAILER DO ARQUIVO}
@@ -792,7 +796,7 @@ begin
             '9'                                                        + // 008 - 008 / Tipo de registro
             space(9)                                                   + // 009 - 017 / Reservado (uso Banco)
             '000001'                                                   + // 018 - 023 / Quantidade de lotes do arquivo
-            IntToStrZero((4 * (ARemessa.Count -1)) + 4, 6)             + // 024 - 029 / Quantidade de registros do arquivo
+            IntToStrZero((iSegmentos * (ARemessa.Count -1)) + 4, 6)    + // 024 - 029 / Quantidade de registros do arquivo
             space(211)                                                 ; // 030 - 240 / Reservado (uso Banco)
 end;
 

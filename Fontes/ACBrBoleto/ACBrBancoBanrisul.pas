@@ -963,7 +963,7 @@ begin
     with Titulo do
     begin
       NossoNumero          := Copy(Linha,63,10);
-      SeuNumero            := copy(Linha,117,10);
+      SeuNumero            := copy(Linha,38,25);
       NumeroDocumento      := copy(Linha,117,10);
 
       ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;

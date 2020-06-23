@@ -55,7 +55,15 @@ begin
   If SSL.SSLCryptLib in [cryCapicom, cryWinCrypt] then
     SSL.LerCertificadosStore
   else
-    SSL.CarregarCertificado;
+  begin
+    with SSL do
+    begin
+      CarregarCertificado;
+      Result := Result +
+                  Format(CCertFormat, [CertNumeroSerie, CertRazaoSocial, CertCNPJ, FormatDateBr(CertDataVenc), CertCertificadora]) +
+                  sLineBreak;
+    end;
+  end;
 
   for I := 0 to SSL.ListaCertificados.Count-1 do
   begin

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2020
+-- ACBrNFeNotasFiscais --
+[*] Ao enviar um email o componente não estava levando em conta o nome do PDF 
+    atribuido na propriedade NomeDocumento.
+  Por: Italo Jurisato Junior
+
 03/06/2020
 -- ACBrNFeNotasFiscais --
 [*] Ajuste na leitura do arquivo .ini referente ao grupo detExport validando todos os campos obrigatórios que não precisam ser preenchidos

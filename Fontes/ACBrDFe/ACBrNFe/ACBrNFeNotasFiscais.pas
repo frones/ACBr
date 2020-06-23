@@ -3464,7 +3464,6 @@ end;
 procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq_temp : String;
   AnexosEmail:TStrings;
   StreamNFe : TMemoryStream;
 begin
@@ -3487,8 +3486,7 @@ begin
         if Assigned(DANFE) then
         begin
           DANFE.ImprimirDANFEPDF(FNFe);
-          NomeArq_temp := PathWithDelim(DANFE.PathPDF) + NumID + '-nfe.pdf';
-          AnexosEmail.Add(NomeArq_temp);
+          AnexosEmail.Add(DANFE.ArquivoPDF);
         end;
       end;
 

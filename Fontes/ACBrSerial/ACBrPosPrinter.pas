@@ -921,7 +921,6 @@ begin
   FLigaModoPagina := '';
   FLigaNegrito := '';
   FLigaSublinhado := '';
-  FPuloDeLinha := '';
   FZera := '';
 end;
 

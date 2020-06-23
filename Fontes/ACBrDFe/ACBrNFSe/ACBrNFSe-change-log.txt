@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2020
+-- ACBrNFSeWebServices --
+[*] Para o provedor Tecnos o valor de Id tem que ser um numero inteiro e não uma
+    string.
+  Por: Italo Jurisato Junior
+
 17/06/2020
 -- ACBrNFSeWebServices --
 [*] Possivel melhoria no tratamento de retorno do método EnviarLoteRpsSincrono.

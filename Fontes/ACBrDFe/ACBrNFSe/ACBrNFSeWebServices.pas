@@ -5078,8 +5078,14 @@ begin
   Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
 
   if Identificador <> '' then
-    Identificador := ' ' + Identificador + '="sub' +
-                     TNFSeSubstituirNfse(Self).FNumeroNFSe + '"';
+  begin
+    if FProvedor = ProTecnos then
+      Identificador := ' ' + Identificador + '="' +
+                       TNFSeSubstituirNfse(Self).FNumeroNFSe + '"'
+    else
+      Identificador := ' ' + Identificador + '="sub' +
+                       TNFSeSubstituirNfse(Self).FNumeroNFSe + '"';
+  end;
 
   InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.IncluiEncodingCab);
 

@@ -19,7 +19,7 @@ HIDDEN:
 
 VISIBLE:
     METHOD New(eArqConfig, eChaveCrypt) CONSTRUCTOR
-    DESTRUCTOR  Destroy
+    DESTRUCTOR Destroy
 
     METHOD Nome
     METHOD Versao

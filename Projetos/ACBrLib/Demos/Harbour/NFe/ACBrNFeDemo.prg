@@ -13,7 +13,5 @@ Function Main ()
    
    ?nfe:Nome
    ?nfe:Versao
-
-   nfe:Destroy()
-    
+   
 return NIL

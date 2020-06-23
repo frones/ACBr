@@ -2,6 +2,7 @@
 
 #include 'hbclass.ch'
 #include 'error.ch'
+#include 'common.ch'
 
 #ifndef _ACBRLIB_CH_
 #define _ACBRLIB_CH_
@@ -17,10 +18,4 @@
    #define __PLATFORM__LINUX
 #endif
 
-#ifdef __PLATFORM__LINUX
-   #define DLL_OSAPI DC_CALL_CDECL
-#else
-   #define DLL_OSAPI DC_CALL_STD
-#endif
-
-#endif 
+#define DLL_OSAPI DC_CALL_CDECL

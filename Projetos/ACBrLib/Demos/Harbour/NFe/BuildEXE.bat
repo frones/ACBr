@@ -9,10 +9,10 @@ goto End
 
 :GoodParameter
 
-set PATH=E:\Programacao\xHabour\harbour\bin;%PATH%
+set PATH=E:\Programacao\Tools\harbour\bin;%PATH%
 set HB_COMPILER=mingw
 ::set HB_COMPILER=msvc
-set HB_PATH=E:\Programacao\xHabour\harbour
+set HB_PATH=E:\Programacao\Tools\harbour
 
 E:
 md "%1\%2\"

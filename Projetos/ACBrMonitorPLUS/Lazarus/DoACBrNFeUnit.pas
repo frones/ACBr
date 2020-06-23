@@ -2243,10 +2243,7 @@ procedure TMetodoCNPJCertificado.Executar;
 begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
-    if ACBrNFe.SSL.SSLCryptLib in [cryCapicom, cryWinCrypt] then
-      fpCmd.Resposta := ACBrNFe.SSL.CertCNPJ
-    else
-      fpCmd.Resposta := 'Método disponivel apenas para WinCrypt ou Capicom.'
+    fpCmd.Resposta := ACBrNFe.SSL.CertCNPJ
   end;
 end;
 

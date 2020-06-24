@@ -221,11 +221,6 @@ begin
 
   TACBrCIOT(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
-
-  // Se o componente estiver configurado para não usar o certificado digital é
-  // preciso trocar o https por http.
-  if not FPDFeOwner.SSL.UseCertificateHTTP then
-    FPURL := StringReplace(FPURL, 'https://', 'http://', [rfReplaceAll]);
 end;
 
 function TCIOTWebService.GerarVersaoDadosSoap: String;

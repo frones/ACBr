@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2020
+-- ACBrCIOTWebServices --
+[*] Removido as linhas que alterava o HTTPS por HTTP das URLs quando
+    não era informado o certificado digital
+   Por: Italo Jurisato Junior
+
 26/05/2020
 -- pcnConversaoCIOT/pcnCIOTW_eFrete --
 [-] https://www.projetoacbr.com.br/forum/topic/57789-retirar-tag-entregadocumentacao-do-ciot/

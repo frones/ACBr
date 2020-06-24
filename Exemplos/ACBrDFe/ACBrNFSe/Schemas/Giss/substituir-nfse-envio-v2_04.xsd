@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.giss.com.br/gerar-nfse-resposta-v2_04.xsd"
-	xmlns="http://www.giss.com.br/gerar-nfse-resposta-v2_04.xsd"
+	targetNamespace="http://www.giss.com.br/substituir-nfse-envio-v2_04.xsd"
+	xmlns="http://www.giss.com.br/substituir-nfse-envio-v2_04.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"
 	attributeFormDefault="unqualified" elementFormDefault="qualified">
 

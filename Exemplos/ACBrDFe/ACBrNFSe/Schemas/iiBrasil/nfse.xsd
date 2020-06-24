@@ -146,7 +146,7 @@
 		</xsd:restriction>
 	</xsd:simpleType>
   
-        <xsd:simpleType name="tsSerieNfse">
+    <xsd:simpleType name="tsSerieNfse">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="6" />
 			<xsd:minLength value="1" />
@@ -829,7 +829,7 @@
 		        <xsd:element name="Email" type="tsEmail" minOccurs="0" maxOccurs="1" />
 		    </xsd:sequence>
 		    <xsd:sequence>
-		        <xsd:element name="Email" type="tsEmail" inOccurs="1" maxOccurs="1" />
+		        <xsd:element name="Email" type="tsEmail" minOccurs="1" maxOccurs="1" />
 		    </xsd:sequence>
 		</xsd:choice>
 	</xsd:complexType>

@@ -70,7 +70,7 @@ type
   end;
 
 const
-  C_URL = 'https://cobranca.bb.com.br:7101/registrarBoleto';
+  C_URL = 'https://cobranca.bb.com.br:7101/';
   C_URL_HOM = 'https://cobranca.homologa.bb.com.br:7101/';
   C_URL_OAUTH_HOM = 'https://oauth.hm.bb.com.br/oauth/token';
   C_URL_OAUTH_PROD = 'https://oauth.bb.com.br/oauth/token';

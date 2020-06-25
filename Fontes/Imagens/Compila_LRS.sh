@@ -49,7 +49,7 @@ echo "****************************************"
 echo
 
 :TEFD
-$LAZRES ACBrTEFD.lrs TACBrTEFD.png
+$LAZRES ACBrTEFD.lrs TACBrTEFD.png TACBrPicPay.png TACBrPOS.png
 mv ACBrTEFD.lrs ../ACBrTEFD
 echo
 echo "****************************************"

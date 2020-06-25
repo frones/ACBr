@@ -43,7 +43,7 @@ echo "****************************************"
 echo.
 
 :TEFD
-%1\tools\lazres.exe ACBrTEFD.lrs TACBrTEFD.png
+%1\tools\lazres.exe ACBrTEFD.lrs TACBrTEFD.png TACBrPicPay.png TACBrPOS.png
 move ACBrTEFD.lrs ..\ACBrTEFD
 echo.
 echo "****************************************"

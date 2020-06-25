@@ -556,10 +556,14 @@ begin
   if (Leitor.rExtrai(2, 'InfDeclaracaoPrestacaoServico') <> '') or
      (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') then
   begin
-    if FProvedor = ProTecnos then
-      NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))
+    case FProvedor of
+      proTecnos:
+        NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
+      proSimplISSv2:
+        NFSe.Competencia := DateToStr(StrToFloatDef(Leitor.rCampo(tcDat, 'Competencia'), 0));
     else
       NFSe.Competencia := Leitor.rCampo(tcStr, 'Competencia');
+    end;
 
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
     NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));

@@ -205,7 +205,7 @@ begin
   ValidarDadosRetorno(rAgencia, rConta);
   with ACBrBanco.ACBrBoleto do
   begin
-    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
+    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 14, '0')) then
        raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
 
     case StrToIntDef(Copy(ARetorno[1],2,2),0) of
@@ -273,9 +273,9 @@ begin
         Liquidacao.Origem     := '';
 
         if (StrToIntDef(Copy(Linha,176,6),0) > 0) then
-           DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
-                                              Copy(Linha,298,2)+'/'+
-                                              Copy(Linha,300,2),0, 'DD/MM/YY' );
+           DataCredito:= StringToDateTimeDef( Copy(Linha,176,2)+'/'+
+                                              Copy(Linha,178,2)+'/'+
+                                              Copy(Linha,180,2),0, 'DD/MM/YY' );
      end;
   end;
 

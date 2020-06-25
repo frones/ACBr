@@ -25,7 +25,7 @@ package DCLACBr_NFCeECFVirtual;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) Implementação ECF Virtual NFCe. Permite usar ACBrECF para emitir NFCe como se fosse um ECF'}
+{$DESCRIPTION 'ACBr - (design-time) Implementação ECF Virtual NFCe. Permite usar ACBrECF para emitir NFCe como se fosse um ECF - (http://www.projectoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

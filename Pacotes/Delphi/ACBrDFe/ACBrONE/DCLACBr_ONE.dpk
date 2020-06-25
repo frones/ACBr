@@ -59,7 +59,7 @@ package DCLACBr_ONE;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (Designtime) Operador Nacional dos Estados - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) Operador Nacional dos Estados - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

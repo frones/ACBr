@@ -67,7 +67,7 @@ package DCLACBr_NF3eDANF3eESCPOS;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (Designtime) DANF3e para NF3e Impressora Serial - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) DANF3e para NF3e Impressora Serial - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

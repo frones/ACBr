@@ -25,7 +25,7 @@ package DCLACBr_GNREGuiaRL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (Designtime) GNRE Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) GNRE Impressão em Fortes Report - (http://www.projectoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

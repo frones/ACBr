@@ -59,7 +59,7 @@ package DCLACBr_MDFe;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (Designtime) Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

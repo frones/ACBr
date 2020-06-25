@@ -63,7 +63,7 @@ package DCLACBr_CTeDacteRL;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (Designtime) DACTe em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) DACTe em Fortes Report - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

@@ -25,7 +25,7 @@ package DCLACBr_MTER;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) MTER Componente Servidor de Micro Terminais TCP/IP - (http://www.projectoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) MTER Componente Servidor de Micro Terminais TCP/IP - (http://www.projectoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

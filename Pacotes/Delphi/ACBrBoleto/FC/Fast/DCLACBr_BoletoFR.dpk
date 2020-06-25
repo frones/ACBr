@@ -25,7 +25,7 @@ package DCLACBr_BoletoFR;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) Boleto Impressão em  FastReport - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) Boleto Impressão em  Fast Report - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

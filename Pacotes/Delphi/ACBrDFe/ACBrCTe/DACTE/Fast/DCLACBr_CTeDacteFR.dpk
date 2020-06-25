@@ -25,7 +25,7 @@ package DCLACBr_CTeDacteFR;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) DACTe em FastReport - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) DACTe em Fast Report - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

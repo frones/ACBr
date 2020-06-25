@@ -25,7 +25,7 @@ package DCLACBr_NFSeDanfseFR;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) DANFSe em FastReport - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) DANFSe em Fast Report - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

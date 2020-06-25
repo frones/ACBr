@@ -25,7 +25,7 @@ package DCLACBr_Diversos;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - (DesignTime) Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - (design-time) Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 

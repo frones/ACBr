@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos) 
 
+25/06/2020
+-- ACBrBancoUnicredRS --
+[-] Correção para poder compilar no Delphi 7
+   Por: Italo Jurisato Junior
+
 23/06/2020
 
 -- ACBrBancoCaixa --

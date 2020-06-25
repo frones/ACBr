@@ -270,7 +270,7 @@ begin
                IntToStrZero( round(ValorAbatimento * 100), 15)                         + // 181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                                            + // 196 a 220 - Identificação do título na empresa
                aCodProtesto                                                            + // 221 - Código para protesto.  '1’ = ProtestarDias Corridos '2’ = ProtestarDias Úteis '3’ = NãoProtestar
-               IfThen(aCodProtesto<>'3', PadLeft(DiasDeProtesto.ToString,2,'0'),'00')  + // 222 a 223 - Prazo para negativar (em dias corridos)
+               IfThen(aCodProtesto<>'3', PadLeft(IntToStr(DiasDeProtesto),2,'0'),'00')  + // 222 a 223 - Prazo para negativar (em dias corridos)
                Space(4)                                                                + // 224 a 227 - Brancos
                '09'                                                                    + // 228 a 229 - Código da moeda: 09-Real
                StringOfChar('0', 10)                                                   + // 230 a 239 - Numero do contrato da op. de credito

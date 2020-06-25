@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ACBrBoleto,
   ACBrBancoCaixa, ACBrBancoUnicredRS, ACBrBancoUnicredES,
-  typinfo,
+  typinfo, ACBrBoletoConversao,
   {$ifdef FPC}
   fpcunit, testregistry, LConvEncoding
   {$else}
@@ -1783,8 +1783,8 @@ end;
 procedure CalcularDVCedente_Caixa_Test.CalcularDVCedente_Caixa_Dig0;
 begin
   Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
-  Boleto.Cedente.CodigoCedente:= '2145868';
-  CheckEquals('0', Caixa.CalcularDVCedente(Titulo));
+  Boleto.Cedente.CodigoCedente:= '45868';
+  CheckEquals('6', Caixa.CalcularDVCedente(Titulo));
 end;
 
 procedure CalcularDVCedente_Caixa_Test.CalcularDVCedente_Caixa_Invalido;
@@ -1815,7 +1815,7 @@ begin
   Titulo.ValorDocumento       := 520.60;
   Titulo.Carteira             := 'RG';
   Titulo.NossoNumero          := '003456789';
-  CheckEquals('10491720600000520605526544000100040034567897', Boleto.Banco.MontarCodigoBarras(Titulo));
+  CheckEquals('10492720600000520605526540000100040034567898', Boleto.Banco.MontarCodigoBarras(Titulo));
 
 
   Boleto.Cedente.CodigoCedente:= '588';
@@ -2028,9 +2028,9 @@ procedure MontarCampoCodigoCedente_Caixa_Test.MontarCampoCodigoCedente_Caixa_Pad
 begin
   Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
   Boleto.Cedente.Agencia      := '1552';
-  Boleto.Cedente.CodigoCedente:= '542552555';
+  Boleto.Cedente.CodigoCedente:= '54255';
 
-  CheckEquals('1552/542552555-1', Boleto.Banco.MontarCampoCodigoCedente(Titulo));
+  CheckEquals('1552/54255-5', Boleto.Banco.MontarCampoCodigoCedente(Titulo));
 end;
 
 procedure MontarCampoCodigoCedente_Caixa_Test.MontarCampoCodigoCedente_Caixa_Invalido;

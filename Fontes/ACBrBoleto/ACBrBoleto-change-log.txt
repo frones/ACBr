@@ -47,7 +47,21 @@ Símbolo : Significado
 
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+[-]     : Correção de Bug (assim esperamos) 
+
+23/06/2020
+
+-- ACBrBancoCaixa --
+[-] Ajuste para validar layout 101 e 007 ajuste na geração da Remessa400
+https://www.projetoacbr.com.br/forum/topic/57786-acbr-boleto-layout-do-arquivo/
+
+-- ACBrBancoUnicredRS --
+[*] Adicionado Remessa e Retorno CNAB240 para o Banco UnicredRS
+https://www.projetoacbr.com.br/forum/topic/56340-unicred-cnab-240/
+
+-- ACBrBancoUnicredES --
+[*] Ajustes layout de Retorno especifico do Banco 136 baseado no manual
+https://www.projetoacbr.com.br/forum/topic/54998-unicred-c%C3%B3digo-136/
 
 17/06/2020
 -- ACBrBancoBanrisul --

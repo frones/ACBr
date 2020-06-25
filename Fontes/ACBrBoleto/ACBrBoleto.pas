@@ -827,6 +827,7 @@ type
     function DefineCampoDigitoConta: String; virtual;                         //Utilizado para definir Digito da Conta na Remessa
     function DefineCampoDigitoAgenciaConta: String; virtual;                  //Utilizado para definir Digito da Agencia / Conta na Remessa
     function DefinePosicaoUsoExclusivo: String; virtual;                      //Utilizado para definir Posições de uso exclusivo FEBRABAN na Remessa
+    function DefineCodBeneficiarioHeader: String; virtual;                    //Utilizado para definir CodBeneficiario no Header da Remessa
 
   public
     Constructor create(AOwner: TACBrBanco);
@@ -3102,6 +3103,7 @@ end;
 function TACBrBancoClass.GerarRegistroHeader240 ( NumeroRemessa: Integer ) : String;
 var
   ListHeader: TStringList;
+  ACodBeneficiario: String;
 begin
   Result := '';
   //ErroAbstract('GerarRemessa240');
@@ -3111,6 +3113,7 @@ begin
     if (Length( ContaDigito)  > 1) and (trim(DigitoVerificadorAgenciaConta) = '')  then
       DigitoVerificadorAgenciaConta:=  copy(ContaDigito,length(ContaDigito ),1) ;
   end;
+  ACodBeneficiario:= trim(DefineCodBeneficiarioHeader);
 
   ListHeader:= TStringList.Create;
   try
@@ -3127,9 +3130,11 @@ begin
       DefineCampoConvenio(20)                          + //33 a 52 - Código do convênio no banco-Alfa
       PadLeft(OnlyNumber(Agencia), 5, '0')             + //53 a 57 - Código da agência do cedente-Numero
       DefineCampoDigitoAgencia                         + //58 - Dígito da agência do cedente -Alfa
-      Padleft(Conta, 12 , '0')                         + //59-70 - Número da Conta Corrente -Numero
-      DefineCampoDigitoConta                           + //71-71 -Dígito Verificador da Conta -Alfa
-      DefineCampoDigitoAgenciaConta                    + //BANCO RETORNOU QUE DEVE GRAVAR VAZIO CONTRARIO AO LAYOUT
+      ifthen(ACodBeneficiario <> '',
+             Padleft(ACodBeneficiario,14,'0') ,
+             Padleft(Conta, 12 , '0')                  + //59-70 - Número da Conta Corrente -Numero
+             DefineCampoDigitoConta                    + //71-71 -Dígito Verificador da Conta -Alfa
+             DefineCampoDigitoAgenciaConta )           + //72 a 72 - Dígito Verificador da Conta
       PadRight(nome, 30, ' ')                          + //73 102 - Nome da Empresa-Alfa
       PadRight(fpNome, 30, ' ')                        + //103 a 132 -Nome do banco-Alfa
       PadRight('', 10, ' ')                            + //133 a 142 - Uso exclusivo FEBRABAN/CNAB  -Alfa
@@ -3156,9 +3161,11 @@ begin
       DefineCampoConvenio(20)                    + //33 a 52 - Código do convênio no banco-Alfa
       Padleft(Agencia, 5, '0')                   + //54 a 58 - Agência Mantenedora da Conta
       DefineCampoDigitoAgencia                   + //59 - Dígito da agência do cedente
-      Padleft(Conta, 12 , '0')                   + //60 -71 Número da Conta Corrente
-      DefineCampoDigitoConta                     + //72 a 72 - Dígito Verificador da Conta
-      DefineCampoDigitoAgenciaConta              + //73 a 73 - Dígito Verificador da Ag/Conta
+      ifthen(ACodBeneficiario <> '',
+             Padleft(ACodBeneficiario,14,'0') ,
+             Padleft(Conta, 12 , '0')            + //60 -71 Número da Conta Corrente
+             DefineCampoDigitoConta              + //72 a 72 - Dígito Verificador da Conta
+             DefineCampoDigitoAgenciaConta )     + //73 a 73 - Dígito Verificador da Ag/Conta
       PadRight(Nome, 30, ' ')                    + //74 a 103 - Nome do cedente
       PadRight('', 40, ' ')                      + //104 a 143 - Mensagem 1
       PadRight('', 40, ' ')                      + //144 a 183 - Mensagen 2
@@ -3448,6 +3455,7 @@ var
   ContLinha : Integer;
   idxMotivo: Integer;
   rConvenioCedente: String;
+  ACodBeneficiario: String;
 begin
   //ErroAbstract('LerRetorno240');
 
@@ -3472,20 +3480,25 @@ begin
 
      if LeCedenteRetorno then
      begin
+       ACodBeneficiario:= trim(DefineCodBeneficiarioHeader);
        Cedente.Nome     := rCedente;
        Cedente.CNPJCPF  := rCNPJCPF;
        Cedente.Convenio := rConvenioCedente;
        Cedente.Agencia       := trim(copy(ARetorno[0], 53, 5));
        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
-       Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
-       Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
-     end;
+       if (ACodBeneficiario <> '') then
+         Cedente.CodigoCedente := trim(copy(ARetorno[0], 59, 14))
+       else
+       begin
+         Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
+         Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
+       end;
 
-     case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
-       01:
-         Cedente.TipoInscricao := pFisica;
+       if (StrToIntDef(copy(ARetorno[0], 18, 1), 0) = 1) then
+         Cedente.TipoInscricao := pFisica
        else
          Cedente.TipoInscricao := pJuridica;
+
      end;
 
      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
@@ -4203,8 +4216,7 @@ begin
 
 end;
 
-function TACBrBancoClass.DefineCodigoMulta(const ACBrTitulo: TACBrTitulo
-  ): String;
+function TACBrBancoClass.DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String;
 begin
   with ACBrTitulo do
   begin
@@ -4248,6 +4260,12 @@ begin
   Result := Space(20)                                        + // 172 a 191 - Uso reservado do banco
             PadRight('REMESSA-PRODUCAO', 20, ' ')            + // 192 a 211 - Uso reservado da empresa
             PadRight('', 29, ' ');                            // 212 a 240 - Uso Exclusivo FEBRABAN / CNAB
+end;
+
+function TACBrBancoClass.DefineCodBeneficiarioHeader: String;
+begin
+  //Por Default não informa beneficiario no Header
+  Result:= '';
 end;
 
 function TACBrBancoClass.DefineCampoConvenio(const ATam: Integer): String;

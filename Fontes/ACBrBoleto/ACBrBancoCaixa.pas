@@ -1036,9 +1036,8 @@ begin
          wLinha:= wLinha                                                           + //  1 até 1   -  ID Registro
                   ATipoCendente                                                    + //  2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')           + //  4  até 17 - Inscrição da empresa
-                  RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )             + // 18 até 21  - Código da Agência
                   ifthen(Length(ACodCedente) > 6, '000',
-                         RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 ))     +
+                         RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 ))     + // 18 até 21  - Código da Agência
                   ifthen(Length(ACodCedente) > 6, PadRight(ACodCedente, 7, '0'),
                          ACodCedente )                                             + // 22 até 27  - Código do Cedente
                   ATipoBoleto                                                      + // 28 a 29    - Quem emite e quem distribui

@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2020
+-- ACBrTEFPayGoWebComum, ACBrTEFPayGoComum --
+[*] Alguns Métodos e Classes foram movidos de ACBrTEFPayGoWebComum para
+    ACBrTEFPayGoComum, para permitir o uso dos mesmos em ACBrPOSPGWebAPI
+
+-- ACBrPOS, ACBrPOSPGWebAPI, ACBrTEFDReg --
+[+] Novo componente TACBrPOS.
+    - Permite criar um Servidor de Aplicações para receber conexões de equipamentos
+      "POS TEF". Permitem a mobilidade em Operações TEF, e Integrar o seu
+      sistema com Recebimentos de TEF externos.
+      https://www.paygo.com.br/produto-presencial/
+    - Usa a API da PayGo PTI_DLL.dll.
+    (por: DSA)
+
 20/06/2020
 -- ACBrTEFD, ACBrTEFDClass --
 [+] Adicionado novo modelo de TEF Dedicado, para suportar "TEF PayGo Web Libc"

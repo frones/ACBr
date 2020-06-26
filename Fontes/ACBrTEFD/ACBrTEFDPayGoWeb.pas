@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrTEFDClass, ACBrTEFPayGoWebComum, ACBrTEFComum;
+  ACBrBase, ACBrTEFDClass, ACBrTEFPayGoWebComum, ACBrTEFPayGoComum, ACBrTEFComum;
 
 resourcestring
   SACBrTEFDPayGoWeb_TransacaoPendente =
@@ -91,7 +91,7 @@ type
     fOperacaoPRE: Word;
     fsPGWebAPI: TACBrTEFPGWebAPI;
     function GetConfirmarTransacoesPendentes: Boolean;
-    function GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
+    function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
 
     function GetCNPJEstabelecimento: String;
@@ -131,7 +131,7 @@ type
   public
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
-    property ParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais read GetParametrosAdicionais;
+    property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
 
     constructor Create( AOwner : TComponent ) ; override;
     destructor Destroy ; override;
@@ -661,9 +661,9 @@ end;
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametrosAdicionais;
+  PA: TACBrTEFPGWebAPIParametros;
 begin
-  PA := TACBrTEFPGWebAPIParametrosAdicionais.Create;
+  PA := TACBrTEFPGWebAPIParametros.Create;
   try
     PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMAA', DataHoraTransacao);
     PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);
@@ -805,7 +805,7 @@ procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
   AValor: Double; ADocumentoVinculado: String; AMoeda: Integer;
   ParametrosAdicionaisTransacao: TStrings);
 var
-  PA: TACBrTEFPGWebAPIParametrosAdicionais;
+  PA: TACBrTEFPGWebAPIParametros;
 begin
   GravaLog('FazerRequisicao: Oper:'+PWOPERToString(PWOPER)+', Header:'+AHeader+
            ', Valor:'+FloatToStr(AValor)+', Documento:'+ADocumentoVinculado);
@@ -823,7 +823,7 @@ begin
   Req.DocumentoVinculado := ADocumentoVinculado;
   Req.ValorTotal := AValor;
 
-  PA := TACBrTEFPGWebAPIParametrosAdicionais.Create;
+  PA := TACBrTEFPGWebAPIParametros.Create;
   try
     if (AValor > 0) then
     begin
@@ -1013,7 +1013,7 @@ begin
   GravaLog(ALogLine);
 end;
 
-function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametrosAdicionais;
+function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
 begin
   Result := fsPGWebAPI.ParametrosAdicionais;
 end;

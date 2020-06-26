@@ -39,11 +39,11 @@ interface
 
 implementation
 
-Uses Classes, ACBrTEFD, ACBrPicPay;
+Uses Classes, ACBrTEFD, ACBrPicPay, ACBrPOS;
 
 procedure Register;
 begin
-  RegisterComponents('ACBrTEFD', [TACBrTEFD, TACBrPicPay]);
+  RegisterComponents('ACBrTEFD', [TACBrTEFD, TACBrPicPay, TACBrPOS]);
 end;
 
 

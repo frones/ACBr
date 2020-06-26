@@ -11,7 +11,8 @@ uses
   ACBrTEFDReg, ACBrTEFD, ACBrTEFDClass, ACBrTEFComum, ACBrTEFAPIClass, 
   ACBrTEFAPI, ACBrTEFDDial, ACBrTEFDPayGo, ACBrTEFDPayGoWeb, ACBrTEFDDisc, 
   ACBrTEFDHiper, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, 
-  ACBrTEFDCappta, ACBrTEFCliSiTefComum, ACBrTEFPayGoWebComum, ACBrPicpay, 
+  ACBrTEFDCappta, ACBrTEFCliSiTefComum, ACBrTEFPayGoComum, 
+  ACBrTEFPayGoWebComum, ACBrPOS, ACBrPOSPGWebAPI, ACBrPicpay, 
   LazarusPackageIntf;
 
 implementation

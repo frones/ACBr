@@ -46,7 +46,7 @@ resourcestring
   sErrLibJaInicializada = 'Biblioteca PTI_DLL já foi inicializada';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrSemComprovante = 'Não há Comprovante a ser impresso';
-  sErrPTIRET_UNKNOWN = 'Erro %d executando %s';
+  sErrPTIRET_UNKNOWN = 'Erro %d';
   sErrPTIRET_INVPARAM = 'Parâmetro inválido informado à função';
   sErrPTIRET_NOCONN = 'O terminal %s está offline.';
   sErrPTIRET_SOCKETERR = 'Erro ao iniciar a escuta da porta TCP %d.';
@@ -229,7 +229,6 @@ type
     fEmConnectionLoop: Boolean;
     fCNPJEstabelecimento: String;
     fDiretorioTrabalho: String;
-    ffMensagemBoasVindas: String;
     fImprimirViaClienteReduzida: Boolean;
     fNomeAplicacao: String;
     fOnGravarLog: TACBrGravarLog;
@@ -307,7 +306,7 @@ type
     procedure DoException( AErrorMsg: String );
 
     function CalcularCapacidadesDaAutomacao: Integer;
-    function FormatarMensagem(const AMsg: String; Colunas: Word): String;
+    function FormatarMensagem(const AMsg: String; Colunas: Word): AnsiString;
     procedure AvaliarErro(iRet: SmallInt; const TerminalId: String);
     procedure VerificarTransacaoFoiIniciada;
     procedure AjustarEstadoConexao(const TerminalId: String; NovoEstado: TACBrPOSPGWebEstadoTerminal);
@@ -323,7 +322,8 @@ type
 
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
 
-    procedure ExibirMensagem(const TerminalId: String; const AMensagem: String);
+    procedure ExibirMensagem(const TerminalId: String; const AMensagem: String;
+      TempoEspera: Word = 0);
     procedure LimparTeclado(const TerminalId: String);
     function AguardarTecla(const TerminalId: String; Espera: Word = 0): Integer;
     function ObterDado(const TerminalId: String; const Titulo: String;
@@ -340,7 +340,8 @@ type
     procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
       Tipo: TACBrPOSPGWebCodBarras);
     procedure ImprimirComprovantesTEF(const TerminalId: String;
-      Tipo: TACBrPOSPGWebComprovantes; IgnoraErroSemComprovante: Boolean = True);
+      Tipo: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+      IgnoraErroSemComprovante: Boolean = True);
     procedure ObterEstado(const TerminalId: String;
       out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
       out Modelo: String; out MAC: String; out Serial: String); overload;
@@ -380,7 +381,7 @@ type
     property PortaTCP: Word read fPortaTCP write fPortaTCP;
     property MaximoTerminaisConectados: Word read fMaximoTerminaisConectados write fMaximoTerminaisConectados;
     property TempoDesconexaoAutomatica: Word read fTempoDesconexaoAutomatica write fTempoDesconexaoAutomatica;
-    property MensagemBoasVindas: String read fMensagemBoasVindas write ffMensagemBoasVindas;
+    property MensagemBoasVindas: String read fMensagemBoasVindas write fMensagemBoasVindas;
     property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read fParametrosAdicionais;
 
     Property SuportaSaque: Boolean read fSuportaSaque write fSuportaSaque;
@@ -467,7 +468,15 @@ procedure TACBrPOSPGWebConexao.Execute;
 begin
   // ATENÇÃO: Todo o código do Evento OnNovaConexao deve ser Thread Safe
   try
-    fPOSPGWeb.OnNovaConexao(fTerminalId, fModel, fMAC, fSerNo);
+    try
+      fPOSPGWeb.OnNovaConexao(fTerminalId, fModel, fMAC, fSerNo);
+    except
+      On E: Exception do
+      begin
+        if not Terminated then
+          fPOSPGWeb.ExibirMensagem(fTerminalId, E.Message, 5);
+      end;
+    end;
   finally
     Terminate;
   end;
@@ -475,13 +484,16 @@ end;
 
 procedure TACBrPOSPGWebConexao.Terminate;
 begin
+  if Terminated then
+    Exit;
+
+  inherited Terminate;
+
   try
     fPOSPGWeb.Desconectar(TerminalId);
   except
     { Ignora erros }
   end;
-
-  inherited Terminate;
 end;
 
 function TACBrPOSPGWebConexao.GetEstado: TACBrPOSPGWebEstadoTerminal;
@@ -712,16 +724,19 @@ begin
 end;
 
 procedure TACBrPOSPGWebAPI.ExibirMensagem(const TerminalId: String;
-  const AMensagem: String);
+  const AMensagem: String; TempoEspera: Word);
 var
   iRet: SmallInt;
-  MsgFormatada: String;
+  MsgFormatada: AnsiString;
 begin
   MsgFormatada := FormatarMensagem(AMensagem, CACBrPOSPGWebColunasDisplay);
   GravarLog('PTI_Display( '+TerminalId+', '+MsgFormatada+' )', True);
   xPTI_Display( TerminalId, MsgFormatada, iRet);
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
+
+  if (TempoEspera > 0) then
+    AguardarTecla(TerminalId, TempoEspera);
 end;
 
 procedure TACBrPOSPGWebAPI.LimparTeclado(const TerminalId: String);
@@ -859,7 +874,7 @@ var
 begin
   // Trocando Tag <e> por \v ou #11, para Expandido. Deve ser o Primeiro caracter da Linha
   TextoFormatado := StringReplace(ATexto, '<e>', #11, [rfReplaceAll]);
-  TextoFormatado := StringReplace(ATexto, '<E>', #11, [rfReplaceAll]);
+  TextoFormatado := StringReplace(TextoFormatado, '<E>', #11, [rfReplaceAll]);
   // Formatando no limite de Colunas
   TextoFormatado := FormatarMensagem(TextoFormatado, CACBrPOSPGWebColunasImpressora);
 
@@ -1189,31 +1204,36 @@ begin
       TACBrPOSPGWebConexao.Create(Self, TerminalId, Model, MAC, SerNo);
     end
     else if (iRet <> PTIRET_NONEWCONN) then
-      GravarLog('  PTI_ConnectionLoop: '+PTIRETToString(iRet));
+      GravarLog('PTI_ConnectionLoop: '+PTIRETToString(iRet));
   finally
     fEmConnectionLoop := False;
     fTimerConexao.Enabled := True;
   end;
 end;
 
-function TACBrPOSPGWebAPI.FormatarMensagem(const AMsg: String; Colunas: Word): String;
+function TACBrPOSPGWebAPI.FormatarMensagem(const AMsg: String; Colunas: Word
+  ): AnsiString;
 var
-  LB: String;
+  MsgFormatada, LB: String;
 begin
-  Result := AMsg;
   if (Length(AMsg) > Colunas) then
   begin
+    MsgFormatada := TiraAcentos(AMsg);
     LB := sLineBreak;
     if (LB <> LF) then
-      Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
+      MsgFormatada := StringReplace(MsgFormatada, sLineBreak, LF, [rfReplaceAll]);
 
     if (LB <> CR) then
-      Result := StringReplace(Result, CR, LF, [rfReplaceAll]);
+      MsgFormatada := StringReplace(MsgFormatada, CR, LF, [rfReplaceAll]);
 
-    Result := QuebraLinhas(Result, Colunas);
+    MsgFormatada := QuebraLinhas(MsgFormatada, Colunas);
     if (LB <> CR) then
-      Result := StringReplace(Result, LB, CR, [rfReplaceAll]);
-  end;
+      MsgFormatada := StringReplace(MsgFormatada, LB, CR, [rfReplaceAll]);
+
+    Result := AnsiString(ACBrStrToAnsi(MsgFormatada));
+  end
+  else
+    Result := AnsiString(AMsg);
 end;
 
 procedure TACBrPOSPGWebAPI.AvaliarErro(iRet: SmallInt; const TerminalId: String

@@ -75,7 +75,7 @@ type
      function GetUtilizaSaldoTotalVoucher: Boolean;
      function GetVersaoAplicacao: String;
      procedure SetDiretorioTrabalho(AValue: String);
-     procedure SetfMensagemBoasVindas(AValue: String);
+     procedure SetMensagemBoasVindas(AValue: String);
      procedure SetImprimirViaClienteReduzida(AValue: Boolean);
      procedure SetInicializada(AValue: Boolean);
      procedure SetMaximoTerminaisConectados(AValue: Word);
@@ -103,7 +103,8 @@ type
      procedure Inicializar;
      procedure DesInicializar;
 
-     procedure ExibirMensagem(const TerminalId: String; const AMensagem: String);
+     procedure ExibirMensagem(const TerminalId: String; const AMensagem: String;
+       TempoEspera: Word = 0);
      procedure LimparTeclado(const TerminalId: String);
      function AguardarTecla(const TerminalId: String; Espera: Word = 0): Integer;
      function ObterDado(const TerminalId: String; const Titulo: String;
@@ -113,14 +114,19 @@ type
        const ValorInicial: String = ''; LinhaCaptura: Word = 2): String;
      function ExecutarMenu(const TerminalId: String; Opcoes: TStrings;
        const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
-       OpcaoInicial: SmallInt = 0): SmallInt;
+       OpcaoInicial: SmallInt = 0): SmallInt; overload;
+     function ExecutarMenu(const TerminalId: String; const OpcoesPipe: String;
+       const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
+       OpcaoInicial: SmallInt = 0): SmallInt; overload;
      procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = PTIBEEP_OK);
      procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
      procedure AvancarPapel(const TerminalId: String);
      procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
        Tipo: TACBrPOSPGWebCodBarras);
      procedure ImprimirQRCode(const TerminalId: String; const Conteudo: String);
-     procedure ImprimirComprovantesTEF(const TerminalId: String; Tipo: TACBrPOSPGWebComprovantes);
+     procedure ImprimirComprovantesTEF(const TerminalId: String;
+       Tipo: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+       IgnoraErroSemComprovante: Boolean = True);
      procedure ObterEstado(const TerminalId: String;
        out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
        out Modelo: String; out MAC: String; out Serial: String); overload;
@@ -165,7 +171,7 @@ type
      property PortaTCP: Word read GetPortaTCP write SetPortaTCP;
      property MaximoTerminaisConectados: Word read GetMaximoTerminaisConectados write SetMaximoTerminaisConectados;
      property TempoDesconexaoAutomatica: Word read GetTempoDesconexaoAutomatica write SetTempoDesconexaoAutomatica;
-     property MensagemBoasVindas: String read GetMensagemBoasVindas write SetfMensagemBoasVindas;
+     property MensagemBoasVindas: String read GetMensagemBoasVindas write SetMensagemBoasVindas;
      property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
 
      Property SuportaSaque: Boolean read GetSuportaSaque write SetSuportaSaque;
@@ -334,7 +340,7 @@ begin
   fPOSPGWeb.DiretorioTrabalho := AValue;
 end;
 
-procedure TACBrPOS.SetfMensagemBoasVindas(AValue: String);
+procedure TACBrPOS.SetMensagemBoasVindas(AValue: String);
 begin
   fPOSPGWeb.MensagemBoasVindas := AValue;
 end;
@@ -426,9 +432,9 @@ begin
 end;
 
 procedure TACBrPOS.ExibirMensagem(const TerminalId: String;
-  const AMensagem: String);
+  const AMensagem: String; TempoEspera: Word);
 begin
-  fPOSPGWeb.ExibirMensagem(TerminalId, AMensagem);
+  fPOSPGWeb.ExibirMensagem(TerminalId, AMensagem, TempoEspera);
 end;
 
 procedure TACBrPOS.LimparTeclado(const TerminalId: String);
@@ -460,6 +466,21 @@ begin
   Result := fPOSPGWeb.ExecutarMenu(TerminalId, Opcoes, Titulo, IntervaloMaxTeclas, OpcaoInicial);
 end;
 
+function TACBrPOS.ExecutarMenu(const TerminalId: String;
+  const OpcoesPipe: String; const Titulo: String; IntervaloMaxTeclas: Word;
+  OpcaoInicial: SmallInt): SmallInt;
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Text := StringReplace(OpcoesPipe, '|', sLineBreak, [rfReplaceAll] );
+    Result := ExecutarMenu(TerminalId, SL, Titulo, IntervaloMaxTeclas, OpcaoInicial);
+  finally
+    SL.Free;
+  end;
+end;
+
 procedure TACBrPOS.Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep);
 begin
   fPOSPGWeb.Beep(TerminalId, TipoBeep);
@@ -488,9 +509,9 @@ begin
 end;
 
 procedure TACBrPOS.ImprimirComprovantesTEF(const TerminalId: String;
-  Tipo: TACBrPOSPGWebComprovantes);
+  Tipo: TACBrPOSPGWebComprovantes; IgnoraErroSemComprovante: Boolean);
 begin
-  fPOSPGWeb.ImprimirComprovantesTEF(TerminalId, Tipo);
+  fPOSPGWeb.ImprimirComprovantesTEF(TerminalId, Tipo, IgnoraErroSemComprovante);
 end;
 
 procedure TACBrPOS.ObterEstado(const TerminalId: String; out

@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD, ACBrPosPrinter,
-  ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef, ACBrTEFPayGoWebComum,
+  ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef, ACBrTEFPayGoComum, ACBrTEFPayGoWebComum,
   ACBrTEFComum, ACBrTEFDPayGoWeb, ImgList, ACBrBase;
 
 type
@@ -208,6 +208,7 @@ type
     procedure PayGoWebObtemCampo(
       DefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo; var Resposta: String;
       var Validado: Boolean; var Cancelado: Boolean);
+    procedure SbArqLogClick(Sender: TObject);
     procedure sbLimparLogClick(Sender: TObject);
     procedure seTotalAcrescimoChange(Sender: TObject);
     procedure seTotalDescontoChange(Sender: TObject);
@@ -527,6 +528,18 @@ begin
   finally
     FormObtemCampo.Free;
   end;
+end;
+
+procedure TFormPrincipal.SbArqLogClick(Sender: TObject);
+var
+  AFileLog: String;
+begin
+  if pos(PathDelim,edLog.Text) = 0 then
+    AFileLog := ExtractFilePath( Application.ExeName ) + edLog.Text
+  else
+    AFileLog := edLog.Text;
+
+  OpenURL( AFileLog );
 end;
 
 procedure TFormPrincipal.btImprimirClick(Sender: TObject);
@@ -1484,7 +1497,7 @@ begin
 
   try
     // ** NOTA **
-    // Usa '01' como Indice de Forma de Pagamento para todas as operações TEF,
+    // Usa '01' como Indice de Forma de Pagamento de ECF, para todas as operações TEF,
     // para evitar que o ACBrTEFD tente separar os Comprovantes por Forma de Pagamento
 
     if (Indice = '02') then          // 02-CHEQUE

@@ -44,7 +44,7 @@ object FormPrincipal: TFormPrincipal
       Top = 0
       Width = 674
       Height = 376
-      ActivePage = tsOperacao
+      ActivePage = tsConfiguracao
       Align = alTop
       Images = ImageList1
       TabOrder = 0
@@ -248,6 +248,7 @@ object FormPrincipal: TFormPrincipal
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
+              OnClick = SbArqLogClick
             end
             object Label12: TLabel
               Left = 240
@@ -801,7 +802,7 @@ object FormPrincipal: TFormPrincipal
               Left = 572
               Top = 4
               Width = 85
-              Height = 42
+              Height = 29
               Align = alRight
               Caption = '000000'
               Color = clBtnFace

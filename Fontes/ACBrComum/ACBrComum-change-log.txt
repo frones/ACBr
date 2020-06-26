@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/06/2020
+-- ACBrBase, ACBrReg --
+[*] Ajustes no endereço de URL do ACBr, em TACBrAboutDialogProperty
+
+-- ACBrBase --
+[*] "TACBrThreadTimer.Destroy", modificação para que o método "WaitFor" sempre
+    seja chamado, antes da liberar, pois o "OnTimer" pode ainda estar em execução
+    (por: DSA)
 
 Data: 27/05/2020
 -- ACBr.inc --

@@ -319,19 +319,28 @@ begin
   {$IFDEF NOGUI}
       Msg := 'Componentes ACBr CONSOLE'+sLineBreak+
              'Automação Comercial Brasil'+sLineBreak+
-             'http://acbr.sourceforge.net' ;
+             'https://projetoacbr.com.br' ;
       Msg := ACBrStr(Msg) ;
       writeln( Msg )
   {$ELSE}
     {$IFDEF VisualCLX}
       Msg := 'Componentes <b>ACBr CLX</b><BR>'+
               'Automação Comercial Brasil<BR><BR>'+
-              '<A HREF="http://acbr.sourceforge.net">'+
-              'http://acbr.sourceforge.net</A><BR><BR>' ;
+              '<A HREF="https://projetoacbr.com.br">'+
+              'https://projetoacbr.com.br</A><BR><BR>' ;
     {$ELSE}
-      Msg := 'Componentes ACBr '+{$IFDEF FPC}'Lazarus/FPC'{$ELSE}'VCL'{$ENDIF}+#10+
+      Msg := 'Componentes ACBr '+
+             {$IFDEF FPC}
+              'Lazarus/FPC'
+             {$ELSE}
+              {$IFDEF FMX}
+               'FMX'
+              {$ELSE}
+               'VCL'
+              {$ENDIF}
+             {$ENDIF}+#10+
              'Automação Comercial Brasil'+#10+#10+
-             'http://acbr.sourceforge.net' ;
+             'https://projetoacbr.com.br' ;
       Msg := ACBrStr( Msg ) ;
     {$ENDIF}
 
@@ -459,8 +468,7 @@ begin
   fsEnabled := False;
   Terminate;
   fsEvent.SetEvent;  // libera Event.WaitFor()
-  if not Terminated then
-    WaitFor;
+  WaitFor;
 
   fsEvent.Free;
   inherited Destroy;

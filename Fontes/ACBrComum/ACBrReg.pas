@@ -173,7 +173,7 @@ end;
 
 function TACBrAboutDialogProperty.GetValue: string;
 begin
-  Result := 'http://acbr.sf.net' ;  
+  Result := 'https://projetoacbr.com.br' ;
 end;
 
 { TACBrFileProperty }

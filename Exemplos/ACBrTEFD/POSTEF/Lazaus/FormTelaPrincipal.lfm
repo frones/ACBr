@@ -16,11 +16,11 @@ object frPOSTEFServer: TfrPOSTEFServer
     Height = 350
     Top = 0
     Width = 610
-    ActivePage = tsOperacao
+    ActivePage = tsConfiguracao
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object tsConfiguracao: TTabSheet
       Caption = 'Configuração'
@@ -147,7 +147,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               Width = 272
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 2
-              Text = 'TEFDemoNF'
+              Text = 'POSTEFServer'
             end
             object Label18: TLabel
               Left = 296

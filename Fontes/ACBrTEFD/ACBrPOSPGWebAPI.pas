@@ -682,7 +682,7 @@ begin
   if not fInicializada then
     Exit;
 
-  GravarLog('TACBrPOSPGWebAPI.DesInicializar');
+  //GravarLog('TACBrPOSPGWebAPI.DesInicializar');
   fTimerConexao.Enabled := False;
   fTimerConexao.OnTimer := Nil;
 
@@ -1070,7 +1070,6 @@ var
   pszValue: PAnsiChar;
   uiBuffLen: LongWord;
   iRet: SmallInt;
-  MsgError: String;
 begin
   Result := #0;
   uiBuffLen := 10240;   // 10K

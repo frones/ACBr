@@ -498,8 +498,8 @@ begin
       ACBrPOS1.ExibirMensagem(TerminalId,
         LeftStr(Descricao, ColDis) + sLineBreak +
         'TOTAL.: '+FormatFloatBr(ValorTotal) + sLineBreak +
-        PadCenter('PAGAMENTO EM DINHEIRO', ColDis)+
-        PadCenter(' CONFIRA O TROCO ', ColDis, '*'), 5);
+        '* D I N H E I R O *'+ sLineBreak +
+        '* CONFIRA O TROCO *', 5);
     end
   else
     raise Exception.Create('PAGAMENTO CANCELADO');

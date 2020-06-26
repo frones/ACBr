@@ -40,6 +40,23 @@ uses
   ACBrTEFPayGoComum, ACBrPOS, ACBrPOSPGWebAPI, ImgList, ACBrBase;
 
 type
+  TItemPedido = record
+    CodItem: Integer;
+    Descricao: String;
+    UN: String;
+    Qtd: Double;
+    PrecoUnit: Double;
+  end;
+
+  TPedido = record
+    NumPedido: Integer;
+    Nome: String;
+    DataHora: TDateTime;
+    ValorTotal: Double;
+    Items: array of TItemPedido;
+  end;
+
+  TPedidos = array of TPedido;
 
   { TfrPOSTEFServer }
 
@@ -105,6 +122,8 @@ type
     procedure lURLTEFClick(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
   private
+    fPedidos: TPedidos;
+
     function GetNomeArquivoConfiguracao: String;
     procedure TratarException(Sender : TObject; E : Exception);
     procedure AdicionarLinhaLog(AMensagem: String);
@@ -118,14 +137,17 @@ type
     procedure PararServidorPOS;
 
     procedure ExecutarFluxoEntrega(const TerminalId: String);
-    function ExibirMenuPedidosEntrega(const TerminalId: String): Boolean;
+    procedure ExibirMenuPedidosEntrega(const TerminalId: String);
+    procedure ImprimirPedido(const TerminalId: String; IndicePedido: Integer);
 
     procedure ExecutarFluxoFechamentoMesa(const TerminalId: String);
 
     procedure ExecutarFluxoFechamentoBomba(const TerminalId: String);
+    procedure ExecutarReimpressao(const TerminalId: String);
 
-    function ExecutarReImpressao(const TerminalId: String): Boolean;
-
+    procedure EfetuarPagamento(const TerminalId: String; const Descricao: String;
+      ValorTotal: Double);
+    procedure IncluirPedidosSimulados;
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
     procedure LerConfiguracao;
@@ -139,7 +161,7 @@ var
 implementation
 
 uses
-  IniFiles, math,
+  IniFiles, math, dateutils, strutils,
   ACBrUtil;
 
 {$R *.dfm}
@@ -250,6 +272,7 @@ begin
 
   LerConfiguracao;
   Application.OnException := TratarException;
+  IncluirPedidosSimulados;
 end;
 
 procedure TfrPOSTEFServer.lURLTEFClick(Sender: TObject);
@@ -304,6 +327,7 @@ procedure TfrPOSTEFServer.IrParaOperacaoPOS;
 begin
   AdicionarLinhaLog('- IrParaOperacaoPOS');
   GravarConfiguracao;
+  ConfigurarACBrPOS;
   sgTerminais.RowCount := 2;
   pgPrincipal.ActivePage := tsOperacao;
 end;
@@ -352,63 +376,98 @@ end;
 
 procedure TfrPOSTEFServer.ExecutarFluxoEntrega(const TerminalId: String);
 var
-  SL: TStringList;
   OP: SmallInt;
   OK: Boolean;
 begin
   OK := False;
   repeat
-    SL := TStringList.Create;
-    try
-      SL.Add('VER PEDIDOS');
-      SL.Add('REIMPRESSAO');
-      SL.Add('ADMINISTRATIVO');
-      SL.Add('SAIR');
-      OP := ACBrPOS1.ExecutarMenu(TerminalId, SL, 'ACBR - DEMO ENTREGA');
-      case OP of
-        0: OK := ExibirMenuPedidosEntrega(TerminalId);
-        1: OK := ExecutarReImpressao(TerminalId);
-        2: ACBrPOS1.ExecutarTransacaoTEF(TerminalId, PWOPER_ADMIN);
-      else
-        Exit;
-      end;
-
-    finally
-      SL.Free;
+    OP := ACBrPOS1.ExecutarMenu( TerminalId,
+                                 'VER PEDIDOS|REIMPRESSAO|ADMINISTRATIVO|SAIR',
+                                 'ACBR - DEMO ENTREGA' );
+    case OP of
+      0: ExibirMenuPedidosEntrega(TerminalId);
+      1: ExecutarReimpressao(TerminalId);
+      2: ACBrPOS1.ExecutarTransacaoTEF(TerminalId, PWOPER_ADMIN);
+    else
+      Exit;
     end;
   until OK;
 end;
 
-// *** NOTA ***
-// Aqui você leria os Pedidos Pendentes do Seu Banco de Dados, com algum Filtro
-function TfrPOSTEFServer.ExibirMenuPedidosEntrega(const TerminalId: String
-  ): Boolean;
-const
-  CPEDIDOS: array[0..3] of array [0..2] of string = (
-    ('098', 'DANIEL  ', ' 25,00'),
-    ('102', 'JONES   ', ' 75,20'),
-    ('113', 'ANA MARI', '115,00'),
-    ('212', 'JUCA PAT', ' 25,50') );
+procedure TfrPOSTEFServer.ExibirMenuPedidosEntrega(const TerminalId: String);
 var
   SL: TStringList;
   OP: SmallInt;
-  i: Integer;
-  ValorPagto: Double;
+  i, IndicePedido, ColDis: Integer;
 begin
-  Result := False;
   SL := TStringList.Create;
   try
-    for i := 0 to Length(CPEDIDOS)-1 do
-      SL.Add(CPEDIDOS[i][1]+' R$'+CPEDIDOS[i][2]);
+    // *** NOTA *** Aqui você deve ler os Pedidos Pendentes no Seu Banco de Dados, com algum Filtro
+    for i := 0 to Length(fPedidos)-1 do
+      SL.Add(LeftStr(fPedidos[i].Nome,8)+' R$ '+FormatFloatBr(fPedidos[i].ValorTotal,'###0.00') );
 
     SL.Add('V O L T A R');
     OP := ACBrPOS1.ExecutarMenu(TerminalId, SL, 'ESCOLHA O PEDIDO');
+
     if (OP >= 0) and (OP < SL.Count-1) then
     begin
-      ValorPagto := StringToFloat(CPEDIDOS[OP][2]);
-      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorPagto);
-      Result := True;
+      ColDis := CACBrPOSPGWebColunasDisplay;
+      IndicePedido := OP;
+      ImprimirPedido(TerminalId, IndicePedido);
+      ACBrPOS1.ExibirMensagem(TerminalId,
+        PadCenter('PEDIDO '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4)+' IMPRESSO', ColDis)+
+        PadCenter('CONFIRA O PEDIDO', ColDis), 5);
+
+      EfetuarPagamento( TerminalId,
+                        'PEDIDO: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4),
+                        fPedidos[IndicePedido].ValorTotal );
     end;
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure TfrPOSTEFServer.ImprimirPedido(const TerminalId: String;
+  IndicePedido: Integer);
+var
+  SL: TStringList;
+  ColImp, ColExp, i: Integer;
+  TotalItem: Currency;
+begin
+  // *** NOTA *** Aqui você deve ler os Itens do Pedido Selecionado, no Seu Banco de Dados
+
+  ColImp := CACBrPOSPGWebColunasImpressora;
+  ColExp := Trunc(ColImp/2)-1;
+
+  // Montando relatório com o Pedido
+  SL := TStringList.Create;
+  try
+    SL.Add( '<e>'+PadCenter('PROJETO ACBR', ColExp) );
+    SL.Add( PadCenter(' https://projetoacbr.com.br/tef ', ColImp, '-')  );
+    SL.Add( '' );
+    SL.Add( PadSpace( 'Pedido: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4)+'|'+
+                      'Data: '+FormatDateTimeBr(fPedidos[IndicePedido].DataHora),
+              ColImp, '|') );
+    SL.Add( '<e>Nome: '+fPedidos[IndicePedido].Nome );
+    SL.Add( StringOfChar('-', ColImp) );
+    for i := 0 to Length(fPedidos[IndicePedido].Items)-1 do
+    begin
+      TotalItem := fPedidos[IndicePedido].Items[i].Qtd * fPedidos[IndicePedido].Items[i].PrecoUnit;
+      SL.Add( IntToStrZero(fPedidos[IndicePedido].Items[i].CodItem, 4)   + ' '+
+              PadRight(fPedidos[IndicePedido].Items[i].Descricao,35) );
+      SL.Add( PadSpace( FormatFloatBr(fPedidos[IndicePedido].Items[i].Qtd, '##0.00')+ ' '+
+              PadRight(fPedidos[IndicePedido].Items[i].UN,2)+ ' x ' +
+                        FormatFloatBr(fPedidos[IndicePedido].Items[i].PrecoUnit, '#,##0.00') + '|' +
+                        FormatFloatBr( TotalItem, '#,##0.00'),
+                ColImp, '|') );
+    end;
+    SL.Add( StringOfChar('-', ColImp) );
+    SL.Add( '<e>'+PadSpace( 'TOTAL:|'+
+                            FormatFloatBr( fPedidos[IndicePedido].ValorTotal, '#,##0.00'),
+                    ColExp, '|') );
+
+    ACBrPOS1.ImprimirTexto(TerminalId, SL.Text);
+    ACBrPOS1.AvancarPapel(TerminalId);
   finally
     SL.Free;
   end;
@@ -424,10 +483,108 @@ begin
 
 end;
 
-function TfrPOSTEFServer.ExecutarReImpressao(const TerminalId: String): Boolean;
+procedure TfrPOSTEFServer.ExecutarReimpressao(const TerminalId: String);
 begin
-
+  try
+    ACBrPOS1.ImprimirComprovantesTEF(TerminalId, PTIPRN_BOTH, False);
+  except
+    On E: Exception do
+      ACBrPOS1.ExibirMensagem(TerminalId, E.Message);
+  end;
 end;
+
+procedure TfrPOSTEFServer.EfetuarPagamento(const TerminalId: String;
+  const Descricao: String; ValorTotal: Double);
+var
+  OP: SmallInt;
+  ColDis: Integer;
+begin
+  ColDis := CACBrPOSPGWebColunasDisplay;
+  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
+
+  case OP of
+    0:
+      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorTotal);
+    1:
+    begin
+      ACBrPOS1.ExibirMensagem(TerminalId,
+        LeftStr(Descricao, ColDis) + sLineBreak +
+        'TOTAL.: '+FormatFloatBr(ValorTotal) + sLineBreak +
+        '* D I N H E I R O *'+ sLineBreak +
+        '* CONFIRA O TROCO *', 5);
+    end
+  else
+    raise Exception.Create('PAGAMENTO CANCELADO');
+  end;
+end;
+
+procedure TfrPOSTEFServer.IncluirPedidosSimulados;
+begin
+  SetLength(fPedidos, 4);
+  fPedidos[0].NumPedido := 98;
+  fPedidos[0].DataHora := IncMinute(Now, -40);
+  fPedidos[0].Nome := 'DANIEL SIMOES';
+  fPedidos[0].ValorTotal := 25;
+  SetLength(fPedidos[0].Items, 1);
+  fPedidos[0].Items[0].CodItem := 100;
+  fPedidos[0].Items[0].Descricao := 'PIZZA BROTO PEPPERONI';
+  fPedidos[0].Items[0].PrecoUnit := 25;
+  fPedidos[0].Items[0].Qtd := 1;
+  fPedidos[0].Items[0].UN := 'UN';
+
+  fPedidos[1].NumPedido := 102;
+  fPedidos[1].DataHora := IncMinute(Now, -30);
+  fPedidos[1].Nome := 'INDIANA JONES';
+  fPedidos[1].ValorTotal := 75;
+  SetLength(fPedidos[1].Items, 2);
+  fPedidos[1].Items[0].CodItem := 100;
+  fPedidos[1].Items[0].Descricao := 'PIZZA BROTO PEPPERONI';
+  fPedidos[1].Items[0].PrecoUnit := 25;
+  fPedidos[1].Items[0].Qtd := 1;
+  fPedidos[1].Items[0].UN := 'UN';
+  fPedidos[1].Items[1].CodItem := 201;
+  fPedidos[1].Items[1].Descricao := 'PIZZA GRANDE MARGUERITA';
+  fPedidos[1].Items[1].PrecoUnit := 50;
+  fPedidos[1].Items[1].Qtd := 1;
+  fPedidos[1].Items[1].UN := 'PC';
+
+  fPedidos[2].NumPedido := 113;
+  fPedidos[2].DataHora := IncMinute(Now, -20);
+  fPedidos[2].Nome := 'ANA MARIA';
+  fPedidos[2].ValorTotal := 115;
+  SetLength(fPedidos[2].Items, 3);
+  fPedidos[2].Items[0].CodItem := 200;
+  fPedidos[2].Items[0].Descricao := 'PIZZA GRANDE PEPPERONI';
+  fPedidos[2].Items[0].PrecoUnit := 50;
+  fPedidos[2].Items[0].Qtd := 1;
+  fPedidos[2].Items[0].UN := 'UN';
+  fPedidos[2].Items[1].CodItem := 201;
+  fPedidos[2].Items[1].Descricao := 'PIZZA GRANDE MARGUERITA';
+  fPedidos[2].Items[1].PrecoUnit := 50;
+  fPedidos[2].Items[1].Qtd := 1;
+  fPedidos[2].Items[1].UN := 'UN';
+  fPedidos[2].Items[2].CodItem := 300;
+  fPedidos[2].Items[2].Descricao := 'COCA PET 1,5';
+  fPedidos[2].Items[2].PrecoUnit := 15;
+  fPedidos[2].Items[2].Qtd := 1;
+  fPedidos[2].Items[2].UN := 'LT';
+
+  fPedidos[3].NumPedido := 212;
+  fPedidos[3].DataHora := IncMinute(Now, -10);
+  fPedidos[3].Nome := 'JUCA PATO';
+  fPedidos[3].ValorTotal := 25.50;
+  SetLength(fPedidos[3].Items, 2);
+  fPedidos[3].Items[0].CodItem := 101;
+  fPedidos[3].Items[0].Descricao := 'PIZZA BROTO MARGUERITA';
+  fPedidos[3].Items[0].PrecoUnit := 25;
+  fPedidos[3].Items[0].Qtd := 1;
+  fPedidos[3].Items[0].UN := 'UN';
+  fPedidos[3].Items[1].CodItem := 500;
+  fPedidos[3].Items[1].Descricao := 'CHICLETE ADAMS';
+  fPedidos[3].Items[1].PrecoUnit := 0.50;
+  fPedidos[3].Items[1].Qtd := 1;
+  fPedidos[3].Items[1].UN := 'UN';
+ end;
 
 procedure TfrPOSTEFServer.LerConfiguracao;
 Var

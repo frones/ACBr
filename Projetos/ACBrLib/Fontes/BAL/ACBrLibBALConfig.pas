@@ -95,7 +95,7 @@ implementation
 
 uses
   ACBrMonitorConsts, ACBrLibConsts, ACBrLibBALConsts,
-  ACBrLibBALClass, ACBrLibComum, ACBrUtil;
+  ACBrLibBALBase, ACBrLibComum, ACBrUtil;
 
 { TBALConfig }
 

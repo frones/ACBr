@@ -53,8 +53,6 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibGNRe; // Ajusta a classe a ser criada
-
   MainThreadID := GetCurrentThreadId();
   Application.Initialize;
 end.

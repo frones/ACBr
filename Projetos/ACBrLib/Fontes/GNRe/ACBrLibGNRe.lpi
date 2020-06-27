@@ -308,7 +308,7 @@
         <PackageName Value="FCL"/>
       </Item6>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="ACBrLibGNRe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -368,6 +368,10 @@
         <Filename Value="..\Comum\ACBrLibCertUtils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="ACBrLibGNReBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

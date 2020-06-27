@@ -38,27 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibCHQDataModule, ACBrCHQ;
-
-type
-
-  { TACBrLibCHQ }
-
-  TACBrLibCHQ = class(TACBrLib)
-  private
-    FCHQDM: TLibCHQDM;
-
-  protected
-    procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
-    procedure Executar; override;
-  public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-    destructor Destroy; override;
-
-    property CHQDM: TLibCHQDM read FCHQDM;
-  end;
+  ACBrLibComum;
 
 {%region Declaração da funções}
 
@@ -87,8 +67,6 @@ function CHQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Cheque}
-procedure StringToMemo( AString : AnsiString; Memo : TStringList );
-
 function CHQ_Ativar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_Desativar: longint;
@@ -126,40 +104,7 @@ function CHQ_SetArquivoBemaFiINI(const eArquivoBemaFiINI: PChar): longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibCHQConfig;
-
-{ TACBrLibCHQ }
-
-constructor TACBrLibCHQ.Create(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  inherited Create(ArqConfig, ChaveCrypt);
-
-  FCHQDM := TLibCHQDM.Create(nil);
-end;
-
-destructor TACBrLibCHQ.Destroy;
-begin
-  FCHQDM.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrLibCHQ.Inicializar;
-begin
-  inherited Inicializar;
-
-  GravarLog('TACBrLibCHQ.Inicializar - Feito', logParanoico);
-end;
-
-procedure TACBrLibCHQ.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  fpConfig := TLibCHQConfig.Create(Self, ArqConfig, ChaveCrypt);
-end;
-
-procedure TACBrLibCHQ.Executar;
-begin
-  inherited Executar;
-  FCHQDM.AplicarConfiguracoes;
-end;
+  ACBrLibConsts, ACBrLibCHQBase;
 
 {%region CHQ}
 
@@ -167,121 +112,91 @@ end;
 function CHQ_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibCHQ, eArqConfig, eChaveCrypt);
 end;
 
 function CHQ_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar;
+  Result := LIB_Finalizar(pLib);
 end;
 
 function CHQ_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esTamanho);
+  Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
 function CHQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esTamanho);
+  Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
 function CHQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
 function CHQ_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(eArqConfig);
+  Result := LIB_ImportarConfig(pLib, eArqConfig);
 end;
 
 function CHQ_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(eArqConfig);
+  Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
 function CHQ_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(eArqConfig);
+  Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
 function CHQ_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
 function CHQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 {%endregion}
 
 {%region Cheque}
-procedure StringToMemo( AString : AnsiString; Memo : TStringList );
-begin
-  AString   := StringReplace(AString,#13+#10,'|',[rfReplaceAll]) ;
-  AString   := StringReplace(AString,#10,'|',[rfReplaceAll]) ;
-  Memo.Text := StringReplace(AString,'|',sLineBreak,[rfReplaceAll]) ;
-end ;
-
 function CHQ_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('CHQ_Ativar', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Ativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).Ativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('CHQ_Desativar', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Desativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).Desativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -289,95 +204,44 @@ function CHQ_ImprimirCheque: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('CHQ_ImprimirCheque', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.ImprimirCheque;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).ImprimirCheque;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_ImprimirLinha(const eLinha: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ALinha: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    ALinha := AnsiString(eLinha);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_ImprimirLinha( ' + ALinha + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_ImprimirLinha', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.ImprimirLinha(ALinha);
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).ImprimirLinha(eLinha);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_ImprimirVerso(const eLinhas: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ALinha: AnsiString;
-  Linhas: TStringList;
 begin
   try
-    VerificarLibInicializada;
-    ALinha := AnsiString(eLinhas);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_ImprimirVerso( ' + ALinha + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_ImprimirVerso', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      Linhas := TStringList.Create;
-      try
-        StringToMemo( ALinha, Linhas ); {Linha separadas por | (pipe)}
-        CHQDM.ACBrCHQ1.ImprimirVerso(Linhas);
-        Result := SetRetorno(ErrOK);
-      finally
-        Linhas.Free;
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).ImprimirVerso(eLinhas);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -385,25 +249,14 @@ function CHQ_TravarCheque: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('CHQ_TravarCheque', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.TravarCheque;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).TravarCheque;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -411,58 +264,29 @@ function CHQ_DestravarCheque: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('CHQ_DestravarCheque', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.DestravarCheque;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).DestravarCheque;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetBanco(const eBanco: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ABanco: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    ABanco := AnsiString(eBanco);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetBanco( ' + ABanco + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetBanco', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Banco := ABanco;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetBanco(eBanco);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -470,230 +294,104 @@ function CHQ_SetValor(const Valor: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetValor( ' + FloatToStr(Valor) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetValor', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Valor := Valor;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetValor(Valor);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetData(const eData: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-Var
-  Data: TDateTime;
 begin
   try
-    Data := StrToDateTime(eData);
-
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetData( ' + DateTimeToStr(Data) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetData', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Data := Data;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetData(eData);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetCidade(const eCidade: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ACidade: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    ACidade := AnsiString(eCidade);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetCidade( ' + ACidade + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetCidade', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Cidade := ACidade;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetCidade(eCidade);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetFavorecido(const eFavorecido: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  AFavorecido: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    AFavorecido := AnsiString(eFavorecido);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetFavorecido( ' + AFavorecido + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetFavorecido', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Favorecido := AFavorecido;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetFavorecido(eFavorecido);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetObservacao(const eObservacao: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  AObservacao: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    AObservacao := AnsiString(eObservacao);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetObservacao( ' + AObservacao + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetObservacao', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.Observacao := AObservacao;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetObservacao(eObservacao);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetBomPara(const eBomPara: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-Var
-  BomPara: TDateTime;
 begin
   try
-    BomPara := StrToDateTime(eBomPara);
-
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetBomPara( ' + DateTimeToStr(BomPara) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetBomPara', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.BomPara := BomPara;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetBomPara(eBomPara);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CHQ_SetArquivoBemaFiINI(const eArquivoBemaFiINI: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-Var
-  ArquivoBemaFiINI: String;
 begin
   try
-    ArquivoBemaFiINI := String(eArquivoBemaFiINI);
-
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CHQ_SetArquivoBemaFiINI( ' + ArquivoBemaFiINI + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('CHQ_SetArquivoBemaFiINI', logNormal);
-
-    with TACBrLibCHQ(pLib) do
-    begin
-      CHQDM.Travar;
-      try
-        CHQDM.ACBrCHQ1.ArquivoBemaFiINI := ArquivoBemaFiINI;
-        Result := SetRetorno(ErrOK);
-      finally
-        CHQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibCHQ(pLib^.Lib).SetArquivoBemaFiINI(eArquivoBemaFiINI);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

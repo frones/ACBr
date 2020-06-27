@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, syncobjs,
-  ACBrLibConfig,
+  ACBrLibComum, ACBrLibConfig,
   ACBrCTe, ACBrCTeDACTeRLClass, ACBrMail,
   ACBrLibMailImport;
 
@@ -55,8 +55,9 @@ type
   private
     FLock: TCriticalSection;
     FACBrMail: TACBrMail;
-
     FLibMail: TACBrLibMail;
+    fpLib: TACBrLib;
+
   public
     procedure CriarACBrMail;
 
@@ -67,13 +68,15 @@ type
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil, FileUtil,
-  ACBrLibCTeConfig, ACBrLibComum, ACBrLibCTeClass;
+  ACBrLibCTeConfig, ACBrLibCTeBase;
 
 {$R *.lfm}
 
@@ -110,7 +113,7 @@ begin
   begin
     GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
     // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FLibMail  := TACBrLibMail.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
     FACBrMail := FLibMail.ACBrMail;
   end
   else
@@ -124,11 +127,11 @@ end;
 
 procedure TLibCTeDM.AplicarConfiguracoes;
 var
-  pLibConfig: TLibCTeConfig;
+  LibConfig: TLibCTeConfig;
 begin
   ACBrCTe1.SSL.DescarregarCertificado;
-  pLibConfig := TLibCTeConfig(TACBrLibCTe(pLib).Config);
-  ACBrCTe1.Configuracoes.Assign(pLibConfig.CTe);
+  LibConfig := TLibCTeConfig(TACBrLibCTe(Lib).Config);
+  ACBrCTe1.Configuracoes.Assign(LibConfig.CTe);
 
   AplicarConfigMail;
 end;
@@ -140,48 +143,48 @@ begin
 
   with FACBrMail do
   begin
-    Attempts := pLib.Config.Email.Tentativas;
-    SetTLS := pLib.Config.Email.TLS;
-    DefaultCharset := pLib.Config.Email.Codificacao;
-    From := pLib.Config.Email.Conta;
-    FromName := pLib.Config.Email.Nome;
-    SetSSL := pLib.Config.Email.SSL;
-    Host := pLib.Config.Email.Servidor;
-    IDECharset := pLib.Config.Email.Codificacao;
-    IsHTML := pLib.Config.Email.IsHTML;
-    Password := pLib.Config.Email.Senha;
-    Port := IntToStr(pLib.Config.Email.Porta);
-    Priority := pLib.Config.Email.Priority;
-    ReadingConfirmation := pLib.Config.Email.Confirmacao;
-    DeliveryConfirmation := pLib.Config.Email.ConfirmacaoEntrega;
-    TimeOut := pLib.Config.Email.TimeOut;
-    Username := pLib.Config.Email.Usuario;
-    UseThread := pLib.Config.Email.SegundoPlano;
+    Attempts := Lib.Config.Email.Tentativas;
+    SetTLS := Lib.Config.Email.TLS;
+    DefaultCharset := Lib.Config.Email.Codificacao;
+    From := Lib.Config.Email.Conta;
+    FromName := Lib.Config.Email.Nome;
+    SetSSL := Lib.Config.Email.SSL;
+    Host := Lib.Config.Email.Servidor;
+    IDECharset := Lib.Config.Email.Codificacao;
+    IsHTML := Lib.Config.Email.IsHTML;
+    Password := Lib.Config.Email.Senha;
+    Port := IntToStr(Lib.Config.Email.Porta);
+    Priority := Lib.Config.Email.Priority;
+    ReadingConfirmation := Lib.Config.Email.Confirmacao;
+    DeliveryConfirmation := Lib.Config.Email.ConfirmacaoEntrega;
+    TimeOut := Lib.Config.Email.TimeOut;
+    Username := Lib.Config.Email.Usuario;
+    UseThread := Lib.Config.Email.SegundoPlano;
   end;
 end;
 
 procedure TLibCTeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                         Protocolo: String = ''; MostrarPreview: String = '');
 var
-  pLibConfig: TLibCTeConfig;
+  LibConfig: TLibCTeConfig;
 begin
-  pLibConfig := TLibCTeConfig(pLib.Config);
+  LibConfig := TLibCTeConfig(Lib.Config);
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-   pLibConfig.DACTe.Apply(ACBrCTeDACTeRL1);
+   LibConfig.DACTe.Apply(ACBrCTeDACTeRL1, Lib);
 
    if NaoEstaVazio(NomeImpressora) then
      ACBrCTeDACTeRL1.Impressora := NomeImpressora;
 
-   if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DACTe.PathPDF))then
-        ForceDirectories(PathWithDelim(pLibConfig.DACTe.PathPDF));
+   if GerarPDF and not DirectoryExists(PathWithDelim(LibConfig.DACTe.PathPDF))then
+        ForceDirectories(PathWithDelim(LibConfig.DACTe.PathPDF));
 
    if NaoEstaVazio(NomeImpressora) then
      ACBrCTeDACTeRL1.Impressora := NomeImpressora;

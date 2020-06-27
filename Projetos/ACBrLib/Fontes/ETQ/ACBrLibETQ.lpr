@@ -83,7 +83,6 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibETQ; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
 end.
 

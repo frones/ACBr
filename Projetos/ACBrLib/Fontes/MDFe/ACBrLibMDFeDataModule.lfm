@@ -30,6 +30,12 @@ object LibMDFeDM: TLibMDFeDM
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -41,6 +47,7 @@ object LibMDFeDM: TLibMDFeDM
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
+    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
     left = 208
     top = 80

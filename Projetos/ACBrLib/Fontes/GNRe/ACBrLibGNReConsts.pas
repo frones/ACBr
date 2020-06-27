@@ -59,17 +59,8 @@ const
 Resourcestring
   SInfGNReCarregados = '%d GNRe(s) Carregado(s)';
 
-function SetRetornoGNReCarregados(const NumGNRe: Integer): Integer;
-
 implementation
 
-uses
-  ACBrLibComum;
-
-function SetRetornoGNReCarregados(const NumGNRe: Integer): Integer;
-begin
-  Result := SetRetorno( 0, {NumGNRe,} Format(SInfGNReCarregados, [NumGNRe]));
-end;
 
 end.
 

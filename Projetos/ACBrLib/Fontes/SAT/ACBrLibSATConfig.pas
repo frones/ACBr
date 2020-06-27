@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrLibConfig, ACBrDFeReport, DFeReportConfig,
-  ACBrSAT, ACBrSATClass, ACBrSATExtratoClass,
+  ACBrSAT, ACBrSATClass, ACBrSATExtratoClass, ACBrLibComum,
   ACBrIntegradorConfig, ACBrDFeSSL, ACBrSATExtratoESCPOS,
   pcnRede, pcnConversao;
 
@@ -74,7 +74,7 @@ type
     procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure ApplyChild(const DFeReport: TACBrSATExtratoClass); override;
+    procedure ApplyChild(const DFeReport: TACBrSATExtratoClass; const Lib: TACBrLib); override;
 
   public
     constructor Create;
@@ -263,8 +263,8 @@ type
 implementation
 
 uses
-  ACBrMonitorConsts, ACBrLibConsts, ACBrLibSATConsts, ACBrLibComum,
-  ACBrLibSATClass, ACBrUtil, ACBrConsts, ACBrSATExtratoFortesFr;
+  ACBrMonitorConsts, ACBrLibConsts, ACBrLibSATConsts,
+  ACBrLibSATBase, ACBrUtil, ACBrConsts, ACBrSATExtratoFortesFr;
 
 { TExtratoConfig }
 constructor TExtratoConfig.Create;
@@ -347,7 +347,7 @@ begin
   AIni.WriteBool(FSessao, CChaveImprimeLogoLateral, FImprimeLogoLateral);
 end;
 
-procedure TExtratoConfig.ApplyChild(const DFeReport: TACBrSATExtratoClass);
+procedure TExtratoConfig.ApplyChild(const DFeReport: TACBrSATExtratoClass; const Lib: TACBrLib);
 Var
   LogoVisible: Boolean;
 begin

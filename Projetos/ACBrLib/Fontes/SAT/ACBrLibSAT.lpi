@@ -300,7 +300,7 @@
         <PackageName Value="ACBr_SAT"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="16">
+    <Units Count="17">
       <Unit0>
         <Filename Value="ACBrLibSAT.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -370,6 +370,10 @@
         <Filename Value="..\..\..\ACBrMonitorPLUS\Lazarus\ACBrMonitorConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit15>
+      <Unit16>
+        <Filename Value="ACBrLibSATBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

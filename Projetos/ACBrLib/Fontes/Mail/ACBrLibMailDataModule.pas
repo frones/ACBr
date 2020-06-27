@@ -37,7 +37,7 @@ unit ACBrLibMailDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrMail;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrMail;
 
 type
 
@@ -50,19 +50,23 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
+
   end;
 
 implementation
 
 uses
   ACBrUtil,
-  ACBrLibMailConfig, ACBrLibComum, ACBrLibMailClass;
+  ACBrLibMailConfig, ACBrLibMailBase;
 
 {$R *.lfm}
 
@@ -82,7 +86,7 @@ procedure TLibMailDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibMailConfig;
 begin
-  pLibConfig := TLibMailConfig(TACBrLibMail(pLib).Config);
+  pLibConfig := TLibMailConfig(Lib.Config);
 
   with ACBrMail1 do
   begin
@@ -97,20 +101,20 @@ begin
     IsHTML := pLibConfig.Email.IsHTML;
     Password := pLibConfig.Email.Senha;
     Port := IntToStr(pLibConfig.Email.Porta);
-    Priority := pLibConfig.Email.Priority;
-    ReadingConfirmation := pLibConfig.Email.Confirmacao;
-    DeliveryConfirmation := pLibConfig.Email.ConfirmacaoEntrega;
-    TimeOut := pLibConfig.Email.TimeOut;
-    Username := pLibConfig.Email.Usuario;
-    UseThread := pLibConfig.Email.SegundoPlano;
+    Priority := Lib.Config.Email.Priority;
+    ReadingConfirmation := Lib.Config.Email.Confirmacao;
+    DeliveryConfirmation := Lib.Config.Email.ConfirmacaoEntrega;
+    TimeOut := Lib.Config.Email.TimeOut;
+    Username := Lib.Config.Email.Usuario;
+    UseThread := Lib.Config.Email.SegundoPlano;
   end;
 end;
 
 procedure TLibMailDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibMailDM.Travar;

@@ -837,13 +837,14 @@ end;
 procedure TLibConfig.AplicarConfiguracoes;
 begin
   TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
-  if AtualizarArquivoConfiguracao then
-    Gravar;
 
   Travar;
   try
     INIParaClasse;
     ClasseParaComponentes;
+    if AtualizarArquivoConfiguracao then
+      Gravar;
+
     TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
   finally
     Destravar;
@@ -860,8 +861,8 @@ begin
     VerificarNomeEPath(not ArquivoInformado);
     TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
 
-    if FIni.FileName <> FNomeArquivo then
-      FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
+    // Força ler atualizações do Disco
+    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
 
     if not FileExists(FNomeArquivo) then
     begin

@@ -55,7 +55,7 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterClass, ACBrLibComum, ACBrUtil;
+  ACBrLibPosPrinterBase, ACBrLibComum, ACBrUtil;
 
 { TLibPosPrinterConfig }
 procedure TLibPosPrinterConfig.ClasseParaComponentes;

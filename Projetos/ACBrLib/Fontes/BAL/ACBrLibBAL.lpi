@@ -298,7 +298,7 @@
         <PackageName Value="ACBrTCP"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="ACBrLibBAL.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -342,6 +342,10 @@
         <Filename Value="..\..\..\ACBrMonitorPLUS\Lazarus\ACBrMonitorConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibBALBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs,
-  ACBrLibConfig, ACBrPosPrinter;
+  ACBrLibComum, ACBrLibConfig, ACBrPosPrinter;
 
 type
 
@@ -18,18 +18,21 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
-  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig, ACBrLibComum;
+  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig;
 
 {$R *.lfm}
 
@@ -47,7 +50,7 @@ procedure TLibPosPrinterDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibPosPrinterConfig;
 begin
-  pLibConfig := TLibPosPrinterConfig(pLib.Config);
+  pLibConfig := TLibPosPrinterConfig(Lib.Config);
 
   with ACBrPosPrinter1 do
   begin
@@ -108,8 +111,8 @@ end;
 
 procedure TLibPosPrinterDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibPosPrinterDM.Travar;

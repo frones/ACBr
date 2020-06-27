@@ -111,14 +111,14 @@ Resourcestring
   SInfBoletosCarregados = '%d Boletos(s) Carregado(s)';
   SErroLerArquivoEntrada ='Erro ao ler arquivo de entrada: %d';
 
-function SetRetornoBoletosCarregados(const NumBoleto: Integer): Integer;
+function SetRetornoBoletosCarregados(const libHandle: PLibHandle; const NumBoleto: Integer): Integer;
 
 
 implementation
 
-function SetRetornoBoletosCarregados(const NumBoleto: Integer): Integer;
+function SetRetornoBoletosCarregados(const libHandle: PLibHandle; const NumBoleto: Integer): Integer;
 begin
-  Result := SetRetorno( 0, {NumBoleto,} Format(SInfBoletosCarregados, [NumBoleto]))
+  Result := libHandle^.Lib.SetRetorno(0, {NumBoleto,} Format(SInfBoletosCarregados, [NumBoleto]))
 end;
 
 end.

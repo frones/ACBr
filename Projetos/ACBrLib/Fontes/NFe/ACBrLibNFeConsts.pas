@@ -37,7 +37,7 @@ unit ACBrLibNFeConsts;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, ACBrLibComum;
 
 const
   CSessaoDANFE = 'DANFE';
@@ -144,22 +144,7 @@ Resourcestring
   SErrCNPJInvalido = 'CNPJ % inválido.';
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
-function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
-
 implementation
-uses
-  ACBrLibComum;
-
-function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
-begin
-  Result := SetRetorno( 0, {NumNFe,} Format(SInfNFeCarregadas, [NumNFe]));
-end;
-
-function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
-begin
-  Result := SetRetorno( 0, {NumNFe,} Format(SInfEventosCarregados, [NumEventos]));
-end;
 
 end.
 

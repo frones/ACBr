@@ -86,7 +86,7 @@ type
 implementation
 
 uses
-  ACBrMonitorConsts, ACBrLibCHQClass, ACBrLibCHQConsts,
+  ACBrMonitorConsts, ACBrLibCHQBase, ACBrLibCHQConsts,
   ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TCHQConfig }

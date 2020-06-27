@@ -91,7 +91,6 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibBoleto; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
   Application.Initialize;
 

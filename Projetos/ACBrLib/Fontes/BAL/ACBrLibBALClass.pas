@@ -38,27 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibBALDataModule, ACBrBAL;
-
-type
-
-  { TACBrLibBAL }
-
-  TACBrLibBAL = class(TACBrLib)
-  private
-    FBALDM: TLibBALDM;
-
-  protected
-    procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
-    procedure Executar; override;
-  public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-    destructor Destroy; override;
-
-    property BALDM: TLibBALDM read FBALDM;
-  end;
+  ACBrLibComum, ACBrLibBALBase;
 
 {%region Declaração da funções}
 
@@ -113,39 +93,8 @@ function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esT
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibBALConfig;
+  ACBrLibConsts, ACBrUtil;
 
-{ TACBrLibBAL }
-
-constructor TACBrLibBAL.Create(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  inherited Create(ArqConfig, ChaveCrypt);
-  FBALDM := TLibBALDM.Create(nil);
-end;
-
-destructor TACBrLibBAL.Destroy;
-begin
-  FBALDM.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrLibBAL.Inicializar;
-begin
-  inherited Inicializar;
-
-  GravarLog('TACBrLibBAL.Inicializar - Feito', logParanoico);
-end;
-
-procedure TACBrLibBAL.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  fpConfig := TLibBALConfig.Create(Self, ArqConfig, ChaveCrypt);
-end;
-
-procedure TACBrLibBAL.Executar;
-begin
-  inherited Executar;
-  FBALDM.AplicarConfiguracoes;
-end;
 
 {%region BAL}
 
@@ -154,62 +103,62 @@ end;
 function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibBAL, eArqConfig, eChaveCrypt);
 end;
 
 function BAL_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar;
+  Result := LIB_Finalizar(pLib);
 end;
 
 function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esTamanho);
+  Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
 function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esTamanho);
+  Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
 function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
 function BAL_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(eArqConfig);
+  Result := LIB_ImportarConfig(pLib, eArqConfig);
 end;
 
 function BAL_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(eArqConfig);
+  Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
 function BAL_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(eArqConfig);
+  Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
 function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
 function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
 {%endregion}
@@ -219,51 +168,28 @@ end;
 function BAL_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('BAL_Ativar', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        BALDM.ACBrBAL1.Ativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).Ativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function BAL_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('BAL_Desativar', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        BALDM.ACBrBAL1.Desativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).Desativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -271,29 +197,14 @@ function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('BAL_LePeso( ' + IntToStr(MillisecTimeOut) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('BAL_LePeso', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        Peso := BALDM.ACBrBAL1.LePeso(MillisecTimeOut);
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -304,32 +215,21 @@ Var
   Resposta: string;
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('BAL_LePesoStr( ' + IntToStr(MillisecTimeOut) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('BAL_LePesoStr', logNormal);
-
-    with TACBrLibBAL(pLib) do
+    VerificarLibInicializada(pLib);
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
+    if Result = 0 then
     begin
-      BALDM.Travar;
-
-      try
-        Peso := BALDM.ACBrBAL1.LePeso(MillisecTimeOut);
-        Resposta := FloatToStr(Peso);
-        MoverStringParaPChar(Resposta, sValor, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        BALDM.Destravar;
-      end;
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -337,25 +237,14 @@ function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('BAL_SolicitarPeso', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        BALDM.ACBrBAL1.SolicitarPeso;
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).SolicitarPeso;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -363,26 +252,14 @@ function BAL_UltimoPesoLido(var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('BAL_UltimoPesoLido', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        Peso := BALDM.ACBrBAL1.UltimoPesoLido;
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -393,98 +270,61 @@ Var
   Resposta: string;
 begin
   try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('BAL_UltimoPesoLidoStr', logNormal);
-
-    with TACBrLibBAL(pLib) do
+    VerificarLibInicializada(pLib);
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
+    if Result = 0 then
     begin
-      BALDM.Travar;
-      try
-        Peso := BALDM.ACBrBAL1.UltimoPesoLido;
-        Resposta := FloatToStr(Peso);
-        MoverStringParaPChar(Resposta, sValor, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        BALDM.Destravar;
-      end;
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  AResposta: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    AResposta := AnsiString(eResposta);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('BAL_InterpretarRepostaPeso( ' + AResposta + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('BAL_InterpretarRepostaPeso', logNormal);
-
-    with TACBrLibBAL(pLib) do
-    begin
-      BALDM.Travar;
-      try
-        Peso := BALDM.ACBrBAL1.InterpretarRepostaPeso(AResposta);
-        Result := SetRetorno(ErrOK);
-      finally
-        BALDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  AResposta: AnsiString;
+Var
   Peso: Double;
   Resposta: string;
 begin
   try
-    VerificarLibInicializada;
-    AResposta := AnsiString(eResposta);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('BAL_InterpretarRespostaPesoStr( ' + AResposta + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('BAL_InterpretarRespostaPesoStr', logNormal);
-
-    with TACBrLibBAL(pLib) do
+    VerificarLibInicializada(pLib);
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
+    if Result = 0 then
     begin
-      BALDM.Travar;
-      try
-        Peso := BALDM.ACBrBAL1.InterpretarRepostaPeso(AResposta);
-        Resposta := FloatToStr(Peso);
-        MoverStringParaPChar(Resposta, sValor, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        BALDM.Destravar;
-      end;
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

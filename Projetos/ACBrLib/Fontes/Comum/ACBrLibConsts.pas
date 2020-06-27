@@ -37,7 +37,7 @@ unit ACBrLibConsts;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, ACBrLibComum;
 
 const
   CACBrLib = 'ACBrLib';
@@ -208,8 +208,8 @@ resourcestring
   SErrLibNaoCarregada = 'Biblioteca %s não pode ser carregada';
 
   SErrDiretorioInvalido = 'Diretório Invalido: %s';
-  SErrConfSessaoNaoExiste = 'Sessão não existe no arquivo de configuração';
-  SErrConfChaveNaoExiste = 'Chave não existe no arquivo de configuração';
+  SErrConfSessaoNaoExiste = 'Sessão não [%s] existe no arquivo de configuração';
+  SErrConfChaveNaoExiste = 'Chave [%s] não existe na Sessão [%s] no arquivo de configuração';
 
   SErrArquivoNaoExiste = 'Arquivo % não encontrado';
   SErrIndex = 'Indice informado % não encontrado';
@@ -219,19 +219,19 @@ resourcestring
 const
 {$I ACBrLibErros.inc}
 
-function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
-function GerarRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
+function SetRetornoWebService(const libHandle: PLibHandle; const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+function GerarRetornoWebService(const libHandle: PLibHandle; const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
 
 implementation
 uses
-  ACBrLibComum, ACBrLibResposta, ACBrUtil;
+  ACBrLibResposta, ACBrUtil;
 
-function GerarRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
+function GerarRetornoWebService(const libHandle: PLibHandle; const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
 Var
   Resp: TACBrLibHttpResposta;
 begin
   Result := '';
-  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+  Resp := TACBrLibHttpResposta.Create(libHandle^.Lib.Config.TipoResposta, libHandle^.Lib.Config.CodResposta);
   try
     Resp.CodigoHTTP := CodigoHTTP;
     Resp.WebService := WebService;
@@ -242,12 +242,12 @@ begin
   end;
 end;
 
-function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+function SetRetornoWebService(const libHandle: PLibHandle; const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
 Var
   Resposta: String;
 begin
-  Resposta := GerarRetornoWebService(CodigoHTTP, WebService, Message);
-  Result := SetRetorno(ErrHttp, Resposta);
+  Resposta := GerarRetornoWebService(libHandle, CodigoHTTP, WebService, Message);
+  Result := libHandle^.Lib.SetRetorno(ErrHttp, Resposta);
 end;
 
 end.

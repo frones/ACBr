@@ -38,27 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibETQDataModule, ACBrDevice, ACBrETQ;
-
-type
-
-  { TACBrLibETQ }
-
-  TACBrLibETQ = class(TACBrLib)
-  private
-    FETQDM: TLibETQDM;
-
-  protected
-    procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
-    procedure Executar; override;
-  public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-    destructor Destroy; override;
-
-    property ETQDM: TLibETQDM read FETQDM;
-  end;
+  ACBrLibComum, ACBrLibETQBase;
 
 {%region Declaração da funções}
 
@@ -135,100 +115,68 @@ implementation
 uses
   ACBrLibConsts, ACBrLibConfig, ACBrLibETQConfig;
 
-{ TACBrLibETQ }
-
-constructor TACBrLibETQ.Create(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  inherited Create(ArqConfig, ChaveCrypt);
-  FETQDM := TLibETQDM.Create(nil);
-end;
-
-destructor TACBrLibETQ.Destroy;
-begin
-  FETQDM.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrLibETQ.Inicializar;
-begin
-  inherited Inicializar;
-
-  GravarLog('TACBrLibETQ.Inicializar - Feito', logParanoico);
-end;
-
-procedure TACBrLibETQ.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  fpConfig := TLibETQConfig.Create(Self, ArqConfig, ChaveCrypt);
-end;
-
-procedure TACBrLibETQ.Executar;
-begin
-  inherited Executar;
-  FETQDM.AplicarConfiguracoes;
-end;
-
 {%region ETQ}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 function ETQ_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibETQ, eArqConfig, eChaveCrypt);
 end;
 
 function ETQ_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar;
+  Result := LIB_Finalizar(pLib);
 end;
 
 function ETQ_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esTamanho);
+  Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
 function ETQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esTamanho);
+  Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
 function ETQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
 function ETQ_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(eArqConfig);
+  Result := LIB_ImportarConfig(pLib, eArqConfig);
 end;
 
 function ETQ_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(eArqConfig);
+  Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
 function ETQ_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(eArqConfig);
+  Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
 function ETQ_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
 function ETQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 {%endregion}
 
@@ -236,51 +184,28 @@ end;
 function ETQ_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('ETQ_Ativar', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.Ativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).Ativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function ETQ_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('ETQ_Desativar', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.Desativar;
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).Desativar;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -288,25 +213,14 @@ function ETQ_IniciarEtiqueta: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('ETQ_IniciarEtiqueta', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.IniciarEtiqueta;
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).IniciarEtiqueta;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -314,66 +228,29 @@ function ETQ_FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_FinalizarEtiqueta( ' + IntToStr(ACopias) + ',' +
-                                 IntToStr(AAvancoEtq) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_FinalizarEtiqueta', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.FinalizarEtiqueta(ACopias, AAvancoEtq);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).FinalizarEtiqueta(ACopias, AAvancoEtq);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function ETQ_CarregarImagem(const eArquivoImagem, eNomeImagem: PChar;
       Flipped: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  AArquivoImagem: AnsiString;
-  ANomeImagem: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    AArquivoImagem := AnsiString(eArquivoImagem);
-    ANomeImagem := AnsiString(eNomeImagem);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_CarregarImagem( ' + AArquivoImagem + ',' +
-        ANomeImagem + ',' + BoolToStr(Flipped, True) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_CarregarImagem', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.CarregarImagem(AArquivoImagem, ANomeImagem, Flipped);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).CarregarImagem(eArquivoImagem, eNomeImagem, Flipped);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 {%endregion}
@@ -383,30 +260,14 @@ function ETQ_Imprimir(const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_Imprimir( ' + IntToStr(ACopias) + ',' +
-                                 IntToStr(AAvancoEtq) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_Imprimir', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.Imprimir(ACopias, AAvancoEtq);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).Imprimir(ACopias, AAvancoEtq);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -414,42 +275,17 @@ function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ATexto: AnsiString;
-  UTF8Str: String;
 begin
   try
-    VerificarLibInicializada;
-    ATexto := AnsiString(eTexto);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirTexto( ' + IntToStr(Orientacao) + ',' +
-        IntToStr(Fonte) + ',' + IntToStr(MultiplicadorH) + ',' +
-        IntToStr(MultiplicadorV) + ',' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(SubFonte) + ',' +
-        BoolToStr(ImprimirReverso, True) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirTexto', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        UTF8Str := ConverterAnsiParaUTF8(ATexto);
-        ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), Fonte, MultiplicadorH,
-              MultiplicadorV, Vertical, Horizontal, UTF8Str,
-              SubFonte, ImprimirReverso);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirTexto(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
+                                                   Horizontal, eTexto, SubFonte, ImprimirReverso);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -457,43 +293,17 @@ function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; con
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ATexto, AFonte: AnsiString;
-  UTF8Str: String;
 begin
   try
-    VerificarLibInicializada;
-    ATexto := AnsiString(eTexto);
-    AFonte := AnsiString(Fonte);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirTextoStr( ' + IntToStr(Orientacao) + ',' +
-        AFonte + ',' + IntToStr(MultiplicadorH) + ',' +
-        IntToStr(MultiplicadorV) + ',' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(SubFonte) + ',' +
-        BoolToStr(ImprimirReverso, True) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirTextoStr', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        UTF8Str := ConverterAnsiParaUTF8(ATexto);
-        ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), AFonte, MultiplicadorH,
-              MultiplicadorV, Vertical, Horizontal, UTF8Str,
-              SubFonte, ImprimirReverso);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirTextoStr(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
+                                                      Horizontal, eTexto, SubFonte, ImprimirReverso);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -501,43 +311,18 @@ function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ATexto: AnsiString;
-  UTF8Str: String;
 begin
   try
-    VerificarLibInicializada;
-    ATexto := AnsiString(eTexto);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirBarras( ' + IntToStr(Orientacao) + ',' +
-        IntToStr(TipoBarras) + ',' + IntToStr(LarguraBarraLarga) + ',' +
-        IntToStr(LarguraBarraFina) + ',' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(AlturaCodBarras) + ',' +
-        IntToStr(ExibeCodigo) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirBarras', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        UTF8Str := ConverterAnsiParaUTF8(ATexto);
-        ETQDM.ACBrETQ1.ImprimirBarras(TACBrETQOrientacao(Orientacao),
-           TACBrTipoCodBarra(TipoBarras), LarguraBarraLarga, LarguraBarraFina,
-           Vertical, Horizontal, UTF8Str, AlturaCodBarras,
-           TACBrETQBarraExibeCodigo(ExibeCodigo));
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirBarras(Orientacao, TipoBarras, LarguraBarraLarga,
+                                                    LarguraBarraFina, Vertical, Horizontal, eTexto,
+                                                    AlturaCodBarras, ExibeCodigo);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -545,31 +330,14 @@ function ETQ_ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer)
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirLinha( ' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + IntToStr(Largura) + ',' +
-        IntToStr(Altura) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirLinha', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.ImprimirLinha(Vertical, Horizontal, Largura, Altura);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirLinha(Vertical, Horizontal, Largura, Altura);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
@@ -578,108 +346,47 @@ function ETQ_ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirCaixa( ' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + IntToStr(Largura) + ',' +
-        IntToStr(Altura) + IntToStr(EspessuraVertical) + ',' +
-        IntToStr(EspessuraHorizontal) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirCaixa', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
+                                                   EspessuraVertical, EspessuraHorizontal);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function ETQ_ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
       const eNomeImagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ANomeImagem: AnsiString;
 begin
   try
-    VerificarLibInicializada;
-    ANomeImagem := AnsiString(eNomeImagem);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirImagem( ' + IntToStr(MultiplicadorImagem) + ',' +
-        IntToStr(Vertical) + ',' + IntToStr(Horizontal) +
-        ANomeImagem  + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirImagem', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        ETQDM.ACBrETQ1.ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal,
-           ANomeImagem);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal, eNomeImagem);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function ETQ_ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
           LarguraModulo, ErrorLevel, Tipo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-Var
-  ATexto: string;
-  UTF8Str: String;
 begin
   try
-    VerificarLibInicializada;
-    ATexto := AnsiString(Texto);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('ETQ_ImprimirQRCode( ' + IntToStr(Vertical) + ',' +
-        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(LarguraModulo)
-        + ',' + IntToStr(ErrorLevel) + ',' + IntToStr(Tipo) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('ETQ_ImprimirQRCode', logNormal);
-
-    with TACBrLibETQ(pLib) do
-    begin
-      ETQDM.Travar;
-      try
-        UTF8Str := ConverterAnsiParaUTF8(ATexto);
-        ETQDM.ACBrETQ1.ImprimirQRCode(Vertical, Horizontal, UTF8Str, LarguraModulo, ErrorLevel, Tipo);
-        Result := SetRetorno(ErrOK);
-      finally
-        ETQDM.Destravar;
-      end;
-    end;
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibETQ(pLib^.Lib).ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo);
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

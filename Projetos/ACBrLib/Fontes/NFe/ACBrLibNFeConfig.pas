@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, Graphics, SysUtils, IniFiles,
-  pcnConversao, pcnConversaoNFe,
+  pcnConversao, pcnConversaoNFe, ACBrLibComum,
   ACBrNFeConfiguracoes, ACBrDFeReport, ACBrDFeDANFeReport,
   ACBrNFeDANFEClass, ACBrNFeDANFeRLClass, ACBrLibConfig,
   ACBrIntegradorConfig, DFeReportConfig;
@@ -215,7 +215,7 @@ type
     procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure ApplyChild(const DFeReport: TACBrDFeDANFeReport); override;
+    procedure ApplyChild(const DFeReport: TACBrDFeDANFeReport; const Lib: TACBrLib); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -275,8 +275,8 @@ implementation
 
 uses
   typinfo, strutils, synacode, blcksock, pcnAuxiliar,
-  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
-  ACBrLibComum, ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
+  ACBrLibNFeBase, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
+  ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
 
 { TDANFeNFeConfig }
@@ -795,11 +795,11 @@ begin
   FNFCeConfig.GravarIni(AIni);
 end;
 
-procedure TDANFeReportConfig.ApplyChild(const DFeReport: TACBrDFeDANFeReport);
+procedure TDANFeReportConfig.ApplyChild(const DFeReport: TACBrDFeDANFeReport; const Lib: TACBrLib);
 var
   pLibConfig: TLibNFeConfig;
 begin
-  pLibConfig := TLibNFeConfig(pLib.Config);
+  pLibConfig := TLibNFeConfig(Lib.Config);
 
   with DFeReport do
   begin
@@ -1016,8 +1016,8 @@ begin
                                                           IfThen(PrecisaCriptografar(ASessao, AChave),
                                                           StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
     case Tipo of
-      tfGravar: Result := StringToB64Crypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt);
-      tfLer: Result := EncodeBase64(B64CryptToString(AValor, pLib.Config.ChaveCrypt));
+      tfGravar: Result := StringToB64Crypt(DecodeBase64(AValor), ChaveCrypt);
+      tfLer: Result := EncodeBase64(B64CryptToString(AValor, ChaveCrypt));
     end;
 
     TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);

@@ -72,7 +72,7 @@ type
     procedure ImportChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure LerIniChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure GravarIniChild(const AIni: TCustomIniFile); virtual; abstract;
-    procedure ApplyChild(const DFeReport: T); virtual; abstract;
+    procedure ApplyChild(const DFeReport: T; const Lib: TACBrLib); virtual; abstract;
 
  public
    constructor Create(ASessao: String);
@@ -82,7 +82,7 @@ type
    procedure Import(const AIni: TCustomIniFile);
    procedure LerIni(const AIni: TCustomIniFile);
    procedure GravarIni(const AIni: TCustomIniFile);
-   procedure Apply(const DFeReport: T);
+   procedure Apply(const DFeReport: T; const Lib: TACBrLib);
 
    property Sessao: String read FSessao;
    property Impressora: String read FImpressora write FImpressora;
@@ -262,7 +262,7 @@ begin
   GravarIniChild(AIni);
 end;
 
-procedure TDFeReportConfig<T>.Apply(const DFeReport: T);
+procedure TDFeReportConfig<T>.Apply(const DFeReport: T; const Lib: TACBrLib);
 begin
   if not Assigned(DFeReport) or (DFeReport = nil) then Exit;
 
@@ -292,12 +292,12 @@ begin
     vUnCom := FCasasDecimais.vUnCom;
   end;
 
-  DFeReport.Sistema := pLib.Config.Sistema.Nome;
-  DFeReport.Site := pLib.Config.Emissor.WebSite;
-  DFeReport.Email := pLib.Config.Emissor.Email;
-  DFeReport.Fax := pLib.Config.Emissor.Telefone;
+  DFeReport.Sistema := Lib.Config.Sistema.Nome;
+  DFeReport.Site := Lib.Config.Emissor.WebSite;
+  DFeReport.Email := Lib.Config.Emissor.Email;
+  DFeReport.Fax := Lib.Config.Emissor.Telefone;
 
-  ApplyChild(DFeReport);
+  ApplyChild(DFeReport, Lib);
 end;
 
 end.

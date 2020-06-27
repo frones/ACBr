@@ -37,7 +37,7 @@ unit ACBrLibCHQDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrCHQ;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCHQ;
 
 type
 
@@ -50,19 +50,22 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil, ACBrDeviceSerial,
-  ACBrLibCHQConfig, ACBrLibComum, ACBrLibCHQClass;
+  ACBrLibCHQConfig, ACBrLibCHQBase;
 
 {$R *.lfm}
 
@@ -80,35 +83,35 @@ end;
 
 procedure TLibCHQDM.AplicarConfiguracoes;
 var
-  pLibConfig: TLibCHQConfig;
+  LibConfig: TLibCHQConfig;
 begin
-  pLibConfig := TLibCHQConfig(TACBrLibCHQ(pLib).Config);
+  LibConfig := TLibCHQConfig(TACBrLibCHQ(Lib).Config);
 
   with ACBrCHQ1 do
   begin
-    Porta := pLibConfig.CHQConfig.Porta;
-    Modelo := pLibConfig.CHQConfig.Modelo;
-    PaginaDeCodigo := pLibConfig.CHQConfig.PaginaDeCodigo;
+    Porta := LibConfig.CHQConfig.Porta;
+    Modelo := LibConfig.CHQConfig.Modelo;
+    PaginaDeCodigo := LibConfig.CHQConfig.PaginaDeCodigo;
 
-    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
-    Device.Data := pLibConfig.PosDeviceConfig.Data;
-    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
-    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
-    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
-    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
-    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
-    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
-    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
-    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
-    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
+    Device.Baud := LibConfig.PosDeviceConfig.Baud;
+    Device.Data := LibConfig.PosDeviceConfig.Data;
+    Device.TimeOut := LibConfig.PosDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(LibConfig.PosDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(LibConfig.PosDeviceConfig.Stop);
+    Device.MaxBandwidth := LibConfig.PosDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := LibConfig.PosDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := LibConfig.PosDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(LibConfig.PosDeviceConfig.HandShake);
+    Device.HardFlow := LibConfig.PosDeviceConfig.HardFlow;
+    Device.SoftFlow := LibConfig.PosDeviceConfig.SoftFlow;
   end;
 end;
 
 procedure TLibCHQDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibCHQDM.Travar;

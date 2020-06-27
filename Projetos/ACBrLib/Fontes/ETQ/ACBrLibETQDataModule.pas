@@ -37,7 +37,8 @@ unit ACBrLibETQDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrETQ;
+  Classes, SysUtils, FileUtil, syncobjs,
+  ACBrLibComum, ACBrLibConfig, ACBrETQ;
 
 type
 
@@ -50,19 +51,22 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    pLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read pLib write pLib;
   end;
 
 implementation
 
 uses
   ACBrUtil, ACBrDeviceSerial,
-  ACBrLibETQConfig, ACBrLibComum, ACBrLibETQClass;
+  ACBrLibETQConfig, ACBrLibETQBase;
 
 {$R *.lfm}
 
@@ -82,7 +86,7 @@ procedure TLibETQDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibETQConfig;
 begin
-  pLibConfig := TLibETQConfig(TACBrLibETQ(pLib).Config);
+  pLibConfig := TLibETQConfig(Lib.Config);
 
   with ACBrETQ1 do
   begin
@@ -118,8 +122,8 @@ end;
 procedure TLibETQDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibETQDM.Travar;

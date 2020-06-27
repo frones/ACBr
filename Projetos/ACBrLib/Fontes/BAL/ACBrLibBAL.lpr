@@ -77,7 +77,6 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibBAL; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
 end.
 

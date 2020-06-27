@@ -59,7 +59,7 @@ type
 implementation
 
 uses
-  ACBrLibMailClass, ACBrLibComum, ACBrUtil;
+  ACBrLibMailBase, ACBrLibComum, ACBrUtil;
 
 { TLibMailConfig }
 

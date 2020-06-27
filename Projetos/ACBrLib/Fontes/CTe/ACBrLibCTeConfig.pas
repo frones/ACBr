@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrCTeConfiguracoes, ACBrCTeDACTeRLClass,
-  pcnConversao,
+  pcnConversao, ACBrLibComum,
   ACBrLibConfig, DFeReportConfig;
 
 type
@@ -64,7 +64,7 @@ type
     procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL); override;
+    procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL; const Lib: TACBrLib); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -111,7 +111,7 @@ implementation
 uses
   blcksock, pcnAuxiliar, pcteConversaoCTe, ACBrDFeSSL,
   ACBrMonitorConsts, ACBrLibConsts, ACBrLibCTeConsts,
-  ACBrLibComum, ACBrLibCTeClass, ACBrUtil;
+  ACBrLibCTeBase, ACBrUtil;
 
 { TDACTeConfig }
 constructor TDACTeConfig.Create;
@@ -171,7 +171,7 @@ begin
   AIni.WriteBool(FSessao, CChaveImprimirDescPorc, FImprimirDescPorc);
 end;
 
-procedure TDACTeConfig.ApplyChild(const DFeReport: TACBrCTeDACTeRL);
+procedure TDACTeConfig.ApplyChild(const DFeReport: TACBrCTeDACTeRL; const Lib: TACBrLib);
 begin
   with DFeReport do
   begin

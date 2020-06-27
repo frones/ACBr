@@ -110,7 +110,7 @@ implementation
 
 uses
   ACBrMonitorConsts, ACBrLibConsts, ACBrLibETQConsts,
-  ACBrLibETQClass, ACBrLibComum, ACBrUtil;
+  ACBrLibETQBase, ACBrLibComum, ACBrUtil;
 
 { TETQConfig }
 

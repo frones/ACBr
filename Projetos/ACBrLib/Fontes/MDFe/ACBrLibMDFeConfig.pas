@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, pcnConversao,
   ACBrMDFeConfiguracoes, ACBrMDFeDAMDFeRLClass,
-  DFeReportConfig, ACBrLibConfig;
+  DFeReportConfig, ACBrLibComum, ACBrLibConfig;
 
 type
 
@@ -59,7 +59,7 @@ type
     procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL); override;
+    procedure ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL; const Lib: TACBrLib); override;
 
   public
     constructor Create;
@@ -100,8 +100,8 @@ implementation
 
 uses
   blcksock, pcnAuxiliar, pmdfeConversaoMDFe,
-  ACBrDFeSSL, ACBrLibMDFeClass, ACBrMonitorConsts,
-  ACBrLibMDFeConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrDFeSSL, ACBrLibMDFeBase, ACBrMonitorConsts,
+  ACBrLibMDFeConsts, ACBrLibConsts, ACBrUtil;
 
 { TDAMDFeConfig }
 constructor TDAMDFeConfig.Create;
@@ -147,7 +147,7 @@ begin
   AIni.WriteBool(FSessao, CChaveEncerrado, FEncerrado);
 end;
 
-procedure TDAMDFeConfig.ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL);
+procedure TDAMDFeConfig.ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL; const Lib: TACBrLib);
 begin
   DFeReport.ImprimeHoraSaida := FImprimeHoraSaida;
   DFeReport.ImprimeHoraSaida_Hora := FImprimeHoraSaida_Hora;

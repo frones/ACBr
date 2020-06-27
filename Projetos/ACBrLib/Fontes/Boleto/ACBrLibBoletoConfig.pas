@@ -255,7 +255,7 @@ implementation
 
 uses
   ACBrMonitorConsts, ACBrLibBoletoConsts, ACBrLibComum,
-  ACBrUtil, ACBrConsts, ACBrLibConsts, ACBrLibBoletoClass;
+  ACBrUtil, ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
 
 { TLibBoletoConfig }
 procedure TLibBoletoConfig.INIParaClasse;

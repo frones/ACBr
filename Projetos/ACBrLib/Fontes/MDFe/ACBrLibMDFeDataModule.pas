@@ -54,6 +54,7 @@ type
   private
     FACBrMail: TACBrMail;
     FLibMail: TACBrLibMail;
+    fpLib: TACBrLib;
 
   protected
     FLock: TCriticalSection;
@@ -68,13 +69,16 @@ type
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
+
   end;
 
 implementation
 
 uses
   ACBrUtil, FileUtil,
-  ACBrLibMDFeConfig, ACBrLibMDFeClass;
+  ACBrLibMDFeConfig, ACBrLibMDFeBase;
 
 {$R *.lfm}
 
@@ -110,7 +114,7 @@ begin
   begin
     GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
     // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FLibMail  := TACBrLibMail.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
     FACBrMail := FLibMail.ACBrMail;
   end
   else
@@ -124,11 +128,11 @@ end;
 
 procedure TLibMDFeDM.AplicarConfiguracoes;
 var
-  pLibConfig: TLibMDFeConfig;
+  LibConfig: TLibMDFeConfig;
 begin
   ACBrMDFe1.SSL.DescarregarCertificado;
-  pLibConfig := TLibMDFeConfig(TACBrLibMDFe(pLib).Config);
-  ACBrMDFe1.Configuracoes.Assign(pLibConfig.MDFe);
+  LibConfig := TLibMDFeConfig(TACBrLibMDFe(Lib).Config);
+  ACBrMDFe1.Configuracoes.Assign(LibConfig.MDFe);
 
   AplicarConfigMail;
 end;
@@ -137,29 +141,29 @@ procedure TLibMDFeDM.AplicarConfigMail;
 begin
   if Assigned(FLibMail) then
   begin
-    FLibMail.ConfigLer(pLib.Config.NomeArquivo);
+    FLibMail.ConfigLer(Lib.Config.NomeArquivo);
     Exit;
   end;
 
   with FACBrMail do
   begin
-    Attempts := pLib.Config.Email.Tentativas;
-    SetTLS := pLib.Config.Email.TLS;
-    DefaultCharset := pLib.Config.Email.Codificacao;
-    From := pLib.Config.Email.Conta;
-    FromName := pLib.Config.Email.Nome;
-    SetSSL := pLib.Config.Email.SSL;
-    Host := pLib.Config.Email.Servidor;
-    IDECharset := pLib.Config.Email.Codificacao;
-    IsHTML := pLib.Config.Email.IsHTML;
-    Password := pLib.Config.Email.Senha;
-    Port := IntToStr(pLib.Config.Email.Porta);
-    Priority := pLib.Config.Email.Priority;
-    ReadingConfirmation := pLib.Config.Email.Confirmacao;
-    DeliveryConfirmation := pLib.Config.Email.ConfirmacaoEntrega;
-    TimeOut := pLib.Config.Email.TimeOut;
-    Username := pLib.Config.Email.Usuario;
-    UseThread := pLib.Config.Email.SegundoPlano;
+    Attempts := Lib.Config.Email.Tentativas;
+    SetTLS := Lib.Config.Email.TLS;
+    DefaultCharset := Lib.Config.Email.Codificacao;
+    From := Lib.Config.Email.Conta;
+    FromName := Lib.Config.Email.Nome;
+    SetSSL := Lib.Config.Email.SSL;
+    Host := Lib.Config.Email.Servidor;
+    IDECharset := Lib.Config.Email.Codificacao;
+    IsHTML := Lib.Config.Email.IsHTML;
+    Password := Lib.Config.Email.Senha;
+    Port := IntToStr(Lib.Config.Email.Porta);
+    Priority := Lib.Config.Email.Priority;
+    ReadingConfirmation := Lib.Config.Email.Confirmacao;
+    DeliveryConfirmation := Lib.Config.Email.ConfirmacaoEntrega;
+    TimeOut := Lib.Config.Email.TimeOut;
+    Username := Lib.Config.Email.Usuario;
+    UseThread := Lib.Config.Email.SegundoPlano;
   end;
 end;
 
@@ -176,7 +180,7 @@ begin
       ACBrMDFe1.DAMDFe.Cancelada := False;
   end;
 
-  TLibMDFeConfig(pLib.Config).DAMDFe.Apply(ACBrMDFeDAMDFeRL1);
+  TLibMDFeConfig(Lib.Config).DAMDFe.Apply(ACBrMDFeDAMDFeRL1, Lib);
 
   if NaoEstaVazio(NomeImpressora) then
     ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;
@@ -189,16 +193,16 @@ begin
   else
     ACBrMDFe1.DAMDFe.Protocolo := '';
 
-  if GerarPDF and not DirectoryExists(PathWithDelim(TLibMDFeConfig(pLib.Config).DAMDFe.PathPDF))then
-        ForceDirectories(PathWithDelim(TLibMDFeConfig(pLib.Config).DAMDFe.PathPDF));
+  if GerarPDF and not DirectoryExists(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF))then
+        ForceDirectories(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF));
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 
 procedure TLibMDFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibMDFeDM.Travar;

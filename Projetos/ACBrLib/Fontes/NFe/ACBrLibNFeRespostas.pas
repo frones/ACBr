@@ -812,6 +812,20 @@ begin
   begin
     Result := Result + sLineBreak + TEventoItemResposta(FItems.Items[i]).Gerar;
   end;
+
+  case Tipo of
+    resXML:
+      begin
+        Result := '<Resposta>' + sLineBreak + Result;
+        Result := Result + sLineBreak + '</Resposta>';
+      end;
+
+    resJSON:
+      begin
+        Result := '{' + sLineBreak + Result;
+        Result := Result + sLineBreak + '}';
+      end;
+  end;
 end;
 
 procedure TEventoResposta.Processar(const ACBrNFe: TACBrNFe);

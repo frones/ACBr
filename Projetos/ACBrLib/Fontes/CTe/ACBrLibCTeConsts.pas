@@ -83,22 +83,7 @@ Resourcestring
   SErrCNPJInvalido = 'CNPJ % inválido.';
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoCTesCarregados(const NumCTe: Integer): Integer;
-function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
-
 implementation
-uses
-  ACBrLibComum;
-
-function SetRetornoCTesCarregados(const NumCTe: Integer): Integer;
-begin
-  Result := SetRetorno( 0, {NumCTe,} Format(SInfCTeCarregados, [NumCTe]));
-end;
-
-function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
-begin
-  Result := SetRetorno( 0, {NumNFe,} Format(SInfEventosCarregados, [NumEventos]));
-end;
 
 end.
 

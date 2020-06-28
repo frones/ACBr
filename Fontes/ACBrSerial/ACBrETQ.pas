@@ -159,7 +159,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     property EtqInicializada: Boolean          read fsEtqInicializada;
 
   published
-    property PaginaDeCodigo:  TACBrETQPaginaCodigo read GetPaginaDeCodigo write SetPaginaDeCodigo default pce850;
+    property PaginaDeCodigo:  TACBrETQPaginaCodigo read GetPaginaDeCodigo write SetPaginaDeCodigo default pceNone;
     property Unidade:         TACBrETQUnidade  read GetUnidade       write SetUnidade default etqDecimoDeMilimetros;
     property Modelo:          TACBrETQModelo   read fsModelo         write SetModelo default etqNenhum;
     property BackFeed:        TACBrETQBackFeed read GetBackFeed      write SetBackFeed default bfNone;

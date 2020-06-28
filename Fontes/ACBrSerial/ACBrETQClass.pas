@@ -151,7 +151,7 @@ begin
   if (not (AOwner is TACBrETQ)) then
     raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrETQ'));
 
-  fPaginaDeCodigo := pce850;
+  fPaginaDeCodigo := pceNone;
   fDPI            := dpi203;
   fpLimparMemoria := True;
   fAvanco         := 0;

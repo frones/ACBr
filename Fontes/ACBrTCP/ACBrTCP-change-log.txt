@@ -36,6 +36,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2020
+-- ACBrWinReqRespClass --
+[-] Correção em "CalculateHeaderReq", para não iserir "Content-Type", caso
+    "MimeType" não tenha sido informado
+    (por: DSA)
+
 13/05/2020
 -- ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp --
 [-] Ajustes para correta leitura de GetLastError

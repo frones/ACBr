@@ -191,7 +191,7 @@ type
 implementation
 
 uses
-  wininet,
+  strutils, wininet,
   synautil,
   ACBrUtil;
 
@@ -483,15 +483,18 @@ begin
   else
     AHost := FHost;
 
-  Result := 'Host: ' + AHost + sLineBreak +
-            'Content-Type: ' + FMimeType + '; charset=' + FCharsets + SLineBreak +
-            'Accept-Charset: ' + FCharsets + SLineBreak;
+
+  HeaderReq.Insert(0, 'Host: '+ AHost);
+  if (FMimeType <> '') then
+    HeaderReq.AddHeader('Content-Type', FMimeType + IfThen(FCharsets <> '','; charset=' + FCharsets, '') );
+
+  if (FCharsets <> '') then
+    HeaderReq.AddHeader('Accept-Charset', FCharsets);
 
   if (FSOAPAction <> '') then
-    Result := Result + 'SOAPAction: "' + FSOAPAction + '"' + SLineBreak;
+    HeaderReq.AddHeader('SOAPAction', AnsiQuotedStr(FSOAPAction, '"'));
 
-  if (FHeaderReq.Count > 0) then
-    Result := Result + HeaderReq.Text + sLineBreak;
+  Result := HeaderReq.Text;
 end;
 
 function TACBrWinReqResp.UseSSL: Boolean;

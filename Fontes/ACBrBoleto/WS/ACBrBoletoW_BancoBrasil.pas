@@ -157,7 +157,6 @@ begin
     else
       raise EACBrBoletoWSException.Create(ClassName + Format( S_ERRO_GERAR_TOKEN_AUTENTICACAO, [OAuth.ErroComunicacao] ));
   end;
-
 end;
 
 procedure TBoletoW_BancoBrasil.GerarHeader;

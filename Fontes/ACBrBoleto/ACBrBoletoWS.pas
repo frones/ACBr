@@ -458,24 +458,24 @@ begin
   Result := False;
   FErroComunicacao := '';
 
-  if not Assigned( TDFeSSL(FSSL) ) then
+  if not Assigned(FSSL) then
     raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DFESSL] ));
 
   //Definindo Header da requisição OAuth
   FSSL.SSLHttpClass.Clear;
+  FSSL.SSLHttpClass.MimeType := ContentType;
   with FSSL.SSLHttpClass.HeaderReq do
   begin
     Clear;
-    Add(C_CONTENT_TYPE + ': ' + ContentType);
-    Add(C_AUTHORIZATION + ': ' + AAuthBase64);
-    Add(C_CACHE_CONTROL + ': ' + C_NO_CACHE);
+    AddHeader(C_CONTENT_TYPE, ContentType);
+    AddHeader(C_AUTHORIZATION, AAuthBase64);
+    AddHeader(C_CACHE_CONTROL, C_NO_CACHE);
   end;
 
   try
     //Utiliza HTTPMethod para envio
-    FSSL.HTTPMethod('POST', URL
-                            + '?' + C_GRANT_TYPE + '=' + GrantType
-                            + '&' + C_SCOPE + '=' + Scope);
+    FSSL.HTTPMethod('POST', URL + '?' + C_GRANT_TYPE + '=' + GrantType
+                                + '&' + C_SCOPE + '=' + Scope);
 
     FSSL.SSLHttpClass.DataResp.Position:= 0;
     ProcessarRespostaOAuth( ReadStrFromStream(FSSL.SSLHttpClass.DataResp, FSSL.SSLHttpClass.DataResp.Size ) );
@@ -491,8 +491,8 @@ end;
 
 constructor TOAuth.Create(ASSL: TDFeSSL; ATipoAmbiente: TpcnTipoAmbiente; AClientID, AClientSecret, AScope: String);
 begin
-  if Assigned( TDFeSSL(ASSL) ) then
-    FSSL := TDFeSSL(ASSL);
+  if Assigned(ASSL) then
+    FSSL := ASSL;
 
   FAmbiente := ATipoAmbiente;
   FClientID := AClientID;
@@ -777,7 +777,7 @@ begin
   FBoletoWS := ABoletoWS;
   FGerador := TGerador.Create;
 
-  if Assigned( TDFeSSL(ABoletoWS.Boleto.Configuracoes.WebService) ) then
+  if Assigned( ABoletoWS.Boleto.Configuracoes.WebService ) then
     FDFeSSL := TDFeSSL(ABoletoWS.Boleto.Configuracoes.WebService);
 
   FOAuth := TOAuth.Create(FDFeSSL,
@@ -852,12 +852,13 @@ end;
 constructor TBoletoWS.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  if Assigned( TACBrBoleto(AOwner) ) then
-  begin
-    FBoleto := TACBrBoleto(AOwner);
-    Clear;
-  end;
 
+  if Assigned(AOwner) and (AOwner is TACBrBoleto) then
+    FBoleto := TACBrBoleto(AOwner)
+  else
+    FBoleto := Nil;
+
+  Clear;
 end;
 
 procedure TBoletoWS.Clear;
@@ -866,7 +867,6 @@ begin
     FBoletoWSClass.Free;
 
   FBoletoWSClass := TBoletoWSClass.Create(Self);
-
 end;
 
 destructor TBoletoWS.Destroy;

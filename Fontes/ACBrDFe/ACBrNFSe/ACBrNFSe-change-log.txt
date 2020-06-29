@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2020
+-- pnfsNFSeR --
+[*] Possível correção para a leitura correta da tag <Competencia> provedor
+    SimplISSv2
+  Por: Italo Jurisato Junior
+
 25/06/2020
 -- pnfsNFSeR --
 [*] Possível correção para a leitura correta da tag <Competencia> provedor

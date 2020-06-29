@@ -294,8 +294,14 @@ begin
 end;
 
 function TACBrETQEpl2.ComandoPaginaDeCodigo: AnsiString;
+var
+  APagCod: String;
 begin
-  Result := 'I'+ConverterPaginaDeCodigo(PaginaDeCodigo);
+  APagCod := ConverterPaginaDeCodigo(PaginaDeCodigo);
+  if (APagCod <> '') then
+    Result := 'I'+APagCod
+  else
+    Result := '';
 end;
 
 function TACBrETQEpl2.ComandoVelocidade: AnsiString;

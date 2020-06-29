@@ -260,7 +260,8 @@ begin
   AdicionarComandos( ComandoResolucao, ListaComandos );
   AdicionarComandos( ComandoOrigemCoordenadas, ListaComandos );
   AdicionarComandos( ComandoVelocidade, ListaComandos );
-  AdicionarComandos( ComandoPaginaDeCodigo, ListaComandos );
+  if (PaginaDeCodigo <> pceNone) then
+    AdicionarComandos( ComandoPaginaDeCodigo, ListaComandos );
 
   Result := ListaComandos;
 end;

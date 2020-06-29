@@ -282,8 +282,14 @@ begin
 end;
 
 function TACBrETQPpla.ComandoPaginaDeCodigo: AnsiString;
+var
+  APagCod: String;
 begin
-  Result := STX + 'KI' + '<' + ConverterPaginaDeCodigo(PaginaDeCodigo);
+  APagCod := ConverterPaginaDeCodigo(PaginaDeCodigo);
+  if (APagCod <> '') then
+    Result := STX + 'KI' + '<' + APagCod
+  else
+    Result := '';
 end;
 
 function TACBrETQPpla.ComandoVelocidade: AnsiString;

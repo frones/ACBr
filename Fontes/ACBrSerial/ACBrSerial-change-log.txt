@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/06/2020
+-- ACBrETQClass, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2 --
+[-] Ajuste para não enviar o comando de página de código, quando ela não for
+    pceNone, ou não suportada
+    (por: DSA)
+
 Data: 12/06/2020
 -- ACBrETQZplII --
 [-] Correção para não enviar o comando de página de código, quando for "pceNone"

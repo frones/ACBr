@@ -242,7 +242,7 @@ begin
     pce850, pce852, pce860 : Result := '13';
     pce1250, pce1252: Result := '27';
   else
-    Result := '';;
+    Result := '';
   end;
 end;
 

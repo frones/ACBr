@@ -4687,7 +4687,8 @@ begin
       proGiap,
       proIPM: FURI := '';
 
-      proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
+      proGovDigital,
+      proTecnos: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
 
       proIssIntel,
       proISSNet: begin
@@ -4695,8 +4696,7 @@ begin
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
-      proABase,
-      proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+      proABase: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                   IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
 
       proRecife,
@@ -5121,8 +5121,7 @@ begin
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
-      proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                            IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
+      proTecnos: FURI := TNFSeSubstituirNfse(Self).FNumeroNFSe;
 
     else
       FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +

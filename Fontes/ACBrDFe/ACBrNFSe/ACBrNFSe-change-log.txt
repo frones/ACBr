@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/06/2020
+-- ACBrNFSeWebServices --
+[*] Para o provedor Tecnos o valor de Id tem que ser um numero inteiro e não uma
+    string (ficou faltando alterar o ID do pedido de cancelamento do método Substituir).
+  Por: Italo Jurisato Junior
 -- pnfsNFSeR --
 [*] Possível correção para a leitura correta da tag <Competencia> provedor
     SimplISSv2

@@ -368,7 +368,7 @@ begin
   begin
     IndiceViaCliente := 0;
     Linhas := LeInformacao(710, 0).AsInteger;    // 710-000 Linhas Via Reduzida Cliente
-    if (Linhas > 0) then
+    if ViaClienteReduzida and (Linhas > 0) then
       IndiceViaCliente := 711
     else
     begin

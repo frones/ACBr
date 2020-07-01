@@ -110,8 +110,8 @@ type
     procedure ACBrPOS1GravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrPOS1MudaEstadoTerminal(const TerminalId: String; EstadoAtual,
       EstadoAnterior: TACBrPOSPGWebEstadoTerminal);
-    procedure ACBrPOS1NovaConexao(const TerminalId: String;
-      const Model: String; const MAC: String; const SerNo: String);
+    procedure ACBrPOS1NovaConexao(const TerminalId: String; const Model: String;
+      const MAC: String; const SerNo: String);
     procedure btConfiguracaoClick(Sender: TObject);
     procedure btIniciarParaServidorClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
@@ -314,10 +314,10 @@ function TfrPOSTEFServer.EstadoTerminal(AEstado: TACBrPOSPGWebEstadoTerminal
   ): String;
 begin
   case AEstado of
-    PTISTAT_IDLE: Result := 'On-Line';
-    PTISTAT_BUSY: Result := 'Ocupado';
-    PTISTAT_NOCONN: Result := 'Off-Line';
-    PTISTAT_WAITRECON: Result := 'Reconectando';
+    statConectado: Result := 'Conectado';
+    statOcupado: Result := 'Ocupado';
+    statDesconectado: Result := 'Desconectado';
+    statEsperaConexao: Result := 'Reconectando';
   else
     Result := 'Desconhecido';
   end;
@@ -387,7 +387,7 @@ begin
     case OP of
       0: ExibirMenuPedidosEntrega(TerminalId);
       1: ExecutarReimpressao(TerminalId);
-      2: ACBrPOS1.ExecutarTransacaoTEF(TerminalId, PWOPER_ADMIN);
+      2: ACBrPOS1.ExecutarTransacaoTEF(TerminalId, operAdmin);
     else
       Exit;
     end;
@@ -475,21 +475,24 @@ end;
 
 procedure TfrPOSTEFServer.ExecutarFluxoFechamentoMesa(const TerminalId: String);
 begin
-
+  raise Exception.Create('Exemplo ainda não implementado');
 end;
 
 procedure TfrPOSTEFServer.ExecutarFluxoFechamentoBomba(const TerminalId: String);
 begin
-
+  raise Exception.Create('Exemplo ainda não implementado');
 end;
 
 procedure TfrPOSTEFServer.ExecutarReimpressao(const TerminalId: String);
 begin
   try
-    ACBrPOS1.ImprimirComprovantesTEF(TerminalId, PTIPRN_BOTH, False);
+    ACBrPOS1.ImprimirComprovantesTEF(TerminalId, prnAmbas, False);
   except
     On E: Exception do
-      ACBrPOS1.ExibirMensagem(TerminalId, E.Message);
+    begin
+      ACBrPOS1.Beep(TerminalId, beepAlerta);
+      ACBrPOS1.ExibirMensagem(TerminalId, E.Message, 5);
+    end;
   end;
 end;
 

@@ -141,45 +141,46 @@ type
   EACBrPOSPGWeb = class(Exception);
 
   TACBrPOSPGWebOperacao = (
-    PWOPER_SALE = 33,      // Pagamento de mercadorias ou serviços.
-    PWOPER_ADMIN = 32,     // Qualquer transação que não seja um pagamento (estorno, pré-autorização, consulta, relatório, reimpressão de recibo, etc.).
-    PWOPER_SALEVOID = 34); // 22h Estorna uma transação de venda que foi previamente realizada e confirmada.
+    operVenda = 33,          // Pagamento de mercadorias ou serviços.
+    operAdmin = 32,          // Qualquer transação que não seja um pagamento (estorno, pré-autorização, consulta, relatório, reimpressão de recibo, etc.).
+    operCancelarVenda = 34); // Estorna uma transação de venda que foi previamente realizada e confirmada.
 
   TACBrPOSPGWebBeep = (
-     PTIBEEP_OK,      // 0 Sucesso
-     PTIBEEP_WARNING, // 1 Alerta
-     PTIBEEP_ERROR);  // 2 Erro
+     beepOK,      // 0 Sucesso
+     beepAlerta,  // 1 Alerta
+     beepErro);   // 2 Erro
 
   TACBrPOSPGWebEstadoTerminal = (
-     PTISTAT_IDLE,       // 0 Terminal está on-line e aguardando por comandos.
-     PTISTAT_BUSY,       // 1 Terminal está on-line, porém ocupado processando um comando.
-     PTISTAT_NOCONN,     // 2 Terminal está offline.
-     PTISTAT_WAITRECON); // 3 Terminal está off-line. A transação continua sendo executada e após sua finalização, o terminal tentará efetuar a reconexão automaticamente
+     statConectado,      // 0 Terminal está on-line e aguardando por comandos.
+     statOcupado,        // 1 Terminal está on-line, porém ocupado processando um comando.
+     statDesconectado,   // 2 Terminal está offline.
+     statEsperaConexao); // 3 Terminal está off-line. A transação continua sendo executada e após sua finalização, o terminal tentará efetuar a reconexão automaticamente
 
   TACBrPOSPGWebCodBarras = (
-     CODESYMB_128 = 2, // Código de barras padrão 128. Pode-se utilizar aproximadamente 31 caracteres alfanuméricos.
-     CODESYMB_ITF = 3, // Código de barras padrão ITF. Pode-se utilizar aproximadamente 30 caracteres alfanuméricos.
-     CODESYMB_QRCODE = 4); // QR Code. Com aceitação de aproximadamente 600 caracteres alfanuméricos.
+     code128 = 2,     // Código de barras padrão 128. Pode-se utilizar aproximadamente 31 caracteres alfanuméricos.
+     codeITF = 3,     // Código de barras padrão ITF. Pode-se utilizar aproximadamente 30 caracteres alfanuméricos.
+     codeQRCODE = 4); // QR Code. Com aceitação de aproximadamente 600 caracteres alfanuméricos.
 
   TACBrPOSPGWebComprovantes = (
-     PTIPRN_NONE,      // 0 - Não imprimir
-     PTIPRN_MERCHANT,  // 1 - Via do estabelecimento
-     PTIPRN_CHOLDER,   // 2 - Via do portador do cartão
-     PTIPRN_BOTH);     // 3 - Ambas as Vias
+     prnNaoImprimir,      // 0 - Não imprimir
+     prnEstabalecimento,  // 1 - Via do estabelecimento
+     prnCliente,          // 2 - Via do portador do cartão
+     prnAmbas);           // 3 - Ambas as Vias
 
   TACBrPOSPGWebStatusTransacao = (
-     PTICNF_SUCCESS = 1,    // Transação confirmada.
-     PTICNF_PRINTERR = 2,   // Erro na impressora, desfazer a transação.
-     PTICNF_DISPFAIL = 3,   // Erro com o mecanismo dispensador, desfazer a transação.
-     PTICNF_OTHERERR = 4);  // Outro erro, desfazer a transação.
+     cnfSucesso = 1,        // Transação confirmada.
+     cnfErroImpressao = 2,  // Erro na impressora, desfazer a transação.
+     cnfErroDispesador = 3, // Erro com o mecanismo dispensador, desfazer a transação.
+     cnfErroDiverso = 4);   // Outro erro, desfazer a transação.
 
   TACBrPOSPGWebAPI = class;
+  TACBrPOSPGWebConexao = class;
 
-  TACBrPOSPGWebNovaConexao = procedure(const TerminalId: String; const Model: String;
-      const MAC: String; const SerNo: String) of object;
+  TACBrPOSPGWebNovaConexao = procedure(const TerminalId: String;
+     const Model: String; const MAC: String; const SerNo: String) of object;
 
   TACBrPOSPGWebNovoEstadoTerminal = procedure(const TerminalId: String;
-      EstadoAtual, EstadoAnterior: TACBrPOSPGWebEstadoTerminal) of object;
+     EstadoAtual, EstadoAnterior: TACBrPOSPGWebEstadoTerminal) of object;
 
   { TACBrPOSPGWebConexao }
 
@@ -334,13 +335,13 @@ type
     function ExecutarMenu(const TerminalId: String; Opcoes: TStrings;
       const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
       Opcao: SmallInt = 0): SmallInt;
-    procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = PTIBEEP_OK);
+    procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = beepOK);
     procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
     procedure AvancarPapel(const TerminalId: String);
     procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
       Tipo: TACBrPOSPGWebCodBarras);
     procedure ImprimirComprovantesTEF(const TerminalId: String;
-      Tipo: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+      Tipo: TACBrPOSPGWebComprovantes = prnAmbas;
       IgnoraErroSemComprovante: Boolean = True);
     procedure ObterEstado(const TerminalId: String;
       out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
@@ -349,7 +350,7 @@ type
 
     procedure ExecutarTransacaoTEF(const TerminalId: String;
       Operacao: TACBrPOSPGWebOperacao;
-      Comprovantes: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+      Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas;
       ParametrosAdicionaisTransacao: TStrings = nil);
 
     procedure IniciarTransacao(const TerminalId: String;
@@ -366,6 +367,7 @@ type
     procedure FinalizarTrancao(const TerminalId: String; Status: TACBrPOSPGWebStatusTransacao);
 
     function Desconectar(const TerminalId: String; Segundos: Word = 0): Boolean;
+    function DesconectarTodos: Integer;
 
     property PathDLL: String read fPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
@@ -450,16 +452,22 @@ begin
   fMAC := MAC;
   fSerNo := SerNo;
 
-  fEstado := PTISTAT_NOCONN;
-  fEstadoAnterior := PTISTAT_NOCONN;
+  fEstado := statDesconectado;
+  fEstadoAnterior := statDesconectado;
   fUltimaLeituraEstado := 0;
 
   fPOSPGWeb.ListaConexoes.Add(Self);
-  SetEstado(PTISTAT_IDLE);
+  SetEstado(statConectado);
 end;
 
 destructor TACBrPOSPGWebConexao.Destroy;
 begin
+  if not Terminated then
+  begin
+    Terminate;
+    WaitFor;
+  end;
+
   fPOSPGWeb.ListaConexoes.Remove(Self);
   inherited Destroy;
 end;
@@ -474,7 +482,13 @@ begin
       On E: Exception do
       begin
         if not Terminated then
-          fPOSPGWeb.ExibirMensagem(fTerminalId, E.Message, 5);
+        begin
+          if fPOSPGWeb.Inicializada then
+          begin
+            fPOSPGWeb.Beep(fTerminalId, beepErro);
+            fPOSPGWeb.ExibirMensagem(fTerminalId, E.Message, 5);
+          end;
+        end;
       end;
     end;
   finally
@@ -490,7 +504,8 @@ begin
   inherited Terminate;
 
   try
-    fPOSPGWeb.Desconectar(TerminalId);
+    if fPOSPGWeb.Inicializada then
+      fPOSPGWeb.Desconectar(TerminalId);
   except
     { Ignora erros }
   end;
@@ -501,7 +516,7 @@ var
   NovoEstado: TACBrPOSPGWebEstadoTerminal;
 begin
   // Força a leitura do Estado, se não for Idle ou a cada 5 segundos
-  if (fEstado <> PTISTAT_IDLE) or (SecondsBetween(fUltimaLeituraEstado, Now) > 5) then
+  if (fEstado <> statConectado) or (SecondsBetween(fUltimaLeituraEstado, Now) > 5) then
   begin
     fPOSPGWeb.ObterEstado(fTerminalId, NovoEstado, fModel, fMAC, fSerNo);
     SetEstado(NovoEstado);
@@ -573,6 +588,23 @@ begin
   fOnGravarLog := Nil;
   fOnNovaConexao := Nil;
   fOnMudaEstadoTerminal := Nil;
+end;
+
+function TACBrPOSPGWebAPI.DesconectarTodos: Integer;
+var
+  i: Integer;
+  Alist: TList;
+begin
+  Result := 0;
+  Alist := fListaConexoes.LockList;
+  try
+    Result := Alist.Count;
+    GravarLog('DesconectarTodos: '+IntToStr(Result));
+    for i := 0 to Alist.Count - 1 do
+      TACBrPOSPGWebConexao(Alist[i]).Terminate;
+  finally
+    fListaConexoes.UnlockList;
+  end;
 end;
 
 destructor TACBrPOSPGWebAPI.Destroy;
@@ -687,9 +719,6 @@ begin
 end;
 
 procedure TACBrPOSPGWebAPI.DesInicializar;
-var
-  Alist: TList;
-  i: Integer;
 begin
   if not fInicializada then
     Exit;
@@ -698,14 +727,7 @@ begin
   fTimerConexao.Enabled := False;
   fTimerConexao.OnTimer := Nil;
 
-  Alist := fListaConexoes.LockList;
-  try
-    for i := 0 to Alist.Count-1 do
-      TACBrPOSPGWebConexao(Alist[i]).Terminate;
-  finally
-    fListaConexoes.UnlockList;
-  end;
-
+  DesconectarTodos;
   UnLoadDLLFunctions;
   fInicializada := False;
 end;
@@ -870,13 +892,13 @@ procedure TACBrPOSPGWebAPI.ImprimirTexto(const TerminalId: String;
   const ATexto: String);
 var
   iRet: SmallInt;
-  TextoFormatado: String;
+  TextoFormatado: AnsiString;
 begin
-  // Trocando Tag <e> por \v ou #11, para Expandido. Deve ser o Primeiro caracter da Linha
-  TextoFormatado := StringReplace(ATexto, '<e>', #11, [rfReplaceAll]);
-  TextoFormatado := StringReplace(TextoFormatado, '<E>', #11, [rfReplaceAll]);
   // Formatando no limite de Colunas
-  TextoFormatado := FormatarMensagem(TextoFormatado, CACBrPOSPGWebColunasImpressora);
+  TextoFormatado := FormatarMensagem(ATexto, CACBrPOSPGWebColunasImpressora);
+  // Trocando Tag <e> por \v ou #11, para Expandido. NOTA: Deve ser o Primeiro caracter da Linha
+  TextoFormatado := StringReplace(TextoFormatado, '<e>', #11, [rfReplaceAll]);
+  TextoFormatado := StringReplace(TextoFormatado, '<E>', #11, [rfReplaceAll]);
 
   GravarLog('PTI_Print( '+TerminalId+', '+TextoFormatado+' )', True);
   xPTI_Print( TerminalId,
@@ -914,7 +936,7 @@ procedure TACBrPOSPGWebAPI.ImprimirComprovantesTEF(const TerminalId: String;
 var
   iRet: SmallInt;
 begin
-  if Tipo = PTIPRN_NONE then
+  if Tipo = prnNaoImprimir then
     Exit;
 
   GravarLog('PTI_EFT_PrintReceipt( '+TerminalId+', '+IntToStr(Word(Tipo))+' )');
@@ -960,7 +982,7 @@ var
   i: Integer;
   AConexao: TACBrPOSPGWebConexao;
 begin
-  Result := PTISTAT_NOCONN;
+  Result := statDesconectado;
   Alist := fListaConexoes.LockList;
   try
     for i := 0 to Alist.Count-1 do
@@ -985,29 +1007,29 @@ var
 begin
   GravarLog('TACBrPOSPGWebAPI.ExecutarTransacaoTEF( '+TerminalId+' )');
   try
-    AjustarEstadoConexao(TerminalId, PTISTAT_BUSY);
+    AjustarEstadoConexao(TerminalId, statOcupado);
     IniciarTransacao( TerminalId, Operacao, ParametrosAdicionaisTransacao );
     iRet := ExecutarTransacao( TerminalId );
     if (iRet = PTIRET_OK) then
     begin
-      if (Comprovantes <> PTIPRN_NONE) then
+      if (Comprovantes <> prnNaoImprimir) then
       begin
         try
           ImprimirComprovantesTEF( TerminalId, Comprovantes );
         except
-          FinalizarTrancao( TerminalId, PTICNF_PRINTERR );
+          FinalizarTrancao( TerminalId, cnfErroImpressao );
           raise;
         end;
       end;
 
-      FinalizarTrancao( TerminalId, PTICNF_SUCCESS );
+      FinalizarTrancao( TerminalId, cnfSucesso );
     end
     else
       AvaliarErro(iRet, TerminalId);
   finally
     ObterDadosDaTransacao( TerminalId );
     fEmTransacao := False;
-    AjustarEstadoConexao(TerminalId, PTISTAT_IDLE);
+    AjustarEstadoConexao(TerminalId, statConectado);
   end;
 end;
 
@@ -1174,7 +1196,7 @@ begin
   if not Result then
     AvaliarErro(iRet, TerminalId)
   else
-    AjustarEstadoConexao(TerminalId, PTISTAT_NOCONN);
+    AjustarEstadoConexao(TerminalId, statDesconectado);
 end;
 
 procedure TACBrPOSPGWebAPI.OnAguardaConexao(Sender: TObject);
@@ -1246,19 +1268,19 @@ begin
     begin
       MsgError := '';
       if not fEmTransacao then
-        AjustarEstadoConexao(TerminalId, PTISTAT_IDLE);
+        AjustarEstadoConexao(TerminalId, statConectado);
     end;
 
     PTIRET_NOCONN:
     begin
       MsgError := Format(sErrPTIRET_NOCONN, [TerminalId]);
-      AjustarEstadoConexao(TerminalId, PTISTAT_NOCONN);
+      AjustarEstadoConexao(TerminalId, statDesconectado);
     end;
 
     PTIRET_BUSY:
     begin
       MsgError := Format(sErrPTIRET_BUSY, [TerminalId]);
-      AjustarEstadoConexao(TerminalId, PTISTAT_BUSY);
+      AjustarEstadoConexao(TerminalId, statOcupado);
     end;
 
     PTIRET_INVPARAM: MsgError := sErrPTIRET_INVPARAM;

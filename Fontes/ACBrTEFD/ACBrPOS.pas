@@ -118,14 +118,14 @@ type
      function ExecutarMenu(const TerminalId: String; const OpcoesPipe: String;
        const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
        OpcaoInicial: SmallInt = 0): SmallInt; overload;
-     procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = PTIBEEP_OK);
+     procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = beepOK);
      procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
      procedure AvancarPapel(const TerminalId: String);
      procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
        Tipo: TACBrPOSPGWebCodBarras);
      procedure ImprimirQRCode(const TerminalId: String; const Conteudo: String);
      procedure ImprimirComprovantesTEF(const TerminalId: String;
-       Tipo: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+       Tipo: TACBrPOSPGWebComprovantes = prnAmbas;
        IgnoraErroSemComprovante: Boolean = True);
      procedure ObterEstado(const TerminalId: String;
        out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
@@ -134,10 +134,10 @@ type
 
      procedure ExecutarTransacaoTEF(const TerminalId: String;
       Operacao: TACBrPOSPGWebOperacao;
-      Comprovantes: TACBrPOSPGWebComprovantes = PTIPRN_BOTH;
+      Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas;
       ParametrosAdicionaisTransacao: TStrings = nil);
      procedure ExecutarTransacaoPagamento(const TerminalId: String;
-      ValorPagto: Double; Comprovantes: TACBrPOSPGWebComprovantes = PTIPRN_BOTH);
+      ValorPagto: Double; Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas);
 
      procedure IniciarTransacao(const TerminalId: String;
        Operacao: TACBrPOSPGWebOperacao;
@@ -505,7 +505,7 @@ end;
 procedure TACBrPOS.ImprimirQRCode(const TerminalId: String;
   const Conteudo: String);
 begin
-  fPOSPGWeb.ImprimirCodBarras(TerminalId, Conteudo, CODESYMB_QRCODE);
+  fPOSPGWeb.ImprimirCodBarras(TerminalId, Conteudo, codeQRCODE);
 end;
 
 procedure TACBrPOS.ImprimirComprovantesTEF(const TerminalId: String;
@@ -545,7 +545,7 @@ begin
     PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
     PA.ValueInfo[PWINFO_CURRENCY] := '986';
 
-    ExecutarTransacaoTEF( TerminalId, PWOPER_SALE, Comprovantes, PA);
+    ExecutarTransacaoTEF( TerminalId, operVenda, Comprovantes, PA);
   finally
     PA.Free;
   end;

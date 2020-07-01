@@ -48,6 +48,7 @@ resourcestring
   sErrPWRET_WRITERR = 'Falha de gravação no diretório %s';
   sErrPWRET_INVCALL = 'Já foi efetuada uma chamada à função PW_iInit';
   sErrPWRET_INVCALL2 = 'Não há captura de dados no PIN-pad em curso.';
+  sErrPWRET_INVCALL3 = 'Não é possível capturar dados em um PIN-pad não ABECS';
   sErrPWRET_NODATA = 'A informação solicitada não está disponível';
   sErrPWRET_BUFOVFLW = 'O valor da informação solicitada não cabe no Buffer alocado';
   sErrPWRET_DLLNOTINIT = 'Biblioteca PGWebLib não foi inicializada';
@@ -263,7 +264,9 @@ const
   PWRET_PPS_INVCALL        = -2110;  // Chamada inválida à função. Operações prévias são necessárias
   PWRET_PPS_INVPARM        = -2111;  // Parâmetro inválido passado a função.
   PWRET_PPS_TIMEOUT        = -2112;  // Esgotado o tempo máximo estipulado para a operação.
+  PWRET_PPS_TIMEOUT2       = -400;   // TimeOut na Operação em curso no PinPad
   PWRET_PPS_CANCEL         = -2113;  // Operação cancelada pelo operador.
+  PWRET_PPS_CANCEL2        = -402;   // Operação cancelada pelo operador no PinPad
   PWRET_PPS_ALREADYOPEN    = -2114;  // Pinpad já aberto.
   PWRET_PPS_NOTOPEN        = -2115;  // Pinpad não foi aberto.
   PWRET_PPS_EXECERR        = -2116;  // Erro interno de execução - problema de implementação da biblioteca (software).
@@ -683,6 +686,8 @@ type
       pszAuthSyst: String);
     procedure AbortarTransacao;
     procedure TratarTransacaoPendente;
+    function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
+      TimeOutSec: SmallInt): String;
 
     function ValidarRespostaCampo(AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
@@ -735,6 +740,7 @@ function PWCNFToString(iCNF: LongWord): String;
 function PWDATToString(bTipoDeDado: Byte): String;
 function PWVALToString(bValidacaoDado: Byte): String;
 function PWTYPToString(bTiposEntradaPermitidos: Byte): String;
+function PWDPINToString(iMessageId: Word): String;
 
 implementation
 
@@ -882,7 +888,9 @@ begin
     PWRET_PPS_INVCALL:          Result := 'PWRET_PPS_INVCALL';
     PWRET_PPS_INVPARM:          Result := 'PWRET_PPS_INVPARM';
     PWRET_PPS_TIMEOUT:          Result := 'PWRET_PPS_TIMEOUT';
+    PWRET_PPS_TIMEOUT2:         Result := 'PWRET_PPS_TIMEOUT2';
     PWRET_PPS_CANCEL:           Result := 'PWRET_PPS_CANCEL';
+    PWRET_PPS_CANCEL2:          Result := 'PWRET_PPS_CANCEL2';
     PWRET_PPS_ALREADYOPEN:      Result := 'PWRET_PPS_ALREADYOPEN';
     PWRET_PPS_NOTOPEN:          Result := 'PWRET_PPS_NOTOPEN';
     PWRET_PPS_EXECERR:          Result := 'PWRET_PPS_EXECERR';
@@ -997,6 +1005,26 @@ begin
     PWTYP_AlfaNumEsp: Result := 'PWTYP_AlfaNumEsp';
   else
     Result := 'PWTYP_'+IntToStr(bTiposEntradaPermitidos);
+  end;
+end;
+
+function PWDPINToString(iMessageId: Word): String;
+begin
+  case iMessageId of
+    PWDPIN_DIGITE_O_DDD:                Result := 'PWDPIN_DIGITE_O_DDD';
+    PWDPIN_REDIGITE_O_DDD:              Result := 'PWDPIN_REDIGITE_O_DDD';
+    PWDPIN_DIGITE_O_TELEFONE:           Result := 'PWDPIN_DIGITE_O_TELEFONE';
+    PWDPIN_REDIGITE_O_TELEFONE:         Result := 'PWDPIN_REDIGITE_O_TELEFONE';
+    PWDPIN_DIGITE_DDD_TELEFONE:         Result := 'PWDPIN_DIGITE_DDD_TELEFONE';
+    PWDPIN_REDIGITE_DDD_TELEFONE:       Result := 'PWDPIN_REDIGITE_DDD_TELEFONE';
+    PWDPIN_DIGITE_O_CPF:                Result := 'PWDPIN_DIGITE_O_CPF';
+    PWDPIN_REDIGITE_O_CPF:              Result := 'PWDPIN_REDIGITE_O_CPF';
+    PWDPIN_DIGITE_O_RG:                 Result := 'PWDPIN_DIGITE_O_RG';
+    PWDPIN_REDIGITE_O_RG:               Result := 'PWDPIN_REDIGITE_O_RG';
+    PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS: Result := 'PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS';
+    PWDPIN_DIGITE_CODIGO_DE_SEGURANCA:  Result := 'PWDPIN_DIGITE_CODIGO_DE_SEGURANCA';
+  else
+    Result := 'PWDPIN_'+IntToStr(iMessageId);
   end;
 end;
 
@@ -1547,6 +1575,49 @@ begin
   end;
 
   FinalizarTrancao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
+end;
+
+function TACBrTEFPGWebAPI.ObterDadoPinPad(iMessageId: Word; MinLen,
+  MaxLen: Byte; TimeOutSec: SmallInt): String;
+var
+  iRet: SmallInt;
+  MsgError: String;
+  pszData: PAnsiChar;
+begin
+  Result := '';
+  MsgError := '';
+  GravarLog('PW_iPPGetUserData( '+PWDPINToString(iMessageId)+', '+
+                                  IntToStr(MinLen)+', '+
+                                  IntToStr(MaxLen)+', '+
+                                  IntToStr(TimeOutSec)+' )');
+
+  pszData := AllocMem(max(50, MaxLen));
+  try
+    iRet := xPW_iPPGetUserData(iMessageId, MinLen, MaxLen, TimeOutSec, pszData);
+    GravarLog('  '+PWRETToString(iRet));
+    case iRet of
+      PWRET_OK:
+      begin
+        Result := String(pszData);
+        GravarLog('  '+Result, True);
+      end;
+
+      PWRET_CANCEL, PWRET_PPS_CANCEL, PWRET_PPS_CANCEL2,
+      PWRET_TIMEOUT, PWRET_PPS_TIMEOUT, PWRET_PPS_TIMEOUT2:
+        MsgError := '';
+      PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+      PWRET_PPCOMERR: MsgError := sErrPWRET_PPCOMERR;
+      PWRET_INVCALL: MsgError := sErrPWRET_INVCALL3;
+    else
+      MsgError := ObterUltimoRetorno;
+    end;
+
+    if (MsgError <> '') then
+      DoException(ACBrStr(MsgError));
+  finally
+    Freemem(pszData);
+  end;
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;

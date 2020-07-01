@@ -692,8 +692,54 @@ end;
 
 function TACBrTEFDPayGoWeb.CDP(const EntidadeCliente: string; out
   Resposta: string): Boolean;
+var
+  TipoMsg: Word;
+  MinLen, MaxLen: Byte;
 begin
-  Result := inherited CDP(EntidadeCliente, Resposta);
+  MinLen := 0; MaxLen := 0;
+
+  if EntidadeCliente = 'F' then
+    TipoMsg := PWDPIN_DIGITE_O_CPF
+  else if EntidadeCliente = 'J' then
+    raise EACBrTEFDErro.Create( ACBrStr('Captura de CNPJ não suportada por: ')+ClassName )
+  else
+    TipoMsg := StrToIntDef(EntidadeCliente, 0);
+
+  case TipoMsg of
+    PWDPIN_DIGITE_O_DDD, PWDPIN_REDIGITE_O_DDD:
+    begin
+      MinLen := 2; MaxLen := 2;
+    end;
+    PWDPIN_DIGITE_O_TELEFONE, PWDPIN_REDIGITE_O_TELEFONE:
+    begin
+      MinLen := 8; MaxLen := 9;
+    end;
+    PWDPIN_DIGITE_DDD_TELEFONE, PWDPIN_REDIGITE_DDD_TELEFONE:
+    begin
+      MinLen := 10; MaxLen := 11;
+    end;
+    PWDPIN_DIGITE_O_CPF, PWDPIN_REDIGITE_O_CPF:
+    begin
+      MinLen := 11; MaxLen := 11;
+    end;
+    PWDPIN_DIGITE_O_RG, PWDPIN_REDIGITE_O_RG:
+    begin
+      MinLen := 5; MaxLen := 11;
+    end;
+    PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS:
+    begin
+      MinLen := 4; MaxLen := 4;
+    end;
+    PWDPIN_DIGITE_CODIGO_DE_SEGURANCA:
+    begin
+      MinLen := 3; MaxLen := 5;
+    end;
+  else
+    raise EACBrTEFDErro.CreateFmt( ACBrStr('Captura Tipo: %s não suportada por: %s'), [EntidadeCliente, ClassName] )
+  end;
+
+  Resposta := fsPGWebAPI.ObterDadoPinPad(TipoMsg, MinLen, MaxLen, 30);  // 30 Segundos de Timeout
+  Result := (Resposta <> '');
 end;
 
 procedure TACBrTEFDPayGoWeb.VerificarTransacoesPendentesClass(

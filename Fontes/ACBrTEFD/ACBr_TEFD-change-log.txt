@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2020
+-- ACBrTEFDPayGoWeb --
+[+] Implementado suporte ao método "CDP" (Captura de Dados no PinPad)
+
+-- ACBrTEFPayGoWebComum --
+[+] Implementado o método:
+    function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
+      TimeOutSec: SmallInt): String;
+    (por: DSA)
+
 26/06/2020
 -- ACBrTEFPayGoWebComum, ACBrTEFPayGoComum --
 [*] Alguns Métodos e Classes foram movidos de ACBrTEFPayGoWebComum para

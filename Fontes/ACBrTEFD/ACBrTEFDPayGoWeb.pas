@@ -700,6 +700,8 @@ begin
 
   if EntidadeCliente = 'F' then
     TipoMsg := PWDPIN_DIGITE_O_CPF
+  else if EntidadeCliente = 'X' then
+    TipoMsg := PWDPIN_DIGITE_O_TELEFONE
   else if EntidadeCliente = 'J' then
     raise EACBrTEFDErro.Create( ACBrStr('Captura de CNPJ não suportada por: ')+ClassName )
   else

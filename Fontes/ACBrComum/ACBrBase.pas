@@ -468,7 +468,8 @@ begin
   fsEnabled := False;
   Terminate;
   fsEvent.SetEvent;  // libera Event.WaitFor()
-  WaitFor;
+  if not Terminated then
+    WaitFor;
 
   fsEvent.Free;
   inherited Destroy;
@@ -522,9 +523,15 @@ end;
 
 function TACBrInformacao.GetAsDate : TDateTime;
 var
-   DataStr : String;
+   DataStr, AnoStr: String;
 begin
   DataStr := OnlyNumber( Trim(fInfo) );
+
+  if (Length(DataStr) = 6) then // DDMMYY, converte para DDMMYYYY
+  begin
+    AnoStr := IntToStr(YearOf(Today));
+    DataStr := copy(DataStr,1,4) + copy(AnoStr,1,2) + copy(DataStr,5,2);
+  end;
 
   try
      Result := EncodeDate( StrToInt(copy(DataStr,5,4)),

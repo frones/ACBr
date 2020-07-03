@@ -957,7 +957,7 @@ begin
              RetornoECF := 'V' ;
            stsEmPagamento:
              RetornoECF := 'P' ;
-           stsLivre, stsFinalizada, stsCancelada, stsOperacaoTEF:
+           stsLivre, stsFinalizada, stsCancelada, stsAguardandoTEF, stsOperacaoTEF:
              RetornoECF := 'L' ;
          else
            RetornoECF := 'O' ;
@@ -1296,7 +1296,7 @@ begin
   begin
     // SiTef precisa de parâmetros extras, vamos informar...
     ACBrTEFD1.TEFCliSiTef.PinPadIdentificador := '01.123.456/0001-07';
-    ACBrTEFD1.TEFCliSiTef.PinPadChaveAcesso := 'Chave Fornecida pela Software Express, eclusiva para o Identificador acima';
+    ACBrTEFD1.TEFCliSiTef.PinPadChaveAcesso := 'Chave Fornecida pela Software Express, exclusiva para o Identificador acima';
   end;
 
   ACBrTEFD1.CDP('F', Saida);  // F=CPF

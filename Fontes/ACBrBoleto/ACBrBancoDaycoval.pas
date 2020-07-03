@@ -378,8 +378,8 @@ begin
       'REMESSA' +                       // Identificação do arquivo
       '01' +                            // Código do serviço
       PadRight('COBRANCA',15) +         // Identificação do serviço
-      PadRight(CodigoCedente, 12) +     // Código da empresa no banco
-      Space(8) +                        // Brancos
+      PadRight(CodigoCedente, 20) +     // Código da empresa no banco
+      //Space(8) +                        // Brancos
       PadRight(Nome, 30) +              // Nome da empresa
       '707' +                           // Código do banco: 707 = Banco Daycoval
       PadRight('BANCO DAYCOVAL', 15) +  // Nome do banco
@@ -482,13 +482,8 @@ begin
     // Conforme manual o aceite deve ser sempre 'N'
     ATipoAceite := 'N';
 
-    // Código de Remessa
-    // Se o boleto for emitido pelo banco, o código da remessa deve ser 3
-    // Se o boleto for emitido pelo cliente, o código da remessa deve ser 4
-    if ( ACBrBoleto.Cedente.ResponEmissao = tbCliEmite ) then
-      ACodigoRemessa := '4'
-    else
-      ACodigoRemessa := '3';
+    // Código de Remessa Fixo 6
+    ACodigoRemessa := '6';
 
     with ACBrBoleto do
     begin
@@ -499,10 +494,9 @@ begin
         PadRight(Cedente.CodigoCedente, 20) +                        // Código da empresa no banco
         PadRight(SeuNumero, 25) +                                    // Identificação do título na empresa
         PadRight(NossoNumero,8) +                                    // Nosso número
-        PadLeft('',5,'0')  +                                         // Zeros
-        PadRight(NossoNumero,8) +                                    // Nosso número correspondente
+        Space(13) +                                                  // Brancos
         Space(24) +                                                  // Brancos
-        ACodigoRemessa +                                             // Código da Remessa (3-Banco Emite / 4-Cliente emite)
+        ACodigoRemessa +                                             // Código da Remessa
         ATipoOcorrencia +                                            // Código da ocorrência
         PadLeft(RightStr(SeuNumero,10), 10, ' ') +                               // Identificação do título na empresa
         FormatDateTime('ddmmyy', Vencimento) +                       // Data de vencimento do título
@@ -573,7 +567,7 @@ begin
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
       ' não é um arquivo de retorno do ' + Nome));
 
-  rCodEmpresa  := Trim(Copy(ARetorno[0], 27, 12));
+  rCodEmpresa  := Trim(Copy(ARetorno[0], 27, 20));
   rCedente     := Trim(Copy(ARetorno[0], 47, 30));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 109, 5), 0);
@@ -593,7 +587,7 @@ begin
 
   with ACBrBanco.ACBrBoleto do
   begin
-    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 12, '0')) then
+    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
       raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido.'));
 
     case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of

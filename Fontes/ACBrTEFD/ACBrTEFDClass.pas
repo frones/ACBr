@@ -1857,10 +1857,13 @@ begin
        while FileExists( ArqBackup ) do
        begin
           try
-             if ImpressaoOk then
-                self.CNF
-             else
-                self.NCN ;
+             if Resp.Confirmar then
+             begin
+               if ImpressaoOk then
+                  self.CNF
+               else
+                  self.NCN ;
+             end;
           except
           end;
 

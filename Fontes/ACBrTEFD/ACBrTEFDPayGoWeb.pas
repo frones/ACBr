@@ -154,10 +154,12 @@ type
        Conta      : String = ''; ContaDC   : String = '';
        Cheque     : String = ''; ChequeDC  : String = '';
        Compensacao: String = '' ) : Boolean ; override;
+    Procedure NCN; overload; override;
     Procedure NCN(Rede, NSU, Finalizacao : String;
        Valor : Double = 0; DocumentoVinculado : String = ''); override;
+    Procedure CNF ; overload; override;
     Procedure CNF(Rede, NSU, Finalizacao : String;
-       DocumentoVinculado : String = ''); override;
+       DocumentoVinculado : String = ''); overload; override;
     Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
        Valor : Double) : Boolean; overload; override;
     Function PRE(Valor : Double; DocumentoVinculado : String = '';
@@ -636,6 +638,12 @@ begin
             ProcessarRespostaPagamento(IndiceFPG_ECF, Valor);
 end;
 
+procedure TACBrTEFDPayGoWeb.NCN;
+begin
+  if Resp.Confirmar then
+    inherited NCN;
+end;
+
 procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
@@ -645,6 +653,12 @@ begin
                                NSU,
                                Resp.Estabelecimento,
                                Rede);
+end;
+
+procedure TACBrTEFDPayGoWeb.CNF;
+begin
+  if Resp.Confirmar then
+    inherited CNF;
 end;
 
 procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
@@ -775,44 +789,47 @@ begin
         Resp.LeArquivo(NomeArqTEF);
 
         try
-          Confirmar := ConfirmarTransacoesPendentes;
-          if Assigned(fOnAvaliarTransacaoPendente) then
-            fOnAvaliarTransacaoPendente( Confirmar,
-                                         Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
-                                                 [FormatDateTimeBr(Resp.DataHoraTransacaoHost),
-                                                  FormatFloatBr(Resp.ValorTotal),
-                                                  Resp.Rede,
-                                                  Resp.NSU] ),
-                                         Resp);
-
-          { Criando cópia da Resposta Atual }
-          AResposta := TACBrTEFDRespPayGoWeb.Create;
-          AResposta.Assign(Resp);
-
-          if Confirmar then
-            CNF
-          else
+          if Resp.Confirmar then
           begin
-            if Resp.CNFEnviado then
+            Confirmar := ConfirmarTransacoesPendentes;
+            if Assigned(fOnAvaliarTransacaoPendente) then
+              fOnAvaliarTransacaoPendente( Confirmar,
+                                           Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
+                                                   [FormatDateTimeBr(Resp.DataHoraTransacaoHost),
+                                                    FormatFloatBr(Resp.ValorTotal),
+                                                    Resp.Rede,
+                                                    Resp.NSU] ),
+                                           Resp);
+
+            { Criando cópia da Resposta Atual }
+            AResposta := TACBrTEFDRespPayGoWeb.Create;
+            AResposta.Assign(Resp);
+
+            if Confirmar then
+              CNF
+            else
             begin
-              if not CNC then
-                Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
+              if Resp.CNFEnviado then
+              begin
+                if not CNC then
+                  Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
+              end
+              else
+                NCN;
+            end;
+
+            if Confirmar then
+            begin
+              RespostasConfirmadas.Add(AResposta);
+              if (Trim(AResposta.NSU) <> '') then
+                NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
             end
             else
-              NCN;
-          end;
-
-          if Confirmar then
-          begin
-            RespostasConfirmadas.Add(AResposta);
-            if (Trim(AResposta.NSU) <> '') then
-              NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
-          end
-          else
-          begin
-            RespostasCanceladas.Add(AResposta);
-            if (Trim(AResposta.NSU) <> '') then
-              NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
+            begin
+              RespostasCanceladas.Add(AResposta);
+              if (Trim(AResposta.NSU) <> '') then
+                NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
+            end;
           end;
 
           SysUtils.DeleteFile(NomeArqTEF);
@@ -967,7 +984,7 @@ end;
 
 function TACBrTEFDPayGoWeb.GetPathDLL: string;
 begin
-  Result := fsPGWebAPI.PathDLL;
+  Result := fsPGWebAPI.PathLib;
 end;
 
 function TACBrTEFDPayGoWeb.GetPontoCaptura: String;
@@ -1052,7 +1069,7 @@ end;
 
 procedure TACBrTEFDPayGoWeb.SetPathDLL(AValue: string);
 begin
-  fsPGWebAPI.PathDLL := AValue;
+  fsPGWebAPI.PathLib := AValue;
 end;
 
 procedure TACBrTEFDPayGoWeb.GravaLogAPI(const ALogLine: String;

@@ -46,6 +46,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2020
+-- ACBrTEFD, ACBrTEFDPayGoWeb --
+[*] Ajuste para não enviar CNF ou NCN para Transações que não requerem Confirmação
+
+-- ACBrTEFPayGoWebComum --
+[+] Implementado o método: "VersaoLib", para retornar a versão atual da Lib
+[*] Método Inicializar, verifica se a Lib é igual ou superior a versão mínima
+    (por: DSA)
+
 01/07/2020
 -- ACBrTEFDPayGoWeb --
 [+] Implementado suporte ao método "CDP" (Captura de Dados no PinPad)

@@ -45,6 +45,7 @@ resourcestring
   sInfoRemovaCartao = 'REMOVER O CARTAO';
   sErrLibJaInicializda = 'Biblioteca PGWebLib já foi inicializada';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
+  sErrLibVersaoInvalida = 'Biblioteca %s tem versão %s, inferior a %s';
   sErrPWRET_WRITERR = 'Falha de gravação no diretório %s';
   sErrPWRET_INVCALL = 'Já foi efetuada uma chamada à função PW_iInit';
   sErrPWRET_INVCALL2 = 'Não há captura de dados no PIN-pad em curso.';
@@ -65,13 +66,15 @@ resourcestring
 
 const
   CACBrTEFPGWebAPIName = 'ACBrTEFPGWebAPI';
-  CACBrTEFPGWebAPIVersao = '1.0.0';
+  CACBrTEFPGWebAPIVersao = '1.0.1';
 
   {$IFDEF MSWINDOWS}
    CACBrTEFPGWebLib = 'PGWebLib.dll';
   {$ELSE}
    CACBrTEFPGWebLib = 'PGWebLib.so';
   {$ENDIF}
+
+  CACBrTEFPGWebLibMinVersion = '0004.0000.0082.0003';
 
   CSleepNothing = 300;
   CMilissegundosMensagem = 5000;  // 5 seg
@@ -549,7 +552,7 @@ type
     fOnGravarLog: TACBrGravarLog;
     fOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
     fParametrosAdicionais: TACBrTEFPGWebAPIParametros;
-    fPathDLL: String;
+    fPathLib: String;
     fPontoCaptura: String;
     fPortaPinPad: Integer;
     fPortaTCP: String;
@@ -626,7 +629,7 @@ type
     procedure SetInicializada(AValue: Boolean);
     procedure SetNomeAplicacao(AValue: String);
     procedure SetNomeEstabelecimento(AValue: String);
-    procedure SetPathDLL(AValue: String);
+    procedure SetPathLib(AValue: String);
     procedure SetPontoCaptura(AValue: String);
     procedure SetPortaTCP(AValue: String);
     procedure SetSoftwareHouse(AValue: String);
@@ -635,8 +638,9 @@ type
     procedure SetEmTransacao(AValue: Boolean);
     procedure OnTimerOcioso(Sender: TObject);
   protected
-    procedure LoadDLLFunctions;
-    procedure UnLoadDLLFunctions;
+    function LibFullName: String;
+    procedure LoadLibFunctions;
+    procedure UnLoadLibFunctions;
     procedure ClearMethodPointers;
 
     procedure DoException( AErrorMsg: String );
@@ -688,11 +692,12 @@ type
     procedure TratarTransacaoPendente;
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
       TimeOutSec: SmallInt): String;
+    function VersaoLib: String;
 
     function ValidarRespostaCampo(AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 
-    property PathDLL: String read fPathDLL write SetPathDLL;
+    property PathLib: String read fPathLib write SetPathLib;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Inicializada: Boolean read fInicializada write SetInicializada;
 
@@ -1086,14 +1091,14 @@ begin
   fParametrosAdicionais.Free;
   fTimerOcioso.Enabled := False;
   fTimerOcioso.Free;
-  UnLoadDLLFunctions;
+  UnLoadLibFunctions;
   inherited Destroy;
 end;
 
 procedure TACBrTEFPGWebAPI.Inicializar;
 var
   iRet: SmallInt;
-  MsgError: String;
+  MsgError, ver: String;
 begin
   if fInicializada then
     Exit;
@@ -1112,7 +1117,7 @@ begin
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
 
-  LoadDLLFunctions;
+  LoadLibFunctions;
   if not DirectoryExists(fDiretorioTrabalho) then
     ForceDirectories(fDiretorioTrabalho);
 
@@ -1132,12 +1137,17 @@ begin
 
   fInicializada := True;
   SetEmTransacao(False);
+
+  ver := VersaoLib;
+  if CompareVersions(ver, CACBrTEFPGWebLibMinVersion) < 0 then
+    DoException(Format( ACBrStr(sErrLibVersaoInvalida),
+                        [LibFullName, ver, CACBrTEFPGWebLibMinVersion]) );
 end;
 
 procedure TACBrTEFPGWebAPI.DesInicializar;
 begin
   GravarLog('TACBrTEFPGWebAPI.DesInicializar');
-  UnLoadDLLFunctions;
+  UnLoadLibFunctions;
   fInicializada := False;
 end;
 
@@ -1197,7 +1207,7 @@ var
   iRet: SmallInt;
   MsgError: String;
 begin
-  LoadDLLFunctions;
+  LoadLibFunctions;
   Result := #0;
   ulDataSize := 10240;   // 10K
   pszData := AllocMem(ulDataSize);
@@ -1618,6 +1628,16 @@ begin
   finally
     Freemem(pszData);
   end;
+end;
+
+function TACBrTEFPGWebAPI.VersaoLib: String;
+begin
+  if not fInicializada then
+    Inicializar;
+
+  IniciarTransacao(PWOPER_VERSION);
+  ExecutarTransacao;
+  Result := fDadosTransacao.ValueInfo[PWINFO_RESULTMSG];
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
@@ -2302,17 +2322,17 @@ begin
     DesInicializar;
 end;
 
-procedure TACBrTEFPGWebAPI.SetPathDLL(AValue: String);
+procedure TACBrTEFPGWebAPI.SetPathLib(AValue: String);
 begin
-  if fPathDLL = AValue then
+  if fPathLib = AValue then
     Exit;
 
-  GravarLog('TACBrTEFPGWebAPI.SetPathDLL( '+AValue+' )');
+  GravarLog('TACBrTEFPGWebAPI.SetPathLib( '+AValue+' )');
 
   if fInicializada then
     DoException(ACBrStr(sErrLibJaInicializda));
 
-  fPathDLL := AValue;
+  fPathLib := AValue;
 end;
 
 procedure TACBrTEFPGWebAPI.SetPontoCaptura(AValue: String);
@@ -2383,6 +2403,14 @@ begin
   GravarLog('  '+PWRETToString(iRet));
 end;
 
+function TACBrTEFPGWebAPI.LibFullName: String;
+var
+  APath: String;
+begin
+  APath := PathWithDelim(PathLib);
+  Result := APath + CACBrTEFPGWebLib;
+end;
+
 procedure TACBrTEFPGWebAPI.SetDiretorioTrabalho(AValue: String);
 begin
   if fDiretorioTrabalho = AValue then
@@ -2420,7 +2448,7 @@ begin
   fCNPJEstabelecimento := ACNPJ;
 end;
 
-procedure TACBrTEFPGWebAPI.LoadDLLFunctions;
+procedure TACBrTEFPGWebAPI.LoadLibFunctions;
 
   procedure PGWebFunctionDetect( FuncName: AnsiString; var LibPointer: Pointer ) ;
   var
@@ -2430,15 +2458,8 @@ procedure TACBrTEFPGWebAPI.LoadDLLFunctions;
     begin
       GravarLog('   '+FuncName);
 
-      // Verifica se exite o caminho das DLLs
-      sLibName := '';
-      if Length(PathDLL) > 0 then
-        sLibName := PathWithDelim(PathDLL);
-
-      // Concatena o caminho se exitir mais o nome da DLL.
-      sLibName := sLibName + CACBrTEFPGWebLib;
-
-      if not FunctionDetect( sLibName, FuncName, LibPointer) then
+      sLibName := LibFullName;
+      if not FunctionDetect(sLibName, FuncName, LibPointer) then
       begin
         LibPointer := NIL ;
         DoException(Format(ACBrStr('Erro ao carregar a função: %s de: %s'),[FuncName, sLibName]));
@@ -2478,7 +2499,7 @@ procedure TACBrTEFPGWebAPI.LoadDLLFunctions;
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
 end;
 
-procedure TACBrTEFPGWebAPI.UnLoadDLLFunctions;
+procedure TACBrTEFPGWebAPI.UnLoadLibFunctions;
 var
   sLibName: String;
 begin
@@ -2487,11 +2508,8 @@ begin
 
   //GravarLog('TACBrTEFPGWebAPI.UnLoadDLLFunctions');
 
-  sLibName := '';
-  if Length(PathDLL) > 0 then
-     sLibName := PathWithDelim(PathDLL);
-
-  UnLoadLibrary( sLibName + CACBrTEFPGWebLib );
+  sLibName := LibFullName;
+  UnLoadLibrary( sLibName );
   ClearMethodPointers;
 end;
 

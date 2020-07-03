@@ -859,8 +859,7 @@ begin
     else
       tipoInscricao := '02';
 
-    aAgencia := PadLeft(RightStr( ACBrBoleto.Cedente.Agencia, 4), 4, '0') +
-                PadLeft(ACBrBoleto.Cedente.AgenciaDigito, 1, '0');
+    aAgencia := PadLeft(RightStr( ACBrBoleto.Cedente.Agencia, 5), 5, '0');
 
     aConta := PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') +
               PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
@@ -1212,7 +1211,7 @@ function TACBrBancoSafra.MontarCampoCodigoCedente(
 begin
   with ACBrTitulo.ACBrBoleto.Cedente do
   begin
-    Result := PadLeft(RightStr(Agencia,4), 4, '0') + PadLeft(AgenciaDigito, 1, '0') + ' / ' + PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') + PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
+    Result := PadLeft(RightStr(Agencia,5), 5, '0') + ' / ' + PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') + PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
   end;
 end;
 
@@ -1227,22 +1226,21 @@ end;
 function TACBrBancoSafra.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras ,
-  valorDocumento, agencia, agenciaDigito, conta,
+  valorDocumento, agencia, conta,
   ContaDigito, NossoNumero: string;
 begin
   with ACBrTitulo.ACBrBoleto do
   begin
     FatorVencimento  := CalcularFatorVencimento(ACBrTitulo.Vencimento);
     valorDocumento   := IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10);
-    agencia          := PadLeft(RightStr(Cedente.Agencia,4), 4, '0');
-    agenciaDigito    := PadLeft(Cedente.AgenciaDigito, 1, '0');
-    conta            := Cedente.Conta;
+    agencia          := PadLeft(RightStr(Cedente.Agencia,5), 5, '0');
+    conta            := PadLeft(Cedente.Conta, 8, '0');
     ContaDigito      := PadLeft(Cedente.ContaDigito, 1, '0');
     NossoNumero      := PadLeft(RightStr(ACBrTitulo.NossoNumero,9),9,'0');
 
     CodigoBarras := IntToStr(Banco.Numero) + '9' + FatorVencimento +
                     valorDocumento +
-                    '7' + agencia + trim(agenciaDigito) + trim(conta) + ContaDigito +
+                    '7' + agencia + trim(conta) + ContaDigito +
                     NossoNumero +  '2';
 
 

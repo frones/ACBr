@@ -37,7 +37,7 @@ unit ACBrLibBPeConsts;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, ACBrLibComum;
 
 const
   CLibBPeNome = 'ACBrLibBPe';
@@ -90,15 +90,13 @@ Resourcestring
   SErrCNPJInvalido = 'CNPJ % inválido.';
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoBPesCarregados(const NumBPe: Integer): Integer;
+function SetRetornoBPesCarregados(const libHandle: PLibHandle; const NumBPe: Integer): Integer;
 
 implementation
-uses
-  ACBrLibComum;
 
-function SetRetornoBPesCarregados(const NumBPe: Integer): Integer;
+function SetRetornoBPesCarregados(const libHandle: PLibHandle; const NumBPe: Integer): Integer;
 begin
-  Result := SetRetorno( 0, {NumBPe,} Format(SInfBPeCarregados, [NumBPe]));
+  Result := libHandle^.Lib.SetRetorno(0, {NumBPe,} Format(SInfBPeCarregados, [NumBPe]));
 end;
 
 end.

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+03/07/2019
+[*] Ajuste no método SetRetornoBPesCarregados, está apresentando erro de compilação
+Por: José M S Junior
+
 18/12/2019
 --- Diversos ---
 [+] Incluido a propriedade Protocolo no retorno do Envio.

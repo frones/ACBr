@@ -47,7 +47,28 @@ Símbolo : Significado
 
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos) 
+[-]     : Correção de Bug (assim esperamos)
+
+01/07/2020
+-- ACBrBoleto --
+[*] Ajustes no arredondamento do valor Mora, Multa, Desconto e Abatimento.
+https://www.projetoacbr.com.br/forum/topic/58242-erro-remessa-cnab-240-santander/
+
+-- ACBrBancoDaycoval --
+[*] [*] Ajustes no tamanho do Nosso Numero no Retorno CNAB400 ref. codCedente
+
+-- ACBrBancoBanrisul --
+[*] Ajustes no arredondamento do valor de multa  na geração de Remessa.
+
+30/06/2020
+-- ACBrBancoSafra --
+[*] Ajustes na validação do campo agencia com 5 dígitos seguindo especificação do manual atualizado.
+https://www.projetoacbr.com.br/forum/topic/54921-diverg%C3%AAncias-no-layout-banco-safra/?page=2
+
+30/06/2020
+-- ACBrBancoUnicredES --
+[*] Ajustes no tamanho do Nosso Numero no Retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/54998-unicred-c%C3%B3digo-136/
 
 25/06/2020
 -- ACBrBancoUnicredRS --

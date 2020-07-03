@@ -758,7 +758,7 @@ begin
       begin
         Req.GravaInformacao(730,000,'1');  // 1: venda (pagamento com cartão)
         Req.GravaInformacao(731,000,'1');  // 1: crédito
-        Req.GravaInformacao(732,000,'1');  // 1: à vista
+        //Req.GravaInformacao(732,000,'1');  // 1: à vista
       end
 
       // Instruindo CRT a apenas transações de Débito
@@ -766,7 +766,7 @@ begin
       begin
         Req.GravaInformacao(730,000,'1');  // 1: venda (pagamento com cartão)
         Req.GravaInformacao(731,000,'2');  // 2: débito
-        Req.GravaInformacao(732,000,'1');  // 1: à vista
+        //Req.GravaInformacao(732,000,'1');  // 1: à vista
       end;
 
       FIndicePagto := '';
@@ -1428,7 +1428,7 @@ var
     if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
     begin
       ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='01'; //01: crédito
-      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='01'; //01: à vista
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='01'; //01: à vista
     end
     else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
       ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 3;
@@ -1440,7 +1440,7 @@ var
     if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
     begin
       ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='02'; //02: débito
-      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='01'; //01: à vista
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='01'; //01: à vista
     end
     else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
       ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 2;

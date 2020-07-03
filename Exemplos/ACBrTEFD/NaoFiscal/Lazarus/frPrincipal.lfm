@@ -38,10 +38,10 @@ object FormPrincipal: TFormPrincipal
       Height = 376
       Top = 0
       Width = 690
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
@@ -242,7 +242,7 @@ object FormPrincipal: TFormPrincipal
               Left = 9
               Height = 15
               Top = 0
-              Width = 86
+              Width = 85
               Caption = 'Gerenciador TEF'
               ParentColor = False
             end
@@ -274,7 +274,7 @@ object FormPrincipal: TFormPrincipal
               Left = 160
               Height = 15
               Top = 96
-              Width = 65
+              Width = 66
               Caption = 'Máx.Cartões'
               ParentColor = False
             end
@@ -688,7 +688,7 @@ object FormPrincipal: TFormPrincipal
               Left = 360
               Height = 15
               Top = 8
-              Width = 64
+              Width = 63
               Caption = 'Teste PayGo'
               ParentColor = False
             end

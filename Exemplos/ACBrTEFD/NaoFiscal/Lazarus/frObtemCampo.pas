@@ -131,7 +131,7 @@ procedure TFormObtemCampo.edtRespostaKeyPress(Sender : TObject; var Key : char);
 var
   Ok: Boolean;
 begin
-   if (Key in [#13,#8]) then  { Enter e BackSpace, OK }
+   if (Key in [#8,#13,#27]) then  { BackSpace, Enter, Esc }
      Exit;
 
    case fTipoCampo of

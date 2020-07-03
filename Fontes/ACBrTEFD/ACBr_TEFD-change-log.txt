@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2020
+-- ACBrTEFDPayGoWeb --
+[-] Correção em "ConteudoToProperty", na leitura do campo "DataHoraTransacaoCancelada"
+
+-- ACBrTEFPayGoWebComum --
+[-] Ajuste em "TACBrTEFPGWebAPI.ObterDadoCartaoDigitado", para que seja possivel
+    obter o cartão digitado, após cancelamento pelo Operador na Letura do Cartão
+    por PinPad
+    (por: DSA)
+
 02/07/2020
 -- ACBrTEFD, ACBrTEFDPayGoWeb --
 [*] Ajuste para não enviar CNF ou NCN para Transações que não requerem Confirmação

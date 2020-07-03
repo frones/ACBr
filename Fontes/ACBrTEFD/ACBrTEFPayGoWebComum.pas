@@ -2104,6 +2104,9 @@ var
   AStr: AnsiString;
 begin
   AResposta := '';
+  if AGetData.bTiposEntradaPermitidos = PWTYP_ReadOnly then
+    AGetData.bTiposEntradaPermitidos := PWTYP_Numerico;
+
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
   begin
     Result := PWRET_OK;

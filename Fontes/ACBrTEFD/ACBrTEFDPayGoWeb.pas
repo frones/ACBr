@@ -46,7 +46,7 @@ resourcestring
     '%s' + sLineBreak +
     'R$ %s' + sLineBreak +
     '%s' + sLineBreak +
-    'NSU: %s';
+    'NSU: %s - ReqNum: %s';
 
   SACBrTEFDPayGoWeb_TransacaoPendenteAPI =
     'Transação Pendente.' + sLineBreak +
@@ -475,10 +475,10 @@ begin
         fpTaxaServico := fpTaxaServico + Linha.Informacao.AsFloat;
 
       PWINFO_TRNORIGDATE:
-        fpDataHoraTransacaoCancelada := fpDataHoraTransacaoCancelada + StringToDateTime(LinStr, 'DDMMYY');
+        fpDataHoraTransacaoCancelada := fpDataHoraTransacaoCancelada + Linha.Informacao.AsDate;
 
       PWINFO_TRNORIGTIME:
-        fpDataHoraTransacaoCancelada := fpDataHoraTransacaoCancelada + StringToDateTime(LinStr, 'HHNNSS');
+        fpDataHoraTransacaoCancelada := fpDataHoraTransacaoCancelada + Linha.Informacao.AsTime;
 
       PWINFO_TRNORIGNSU:
         fpNSUTransacaoCancelada := LinStr;
@@ -795,10 +795,10 @@ begin
             if Assigned(fOnAvaliarTransacaoPendente) then
               fOnAvaliarTransacaoPendente( Confirmar,
                                            Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
-                                                   [FormatDateTimeBr(Resp.DataHoraTransacaoHost),
+                                                   [FormatDateTimeBr(Resp.DataHoraTransacaoLocal),
                                                     FormatFloatBr(Resp.ValorTotal),
                                                     Resp.Rede,
-                                                    Resp.NSU] ),
+                                                    Resp.NSU, Resp.CodigoAutorizacaoTransacao] ),
                                            Resp);
 
             { Criando cópia da Resposta Atual }

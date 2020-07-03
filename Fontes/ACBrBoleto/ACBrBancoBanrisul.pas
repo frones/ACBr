@@ -711,7 +711,7 @@ begin
                    DupeString('0', 48) +
                    '1' +
                    FormatDateTime('ddmmyyyy', DataMulta) +
-                   PadLeft(StringReplace(FormatFloat('#####0.00', PercentualMulta * ValorDocumento / 100), ',', '', []), 15, '0') +
+                   PadLeft(StringReplace(FormatFloat('#####0.00', TruncTo(((PercentualMulta * ValorDocumento) / 100),2)), ',', '', []), 15, '0') +
                    DupeString(' ', 90) +
                    DupeString('0', 28) +
                    DupeString(' ', 33);

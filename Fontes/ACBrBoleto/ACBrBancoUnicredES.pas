@@ -186,6 +186,8 @@ begin
   rCodEmpresa:= trim(Copy(ARetorno[0],108,14));
   rCedente   := trim(Copy(ARetorno[0],47,30));
 
+  ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],101,7),0);
+
   if (StrToIntDef( Copy(ARetorno[0], 95, 6 ), 0) > 0) then
     ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                                             Copy(ARetorno[0],97,2)+'/'+
@@ -234,49 +236,56 @@ begin
     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
   end;
 
-  for ContLinha := 1 to ARetorno.Count - 2 do
-  begin
-     Linha := ARetorno[ContLinha] ;
+  try
+    fpTamanhoMaximoNossoNum  := 17;
+    for ContLinha := 1 to ARetorno.Count - 2 do
+    begin
+       Linha := ARetorno[ContLinha] ;
 
-     if Copy(Linha,1,1)<> '1' then
-        Continue;
+       if Copy(Linha,1,1)<> '1' then
+          Continue;
 
-     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-     with Titulo do
-     begin
-        SeuNumero                   := copy(Linha,280,26);
-        NumeroDocumento             := copy(Linha,117,10);
-        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                       copy(Linha,109,2),0));
+       with Titulo do
+       begin
+          SeuNumero                   := copy(Linha,280,26);
+          NumeroDocumento             := copy(Linha,117,10);
+          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
+                                         copy(Linha,109,2),0));
 
-        if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
-          DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                               Copy(Linha,113,2)+'/'+
-                                               Copy(Linha,115,2),0, 'DD/MM/YY' );
-        if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
-           Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
-                                              Copy(Linha,149,2)+'/'+
-                                              Copy(Linha,151,2),0, 'DD/MM/YY' );
+          if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
+            DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                                 Copy(Linha,113,2)+'/'+
+                                                 Copy(Linha,115,2),0, 'DD/MM/YY' );
+          if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
+             Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                                Copy(Linha,149,2)+'/'+
+                                                Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-        ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-        ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-        ValorRecebido        := StrToFloatDef(Copy(Linha,306,13),0)/100;
-        ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        NossoNumero          := Copy(Linha,46, fpTamanhoMaximoNossoNum);
+          ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+          ValorRecebido        := StrToFloatDef(Copy(Linha,306,13),0)/100;
+          ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
+          NossoNumero          := Copy(Linha,46, fpTamanhoMaximoNossoNum);
+          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,7),0)/100;
 
-        // informações do local de pagamento
-        Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
-        Liquidacao.Agencia    := Copy(Linha,169,4);
-        Liquidacao.Origem     := '';
+          // informações do local de pagamento
+          Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+          Liquidacao.Agencia    := Copy(Linha,169,4);
+          Liquidacao.Origem     := '';
 
-        if (StrToIntDef(Copy(Linha,176,6),0) > 0) then
-           DataCredito:= StringToDateTimeDef( Copy(Linha,176,2)+'/'+
-                                              Copy(Linha,178,2)+'/'+
-                                              Copy(Linha,180,2),0, 'DD/MM/YY' );
-     end;
+          if (StrToIntDef(Copy(Linha,176,6),0) > 0) then
+             DataCredito:= StringToDateTimeDef( Copy(Linha,176,2)+'/'+
+                                                Copy(Linha,178,2)+'/'+
+                                                Copy(Linha,180,2),0, 'DD/MM/YY' );
+       end;
+    end;
+
+  finally
+    fpTamanhoMaximoNossoNum:= 10;
   end;
 
 end;

@@ -559,6 +559,8 @@ begin
     case FProvedor of
       proTecnos:
         NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
+
+      proSigCorp,
       proSimplISSv2:
         NFSe.Competencia := DateToStr(Leitor.rCampo(tcDat, 'Competencia'));
     else
@@ -1645,8 +1647,17 @@ begin
   if ((Leitor.rExtrai(1, 'NfseCancelamento') <> '') or (Leitor.rExtrai(1, 'CancelamentoNfse') <> '')) then
   begin
     NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+
     if NFSe.NfseCancelamento.DataHora = 0 then
-      NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+    begin
+      case Provedor of
+        proSigCorp:
+          NFSe.NfseCancelamento.DataHora := StringToDateTime(Leitor.rCampo(tcStr, 'DataHoraCancelamento') , 'DD/MM/YYYY hh:nn:ss')
+      else
+        NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+      end;
+    end;
+
     NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
     case FProvedor of
@@ -2116,12 +2127,14 @@ begin
   case FProvedor of
     proTecnos:
       NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
+
     proSigCorp:
       begin
         NFSe.Competencia := Copy(Leitor.rCampo(tcStr, 'Competencia'),5,2);
         NFSe.Competencia := Copy(Leitor.rCampo(tcStr, 'Competencia'),1,4) + '/' +
           IfThen(Length(NFSe.Competencia) = 1, '0' + NFSe.Competencia, NFSe.Competencia);
       end;
+
     proSimplISSv2:
       NFSe.Competencia := DateToStr(Leitor.rCampo(tcDat, 'Competencia'));
   else

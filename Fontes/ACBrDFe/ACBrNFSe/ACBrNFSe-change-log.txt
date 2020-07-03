@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/58360-problema-digifred-ernestina-rs-resolvido/
+  Por: Frederico Hahn Pesenti
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/58330-ajustes-provedor-prosigcorp-pouso-alegre-mg/
+  Por: Adilson Pazzini
+
 29/06/2020
 -- ACBrNFSeWebServices --
 [*] Para o provedor Tecnos o valor de Id tem que ser um numero inteiro e não uma

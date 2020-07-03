@@ -223,7 +223,7 @@ begin
 
         if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
                               proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep,
-                              proiiBrasilv2, proMegaSoft, proModernizacaoPublica]) or
+                              proiiBrasilv2, proMegaSoft, proModernizacaoPublica, proDigifred]) or
            ((FProvedor in [proPronimv2, proModernizacaoPublica]) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
           Gerador.wCampo(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
@@ -615,7 +615,7 @@ begin
       StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase]), DSC_DISCR);
   end;
 
-  if not (FProvedor in [proSigep, proMegaSoft]) then
+  if not (FProvedor in [proSigep, proMegaSoft, proDigifred]) then
   begin
     if FProvedor in [proVirtual, proVersaTecnologia, proSimplISSv2] then
       Gerador.wCampo(tcInt, '#34', 'CodigoPais', 04, 04, 1, NFSe.Servico.CodigoPais, DSC_CPAIS)
@@ -706,7 +706,11 @@ begin
     Gerador.wCampo(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
       StringReplace(NFSe.Servico.ItemServico[i].Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase]), DSC_DISCR);
     Gerador.wCampo(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN);
-    Gerador.wCampo(tcInt, '#34', 'CodigoPais               ', 04, 04, 0, NFSe.Servico.CodigoPais, DSC_CPAIS);
+
+    if not (FProvedor in [proDigifred]) then
+    begin
+      Gerador.wCampo(tcInt, '#34', 'CodigoPais               ', 04, 04, 0, NFSe.Servico.CodigoPais, DSC_CPAIS);
+    end;
 
     if not (FProvedor in [proCenti]) then
       Gerador.wCampo(tcStr, '#35', 'ExigibilidadeISS', 01, 01, 1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), DSC_INDISS);

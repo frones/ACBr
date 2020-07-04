@@ -1670,7 +1670,7 @@ object frmACBrCTe: TfrmACBrCTe
       Top = 198
       Width = 567
       Height = 413
-      ActivePage = TabSheet5
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1755,7 +1755,6 @@ object frmACBrCTe: TfrmACBrCTe
             '')
           ScrollBars = ssVertical
           TabOrder = 0
-          WordWrap = False
         end
       end
     end

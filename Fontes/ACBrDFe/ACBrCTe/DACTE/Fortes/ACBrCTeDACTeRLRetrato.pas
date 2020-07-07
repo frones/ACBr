@@ -1754,7 +1754,12 @@ begin
           rlmObs.Lines.Add('');
        rlmObs.Lines.EndUpdate;
     end;
-    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+
+    if fpCTe.procCTe.nprot = '' then
+      rllMsgTeste.Caption := ACBrStr('CT-e NÃO ENVIADO, SEM VALOR FISCAL - HOMOLOGAÇÃO')
+    else
+      rllMsgTeste.Caption := ACBrStr('CT-e SEM VALOR FISCAL - AMBIENTE DE HOMOLOGAÇÃO');
+
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end
@@ -1785,7 +1790,9 @@ begin
     end
     else
     begin
-      rllMsgTeste.Caption := ACBrStr('CT-E NÃO ENVIADO PARA SEFAZ');
+      if fpCTe.procCTe.nprot = '' then
+        rllMsgTeste.Caption := ACBrStr('CT-e NÃO ENVIADO, SEM VALOR FISCAL')
+
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;
     end;

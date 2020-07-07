@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2020
+-- ACBrCTeDACTeRLRetrato --
+[*] Mensagens mais objetivas quando o CT-e esta sem o protocolo de autorização.
+   Por: Mario Inacio
+
 14/05/2020
 -- ACBrCTeDACTeRLClass --
 [*] Corrigido o nome do PDF de eventos.

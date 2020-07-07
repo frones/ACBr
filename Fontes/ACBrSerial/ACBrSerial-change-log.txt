@@ -40,7 +40,7 @@ Símbolo : Significado
 
 Data: 29/06/2020
 -- ACBrETQClass, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2 --
-[-] Ajuste para não enviar o comando de página de código, quando ela não for
+[-] Ajuste para não enviar o comando de página de código, quando ela for
     pceNone, ou não suportada
     (por: DSA)
 

@@ -1791,7 +1791,7 @@ begin
     else
     begin
       if fpCTe.procCTe.nprot = '' then
-        rllMsgTeste.Caption := ACBrStr('CT-e NÃO ENVIADO, SEM VALOR FISCAL')
+        rllMsgTeste.Caption := ACBrStr('CT-e NÃO ENVIADO, SEM VALOR FISCAL');
 
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;

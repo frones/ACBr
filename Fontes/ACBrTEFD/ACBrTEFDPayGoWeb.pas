@@ -46,7 +46,7 @@ resourcestring
     '%s' + sLineBreak +
     'R$ %s' + sLineBreak +
     '%s' + sLineBreak +
-    'NSU: %s - ReqNum: %s';
+    'NSU: %s - Autorização: %s';
 
   SACBrTEFDPayGoWeb_TransacaoPendenteAPI =
     'Transação Pendente.' + sLineBreak +
@@ -129,6 +129,7 @@ type
       pszReqNum: String; pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
       pszAuthSyst: String);
   public
+    property PGWebAPI: TACBrTEFPGWebAPI read fsPGWebAPI;
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
     property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
@@ -160,6 +161,7 @@ type
     Procedure CNF ; overload; override;
     Procedure CNF(Rede, NSU, Finalizacao : String;
        DocumentoVinculado : String = ''); overload; override;
+    Function CNC : Boolean ; overload; override;
     Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
        Valor : Double) : Boolean; overload; override;
     Function PRE(Valor : Double; DocumentoVinculado : String = '';
@@ -426,13 +428,13 @@ begin
       end;
 
       PWINFO_REQNUM:
-        fpCodigoAutorizacaoTransacao := LinStr;
+        fpNumeroLoteTransacao := Linha.Informacao.AsInt64;
 
       PWINFO_VIRTMERCH:
         fpEstabelecimento := LinStr;
 
-      //PWINFO_AUTHCODE:
-      //  fpCodigoAutorizacaoTransacao := LinStr;
+      PWINFO_AUTHCODE:
+        fpCodigoAutorizacaoTransacao := LinStr;
 
       //PWINFO_AUTRESPCODE:
       //  fpAutenticacao := LinStr;
@@ -648,7 +650,7 @@ procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
   fsPGWebAPI.FinalizarTrancao( PWCNF_REV_FISC_AUT,
-                               Resp.CodigoAutorizacaoTransacao,
+                               IntToStr(Resp.NumeroLoteTransacao),
                                Finalizacao,
                                NSU,
                                Resp.Estabelecimento,
@@ -665,25 +667,50 @@ procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
   DocumentoVinculado: String);
 begin
   fsPGWebAPI.FinalizarTrancao( PWCNF_CNF_AUTO,
-                               Resp.CodigoAutorizacaoTransacao,
+                               IntToStr(Resp.NumeroLoteTransacao),
                                Finalizacao,
                                NSU,
                                Resp.Estabelecimento,
                                Rede);
 end;
 
+function TACBrTEFDPayGoWeb.CNC: Boolean;
+begin
+  Result := CNC(Resp.Rede, Resp.NSU, Resp.DataHoraTransacaoLocal, Resp.ValorTotal);
+end;
+
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
 var
   PA: TACBrTEFPGWebAPIParametros;
+
+  procedure CopiarValorDaUltimaResposta(AInfo: Integer);
+  var
+    AStr: String;
+  begin
+    AStr := Resp.LeInformacao(AInfo).AsString;
+    if (Trim(AStr) <> '') then
+      PA.ValueInfo[AInfo] := AStr;
+  end;
+
 begin
   PA := TACBrTEFPGWebAPIParametros.Create;
   try
-    PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMAA', DataHoraTransacao);
+    PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);
     PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);
+    PA.ValueInfo[PWINFO_TRNORIGDATETIME] := FormatDateTime('YYYYMMDDhhnnss', DataHoraTransacao);
     PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
     PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));
-    PA.ValueInfo[PWINFO_TRNORIGAUTH] := ''; // Código de autorização da transação original.
+    PA.ValueInfo[PWINFO_TRNORIGAUTH] := Resp.CodigoAutorizacaoTransacao;
+    PA.ValueInfo[PWINFO_TRNORIGAUTHCODE] := Resp.CodigoAutorizacaoTransacao;
+    PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
+    PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
+    CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
+    CopiarValorDaUltimaResposta(PWINFO_CARDTYPE);
+    CopiarValorDaUltimaResposta(PWINFO_AUTHSYST);
+    CopiarValorDaUltimaResposta(PWINFO_VIRTMERCH);
+    CopiarValorDaUltimaResposta(PWINFO_AUTMERCHID);
+    CopiarValorDaUltimaResposta(PWINFO_FINTYPE);
 
     FazerRequisicao(fOperacaoCNC, 'CNC', Valor, '', 0, PA);
   finally
@@ -788,54 +815,52 @@ begin
       begin
         Resp.LeArquivo(NomeArqTEF);
 
-        try
-          if Resp.Confirmar then
+        if Resp.Confirmar then
+        begin
+          Confirmar := ConfirmarTransacoesPendentes;
+          if Assigned(fOnAvaliarTransacaoPendente) then
           begin
-            Confirmar := ConfirmarTransacoesPendentes;
-            if Assigned(fOnAvaliarTransacaoPendente) then
-              fOnAvaliarTransacaoPendente( Confirmar,
-                                           Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
-                                                   [FormatDateTimeBr(Resp.DataHoraTransacaoLocal),
-                                                    FormatFloatBr(Resp.ValorTotal),
-                                                    Resp.Rede,
-                                                    Resp.NSU, Resp.CodigoAutorizacaoTransacao] ),
-                                           Resp);
-
-            { Criando cópia da Resposta Atual }
-            AResposta := TACBrTEFDRespPayGoWeb.Create;
-            AResposta.Assign(Resp);
-
-            if Confirmar then
-              CNF
-            else
-            begin
-              if Resp.CNFEnviado then
-              begin
-                if not CNC then
-                  Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
-              end
-              else
-                NCN;
-            end;
-
-            if Confirmar then
-            begin
-              RespostasConfirmadas.Add(AResposta);
-              if (Trim(AResposta.NSU) <> '') then
-                NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
-            end
-            else
-            begin
-              RespostasCanceladas.Add(AResposta);
-              if (Trim(AResposta.NSU) <> '') then
-                NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
-            end;
+            fOnAvaliarTransacaoPendente( Confirmar,
+                                         Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
+                                                 [FormatDateTimeBr(Resp.DataHoraTransacaoLocal),
+                                                  FormatFloatBr(Resp.ValorTotal),
+                                                  Resp.Rede,
+                                                  Resp.NSU, Resp.CodigoAutorizacaoTransacao] ),
+                                         Resp);
           end;
 
-          SysUtils.DeleteFile(NomeArqTEF);
-        except
+          { Criando cópia da Resposta Atual }
+          AResposta := TACBrTEFDRespPayGoWeb.Create;
+          AResposta.Assign(Resp);
+
+          if Confirmar then
+            CNF
+          else
+          begin
+            if Resp.CNFEnviado then
+            begin
+              if not CNC then
+                Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
+            end
+            else
+              NCN;
+          end;
+
+          if Confirmar then
+          begin
+            RespostasConfirmadas.Add(AResposta);
+            if (Trim(AResposta.NSU) <> '') then
+              NSUsConf := NSUsConf + AResposta.NSU + sLineBreak;
+          end
+          else
+          begin
+            RespostasCanceladas.Add(AResposta);
+            if (Trim(AResposta.NSU) <> '') then
+              NSUsCanc := NSUsCanc + AResposta.NSU + sLineBreak;
+          end;
         end;
 
+        SysUtils.DeleteFile(NomeArqTEF);
         ArquivosVerficar.Delete(0);
       end;
     end;
@@ -848,7 +873,7 @@ begin
         if Assigned(OnDepoisConfirmarTransacoes) then
           OnDepoisConfirmarTransacoes( RespostasConfirmadas )
         else if (NSUsConf <> '') then
-          TACBrTEFD(Owner).DoExibeMsg(opmOK, Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoConfirmadaReImprimir), [NSUsConf]));
+          DoExibeMsg(opmOK, Format( SACBrTEFDPayGoWeb_TransacaoConfirmadaReImprimir, [NSUsConf]));
       end;
 
       if (RespostasCanceladas.Count > 0) then
@@ -856,7 +881,7 @@ begin
         if Assigned(OnDepoisCancelarTransacoes) then
           OnDepoisCancelarTransacoes( RespostasCanceladas )
         else if (NSUsCanc <> '') then
-          TACBrTEFD(Owner).DoExibeMsg(opmOK, Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoCancelada), [NSUsCanc]));
+          DoExibeMsg(opmOK, Format( SACBrTEFDPayGoWeb_TransacaoCancelada, [NSUsCanc]));
       end;
     end;
   finally

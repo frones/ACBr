@@ -453,7 +453,17 @@ type
     szValue: Array[0..21] of AnsiChar;
   end;
 
-  PW_Operations = Array[0..9] of TPW_Operations;
+  TArrPW_Operations = Array[0..10] of TPW_Operations;
+
+  TPW_OperationsEx = record
+    bOperType: Byte;
+    szOperName: Array[0..21] of AnsiChar;
+    szAuthSyst: Array[0..21] of AnsiChar;
+    szValue: Array[0..21] of AnsiChar;
+    fAuthPreferential: Boolean;
+  end;
+
+  TArrPW_OperationsEx = Array[0..10] of TPW_OperationsEx;
 
   TACBrTEFPGWebAPITiposEntrada =
     (pgApenasLeitura = 0,
@@ -583,45 +593,48 @@ type
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iIdleProc: function(): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xPW_iGetOperations: function(bOperType: Byte; vstOperations: PW_Operations;
-              piNumOperations: SmallInt): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iGetOperations: function(bOperType: Byte; vstOperations: TArrPW_Operations;
+              var piNumOperations: SmallInt): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iGetOperationsEx: function(bOperType: Byte; vstOperations: TArrPW_OperationsEx;
+              var piNumOperations: SmallInt; iStructSize: SmallInt): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPEventLoop: function(pszDisplay: PAnsiChar; ulDisplaySize: LongWord): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPAbort: function(): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetCard: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetPIN: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetData: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGoOnChip: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPFinishChip: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPConfirmData: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGenericCMD: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPDataConfirmation: function(uiIndex: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPDisplay: function(const pszMsg: PAnsiChar): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetUserData: function(uiMessageId: Word; bMinLen: Byte; bMaxLen: Byte;
-             iToutSec:  SmallInt; pszData: PAnsiChar): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              iToutSec:  SmallInt; pszData: PAnsiChar): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPWaitEvent: function(var pulEvent: LongWord): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPRemoveCard: function(): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetPINBlock: function(bKeyID: Byte; const pszWorkingKey: PAnsiChar;
-             bMinLen: Byte; bMaxLen: Byte; iToutSec: SmallInt;
-             const pszPrompt: PAnsiChar; pszData: PAnsiChar): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              bMinLen: Byte; bMaxLen: Byte; iToutSec: SmallInt;
+              const pszPrompt: PAnsiChar; pszData: PAnsiChar): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iTransactionInquiry: function(const pszXmlRequest: PAnsiChar;
-             pszXmlResponse: PAnsiChar; ulXmlResponseLen: Word): SmallInt;
-             {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+              pszXmlResponse: PAnsiChar; ulXmlResponseLen: Word): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     procedure SetCNPJEstabelecimento(AValue: String);
     procedure SetDiretorioTrabalho(AValue: String);
@@ -693,6 +706,7 @@ type
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
       TimeOutSec: SmallInt): String;
     function VersaoLib: String;
+    procedure ObterOperacoes(TipoOperacao: Byte; Operacoes: TArrPW_OperationsEx);
 
     function ValidarRespostaCampo(AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
@@ -1161,6 +1175,7 @@ begin
   xPW_iConfirmation := Nil;
   xPW_iIdleProc := Nil;
   xPW_iGetOperations := Nil;
+  xPW_iGetOperationsEx := Nil;
   xPW_iPPEventLoop := Nil;
   xPW_iPPAbort := Nil;
   xPW_iPPGetCard := Nil;
@@ -1638,6 +1653,31 @@ begin
   IniciarTransacao(PWOPER_VERSION);
   ExecutarTransacao;
   Result := fDadosTransacao.ValueInfo[PWINFO_RESULTMSG];
+end;
+
+procedure TACBrTEFPGWebAPI.ObterOperacoes(TipoOperacao: Byte;
+  Operacoes: TArrPW_OperationsEx);
+var
+  iRet, piNumOperations, iStructSize: SmallInt;
+  MsgError: String;
+begin
+  if not Assigned(xPW_iGetOperationsEx) then
+    Exit;
+
+  piNumOperations := Length(Operacoes);
+  iStructSize := SizeOf(TPW_OperationsEx);
+  GravarLog('xPW_iGetOperationsEx');
+  iRet := xPW_iGetOperationsEx(TipoOperacao, Operacoes, piNumOperations, iStructSize );
+  GravarLog('  '+PWRETToString(iRet));
+  case iRet of
+    PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+    PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+  else
+    MsgError := ObterUltimoRetorno;
+  end;
+
+  if (MsgError <> '') then
+    DoException(ACBrStr(MsgError));
 end;
 
 function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
@@ -2500,6 +2540,12 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect('PW_iPPRemoveCard', @xPW_iPPRemoveCard);
    PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock);
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
+   try
+     PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx);
+   except
+     xPW_iGetOperationsEx := Nil;  // Não suportado nessa versão da DLL
+   end;
+
 end;
 
 procedure TACBrTEFPGWebAPI.UnLoadLibFunctions;

@@ -46,6 +46,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2020
+-- ACBrTEFComum --
+[*] propriedade TACBrTEFResp.NumeroLoteTransacao, modificada de Integer para Int64
+
+-- ACBrTEFDPayGoWeb --
+[+] Adicionada Propriedade, para expor a classe de API
+    property PGWebAPI: TACBrTEFPGWebAPI (readonly)
+[*] Mudança no mapeamento de TACBrTEFDRespPayGoWeb.ConteudoToProperty:
+    PWINFO_REQNUM -> NumeroLoteTransacao
+    PWINFO_AUTHCODE -> CodigoAutorizacaoTransacao
+[-] Correção no método "CNC"
+[+] Método CNC modificado para aproveitar as informações da Transação em memória,
+    para evitar a abertura de janelas, desnecessárias...
+[-] Correções em "VerificarTransacoesPendentesClass"
+    - Permitindo que Exceptions ocorridos, sejam exibidos
+    - Correção de A.V. na chamada de "DoExibeMsg"
+    (por: DSA)
+
 03/07/2020
 -- ACBrTEFDPayGoWeb --
 [-] Correção em "ConteudoToProperty", na leitura do campo "DataHoraTransacaoCancelada"

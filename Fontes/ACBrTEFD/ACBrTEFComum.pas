@@ -245,7 +245,7 @@ type
     fpNomeOperadoraCelular: String;
     fpNSU: String;
     fpNSUTransacaoCancelada: String;
-    fpNumeroLoteTransacao: Integer;
+    fpNumeroLoteTransacao: Int64;
     fpNumeroRecargaCelular: String;
     fpQtdLinhasComprovante: Integer;
     fpQtdParcelas: Integer;
@@ -328,7 +328,7 @@ type
     property TransacaoAprovada: Boolean read GetTransacaoAprovada;
     property TipoTransacao: Integer read fpTipoTransacao;
     property CodigoAutorizacaoTransacao: String read fpCodigoAutorizacaoTransacao;
-    property NumeroLoteTransacao: Integer read fpNumeroLoteTransacao;
+    property NumeroLoteTransacao: Int64 read fpNumeroLoteTransacao;
     property DataHoraTransacaoHost: TDateTime read fpDataHoraTransacaoHost;
     property DataHoraTransacaoLocal: TDateTime read fpDataHoraTransacaoLocal;
     property TipoParcelamento: Integer read fpTipoParcelamento;

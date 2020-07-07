@@ -1,4 +1,3 @@
-{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -4675,6 +4674,8 @@ begin
     case FProvedor of
       proCONAM: FURI := 'Sdt_cancelanfe';
 
+      proCenti: FURI := FNotasFiscais.Items[0].NFSe.InfID.ID;
+
       proDigifred,
       proPronimv2,
       proPublica: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4818,6 +4819,9 @@ begin
       // Necessário para o provedor ISSDSF
       Transacao  := FNotasFiscais.Transacao;
       Notas      := FvNotas;
+      
+      if FProvedor = proCenti then
+        CodVerificacaoRPS := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
 
       NumeroLote := FNotasFiscais.NumeroLote;
       if NumeroLote = '' then
@@ -6010,7 +6014,7 @@ begin
   with TACBrNFSe(FACBrNFSe) do
   begin
     if not (Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet,
-                                             proSMARAPD, proIPM]) then
+                                             proSMARAPD, proIPM, proCenti]) then
     begin
       if Configuracoes.Geral.Provedor in [proSystemPro] then
       begin

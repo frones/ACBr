@@ -533,7 +533,14 @@ begin
               infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
 
           InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');
-          InfCanc.Sucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+          if Provedor = proCenti then
+          begin
+            if Leitor.rCampo(tcStr, 'Status') = '3' then
+              InfCanc.Sucesso := 'S';
+          end
+          else
+            InfCanc.Sucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
           if Provedor = proAgili then
             InfCanc.Protocolo := Leitor.rCampo(tcStr, 'ProtocoloRequerimentoCancelamento');

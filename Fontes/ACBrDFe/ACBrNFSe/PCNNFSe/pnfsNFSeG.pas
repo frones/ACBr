@@ -1927,6 +1927,10 @@ begin
     begin
       Gerador.Prefixo := Prefixo4;
       Gerador.wGrupo('IdentificacaoNfse');
+
+      if Provedor = proCenti then
+        Gerador.wCampo(tcStr, '#4', 'Id', 01, 36, 1, IdCanc, '');
+
       Gerador.wCampo(tcStr, '#3', 'Numero', 01, 15, 1, NumeroNfse, '');
 
       GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proActcon, pro4R]));
@@ -1934,10 +1938,11 @@ begin
       if (Provedor <> proBetha) or (IM <> '') then
         Gerador.wCampo(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
-      if Provedor = proSigep then
-        Gerador.wCampo(tcStr, '#2', 'codigoVerificacao', 01, 09, 1, CodVerificacaoRPS, '')
-      else
+      if Provedor <> proSigep then
         Gerador.wCampo(tcInt, '#2', 'CodigoMunicipio', 01, 07, 1, CodMunicipio, '');
+
+      if Provedor in [proSigep, proCenti] then
+        Gerador.wCampo(tcStr, '#2', 'CodigoVerificacao', 01, 09, 1, CodVerificacaoRPS, '');
 
       Gerador.wGrupo('/IdentificacaoNfse');
 

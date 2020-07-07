@@ -464,9 +464,14 @@ begin
 //      if (Provedor in [ProTecnos]) and (ProtocoloTemp <> '') then
       FProtocolo := ProtocoloTemp;
 
-      SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
-      if trim(SituacaoTemp) = '' then
-        SituacaoTemp := '4';
+      if Provedor = proCenti then
+        SituacaoTemp := Leitor.rCampo(tcStr, 'Status')
+      else
+      begin
+        SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
+        if trim(SituacaoTemp) = '' then
+          SituacaoTemp := '4';
+      end;
       FSituacao := SituacaoTemp;
 
       // Ler a Lista de NFSe

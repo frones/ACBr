@@ -239,33 +239,36 @@ de campos quando necessário}
     fInfo: String;
     fName: String;
     function GetAsBinary: AnsiString;
-    function GetAsDate : TDateTime;
+    function GetAsDate: TDateTime;
     function GetAsFloat: Double;
-    function GetAsInteger : Integer;
+    function GetAsInt64: Int64;
+    function GetAsInteger: Integer;
     function GetAsString: String;
-    function GetAsTime : TDateTime;
-    function GetAsTimeStamp : TDateTime;
-    function GetAsTimeStampSQL : TDateTime;
+    function GetAsTime: TDateTime;
+    function GetAsTimeStamp: TDateTime;
+    function GetAsTimeStampSQL: TDateTime;
     procedure SetAsBinary(AValue: AnsiString);
-    procedure SetAsDate(const AValue : TDateTime);
-    procedure SetAsFloat(const AValue : Double);
-    procedure SetAsInteger(const AValue : Integer);
+    procedure SetAsDate(const AValue: TDateTime);
+    procedure SetAsFloat(const AValue: Double);
+    procedure SetAsInteger(const AValue: Integer);
+    procedure SetAsInt64(const AValue: Int64);
     procedure SetAsString(const AValue: String);
-    procedure SetAsTime(const AValue : TDateTime);
-    procedure SetAsTimeStamp(const AValue : TDateTime);
-    procedure SetAsTimeStampSQL(const AValue : TDateTime);
+    procedure SetAsTime(const AValue: TDateTime);
+    procedure SetAsTimeStamp(const AValue: TDateTime);
+    procedure SetAsTimeStampSQL(const AValue: TDateTime);
     procedure SetFloatDecimalDigits(AValue: Integer);
   public
     constructor Create;
     property Nome          : String     read fName             write fName;
-    property AsString      : String     read GetAsString       write SetAsString ;
-    property AsDate        : TDateTime  read GetAsDate         write SetAsDate ;
-    property AsTime        : TDateTime  read GetAsTime         write SetAsTime ;
-    property AsTimeStamp   : TDateTime  read GetAsTimeStamp    write SetAsTimeStamp ;
-    property AsTimeStampSQL: TDateTime  read GetAsTimeStampSQL write SetAsTimeStampSQL ;
-    property AsInteger     : Integer    read GetAsInteger      write SetAsInteger ;
-    property AsFloat       : Double     read GetAsFloat        write SetAsFloat ;
-    property AsBinary      : AnsiString read GetAsBinary       write SetAsBinary ;
+    property AsString      : String     read GetAsString       write SetAsString;
+    property AsDate        : TDateTime  read GetAsDate         write SetAsDate;
+    property AsTime        : TDateTime  read GetAsTime         write SetAsTime;
+    property AsTimeStamp   : TDateTime  read GetAsTimeStamp    write SetAsTimeStamp;
+    property AsTimeStampSQL: TDateTime  read GetAsTimeStampSQL write SetAsTimeStampSQL;
+    property AsInteger     : Integer    read GetAsInteger      write SetAsInteger;
+    property AsInt64       : Int64      read GetAsInt64        write SetAsInt64;
+    property AsFloat       : Double     read GetAsFloat        write SetAsFloat;
+    property AsBinary      : AnsiString read GetAsBinary       write SetAsBinary;
 
     property FloatDecimalDigits : Integer read fFloatDecimalDigits write SetFloatDecimalDigits default 2;
   end ;
@@ -560,9 +563,14 @@ begin
   Result := Result / Pow;
 end;
 
-function TACBrInformacao.GetAsInteger : Integer;
+function TACBrInformacao.GetAsInteger: Integer;
 begin
   Result := StrToIntDef(Trim(fInfo),0);
+end;
+
+function TACBrInformacao.GetAsInt64: Int64;
+begin
+  Result := StrToInt64Def(Trim(fInfo),0);
 end;
 
 function TACBrInformacao.GetAsString: String;
@@ -650,6 +658,14 @@ begin
 end;
 
 procedure TACBrInformacao.SetAsInteger(const AValue : Integer);
+begin
+  if AValue = 0 then
+     fInfo := ''
+  else
+     fInfo := IntToStr( AValue ) ;
+end;
+
+procedure TACBrInformacao.SetAsInt64(const AValue: Int64);
 begin
   if AValue = 0 then
      fInfo := ''

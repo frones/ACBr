@@ -4375,6 +4375,7 @@ begin
   NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');
   NFSe.Numero                       := Leitor.rCampo(tcStr, 'NumNot');
   NFSe.IdentificacaoRps.Numero      := Leitor.rCampo(tcStr, 'NumRps');
+  NFSe.CodigoVerificacao            := Leitor.rCampo(tcStr, 'CodVer');
 
   if (Leitor.rExtrai(1, 'Nfse') <> '') then
   begin

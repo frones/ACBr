@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2020
+-- pnfsCancNfseResposta/pnfsNFSeG --
+[*] https://www.projetoacbr.com.br/forum/topic/58043-cancelamento-nfs-e-speedgov/
+  Por: Mariana Beza
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/58371-provedor-governa/
+  Por: Mariana Beza
+
 03/07/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/58360-problema-digifred-ernestina-rs-resolvido/

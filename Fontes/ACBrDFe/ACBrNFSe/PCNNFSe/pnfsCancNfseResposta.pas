@@ -492,6 +492,32 @@ begin
                      end;
                    end
                  end;
+      proSpeedGov: begin
+                     if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+                     begin
+                       if AnsiLowerCase(Leitor.rCampo(tcStr, 'Sucesso')) = 'true' then
+                       begin
+                         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+                         InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');
+                       end
+                       else
+                         infCanc.DataHora := 0;
+
+                       InfCanc.FPedido.InfID.ID           := '';
+                       InfCanc.FPedido.CodigoCancelamento := '';
+
+                       if Leitor.rExtrai(1, 'MensagemRetorno') <> '' then
+                       begin
+                         if Pos('cancelada com sucesso', AnsiLowerCase(Leitor.rCampo(tcStr, 'Mensagem'))) = 0 then
+                         begin
+                           InfCanc.FMsgRetorno.New;
+                           InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+                           InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+                           InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+                         end;
+                       end;
+                     end;
+                   end;
     else
       begin
         if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or

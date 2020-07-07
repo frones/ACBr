@@ -1993,6 +1993,13 @@ begin
         TagF :=    '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                 '</' + Prefixo3 + 'Pedido>';
       end;
+    proSpeedGov:
+      begin
+        TagI := '<Pedido>' +
+                   '<' + Prefixo4 + 'InfPedidoCancelamento' + FaIdentificadorCanc + '>';
+        TagF :=    '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                '</Pedido>';
+      end;
 
     proAssessorPublico, proEquiplano, proGinfes, proGoverna, proEGoverneISS,
     proISSDSF, proCTA, proCONAM, proEL, proInfisc, proInfiscv11, proSP,

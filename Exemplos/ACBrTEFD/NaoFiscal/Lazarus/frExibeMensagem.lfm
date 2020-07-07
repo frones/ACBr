@@ -30,13 +30,25 @@ object FormExibeMensagem: TFormExibeMensagem
     Align = alTop
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Around = 10
-    Caption = 'Mensagem ao Operador'
+    ClientHeight = 92
+    ClientWidth = 495
     Font.Height = -19
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    Wordwrap = True
-    OnClick = pMensagemClick
+    object lMensagem: TLabel
+      Left = 1
+      Height = 90
+      Top = 1
+      Width = 493
+      Align = alClient
+      Alignment = taCenter
+      Caption = 'Mensagem ao Operador'
+      Layout = tlCenter
+      ParentColor = False
+      WordWrap = True
+      OnClick = lMensagemClick
+    end
   end
   object tEspera: TTimer
     Enabled = False

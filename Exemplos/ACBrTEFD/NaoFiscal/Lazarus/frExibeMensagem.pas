@@ -43,13 +43,14 @@ type
 
   TFormExibeMensagem = class(TForm)
     btOk: TButton;
+    lMensagem: TLabel;
     pMensagem: TPanel;
     tEspera: TTimer;
     procedure btOkKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure pMensagemClick(Sender: TObject);
     procedure tEsperaTimer(Sender: TObject);
+    procedure lMensagemClick(Sender: TObject);
   private
     fTempoEspera: Integer;
     fFinalEspera: TDateTime;
@@ -85,11 +86,6 @@ begin
   end;
 end;
 
-procedure TFormExibeMensagem.pMensagemClick(Sender: TObject);
-begin
-  AbortarTempoEspera;
-end;
-
 procedure TFormExibeMensagem.btOkKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -97,6 +93,11 @@ begin
 end;
 
 procedure TFormExibeMensagem.FormClick(Sender: TObject);
+begin
+  AbortarTempoEspera;
+end;
+
+procedure TFormExibeMensagem.lMensagemClick(Sender: TObject);
 begin
   AbortarTempoEspera;
 end;
@@ -114,20 +115,20 @@ end;
 
 function TFormExibeMensagem.GetMensagem: String;
 begin
-  Result := pMensagem.Caption;
+  Result := lMensagem.Caption;
 end;
 
 procedure TFormExibeMensagem.SetMensagem(AValue: String);
 var
   NumLin, AltLin: Integer;
 begin
-  pMensagem.Caption := AValue;
+  lMensagem.Caption := AValue;
 
   // Se houver quebra de linhas na msg, aumente o formulário...
   NumLin := CountStr(AValue, CR);
   if (NumLin > 0) then
   begin
-    AltLin := pMensagem.Canvas.GetTextHeight('H');
+    AltLin := lMensagem.Canvas.TextHeight('H');
     Height := Height + (NumLin * AltLin);
   end;
 end;

@@ -41,9 +41,9 @@ type
 
   TFormExibeMensagem = class(TForm)
     btOk: TButton;
+    lMensagem: TLabel;
     pMensagem: TPanel;
     tEspera: TTimer;
-    lMensagem: TLabel;
     procedure btOkKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

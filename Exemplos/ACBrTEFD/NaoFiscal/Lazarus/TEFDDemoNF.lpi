@@ -166,7 +166,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="5">
+    <Exceptions Count="4">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -177,11 +177,8 @@
         <Name Value="Exception"/>
       </Item3>
       <Item4>
-        <Name Value="EACBrTEFDErro"/>
+        <Name Value="EConvertError"/>
       </Item4>
-      <Item5>
-        <Name Value="EACBrTEFPayGoWeb"/>
-      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

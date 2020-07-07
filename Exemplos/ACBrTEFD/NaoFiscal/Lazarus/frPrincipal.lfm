@@ -1,7 +1,7 @@
 object FormPrincipal: TFormPrincipal
-  Left = 456
+  Left = 308
   Height = 500
-  Top = 182
+  Top = 204
   Width = 1024
   Caption = 'ACBrTEFD - Demo não fiscal'
   ClientHeight = 500
@@ -905,8 +905,8 @@ object FormPrincipal: TFormPrincipal
     TabOrder = 2
     object mImpressao: TMemo
       Left = 0
-      Height = 211
-      Top = 187
+      Height = 194
+      Top = 204
       Width = 329
       Align = alClient
       Font.CharSet = ANSI_CHARSET
@@ -924,7 +924,7 @@ object FormPrincipal: TFormPrincipal
     object lSaidaImpressao: TLabel
       Left = 5
       Height = 21
-      Top = 161
+      Top = 178
       Width = 319
       Align = alTop
       Alignment = taCenter
@@ -960,7 +960,7 @@ object FormPrincipal: TFormPrincipal
     end
     object pMensagem: TPanel
       Left = 0
-      Height = 125
+      Height = 142
       Top = 31
       Width = 329
       Align = alTop
@@ -968,7 +968,7 @@ object FormPrincipal: TFormPrincipal
       BevelInner = bvLowered
       BevelWidth = 2
       BorderStyle = bsSingle
-      ClientHeight = 121
+      ClientHeight = 138
       ClientWidth = 325
       Font.Height = -16
       Font.Style = [fsBold]
@@ -977,17 +977,15 @@ object FormPrincipal: TFormPrincipal
       Visible = False
       object pMensagemOperador: TPanel
         Left = 4
-        Height = 58
+        Height = 70
         Top = 4
         Width = 317
         Align = alTop
-        Caption = 'pMensagemOperador'
-        ClientHeight = 58
+        ClientHeight = 70
         ClientWidth = 317
         TabOrder = 0
         Visible = False
-        Wordwrap = True
-        object Label15: TLabel
+        object lTituloMsgOperador: TLabel
           Left = 1
           Height = 13
           Top = 1
@@ -998,20 +996,31 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           ParentFont = False
         end
+        object lMensagemOperador: TLabel
+          Left = 1
+          Height = 55
+          Top = 14
+          Width = 315
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'lMensagemOperador'
+          Layout = tlCenter
+          ParentColor = False
+          WordWrap = True
+        end
       end
       object pMensagemCliente: TPanel
         Left = 4
-        Height = 55
-        Top = 62
+        Height = 60
+        Top = 74
         Width = 317
         Align = alClient
-        Caption = 'pMensagemCliente'
-        ClientHeight = 55
+        ClientHeight = 60
         ClientWidth = 317
         TabOrder = 1
         Visible = False
         Wordwrap = True
-        object Label17: TLabel
+        object lTituloMensagemCliente: TLabel
           Left = 1
           Height = 13
           Top = 1
@@ -1021,6 +1030,18 @@ object FormPrincipal: TFormPrincipal
           Font.Height = -11
           ParentColor = False
           ParentFont = False
+        end
+        object lMensagemCliente: TLabel
+          Left = 1
+          Height = 45
+          Top = 14
+          Width = 315
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'lMensagemCliente'
+          Layout = tlCenter
+          ParentColor = False
+          WordWrap = True
         end
       end
     end

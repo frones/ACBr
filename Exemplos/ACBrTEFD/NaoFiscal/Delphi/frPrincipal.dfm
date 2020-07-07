@@ -868,7 +868,7 @@ object FormPrincipal: TFormPrincipal
     TabOrder = 0
     object lSaidaImpressao: TLabel
       Left = 0
-      Top = 145
+      Top = 162
       Width = 329
       Height = 20
       Align = alTop
@@ -905,9 +905,9 @@ object FormPrincipal: TFormPrincipal
     end
     object mImpressao: TMemo
       Left = 0
-      Top = 165
+      Top = 182
       Width = 329
-      Height = 233
+      Height = 216
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -946,7 +946,7 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Top = 20
       Width = 329
-      Height = 125
+      Height = 142
       Align = alTop
       Anchors = []
       BevelInner = bvLowered
@@ -964,12 +964,11 @@ object FormPrincipal: TFormPrincipal
         Left = 4
         Top = 4
         Width = 317
-        Height = 58
+        Height = 70
         Align = alTop
-        Caption = 'pMensagemOperador'
         TabOrder = 0
         Visible = False
-        object Label15: TLabel
+        object lTituloMsgOperador: TLabel
           Left = 1
           Top = 1
           Width = 315
@@ -985,17 +984,27 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           ParentFont = False
         end
+        object lMensagemOperador: TLabel
+          Left = 1
+          Top = 14
+          Width = 315
+          Height = 55
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'lMensagemOperador'
+          Layout = tlCenter
+          WordWrap = True
+        end
       end
       object pMensagemCliente: TPanel
         Left = 4
-        Top = 62
+        Top = 74
         Width = 317
-        Height = 55
+        Height = 60
         Align = alClient
-        Caption = 'pMensagemCliente'
         TabOrder = 1
         Visible = False
-        object Label17: TLabel
+        object lTituloMensagemCliente: TLabel
           Left = 1
           Top = 1
           Width = 315
@@ -1010,6 +1019,17 @@ object FormPrincipal: TFormPrincipal
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+        end
+        object lMensagemCliente: TLabel
+          Left = 1
+          Top = 14
+          Width = 315
+          Height = 45
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'lMensagemCliente'
+          Layout = tlCenter
+          WordWrap = True
         end
       end
     end

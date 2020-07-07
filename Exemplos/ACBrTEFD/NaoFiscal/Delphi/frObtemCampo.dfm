@@ -31,6 +31,7 @@ object FormObtemCampo: TFormObtemCampo
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 0
     OnChange = edtRespostaChange
+    OnKeyDown = edtRespostaKeyDown
     OnKeyPress = edtRespostaKeyPress
   end
   object btOk: TBitBtn

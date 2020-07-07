@@ -94,9 +94,11 @@ type
     Label18: TLabel;
     Label19: TLabel;
     Label8: TLabel;
+    lMensagemCliente: TLabel;
+    lMensagemOperador: TLabel;
     lNumOperacao: TLabel;
-    Label15: TLabel;
-    Label17: TLabel;
+    lTituloMsgOperador: TLabel;
+    lTituloMensagemCliente: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
@@ -643,7 +645,7 @@ begin
 
     opmDestaqueVia:
       begin
-        OldMensagem := pMensagemOperador.Caption ;
+        OldMensagem := lMensagemOperador.Caption;
         try
           { Aguardando 3 segundos }
           Fim := IncSecond(now, 3)  ;
@@ -1685,13 +1687,13 @@ end;
 procedure TFormPrincipal.MensagemTEF(const MsgOperador, MsgCliente: String);
 begin
   if (MsgOperador <> '') then
-    pMensagemOperador.Caption := MsgOperador;
+    lMensagemOperador.Caption := MsgOperador;
 
   if (MsgCliente <> '') then
-    pMensagemCliente.Caption := MsgCliente;
+    lMensagemCliente.Caption := MsgCliente;
 
-  pMensagemOperador.Visible := (Trim(pMensagemOperador.Caption) <> '');
-  pMensagemCliente.Visible := (Trim(pMensagemCliente.Caption) <> '');
+  pMensagemOperador.Visible := (Trim(lMensagemOperador.Caption) <> '');
+  pMensagemCliente.Visible := (Trim(lMensagemCliente.Caption) <> '');
   pMensagem.Visible := pMensagemOperador.Visible or pMensagemCliente.Visible;
   Application.ProcessMessages;
 end;

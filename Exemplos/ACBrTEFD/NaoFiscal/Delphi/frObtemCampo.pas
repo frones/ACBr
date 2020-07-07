@@ -49,9 +49,11 @@ type
     btCancel : TBitBtn;
     btVoltar: TBitBtn;
     edtResposta : TEdit;
-    pTitulo : TPanel;
     lTitulo: TLabel;
+    pTitulo : TPanel;
     procedure edtRespostaChange(Sender: TObject);
+    procedure edtRespostaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure edtRespostaKeyPress(Sender : TObject; var Key : char);
     procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
     procedure FormCreate(Sender : TObject);
@@ -96,6 +98,8 @@ begin
 end;
 
 procedure TFormObtemCampo.FormShow(Sender : TObject);
+var
+  TamMascara: Integer;
 begin
    if (fTipoCampo = tcoCurrency) then
    begin
@@ -104,7 +108,19 @@ begin
      edtResposta.SelStart := Length(edtResposta.Text);
    end
    else
+   begin
+     if (fMascara <> '') then
+     begin
+       TamMascara := CountStr(fMascara, '*');
+       if TamanhoMaximo = 0 then
+         TamanhoMaximo := TamMascara;
+
+       if TamanhoMinimo = 0 then
+         TamanhoMinimo := TamMascara;
+     end;
+
      edtResposta.SetFocus;
+   end;
 end;
 
 procedure TFormObtemCampo.FormCloseQuery(Sender : TObject; var CanClose : boolean);
@@ -181,6 +197,16 @@ begin
   begin
     edtResposta.Text := FormatarMascaraDinamica( RemoverMascara(edtResposta.Text, fMascara), fMascara);
     edtResposta.SelStart := Length(edtResposta.Text);
+  end;
+end;
+
+procedure TFormObtemCampo.edtRespostaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (key = 13) then
+  begin
+    if (TamanhoMinimo > 0) and (Length(Resposta) < TamanhoMinimo) then
+      Key := 0;
   end;
 end;
 

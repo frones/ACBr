@@ -1,7 +1,7 @@
 object FormMenuTEF: TFormMenuTEF
-  Left = 567
+  Left = 353
   Height = 361
-  Top = 308
+  Top = 162
   Width = 608
   Caption = 'Selecione uma opção'
   ClientHeight = 361

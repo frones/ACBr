@@ -51,8 +51,11 @@ type
     btCancel : TBitBtn;
     btVoltar: TBitBtn;
     edtResposta : TEdit;
+    lTitulo: TLabel;
     pTitulo : TPanel;
     procedure edtRespostaChange(Sender: TObject);
+    procedure edtRespostaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure edtRespostaKeyPress(Sender : TObject; var Key : char);
     procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
     procedure FormCreate(Sender : TObject);
@@ -97,6 +100,8 @@ begin
 end;
 
 procedure TFormObtemCampo.FormShow(Sender : TObject);
+var
+  TamMascara: Integer;
 begin
    if (fTipoCampo = tcoCurrency) then
    begin
@@ -105,7 +110,19 @@ begin
      edtResposta.SelStart := Length(edtResposta.Text);
    end
    else
+   begin
+     if (fMascara <> '') then
+     begin
+       TamMascara := CountStr(fMascara, '*');
+       if TamanhoMaximo = 0 then
+         TamanhoMaximo := TamMascara;
+
+       if TamanhoMinimo = 0 then
+         TamanhoMinimo := TamMascara;
+     end;
+
      edtResposta.SetFocus;
+   end;
 end;
 
 procedure TFormObtemCampo.FormCloseQuery(Sender : TObject; var CanClose : boolean);
@@ -185,6 +202,16 @@ begin
   end;
 end;
 
+procedure TFormObtemCampo.edtRespostaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (key = 13) then
+  begin
+    if (TamanhoMinimo > 0) and (Length(Resposta) < TamanhoMinimo) then
+      Key := 0;
+  end;
+end;
+
 function TFormObtemCampo.GetResposta: String;
 var
   AValor: Int64;
@@ -207,20 +234,20 @@ end;
 
 function TFormObtemCampo.GetTitulo: String;
 begin
-  Result := pTitulo.Caption;
+  Result := lTitulo.Caption;
 end;
 
 procedure TFormObtemCampo.SetTitulo(AValue: String);
 var
   NumLin, AltLin: Integer;
 begin
-  pTitulo.Caption := AValue;
+  lTitulo.Caption := AValue;
 
   // Se houver quebra de linhas na msg, aumente o formulário...
   NumLin := CountStr(AValue, CR);
   if (NumLin > 0) then
   begin
-    AltLin := pTitulo.Canvas.GetTextHeight('H');
+    AltLin := lTitulo.Canvas.TextHeight('H');
     Height := Height + (NumLin * AltLin);
   end;
 end;

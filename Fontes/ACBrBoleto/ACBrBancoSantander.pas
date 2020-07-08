@@ -396,7 +396,7 @@ begin
       sEspecie := EspecieDoc;
     end;
 
-    if (ValorMoraJuros > 0) then
+    if ( TruncTo( ValorMoraJuros, fpCasasDecimaisMoraJuros ) > 0) then
     begin
       STipoJuros := IfThen( (CodigoMora <> ''), CodigoMora, '1');    //1- Valor por dia  2- Taxa Mensal
       if DataMoraJuros <> 0 then

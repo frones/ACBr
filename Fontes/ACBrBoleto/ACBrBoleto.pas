@@ -1221,8 +1221,10 @@ type
     fCEP         : String;
     fEmail       : String;
     fFone        : String;
+    FMensagem    : String;
     function GetAvalista: String;
     procedure SetAvalista(const AValue: String);
+    procedure SetMensagem(const AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1242,6 +1244,7 @@ type
     property CEP         : String  read fCEP         write fCEP;
     property Email       : String  read fEmail       write fEmail;
     property Fone        : String  read fFone        write fFone;
+    property Mensagem    : String  read FMensagem    write SetMensagem;
   end;
 
   { TACBrDadosNFe }
@@ -1945,6 +1948,11 @@ begin
      Exit;
 
    Self.SacadoAvalista.NomeAvalista:= AValue;
+end;
+
+procedure TACBrSacado.SetMensagem(const AValue: String);
+begin
+  FMensagem := AValue;
 end;
 
 constructor TACBrSacado.Create;

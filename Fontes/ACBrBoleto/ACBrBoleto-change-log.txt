@@ -49,9 +49,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-01/07/2020
--- ACBrBoleto --
-[*] Ajustes no arredondamento do valor Mora, Multa, Desconto e Abatimento.
+07/07/2020
+-- ACBrBancoCaixa --
+[*] Ajustes no Header para o layout 007 CNAB400
+https://www.projetoacbr.com.br/forum/topic/58310-ajustes-nos-layouts-do-bradesco-e-caixa-economica-federal/
+
+07/07/2020
+-- ACBrBancoBradesco, ACBrBoleto --
+[*] Adicionado a propriedade mensagem do Sacado
+https://www.projetoacbr.com.br/forum/topic/58310-ajustes-nos-layouts-do-bradesco-e-caixa-economica-federal/
+
+06/07/2020
+-- ACBrBancoSantander --
+[*] Ajustes na validação de arredondamento do valor Mora ao gerar remessa.
 https://www.projetoacbr.com.br/forum/topic/58242-erro-remessa-cnab-240-santander/
 
 -- ACBrBancoDaycoval --

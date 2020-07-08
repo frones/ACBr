@@ -393,7 +393,8 @@ begin
        PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
          Sacado.Complemento, 40)                               +  // 275 a 314
-       space(12) + PadRight( Sacado.CEP, 8 )                   +  // 315 a 334 - 1ª Mensagem + CEP
+       PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
+       PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP
        PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - 2ª Mensagem
        IntToStrZero(aRemessa.Count + 1, 6)                     ;  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 

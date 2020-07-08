@@ -75,7 +75,7 @@ type
     procedure ConteudoToProperty; override;
   end;
 
-  TACBrTEFDAvaliarTransacaoPendente = procedure(var Confirmar: Boolean;
+  TACBrTEFDAvaliarTransacaoPendente = procedure(var Status: LongWord;
     const Mensagem: String; Resp: TACBrTEFDResp) of object;
 
   { TACBrTEFDPayGoWeb }
@@ -124,6 +124,9 @@ type
          ParametrosAdicionaisTransacao: TStrings = nil);
     function ContinuarRequisicao: Boolean;
     procedure ObterDadosTransacao;
+    procedure FinalizarTransacao(Status: LongWord; pszReqNum: String;
+      pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
+      pszAuthSyst: String);
 
     procedure AvaliarTransacaoPendenteAPI(var Status: LongWord;
       pszReqNum: String; pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
@@ -546,7 +549,7 @@ begin
 
   fpResp := TACBrTEFDRespPayGoWeb.Create;
   fpResp.TipoGP := fpTipo;
-  FOnAvaliarTransacaoPendente := Nil;
+  fOnAvaliarTransacaoPendente := Nil;
 end;
 
 destructor TACBrTEFDPayGoWeb.Destroy;
@@ -649,12 +652,12 @@ end;
 procedure TACBrTEFDPayGoWeb.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
-  fsPGWebAPI.FinalizarTrancao( PWCNF_REV_FISC_AUT,
-                               IntToStr(Resp.NumeroLoteTransacao),
-                               Finalizacao,
-                               NSU,
-                               Resp.Estabelecimento,
-                               Rede);
+  FinalizarTransacao( PWCNF_REV_FISC_AUT,
+                      IntToStr(Resp.NumeroLoteTransacao),
+                      Finalizacao,
+                      NSU,
+                      Resp.Estabelecimento,
+                      Rede);
 end;
 
 procedure TACBrTEFDPayGoWeb.CNF;
@@ -666,12 +669,12 @@ end;
 procedure TACBrTEFDPayGoWeb.CNF(Rede, NSU, Finalizacao: String;
   DocumentoVinculado: String);
 begin
-  fsPGWebAPI.FinalizarTrancao( PWCNF_CNF_AUTO,
-                               IntToStr(Resp.NumeroLoteTransacao),
-                               Finalizacao,
-                               NSU,
-                               Resp.Estabelecimento,
-                               Rede);
+  FinalizarTransacao( PWCNF_CNF_AUTO,
+                      IntToStr(Resp.NumeroLoteTransacao),
+                      Finalizacao,
+                      NSU,
+                      Resp.Estabelecimento,
+                      Rede);
 end;
 
 function TACBrTEFDPayGoWeb.CNC: Boolean;
@@ -792,6 +795,7 @@ Var
   ArqMask, NomeArqTEF, NSUsConf, NSUsCanc: String;
   AResposta: TACBrTEFDResp;
   Confirmar: Boolean;
+  ulResult: LongWord;
   RespostasCanceladas, RespostasConfirmadas: TACBrTEFDRespostasPendentes;
 begin
   ArquivosVerficar := TStringList.Create;
@@ -817,10 +821,14 @@ begin
 
         if Resp.Confirmar then
         begin
-          Confirmar := ConfirmarTransacoesPendentes;
+          if ConfirmarTransacoesPendentes then
+            ulResult :=  PWCNF_CNF_MANU_AUT
+          else
+            ulResult :=  PWCNF_REV_PWR_AUT;
+
           if Assigned(fOnAvaliarTransacaoPendente) then
           begin
-            fOnAvaliarTransacaoPendente( Confirmar,
+            fOnAvaliarTransacaoPendente( ulResult,
                                          Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendente),
                                                  [FormatDateTimeBr(Resp.DataHoraTransacaoLocal),
                                                   FormatFloatBr(Resp.ValorTotal),
@@ -829,22 +837,24 @@ begin
                                          Resp);
           end;
 
+          Confirmar := (ulResult = PWCNF_CNF_AUTO) or (ulResult = PWCNF_CNF_MANU_AUT);
+
           { Criando cópia da Resposta Atual }
           AResposta := TACBrTEFDRespPayGoWeb.Create;
           AResposta.Assign(Resp);
 
-          if Confirmar then
-            CNF
-          else
+          if (not Confirmar) and Resp.CNFEnviado then
           begin
-            if Resp.CNFEnviado then
-            begin
-              if not CNC then
-                Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
-            end
-            else
-              NCN;
-          end;
+            if not CNC then
+              Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
+          end
+          else
+            FinalizarTransacao( ulResult,
+                                IntToStr(AResposta.NumeroLoteTransacao),
+                                AResposta.Finalizacao,
+                                AResposta.NSU,
+                                AResposta.Estabelecimento,
+                                AResposta.Rede);
 
           if Confirmar then
           begin
@@ -990,21 +1000,27 @@ begin
   end;
 end;
 
+procedure TACBrTEFDPayGoWeb.FinalizarTransacao(Status: LongWord;
+  pszReqNum: String; pszLocRef: String; pszExtRef: String;
+  pszVirtMerch: String; pszAuthSyst: String);
+begin
+  fsPGWebAPI.FinalizarTransacao( Status, pszReqNum, pszLocRef,
+                                 pszExtRef, pszVirtMerch, pszAuthSyst);
+end;
+
 procedure TACBrTEFDPayGoWeb.AvaliarTransacaoPendenteAPI(var Status: LongWord;
   pszReqNum: String; pszLocRef: String; pszExtRef: String;
   pszVirtMerch: String; pszAuthSyst: String);
-var
-  Confirmar: Boolean;
 begin
-  Confirmar := ConfirmarTransacoesPendentes;
-  if Assigned(fOnAvaliarTransacaoPendente) then
-    fOnAvaliarTransacaoPendente( Confirmar,
-                                 Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendenteAPI),
-                                         [pszAuthSyst, pszExtRef] ), Resp);
-  if Confirmar then
+  if ConfirmarTransacoesPendentes then
     Status := PWCNF_CNF_MANU_AUT
   else
     Status := PWCNF_REV_MANU_AUT;
+
+  if Assigned(fOnAvaliarTransacaoPendente) then
+    fOnAvaliarTransacaoPendente( Status,
+                                 Format( ACBrStr(SACBrTEFDPayGoWeb_TransacaoPendenteAPI),
+                                         [pszAuthSyst, pszExtRef] ), Resp);
 end;
 
 function TACBrTEFDPayGoWeb.GetPathDLL: string;

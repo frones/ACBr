@@ -46,6 +46,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2020
+-- ACBrTEFPayGoWebComum --
+[*] Correção de grafia no Nome do método "FinalizarTransacao"
+
+-- ACBrTEFDPayGoWeb --
+[*] Modificação da assinatura do evento:
+    TACBrTEFDAvaliarTransacaoPendente = procedure(var Status: LongWord;
+      const Mensagem: String; Resp: TACBrTEFDResp) of object;
+    - "Confirmar: Boolean", modificado para: "Status: LongWord", permitindo a
+      aplicação, informar Status diversos, para a resposta do evento.
+    (por: DSA)
+
 07/07/2020
 -- ACBrTEFComum --
 [*] propriedade TACBrTEFResp.NumeroLoteTransacao, modificada de Integer para Int64

@@ -698,7 +698,7 @@ type
     procedure AdicionarParametro(AKeyValueStr: String); overload;
     function ExecutarTransacao: Boolean;
     procedure ObterDadosDaTransacao;
-    procedure FinalizarTrancao(Status: LongWord; pszReqNum: String;
+    procedure FinalizarTransacao(Status: LongWord; pszReqNum: String;
       pszLocRef: String; pszExtRef: String; pszVirtMerch: String;
       pszAuthSyst: String);
     procedure AbortarTransacao;
@@ -1519,7 +1519,7 @@ begin
   end;
 end;
 
-procedure TACBrTEFPGWebAPI.FinalizarTrancao(Status: LongWord;
+procedure TACBrTEFPGWebAPI.FinalizarTransacao(Status: LongWord;
   pszReqNum: String; pszLocRef: String; pszExtRef: String;
   pszVirtMerch: String; pszAuthSyst: String);
 var
@@ -1566,7 +1566,7 @@ begin
     pszVirtMerch := Trim(ObterInfo(PWINFO_VIRTMERCH));
     pszAuthSyst := Trim(ObterInfo(PWINFO_AUTHSYST));
 
-    FinalizarTrancao(PWCNF_REV_ABORT, pszReqNum, pszLocRef, pszExtRef,
+    FinalizarTransacao(PWCNF_REV_ABORT, pszReqNum, pszLocRef, pszExtRef,
                                       pszVirtMerch, pszAuthSyst);
   end;
 end;
@@ -1599,7 +1599,7 @@ begin
       AStatus := PWCNF_REV_MANU_AUT;
   end;
 
-  FinalizarTrancao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
+  FinalizarTransacao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
 end;
 
 function TACBrTEFPGWebAPI.ObterDadoPinPad(iMessageId: Word; MinLen,

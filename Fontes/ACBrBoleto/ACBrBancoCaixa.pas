@@ -489,7 +489,10 @@ begin
                '104'                                   + // 77 ate 79   - Código do Banco (104)
                PadRight('C ECON FEDERAL', 15)          + // 80 ate 94   - Nome do Banco(C ECON FEDERAL)
                FormatDateTime('ddmmyy',Now)            + // 95 ate 100  - Data de geração do arquivo
-               space(289)                              + // 101 ate 389 - Brancos
+               ifThen((((fpLayoutVersaoArquivo = 107)
+                     and (fpLayoutVersaoLote = 67))
+                     or (fpLayoutVersaoArquivo = 007)), '007', space(3)) + // 101 ate 103 - Nº da Versão do Layout
+               space(286)                              + // 104 ate 389 - Brancos
                IntToStrZero(NumeroRemessa,5)           + // 390 ate 394 - Número sequencial do Arquivo de Remessa
                IntToStrZero(1,6);                        // 395 ate 400 - Número sequencial do Registrono Arquivo
       aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
@@ -824,7 +827,6 @@ var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade  :String;
   aDataDesconto, ANossoNumero, ATipoAceite, ATipoEspecieDoc  :String;
   ATipoSacado, ATipoCendente, wLinha                         :String;
-  TamConvenioMaior6                                          :Boolean;
   wCarteira                                                  :Integer;
   ACodigoDesconto, ADataMulta : String;
   ACodCedente : String;
@@ -932,8 +934,6 @@ begin
       else
         ADataMulta := PadLeft('', 6, '0');
 
-      TamConvenioMaior6:= Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
-
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
          toRemessaBaixar                         : ATipoOcorrencia := '02'; {Pedido de Baixa}
@@ -1028,12 +1028,7 @@ begin
 
       with ACBrBoleto do
       begin
-         if TamConvenioMaior6 then
-            wLinha:= '7'
-         else
-            wLinha:= '1';
-
-         wLinha:= wLinha                                                           + //  1 até 1   -  ID Registro
+         wLinha:= '1'                                                              + //  1 até 1   -  ID Registro - Preencher com ‘1'
                   ATipoCendente                                                    + //  2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')           + //  4  até 17 - Inscrição da empresa
                   ifthen(Length(ACodCedente) > 6, '000',

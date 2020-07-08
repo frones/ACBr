@@ -94,6 +94,8 @@ type
     Label18: TLabel;
     Label19: TLabel;
     Label8: TLabel;
+    lMensagemCliente: TLabel;
+    lMensagemOperador: TLabel;
     lNumOperacao: TLabel;
     lTituloMsgOperador: TLabel;
     lTituloMensagemCliente: TLabel;
@@ -148,8 +150,6 @@ type
     Splitter3: TSplitter;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
-    lMensagemOperador: TLabel;
-    lMensagemCliente: TLabel;
     procedure ACBrTEFD1AguardaResp(Arquivo: String; SegundosTimeOut: Integer;
       var Interromper: Boolean);
     procedure ACBrTEFD1AntesFinalizarRequisicao(Req: TACBrTEFDReq);
@@ -201,7 +201,7 @@ type
     procedure lURLTEFClick(Sender: TObject);
     procedure PayGoWebAguardaPinPad(
       OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean);
-    procedure PayGoWebAvaliarTransacaoPendente(var Confirmar: Boolean;
+    procedure PayGoWebAvaliarTransacaoPendente(var Status: Cardinal;
       const Mensagem: String; Resp: TACBrTEFDResp);
     procedure PayGoWebExibeMensagem(Mensagem: String;
       Terminal: TACBrTEFPGWebAPITerminalMensagem; MilissegundosExibicao: Integer);
@@ -400,15 +400,21 @@ begin
 end;
 
 procedure TFormPrincipal.PayGoWebAvaliarTransacaoPendente(
-  var Confirmar: Boolean; const Mensagem: String; Resp: TACBrTEFDResp);
+  var Status: Cardinal; const Mensagem: String; Resp: TACBrTEFDResp);
 var
   MR: TModalResult;
 begin
   // Aqui você pode Confirmar ou Cancelar as transações pendentes de acordo com a sua lógica
   // Ou ainda, fazer uma pergunta ao usuário, como nesse exemplo...
+  // Veja os valores possíveis, para "Status", em ACBrTEFPayGoWebComum.pas, procure por: "PWCNF_"
+
   MR := mrYes;
   ACBrTEFD1ExibeMsg( opmYesNo, Mensagem + sLineBreak + sLineBreak + 'Confirmar ?', MR);
-  Confirmar := (MR = mrYes);
+
+  if (MR = mrNo) then
+    Status := PWCNF_REV_PWR_AUT
+  else
+    Status := PWCNF_CNF_MANU_AUT;
 end;
 
 procedure TFormPrincipal.PayGoWebExibeMensagem(Mensagem: String;

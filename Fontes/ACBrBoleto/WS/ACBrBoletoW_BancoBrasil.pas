@@ -292,13 +292,16 @@ begin
     Gerador.wCampo(tcStr, '#37', PrefixTag('siglaUfPagador'                     ), 00, 02, 1, Sacado.UF, DSC_UF);
     Gerador.wCampo(tcStr, '#38', PrefixTag('textoNumeroTelefonePagador'         ), 00, 12, 1, Sacado.Fone, DSC_FONE);
 
-    if (Integer(Sacado.SacadoAvalista.Pessoa) = 0)  then
-      Gerador.wCampo(tcStr, '#39', PrefixTag('codigoTipoInscricaoAvalista'       ), 01, 01, 1, '1', DSC_NOME_AVALISTA)
-    else
-      Gerador.wCampo(tcStr, '#39', PrefixTag('codigoTipoInscricaoAvalista'       ), 01, 01, 1, '2', DSC_NOME_AVALISTA);
+    if NaoEstaVazio(trim(Sacado.SacadoAvalista.CNPJCPF)) then
+    begin
+      if (Integer(Sacado.SacadoAvalista.Pessoa) = 0)  then
+        Gerador.wCampo(tcStr, '#39', PrefixTag('codigoTipoInscricaoAvalista'       ), 01, 01, 1, '1', DSC_NOME_AVALISTA)
+      else
+        Gerador.wCampo(tcStr, '#39', PrefixTag('codigoTipoInscricaoAvalista'       ), 01, 01, 1, '2', DSC_NOME_AVALISTA);
 
-    Gerador.wCampo(tcStr, '#40', PrefixTag('numeroInscricaoAvalista'             ), 00, 15, 1, OnlyNumber( Sacado.SacadoAvalista.CNPJCPF ), DSC_NOME_AVALISTA);
-    Gerador.wCampo(tcStr, '#41', PrefixTag('nomeAvalistaTitulo'                  ), 00, 60, 1, Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA);
+      Gerador.wCampo(tcStr, '#40', PrefixTag('numeroInscricaoAvalista'             ), 00, 15, 1, OnlyNumber( Sacado.SacadoAvalista.CNPJCPF ), DSC_NOME_AVALISTA);
+      Gerador.wCampo(tcStr, '#41', PrefixTag('nomeAvalistaTitulo'                  ), 00, 60, 1, Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA);
+    end;
 
     if NaoEstaVazio( Boleto.Cedente.CedenteWS.KeyUser ) then
       lCodigoChaveUsuario:= Boleto.Cedente.CedenteWS.KeyUser

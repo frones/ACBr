@@ -43,7 +43,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -90,7 +90,7 @@ type
 
   { TACBrRastreioClass }
 
-  TACBrRastreioClass = class(TObjectList{$IfDef NEXTGEN}<TACBrRastreio>{$EndIf})
+  TACBrRastreioClass = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrRastreio>{$EndIf})
   protected
     procedure SetObject(Index: integer; Item: TACBrRastreio);
     function GetObject(Index: integer): TACBrRastreio;

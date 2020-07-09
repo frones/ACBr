@@ -68,8 +68,11 @@ interface
 uses
   SysUtils, Classes,
   blcksock, synautil, synaip, synsock
+  {$IfDef POSIX}
+   ,System.Generics.Collections, System.Generics.Defaults
+  {$EndIf}
   {$IfDef NEXTGEN}
-   ,synafpc, System.Generics.Collections, System.Generics.Defaults
+   ,synafpc
   {$EndIf};
 
 const
@@ -125,7 +128,7 @@ type
     property Permission: string read FPermission write FPermission;
   end;
 
-  {$IFDEF NEXTGEN}
+  {$IFDEF POSIX}
     TFTPRecList = TList<TFTPListRec>;
   {$ELSE}
     TFTPRecList = TList;

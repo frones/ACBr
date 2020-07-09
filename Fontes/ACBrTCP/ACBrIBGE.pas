@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -259,11 +259,11 @@ type
       write fOnLerCache;
   end ;
 
-  function CompCidadeCodMunicipioAsc(const pCidade1, pCidade2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
-  function CompCidadeMunicipioAsc(const pCidade1, pCidade2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompCidadeCodMunicipioAsc(const pCidade1, pCidade2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompCidadeMunicipioAsc(const pCidade1, pCidade2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 
-  function CompUFCodUFAsc(const pUF1, pUF2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
-  function CompUFNomeAsc(const pUF1, pUF2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompUFCodUFAsc(const pUF1, pUF2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompUFNomeAsc(const pUF1, pUF2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 
 implementation
 
@@ -380,7 +380,7 @@ begin
   oUF := TACBrIBGEUF.Create;
   try
     oUF.CodUF := ACodUF;
-    {$IfDef NEXTGEN}
+    {$IfDef HAS_SYSTEM_GENERICS}
      Result := FindObject(oUF, TComparer<TObject>.Construct( CompUFCodUFAsc ) );
     {$Else}
      Result := FindObject(Pointer(oUF), @CompUFCodUFAsc);
@@ -423,7 +423,7 @@ begin
   if FSortOrder = 1 then
     Exit;
 
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TObject>.Construct( CompUFCodUFAsc ) );
   {$Else}
   Self.Sort(@CompUFCodUFAsc);
@@ -437,7 +437,7 @@ begin
   if FSortOrder = 2 then
     Exit;
 
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TObject>.Construct( CompUFNomeAsc ) );
   {$Else}
   Self.Sort(@CompUFNomeAsc);
@@ -586,7 +586,7 @@ begin
   {$EndIf}
 end;
 
-function CompUFCodUFAsc(const pUF1, pUF2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+function CompUFCodUFAsc(const pUF1, pUF2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
   UF1, UF2: TACBrIBGEUF;
 begin
@@ -601,7 +601,7 @@ begin
     Result := 0;
 end;
 
-function CompUFNomeAsc(const pUF1, pUF2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+function CompUFNomeAsc(const pUF1, pUF2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
   UF1, UF2: TACBrIBGEUF;
 begin
@@ -736,7 +736,7 @@ begin
   oCidadeFind := TACBrIBGECidade.Create;
   try
     oCidadeFind.MunicipioIdx := AMunicipio;
-    {$IfDef NEXTGEN}
+    {$IfDef HAS_SYSTEM_GENERICS}
      I := FindObject(oCidadeFind, TComparer<TObject>.Construct( CompCidadeMunicipioAsc ), (not Exact));
     {$Else}
      I := FindObject(Pointer(oCidadeFind), @CompCidadeMunicipioAsc, (not Exact));
@@ -761,7 +761,7 @@ begin
   oCidade := TACBrIBGECidade.Create;
   try
     oCidade.CodMunicipio := ACodMunicio;
-    {$IfDef NEXTGEN}
+    {$IfDef HAS_SYSTEM_GENERICS}
      Result := FindObject(oCidade, TComparer<TObject>.Construct( CompCidadeCodMunicipioAsc ), (not Exact));
     {$Else}
      Result := FindObject(Pointer(oCidade), @CompCidadeCodMunicipioAsc, (not Exact));
@@ -776,7 +776,7 @@ begin
   if FSortOrder = 1 then
     Exit;
 
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TObject>.Construct( CompCidadeCodMunicipioAsc ) );
   {$Else}
   Self.Sort(@CompCidadeCodMunicipioAsc);
@@ -790,7 +790,7 @@ begin
   if FSortOrder = 2 then
     Exit;
 
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TObject>.Construct( CompCidadeMunicipioAsc ) );
   {$Else}
   Self.Sort(@CompCidadeMunicipioAsc);
@@ -964,7 +964,7 @@ begin
   {$EndIf}
 end;
 
-function CompCidadeCodMunicipioAsc(const pCidade1, pCidade2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+function CompCidadeCodMunicipioAsc(const pCidade1, pCidade2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
   oCidade1, oCidade2: TACBrIBGECidade;
 begin
@@ -979,7 +979,7 @@ begin
     Result := 0;
 end;
 
-function CompCidadeMunicipioAsc(const pCidade1, pCidade2: {$IfDef NEXTGEN}TObject{$Else}Pointer{$EndIf}): Integer;
+function CompCidadeMunicipioAsc(const pCidade1, pCidade2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
   oCidade1, oCidade2: TACBrIBGECidade;
 begin

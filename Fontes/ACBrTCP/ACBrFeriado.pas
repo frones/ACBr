@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -85,7 +85,7 @@ type
     property ListaCidade: String    read fListaCidade write fListaCidade;
   end;
 
-  TACBrFeriadoEventos = class(TObjectList{$IfDef NEXTGEN}<TACBrFeriadoEvento>{$EndIf})
+  TACBrFeriadoEventos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrFeriadoEvento>{$EndIf})
   protected
     procedure SetObject(Index: Integer; Item: TACBrFeriadoEvento);
     function GetObject(Index: Integer): TACBrFeriadoEvento;

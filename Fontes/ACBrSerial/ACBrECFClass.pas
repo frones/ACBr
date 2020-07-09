@@ -38,7 +38,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrDevice, ACBrConsts, ACBrBase
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    ,System.Generics.Collections, System.Generics.Defaults
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    ,System.Contnrs
@@ -99,7 +99,7 @@ type
 
   { TACBRAbastecimentos }
 
-  TACBRRodapeAbastecimentos = class(TObjectList{$IfDef NEXTGEN}<TACBRRodapeAbastecimento>{$EndIf})
+  TACBRRodapeAbastecimentos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBRRodapeAbastecimento>{$EndIf})
   private
     fsImprimir: Boolean;
     procedure SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
@@ -237,7 +237,7 @@ end;
 
 { Lista de Objetos do tipo TACBrECFAliquota }
 
-TACBrECFAliquotas = class(TObjectList{$IfDef NEXTGEN}<TACBrECFAliquota>{$EndIf})
+TACBrECFAliquotas = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFAliquota>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFAliquota);
     function GetObject (Index: Integer): TACBrECFAliquota;
@@ -274,7 +274,7 @@ end;
 
 { TACBrECFTotalizadoresNaoTributados }
 
-TACBrECFTotalizadoresNaoTributados = class(TObjectList{$IfDef NEXTGEN}<TACBrECFTotalizadorNaoTributado>{$EndIf})
+TACBrECFTotalizadoresNaoTributados = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFTotalizadorNaoTributado>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFTotalizadorNaoTributado);
     function GetObject (Index: Integer): TACBrECFTotalizadorNaoTributado;
@@ -316,7 +316,7 @@ TACBrECFFormaPagamento = class
 end;
 
 { Lista de Objetos do tipo TACBrECFFormaPagamento }
-TACBrECFFormasPagamento = class(TObjectList{$IfDef NEXTGEN}<TACBrECFFormaPagamento>{$EndIf})
+TACBrECFFormasPagamento = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFFormaPagamento>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFFormaPagamento);
     function GetObject (Index: Integer): TACBrECFFormaPagamento;
@@ -341,7 +341,7 @@ TACBrECFUnidadeMedida = class
 end;
 
 { Lista de Objetos do tipo TACBrECFunidadeMedida }
-TACBrECFUnidadesMedida = class(TObjectList{$IfDef NEXTGEN}<TACBrECFUnidadeMedida>{$EndIf})
+TACBrECFUnidadesMedida = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFUnidadeMedida>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFUnidadeMedida);
     function GetObject (Index: Integer): TACBrECFUnidadeMedida;
@@ -375,7 +375,7 @@ TACBrECFRelatorioGerencial = class
  end;
 
 { Lista de Objetos do tipo TACBrECFRelatoriosGerencial }
-TACBrECFRelatoriosGerenciais = class(TObjectList{$IfDef NEXTGEN}<TACBrECFRelatorioGerencial>{$EndIf})
+TACBrECFRelatoriosGerenciais = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFRelatorioGerencial>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFRelatorioGerencial);
     function GetObject (Index: Integer): TACBrECFRelatorioGerencial;
@@ -439,7 +439,7 @@ TACBrECFConsumidor = class
 end ;
 
 { Lista de Objetos do tipo TACBrECFComprovanteNaoFiscal }
-TACBrECFComprovantesNaoFiscais = class(TObjectList{$IfDef NEXTGEN}<TACBrECFComprovanteNaoFiscal>{$EndIf})
+TACBrECFComprovantesNaoFiscais = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFComprovanteNaoFiscal>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFComprovanteNaoFiscal);
     function GetObject (Index: Integer): TACBrECFComprovanteNaoFiscal;
@@ -1618,7 +1618,7 @@ end;
 
 procedure TACBrECFFormasPagamento.Ordenar;
 begin
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TACBrECFFormaPagamento>.Construct( CompararCamposOrdenacao ) );
   {$Else}
   Self.Sort(@CompararCamposOrdenacao);

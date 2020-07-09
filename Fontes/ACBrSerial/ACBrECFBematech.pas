@@ -686,7 +686,7 @@ Uses
    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, IniFiles, math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
-   {$IfDef  POSIX}Posix.Unistd, {$Endif}
+   {$IfDef POSIX}Posix.Unistd,{$Endif}
    ACBrConsts, ACBrECF, ACBrECFEscECF, ACBrUtil;
 
 function BematechTraduzirTag(const ATag : AnsiString) : AnsiString ;

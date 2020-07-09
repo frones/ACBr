@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -70,7 +70,7 @@ type
 
   { TACBrNCMsList }
 
-  TACBrNCMsList = class(TObjectList{$IfDef NEXTGEN}<TACBrNCM>{$EndIf})
+  TACBrNCMsList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrNCM>{$EndIf})
   protected
     procedure SetObject(Index: integer; Item: TACBrNCM);
     function GetObject(Index: integer): TACBrNCM;

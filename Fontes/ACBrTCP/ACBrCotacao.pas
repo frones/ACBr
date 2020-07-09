@@ -48,8 +48,8 @@ unit ACBrCotacao;
 interface
 
 uses
-    SysUtils, Variants, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  SysUtils, Variants, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -89,7 +89,7 @@ type
 
   end;
 
-  TACBrCotacaoItens = class(TObjectList{$IfDef NEXTGEN}<TACBrCotacaoItem>{$EndIf})
+  TACBrCotacaoItens = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCotacaoItem>{$EndIf})
   private
     function GetItem(Index: integer): TACBrCotacaoItem;
     procedure SetItem(Index: integer; const Value: TACBrCotacaoItem);

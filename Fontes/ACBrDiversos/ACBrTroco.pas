@@ -37,7 +37,7 @@ unit ACBrTroco;
 interface
 uses
   SysUtils , Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -60,7 +60,7 @@ TDinheiro = class
   end;
 
 {Classe que ira armazenar os objetos de TDinheiro}
-TDinheiroList = class(TObjectList{$IfDef NEXTGEN}<TDinheiro>{$EndIf})
+TDinheiroList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TDinheiro>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TDinheiro);
     function GetObject (Index: Integer): TDinheiro;
@@ -89,7 +89,7 @@ TTroco = class
 end;
 
 {Classe que ira armazenar os objetos de TTroco}
-TTrocoList = class(TObjectList{$IfDef NEXTGEN}<TTroco>{$EndIf})
+TTrocoList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TTroco>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TTroco);
     function GetObject (Index: Integer): TTroco;

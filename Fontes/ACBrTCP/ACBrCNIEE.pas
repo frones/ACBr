@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Variants, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -125,7 +125,7 @@ type
     property QtLacresFab: Integer read FQtLacresFab write FQtLacresFab;
   end;
 
-  TACBrCNIEERegistros = class(TObjectList{$IfDef NEXTGEN}<TACBrCNIEERegistro>{$EndIf})
+  TACBrCNIEERegistros = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCNIEERegistro>{$EndIf})
   private
     function GetItem(Index: integer): TACBrCNIEERegistro;
     procedure SetItem(Index: integer; const Value: TACBrCNIEERegistro);

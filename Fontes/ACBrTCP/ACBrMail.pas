@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, syncobjs, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -85,7 +85,7 @@ type
 
   { TMailAttachments }
 
-  TMailAttachments = class(TObjectList{$IfDef NEXTGEN}<TMailAttachment>{$EndIf})
+  TMailAttachments = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TMailAttachment>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TMailAttachment);
     function GetObject (Index: Integer): TMailAttachment;

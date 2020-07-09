@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -65,7 +65,7 @@ type
 
   { TACBrMTerComandos }
 
-  TACBrMTerComandos = class(TObjectList{$IfDef NEXTGEN}<TACBrMTerComando>{$EndIf})
+  TACBrMTerComandos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrMTerComando>{$EndIf})
   private
     function GetObject(aIndex: Integer): TACBrMTerComando;
     procedure SetObject(aIndex: Integer; aItem: TACBrMTerComando);

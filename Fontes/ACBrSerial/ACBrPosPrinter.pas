@@ -43,7 +43,7 @@ uses
   {$EndIf}
   Types,
   ACBrDevice, ACBrBase,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs
@@ -353,7 +353,7 @@ type
 
   { TACBrPosCheques }
 
-  TACBrPosCheques = class(TObjectList{$IfDef NEXTGEN}<TACBrPosCheque>{$EndIf})
+  TACBrPosCheques = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrPosCheque>{$EndIf})
   private
     FBancoPadrao: Integer;
     FDimensao: TPoint;
@@ -373,7 +373,7 @@ type
   public
     constructor Create(APosChequeIni: String = ''; AResourceName: String = '');
     destructor Destroy; override;
-    procedure Clear; {$IfNDef NEXTGEN}override;{$EndIf}
+    procedure Clear; {$IfNDef HAS_SYSTEM_GENERICS}override;{$EndIf}
 
     procedure Load;
     function FindPosCheque(ACodBanco: Integer; UsaPadraoSeNaoAchar: Boolean = True): TACBrPosCheque;

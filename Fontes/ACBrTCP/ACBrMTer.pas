@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -153,7 +153,7 @@ type
 
   { TACBrMTerConexoes }
 
-  TACBrMTerConexoes = class(TObjectList{$IfDef NEXTGEN}<TACBrMTerConexao>{$EndIf})
+  TACBrMTerConexoes = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrMTerConexao>{$EndIf})
   private
     fACBrMTer: TACBrMTer;
     function GetConexao(aIP: String): TACBrMTerConexao;

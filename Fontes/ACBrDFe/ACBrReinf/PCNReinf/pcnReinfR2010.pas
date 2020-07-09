@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -142,7 +142,7 @@ type
   end;
 
   { TidePrestServ }
-  TidePrestServ = class(TObject)
+  TidePrestServ = class(TObject)
   private
     FcnpjPrestador: string;
     FvlrTotalBruto: Double;

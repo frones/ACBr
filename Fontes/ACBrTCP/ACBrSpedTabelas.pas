@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -85,7 +85,7 @@ type
 
   { TACBrSpedTabelasClass }
 
-  TACBrSpedTabelasClass = class(TObjectList{$IfDef NEXTGEN}<TACBrSpedTabela>{$EndIf})
+  TACBrSpedTabelasClass = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrSpedTabela>{$EndIf})
   protected
     procedure SetObject(Index: integer; Item: TACBrSpedTabela);
     function GetObject(Index: integer): TACBrSpedTabela;

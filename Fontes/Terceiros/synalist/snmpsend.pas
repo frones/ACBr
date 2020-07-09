@@ -71,8 +71,11 @@ interface
 uses
   Classes, SysUtils,
   blcksock, synautil, asn1util, synaip, synacode, synacrypt
+  {$IfDef POSIX}
+   ,System.Generics.Collections, System.Generics.Defaults
+  {$EndIf}
   {$IfDef NEXTGEN}
-   ,synafpc, System.Generics.Collections, System.Generics.Defaults
+   ,synafpc
   {$EndIf};
 
 const
@@ -164,7 +167,7 @@ type
     EngineStamp: Cardinal;
   end;
 
-  {$IFDEF NEXTGEN}
+  {$IFDEF POSIX}
     TSNMPMibList = TList<TSNMPMib>;
   {$ELSE}
     TSNMPMibList = TList;

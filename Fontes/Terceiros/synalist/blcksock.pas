@@ -109,7 +109,7 @@ uses
   SysUtils, Classes,
   synafpc,
   synsock, synautil, synacode, synaip
-  {$IFDEF NEXTGEN}
+  {$IFDEF POSIX}
     ,System.Generics.Collections, System.Generics.Defaults
   {$ENDIF}
   {$IfDef CIL}
@@ -285,7 +285,7 @@ type
 
   TBlockSocket = class;
 
-{$IFDEF NEXTGEN}
+{$IFDEF POSIX}
   TOptionList = TList<TSynaOption>;
   TSocketList = TList<TBlockSocket>;
 {$ELSE}

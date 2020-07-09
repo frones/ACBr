@@ -68,9 +68,9 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IFDEF NEXTGEN}
-    System.Generics.Collections, System.Generics.Defaults,
-  {$ENDIF}
+  {$IfDef POSIX}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$EndIf}
   synafpc,
   synachar, synacode, synautil, mimeinln;
 
@@ -78,7 +78,7 @@ type
 
   TMimePart = class;
 
-{$IFDEF NEXTGEN}
+{$IFDEF POSIX}
   TSubPartsList = TList<TMimePart>;
 {$ELSE}
   TSubPartsList = TList;

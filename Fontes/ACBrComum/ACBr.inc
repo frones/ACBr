@@ -3,7 +3,11 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:  Alexandre Rocha Lima e Marcondes               }
+{                               Regys Silveira                                 }
+{                               Juliomar Marchetti                             }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -22,34 +26,11 @@
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Alexandre Rocha Lima e Marcondes -  arlm@users.sourceforge.net               }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-
-{******************************************************************************
-|* Historico
-|*
-|* 20/05/2004: Primeira Versao
-|*    Alexandre Rocha Lima e Marcondes
-|*    Criaçao e Distribuiçao da Primeira Versao
-|* 06/04/2005: Atualização
-|*    Alexandre Rocha Lima e Marcondes
-|*    Suporte para o Kylix 1, 2 e 3; Delphi 8 e 9; identificação da VisualCLX
-|* 15/08/2005: Adcionada compatibilidade de suporte a D5 e CLX
-|*    Daniel Simoes de Almeida
-|*    Se for CLX ou VisualCLX considera DELPHI6_UP com true
-|* 21/08/2005: Adcionada compatibilidade com FreePascal e Lazarus
-|*    Douglas Fernando Scheibler / Daniel Simoes de Almeida
-|* 16/01/2006: Adcionada compatibilidade com o Delphi 2006
-|*    Luciano Donato
-|* 06/02/2007: Adcionada compatibilidade com o C++ Builder
-|*    Thiago Delgado Pinto
-|* 23/10/2012: Reformulação do arquivo para utilizar o jedi.inc e kilyx.inc
-|*    do projeto Jedi, visando uma melhor utilização do arquivo
-|*    Régys Borges da Silveira
-******************************************************************************}
 
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC, (NÃO RECOMENDADO)
 {.$DEFINE DFE_SEM_OPENSSL}
@@ -155,24 +136,23 @@
  {$UNDEF USE_DELAYED}
 {$ENDIF}
 
-{$IFDEF DELPHI9_UP}
+{$IFDEF DELPHI2005_UP}
   {$DEFINE HAS_INLINE}
 {$ENDIF}
-{$IFDEF DELPHI10_UP}
+{$IFDEF DELPHI2006_UP}
   {$DEFINE HAS_STRICTDELIMITER}
 {$ENDIF}
-{$IFDEF DELPHI12_UP}
+{$IFDEF DELPHI2009_UP}
   {$DEFINE HAS_CHARINSET}
+  {$DEFINE USE_JSONDATAOBJECTS_UNIT}
 {$ENDIF}
-{$IFDEF DELPHI15_UP}
+{$IFDEF DELPHIXE_UP}
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}
 {$ENDIF}
 {$IfDEF DELPHIXE8_UP}
   {$DEFINE HAS_BLUETOOTH}
-{$ENDIF}
-{$IFDEF DELPHI2009_UP}
-  {$DEFINE USE_JSONDATAOBJECTS_UNIT}
+  {$DEFINE HAS_SYSTEM_GENERICS}
 {$ENDIF}
 
 // Definições multi-plataforma
@@ -185,28 +165,28 @@
 
 {$IFDEF DELPHILANGUAGE}
   {$IFDEF POSIX}
-    {$DEFINE USE_UTF8}
+    {$IFDEF LINUX}
+      {$DEFINE USE_UTF8}
+      {$UNDEF HAS_BLUETOOTH}
+    {$ENDIF}
     {$DEFINE FMX}
+    {$DEFINE HAS_SYSTEM_GENERICS}
+
     {$UNDEF CLX}
     {$UNDEF VisualCLX}
     {$UNDEF VCL}
     {$DEFINE DFE_SEM_CAPICOM}
     {$DEFINE DFE_SEM_MSXML}
     {$UNDEF USE_DELAYED}
-    {$UNDEF HAS_BLUETOOTH}
     {$LEGACYIFEND ON}
-  {$ENDIF}
-
-  {$IFDEF ANDROID}
-    {$DEFINE NEXTGEN}
   {$ENDIF}
 
   {$IFDEF NEXTGEN}
+    {$DEFINE HAS_SYSTEM_GENERICS}
     {$DEFINE USE_UTF8}
     {$DEFINE HAS_BLUETOOTH}
     {$LEGACYIFEND ON}
-    //http://riversoftavg.com/blogs/index.php/2015/01/17/zerobasedstrings-just-dont/
-    {$ZEROBASEDSTRINGS OFF}
+    {$ZEROBASEDSTRINGS OFF}  //http://riversoftavg.com/blogs/index.php/2015/01/17/zerobasedstrings-just-dont/
   {$ENDIF}
 
   {$IFDEF CLX}

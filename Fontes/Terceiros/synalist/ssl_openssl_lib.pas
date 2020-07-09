@@ -97,7 +97,7 @@ uses
 {$IfDef ANDROID}
   ,System.IOUtils
 {$EndIf}
-{$IFDEF NEXTGEN}
+{$IFDEF POSIX}
   ,System.Generics.Collections, System.Generics.Defaults
 {$ENDIF}
 {$IFNDEF MSWINDOWS}
@@ -1102,7 +1102,7 @@ var
 {$ENDIF}
 
 type
-  {$IFDEF NEXTGEN}
+  {$IFDEF POSIX}
     TCriticalSectionList = TList<TCriticalSection>;
   {$ELSE}
     TCriticalSectionList = TList;

@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs
@@ -76,7 +76,7 @@ type
 
   { TACBrAACECFs }
 
-  TACBrAACECFs = class(TObjectList{$IfDef NEXTGEN}<TACBrAACECF>{$EndIf})
+  TACBrAACECFs = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrAACECF>{$EndIf})
   private
     procedure SetObject(Index: Integer; Item: TACBrAACECF);
     function GetObject(Index: Integer): TACBrAACECF;
@@ -136,7 +136,7 @@ type
 
   { TACBrECFArquivos }
 
-  TACBrECFArquivos = class(TObjectList{$IfDef NEXTGEN}<TACBrECFArquivo>{$EndIf})
+  TACBrECFArquivos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFArquivo>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFArquivo);
     function GetObject (Index: Integer): TACBrECFArquivo;
@@ -308,7 +308,7 @@ type
   end;
 
   { Lista de Objetos do tipo TACBrECFDAV }
-  TACBrECFDAVs = class(TObjectList{$IfDef NEXTGEN}<TACBrECFDAV>{$EndIf})
+  TACBrECFDAVs = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFDAV>{$EndIf})
   private
     procedure SetObject (Index: Integer; Item: TACBrECFDAV);
     function GetObject (Index: Integer): TACBrECFDAV;
@@ -513,7 +513,7 @@ end;
 
 { TACBrECFDAV }
 
-function OrdenarDAVs(const ADav1, ADav2: {$IfDef NEXTGEN}TACBrECFDAV{$Else}Pointer{$EndIf}): Integer;
+function OrdenarDAVs(const ADav1, ADav2: {$IfDef HAS_SYSTEM_GENERICS}TACBrECFDAV{$Else}Pointer{$EndIf}): Integer;
 var
   Str1, Str2 : String ;
 begin
@@ -574,7 +574,7 @@ end;
 
 procedure TACBrECFDAVs.Ordenar;
 begin
-  {$IfDef NEXTGEN}
+  {$IfDef HAS_SYSTEM_GENERICS}
   Self.Sort( TComparer<TACBrECFDAV>.Construct( OrdenarDAVs ) );
   {$Else}
   Self.Sort(@OrdenarDAVs);

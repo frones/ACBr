@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -93,7 +93,7 @@ type
 
   { TACBrCEPEnderecos }
 
-  TACBrCEPEnderecos = class(TObjectList{$IfDef NEXTGEN}<TACBrCEPEndereco>{$EndIf})
+  TACBrCEPEnderecos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCEPEndereco>{$EndIf})
     protected
       procedure SetObject (Index: Integer; Item: TACBrCEPEndereco);
       function GetObject (Index: Integer): TACBrCEPEndereco;

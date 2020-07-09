@@ -37,7 +37,7 @@ unit ACBrCHQClass;
 interface
 uses
   Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -96,7 +96,7 @@ end;
   um arquivo no formato do Arquivo INI usado pela Bematech. Caso nenhum arquivo
   seja especificado, ou o arquivo nao exista, os valores Defaults serao
   utilizados (Mais explicações no Implementação da CarregaBemaFiINI abaixo) }
-TACBrCHQModelos = class(TObjectList{$IfDef NEXTGEN}<TACBrCHQModelo>{$EndIf})
+TACBrCHQModelos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCHQModelo>{$EndIf})
   private
     fsArquivoBemaFiINI: String;
     procedure SetArquivoBemaFiINI(const Value: String);

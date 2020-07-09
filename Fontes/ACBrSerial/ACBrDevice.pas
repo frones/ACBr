@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   synaser, blcksock,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -177,7 +177,7 @@ end;
 
 { TACBrTags }
 
-TACBrTags = class(TObjectList{$IfDef NEXTGEN}<TACBrTag>{$EndIf})
+TACBrTags = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrTag>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrTag);
     function GetObject (Index: Integer): TACBrTag;

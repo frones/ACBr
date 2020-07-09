@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -85,7 +85,7 @@ type
 
   { TACBrTEFPayGoTabelaRedes }
 
-  TACBrTEFPayGoTabelaRedes = class(TObjectList{$IfDef NEXTGEN}<TACBrTEFPayGoRede>{$EndIf})
+  TACBrTEFPayGoTabelaRedes = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrTEFPayGoRede>{$EndIf})
   private
     procedure LoadFromStringList(AStringList: TStrings);
 

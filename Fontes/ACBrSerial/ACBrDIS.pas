@@ -37,7 +37,7 @@ unit ACBrDIS;
 interface
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
     System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
     System.Contnrs,
@@ -115,7 +115,7 @@ TACBrDISLinha = class
 end ;
 
 { Lista de Objetos do tipo TACBrDISLinha }
-TACBrDISLinhas = class(TObjectList{$IfDef NEXTGEN}<TACBrDISLinha>{$EndIf})
+TACBrDISLinhas = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrDISLinha>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrDISLinha);
     function GetObject (Index: Integer): TACBrDISLinha;

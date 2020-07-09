@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -110,7 +110,7 @@ type
 
   { TListaCertificados }
 
-  TListaCertificados = class(TObjectList{$IfDef NEXTGEN}<TDadosCertificado>{$EndIf})
+  TListaCertificados = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TDadosCertificado>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TDadosCertificado);
     function GetObject (Index: Integer): TDadosCertificado;

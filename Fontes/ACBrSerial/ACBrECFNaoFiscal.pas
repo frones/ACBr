@@ -37,7 +37,7 @@ unit ACBrECFNaoFiscal ;
 interface
 uses
   Classes, Math, SysUtils, IniFiles,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,

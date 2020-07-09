@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -205,7 +205,7 @@ type
   	property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
-  TACBrCargaBalItens = class(TObjectList{$IfDef NEXTGEN}<TACBrCargaBalItem>{$EndIf})
+  TACBrCargaBalItens = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCargaBalItem>{$EndIf})
   private
     function GetItem(Index: Integer): TACBrCargaBalItem;
     procedure SetItem(Index: Integer; const Value: TACBrCargaBalItem);

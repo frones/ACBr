@@ -50,7 +50,7 @@ uses
   {$ELSE}
    Windows, ACBrD5,
   {$ENDIF}
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs
@@ -187,7 +187,7 @@ TAnsiStringList = class
 
 { TACBrObjectList }
 
-  TACBrObjectList = class(TObjectList{$IfDef NEXTGEN}<TObject>{$EndIf})
+  TACBrObjectList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
   protected
     fIsSorted: Boolean;
   public
@@ -195,7 +195,7 @@ TAnsiStringList = class
 
     Function Add(AObject: TObject): Integer;
     Procedure Insert(Index: Integer; AObject: TObject);
-    {$IfDef NEXTGEN}
+    {$IfDef HAS_SYSTEM_GENERICS}
      procedure Sort(const AComparer: IComparer<TObject>);
      function FindObject(Item: TObject; AComparer: IComparer<TObject>; Nearest: Boolean = False): Integer;
      procedure Assign(ObjectListSource: TObjectList<TObject>);
@@ -275,7 +275,7 @@ de campos quando necessário}
 
   { TACBrInformacoes }
 
-  TACBrInformacoes = class(TObjectList{$IfDef NEXTGEN}<TACBrInformacao>{$EndIf})
+  TACBrInformacoes = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrInformacao>{$EndIf})
   private
     function GetItem(Index: Integer): TACBrInformacao;
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
@@ -375,7 +375,7 @@ begin
   fIsSorted := False;
 end;
 
-{$IfDef NEXTGEN}
+{$IfDef HAS_SYSTEM_GENERICS}
  procedure TACBrObjectList.Sort(const AComparer: IComparer<TObject>);
  begin
    inherited Sort(AComparer);
@@ -404,7 +404,7 @@ end;
  end;
 {$EndIf}
 
-{$IfDef NEXTGEN}
+{$IfDef HAS_SYSTEM_GENERICS}
 function TACBrObjectList.FindObject(Item: TObject; AComparer: IComparer<TObject>; Nearest: Boolean = False): Integer;
 {$Else}
 function TACBrObjectList.FindObject(Item: Pointer; AComparer: TListSortCompare; Nearest: Boolean): Integer;
@@ -414,7 +414,7 @@ var
 
   function DoCompare(APos: Integer): Integer;
   begin
-    {$IfDef NEXTGEN}
+    {$IfDef HAS_SYSTEM_GENERICS}
      Result := AComparer.Compare(Item,Items[APos]);
     {$Else}
      Result := AComparer(Item,Pointer(Items[APos]));

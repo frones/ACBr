@@ -41,7 +41,7 @@ unit ACBrECFVirtual ;
 interface
 uses
   Classes, Math, SysUtils, IniFiles,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -100,7 +100,7 @@ end;
 
 { TACBrECFVirtualClassItensCupom }
 
-TACBrECFVirtualClassItensCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassItemCupom>{$EndIf})
+TACBrECFVirtualClassItensCupom = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFVirtualClassItemCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassItemCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassItemCupom;
@@ -131,7 +131,7 @@ end;
 
 { TACBrECFVirtualClassPagamentosCupom }
 
-TACBrECFVirtualClassPagamentosCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassPagamentoCupom>{$EndIf})
+TACBrECFVirtualClassPagamentosCupom = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFVirtualClassPagamentoCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassPagamentoCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassPagamentoCupom;
@@ -164,7 +164,7 @@ end;
 
 { TACBrECFVirtualClassCNFsCupom }
 
-TACBrECFVirtualClassCNFsCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassCNFCupom>{$EndIf})
+TACBrECFVirtualClassCNFsCupom = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFVirtualClassCNFCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassCNFCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassCNFCupom;
@@ -202,7 +202,7 @@ end;
 
 { TACBrECFVirtualClassAliquotasCupom }
 
-TACBrECFVirtualClassAliquotasCupom = class(TObjectList{$IfDef NEXTGEN}<TACBrECFVirtualClassAliquotaCupom>{$EndIf})
+TACBrECFVirtualClassAliquotasCupom = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFVirtualClassAliquotaCupom>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassAliquotaCupom);
     function GetObject (Index: Integer): TACBrECFVirtualClassAliquotaCupom;

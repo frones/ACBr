@@ -37,7 +37,7 @@ unit ACBrECFSwedaSTX ;
 interface
 uses
   Classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -71,7 +71,7 @@ TACBrECFSwedaInfo34 = class
 end ;
 
 { Lista de Objetos do tipo TACBrECFSwedaCache }
-TACBrECFSwedaCache = class(TObjectList{$IfDef NEXTGEN}<TACBrECFSwedaInfo34>{$EndIf})
+TACBrECFSwedaCache = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrECFSwedaInfo34>{$EndIf})
 protected
   procedure SetObject (Index: Integer; Item: TACBrECFSwedaInfo34);
   function GetObject (Index: Integer): TACBrECFSwedaInfo34;

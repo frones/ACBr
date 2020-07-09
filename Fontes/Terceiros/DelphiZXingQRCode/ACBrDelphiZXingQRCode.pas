@@ -69,7 +69,7 @@ type
 implementation
 
 uses
- {$IF DEFINED(NEXTGEN)}
+ {$IF DEFINED(HAS_SYSTEM_GENERICS)}
   System.Generics.Collections,
  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
   System.Contnrs,
@@ -464,7 +464,7 @@ type
   TReedSolomonEncoder = class
   private
     FField: TGenericGF;
-    FCachedGenerators: TObjectList{$IfDef NEXTGEN}<TGenericGFPoly>{$EndIf};
+    FCachedGenerators: TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TGenericGFPoly>{$EndIf};
   public
     constructor Create(AField: TGenericGF);
     destructor Destroy; override;
@@ -1383,7 +1383,7 @@ var
   DataBytesOffset: Integer;
   MaxNumDataBytes: Integer;
   MaxNumECBytes: Integer;
-  Blocks: TObjectList{$IfDef NEXTGEN}<TBlockPair>{$EndIf};
+  Blocks: TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TBlockPair>{$EndIf};
   NumDataBytesInBlock: TIntegerArray;
   NumECBytesInBlock: TIntegerArray;
   Size: Integer;
@@ -1408,7 +1408,7 @@ begin
   MaxNumEcBytes := 0;
 
   // Since, we know the number of reedsolmon blocks, we can initialize the vector with the number.
-  Blocks := TObjectList{$IfDef NEXTGEN}<TBlockPair>{$EndIf}.Create(True);
+  Blocks := TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TBlockPair>{$EndIf}.Create(True);
   try
     Blocks.Capacity := NumRSBlocks;
 
@@ -3054,7 +3054,7 @@ begin
   FField := AField;
 
   // Contents of FCachedGenerators will be freed by FGenericGF.Destroy
-  FCachedGenerators := TObjectList{$IfDef NEXTGEN}<TGenericGFPoly>{$EndIf}.Create(False);
+  FCachedGenerators := TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TGenericGFPoly>{$EndIf}.Create(False);
 
   SetLength(IntArray, 1);
   IntArray[0] := 1;

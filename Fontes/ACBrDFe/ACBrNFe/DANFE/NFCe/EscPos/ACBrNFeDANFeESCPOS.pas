@@ -320,10 +320,18 @@ begin
           LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
           FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
 
-          LinhaCmd :=
-            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
-            PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
-          LinhaCmd := padSpace(LinhaCmd, ColunasCondensado, '|');
+          if (ColunasCondensado >= 48) then
+          begin
+            LinhaCmd :=
+              PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+              PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
+            LinhaCmd := padSpace(LinhaCmd, ColunasCondensado, '|');
+          end
+          else
+            LinhaCmd := padSpace(
+              sQuantidade + '|' + sUnidade + ' X ' +
+              sVlrUnitario + '|' + sVlrProduto, ColunasCondensado, '|');
+
           FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
         end;
 

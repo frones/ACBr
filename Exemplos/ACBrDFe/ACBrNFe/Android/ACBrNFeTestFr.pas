@@ -1,3 +1,37 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
 unit ACBrNFeTestFr;
 
 interface
@@ -15,7 +49,7 @@ uses
   FileSelectFrame,
   ACBrIBGE, ACBrSocket, ACBrCEP,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
-  ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrBase, ACBrMail;
+  ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrBase, ACBrMail, FMX.Memo.Types;
 
 type
   TACBrNFCeTestOperacao = (opLivre, opErro, opGerando, opAssinando, opGravando, opTransmitindo, opImprimindo, opEmail);
@@ -465,7 +499,7 @@ procedure Toast(const AMsg: string; ShortDuration: Boolean = True);
 var
   ToastLength: Integer;
 begin
-  {$IfDef MSWINDOWS}
+  {$IfNDef ANDROID}
    TDialogServiceAsync.ShowMessage(AMsg);
   {$Else}
    if ShortDuration then
@@ -1076,12 +1110,14 @@ end;
 
 procedure TACBrNFCeTestForm.CarregarImpressorasBth;
 begin
-  PedirPermissoesInternet;
-  cbxImpressorasBth.Items.Clear;
-  try
-    ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
-  except
-  end;
+  {$IfDef HAS_BLUETOOTH}
+   PedirPermissoesInternet;
+   cbxImpressorasBth.Items.Clear;
+   try
+     ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+   except
+   end;
+  {$EndIf}
 end;
 
 procedure TACBrNFCeTestForm.CarregarListaDeCidades;
@@ -1345,7 +1381,7 @@ var
   CertPFX: string;
 begin
   CertPFX := edtConfCertPFX.Text;
-  if ExtractFilePath(CertPFX) = '' then
+  if (ExtractFilePath(CertPFX) = '') then
     CertPFX := ApplicationPath + CertPFX;
 
   ACBrNFe1.Configuracoes.Certificados.URLPFX := edtConfCertURL.Text;
@@ -1415,6 +1451,7 @@ begin
   ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral := cbQRCodeLateral.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.IsChecked;
   ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbImprimirDescAcres.IsChecked;
+  ACBrNFeDANFeESCPOS1.SuportaCondensado := False;
 end;
 
 procedure TACBrNFCeTestForm.ConsultarCEP;
@@ -2036,6 +2073,8 @@ begin
 end;
 
 function TACBrNFCeTestForm.ValidarEditsCertificado(const URL, PFX, Pass: String): Boolean;
+var
+ sArqPfx: String;
 begin
   Result := not Pass.IsEmpty;
   if Result then
@@ -2043,7 +2082,14 @@ begin
     if (not URL.IsEmpty) then
       Result := (not PFX.IsEmpty)   // Precisa do PFX, para Cache Local
     else
-      Result := (not PFX.IsEmpty) and FileExists(PFX);
+    begin
+      if (ExtractFilePath(PFX) = '') then
+        sArqPfx := ApplicationPath + PFX
+      else
+        sArqPfx := PFX;
+
+      Result := (not PFX.IsEmpty) and FileExists(sArqPfx);
+    end;
   end;
 end;
 

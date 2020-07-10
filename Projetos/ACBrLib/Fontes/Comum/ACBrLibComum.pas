@@ -159,11 +159,14 @@ function StringToB64Crypt(AString: String; AChave: AnsiString = ''): String;
 function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
 
 function StringEhXML(AString: String): Boolean;
+function StringEhINI(AString: String): Boolean;
 function StringEhArquivo(AString: String): Boolean;
 {%endregion}
 
+{$IFNDEF MT}
 var
   pLib: PLibHandle;
+{$ENDIF}
 
 implementation
 
@@ -761,11 +764,5 @@ begin
     (pos('<', AString) = 0) and
     (pos('=', AString) = 0);
 end;
-
-initialization
-  pLib := nil;
-
-finalization
-  LiberarLib(pLib);
 
 end.

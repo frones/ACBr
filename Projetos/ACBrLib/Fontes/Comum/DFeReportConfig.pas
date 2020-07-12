@@ -264,7 +264,7 @@ end;
 
 procedure TDFeReportConfig<T>.Apply(const DFeReport: T; const Lib: TACBrLib);
 begin
-  if not Assigned(DFeReport) or (DFeReport = nil) then Exit;
+  if not Assigned(DFeReport) then Exit;
 
   DFeReport.PathPDF := FPathPDF;
   DFeReport.UsaSeparadorPathPDF := FUsaSeparadorPathPDF;

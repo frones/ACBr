@@ -381,7 +381,7 @@ end;
 procedure TACBrTEFDIdentificacao.SetSoftwareHouse(AValue: String);
 begin
    if FSoftwareHouse=AValue then Exit;
-   FSoftwareHouse := LeftStr(Trim(AValue),8);
+   FSoftwareHouse := Trim(AValue);
 end;
 
 procedure TACBrTEFDIdentificacao.SetNomeAplicacao(AValue: String);

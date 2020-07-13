@@ -688,7 +688,7 @@ begin
 
     opmDestaqueVia:
       begin
-        OldMensagem := lMensagemOperador.Caption ;
+        OldMensagem := lMensagemOperador.Caption;
         try
           { Aguardando 3 segundos }
           Fim := IncSecond(now, 3)  ;
@@ -1763,7 +1763,7 @@ begin
   ACBrTEFD1.SuportaDesconto := cbSuportaDesconto.Checked;
   ACBrTEFD1.SuportaSaque := cbSuportaSaque.Checked;
 
-  ACBrTEFD1.Identificacao.RazaoSocial := edRazaoSocial.Text;
+  ACBrTEFD1.Identificacao.SoftwareHouse := edRazaoSocial.Text;
   ACBrTEFD1.Identificacao.RegistroCertificacao := edRegistro.Text;
   ACBrTEFD1.Identificacao.NomeAplicacao := edAplicacaoNome.Text;
   ACBrTEFD1.Identificacao.VersaoAplicacao := edAplicacaoVersao.Text;

@@ -379,6 +379,7 @@ begin
     end;
 
     fpQtdLinhasComprovante := max(fpImagemComprovante1aVia.Count, fpImagemComprovante2aVia.Count);
+    fpConfirmar := (fpQtdLinhasComprovante > 0);
 
     // leitura de parcelas conforme nova documentação
     // 141 e 142 foram removidos em Setembro de 2014

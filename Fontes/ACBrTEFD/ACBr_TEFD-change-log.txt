@@ -47,6 +47,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/07/2020
+-- ACBrTEFDCliSitef --
+[*] Ajuste em "TACBrTEFDCliSiTef.ContinuarRequisicao", para processar os comandos 50 e 51
+    https://www.projetoacbr.com.br/forum/topic/55962-o-acbr-j%C3%A1-esta-preparado-p-receber-pagamento-via-qrcode/?do=findComment&comment=383758
+    (por: tiagok)
+
 -- ACBrTEFCliSiTefComum --
 [-] Ajuste para que "TACBrTEFResp.Confirmar" seja ligadao, quando houver
     comprovantes a serem impressos

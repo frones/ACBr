@@ -1000,6 +1000,16 @@ begin
                      BloquearMouseTeclado(True);
                    end;
 
+                 50 :
+                   begin
+                     MensagemOperador := 'QRCODE=' + ProcessaMensagemTela( Mensagem );
+                     DoExibeMsg( opmExibirMsgOperador, MensagemOperador, (TipoCampo=584) ) ;
+                   end;
+                   
+                 51 :
+                   begin
+                     DoExibeMsg( opmRemoverMsgOperador, '' ) ;
+                   end;
               end;
             end
             else

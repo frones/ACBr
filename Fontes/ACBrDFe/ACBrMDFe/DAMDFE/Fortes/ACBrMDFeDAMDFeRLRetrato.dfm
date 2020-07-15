@@ -1925,6 +1925,15 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Center = True
         Scaled = True
       end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 713
+        Top = 176
+        Width = 25
+        Height = 17
+        Info = itPageNumber
+        Text = ''
+        Visible = False
+      end
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter

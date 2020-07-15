@@ -175,6 +175,7 @@ type
     rllMsg2: TRLLabel;
     RLDraw18: TRLDraw;
     RLDraw19: TRLDraw;
+    RLSystemInfo2: TRLSystemInfo;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -194,7 +195,6 @@ type
   private
     { Private declarations }
     FNumItem: Integer;
-    FTotalPages: integer;
   end;
 
 implementation
@@ -608,7 +608,8 @@ begin
   inherited;
 
   nItemControle := 0;
-  FTotalPages   := 1;
+
+  RLMDFe.FirstPageNumber := 1;
   RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
 
   TDFeReportFortes.AjustarMargem(RLMDFe, fpDAMDFe);
@@ -695,7 +696,6 @@ begin
 
   Eof := (RecNo > 1);
   RecordAction := raUseIt;
-  rlb_6_Observacao.Visible := Eof;
 end;
 
 procedure TfrlDAMDFeRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
@@ -711,7 +711,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 begin
   inherited;
-
+  rlb_6_Observacao.Visible := RLMDFe.PageNumber = 1 ;
   rlmChave1.Lines.Clear;
   rlmChave2.Lines.Clear;
 end;
@@ -735,7 +735,7 @@ begin
   begin
     rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
 
-    LinhaDivisoria.Left := (rlbMunicipio.Width div 2) - 30;
+    LinhaDivisoria.Left := (rlbMunicipio.Width div 2) ;
 
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do

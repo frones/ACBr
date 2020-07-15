@@ -24,11 +24,12 @@ object frPOSTEFServer: TfrPOSTEFServer
     TabIndex = 1
     TabOrder = 0
     object tsMenuPrincipal: TTabSheet
-      Caption = 'tsMenuPrincipal'
+      Caption = 'Menu Principal'
       ClientHeight = 381
       ClientWidth = 782
+      ImageIndex = 1
       object btOperacao: TBitBtn
-        Left = 316
+        Left = 66
         Height = 112
         Top = 208
         Width = 168
@@ -40,7 +41,7 @@ object frPOSTEFServer: TfrPOSTEFServer
         TabOrder = 0
       end
       object btConfiguracao: TBitBtn
-        Left = 66
+        Left = 316
         Height = 112
         Top = 208
         Width = 168
@@ -6088,10 +6089,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Height = 344
           Top = 0
           Width = 782
-          ActivePage = tsConfSAT
+          ActivePage = tsConfEMail
           Align = alClient
           Images = ImageList1
-          TabIndex = 3
+          TabIndex = 4
           TabOrder = 0
           object tsConfPosTef: TTabSheet
             Caption = 'POS TEF'
@@ -6159,11 +6160,11 @@ object frPOSTEFServer: TfrPOSTEFServer
               Left = 16
               Height = 120
               Top = 160
-              Width = 659
+              Width = 740
               Anchors = [akTop, akLeft, akRight]
               Caption = 'Software House e Aplicação'
               ClientHeight = 100
-              ClientWidth = 655
+              ClientWidth = 736
               TabOrder = 5
               object Label14: TLabel
                 Left = 8
@@ -6177,7 +6178,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 8
                 Height = 23
                 Top = 16
-                Width = 524
+                Width = 605
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 0
                 Text = 'PROJETO ACBR'
@@ -6194,13 +6195,13 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 8
                 Height = 23
                 Top = 64
-                Width = 524
+                Width = 605
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 2
                 Text = 'POSTEFServer'
               end
               object Label18: TLabel
-                Left = 548
+                Left = 629
                 Height = 15
                 Top = 0
                 Width = 43
@@ -6209,7 +6210,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 ParentColor = False
               end
               object edRegistro: TEdit
-                Left = 548
+                Left = 629
                 Height = 23
                 Top = 16
                 Width = 96
@@ -6218,7 +6219,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Text = '123456'
               end
               object Label19: TLabel
-                Left = 548
+                Left = 629
                 Height = 15
                 Top = 48
                 Width = 34
@@ -6227,7 +6228,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 ParentColor = False
               end
               object edAplicacaoVersao: TEdit
-                Left = 548
+                Left = 629
                 Height = 23
                 Top = 64
                 Width = 96
@@ -6282,13 +6283,13 @@ object frPOSTEFServer: TfrPOSTEFServer
               Left = 16
               Height = 23
               Top = 120
-              Width = 402
+              Width = 483
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 8
               Text = 'CONECTADO  a ACBrPOS TEF Server'
             end
             object cbTipoAplicacao: TComboBox
-              Left = 442
+              Left = 523
               Height = 23
               Top = 120
               Width = 233
@@ -6304,7 +6305,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               Text = 'Recebimento na Entrega (Delivery)'
             end
             object Label20: TLabel
-              Left = 443
+              Left = 524
               Height = 15
               Top = 104
               Width = 113
@@ -6319,7 +6320,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             ClientWidth = 774
             ImageIndex = 14
             object pConfEmissor: TPanel
-              Left = 57
+              Left = 97
               Height = 258
               Top = 32
               Width = 568
@@ -7016,7 +7017,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 14
                 Height = 23
                 Top = 60
-                Width = 185
+                Width = 183
                 Anchors = [akTop, akLeft, akRight]
                 OnChange = edtCertArqPFXChange
                 TabOrder = 1
@@ -7025,7 +7026,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 14
                 Height = 23
                 Top = 144
-                Width = 209
+                Width = 183
                 Anchors = [akTop, akLeft, akRight]
                 EchoMode = emPassword
                 OnChange = edtCertURLPFXChange
@@ -7075,6 +7076,33 @@ object frPOSTEFServer: TfrPOSTEFServer
                 ImageIndex = 20
                 OnClick = btCertInfoClick
                 TabOrder = 4
+              end
+              object sbVerSenhaCertificado: TSpeedButton
+                Left = 200
+                Height = 23
+                Top = 144
+                Width = 23
+                AllowAllUp = True
+                Anchors = [akTop, akRight]
+                Flat = True
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                  3BB33773333773333773B333333B3333333B7333333733333337
+                }
+                GroupIndex = 1
+                Images = ImageList1
+                ImageIndex = 23
+                OnClick = sbVerSenhaCertificadoClick
               end
             end
             object GroupBox4: TGroupBox
@@ -7321,7 +7349,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 128
                 Height = 23
                 Top = 58
-                Width = 98
+                Width = 74
                 Anchors = [akTop, akRight]
                 EchoMode = emPassword
                 PasswordChar = '*'
@@ -7335,6 +7363,33 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Anchors = [akTop, akRight]
                 MaxValue = 999999
                 TabOrder = 3
+              end
+              object sbVerSenhaProxy: TSpeedButton
+                Left = 204
+                Height = 23
+                Top = 58
+                Width = 23
+                AllowAllUp = True
+                Anchors = [akTop, akRight]
+                Flat = True
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                  3BB33773333773333773B333333B3333333B7333333733333337
+                }
+                GroupIndex = 1
+                Images = ImageList1
+                ImageIndex = 23
+                OnClick = sbVerSenhaProxyClick
               end
             end
             object GroupBox2: TGroupBox
@@ -7596,103 +7651,298 @@ object frPOSTEFServer: TfrPOSTEFServer
             ClientHeight = 316
             ClientWidth = 774
             ImageIndex = 11
-            object Label48: TLabel
+            object gEmailConta: TGroupBox
               Left = 8
-              Height = 15
-              Top = 8
-              Width = 76
-              Caption = 'Servidor SMTP'
-              ParentColor = False
-            end
-            object Label49: TLabel
-              Left = 206
-              Height = 15
-              Top = 8
-              Width = 28
-              Caption = 'Porta'
-              ParentColor = False
-            end
-            object Label50: TLabel
-              Left = 8
-              Height = 15
-              Top = 48
-              Width = 40
-              Caption = 'Usuário'
-              ParentColor = False
-            end
-            object Label53: TLabel
-              Left = 137
-              Height = 15
-              Top = 48
-              Width = 32
-              Caption = 'Senha'
-              ParentColor = False
-            end
-            object Label54: TLabel
-              Left = 8
-              Height = 15
-              Top = 88
-              Width = 137
-              Caption = 'Assunto do email enviado'
-              ParentColor = False
-            end
-            object Label55: TLabel
-              Left = 8
-              Height = 15
-              Top = 160
-              Width = 108
-              Caption = 'Mensagem do Email'
-              ParentColor = False
-            end
-            object edtSmtpHost: TEdit
-              Left = 8
-              Height = 23
-              Top = 24
-              Width = 193
+              Height = 256
+              Top = 16
+              Width = 496
+              Anchors = []
+              Caption = 'Conta de Email'
+              ClientHeight = 236
+              ClientWidth = 492
               TabOrder = 0
+              object cbEmailIdeCharSet: TComboBox
+                Left = 252
+                Height = 23
+                Top = 157
+                Width = 232
+                ItemHeight = 15
+                Style = csDropDownList
+                TabOrder = 8
+              end
+              object lblFrom: TLabel
+                Left = 8
+                Height = 15
+                Top = 1
+                Width = 82
+                Caption = 'Email Remetete'
+                ParentColor = False
+              end
+              object edtEmailFrom: TEdit
+                Left = 8
+                Height = 23
+                Top = 19
+                Width = 232
+                OnChange = edtEmailFromChange
+                TabOrder = 0
+                Text = 'fulano@empresa.com.br'
+              end
+              object lblFromName: TLabel
+                Left = 252
+                Height = 15
+                Top = 1
+                Width = 96
+                Caption = 'Nome Remetente:'
+                ParentColor = False
+              end
+              object edtEmailFromName: TEdit
+                Left = 252
+                Height = 23
+                Top = 19
+                Width = 232
+                OnChange = edtEmailFromChange
+                TabOrder = 1
+                Text = 'Fula do Tal'
+              end
+              object lblHost: TLabel
+                Left = 8
+                Height = 15
+                Top = 46
+                Width = 33
+                Caption = 'SMTP:'
+                ParentColor = False
+              end
+              object edtEmailHost: TEdit
+                Left = 8
+                Height = 23
+                Top = 64
+                Width = 232
+                OnChange = edtEmailFromChange
+                TabOrder = 2
+                Text = 'smtp.empresa.com.br'
+              end
+              object lblPort: TLabel
+                Left = 252
+                Height = 15
+                Top = 46
+                Width = 31
+                Caption = 'Porta:'
+                ParentColor = False
+              end
+              object lblUser: TLabel
+                Left = 8
+                Height = 15
+                Top = 93
+                Width = 33
+                Caption = 'Login:'
+                ParentColor = False
+              end
+              object edtEmailUser: TEdit
+                Left = 8
+                Height = 23
+                Top = 111
+                Width = 232
+                OnChange = edtEmailFromChange
+                TabOrder = 5
+                Text = 'fulano@empresa.com.br'
+              end
+              object lblPassword: TLabel
+                Left = 252
+                Height = 15
+                Top = 93
+                Width = 35
+                Caption = 'Senha:'
+                ParentColor = False
+              end
+              object edtEmailPassword: TEdit
+                Left = 252
+                Height = 23
+                Top = 111
+                Width = 204
+                EchoMode = emPassword
+                OnChange = edtEmailFromChange
+                PasswordChar = '*'
+                TabOrder = 6
+              end
+              object lblDefaultCharset: TLabel
+                Left = 8
+                Height = 15
+                Top = 138
+                Width = 84
+                Caption = 'Default Charset:'
+                ParentColor = False
+              end
+              object cbEmailDefaultCharset: TComboBox
+                Left = 8
+                Height = 23
+                Top = 157
+                Width = 232
+                ItemHeight = 15
+                Style = csDropDownList
+                TabOrder = 7
+              end
+              object lbl1: TLabel
+                Left = 252
+                Height = 15
+                Top = 138
+                Width = 63
+                Caption = 'IDE Charset:'
+                ParentColor = False
+              end
+              object seEmailPort: TSpinEdit
+                Left = 252
+                Height = 23
+                Top = 64
+                Width = 74
+                MaxValue = 99999
+                OnChange = edtEmailFromChange
+                TabOrder = 3
+                Value = 587
+              end
+              object gbEmailAutenticacao: TGroupBox
+                Left = 343
+                Height = 48
+                Top = 48
+                Width = 141
+                Caption = 'Tipo Autenticação:'
+                ClientHeight = 28
+                ClientWidth = 137
+                TabOrder = 4
+                object chkEmailTLS: TCheckBox
+                  Left = 24
+                  Height = 19
+                  Top = 0
+                  Width = 38
+                  Caption = 'TLS'
+                  TabOrder = 0
+                end
+                object chkEmailSSL: TCheckBox
+                  Left = 80
+                  Height = 19
+                  Top = 0
+                  Width = 38
+                  Caption = 'SSL'
+                  Checked = True
+                  State = cbChecked
+                  TabOrder = 1
+                end
+              end
+              object imgErrEmail: TImage
+                Left = 272
+                Height = 16
+                Top = 204
+                Width = 16
+                Visible = False
+              end
+              object btEmailTeste: TBitBtn
+                Left = 292
+                Height = 28
+                Top = 197
+                Width = 176
+                Caption = 'Enviar E-Mail Teste'
+                Enabled = False
+                Images = ImageList1
+                ImageIndex = 11
+                OnClick = btEmailTesteClick
+                TabOrder = 10
+              end
+              object lblFrom1: TLabel
+                Left = 8
+                Height = 15
+                Top = 184
+                Width = 132
+                Caption = 'Email Destinatário (Teste)'
+                ParentColor = False
+              end
+              object edtEmailTo: TEdit
+                Left = 8
+                Height = 23
+                Top = 202
+                Width = 232
+                OnChange = edtEmailFromChange
+                TabOrder = 9
+              end
+              object sbVerSenhaEmail: TSpeedButton
+                Left = 461
+                Height = 23
+                Top = 111
+                Width = 23
+                AllowAllUp = True
+                Flat = True
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                  3BB33773333773333773B333333B3333333B7333333733333337
+                }
+                GroupIndex = 1
+                Images = ImageList1
+                ImageIndex = 23
+                OnClick = sbVerSenhaEmailClick
+              end
             end
-            object edtSmtpPort: TEdit
-              Left = 206
-              Height = 23
-              Top = 24
-              Width = 51
+            object gEmailMensagem: TGroupBox
+              Left = 512
+              Height = 256
+              Top = 16
+              Width = 240
+              Caption = 'Mensagem'
+              ClientHeight = 236
+              ClientWidth = 236
               TabOrder = 1
-            end
-            object edtSmtpUser: TEdit
-              Left = 8
-              Height = 23
-              Top = 64
-              Width = 120
-              TabOrder = 2
-            end
-            object edtSmtpPass: TEdit
-              Left = 137
-              Height = 23
-              Top = 64
-              Width = 120
-              TabOrder = 3
-            end
-            object edtEmailAssunto: TEdit
-              Left = 8
-              Height = 23
-              Top = 104
-              Width = 249
-              TabOrder = 4
-            end
-            object cbEmailSSL: TCheckBox
-              Left = 10
-              Height = 19
-              Top = 136
-              Width = 167
-              Caption = 'SMTP exige conexão segura'
-              TabOrder = 5
-            end
-            object mmEmailMsg: TMemo
-              Left = 8
-              Height = 130
-              Top = 176
-              Width = 249
-              TabOrder = 6
+              object lblFrom2: TLabel
+                Left = 8
+                Height = 15
+                Top = 1
+                Width = 43
+                Caption = 'Assunto'
+                ParentColor = False
+              end
+              object edtEmailAssunto: TEdit
+                Left = 8
+                Height = 23
+                Top = 19
+                Width = 221
+                Anchors = [akTop, akLeft, akRight]
+                OnChange = edtEmailFromChange
+                TabOrder = 0
+                Text = 'NF-e emitida pela empresa [EmitFantasia]'
+              end
+              object lblFrom3: TLabel
+                Left = 8
+                Height = 15
+                Top = 46
+                Width = 59
+                Caption = 'Mensagem'
+                ParentColor = False
+              end
+              object mEmailMensagem: TMemo
+                Left = 8
+                Height = 161
+                Top = 64
+                Width = 221
+                Anchors = [akTop, akLeft, akRight, akBottom]
+                Lines.Strings = (
+                  'Você está recebendo uma NFC-e.'
+                  ''
+                  'Emitida pela empresa [EmitFantasia] '
+                  'Data de Emissão [dEmissao] '
+                  'Chave de acesso: [ChaveDFe]'
+                  ''
+                  'XML está em anexo'
+                )
+                ScrollBars = ssAutoBoth
+                TabOrder = 1
+                WordWrap = False
+              end
             end
           end
         end
@@ -7723,7 +7973,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             Width = 136
             Caption = 'Ler Parâmetros'
             Images = ImageList1
-            ImageIndex = 3
+            ImageIndex = 22
             OnClick = btLerParametrosClick
             TabOrder = 1
           end
@@ -7751,11 +8001,11 @@ object frPOSTEFServer: TfrPOSTEFServer
         Left = 0
         Height = 381
         Top = 0
-        Width = 774
+        Width = 782
         Align = alClient
         BevelOuter = bvNone
         ClientHeight = 381
-        ClientWidth = 774
+        ClientWidth = 782
         TabOrder = 0
         object pTerminais: TPanel
           Left = 0
@@ -7802,16 +8052,16 @@ object frPOSTEFServer: TfrPOSTEFServer
           Left = 216
           Height = 347
           Top = 0
-          Width = 558
+          Width = 566
           Align = alClient
           ClientHeight = 347
-          ClientWidth = 558
+          ClientWidth = 566
           TabOrder = 1
           object mLog: TMemo
             Left = 4
             Height = 324
             Top = 19
-            Width = 550
+            Width = 558
             Align = alClient
             BorderSpacing.Around = 3
             ReadOnly = True
@@ -7823,7 +8073,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             Left = 1
             Height = 15
             Top = 1
-            Width = 556
+            Width = 564
             Align = alTop
             Caption = 'Log das Operações'
             ParentColor = False
@@ -7839,10 +8089,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Left = 0
           Height = 34
           Top = 347
-          Width = 774
+          Width = 782
           Align = alBottom
           ClientHeight = 34
-          ClientWidth = 774
+          ClientWidth = 782
           TabOrder = 3
           object btLimparLog: TBitBtn
             Left = 232
@@ -7856,7 +8106,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             TabOrder = 0
           end
           object btVoltar2: TBitBtn
-            Left = 648
+            Left = 656
             Height = 28
             Top = 2
             Width = 100
@@ -7868,12 +8118,13 @@ object frPOSTEFServer: TfrPOSTEFServer
             TabOrder = 1
           end
           object btIniciarParaServidor: TBitBtn
-            Left = 40
+            Left = 41
             Height = 28
             Top = 2
             Width = 136
             Anchors = [akTop]
             Caption = 'Iniciar Servidor'
+            Default = True
             Images = ImageList1
             ImageIndex = 8
             OnClick = btIniciarParaServidorClick
@@ -7921,7 +8172,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     Left = 320
     Top = 376
     Bitmap = {
-      4C69160000001000000010000000000000000000000000000000000000110000
+      4C69180000001000000010000000000000000000000000000000000000110000
       00330000002E0000001100000000000000000000000000000000000000000000
       00000000000000000000000000000000000000000000000000000000006E0000
       00FD000000FF000000DD0000006B000000030000000000000000000000000000
@@ -8025,21 +8276,21 @@ object frPOSTEFServer: TfrPOSTEFServer
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000C00000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000001000000000000000000000000000000000000000000000
-      00100000004A000000840000009B000000920000005E0000001E000000000000
-      00000000003F0000008F00000000000000000000000000000000000000480000
-      00D0000000FC000000FE000000F6000000FB000000FF000000E4000000780000
-      0042000000E4000000AA0000000000000000000000000000005F000000F20000
-      00EE0000007F0000002E000000190000002100000064000000D9000000FD0000
-      00F4000000FF000000AA00000000000000000000003A000000F1000000D90000
-      0021000000000000000000000000000000000000000000000053000000F80000
-      00FF000000FF000000AA0000000000000005000000B1000000F2000000380000
-      00000000000000000000000000000000000000000048000000EA000000FF0000
-      00FF000000FF000000AA0000000000000003000000510000006F000000030000
-      00000000000000000000000000000000001400000094000000AA000000AA0000
-      00AA000000AA0000007100000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000008900000037000000000000
+      00010000002100000062000000930000009B00000081000000470000000D0000
+      000000000000000000000000000000000000000000AA000000DF0000003C0000
+      0080000000E7000000FF000000FD000000F6000000FF000000FB000000CA0000
+      004000000000000000000000000000000000000000AA000000FF000000F30000
+      00FE000000D30000006000000021000000190000003100000086000000F20000
+      00F000000055000000000000000000000000000000AA000000FF000000FF0000
+      00F6000000480000000000000000000000000000000000000000000000290000
+      00E0000000ED000000310000000000000000000000AA000000FF000000FF0000
+      00FF000000E40000003F00000000000000000000000000000000000000000000
+      0042000000F7000000A6000000040000000000000071000000AA000000AA0000
+      00AA000000AA0000008F00000010000000000000000000000000000000000000
+      0005000000740000004B00000003000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -8623,6 +8874,70 @@ object frPOSTEFServer: TfrPOSTEFServer
       00AC000000F3000000D2000000B0000000B1000000D5000000F2000000A40000
       0013000000000000000000000000000000000000000000000000000000000000
       0005000000390000007F000000A4000000A20000007B00000036000000030000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000001000000000000000000000000000000000000000000000
+      00100000004A000000840000009B000000920000005E0000001E000000000000
+      00000000003F0000008F00000000000000000000000000000000000000480000
+      00D0000000FC000000FE000000F6000000FB000000FF000000E4000000780000
+      0042000000E4000000AA0000000000000000000000000000005F000000F20000
+      00EE0000007F0000002E000000190000002100000064000000D9000000FD0000
+      00F4000000FF000000AA00000000000000000000003A000000F1000000D90000
+      0021000000000000000000000000000000000000000000000053000000F80000
+      00FF000000FF000000AA0000000000000005000000B1000000F2000000380000
+      00000000000000000000000000000000000000000048000000EA000000FF0000
+      00FF000000FF000000AA0000000000000003000000510000006F000000030000
+      00000000000000000000000000000000001400000094000000AA000000AA0000
+      00AA000000AA0000007100000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000007000000070000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      002A0000008D000000CF000000E6000000E5000000CC00000088000000250000
+      000000000000000000000000000000000000000000000000000D000000890000
+      00FC000000FF000000ED000000C2000000C4000000EF000000FF000000FA0000
+      00800000000A0000000000000000000000000000000E000000AB000000FE0000
+      00FF000000BB000000260000000C0000000B0000002B000000C3000000FF0000
+      00FE000000A10000000B000000000000000200000084000000FE000000FF0000
+      00EA000000220000004F000000CE000000CB000000460000002B000000EF0000
+      00FF000000FC000000780000000100000027000000F2000000FF000000FF0000
+      00B600000010000000D3000000FF000000FF000000CB0000000B000000C40000
+      00FF000000FF000000EC0000001F0000002B000000F4000000FF000000FF0000
+      00B400000012000000D5000000FF000000FF000000CE0000000C000000C10000
+      00FF000000FF000000EF00000023000000030000008D000000FE000000FF0000
+      00E80000001D0000005A000000D5000000D30000004F00000026000000ED0000
+      00FF000000FD00000081000000020000000000000011000000B5000000FF0000
+      00FF000000B20000001D000000120000001000000022000000BB000000FF0000
+      00FE000000AB0000000D00000000000000000000000000000011000000970000
+      00FF000000FF000000E8000000B4000000B6000000EA000000FF000000FD0000
+      008E0000000D0000000000000000000000000000000000000000000000000000
+      00360000009B000000DA000000E9000000E9000000D700000096000000300000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000300000012000000110000000300000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000

@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   StdCtrls, Spin, Buttons, Grids, DBGrids, Menus, ACBrTEFPayGoComum, ACBrPOS,
   ACBrPOSPGWebAPI, ACBrPosPrinter, ACBrMail, ACBrConsultaCNPJ, ACBrCEP,
-  ACBrIBGE, ACBrNFe, ACBrNFeDANFeESCPOS;
+  ACBrIBGE, synachar, ACBrNFe, ACBrNFeDANFeESCPOS;
 
 type
   TItemPedido = record
@@ -73,6 +73,7 @@ type
     ACBrPOS1: TACBrPOS;
     ACBrPosPrinter1: TACBrPosPrinter;
     btConfiguracao: TBitBtn;
+    btEmailTeste: TBitBtn;
     btOperacao: TBitBtn;
     btStatusServico: TBitBtn;
     btVoltar2: TBitBtn;
@@ -83,7 +84,8 @@ type
     btVoltar: TBitBtn;
     btSalvarParametros: TBitBtn;
     cbCryptLib: TComboBox;
-    cbEmailSSL: TCheckBox;
+    cbEmailDefaultCharset: TComboBox;
+    cbEmailIdeCharSet: TComboBox;
     cbHttpLib: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
     cbSSLLib: TComboBox;
@@ -101,6 +103,8 @@ type
     cbxIndRatISSQN: TComboBox;
     cbxRegTribISSQN: TComboBox;
     cbxUTF8: TCheckBox;
+    chkEmailSSL: TCheckBox;
+    chkEmailTLS: TCheckBox;
     edAplicacaoNome: TEdit;
     edAplicacaoVersao: TEdit;
     edLog: TEdit;
@@ -111,7 +115,13 @@ type
     edtCertArqPFX: TEdit;
     edtCodigoAtivacao: TEdit;
     edtCodUF: TEdit;
+    edtEmailFrom: TEdit;
     edtEmailAssunto: TEdit;
+    edtEmailFromName: TEdit;
+    edtEmailHost: TEdit;
+    edtEmailPassword: TEdit;
+    edtEmailTo: TEdit;
+    edtEmailUser: TEdit;
     edtEmitBairro: TEdit;
     edtEmitCEP: TEdit;
     edtEmitCNPJ: TEdit;
@@ -119,29 +129,38 @@ type
     edtCertSenha: TEdit;
     edtCertURLPFX: TEdit;
     edtPathSchemas: TEdit;
-    edtSmtpHost: TEdit;
-    edtSmtpPass: TEdit;
-    edtSmtpPort: TEdit;
-    edtSmtpUser: TEdit;
     edtSwHAssinatura: TEdit;
     edtSwHCNPJ: TEdit;
     edtTokenID: TEdit;
     edtProxyHost: TEdit;
+    gbEmailAutenticacao: TGroupBox;
+    gEmailMensagem: TGroupBox;
     Image1: TImage;
     Image2: TImage;
+    imgErrEmail: TImage;
     imgErrWebService: TImage;
     imgErrPathSchemas: TImage;
     Label46: TLabel;
     Label47: TLabel;
-    Label48: TLabel;
-    Label49: TLabel;
-    Label50: TLabel;
-    Label53: TLabel;
-    Label54: TLabel;
-    Label55: TLabel;
     Label6: TLabel;
-    mmEmailMsg: TMemo;
+    lbl1: TLabel;
+    lblDefaultCharset: TLabel;
+    lblFrom: TLabel;
+    lblFrom1: TLabel;
+    lblFrom2: TLabel;
+    lblFrom3: TLabel;
+    lblFromName: TLabel;
+    lblHost: TLabel;
+    lblPassword: TLabel;
+    lblPort: TLabel;
+    lblUser: TLabel;
+    gEmailConta: TGroupBox;
+    mEmailMensagem: TMemo;
     rgTipoAmb: TComboBox;
+    sbVerSenhaCertificado: TSpeedButton;
+    sbVerSenhaEmail: TSpeedButton;
+    sbVerSenhaProxy: TSpeedButton;
+    seEmailPort: TSpinEdit;
     seProxyPorta: TSpinEdit;
     edtProxySenha: TEdit;
     edtProxyUser: TEdit;
@@ -271,6 +290,7 @@ type
     procedure ACBrPOS1NovaConexao(const TerminalId: String; const Model: String;
       const MAC: String; const SerNo: String);
     procedure btConfiguracaoClick(Sender: TObject);
+    procedure btEmailTesteClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
     procedure btVoltar2Click(Sender: TObject);
     procedure btIniciarParaServidorClick(Sender: TObject);
@@ -290,6 +310,7 @@ type
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure edtCertArqPFXChange(Sender: TObject);
     procedure edtCertNumSerieChange(Sender: TObject);
+    procedure edtEmailFromChange(Sender: TObject);
     procedure edtEmitCEPChange(Sender: TObject);
     procedure edtEmitCEPExit(Sender: TObject);
     procedure edtEmitCNPJChange(Sender: TObject);
@@ -309,6 +330,9 @@ type
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnNumSerieClick(Sender: TObject);
+    procedure sbVerSenhaCertificadoClick(Sender: TObject);
+    procedure sbVerSenhaEmailClick(Sender: TObject);
+    procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
   private
     fPedidos: TPedidos;
@@ -322,10 +346,12 @@ type
     function EstadoTerminal(AEstado: TACBrPOSPGWebEstadoTerminal): String;
     procedure ValidarConfigCertificado;
     procedure ValidarConfigWebService;
+    procedure ValidarConfigEmail;
 
     procedure LigarAlertasdeErrosDeConfiguracao;
     procedure ConfigurarACBrNFe;
     procedure ConfigurarACBrPOS;
+    procedure ConfigurarACBrMail;
 
   protected
     procedure IrParaMenuPrincipal;
@@ -334,6 +360,7 @@ type
     procedure IniciarServidorPOS;
     procedure PararServidorPOS;
 
+    function SubstituirVariaveisEmail(const AText: String): String;
     procedure CarregarListaDeCidades(cUF: Integer);
 
     procedure ExecutarFluxoEntrega(const TerminalId: String);
@@ -382,6 +409,7 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  E: TMimeChar;
 begin
   fcUF := 0;
   fcMunList := TStringList.Create;
@@ -423,6 +451,13 @@ begin
     cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
   cbSSLType.ItemIndex := 0;
 
+  cbEmailDefaultCharset.Items.Clear;
+  for E := Low(TMailCharset) to High(TMailCharset) do
+    cbEmailDefaultCharset.Items.Add(GetEnumName(TypeInfo(TMailCharset), integer(E)));
+  cbEmailDefaultCharset.ItemIndex := 0;
+  cbEmailIdeCharSet.Items.Assign(cbEmailDefaultCharset.Items);
+  cbEmailIdeCharSet.ItemIndex := 0;
+
   LerConfiguracao;
   Application.OnException := @TratarException;
 
@@ -443,6 +478,7 @@ begin
   ImageList1.GetBitmap(16, imgErrTokenID.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrTokenCSC.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrPathSchemas.Picture.Bitmap);
+  ImageList1.GetBitmap(16, imgErrEmail.Picture.Bitmap);
 end;
 
 procedure TfrPOSTEFServer.FormDestroy(Sender: TObject);
@@ -604,6 +640,11 @@ begin
   ValidarConfigCertificado;
 end;
 
+procedure TfrPOSTEFServer.edtEmailFromChange(Sender: TObject);
+begin
+  ValidarConfigEmail;
+end;
+
 procedure TfrPOSTEFServer.edtEmitCEPChange(Sender: TObject);
 begin
   if (Length(edtEmitCEP.Text) > 5) then
@@ -750,6 +791,18 @@ end;
 procedure TfrPOSTEFServer.btConfiguracaoClick(Sender: TObject);
 begin
   IrParaConfiguracao;
+end;
+
+procedure TfrPOSTEFServer.btEmailTesteClick(Sender: TObject);
+begin
+  ConfigurarACBrMail;
+
+  ACBrMail1.Clear;
+  ACBrMail1.IsHTML := False;
+  ACBrMail1.Subject := SubstituirVariaveisEmail(edtEmailAssunto.Text);
+  ACBrMail1.AltBody.Text := SubstituirVariaveisEmail(mEmailMensagem.Lines.Text);
+  ACBrMail1.AddAddress(edtEmailTo.Text);
+  ACBrMail1.Send;
 end;
 
 procedure TfrPOSTEFServer.btOperacaoClick(Sender: TObject);
@@ -959,6 +1012,30 @@ begin
   finally
     frmSelecionarCertificado.Free;
   end;
+end;
+
+procedure TfrPOSTEFServer.sbVerSenhaCertificadoClick(Sender: TObject);
+begin
+  if sbVerSenhaCertificado.Down then
+    edtCertSenha.EchoMode := emNormal
+  else
+    edtCertSenha.EchoMode := emPassword;
+end;
+
+procedure TfrPOSTEFServer.sbVerSenhaEmailClick(Sender: TObject);
+begin
+  if sbVerSenhaEmail.Down then
+    edtEmailPassword.EchoMode := emNormal
+  else
+    edtEmailPassword.EchoMode := emPassword;
+end;
+
+procedure TfrPOSTEFServer.sbVerSenhaProxyClick(Sender: TObject);
+begin
+  if sbVerSenhaProxy.Down then
+    edtProxySenha.EchoMode := emNormal
+  else
+    edtProxySenha.EchoMode := emPassword;
 end;
 
 procedure TfrPOSTEFServer.spPathSchemasClick(Sender: TObject);
@@ -1621,6 +1698,7 @@ procedure TfrPOSTEFServer.LerConfiguracao;
 Var
   Ini : TIniFile ;
   cUF: LongInt;
+  bs: String;
 begin
   AdicionarLinhaLog('- LerConfiguracao');
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
@@ -1683,6 +1761,20 @@ begin
     seProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
     edtProxyUser.Text := Ini.ReadString('Proxy', 'User', '');
     edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass', '');
+
+    edtEmailFrom.Text := Ini.ReadString('Email', 'From', edtEmailFrom.Text);
+    edtEmailFromName.Text := Ini.ReadString('Email', 'FromName', edtEmailFromName.Text);
+    edtEmailHost.Text := Ini.ReadString('Email', 'Host', edtEmailHost.Text);
+    seEmailPort.Text := Ini.ReadString('Email', 'Port', seEmailPort.Text);
+    edtEmailUser.Text := Ini.ReadString('Email', 'User', edtEmailUser.Text);
+    edtEmailPassword.Text := Ini.ReadString('Email', 'Pass', edtEmailPassword.Text);
+    chkEmailTLS.Checked := Ini.ReadBool('Email', 'TLS', chkEmailTLS.Checked);
+    chkEmailSSL.Checked := Ini.ReadBool('Email', 'SSL', chkEmailSSL.Checked);
+    cbEmailDefaultCharset.ItemIndex := Ini.ReadInteger('Email', 'DefaultCharset', Integer(ACBrMail1.DefaultCharset));
+    cbEmailIdeCharSet.ItemIndex := Ini.ReadInteger('Email', 'IdeCharset', Integer(ACBrMail1.IDECharset));
+    edtEmailAssunto.Text := Ini.ReadString('Email', 'Assunto', edtEmailAssunto.Text);
+    bs := BinaryStringToString(mEmailMensagem.Lines.Text);
+    mEmailMensagem.Lines.Text := StringToBinaryString(Ini.ReadString('Email', 'Mensagem', bs) );
   finally
      Ini.Free ;
   end ;
@@ -1761,6 +1853,19 @@ begin
     Ini.WriteString('Proxy', 'Porta', seProxyPorta.Text);
     Ini.WriteString('Proxy', 'User',  edtProxyUser.Text);
     Ini.WriteString('Proxy', 'Pass',  edtProxySenha.Text);
+
+    Ini.WriteString('Email', 'From', edtEmailFrom.text);
+    Ini.WriteString('Email', 'FromName', edtEmailFromName.text);
+    Ini.WriteString('Email', 'Host', edtEmailHost.text);
+    Ini.WriteString('Email', 'Port', seEmailPort.text);
+    Ini.WriteString('Email', 'User', edtEmailUser.text);
+    Ini.WriteString('Email', 'Pass', edtEmailPassword.text);
+    Ini.WriteBool('Email', 'TLS', chkEmailTLS.Checked);
+    Ini.WriteBool('Email', 'SSL', chkEmailSSL.Checked);
+    Ini.WriteInteger('Email', 'DefaultCharset', cbEmailDefaultCharset.ItemIndex);
+    Ini.WriteInteger('Email', 'IdeCharset', cbEmailIdeCharSet.ItemIndex);
+    Ini.WriteString('Email', 'Assunto', edtEmailAssunto.Text);
+    Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mEmailMensagem.Lines.Text));
   finally
      INI.Free ;
   end ;
@@ -1835,6 +1940,34 @@ begin
   ACBrPOS1.SuportaDesconto := cbSuportaDesconto.Checked;
   ACBrPOS1.SuportaSaque := cbSuportaSaque.Checked;
   ACBrPOS1.UtilizaSaldoTotalVoucher := cbUtilizarSaldoTotalVoucher.Checked;
+end;
+
+procedure TfrPOSTEFServer.ConfigurarACBrMail;
+begin
+  ACBrMail1.From := edtEmailFrom.text;
+  ACBrMail1.FromName := edtEmailFromName.text;
+  ACBrMail1.Host := edtEmailHost.text; // troque pelo seu servidor smtp
+  ACBrMail1.Username := edtEmailUser.text;
+  ACBrMail1.Password := edtEmailPassword.text;
+  ACBrMail1.Port := seEmailPort.text; // troque pela porta do seu servidor smtp
+  ACBrMail1.SetTLS := chkEmailTLS.Checked;
+  ACBrMail1.SetSSL := chkEmailSSL.Checked;  // Verifique se o seu servidor necessita SSL
+  ACBrMail1.DefaultCharset := TMailCharset(cbEmailDefaultCharset.ItemIndex);
+  ACBrMail1.IDECharset := TMailCharset(cbEmailIdeCharSet.ItemIndex);
+end;
+
+function TfrPOSTEFServer.SubstituirVariaveisEmail(const AText: String): String;
+begin
+  Result := AText;
+  if (ACBrNFe1.NotasFiscais.Count > 0) then
+  begin
+    Result := StringReplace(Result, '[EmitFantasia]',
+                           ACBrNFe1.NotasFiscais[0].NFe.Emit.xFant, [rfReplaceAll]);
+    Result := StringReplace(Result, '[dEmissao]',
+                           DateToStr(ACBrNFe1.NotasFiscais[0].NFe.Ide.dEmi), [rfReplaceAll]);
+    Result := StringReplace(Result, '[ChaveDFe]',
+                           ACBrNFe1.NotasFiscais[0].NFe.infNFe.ID, [rfReplaceAll]);
+  end;
 end;
 
 procedure TfrPOSTEFServer.IrParaMenuPrincipal;
@@ -1915,6 +2048,21 @@ begin
                                    imgErrWebService.Visible);
 end;
 
+procedure TfrPOSTEFServer.ValidarConfigEmail;
+var
+  Ok: Boolean;
+begin
+  Ok := (edtEmailFrom.Text <> '') and
+        (edtEmailFromName.Text <> '') and
+        (edtEmailHost.Text <> '') and
+        (seEmailPort.Value > 0) and
+        (edtEmailUser.Text <> '') and
+        (edtEmailPassword.Text <> '');
+
+  imgErrEmail.Visible := not Ok;
+  btEmailTeste.Enabled := Ok and (edtEmailTo.Text <> '');
+end;
+
 procedure TfrPOSTEFServer.LigarAlertasdeErrosDeConfiguracao;
 begin
   edtEmitCNPJChange(Nil);
@@ -1930,6 +2078,8 @@ begin
   ValidarConfigWebService;
   edtTokenCSCChange(Nil);
   edtTokenIDChange(Nil);
+
+  ValidarConfigEmail;
 end;
 
 end.

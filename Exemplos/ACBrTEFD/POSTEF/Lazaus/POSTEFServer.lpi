@@ -58,15 +58,27 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="6">
       <Item1>
-        <PackageName Value="ACBr_TEFD"/>
+        <PackageName Value="ACBrTCP"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrSerial"/>
       </Item2>
+      <Item3>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBr_NFe"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="ACBr_TEFD"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
         <Filename Value="POSTEFServer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -78,6 +90,20 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="FormConsultaCNPJ.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConsultaCNPJ"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="FormSelecionarCertificado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSelecionarCertificado"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

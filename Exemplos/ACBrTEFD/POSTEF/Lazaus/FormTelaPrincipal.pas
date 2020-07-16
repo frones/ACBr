@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   StdCtrls, Spin, Buttons, Grids, DBGrids, Menus, ACBrTEFPayGoComum, ACBrPOS,
   ACBrPOSPGWebAPI, ACBrPosPrinter, ACBrMail, ACBrConsultaCNPJ, ACBrCEP,
-  ACBrIBGE, synachar, ACBrNFe, ACBrNFeDANFeESCPOS;
+  ACBrIBGE, ACBrSAT, synachar, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrSocket, ACBrSATClass, ACBrBase;
 
 type
   TItemPedido = record
@@ -72,10 +72,13 @@ type
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrPOS1: TACBrPOS;
     ACBrPosPrinter1: TACBrPosPrinter;
+    ACBrSAT1: TACBrSAT;
     btConfiguracao: TBitBtn;
     btEmailTeste: TBitBtn;
     btOperacao: TBitBtn;
     btStatusServico: TBitBtn;
+    btStatusOperacionalSAT: TBitBtn;
+    btStatusSAT: TBitBtn;
     btVoltar2: TBitBtn;
     btIniciarParaServidor: TBitBtn;
     btLerParametros: TBitBtn;
@@ -94,27 +97,28 @@ type
     cbSuportaSaque: TCheckBox;
     cbTipoAplicacao: TComboBox;
     cbWebServiceUF: TComboBox;
-    cbxAmbiente: TComboBox;
-    cbXmlSignLib: TComboBox;
-    cbxTipoEmpresa: TComboBox;
-    cbUtilizarSaldoTotalVoucher: TCheckBox;
+    cbSATAmbiente: TComboBox;
     cbxEmitCidade: TComboBox;
     cbxEmitUF: TComboBox;
     cbxIndRatISSQN: TComboBox;
+    cbXmlSignLib: TComboBox;
+    cbUtilizarSaldoTotalVoucher: TCheckBox;
+    cbSATModelo: TComboBox;
     cbxRegTribISSQN: TComboBox;
-    cbxUTF8: TCheckBox;
+    cbxTipoEmpresa: TComboBox;
+    cbEmailDoctoFiscal: TCheckBox;
+    ckSATUTF8: TCheckBox;
     chkEmailSSL: TCheckBox;
     chkEmailTLS: TCheckBox;
     edAplicacaoNome: TEdit;
     edAplicacaoVersao: TEdit;
     edLog: TEdit;
     edMensagemBoasVindas: TEdit;
-    edNomeDLL: TEdit;
+    edtSATDLL: TEdit;
     edRazaoSocial: TEdit;
     edRegistro: TEdit;
     edtCertArqPFX: TEdit;
-    edtCodigoAtivacao: TEdit;
-    edtCodUF: TEdit;
+    edtSATCodigoAtivacao: TEdit;
     edtEmailFrom: TEdit;
     edtEmailAssunto: TEdit;
     edtEmailFromName: TEdit;
@@ -122,89 +126,12 @@ type
     edtEmailPassword: TEdit;
     edtEmailTo: TEdit;
     edtEmailUser: TEdit;
-    edtEmitBairro: TEdit;
-    edtEmitCEP: TEdit;
-    edtEmitCNPJ: TEdit;
     edtCertNumSerie: TEdit;
     edtCertSenha: TEdit;
     edtCertURLPFX: TEdit;
-    edtPathSchemas: TEdit;
-    edtSwHAssinatura: TEdit;
-    edtSwHCNPJ: TEdit;
-    edtTokenID: TEdit;
-    edtProxyHost: TEdit;
-    gbEmailAutenticacao: TGroupBox;
-    gEmailMensagem: TGroupBox;
-    Image1: TImage;
-    Image2: TImage;
-    imgErrEmail: TImage;
-    imgErrWebService: TImage;
-    imgErrPathSchemas: TImage;
-    Label46: TLabel;
-    Label47: TLabel;
-    Label6: TLabel;
-    lbl1: TLabel;
-    lblDefaultCharset: TLabel;
-    lblFrom: TLabel;
-    lblFrom1: TLabel;
-    lblFrom2: TLabel;
-    lblFrom3: TLabel;
-    lblFromName: TLabel;
-    lblHost: TLabel;
-    lblPassword: TLabel;
-    lblPort: TLabel;
-    lblUser: TLabel;
-    gEmailConta: TGroupBox;
-    mEmailMensagem: TMemo;
-    rgTipoAmb: TComboBox;
-    sbVerSenhaCertificado: TSpeedButton;
-    sbVerSenhaEmail: TSpeedButton;
-    sbVerSenhaProxy: TSpeedButton;
-    seEmailPort: TSpinEdit;
-    seProxyPorta: TSpinEdit;
-    edtProxySenha: TEdit;
-    edtProxyUser: TEdit;
-    edtTokenCSC: TEdit;
-    gbCertificado: TGroupBox;
-    gbBibliotecas: TGroupBox;
-    gbProxy: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox4: TGroupBox;
-    GroupBox6: TGroupBox;
-    imgErrCertificado: TImage;
-    imgErrTokenID: TImage;
-    imgErrHttpLib: TImage;
-    imgErrCryptLib: TImage;
-    imgErrSSLLib: TImage;
-    imgErrTokenCSC: TImage;
-    imgErrXmlSignLib: TImage;
-    Label10: TLabel;
-    Label3: TLabel;
-    Label35: TLabel;
-    Label36: TLabel;
-    Label37: TLabel;
-    Label38: TLabel;
-    Label39: TLabel;
-    Label4: TLabel;
-    Label40: TLabel;
-    Label41: TLabel;
-    Label42: TLabel;
-    Label43: TLabel;
-    Label44: TLabel;
-    Label45: TLabel;
-    Label5: TLabel;
-    Label51: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    lCryptLib: TLabel;
-    lHttpLib: TLabel;
-    lSSLLib: TLabel;
-    lSSLLib1: TLabel;
-    lTimeOut: TLabel;
-    lXmlSign: TLabel;
-    OpenDialog1: TOpenDialog;
-    pEmitCodCidade: TPanel;
-    pEmitCodUF: TPanel;
+    edtEmitBairro: TEdit;
+    edtEmitCEP: TEdit;
+    edtEmitCNPJ: TEdit;
     edtEmitComp: TEdit;
     edtEmitFantasia: TEdit;
     edtEmitFone: TEdit;
@@ -213,26 +140,39 @@ type
     edtEmitLogradouro: TEdit;
     edtEmitNumero: TEdit;
     edtEmitRazao: TEdit;
-    GroupBox1: TGroupBox;
-    ImageList1: TImageList;
+    edtPathSchemas: TEdit;
+    edtSATSwHAssinatura: TEdit;
+    edtSATSwHCNPJ: TEdit;
+    edtTokenID: TEdit;
+    edtProxyHost: TEdit;
+    gbEmailAutenticacao: TGroupBox;
+    gConfSAT: TGroupBox;
+    gbSATPagCod: TGroupBox;
+    imgErrSAT: TImage;
+    Label39: TLabel;
+    Label40: TLabel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label44: TLabel;
+    Label45: TLabel;
+    Label5: TLabel;
+    rgDocumentoFiscal: TRadioGroup;
+    gEmailMensagem: TGroupBox;
+    Image1: TImage;
+    Image2: TImage;
     imgErrCEP: TImage;
     imgErrCidade: TImage;
     imgErrCNPJ: TImage;
+    imgErrEmail: TImage;
     imgErrFone: TImage;
     imgErrRazaoSocial: TImage;
     imgErrUF: TImage;
-    Label1: TLabel;
-    Label11: TLabel;
+    imgErrWebService: TImage;
+    imgErrPathSchemas: TImage;
     Label12: TLabel;
     Label13: TLabel;
-    Label14: TLabel;
     Label15: TLabel;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
-    Label2: TLabel;
-    Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
@@ -247,11 +187,83 @@ type
     Label32: TLabel;
     Label33: TLabel;
     Label34: TLabel;
+    Label46: TLabel;
+    Label47: TLabel;
     Label52: TLabel;
+    Label6: TLabel;
+    lbl1: TLabel;
+    lblDefaultCharset: TLabel;
+    lblFrom: TLabel;
+    lblFrom1: TLabel;
+    lblFrom2: TLabel;
+    lblFrom3: TLabel;
+    lblFromName: TLabel;
+    lblHost: TLabel;
+    lblPassword: TLabel;
+    lblPort: TLabel;
+    lblUser: TLabel;
+    gEmailConta: TGroupBox;
+    mEmailMensagem: TMemo;
+    gConfEmissor: TGroupBox;
+    pEmitCodCidade: TPanel;
+    pEmitCodUF: TPanel;
+    rgTipoAmb: TComboBox;
+    sbConsultaCEP: TSpeedButton;
+    sbConsultaCNPJ: TSpeedButton;
+    sbNomeDLL: TSpeedButton;
+    sbVerSenhaCertificado: TSpeedButton;
+    sbVerSenhaEmail: TSpeedButton;
+    sbVerSenhaProxy: TSpeedButton;
+    seEmailPort: TSpinEdit;
+    seSATNumeroCaixa: TSpinEdit;
+    seSATPagCod: TSpinEdit;
+    seProxyPorta: TSpinEdit;
+    edtProxySenha: TEdit;
+    edtProxyUser: TEdit;
+    edtTokenCSC: TEdit;
+    gbCertificado: TGroupBox;
+    gbBibliotecas: TGroupBox;
+    gbProxy: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox4: TGroupBox;
+    imgErrCertificado: TImage;
+    imgErrTokenID: TImage;
+    imgErrHttpLib: TImage;
+    imgErrCryptLib: TImage;
+    imgErrSSLLib: TImage;
+    imgErrTokenCSC: TImage;
+    imgErrXmlSignLib: TImage;
+    Label10: TLabel;
+    Label3: TLabel;
+    Label35: TLabel;
+    Label36: TLabel;
+    Label37: TLabel;
+    Label38: TLabel;
+    Label4: TLabel;
+    Label51: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    lCryptLib: TLabel;
+    lHttpLib: TLabel;
+    lSSLLib: TLabel;
+    lSSLLib1: TLabel;
+    lTimeOut: TLabel;
+    lXmlSign: TLabel;
+    OpenDialog1: TOpenDialog;
+    GroupBox1: TGroupBox;
+    ImageList1: TImageList;
+    Label1: TLabel;
+    Label11: TLabel;
+    Label14: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label2: TLabel;
+    Label20: TLabel;
     Label7: TLabel;
     lURLTEF: TLabel;
     mLog: TMemo;
-    pConfEmissor: TPanel;
     pgConfig: TPageControl;
     pOperacao: TPanel;
     pBotoesOperacao: TPanel;
@@ -261,18 +273,13 @@ type
     pLogs: TPanel;
     pTerminais: TPanel;
     SbArqLog: TSpeedButton;
-    sbConsultaCEP: TSpeedButton;
-    sbConsultaCNPJ: TSpeedButton;
-    sbNomeDLL: TSpeedButton;
     sbtnCaminhoCert: TSpeedButton;
     sbtnGetCert: TSpeedButton;
     sbtnNumSerie: TSpeedButton;
     seMaxConexoes: TSpinEdit;
-    seNumeroCaixa: TSpinEdit;
-    sePagCod: TSpinEdit;
     sePortaTCP: TSpinEdit;
     seTimeOut: TSpinEdit;
-    sfeVersaoEnt: TFloatSpinEdit;
+    seSATVersaoEnt: TFloatSpinEdit;
     sgTerminais: TStringGrid;
     Splitter1: TSplitter;
     spPathSchemas: TSpeedButton;
@@ -284,14 +291,34 @@ type
     tsConfPosTef: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
+    procedure ACBrCEP1AntesAbrirHTTP(var AURL: String);
+    procedure ACBrCEP1BuscaEfetuada(Sender: TObject);
+    procedure ACBrConsultaCNPJ1AntesAbrirHTTP(var AURL: String);
+    procedure ACBrIBGE1AntesAbrirHTTP(var AURL: String);
+    procedure ACBrIBGE1BuscaEfetuada(Sender: TObject);
+    procedure ACBrIBGE1GravarCache(ConteudoCache: TStrings; var Tratado: Boolean
+      );
+    procedure ACBrIBGE1LerCache(ConteudoCache: TStrings; var Tratado: Boolean);
+    procedure ACBrMail1AfterMailProcess(Sender: TObject);
+    procedure ACBrMail1BeforeMailProcess(Sender: TObject);
+    procedure ACBrMail1MailProcess(const AMail: TACBrMail;
+      const aStatus: TMailStatus);
+    procedure ACBrNFe1GerarLog(const ALogLine: String; var Tratado: Boolean);
+    procedure ACBrNFe1StatusChange(Sender: TObject);
     procedure ACBrPOS1GravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrPOS1MudaEstadoTerminal(const TerminalId: String; EstadoAtual,
       EstadoAnterior: TACBrPOSPGWebEstadoTerminal);
     procedure ACBrPOS1NovaConexao(const TerminalId: String; const Model: String;
       const MAC: String; const SerNo: String);
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
+    procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
+    procedure ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
     procedure btConfiguracaoClick(Sender: TObject);
     procedure btEmailTesteClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
+    procedure btStatusOperacionalSATClick(Sender: TObject);
+    procedure btStatusSATClick(Sender: TObject);
     procedure btVoltar2Click(Sender: TObject);
     procedure btIniciarParaServidorClick(Sender: TObject);
     procedure btCertInfoClick(Sender: TObject);
@@ -308,6 +335,7 @@ type
     procedure cbxEmitCidadeChange(Sender: TObject);
     procedure cbxEmitUFChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
+    procedure ckSATUTF8Change(Sender: TObject);
     procedure edtCertArqPFXChange(Sender: TObject);
     procedure edtCertNumSerieChange(Sender: TObject);
     procedure edtEmailFromChange(Sender: TObject);
@@ -317,6 +345,7 @@ type
     procedure edtEmitFoneChange(Sender: TObject);
     procedure edtEmitRazaoChange(Sender: TObject);
     procedure edtPathSchemasChange(Sender: TObject);
+    procedure edtSATDLLChange(Sender: TObject);
     procedure edtTokenCSCChange(Sender: TObject);
     procedure edtTokenIDChange(Sender: TObject);
     procedure edtOnlyNumberKeyPress(Sender: TObject; var Key: char);
@@ -324,15 +353,18 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure lURLTEFClick(Sender: TObject);
+    procedure rgDocumentoFiscalClick(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
     procedure sbConsultaCNPJClick(Sender: TObject);
+    procedure sbNomeDLLClick(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnNumSerieClick(Sender: TObject);
     procedure sbVerSenhaCertificadoClick(Sender: TObject);
     procedure sbVerSenhaEmailClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
+    procedure seSATPagCodChange(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
   private
     fPedidos: TPedidos;
@@ -347,11 +379,16 @@ type
     procedure ValidarConfigCertificado;
     procedure ValidarConfigWebService;
     procedure ValidarConfigEmail;
+    procedure ValidarConfigSAT;
 
     procedure LigarAlertasdeErrosDeConfiguracao;
     procedure ConfigurarACBrNFe;
     procedure ConfigurarACBrPOS;
     procedure ConfigurarACBrMail;
+
+    procedure ConfigurarACBrSAT;
+    procedure AtivarSAT;
+    procedure DesativarSAT;
 
   protected
     procedure IrParaMenuPrincipal;
@@ -394,7 +431,9 @@ implementation
 uses
   IniFiles, math, dateutils, TypInfo,
   FormConsultaCNPJ, FormSelecionarCertificado,
-  ACBrUtil, ACBrValidador, ACBrDFeSSL, pcnConversao, blcksock;
+  ACBrUtil, ACBrValidador, ACBrDFeSSL,
+  pcnConversao, pcnConversaoNFe,
+  blcksock;
 
 {$R *.lfm}
 
@@ -410,6 +449,8 @@ var
   X: TSSLXmlSignLib;
   Y: TSSLType;
   E: TMimeChar;
+  S: TACBrSATModelo;
+  A: TpcnTipoAmbiente;
 begin
   fcUF := 0;
   fcMunList := TStringList.Create;
@@ -458,6 +499,14 @@ begin
   cbEmailIdeCharSet.Items.Assign(cbEmailDefaultCharset.Items);
   cbEmailIdeCharSet.ItemIndex := 0;
 
+  cbSATModelo.Items.Clear ;
+  For S := Low(TACBrSATModelo) to High(TACBrSATModelo) do
+     cbSATModelo.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(S) ) ) ;
+
+  cbSATAmbiente.Items.Clear ;
+  For A := Low(TpcnTipoAmbiente) to High(TpcnTipoAmbiente) do
+     cbSATAmbiente.Items.Add( GetEnumName(TypeInfo(TpcnTipoAmbiente), integer(A) ) ) ;
+
   LerConfiguracao;
   Application.OnException := @TratarException;
 
@@ -479,6 +528,7 @@ begin
   ImageList1.GetBitmap(16, imgErrTokenCSC.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrPathSchemas.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrEmail.Picture.Bitmap);
+  ImageList1.GetBitmap(16, imgErrSAT.Picture.Bitmap);
 end;
 
 procedure TfrPOSTEFServer.FormDestroy(Sender: TObject);
@@ -601,6 +651,12 @@ begin
   end;
 end;
 
+procedure TfrPOSTEFServer.ckSATUTF8Change(Sender: TObject);
+begin
+  ACBrSAT1.Config.EhUTF8 := ckSATUTF8.Checked;
+  seSATPagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
+end;
+
 procedure TfrPOSTEFServer.edtCertURLPFXChange(Sender: TObject);
 begin
 if (edtCertURLPFX.Text <> '') then
@@ -711,6 +767,11 @@ begin
   ValidarConfigWebService;
 end;
 
+procedure TfrPOSTEFServer.edtSATDLLChange(Sender: TObject);
+begin
+  ValidarConfigSAT;
+end;
+
 procedure TfrPOSTEFServer.edtTokenCSCChange(Sender: TObject);
 begin
   imgErrTokenCSC.Visible := (edtTokenCSC.Text = '');
@@ -744,6 +805,71 @@ procedure TfrPOSTEFServer.ACBrPOS1GravarLog(const ALogLine: String;
 begin
   AdicionarLinhaLog(ALogLine);
   Tratado := False;
+end;
+
+procedure TfrPOSTEFServer.ACBrCEP1AntesAbrirHTTP(var AURL: String);
+begin
+  AdicionarLinhaLog('ACBrCEP: Efetuando consulta em: '+AURL) ;
+end;
+
+procedure TfrPOSTEFServer.ACBrCEP1BuscaEfetuada(Sender: TObject);
+begin
+  AdicionarLinhaLog( Format('ACBrCEP: %d Endereço(s) encontrado(s)', [ACBrCEP1.Enderecos.Count]) );
+end;
+
+procedure TfrPOSTEFServer.ACBrConsultaCNPJ1AntesAbrirHTTP(var AURL: String);
+begin
+  AdicionarLinhaLog('ACBrConsultaCNPJ: Efetuando consulta em: '+AURL) ;
+end;
+
+procedure TfrPOSTEFServer.ACBrIBGE1AntesAbrirHTTP(var AURL: String);
+begin
+  AdicionarLinhaLog('ACBrIBGE: Efetuando consulta em: '+AURL) ;
+end;
+
+procedure TfrPOSTEFServer.ACBrIBGE1BuscaEfetuada(Sender: TObject);
+begin
+  AdicionarLinhaLog( Format('ACBrIBGE: %d Cidade(s) encontrada(s)', [ACBrIBGE1.Cidades.Count]) );
+end;
+
+procedure TfrPOSTEFServer.ACBrIBGE1GravarCache(ConteudoCache: TStrings;
+  var Tratado: Boolean);
+begin
+  AdicionarLinhaLog('ACBrIBGE: Gravando Cache');
+end;
+
+procedure TfrPOSTEFServer.ACBrIBGE1LerCache(ConteudoCache: TStrings;
+  var Tratado: Boolean);
+begin
+  AdicionarLinhaLog('ACBrIBGE: Lendo Cache');
+end;
+
+procedure TfrPOSTEFServer.ACBrMail1AfterMailProcess(Sender: TObject);
+begin
+  AdicionarLinhaLog('ACBrMail - Enviado: ' + TACBrMail(Sender).Subject);
+end;
+
+procedure TfrPOSTEFServer.ACBrMail1BeforeMailProcess(Sender: TObject);
+begin
+  AdicionarLinhaLog('ACBrMail - Inicio: ' + TACBrMail(Sender).Subject);
+end;
+
+procedure TfrPOSTEFServer.ACBrMail1MailProcess(const AMail: TACBrMail;
+  const aStatus: TMailStatus);
+begin
+  AdicionarLinhaLog( 'ACBrMail - Status: ' + GetEnumName(TypeInfo(TMailStatus), integer(aStatus)) );
+end;
+
+procedure TfrPOSTEFServer.ACBrNFe1GerarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  AdicionarLinhaLog('ACBrNFe - '+ALogLine);
+end;
+
+procedure TfrPOSTEFServer.ACBrNFe1StatusChange(Sender: TObject);
+begin
+  AdicionarLinhaLog( 'ACBrNFe - Status: ' +
+                     GetEnumName(TypeInfo(TStatusACBrNFe), integer(ACBrNFe1.Status)) );
 end;
 
 procedure TfrPOSTEFServer.ACBrPOS1MudaEstadoTerminal(const TerminalId: String;
@@ -788,6 +914,27 @@ begin
   end;
 end;
 
+procedure TfrPOSTEFServer.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := AnsiString( edtSATCodigoAtivacao.Text );
+end;
+
+procedure TfrPOSTEFServer.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := AnsiString( edtSATSwHAssinatura.Text );
+end;
+
+procedure TfrPOSTEFServer.ACBrSAT1GravarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+   AdicionarLinhaLog('ACBrSAT - '+ALogLine);
+end;
+
+procedure TfrPOSTEFServer.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
+begin
+  AdicionarLinhaLog('ACBrSAT - Mensagem do SEFAZ: ' + IntToStr(ACod)+'-'+AMensagem);
+end;
+
 procedure TfrPOSTEFServer.btConfiguracaoClick(Sender: TObject);
 begin
   IrParaConfiguracao;
@@ -799,15 +946,70 @@ begin
 
   ACBrMail1.Clear;
   ACBrMail1.IsHTML := False;
-  ACBrMail1.Subject := SubstituirVariaveisEmail(edtEmailAssunto.Text);
-  ACBrMail1.AltBody.Text := SubstituirVariaveisEmail(mEmailMensagem.Lines.Text);
+  ACBrMail1.Subject := 'Teste de Email';
+  ACBrMail1.AltBody.Text := 'Teste de Email'+sLineBreak+'https://projetoacbr.com.br/tef/';
   ACBrMail1.AddAddress(edtEmailTo.Text);
-  ACBrMail1.Send;
+  ACBrMail1.Send(False);
+
+  MessageDlg('Teste de Email', 'Email enviado com sucesso', mtInformation, [mbOK], 0);
 end;
 
 procedure TfrPOSTEFServer.btOperacaoClick(Sender: TObject);
 begin
   IrParaOperacaoPOS;
+end;
+
+procedure TfrPOSTEFServer.btStatusOperacionalSATClick(Sender: TObject);
+var
+  Resp: String;
+  SL: TStringList;
+begin
+  AtivarSAT;
+  ACBrSAT1.ConsultarStatusOperacional;
+
+  if ACBrSAT1.Resposta.codigoDeRetorno = 10000 then
+  begin
+    SL := TStringList.Create;
+    try
+      with ACBrSAT1.Status do
+      begin
+        SL.Add('NSERIE.........: '+NSERIE);
+        SL.Add('LAN_MAC........: '+LAN_MAC);
+        SL.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
+        SL.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
+        SL.Add('MT_TOTAL.......: '+MT_TOTAL);
+        SL.Add('MT_USADA.......: '+MT_USADA);
+        SL.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
+        SL.Add('VER_SB.........: '+VER_SB);
+        SL.Add('VER_LAYOUT.....: '+VER_LAYOUT);
+        SL.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
+        SL.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
+        SL.Add('LISTA_FINAL....: '+LISTA_FINAL);
+        SL.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
+        SL.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
+        SL.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
+        SL.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
+        SL.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
+      end;
+
+      MessageDlg('ConsultarStatusOperacional', SL.Text, mtInformation, [mbOK], 0);
+    finally
+      SL.Free;
+    end;
+  end
+  else
+    MessageDlg('ConsultarStatusOperacional', ACBrSAT1.Resposta.RetornoStr, mtInformation, [mbOK], 0);
+end;
+
+procedure TfrPOSTEFServer.btStatusSATClick(Sender: TObject);
+var
+  Resp: String;
+begin
+  AtivarSAT;
+  ACBrSAT1.ConsultarSAT;
+  Resp := ACBrSAT1.Resposta.mensagemRetorno;
+
+  MessageDlg('ConsultarSAT', Resp, mtInformation, [mbOK], 0);
 end;
 
 procedure TfrPOSTEFServer.btIniciarParaServidorClick(Sender: TObject);
@@ -850,6 +1052,14 @@ begin
   OpenURL('https://projetoacbr.com.br/tef/');
 end;
 
+procedure TfrPOSTEFServer.rgDocumentoFiscalClick(Sender: TObject);
+begin
+  tsConfEmissor.Enabled := (rgDocumentoFiscal.ItemIndex > 0);
+  tsConfEMail.Enabled := tsConfEmissor.Enabled and cbEmailDoctoFiscal.Checked;
+  tsConfNFCe.Enabled := (rgDocumentoFiscal.ItemIndex = 1);
+  tsConfSAT.Enabled := (rgDocumentoFiscal.ItemIndex = 2);
+end;
+
 procedure TfrPOSTEFServer.SbArqLogClick(Sender: TObject);
 var
   AFileLog: String;
@@ -864,11 +1074,9 @@ end;
 
 procedure TfrPOSTEFServer.sbConsultaCEPClick(Sender: TObject);
 var
-  Erro: string;
   EndAchado: TACBrCEPEndereco;
   cUF: Integer;
 begin
-  Erro := '';
   try
     ACBrCEP1.BuscarPorCEP(OnlyNumber(edtEmitCEP.Text));
     if (ACBrCEP1.Enderecos.Count > 0) then
@@ -929,6 +1137,15 @@ begin
   finally
      frConsultaCNPJ.Free;
   end;
+end;
+
+procedure TfrPOSTEFServer.sbNomeDLLClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo DLL|*.dll';
+  OpenDialog1.InitialDir := ExtractFilePath(edtSATDLL.Text);
+  OpenDialog1.FileName := edtSATDLL.Text;
+  if OpenDialog1.Execute then
+    edtSATDLL.Text := OpenDialog1.FileName ;
 end;
 
 procedure TfrPOSTEFServer.sbtnCaminhoCertClick(Sender: TObject);
@@ -1036,6 +1253,12 @@ begin
     edtProxySenha.EchoMode := emNormal
   else
     edtProxySenha.EchoMode := emPassword;
+end;
+
+procedure TfrPOSTEFServer.seSATPagCodChange(Sender: TObject);
+begin
+  ACBrSAT1.Config.PaginaDeCodigo := seSATPagCod.Value;
+  ckSATUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
 procedure TfrPOSTEFServer.spPathSchemasClick(Sender: TObject);
@@ -1703,6 +1926,9 @@ begin
   AdicionarLinhaLog('- LerConfiguracao');
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
+    rgDocumentoFiscal.ItemIndex := Ini.ReadInteger('Geral','DoctoFiscal', 0);
+    cbEmailDoctoFiscal.Checked := Ini.ReadBool('Geral','EmailDoctoFiscal', False);
+
     sePortaTCP.Value := Ini.ReadInteger('POS', 'PortaTCP', sePortaTCP.Value);
     seMaxConexoes.Value := Ini.ReadInteger('POS', 'MaxConexoes.', seMaxConexoes.Value);
     edLog.Text := Ini.ReadString('POS', 'Log', '');
@@ -1748,12 +1974,12 @@ begin
     edtCertSenha.Text := Ini.ReadString('Certificado', 'Senha', '');
     edtCertNumSerie.Text := Ini.ReadString('Certificado', 'NumSerie', '');
 
-    cbSSLType.ItemIndex := Ini.ReadInteger('WebService', 'SSLType', 5);
-    cbWebServiceUF.ItemIndex := cbWebServiceUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', ''));
-    rgTipoAmb.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 1);
-    seTimeOut.Value := Ini.ReadInteger('WebService', 'TimeOut', seTimeOut.Value);
-    edtPathSchemas.Text := Ini.ReadString('Geral', 'PathSchemas', ApplicationPath+'Schemas\NFe');
+    cbSSLType.ItemIndex := Ini.ReadInteger('NFCe.WebService', 'SSLType', 5);
+    cbWebServiceUF.ItemIndex := cbWebServiceUF.Items.IndexOf(Ini.ReadString('NFCe.WebService', 'UF', ''));
+    rgTipoAmb.ItemIndex := Ini.ReadInteger('NFCe.WebService', 'Ambiente', 1);
+    seTimeOut.Value := Ini.ReadInteger('NFCe.WebService', 'TimeOut', seTimeOut.Value);
 
+    edtPathSchemas.Text := Ini.ReadString('NFCe', 'PathSchemas', ApplicationPath+'Schemas\NFe');
     edtTokenID.Text := Ini.ReadString('NFCe', 'TokenID', '');
     edtTokenCSC.Text := Ini.ReadString('NFCe', 'TokenCSC', '');
 
@@ -1761,6 +1987,16 @@ begin
     seProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
     edtProxyUser.Text := Ini.ReadString('Proxy', 'User', '');
     edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass', '');
+
+    cbSATModelo.ItemIndex := Ini.ReadInteger('SAT','Modelo', 0);
+    edtSATDLL.Text := Ini.ReadString('SAT','NomeDLL', '');
+    edtSATCodigoAtivacao.Text := Ini.ReadString('SAT','CodigoAtivacao', '');
+    seSATNumeroCaixa.Value := Ini.ReadInteger('SAT','NumeroCaixa', 1);
+    cbSATAmbiente.ItemIndex := Ini.ReadInteger('SAT','Ambiente', 1);
+    seSATPagCod.Value := Ini.ReadInteger('SAT','PaginaDeCodigo', CP_UTF8);
+    seSATVersaoEnt.Value := Ini.ReadFloat('SAT','versaoDadosEnt', ACBrSAT1.Config.infCFe_versaoDadosEnt);
+    edtSATSwHCNPJ.Text := INI.ReadString('SAT.SwH','CNPJ', '');
+    edtSATSwHAssinatura.Text := INI.ReadString('SAT.SwH','Assinatura', '');
 
     edtEmailFrom.Text := Ini.ReadString('Email', 'From', edtEmailFrom.Text);
     edtEmailFromName.Text := Ini.ReadString('Email', 'FromName', edtEmailFromName.Text);
@@ -1792,27 +2028,30 @@ end;
 
 procedure TfrPOSTEFServer.GravarConfiguracao;
 Var
-  INI : TIniFile ;
+  Ini : TIniFile ;
 begin
   AplicarConfiguracao;
 
   AdicionarLinhaLog('- GravarConfiguracao');
-  INI := TIniFile.Create(NomeArquivoConfiguracao);
+  Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
-    INI.WriteInteger('POS', 'PortaTCP', sePortaTCP.Value);
-    INI.WriteInteger('POS', 'MaxConexoes.', seMaxConexoes.Value);
-    INI.WriteString('POS', 'Log', edLog.Text);
-    INI.WriteString('POS', 'MensagemBoasVindas', edMensagemBoasVindas.Text);
-    INI.WriteBool('POS', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
-    INI.WriteBool('POS', 'SuportaDesconto', cbSuportaDesconto.Checked);
-    INI.WriteBool('POS', 'SuportaSaque', cbSuportaSaque.Checked);
-    INI.WriteBool('POS', 'UtilizarSaldoTotalVoucher', cbUtilizarSaldoTotalVoucher.Checked);
+    Ini.WriteInteger('Geral','DoctoFiscal', rgDocumentoFiscal.ItemIndex);
+    Ini.WriteBool('Geral','EmailDoctoFiscal', cbEmailDoctoFiscal.Checked);
 
-    INI.WriteInteger('Aplicacao', 'TipoDemo', cbTipoAplicacao.ItemIndex);
-    INI.WriteString('Aplicacao', 'RazaoSocial', edRazaoSocial.Text);
-    INI.WriteString('Aplicacao', 'Registro', edRegistro.Text);
-    INI.WriteString('Aplicacao', 'Nome', edAplicacaoNome.Text);
-    INI.WriteString('Aplicacao', 'Versao', edAplicacaoVersao.Text);
+    Ini.WriteInteger('POS', 'PortaTCP', sePortaTCP.Value);
+    Ini.WriteInteger('POS', 'MaxConexoes.', seMaxConexoes.Value);
+    Ini.WriteString('POS', 'Log', edLog.Text);
+    Ini.WriteString('POS', 'MensagemBoasVindas', edMensagemBoasVindas.Text);
+    Ini.WriteBool('POS', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
+    Ini.WriteBool('POS', 'SuportaDesconto', cbSuportaDesconto.Checked);
+    Ini.WriteBool('POS', 'SuportaSaque', cbSuportaSaque.Checked);
+    Ini.WriteBool('POS', 'UtilizarSaldoTotalVoucher', cbUtilizarSaldoTotalVoucher.Checked);
+
+    Ini.WriteInteger('Aplicacao', 'TipoDemo', cbTipoAplicacao.ItemIndex);
+    Ini.WriteString('Aplicacao', 'RazaoSocial', edRazaoSocial.Text);
+    Ini.WriteString('Aplicacao', 'Registro', edRegistro.Text);
+    Ini.WriteString('Aplicacao', 'Nome', edAplicacaoNome.Text);
+    Ini.WriteString('Aplicacao', 'Versao', edAplicacaoVersao.Text);
 
     Ini.WriteString('Emitente', 'CNPJ', edtEmitCNPJ.Text);
     Ini.WriteString('Emitente', 'IE', edtEmitIE.Text);
@@ -1828,8 +2067,8 @@ begin
     Ini.WriteInteger('Emitente', 'cUF', StrToIntDef(pEmitCodUF.Caption,0));
     Ini.WriteInteger('Emitente', 'cMun', StrToIntDef(pEmitCodCidade.Caption,0));
     Ini.WriteInteger('Emitente', 'CRT', cbxTipoEmpresa.ItemIndex);
-    INI.WriteInteger('Emitente', 'RegTribISSQN', cbxRegTribISSQN.ItemIndex);
-    INI.WriteInteger('Emitente', 'IndRatISSQN', cbxIndRatISSQN.ItemIndex);
+    Ini.WriteInteger('Emitente', 'RegTribISSQN', cbxRegTribISSQN.ItemIndex);
+    Ini.WriteInteger('Emitente', 'IndRatISSQN', cbxIndRatISSQN.ItemIndex);
 
     Ini.WriteInteger('Certificado', 'SSLLib', cbSSLLib.ItemIndex);
     Ini.WriteInteger('Certificado', 'CryptLib', cbCryptLib.ItemIndex);
@@ -1840,12 +2079,11 @@ begin
     Ini.WriteString('Certificado', 'Senha', edtCertSenha.Text);
     Ini.WriteString('Certificado', 'NumSerie', edtCertNumSerie.Text);
 
-    Ini.WriteInteger('WebService', 'SSLType', cbSSLType.ItemIndex);
-    Ini.WriteString('WebService', 'UF', cbWebServiceUF.Text);
-    Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
-    Ini.WriteInteger('WebService', 'TimeOut', seTimeOut.Value);
-    Ini.WriteString('Geral', 'PathSchemas', edtPathSchemas.Text);
-
+    Ini.WriteInteger('NFCe.WebService', 'SSLType', cbSSLType.ItemIndex);
+    Ini.WriteString('NFCe.WebService', 'UF', cbWebServiceUF.Text);
+    Ini.WriteInteger('NFCe.WebService', 'Ambiente', rgTipoAmb.ItemIndex);
+    Ini.WriteInteger('NFCe.WebService', 'TimeOut', seTimeOut.Value);
+    Ini.WriteString('NFCe', 'PathSchemas', edtPathSchemas.Text);
     Ini.WriteString('NFCe', 'TokenID', edtTokenID.Text);
     Ini.WriteString('NFCe', 'TokenCSC', edtTokenCSC.Text);
 
@@ -1853,6 +2091,16 @@ begin
     Ini.WriteString('Proxy', 'Porta', seProxyPorta.Text);
     Ini.WriteString('Proxy', 'User',  edtProxyUser.Text);
     Ini.WriteString('Proxy', 'Pass',  edtProxySenha.Text);
+
+    Ini.WriteInteger('SAT','Modelo',cbSATModelo.ItemIndex);
+    Ini.WriteString('SAT','NomeDLL',edtSATDLL.Text);
+    Ini.WriteString('SAT','CodigoAtivacao',edtSATCodigoAtivacao.Text);
+    Ini.WriteInteger('SAT','NumeroCaixa',seSATNumeroCaixa.Value);
+    Ini.WriteInteger('SAT','Ambiente',cbSATAmbiente.ItemIndex);
+    Ini.WriteInteger('SAT','PaginaDeCodigo',seSATPagCod.Value);
+    Ini.WriteFloat('SAT','versaoDadosEnt',seSATVersaoEnt.Value);
+    INI.WriteString('SAT.SwH','CNPJ',edtSATSwHCNPJ.Text);
+    INI.WriteString('SAT.SwH','Assinatura',edtSATSwHAssinatura.Text);
 
     Ini.WriteString('Email', 'From', edtEmailFrom.text);
     Ini.WriteString('Email', 'FromName', edtEmailFromName.text);
@@ -1867,7 +2115,7 @@ begin
     Ini.WriteString('Email', 'Assunto', edtEmailAssunto.Text);
     Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mEmailMensagem.Lines.Text));
   finally
-     INI.Free ;
+     Ini.Free ;
   end ;
 end;
 
@@ -1919,7 +2167,7 @@ begin
   ACBrNFe1.Configuracoes.WebServices.Salvar := False;
 
   ACBrNFe1.Configuracoes.Arquivos.PathSchemas := edtPathSchemas.Text;
-  ACBrNFe1.Configuracoes.Arquivos.PathNFe := ApplicationPath + 'xml';
+  ACBrNFe1.Configuracoes.Arquivos.PathNFe := ApplicationPath + 'xml'+PathDelim+'nfe';
   ACBrNFe1.Configuracoes.Arquivos.PathEvento := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   ACBrNFe1.Configuracoes.Arquivos.PathInu := ACBrNFe1.Configuracoes.Arquivos.PathNFe;
   ACBrNFe1.Configuracoes.Arquivos.PathSalvar := ACBrNFe1.Configuracoes.Arquivos.PathNFe + PathDelim + 'soap';
@@ -1954,6 +2202,42 @@ begin
   ACBrMail1.SetSSL := chkEmailSSL.Checked;  // Verifique se o seu servidor necessita SSL
   ACBrMail1.DefaultCharset := TMailCharset(cbEmailDefaultCharset.ItemIndex);
   ACBrMail1.IDECharset := TMailCharset(cbEmailIdeCharSet.ItemIndex);
+end;
+
+procedure TfrPOSTEFServer.AtivarSAT;
+begin
+  ConfigurarACBrSAT;
+  ACBrSAT1.Inicializar;
+end;
+
+procedure TfrPOSTEFServer.DesativarSAT;
+begin
+  ACBrSAT1.DesInicializar;
+end;
+
+procedure TfrPOSTEFServer.ConfigurarACBrSAT;
+begin
+  with ACBrSAT1 do
+  begin
+    Modelo  := TACBrSATModelo(cbSATModelo.ItemIndex);
+    NomeDLL := edtSATDLL.Text;
+    Config.ide_numeroCaixa := seSATNumeroCaixa.Value;
+    Config.ide_tpAmb       := TpcnTipoAmbiente(cbSATAmbiente.ItemIndex);
+    Config.ide_CNPJ        := edtSATSwHCNPJ.Text;
+    Config.emit_CNPJ       := OnlyNumber(edtEmitCNPJ.Text);
+    Config.emit_IE         := OnlyNumber(edtEmitIE.Text);
+    Config.emit_IM         := OnlyNumber(edtEmitIM.Text);
+    Config.emit_cRegTrib      := TpcnRegTrib(IfThen(cbxTipoEmpresa.ItemIndex = 2, 1, 0)) ;
+    Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
+    Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
+    Config.PaginaDeCodigo     := seSATPagCod.Value;
+    Config.EhUTF8             := ckSATUTF8.Checked;
+    Config.infCFe_versaoDadosEnt := seSATVersaoEnt.Value;
+
+    ConfigArquivos.PastaCFeVenda := ApplicationPath + 'xml'+PathDelim+'sat';
+    ConfigArquivos.PastaCFeCancelamento := ConfigArquivos.PastaCFeVenda;
+    ConfigArquivos.PastaEnvio := ConfigArquivos.PastaCFeVenda;
+  end
 end;
 
 function TfrPOSTEFServer.SubstituirVariaveisEmail(const AText: String): String;
@@ -2063,8 +2347,26 @@ begin
   btEmailTeste.Enabled := Ok and (edtEmailTo.Text <> '');
 end;
 
+procedure TfrPOSTEFServer.ValidarConfigSAT;
+var
+  Ok: Boolean;
+begin
+  Ok := (edtSATDLL.Text <> '') and
+        (edtSATCodigoAtivacao.Text <> '') and
+        (edtSATSwHCNPJ.Text <> '') and
+        (edtSATSwHAssinatura.Text <> '') and
+        (cbSATModelo.ItemIndex >= 0) and
+        (cbSATAmbiente.ItemIndex >= 0);
+
+  imgErrSAT.Visible := not Ok;
+  btStatusSAT.Enabled := Ok;
+  btStatusOperacionalSAT.Enabled := Ok;
+end;
+
 procedure TfrPOSTEFServer.LigarAlertasdeErrosDeConfiguracao;
 begin
+  rgDocumentoFiscalClick(Nil);
+
   edtEmitCNPJChange(Nil);
   edtEmitRazaoChange(Nil);
   edtEmitFoneChange(Nil);

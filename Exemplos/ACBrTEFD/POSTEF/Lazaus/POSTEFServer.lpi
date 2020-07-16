@@ -58,25 +58,28 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="7">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_TEFD"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item5>
       <Item6>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_TEFD"/>
       </Item6>
+      <Item7>
+        <PackageName Value="LCL"/>
+      </Item7>
     </RequiredPackages>
     <Units Count="4">
       <Unit0>

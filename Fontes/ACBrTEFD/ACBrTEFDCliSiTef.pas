@@ -554,6 +554,7 @@ end;
 function TACBrTEFDCliSiTef.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
 var
+   Restr : AnsiString;
    Sts : Integer;
 begin
   Respostas.Values['146'] := FormatFloat('0.00',Valor);
@@ -561,7 +562,11 @@ begin
   Respostas.Values['515'] := FormatDateTime('DDMMYYYY',DataHoraTransacao) ;
   Respostas.Values['516'] := NSU ;
 
-  Sts := FazerRequisicao( fOperacaoCNC, 'CNC' ) ;
+  Restr := fRestricoes;
+  if Restr = '' then
+     Restr := '[10]';
+
+  Sts := FazerRequisicao( fOperacaoCNC, 'CNC', Valor, '', Restr);
 
   if Sts = 10000 then
      Sts := ContinuarRequisicao( CACBrTEFCliSiTef_ImprimeGerencialConcomitante ) ;
@@ -1005,7 +1010,6 @@ begin
                      MensagemOperador := 'QRCODE=' + ProcessaMensagemTela( Mensagem );
                      DoExibeMsg( opmExibirMsgOperador, MensagemOperador, (TipoCampo=584) ) ;
                    end;
-                   
                  51 :
                    begin
                      DoExibeMsg( opmRemoverMsgOperador, '' ) ;

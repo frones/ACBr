@@ -56,6 +56,7 @@ type
     Nome: String;
     DataHora: TDateTime;
     ValorTotal: Double;
+    TotalPago: Double;
     Items: array of TItemPedido;
   end;
 
@@ -91,6 +92,7 @@ type
     cbEmailIdeCharSet: TComboBox;
     cbHttpLib: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
+    cbIniciarEmOperacao: TCheckBox;
     cbSSLLib: TComboBox;
     cbSSLType: TComboBox;
     cbSuportaDesconto: TCheckBox;
@@ -148,6 +150,7 @@ type
     gbEmailAutenticacao: TGroupBox;
     gConfSAT: TGroupBox;
     gbSATPagCod: TGroupBox;
+    gbNFCeNumeros: TGroupBox;
     imgErrSAT: TImage;
     Label39: TLabel;
     Label40: TLabel;
@@ -156,7 +159,10 @@ type
     Label43: TLabel;
     Label44: TLabel;
     Label45: TLabel;
+    Label48: TLabel;
+    Label49: TLabel;
     Label5: TLabel;
+    Label52: TLabel;
     rgDocumentoFiscal: TRadioGroup;
     gEmailMensagem: TGroupBox;
     Image1: TImage;
@@ -189,7 +195,6 @@ type
     Label34: TLabel;
     Label46: TLabel;
     Label47: TLabel;
-    Label52: TLabel;
     Label6: TLabel;
     lbl1: TLabel;
     lblDefaultCharset: TLabel;
@@ -207,7 +212,7 @@ type
     gConfEmissor: TGroupBox;
     pEmitCodCidade: TPanel;
     pEmitCodUF: TPanel;
-    rgTipoAmb: TComboBox;
+    cbTipoAmb: TComboBox;
     sbConsultaCEP: TSpeedButton;
     sbConsultaCNPJ: TSpeedButton;
     sbNomeDLL: TSpeedButton;
@@ -215,6 +220,8 @@ type
     sbVerSenhaEmail: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
     seEmailPort: TSpinEdit;
+    seNFCeLote: TSpinEdit;
+    seNFCeNumero: TSpinEdit;
     seSATNumeroCaixa: TSpinEdit;
     seSATPagCod: TSpinEdit;
     seProxyPorta: TSpinEdit;
@@ -224,8 +231,8 @@ type
     gbCertificado: TGroupBox;
     gbBibliotecas: TGroupBox;
     gbProxy: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox4: TGroupBox;
+    gbToken: TGroupBox;
+    gbWebService: TGroupBox;
     imgErrCertificado: TImage;
     imgErrTokenID: TImage;
     imgErrHttpLib: TImage;
@@ -283,6 +290,7 @@ type
     sgTerminais: TStringGrid;
     Splitter1: TSplitter;
     spPathSchemas: TSpeedButton;
+    tiIniciar: TTimer;
     tsMenuPrincipal: TTabSheet;
     tsConfSAT: TTabSheet;
     tsConfEmissor: TTabSheet;
@@ -346,6 +354,7 @@ type
     procedure edtEmitRazaoChange(Sender: TObject);
     procedure edtPathSchemasChange(Sender: TObject);
     procedure edtSATDLLChange(Sender: TObject);
+    procedure edtSATSwHCNPJChange(Sender: TObject);
     procedure edtTokenCSCChange(Sender: TObject);
     procedure edtTokenIDChange(Sender: TObject);
     procedure edtOnlyNumberKeyPress(Sender: TObject; var Key: char);
@@ -366,6 +375,7 @@ type
     procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure seSATPagCodChange(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
+    procedure tiIniciarTimer(Sender: TObject);
   private
     fPedidos: TPedidos;
     fcUF: Integer;
@@ -390,10 +400,14 @@ type
     procedure AtivarSAT;
     procedure DesativarSAT;
 
+    function TemEmissaoDeNFCe: Boolean;
+    function TemEnvioDeEmail: Boolean;
+
   protected
     procedure IrParaMenuPrincipal;
     procedure IrParaOperacaoPOS;
     procedure IrParaConfiguracao;
+
     procedure IniciarServidorPOS;
     procedure PararServidorPOS;
 
@@ -402,17 +416,17 @@ type
 
     procedure ExecutarFluxoEntrega(const TerminalId: String);
     procedure ExibirMenuPedidosEntrega(const TerminalId: String);
-    procedure ImprimirPedido(const TerminalId: String; IndicePedido: Integer);
-    procedure ImprimirNFCe(const TerminalId: String; IndicePedido: Integer);
 
     procedure ExecutarFluxoFechamentoMesa(const TerminalId: String);
 
     procedure ExecutarFluxoFechamentoBomba(const TerminalId: String);
     procedure ExecutarReimpressao(const TerminalId: String);
 
-    procedure EfetuarPagamento(const TerminalId: String; const Descricao: String;
-      ValorTotal: Double);
+    procedure EfetuarPagamento(const TerminalId: String; IndicePedido: Integer);
+
+    procedure ImprimirPedido(const TerminalId: String; IndicePedido: Integer);
     procedure CriarNFCe(IndicePedido: Integer);
+    procedure ImprimirNFCe(const TerminalId: String; IndicePedido: Integer);
     procedure IncluirPedidosSimulados;
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
@@ -431,7 +445,7 @@ implementation
 uses
   IniFiles, math, dateutils, TypInfo,
   FormConsultaCNPJ, FormSelecionarCertificado,
-  ACBrUtil, ACBrValidador, ACBrDFeSSL,
+  ACBrUtil, ACBrValidador, ACBrDFeSSL, ACBrDFeUtil,
   pcnConversao, pcnConversaoNFe,
   blcksock;
 
@@ -529,6 +543,8 @@ begin
   ImageList1.GetBitmap(16, imgErrPathSchemas.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrEmail.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrSAT.Picture.Bitmap);
+
+  tiIniciar.Enabled := cbIniciarEmOperacao.Checked;
 end;
 
 procedure TfrPOSTEFServer.FormDestroy(Sender: TObject);
@@ -772,6 +788,17 @@ begin
   ValidarConfigSAT;
 end;
 
+procedure TfrPOSTEFServer.edtSATSwHCNPJChange(Sender: TObject);
+begin
+  if (Length(edtSATSwHCNPJ.Text) > 2) then
+  begin
+    edtSATSwHCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtSATSwHCNPJ.Text), '**.***.***/****-**');
+    edtSATSwHCNPJ.SelStart := Length(edtSATSwHCNPJ.Text);
+  end;
+
+  edtSATDLLChange(Sender);
+end;
+
 procedure TfrPOSTEFServer.edtTokenCSCChange(Sender: TObject);
 begin
   imgErrTokenCSC.Visible := (edtTokenCSC.Text = '');
@@ -877,6 +904,7 @@ procedure TfrPOSTEFServer.ACBrPOS1MudaEstadoTerminal(const TerminalId: String;
 var
   Linha, i: Integer;
   EstadoStr: String;
+  CanSelect: Boolean;
 begin
   EstadoStr := EstadoTerminal(EstadoAtual);
   AdicionarLinhaLog('- MudaEstadoTerminal: '+TerminalId+', '+EstadoStr);
@@ -901,6 +929,7 @@ begin
 
   sgTerminais.Rows[Linha][0] := TerminalId;
   sgTerminais.Rows[Linha][1] := EstadoStr;
+  CanSelect := True;
 end;
 
 procedure TfrPOSTEFServer.ACBrPOS1NovaConexao(const TerminalId: String;
@@ -1274,6 +1303,13 @@ begin
     edtPathSchemas.Text := Dir;
 end;
 
+procedure TfrPOSTEFServer.tiIniciarTimer(Sender: TObject);
+begin
+  tiIniciar.Enabled := False;
+  IrParaOperacaoPOS;
+  IniciarServidorPOS;
+end;
+
 function TfrPOSTEFServer.GetNomeArquivoConfiguracao: String;
 begin
   Result := ChangeFileExt(Application.ExeName,'.ini') ;
@@ -1380,8 +1416,11 @@ begin
   OK := False;
   repeat
     OP := ACBrPOS1.ExecutarMenu( TerminalId,
-                                 'VER PEDIDOS|REIMPRESSAO|ADMINISTRATIVO|SAIR',
-                                 'ACBR - DEMO ENTREGA' );
+                                 'VER PEDIDOS|'+
+                                 'REIMPRESSAO|'+
+                                 'ADMINISTRATIVO|'+
+                                 'SAIR',
+                                 'ACBR - DEMO ENTREGA');
     case OP of
       0: ExibirMenuPedidosEntrega(TerminalId);
       1: ExecutarReimpressao(TerminalId);
@@ -1396,29 +1435,44 @@ procedure TfrPOSTEFServer.ExibirMenuPedidosEntrega(const TerminalId: String);
 var
   SL: TStringList;
   OP: SmallInt;
-  i, IndicePedido, ColDis: Integer;
+  i, l, IndicePedido, MaxPedidos: Integer;
+  PedidosListados: array of Integer;
 begin
   SL := TStringList.Create;
   try
-    // *** NOTA *** Aqui você deve ler os Pedidos Pendentes no Seu Banco de Dados, com algum Filtro
-    for i := 0 to Length(fPedidos)-1 do
-      SL.Add(LeftStr(fPedidos[i].Nome,8)+' R$ '+FormatFloatBr(fPedidos[i].ValorTotal,'###0.00') );
+    {
+      *** NOTA ***
+      Aqui você deve ler os Pedidos Pendentes no Seu Banco de Dados, com algum
+      Filtro, para Exibir apenas os Pedidos em aberto e relacionados a esse POS
+    }
+    MaxPedidos := min(Length(fPedidos)-1, 8);  // Exibe no máximo 8 pedidos
+    SetLength(PedidosListados, 0);
+    for i := 0 to MaxPedidos do
+      if (fPedidos[i].TotalPago = 0) then  // já não foi pago ?
+      begin
+        l := Length(PedidosListados);
+        SetLength(PedidosListados, l+1);
+        PedidosListados[l] := i;
+        SL.Add(LeftStr(fPedidos[i].Nome,8)+' R$ '+FormatFloatBr(fPedidos[i].ValorTotal,'###0.00') );
+      end;
 
     SL.Add('V O L T A R');
     OP := ACBrPOS1.ExecutarMenu(TerminalId, SL, 'ESCOLHA O PEDIDO');
 
     if (OP >= 0) and (OP < SL.Count-1) then
     begin
-      ColDis := CACBrPOSPGWebColunasDisplay;
-      IndicePedido := OP;
+      IndicePedido := PedidosListados[OP];
+      // Imprimindo conferência do Pedido //
       ImprimirPedido(TerminalId, IndicePedido);
-      ACBrPOS1.ExibirMensagem(TerminalId,
-        PadCenter('PEDIDO '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4)+' IMPRESSO', ColDis)+
-        PadCenter('CONFIRA O PEDIDO', ColDis), 5);
 
-      EfetuarPagamento( TerminalId,
-                        'PEDIDO: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4),
-                        fPedidos[IndicePedido].ValorTotal );
+      ACBrPOS1.ExibirMensagem(TerminalId,
+          PadCenter( 'PEDIDO '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4)+
+                     ' IMPRESSO', CACBrPOSPGWebColunasDisplay)+
+          PadCenter('CONFIRA O PEDIDO', CACBrPOSPGWebColunasDisplay),
+        3);
+
+      // Efetuando pagamento do Pedido
+      EfetuarPagamento( TerminalId, IndicePedido );
     end;
   finally
     SL.Free;
@@ -1441,12 +1495,11 @@ begin
   SL := TStringList.Create;
   try
     SL.Add( '<e>'+PadCenter('PROJETO ACBR', ColExp) );
-    SL.Add( PadCenter(' https://projetoacbr.com.br/tef ', ColImp, '-')  );
-    SL.Add( '' );
+    SL.Add( StringOfChar('-', ColImp));
     SL.Add( PadSpace( 'Pedido: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4)+'|'+
                       'Data: '+FormatDateTimeBr(fPedidos[IndicePedido].DataHora),
               ColImp, '|') );
-    SL.Add( '<e>Nome: '+fPedidos[IndicePedido].Nome );
+    SL.Add( '<e>NOME: '+fPedidos[IndicePedido].Nome );
     SL.Add( StringOfChar('-', ColImp) );
     for i := 0 to Length(fPedidos[IndicePedido].Items)-1 do
     begin
@@ -1463,7 +1516,8 @@ begin
     SL.Add( '<e>'+PadSpace( 'TOTAL:|'+
                             FormatFloatBr( fPedidos[IndicePedido].ValorTotal, '#,##0.00'),
                     ColExp, '|') );
-
+    SL.Add( ' ' );
+    SL.Add( PadCenter(' https://projetoacbr.com.br/tef ', ColImp, '-')  );
     ACBrPOS1.ImprimirTexto(TerminalId, SL.Text);
     ACBrPOS1.AvancarPapel(TerminalId);
   finally
@@ -1503,24 +1557,49 @@ begin
 end;
 
 procedure TfrPOSTEFServer.EfetuarPagamento(const TerminalId: String;
-  const Descricao: String; ValorTotal: Double);
+  IndicePedido: Integer);
 var
   OP: SmallInt;
-  ColDis: Integer;
+  AStr, Descricao, MsgTroco: String;
+  Troco: Double;
+  ValorPago: Double;
 begin
-  ColDis := CACBrPOSPGWebColunasDisplay;
+  Descricao := 'PEDIDO: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4);
+
   OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
 
   case OP of
     0:
-      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorTotal);
+      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, fPedidos[IndicePedido].ValorTotal);
     1:
     begin
+      ValorPago := 0;
+      while (ValorPago < fPedidos[IndicePedido].ValorTotal) do
+      begin
+        AStr := IntToStr(Trunc(fPedidos[IndicePedido].ValorTotal*100));
+        AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO', '@@@.@@@,@@', 3, 8,
+                                    False, False, False, 30, AStr);
+        ValorPago := StrToIntDef(OnlyNumber(AStr),0)/100;
+
+        if (ValorPago < fPedidos[IndicePedido].ValorTotal) then
+          ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + sLineBreak +
+                                              'TOTAL PEDIDO:' + sLineBreak +
+                                              FormatFloatBr(fPedidos[IndicePedido].ValorTotal), 3);
+      end;
+
+      fPedidos[IndicePedido].TotalPago := ValorPago;
+      MsgTroco := '';
+      if ValorPago > fPedidos[IndicePedido].ValorTotal then
+      begin
+        Troco := ValorPago - fPedidos[IndicePedido].ValorTotal;
+        MsgTroco := '* CONFIRA O TROCO *' + sLineBreak + 'R$ '+FormatFloatBr(Troco);
+      end;
+
       ACBrPOS1.ExibirMensagem(TerminalId,
-        LeftStr(Descricao, ColDis) + sLineBreak +
-        'TOTAL.: '+FormatFloatBr(ValorTotal) + sLineBreak +
-        '* D I N H E I R O *'+ sLineBreak +
-        '* CONFIRA O TROCO *', 5);
+        LeftStr(Descricao, CACBrPOSPGWebColunasDisplay) + sLineBreak +
+        'PAGO.: R$ '+FormatFloatBr(ValorPago) + sLineBreak +
+        '* D I N H E I R O *' + sLineBreak +
+        MsgTroco, 10);
     end
   else
     raise Exception.Create('PAGAMENTO CANCELADO');
@@ -1530,50 +1609,49 @@ end;
 procedure TfrPOSTEFServer.CriarNFCe(IndicePedido: Integer);
 var
   Ok: Boolean;
-  BaseCalculo,
-  ValorICMS: Double;
+  BaseCalculo, BaseCalculoTotal, ValorICMS, ValorICMSTotal, TotalItem: Double;
+  i: Integer;
 begin
   {
     *** NOTA ***
     1 - Aqui você deve consultar seu Banco de Dados, Ler o Pedido e calcular os Impostos
         corretamente
-    2 - Nesse Exemplo, a NFCe está sendo gerada com Dados de Emissor inválios, e
-        portanto, ela não será transmitida, pois o nosso objetivo é apenas mostrar a
-        Impressão de NFCe no POS TEF
   }
 
-(*  ACBrNFe1.NotasFiscais.Clear;
+  ACBrNFe1.NotasFiscais.Clear;
   with ACBrNFe1.NotasFiscais.Add.NFe do
   begin
     Ide.natOp     := 'VENDA';
     Ide.indPag    := ipVista;
     Ide.modelo    := 65;
     Ide.serie     := 1;
-    Ide.nNF       := Trunc(sbProximaNFCe.Value);
+    Ide.nNF       := Trunc(seNFCeNumero.Value);
     Ide.cNF       := GerarCodigoDFe(Ide.nNF);
     Ide.dEmi      := now;
     Ide.dSaiEnt   := now;
     Ide.hSaiEnt   := now;
     Ide.tpNF      := tnSaida;
-    Ide.tpEmis    := TpcnTipoEmissao( IfThen(swOnLine.IsChecked, 0, 8) );
-    Ide.tpAmb     := TpcnTipoAmbiente( IfThen(swWebServiceAmbiente.IsChecked, 0, 1) );
-    Ide.cUF       := StrToInt(lEmitcUF.Text);
-    Ide.cMunFG    := StrToInt(lEmitcMun.Text);
+    Ide.tpEmis    := teNormal;  // Implementar NFCe OffLine
+    Ide.tpAmb     := TpcnTipoAmbiente(cbTipoAmb.ItemIndex);
+    Ide.cUF       := StrToInt(pEmitCodUF.Caption);
+    Ide.cMunFG    := StrToInt(pEmitCodCidade.Caption);
     Ide.finNFe    := fnNormal;
     Ide.tpImp     := tiNFCe;
     Ide.indFinal  := cfConsumidorFinal;
     Ide.indPres   := pcPresencial;
 
-    if not swOnLine.IsChecked then
-    begin
-      Ide.dhCont := date;
-      Ide.xJust  := 'Justificativa Contingencia';
-    end;
+    //if not swOnLine.IsChecked then
+    //begin
+    //  Ide.dhCont := date;
+    //  Ide.xJust  := 'Justificativa Contingencia';
+    //end;
 
     Emit.CNPJCPF           := OnlyNumber(edtEmitCNPJ.Text);
     Emit.IE                := OnlyNumber(edtEmitIE.Text);
+    Emit.IEST              := '';
     Emit.xNome             := edtEmitRazao.Text;
     Emit.xFant             := edtEmitFantasia.Text;
+    Emit.CRT := TpcnCRT(cbxTipoEmpresa.ItemIndex);
 
     Emit.EnderEmit.fone    := edtEmitFone.Text;
     Emit.EnderEmit.CEP     := StrToInt(OnlyNumber(edtEmitCEP.Text));
@@ -1581,214 +1659,175 @@ begin
     Emit.EnderEmit.nro     := edtEmitNumero.Text;
     Emit.EnderEmit.xCpl    := edtEmitComp.Text;
     Emit.EnderEmit.xBairro := edtEmitBairro.Text;
-    Emit.EnderEmit.cMun    := StrToInt(lEmitcMun.Text);
-    Emit.EnderEmit.xMun    := cbxEmitCidade.Selected.Text;
-    Emit.EnderEmit.UF      := cbxEmitUF.Selected.Text;
+    Emit.EnderEmit.cMun    := StrToInt(pEmitCodCidade.Caption);
+    Emit.EnderEmit.xMun    := cbxEmitCidade.Text;
+    Emit.EnderEmit.UF      := cbxEmitUF.Text;
     Emit.enderEmit.cPais   := 1058;
     Emit.enderEmit.xPais   := 'BRASIL';
 
-    Emit.IEST := '';
-    // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
-    // passar os valores 1, 2 ou 3
-    // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
-    Emit.CRT  := StrToCRT(Ok, IntToStr(cbxTipoEmpresa.ItemIndex + 1));
-
-    // Na NFC-e o Destinatário é opcional
-    {
-    Dest.CNPJCPF           := 'informar o CPF do destinatário';
-    Dest.ISUF              := '';
-    Dest.xNome             := 'nome do destinatário';
-
-    Dest.indIEDest         := inNaoContribuinte;
-
-    Dest.EnderDest.Fone    := '1533243333';
-    Dest.EnderDest.CEP     := 18270170;
-    Dest.EnderDest.xLgr    := 'Rua Coronel Aureliano de Camargo';
-    Dest.EnderDest.nro     := '973';
-    Dest.EnderDest.xCpl    := '';
-    Dest.EnderDest.xBairro := 'Centro';
-    Dest.EnderDest.cMun    := 3554003;
-    Dest.EnderDest.xMun    := 'Tatuí';
-    Dest.EnderDest.UF      := 'SP';
-    Dest.EnderDest.cPais   := 1058;
-    Dest.EnderDest.xPais   := 'BRASIL';
-    }
-
-//Use os campos abaixo para informar o endereço de retirada quando for diferente do Remetente/Destinatário
-    Retirada.CNPJCPF := '';
-    Retirada.xLgr    := '';
-    Retirada.nro     := '';
-    Retirada.xCpl    := '';
-    Retirada.xBairro := '';
-    Retirada.cMun    := 0;
-    Retirada.xMun    := '';
-    Retirada.UF      := '';
-
-//Use os campos abaixo para informar o endereço de entrega quando for diferente do Remetente/Destinatário
-    Entrega.CNPJCPF := '';
-    Entrega.xLgr    := '';
-    Entrega.nro     := '';
-    Entrega.xCpl    := '';
-    Entrega.xBairro := '';
-    Entrega.cMun    := 0;
-    Entrega.xMun    := '';
-    Entrega.UF      := '';
-
-//Adicionando Produtos
-    with Det.New do
+    BaseCalculoTotal := 0;
+    ValorICMSTotal := 0;
+    for i := 0 to Length(fPedidos[IndicePedido].Items)-1 do
     begin
-      Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
-      Prod.cProd    := '123456';
-      Prod.cEAN     := '7896523206646';
-      Prod.xProd    := 'Descrição do Produto. Teste acentos ÁÉÍÓÚ';
-      Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
-      Prod.EXTIPI   := '';
-      Prod.CFOP     := '5101';
-      Prod.uCom     := 'UN';
-      Prod.qCom     := 1;
-      Prod.vUnCom   := 100;
-      Prod.vProd    := 100;
+      TotalItem := RoundABNT(fPedidos[IndicePedido].Items[i].Qtd * fPedidos[IndicePedido].Items[i].PrecoUnit, -2);
 
-      Prod.cEANTrib  := '7896523206646';
-      Prod.uTrib     := 'UN';
-      Prod.qTrib     := 1;
-      Prod.vUnTrib   := 100;
-
-      Prod.vOutro    := 0;
-      Prod.vFrete    := 0;
-      Prod.vSeg      := 0;
-      Prod.vDesc     := 0;
-
-      Prod.CEST := '1111111';
-
-//         infAdProd      := 'Informação Adicional do Produto';
-
-      with Imposto do
+      //Adicionando Produtos
+      with Det.New do
       begin
-        // lei da transparencia nos impostos
-        vTotTrib := 0;
+        Prod.nItem    := I+1;
+        Prod.cProd    := IntToStr(fPedidos[IndicePedido].Items[i].CodItem);
+        Prod.xProd    := fPedidos[IndicePedido].Items[i].Descricao;
+        Prod.cEAN     := '';
+        Prod.NCM      := '';
+        Prod.EXTIPI   := '';
+        Prod.CFOP     := '5101';
+        Prod.uCom     := fPedidos[IndicePedido].Items[i].UN;
+        Prod.qCom     := fPedidos[IndicePedido].Items[i].Qtd;
+        Prod.vUnCom   := fPedidos[IndicePedido].Items[i].PrecoUnit;
+        Prod.vProd    := TotalItem;
 
-        with ICMS do
+        Prod.cEANTrib  := '';
+        Prod.uTrib     := fPedidos[IndicePedido].Items[i].UN;
+        Prod.qTrib     := fPedidos[IndicePedido].Items[i].Qtd;
+        Prod.vUnTrib   := fPedidos[IndicePedido].Items[i].PrecoUnit;
+
+        Prod.vOutro    := 0;
+        Prod.vFrete    := 0;
+        Prod.vSeg      := 0;
+        Prod.vDesc     := 0;
+
+        Prod.CEST := '';
+  //    infAdProd      := 'Informação Adicional do Produto';
+
+        with Imposto do
         begin
-          // caso o CRT seja:
-          // 1=Simples Nacional
-          // Os valores aceitos para CSOSN são:
-          // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
-          // csosn300, csosn400, csosn500,csosn900
+          // lei da transparencia nos impostos
+          vTotTrib := 0;
 
-          // 2=Simples Nacional, excesso sublimite de receita bruta;
-          // ou 3=Regime Normal.
-          // Os valores aceitos para CST são:
-          // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
-          // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
-          // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
-
-          // (consulte o contador do seu cliente para saber qual deve ser utilizado)
-          // Pode variar de um produto para outro.
-
-          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
-            CST := cst00
-          else
-            CSOSN := csosn102;
-
-          orig    := oeNacional;
-          modBC   := dbiValorOperacao;
-
-          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
-            BaseCalculo := 100
-          else
-            BaseCalculo := 0;
-
-          vBC     := BaseCalculo;
-          pICMS   := 18;
-
-          ValorICMS := vBC * pICMS;
-
-          vICMS   := ValorICMS;
-          modBCST := dbisMargemValorAgregado;
-          pMVAST  := 0;
-          pRedBCST:= 0;
-          vBCST   := 0;
-          pICMSST := 0;
-          vICMSST := 0;
-          pRedBC  := 0;
-
-          pCredSN := 5;
-          vCredICMSSN := 50;
-          vBCFCPST := 100;
-          pFCPST := 2;
-          vFCPST := 2;
-          vBCSTRet := 0;
-          pST := 0;
-          vICMSSubstituto := 0;
-          vICMSSTRet := 0;
-          vBCFCPSTRet := 0;
-          pFCPSTRet := 0;
-          vFCPSTRet := 0;
-          pRedBCEfet := 0;
-          vBCEfet := 0;
-          pICMSEfet := 0;
-          vICMSEfet := 0;
-
-          // partilha do ICMS e fundo de probreza
-          with ICMSUFDest do
+          with ICMS do
           begin
-            vBCUFDest      := 0.00;
-            pFCPUFDest     := 0.00;
-            pICMSUFDest    := 0.00;
-            pICMSInter     := 0.00;
-            pICMSInterPart := 0.00;
-            vFCPUFDest     := 0.00;
-            vICMSUFDest    := 0.00;
-            vICMSUFRemet   := 0.00;
+            // caso o CRT seja:
+            // 1=Simples Nacional
+            // Os valores aceitos para CSOSN são:
+            // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
+            // csosn300, csosn400, csosn500,csosn900
+
+            // 2=Simples Nacional, excesso sublimite de receita bruta;
+            // ou 3=Regime Normal.
+            // Os valores aceitos para CST são:
+            // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
+            // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
+            // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
+
+            // (consulte o contador do seu cliente para saber qual deve ser utilizado)
+            // Pode variar de um produto para outro.
+
+            if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+              CST := cst00
+            else
+              CSOSN := csosn102;
+
+            orig    := oeNacional;
+            modBC   := dbiValorOperacao;
+
+            if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+              BaseCalculo := TotalItem
+            else
+              BaseCalculo := 0;
+
+            BaseCalculoTotal := BaseCalculoTotal + BaseCalculo;
+
+            vBC     := BaseCalculo;
+            pICMS   := 18;
+            ValorICMS := vBC * pICMS;
+            ValorICMSTotal := ValorICMSTotal + ValorICMS;
+
+            vICMS   := ValorICMS;
+            modBCST := dbisMargemValorAgregado;
+            pMVAST  := 0;
+            pRedBCST:= 0;
+            vBCST   := 0;
+            pICMSST := 0;
+            vICMSST := 0;
+            pRedBC  := 0;
+
+            pCredSN := 0;
+            vCredICMSSN := 0;
+            vBCFCPST := TotalItem;
+            pFCPST := 2;
+            vFCPST := 2;
+            vBCSTRet := 0;
+            pST := 0;
+            vICMSSubstituto := 0;
+            vICMSSTRet := 0;
+            vBCFCPSTRet := 0;
+            pFCPSTRet := 0;
+            vFCPSTRet := 0;
+            pRedBCEfet := 0;
+            vBCEfet := 0;
+            pICMSEfet := 0;
+            vICMSEfet := 0;
+
+            // partilha do ICMS e fundo de probreza
+            with ICMSUFDest do
+            begin
+              vBCUFDest      := 0.00;
+              pFCPUFDest     := 0.00;
+              pICMSUFDest    := 0.00;
+              pICMSInter     := 0.00;
+              pICMSInterPart := 0.00;
+              vFCPUFDest     := 0.00;
+              vICMSUFDest    := 0.00;
+              vICMSUFRemet   := 0.00;
+            end;
           end;
-        end;
 
-        with PIS do
-        begin
-          CST      := pis99;
-          PIS.vBC  := 0;
-          PIS.pPIS := 0;
-          PIS.vPIS := 0;
+          with PIS do
+          begin
+            CST      := pis99;
+            PIS.vBC  := 0;
+            PIS.pPIS := 0;
+            PIS.vPIS := 0;
 
-          PIS.qBCProd   := 0;
-          PIS.vAliqProd := 0;
-          PIS.vPIS      := 0;
-        end;
+            PIS.qBCProd   := 0;
+            PIS.vAliqProd := 0;
+            PIS.vPIS      := 0;
+          end;
 
-        with PISST do
-        begin
-          vBc       := 0;
-          pPis      := 0;
-          qBCProd   := 0;
-          vAliqProd := 0;
-          vPIS      := 0;
-        end;
+          with PISST do
+          begin
+            vBc       := 0;
+            pPis      := 0;
+            qBCProd   := 0;
+            vAliqProd := 0;
+            vPIS      := 0;
+          end;
 
-        with COFINS do
-        begin
-          CST            := cof99;
-          COFINS.vBC     := 0;
-          COFINS.pCOFINS := 0;
-          COFINS.vCOFINS := 0;
+          with COFINS do
+          begin
+            CST            := cof99;
+            COFINS.vBC     := 0;
+            COFINS.pCOFINS := 0;
+            COFINS.vCOFINS := 0;
 
-          COFINS.qBCProd   := 0;
-          COFINS.vAliqProd := 0;
-        end;
+            COFINS.qBCProd   := 0;
+            COFINS.vAliqProd := 0;
+          end;
 
-        with COFINSST do
-        begin
-          vBC       := 0;
-          pCOFINS   := 0;
-          qBCProd   := 0;
-          vAliqProd := 0;
-          vCOFINS   := 0;
+          with COFINSST do
+          begin
+            vBC       := 0;
+            pCOFINS   := 0;
+            qBCProd   := 0;
+            vAliqProd := 0;
+            vCOFINS   := 0;
+          end;
         end;
       end;
     end;
 
-    Total.ICMSTot.vBC     := BaseCalculo;
-    Total.ICMSTot.vICMS   := ValorICMS;
+    Total.ICMSTot.vBC     := BaseCalculoTotal;
+    Total.ICMSTot.vICMS   := ValorICMSTotal;
     Total.ICMSTot.vBCST   := 0;
     Total.ICMSTot.vST     := 0;
     Total.ICMSTot.vProd   := 100;
@@ -1831,22 +1870,9 @@ begin
 
     InfAdic.infCpl     :=  '';
     InfAdic.infAdFisco :=  '';
-
-    with InfAdic.obsCont.New do
-    begin
-      xCampo := 'ObsCont';
-      xTexto := 'Texto';
-    end;
-
-    with InfAdic.obsFisco.New do
-    begin
-      xCampo := 'ObsFisco';
-      xTexto := 'Texto';
-    end;
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
-  *)
 end;
 
 procedure TfrPOSTEFServer.IncluirPedidosSimulados;
@@ -1856,6 +1882,7 @@ begin
   fPedidos[0].DataHora := IncMinute(Now, -40);
   fPedidos[0].Nome := 'DANIEL SIMOES';
   fPedidos[0].ValorTotal := 25;
+  fPedidos[0].TotalPago := 0;
   SetLength(fPedidos[0].Items, 1);
   fPedidos[0].Items[0].CodItem := 100;
   fPedidos[0].Items[0].Descricao := 'PIZZA BROTO PEPPERONI';
@@ -1867,6 +1894,7 @@ begin
   fPedidos[1].DataHora := IncMinute(Now, -30);
   fPedidos[1].Nome := 'INDIANA JONES';
   fPedidos[1].ValorTotal := 75;
+  fPedidos[0].TotalPago := 0;
   SetLength(fPedidos[1].Items, 2);
   fPedidos[1].Items[0].CodItem := 100;
   fPedidos[1].Items[0].Descricao := 'PIZZA BROTO PEPPERONI';
@@ -1883,6 +1911,7 @@ begin
   fPedidos[2].DataHora := IncMinute(Now, -20);
   fPedidos[2].Nome := 'ANA MARIA';
   fPedidos[2].ValorTotal := 115;
+  fPedidos[0].TotalPago := 0;
   SetLength(fPedidos[2].Items, 3);
   fPedidos[2].Items[0].CodItem := 200;
   fPedidos[2].Items[0].Descricao := 'PIZZA GRANDE PEPPERONI';
@@ -1904,6 +1933,7 @@ begin
   fPedidos[3].DataHora := IncMinute(Now, -10);
   fPedidos[3].Nome := 'JUCA PATO';
   fPedidos[3].ValorTotal := 25.50;
+  fPedidos[0].TotalPago := 0;
   SetLength(fPedidos[3].Items, 2);
   fPedidos[3].Items[0].CodItem := 101;
   fPedidos[3].Items[0].Descricao := 'PIZZA BROTO MARGUERITA';
@@ -1928,6 +1958,7 @@ begin
   try
     rgDocumentoFiscal.ItemIndex := Ini.ReadInteger('Geral','DoctoFiscal', 0);
     cbEmailDoctoFiscal.Checked := Ini.ReadBool('Geral','EmailDoctoFiscal', False);
+    cbIniciarEmOperacao.Checked := Ini.ReadBool('Geral','IniciarEmOperacao', False);
 
     sePortaTCP.Value := Ini.ReadInteger('POS', 'PortaTCP', sePortaTCP.Value);
     seMaxConexoes.Value := Ini.ReadInteger('POS', 'MaxConexoes.', seMaxConexoes.Value);
@@ -1976,12 +2007,14 @@ begin
 
     cbSSLType.ItemIndex := Ini.ReadInteger('NFCe.WebService', 'SSLType', 5);
     cbWebServiceUF.ItemIndex := cbWebServiceUF.Items.IndexOf(Ini.ReadString('NFCe.WebService', 'UF', ''));
-    rgTipoAmb.ItemIndex := Ini.ReadInteger('NFCe.WebService', 'Ambiente', 1);
+    cbTipoAmb.ItemIndex := Ini.ReadInteger('NFCe.WebService', 'Ambiente', 1);
     seTimeOut.Value := Ini.ReadInteger('NFCe.WebService', 'TimeOut', seTimeOut.Value);
 
     edtPathSchemas.Text := Ini.ReadString('NFCe', 'PathSchemas', ApplicationPath+'Schemas\NFe');
     edtTokenID.Text := Ini.ReadString('NFCe', 'TokenID', '');
     edtTokenCSC.Text := Ini.ReadString('NFCe', 'TokenCSC', '');
+    seNFCeLote.Value := Ini.ReadInteger('NFCe', 'Lote', 1);
+    seNFCeNumero.Value := Ini.ReadInteger('NFCe', 'Numero', 1);
 
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     seProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
@@ -2037,6 +2070,7 @@ begin
   try
     Ini.WriteInteger('Geral','DoctoFiscal', rgDocumentoFiscal.ItemIndex);
     Ini.WriteBool('Geral','EmailDoctoFiscal', cbEmailDoctoFiscal.Checked);
+    Ini.WriteBool('Geral','IniciarEmOperacao', cbIniciarEmOperacao.Checked);
 
     Ini.WriteInteger('POS', 'PortaTCP', sePortaTCP.Value);
     Ini.WriteInteger('POS', 'MaxConexoes.', seMaxConexoes.Value);
@@ -2081,11 +2115,13 @@ begin
 
     Ini.WriteInteger('NFCe.WebService', 'SSLType', cbSSLType.ItemIndex);
     Ini.WriteString('NFCe.WebService', 'UF', cbWebServiceUF.Text);
-    Ini.WriteInteger('NFCe.WebService', 'Ambiente', rgTipoAmb.ItemIndex);
+    Ini.WriteInteger('NFCe.WebService', 'Ambiente', cbTipoAmb.ItemIndex);
     Ini.WriteInteger('NFCe.WebService', 'TimeOut', seTimeOut.Value);
     Ini.WriteString('NFCe', 'PathSchemas', edtPathSchemas.Text);
     Ini.WriteString('NFCe', 'TokenID', edtTokenID.Text);
     Ini.WriteString('NFCe', 'TokenCSC', edtTokenCSC.Text);
+    Ini.WriteInteger('NFCe', 'Lote', seNFCeLote.Value);
+    Ini.WriteInteger('NFCe', 'Numero', seNFCeNumero.Value);
 
     Ini.WriteString('Proxy', 'Host',  edtProxyHost.Text);
     Ini.WriteString('Proxy', 'Porta', seProxyPorta.Text);
@@ -2145,7 +2181,7 @@ begin
 
   ACBrNFe1.Configuracoes.WebServices.UF := cbWebServiceUF.Text;
 
-  ACBrNFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(rgTipoAmb.ItemIndex);
+  ACBrNFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(cbTipoAmb.ItemIndex);
   ACBrNFe1.Configuracoes.WebServices.TimeOut := seTimeOut.Value;
 
   ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
@@ -2213,6 +2249,16 @@ end;
 procedure TfrPOSTEFServer.DesativarSAT;
 begin
   ACBrSAT1.DesInicializar;
+end;
+
+function TfrPOSTEFServer.TemEmissaoDeNFCe: Boolean;
+begin
+  Result := (rgDocumentoFiscal.ItemIndex = 1);
+end;
+
+function TfrPOSTEFServer.TemEnvioDeEmail: Boolean;
+begin
+  Result := cbEmailDoctoFiscal.Checked;
 end;
 
 procedure TfrPOSTEFServer.ConfigurarACBrSAT;

@@ -721,6 +721,8 @@ type
   function MotInvToStr(AValue: TACBrMotInv): string;
   function IndPropToStr(AValue: TACBrIndProp): string;
   function StrToIndProp(const AValue: string): TACBrIndProp;
+  function IndEstToStr(AValue: TACBrIndEstoque): string;
+  function StrToIndEst(const AValue: string): TACBrIndEstoque;
   function TpLigacaoToStr(AValue: TACBrTpLigacao): string;
   function StrToTpLigacao(const AValue: string): TACBrTpLigacao;
   function GrupoTensaoToStr(AValue: TACBrGrupoTensao): string;
@@ -1060,6 +1062,16 @@ end;
 function StrToIndProp(const AValue: string): TACBrIndProp;
 begin
    Result := TACBrIndProp( StrToIntDef( AValue, 0) );
+end;
+
+function IndEstToStr(AValue: TACBrIndEstoque): string;
+begin
+   Result := FormatFloat('00', Integer( AValue ) );
+end;
+
+function StrToIndEst(const AValue: string): TACBrIndEstoque;
+begin
+   Result := TACBrIndEstoque( StrToIntDef( AValue, 0) );
 end;
 
 function TpLigacaoToStr(AValue: TACBrTpLigacao): string;

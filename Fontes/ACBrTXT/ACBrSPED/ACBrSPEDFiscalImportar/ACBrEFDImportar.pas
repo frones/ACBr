@@ -47,7 +47,8 @@ uses
   ACBrEFDBloco_D_Importar,
   ACBrEFDBloco_E_Importar,
   ACBrEFDBloco_H_Importar,
-  ACBrEFDBloco_1_Importar;
+  ACBrEFDBloco_1_Importar,
+  ACBrEFDBloco_K_Importar;
 
 const
   CACBrSpedFiscalImportar_Versao = '1.00';
@@ -74,6 +75,7 @@ type
     procedure ProcessaBlocoD(const Delimiter: TStrings);
     procedure ProcessaBlocoE(const Delimiter: TStrings);
     procedure ProcessaBlocoH(const Delimiter: TStrings);
+    procedure ProcessaBlocoK(const Delimiter: TStrings);
     procedure ProcessaBloco1(const Delimiter: TStrings);
   public
     procedure Importar;
@@ -137,6 +139,8 @@ begin
           ProcessaBlocoE(Delimitador)
         else if (Bloco = 'H') then
           ProcessaBlocoH(Delimitador)
+        else if (Bloco = 'K') then
+          ProcessaBlocoK(Delimitador)
         else if (Bloco = '1') then
           ProcessaBloco1(Delimitador);
       end;
@@ -204,6 +208,18 @@ begin
     ProcessaBloco(ImportarBlocoH, Delimiter);
   finally
     ImportarBlocoH.Free;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar.ProcessaBlocoK(const Delimiter: TStrings);
+var
+  ImportarBlocoK: TACBrSpedFiscalImportar_BlocoK;
+begin
+  ImportarBlocoK := TACBrSpedFiscalImportar_BlocoK.Create;
+  try
+    ProcessaBloco(ImportarBlocoK, Delimiter);
+  finally
+    ImportarBlocoK.Free;
   end;
 end;
 

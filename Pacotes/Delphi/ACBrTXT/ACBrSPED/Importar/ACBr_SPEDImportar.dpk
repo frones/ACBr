@@ -24,7 +24,6 @@ package ACBr_SPEDImportar;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
-{$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
@@ -54,6 +53,7 @@ contains
   ACBrEFDBloco_D_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_D_Importar.pas',
   ACBrEFDBloco_E_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_E_Importar.pas',
   ACBrEFDBloco_H_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_H_Importar.pas',
-  ACBrEFDBloco_1_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_1_Importar.pas';
+  ACBrEFDBloco_1_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_1_Importar.pas',
+  ACBrEFDBloco_K_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_K_Importar.pas';
 
 end.

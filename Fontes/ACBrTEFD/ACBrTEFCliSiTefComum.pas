@@ -292,6 +292,9 @@ begin
           fpDataHoraTransacaoLocal := fpDataHoraTransacaoComprovante;
         end;
 
+        106: fpIdCarteiraDigital := LinStr;
+        107: fpNomeCarteiraDigital := LinStr;
+
         120: fpAutenticacao := LinStr;
         121: fpImagemComprovante1aVia.Text := ChangeLineBreak(LinStr, sLineBreak);
         122: fpImagemComprovante2aVia.Text := ChangeLineBreak(LinStr, sLineBreak);

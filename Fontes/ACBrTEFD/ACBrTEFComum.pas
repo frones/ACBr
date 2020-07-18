@@ -289,6 +289,8 @@ type
     fpCodigoBandeiraPadrao: String;  // SiTef-132, Contém um índice que indica qual o tipo do cartão quando esse tipo for identificável, segundo uma tabela a ser fornecida (5 posições)
     fpConfirmar: Boolean;     // Se Verdadeiro, deve confirmar essa transação
     fpQRCode: String;       // String com o Conteúdo do QRCode
+    fpIdCarteiraDigital : String; // Código de identificação da carteira digital
+    fpNomeCarteiraDigital : String; // Nome da carteira digital
 
     procedure SetCNFEnviado(const AValue: Boolean);
     procedure SetArqBackup(const AValue: String);
@@ -387,6 +389,8 @@ type
     property DataEntradaCDC: TDateTime read fpDataEntradaCDC;
     property TipoOperacao: TACBrTEFRespTipoOperacao read fpTipoOperacao;
     property QRCode: String read fpQRCode;
+    property IdCarteiraDigital: String read fpIdCarteiraDigital;
+    property NomeCarteiraDigital: String read fpNomeCarteiraDigital;
 
     property NFCeSAT: TACBrTEFRespNFCeSAT read fpNFCeSAT;
 

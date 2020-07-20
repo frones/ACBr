@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2020
+-- ACBrTEF --
+[*] Ajuste em "TACBrTEFD.ConfirmarTransacoesPendentes", para sempre chamar o evento,
+    mesmo que as transações tenham sido confirmadas anteriormente (multiplos cartões)
+    https://www.projetoacbr.com.br/forum/topic/58532-d%C3%BAvida-ao-usar-outra-forma-de-pagamento/
+    (por: DSA)
+
 14/07/2020
 -- ACBrTEFDCliSitef --
 [*] Ajuste em "TACBrTEFDCliSiTef.ContinuarRequisicao", para processar os comandos 50 e 51

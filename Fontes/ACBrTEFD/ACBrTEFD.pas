@@ -838,12 +838,10 @@ end;
 
 procedure TACBrTEFD.ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean);
 var
-  HouveConfirmacao: Boolean;
   I : Integer;
 begin
   fTefClass.GravaLog( 'ConfirmarTransacoesPendentes' );
 
-  HouveConfirmacao := False;
   I := 0;
   while I < RespostasPendentes.Count do
   begin
@@ -855,8 +853,7 @@ begin
         if not CNFEnviado then
         begin
           CNF( Rede, NSU, Finalizacao, DocumentoVinculado );
-          CNFEnviado       := True;
-          HouveConfirmacao := True;
+          CNFEnviado := True;
         end;
 
         if ApagarRespostasPendentes then
@@ -873,7 +870,7 @@ begin
   end ;
 
   try
-    if HouveConfirmacao and Assigned( fOnDepoisConfirmarTransacoes ) then
+    if (RespostasPendentes.Count > 0) and Assigned( fOnDepoisConfirmarTransacoes ) then
       fOnDepoisConfirmarTransacoes( RespostasPendentes );
   finally
     if ApagarRespostasPendentes then

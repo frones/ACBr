@@ -181,12 +181,12 @@ end;
 
 function TACBrLibNFe.SetRetornoNFeCarregadas(const NumNFe: integer): integer;
 begin
-  Result := SetRetorno(0, {NumNFe,} Format(SInfNFeCarregadas, [NumNFe]));
+  Result := SetRetorno(0, Format(SInfNFeCarregadas, [NumNFe]));
 end;
 
 function TACBrLibNFe.SetRetornoEventoCarregados(const NumEventos: integer): integer;
 begin
-  Result := SetRetorno(0, {NumNFe,} Format(SInfEventosCarregados, [NumEventos]));
+  Result := SetRetorno(0, Format(SInfEventosCarregados, [NumEventos]));
 end;
 
 function TACBrLibNFe.CarregarXML(const eArquivoOuXML: PChar): longint;
@@ -263,7 +263,6 @@ var
   Resposta: string;
 begin
   try
-
     if Config.Log.Nivel > logNormal then
       GravarLog('NFE_ObterXml(' + IntToStr(AIndex) + ' )', logCompleto, True)
     else

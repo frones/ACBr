@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibNFeClass;
+unit ACBrLibNFeST;
 
 interface
 
@@ -182,6 +182,7 @@ function NFE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
+  pLib := nil;
 end;
 
 function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;

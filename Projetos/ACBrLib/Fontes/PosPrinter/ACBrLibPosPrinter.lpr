@@ -5,7 +5,8 @@ library ACBrLibPosPrinter;
 uses
   Interfaces, printer4lazarus, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibPosPrinterClass, ACBrLibPosPrinterConfig, ACBrLibPosPrinterDataModule;
+  {$IFDEF MT}ACBrLibPosPrinterMT{$ELSE}ACBrLibPosPrinterST{$ENDIF},
+  ACBrLibPosPrinterConfig, ACBrLibPosPrinterDataModule;
 
 {$R *.res}
 

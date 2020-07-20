@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibPosPrinterClass;
+unit ACBrLibPosPrinterST;
 
 interface
 

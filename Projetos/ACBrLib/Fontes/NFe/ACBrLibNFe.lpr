@@ -36,8 +36,9 @@
 library ACBrLibNFe;
 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibNFeClass, ACBrLibConfig,
+  Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
   ACBrLibComum, ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta,
+  {$IFDEF MT}ACBrLibNFeMT{$ELSE}ACBrLibNFeST{$ENDIF},
   DFeReportConfig, ACBrLibNFeRespostas;
 
 {$R *.res}

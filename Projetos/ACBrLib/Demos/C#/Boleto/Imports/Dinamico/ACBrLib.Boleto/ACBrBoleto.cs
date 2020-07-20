@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.Boleto;

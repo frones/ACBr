@@ -2,8 +2,8 @@
 {
     public enum ETQBackFeed
     {
-        bfNone, 
-        bfOn, 
+        bfNone,
+        bfOn,
         bfOff
     }
 }

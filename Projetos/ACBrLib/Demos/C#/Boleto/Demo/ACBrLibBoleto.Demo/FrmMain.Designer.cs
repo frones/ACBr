@@ -200,10 +200,6 @@
             // 
             this.cmbTipoCarteira.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoCarteira.FormattingEnabled = true;
-            this.cmbTipoCarteira.Items.AddRange(new object[] {
-            "tctSimples",
-            "tctRegistrada",
-            "tctEletronica"});
             this.cmbTipoCarteira.Location = new System.Drawing.Point(303, 148);
             this.cmbTipoCarteira.Name = "cmbTipoCarteira";
             this.cmbTipoCarteira.Size = new System.Drawing.Size(127, 21);
@@ -240,9 +236,6 @@
             // 
             this.cmbTipoDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoDocumento.FormattingEnabled = true;
-            this.cmbTipoDocumento.Items.AddRange(new object[] {
-            "Tradicional",
-            "Escritural"});
             this.cmbTipoDocumento.Location = new System.Drawing.Point(170, 148);
             this.cmbTipoDocumento.Name = "cmbTipoDocumento";
             this.cmbTipoDocumento.Size = new System.Drawing.Size(127, 21);
@@ -445,9 +438,6 @@
             // 
             this.cmbTipoInscricao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoInscricao.FormattingEnabled = true;
-            this.cmbTipoInscricao.Items.AddRange(new object[] {
-            "pFisica",
-            "pJuridica"});
             this.cmbTipoInscricao.Location = new System.Drawing.Point(6, 30);
             this.cmbTipoInscricao.Name = "cmbTipoInscricao";
             this.cmbTipoInscricao.Size = new System.Drawing.Size(100, 21);
@@ -601,14 +591,6 @@
             // 
             this.cmbModeloImpressao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbModeloImpressao.FormattingEnabled = true;
-            this.cmbModeloImpressao.Items.AddRange(new object[] {
-            "lPadrao",
-            "lCarne",
-            "llFatura",
-            "lPadraoEntrega",
-            "lReciboTopo",
-            "lPadraoEntrega2",
-            "lFaturaDetal"});
             this.cmbModeloImpressao.Location = new System.Drawing.Point(183, 26);
             this.cmbModeloImpressao.Name = "cmbModeloImpressao";
             this.cmbModeloImpressao.Size = new System.Drawing.Size(143, 21);
@@ -745,11 +727,6 @@
             // 
             this.cmbRespEmissao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRespEmissao.FormattingEnabled = true;
-            this.cmbRespEmissao.Items.AddRange(new object[] {
-            "tbCliEmite",
-            "tbBancoEmite",
-            "tbBancoReemite",
-            "tbBancoNaoReemite"});
             this.cmbRespEmissao.Location = new System.Drawing.Point(540, 25);
             this.cmbRespEmissao.Name = "cmbRespEmissao";
             this.cmbRespEmissao.Size = new System.Drawing.Size(172, 21);
@@ -816,42 +793,6 @@
             // cmbBanco
             // 
             this.cmbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBanco.Items.AddRange(new object[] {
-            "cobBancoABCBrasil",
-            "cobBancoCECRED",
-            "cobBancoCresolSCRS",
-            "cobBancoDaAmazonia",
-            "cobBancoDoBrasil",
-            "cobBancoDoBrasilSICOOB",
-            "cobBancoDoNordeste",
-            "cobBancoMercantil",
-            "cobBancoob",
-            "cobBancoPine",
-            "cobBancoPineBradesco",
-            "cobBancoSafra",
-            "cobBanese",
-            "cobBanestes",
-            "cobBanrisul",
-            "cobBicBanco",
-            "cobBradesco",
-            "cobBradescoSICOOB",
-            "cobBRB",
-            "cobCaixaEconomica",
-            "cobCaixaSicob",
-            "cobCitiBank",
-            "cobCrediSIS",
-            "cobDaycoval",
-            "cobHSBC",
-            "cobItau",
-            "cobNenhum",
-            "cobSafraBradesco",
-            "cobSantander",
-            "cobSicred",
-            "cobUnicredES",
-            "cobUnicredRS",
-            "cobUnicredSC",
-            "cobUniprime",
-            "cobUniprimeNortePR"});
             this.cmbBanco.Location = new System.Drawing.Point(6, 25);
             this.cmbBanco.Name = "cmbBanco";
             this.cmbBanco.Size = new System.Drawing.Size(172, 21);
@@ -994,9 +935,6 @@
             // 
             this.cmbLayoutCNAB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLayoutCNAB.FormattingEnabled = true;
-            this.cmbLayoutCNAB.Items.AddRange(new object[] {
-            "CNAB240",
-            "CNAB400"});
             this.cmbLayoutCNAB.Location = new System.Drawing.Point(9, 30);
             this.cmbLayoutCNAB.Name = "cmbLayoutCNAB";
             this.cmbLayoutCNAB.Size = new System.Drawing.Size(100, 21);

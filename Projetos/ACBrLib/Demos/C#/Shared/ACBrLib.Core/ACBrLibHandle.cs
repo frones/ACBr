@@ -151,6 +151,7 @@ namespace ACBrLib.Core
         protected readonly Dictionary<string, Delegate> methodCache;
         protected readonly string className;
         protected const int BUFFER_LEN = 256;
+        protected IntPtr libHandle;
 
         #endregion Fields
 

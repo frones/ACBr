@@ -39,5 +39,7 @@
         BoletoBancoConfig,
         BoletoDiretorioConfig,
         BoletoBancoFCFortesConfig,
+        GNRe,
+        Guia,
     }
 }

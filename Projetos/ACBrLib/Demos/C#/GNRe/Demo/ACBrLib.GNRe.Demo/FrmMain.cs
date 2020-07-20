@@ -52,7 +52,7 @@ namespace ACBrLib.GNRe.Demo
                 cmbSSlType.EnumDataSource(SSLType.LT_all);
 
                 // Altera as config de log
-                gnre.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", 4);
+                gnre.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);
 
                 var logPath = Path.Combine(Application.StartupPath, "Logs");
                 if (!Directory.Exists(logPath))

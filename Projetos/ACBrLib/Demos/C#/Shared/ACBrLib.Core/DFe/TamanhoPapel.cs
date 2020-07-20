@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ACBrLib.Core
+namespace ACBrLib.Core.DFe
 {
     public enum TamanhoPapel
     {

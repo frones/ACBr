@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:  Jos√© M S Junior                                }
+{ Colaboradores nesse arquivo:  JosÈ M S Junior                                }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -40,35 +40,35 @@ uses
   SysUtils;
 
 const
-  DSC_USUARIO_SERVICO = 'Autentica√ß√£o: nome do Usu√°rio Servi√ßo WebService';
-  DSC_AUTENTICACAO = 'Autentica√ß√£o do usu√°rio';
-  DSC_KEYUSER = 'Key User C√≥digo Chave Usu√°rio';
-  DSC_VERSAODF = 'Vers√£o do Servi√ßo WebService';
-  DSC_TIPO_SERVICO = 'Tipo do Servi√ßo WebServico';
-  DSC_SISTEMA_ORIGEM = 'C√≥digo Sistema de Origem WebService';
-  DSC_AGENCIA = 'N√∫mero da Ag√™ncia';
+  DSC_USUARIO_SERVICO = 'AutenticaÁ„o: nome do Usu·rio ServiÁo WebService';
+  DSC_AUTENTICACAO = 'AutenticaÁ„o do usu·rio';
+  DSC_KEYUSER = 'Key User CÛdigo Chave Usu·rio';
+  DSC_VERSAODF = 'Vers„o do ServiÁo WebService';
+  DSC_TIPO_SERVICO = 'Tipo do ServiÁo WebServico';
+  DSC_SISTEMA_ORIGEM = 'CÛdigo Sistema de Origem WebService';
+  DSC_AGENCIA = 'N˙mero da AgÍncia';
   DSC_DATA_HORA = 'Data Hora de Envio Remessa';
-  DSC_CODIGO_CEDENTE = 'C√≥digo do Cedente';
-  DSC_CONVENIO = 'N√∫mero do Convenio';
-  DSC_CARTEIRA = 'N√∫mero da Carteira';
-  DSC_VARIACAO_CARTEIRA = 'N√∫mero da varia√ß√£o de Carteira';
-  DSC_MODALIDADE = 'Modalidade do T√≠tulo';
+  DSC_CODIGO_CEDENTE = 'CÛdigo do Cedente';
+  DSC_CONVENIO = 'N˙mero do Convenio';
+  DSC_CARTEIRA = 'N˙mero da Carteira';
+  DSC_VARIACAO_CARTEIRA = 'N˙mero da variaÁ„o de Carteira';
+  DSC_MODALIDADE = 'Modalidade do TÌtulo';
   DSC_CODIGO_MODALIDADE = 'Codigo Modalidade Titulo';
-  DSC_NOSSO_NUMERO = 'Nosso N√∫mero';
-  DSC_NUMERO_DOCUMENTO = 'N√∫mero do Documento';
-  DSC_DATA_VENCIMENTO = 'Vencimento T√≠tulo';
-  DSC_VALOR_DOCUMENTO = 'Valor do T√≠tulo';
+  DSC_NOSSO_NUMERO = 'Nosso N˙mero';
+  DSC_NUMERO_DOCUMENTO = 'N˙mero do Documento';
+  DSC_DATA_VENCIMENTO = 'Vencimento TÌtulo';
+  DSC_VALOR_DOCUMENTO = 'Valor do TÌtulo';
   DSC_TIPO_ESPECIE = 'Tipo Especie';
   DSC_ACEITE = 'Aceite';
   DSC_DATA_DOCUMENTO = 'Data Documento';
   DSC_VALOR_ABATIMENTO = 'Valor Abatimento';
   DSC_VALOR_IOF = 'Valor IOF';
-  DSC_MOEDA = 'C√≥digo Moeda';
-  DSC_CODIGO_MORA_JUROS = 'C√≥digo Mora Juros';
+  DSC_MOEDA = 'CÛdigo Moeda';
+  DSC_CODIGO_MORA_JUROS = 'CÛdigo Mora Juros';
   DSC_DATA_MORA_JUROS = 'Data Mora Juros';
   DSC_VALOR_MORA_JUROS = 'Valor Mora Juros';
-  DSC_CODIGO_NEGATIVACAO = 'C√≥digo Negativa√ß√£o';
-  DSC_DIAS_PROTESTO = 'N√∫mero Dias Protesto';
+  DSC_CODIGO_NEGATIVACAO = 'CÛdigo NegativaÁ„o';
+  DSC_DIAS_PROTESTO = 'N˙mero Dias Protesto';
   DSC_NOME_SACADO = 'Nome do Sacado';
   DSC_LOGRADOURO = 'Logradouro do Sacado';
   DSC_BAIRRO = 'Bairro do Sacado';
@@ -85,16 +85,16 @@ const
   DSC_DATA_DESCONTO2 = 'Data Desconto2';
   DSC_VALOR_DESCONTO2 = 'Valor Desconto2';
   DSC_MENSAGEM = 'Mensagem';
-  DSC_INSTRUCAO1 = 'Instru√ß√£o 1';
-  DSC_INSTRUCAO2 = 'Instru√ß√£o 2';
-  DSC_INSTRUCAO3 = 'Instru√ß√£o 3';
+  DSC_INSTRUCAO1 = 'InstruÁ„o 1';
+  DSC_INSTRUCAO2 = 'InstruÁ„o 2';
+  DSC_INSTRUCAO3 = 'InstruÁ„o 3';
   DSC_QTDE_PAGAMENTO_PARCIAL = 'Qtde Pagamento Parcial';
   DSC_TIPO_PAGAMENTO = 'Tipo de Pagamento';
   DSC_VALOR_MIN_PAGAMENTO = 'Valor Min Pagamento';
   DSC_VALOR_MAX_PAGAMENTO = 'Valor Max Pagamento';
   DSC_PERCENTUAL_MIN_PAGAMENTO = 'Percentual Min Pagamento';
   DSC_PERCENTUAL_MAX_PAGAMENTO = 'Percentual Max Pagamento';
-  DSC_CANAL_SOLICITACAO = 'Canal de Solicita√ß√£o do Servi√ßo';
+  DSC_CANAL_SOLICITACAO = 'Canal de SolicitaÁ„o do ServiÁo';
 
 implementation
 

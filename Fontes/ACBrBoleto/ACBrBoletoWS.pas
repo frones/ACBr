@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:  Jos√© M S Junior                                }
+{ Colaboradores nesse arquivo:  JosÈ M S Junior                                }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -316,8 +316,8 @@ Const
 
 ResourceString
   S_METODO_NAO_IMPLEMENTADO =  'Metodo %s nao Implementado ';
-  S_OPERACAO_NAO_IMPLEMENTADO =  'Opera√ß√£o %s nao Implementado para este Banco';
-  S_ERRO_GERAR_TOKEN_AUTENTICACAO = 'Erro ao gerar token de Autentica√ß√£o: %s';
+  S_OPERACAO_NAO_IMPLEMENTADO =  'OperaÁ„o %s nao Implementado para este Banco';
+  S_ERRO_GERAR_TOKEN_AUTENTICACAO = 'Erro ao gerar token de AutenticaÁ„o: %s';
 
 implementation
 
@@ -348,7 +348,7 @@ end;
 function TOAuth.getURL: String;
 begin
   if FURL = '' then
-    Raise Exception.Create(ACBrStr('M√©todo de Autentica√ß√£o inv√°lido. URL n√£o definida!'))
+    Raise Exception.Create(ACBrStr('MÈtodo de AutenticaÁ„o inv·lido. URL n„o definida!'))
   else
     Result := FURL;
 end;
@@ -372,7 +372,7 @@ end;
 function TOAuth.getClientID: String;
 begin
   if FClientID = '' then
-    Raise Exception.Create(ACBrStr('Client_ID n√£o Informado'));
+    Raise Exception.Create(ACBrStr('Client_ID n„o Informado'));
 
   Result := FClientID;
 end;
@@ -380,7 +380,7 @@ end;
 function TOAuth.getClientSecret: String;
 begin
   if FClientSecret = '' then
-    Raise Exception.Create(ACBrStr('Client_Secret n√£o Informado'));
+    Raise Exception.Create(ACBrStr('Client_Secret n„o Informado'));
 
   Result := FClientSecret;
 end;
@@ -388,7 +388,7 @@ end;
 function TOAuth.getScope: String;
 begin
   if FScope = '' then
-    Raise Exception.Create(ACBrStr('Scope n√£o Informado'));
+    Raise Exception.Create(ACBrStr('Scope n„o Informado'));
 
   Result := FScope;
 end;
@@ -455,13 +455,12 @@ end;
 
 function TOAuth.Executar(const AAuthBase64: String): Boolean;
 begin
-  Result := False;
   FErroComunicacao := '';
 
   if not Assigned(FSSL) then
     raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DFESSL] ));
 
-  //Definindo Header da requisi√ß√£o OAuth
+  //Definindo Header da requisiÁ„o OAuth
   FSSL.SSLHttpClass.Clear;
   FSSL.SSLHttpClass.MimeType := ContentType;
   with FSSL.SSLHttpClass.HeaderReq do
@@ -483,7 +482,7 @@ begin
     Result := (FErroComunicacao = '');
   except
     on E: Exception do
-      raise EACBrBoletoWSException.Create(ACBrStr('Falha na Autentica√ß√£o: '+ E.Message));
+      raise EACBrBoletoWSException.Create(ACBrStr('Falha na AutenticaÁ„o: '+ E.Message));
 
   end;
 
@@ -514,11 +513,10 @@ end;
 
 function TOAuth.GerarToken: Boolean;
 begin
-  Result := False;
 
-  if ( Token <> '' ) and ( CompareDateTime( Expire, Now ) = 1 ) then                                        //Token ja gerado e ainda v√°lido
+  if ( Token <> '' ) and ( CompareDateTime( Expire, Now ) = 1 ) then                                        //Token ja gerado e ainda v·lido
     Result := True
-  else                                                                                                      //Converte Basic da Autentica√ß√£o em Base64
+  else                                                                                                      //Converte Basic da AutenticaÁ„o em Base64
     Result := Executar( 'Basic ' + String(EncodeBase64(AnsiString(FClientID + ':' + FClientSecret))) );
 
 end;
@@ -532,7 +530,6 @@ end;
 
 function TRetornoEnvioREST.RetornoEnvio: Boolean;
 begin
-  Result := False;
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_RETORNO_ENVIO] ));
 end;
 
@@ -551,7 +548,6 @@ end;
 
 function TBoletoWSREST.Enviar: Boolean;
 begin
-  Result := False;
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_ENVIAR] ));
 end;
 
@@ -564,7 +560,6 @@ end;
 
 function TRetornoEnvioSOAP.RetornoEnvio: Boolean;
 begin
-  Result := False;
   leitor.Arquivo := ParseText(RetWS);
   LerRetorno;
 
@@ -626,7 +621,7 @@ var
   Stream: TMemoryStream;
 begin
   try
-    if FPAuthorization = '' then //Se Existir Autentica√ß√£o deve utilizar HTTPMetod, anexando Token de Autoriza√ß√£o no Header
+    if FPAuthorization = '' then //Se Existir AutenticaÁ„o deve utilizar HTTPMetod, anexando Token de AutorizaÁ„o no Header
       FRetornoWS:= FDFeSSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType )
     else
     begin
@@ -696,7 +691,7 @@ begin
   if NaoEstaVazio(FPRootElement) then
     Gerador.wGrupo(FPRootElement);
 
-  //Gera o Cabe√ßalho XML, implementado na classe do Banco selecionado
+  //Gera o CabeÁalho XML, implementado na classe do Banco selecionado
   GerarHeader;
   //Gera os dados XML, implementado na classe do Banco selecionado
   GerarDados;
@@ -712,7 +707,6 @@ end;
 
 function TBoletoWSSOAP.Enviar: Boolean;
 begin
-  Result := False;
   FBoletoWS.FRetornoBanco.CodRetorno:= 0;
   FBoletoWS.FRetornoBanco.Msg := '';
   FPAuthorization:= '';
@@ -757,14 +751,12 @@ end;
 
 function TRetornoEnvioClass.LerRetorno: Boolean;
 begin
-  Result := False;
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_RETORNO] ));
 
 end;
 
 function TRetornoEnvioClass.RetornoEnvio: Boolean;
 begin
-  Result := False;
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_RETORNO_ENVIO] ));
 
 end;
@@ -809,7 +801,6 @@ end;
 
 function TBoletoWSClass.Enviar: Boolean;
 begin
-  Result := False;
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_ENVIAR] ));
 end;
 

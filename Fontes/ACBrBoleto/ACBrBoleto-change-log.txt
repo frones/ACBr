@@ -49,6 +49,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2020
+-- ACBrBancoBrasil --
+[*] Adicionado Novos códigos de Rejeição no retorno CNAB240
+
+-- ACBrBoletoWS --
+[*] Melhorias, remoção de Hints e conversão das Units.
+
+-- ACBrBancoSantander --
+[*] Melhorias e refatoração das funções
+
 07/07/2020
 -- ACBrBancoCaixa --
 [*] Ajustes no Header para o layout 007 CNAB400

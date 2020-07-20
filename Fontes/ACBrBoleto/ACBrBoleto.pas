@@ -4597,7 +4597,6 @@ function TACBrBoleto.EnviarBoleto: boolean;
 var
   RemessaWS: TBoletoWS;
 begin
-  Result := False;
   if ListadeBoletos.Count < 1 then
     raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 

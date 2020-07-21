@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2020
+[-] Correção para usar as propriedade ImprimeLogoLateral e ImprimeQRCodeLateral corretamente.
+    (por: Rafael Dias)
+
 09/07/2020
 [*] Melhor suporte a impressoras com 32 colunas
 [+] Adicionada a propriedade "SuportaCondensado: Boolean default True"

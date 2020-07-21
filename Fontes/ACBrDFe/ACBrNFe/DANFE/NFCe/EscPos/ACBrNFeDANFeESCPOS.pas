@@ -153,7 +153,7 @@ end;
 
 function TACBrNFeDANFeESCPOS.FazerImpressaoLateral: Boolean;
 begin
-  Result := ImprimeQRCodeLateral and SuportaCondensado and
+  Result := SuportaCondensado and
             (PosPrinter.Colunas >= 48) and
             (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0);
 end;
@@ -184,7 +184,7 @@ var
   Altura: Integer;
   TextoLateral: String;
 begin
-  if FazerImpressaoLateral then
+  if FazerImpressaoLateral and ImprimeLogoLateral then
   begin
     TextoLateral := TagLigaCondensado;
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
@@ -778,7 +778,7 @@ begin
 
   DadosQRCode := CalcularDadosQRCode;
 
-  if FazerImpressaoLateral then
+  if FazerImpressaoLateral and ImprimeQRCodeLateral then
   begin
     FPosPrinter.Buffer.Add(' ');
 

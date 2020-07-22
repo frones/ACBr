@@ -1,15 +1,46 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{																			                                         }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
 unit Unit1;
 
 interface
 
 //** Converted with Mida 600     http://www.midaconverter.com - PROJETO.ACBR
 
-
-
 uses
   System.SysUtils,
   System.Types,
   System.UITypes,
+  System.UIConsts,
   System.Classes,
   System.Variants,
   System.IniFiles,
@@ -46,8 +77,8 @@ uses
   Fmx.StdCtrls,
   FMX.Header,
   FMX.Graphics, System.ImageList, FMX.ImgList, FMX.EditBox, FMX.SpinBox,
-  FMX.ScrollBox, FMX.Controls.Presentation,
-  ACBrPosPrinter, ACBrBase, ACBrDevice, FMX.ComboEdit;
+  FMX.ScrollBox, FMX.Controls.Presentation, FMX.ComboEdit,
+  ACBrPosPrinter, ACBrBase, ACBrDevice;
 
 type
 
@@ -217,6 +248,7 @@ StyleBook1: TStyleBook;
     { private declarations }
     Procedure GravarINI ;
     Procedure LerINI ;
+    function CalcularNomeArquivoConfiguracao: String;
   public
     { public declarations }
   end;
@@ -363,7 +395,8 @@ begin
                  'chNFe=35150805481336000137650220000000711000001960&nVersao=100&tpAmb=2&dhEmi=323031352D30382D31395432323A33333A32352D30333A3030&vNF=3.00&'+
                  'vICMS=0.12&digVal=776967396F2B665861706673396878776E64594C396F61654C35493D&cIdToken=000001&cHashQRCode=9BD312D558823E1EC68CEDB338A39B6150B0480E</qrcode>');
   mImp.Lines.Add('Exemplo de QRCode para SAT');
-  mImp.Lines.Add('<qrcode_error>0</qrcode_error><qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|'+
+  mImp.Lines.Add({'<qrcode_error>0</qrcode_error>}
+                 '<qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|'+
                  'TCbeD81ePUpMvso4VjFqRTvs4ovqmR1ZG3bwSCumzHtW8bbMedVJjVnww103v3LxKfgckAyuizcR/9pXaKay6M4Gu8kyDef+6VH5qONIZV1cB+mFfXiaCgeZ'+
                  'ALuRDCH1PRyb6hoBeRUkUk6lOdXSczRW9Y83GJMXdOFroEbzFmpf4+WOhe2BZ3mEdXKKGMfl1EB0JWnAThkGT+1Er9Jh/3En5YI4hgQP3NC2BiJVJ6oCEbKb'+
                  '85s5915DSZAw4qB/MlESWViDsDVYEnS/FQgA2kP2A9pR4+agdHmgWiz30MJYqX5Ng9XEYvvOMzl1Y6+7/frzsocOxfuQyFsnfJzogw==</qrcode>');
@@ -591,6 +624,18 @@ begin
   ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
 end;
 
+function TFrPosPrinterTeste.CalcularNomeArquivoConfiguracao: String;
+begin
+  {$IfDef ANDROID}
+   Result := TPath.Combine(TPath.GetDocumentsPath, 'PosPrinterTeste.ini' );
+  {$ElseIf Defined(FMX) and Defined(POSIX) and Defined(DEBUG)}
+   // Salva no diretório anterior, pois o PAServer sempre apaga a Pasta antes de executar
+   Result := ApplicationPath + '../' + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+  {$Else}
+   Result := ChangeFileExt(ParamStr(0), '.ini');
+  {$IfEnd}
+end;
+
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.IsChecked;
@@ -715,23 +760,19 @@ begin
 end;
 
 procedure TFrPosPrinterTeste.btSearchPortsClick(Sender: TObject);
-var
-  K: Integer;
-  PrinterSys: TPrinter;
 begin
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
-
   {$IfDef MSWINDOWS}
-   ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters();
-   for K := 0 to ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
-     cbxPorta.Items.Add('USB:'+ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[K].DeviceName);
+  ACBrPosPrinter1.Device.AcharPortasUSB( cbxPorta.Items );
   {$EndIf}
-
-  PrinterSys := FMX.Printer.Printer;
-  if Assigned(PrinterSys) then
-    For K := 0 to PrinterSys.Count-1 do
-      cbxPorta.Items.Add('RAW:'+PrinterSys.Printers[K].Title);
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
+  {$IfDef HAS_BLUETOOTH}
+  try
+    ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxPorta.Items, True );
+  except
+  end;
+  {$EndIf}
 
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
@@ -740,9 +781,7 @@ begin
 
   {$IfNDef MSWINDOWS}
    cbxPorta.Items.Add('/dev/ttyS0') ;
-   cbxPorta.Items.Add('/dev/ttyS1') ;
    cbxPorta.Items.Add('/dev/ttyUSB0') ;
-   cbxPorta.Items.Add('/dev/ttyUSB1') ;
    cbxPorta.Items.Add('/tmp/ecf.txt') ;
   {$EndIf}
 end;
@@ -829,7 +868,7 @@ Var
   ArqINI : String ;
   INI : TIniFile ;
 begin
-  ArqINI := ChangeFileExt( ParamStr(0),'.ini' ) ;
+  ArqINI := CalcularNomeArquivoConfiguracao;
 
   INI := TIniFile.Create(ArqINI);
   try
@@ -870,7 +909,7 @@ Var
   ArqINI : String ;
   INI : TIniFile ;
 begin
-  ArqINI := ChangeFileExt( ParamStr(0),'.ini' ) ;
+  ArqINI := CalcularNomeArquivoConfiguracao;
 
   INI := TIniFile.Create(ArqINI);
   try
@@ -916,17 +955,44 @@ end;
 procedure TFrPosPrinterTeste.bImprimirImagemClick(Sender: TObject);
 var
   MS: TMemoryStream;
+  BitMapData: TBitmapData;
+  X,Y: Integer;
+  SL: TStringList;
+  Linha: string;
+  b: TAlphaColor;
+  RasterStr: AnsiString;
 begin
   if rbStream.IsChecked  then
   begin
-    MS := TMemoryStream.Create;
+    SL := TStringList.Create;
     try
-      Image1.Bitmap.SaveToStream(MS);
-      MS.Position := 0;
-      ACBrPosPrinter1.ImprimirImagemStream(MS);
+      if Image1.Bitmap.Map(TMapAccess.Read, BitMapData) then
+      try
+        for Y := 0 to BitMapData.Height-1 do
+        begin
+          Linha := '';
+          for X := 0 to BitMapData.Width-1 do
+          begin
+            b := BitMapData.GetPixel(X, Y);
+            if b = claBlack then
+              Linha := Linha + '1'
+            else
+              Linha := Linha + '0';
+          end;
+
+          SL.Add(Linha);
+        end;
+
+        // DEBUG
+        //SL.SaveToFile('c:\temp\ascii.txt');
+        AscIIToRasterStr(SL, X, Y, RasterStr);
+        ACBrPosPrinter1.ImprimirImagemRasterStr(RasterStr, X, Y);
+      finally
+        Image1.Bitmap.Unmap(BitMapData);
+      end;
     finally
-      MS.Free ;
-    end ;
+      SL.Free;
+    end;
   end
   else
     ACBrPosPrinter1.ImprimirImagemArquivo(edImagem.Text);

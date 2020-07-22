@@ -6,8 +6,8 @@
         <MainSource>PosPrinterTeste.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android</Platform>
-        <TargetedPlatforms>34011</TargetedPlatforms>
+        <Platform Condition="'$(Platform)'==''">Linux64</Platform>
+        <TargetedPlatforms>32915</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -449,7 +449,7 @@
         <VerInfo_UIDeviceFamily>iPhoneAndiPad</VerInfo_UIDeviceFamily>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Linux64)'!=''">
-        <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrSerial\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrSerial\;C:\Pascal\Comp\ACBr\trunk2\Fontes\Terceiros\synalist\;C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrComum\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <Debugger_Launcher>/usr/bin/xterm -e &quot;%debuggee%&quot;</Debugger_Launcher>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
@@ -585,12 +585,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
-                    <Platform Name="Android">
-                        <RemoteName>libPosPrinterTeste.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Android\Debug\libPosPrinterTeste.so" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteName>libPosPrinterTeste.so</RemoteName>
@@ -600,6 +594,12 @@
                 <DeployFile LocalName="Android\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile">
                     <Platform Name="Android">
                         <RemoteName>classes.dex</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
+                        <RemoteName>libPosPrinterTeste.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -613,14 +613,14 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Linux64\Debug\PosPrinterTeste" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Linux64">
-                        <RemoteName>PosPrinterTeste</RemoteName>
+                <DeployFile LocalName="Android\Debug\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
+                    <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Android\Debug\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
-                    <Platform Name="Android">
+                <DeployFile LocalName="Linux64\Debug\PosPrinterTeste" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Linux64">
+                        <RemoteName>PosPrinterTeste</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1538,9 +1538,9 @@
             <Platforms>
                 <Platform value="Android">True</Platform>
                 <Platform value="Android64">True</Platform>
-                <Platform value="iOSDevice32">True</Platform>
-                <Platform value="iOSDevice64">True</Platform>
-                <Platform value="iOSSimulator">True</Platform>
+                <Platform value="iOSDevice32">False</Platform>
+                <Platform value="iOSDevice64">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
                 <Platform value="Linux64">True</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>

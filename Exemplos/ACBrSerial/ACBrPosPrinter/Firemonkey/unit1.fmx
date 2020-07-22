@@ -1242,6 +1242,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Top = 136
   end
   object ACBrPosPrinter1: TACBrPosPrinter
+    Device.SendBytesCount = 8192
+    Device.SendBytesInterval = 100
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

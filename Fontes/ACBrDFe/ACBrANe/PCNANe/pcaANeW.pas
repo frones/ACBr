@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcaConversao, pcaANe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts, pcaConversao, pcaANe;
 
 type
 

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2020
+-- ACBrXmlDocument --
+[+] Inclusão do método ImportXml e da propriedade OuterXml.
+  Por: Rafael Dias
+
 27/05/2020
 -- ACBrDFeWinCrypt --
 [-] Correção para remover o terminador #0 no retorno dos métodos "CertSubjectName" 

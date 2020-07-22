@@ -83,6 +83,7 @@ type
 
     function GetName: string;
     function GetContent: string;
+    function GetOuterXml: string;
     procedure SetName(AName: string);
     procedure SetContent(AContent: string);
 
@@ -95,8 +96,10 @@ type
     property Childrens: TACBrXMLNodeList read FNodeList;
     property Attributes: TACBrXMLAttributeList read FAttributeList;
     property Content: string read GetContent write SetContent;
+    property OuterXml: string read GetOuterXml;
 
     procedure AppendChild(ANode: TACBrXmlNode);
+    procedure ImportXml(AXmlString: string);
     procedure SetAttribute(AName, AContent: string);
     procedure SetNamespace(AHref: string; APrefix: string = '');
 
@@ -355,6 +358,21 @@ begin
   Result := string(xmlNodeGetContent(FXmlNode));
 end;
 
+function TACBrXmlNode.GetOuterXml: string;
+Var
+  buffer: xmlBufferPtr;
+begin
+  Result := '';
+  buffer := xmlBufferCreate();
+
+  try
+    xmlNodeDump(buffer, FXmlNode.doc, FXmlNode, 0, 0);
+    Result := string(buffer.content);
+  finally
+    xmlBufferFree(buffer);
+  end;
+end;
+
 procedure TACBrXmlNode.SetName(AName: string);
 begin
   if AName = EmptyStr then
@@ -405,6 +423,39 @@ begin
   ANode.FXmlNode := xmlAddChild(FXmlNode, ANode.FXmlNode);
   ANode.FXmlDoc := FXmlDoc;
   Childrens.Insert(ANode);
+end;
+
+procedure TACBrXmlNode.ImportXml(AXmlString: string);
+Var
+  ANode: TACBrXmlNode;
+  NewNode, curNode: xmlNodePtr;
+  memDoc: xmlDocPtr;
+  NewNodeXml: String;
+begin
+  if EstaVazio(AXmlString) then Exit;
+
+  NewNode := nil;
+  memDoc := nil;
+  try
+    NewNodeXml := '<a>' + AXmlString + '</a>';
+    memDoc := xmlReadMemory(PAnsiChar(AnsiString(NewNodeXml)), Length(NewNodeXml), nil, nil, 0);
+    curNode := xmlDocGetRootElement(memDoc);
+    curNode := curNode^.children;
+    while curNode <> nil do
+    begin
+      if curNode^.type_ = XML_ELEMENT_NODE then
+      begin
+        NewNode := xmlDocCopyNode(curNode, FXmlDoc.xmlDocInternal, 1);
+        ANode := TACBrXmlNode.Create(FXmlDoc, NewNode);
+        AppendChild(ANode);
+      end;
+
+      curNode := curNode^.Next;
+    end;
+  finally
+    if (memDoc <> nil) then
+      xmlFreeDoc(memDoc);
+  end;
 end;
 
 procedure TACBrXmlNode.SetAttribute(AName, AContent: string);
@@ -951,7 +1002,6 @@ begin
 
   if AName <> EmptyStr then
   begin
-    xmlNode := nil;
     xmlNode := xmlNewDocNode(xmlDocInternal, nil, PAnsichar(ansistring(AName)), nil);
     SetRootElement(TACBrXmlNode.Create(Self, xmlNode));
 
@@ -1026,7 +1076,6 @@ function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string; APref
 var
   NodeName: PAnsichar;
 begin
-  Result := nil;
   NodeName := PAnsichar(ansistring(AName));
 
   Result := TACBrXmlNode.Create(Self, xmlNewDocNode(xmlDocInternal, nil, NodeName, nil));

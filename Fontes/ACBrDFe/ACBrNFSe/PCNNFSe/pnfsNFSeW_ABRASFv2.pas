@@ -353,12 +353,6 @@ begin
   Gerador.wCampo(tcDe2, '#13', 'ValorServicos  ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO);
 
   case FProvedor of
-    profintelISS:
-      begin
-        Gerador.wCampo(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, DSC_VDEDUCISS);
-        Gerador.wCampo(tcDe2, '#21', 'ValorIss       ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, DSC_VISS);
-      end;
-
     proABase,
     proActcon,
     proPronimv2,
@@ -476,7 +470,6 @@ begin
     proTecnos: Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     pro4R,
-    profintelISS,
     proISSDigital,
     proISSe,
     proLink3,
@@ -499,9 +492,6 @@ begin
   else
     Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
   end;
-
-  if FProvedor in [profintelISS] then
-    Gerador.wCampo(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS);
 
   case FProvedor of
     proABase,
@@ -674,11 +664,10 @@ begin
     end;
     Gerador.wCampo(tcDe2, '#25', 'Aliquota              ', 01, 05, 1, NFSe.Servico.ItemServico[i].Aliquota, DSC_VALIQ);
     Gerador.wCampo(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.ItemServico[i].BaseCalculo, DSC_VBCISS);
-    Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoIncondicionado, DSC_VDESCINCOND);
-    Gerador.wCampo(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoCondicionado, DSC_VDESCCOND);
-
     if FProvedor = proSystemPro then
     begin
+      Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoIncondicionado, DSC_VDESCINCOND);
+      Gerador.wCampo(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoCondicionado, DSC_VDESCCOND);
       Gerador.wCampo(tcDe2, '#15', 'ValorPis   ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorPis, DSC_VPIS);
       Gerador.wCampo(tcDe2, '#16', 'ValorCofins', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorCofins, DSC_VCOFINS);
       Gerador.wCampo(tcDe2, '#17', 'ValorInss  ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorInss, DSC_VINSS);
@@ -731,11 +720,11 @@ end;
 procedure TNFSeW_ABRASFv2.GerarValoresServico;
 begin
   Gerador.wGrupo('ValoresServico');
-  Gerador.wCampo(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, DSC_VPIS);
-  Gerador.wCampo(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS);
-  Gerador.wCampo(tcDe2, '#17', 'ValorInss       ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, DSC_VINSS);
-  Gerador.wCampo(tcDe2, '#18', 'ValorIr         ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, DSC_VIR);
-  Gerador.wCampo(tcDe2, '#19', 'ValorCsll       ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, DSC_VCSLL);
+  Gerador.wCampo(tcDe2, '#15', 'ValorPis        ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, DSC_VPIS);
+  Gerador.wCampo(tcDe2, '#16', 'ValorCofins     ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS);
+  Gerador.wCampo(tcDe2, '#17', 'ValorInss       ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, DSC_VINSS);
+  Gerador.wCampo(tcDe2, '#18', 'ValorIr         ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, DSC_VIR);
+  Gerador.wCampo(tcDe2, '#19', 'ValorCsll       ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, DSC_VCSLL);
   Gerador.wCampo(tcDe2, '#21', 'ValorIss        ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, DSC_VISS);
   Gerador.wCampo(tcDe2, '#13', 'ValorLiquidoNfse', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, DSC_VNFSE);
   Gerador.wCampo(tcDe2, '#13', 'ValorServicos   ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO);
@@ -907,7 +896,7 @@ begin
       else
       begin
         if not (FProvedor in [proCenti, proGoiania, proSigep, proMegaSoft, proActconv2]) then
-          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI)
+          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
       end;
     end;
 
@@ -995,7 +984,7 @@ begin
   Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   if (FProvedor in [pro4R, proABase, proActcon, proAgili, proCoplan, proDigifred,
-     profintelISS, proFiorilli, proGoiania, proGovDigital,
+     proFiorilli, proGoiania, proGovDigital,
      proISSDigital, proLink3, proProdata, proPVH, proSaatri,
      proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
      proNFSEBrasil, proNEAInformatica, proNotaInteligente, proVersaTecnologia,

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2020
+-- pcnCIOTW_eFrete --
+[-] Correção na geração de Viagem Adicional em Viagem
+   Por: Márcio B.
+
 24/06/2020
 -- ACBrCIOTWebServices --
 [*] Removido as linhas que alterava o HTTPS por HTTP das URLs quando

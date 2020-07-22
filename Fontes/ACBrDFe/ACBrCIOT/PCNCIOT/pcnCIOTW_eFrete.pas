@@ -1219,8 +1219,10 @@ begin
             Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
             Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, CodigoNCMNaturezaCarga);
             Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria             ', 01, 01, 0, DescricaoDaMercadoria);
+            Gerador.Prefixo := 'obj:';
             Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
             Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
+            Gerador.Prefixo := 'adic:';
             Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
             Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
 

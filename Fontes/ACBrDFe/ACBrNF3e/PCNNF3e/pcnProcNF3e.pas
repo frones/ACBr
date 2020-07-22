@@ -37,7 +37,7 @@ unit pcnProcNF3e;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
 
 type
 

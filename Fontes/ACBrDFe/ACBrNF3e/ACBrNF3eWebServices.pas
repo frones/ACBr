@@ -518,7 +518,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrNF3e,
+  ACBrUtil, ACBrCompress, ACBrNF3e, pcnConsts, 
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnNF3eConsts, pcnConsSitNF3e, //pcnInutNF3e, pcnRetInutNF3e,
   pcnConsReciDFe,

@@ -689,7 +689,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrNFSe,
-  pcnGerador, pcnLeitor, StrUtilsEx;
+  pcnGerador, pcnLeitor, pcnConsts, StrUtilsEx;
 
 { TNFSeWebService }
 

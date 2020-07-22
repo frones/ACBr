@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/57285-envio-nfse-leopoldina-erro-http-415/?do=findComment&comment=383391
+  Por: Eliser FB
+
+17/07/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/58568-problema-fiorilli-serafina-corr%C3%AAa-rs-resolvido/
+  Por: Frederico Hahn Pesenti
+
 07/07/2020
 -- pnfsCancNfseResposta/pnfsNFSeG/pnfsLerListaNFSe/ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/58416-cancelamento-provedor-centi/

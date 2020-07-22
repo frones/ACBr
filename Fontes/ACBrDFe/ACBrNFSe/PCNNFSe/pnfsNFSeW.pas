@@ -146,7 +146,7 @@ uses
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa,
   pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili, pnfsNFSeW_SMARAPD, pnfsNFSeW_IPM,
   pnfsNFSeW_AssessorPublico, pnfsNFSeW_WebFisco, pnfsNFSeW_Lencois, pnfsNFSeW_Giap,
-  pnfsNFSeW_Elotech, pnfsNFSeW_Siat;
+  pnfsNFSeW_Elotech, pnfsNFSeW_Siat, pnfsNFSeW_GeisWeb;
 
 { TNFSeW }
 
@@ -209,7 +209,8 @@ begin
     loWebFisco:    FNFSeWClass := TNFSeW_WebFisco.Create(Self);
     loLencois:     FNFSeWClass := TNFSeW_Lencois.Create(Self);
     loGiap:        FNFSeWClass := TNFSeW_Giap.Create(Self);
-    loSiat:        FNFSeWClass := TNFSeW_Siat.Create(Self);  
+    loSiat:        FNFSeWClass := TNFSeW_Siat.Create(Self);
+    loGeisWeb:     FNFSeWClass := TNFSeW_GeisWeb.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;

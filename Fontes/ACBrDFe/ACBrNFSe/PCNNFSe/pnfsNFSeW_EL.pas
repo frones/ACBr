@@ -45,7 +45,7 @@ uses
   SysUtils, Classes, StrUtils,
   ACBrConsts,
   pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao, pnfsConsts;
+  pnfsNFSe, pnfsConversao, pnfsConsts, pcnConsts;
 
 type
   { TNFSeW_EL }

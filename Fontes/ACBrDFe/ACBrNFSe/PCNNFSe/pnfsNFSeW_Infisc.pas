@@ -45,7 +45,7 @@ uses
   SysUtils, Classes,
   ACBrConsts,
   pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pcnConsts;
 
 type
   { TNFSeW_Infisc }

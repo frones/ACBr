@@ -45,7 +45,7 @@ uses
   {$IFEND}
   ACBrBase, ACBrUtil,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
-  ACBrReinfConfiguracoes, ACBrReinfEventos,
+  ACBrReinfConfiguracoes, ACBrReinfEventos, pcnConsts,
   pcnCommonReinf, pcnConversaoReinf;
 
 type

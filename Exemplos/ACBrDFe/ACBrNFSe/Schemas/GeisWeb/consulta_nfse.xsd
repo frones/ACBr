@@ -1,0 +1,22 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ConsultaNfse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="CnpjCpf"/>
+        <xs:element name="Consulta">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="CnpjCpfPrestador"/>
+              <xs:element type="xs:string" name="NumeroNfse"/>
+              <xs:element type="xs:string" name="DtInicial"/>
+              <xs:element type="xs:string" name="DtFinal"/>
+              <xs:element type="xs:string" name="NumeroInicial"/>
+              <xs:element type="xs:string" name="NumeroFinal"/>
+			        <xs:element type="xs:string" name="Pagina"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

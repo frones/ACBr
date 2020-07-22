@@ -50,7 +50,7 @@ uses
    Contnrs,
   {$IFEND}
   ACBrBase, ACBrUtil,
-  pcnConversao,
+  pcnConversao, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

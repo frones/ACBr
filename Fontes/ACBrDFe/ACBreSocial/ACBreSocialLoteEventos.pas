@@ -105,7 +105,7 @@ type
 implementation
 
 uses
-  ACBreSocial, DateUtils;
+  ACBreSocial, DateUtils, pcnConsts;
 
 { TLoteEventos }
 

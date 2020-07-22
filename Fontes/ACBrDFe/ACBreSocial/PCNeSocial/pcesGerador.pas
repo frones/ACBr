@@ -43,7 +43,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, variants,
   ACBrUtil,
-  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
+  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar, pcnConsts,
   pcesCommon, pcesConversaoeSocial;
 
 type

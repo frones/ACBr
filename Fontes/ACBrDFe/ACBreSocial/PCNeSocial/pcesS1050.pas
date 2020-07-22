@@ -45,7 +45,7 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, pcnConversao, pcnGerador,
+  ACBrBase, pcnConversao, pcnGerador, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 

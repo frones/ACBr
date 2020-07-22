@@ -46,7 +46,7 @@ uses
    Contnrs,
   {$IFEND}
   ACBrBase, ACBrUtil,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador,
   pcnLeitor;
 

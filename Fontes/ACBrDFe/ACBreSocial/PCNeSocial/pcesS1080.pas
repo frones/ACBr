@@ -46,7 +46,7 @@ uses
    Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao,
+  pcnConversao, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

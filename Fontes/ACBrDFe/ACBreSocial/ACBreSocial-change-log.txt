@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2020
+-- Diversos --
+[+] Acrescentado a unit pcnConsts em algumas units do componente.
+    Por conta da migração de algumas constantes de pcnGerador para
+    pcnConsts.
+   Por: Italo Jurisato Junior
+
 15/05/2020
 -- ACBreSocialEventos --
 [*] https://www.projetoacbr.com.br/forum/topic/57602-teventosloadfromstring/

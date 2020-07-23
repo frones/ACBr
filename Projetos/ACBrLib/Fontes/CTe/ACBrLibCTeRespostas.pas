@@ -412,17 +412,17 @@ begin
   end
   else if (ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS) and (ACBrCTe.Conhecimentos.Count > 0) then
   begin
-    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe), Tipo, Formato);
-    FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.Id;
-    FItem.tpAmb := TpAmbToStr(ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.tpAmb);
-    FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.verAplic;
-    FItem.chDFe := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe;
-    FItem.dhRecbto := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.dhRecbto;
-    FItem.nProt := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.nProt;
-    FItem.digVal := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.digVal;
-    FItem.cStat := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.cStat;
-    FItem.xMotivo := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.xMotivo;
-    FItem.XML := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.XML_prot;
+    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chCTe), Tipo, Formato);
+    FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.Id;
+    FItem.tpAmb := TpAmbToStr(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.tpAmb);
+    FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.verAplic;
+    FItem.chDFe := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chCTe;
+    FItem.dhRecbto := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.dhRecbto;
+    FItem.nProt := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.nProt;
+    FItem.digVal := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.digVal;
+    FItem.cStat := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.cStat;
+    FItem.xMotivo := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.xMotivo;
+    FItem.XML := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.XML_prot;
   end;
 end;
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2020
+--- ACBrLibCTeRespostas ---
+[-] Corrigindo erro de compilação a propriedade CTeRetornoOS foi renomeada para CTeRetornoSincrono.
+    Por: Rafael Dias
+
 27/02/2020
 --- ACBrLibCTeClass ---
 [+] Adicionado o metodo um novo parametro ao metodo CTE_Consultar, para definir se deve ou não extrair os eventos, se houverem, da resposta.

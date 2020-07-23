@@ -50,7 +50,7 @@ unit pcnProcNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
 
 type
 

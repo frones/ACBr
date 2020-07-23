@@ -38,7 +38,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnCFeCanc;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts, pcnCFeCanc;
 
 type
 

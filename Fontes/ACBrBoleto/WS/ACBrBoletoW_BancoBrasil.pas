@@ -84,7 +84,7 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils;
+  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts;
 
 { TBoletoW_BancoBrasil }
 

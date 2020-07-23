@@ -50,7 +50,7 @@ uses
      {$ENDIF}
    {$ENDIF}
   {$ENDIF}
-  ACBrDFeConfiguracoes, ACBrIntegrador, ACBrDFe, pcnGerador;
+  ACBrDFeConfiguracoes, ACBrIntegrador, ACBrDFe, pcnConsts, pcnGerador;
 
 const
   CErroSemResposta = 'Erro ao obter resposta do webservice.';

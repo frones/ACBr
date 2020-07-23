@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, synacode,
-  ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeWebService, pcnConsts,
   ACBrANeDocumentos, ACBrANeConfiguracoes,
   pcnAuxiliar, pcnConversao, pcaConversao, pcaANe, pcaRetEnvANe;
 

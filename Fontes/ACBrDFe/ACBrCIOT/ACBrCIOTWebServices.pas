@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeWebService, pcnConsts,
   ACBrCIOTContratos, ACBrCIOTConfiguracoes,
   pcnAuxiliar, pcnConversao, pcnConversaoCIOT, pcnCIOT, pcnRetEnvCIOT;
 

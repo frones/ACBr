@@ -147,6 +147,8 @@ type
     FitemPedido: TitemPedidoCollection;
     FidPedidoCancelado: String;
     Fpoltrona: Integer;
+    FqBagagem: Integer;
+    FvTotBag: Currency;
 
     procedure setCondUso(const Value: String);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
@@ -173,6 +175,8 @@ type
     property itemPedido: TitemPedidoCollection read FitemPedido write SetitemPedido;
     property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
     property poltrona: Integer      read Fpoltrona    write Fpoltrona;
+    property qBagagem: Integer      read FqBagagem    write FqBagagem;
+    property vTotBag: Currency      read FvTotBag     write FvTotBag;
   end;
 
   TRetchBPePendCollection = class(TACBrObjectList)
@@ -271,6 +275,7 @@ begin
     teCancelamento:      Result := 'Cancelamento';
     teNaoEmbarque:       Result := 'Nao Embarque';
     teAlteracaoPoltrona: Result := 'Alteracao de Poltrona';
+    teExcessoBagagem:    Result := 'Excesso Bagagem';
   else
     Result := '';
   end;
@@ -292,6 +297,7 @@ begin
     teCancelamento:      Result := 'CANCELAMENTO DE BP-e';
     teNaoEmbarque:       Result := 'NAO EMBARQUE';
     teAlteracaoPoltrona: Result := 'ALTERACAO DE POLTRONA';
+    teExcessoBagagem:    Result := 'EXCESSO BAGAGEM';
   else
     Result := 'Não Definido';
   end;

@@ -256,6 +256,8 @@ begin
        end;
     57:
       DescricaoModelo := 'CTe';
+    64:
+      DescricaoModelo := 'GTVe';
     67:
       DescricaoModelo := 'CTeOS';
   end;

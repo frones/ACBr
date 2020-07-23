@@ -46,9 +46,12 @@ type
 
   TGeralConfBPe = class(TGeralConf)
   private
+    FModeloDF: TModeloBPe;
+    FModeloDFCodigo: integer;
     FVersaoDF: TVersaoBPe;
 
     procedure SetVersaoDF(const Value: TVersaoBPe);
+    procedure SetModeloDF(const Value: TModeloBPe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfBPe: TGeralConfBPe); reintroduce;
@@ -56,6 +59,8 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
+    property ModeloDF: TModeloBPe read FModeloDF write SetModeloDF default moBPe;
+    property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoBPe read FVersaoDF write SetVersaoDF default ve100;
   end;
 
@@ -77,8 +82,10 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''; const AIE: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const AIE: String = ''; Data: TDateTime = 0): String;
+    function GetPathBPe(Data: TDateTime = 0; const CNPJ: String = '';
+      const AIE: String = ''; Modelo: TModeloBPe = moBPe): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = '';
+      const AIE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathBPe: Boolean read FEmissaoPathBPe
       write FEmissaoPathBPe default False;
@@ -166,6 +173,8 @@ constructor TGeralConfBPe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
+  FModeloDF := moBPe;
+  FModeloDFCodigo := StrToInt(ModeloBPeToStr(FModeloDF));
   FVersaoDF := ve100;
 end;
 
@@ -173,7 +182,14 @@ procedure TGeralConfBPe.Assign(DeGeralConfBPe: TGeralConfBPe);
 begin
   inherited Assign(DeGeralConfBPe);
 
+  ModeloDF := DeGeralConfBPe.ModeloDF;
   VersaoDF := DeGeralConfBPe.VersaoDF;
+end;
+
+procedure TGeralConfBPe.SetModeloDF(const Value: TModeloBPe);
+begin
+  FModeloDF := Value;
+  FModeloDFCodigo := StrToInt(ModeloBPeToStr(FModeloDF));
 end;
 
 procedure TGeralConfBPe.SetVersaoDF(const Value: TVersaoBPe);
@@ -185,6 +201,7 @@ procedure TGeralConfBPe.GravarIni(const AIni: TCustomIniFile);
 begin
   inherited GravarIni(AIni);
 
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF));
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
 end;
 
@@ -192,6 +209,7 @@ procedure TGeralConfBPe.LerIni(const AIni: TCustomIniFile);
 begin
   inherited LerIni(AIni);
 
+  ModeloDF := TModeloBPe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
   VersaoDF := TVersaoBPe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
 end;
 
@@ -245,9 +263,17 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''; const AIE: String = ''): String;
+function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; const CNPJ: String = '';
+  const AIE: String = ''; Modelo: TModeloBPe = moBPe): String;
+var
+  DescricaoModelo: String;
 begin
-  Result := GetPath(FPathBPe, ModeloDF, CNPJ, AIE, Data, ModeloDF);
+  if Modelo = moBPe then
+    DescricaoModelo := 'BPe'
+  else
+    DescricaoModelo := 'BPeTM';
+
+  Result := GetPath(FPathBPe, DescricaoModelo, CNPJ, AIE, Data, DescricaoModelo);
 end;
 
 procedure TArquivosConfBPe.GravarIni(const AIni: TCustomIniFile);

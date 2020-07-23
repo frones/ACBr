@@ -684,8 +684,16 @@ begin
   FConfigRemover.TagQuebradeLinhaUnica := FPIniParams.ReadBool('Remover', 'TagQuebradeLinhaUnica', False);
   FConfigRemover.TagTransform          := FPIniParams.ReadBool('Remover', 'TagTransfom', False);
 
-  FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
-  FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+
+  if FPIniParams.ReadString('NameSpace', 'Producao_' + CodIBGE, '') <> '' then
+    FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao_' + CodIBGE, ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll])
+  else
+    FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+
+  if FPIniParams.ReadString('NameSpace', 'Homologacao_' + CodIBGE, '') <> '' then
+    FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao_' + CodIBGE, ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll])
+  else
+    FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
 
   FConfigAssinar.RPS := FPIniParams.ReadBool('Assinar', 'RPS', False);
   FConfigAssinar.Lote := FPIniParams.ReadBool('Assinar', 'Lote', False);
@@ -715,8 +723,13 @@ begin
     FConfigXML.VersaoAtrib := FPIniParams.ReadString('XML', 'VersaoAtrib', '');
 
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
-  FConfigXML.NameSpace := StringReplace(StringReplace(Trim(FPIniParams.ReadString('XML', 'NameSpace', '')), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]),
-    '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+
+
+  if FPIniParams.ReadString('XML', 'NameSpace_' + CodIBGE, '') <> '' then
+    FConfigXML.NameSpace := FPIniParams.ReadString('XML', 'NameSpace_' + CodIBGE , '')
+  else
+    FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
+
   FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);
   FConfigXML.DadosStr := FPIniParams.ReadBool('XML', 'Dados', False);
 

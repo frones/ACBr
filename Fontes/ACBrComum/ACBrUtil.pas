@@ -1777,22 +1777,25 @@ end;
   verifica se a virgula é '.' ou ',' efetuando a conversão se necessário
   Se não for possivel converter, dispara Exception
  ---------------------------------------------------------------------------- }
-function StringToFloat(NumString : String) : Double ;
+function StringToFloat(NumString: String): Double;
 var
   DS: Char;
 begin
-  NumString := Trim( NumString ) ;
+  NumString := Trim(NumString);
 
   DS := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator;
 
   if DS <> '.' then
-     NumString := StringReplace(NumString,'.',DS,[rfReplaceAll]) ;
+    NumString := StringReplace(NumString, '.', DS, [rfReplaceAll]);
 
   if DS <> ',' then
-     NumString := StringReplace(NumString,',',DS,[rfReplaceAll]) ;
+    NumString := StringReplace(NumString, ',', DS, [rfReplaceAll]);
 
-  Result := StrToFloat(NumString)
-end ;
+  while CountStr(NumString, DS) > 1 do
+    NumString := StringReplace(NumString, DS, '', []);
+
+  Result := StrToFloat(NumString);
+end;
 
 {-----------------------------------------------------------------------------
   Converte um Double para string, SEM o separator decimal, considerando as

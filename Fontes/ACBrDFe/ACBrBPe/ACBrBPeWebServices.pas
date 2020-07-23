@@ -347,7 +347,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrBPe,
+  ACBrUtil, ACBrCompress, ACBrBPe, pcnBPeConsts, pcnConsts,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitBPe;
 
@@ -611,9 +611,20 @@ procedure TBPeRecepcao.DefinirURL;
 var
   xUF: String;
   VerServ: Double;
+  Modelo: TModeloBPe;
 begin
+  if FPConfiguracoesBPe.Geral.ModeloDF = moBPe then
+    FPLayout := LayBPeRecepcao
+  else
+    FPLayout := LayBPeRecepcaoTM;
+
   if FBilhetes.Count > 0 then    // Tem BPe ? Se SIM, use as informações do XML
   begin
+    if FBilhetes.Items[0].BPe.Ide.tpBPe = tbBPeTM then
+      Modelo := moBPeTM
+    else
+      Modelo := moBPe;
+
     FcUF := FBilhetes.Items[0].BPe.Ide.cUF;
 
     if FPConfiguracoesBPe.WebServices.Ambiente <> FBilhetes.Items[0].BPe.Ide.tpAmb then
@@ -621,6 +632,7 @@ begin
   end
   else
   begin     // Se não tem BPe, use as configurações do componente
+    Modelo := FPConfiguracoesBPe.Geral.ModeloDF;
     FcUF := FPConfiguracoesBPe.WebServices.UFCodigo;
   end;
 
@@ -628,8 +640,6 @@ begin
   FTpAmb  := FPConfiguracoesBPe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
-
-  FPLayout := LayBPeRecepcao;
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesBPe.Geral.FormaEmissao of
@@ -640,7 +650,7 @@ begin
   end;
 
   TACBrBPe(FPDFeOwner).LerServicoDeParams(
-    ModeloDF,
+    ModeloBPeToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutBPeToServico(FPLayout),
@@ -653,12 +663,24 @@ end;
 
 procedure TBPeRecepcao.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'BPeRecepcao';
+  if FPConfiguracoesBPe.Geral.ModeloDF = moBPe then
+  begin
+    FPServico := GetUrlWsd + 'BPeRecepcao';
 
-  if FPConfiguracoesBPe.WebServices.UFCodigo in [31, 52] then
-    FPSoapAction := FPServico + '/bpeRecepcao'
+    if FPConfiguracoesBPe.WebServices.UFCodigo in [31, 52] then
+      FPSoapAction := FPServico + '/bpeRecepcao'
+    else
+      FPSoapAction := FPServico;
+  end
   else
-    FPSoapAction := FPServico;
+  begin
+    FPServico := GetUrlWsd + 'BPeRecepcaoTM';
+
+    if FPConfiguracoesBPe.WebServices.UFCodigo in [31, 52] then
+      FPSoapAction := FPServico + '/bpeRecepcaoTM'
+    else
+      FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
@@ -668,10 +690,20 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de BP-e transmitidos (máximo de 1 BP-e)' +
              ' excedido. Quantidade atual: ' + IntToStr(FBilhetes.Count)));
 
-  if FBilhetes.Count > 0 then
-    FPDadosMsg := '<BPe' +
-       RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPe', '</BPe>') +
-       '</BPe>';
+  if FPConfiguracoesBPe.Geral.ModeloDF = moBPe then
+  begin
+    if FBilhetes.Count > 0 then
+      FPDadosMsg := '<BPe' +
+         RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPe', '</BPe>') +
+         '</BPe>';
+  end
+  else
+  begin
+    if FBilhetes.Count > 0 then
+      FPDadosMsg := '<BPeTM' +
+         RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPeTM', '</BPeTM>') +
+         '</BPeTM>';
+  end;
 
   FMsgUnZip := FPDadosMsg;
 
@@ -717,7 +749,9 @@ var
   AProcBPe: TProcBPe;
   SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoResult'], FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoResult',
+                               'bpeResultTMMsg', 'bpeRecepcaoTMResult'],
+                               FPRetornoWS );
 
   FBPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FBPeRetorno.LerXml;
@@ -897,16 +931,28 @@ procedure TBPeConsulta.DefinirURL;
 var
   VerServ: Double;
   xUF: String;
+  Modelo: TModeloBPe;
 begin
   FPVersaoServico := '';
   FPURL   := '';
-  FcUF    := ExtrairUFChaveAcesso(FBPeChave);
-  VerServ := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
 
   if FBilhetes.Count > 0 then
-    FTpAmb  := FBilhetes.Items[0].BPe.Ide.tpAmb
+  begin
+    if FBilhetes.Items[0].BPe.Ide.tpBPe = tbBPeTM then
+      Modelo := moBPeTM
+    else
+      Modelo := moBPe;
+
+    FTpAmb := FBilhetes.Items[0].BPe.Ide.tpAmb
+  end
   else
-    FTpAmb  := FPConfiguracoesBPe.WebServices.Ambiente;
+  begin
+    Modelo := FPConfiguracoesBPe.Geral.ModeloDF;
+    FTpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
+  end;
+
+  FcUF    := ExtrairUFChaveAcesso(FBPeChave);
+  VerServ := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
 
   // Se o bilhete foi enviado para o SVC a consulta tem que ser realizada no SVC e
   // não na SEFAZ-Autorizadora
@@ -918,7 +964,7 @@ begin
   end;
 
   TACBrBPe(FPDFeOwner).LerServicoDeParams(
-    ModeloDF,
+    ModeloBPeToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutBPeToServico(FPLayout),
@@ -1375,7 +1421,8 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].infEvento.chBPe));
   end;
 
-  if not (FEvento.Evento.Items[0].infEvento.tpEvento in [teCancelamento, teNaoEmbarque]) then
+  if not (FEvento.Evento.Items[0].infEvento.tpEvento in
+    [teCancelamento, teNaoEmbarque, teAlteracaoPoltrona, teExcessoBagagem]) then
   begin
     FPLayout := LayBPeEventoAN;
     UF       := 'AN';
@@ -1384,7 +1431,7 @@ begin
   FPURL := '';
 
   TACBrBPe(FPDFeOwner).LerServicoDeParams(
-    ModeloDF,
+    TACBrBPe(FPDFeOwner).GetNomeModeloDFe,
     UF,
     FTpAmb,
     LayOutBPeToServico(FPLayout),
@@ -1434,11 +1481,14 @@ begin
           teCancelamento: SchemaEventoBPe := schevCancBPe;
           teNaoEmbarque: SchemaEventoBPe := schevNaoEmbBPe;
           teAlteracaoPoltrona: SchemaEventoBPe := schevAlteracaoPoltrona;
+          teExcessoBagagem: SchemaEventoBPe := schevExcessoBagagem;
         end;
 
         infEvento.detEvento.nProt    := FEvento.Evento[I].infEvento.detEvento.nProt;
         infEvento.detEvento.xJust    := FEvento.Evento[I].infEvento.detEvento.xJust;
         infEvento.detEvento.poltrona := FEvento.Evento[I].infEvento.detEvento.poltrona;
+        infEvento.detEvento.qBagagem := FEvento.Evento[I].infEvento.detEvento.qBagagem;
+        infEvento.detEvento.vTotBag  := FEvento.Evento[I].infEvento.detEvento.vTotBag;
       end;
     end;
     {*)}
@@ -1490,6 +1540,13 @@ begin
           AXMLEvento := '<evAlteracaoPoltrona xmlns="' + ACBRBPE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evAlteracaoPoltrona>', '</evAlteracaoPoltrona>')) +
                         '</evAlteracaoPoltrona>';
+        end;
+
+      schevExcessoBagagem:
+        begin
+          AXMLEvento := '<evExcessoBagagem xmlns="' + ACBRBPE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evExcessoBagagem>', '</evExcessoBagagem>')) +
+                        '</evExcessoBagagem>';
         end;
     end;
 

@@ -244,11 +244,76 @@ type
   TinfRespTec = class;
 ////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////
+  TinfGTVeCollection     = class;
+  TinfGTVeCollectionItem = class;
+
   TinfCTeSupl = class(TObject)
   private
     FqrCodCTe: String;
   public
     property qrCodCTe: String read FqrCodCTe write FqrCodCTe;
+  end;
+
+  TinfEspecieCollectionItem = class(TObject)
+  private
+    FtpEspecie: TEspecie;
+    FvEspecie: Double;
+    FtpNumerario: TtpNumerario;
+    FxMoedaEstr: String;
+  public
+    property tpEspecie: TEspecie       read FtpEspecie   write FtpEspecie;
+    property vEspecie: Double          read FvEspecie    write FvEspecie;
+    property tpNumerario: TtpNumerario read FtpNumerario write FtpNumerario;
+    property xMoedaEstr: String        read FxMoedaEstr  write FxMoedaEstr;
+  end;
+
+  TinfEspecieCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfEspecieCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfEspecieCollectionItem);
+  public
+    function Add: TinfEspecieCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfEspecieCollectionItem;
+    property Items[Index: Integer]: TinfEspecieCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfVeiculoCollectionItem = class(TObject)
+  private
+    Fplaca: String;
+    FUF: String;
+    FRNTRC: String;
+  public
+    property placa: String read Fplaca write Fplaca;
+    property UF: String    read FUF    write FUF;
+    property RNTRC: String read FRNTRC write FRNTRC;
+  end;
+
+  TinfVeiculoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfVeiculoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfVeiculoCollectionItem);
+  public
+    function Add: TinfVeiculoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfVeiculoCollectionItem;
+    property Items[Index: Integer]: TinfVeiculoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetGTV = class(TObject)
+  private
+    FqCarga: Double;
+    FinfEspecie: TinfEspecieCollection;
+    FinfVeiculo: TinfVeiculoCollection;
+
+    procedure SetinfEspecie(const Value: TinfEspecieCollection);
+    procedure SetinfVeiculo(const Value: TinfVeiculoCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property infEspecie: TinfEspecieCollection read FinfEspecie write SetinfEspecie;
+    property qCarga: Double read FqCarga write FqCarga;
+    property infVeiculo: TinfVeiculoCollection read FinfVeiculo write SetinfVeiculo;
   end;
 
   TCTe = class(TObject)
@@ -273,6 +338,10 @@ type
     FautXML: TautXMLCollection;
     FinfRespTec: TinfRespTec;
     FinfCTeSupl: TinfCTeSupl;
+
+    Forigem: TEnderEmit;
+    Fdestino: TEnderEmit;
+    FdetGTV: TdetGTV;
 
     FProcCTe: TProcCTe;
     FSignature: TSignature;
@@ -304,6 +373,10 @@ type
 
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
     property infCTeSupl: TinfCTeSupl read FinfCTeSupl write FinfCTeSupl;
+
+    property origem: TEnderEmit  read Forigem  write Forigem;
+    property destino: TEnderEmit read Fdestino write Fdestino;
+    property detGTV: TdetGTV read FdetGTV write FdetGTV;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -354,6 +427,8 @@ type
     Fretira     : TpcteRetira;
     Fxdetretira : String;
     FindIEToma: TpcnindIEDest;
+    FdhSaidaOrig: TDateTime;
+    FdhChegadaDest: TDateTime;
 
     FToma03 : TToma03;
     FToma4  : TToma4;
@@ -361,7 +436,7 @@ type
 
     FdhCont : TDateTime;
     FxJust  : String;
-    
+
     procedure SetinfPercurso(Value: TinfPercursoCollection);
   public
     constructor Create;
@@ -398,6 +473,8 @@ type
     property retira: TpcteRetira          read Fretira         write Fretira;
     property xDetRetira: String           read Fxdetretira     write Fxdetretira;
     property indIEToma: TpcnindIEDest     read FindIEToma      write FindIEToma;
+    property dhSaidaOrig: TDateTime       read FdhSaidaOrig    write FdhSaidaOrig;
+    property dhChegadaDest: TDateTime     read FdhChegadaDest  write FdhChegadaDest;
 
     property toma03: TToma03 read FToma03 write FToma03;
     property toma4: TToma4   read FToma4  write FToma4;
@@ -1065,11 +1142,13 @@ type
     FinfServico: TinfServico;
     FinfDocRef: TinfDocRefCollection;
     FrefCTeCanc: String;
+    FinfGTVe: TinfGTVeCollection;
 
     procedure SetSeg(const Value: TSegCollection);
     procedure SetPeri(const Value: TPeriCollection);
     procedure SetVeicNovos(const Value: TVeicNovosCollection);
     procedure SetinfDocRef(const Value: TinfDocRefCollection);
+    procedure SetinfGTVe(const Value: TinfGTVeCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1098,6 +1177,7 @@ type
     property infServico: TinfServico         read FinfServico write FinfServico;
     property infDocRef: TinfDocRefCollection read FinfDocRef  write SetinfDocRef;
     property refCTeCanc: String              read FrefCTeCanc write FrefCTeCanc;
+    property infGTVe: TinfGTVeCollection     read FinfGTVe    write SetinfGTVe;
   end;
 
   TInfServico = class(TObject)
@@ -1126,12 +1206,14 @@ type
     Fsubserie: String;
     FdEmi: TDateTime;
     FvDoc: Currency;
+    FchBPe: String;
   public
     property nDoc: String     read FnDoc     write FnDoc;
     property serie: String    read Fserie    write Fserie;
     property subserie: String read Fsubserie write Fsubserie;
     property dEmi: TDateTime  read FdEmi     write FdEmi;
     property vDoc: Currency   read FvDoc     write FvDoc;
+    property chBPe: String    read FchBPe    write FchBPe;
   end;
 
   TInfGlobalizado = class(TObject)
@@ -2432,6 +2514,52 @@ type
     property hashCSRT: String read FhashCSRT write FhashCSRT;
   end;
 
+  ////////////////////////////////////////////////////////////////////////////////
+
+  TinfGTVeCompCollectionItem = class(TObject)
+  private
+    FtpComp: TtpComp;
+    FvComp : Currency;
+    FxComp : String;
+  public
+    property tpComp: TtpComp read FtpComp write FtpComp;
+    property vComp: Currency read FvComp  write FvComp;
+    property xComp: String   read FxComp  write FxComp;
+  end;
+
+  TinfGTVeCompCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfGTVeCompCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfGTVeCompCollectionItem);
+  public
+    function Add: TinfGTVeCompCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfGTVeCompCollectionItem;
+    property Items[Index: Integer]: TinfGTVeCompCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfGTVeCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfGTVeCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfGTVeCollectionItem);
+  public
+    function Add: TinfGTVeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfGTVeCollectionItem;
+    property Items[Index: Integer]: TinfGTVeCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfGTVeCollectionItem = class(TObject)
+  private
+    FchCTe: String;
+    FComp: TinfGTVeCompCollection;
+    procedure SetComp(const Value: TinfGTVeCompCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property chCTe: String read FchCTe write FchCTe;
+    property Comp: TinfGTVeCompCollection read FComp write SetComp;
+  end;
+
 const
   CMUN_EXTERIOR = 9999999;
   XMUN_EXTERIOR  = 'EXTERIOR';
@@ -2469,6 +2597,10 @@ begin
   FinfRespTec := TinfRespTec.Create;
   FinfCTeSupl := TinfCTeSupl.Create;
 
+  Forigem  := TEnderEmit.Create;
+  Fdestino := TEnderEmit.Create;
+  FdetGTV  := TdetGTV.Create;
+
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
 end;
@@ -2495,6 +2627,10 @@ begin
   FautXML.Free;
   FinfRespTec.Free;
   FinfCTeSupl.Free;
+
+  Forigem.Free;
+  Fdestino.Free;
+  FdetGTV.Free;
 
   FProcCTe.Free;
   Fsignature.Free;
@@ -2890,6 +3026,8 @@ begin
   FinfServVinc    := TinfServVinc.Create;
   FinfDocRef      := TinfDocRefCollection.Create;
   FinfServico     := TinfServico.Create;
+
+  FinfGTVe := TinfGTVeCollection.Create;
 end;
 
 destructor TInfCTeNorm.Destroy;
@@ -2915,6 +3053,7 @@ begin
   FinfServVinc.Free;
   FinfDocRef.Free;
   FinfServico.Free;
+  FinfGTVe.Free;
 
   inherited;
 end;
@@ -2937,6 +3076,11 @@ end;
 procedure TInfCTeNorm.SetinfDocRef(const Value: TinfDocRefCollection);
 begin
   FinfDocRef := Value;
+end;
+
+procedure TInfCTeNorm.SetinfGTVe(const Value: TinfGTVeCollection);
+begin
+  FinfGTVe := Value;
 end;
 
 { TInfCarga }
@@ -4249,6 +4393,154 @@ begin
   FinfFretamento.Free;
 
   inherited;
+end;
+
+{ TinfGTVeCollection }
+
+function TinfGTVeCollection.Add: TinfGTVeCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfGTVeCollection.GetItem(Index: Integer): TinfGTVeCollectionItem;
+begin
+  Result := TinfGTVeCollectionItem(inherited Items[Index]);
+end;
+
+function TinfGTVeCollection.New: TinfGTVeCollectionItem;
+begin
+  Result := TinfGTVeCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfGTVeCollection.SetItem(Index: Integer;
+  Value: TinfGTVeCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TinfGTVeCollectionItem }
+
+constructor TinfGTVeCollectionItem.Create;
+begin
+  inherited Create;
+
+  FComp := TinfGTVeCompCollection.Create;
+end;
+
+destructor TinfGTVeCollectionItem.Destroy;
+begin
+  FComp.Free;
+
+  inherited;
+end;
+
+procedure TinfGTVeCollectionItem.SetComp(const Value: TinfGTVeCompCollection);
+begin
+  FComp := Value;
+end;
+
+{ TinfGTVeCompCollection }
+
+function TinfGTVeCompCollection.Add: TinfGTVeCompCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfGTVeCompCollection.GetItem(
+  Index: Integer): TinfGTVeCompCollectionItem;
+begin
+  Result := TinfGTVeCompCollectionItem(inherited Items[Index]);
+end;
+
+function TinfGTVeCompCollection.New: TinfGTVeCompCollectionItem;
+begin
+  Result := TinfGTVeCompCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfGTVeCompCollection.SetItem(Index: Integer;
+  Value: TinfGTVeCompCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TinfEspecieCollection }
+
+function TinfEspecieCollection.Add: TinfEspecieCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfEspecieCollection.GetItem(
+  Index: Integer): TinfEspecieCollectionItem;
+begin
+  Result := TinfEspecieCollectionItem(inherited Items[Index]);
+end;
+
+function TinfEspecieCollection.New: TinfEspecieCollectionItem;
+begin
+  Result := TinfEspecieCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfEspecieCollection.SetItem(Index: Integer;
+  Value: TinfEspecieCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TdetGTV }
+
+constructor TdetGTV.Create;
+begin
+  inherited Create;
+
+  FinfEspecie := TinfEspecieCollection.Create;
+  FinfVeiculo := TinfVeiculoCollection.Create;
+end;
+
+destructor TdetGTV.Destroy;
+begin
+  FinfEspecie.Free;
+  FinfVeiculo.Free;
+
+  inherited;
+end;
+
+procedure TdetGTV.SetinfEspecie(const Value: TinfEspecieCollection);
+begin
+  FinfEspecie := Value;
+end;
+
+procedure TdetGTV.SetinfVeiculo(const Value: TinfVeiculoCollection);
+begin
+  FinfVeiculo := Value;
+end;
+
+{ TinfVeiculoCollection }
+
+function TinfVeiculoCollection.Add: TinfVeiculoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfVeiculoCollection.GetItem(
+  Index: Integer): TinfVeiculoCollectionItem;
+begin
+  Result := TinfVeiculoCollectionItem(inherited Items[Index]);
+end;
+
+function TinfVeiculoCollection.New: TinfVeiculoCollectionItem;
+begin
+  Result := TinfVeiculoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfVeiculoCollection.SetItem(Index: Integer;
+  Value: TinfVeiculoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

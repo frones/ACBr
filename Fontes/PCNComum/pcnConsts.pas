@@ -48,6 +48,26 @@ uses
   SysUtils;
 
 const
+  CODIGO_BRASIL = 1058;
+
+  ERR_MSG_MAIOR = 'Tamanho maior que o máximo permitido';
+  ERR_MSG_MENOR = 'Tamanho menor que o mínimo permitido';
+  ERR_MSG_VAZIO = 'Nenhum valor informado';
+  ERR_MSG_INVALIDO = 'Conteúdo inválido';
+  ERR_MSG_MAXIMO_DECIMAIS = 'Numero máximo de casas decimais permitidas';
+  ERR_MSG_MAIOR_MAXIMO = 'Número de ocorrências maior que o máximo permitido - Máximo ';
+  ERR_MSG_GERAR_CHAVE = 'Erro ao gerar a chave da DFe!';
+  ERR_MSG_FINAL_MENOR_INICIAL = 'O numero final não pode ser menor que o inicial';
+  ERR_MSG_ARQUIVO_NAO_ENCONTRADO = 'Arquivo não encontrado';
+  ERR_MSG_SOMENTE_UM = 'Somente um campo deve ser preenchido';
+  ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
+
+  XML_V01           = '?xml version="1.0"?';
+  ENCODING_UTF8     = '?xml version="1.0" encoding="UTF-8"?';
+  ENCODING_UTF8_STD = '?xml version="1.0" encoding="UTF-8" standalone="no"?';
+
+  NAME_SPACE = 'xmlns="http://www.portalfiscal.inf.br/nfe"';
+
   DSC_CHAVE = 'Chave do DFe';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
   DSC_NSU = 'NSU específico';
@@ -117,6 +137,64 @@ const
   DSC_TPAG = 'Forma de Pagamento';
   DSC_INDINCENTIVO = 'Indicador de Incentivo Fiscal';
 
+  DSC_CNPJ = 'CNPJ(MF)';
+  DSC_CPF = 'CPF';
+  DSC_CUF = 'Código do UF (Unidade da Federação)';
+  DSC_CNF = 'Número da Nota Fiscal Eletrônica';
+  DSC_MOD = 'Modelo';
+  DSC_SERIE = 'Série do Documento Fiscal';
+  DSC_DEMI = 'Data de emissão';
+  DSC_CDV = 'Digito Verificador';
+  DSC_TPAMB = 'Identificação do Ambiente';
+  DSC_XNOME = 'Razão Social ou Nome';
+  DSC_IE = 'Inscrição Estadual';
+  DSC_IM = 'Inscrição Municipal';
+  DSC_XLGR = 'Logradouro';
+  DSC_NRO = 'Número';
+  DSC_XCPL = 'Complemento (Endereço)';
+  DSC_XBAIRRO = 'Bairro';
+  DSC_XMUN = 'Nome do Município';
+  DSC_CEP = 'CEP';
+  DSC_UF = 'Sigla da UF';
+  DSC_INFADPROD = 'Informações adicionais do Produto';
+  DSC_NITEM = 'Numero do item';
+  DSC_CPROD = 'Código do produto ou serviço';
+  DSC_CEAN = 'Código de Barra do Item';
+  DSC_XPROD = 'Descrição do Produto ou Serviço';
+  DSC_NCM = 'Código NCM';
+  DSC_CEST = 'Código Identificador da Substitução Tributária';
+  DSC_CFOP = 'CFOP';
+  DSC_UCOM = 'Unidade Comercial';
+  DSC_QCOM = 'Quantidade Comercial';
+  DSC_VUNCOM = 'Valor Unitário de Comercialização';
+  DSC_VPROD = 'Valor Total Bruto dos Produtos ou Serviços';
+  DSC_NITEMPED = 'Item do Pedido de Compra da DI – adição';
+  DSC_VDESC = 'Valor do desconto';
+  DSC_VOUTRO = 'Outras Despesas Acessórias';
+  DSC_XTEXTO = 'Conteúdo do Campo';
+  DSC_ORIG = 'Origem da mercadoria';
+  DSC_CST = 'Código da situação tributária ';
+  DSC_PICMS = 'Alíquota do imposto';
+  DSC_VICMS = 'Valor do ICMS';
+  DSC_CSOSN = 'Código de Situação da Operação – Simples Nacional';
+  DSC_VBC = 'Valor da BC do ICMS';
+  DSC_PPIS = 'Alíquota do PIS (em percentual)';
+  DSC_VPIS = 'Valor do PIS';
+  DSC_QBCPROD = 'BC da CIDE';
+  DSC_VALIQPROD = 'Valor da alíquota (em reais)';
+  DSC_PCOFINS = 'Alíquota da COFINS (em percentual)';
+  DSC_VCOFINS = 'Valor do COFINS';
+  DSC_PISOUTR = 'Grupo PIS outras operações';
+  DSC_VBCISS = 'Valor da Base de Cálculo do ISSQN';
+  DSC_VALIQ = 'Alíquota';
+  DSC_VISSQN = 'Valor do Imposto sobre Serviço de Qualquer Natureza';
+  DSC_CMUNFG = 'Código do Município FG';
+  DSC_CLISTSERV = 'Lista Prestação de Serviços';
+  DSC_VISS = 'Valor do Imposto sobre Serviço';
+  DSC_INFCPL = 'Informações complementares de interesse do contribuinte';
+  DSC_OBSFISCO = 'Observações de interesse do fisco';
+  DSC_XCAMPO = 'Identificação do Campo';
+
   DSC_MODAL  = 'Tipo de Modal';
   DSC_RNTRC  = 'Registro Nacional de Transportadores Rodoviários de Carga';
   DSC_TPPROP = 'Tipo de Proprietário';
@@ -167,6 +245,40 @@ const
 
   DSC_IDCSRT = 'Identificador CSRT - Código de Segurança do Responsável Técnico';
   DSC_HASHCSRT = 'Hash do CSRT - Código de Segurança do Responsável Técnico';
+
+  //CFe - Cupom Fiscal Eletrônico - SAT
+  DSC_VDESCSUBTOT = 'Valor de Desconto sobre Subtotal';
+  DSC_VACRESSUBTOT = 'Valor de Acréscimo sobre Subtotal';
+  DSC_VPISST = 'Valor do PIS ST';
+  DSC_VCOFINSST = 'Valor do COFINS ST';
+  DSC_VCFE = 'Valor Total do CF-e';
+  DSC_VCFELEI12741 = 'Valor aproximado dos tributos do CFe-SAT – Lei 12741/12.';
+  DSC_VDEDUCISS = 'Valor das deduções para ISSQN';
+  DSC_CSERVTRIBMUN = 'Codigo de tributação pelo ISSQN do municipio';
+  DSC_CNATOP = 'Natureza da Operação de ISSQN';
+  DSC_INDINCFISC = 'Indicador de Incentivo Fiscal do ISSQN';
+  DSC_COFINSST = 'Grupo de COFINS Substituição Tributária';
+  DSC_REGTRIB = 'Código de Regime Tributário';
+  DSC_REGISSQN = 'Regime Especial de Tributação do ISSQN';
+  DSC_RATISSQN = 'Indicador de rateio do Desconto sobre subtotal entre itens sujeitos à tributação pelo ISSQN.';
+  DSC_NCFE = 'Número do Cupom Fiscal Eletronico';
+  DSC_HEMI = 'Hora de emissão';
+  DSC_SIGNAC = 'Assinatura do Aplicativo Comercial';
+  DSC_QRCODE = 'Assinatura Digital para uso em QRCODE';
+  DSC_MP = 'Grupo de informações sobre Pagamento do CFe';
+  DSC_CMP = 'Código do Meio de Pagamento';
+  DSC_VMP = 'Valor do Meio de Pagamento';
+  DSC_CADMC = 'Credenciadora de cartão de débito ou crédito';
+  DSC_VTROCO = 'Valor do troco';
+  DSC_VITEM = 'Valor líquido do Item';
+  DSC_VRATDESC = 'Rateio do desconto sobre subtotal';
+  DSC_VRATACR = 'Rateio do acréscimo sobre subtotal';
+  DSC_NUMEROCAIXA = 'Número do Caixa ao qual o SAT está conectado';
+  DSC_VITEM12741 = 'Valor aproximado dos tributos do Produto ou serviço – Lei 12741/12';
+  DSC_NSERIESAT = 'Número de série do equipamento SAT';
+  DSC_DHINICIAL = 'Data e hora incial';
+  DSC_DHFINAL = 'Data e Hora Final';
+  DSC_CHAVESEGURANCA = 'Chave de segurança';
 
 implementation
 

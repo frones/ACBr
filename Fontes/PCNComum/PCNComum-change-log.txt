@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2020
+-- Diversos --
+[+] Acrescentado na unit pcnConsts as constantes que estavam no pcnGerador.
+   Por: Italo Jurisato Junior
+
 27/04/2020
 -- pcnConversao/pcnGerador/pcnLeitor --
 [+] Acrescentado o tipo de conversão tcDe8 que é utilizado em algumas tags do

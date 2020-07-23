@@ -46,7 +46,7 @@ uses
    Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnGerador, pcnConsts,
+  pcnConversao, pcnGerador, pcnConsts, pcnBPeConsts,
   pcnEventoBPe, pcnSignature;
 
 type
@@ -91,6 +91,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     function GerarXML: Boolean;
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
@@ -115,6 +116,7 @@ uses
 constructor TEventoBPe.Create;
 begin
   inherited Create;
+
   FGerador := TGerador.Create;
   FEvento  := TInfEventoCollection.Create;
 end;
@@ -123,6 +125,7 @@ destructor TEventoBPe.Destroy;
 begin
   FGerador.Free;
   FEvento.Free;
+
   inherited;
 end;
 
@@ -200,6 +203,16 @@ begin
             Gerador.wCampo(tcInt, 'EP04', 'poltrona  ', 03, 03, 1, Evento.Items[i].InfEvento.detEvento.poltrona);
             Gerador.wGrupo('/evAlteraPoltronaBPe');
           end;
+
+      teExcessoBagagem:
+          begin
+            Gerador.wGrupo('evExcessoBagagem', 'EP01');
+            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 60, 1, Evento.Items[i].InfEvento.DescEvento);
+            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcInt, 'EP04', 'qBagagem  ', 01, 20, 1, Evento.Items[i].InfEvento.detEvento.qBagagem);
+            Gerador.wCampo(tcDe2, 'EP05', 'vTotBag   ', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vTotBag);
+            Gerador.wGrupo('/evExcessoBagagem');
+          end;
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');
@@ -260,6 +273,8 @@ begin
         infEvento.DetEvento.nProt     := RetEventoBPe.InfEvento.DetEvento.nProt;
         infEvento.DetEvento.xJust     := RetEventoBPe.InfEvento.DetEvento.xJust;
         infEvento.DetEvento.poltrona  := RetEventoBPe.InfEvento.DetEvento.poltrona;
+        infEvento.DetEvento.qBagagem  := RetEventoBPe.InfEvento.DetEvento.qBagagem;
+        infEvento.DetEvento.vTotBag   := RetEventoBPe.InfEvento.DetEvento.vTotBag;
 
         infEvento.detEvento.cOrgaoAutor := RetEventoBPe.InfEvento.detEvento.cOrgaoAutor;
         infEvento.detEvento.tpAutor     := RetEventoBPe.InfEvento.detEvento.tpAutor;
@@ -342,6 +357,8 @@ begin
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
         infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
         infEvento.detEvento.poltrona := INIRec.ReadInteger(sSecao, 'poltrona', 0);
+        infEvento.detEvento.qBagagem := INIRec.ReadInteger(sSecao, 'qBagagem', 0);
+        infEvento.detEvento.vTotBag  := StringToFloatDef(INIRec.ReadString(sSecao, 'vTotBag', ''), 0);
       end;
       Inc(I);
     end;

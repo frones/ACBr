@@ -87,6 +87,114 @@ type
   TInfAdic = class;
   TinfBPeSupl = class;
 
+  TdetCompCollectionItem = class(TObject)
+  private
+    FxNome: string;
+    FqComp: Integer;
+  public
+    procedure Assign(Source: TdetCompCollectionItem);
+
+    property xNome: string  read FxNome write FxNome;
+    property qComp: Integer read FqComp write FqComp;
+  end;
+
+  TdetCompCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetCompCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetCompCollectionItem);
+  public
+    function Add: TdetCompCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetCompCollectionItem;
+    property Items[Index: Integer]: TdetCompCollectionItem read GetItem write SetItem; default;
+  end;
+
+  Ttotal = class(TObject)
+  private
+    FqPass: Integer;
+    FvBP: Double;
+    FvBC: Double;
+    FvICMS: Double;
+  public
+    procedure Assign(Source: Ttotal);
+
+    property qPass : Integer read FqPass write FqPass;
+    property vBP: Double     read FvBP   write FvBP;
+    property vBC: Double     read FvBC   write FvBC;
+    property vICMS: Double   read FvICMS write FvICMS;
+  end;
+
+  TdetCollectionItem = class(TObject)
+  private
+    FnViagem: Integer;
+    FcMunIni: Integer;
+    FcMunFim: Integer;
+    FnContInicio: String;
+    FnContFim: String;
+    FqPass: String;
+    FvBP: Double;
+    Fimp: TImp;
+    FComp: TdetCompCollection;
+
+    procedure SetComp(const Value: TdetCompCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Assign(Source: TdetCollectionItem);
+
+    property nViagem : Integer        read FnViagem     write FnViagem;
+    property cMunIni: Integer         read FcMunIni     write FcMunIni;
+    property cMunFim: Integer         read FcMunFim     write FcMunFim;
+    property nContInicio: String      read FnContInicio write FnContInicio;
+    property nContFim: String         read FnContFim    write FnContFim;
+    property qPass: String            read FqPass       write FqPass;
+    property vBP: Double              read FvBP         write FvBP;
+    property imp: TImp                read Fimp         write Fimp;
+    property Comp: TdetCompCollection read FComp        write SetComp;
+  end;
+
+  TdetCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetCollectionItem);
+  public
+    function Add: TdetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetCollectionItem;
+    property Items[Index: Integer]: TdetCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetBPeTMCollectionItem = class(TObject)
+  private
+    FidEqpCont: Integer;
+    FUFIniViagem: String;
+    FUFFimViagem: String;
+    Fplaca: String;
+    Fprefixo: String;
+    Fdet: TdetCollection;
+
+    procedure Setdet(const Value: TdetCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Assign(Source: TdetBPeTMCollectionItem);
+
+    property idEqpCont : Integer read FidEqpCont   write FidEqpCont;
+    property UFIniViagem: String read FUFIniViagem write FUFIniViagem;
+    property UFFimViagem: String read FUFFimViagem write FUFFimViagem;
+    property placa: String       read Fplaca       write Fplaca;
+    property prefixo: String     read Fprefixo     write Fprefixo;
+    property det: TdetCollection read Fdet         write Setdet;
+  end;
+
+  TdetBPeTMCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetBPeTMCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetBPeTMCollectionItem);
+  public
+    function Add: TdetBPeTMCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetBPeTMCollectionItem;
+    property Items[Index: Integer]: TdetBPeTMCollectionItem read GetItem write SetItem; default;
+  end;
+
   { TinfRespTec }
 
   TinfRespTec = class(TObject)
@@ -126,13 +234,17 @@ type
     FautXML: TautXMLCollection;
     FInfAdic: TInfAdic;
     FinfBPeSupl: TinfBPeSupl;
+    FinfRespTec: TinfRespTec;
+    FdetBPeTM: TdetBPeTMCollection;
+    Ftotal: Ttotal;
+
     FSignature: TSignature;
     FProcBPe: TProcBPe;
-    FinfRespTec: TinfRespTec;
 
     procedure SetInfViagem(const Value: TInfViagemCollection);
     procedure SetPag(Value: TpagCollection);
     procedure SetautXML(const Value: TautXMLCollection);
+    procedure SetdetBPeTM(const Value: TdetBPeTMCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -153,9 +265,12 @@ type
     property autXML: TautXMLCollection read FautXML write SetautXML;
     property InfAdic: TInfAdic read FInfAdic write FInfAdic;
     property infBPeSupl: TinfBPeSupl read FinfBPeSupl write FinfBPeSupl;
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property detBPeTM: TdetBPeTMCollection read FdetBPeTM write SetdetBPeTM;
+    property total: Ttotal read Ftotal write Ftotal;
+
     property Signature: TSignature read FSignature write FSignature;
     property procBPe: TProcBPe read FProcBPe write FProcBPe;
-    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
   end;
 
   TinfBPe = class(TObject)
@@ -184,7 +299,8 @@ type
     FcDV: Integer;
     Fmodal: TModalBPe;
     FdhEmi: TDateTime;
-    FtpEmis: TpcnTipoEmissao;
+    FdCompet: TDateTime;
+    FtpEmis: TTipoEmissao;
     FverProc: String;
     FtpBPe: TTipoBPe;
     FindPres: TpcnPresencaComprador;
@@ -194,6 +310,7 @@ type
     FcMunFim: Integer;
     FdhCont : TDateTime;
     FxJust  : String;
+    FCFOP: Integer;
 
   public
     procedure Assign(Source: TIde);
@@ -207,7 +324,8 @@ type
     property cDV: Integer read FcDV write FcDV;
     property modal: TModalBPe read Fmodal write Fmodal;
     property dhEmi: TDateTime read FdhEmi write FdhEmi;
-    property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis default teNormal;
+    property dCompet: TDateTime read FdCompet write FdCompet;
+    property tpEmis: TTipoEmissao read FtpEmis write FtpEmis default teNormal;
     property verProc: String read FverProc write FverProc;
     property tpBPe: TTipoBPe read FtpBPe write FtpBPe default tbNormal;
     property indPres: TpcnPresencaComprador read FindPres write FindPres;
@@ -217,6 +335,7 @@ type
     property cMunFim: Integer read FcMunFim write FcMunFim;
     property dhCont: TDateTime read FdhCont write FdhCont;
     property xJust: String read FxJust write FxJust;
+    property CFOP: Integer read FCFOP write FCFOP;
   end;
 
   TEmit = class(TObject)
@@ -668,7 +787,14 @@ begin
   infViagem.Assign(Source.infViagem);
   infValorBPe.Assign(Source.infValorBPe);
   Imp.Assign(Source.Imp);
+  Pag.Assign(Source.Pag);
+  autXML.Assign(Source.autXML);
+  InfAdic.Assign(Source.InfAdic);
   infBPeSupl.Assign(Source.infBPeSupl);
+  infRespTec.Assign(Source.infRespTec);
+  detBPeTM.Assign(Source.detBPeTM);
+  total.Assign(Source.total);
+
   Signature.Assign(Source.Signature);
   procBPe.Assign(Source.procBPe);
 end;
@@ -703,9 +829,12 @@ begin
   FautXML      := TautXMLCollection.Create;
   FinfAdic     := TinfAdic.Create;
   FinfBPeSupl  := TinfBPeSupl.Create;
+  FinfRespTec  := TinfRespTec.Create;
+  FdetBPeTM    := TdetBPeTMCollection.Create;
+  Ftotal       := Ttotal.Create;
+
   FSignature   := TSignature.create;
   FProcBPe     := TProcBPe.create;
-  FinfRespTec  := TinfRespTec.Create;
 
   FinfBPe.Versao := 0;
 end;
@@ -726,9 +855,12 @@ begin
   FautXML.Free;
   FinfAdic.Free;
   FinfBPeSupl.Free;
+  FinfRespTec.Free;
+  FdetBPeTM.Free;
+  Ftotal.Free;
+
   FSignature.Free;
   FProcBPe.Free;
-  FinfRespTec.Free;
 
   inherited Destroy;
 end;
@@ -746,6 +878,11 @@ end;
 procedure TBPe.SetautXML(const Value: TautXMLCollection);
 begin
   FautXML := Value;
+end;
+
+procedure TBPe.SetdetBPeTM(const Value: TdetBPeTMCollection);
+begin
+  FdetBPeTM := Value;
 end;
 
 { TinfBPe }
@@ -785,6 +922,7 @@ begin
   cDV     := Source.cDV;
   Modal   := Source.modal;
   dhEmi   := Source.dhEmi;
+  dCompet := Source.dCompet;
   tpEmis  := Source.tpEmis;
   verProc := Source.verProc;
   tpBPe   := Source.tpBPe;
@@ -795,6 +933,7 @@ begin
   cMunFim := Source.cMunFim;
   dhCont  := Source.dhCont;
   xJust   := Source.xJust;
+  CFOP    := Source.CFOP;
 end;
 
 {Emit}
@@ -1230,6 +1369,164 @@ begin
   fone     := Source.fone;
   idCSRT   := Source.idCSRT;
   hashCSRT := Source.hashCSRT;
+end;
+
+{ TdetBPeTMCollectionItem }
+
+procedure TdetBPeTMCollectionItem.Assign(Source: TdetBPeTMCollectionItem);
+begin
+  idEqpCont   := Source.idEqpCont;
+  UFIniViagem := Source.UFIniViagem;
+  UFFimViagem := Source.UFFimViagem;
+  Placa       := Source.Placa;
+  Prefixo     := Source.Prefixo;
+
+  det.Assign(Source.det);
+end;
+
+constructor TdetBPeTMCollectionItem.Create;
+begin
+  inherited Create;
+
+  Fdet := TdetCollection.Create;
+end;
+
+destructor TdetBPeTMCollectionItem.Destroy;
+begin
+  Fdet.Free;
+
+  inherited Destroy;
+end;
+
+procedure TdetBPeTMCollectionItem.Setdet(const Value: TdetCollection);
+begin
+  Fdet := Value;
+end;
+
+{ TdetBPeTMCollection }
+
+function TdetBPeTMCollection.Add: TdetBPeTMCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TdetBPeTMCollection.GetItem(Index: Integer): TdetBPeTMCollectionItem;
+begin
+  Result := TdetBPeTMCollectionItem(inherited Items[Index]);
+end;
+
+function TdetBPeTMCollection.New: TdetBPeTMCollectionItem;
+begin
+  Result := TdetBPeTMCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TdetBPeTMCollection.SetItem(Index: Integer;
+  Value: TdetBPeTMCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TdetCollectionItem }
+
+procedure TdetCollectionItem.Assign(Source: TdetCollectionItem);
+begin
+  nViagem     := Source.nViagem;
+  cMunIni     := Source.cMunIni;
+  cMunFim     := Source.cMunFim;
+  nContInicio := Source.nContInicio;
+  nContFim    := Source.nContFim;
+  qPass       := Source.qPass;
+  vBP         := Source.vBP;
+
+  imp.Assign(Source.imp);
+  Comp.Assign(Source.Comp);
+end;
+
+constructor TdetCollectionItem.Create;
+begin
+  inherited Create;
+
+  Fimp  := TImp.Create;
+  FComp := TdetCompCollection.Create;
+end;
+
+destructor TdetCollectionItem.Destroy;
+begin
+  Fimp.Free;
+  FComp.Free;
+
+  inherited Destroy;
+end;
+
+procedure TdetCollectionItem.SetComp(const Value: TdetCompCollection);
+begin
+  FComp := Value;
+end;
+
+{ TdetCollection }
+
+function TdetCollection.Add: TdetCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TdetCollection.GetItem(Index: Integer): TdetCollectionItem;
+begin
+  Result := TdetCollectionItem(inherited Items[Index]);
+end;
+
+function TdetCollection.New: TdetCollectionItem;
+begin
+  Result := TdetCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TdetCollection.SetItem(Index: Integer; Value: TdetCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TdetCompCollectionItem }
+
+procedure TdetCompCollectionItem.Assign(Source: TdetCompCollectionItem);
+begin
+  xNome := Source.xNome;
+  qComp := Source.qComp;
+end;
+
+{ TdetCompCollection }
+
+function TdetCompCollection.Add: TdetCompCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TdetCompCollection.GetItem(Index: Integer): TdetCompCollectionItem;
+begin
+  Result := TdetCompCollectionItem(inherited Items[Index]);
+end;
+
+function TdetCompCollection.New: TdetCompCollectionItem;
+begin
+  Result := TdetCompCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TdetCompCollection.SetItem(Index: Integer;
+  Value: TdetCompCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ Ttotal }
+
+procedure Ttotal.Assign(Source: Ttotal);
+begin
+  qPass := Source.qPass;
+  vBP := Source.vBP;
+  vBC := Source.vBC;
+  vICMS := Source.vICMS;
 end;
 
 end.

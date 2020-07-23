@@ -40,6 +40,8 @@ uses
   SysUtils;
 
 const
+  NAME_SPACE_CTE = 'xmlns="http://www.portalfiscal.inf.br/cte"';
+
   xRazao = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 
   DSC_TPCTe    = 'Tipo do Conhecimento';

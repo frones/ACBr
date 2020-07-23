@@ -40,6 +40,8 @@ uses
   SysUtils;
 
 const
+  NAME_SPACE_BPE = 'xmlns="http://www.portalfiscal.inf.br/bpe"';
+
   DSC_CHBPE = 'Chave do Bilhete de Passagem Eletrônico';
   DSC_INFQRCODEBPE = 'QR-Code do BP-e';
   DSC_BOARDPASSBPE = 'Boarding Pass do BP-e';
@@ -106,7 +108,13 @@ const
   DSC_INFADCARD = 'Informações Adicionais do Cartão de Crédito';
   DSC_XDOC = 'Descrição do Documento';
   DSC_NDOCPAG = 'Numero do Documento para Pagamento';
-  DSC_XXXX = 'XXXX';
+  DSC_UFINIVIAGEM ='UF de inicio de Viagem';
+  DSC_UFFIMVIAGEM = 'UF de fim de Viagem';
+  DSC_NCONTINICIO = 'Contador início da viagem';
+  DSC_NCONTFIM = 'Contador fim da viagem';
+  DSC_QPASS = 'Quantidade de Passagens da viagem';
+  DSC_QCOMP = 'Quantidade do componente';
+  DSC_DCOMPET = 'Data de Competencia';
 
 implementation
 

@@ -196,6 +196,8 @@ begin
            infEvento.DetEvento.nProt     := Leitor.rCampo(tcStr, 'nProt');
            infEvento.DetEvento.xJust     := Leitor.rCampo(tcStr, 'xJust');
            infEvento.DetEvento.poltrona  := Leitor.rCampo(tcInt, 'poltrona');
+           infEvento.DetEvento.qBagagem  := Leitor.rCampo(tcInt, 'qBagagem');
+           infEvento.DetEvento.vTotBag   := Leitor.rCampo(tcDe2, 'vTotBag');
 
            InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
            infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));

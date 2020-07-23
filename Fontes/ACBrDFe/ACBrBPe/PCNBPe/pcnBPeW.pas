@@ -63,6 +63,9 @@ type
     procedure GerarEmit;
     procedure GerarEnderEmit;
 
+    procedure GerarDetBPeTM;
+    procedure GerarTotal;
+
     procedure GerarComp;
     procedure GerarEnderComp;
 
@@ -76,6 +79,7 @@ type
     procedure GerarinfViagem;
     procedure GerarinfValorBPe;
     procedure GerarImp;
+    procedure GerarDetImp(i, j: Integer);
     procedure GerarImpICMSUFFim;
 
     procedure Gerarpag;
@@ -162,7 +166,7 @@ begin
   FVersao := Copy(BPe.infBPe.VersaoStr, 9, 4);
 
   FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ, BPe.ide.serie,
-                            BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)),
+                            BPe.ide.nBP, StrToInt(TpEmisBPeToStr(BPe.ide.tpEmis)),
                             BPe.ide.cBP, BPe.ide.modelo);
   BPe.infBPe.ID := 'BPe' + FChaveBPe;
 
@@ -184,7 +188,11 @@ begin
   if BPe.procBPe.nProt <> '' then
     Gerador.wGrupo('BPeProc ' + BPe.infBPe.VersaoStr + ' ' + NAME_SPACE_BPE, '');
 
-  Gerador.wGrupo('BPe ' + NAME_SPACE_BPE);
+  if BPe.ide.tpBPe = tbBPeTM then
+    Gerador.wGrupo('BPeTM ' + NAME_SPACE_BPE)
+  else
+    Gerador.wGrupo('BPe ' + NAME_SPACE_BPE);
+
   Gerador.wGrupo('infBPe ' + BPe.infBPe.VersaoStr + ' Id="' + BPe.infBPe.ID + '"');
 
   GerarInfBPe;
@@ -215,7 +223,11 @@ begin
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FBPe.Signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-  Gerador.wGrupo('/BPe');
+
+  if BPe.ide.tpBPe = tbBPeTM then
+    Gerador.wGrupo('/BPeTM')
+  else
+    Gerador.wGrupo('/BPe');
 
   if BPe.procBPe.nProt <> '' then
    begin
@@ -253,20 +265,29 @@ begin
   GerarIde;
   GerarEmit; // Emitente
 
-  if BPe.Comp.xNome <> '' then
-    GerarComp; // Comprador
+  if BPe.ide.tpBPe = tbBPeTM then
+  begin
+    GerarDetBPeTM;
+    GerarTotal;
+  end
+  else
+  begin
+    if BPe.Comp.xNome <> '' then
+      GerarComp; // Comprador
 
-  if BPe.Agencia.xNome <> '' then
-    GerarAgencia;
+    if BPe.Agencia.xNome <> '' then
+      GerarAgencia;
 
-  if BPe.infBPeSub.chBPe <> '' then
-    GerarinfBPeSub;
+    if BPe.infBPeSub.chBPe <> '' then
+      GerarinfBPeSub;
 
-  GerarinfPassagem;
-  GerarinfViagem;
-  GerarinfValorBPe;
-  GerarImp; // Impostos
-  GerarPag; // Pagamento
+    GerarinfPassagem;
+    GerarinfViagem;
+    GerarinfValorBPe;
+    GerarImp; // Impostos
+    GerarPag; // Pagamento
+  end;
+
   GerarautXML;
   GerarInfAdic;
   GerarinfRespTec;
@@ -288,14 +309,24 @@ begin
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#012', 'modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
   Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);
-  Gerador.wCampo(tcStr, '#014', 'tpEmis ', 01, 01, 1, tpEmisToStr(BPe.Ide.tpEmis), DSC_TPEMIS);
+
+  if BPe.ide.tpBPe = tbBPeTM then
+    Gerador.wCampo(tcDat, '#013', 'dCompet', 10, 10, 1, BPe.ide.dCompet, DSC_DCOMPET);
+
+  Gerador.wCampo(tcStr, '#014', 'tpEmis ', 01, 01, 1, tpEmisBPeToStr(BPe.Ide.tpEmis), DSC_TPEMIS);
   Gerador.wCampo(tcStr, '#015', 'verProc', 01, 20, 1, BPe.Ide.verProc, DSC_VERPROC);
   Gerador.wCampo(tcStr, '#016', 'tpBPe  ', 01, 01, 1, tpBPeToStr(BPe.ide.tpBPe), DSC_TPBPE);
-  Gerador.wCampo(tcStr, '#017', 'indPres', 01, 01, 1, PresencaCompradorToStr(BPe.Ide.indPres), DSC_INDPRESBPE);
-  Gerador.wCampo(tcStr, '#018', 'UFIni  ', 02, 02, 1, BPe.Ide.UFIni, DSC_UFINIBPE);
-  Gerador.wCampo(tcInt, '#019', 'cMunIni', 07, 07, 1, BPe.ide.cMunIni, DSC_CMUNINIBPE);
-  Gerador.wCampo(tcStr, '#020', 'UFFim  ', 02, 02, 1, BPe.Ide.UFFim, DSC_UFFIMBPE);
-  Gerador.wCampo(tcInt, '#021', 'cMunFim', 07, 07, 1, BPe.ide.cMunFim, DSC_CMUNFIMBPE);
+
+  if BPe.ide.tpBPe = tbBPeTM then
+    Gerador.wCampo(tcInt, '#013', 'CFOP', 04, 04, 1, BPe.ide.CFOP, DSC_CFOP)
+  else
+  begin
+    Gerador.wCampo(tcStr, '#017', 'indPres', 01, 01, 1, PresencaCompradorToStr(BPe.Ide.indPres), DSC_INDPRESBPE);
+    Gerador.wCampo(tcStr, '#018', 'UFIni  ', 02, 02, 1, BPe.Ide.UFIni, DSC_UFINIBPE);
+    Gerador.wCampo(tcInt, '#019', 'cMunIni', 07, 07, 1, BPe.ide.cMunIni, DSC_CMUNINIBPE);
+    Gerador.wCampo(tcStr, '#020', 'UFFim  ', 02, 02, 1, BPe.Ide.UFFim, DSC_UFFIMBPE);
+    Gerador.wCampo(tcInt, '#021', 'cMunFim', 07, 07, 1, BPe.ide.cMunFim, DSC_CMUNFIMBPE);
+  end;
 
   if (BPe.Ide.dhCont > 0) or (BPe.Ide.xJust <> '') then
   begin
@@ -576,7 +607,7 @@ begin
     Gerador.wCampo(tcStr, '#096', 'cPercurso   ', 01,  20, 1, BPe.infViagem[i].cPercurso, DSC_CPERCURSO);
     Gerador.wCampo(tcStr, '#097', 'xPercurso   ', 02, 100, 1, BPe.infViagem[i].xPercurso, DSC_XPERCURSO);
     Gerador.wCampo(tcStr, '#098', 'tpViagem    ', 02,  02, 1, tpViagemToStr(BPe.infViagem[i].tpViagem), DSC_TPVIAGEM);
-    Gerador.wCampo(tcStr, '#099', 'tpServ      ', 01,  01, 1, tpServicoToStr(BPe.infViagem[i].tpServ), DSC_TPSERVICO);
+    Gerador.wCampo(tcStr, '#099', 'tpServ      ', 01,  02, 1, tpServicoToStr(BPe.infViagem[i].tpServ), DSC_TPSERVICO);
     Gerador.wCampo(tcStr, '#100', 'tpAcomodacao', 01,  01, 1, tpAcomodacaoToStr(BPe.infViagem[i].tpAcomodacao), DSC_TPACOMODACAO);
     Gerador.wCampo(tcStr, '#101', 'tpTrecho    ', 01,  01, 1, tpTrechoToStr(BPe.infViagem[i].tpTrecho), DSC_TPTRECHO);
 
@@ -784,6 +815,142 @@ begin
     Gerador.wAlerta('#161', 'pag', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
+procedure TBPeW.GerarDetBPeTM;
+var
+  i, j, k: Integer;
+begin
+  for i := 0 to BPe.detBPeTM.Count - 1 do
+  begin
+    Gerador.wGrupo('detBPeTM idEqpCont="' + IntToStr(BPe.detBPeTM[i].idEqpCont) + '"', '#42');
+
+    Gerador.wCampo(tcStr, '#44', 'UFIniViagem', 2, 02, 1, BPe.detBPeTM[i].UFIniViagem, DSC_UFINIVIAGEM);
+    Gerador.wCampo(tcStr, '#45', 'UFFimViagem', 2, 02, 0, BPe.detBPeTM[i].UFFimViagem, DSC_UFFIMVIAGEM);
+    Gerador.wCampo(tcStr, '#46', 'placa      ', 7, 07, 0, BPe.detBPeTM[i].placa, DSC_PLACA);
+    Gerador.wCampo(tcStr, '#47', 'prefixo    ', 1, 20, 0, BPe.detBPeTM[i].prefixo, DSC_PREFIXO);
+
+    for j := 0 to BPe.detBPeTM[i].det.Count - 1 do
+    begin
+      Gerador.wGrupo('det nViagem="' + IntToStr(BPe.detBPeTM[i].det[j].nViagem) + '"', '#48');
+
+      Gerador.wCampo(tcInt, '#50', 'cMunIni    ', 7, 07, 1, BPe.detBPeTM[i].det[j].cMunIni, DSC_CMUNINIBPE);
+      Gerador.wCampo(tcInt, '#51', 'cMunFim    ', 7, 07, 0, BPe.detBPeTM[i].det[j].cMunFim, DSC_CMUNFIMBPE);
+      Gerador.wCampo(tcStr, '#52', 'nContInicio', 1, 20, 1, BPe.detBPeTM[i].det[j].nContInicio, DSC_NCONTINICIO);
+      Gerador.wCampo(tcStr, '#53', 'nContFim   ', 1, 20, 1, BPe.detBPeTM[i].det[j].nContFim, DSC_NCONTFIM);
+      Gerador.wCampo(tcStr, '#54', 'qPass      ', 1, 20, 1, BPe.detBPeTM[i].det[j].qPass, DSC_QPASS);
+      Gerador.wCampo(tcDe2, '#55', 'vBP        ', 1, 15, 1, BPe.detBPeTM[i].det[j].vBP, DSC_VBP);
+
+      GerarDetImp(i, j);
+
+      for k := 0 to BPe.detBPeTM[i].det[j].Comp.Count - 1 do
+      begin
+        Gerador.wGrupo('Comp', '#82');
+        Gerador.wCampo(tcStr, '#83', 'xNome', 1, 15, 1, BPe.detBPeTM[i].det[j].Comp[k].xNome, DSC_XNOME);
+        Gerador.wCampo(tcInt, '#84', 'qComp', 5, 05, 1, BPe.detBPeTM[i].det[j].Comp[k].qComp, DSC_QCOMP);
+        Gerador.wGrupo('/Comp');
+      end;
+
+      Gerador.wGrupo('/det');
+    end;
+
+    Gerador.wGrupo('/detBPeTM');
+  end;
+
+  if BPe.detBPeTM.Count > 99 then
+    Gerador.wAlerta('#42', 'detBPeTM', '', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TBPeW.GerarDetImp(i, j: Integer);
+var
+  sTagTemp : String;
+
+  function BuscaTag(const t: TpcnCSTIcms): String;
+  begin
+    case t of
+      cst00: result := '00';
+
+      cst20: result := '20';
+
+      cst40,
+      cst41,
+      cst51: result := '45';
+
+      cst90: result := '90';
+
+      cstICMSOutraUF: result := 'OutraUF';
+    end;
+  end;
+begin
+  Gerador.wGrupo('imp', '#119');
+
+  Gerador.wGrupo('ICMS', '#120');
+
+  case BPe.Emit.CRT of
+    crtRegimeNormal, crtSimplesExcessoReceita :
+      begin
+        sTagTemp := BuscaTag( BPe.detBPeTM[i].det[j].Imp.ICMS.CST );
+
+        Gerador.wGrupo('ICMS' + sTagTemp, 'N' + CSTICMSTOStrTagPos(BPe.detBPeTM[i].det[j].Imp.ICMS.CST));
+        Gerador.wCampo(tcStr, '#122', 'CST', 02, 02, 1, CSTICMSTOStr(BPe.detBPeTM[i].det[j].Imp.ICMS.CST), DSC_CST);
+
+        case BPe.Imp.ICMS.CST of
+          cst00: begin
+                   Gerador.wCampo(tcDe2, '#123', 'vBC  ', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vBC, DSC_VBC);
+                   Gerador.wCampo(tcDe2, '#124', 'pICMS', 01, 05, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.pICMS, DSC_PICMS);
+                   Gerador.wCampo(tcDe2, '#125', 'vICMS', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vICMS, DSC_VICMS);
+                 end;
+          cst20: begin
+                   Gerador.wCampo(tcDe2, '#126', 'pRedBC', 01, 05, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.pRedBC, DSC_PREDBC);
+                   Gerador.wCampo(tcDe2, '#127', 'vBC   ', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vBC, DSC_VBC);
+                   Gerador.wCampo(tcDe2, '#128', 'pICMS ', 01, 05, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.pICMS, DSC_PICMS);
+                   Gerador.wCampo(tcDe2, '#129', 'vICMS ', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vICMS, DSC_VICMS);
+                 end;
+          cst40,
+          cst41,
+          cst51: begin
+                   //Esse bloco só contem o CST
+                 end;
+          cst90: begin
+                   Gerador.wCampo(tcDe2, '#135', 'pRedBC', 01, 05, 0, BPe.detBPeTM[i].det[j].Imp.ICMS.pRedBC, DSC_PREDBC);
+                   Gerador.wCampo(tcDe2, '#136', 'vBC   ', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vBC, DSC_VBC);
+                   Gerador.wCampo(tcDe2, '#137', 'pICMS ', 01, 05, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.pICMS, DSC_PICMS);
+                   Gerador.wCampo(tcDe2, '#138', 'vICMS ', 01, 15, 1, BPe.detBPeTM[i].det[j].Imp.ICMS.vICMS, DSC_VICMS);
+                   Gerador.wCampo(tcDe2, '#139', 'vCred ', 01, 15, 0, BPe.detBPeTM[i].det[j].Imp.ICMS.vCred, DSC_VCRED);
+                 end;
+        end;
+
+        Gerador.wGrupo('/ICMS' + sTagTemp );
+      end;
+    crtSimplesNacional:
+      begin
+        //Grupo do Simples Nacional
+        Gerador.wGrupo('ICMSSN', '#147');
+        Gerador.wCampo(tcStr, '#148', 'CST  ', 02, 02, 1, '90', DSC_CST);
+        Gerador.wCampo(tcStr, '#149', 'indSN', 01, 01, 1, '1', '');
+        Gerador.wGrupo('/ICMSSN');
+      end;
+	end;
+  Gerador.wGrupo('/ICMS');
+
+  Gerador.wCampo(tcStr, '#151', 'infAdFisco', 01, 2000, 0, BPe.detBPeTM[i].det[j].Imp.infAdFisco, DSC_INFADFISCO);
+
+  Gerador.wGrupo('/imp');
+end;
+
+procedure TBPeW.GerarTotal;
+begin
+  Gerador.wGrupo('total', '#85');
+
+  Gerador.wCampo(tcInt, '#86', 'qPass', 01, 06, 1, BPe.total.qPass, DSC_QPASS);
+  Gerador.wCampo(tcDe2, '#87', 'vBP  ', 01, 15, 1, BPe.total.vBP, DSC_VBP);
+
+  Gerador.wGrupo('ICMSTot', '#88');
+  Gerador.wCampo(tcDe2, '#89', 'vBC  ', 01, 15, 1, BPe.total.vBC, DSC_VBC);
+  Gerador.wCampo(tcDe2, '#60', 'vICMS', 01, 15, 1, BPe.total.vICMS, DSC_VICMS);
+  Gerador.wGrupo('/ICMSTot');
+
+  Gerador.wGrupo('/total');
+end;
+
 procedure TBPeW.GerarautXML;
 var
   i: Integer;
@@ -828,7 +995,6 @@ begin
     else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
       xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
 end;
-
 
 end.
 

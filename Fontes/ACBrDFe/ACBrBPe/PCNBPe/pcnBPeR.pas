@@ -78,7 +78,7 @@ end;
 function TBPeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i: Integer;
+  i, j, k: Integer;
   VersaoInfBPe: String;
 //  Aspas: String;
 begin
@@ -115,7 +115,8 @@ begin
 
     BPe.Ide.modal  := StrToModalBPe(Ok, Leitor.rCampo(tcStr, 'modal'));
     BPe.ide.dhEmi   := Leitor.rCampo(tcDatHor, 'dhEmi');
-    BPe.Ide.tpEmis  := StrToTpEmis(ok, Leitor.rCampo(tcStr, 'tpEmis'));
+    BPe.ide.dCompet := Leitor.rCampo(tcDat, 'dCompet');
+    BPe.Ide.tpEmis  := StrToTpEmisBPe(ok, Leitor.rCampo(tcStr, 'tpEmis'));
     BPe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
     BPe.ide.tpBPe   := StrToTpBPe(ok, Leitor.rCampo(tcStr, 'tpBPe'));
     BPe.ide.indPres := StrToPresencaComprador(ok, Leitor.rCampo(tcStr, 'indPres'));
@@ -125,6 +126,7 @@ begin
     BPe.Ide.cMunFim := Leitor.rCampo(tcInt, 'cMunFim');
     BPe.Ide.dhCont  := Leitor.rCampo(tcDatHor, 'dhCont');
     BPe.Ide.xJust   := Leitor.rCampo(tcStr, 'xJust');
+    BPe.Ide.CFOP    := Leitor.rCampo(tcInt, 'CFOP');
   end;
 
   if Leitor.rExtrai(1, 'emit') <> '' then
@@ -152,6 +154,77 @@ begin
       BPe.Emit.enderEmit.fone    := Leitor.rCampo(tcStr, 'fone');
       BPe.Emit.enderEmit.Email   := Leitor.rCampo(tcStr, 'email');
     end;
+  end;
+
+  i := 0;
+  BPe.detBPeTM.Clear;
+  while Leitor.rExtrai(1, 'detBPeTM', '', i + 1) <> '' do
+  begin
+    BPe.detBPeTM.New;
+    BPe.detBPeTM[i].idEqpCont   := Leitor.rAtributo('detBPeTM idEqpCont=');
+    BPe.detBPeTM[i].UFIniViagem := Leitor.rCampo(tcStr, 'UFIniViagem');
+    BPe.detBPeTM[i].UFFimViagem := Leitor.rCampo(tcStr, 'UFFimViagem');
+    BPe.detBPeTM[i].placa       := Leitor.rCampo(tcStr, 'placa');
+    BPe.detBPeTM[i].prefixo     := Leitor.rCampo(tcStr, 'prefixo');
+
+    j := 0;
+    BPe.detBPeTM[i].det.Clear;
+    while Leitor.rExtrai(2, 'det', '', j + 1) <> '' do
+    begin
+      BPe.detBPeTM[i].det.New;
+      BPe.detBPeTM[i].det[j].nViagem     := Leitor.rAtributo('det nViagem=');
+      BPe.detBPeTM[i].det[j].cMunIni     := Leitor.rCampo(tcInt, 'cMunIni');
+      BPe.detBPeTM[i].det[j].cMunFim     := Leitor.rCampo(tcInt, 'cMunFim');
+      BPe.detBPeTM[i].det[j].nContInicio := Leitor.rCampo(tcStr, 'nContInicio');
+      BPe.detBPeTM[i].det[j].nContFim    := Leitor.rCampo(tcStr, 'nContFim');
+      BPe.detBPeTM[i].det[j].qPass       := Leitor.rCampo(tcStr, 'qPass');
+      BPe.detBPeTM[i].det[j].vBP         := Leitor.rCampo(tcDe2, 'vBP');
+
+      if Leitor.rExtrai(3, 'imp') <> '' then
+      begin
+        BPe.detBPeTM[i].det[j].Imp.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
+
+        if Leitor.rExtrai(4, 'ICMS') <> '' then
+        begin
+          BPe.detBPeTM[i].det[j].Imp.ICMS.CST           := StrToCSTICMS(ok, Leitor.rCampo(tcStr, 'CST'));
+          BPe.detBPeTM[i].det[j].Imp.ICMS.vBC           := Leitor.rCampo(tcDe2, 'vBC');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.pICMS         := Leitor.rCampo(tcDe2, 'pICMS');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.vICMS         := Leitor.rCampo(tcDe2, 'vICMS');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.pRedBC        := Leitor.rCampo(tcDe2, 'pRedBC');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.vCred         := Leitor.rCampo(tcDe2, 'vCred');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.pRedBCOutraUF := Leitor.rCampo(tcDe2, 'pRedBCOutraUF');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.vBCOutraUF    := Leitor.rCampo(tcDe2, 'vBCOutraUF');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.pICMSOutraUF  := Leitor.rCampo(tcDe2, 'pICMSOutraUF');
+          BPe.detBPeTM[i].det[j].Imp.ICMS.vICMSOutraUF  := Leitor.rCampo(tcDe2, 'vICMSOutraUF');
+
+          if Leitor.rExtrai(5, 'ICMSSN') <> '' then
+            BPe.detBPeTM[i].det[j].Imp.ICMS.CST := cstICMSSN;
+        end;
+      end;
+
+      k := 0;
+      BPe.detBPeTM[i].det[j].Comp.Clear;
+      while Leitor.rExtrai(3, 'Comp', '', k + 1) <> '' do
+      begin
+        BPe.detBPeTM[i].det[j].Comp.New;
+        BPe.detBPeTM[i].det[j].Comp[k].xNome := Leitor.rCampo(tcStr, 'xNome');
+        BPe.detBPeTM[i].det[j].Comp[k].qComp := Leitor.rCampo(tcInt, 'qComp');
+
+        Inc(k);
+      end;
+
+      Inc(j);
+    end;
+
+    inc(i);
+  end;
+
+  if Leitor.rExtrai(1, 'total') <> '' then
+  begin
+    BPe.total.qPass := Leitor.rCampo(tcInt, 'qPass');
+    BPe.total.vBP   := Leitor.rCampo(tcDe2, 'vBP');
+    BPe.total.vBC   := Leitor.rCampo(tcDe2, 'vBC');
+    BPe.total.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
   end;
 
   if Leitor.rExtrai(1, 'comp') <> '' then

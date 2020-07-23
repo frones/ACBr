@@ -40,6 +40,8 @@ uses
   SysUtils;
 
 const
+  NAME_SPACE_MDFE = 'xmlns="http://www.portalfiscal.inf.br/mdfe"';
+
   DSC_NMDF        = 'Número do Manifesto';
   DSC_CMDF        = 'Código numérico que compõe a Chave de Acesso';
   DSC_TPEMIT      = 'Tipo do Emitente';

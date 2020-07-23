@@ -141,7 +141,7 @@ implementation
 
 uses
   strutils,
-  pcnGerador,
+  pcnConsts,
   ACBrDFeException, ACBrUtil;
 
 { TACBrDFe }

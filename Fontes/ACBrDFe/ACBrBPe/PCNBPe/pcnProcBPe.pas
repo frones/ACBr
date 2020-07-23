@@ -37,7 +37,7 @@ unit pcnProcBPe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnConversao, pcnConsts, pcnGerador, pcnBPeConsts;
 
 type
 

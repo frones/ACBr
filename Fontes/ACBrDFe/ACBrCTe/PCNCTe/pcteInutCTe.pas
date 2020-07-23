@@ -42,7 +42,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
-  ACBrUtil, pcnConsts, pcnSignature;
+  ACBrUtil, pcnConsts, pcnSignature, pcteConsts;
 
 type
 

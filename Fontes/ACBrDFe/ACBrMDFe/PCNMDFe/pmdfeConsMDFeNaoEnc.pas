@@ -41,7 +41,7 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil, pmdfeConversaoMDFe,
-  pcnConsts;
+  pcnConsts, pmdfeConsts;
 
 type
 

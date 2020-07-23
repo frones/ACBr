@@ -494,7 +494,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrMDFe,
+  ACBrUtil, ACBrCompress, ACBrMDFe, pmdfeConsts, pcnConsts,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc;
 

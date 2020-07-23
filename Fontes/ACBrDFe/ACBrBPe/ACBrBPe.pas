@@ -140,9 +140,6 @@ type
     property DABPE: TACBrBPeDABPEClass read FDABPE write SetDABPE;
   end;
 
-Const
-  ModeloDF = 'BPe';
-  
 implementation
 
 uses
@@ -229,7 +226,8 @@ end;
 
 function TACBrBPe.GetNomeModeloDFe: String;
 begin
-  Result := 'BPe';
+//  Result := 'BPe';
+  Result := ModeloBPeToPrefixo( Configuracoes.Geral.ModeloDF );
 end;
 
 function TACBrBPe.GetNameSpaceURI: String;
@@ -274,21 +272,29 @@ var
   lTipoEvento: String;
   I: Integer;
 begin
+  if Configuracoes.Geral.ModeloDF = moBPe then
+    Result := schBPe
+  else
+    Result := schBPeTM;
 
-  Result := schBPe;
   I := pos('<infBPe', AXML);
+
   if I = 0 then
   begin
     I := Pos('<infEvento', AXML);
+
     if I > 0 then
     begin
       lTipoEvento := Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>'));
+
       if lTipoEvento = '110111' then
         Result := schevCancBPe // Cancelamento
       else if lTipoEvento = '110115' then
         Result := schevNaoEmbBPe // Não Embarque
       else if lTipoEvento = '110116' then
-        Result := schevAlteracaoPoltrona; // Alteração de Poltrona
+        Result := schevAlteracaoPoltrona // Alteração de Poltrona
+      else if lTipoEvento = '110117' then
+        Result := schevExcessoBagagem; // Excesso de Bagagem
     end;
   end;
 end;
@@ -350,7 +356,7 @@ var
   AUF: String;
 begin
   case Configuracoes.Geral.FormaEmissao of
-    teNormal: AUF := Configuracoes.WebServices.UF;
+    pcnConversao.teNormal: AUF := Configuracoes.WebServices.UF;
     teSVCAN: AUF := 'SVC-AN';
     teSVCRS: AUF := 'SVC-RS';
   else

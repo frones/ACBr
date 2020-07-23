@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil, pcnConversao, pcnGerador;
+  ACBrBlocoX, ACBrUtil, pcnConversao, pcnConsts, pcnGerador;
 
 { TACBrBlocoX_Estoque }
 

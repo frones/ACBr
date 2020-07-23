@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts;
 
 type
   TConsConfigUF = class(TObject)

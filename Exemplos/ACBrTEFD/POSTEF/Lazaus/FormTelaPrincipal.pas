@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   StdCtrls, Spin, Buttons, Grids, DBGrids, Menus, ACBrTEFPayGoComum, ACBrPOS,
-  ACBrPOSPGWebAPI, ACBrPosPrinter, ACBrMail, ACBrConsultaCNPJ, ACBrCEP,
+  ACBrPOSPGWebAPI, ACBrPosPrinter, ACBrMail, ACBrConsultaCNPJ, ACBrCEP, ACBrConsts,
   ACBrIBGE, ACBrSAT, synachar, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrSocket, ACBrSATClass, ACBrBase;
 
 type
@@ -401,6 +401,7 @@ type
     procedure DesativarSAT;
 
     function TemEmissaoDeNFCe: Boolean;
+    function TemEmissaoDeSAT: Boolean;
     function TemEnvioDeEmail: Boolean;
 
   protected
@@ -423,10 +424,26 @@ type
     procedure ExecutarReimpressao(const TerminalId: String);
 
     procedure EfetuarPagamento(const TerminalId: String; IndicePedido: Integer);
+    procedure EfetuarPagamentoDinheiro(const TerminalId: String; IndicePedido: Integer);
 
     procedure ImprimirPedido(const TerminalId: String; IndicePedido: Integer);
-    procedure CriarNFCe(IndicePedido: Integer);
-    procedure ImprimirNFCe(const TerminalId: String; IndicePedido: Integer);
+
+    procedure GerarDocumentoFiscal(IndicePedido: Integer);
+    procedure GerarNFCe(IndicePedido: Integer);
+    procedure GerarSAT(IndicePedido: Integer);
+
+    procedure TransmitirDocumentoFiscal;
+    procedure TransmitirNFCe;
+    procedure TransmiirSAT;
+
+    procedure ImprimirDocumentoFiscal(const TerminalId: String);
+    procedure ImprimirNFCe(const TerminalId: String);
+    procedure ImprimirSAT(const TerminalId: String);
+
+    procedure EnviarEmailDocumentoFiscal;
+    procedure EnviarEmailNFCe;
+    procedure EnviarEmailSAT;
+
     procedure IncluirPedidosSimulados;
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
@@ -1348,6 +1365,7 @@ procedure TfrPOSTEFServer.IrParaOperacaoPOS;
 begin
   AdicionarLinhaLog('- IrParaOperacaoPOS');
   GravarConfiguracao;
+  AplicarConfiguracao;
   sgTerminais.Clear;
   pgPrincipal.ActivePage := tsOperacao;
 end;
@@ -1472,7 +1490,13 @@ begin
         3);
 
       // Efetuando pagamento do Pedido
-      EfetuarPagamento( TerminalId, IndicePedido );
+      EfetuarPagamento(TerminalId, IndicePedido);
+
+      GerarDocumentoFiscal(IndicePedido);
+
+      //TransmitirDocumentoFiscal;
+      ImprimirDocumentoFiscal(TerminalId);
+      EnviarEmailDocumentoFiscal;
     end;
   finally
     SL.Free;
@@ -1525,88 +1549,15 @@ begin
   end;
 end;
 
-procedure TfrPOSTEFServer.ImprimirNFCe(const TerminalId: String;
-  IndicePedido: Integer);
+procedure TfrPOSTEFServer.GerarDocumentoFiscal(IndicePedido: Integer);
 begin
-  { *** NOTA ***
-    Aqui você deve Ler o Pedido e gerar uma NFCe, baseado nos itens dele }
-
+  if TemEmissaoDeNFCe then
+    GerarNFCe(IndicePedido)
+  else if TemEmissaoDeSAT then
+    GerarSAT(IndicePedido);
 end;
 
-procedure TfrPOSTEFServer.ExecutarFluxoFechamentoMesa(const TerminalId: String);
-begin
-  raise Exception.Create('Exemplo ainda não implementado');
-end;
-
-procedure TfrPOSTEFServer.ExecutarFluxoFechamentoBomba(const TerminalId: String);
-begin
-  raise Exception.Create('Exemplo ainda não implementado');
-end;
-
-procedure TfrPOSTEFServer.ExecutarReimpressao(const TerminalId: String);
-begin
-  try
-    ACBrPOS1.ImprimirComprovantesTEF(TerminalId, prnAmbas, False);
-  except
-    On E: Exception do
-    begin
-      ACBrPOS1.Beep(TerminalId, beepAlerta);
-      ACBrPOS1.ExibirMensagem(TerminalId, E.Message, 5);
-    end;
-  end;
-end;
-
-procedure TfrPOSTEFServer.EfetuarPagamento(const TerminalId: String;
-  IndicePedido: Integer);
-var
-  OP: SmallInt;
-  AStr, Descricao, MsgTroco: String;
-  Troco: Double;
-  ValorPago: Double;
-begin
-  Descricao := 'PEDIDO: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4);
-
-  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
-
-  case OP of
-    0:
-      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, fPedidos[IndicePedido].ValorTotal);
-    1:
-    begin
-      ValorPago := 0;
-      while (ValorPago < fPedidos[IndicePedido].ValorTotal) do
-      begin
-        AStr := IntToStr(Trunc(fPedidos[IndicePedido].ValorTotal*100));
-        AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO', '@@@.@@@,@@', 3, 8,
-                                    False, False, False, 30, AStr);
-        ValorPago := StrToIntDef(OnlyNumber(AStr),0)/100;
-
-        if (ValorPago < fPedidos[IndicePedido].ValorTotal) then
-          ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + sLineBreak +
-                                              'TOTAL PEDIDO:' + sLineBreak +
-                                              FormatFloatBr(fPedidos[IndicePedido].ValorTotal), 3);
-      end;
-
-      fPedidos[IndicePedido].TotalPago := ValorPago;
-      MsgTroco := '';
-      if ValorPago > fPedidos[IndicePedido].ValorTotal then
-      begin
-        Troco := ValorPago - fPedidos[IndicePedido].ValorTotal;
-        MsgTroco := '* CONFIRA O TROCO *' + sLineBreak + 'R$ '+FormatFloatBr(Troco);
-      end;
-
-      ACBrPOS1.ExibirMensagem(TerminalId,
-        LeftStr(Descricao, CACBrPOSPGWebColunasDisplay) + sLineBreak +
-        'PAGO.: R$ '+FormatFloatBr(ValorPago) + sLineBreak +
-        '* D I N H E I R O *' + sLineBreak +
-        MsgTroco, 10);
-    end
-  else
-    raise Exception.Create('PAGAMENTO CANCELADO');
-  end;
-end;
-
-procedure TfrPOSTEFServer.CriarNFCe(IndicePedido: Integer);
+procedure TfrPOSTEFServer.GerarNFCe(IndicePedido: Integer);
 var
   Ok: Boolean;
   BaseCalculo, BaseCalculoTotal, ValorICMS, ValorICMSTotal, TotalItem: Double;
@@ -1873,6 +1824,173 @@ begin
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
+
+  // Incrementando o número da NFCe
+  seNFCeNumero.Value := seNFCeNumero.Value + 1;
+  GravarConfiguracao;
+end;
+
+procedure TfrPOSTEFServer.GerarSAT(IndicePedido: Integer);
+begin
+
+end;
+
+
+procedure TfrPOSTEFServer.TransmitirDocumentoFiscal;
+begin
+  if TemEmissaoDeNFCe then
+    TransmitirNFCe
+  else if TemEmissaoDeSAT then
+    TransmiirSAT;
+end;
+
+procedure TfrPOSTEFServer.TransmitirNFCe;
+begin
+
+end;
+
+procedure TfrPOSTEFServer.TransmiirSAT;
+begin
+
+end;
+
+procedure TfrPOSTEFServer.ExecutarFluxoFechamentoMesa(const TerminalId: String);
+begin
+  raise Exception.Create('Exemplo ainda não implementado');
+end;
+
+procedure TfrPOSTEFServer.ExecutarFluxoFechamentoBomba(const TerminalId: String);
+begin
+  raise Exception.Create('Exemplo ainda não implementado');
+end;
+
+procedure TfrPOSTEFServer.ExecutarReimpressao(const TerminalId: String);
+begin
+  try
+    ACBrPOS1.ImprimirComprovantesTEF(TerminalId, prnAmbas, False);
+  except
+    On E: Exception do
+    begin
+      ACBrPOS1.Beep(TerminalId, beepAlerta);
+      ACBrPOS1.ExibirMensagem(TerminalId, E.Message, 5);
+    end;
+  end;
+end;
+
+procedure TfrPOSTEFServer.EfetuarPagamento(const TerminalId: String;
+  IndicePedido: Integer);
+var
+  OP: SmallInt;
+begin
+  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
+
+  case OP of
+    0:
+    begin
+      ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, fPedidos[IndicePedido].ValorTotal);
+      fPedidos[IndicePedido].TotalPago := fPedidos[IndicePedido].ValorTotal;
+    end;
+
+    1: EfetuarPagamentoDinheiro(TerminalId, IndicePedido);
+  else
+    raise Exception.Create('PAGAMENTO CANCELADO');
+  end;
+end;
+
+procedure TfrPOSTEFServer.EfetuarPagamentoDinheiro(const TerminalId: String;
+  IndicePedido: Integer);
+var
+  ValorPago, Troco: Double;
+  AStr, MsgTroco: String;
+begin
+  ValorPago := 0;
+  while (ValorPago < fPedidos[IndicePedido].ValorTotal) do
+  begin
+    AStr := IntToStr(Trunc(fPedidos[IndicePedido].ValorTotal*100));
+    AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO', '@@@.@@@,@@', 3, 8,
+                                False, False, False, 30, AStr);
+    ValorPago := StrToIntDef(OnlyNumber(AStr),0)/100;
+
+    if (ValorPago < fPedidos[IndicePedido].ValorTotal) then
+      ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + sLineBreak +
+                                          'TOTAL PEDIDO:' + sLineBreak +
+                                          FormatFloatBr(fPedidos[IndicePedido].ValorTotal), 3);
+  end;
+
+  fPedidos[IndicePedido].TotalPago := ValorPago;
+  MsgTroco := '';
+  if ValorPago > fPedidos[IndicePedido].ValorTotal then
+  begin
+    Troco := ValorPago - fPedidos[IndicePedido].ValorTotal;
+    MsgTroco := '* CONFIRA O TROCO *' + sLineBreak + 'R$ '+FormatFloatBr(Troco);
+  end;
+
+  ACBrPOS1.ExibirMensagem(TerminalId,
+    LeftStr( 'PEDIDO: '+IntToStrZero(fPedidos[IndicePedido].NumPedido, 4),
+             CACBrPOSPGWebColunasDisplay) + sLineBreak +
+    'PAGO.: R$ '+FormatFloatBr(ValorPago) + sLineBreak +
+    '* D I N H E I R O *' + sLineBreak +
+    MsgTroco);
+end;
+
+procedure TfrPOSTEFServer.ImprimirDocumentoFiscal(const TerminalId: String);
+begin
+  if TemEmissaoDeNFCe then
+    ImprimirNFCe(TerminalId)
+  else if TemEmissaoDeSAT then
+    ImprimirSAT(TerminalId);
+end;
+
+procedure TfrPOSTEFServer.ImprimirNFCe(const TerminalId: String);
+var
+  SL: TStringList;
+  Relatorio, QRCodeStr: String;
+  i, p: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    ACBrNFeDANFeESCPOS1.SuportaCondensado := False;
+    ACBrNFeDANFeESCPOS1.ImprimeLogoLateral := False;
+    ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral := False;
+    ACBrNFeDANFeESCPOS1.GerarRelatorioDANFE(SL, QRCodeStr);
+    Relatorio := SL.Text;
+  finally
+    SL.Free;
+  end;
+
+  p := pos(QRCodeStr, Relatorio);
+  if p < 1 then
+    p := Length(Relatorio)+1;
+
+  ACBrPOS1.ImprimirTexto(TerminalId, copy(Relatorio,1, P-1) );
+  ACBrPOS1.ImprimirQRCode(TerminalId, QRCodeStr);
+  ACBrPOS1.ImprimirTexto(TerminalId, copy(Relatorio, p+Length(QRCodeStr), Length(Relatorio)) );
+end;
+
+procedure TfrPOSTEFServer.ImprimirSAT(const TerminalId: String);
+begin
+  // Imprimindo o Extrato;
+end;
+
+procedure TfrPOSTEFServer.EnviarEmailDocumentoFiscal;
+begin
+  if not cbEmailDoctoFiscal.Checked then
+    Exit;
+
+  if TemEmissaoDeNFCe then
+    EnviarEmailNFCe
+  else if TemEmissaoDeSAT then
+    EnviarEmailSAT;
+end;
+
+procedure TfrPOSTEFServer.EnviarEmailNFCe;
+begin
+
+end;
+
+procedure TfrPOSTEFServer.EnviarEmailSAT;
+begin
+
 end;
 
 procedure TfrPOSTEFServer.IncluirPedidosSimulados;
@@ -2063,8 +2181,6 @@ procedure TfrPOSTEFServer.GravarConfiguracao;
 Var
   Ini : TIniFile ;
 begin
-  AplicarConfiguracao;
-
   AdicionarLinhaLog('- GravarConfiguracao');
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
@@ -2254,6 +2370,11 @@ end;
 function TfrPOSTEFServer.TemEmissaoDeNFCe: Boolean;
 begin
   Result := (rgDocumentoFiscal.ItemIndex = 1);
+end;
+
+function TfrPOSTEFServer.TemEmissaoDeSAT: Boolean;
+begin
+  Result := (rgDocumentoFiscal.ItemIndex = 2);
 end;
 
 function TfrPOSTEFServer.TemEnvioDeEmail: Boolean;

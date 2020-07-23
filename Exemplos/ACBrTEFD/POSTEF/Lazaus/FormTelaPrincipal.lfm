@@ -17,11 +17,11 @@ object frPOSTEFServer: TfrPOSTEFServer
     Height = 409
     Top = 0
     Width = 790
-    ActivePage = tsConfiguracao
+    ActivePage = tsOperacao
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     object tsMenuPrincipal: TTabSheet
       Caption = 'Menu Principal'
@@ -6089,10 +6089,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Height = 344
           Top = 0
           Width = 782
-          ActivePage = tsConfEmissor
+          ActivePage = tsConfPosTef
           Align = alClient
           Images = ImageList1
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 0
           object tsConfPosTef: TTabSheet
             Caption = 'POS TEF'
@@ -8249,6 +8249,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             Height = 28
             Top = 2
             Width = 112
+            Anchors = [akTop, akRight]
             Caption = 'Limpar Log'
             Images = ImageList1
             ImageIndex = 6
@@ -8272,7 +8273,6 @@ object frPOSTEFServer: TfrPOSTEFServer
             Height = 28
             Top = 2
             Width = 136
-            Anchors = [akTop]
             Caption = 'Iniciar Servidor'
             Default = True
             Images = ImageList1
@@ -9112,10 +9112,6 @@ object frPOSTEFServer: TfrPOSTEFServer
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8
-    MargemSuperior = 8
-    MargemEsquerda = 6
-    MargemDireita = 5.1
     ExpandeLogoMarcaConfig.Altura = 0
     ExpandeLogoMarcaConfig.Esquerda = 0
     ExpandeLogoMarcaConfig.Topo = 0
@@ -9142,7 +9138,6 @@ object frPOSTEFServer: TfrPOSTEFServer
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    TraduzirTags = False
     Left = 440
   end
   object ACBrMail1: TACBrMail

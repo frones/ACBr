@@ -331,45 +331,43 @@ Informar os zeros não significativos.</xs:documentation>
 															<xs:restriction base="TIeDest"/>
 														</xs:simpleType>
 													</xs:element>
-													<xs:sequence>
-														<xs:element name="xNome">
-															<xs:annotation>
-																<xs:documentation>Razão Social ou Nome</xs:documentation>
-															</xs:annotation>
-															<xs:simpleType>
-																<xs:restriction base="TString">
-																	<xs:maxLength value="60"/>
-																	<xs:minLength value="2"/>
-																</xs:restriction>
-															</xs:simpleType>
-														</xs:element>
-														<xs:element name="xFant" minOccurs="0">
-															<xs:annotation>
-																<xs:documentation>Nome Fantasia</xs:documentation>
-															</xs:annotation>
-															<xs:simpleType>
-																<xs:restriction base="TString">
-																	<xs:maxLength value="60"/>
-																	<xs:minLength value="2"/>
-																</xs:restriction>
-															</xs:simpleType>
-														</xs:element>
-														<xs:element name="fone" type="TFone" minOccurs="0">
-															<xs:annotation>
-																<xs:documentation>Telefone</xs:documentation>
-															</xs:annotation>
-														</xs:element>
-														<xs:element name="enderToma" type="TEndereco">
-															<xs:annotation>
-																<xs:documentation>Dados do endereço</xs:documentation>
-															</xs:annotation>
-														</xs:element>
-														<xs:element name="email" type="TEmail" minOccurs="0">
-															<xs:annotation>
-																<xs:documentation>Endereço de email</xs:documentation>
-															</xs:annotation>
-														</xs:element>
-													</xs:sequence>
+													<xs:element name="xNome">
+														<xs:annotation>
+															<xs:documentation>Razão Social ou Nome</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:maxLength value="60"/>
+																<xs:minLength value="2"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="xFant" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Nome Fantasia</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:maxLength value="60"/>
+																<xs:minLength value="2"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="fone" type="TFone" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Telefone</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="enderToma" type="TEndereco">
+														<xs:annotation>
+															<xs:documentation>Dados do endereço</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="email" type="TEmail" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Endereço de email</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -894,7 +892,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 			</xs:element>
 			<xs:element name="infCTeSupl" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Informações suplementares do CTV-e</xs:documentation>
+					<xs:documentation>Informações suplementares da GTV-e</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
@@ -4468,12 +4466,10 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 													</xs:sequence>
 													<xs:element name="chBPe">
 														<xs:annotation>
-															<xs:documentation>Chave de acesso do BP-e que possui eventos de excesso de bagagem</xs:documentation>
+															<xs:documentation>Chave de acesso do BP-e que possui eventos excesso de bagagem</xs:documentation>
 														</xs:annotation>
 														<xs:simpleType>
-															<xs:restriction base="xs:string">
-																<xs:pattern value="[0-9]{44}"/>
-															</xs:restriction>
+															<xs:restriction base="TChNFe"/>
 														</xs:simpleType>
 													</xs:element>
 												</xs:choice>
@@ -4771,13 +4767,13 @@ Somente para Transporte de Valores</xs:documentation>
 													</xs:element>
 													<xs:element name="Comp" maxOccurs="unbounded">
 														<xs:annotation>
-															<xs:documentation>Componentes do Valor da GTV-e</xs:documentation>
+															<xs:documentation>Componentes do Valor da GTVe</xs:documentation>
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="tpComp">
 																	<xs:annotation>
-																		<xs:documentation>Tipo do componente</xs:documentation>
+																		<xs:documentation>Tipo do Componente</xs:documentation>
 																		<xs:documentation>1-Custodia
 2-Embarque
 3-Tempo de espera
@@ -4786,9 +4782,8 @@ Somente para Transporte de Valores</xs:documentation>
 6-Outros</xs:documentation>
 																	</xs:annotation>
 																	<xs:simpleType>
-																		<xs:restriction base="TString">
-																			<xs:maxLength value="15"/>
-																			<xs:minLength value="1"/>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="preserve"/>
 																			<xs:enumeration value="1"/>
 																			<xs:enumeration value="2"/>
 																			<xs:enumeration value="3"/>
@@ -4803,15 +4798,15 @@ Somente para Transporte de Valores</xs:documentation>
 																		<xs:documentation>Valor do componente</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element name="xComp" minOccurs="0">
+																<xs:element name="xComp">
 																	<xs:annotation>
 																		<xs:documentation>Nome do componente (informar apenas para outros)</xs:documentation>
-																		<xs:documentation>Exxemplos: FRETE PESO, FRETE VALOR, SEC/CAT, ADEME, AGENDAMENTO, etc</xs:documentation>
+																		<xs:documentation>Exemplos: FRETE PESO, FRETE VALOR, SEC/CAT, ADEME, AGENDAMENTO, etc</xs:documentation>
 																	</xs:annotation>
 																	<xs:simpleType>
 																		<xs:restriction base="TString">
 																			<xs:maxLength value="15"/>
-																			<xs:minLength value="1"/>
+																			<xs:minLength value="0"/>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>

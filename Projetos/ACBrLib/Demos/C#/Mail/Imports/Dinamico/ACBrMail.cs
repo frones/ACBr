@@ -92,8 +92,8 @@ namespace ACBrLib.Mail
         }
 
         #endregion Constructors
-		
-		#region Properties
+
+        #region Properties
 
         public string Nome
         {
@@ -102,7 +102,7 @@ namespace ACBrLib.Mail
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.ETQ_Nome>();
+                var method = GetMethod<Delegates.MAIL_Nome>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);
@@ -118,7 +118,7 @@ namespace ACBrLib.Mail
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.ETQ_Versao>();
+                var method = GetMethod<Delegates.MAIL_Versao>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);

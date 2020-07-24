@@ -5629,8 +5629,8 @@ begin
   ArqSWH := ExtractFilePath(Application.ExeName) + 'swh.ini';
   if not FileExists(ArqSWH) then
   begin
-    AddLinesLog('ATENÇÃO: Arquivo "swh.ini" não encontrado.' +
-      sLineBreak + '     Nenhuma Chave RSA Privada pode ser lida.' + sLineBreak);
+    //AddLinesLog('ATENÇÃO: Arquivo "swh.ini" não encontrado.' +
+      //sLineBreak + '     Nenhuma Chave RSA Privada pode ser lida.' + sLineBreak);
     exit;
   end;
 
@@ -5675,7 +5675,7 @@ begin
       '- Chave será utilizada para assinatura digital';
   except
     mRSAKey.Text := 'ATENÇÃO: Chave RSA Privada NÃO pode ser lida no arquivo "swh.ini".';
-    AddLinesLog(mRSAKey.Text + sLineBreak);
+    //AddLinesLog(mRSAKey.Text + sLineBreak);
   end;
 end;
 
@@ -8987,7 +8987,7 @@ begin
     ACBrNFe1.DANFE.PathPDF              := PathWithDelim(edtPathPDF.Text);
     ACBrNFe1.DANFE.CasasDecimais.qCom   := spedtCasasDecimaisQtd.Value;
     ACBrNFe1.DANFE.CasasDecimais.vUnCom := spedtDecimaisVUnit.Value;
-    ACBrNFe1.DANFE.ImprimeTotalLiquido := cbxImpValLiq.Checked;
+    ACBrNFe1.DANFE.ImprimeTotalLiquido  := cbxImpValLiq.Checked;
     ACBrNFe1.DANFE.MostraStatus := cbxMostraStatus.Checked;
     ACBrNFe1.DANFE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
     ACBrNFe1.DANFE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;

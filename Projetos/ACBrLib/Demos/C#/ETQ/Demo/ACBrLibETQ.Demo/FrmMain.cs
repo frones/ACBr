@@ -52,6 +52,7 @@ namespace ACBrLibETQ.Demo
             comboBoxModelo.EnumDataSource(ETQModelo.etqNenhum);
             comboBoxDPI.EnumDataSource(ETQDPI.dpi300);
             comboBoxBackFeed.EnumDataSource(ETQBackFeed.bfNone);
+            cmbPageCode.EnumDataSource(ETQPageCode.pceNone);
 
             // Altera as config de log
             acbrEtq.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", "4");
@@ -220,7 +221,7 @@ namespace ACBrLibETQ.Demo
 
         private void LoadConfig()
         {
-            acbrEtq.ConfigLer("");
+            acbrEtq.ConfigLer();
 
             cbbPortas.SelectedItem = acbrEtq.ConfigLerValor<string>(ACBrSessao.ETQ, "Porta");
             comboBoxModelo.SetSelectedValue(acbrEtq.ConfigLerValor<ETQModelo>(ACBrSessao.ETQ, "Modelo"));
@@ -228,21 +229,23 @@ namespace ACBrLibETQ.Demo
             comboBoxDPI.SetSelectedValue(acbrEtq.ConfigLerValor<ETQDPI>(ACBrSessao.ETQ, "DPI"));
             numericUpDownVelocidade.Value = acbrEtq.ConfigLerValor<decimal>(ACBrSessao.ETQ, "Velocidade");
             comboBoxBackFeed.SetSelectedValue(acbrEtq.ConfigLerValor<ETQBackFeed>(ACBrSessao.ETQ, "BackFeed"));
+            cmbPageCode.SetSelectedValue(acbrEtq.ConfigLerValor<ETQPageCode>(ACBrSessao.ETQ, "PaginaDeCodigo"));
             numericUpDownAvancoEtq.Value = acbrEtq.ConfigLerValor<decimal>(ACBrSessao.ETQ, "Avanco");
             checkBoxLimparMemoria.Checked = acbrEtq.ConfigLerValor<bool>(ACBrSessao.ETQ, "LimparMemoria");
         }
 
         private void SaveConfig()
         {
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Porta", cbbPortas.SelectedText);
+            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Porta", cbbPortas.Text);
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Modelo", comboBoxModelo.GetSelectedValue<ETQModelo>());
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Temperatura", numericUpDownTemperatura.Value);
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "DPI", comboBoxDPI.GetSelectedValue<ETQDPI>());
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Velocidade", numericUpDownVelocidade.Value);
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "BackFeed", comboBoxBackFeed.GetSelectedValue<ETQBackFeed>());
+            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "PaginaDeCodigo", cmbPageCode.GetSelectedValue<ETQPageCode>());
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Avanco", numericUpDownAvancoEtq.Value);
             acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "LimparMemoria", checkBoxLimparMemoria.Checked);
-            acbrEtq.ConfigGravar("");
+            acbrEtq.ConfigGravar();
         }
 
         #endregion Methods

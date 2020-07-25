@@ -86,12 +86,6 @@ namespace ACBrLib.ETQ
 
         #endregion InnerTypes
 
-        #region Fields
-
-        private const int BUFFER_LEN = 256;
-
-        #endregion Fields
-
         #region Constructors
 
         public ACBrETQ(string eArqConfig = "", string eChaveCrypt = "") :

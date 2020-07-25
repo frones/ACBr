@@ -8,12 +8,6 @@ namespace ACBrLib.Sat
 {
     public sealed class ACBrSat : ACBrLibHandle
     {
-        #region Fields
-
-        private const int BUFFER_LEN = 256;
-
-        #endregion Fields
-
         #region InnerTypes
 
         private class Delegates

@@ -39,7 +39,10 @@
             this.buttonCarregarImagem = new System.Windows.Forms.Button();
             this.textBoxImagem = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbbPortas = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBoxBackFeed = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,17 +56,16 @@
             this.numericUpDownTemperatura = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxModelo = new System.Windows.Forms.ComboBox();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cbbPortas = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbPageCode = new System.Windows.Forms.ComboBox();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCopias)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvancoEtq)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVelocidade)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemperatura)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -187,8 +189,21 @@
             this.label7.TabIndex = 1;
             this.label7.Text = "Nome Imagem Memória";
             // 
+            // pictureBox
+            // 
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.Image = global::ACBrLibETQ.Demo.Properties.Resources.acbr;
+            this.pictureBox.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(271, 91);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.cmbPageCode);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.cbbPortas);
             this.groupBox1.Controls.Add(this.label6);
@@ -210,6 +225,23 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configurações da Impressora";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 19);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 13);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "Porta";
+            // 
+            // cbbPortas
+            // 
+            this.cbbPortas.FormattingEnabled = true;
+            this.cbbPortas.Location = new System.Drawing.Point(9, 35);
+            this.cbbPortas.Name = "cbbPortas";
+            this.cbbPortas.Size = new System.Drawing.Size(120, 21);
+            this.cbbPortas.TabIndex = 13;
             // 
             // label6
             // 
@@ -358,33 +390,23 @@
             this.comboBoxModelo.Size = new System.Drawing.Size(126, 21);
             this.comboBoxModelo.TabIndex = 1;
             // 
-            // pictureBox
+            // label10
             // 
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Image = global::ACBrLibETQ.Demo.Properties.Resources.acbr;
-            this.pictureBox.Location = new System.Drawing.Point(6, 19);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(271, 91);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(132, 136);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(93, 13);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Pagina de Codígo";
             // 
-            // label9
+            // cmbPageCode
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 19);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(32, 13);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Porta";
-            // 
-            // cbbPortas
-            // 
-            this.cbbPortas.FormattingEnabled = true;
-            this.cbbPortas.Location = new System.Drawing.Point(9, 35);
-            this.cbbPortas.Name = "cbbPortas";
-            this.cbbPortas.Size = new System.Drawing.Size(120, 21);
-            this.cbbPortas.TabIndex = 13;
+            this.cmbPageCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPageCode.FormattingEnabled = true;
+            this.cmbPageCode.Location = new System.Drawing.Point(135, 152);
+            this.cmbPageCode.Name = "cmbPageCode";
+            this.cmbPageCode.Size = new System.Drawing.Size(126, 21);
+            this.cmbPageCode.TabIndex = 16;
             // 
             // FrmMain
             // 
@@ -403,12 +425,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCopias)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvancoEtq)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVelocidade)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemperatura)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -443,6 +465,8 @@
         private System.Windows.Forms.ComboBox comboBoxModelo;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbbPortas;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cmbPageCode;
     }
 }
 

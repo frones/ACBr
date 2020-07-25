@@ -209,6 +209,7 @@
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnGerarChave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1862,6 +1863,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnGerarChave);
             this.tabPage5.Controls.Add(this.btnLimparLista);
             this.tabPage5.Controls.Add(this.btnImprimirPDF);
             this.tabPage5.Controls.Add(this.btnEnviarAssincrono);
@@ -2237,6 +2239,16 @@
             this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
             // 
+            // btnGerarChave
+            // 
+            this.btnGerarChave.Location = new System.Drawing.Point(6, 151);
+            this.btnGerarChave.Name = "btnGerarChave";
+            this.btnGerarChave.Size = new System.Drawing.Size(118, 23);
+            this.btnGerarChave.TabIndex = 26;
+            this.btnGerarChave.Text = "Gerar Chave NFe ";
+            this.btnGerarChave.UseVisualStyleBackColor = true;
+            this.btnGerarChave.Click += new System.EventHandler(this.btnGerarChave_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2488,6 +2500,7 @@
         private System.Windows.Forms.Button btnDFePorChave;
         private System.Windows.Forms.Button btnObterCertificados;
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
+        private System.Windows.Forms.Button btnGerarChave;
     }
 }
 

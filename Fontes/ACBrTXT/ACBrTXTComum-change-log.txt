@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2020
+-- ACBrTXTClass --
+[-] Correção para os métodos "RFill" e "LFill" que não estavam removendo os
+    espaços corretamente de acordo com a propriedade "TrimString".
+    https://www.projetoacbr.com.br/forum/topic/58617-correção-da-função-tacbrtxtclasslfill/
+  Por: pcbonetti
+
 18/02/2020
 -- ACBrLCDPR --
 [-] https://www.projetoacbr.com.br/forum/topic/56293-o-lcdpr-n%C3%A3o-est%C3%A1-limpando-as-informa%C3%A7%C3%B5es-dos-campos-ao-gerar-pela-segunda-vez/

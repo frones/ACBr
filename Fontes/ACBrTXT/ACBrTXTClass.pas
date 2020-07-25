@@ -225,6 +225,11 @@ function TACBrTXTClass.RFill(const Value: String;
                              Size: Integer = 0;
                              Caracter: Char = ' '): String;
 begin
+  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
+  /// iniciais e finais.
+  if FTrimString then
+     Result := Trim(Result);
+
   if (Size > 0) and (Length(Value) > Size) then
      Result := Copy(Value, 1, Size)
   else
@@ -234,11 +239,6 @@ begin
      Result := FDelimitador + StringReplace(Result, ' ', Caracter, [rfReplaceAll])
   else
      Result := FDelimitador + Result;
-
-  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
-  /// iniciais e finais.
-  if FTrimString then
-     Result := Trim(Result);
 end;
 
 function TACBrTXTClass.LFill(const Value: String;
@@ -252,17 +252,17 @@ begin
      Exit;
   end;
 
+  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
+  /// iniciais e finais.
+  if FTrimString then
+     Result := Trim(Result);
+
   if (Size > 0) and (Length(Value) > Size) then
      Result := Copy(Value, 1, Size)
   else
      Result := StringOfChar(Caracter, Size - length(Value)) + Value;
 
   Result := FDelimitador + Result;
-
-  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
-  /// iniciais e finais.
-  if FTrimString then
-     Result := Trim(Result);
 end;
 
 function TACBrTXTClass.LFill(Value: Extended;

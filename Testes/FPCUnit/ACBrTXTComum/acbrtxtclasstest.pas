@@ -38,6 +38,10 @@ type
     procedure DFill_InteiroZero_ResultadoVazio;
     procedure LFill_StringZero_ResultadoVazio;
     procedure LFill_StringZero_ResultadoNaoVazio;
+    procedure LFill_TrimString;
+    procedure LFill_TrimString_TamanhoMaiorQueZero;
+    procedure RFill_TrimString;
+    procedure RFill_TrimString_TamanhoMaiorQueZero;
   end;
 
   { TTACBrTXTClass_MetodosVLFill_Numericos }
@@ -159,6 +163,50 @@ begin
   vValue2 := 0;
   CheckEquals('|', fACBrTXTClass.LFill(vValue,  'ddmmyyyy', True), 'Não tratou Date como Nulo corretamente.');
   CheckEquals('|', fACBrTXTClass.LFill(vValue2, 'ddmmyyyy', True), 'Não tratou DateTime como Nulo corretamente.');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_TrimString;
+var
+  vValue: string;
+begin
+  vValue := ' Projeto ACBr ';
+  fACBrTXTClass.TrimString := True;
+  CheckEquals('|Projeto ACBr', fACBrTXTClass.LFill(vValue, 0, False), 'Não removeu espaços antes e depois da string');
+  fACBrTXTClass.TrimString := False;
+  CheckEquals('| Projeto ACBr ', fACBrTXTClass.LFill(vValue, 0, False), 'Removeu espaços antes e depois da string indevidamente');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_TrimString_TamanhoMaiorQueZero;
+var
+  vValue: string;
+begin
+  vValue := ' 123456 ';
+  fACBrTXTClass.TrimString := True;
+  CheckEquals('|0000123456', fACBrTXTClass.LFill(vValue, 10, False), 'Não removeu espaços antes e depois da string');
+  fACBrTXTClass.TrimString := False;
+  CheckEquals('|00 123456 ', fACBrTXTClass.LFill(vValue, 10, False), 'Removeu espaços antes e depois da string indevidamente');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.RFill_TrimString;
+var
+  vValue: string;
+begin
+  vValue := ' Projeto ACBr ';
+  fACBrTXTClass.TrimString := True;
+  CheckEquals('|Projeto ACBr', fACBrTXTClass.RFill(vValue, 0), 'Não removeu espaços antes e depois da string');
+  fACBrTXTClass.TrimString := False;
+  CheckEquals('| Projeto ACBr ', fACBrTXTClass.RFill(vValue, 0), 'Removeu espaços antes e depois da string indevidamente');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.RFill_TrimString_TamanhoMaiorQueZero;
+var
+  vValue: string;
+begin
+  vValue := ' 123456 ';
+  fACBrTXTClass.TrimString := True;
+  CheckEquals('|123456XXXX', fACBrTXTClass.RFill(vValue, 10, 'X'), 'Não removeu espaços antes e depois da string');
+  fACBrTXTClass.TrimString := False;
+  CheckEquals('| 123456 XX', fACBrTXTClass.RFill(vValue, 10, 'X'), 'Removeu espaços antes e depois da string indevidamente');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_TDateTimeZero_ResultadoNaoVazio;

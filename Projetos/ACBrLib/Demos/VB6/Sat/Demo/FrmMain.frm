@@ -26,6 +26,22 @@ Begin VB.Form FrmMain
    ScaleHeight     =   5850
    ScaleWidth      =   11280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdCancelarCFe 
+      Caption         =   "Cancelar CFe"
+      Height          =   360
+      Left            =   1800
+      TabIndex        =   86
+      Top             =   4080
+      Width           =   1590
+   End
+   Begin VB.CommandButton cmdImprimirCFeCanc 
+      Caption         =   "Imprimir CFe Canc"
+      Height          =   360
+      Left            =   1800
+      TabIndex        =   85
+      Top             =   5040
+      Width           =   1590
+   End
    Begin VB.CommandButton cmdConsultarStatus 
       Caption         =   "Consultar Status"
       Height          =   360
@@ -173,21 +189,21 @@ Begin VB.Form FrmMain
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":2602
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ckbTLS"
-      Tab(2).Control(1)=   "ckbSSL"
-      Tab(2).Control(2)=   "txtPorta"
-      Tab(2).Control(3)=   "txtHost"
-      Tab(2).Control(4)=   "txtSenha"
-      Tab(2).Control(5)=   "txtUsuario"
-      Tab(2).Control(6)=   "txtEmail"
+      Tab(2).Control(0)=   "lblNome"
+      Tab(2).Control(1)=   "lblEmail"
+      Tab(2).Control(2)=   "lblUsuário"
+      Tab(2).Control(3)=   "lblSenha"
+      Tab(2).Control(4)=   "lblHostSMTP"
+      Tab(2).Control(5)=   "lblPortaMail"
+      Tab(2).Control(6)=   "nudPorta"
       Tab(2).Control(7)=   "txtNome"
-      Tab(2).Control(8)=   "nudPorta"
-      Tab(2).Control(9)=   "lblPortaMail"
-      Tab(2).Control(10)=   "lblHostSMTP"
-      Tab(2).Control(11)=   "lblSenha"
-      Tab(2).Control(12)=   "lblUsuário"
-      Tab(2).Control(13)=   "lblEmail"
-      Tab(2).Control(14)=   "lblNome"
+      Tab(2).Control(8)=   "txtEmail"
+      Tab(2).Control(9)=   "txtUsuario"
+      Tab(2).Control(10)=   "txtSenha"
+      Tab(2).Control(11)=   "txtHost"
+      Tab(2).Control(12)=   "txtPorta"
+      Tab(2).Control(13)=   "ckbSSL"
+      Tab(2).Control(14)=   "ckbTLS"
       Tab(2).ControlCount=   15
       Begin VB.TextBox txtVersaoCFe 
          Alignment       =   1  'Right Justify
@@ -1443,6 +1459,22 @@ Private Sub btnSelDll_Click()
     txtDllPath.Text = CommonDialog1.FileName
 End Sub
 
+Private Sub cmdCancelarCFe_Click()
+
+    On Error Resume Next
+    CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+            
+    If Err Then Exit Sub
+    
+    Dim retorno As String
+    retorno = sat.CancelarCFe(CommonDialog1.FileName)
+    SetResposta retorno
+
+End Sub
+
 Private Sub cmdConsultarSAT_Click()
     Dim retorno As String
     retorno = sat.ConsultarSAT()
@@ -1453,6 +1485,29 @@ Private Sub cmdConsultarStatus_Click()
     Dim retorno As String
     retorno = sat.ConsultarStatusOperacional()
     SetResposta retorno
+End Sub
+
+Private Sub cmdImprimirCFeCanc_Click()
+    Dim xmlVenda As String
+    Dim xmlCancelamento As String
+    
+    On Error Resume Next
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo Xml de venda"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+    
+    xmlVenda = CommonDialog1.FileName
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo Xml de cancelamento"
+    CommonDialog1.ShowOpen
+    
+    xmlCancelamento = CommonDialog1.FileName
+            
+    If Err Then Exit Sub
+    
+    sat.ImprimirExtratoCancelamento xmlVenda, xmlCancelamento
 End Sub
 
 Private Sub Form_Load()

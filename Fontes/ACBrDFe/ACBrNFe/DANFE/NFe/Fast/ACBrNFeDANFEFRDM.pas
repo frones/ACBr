@@ -294,7 +294,7 @@ begin
         FieldDefs.Add('CEP', ftString, 9);
         FieldDefs.Add('CPais', ftString, 4);
         FieldDefs.Add('XPais', ftString, 60);
-        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('Fone', ftString, 17);
         FieldDefs.Add('IE', ftString, 15);
         FieldDefs.Add('IM', ftString, 15);
         FieldDefs.Add('IEST', ftString, 15);
@@ -332,7 +332,7 @@ begin
         FieldDefs.Add('CEP', ftString, 9);
         FieldDefs.Add('CPais', ftString, 4);
         FieldDefs.Add('XPais', ftString, 60);
-        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('Fone', ftString, 17);
         FieldDefs.Add('IE', ftString, 18);
         FieldDefs.Add('Consumidor', ftString, 400);
         CreateDataSet;
@@ -686,7 +686,7 @@ begin
          FieldDefs.Add('CEP', ftString, 9);
          FieldDefs.Add('CPais', ftString, 4);
          FieldDefs.Add('XPais', ftString, 60);
-         FieldDefs.Add('Fone', ftString, 15);
+         FieldDefs.Add('Fone', ftString, 17);
          FieldDefs.Add('IE', ftString, 15);
          CreateDataSet;
       end;
@@ -719,7 +719,7 @@ begin
          FieldDefs.Add('CEP', ftString, 9);
          FieldDefs.Add('CPais', ftString, 4);
          FieldDefs.Add('XPais', ftString, 60);
-         FieldDefs.Add('Fone', ftString, 15);
+         FieldDefs.Add('Fone', ftString, 17);
          FieldDefs.Add('IE', ftString, 15);
          CreateDataSet;
       end;

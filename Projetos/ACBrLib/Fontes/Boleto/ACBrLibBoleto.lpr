@@ -38,7 +38,9 @@ uses
   Interfaces, Forms,
   sysutils, Classes, ACBrLibBoletoDataModule,
   ACBrLibConfig, ACBrLibResposta,
-  ACBrLibComum, ACBrLibConsts, ACBrLibBoletoClass, ACBrLibBoletoConsts, ACBrLibBoletoConfig;
+  ACBrLibComum, ACBrLibConsts,
+  {$IFDEF MT}ACBrLibBoletoMT{$ELSE}ACBrLibBoletoST{$ENDIF},
+  ACBrLibBoletoConsts, ACBrLibBoletoConfig;
 
 //{$R *.res}
 

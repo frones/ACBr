@@ -2,13 +2,12 @@ object LibNFeDM: TLibNFeDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  left = 346
-  top = 174
+  Left = 346
+  Top = 174
   Height = 231
   HorizontalOffset = 247
   VerticalOffset = 118
   Width = 491
-  PPI = 96
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
@@ -29,8 +28,8 @@ object LibNFeDM: TLibNFeDM
     FormularioContinuo = True
     FonteLinhaItem.Height = -9
     FonteLinhaItem.Name = 'Lucida Console'
-    left = 176
-    top = 104
+    Left = 176
+    Top = 104
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -50,11 +49,11 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     ExibeCampoFatura = False
-    TributosPercentualPersonalizado = 0
-    left = 176
-    top = 56
+    Left = 176
+    Top = 56
   end
   object ACBrNFe1: TACBrNFe
+    MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -66,8 +65,8 @@ object LibNFeDM: TLibNFeDM
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    left = 48
-    top = 48
+    Left = 48
+    Top = 48
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -87,14 +86,15 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     FormularioContinuo = True
-    left = 176
-    top = 163
+    PosPrinter = ACBrPosPrinter1
+    Left = 176
+    Top = 163
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    left = 176
-    top = 8
+    Left = 176
+    Top = 8
   end
   object ACBrNFeDANFCeFortesA4: TACBrNFeDANFCeFortesA4
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -114,7 +114,30 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     FormularioContinuo = True
-    left = 328
-    top = 163
+    Left = 328
+    Top = 163
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    Left = 328
+    Top = 104
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    Left = 328
+    Top = 56
   end
 end

@@ -128,8 +128,6 @@ function POS_EjetarCheque(const libHandle: PLibHandle): longint;{$IfDef STDCALL}
 function POS_PodeLerDaPorta(const libHandle: PLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerCaracteristicas(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_GetPosPrinter(const libHandle: PLibHandle): Pointer;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -625,18 +623,6 @@ begin
 
     on E: Exception do
       Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function POS_GetPosPrinter(const libHandle: PLibHandle): Pointer;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(libHandle);
-    Result := TACBrLibPosPrinter(libHandle^.Lib).GetPosPrinter;
-  except
-    on E: Exception do
-      Result := nil;
   end;
 end;
 

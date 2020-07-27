@@ -196,7 +196,7 @@ begin
           BoletoDM.ACBrBoleto1.GerarPDF
         else if TpSaida = 'E' then
         begin
-          with TLibBoletoConfig(TACBrLibBoleto(pLib).Config).BoletoConfig do
+          with TLibBoletoConfig(Config).BoletoConfig do
           begin
             Mensagem := TStringList.Create;
             try

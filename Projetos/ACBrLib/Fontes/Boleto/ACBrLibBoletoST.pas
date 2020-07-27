@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibBoletoClass;
+unit ACBrLibBoletoST;
 
 
 interface

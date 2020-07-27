@@ -453,7 +453,7 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibNFe(pLib^.Lib).GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi,
-                                                   AEmissao, ACNPJCPF, sResposta, esTamanho);
+                                                AEmissao, ACNPJCPF, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;

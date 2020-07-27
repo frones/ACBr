@@ -39,8 +39,7 @@ interface
 uses
   Classes, SysUtils, syncobjs, ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
   ACBrPosPrinter, ACBrIntegrador, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
-  ACBrDANFCeFortesFrA4, ACBrLibConfig, ACBrLibMailImport,
-  ACBrLibPosPrinterImport, ACBrLibComum;
+  ACBrDANFCeFortesFrA4, ACBrLibConfig, ACBrLibComum;
 
 type
 
@@ -48,26 +47,21 @@ type
 
   TLibNFeDM = class(TDataModule)
     ACBrIntegrador1: TACBrIntegrador;
+    ACBrMail1: TACBrMail;
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFCeFortesA4: TACBrNFeDANFCeFortesA4;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrPosPrinter1: TACBrPosPrinter;
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
-    FACBrMail: TACBrMail;
-    FACBrPosPrinter: TACBrPosPrinter;
     fpLib: TACBrLib;
 
-    FLibMail: TACBrLibMail;
-    FLibPosPrinter: TACBrLibPosPrinter;
   public
-    procedure CriarACBrMail;
-    procedure CriarACBrPosPrinter;
-
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
@@ -96,78 +90,11 @@ uses
 procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
-
-  FACBrMail := Nil;
-  FLibMail := Nil;
-  FACBrPosPrinter := Nil;
-  FLibPosPrinter := Nil;
 end;
 
 procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
-
-  if Assigned(FLibMail) then
-    FreeAndNil(FLibMail)
-  else if Assigned(FACBrMail) then
-    FreeAndNil(FACBrMail);
-
-  if Assigned(FLibPosPrinter) then
-    FreeAndNil(FLibPosPrinter)
-  else if Assigned(FACBrPosPrinter) then
-    FreeAndNil(FACBrPosPrinter);
-end;
-
-procedure TLibNFeDM.CriarACBrMail;
-var
-  NomeLib: String;
-begin
-  if Assigned(FLibMail) or Assigned(FACBrMail) then
-    Exit;
-
-  GravarLog('  CriarACBrMail', logCompleto);
-
-  NomeLib := ApplicationPath + CACBrMailLIBName;
-  if FileExists(NomeLib) then
-  begin
-    GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
-    // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
-    FACBrMail := FLibMail.ACBrMail;
-  end
-  else
-  begin
-    GravarLog('     Criando MAIL Interno', logCompleto);
-    FACBrMail := TACBrMail.Create(Nil);
-  end;
-
-  ACBrNFe1.MAIL := FACBrMail;
-end;
-
-procedure TLibNFeDM.CriarACBrPosPrinter;
-var
-  NomeLib: String;
-begin
-  if Assigned(FLibPosPrinter) or Assigned(FACBrPosPrinter) then
-    Exit;
-
-  GravarLog('  CriarACBrPosPrinter', logCompleto);
-
-  NomeLib := ApplicationPath + CACBrPosPrinterLIBName;
-  if FileExists(NomeLib) then
-  begin
-    GravarLog('      Carregando PosPrinter de: ' + NomeLib, logCompleto);
-    // Criando Classe para Leitura da Lib //
-    FLibPosPrinter  := TACBrLibPosPrinter.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
-    FACBrPosPrinter := FLibPosPrinter.ACBrPosPrinter;
-  end
-  else
-  begin
-    GravarLog('     Criando PosPrinter Interno', logCompleto);
-    FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
-  end;
-
-  ACBrNFeDANFeESCPOS1.PosPrinter := FACBrPosPrinter;
 end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;
@@ -192,13 +119,7 @@ end;
 
 procedure TLibNFeDM.AplicarConfigMail;
 begin
-  if Assigned(FLibMail) then
-  begin
-    FLibMail.ConfigLer(Lib.Config.NomeArquivo);
-    Exit;
-  end;
-
-  with FACBrMail do
+  with ACBrMail1 do
   begin
     Attempts := Lib.Config.Email.Tentativas;
     SetTLS := Lib.Config.Email.TLS;
@@ -224,15 +145,9 @@ procedure TLibNFeDM.AplicarConfigPosPrinter;
 var
   LibConfig: TLibNFeConfig;
 begin
-  if Assigned(FLibPosPrinter) then
-  begin
-    FLibPosPrinter.ConfigLer(Lib.Config.NomeArquivo);
-    Exit;
-  end;
-
   LibConfig := TLibNFeConfig(Lib.Config);
 
-  with FACBrPosPrinter do
+  with ACBrPosPrinter1 do
   begin
     ArqLog := LibConfig.PosPrinter.ArqLog;
     Modelo := TACBrPosPrinterModelo(LibConfig.PosPrinter.Modelo);

@@ -61,10 +61,7 @@ exports
   POS_LerCMC7,
   POS_EjetarCheque,
   POS_PodeLerDaPorta,
-  POS_LerCaracteristicas,
-
-  // Componente Handler
-  POS_GetPosPrinter;
+  POS_LerCaracteristicas;
 
 begin
   {$IFDEF DEBUG}

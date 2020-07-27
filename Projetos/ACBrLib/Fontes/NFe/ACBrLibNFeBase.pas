@@ -52,7 +52,6 @@ type
     function SetRetornoEventoCarregados(const NumEventos: integer): integer;
 
   protected
-    procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
   public
@@ -134,7 +133,7 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
+  ACBrNFeDANFeESCPOS, ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
   ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil, ACBrLibCertUtils,
@@ -154,18 +153,6 @@ begin
   FNFeDM.Free;
 
   inherited Destroy;
-end;
-
-procedure TACBrLibNFe.Inicializar;
-begin
-  GravarLog('TACBrLibNFe.Inicializar', logNormal);
-
-  FNFeDM.CriarACBrMail;
-  FNFeDM.CriarACBrPosPrinter;
-
-  GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
-
-  inherited Inicializar;
 end;
 
 procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
@@ -649,8 +636,7 @@ begin
 
     try
       Resposta := '';
-      Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF,
-      ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
+      Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -1747,6 +1733,11 @@ begin
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
       NFeDM.ACBrNFe1.DANFE.NumCopias := NumCopias;
+      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
+      begin
+        if NFeDM.ACBrPosPrinter1.Ativo then
+          NFeDM.ACBrPosPrinter1.Desativar;
+      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;
@@ -1829,6 +1820,11 @@ begin
 
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
+      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
+      begin
+        if NFeDM.ACBrPosPrinter1.Ativo then
+          NFeDM.ACBrPosPrinter1.Desativar;
+      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;
@@ -1926,6 +1922,11 @@ begin
 
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
+      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
+      begin
+        if NFeDM.ACBrPosPrinter1.Ativo then
+          NFeDM.ACBrPosPrinter1.Desativar;
+      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;

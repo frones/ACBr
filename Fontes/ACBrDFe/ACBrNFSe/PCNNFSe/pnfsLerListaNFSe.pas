@@ -425,6 +425,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'retorno') <> '');
 
+    //SigIss
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'DadosNota') <> '');
+
     //DataSmart
     if ((not Nivel1) and (Provedor = proDataSmart)) then
       Nivel1 := (leitor.rExtrai(1, 'CompNfse') <> '');
@@ -524,7 +528,8 @@ begin
             ((Provedor in [proEL]) and (Leitor.rExtrai(Nivel, 'nfeRpsNotaFiscal', '', i + 1) <> '')) or
             ((Provedor in [proSMARAPD]) and (Leitor.rExtrai(Nivel, 'nfdok', '', i + 1) <> '')) or
             ((Provedor in [proISSNET]) and (Leitor.rExtrai(Nivel, 'NotaFiscalRelatorioDTO', '', i + 1) <> '')) or
-            ((Provedor in [proAssessorPublico]) and (Leitor.rExtrai(Nivel, 'NOTA', '', i + 1) <> '')) do
+            ((Provedor in [proAssessorPublico]) and (Leitor.rExtrai(Nivel, 'NOTA', '', i + 1) <> '')) or
+            ((Provedor in [proSigIss]) and (Leitor.rExtrai(Nivel, 'DadosNota', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -1391,6 +1396,52 @@ begin
       end;
     end;
 
+    {Provedor SigIss}
+    if FProvedor = proSigIss then
+    begin
+      if Leitor.rExtrai(1, 'RetornoNota') <> EmptyStr then
+      begin
+        if Leitor.rCampo(tcStr, 'Resultado') = '1' then
+        begin
+          with ListaNFSe.FCompNFSe.add do
+          begin
+            NFSe.Numero             := Leitor.rCampo(tcStr, 'Nota');
+            NFSe.Link               := Leitor.rCampo(tcStr, 'LinkImpressao');
+          end;
+        end
+        {
+        else if Leitor.rCampo(tcStr, 'nota') <> '' then
+        begin
+          with ListaNFSe.FCompNFSe.Items[0] do
+          begin
+            NFSe.Numero             := Leitor.rCampo(tcStr, 'Nota');
+            NFSe.Link               := Leitor.rCampo(tcStr, 'LinkImpressao');
+          end;
+        end
+        }
+        else if Leitor.rExtrai(1, 'DescricaoErros') <> EmptyStr then
+        begin
+          Result := False;
+          if Leitor.rCampo(tcStr, 'DescricaoErro') <> EmptyStr then
+          begin
+            with ListaNFSe.MsgRetorno.New do
+            begin
+              Codigo := Leitor.rCampo(tcStr, 'id');
+              Mensagem:= Leitor.rCampo(tcStr, 'DescricaoProcesso')+ ': '+Leitor.rCampo(tcStr, 'DescricaoErro');
+            end;
+          end;
+        end
+        else
+        begin
+          with ListaNFSe.MsgRetorno.New do
+          begin
+            Codigo := '0';
+            Mensagem:= 'Nota Não Existe';
+          end;
+          Result := False;
+        end;
+      end;
+    end;
   except
     Result := False;
   end;

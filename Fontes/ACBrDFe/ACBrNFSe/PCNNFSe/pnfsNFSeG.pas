@@ -1296,6 +1296,9 @@ begin
     proNFSEBrasil: begin
                      // Nenhum valor
                    end;
+    proSigIss: begin
+                  Gerador.ArquivoFormatoXML := notas;
+               end;
 
     proGiap: begin
                Gerador.wGrupo('consulta');
@@ -1304,7 +1307,7 @@ begin
                Gerador.wGrupo('/consulta');
              end;
 
-    proSP, 
+    proSP,
     proNotaBlu: begin
                   Gerador.wGrupo('Cabecalho' + FaVersao + ' xmlns=""');
                   Gerador.wGrupo('CPFCNPJRemetente');
@@ -1509,6 +1512,19 @@ begin
         Gerador.wGrupo('/ChaveNFe');
         Gerador.wGrupo('/Detalhe');
       end;
+    proSigISS:
+     begin
+        Gerador.ArquivoFormatoXML := '';
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupo('ConsultarNotaPrestador');
+        Gerador.wGrupo('DadosPrestador');
+        Gerador.wCampo(tcStr, '#01', 'ccm',  01, 015, 0, UserWeb, '');
+        Gerador.wCampo(tcStr, '#02', 'cnpj', 11, 014, 1, Cnpj, '');
+        Gerador.wCampo(tcStr, '#03', 'senha',01, 010, 1, SenhaWeb, '');
+        Gerador.wGrupo('/DadosPrestador');
+        Gerador.wCampo(tcStr, '', 'nota', 01, 10, 1, OnlyNumber(NumeroNFSe), '');
+        Gerador.wGrupo('/ConsultarNotaPrestador');
+    end;
 
     proGoverna:
       begin
@@ -1835,6 +1851,12 @@ begin
         Gerador.wGrupo('/InfPedidoCancelamento');
       end;
 
+
+    proSigIss:
+    begin
+        Gerador.ArquivoFormatoXML := Notas;
+    end;
+
     proNFSEBrasil:
       begin
         Gerador.ArquivoFormatoXML := NumeroRps;
@@ -2009,7 +2031,7 @@ begin
     proAssessorPublico, proEquiplano, proGinfes, proGoverna, proEGoverneISS,
     proISSDSF, proCTA, proCONAM, proEL, proInfisc, proInfiscv11, proSP,
     proNotaBlu, proSMARAPD, proGiap, proWEBFISCO,
-    proIPM, proSiat:
+    proIPM, proSiat, proSigIss:
       begin
         TagI := '';
         TagF := '';

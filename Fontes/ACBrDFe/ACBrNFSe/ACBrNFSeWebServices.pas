@@ -1256,6 +1256,20 @@ begin
       break;
     end;
 
+    // O provedor SIGISS não retorna o XML da NFS-e esse é obtido pelo
+    // Link retornado e atribuido a propriedade Link, bem como o numero da nota
+    // que é atribuido a propriedade Numero
+    {
+    if (FProvedor = proSigIss) then
+    begin
+      FNotasFiscais.Items[0].NFSe.Link         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Link;
+      FNotasFiscais.Items[0].NFSe.Numero       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Numero;
+      if (Trim(FXML_NFSe) <> '') then
+          FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.XML := FXML_NFSe;
+      FNotasFiscais.Items[0].NFSe.XML               := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.XML;
+      break;
+    end;
+    }
     if (FProvedor = proIPM) then
     begin
       FNotasFiscais.Items[0].NFSe.Autenticador      := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Autenticador;
@@ -1446,7 +1460,10 @@ begin
 
     FNotasFiscais.Items[ii].NFSe.NfseSubstituidora := FRetornoNFSe.ListaNfse.CompNfse.Items[i].NFSe.NfseSubstituidora;
 
-    FRetNFSe := GerarRetornoNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML);
+    if FProvedor=proSigIss then
+       FRetNFSe := FNotasFiscais.Items[ii].nfse.XML
+    else
+       FRetNFSe := GerarRetornoNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML);
 
     if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
       xData := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao
@@ -1571,6 +1588,11 @@ begin
                  'Link.......... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Link + LineBreak +
                  'Numero........ : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Numero + LineBreak +
                  'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak
+      else if FProvedor = proSigISS then
+        FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+                 'Link.......... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Link + LineBreak +
+                 'Numero........ : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Numero + LineBreak +
+                 'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak
       else
         FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                  'Situação...... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Situacao + LineBreak +
@@ -1593,7 +1615,7 @@ begin
     proISSDSF, proSiat: Result := Alerta203 or (FDataRecebimento <> 0); 
 
     proEgoverneISS,
-    proiiBrasilv2: Result := ProcSucesso;
+    proiiBrasilv2, proSigIss: Result := ProcSucesso;
   else
     Result := (FDataRecebimento <> 0);
   end;
@@ -1897,7 +1919,7 @@ begin
         proIPM: FvNotas := RPS;
 
 //        proWEBFISCO: FvNotas := RetornarConteudoEntre(RPS, '<EnvNfe>', '</EnvNfe>');
-        proWEBFISCO: FvNotas := RPS;
+        proWEBFISCO, proSigIss: FvNotas := RPS;
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -1954,7 +1976,8 @@ begin
            proInfisc,
            proInfiscv11,
            proIPM,
-           proSMARAPD: FTagI := '';
+           proSMARAPD,
+		   proSigISS: FTagI := '';
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -2105,7 +2128,8 @@ begin
            proFISSLex,
            proIPM,
            proGiap,
-           proSMARAPD: FTagI := '';
+           proSMARAPD,
+           proSigIss: FTagI := '';
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -2138,7 +2162,8 @@ begin
            proFISSLex,
            proIPM,
            proGiap,
-           proSMARAPD: FTagI := '';
+           proSMARAPD,
+           ProSigIss: FTagI := '';
 
            proSJP: FTagI := '<' + FTagGrupo + FNameSpaceDad + ' Id="consultar">';
 
@@ -2216,7 +2241,8 @@ begin
            proGoverna,
            proSMARAPD,
            proGiap,
-           proIPM: FTagI := '';
+           proIPM,
+           proSigISS: FTagI := '';
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -2252,7 +2278,8 @@ begin
            proSMARAPD,
            proGiap,
            proWEBFISCO,
-           proIPM: FTagI := '';
+           proIPM, proSigIss: FTagI := '';
+
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -2328,7 +2355,8 @@ begin
            proInfiscv11,
            proGoverna,
            proIPM,
-           proSMARAPD: FTagF := '';
+           proSMARAPD,
+		   proSigISS: FTagF := '';
          else
            FTagF := '</' + FTagGrupo + '>';
          end;
@@ -2357,7 +2385,7 @@ begin
          if FProvedor in [proDBSeller] then
            FTagF := FTagF + '</ConsultarNfsePorRps>';
 
-         if FProvedor in [proAssessorPublico, proGoverna, proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proGoverna, proFISSLex, proSMARAPD, proIPM, proGiap, proSigIss] then
            FTagF := '';
        end;
 
@@ -2365,7 +2393,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proAssessorPublico, proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proFISSLex, proSMARAPD, proIPM, proGiap, proSigIss] then
            FTagF := '';
        end;
 
@@ -2377,7 +2405,8 @@ begin
            proGoverna,
            proIPM,
            proGiap,
-           proSMARAPD: FTagF := '';
+           proSMARAPD,
+           proSigIss: FTagF := '';
 
            proISSNet: FTagF := '</p1:' + FTagGrupo + '>';
          else
@@ -2393,7 +2422,8 @@ begin
          case FProvedor of
            proAssessorPublico,
            proWEBFISCO,
-           proIPM: FTagF := '';
+           proIPM,
+           proSigIss: FTagF := '';
          else
            FTagF := '</' + FTagGrupo + '>';
          end;
@@ -2737,7 +2767,7 @@ begin
     if FTagGrupo <> '' then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
-	if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA, proSiat]) then 
+	if (FTagElemento <> '') and not (Provedor in [proBetha, proIssDSF, proCTA, proSiat, proSigISS]) then 
       FTagElemento := FPrefixo3 + FTagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -4313,6 +4343,29 @@ begin
       end;
     end;
 
+    if FProvedor=proSigISS then
+    begin
+      Gerador := TGerador.Create;
+      try
+        with FNotasFiscais.Items[0] do
+        begin
+          Gerador.ArquivoFormatoXML := '';
+          Gerador.Prefixo := Prefixo4;
+          Gerador.wGrupo('ConsultarNotaPrestador');
+          Gerador.wGrupo('DadosPrestador');
+          Gerador.wCampo(tcStr, '#01', 'ccm',  01, 015, 0, NFSe.Prestador.Usuario, '');
+          Gerador.wCampo(tcStr, '#02', 'cnpj', 11, 014, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
+          Gerador.wCampo(tcStr, '#03', 'senha',01, 010, 1, NFSe.Prestador.Senha, '');
+          Gerador.wGrupo('/DadosPrestador');
+          Gerador.wCampo(tcStr, '', 'nota', 01, 10, 1, OnlyNumber(NFSe.Numero), '');
+          Gerador.wGrupo('/ConsultarNotaPrestador');
+        end;
+        FvNotas := Gerador.ArquivoFormatoXML;
+      finally
+        Gerador.Free;
+      end;
+    end;
+
     InicializarGerarDadosMsg;
 
     with GerarDadosMsg do
@@ -4687,7 +4740,8 @@ begin
       proNotaBlu,
       proSMARAPD,
       proGiap,
-      proIPM: FURI := '';
+      proIPM,
+	  proSigISS: FURI := '';
 
       proGovDigital,
       proTecnos: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4787,8 +4841,33 @@ begin
       end;
     end;
 
+    if FProvedor=proSigISS then
+    begin
+      Gerador := TGerador.Create;
+      try
+        with FNotasFiscais.Items[0] do
+        begin
+          Gerador.ArquivoFormatoXML := '';
+          Gerador.Prefixo := Prefixo4;
+          Gerador.wGrupo('CancelarNota');
+          Gerador.wGrupo('DadosPrestador');
+          Gerador.wCampo(tcStr, '#01', 'ccm',  01, 015, 0, NFSe.Prestador.Usuario, '');
+          Gerador.wCampo(tcStr, '#02', 'cnpj', 11, 014, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
+          Gerador.wCampo(tcStr, '#03', 'senha',01, 010, 1, NFSe.Prestador.Senha, '');
+          Gerador.wGrupo('/DadosPrestador');
+          Gerador.wGrupo('DescricaoCancelaNota');
+          Gerador.wCampo(tcStr, '', 'nota', 01, 10, 1, OnlyNumber(NFSe.Numero), '');
+          Gerador.wCampo(tcStr, '', 'motivo', 01, 255,  1, MotivoCancelamento, '');
+          Gerador.wCampo(tcStr, '', 'email', 01, 80, 1, NFSe.Tomador.Contato.Email, '');
+          Gerador.wGrupo('/DescricaoCancelaNota');
+          Gerador.wGrupo('/CancelarNota');
+        end;
+        FvNotas := Gerador.ArquivoFormatoXML;
+      finally
+        Gerador.Free;
+      end;
+    end;
     InicializarGerarDadosMsg;
-
     with GerarDadosMsg do
     begin
       if FProvedor in [proSP, proNotaBlu] then
@@ -6015,7 +6094,7 @@ begin
   with TACBrNFSe(FACBrNFSe) do
   begin
     if not (Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet,
-                                             proSMARAPD, proIPM, proCenti]) then
+                                             proSMARAPD, proIPM, proCenti, proSigISS]) then
     begin
       if Configuracoes.Geral.Provedor in [proSystemPro] then
       begin

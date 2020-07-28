@@ -153,7 +153,7 @@ type
     function LerXML_proGiap: Boolean;
     function LerXML_proAssessorPublica: Boolean;
     function LerXML_proSiat: Boolean; 
-
+    function LerXML_proSigIss: Boolean;
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -316,6 +316,7 @@ begin
     proGiap:       Result := LerXML_proGiap;
     proAssessorPublico : Result := LerXML_proAssessorPublica;
     proSiat:       Result := LerXML_proSiat;
+    proSigIss:     Result := LerXML_proSigIss;
   else
     Result := LerXml_ABRASF;
   end;
@@ -1356,6 +1357,66 @@ begin
       FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
       FInfRec.FMsgRetorno[i].FCorrecao := '';
     end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proSigIss: Boolean;
+var
+  i: Integer;
+  j: string;
+  leitorAux: TLeitor;
+begin
+  Result := True;
+  try
+    if leitor.rExtrai(1, 'GerarNotaResponse') <> ''
+     then begin
+       j := leitor.Arquivo;
+       j := StringReplace(j, ' xsi:type="xsd:int"', '', [rfReplaceAll]);
+       j := StringReplace(j, ' xsi:type="xsd:string"', '', [rfReplaceAll]);
+
+       leitorAux := TLeitor.Create;
+       leitorAux.Arquivo := j;
+       leitorAux.Grupo   := j;
+
+       FInfRec.FSucesso := leitorAux.rCampo(tcStr, 'Resultado');
+
+       if (FInfRec.FSucesso = '1')
+        then begin
+          FInfRec.FDataRecebimento := now;
+          FInfRec.FProtocolo       := leitorAux.rCampo(tcStr, 'Nota');
+
+          if (leitorAux.rExtrai(1, 'DescricaoErros') <> '')
+           then begin
+             i := 0;
+
+             while leitorAux.rExtrai(1, 'DescricaoErros', '', i + 1) <> '' do
+              begin
+                FInfRec.MsgRetorno.Add;
+                FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'id');
+                FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'DescricaoProcesso');
+
+                Inc(i);
+              end;
+           end;
+        end
+        else begin
+          if (leitorAux.rExtrai(1, 'DescricaoErros') <> '')
+           then begin
+             i := 0;
+
+             while Leitor.rExtrai(1, 'DescricaoErros', '', i + 1) <> '' do
+              begin
+                FInfRec.MsgRetorno.Add;
+                FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'id');
+                FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'DescricaoErro');
+
+                Inc(i);
+              end;
+           end;
+        end;
+     end;
   except
     Result := False;
   end;

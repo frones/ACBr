@@ -450,6 +450,10 @@ type
     FEndereco: TEndereco;
     FTelefone: String;
     FEmail: String;
+    Fcrc_estado: string;
+    Fcrc: string;
+    procedure Setcrc(const Value: string);
+    procedure Setcrc_estado(const Value: string);
   public
     constructor Create;
     destructor Destroy; override;
@@ -468,6 +472,9 @@ type
     property CNPJ_Prefeitura: String read FCNPJ_Prefeitura write FCNPJ_Prefeitura;
     property ValorReceitaBruta: Currency read FValorReceitaBruta write FValorReceitaBruta;
     property DataInicioAtividade: TDateTime read FDataInicioAtividade write FDataInicioAtividade;
+    //usado por SIG-ISS
+    property crc : string read Fcrc write Setcrc;
+    property crc_estado: string read Fcrc_estado write Setcrc_estado;
     //usado por Elotech
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property Fantasia: String read FFantasia write FFantasia;
@@ -834,12 +841,14 @@ type
     FValorCargaTributariaMunicipal: Double;
     FPercentualCargaTributariaEstadual: Double;
     FValorCargaTributariaEstadual: Double;
+    Fid_sis_legado: integer;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: String);
     procedure SetDespesa(const Value: TDespesaCollection);
     procedure SetAssinaComChaveParams(
       const Value: TAssinaComChaveParamsCollection);
+    procedure Setid_sis_legado(const Value: integer);
 
   public
     constructor Create;
@@ -909,6 +918,9 @@ type
     property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
 
     property AssinaComChaveParams: TAssinaComChaveParamsCollection read FAssinaComChaveParams write SetAssinaComChaveParams;
+
+    //usado por SIG-ISS
+    property id_sis_legado : integer read Fid_sis_legado write Setid_sis_legado; //Código da nota no sistema legado do contribuinte.
 
     // Provedor SP
     property Assinatura: String read FAssinatura write FAssinatura;
@@ -1193,6 +1205,11 @@ begin
   FAssinaComChaveParams := Value;
 end;
 
+procedure TNFSe.Setid_sis_legado(const Value: integer);
+begin
+  Fid_sis_legado := Value;
+end;
+
 { TLoteRps }
 
 constructor TLoteRps.Create;
@@ -1455,6 +1472,16 @@ begin
   FEndereco.Free;
 
   inherited Destroy;
+end;
+
+procedure TIdentificacaoPrestador.Setcrc(const Value: string);
+begin
+  Fcrc := Value;
+end;
+
+procedure TIdentificacaoPrestador.Setcrc_estado(const Value: string);
+begin
+  Fcrc_estado := Value;
 end;
 
 end.

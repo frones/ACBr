@@ -161,6 +161,7 @@ type
     function LerXml_proIPM: Boolean;
     function LerXml_proAssessorPublico: Boolean;
     function LerXml_proSiat: Boolean;
+    function LerXml_proSigISS: Boolean;
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
@@ -311,6 +312,7 @@ begin
     proIPM:         Result := LerXml_proIPM;
     proAssessorPublico:  Result := LerXml_proAssessorPublico;
     proSiat:        Result := LerXml_proSiat; 
+    proSigIss:       Result := LerXml_proSigIss; 
   else
     Result := LerXml_ABRASF;
   end;
@@ -1192,7 +1194,7 @@ begin
   end;
 end;
 
-function TretCancNFSe.LerXml_proSiat: Boolean; 
+function TretCancNFSe.LerXml_proSiat: Boolean;
 var
   i: Integer;
 begin
@@ -1207,7 +1209,7 @@ begin
 
         if FInfCanc.FSucesso = 'S' then
           FInfCanc.DataHora := Date
-        else if FInfCanc.FSucesso = 'true' then 
+        else if FInfCanc.FSucesso = 'true' then
           FInfCanc.DataHora := Date;
       end;
 
@@ -1251,6 +1253,45 @@ begin
       end;
 
       Result := True;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proSigISS: Boolean;
+begin
+  Result := False;
+  try
+    if Leitor.rExtrai(1, 'RetornoNota') <> EmptyStr then
+    begin
+      if Leitor.rCampo(tcStr, 'Resultado') = '1' then
+      begin
+        with FInfCanc.FNotasCanceladas.New do
+        begin
+          InfCanc.Sucesso  := 'True';
+          InfCanc.DataHora := Now;
+          InfCanc.MsgCanc  := Leitor.rCampo(tcStr, 'DescricaoProcesso')+ ': '+Leitor.rCampo(tcStr, 'DescricaoErro');
+          Result := True;
+        end;
+      end
+      else if Leitor.rExtrai(1, 'DescricaoErros') <> EmptyStr then
+      begin
+        InfCanc.MsgRetorno.New;
+        InfCanc.MsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'id');;
+        InfCanc.MsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'DescricaoProcesso')+ ': '+Leitor.rCampo(tcStr, 'DescricaoErro');
+        InfCanc.MsgRetorno[0].FCorrecao := '';
+        Result := False;
+      end
+      else
+      begin
+        with InfCanc.MsgRetorno.New do
+        begin
+          Codigo := '0';
+          Mensagem:= 'Nota Não Existe';
+        end;
+        Result := False;
+      end;
     end;
   except
     Result := False;

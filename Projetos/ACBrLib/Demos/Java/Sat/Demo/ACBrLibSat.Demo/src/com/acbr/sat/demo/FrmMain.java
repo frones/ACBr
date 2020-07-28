@@ -845,7 +845,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnCriarCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarCFeActionPerformed
         try{
             JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("png", "Arquivos PNG (*.png)");
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             int returnVal = chooser.showSaveDialog(rootPane);
@@ -877,7 +877,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnEnviarCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarCFeActionPerformed
         try{
             JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivos Xml CFe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             int returnVal = chooser.showSaveDialog(rootPane);

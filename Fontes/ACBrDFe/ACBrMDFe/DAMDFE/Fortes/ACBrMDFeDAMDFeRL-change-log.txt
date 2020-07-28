@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2020
+-- ACBrMDFeDAEventoRLRetrato --
+[*] https://www.projetoacbr.com.br/forum/topic/58634-c%C3%B3digo-de-barras-na-impress%C3%A3o-do-evento-de-cancelamento/
+   Por: Fábio dos Santos Amorim
+
 14/05/2020
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] A variável CarregouLogo estava sendo atribuida mas não estava sendo

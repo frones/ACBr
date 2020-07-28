@@ -271,9 +271,10 @@ begin
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  chave: String;
 begin
   inherited;
-
   if fpMDFe <> nil then
   begin
     PrintIt := True;
@@ -282,7 +283,9 @@ begin
     rllSerie.Caption := IntToStr(fpMDFe.ide.serie);
     rllNumMDFe.Caption := FormatFloat('000,000,000', fpMDFe.Ide.nMDF);
     rllEmissao.Caption := FormatDateTimeBr(fpMDFe.Ide.dhEmi);
-    rllChave.Caption := FormatarChaveAcesso(Copy(fpMDFe.InfMDFe.Id, 5, 44));
+    chave := Copy(fpMDFe.InfMDFe.Id, 5, 44);
+    rllChave.Caption := FormatarChaveAcesso(chave);
+    RLBarcode1.Caption := chave;
   end
   else
     PrintIt := False;

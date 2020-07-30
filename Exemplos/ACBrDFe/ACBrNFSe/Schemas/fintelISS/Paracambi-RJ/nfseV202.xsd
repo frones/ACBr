@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="https://iss.paracambi.rj.gov.br/Arquivos/nfseV202.xsd" xmlns="https://iss.paracambi.rj.gov.br/Arquivos/nfseV202.xsd"
+	targetNamespace="http://iss.paracambi.rj.gov.br/Arquivos/nfseV202.xsd" xmlns="http://iss.paracambi.rj.gov.br/Arquivos/nfseV202.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
 	elementFormDefault="qualified">
   <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"

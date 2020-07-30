@@ -1,3 +1,0 @@
-Dependendo da cidade e do ambiente deve-se fazer uma cópia do Schema e renomea-lo para:
-
-nfse_v2101 ou nfse_v202 dependendo da cidade.

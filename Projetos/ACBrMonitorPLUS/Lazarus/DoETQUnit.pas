@@ -775,10 +775,15 @@ var
 begin
   with TACBrObjetoETQ(fpObjetoDono) do
   begin
-    ACopias := IfThen( NaoEstaVazio( fpCmd.Params(0) ), StrToInt(fpCmd.Params(0)) ,
-                        MonitorConfig.ETQ.Copias);
-    AAvanco := IfThen( NaoEstaVazio( fpCmd.Params(1) ), StrToInt(fpCmd.Params(1)) ,
-                        MonitorConfig.ETQ.Avanco);
+    if NaoEstaVazio( fpCmd.Params(0) ) then
+      ACopias := StrToInt(fpCmd.Params(0))
+    else
+      ACopias := MonitorConfig.ETQ.Copias;
+
+    if NaoEstaVazio( fpCmd.Params(1) ) then
+      AAvanco := StrToInt(fpCmd.Params(1))
+    else
+      AAvanco := MonitorConfig.ETQ.Avanco;
 
     ACBrETQ.Imprimir( ACopias, AAvanco );
   end;

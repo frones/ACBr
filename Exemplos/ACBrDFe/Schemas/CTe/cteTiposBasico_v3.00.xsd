@@ -19,7 +19,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="0"/>
+			<xs:enumeration value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="TGTVe">
@@ -784,7 +784,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element name="xMoedaEstr">
+												<xs:element name="xMoedaEstr" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Nome da Moeda</xs:documentation>
 														<xs:documentation>Informar somente se tipo de numerário for 2 - Estrangeiro</xs:documentation>

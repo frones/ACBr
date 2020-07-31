@@ -407,7 +407,8 @@ begin
       IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumDFe));
 
       // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
-      IdentificacaoRps.Serie := 'NF'; //'85';
+//      IdentificacaoRps.Serie := 'NF'; //'85';
+      IdentificacaoRps.Serie := '85';
 
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
       IdentificacaoRps.Tipo := trRPS;
@@ -1544,7 +1545,7 @@ begin
 
     // Para os provedores que possuem uma lista de serviços como é o caso do Infisc
     // devemos atribuir o valor True a propriedade DetalharServico
-    ACBrNFSeDANFSeRL1.DetalharServico := (ACBrNFSe1.Configuracoes.Geral.Provedor = proInfisc);
+//    ACBrNFSeDANFSeRL1.DetalharServico := (ACBrNFSe1.Configuracoes.Geral.Provedor = proInfisc);
   end;
 
   with ACBrNFSe1.MAIL do

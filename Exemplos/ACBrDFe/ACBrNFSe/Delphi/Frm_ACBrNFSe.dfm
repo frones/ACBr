@@ -1874,6 +1874,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
     PrintDialog = True
+    DetalharServico = True
     Left = 432
     Top = 248
   end

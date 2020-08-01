@@ -2868,6 +2868,11 @@ begin
         sSecao := 'autXML' + IntToStrZero(I, 2);
         sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        begin
+          sSecao := 'autXML' + IntToStrZero(I, 3);
+          sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+        end;
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
         with autXML.New do

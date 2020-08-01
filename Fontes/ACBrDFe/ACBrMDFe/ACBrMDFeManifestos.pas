@@ -1143,7 +1143,7 @@ begin
 
       for i := 0 to autXML.Count - 1 do
       begin
-        sSecao := 'autXML' + IntToStrZero(I + 1, 3);
+        sSecao := 'autXML' + IntToStrZero(I + 1, 2);
         with autXML.Items[i] do
         begin
           INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
@@ -2330,7 +2330,11 @@ begin
       begin
         sSecao := 'autXML' + IntToStrZero(I, 2);
         sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
-
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        begin
+          sSecao := 'autXML' + IntToStrZero(I, 3);
+          sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+        end;
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 

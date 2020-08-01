@@ -9212,6 +9212,17 @@ var
 begin
   CanEnabled := cbxSalvarArqs.Checked;
 
+  if not(CanEnabled) then
+  begin
+    cbxPastaMensal.Checked := False;
+    cbxAdicionaLiteral.Checked  := False;
+    cbxEmissaoPathNFe.Checked  := False;
+    cbxSalvaPathEvento.Checked  := False;
+    cbxSepararPorCNPJ.Checked  := False;
+    cbxSepararporModelo.Checked  := False;
+    cbxSalvarNFesProcessadas.Checked  := False;
+  end;
+
   cbxPastaMensal.Enabled := CanEnabled;
   cbxAdicionaLiteral.Enabled := CanEnabled;
   cbxEmissaoPathNFe.Enabled := CanEnabled;

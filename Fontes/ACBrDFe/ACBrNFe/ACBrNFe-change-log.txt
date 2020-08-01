@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2020
+-- ACBrNFeNotasFiscais --
+[*] Ajuste e padronização na leitura do .ini ref campo autXML
+
 23/07/2020
 -- Diversos --
 [+] Acrescentado a unit pcnConsts em algumas units do componente.

@@ -1734,6 +1734,11 @@ begin
         sSecao := 'autXML'+IntToStrZero(I,3) ;
         sFim     := OnlyNumber(INIRec.ReadString( sSecao ,'CNPJ',INIRec.ReadString(  sSecao,'CPF',INIRec.ReadString(  sSecao,'CNPJCPF','FIM'))));
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        begin
+          sSecao := 'autXML'+IntToStrZero(I,2) ;
+          sFim     := OnlyNumber(INIRec.ReadString( sSecao ,'CNPJ',INIRec.ReadString(  sSecao,'CPF',INIRec.ReadString(  sSecao,'CNPJCPF','FIM'))));
+        end;
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;
 
         with autXML.New do

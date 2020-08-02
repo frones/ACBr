@@ -8,7 +8,7 @@ unit ACBr_EDI;
 interface
 
 uses
-  ACBrEDIReg, ACBrEDIClass, ACBrEDICobranca, ACBrEDIConhectos, ACBrEDIPreFatura,
+  ACBrEDIReg, ACBrEDIClass, ACBrEDICobranca, ACBrEDIConhectos, 
   ACBrEDINotaFiscal, ACBrEDIOcorrencia, pediConversao, LazarusPackageIntf;
 
 implementation

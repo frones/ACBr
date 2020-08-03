@@ -37,7 +37,8 @@ library ACBrLibCHQ;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibCHQClass, ACBrLibCHQConfig, ACBrLibCHQDataModule;
+  {$IFDEF MT}ACBrLibCHQMT{$ELSE}ACBrLibCHQST{$ENDIF},
+  ACBrLibCHQConfig, ACBrLibCHQDataModule;
 
 {$R *.res}
 

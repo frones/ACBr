@@ -287,6 +287,7 @@ type
     FEmissor: TEmpresaConfig;
     FTipoResposta: TACBrLibRespostaTipo;
     FCodificaoResposta: TACBrLibCodificacao;
+    EhArquivo: boolean;
 
     procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
@@ -708,6 +709,8 @@ end;
 { TLibConfig }
 
 constructor TLibConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
+Var
+  FIniFile: TStringList;
 begin
   if not (AOwner is TACBrLib) then
     raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibDono);
@@ -715,28 +718,43 @@ begin
   inherited Create;
 
   FOwner := AOwner;
-  FNomeArquivo := Trim(ANomeArquivo);
-  if Length(Trim(AChaveCrypt)) = 0 then
-    FChaveCrypt := CLibChaveCrypt
-  else
-    FChaveCrypt := AChaveCrypt;
+  FIniFile := TStringList.Create;
 
-  FTipoResposta := resINI;
-  FCodificaoResposta := codUTF8;
-  FLog := TLogConfig.Create;
-  FSistema := TSistemaConfig.Create;
-  FEmail := TEmailConfig.Create(FChaveCrypt);
-  FPosPrinter := TPosPrinterConfig.Create();
-  FPosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
-  FProxyInfo := TProxyConfig.Create(FChaveCrypt);
-  FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
-  FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
+  try
+    FNomeArquivo := '';
 
-  FIni := TMemIniFile.Create('');
-  FIniAge := 0;
+    EhArquivo := not StringEhINI(ANomeArquivo);
+    if EhArquivo then
+      FNomeArquivo := Trim(ANomeArquivo)
+    else
+      FIniFile.Text := ANomeArquivo;
 
-  TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
-    StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
+    if Length(Trim(AChaveCrypt)) = 0 then
+      FChaveCrypt := CLibChaveCrypt
+    else
+      FChaveCrypt := AChaveCrypt;
+
+    FTipoResposta := resINI;
+    FCodificaoResposta := codUTF8;
+    FLog := TLogConfig.Create;
+    FSistema := TSistemaConfig.Create;
+    FEmail := TEmailConfig.Create(FChaveCrypt);
+    FPosPrinter := TPosPrinterConfig.Create();
+    FPosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
+    FProxyInfo := TProxyConfig.Create(FChaveCrypt);
+    FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
+    FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
+
+    FIni := TMemIniFile.Create('');
+    FIniAge := 0;
+    if not EhArquivo then
+      FIni.SetStrings(FIniFile);
+
+    TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + IfThen(EhArquivo, FNomeArquivo, '[Memory]') + ', ' +
+                               StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
+  finally
+    FIniFile.Free;
+  end;
 end;
 
 destructor TLibConfig.Destroy;
@@ -760,7 +778,7 @@ procedure TLibConfig.VerificarSeIniFoiModificado;
 var
   NewIniAge: LongInt;
 begin
-  if not FileExists(FNomeArquivo) then Exit;
+  if (not EhArquivo or  not FileExists(FNomeArquivo)) then Exit;
 
   NewIniAge := FileAge(FNomeArquivo);
   if NewIniAge > FIniAge then
@@ -857,17 +875,24 @@ var
 begin
   Travar;
   try
-    ArquivoInformado := (FNomeArquivo <> '') and FileExists(FNomeArquivo);
-    VerificarNomeEPath(not ArquivoInformado);
-    TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
-
-    // Força ler atualizações do Disco
-    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
-
-    if not FileExists(FNomeArquivo) then
+    if EhArquivo then
     begin
-      Gravar;
-      Exit;
+      ArquivoInformado := (FNomeArquivo <> '') and FileExists(FNomeArquivo);
+      VerificarNomeEPath(not ArquivoInformado);
+    end;
+
+    TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + IfThen(EhArquivo, FNomeArquivo, '[Memory]'), logCompleto);
+
+    if EhArquivo then
+    begin
+      // Força ler atualizações do Disco
+      FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
+
+      if not FileExists(FNomeArquivo) then
+      begin
+        Gravar;
+        Exit;
+      end;
     end;
 
     LerDataHoraArqIni;
@@ -903,8 +928,11 @@ begin
 
     ClasseParaINI;
 
-    if FIni.FileName <> FNomeArquivo then
-      FIni.Rename(FNomeArquivo, False);
+    if EhArquivo then
+    begin
+      if FIni.FileName <> FNomeArquivo then
+        FIni.Rename(FNomeArquivo, False);
+    end;
 
     FIni.UpdateFile;
     LerDataHoraArqIni;

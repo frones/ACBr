@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibSATClass;
+unit ACBrLibSATST;
 
 interface
 

@@ -37,7 +37,8 @@ library ACBrLibSat;
 
 uses
   Interfaces, sysutils, Classes, Forms,
-  ACBrLibComum, ACBrLibSATClass;
+  {$IFDEF MT}ACBrLibSATMT{$ELSE}ACBrLibSATST{$ENDIF},
+  ACBrLibComum;
 
 {$R *.res}
 

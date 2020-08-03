@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibGNReClass;
+unit ACBrLibGNReST;
 
 interface
 

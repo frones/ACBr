@@ -114,7 +114,7 @@ end;
 
 procedure TLibBALDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
+  if Assigned(Lib) then
     Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 

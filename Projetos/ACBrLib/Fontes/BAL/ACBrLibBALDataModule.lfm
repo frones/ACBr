@@ -6,10 +6,9 @@ object LibBALDM: TLibBALDM
   HorizontalOffset = 257
   VerticalOffset = 127
   Width = 150
-  PPI = 96
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'
-    left = 57
-    top = 21
+    Left = 57
+    Top = 21
   end
 end

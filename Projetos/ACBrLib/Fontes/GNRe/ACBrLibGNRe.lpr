@@ -3,7 +3,8 @@
 library ACBrLibGNRe;
 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibGNReClass, ACBrLibConfig,
+  Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
+  {$IFDEF MT}ACBrLibGNReMT{$ELSE}ACBrLibGNReST{$ENDIF},
   ACBrLibComum, ACBrLibConsts, ACBrLibGNReConfig, ACBrLibResposta,
   ACBrLibGNReRespostas, ACBrLibGNReConsts;
 

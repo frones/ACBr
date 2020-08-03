@@ -36,7 +36,8 @@
 library ACBrLibMDFe;
 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibMDFeClass, ACBrLibConfig,
+  Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
+  {$IFDEF MT}ACBrLibMDFeMT{$ELSE}ACBrLibMDFeST{$ENDIF},
   ACBrLibComum, ACBrLibConsts, ACBrLibMDFeConfig, ACBrLibResposta,
   ACBrLibMDFeRespostas, ACBrLibMDFeConsts;
 

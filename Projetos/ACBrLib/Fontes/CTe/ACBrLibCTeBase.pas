@@ -52,7 +52,6 @@ type
     function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
 
   protected
-    procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');      override;
     procedure Executar; override;
 
@@ -137,17 +136,6 @@ begin
   FCTeDM.Free;
 
   inherited Destroy;
-end;
-
-procedure TACBrLibCTe.Inicializar;
-begin
-  GravarLog('TACBrLibCTe.Inicializar', logNormal);
-
-  FCTeDM.CriarACBrMail;
-
-  GravarLog('TACBrLibCTe.Inicializar - Feito', logParanoico);
-
-  inherited Inicializar;
 end;
 
 procedure TACBrLibCTe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

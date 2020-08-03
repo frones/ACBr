@@ -32,72 +32,60 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibMailClass;
+unit ACBrLibBALST;
 
 interface
 
 uses
-  Classes, SysUtils, typinfo;
+  Classes, SysUtils, typinfo,
+  ACBrLibComum, ACBrLibBALBase;
 
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Finalizar: longint;
+function BAL_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Inicializada: Boolean;
+function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ImportarConfig(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigGravar(const eArqConfig: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
-{%region Diversos}
-function MAIL_SetSubject(const eSubject: PChar): longint;
+{%region Balança}
+function BAL_Ativar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAddress(const eEmail, eName: PChar): longint;
+function BAL_Desativar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;
+function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddCC(const eEmail, eName: PChar): longint;
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddBCC(const eEmail: PChar): longint;
+function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ClearAttachment: longint;
+function BAL_UltimoPesoLido(var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAttachment(const eFileName, eDescription: PChar;
-            const aDisposition: Integer): longint;
+function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddBody(const eBody: PChar): longint;
+function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAltBody(const eAltBody: PChar): longint;
+function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_SaveToFile(const eFileName: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_GetMail: Pointer;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-{%endregion}
 
-{%region Envio}
-function MAIL_Clear: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Send: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -105,72 +93,69 @@ function MAIL_Send: longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibComum, ACBrLibMailBase;
+  ACBrLibConsts, ACBrUtil;
 
-{%region Mail}
 
-function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+{%region BAL}
+
+{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
+
+function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(pLib, TACBrLibMail, eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibBAL, eArqConfig, eChaveCrypt);
 end;
 
-function MAIL_Finalizar: longint;
+function BAL_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
 end;
 
-function MAIL_Inicializada: Boolean;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  Result := LIB_Inicalizada(pLib);
-end;
-
-function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function MAIL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function MAIL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function MAIL_ImportarConfig(const eArqConfig: PChar): longint;
+function BAL_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ImportarConfig(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -178,14 +163,42 @@ end;
 
 {%endregion}
 
-{%region Diversos}
+{%region Balanço}
 
-function MAIL_SetSubject(const eSubject: PChar): longint;
+function BAL_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).Ativar;
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function BAL_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBAL(pLib^.Lib).Desativar;
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).SetSubject(eSubject);
+    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -195,11 +208,22 @@ begin
   end;
 end;
 
-function MAIL_AddAddress(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Peso: Double;
+  Resposta: string;
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddAddress(eEmail, eName);
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
+    if Result = 0 then
+    begin
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+    end;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -209,54 +233,12 @@ begin
   end;
 end;
 
-function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddReplyTo(eEmail, eName);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function MAIL_AddCC(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddCC(eEmail, eName);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function MAIL_AddBCC(const eEmail: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddBCC(eEmail);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function MAIL_AddBody(const eBody: PChar): longint;
+function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddBody(eBody);
+    Result := TACBrLibBAL(pLib^.Lib).SolicitarPeso;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -266,12 +248,12 @@ begin
   end;
 end;
 
-function MAIL_AddAltBody(const eAltBody: PChar): longint;
+function BAL_UltimoPesoLido(var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddAltBody(eAltBody);
+    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -281,11 +263,22 @@ begin
   end;
 end;
 
-function MAIL_ClearAttachment: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Peso: Double;
+  Resposta: string;
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).ClearAttachment;
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
+    if Result = 0 then
+    begin
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+    end;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -295,59 +288,12 @@ begin
   end;
 end;
 
-function MAIL_AddAttachment(const eFileName, eDescription: PChar;
-  const aDisposition: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).AddAttachment(eFileName, eDescription, aDisposition);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function MAIL_SaveToFile(const eFileName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).SaveToFile(eFileName);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function MAIL_GetMail: Pointer;
+function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).GetMail;
-  except
-    on E: EACBrLibException do
-      Result := nil;
-
-    on E: Exception do
-      Result := nil;
-  end;
-end;
-
-{%endregion}
-
-{%region Envio}
-
-function MAIL_Clear: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).Clear;
+    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -357,11 +303,22 @@ begin
   end;
 end;
 
-function MAIL_Send: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Peso: Double;
+  Resposta: string;
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibMail(pLib^.Lib).Send;
+    Peso := 0;
+    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
+    if Result = 0 then
+    begin
+      Resposta := FloatToString(Peso);
+      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+    end;
   except
     on E: EACBrLibException do
       Result := E.Erro;

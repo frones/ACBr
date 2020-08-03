@@ -2,14 +2,14 @@ object LibMDFeDM: TLibMDFeDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  left = 346
-  top = 174
+  Left = 346
+  Top = 174
   Height = 231
   HorizontalOffset = 238
   VerticalOffset = 116
   Width = 491
-  PPI = 96
   object ACBrMDFe1: TACBrMDFe
+    MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -21,8 +21,8 @@ object LibMDFeDM: TLibMDFeDM
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
-    left = 94
-    top = 72
+    Left = 94
+    Top = 72
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -49,7 +49,18 @@ object LibMDFeDM: TLibMDFeDM
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
-    left = 208
-    top = 80
+    Left = 208
+    Top = 80
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    Left = 136
+    Top = 172
   end
 end

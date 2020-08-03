@@ -37,8 +37,7 @@ unit ACBrLibMailImport;
 interface
 
 uses
-  Classes, SysUtils, DynLibs,
-  ACBrMail;
+  Classes, SysUtils, DynLibs;
 
 const
  {$IfDef MSWINDOWS}
@@ -66,24 +65,18 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TMailGetMail = function: Pointer;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
   { TACBrLibMail }
 
   TACBrLibMail = class
   private
-    FArqLib: String;
     FHandle: TLibHandle;
     FMailInicializar: TMailInicializar;
     FMailFinalizar: TMailFinalizar;
     FMailConfigLer: TMailConfigLer;
     FMailInicializada: TMailInicializada;
     FMailUltimoRetorno: TMailUltimoRetorno;
-    FMailGetMail: TMailGetMail;
-
-    FACBrMail: TACBrMail;
-
+	
     procedure LoadLib;
     procedure UnLoadLib;
     procedure CheckResut(const resultado: longint);
@@ -91,8 +84,6 @@ type
   public
     constructor Create(ArqLib: String; ArqConfig: string = ''; ChaveCrypt: ansistring = '');
     destructor Destroy; override;
-
-    property ACBrMail: TACBrMail read FACBrMail;
 
     procedure ConfigLer(const eArqConfig: string);
   end;
@@ -108,7 +99,6 @@ Var
   ret: longint;
 begin
   inherited Create();
-  FArqLib := ArqLib;
   LoadLib;
 
   ret := FMailInicializar(PChar(ArqConfig), PChar(ChaveCrypt));
@@ -131,8 +121,6 @@ begin
 end;
 
 procedure TACBrLibMail.LoadLib;
-var
-  APointer: Pointer;
 begin
   if not FileExists(FArqLib) then
     Raise EACBrLibException.CreateFmt(SErrArquivoNaoExiste, [FArqLib]);
@@ -146,11 +134,6 @@ begin
     FMailConfigLer := GetProcAddress(FHandle, 'MAIL_ConfigLer');
     FMailInicializada := GetProcAddress(FHandle, 'MAIL_Inicializada');
     FMailUltimoRetorno := GetProcAddress(FHandle, 'MAIL_UltimoRetorno');
-    FMailGetMail := GetProcAddress(FHandle, 'MAIL_GetMail');
-
-    APointer := FMailGetMail;
-    if Assigned(APointer) then
-      FACBrMail := TACBrMail(APointer)
   end;
 
   if not Assigned(FACBrMail) then
@@ -166,8 +149,6 @@ begin
   FMailConfigLer := nil;
   FMailUltimoRetorno := nil;
   FMailGetMail := nil;
-  FHandle := 0;
-  FACBrMail := Nil;
 end;
 
 procedure TACBrLibMail.ConfigLer(const eArqConfig: string);

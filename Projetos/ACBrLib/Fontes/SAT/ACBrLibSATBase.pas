@@ -49,7 +49,6 @@ type
     FSatDM: TLibSatDM;
 
   protected
-    procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
       override;
     procedure Executar; override;
@@ -112,18 +111,6 @@ destructor TACBrLibSAT.Destroy;
 begin
   FSatDM.Free;
   inherited Destroy;
-end;
-
-procedure TACBrLibSAT.Inicializar;
-begin
-  GravarLog('TACBrLibSAT.Inicializar', logNormal);
-
-  FSatDM.CriarACBrMail;
-  FSatDM.CriarACBrPosPrinter;
-
-  inherited Inicializar;
-
-  GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
 end;
 
 procedure TACBrLibSAT.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
@@ -832,6 +819,8 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
+      if SatDM.ACBrPosPrinter1.Ativo then
+          SatDM.ACBrPosPrinter1.Desativar;
       SatDM.Destravar;
     end;
   except
@@ -865,6 +854,8 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
+      if SatDM.ACBrPosPrinter1.Ativo then
+          SatDM.ACBrPosPrinter1.Desativar;
       SatDM.Destravar;
     end;
   except
@@ -901,6 +892,8 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
+      if SatDM.ACBrPosPrinter1.Ativo then
+          SatDM.ACBrPosPrinter1.Desativar;
       SatDM.Destravar;
     end;
   except

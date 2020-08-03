@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibCHQClass;
+unit ACBrLibCHQST;
 
 interface
 

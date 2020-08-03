@@ -32,130 +32,125 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibCTeClass;
+unit ACBrLibMDFeST;
 
 interface
 
 uses
-  Classes, SysUtils, ACBrLibCTeBase;
+  Classes, SysUtils;
 
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function CTE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function MDFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Finalizar: longint;
+function MDFE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function MDFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function MDFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function MDFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImportarConfig(const eArqConfig: PChar): longint;
+function MDFE_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConfigLer(const eArqConfig: PChar): longint;
+function MDFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConfigGravar(const eArqConfig: PChar): longint;
+function MDFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function MDFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function MDFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
-{%region CTe}
-function CTE_CarregarXML(const eArquivoOuXML: PChar): longint;
+{%region MDFe}
+function MDFE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_CarregarINI(const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function MDFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function MDFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+function MDFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_LimparLista: longint;
+function MDFE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_LimparListaEventos: longint;
+function MDFE_LimparListaEventos: longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_Assinar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Assinar: longint;
+function MDFE_Validar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Validar: longint;
+function MDFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+function MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
   AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
-function CTE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Consultar(const eChaveOuCTe: PChar; AExtrairEventos: Boolean;
+function MDFE_Consultar(const eChaveOuMDFe: PChar; AExtrairEventos: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
-  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
+function MDFE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConsultarRecibo(ARecibo: PChar;
+function MDFE_ConsultarRecibo(ARecibo: PChar;
     const sResposta: PChar; var esTamanho: longint): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_EnviarEvento(idLote: Integer;
+function MDFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
-    const sResposta: PChar; var esTamanho: longint): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
+function MDFE_EncerrarMDFe(const eChaveOuMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
+function MDFE_ConsultaMDFeNaoEnc(const nCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_DistribuicaoDFePorUltNSU(eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echCTe: PChar;
+function MDFE_DistribuicaoDFePorNSU(eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_EnviarEmail(const ePara, eChaveCTe: PChar; const AEnviaPDF: Boolean;
+function MDFE_DistribuicaoDFePorChave(eCNPJCPF, echMDFe: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_EnviarEmail(const ePara, eArquivoXmlMDFe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PChar;
+function MDFE_EnviarEmailEvento(const ePara, eArquivoXmlEvento, eArquivoXmlMDFe: PChar;
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
-  bMostrarPreview: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirPDF: longint;
+function MDFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+function MDFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+function MDFE_ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
+function MDFE_ImprimirEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -164,67 +159,67 @@ function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
 implementation
 
 uses
-  ACBrLibComum, ACBrLibConsts;
+  ACBrLibConsts, ACBrLibComum, ACBrLibMDFeBase;
 
-{%region CTe}
+{%region MDFe}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function CTE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function MDFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(pLib, TACBrLibCTe, eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibMDFe,eArqConfig, eChaveCrypt);
 end;
 
-function CTE_Finalizar: longint;
+function MDFE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
 end;
 
-function CTE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function MDFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function MDFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function MDFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function CTE_ImportarConfig(const eArqConfig: PChar): longint;
+function MDFE_ImportarConfig(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ImportarConfig(pLib, eArqConfig);
 end;
 
-function CTE_ConfigLer(const eArqConfig: PChar): longint;
+function MDFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function CTE_ConfigGravar(const eArqConfig: PChar): longint;
+function MDFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function CTE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function MDFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function CTE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function MDFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -232,12 +227,12 @@ end;
 
 {%endregion}
 
-function CTE_CarregarXML(const eArquivoOuXML: PChar): longint;
+function MDFE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).CarregarXML(eArquivoOuXML);
+    Result := TACBrLibMDFe(pLib^.Lib).CarregarXML(eArquivoOuXML);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -247,12 +242,12 @@ begin
   end;
 end;
 
-function CTE_CarregarINI(const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).CarregarINI(eArquivoOuINI);
+    Result := TACBrLibMDFe(pLib^.Lib).CarregarINI(eArquivoOuINI);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -262,12 +257,12 @@ begin
   end;
 end;
 
-function CTE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ObterXml(AIndex, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ObterXml(AIndex, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -277,12 +272,12 @@ begin
   end;
 end;
 
-function CTE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function MDFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).GravarXml(AIndex, eNomeArquivo, ePathArquivo);
+    Result := TACBrLibMDFe(pLib^.Lib).GravarXml(AIndex, eNomeArquivo, ePathArquivo);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -292,12 +287,12 @@ begin
   end;
 end;
 
-function CTE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ObterIni(AIndex, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ObterIni(AIndex, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -307,12 +302,12 @@ begin
   end;
 end;
 
-function CTE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function MDFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).GravarIni(AIndex, eNomeArquivo, ePathArquivo);
+    Result := TACBrLibMDFe(pLib^.Lib).GravarIni(AIndex, eNomeArquivo, ePathArquivo);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -322,12 +317,12 @@ begin
   end;
 end;
 
-function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+function MDFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).CarregarEventoXML(eArquivoOuXML);
+    Result := TACBrLibMDFe(pLib^.Lib).CarregarEventoXML(eArquivoOuXML);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -337,12 +332,12 @@ begin
   end;
 end;
 
-function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).CarregarEventoINI(eArquivoOuINI);
+    Result := TACBrLibMDFe(pLib^.Lib).CarregarEventoINI(eArquivoOuINI);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -352,12 +347,12 @@ begin
   end;
 end;
 
-function CTE_LimparLista: longint;
+function MDFE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).LimparLista;
+    Result := TACBrLibMDFe(pLib^.Lib).LimparLista;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -367,12 +362,12 @@ begin
   end;
 end;
 
-function CTE_LimparListaEventos: longint;
+function MDFE_LimparListaEventos: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).LimparListaEventos;
+    Result := TACBrLibMDFe(pLib^.Lib).LimparListaEventos;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -382,12 +377,12 @@ begin
   end;
 end;
 
-function CTE_Assinar: longint;
+function MDFE_Assinar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Assinar;
+    Result := TACBrLibMDFe(pLib^.Lib).Assinar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -397,12 +392,12 @@ begin
   end;
 end;
 
-function CTE_Validar: longint;
+function MDFE_Validar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Validar;
+    Result := TACBrLibMDFe(pLib^.Lib).Validar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -412,12 +407,12 @@ begin
   end;
 end;
 
-function CTE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ValidarRegrasdeNegocios(sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ValidarRegrasdeNegocios(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -427,12 +422,12 @@ begin
   end;
 end;
 
-function CTE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).VerificarAssinatura(sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).VerificarAssinatura(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -442,14 +437,14 @@ begin
   end;
 end;
 
-function CTE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+function MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
   AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi,
-                                                AEmissao, ACNPJCPF, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi,
+                                                 AEmissao, ACNPJCPF, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -459,12 +454,12 @@ begin
   end;
 end;
 
-function CTE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ObterCertificados(sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ObterCertificados(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -474,12 +469,12 @@ begin
   end;
 end;
 
-function CTE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).GetPath(ATipo, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).GetPath(ATipo, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -489,12 +484,12 @@ begin
   end;
 end;
 
-function CTE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).GetPathEvento(ACodEvento, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).GetPathEvento(ACodEvento, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -507,12 +502,13 @@ end;
 {%endregion}
 
 {%region Servicos}
-function CTE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+
+function MDFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).StatusServico(sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).StatusServico(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -522,13 +518,13 @@ begin
   end;
 end;
 
-function CTE_Consultar(const eChaveOuCTe: PChar; AExtrairEventos: Boolean; const sResposta: PChar;
-                       var esTamanho: longint): longint;
+function MDFE_Consultar(const eChaveOuMDFe: PChar; AExtrairEventos: Boolean;
+                        const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Consultar(eChaveOuCTe, AExtrairEventos, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).Consultar(eChaveOuMDFe, AExtrairEventos, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -538,31 +534,13 @@ begin
   end;
 end;
 
-function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
-  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, NumeroInicial, NumeroFinal,
-                                                sResposta, esTamanho);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function CTE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
+function MDFE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Enviar(ALote, AImprimir, ASincrono, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).Enviar(ALote, AImprimir, ASincrono, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -572,12 +550,12 @@ begin
   end;
 end;
 
-function CTE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ConsultarRecibo(ARecibo, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ConsultarRecibo(ARecibo, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -587,13 +565,13 @@ begin
   end;
 end;
 
-function CTE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
+function MDFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Cancelar(eChave, eJustificativa, eCNPJ, ALote, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).Cancelar(eChave, eJustificativa, eCNPJCPF, ALote, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -603,13 +581,29 @@ begin
   end;
 end;
 
-function CTE_EnviarEvento(idLote: Integer;
+function MDFE_EnviarEvento(idLote: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibMDFe(pLib^.Lib).EnviarEvento(idLote, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function MDFE_EncerrarMDFe(const eChaveOuMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).EnviarEvento(idLote, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).EncerrarMDFe(eChaveOuMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo,
+                                                   sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -619,13 +613,12 @@ begin
   end;
 end;
 
-function CTE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
-    const sResposta: PChar; var esTamanho: longint): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_ConsultaMDFeNaoEnc(const nCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ConsultaCadastro(cUF, nDocumento, nIE, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).ConsultaMDFeNaoEnc(nCNPJ, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -635,13 +628,13 @@ begin
   end;
 end;
 
-function CTE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
+function MDFE_DistribuicaoDFePorUltNSU(eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).DistribuicaoDFePorUltNSU(AcUFAutor, eCNPJCPF, eultNSU, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).DistribuicaoDFePorUltNSU(eCNPJCPF, eultNSU, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -651,13 +644,13 @@ begin
   end;
 end;
 
-function CTE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
+function MDFE_DistribuicaoDFePorNSU(eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).DistribuicaoDFePorNSU(AcUFAutor, eCNPJCPF, eNSU, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).DistribuicaoDFePorNSU(eCNPJCPF, eNSU, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -667,13 +660,13 @@ begin
   end;
 end;
 
-function CTE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echCTe: PChar;
+function MDFE_DistribuicaoDFePorChave(eCNPJCPF, echMDFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).DistribuicaoDFePorChave(AcUFAutor, eCNPJCPF, echCTe, sResposta, esTamanho);
+    Result := TACBrLibMDFe(pLib^.Lib).DistribuicaoDFePorChave(eCNPJCPF, echMDFe, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -683,13 +676,13 @@ begin
   end;
 end;
 
-function CTE_EnviarEmail(const ePara, eChaveCTe: PChar; const AEnviaPDF: Boolean;
+function MDFE_EnviarEmail(const ePara, eArquivoXmlMDFe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).EnviarEmail(ePara, eChaveCTe, AEnviaPDF, eAssunto, eCC, eAnexos, eMensagem);
+    Result := TACBrLibMDFe(pLib^.Lib).EnviarEmail(ePara, eArquivoXmlMDFe, AEnviaPDF, eAssunto, eCC, eAnexos, eMensagem);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -699,14 +692,14 @@ begin
   end;
 end;
 
-function CTE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PChar;
+function MDFE_EnviarEmailEvento(const ePara, eArquivoXmlEvento, eArquivoXmlMDFe: PChar;
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).EnviarEmailEvento(ePara, eChaveEvento, eChaveCTe, AEnviaPDF,
-                                                       eAssunto, eCC, eAnexos, eMensagem);
+    Result := TACBrLibMDFe(pLib^.Lib).EnviarEmailEvento(ePara, eArquivoXmlEvento, eArquivoXmlMDFe, AEnviaPDF,
+                                                        eAssunto, eCC, eAnexos, eMensagem);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -716,27 +709,12 @@ begin
   end;
 end;
 
-function CTE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
-  bMostrarPreview: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function CTE_ImprimirPDF: longint;
+function MDFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo, bMostrarPreview: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ImprimirPDF;
+    Result := TACBrLibMDFe(pLib^.Lib).Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -746,12 +724,12 @@ begin
   end;
 end;
 
-function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+function MDFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ImprimirEvento(eArquivoXmlCTe, eArquivoXmlEvento);
+    Result := TACBrLibMDFe(pLib^.Lib).ImprimirPDF;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -761,12 +739,12 @@ begin
   end;
 end;
 
-function CTE_ImprimirEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+function MDFE_ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ImprimirEventoPDF(eArquivoXmlCTe, eArquivoXmlEvento);
+    Result := TACBrLibMDFe(pLib^.Lib).ImprimirEvento(eArquivoXmlMDFe, eArquivoXmlEvento);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -776,27 +754,12 @@ begin
   end;
 end;
 
-function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
+function MDFE_ImprimirEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ImprimirInutilizacao(eArquivoXml);
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibCTe(pLib^.Lib).ImprimirInutilizacaoPDF(eArquivoXml);
+    Result := TACBrLibMDFe(pLib^.Lib).ImprimirEventoPDF(eArquivoXmlMDFe, eArquivoXmlEvento);
   except
     on E: EACBrLibException do
       Result := E.Erro;

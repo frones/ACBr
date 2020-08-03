@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibBALClass;
+unit ACBrLibBALMT;
 
 interface
 
@@ -43,48 +43,47 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Finalizar: longint;
+function BAL_Finalizar(libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ImportarConfig(const eArqConfig: PChar): longint;
+function BAL_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function BAL_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Balança}
-function BAL_Ativar: longint;
+function BAL_Ativar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Desativar: longint;
+function BAL_Desativar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(const libHandle: PLibHandle; MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+function BAL_LePesoStr(const libHandle: PLibHandle; MillisecTimeOut: Integer; sValor: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_SolicitarPeso(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_UltimoPesoLido(const libHandle: PLibHandle; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_SolicitarPeso: longint;
+function BAL_UltimoPesoLidoStr(const libHandle: PLibHandle; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoPesoLido(var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(const libHandle: PLibHandle; eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_InterpretarRespostaPesoStr(const libHandle: PLibHandle; eResposta: PChar; sValor: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
 
@@ -100,76 +99,76 @@ uses
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
-function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(pLib, TACBrLibBAL, eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(libHandle, TACBrLibBAL, eArqConfig, eChaveCrypt);
 end;
 
-function BAL_Finalizar: longint;
+function BAL_Finalizar(libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar(pLib);
+  Result := LIB_Finalizar(libHandle);
 end;
 
-function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(pLib, sNome, esTamanho);
+  Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(pLib, sVersao, esTamanho);
+  Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function BAL_ImportarConfig(const eArqConfig: PChar): longint;
+function BAL_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(pLib, eArqConfig);
+  Result := LIB_ImportarConfig(libHandle, eArqConfig);
 end;
 
-function BAL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(pLib, eArqConfig);
+  Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function BAL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(pLib, eArqConfig);
+  Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function BAL_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
 {%endregion}
 
 {%region Balanço}
 
-function BAL_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_Ativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).Ativar;
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).Ativar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -179,11 +178,11 @@ begin
   end;
 end;
 
-function BAL_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_Desativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).Desativar;
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).Desativar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -193,12 +192,12 @@ begin
   end;
 end;
 
-function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(const libHandle: PLibHandle; MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).LePeso(MillisecTimeOut, Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -208,21 +207,21 @@ begin
   end;
 end;
 
-function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_LePesoStr(const libHandle: PLibHandle; MillisecTimeOut: Integer; sValor: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;
   Resposta: string;
 begin
   try
-    VerificarLibInicializada(pLib);
+    VerificarLibInicializada(libHandle);
     Peso := 0;
-    Result := TACBrLibBAL(pLib^.Lib).LePeso(MillisecTimeOut, Peso);
+    Result := TACBrLibBAL(libHandle^.Lib).LePeso(MillisecTimeOut, Peso);
     if Result = 0 then
     begin
       Resposta := FloatToString(Peso);
-      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
-      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+      TACBrLibBAL(libHandle^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(libHandle^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do
@@ -233,12 +232,11 @@ begin
   end;
 end;
 
-function BAL_SolicitarPeso: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_SolicitarPeso(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).SolicitarPeso;
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).SolicitarPeso;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -248,12 +246,12 @@ begin
   end;
 end;
 
-function BAL_UltimoPesoLido(var Peso: Double): longint;
+function BAL_UltimoPesoLido(const libHandle: PLibHandle; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).UltimoPesoLido(Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -263,21 +261,21 @@ begin
   end;
 end;
 
-function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+function BAL_UltimoPesoLidoStr(const libHandle: PLibHandle; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;
   Resposta: string;
 begin
   try
-    VerificarLibInicializada(pLib);
+    VerificarLibInicializada(libHandle);
     Peso := 0;
-    Result := TACBrLibBAL(pLib^.Lib).UltimoPesoLido(Peso);
+    Result := TACBrLibBAL(libHandle^.Lib).UltimoPesoLido(Peso);
     if Result = 0 then
     begin
       Resposta := FloatToString(Peso);
-      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
-      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+      TACBrLibBAL(libHandle^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(libHandle^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do
@@ -288,12 +286,12 @@ begin
   end;
 end;
 
-function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(const libHandle: PLibHandle; eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBAL(libHandle^.Lib).InterpretarRespostaPeso(eResposta, Peso);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -303,21 +301,21 @@ begin
   end;
 end;
 
-function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_InterpretarRespostaPesoStr(const libHandle: PLibHandle; eResposta: PChar; sValor: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;
   Resposta: string;
 begin
   try
-    VerificarLibInicializada(pLib);
+    VerificarLibInicializada(libHandle);
     Peso := 0;
-    Result := TACBrLibBAL(pLib^.Lib).InterpretarRespostaPeso(eResposta, Peso);
+    Result := TACBrLibBAL(libHandle^.Lib).InterpretarRespostaPeso(eResposta, Peso);
     if Result = 0 then
     begin
       Resposta := FloatToString(Peso);
-      TACBrLibBAL(pLib^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
-      TACBrLibBAL(pLib^.Lib).SetRetorno(Result, Resposta);
+      TACBrLibBAL(libHandle^.Lib).MoverStringParaPChar(Resposta, sValor, esTamanho);
+      TACBrLibBAL(libHandle^.Lib).SetRetorno(Result, Resposta);
     end;
   except
     on E: EACBrLibException do

@@ -37,7 +37,8 @@ library ACBrLibMail;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibMailClass, ACBrLibMailConfig, ACBrLibMailDataModule;
+  {$IFDEF MT}ACBrLibMailMT{$ELSE}ACBrLibMailST{$ENDIF},
+  ACBrLibMailConfig, ACBrLibMailDataModule;
 
 {$R *.res}
 
@@ -71,7 +72,6 @@ exports
   MAIL_AddBody,
   MAIL_AddAltBody,
   MAIL_SaveToFile,
-  MAIL_GetMail,
 
   // Envio
   MAIL_Clear,

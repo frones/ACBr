@@ -39,8 +39,7 @@ interface
 uses
   Classes, SysUtils, syncobjs,
   ACBrLibComum, ACBrLibConfig,
-  ACBrCTe, ACBrCTeDACTeRLClass, ACBrMail,
-  ACBrLibMailImport;
+  ACBrCTe, ACBrCTeDACTeRLClass, ACBrMail;
 
 type
 
@@ -49,20 +48,16 @@ type
   TLibCTeDM = class(TDataModule)
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
+    ACBrMail1: TACBrMail;
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
-    FACBrMail: TACBrMail;
-    FLibMail: TACBrLibMail;
     fpLib: TACBrLib;
 
   public
-    procedure CriarACBrMail;
-
     procedure AplicarConfiguracoes;
-    procedure AplicarConfigMail;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
@@ -85,44 +80,11 @@ uses
 procedure TLibCTeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
-  FACBrMail := Nil;
-  FLibMail := Nil;
 end;
 
 procedure TLibCTeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
-
-  if Assigned(FLibMail) then
-    FreeAndNil(FLibMail)
-  else if Assigned(FACBrMail) then
-    FreeAndNil(FACBrMail);
-end;
-
-procedure TLibCTeDM.CriarACBrMail;
-var
-  NomeLib: String;
-begin
-  if Assigned(FLibMail) or Assigned(FACBrMail) then
-    Exit;
-
-  GravarLog('  CriarACBrMail', logCompleto);
-
-  NomeLib := ApplicationPath + CACBrMailLIBName;
-  if FileExists(NomeLib) then
-  begin
-    GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
-    // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
-    FACBrMail := FLibMail.ACBrMail;
-  end
-  else
-  begin
-    GravarLog('     Criando MAIL Interno', logCompleto);
-    FACBrMail := TACBrMail.Create(Nil);
-  end;
-
-  ACBrCTe1.MAIL := FACBrMail;
 end;
 
 procedure TLibCTeDM.AplicarConfiguracoes;
@@ -133,15 +95,7 @@ begin
   LibConfig := TLibCTeConfig(TACBrLibCTe(Lib).Config);
   ACBrCTe1.Configuracoes.Assign(LibConfig.CTe);
 
-  AplicarConfigMail;
-end;
-
-procedure TLibCTeDM.AplicarConfigMail;
-begin
-  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
-    Exit;
-
-  with FACBrMail do
+  with ACBrMail1 do
   begin
     Attempts := Lib.Config.Email.Tentativas;
     SetTLS := Lib.Config.Email.TLS;

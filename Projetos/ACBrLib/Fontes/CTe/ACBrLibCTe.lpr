@@ -3,8 +3,9 @@
 library ACBrLibCTe;
 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibCTeClass, ACBrLibConfig,
+  Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
   ACBrLibComum, ACBrLibConsts, ACBrLibCTeConfig, ACBrLibResposta,
+  {$IFDEF MT}ACBrLibCTeMT{$ELSE}ACBrLibCTeST{$ENDIF},
   ACBrLibDistribuicaoDFe, ACBrLibCTeRespostas, ACBrLibCTeConsts;
 
 {$R *.res}

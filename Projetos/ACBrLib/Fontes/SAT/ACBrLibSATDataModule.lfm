@@ -6,8 +6,8 @@ object LibSatDM: TLibSatDM
   HorizontalOffset = 388
   VerticalOffset = 250
   Width = 393
-  PPI = 96
   object ACBrSAT1: TACBrSAT
+    MAIL = ACBrMail1
     Config.infCFe_versaoDadosEnt = 0.07
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
@@ -26,8 +26,8 @@ object LibSatDM: TLibSatDM
     Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
-    left = 61
-    top = 80
+    Left = 61
+    Top = 80
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -49,8 +49,9 @@ object LibSatDM: TLibSatDM
     CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     FormularioContinuo = True
-    left = 200
-    top = 160
+    PosPrinter = ACBrPosPrinter1
+    Left = 200
+    Top = 160
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -72,13 +73,36 @@ object LibSatDM: TLibSatDM
     CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     FormularioContinuo = True
-    left = 61
-    top = 160
+    Left = 61
+    Top = 160
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    left = 200
-    top = 80
+    Left = 200
+    Top = 80
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    Left = 328
+    Top = 80
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    Left = 328
+    Top = 160
   end
 end

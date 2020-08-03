@@ -37,7 +37,8 @@ library ACBrLibETQ;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibETQClass, ACBrLibETQConfig, ACBrLibETQDataModule;
+  {$IFDEF MT}ACBrLibETQMT{$ELSE}ACBrLibETQST{$ENDIF},
+  ACBrLibETQConfig, ACBrLibETQDataModule;
 
 {$R *.res}
 

@@ -1733,11 +1733,8 @@ begin
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
       NFeDM.ACBrNFe1.DANFE.NumCopias := NumCopias;
-      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
-      begin
-        if NFeDM.ACBrPosPrinter1.Ativo then
+      if NFeDM.ACBrPosPrinter1.Ativo then
           NFeDM.ACBrPosPrinter1.Desativar;
-      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;
@@ -1820,11 +1817,8 @@ begin
 
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
-      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
-      begin
-        if NFeDM.ACBrPosPrinter1.Ativo then
+      if NFeDM.ACBrPosPrinter1.Ativo then
           NFeDM.ACBrPosPrinter1.Desativar;
-      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;
@@ -1922,11 +1916,8 @@ begin
 
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
-      if NFeDM.ACBrNFe1.DANFE is TACBrNFeDANFeESCPOS then
-      begin
-        if NFeDM.ACBrPosPrinter1.Ativo then
+      if NFeDM.ACBrPosPrinter1.Ativo then
           NFeDM.ACBrPosPrinter1.Desativar;
-      end;
       Resposta.Free;
       NFeDM.Destravar;
     end;

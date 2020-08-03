@@ -37,7 +37,8 @@ library ACBrLibBAL;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibBALClass, ACBrLibBALConfig, ACBrLibBALDataModule;
+  {$IFDEF MT}ACBrLibBALMT{$ELSE}ACBrLibBALST{$ENDIF},
+  ACBrLibBALConfig, ACBrLibBALDataModule;
 
 {$R *.res}
 

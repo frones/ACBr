@@ -2,14 +2,14 @@ object LibCTeDM: TLibCTeDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  left = 346
-  top = 174
+  Left = 346
+  Top = 174
   Height = 231
   HorizontalOffset = 199
   VerticalOffset = 121
   Width = 491
-  PPI = 96
   object ACBrCTe1: TACBrCTe
+    MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -21,8 +21,8 @@ object LibCTeDM: TLibCTeDM
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
-    left = 96
-    top = 32
+    Left = 96
+    Top = 32
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -50,7 +50,18 @@ object LibCTeDM: TLibCTeDM
     EPECEnviado = False
     ImprimeDescPorc = False
     PrintDialog = False
-    left = 200
-    top = 32
+    Left = 200
+    Top = 32
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    Left = 217
+    Top = 112
   end
 end

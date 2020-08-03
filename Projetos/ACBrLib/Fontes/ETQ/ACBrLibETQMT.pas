@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibETQClass;
+unit ACBrLibETQMT;
 
 interface
 
@@ -43,67 +43,67 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function ETQ_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Finalizar: longint;
+function ETQ_Finalizar(libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function ETQ_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImportarConfig(const eArqConfig: PChar): longint;
+function ETQ_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigLer(const eArqConfig: PChar): longint;
+function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigGravar(const eArqConfig: PChar): longint;
+function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Diversos}
-function ETQ_Ativar: longint;
+function ETQ_Ativar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Desativar: longint;
+function ETQ_Desativar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_IniciarEtiqueta: longint;
+function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_CarregarImagem(const eArquivoImagem, eNomeImagem: PChar;
+function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PChar;
       Flipped: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Impressão}
-function ETQ_Imprimir(const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
+function ETQ_ImprimirTexto(const libHandle: PLibHandle; const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
-            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
+function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PChar;
+            const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
+function ETQ_ImprimirBarras(const libHandle: PLibHandle; const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): longint;
+function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
+function ETQ_ImprimirCaixa(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura,
       EspessuraVertical, EspessuraHorizontal: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
+function ETQ_ImprimirImagem(const libHandle: PLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
       const eNomeImagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
+function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PChar;
           LarguraModulo, ErrorLevel, Tipo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
@@ -118,74 +118,74 @@ uses
 {%region ETQ}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function ETQ_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(pLib, TACBrLibETQ, eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(libHandle, TACBrLibETQ, eArqConfig, eChaveCrypt);
 end;
 
-function ETQ_Finalizar: longint;
+function ETQ_Finalizar(libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar(pLib);
+  Result := LIB_Finalizar(libHandle);
 end;
 
-function ETQ_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function ETQ_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(pLib, sNome, esTamanho);
+  Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function ETQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(pLib, sVersao, esTamanho);
+  Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function ETQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function ETQ_ImportarConfig(const eArqConfig: PChar): longint;
+function ETQ_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(pLib, eArqConfig);
+  Result := LIB_ImportarConfig(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigLer(const eArqConfig: PChar): longint;
+function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(pLib, eArqConfig);
+  Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigGravar(const eArqConfig: PChar): longint;
+function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(pLib, eArqConfig);
+  Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function ETQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 {%endregion}
 
 {%region Diversos}
-function ETQ_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_Ativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).Ativar;
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).Ativar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -195,26 +195,12 @@ begin
   end;
 end;
 
-function ETQ_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).Desativar;
-  except
-    on E: EACBrLibException do
-      Result := E.Erro;
-
-    on E: Exception do
-      Result := ErrExecutandoMetodo;
-  end;
-end;
-
-function ETQ_IniciarEtiqueta: longint;
+function ETQ_Desativar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).IniciarEtiqueta;
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).Desativar;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -224,12 +210,12 @@ begin
   end;
 end;
 
-function ETQ_FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).FinalizarEtiqueta(ACopias, AAvancoEtq);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).IniciarEtiqueta;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -239,12 +225,27 @@ begin
   end;
 end;
 
-function ETQ_CarregarImagem(const eArquivoImagem, eNomeImagem: PChar;
+function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).FinalizarEtiqueta(ACopias, AAvancoEtq);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PChar;
       Flipped: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).CarregarImagem(eArquivoImagem, eNomeImagem, Flipped);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).CarregarImagem(eArquivoImagem, eNomeImagem, Flipped);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -256,12 +257,12 @@ end;
 {%endregion}
 
 {%region Impressão}
-function ETQ_Imprimir(const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).Imprimir(ACopias, AAvancoEtq);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).Imprimir(ACopias, AAvancoEtq);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -271,14 +272,14 @@ begin
   end;
 end;
 
-function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
+function ETQ_ImprimirTexto(const libHandle: PLibHandle; const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirTexto(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirTexto(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
                                                    Horizontal, eTexto, SubFonte, ImprimirReverso);
   except
     on E: EACBrLibException do
@@ -289,14 +290,14 @@ begin
   end;
 end;
 
-function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
-            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
+function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PChar;
+            const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirTextoStr(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirTextoStr(Orientacao, Fonte, MultiplicadorH, MultiplicadorV, Vertical,
                                                       Horizontal, eTexto, SubFonte, ImprimirReverso);
   except
     on E: EACBrLibException do
@@ -307,14 +308,14 @@ begin
   end;
 end;
 
-function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
+function ETQ_ImprimirBarras(const libHandle: PLibHandle; const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirBarras(Orientacao, TipoBarras, LarguraBarraLarga,
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirBarras(Orientacao, TipoBarras, LarguraBarraLarga,
                                                     LarguraBarraFina, Vertical, Horizontal, eTexto,
                                                     AlturaCodBarras, ExibeCodigo);
   except
@@ -326,12 +327,12 @@ begin
   end;
 end;
 
-function ETQ_ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): longint;
+function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirLinha(Vertical, Horizontal, Largura, Altura);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirLinha(Vertical, Horizontal, Largura, Altura);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -341,13 +342,13 @@ begin
   end;
 end;
 
-function ETQ_ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
+function ETQ_ImprimirCaixa(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura,
       EspessuraVertical, EspessuraHorizontal: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
                                                    EspessuraVertical, EspessuraHorizontal);
   except
     on E: EACBrLibException do
@@ -358,13 +359,13 @@ begin
   end;
 end;
 
-function ETQ_ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
+function ETQ_ImprimirImagem(const libHandle: PLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
       const eNomeImagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal, eNomeImagem);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal, eNomeImagem);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -374,13 +375,13 @@ begin
   end;
 end;
 
-function ETQ_ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
+function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PChar;
           LarguraModulo, ErrorLevel, Tipo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibETQ(pLib^.Lib).ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo);
   except
     on E: EACBrLibException do
       Result := E.Erro;

@@ -42,7 +42,7 @@ uses
   {$IFDEF MT}ACBrLibBoletoMT{$ELSE}ACBrLibBoletoST{$ENDIF},
   ACBrLibBoletoConsts, ACBrLibBoletoConfig;
 
-//{$R *.res}
+{$R *.res}
 
 {$IFDEF DEBUG}
 var

@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2020
+-- pcteCTeW --
+[*] Ajuste nas condições para gerar ou não o grupo referente ao
+    ICMSUFFim quando se tratar de transporte interestadual e 
+    tomador não contribuinte do ICMS.
+   Por: Dailon Parisotto
+
 31/07/2020
 -- ACBrCTeConhecimentos --
 [*] Ajuste e padronização na leitura do .ini ref campo autXML

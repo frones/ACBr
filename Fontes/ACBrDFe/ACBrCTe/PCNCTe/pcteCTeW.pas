@@ -1387,10 +1387,10 @@ begin
   // Grupo a ser informado nas prestações de serviços de transporte interestaduais
   // para consumidor final, não contribuinte do ICMS.
 
-  if (CTe.Imp.ICMSUFFim.vBCUFFim <> 0) or (CTe.Imp.ICMSUFFim.pFCPUFFim <> 0) or
-     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or //(CTe.Imp.ICMSUFFim.pICMSInter <> 0) or
-     (CTe.Imp.ICMSUFFim.vFCPUFFim <> 0) or (CTe.Imp.ICMSUFFim.vICMSUFFim <> 0) or
-     (CTe.Imp.ICMSUFFim.vICMSUFIni <> 0) then
+  if ((CTe.Imp.ICMSUFFim.vBCUFFim <> 0) or (CTe.Imp.ICMSUFFim.pFCPUFFim <> 0) or
+     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.vFCPUFFim <> 0) or 
+	 (CTe.Imp.ICMSUFFim.vICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.vICMSUFIni <> 0)) or
+     ((CTe.ide.UFIni <> CTe.ide.UFFim) and (CTe.ide.indIEToma = inNaoContribuinte)) then
   begin
     Gerador.wGrupo('ICMSUFFim', '#248a');
     Gerador.wCampo(tcDe2, '#', 'vBCUFFim      ', 01, 15, 1, CTe.Imp.ICMSUFFim.vBCUFFim, DSC_VBC);

@@ -317,14 +317,19 @@ begin
     // Extraindo apenas os dados da BPe (sem BPeProc)
     DeclaracaoXML := ObtemDeclaracaoXML(AXML);
 
-    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
+    if Pos('BPeTM', AXML) > 0 then
+      Modelo := moBPeTM
+    else
+      Modelo := moBPe;
+
+//    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
 
     if Modelo = moBPe then
     begin
       ALayout := LayBPeRecepcao;
       AXML := DeclaracaoXML + '<BPe xmlns' +
               RetornarConteudoEntre(AXML, '<BPe xmlns', '</BPe>') +
-              '</Bpe>';
+              '</BPe>';
     end
     else
     begin
@@ -365,7 +370,12 @@ begin
     // Extraindo apenas os dados do BPe (sem bpeProc)
     DeclaracaoXML := ObtemDeclaracaoXML(AXML);
 
-    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
+    if Pos('BPeTM', AXML) > 0 then
+      Modelo := moBPeTM
+    else
+      Modelo := moBPe;
+
+//    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
 
     if Modelo = moBPe then
     begin

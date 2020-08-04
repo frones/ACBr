@@ -54,7 +54,6 @@ type
     function ListaOcorrenciasEX(): AnsiString;
 
   protected
-    procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
 
@@ -107,17 +106,6 @@ destructor TACBrLibBoleto.Destroy;
 begin
   FBoletoDM.Free;
   inherited Destroy;
-end;
-  
-procedure TACBrLibBoleto.Inicializar;
-begin
-  GravarLog('TACBrLibBoleto.Inicializar', logNormal);
-
-  FBoletoDM.CriarACBrMail;
-
-  GravarLog('TACBrLibBoleto.Inicializar - Feito', logParanoico);
-
-  inherited Inicializar;
 end;
 
 procedure TACBrLibBoleto.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

@@ -84,8 +84,6 @@ exports
   Boleto_RetornaLinhaDigitavel,
   Boleto_RetornaCodigoBarras;
 
-{$R *.res}
-
 begin
   {$IFDEF DEBUG}
    HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;

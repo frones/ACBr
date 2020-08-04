@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, syncobjs,
   ACBrMail, ACBrGNRE2, ACBrGNReGuiaRLClass,
-  ACBrLibComum, ACBrLibConfig, ACBrLibMailImport;
+  ACBrLibComum, ACBrLibConfig;
 
 type
 
@@ -16,18 +16,15 @@ type
   TLibGNReDM = class(TDataModule)
     ACBrGNRE1: TACBrGNRE;
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
+    ACBrMail1: TACBrMail;
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
-    FACBrMail: TACBrMail;
-    FLibMail: TACBrLibMail;
     fpLib: TACBrLib;
 
   public
-    procedure CriarACBrMail;
-
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure ConfigurarImpressao(GerarPDF: Boolean; NomeImpressora: String = ''; MostrarPreview: String = '');
@@ -52,44 +49,11 @@ uses
 procedure TLibGNReDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
-  FACBrMail := Nil;
-  FLibMail := Nil;
 end;
 
 procedure TLibGNReDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
-
-  if Assigned(FLibMail) then
-    FreeAndNil(FLibMail)
-  else if Assigned(FACBrMail) then
-    FreeAndNil(FACBrMail);
-end;
-
-procedure TLibGNReDM.CriarACBrMail;
-var
-  NomeLib: String;
-begin
-  if Assigned(FLibMail) or Assigned(FACBrMail) then
-    Exit;
-
-  GravarLog('  CriarACBrMail', logCompleto);
-
-  NomeLib := ApplicationPath + CACBrMailLIBName;
-  if FileExists(NomeLib) then
-  begin
-    GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
-    // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, Lib.Config.NomeArquivo, Lib.Config.ChaveCrypt);
-    FACBrMail := FLibMail.ACBrMail;
-  end
-  else
-  begin
-    GravarLog('     Criando MAIL Interno', logCompleto);
-    FACBrMail := TACBrMail.Create(Nil);
-  end;
-
-  ACBrGNRe1.MAIL := FACBrMail;
 end;
 
 procedure TLibGNReDM.AplicarConfiguracoes;
@@ -105,10 +69,7 @@ end;
 
 procedure TLibGNReDM.AplicarConfigMail;
 begin
-  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
-    Exit;
-
-  with FACBrMail do
+  with ACBrMail1 do
   begin
     Attempts := Lib.Config.Email.Tentativas;
     SetTLS := Lib.Config.Email.TLS;

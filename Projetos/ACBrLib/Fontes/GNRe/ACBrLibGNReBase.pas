@@ -51,10 +51,9 @@ type
     function SetRetornoGNReCarregados(const NumGNRe: Integer): Integer;
 
   protected
-    procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
+    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
+
   public
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
@@ -107,17 +106,6 @@ begin
   FGNReDM.Free;
 
   inherited Destroy;
-end;
-
-procedure TACBrLibGNRe.Inicializar;
-begin
-  GravarLog('TACBrLibGNRe.Inicializar', logNormal);
-
-  FGNReDM.CriarACBrMail;
-
-  GravarLog('TACBrLibGNRe.Inicializar - Feito', logParanoico);
-
-  inherited Inicializar;
 end;
 
 procedure TACBrLibGNRe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

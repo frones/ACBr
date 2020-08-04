@@ -2,14 +2,14 @@ object LibGNReDM: TLibGNReDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  left = 346
-  top = 174
+  Left = 346
+  Top = 174
   Height = 231
   HorizontalOffset = 238
   VerticalOffset = 116
   Width = 491
-  PPI = 96
   object ACBrGNRE1: TACBrGNRE
+    MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -20,8 +20,8 @@ object LibGNReDM: TLibGNReDM
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     GNREGuia = ACBrGNREGuiaRL1
-    left = 46
-    top = 52
+    Left = 46
+    Top = 52
   end
   object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
@@ -34,7 +34,18 @@ object LibGNReDM: TLibGNReDM
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     PrintDialog = True
-    left = 176
-    top = 56
+    Left = 176
+    Top = 56
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    Left = 289
+    Top = 77
   end
 end

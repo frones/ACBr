@@ -166,7 +166,7 @@ begin
 
     FPosPrinter.Buffer.Add('</zera><mp>' +
                            FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda)+
-                           StringOfChar(LF, max(LinhasTextoLateral-1,0))+ '</logo>');
+                           {StringOfChar(LF, max(LinhasTextoLateral-1,0))+} '</logo>');
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                            '</ae><c>'+TextoLateral +
                            '</mp>');
@@ -299,9 +299,12 @@ begin
       LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
       FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
 
-      LinhaCmd :=
-        PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
-        PadRight(sVlrUnitario, 13) + '|' + sVlrImpostos + sVlrBruto;
+      if (FPosPrinter.ColunasFonteCondensada >= 48) then
+        LinhaCmd := PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+                    PadRight(sVlrUnitario, 13) + '|' + sVlrImpostos + sVlrBruto
+      else
+        LinhaCmd := sQuantidade  + '|' + sUnidade + ' X ' +
+                    sVlrUnitario + '|' + sVlrImpostos + sVlrBruto;
 
       LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
       FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
@@ -338,7 +341,7 @@ begin
           FPosPrinter.ColunasFonteCondensada, '|'));
       end;
 
-      // Rateio de Desconto
+      // Rateio de Acréscimo
       if (CFe.Det.Items[i].Prod.vRatAcr > 0) then
       begin
         GapItem := True;
@@ -532,7 +535,13 @@ begin
   if Length(Chave) > FPosPrinter.ColunasFonteCondensada then
     Chave := OnlyNumber(Chave);
 
-  FPosPrinter.Buffer.Add('</ce><c>'+Chave);
+  if Length(Chave) > FPosPrinter.ColunasFonteCondensada then
+  begin
+    FPosPrinter.Buffer.Add(copy(CFe.infCFe.ID,1,22));
+    FPosPrinter.Buffer.Add(copy(CFe.infCFe.ID,23,22));
+  end
+  else
+    FPosPrinter.Buffer.Add('</ce><c>'+Chave);
 
   Suporta128c := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
   TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );

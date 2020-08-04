@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2020
+-- ACBrSATExtratoESCPOS --
+[*] Ajustes para melhor impressão, em 40 colunas
+    (por: DSA)
+
 23/07/2020
 -- Diversos --
 [+] Acrescentado a unit pcnConsts em algumas units do componente.

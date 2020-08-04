@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2020
+[*] Ajustes para melhor impressão, em 40 colunas
+    (por: DSA)
+
 21/07/2020
 [-] Correção para usar as propriedade ImprimeLogoLateral e ImprimeQRCodeLateral corretamente.
     (por: Rafael Dias)

@@ -98,7 +98,6 @@ type
     procedure ImprimirEVENTO(NFE : TNFe = nil);override;
     procedure ImprimirINUTILIZACAO(ANFe: TNFe = nil); override;
 
-
     procedure ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;
       const ACortaPapel: Boolean = True; const ALogo : Boolean = True);
   published
@@ -228,7 +227,9 @@ begin
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
        FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>' +  FpNFe.Emit.xFant + '</n>');
 
-    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'CNPJ: '+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' + FpNFe.Emit.xNome + '</n>');
+    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+
+      QuebraLinhas( 'CNPJ: '+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' +
+                    FpNFe.Emit.xNome + '</n>', ColunasCondensado) );
 
     FPosPrinter.Buffer.Add( TagLigaCondensado +
       QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
@@ -239,7 +240,10 @@ begin
         FormatarCEP(FpNFe.Emit.EnderEmit.CEP), ColunasCondensado) );
 
     if not EstaVazio(FpNFe.Emit.EnderEmit.fone) then
-      FPosPrinter.Buffer.Add('</ce></fn>'+TagLigaCondensado+'Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n> I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+      FPosPrinter.Buffer.Add('</ce></fn>'+TagLigaCondensado+
+      QuebraLinhas('Fone:<n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+
+                   '</n> I.E.:'+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF),
+                   ColunasCondensado) )
     else
       FPosPrinter.Buffer.Add('</ce></fn>'+TagLigaCondensado+'I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
   end;
@@ -322,16 +326,14 @@ begin
 
           if (ColunasCondensado >= 48) then
           begin
-            LinhaCmd :=
-              PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
-              PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
-            LinhaCmd := padSpace(LinhaCmd, ColunasCondensado, '|');
+            LinhaCmd := PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+                        PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
           end
           else
-            LinhaCmd := padSpace(
-              sQuantidade + '|' + sUnidade + ' X ' +
-              sVlrUnitario + '|' + sVlrProduto, ColunasCondensado, '|');
+            LinhaCmd := sQuantidade + '|' + sUnidade + ' X ' +
+                        sVlrUnitario + '|' + sVlrProduto;
 
+          LinhaCmd := padSpace(LinhaCmd, ColunasCondensado, '|');
           FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
         end;
 
@@ -473,14 +475,18 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsultaChaveAcesso;
+var
+  UrlChave: String;
 begin
   // chave de acesso
   FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>Consulte pela Chave de Acesso em</n>');
   if EstaVazio(FpNFe.infNFeSupl.urlChave) then
-    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao))
+    UrlChave := TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao)
   else
-    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + FpNFe.infNFeSupl.urlChave);
-  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));
+    UrlChave := FpNFe.infNFeSupl.urlChave;
+
+  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(UrlChave, ColunasCondensado) );
+  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)), ColunasCondensado) );
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
@@ -668,13 +674,13 @@ begin
   begin
     InfoAut := TagLigaCondensado+'<n>'+ACBrStr('Protocolo de Autorização:')+'</n>|'+
                 Trim(FpNFe.procNFe.nProt);
-    Result := Result + ReplaceSoftBreak(InfoAut) + sLineBreak;
+    Result := Result + QuebraLinhas( ReplaceSoftBreak(InfoAut), Colunas) + sLineBreak;
 
     if (FpNFe.procNFe.dhRecbto <> 0) then
     begin
       InfoAut := TagLigaCondensado+'<n>'+ACBrStr('Data de Autorização')+'</n>|'+
                  DateTimeToStr(FpNFe.procNFe.dhRecbto);
-      Result := Result + ReplaceSoftBreak(InfoAut) + sLineBreak;
+      Result := Result + QuebraLinhas( ReplaceSoftBreak(InfoAut), Colunas) + sLineBreak;
     end;
   end;
 
@@ -738,10 +744,10 @@ procedure TACBrNFeDANFeESCPOS.GerarRodape;
 begin
   // sistema
   if Sistema <> '' then
-    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + Sistema);
+    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(Sistema, ColunasCondensado));
 
   if Site <> '' then
-    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + Site);
+    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(Site, ColunasCondensado));
 
   // pular linhas e cortar o papel
   if FPosPrinter.CortaPapel then

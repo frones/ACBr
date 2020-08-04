@@ -269,7 +269,7 @@
           </Other>
         </CompilerOptions>
       </Item7>
-      <Item8 Name="Win32-i386-CDECL MT">
+      <Item8 Name="Win32-i386-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -310,7 +310,7 @@
           </Other>
         </CompilerOptions>
       </Item8>
-      <Item9 Name="Win64-x86_64-CDECL MT">
+      <Item9 Name="Win64-x86_64-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -352,7 +352,7 @@
           </Other>
         </CompilerOptions>
       </Item9>
-      <Item10 Name="Win32-i386-STDCALL MT">
+      <Item10 Name="Win32-i386-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -393,7 +393,7 @@
           </Other>
         </CompilerOptions>
       </Item10>
-      <Item11 Name="Win64-x86_64-STDCALL MT">
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -434,7 +434,7 @@
           </Other>
         </CompilerOptions>
       </Item11>
-      <Item12 Name="Linux-x86_64 MT">
+      <Item12 Name="Linux-x86_64-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -475,7 +475,7 @@
           </Other>
         </CompilerOptions>
       </Item12>
-      <Item13 Name="Linux-i3861 MT">
+      <Item13 Name="Linux-i3861-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

@@ -44,7 +44,7 @@ object FormPrincipal: TFormPrincipal
       Top = 0
       Width = 674
       Height = 376
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
       TabOrder = 0
@@ -477,9 +477,6 @@ object FormPrincipal: TFormPrincipal
             Align = alTop
             Caption = 'Valores da Opera'#231#227'o'
             TabOrder = 0
-            DesignSize = (
-              661
-              136)
             object Label2: TLabel
               Left = 25
               Top = 24
@@ -647,7 +644,6 @@ object FormPrincipal: TFormPrincipal
               Top = 93
               Width = 113
               Height = 28
-              Anchors = [akTop, akRight]
               Caption = 'Pagamentos'
               Default = True
               Enabled = False
@@ -665,7 +661,6 @@ object FormPrincipal: TFormPrincipal
               Top = 53
               Width = 113
               Height = 28
-              Anchors = [akTop, akRight]
               Caption = 'Administrativo'
               Enabled = False
               Font.Charset = DEFAULT_CHARSET
@@ -710,7 +705,6 @@ object FormPrincipal: TFormPrincipal
               Top = 14
               Width = 113
               Height = 25
-              Anchors = [akTop, akRight]
               Caption = 'Solicita CPF'
               TabOrder = 10
               OnClick = btObterCPFClick
@@ -802,7 +796,7 @@ object FormPrincipal: TFormPrincipal
               Left = 572
               Top = 4
               Width = 85
-              Height = 29
+              Height = 42
               Align = alRight
               Caption = '000000'
               Color = clBtnFace

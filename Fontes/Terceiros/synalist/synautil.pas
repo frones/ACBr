@@ -66,6 +66,13 @@
   {$ZEROBASEDSTRINGS OFF}
 {$ENDIF}
 
+{$IfDef DELPHI2009_UP}
+  {$DEFINE HAS_CHARINSET}
+{$EndIf}
+{$IfDef FPC}
+  {$DEFINE HAS_CHARINSET}
+{$EndIf}
+
 unit synautil;
 
 interface
@@ -383,7 +390,7 @@ function  MatchLastBoundary               (ABOL,AETX:PANSIChar; const ABoundary:
 function  BuildStringFromBuffer           (AStx,AEtx:PANSIChar): ANSIString;
 {/pf}
 
-{$IfNDef DELPHI2009_UP}
+{$IfNDef HAS_CHARINSET}
 function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
 {$EndIf}
 
@@ -2125,7 +2132,7 @@ begin
 end;
 {/pf}
 
-{$IfNDef DELPHI2009_UP}
+{$IfNDef HAS_CHARINSET}
 function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
 begin
   result := C in CharSet;     

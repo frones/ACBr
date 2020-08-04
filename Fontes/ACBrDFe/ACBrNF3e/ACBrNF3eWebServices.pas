@@ -890,7 +890,7 @@ begin
     FPSoapAction := FPServico + '/NF3eRecepcaoLote';
   end;
 
-  FPBodyElement := 'NF3eDadosMsg';
+//  FPBodyElement := 'NF3eDadosMsg';
 end;
 
 procedure TNF3eRecepcao.DefinirDadosMsg;
@@ -2295,11 +2295,9 @@ begin
 end;
 
 procedure TNF3eInutilizacao.DefinirServicoEAction;
-//var
-//  ok: Boolean;
 begin
   if EstaVazio(FPServico) then
-    FPServico := GetUrlWsd + 'NF3eInutilizacao4';
+    FPServico := GetUrlWsd + 'NF3eInutilizacao';
 
   if EstaVazio(FPSoapAction) then
     FPSoapAction := FPServico + '/NF3eInutilizacaoNF';
@@ -2343,9 +2341,7 @@ begin
 {
   NF3eRetorno := TRetInutNF3e.Create;
   try
-    FPRetWS := SeparaDadosArray(['NF3eInutilizacaoNF2Result',
-                                 'NF3eInutilizacaoNFResult',
-                                 'NF3eResultMsg'],FPRetornoWS );
+    FPRetWS := SeparaDados('NF3eResultMsg', FPRetornoWS);
 
     VerificarSemResposta;
 

@@ -434,7 +434,6 @@ Var
 begin
   if EstaVazio(AXmlString) then Exit;
 
-  NewNode := nil;
   memDoc := nil;
   try
     NewNodeXml := '<a>' + AXmlString + '</a>';

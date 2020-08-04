@@ -98,7 +98,7 @@ type
   TnfseDeducaoPor = ( dpNenhum, dpPercentual, dpValor );
   TnfseTipoDeducao = ( tdNenhum, tdMateriais, tdSubEmpreitada, tdValor );
 
-  TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
+  TnfseProvedor = ( proNenhum, proTiplan, proISSNet, proWebISS, proWebISSv2, proGINFES, proIssDSF,
                     proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
                     proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
                     profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
@@ -535,7 +535,7 @@ begin
          'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2', 'WEBFISCO', 'DSFSJC',
          'SimplISSv2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'SmarAPDv1', 'Futurize', 'GeisWeb'],
-        [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
+        [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
          profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
@@ -580,7 +580,7 @@ begin
          'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2', 'WEBFISCO', 'DSFSJC',
          'SimplISSv2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'SmarAPDv1', 'Futurize', 'GeisWeb'],
-        [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
+        [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
          profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
@@ -18246,8 +18246,8 @@ begin
     LayNfseGerar:                Result := schNFSe;
     LayNfseRecepcaoLoteSincrono: Result := schNFSe;
     LayNfseSubstituiNfse:        Result := schSubNFSe;
-    LayNfseAbrirSessao:           Result := schAbrirSessao;
-    LayNfseFecharSessao:          Result := schFecharSessao;
+    LayNfseAbrirSessao:          Result := schAbrirSessao;
+    LayNfseFecharSessao:         Result := schFecharSessao;
   else
     Result := schErro;
   end;
@@ -18512,7 +18512,7 @@ begin
     proElotech:     Result := loElotech;
     proWebFisco:    Result := loWebFisco;
     proLencois:     Result := loLencois;    
-	proGeisWeb:     Result := loGeisWeb;
+	  proGeisWeb:     Result := loGeisWeb;
   else
     Result := loNone;
   end;

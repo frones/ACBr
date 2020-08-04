@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrLibComum,
-  ACBrLibConfig, ACBrLibMailImport, ACBrMail;
+  ACBrLibConfig, ACBrMail;
 
 type
 

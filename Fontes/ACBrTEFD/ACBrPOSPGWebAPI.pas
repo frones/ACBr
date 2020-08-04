@@ -182,6 +182,9 @@ type
   TACBrPOSPGWebNovoEstadoTerminal = procedure(const TerminalId: String;
      EstadoAtual, EstadoAnterior: TACBrPOSPGWebEstadoTerminal) of object;
 
+  TACBrPOSPGWebAposFinalizarTransacao = procedure(const TerminalId: String;
+    Status: TACBrPOSPGWebStatusTransacao) of object ;
+
   { TACBrPOSPGWebConexao }
 
   TACBrPOSPGWebConexao = class(TThread)
@@ -217,6 +220,7 @@ type
 
   TACBrPOSPGWebAPI = class
   private
+    fOnAposFinalizarTransacao: TACBrPOSPGWebAposFinalizarTransacao;
     fOnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal;
     fOnNovaConexao: TACBrPOSPGWebNovaConexao;
     fTimerConexao: TACBrThreadTimer;
@@ -399,6 +403,8 @@ type
     property OnNovaConexao: TACBrPOSPGWebNovaConexao read fOnNovaConexao write fOnNovaConexao;
     property OnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal read fOnMudaEstadoTerminal
       write fOnMudaEstadoTerminal;
+    property OnAposFinalizarTransacao: TACBrPOSPGWebAposFinalizarTransacao
+      read fOnAposFinalizarTransacao write fOnAposFinalizarTransacao;
   end;
 
 function PTIRETToString(iRET: SmallInt): String;
@@ -482,13 +488,8 @@ begin
       On E: Exception do
       begin
         if not Terminated then
-        begin
-          if fPOSPGWeb.Inicializada then
-          begin
-            fPOSPGWeb.Beep(fTerminalId, beepErro);
-            fPOSPGWeb.ExibirMensagem(fTerminalId, E.Message, 5);
-          end;
-        end;
+          fPOSPGWeb.GravarLog( Format( 'Erro: %s, Terminal: %s, Mensagem: %s',
+                                       [E.ClassName, fTerminalId, E.Message] ));
       end;
     end;
   finally
@@ -588,6 +589,7 @@ begin
   fOnGravarLog := Nil;
   fOnNovaConexao := Nil;
   fOnMudaEstadoTerminal := Nil;
+  fOnAposFinalizarTransacao := Nil;
 end;
 
 function TACBrPOSPGWebAPI.DesconectarTodos: Integer;
@@ -758,7 +760,13 @@ begin
   AvaliarErro(iRet, TerminalId);
 
   if (TempoEspera > 0) then
-    AguardarTecla(TerminalId, TempoEspera);
+  begin
+    try
+      AguardarTecla(TerminalId, TempoEspera);
+    except
+      {Suprime erros}
+    end;
+  end;
 end;
 
 procedure TACBrPOSPGWebAPI.LimparTeclado(const TerminalId: String);
@@ -807,7 +815,9 @@ begin
   Result := '';
   pszData := AllocMem(50);
   try
-    Move(ValorInicial[1], pszData, Length(ValorInicial)+1 );
+    if (Length(ValorInicial) > 0) then
+      Move(ValorInicial[1], pszData^, Length(ValorInicial)+1 );
+
     xPTI_GetData( TerminalId,
                   Titulo,
                   Mascara,
@@ -894,9 +904,11 @@ var
   iRet: SmallInt;
   TextoFormatado: AnsiString;
 begin
+  // Trocando comando #11 por Tag <e>, para Expandido. Pois FormatarMensagem() irá remover Acentos e Não caracteres
+  TextoFormatado := StringReplace(ATexto, #11, '<e>', [rfReplaceAll]);
   // Formatando no limite de Colunas
-  TextoFormatado := FormatarMensagem(ATexto, CACBrPOSPGWebColunasImpressora);
-  // Trocando Tag <e> por \v ou #11, para Expandido. NOTA: Deve ser o Primeiro caracter da Linha
+  TextoFormatado := FormatarMensagem(TextoFormatado, CACBrPOSPGWebColunasImpressora);
+  // Trocando Tag <e> por #11 ( \v ), para Expandido. NOTA: Deve ser o Primeiro caracter da Linha
   TextoFormatado := StringReplace(TextoFormatado, '<e>', #11, [rfReplaceAll]);
   TextoFormatado := StringReplace(TextoFormatado, '<E>', #11, [rfReplaceAll]);
 
@@ -1027,7 +1039,6 @@ begin
     else
       AvaliarErro(iRet, TerminalId);
   finally
-    ObterDadosDaTransacao( TerminalId );
     fEmTransacao := False;
     AjustarEstadoConexao(TerminalId, statConectado);
   end;
@@ -1180,6 +1191,12 @@ begin
   GravarLog('PTI_EFT_Confirm( '+TerminalId+', '+IntToStr(SmallInt(Status))+' )');
   xPTI_EFT_Confirm( TerminalId, SmallInt(Status), iRet);
   GravarLog('  '+PTIRETToString(iRet));
+
+  ObterDadosDaTransacao( TerminalId );
+
+  if Assigned(fOnAposFinalizarTransacao) then
+    fOnAposFinalizarTransacao(TerminalId, Status);
+
   fEmTransacao := False;
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1236,24 +1253,20 @@ end;
 function TACBrPOSPGWebAPI.FormatarMensagem(const AMsg: String; Colunas: Word
   ): AnsiString;
 var
-  MsgFormatada, LB: String;
+  MsgFormatada: String;
+  l: Integer;
 begin
-  if (Length(AMsg) > Colunas) then
+  l := Length(AMsg);
+  if (l > Colunas) then
   begin
     MsgFormatada := TiraAcentos(AMsg);
-    LB := sLineBreak;
-    if (LB <> LF) then
-      MsgFormatada := StringReplace(MsgFormatada, sLineBreak, LF, [rfReplaceAll]);
-
-    if (LB <> CR) then
-      MsgFormatada := StringReplace(MsgFormatada, CR, LF, [rfReplaceAll]);
-
-    MsgFormatada := QuebraLinhas(MsgFormatada, Colunas);
-    if (LB <> CR) then
-      MsgFormatada := StringReplace(MsgFormatada, LB, CR, [rfReplaceAll]);
+    MsgFormatada := AjustaLinhas(MsgFormatada, Colunas);
+    MsgFormatada := StringReplace(MsgFormatada, LF, CR, [rfReplaceAll]);
 
     Result := AnsiString(ACBrStrToAnsi(MsgFormatada));
   end
+  else if (l < 1) then
+    Result := CR
   else
     Result := AnsiString(AMsg);
 end;

@@ -457,9 +457,9 @@ type
 
   TPW_OperationsEx = record
     bOperType: Byte;
-    szOperName: Array[0..21] of AnsiChar;
-    szAuthSyst: Array[0..21] of AnsiChar;
-    szValue: Array[0..21] of AnsiChar;
+    szOperName: Array[0..20] of AnsiChar;
+    szAuthSyst: Array[0..20] of AnsiChar;
+    szValue: Array[0..20] of AnsiChar;
     fAuthPreferential: Boolean;
   end;
 
@@ -2540,11 +2540,11 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect('PW_iPPRemoveCard', @xPW_iPPRemoveCard);
    PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock);
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
-   try
-     PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx);
-   except
-     xPW_iGetOperationsEx := Nil;  // Não suportado nessa versão da DLL
-   end;
+   //try
+   //  PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx);
+   //except
+   //  xPW_iGetOperationsEx := Nil;  // Não suportado nessa versão da DLL
+   //end;
 
 end;
 

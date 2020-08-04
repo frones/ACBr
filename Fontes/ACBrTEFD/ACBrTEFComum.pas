@@ -296,13 +296,13 @@ type
     procedure SetArqBackup(const AValue: String);
 
     function GetTransacaoAprovada: Boolean; virtual;
-    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); virtual;
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Assign(Source: TACBrTEFResp); virtual;
     procedure ConteudoToProperty; virtual;
+    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); virtual;
 
     procedure Clear; virtual;
     procedure LeArquivo(const NomeArquivo: String);
@@ -312,55 +312,55 @@ type
 
     property Header: String read fpHeader;
     property ID: Integer read fpID;
-    property DocumentoVinculado: String read fpDocumentoVinculado;
-    property ValorTotal: Double read fpValorTotal;
-    property ValorOriginal: Double read fpValorOriginal;
-    property Saque: Double read fpSaque;
-    property Desconto: Double read fpDesconto;
-    property TaxaServico: Double read fpTaxaServico;
-    property Moeda: Integer read fpMoeda;
-    property CMC7: String read fpCMC7;
-    property TipoPessoa: AnsiChar read fpTipoPessoa;
-    property DocumentoPessoa: String read fpDocumentoPessoa;
-    property DataCheque: TDateTime read fpDataCheque;
-    property Rede: String read fpRede;
-    property NSU: String read fpNSU;
-    property Finalizacao: String read fpFinalizacao;
-    property StatusTransacao: String read fpStatusTransacao;
+    property DocumentoVinculado: String read fpDocumentoVinculado write fpDocumentoVinculado;
+    property ValorTotal: Double read fpValorTotal write fpValorTotal;
+    property ValorOriginal: Double read fpValorOriginal write fpValorOriginal;
+    property Saque: Double read fpSaque write fpSaque;
+    property Desconto: Double read fpDesconto write fpDesconto;
+    property TaxaServico: Double read fpTaxaServico write fpTaxaServico;
+    property Moeda: Integer read fpMoeda write fpMoeda;
+    property CMC7: String read fpCMC7 write fpCMC7;
+    property TipoPessoa: AnsiChar read fpTipoPessoa write fpTipoPessoa;
+    property DocumentoPessoa: String read fpDocumentoPessoa write fpDocumentoPessoa;
+    property DataCheque: TDateTime read fpDataCheque write fpDataCheque;
+    property Rede: String read fpRede write fpRede;
+    property NSU: String read fpNSU write fpNSU;
+    property Finalizacao: String read fpFinalizacao write fpFinalizacao;
+    property StatusTransacao: String read fpStatusTransacao write fpStatusTransacao;
     property TransacaoAprovada: Boolean read GetTransacaoAprovada;
-    property TipoTransacao: Integer read fpTipoTransacao;
-    property CodigoAutorizacaoTransacao: String read fpCodigoAutorizacaoTransacao;
-    property NumeroLoteTransacao: Int64 read fpNumeroLoteTransacao;
-    property DataHoraTransacaoHost: TDateTime read fpDataHoraTransacaoHost;
-    property DataHoraTransacaoLocal: TDateTime read fpDataHoraTransacaoLocal;
-    property TipoParcelamento: Integer read fpTipoParcelamento;
-    property QtdParcelas: Integer read fpQtdParcelas;
-    property DataPreDatado: TDateTime read fpDataPreDatado;
-    property NSUTransacaoCancelada: String read fpNSUTransacaoCancelada;
-    property DataHoraTransacaoCancelada: TDateTime read fpDataHoraTransacaoCancelada;
-    property QtdLinhasComprovante: Integer read fpQtdLinhasComprovante;
-    property TextoEspecialOperador: String read fpTextoEspecialOperador;
-    property TextoEspecialCliente: String read fpTextoEspecialCliente;
-    property Autenticacao: String read fpAutenticacao;
-    property Banco: String read fpBanco;
-    property Agencia: String read fpAgencia;
-    property AgenciaDC: String read fpAgenciaDC;
-    property Conta: String read fpConta;
-    property ContaDC: String read fpContaDC;
-    property Cheque: String read fpCheque;
-    property ChequeDC: String read fpChequeDC;
-    property NomeAdministradora: String read fpNomeAdministradora;
-    property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante;
-    property Trailer: String read fpTrailer;
-    property BIN: String read fpBin;
-    property CodigoBandeiraPadrao: String read fpCodigoBandeiraPadrao;
+    property TipoTransacao: Integer read fpTipoTransacao write fpTipoTransacao;
+    property CodigoAutorizacaoTransacao: String read fpCodigoAutorizacaoTransacao write fpCodigoAutorizacaoTransacao;
+    property NumeroLoteTransacao: Int64 read fpNumeroLoteTransacao write fpNumeroLoteTransacao;
+    property DataHoraTransacaoHost: TDateTime read fpDataHoraTransacaoHost write fpDataHoraTransacaoHost;
+    property DataHoraTransacaoLocal: TDateTime read fpDataHoraTransacaoLocal write fpDataHoraTransacaoLocal;
+    property TipoParcelamento: Integer read fpTipoParcelamento write fpTipoParcelamento;
+    property QtdParcelas: Integer read fpQtdParcelas write fpQtdParcelas;
+    property DataPreDatado: TDateTime read fpDataPreDatado write fpDataPreDatado;
+    property NSUTransacaoCancelada: String read fpNSUTransacaoCancelada write fpNSUTransacaoCancelada;
+    property DataHoraTransacaoCancelada: TDateTime read fpDataHoraTransacaoCancelada write fpDataHoraTransacaoCancelada;
+    property QtdLinhasComprovante: Integer read fpQtdLinhasComprovante write fpQtdLinhasComprovante;
+    property TextoEspecialOperador: String read fpTextoEspecialOperador write fpTextoEspecialOperador;
+    property TextoEspecialCliente: String read fpTextoEspecialCliente write fpTextoEspecialCliente;
+    property Autenticacao: String read fpAutenticacao write fpAutenticacao;
+    property Banco: String read fpBanco write fpBanco;
+    property Agencia: String read fpAgencia write fpAgencia;
+    property AgenciaDC: String read fpAgenciaDC write fpAgenciaDC;
+    property Conta: String read fpConta write fpConta;
+    property ContaDC: String read fpContaDC write fpContaDC;
+    property Cheque: String read fpCheque write fpCheque;
+    property ChequeDC: String read fpChequeDC write fpChequeDC;
+    property NomeAdministradora: String read fpNomeAdministradora write fpNomeAdministradora;
+    property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante write fpDataHoraTransacaoComprovante;
+    property Trailer: String read fpTrailer write fpTrailer;
+    property BIN: String read fpBin write fpBin;
+    property CodigoBandeiraPadrao: String read fpCodigoBandeiraPadrao write fpCodigoBandeiraPadrao;
 
     property CorrespBancarios: TACBrTEFRespListaCB read fpCorrespBancarios;
 
-    property CodigoOperadoraCelular: String read fpCodigoOperadoraCelular;
-    property NomeOperadoraCelular: String read fpNomeOperadoraCelular;
-    property ValorRecargaCelular: Double read fpValorRecargaCelular;
-    property NumeroRecargaCelular: String read fpNumeroRecargaCelular;
+    property CodigoOperadoraCelular: String read fpCodigoOperadoraCelular write fpCodigoOperadoraCelular;
+    property NomeOperadoraCelular: String read fpNomeOperadoraCelular write fpNomeOperadoraCelular;
+    property ValorRecargaCelular: Double read fpValorRecargaCelular write fpValorRecargaCelular;
+    property NumeroRecargaCelular: String read fpNumeroRecargaCelular write fpNumeroRecargaCelular;
 
     property Parcelas: TACBrTEFRespParcelas read fpParcelas;
 
@@ -370,34 +370,34 @@ type
     property ArqBackup: String read fpArqBackup write SetArqBackup;
     property ArqRespPendente: String read fpArqRespPendente write fpArqRespPendente;
 
-    property Confirmar: Boolean read fpConfirmar;
+    property Confirmar: Boolean read fpConfirmar write fpConfirmar;
     property CNFEnviado: Boolean read fpCNFEnviado write SetCNFEnviado;
 
     property ViaClienteReduzida: Boolean read fpViaClienteReduzida write fpViaClienteReduzida;
 
-    property DataVencimento: TDateTime read fpDataVencimento;
-    property Instituicao: String read fpInstituicao;
-    property ModalidadePagto: String read fpModalidadePagto;
-    property ModalidadePagtoDescrita: String read fpModalidadePagtoDescrita;
-    property ModalidadeExtenso: String read fpModalidadePagtoExtenso;
-    property CodigoRedeAutorizada: String read fpCodigoRedeAutorizada;
-    property Debito: Boolean read fpDebito;
-    property Credito: Boolean read fpCredito;
-    property Digitado: Boolean read fpDigitado;
-    property ParceladoPor: TACBrTEFRespParceladoPor read fpParceladoPor;
-    property ValorEntradaCDC: Double read fpValorEntradaCDC;
-    property DataEntradaCDC: TDateTime read fpDataEntradaCDC;
-    property TipoOperacao: TACBrTEFRespTipoOperacao read fpTipoOperacao;
-    property QRCode: String read fpQRCode;
-    property IdCarteiraDigital: String read fpIdCarteiraDigital;
-    property NomeCarteiraDigital: String read fpNomeCarteiraDigital;
+    property DataVencimento: TDateTime read fpDataVencimento write fpDataVencimento;
+    property Instituicao: String read fpInstituicao write fpInstituicao;
+    property ModalidadePagto: String read fpModalidadePagto write fpModalidadePagto;
+    property ModalidadePagtoDescrita: String read fpModalidadePagtoDescrita write fpModalidadePagtoDescrita;
+    property ModalidadePagtoExtenso: String read fpModalidadePagtoExtenso write fpModalidadePagtoExtenso;
+    property CodigoRedeAutorizada: String read fpCodigoRedeAutorizada write fpCodigoRedeAutorizada;
+    property Debito: Boolean read fpDebito write fpDebito;
+    property Credito: Boolean read fpCredito write fpCredito;
+    property Digitado: Boolean read fpDigitado write fpDigitado;
+    property ParceladoPor: TACBrTEFRespParceladoPor read fpParceladoPor write fpParceladoPor;
+    property ValorEntradaCDC: Double read fpValorEntradaCDC write fpValorEntradaCDC;
+    property DataEntradaCDC: TDateTime read fpDataEntradaCDC write fpDataEntradaCDC;
+    property TipoOperacao: TACBrTEFRespTipoOperacao read fpTipoOperacao write fpTipoOperacao;
+    property QRCode: String read fpQRCode write fpQRCode;
+    property IdCarteiraDigital: String read fpIdCarteiraDigital write fpIdCarteiraDigital;
+    property NomeCarteiraDigital: String read fpNomeCarteiraDigital write fpNomeCarteiraDigital;
 
     property NFCeSAT: TACBrTEFRespNFCeSAT read fpNFCeSAT;
 
-    property IdPagamento: Integer read fpIdPagamento;
-    property IdRespostaFiscal: Integer read fpIdRespostaFiscal;
-    property SerialPOS: String read fpSerialPOS;
-    property Estabelecimento: String read fpEstabelecimento;
+    property IdPagamento: Integer read fpIdPagamento write fpIdPagamento;
+    property IdRespostaFiscal: Integer read fpIdRespostaFiscal write fpIdRespostaFiscal;
+    property SerialPOS: String read fpSerialPOS write fpSerialPOS;
+    property Estabelecimento: String read fpEstabelecimento write fpEstabelecimento;
   end;
 
   { TACBrTEFRespostasPendentes }

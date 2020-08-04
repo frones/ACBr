@@ -37,9 +37,12 @@ unit ACBrTEFPayGoComum;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrTEFComum;
 
 const
+  PWRET_OK = 0;      // Operação bem sucedida
+
   //==========================================================================================
   //  Tabela de Códigos de retorno das transações
   //==========================================================================================
@@ -210,11 +213,326 @@ type
     property ValueInfo[AInfo: Word]: string read GetValueInfo write SetValueInfo;
   end;
 
+procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
+
 function ParseKeyValue(AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
 function PWINFOToString(iINFO: Word): String;
 function PWOPERToString(iOPER: SmallInt): String;
 
+function MoedaToISO4217(AMoeda: Byte): Word;
+function ISO4217ToMoeda(AIso4217: Word): Byte;
+
 implementation
+
+uses
+  Math, DateUtils, StrUtils,
+  ACBrConsts;
+
+procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
+
+  procedure ConteudoToComprovantes;
+  var
+    ImprimirViaCliente, ImprimirViaEstabelecimento: Boolean;
+    ViaCompleta, ViaDiferenciada, ViasDeComprovante: String;
+  begin
+    with AACBrTEFResp do
+    begin
+      {
+      PWINFO_RCPTPRN      F4h 1 Indica quais vias de comprovante devem ser impressas:
+                              0: não há comprovante, 1: imprimir somente a via do Cliente,
+                              2: imprimir somente a via do Estabelecimento, 3: imprimir ambas as vias do Cliente e do Estabelecimento
+      PWINFO_RCPTFULL     52h Comprovante para impressão – Via completa.
+                              Até 40 colunas, quebras de linha identificadas pelo caractere 0Dh.
+      PWINFO_RCPTMERCH    53h Comprovante para impressão – Via diferenciada para o Estabelecimento.
+                              Até 40 colunas, quebras de linha identificadas pelo caractere 0Dh.
+      PWINFO_RCPTCHOLDER  54h Comprovante para impressão – Via diferenciada para o Cliente.
+                              Até 40 colunas, quebras de linha identificadas pelo caractere 0Dh.
+      PWINFO_RCPTCHSHORT  55h Comprovante para impressão – Cupom reduzido (para o Cliente).
+                              Até 40 colunas, quebras de linha identificadas pelo caractere 0Dh.
+      }
+
+      ViasDeComprovante := Trim(LeInformacao(PWINFO_RCPTPRN, 0).AsString);
+
+      if (ViasDeComprovante <> '') then
+      begin
+        ImprimirViaCliente := (ViasDeComprovante = '1') or (ViasDeComprovante = '3');
+        ImprimirViaEstabelecimento := (ViasDeComprovante = '2') or (ViasDeComprovante = '3');
+      end
+      else
+      begin
+        ImprimirViaCliente := (Trim(LeInformacao(PWINFO_RCPTCHOLDER, 0).AsBinary) <> '') or
+                              (Trim(LeInformacao(PWINFO_RCPTCHSHORT, 0).AsBinary) <> '');
+        ImprimirViaEstabelecimento := (Trim(LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary) <> '');
+      end;
+
+
+      ViaCompleta := LeInformacao(PWINFO_RCPTFULL, 0).AsBinary;
+
+      // Verificando Via do Estabelecimento
+      if ImprimirViaEstabelecimento then
+      begin
+        ViaDiferenciada := LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary;
+        if (Trim(ViaDiferenciada) <> '') then
+          ImagemComprovante2aVia.Text := ViaDiferenciada
+        else
+          ImagemComprovante2aVia.Text := ViaCompleta;
+      end
+      else
+        ImagemComprovante2aVia.Clear;
+
+      // Verificando Via do Cliente
+      if ImprimirViaCliente then
+      begin
+        ViaDiferenciada := LeInformacao(PWINFO_RCPTCHSHORT, 0).AsBinary;
+        if (Trim(ViaDiferenciada) = '') then
+          ViaDiferenciada := LeInformacao(PWINFO_RCPTCHOLDER, 0).AsBinary;
+
+        if (Trim(ViaDiferenciada) <> '') then
+          ImagemComprovante1aVia.Text := ViaDiferenciada
+        else
+          ImagemComprovante1aVia.Text := ViaCompleta;
+      end
+      else
+        ImagemComprovante1aVia.Clear;
+
+      QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
+    end;
+  end;
+
+  procedure ConteudoToParcelas;
+  var
+    DataParcela: TDateTime;
+    ValorParcela: Double;
+    I: Integer;
+    Parc: TACBrTEFRespParcela;
+  begin
+    with AACBrTEFResp do
+    begin
+      Parcelas.Clear;
+
+      QtdParcelas := LeInformacao(PWINFO_INSTALLMENTS, 0).AsInteger;
+      if (QtdParcelas > 0) then
+      begin
+        DataParcela := LeInformacao(PWINFO_INSTALLMDATE, 0).AsDate;
+        ValorParcela := LeInformacao(PWINFO_INSTALLM1AMT, 0).AsFloat;
+
+        for I := 1 to QtdParcelas do
+        begin
+          Parc := TACBrTEFRespParcela.create;
+          Parc.Vencimento := DataParcela;
+          Parc.Valor := ValorParcela;
+          Parc.NSUParcela := NSU;
+          Parcelas.Add(Parc);
+
+          ValorParcela := LeInformacao(PWINFO_INSTALLMAMNT, 0).AsFloat;
+          DataParcela := IncDay(DataParcela,30);
+        end;
+      end;
+    end;
+  end;
+
+var
+  I, AInt: Integer;
+  LinStr: String;
+  Linha: TACBrTEFLinha;
+begin
+  with AACBrTEFResp do
+  begin
+    ImagemComprovante1aVia.Clear;
+    ImagemComprovante2aVia.Clear;
+    Debito := False;
+    Credito := False;
+    Digitado := False;
+    TaxaServico := 0;
+    DataHoraTransacaoCancelada := 0;
+
+    for I := 0 to Conteudo.Count - 1 do
+    begin
+      Linha := Conteudo.Linha[I];
+      LinStr := Linha.Informacao.AsBinary;
+
+      case Linha.Identificacao of
+        PWINFO_TOTAMNT:
+          ValorTotal := Linha.Informacao.AsFloat;
+
+        PWINFO_DISCOUNTAMT:
+          Desconto := Linha.Informacao.AsFloat;
+
+        PWINFO_CASHBACKAMT:
+          Saque := Linha.Informacao.AsFloat;
+
+        PWINFO_CURRENCY:
+        begin
+          AInt := Linha.Informacao.AsInteger;
+          Moeda := ISO4217ToMoeda(AInt);
+        end;
+
+        PWINFO_CNFREQ:
+          Confirmar := (Trim(Linstr)='1');
+
+        PWINFO_FISCALREF:
+          DocumentoVinculado := LinStr;
+
+        PWINFO_CARDTYPE:
+        begin
+          // 1: crédito, 2: débito, 4: voucher/PAT, 8: private label, 16: frota, 128: outros
+          AInt := Linha.Informacao.AsInteger;
+          Credito := (AInt = 1);
+          Debito := (AInt = 2);
+        end;
+
+        PWINFO_CARDENTMODE:
+        begin
+          // 1: digitado, 2: tarja magnética, 4: chip com contato, 16: fallback de chip para tarja,
+          // 32: chip sem contato simulando tarja (cliente informa tipo efetivamente utilizado),
+          // 64: chip sem contato EMV (cliente informa tipo efetivamente, utilizado),
+          // 256: fallback de tarja para digitado
+          AInt := Linha.Informacao.AsInteger;
+          Digitado := (AInt = 1) or (AInt = 256);
+        end;
+
+        PWINFO_CARDFULLPAN:
+        begin
+          Bin := LinStr;
+          NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
+        end;
+
+        PWINFO_CARDPARCPAN:
+        begin
+          if (NFCeSAT.UltimosQuatroDigitos = '') then
+            NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
+        end;
+
+        PWINFO_DEFAULTCARDPARCPAN:
+          NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
+
+        PWINFO_CARDEXPDATE:
+          NFCeSAT.DataExpiracao := LinStr;
+
+        PWINFO_DATETIME:
+          DataHoraTransacaoLocal := Linha.Informacao.AsTimeStampSQL;
+
+        PWINFO_AUTDATETIME:
+          DataHoraTransacaoHost :=  Linha.Informacao.AsTimeStampSQL;
+
+        PWINFO_AUTHSYST:
+          Rede := LinStr;
+
+        PWINFO_CARDNAME:
+        begin
+          CodigoBandeiraPadrao := LinStr;
+          if (NFCeSAT.Bandeira = '') then
+            NFCeSAT.Bandeira := LinStr;
+        end;
+
+        PWINFO_CARDNAMESTD:
+        begin
+          NomeAdministradora := LinStr;
+          NFCeSAT.Bandeira := LinStr;
+        end;
+
+        PWINFO_CHOLDERNAME:
+          NFCeSAT.DonoCartao := LinStr;
+
+        PWINFO_AUTLOCREF:
+          Finalizacao := LinStr;
+
+        PWINFO_AUTEXTREF:
+        begin
+          NSU := LinStr;
+          NFCeSAT.Autorizacao := NSU;
+        end;
+
+        PWINFO_REQNUM:
+          NumeroLoteTransacao := Linha.Informacao.AsInt64;
+
+        PWINFO_VIRTMERCH:
+          Estabelecimento := LinStr;
+
+        PWINFO_AUTHCODE:
+          CodigoAutorizacaoTransacao := LinStr;
+
+        //PWINFO_AUTRESPCODE:
+        //  Autenticacao := LinStr;
+
+        PWINFO_FINTYPE:
+        begin
+          // 1: à vista, 2: parcelado pelo emissor, 4: parcelado pelo estabelecimento, 8: pré-datado, 16: crédito emissor
+          AInt := Linha.Informacao.AsInteger;
+          if (AInt = 2) then
+          begin
+            ParceladoPor := parcADM;
+            TipoOperacao := opParcelado;
+          end
+          else if (AInt = 4) then
+          begin
+            ParceladoPor := parcLoja;
+            TipoOperacao := opParcelado;
+          end
+          else if (AInt = 8) then
+          begin
+            ParceladoPor := parcNenhum;
+            TipoOperacao := opPreDatado;
+          end
+          else if (AInt = 16) then
+          begin
+            ParceladoPor := parcNenhum;
+            TipoOperacao := opOutras;
+          end
+          else
+          begin
+            ParceladoPor := parcNenhum;
+            TipoOperacao := opAvista;
+          end
+        end;
+
+        PWINFO_INSTALLMDATE:
+          DataPreDatado := Linha.Informacao.AsDate;
+
+        PWINFO_BOARDINGTAX, PWINFO_TIPAMOUNT:
+          TaxaServico := TaxaServico + Linha.Informacao.AsFloat;
+
+        PWINFO_TRNORIGDATE:
+          DataHoraTransacaoCancelada := DataHoraTransacaoCancelada + Linha.Informacao.AsDate;
+
+        PWINFO_TRNORIGTIME:
+          DataHoraTransacaoCancelada := DataHoraTransacaoCancelada + Linha.Informacao.AsTime;
+
+        PWINFO_TRNORIGNSU:
+          NSUTransacaoCancelada := LinStr;
+
+        PWINFO_TRNORIGAMNT:
+          ValorOriginal := Linha.Informacao.AsFloat;
+
+        PWINFO_AUTHPOSQRCODE:
+          QRCode := LinStr;
+
+        //PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
+        //PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
+        //PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
+        //PWINFO_TRANSACDESCRIPT 1F40h Até 80 Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
+      else
+        ProcessarTipoInterno(Linha);
+      end;
+    end;
+
+    ConteudoToComprovantes;
+    ConteudoToParcelas;
+
+    if (TipoOperacao <> opPreDatado) then
+      DataPreDatado := 0;
+
+    if (LeInformacao(PWINFO_RET, 0).AsInteger = PWRET_OK) then
+      TextoEspecialOperador := LeInformacao(PWINFO_RESULTMSG, 0).AsBinary
+    else
+      TextoEspecialOperador := LeInformacao(PWINFO_CNCDSPMSG, 0).AsBinary;
+
+    if (Trim(TextoEspecialOperador) = '') then
+      TextoEspecialOperador := 'TRANSACAO FINALIZADA'
+    else if (copy(TextoEspecialOperador,1,1) = CR) then
+      TextoEspecialOperador := copy(TextoEspecialOperador, 2, Length(TextoEspecialOperador));
+  end;
+end;
 
 function ParseKeyValue(AKeyValueStr: String; out TheKey: String;
   out TheValue: String): Boolean;
@@ -397,6 +715,27 @@ begin
   end;
 end;
 
+function MoedaToISO4217(AMoeda: Byte): Word;
+begin
+  case AMoeda of
+    0: Result := 986;    // BRL
+    1: Result := 840;    // USD
+    2: Result := 978;    // EUR
+  else
+    Result := AMoeda;
+  end;
+end;
+
+function ISO4217ToMoeda(AIso4217: Word): Byte;
+begin
+  case AIso4217 of
+    986: Result := 0;    // BRL
+    840: Result := 1;    // USD
+    978: Result := 2;    // EUR
+  else
+    Result := AIso4217;
+  end;
+end;
 
 { TACBrTEFPGWebAPIParametros }
 

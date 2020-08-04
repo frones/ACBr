@@ -71,7 +71,7 @@ type
     procedure SetSoftwareHouse(AValue: String);
     procedure SetVersao(AValue: String);
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     procedure Clear;
 
   published
@@ -90,7 +90,7 @@ type
     FRazaoSocial: String;
     procedure SetRazaoSocial(AValue: String);
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     procedure Clear;
 
   published
@@ -108,7 +108,7 @@ type
     FOperador: String;
     FPortaPinPad: String;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     procedure Clear;
 
   published
@@ -177,7 +177,7 @@ uses
 
 { TACBrTEFAPIConfigTerminal }
 
-constructor TACBrTEFAPIConfigTerminal.Create;
+constructor TACBrTEFAPIConfigTerminal.Create(AOwner: TComponent);
 begin
   inherited;
   Clear;
@@ -195,7 +195,7 @@ end;
 
 { TACBrTEFAPIIdentificacaoEstabelecimento }
 
-constructor TACBrTEFAPIIdentificacaoEstabelecimento.Create;
+constructor TACBrTEFAPIIdentificacaoEstabelecimento.Create(AOwner: TComponent);
 begin
   inherited;
   Clear;
@@ -244,7 +244,7 @@ begin
   FVersao := Trim(AValue);
 end;
 
-constructor TACBrTEFAPIIdentificacaoAplicacao.Create;
+constructor TACBrTEFAPIIdentificacaoAplicacao.Create(AOwner: TComponent);
 begin
   inherited;
   Clear;
@@ -274,19 +274,19 @@ begin
 
   FAPI := TACBrTEFAPIClass.Create(Self);
 
-  FTerminal := TACBrTEFAPIConfigTerminal.Create;
+  FTerminal := TACBrTEFAPIConfigTerminal.Create(Self);
   FTerminal.Name := 'ConfigTerminal';
   {$IFDEF COMPILER6_UP}
   FTerminal.SetSubComponent(True);
   {$ENDIF}
 
-  FEstabelecimento := TACBrTEFAPIIdentificacaoEstabelecimento.Create;
+  FEstabelecimento := TACBrTEFAPIIdentificacaoEstabelecimento.Create(Self);
   FEstabelecimento.Name := 'Estabelecimento';
   {$IFDEF COMPILER6_UP}
   FEstabelecimento.SetSubComponent(True);
   {$ENDIF}
 
-  FAplicacao := TACBrTEFAPIIdentificacaoAplicacao.Create;
+  FAplicacao := TACBrTEFAPIIdentificacaoAplicacao.Create(Self);
   FAplicacao.Name := 'Aplicacao';
   {$IFDEF COMPILER6_UP}
   FAplicacao.SetSubComponent(True);

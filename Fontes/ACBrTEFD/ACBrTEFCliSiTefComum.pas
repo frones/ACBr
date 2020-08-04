@@ -75,8 +75,6 @@ const
 
 type
 
-  TACBrTEFRespHack = class(TACBrTEFResp);    // Hack para acessar conteudo Protected
-
   { TACBrTEFRespCliSiTef }
 
   TACBrTEFRespCliSiTef = class(TACBrTEFResp)
@@ -241,14 +239,14 @@ var
   CB: TACBrTEFRespCB;
   LinStr: AnsiString;
 begin
-  with TACBrTEFRespHack(AACBrTEFResp) do     // Hack para acessar conteudo Protected
+  with AACBrTEFResp do
   begin
-    fpValorTotal := 0;
-    fpImagemComprovante1aVia.Clear;
-    fpImagemComprovante2aVia.Clear;
-    fpDebito := False;
-    fpCredito := False;
-    fpDigitado := False;
+    ValorTotal := 0;
+    ImagemComprovante1aVia.Clear;
+    ImagemComprovante2aVia.Clear;
+    Debito := False;
+    Credito := False;
+    Digitado := False;
 
     for I := 0 to Conteudo.Count - 1 do
     begin
@@ -256,83 +254,83 @@ begin
       LinStr := StringToBinaryString(Linha.Informacao.AsString);
 
       case Linha.Identificacao of
-        29: fpDigitado := (LinStr = 'True');
+        29: Digitado := (LinStr = 'True');
         // TODO: Mapear mais propriedades do CliSiTef //
         100:
         begin
-          fpModalidadePagto := LinStr;
+          ModalidadePagto := LinStr;
 
-          case StrToIntDef(Copy(fpModalidadePagto, 1, 2), 0) of
-            01: fpDebito := True;
-            02: fpCredito := True;
+          case StrToIntDef(Copy(ModalidadePagto, 1, 2), 0) of
+            01: Debito := True;
+            02: Credito := True;
           end;
 
-          wTipoOperacao := StrToIntDef(Copy(fpModalidadePagto, 3, 2), 0);
+          wTipoOperacao := StrToIntDef(Copy(ModalidadePagto, 3, 2), 0);
           {Tipo de Parcelamento}
           case wTipoOperacao of
-            02: fpParceladoPor := parcLoja;
-            03: fpParceladoPor := parcADM;
+            02: ParceladoPor := parcLoja;
+            03: ParceladoPor := parcADM;
           end;
 
           case wTipoOperacao of
-            00: fpTipoOperacao := opAvista;
-            01: fpTipoOperacao := opPreDatado;
-            02, 03: fpTipoOperacao := opParcelado;
+            00: TipoOperacao := opAvista;
+            01: TipoOperacao := opPreDatado;
+            02, 03: TipoOperacao := opParcelado;
           else
-            fpTipoOperacao := opOutras;
+            TipoOperacao := opOutras;
           end;
         end;
 
-        101: fpModalidadePagtoExtenso := LinStr;
-        102: fpModalidadePagtoDescrita := LinStr;
+        101: ModalidadePagtoExtenso := LinStr;
+        102: ModalidadePagtoDescrita := LinStr;
         105:
         begin
-          fpDataHoraTransacaoComprovante := Linha.Informacao.AsTimeStampSQL;
-          fpDataHoraTransacaoHost := fpDataHoraTransacaoComprovante;
-          fpDataHoraTransacaoLocal := fpDataHoraTransacaoComprovante;
+          DataHoraTransacaoComprovante := Linha.Informacao.AsTimeStampSQL;
+          DataHoraTransacaoHost := DataHoraTransacaoComprovante;
+          DataHoraTransacaoLocal := DataHoraTransacaoComprovante;
         end;
 
-        106: fpIdCarteiraDigital := LinStr;
-        107: fpNomeCarteiraDigital := LinStr;
+        106: IdCarteiraDigital := LinStr;
+        107: NomeCarteiraDigital := LinStr;
 
-        120: fpAutenticacao := LinStr;
-        121: fpImagemComprovante1aVia.Text := ChangeLineBreak(LinStr, sLineBreak);
-        122: fpImagemComprovante2aVia.Text := ChangeLineBreak(LinStr, sLineBreak);
-        123: fpTipoTransacao := Linha.Informacao.AsInteger;
+        120: Autenticacao := LinStr;
+        121: ImagemComprovante1aVia.Text := ChangeLineBreak(LinStr, sLineBreak);
+        122: ImagemComprovante2aVia.Text := ChangeLineBreak(LinStr, sLineBreak);
+        123: TipoTransacao := Linha.Informacao.AsInteger;
         130:
         begin
-          fpSaque := Linha.Informacao.AsFloat;
-          fpValorTotal := fpValorTotal + fpSaque;
+          Saque := Linha.Informacao.AsFloat;
+          ValorTotal := ValorTotal + Saque;
         end;
 
-        131: fpInstituicao := LinStr;
-        132: fpCodigoBandeiraPadrao := LinStr;
-        135: fpCodigoAutorizacaoTransacao := LinStr;
-        134: fpNSU := LinStr;
-        136: fpBin := LinStr;
-        139: fpValorEntradaCDC := Linha.Informacao.AsFloat;
-        140: fpDataEntradaCDC := Linha.Informacao.AsDate;
-        156: fpRede := LinStr;
-        501: fpTipoPessoa := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0, 'J', 'F')[1]);
-        502: fpDocumentoPessoa := LinStr;
-        504: fpTaxaServico := Linha.Informacao.AsFloat;
-        505: fpQtdParcelas := Linha.Informacao.AsInteger;
-        506: fpDataPreDatado := Linha.Informacao.AsDate;
-        511: fpQtdParcelas := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 não é retornado}
-        515: fpDataHoraTransacaoCancelada := Linha.Informacao.AsDate;
-        516: fpNSUTransacaoCancelada := LinStr;
-        527: fpDataVencimento := Linha.Informacao.AsDate;         { Data Vencimento do Cheque }
-        589: fpCodigoOperadoraCelular := LinStr;                  { Código da Operadora de Celular }
-        590: fpNomeOperadoraCelular := LinStr;                    { Nome da Operadora de Celular }
-        591: fpValorRecargaCelular := Linha.Informacao.AsFloat;   { Valor selecionado para a Recarga }
-        592: fpNumeroRecargaCelular := LinStr;                    { Numero de Celular informado para Recarda }
+        131: Instituicao := LinStr;
+        132: CodigoBandeiraPadrao := LinStr;
+        135: CodigoAutorizacaoTransacao := LinStr;
+        134: NSU := LinStr;
+        136: Bin := LinStr;
+        139: ValorEntradaCDC := Linha.Informacao.AsFloat;
+        140: DataEntradaCDC := Linha.Informacao.AsDate;
+        156: Rede := LinStr;
+        501: TipoPessoa := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0, 'J', 'F')[1]);
+        502: DocumentoPessoa := LinStr;
+        504: TaxaServico := Linha.Informacao.AsFloat;
+        505: QtdParcelas := Linha.Informacao.AsInteger;
+        506: DataPreDatado := Linha.Informacao.AsDate;
+        511: QtdParcelas := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 não é retornado}
+        515: DataHoraTransacaoCancelada := Linha.Informacao.AsDate;
+        516: NSUTransacaoCancelada := LinStr;
+        527: DataVencimento := Linha.Informacao.AsDate;         { Data Vencimento do Cheque }
+        589: CodigoOperadoraCelular := LinStr;                  { Código da Operadora de Celular }
+        590: NomeOperadoraCelular := LinStr;                    { Nome da Operadora de Celular }
+        591: ValorRecargaCelular := Linha.Informacao.AsFloat;   { Valor selecionado para a Recarga }
+        592: NumeroRecargaCelular := LinStr;                    { Numero de Celular informado para Recarda }
 
         607:  // Indice do Correspondente Bancário
         begin
           wNumCB := Linha.Informacao.AsInteger;
 
           if (wNumCB = 1) then
-            fpCorrespBancarios.Clear;
+            CorrespBancarios.Clear;
 
           CB := TACBrTEFRespCB.Create;
           CB.DataVencimento := LeInformacao(600, wNumCB).AsDate;   { Data Vencimento do título - CB }
@@ -346,53 +344,53 @@ begin
           CB.NSUCancelamento := LeInformacao(623, wNumCB).AsString;{ NSU para cancelamento - CB }
           CB.Documento := LeInformacao(624, wNumCB).AsString;      { Linha Digitável/Código de Barras do documento pago}
 
-          fpCorrespBancarios.Add(CB);
+          CorrespBancarios.Add(CB);
         end;
 
-        609: fpCorrespBancarios.TotalTitulos := Linha.Informacao.AsFloat;       { Valor total dos títulos efetivamente pagos no caso de pagamento em lote }
-        610: fpCorrespBancarios.TotalTitulosNaoPago := Linha.Informacao.AsFloat;{ Valor total dos títulos NÃO pagos no caso de pagamento em lote }
+        609: CorrespBancarios.TotalTitulos := Linha.Informacao.AsFloat;       { Valor total dos títulos efetivamente pagos no caso de pagamento em lote }
+        610: CorrespBancarios.TotalTitulosNaoPago := Linha.Informacao.AsFloat;{ Valor total dos títulos NÃO pagos no caso de pagamento em lote }
         613:
         begin
-          fpCheque := copy(LinStr, 21, 6);
-          fpCMC7 := LinStr;
+          Cheque := copy(LinStr, 21, 6);
+          CMC7 := LinStr;
         end;
 
-        626: fpBanco := LinStr;
-        627: fpAgencia := LinStr;
-        628: fpAgenciaDC := LinStr;
-        629: fpConta := LinStr;
-        630: fpContaDC := LinStr;
+        626: Banco := LinStr;
+        627: Agencia := LinStr;
+        628: AgenciaDC := LinStr;
+        629: Conta := LinStr;
+        630: ContaDC := LinStr;
 
         // dados de retorno da NFC-e/SAT
-        950: fpNFCeSAT.CNPJCredenciadora := LinStr;
-        951: fpNFCeSAT.Bandeira := LinStr;
-        952: fpNFCeSAT.Autorizacao := LinStr;
-        953: fpNFCeSAT.CodCredenciadora := LinStr;
-        1002: fpNFCeSAT.DataExpiracao := LinStr;
-        1003: fpNFCeSAT.DonoCartao := LinStr;
-        1190: fpNFCeSAT.UltimosQuatroDigitos := LinStr;
+        950: NFCeSAT.CNPJCredenciadora := LinStr;
+        951: NFCeSAT.Bandeira := LinStr;
+        952: NFCeSAT.Autorizacao := LinStr;
+        953: NFCeSAT.CodCredenciadora := LinStr;
+        1002: NFCeSAT.DataExpiracao := LinStr;
+        1003: NFCeSAT.DonoCartao := LinStr;
+        1190: NFCeSAT.UltimosQuatroDigitos := LinStr;
         4029:
         begin
-          fpDesconto := Linha.Informacao.AsFloat;
-          fpValorTotal := fpValorTotal - fpDesconto;
+          Desconto := Linha.Informacao.AsFloat;
+          ValorTotal := ValorTotal - Desconto;
         end;
       else
         ProcessarTipoInterno(Linha);
       end;
     end;
 
-    fpQtdLinhasComprovante := max(fpImagemComprovante1aVia.Count, fpImagemComprovante2aVia.Count);
-    fpConfirmar := (fpQtdLinhasComprovante > 0);
+    QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
+    Confirmar := (QtdLinhasComprovante > 0);
 
     // leitura de parcelas conforme nova documentação
     // 141 e 142 foram removidos em Setembro de 2014
-    fpParcelas.Clear;
-    if (fpQtdParcelas > 0) then
+    Parcelas.Clear;
+    if (QtdParcelas > 0) then
     begin
-      wValParc := RoundABNT((fpValorTotal / fpQtdParcelas), -2);
+      wValParc := RoundABNT((ValorTotal / QtdParcelas), -2);
       wTotalParc := 0;
 
-      for I := 1 to fpQtdParcelas do
+      for I := 1 to QtdParcelas do
       begin
         Parc := TACBrTEFRespParcela.Create;
         if I = 1 then
@@ -411,19 +409,19 @@ begin
           Parc.NSUParcela := NSU;
 
         if Parc.Vencimento <= 0 then
-          Parc.Vencimento := IncDay(fpDataHoraTransacaoHost, I * 30);
+          Parc.Vencimento := IncDay(DataHoraTransacaoHost, I * 30);
 
         if Parc.Valor <= 0 then
         begin
-          if (I = fpQtdParcelas) then
-            wValParc := fpValorTotal - wTotalParc
+          if (I = QtdParcelas) then
+            wValParc := ValorTotal - wTotalParc
           else
             wTotalParc := wTotalParc + wValParc;
 
           Parc.Valor := wValParc;
         end;
 
-        fpParcelas.Add(Parc);
+        Parcelas.Add(Parc);
       end;
     end;
   end;

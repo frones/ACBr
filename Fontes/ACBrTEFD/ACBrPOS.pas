@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrTEFPayGoComum, ACBrPOSPGWebAPI;
+  ACBrBase, ACBrTEFPayGoComum, ACBrPOSPGWebAPI, ACBrTEFComum;
 
 type
 
@@ -46,14 +46,18 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
+  TACBrPOSAposFinalizarTransacao = procedure(const TerminalId: String;
+    Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao) of object ;
+
    { TACBrPOS }
 
    TACBrPOS = class( TACBrComponent )
-     fPOSPGWeb: TACBrPOSPGWebAPI;
-
    private
+     fPOSPGWeb: TACBrPOSPGWebAPI;
      fArqLOG: String;
+     fTEFResp: TACBrTEFResp;
      fOnGravarLog: TACBrGravarLog;
+     fOnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao;
      function GetDadosTransacao: TACBrTEFPGWebAPIParametros;
      function GetDiretorioTrabalho: String;
      function GetEmTransacao: Boolean;
@@ -91,18 +95,21 @@ type
      procedure SetTempoDesconexaoAutomatica(AValue: Word);
      procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
      procedure SetVersaoAplicacao(AValue: String);
+
+     procedure DadosDaTransacaoParaTEFResp;
+     procedure GravarLogAPI(const ALogLine: String; var Tratado: Boolean);
+     procedure AposFinalizarTransacaoAPI(const TerminalId: String;
+       Status: TACBrPOSPGWebStatusTransacao);
    protected
 
    public
      constructor Create(AOwner: TComponent); override;
      destructor Destroy; override;
 
-     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
-     procedure GravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-
      procedure Inicializar;
      procedure DesInicializar;
 
+     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
      procedure ExibirMensagem(const TerminalId: String; const AMensagem: String;
        TempoEspera: Word = 0);
      procedure LimparTeclado(const TerminalId: String);
@@ -158,6 +165,7 @@ type
      property EmTransacao: Boolean read GetEmTransacao;
 
      property DadosDaTransacao: TACBrTEFPGWebAPIParametros read GetDadosTransacao;
+     property TEFResp: TACBrTEFResp read fTEFResp;
 
    published
      property PathDLL: String read GetPathDLL write SetPathDLL;
@@ -187,13 +195,15 @@ type
      property OnNovaConexao: TACBrPOSPGWebNovaConexao read GetOnNovaConexao write SetOnNovaConexao;
      property OnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal read GetOnMudaEstadoTerminal
        write SetOnMudaEstadoTerminal;
+     property OnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao
+       read fOnAposFinalizarTransacao write fOnAposFinalizarTransacao;
    end;
 
 implementation
 
 uses
-  math,
-  ACBrUtil;
+  math, StrUtils,
+  ACBrUtil, ACBrConsts;
 
 { TACBrPOS }
 
@@ -202,13 +212,17 @@ begin
   inherited Create(AOwner);
   fArqLOG := '';
   fOnGravarLog := Nil;
+  fOnAposFinalizarTransacao := Nil;
 
+  fTEFResp := TACBrTEFResp.Create;
   fPOSPGWeb := TACBrPOSPGWebAPI.Create;
   fPOSPGWeb.OnGravarLog := GravarLogAPI;
+  fPOSPGWeb.OnAposFinalizarTransacao := AposFinalizarTransacaoAPI;
 end;
 
 destructor TACBrPOS.Destroy;
 begin
+  fTEFResp.Free;
   fPOSPGWeb.Free;
   inherited Destroy;
 end;
@@ -421,6 +435,37 @@ begin
   fPOSPGWeb.VersaoAplicacao := AValue;
 end;
 
+procedure TACBrPOS.DadosDaTransacaoParaTEFResp;
+var
+  i, p, AInfo: Integer;
+  Lin, AValue: String;
+begin
+  for i := 0 to DadosDaTransacao.Count-1 do
+  begin
+    Lin := DadosDaTransacao[i];
+    p := pos('=', Lin);
+    if (p > 0) then
+    begin
+      AInfo := StrToIntDef(copy(Lin, 1, p-1), -1);
+      if (AInfo >= 0) then
+      begin
+        AValue := copy(Lin, P+1, Length(Lin));
+        fTEFResp.Conteudo.GravaInformacao(Ainfo, 0, AValue);
+      end;
+    end;
+  end;
+
+  ConteudoToPropertyPayGoWeb( fTEFResp );
+end;
+
+procedure TACBrPOS.AposFinalizarTransacaoAPI(const TerminalId: String;
+  Status: TACBrPOSPGWebStatusTransacao);
+begin
+  DadosDaTransacaoParaTEFResp;
+  if Assigned(fOnAposFinalizarTransacao) then
+    fOnAposFinalizarTransacao( TerminalId, fTEFResp, Status);
+end;
+
 procedure TACBrPOS.Inicializar;
 begin
   fPOSPGWeb.Inicializar;
@@ -587,6 +632,7 @@ end;
 procedure TACBrPOS.ObterDadosDaTransacao(const TerminalId: String);
 begin
   fPOSPGWeb.ObterDadosDaTransacao(TerminalId);
+  DadosDaTransacaoParaTEFResp;
 end;
 
 procedure TACBrPOS.FinalizarTrancao(const TerminalId: String;

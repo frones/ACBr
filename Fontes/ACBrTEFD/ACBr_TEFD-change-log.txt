@@ -46,6 +46,53 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2020
+-- ACBrTEFComum --
+[*] Classe "TACBrTEFResp", propriedades Read Only, agora são Read/Write, para
+    permitir maior flxibilidade de uso, e aproveitamento de rotinas entre Classes
+[*] Propriedade TACBrTEFResp.ModalidadeExtenso, renomeada para:
+    TACBrTEFResp.ModalidadePagtoExtenso
+
+-- ACBrTEFDPayGoWeb, ACBrTEFPayGoComum --
+[*] Metodos movidos de "ACBrTEFDPayGoWeb" para "ACBrTEFPayGoComum", para permitir
+    o uso dos mesmos, em ACBrPOS
+    - function MoedaToISO4217(AMoeda: Byte): Word;
+    - function ISO4217ToMoeda(AIso4217: Word): Byte;
+    - TACBrTEFDRespPayGoWeb.ConteudoToComprovantes
+
+-- ACBrPOS --
+[+] Adicionada a propriedade TEFResp: TACBrTEFResp, contendo as informações da
+    última transação TEF
+[+] Adicionado o evento: OnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao
+    TACBrPOSAposFinalizarTransacao = procedure(const TerminalId: String;
+      Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao)
+    - Disparado após o Termino de uma transação TEF.
+
+-- ACBrPOSPGWebAPI --
+[+] Adicionado o evento: OnAposFinalizarTransacao: TACBrPOSPGWebAposFinalizarTransacao
+    TACBrPOSAposFinalizarTransacao = procedure(const TerminalId: String;
+      Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao)
+    - Disparado após o Termino de uma Transação TEF
+[-] Ajuste em "TACBrPOSPGWebConexao.Execute", para não exibir Exceptions no
+    Terminal, mas gravar no Log
+[-] Correção em TACBrPOSPGWebAPI.ExibirMensagem, para suprimir mensagens de erro,
+    quando Teclas de função são pressionadas
+[-] Correção em TACBrPOSPGWebAPI.ObterDado, para evitar A.V. quando informando
+    um "ValorInicial"
+[-] Ajuste em "TACBrPOSPGWebAPI.FormatarMensagem", para preservar espaços a
+    esquerda, das Linhas
+
+-- ACBrPOSPGWebPrinter --
+[+] Adicionada Unit de Tradução das Tags de Impressão de ACBrPosPrinter, para
+    chamadas de comandos de impressão da PTI_DLL
+    - A Classe "TACBrPOSPGWebPrinter", deve ser instanciada manualmente e
+      atribuida a "ACBrPosPrinter1.ModeloExterno"
+
+-- ACBrTEFCliSiTefComum --
+[*] Remoção de "TACBrTEFRespHack", modificando "ConteudoToPropertyCliSiTef" para
+    fazer uso de propriedades Publicas de TACBrTEFResp
+
+
 20/07/2020
 -- ACBrTEF --
 [*] Ajuste em "TACBrTEFD.ConfirmarTransacoesPendentes", para sempre chamar o evento,

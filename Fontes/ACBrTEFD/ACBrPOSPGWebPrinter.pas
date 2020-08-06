@@ -163,7 +163,7 @@ var
 
 begin
   // DEBUG
-  WriteToFile('c:\temp\relat1.txt', LinhasImpressao);
+  //WriteToFile('c:\temp\relat1.txt', LinhasImpressao);
 
   if not Assigned(FACBrPOS) then
     raise EPosPrinterException.Create(ACBrStr('ACBrPOS não atribuido a TACBrPOSPGWebPrinter'));

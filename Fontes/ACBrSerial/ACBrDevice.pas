@@ -726,7 +726,7 @@ begin
 
   GravaLog('Ativar - Porta '+copy(GetEnumName(TypeInfo(TACBrDeviceType), integer(fsDeviceType)),3,20)+': '+fsPorta);
 
-  if (fsPorta = '') or (fsDeviceType = dtNenhum) then
+  if (fsPorta = '') or ( (fsDeviceType = dtNenhum) and (copy(UpperCase(fsPorta), 1, 4) <> 'NULL') ) then
     DoException( Exception.Create(ACBrStr(cACBrDeviceAtivarPortaException)) );
 
   fsDeviceAtivo.Conectar(fsPorta, fsTimeOutMilissegundos);
@@ -935,6 +935,8 @@ begin
 
   if APorta = '*' then
     Result := dtRawPrinter   // usará a impressora default
+  else if (copy(UPorta, 1, 4) = 'NULL') then
+    Result := dtNenhum
   else if (copy(UPorta, 1, 4) = 'TCP:') then
     Result := dtTCP
   else if (copy(UPorta, 1, 4) = 'RAW:') then

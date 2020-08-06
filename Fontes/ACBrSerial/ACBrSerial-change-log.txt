@@ -38,6 +38,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/08/2020
+-- ACBrDevice --
+[+] Adicionado Porta "NULL", que será atribuido para DeviceType = dtNenhum
+    Util, quando o ACBrPosPrinter é usado com "ModeloExterno", onde a Abertura
+    e Envio de dados ao dispositivo, não será feita por TACBrDevice
+
+-- ACBrPosPrinter --
+[+] Adicionado Modelo "ppExterno", que será selecionado automaticamente, e apenas,
+    se houver alguma classe atribuida a "ModeloExterno"
+[+] Adicionada nova propriedade Publica, "ModeloExterno: TACBrPosPrinterClass"
+    - Permite atribuir ao ACBrPosPrinter, classes de Impressoras, que não são
+      compiladas interamente em ACBrPosPrinter.
+    - Isso pode ser útil, para criar classes de tradução do ACBrPosPrinter, para
+      outras bibliotecas de impressão. Ver exemplo em:
+      Fontes\ACBrTEFD\ACBrPOSPGWebPrinter.pas
+[+] TACBrPosPrinterClass, agora permite que a Classe de impressão, cuide da
+    Tradução de Tags e Blocos, com chamadas aos métodos internos:
+    "TraduzirTag" e "TraduzirTagBloco"
+[-] Modelo "ppTexto", agora usa as razões de Fontes: Condensada=1 e Expandida=1,
+    (por: DSA)
+
+
 Data: 29/06/2020
 -- ACBrETQClass, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2 --
 [-] Ajuste para não enviar o comando de página de código, quando ela for

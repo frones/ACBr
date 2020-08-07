@@ -309,7 +309,7 @@ begin
       EspecieDoc        := 'DM';
       Aceite            := atSim;
       DataProcessamento := Now;
-      NossoNumero       := IntToStrZero(I,11);
+      NossoNumero       := IntToStrZero(I,8);
       Carteira          := '09';
       ValorDocumento    := 100.35 * (I+0.5);
       Sacado.NomeSacado := 'Jose Luiz Pedroso';
@@ -325,7 +325,7 @@ begin
       Instrucao1        := '00';
       Instrucao2        := '00';
       NossoNumero       := edtNossoNro.Text;
-      dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
+      //dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
     end;
   end;
 end;

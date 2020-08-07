@@ -58,6 +58,7 @@ type
      fTEFResp: TACBrTEFResp;
      fOnGravarLog: TACBrGravarLog;
      fOnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao;
+     function GetConfirmarTransacoesPendentes: Boolean;
      function GetDadosTransacao: TACBrTEFPGWebAPIParametros;
      function GetDiretorioTrabalho: String;
      function GetEmTransacao: Boolean;
@@ -66,6 +67,8 @@ type
      function GetMaximoTerminaisConectados: Word;
      function GetMensagemBoasVindas: String;
      function GetNomeAplicacao: String;
+
+     function GetOnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente;
      function GetOnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal;
      function GetOnNovaConexao: TACBrPOSPGWebNovaConexao;
      function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
@@ -78,12 +81,14 @@ type
      function GetTempoDesconexaoAutomatica: Word;
      function GetUtilizaSaldoTotalVoucher: Boolean;
      function GetVersaoAplicacao: String;
+     procedure SetConfirmarTransacoesPendentes(AValue: Boolean);
      procedure SetDiretorioTrabalho(AValue: String);
      procedure SetMensagemBoasVindas(AValue: String);
      procedure SetImprimirViaClienteReduzida(AValue: Boolean);
      procedure SetInicializada(AValue: Boolean);
      procedure SetMaximoTerminaisConectados(AValue: Word);
      procedure SetNomeAplicacao(AValue: String);
+     procedure SetOnAvaliarTransacaoPendente(AValue: TACBrPOSPGWebAvaliarTransacaoPendente);
      procedure SetOnMudaEstadoTerminal(AValue: TACBrPOSPGWebNovoEstadoTerminal);
      procedure SetOnNovaConexao(AValue: TACBrPOSPGWebNovaConexao);
      procedure SetPathDLL(AValue: String);
@@ -117,13 +122,13 @@ type
      function ObterDado(const TerminalId: String; const Titulo: String;
        const Mascara: String = ''; uiLenMin: Word = 1; uiLenMax: Word = 20;
        AlinhaAEsqueda: Boolean = False; PermiteAlfa: Boolean = False;
-       OcultarDigitacao: Boolean = False; IntervaloMaxTeclas: Word = 30;
+       OcultarDigitacao: Boolean = False; IntervaloMaxTeclas: Word = 0;
        const ValorInicial: String = ''; LinhaCaptura: Word = 2): String;
      function ExecutarMenu(const TerminalId: String; Opcoes: TStrings;
-       const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
+       const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
        OpcaoInicial: SmallInt = 0): SmallInt; overload;
      function ExecutarMenu(const TerminalId: String; const OpcoesPipe: String;
-       const Titulo: String = ''; IntervaloMaxTeclas: Word = 30;
+       const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
        OpcaoInicial: SmallInt = 0): SmallInt; overload;
      procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = beepOK);
      procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
@@ -160,6 +165,8 @@ type
      procedure FinalizarTrancao(const TerminalId: String; Status: TACBrPOSPGWebStatusTransacao);
 
      function Desconectar(const TerminalId: String; Segundos: Word = 0): Boolean;
+     procedure TerminarConexao(const TerminalId: String);
+     function TerminarTodasConexoes: Integer;
 
      property Inicializada: Boolean read GetInicializada write SetInicializada;
      property EmTransacao: Boolean read GetEmTransacao;
@@ -173,23 +180,21 @@ type
      property ArqLOG: String read fArqLOG write fArqLOG;
 
      property SoftwareHouse: String read GetSoftwareHouse write SetSoftwareHouse;
-     property NomeAplicacao: String read GetNomeAplicacao write SetNomeAplicacao ;
-     property VersaoAplicacao: String read GetVersaoAplicacao write SetVersaoAplicacao ;
+     property NomeAplicacao: String read GetNomeAplicacao write SetNomeAplicacao;
+     property VersaoAplicacao: String read GetVersaoAplicacao write SetVersaoAplicacao;
 
-     property PortaTCP: Word read GetPortaTCP write SetPortaTCP;
-     property MaximoTerminaisConectados: Word read GetMaximoTerminaisConectados write SetMaximoTerminaisConectados;
-     property TempoDesconexaoAutomatica: Word read GetTempoDesconexaoAutomatica write SetTempoDesconexaoAutomatica;
+     property PortaTCP: Word read GetPortaTCP write SetPortaTCP default CACBrPOSPGWebPortaTCP;
+     property MaximoTerminaisConectados: Word read GetMaximoTerminaisConectados write SetMaximoTerminaisConectados default CACBrPOSPGWebMaxTerm;
+     property TempoDesconexaoAutomatica: Word read GetTempoDesconexaoAutomatica write SetTempoDesconexaoAutomatica default CACBrPOSPGWebTempoDesconexao;
      property MensagemBoasVindas: String read GetMensagemBoasVindas write SetMensagemBoasVindas;
      property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
 
-     Property SuportaSaque: Boolean read GetSuportaSaque write SetSuportaSaque;
-     Property SuportaDesconto: Boolean read GetSuportaDesconto write SetSuportaDesconto;
-     property ImprimirViaClienteReduzida : Boolean read GetImprimirViaClienteReduzida
-       write SetImprimirViaClienteReduzida;
-     property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas
-       write SetSuportaViasDiferenciadas;
-     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher
-       write SetUtilizaSaldoTotalVoucher;
+     Property SuportaSaque: Boolean read GetSuportaSaque write SetSuportaSaque default False;
+     Property SuportaDesconto: Boolean read GetSuportaDesconto write SetSuportaDesconto default True;
+     property ImprimirViaClienteReduzida : Boolean read GetImprimirViaClienteReduzida write SetImprimirViaClienteReduzida default True;
+     property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas write SetSuportaViasDiferenciadas default True;
+     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher write SetUtilizaSaldoTotalVoucher default False;
+     property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes write SetConfirmarTransacoesPendentes default True;
 
      property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
      property OnNovaConexao: TACBrPOSPGWebNovaConexao read GetOnNovaConexao write SetOnNovaConexao;
@@ -197,6 +202,9 @@ type
        write SetOnMudaEstadoTerminal;
      property OnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao
        read fOnAposFinalizarTransacao write fOnAposFinalizarTransacao;
+     property OnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente
+       read GetOnAvaliarTransacaoPendente write SetOnAvaliarTransacaoPendente;
+
    end;
 
 implementation
@@ -254,6 +262,11 @@ begin
   Result := fPOSPGWeb.DadosDaTransacao;
 end;
 
+function TACBrPOS.GetConfirmarTransacoesPendentes: Boolean;
+begin
+  Result := fPOSPGWeb.ConfirmarTransacoesPendentes;
+end;
+
 function TACBrPOS.GetDiretorioTrabalho: String;
 begin
   Result := fPOSPGWeb.DiretorioTrabalho;
@@ -287,6 +300,11 @@ end;
 function TACBrPOS.GetNomeAplicacao: String;
 begin
   Result := fPOSPGWeb.NomeAplicacao;
+end;
+
+function TACBrPOS.GetOnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente;
+begin
+  Result := fPOSPGWeb.OnAvaliarTransacaoPendente;
 end;
 
 function TACBrPOS.GetOnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal;
@@ -349,6 +367,11 @@ begin
   Result := fPOSPGWeb.VersaoAplicacao;
 end;
 
+procedure TACBrPOS.SetConfirmarTransacoesPendentes(AValue: Boolean);
+begin
+  fPOSPGWeb.ConfirmarTransacoesPendentes := AValue;
+end;
+
 procedure TACBrPOS.SetDiretorioTrabalho(AValue: String);
 begin
   fPOSPGWeb.DiretorioTrabalho := AValue;
@@ -379,8 +402,12 @@ begin
   fPOSPGWeb.NomeAplicacao := AValue;
 end;
 
-procedure TACBrPOS.SetOnMudaEstadoTerminal(
-  AValue: TACBrPOSPGWebNovoEstadoTerminal);
+procedure TACBrPOS.SetOnAvaliarTransacaoPendente(AValue: TACBrPOSPGWebAvaliarTransacaoPendente);
+begin
+  fPOSPGWeb.OnAvaliarTransacaoPendente := AValue;
+end;
+
+procedure TACBrPOS.SetOnMudaEstadoTerminal(AValue: TACBrPOSPGWebNovoEstadoTerminal);
 begin
   fPOSPGWeb.OnMudaEstadoTerminal := AValue;
 end;
@@ -644,6 +671,16 @@ end;
 function TACBrPOS.Desconectar(const TerminalId: String; Segundos: Word): Boolean;
 begin
   Result := fPOSPGWeb.Desconectar(TerminalId, Segundos);
+end;
+
+procedure TACBrPOS.TerminarConexao(const TerminalId: String);
+begin
+  fPOSPGWeb.TerminarConexao(TerminalId);
+end;
+
+function TACBrPOS.TerminarTodasConexoes: Integer;
+begin
+  Result := fPOSPGWeb.TerminarTodasConexoes;
 end;
 
 end.

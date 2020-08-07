@@ -46,6 +46,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2020
+-- ACBrPOS, ACBrPOSPGWebAPI --
+[+] Adicionado métodos para permitir ao Servidor, derrubar conexões de Terminais:
+    procedure TerminarConexao(const TerminalId: String);
+    function TerminarTodasConexoes: Integer;  (Retorna o número de conexões atuais)
+[+] Adicionado evento, permitindo a aplicação tratar transações Pendentes:
+    "OnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente"
+    TACBrPOSPGWebAvaliarTransacaoPendente = procedure(const TerminalId: String;
+      var Status: TACBrPOSPGWebStatusTransacao;
+      const AuthSyst, VirtMerch, AutLocRef, AutExtRef: String) of object;
+[+] Adicionada a propriedade: "ConfirmarTransacoesPendentes: Boolean"
+    Será usada, caso o Evento "OnAvaliarTransacaoPendente", não seja programado
+[*] Adicionado valor Default em várias propriedades Published
+
+-- ACBrPOSPGWebAPI --
+[*] Simplificação no texto de algumas mensagens de Erro
+{*] Tempo padrão para desconexão aumentado de 30 para 60 segundos
+[*] Melhorias no Log da Thread de Execução de Conexões: "TACBrPOSPGWebConexao"
+[*] Melhorias na detecção de desconexão de Terminais, com o método: "VerificarConexao"
+[+] Adicionado tratamento para o Erro de Transação Pendente em:
+    "TACBrPOSPGWebAPI.ExecutarTransacaoTEF"
+   (por: DSA)
+
 04/08/2020
 -- ACBrTEFComum --
 [*] Classe "TACBrTEFResp", propriedades Read Only, agora são Read/Write, para

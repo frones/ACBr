@@ -26,6 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTEFD"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -58,30 +59,39 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="10">
       <Item1>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBrTCP"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_TEFD"/>
+        <PackageName Value="ACBrSerial"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item7>
+      <Item8>
+        <PackageName Value="ACBr_NFe"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="ACBr_TEFD"/>
+      </Item9>
+      <Item10>
+        <PackageName Value="LCL"/>
+      </Item10>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="POSTEFServer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -107,6 +117,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTEFD\ACBrPOSPGWebPrinter.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -117,6 +131,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTEFD"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
@@ -146,7 +161,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="5">
+    <Exceptions Count="6">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -162,6 +177,9 @@
       <Item5>
         <Name Value="Exception"/>
       </Item5>
+      <Item6>
+        <Name Value="EACBrDFeException"/>
+      </Item6>
     </Exceptions>
   </Debugging>
 </CONFIG>

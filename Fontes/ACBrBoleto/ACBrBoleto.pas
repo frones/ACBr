@@ -4037,10 +4037,8 @@ begin
         pFisica   : Result := '1';
         pJuridica : Result := '2';
         pOutras   : Result := '9';
-     else
-        Result := '0';
+        pNenhum   : Result := '0';
      end;
-
   end;
 end;
 

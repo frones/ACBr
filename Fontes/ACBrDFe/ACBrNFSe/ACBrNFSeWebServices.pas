@@ -123,6 +123,7 @@ type
     function ExtrairGrupoMsgRet(const AGrupo: String): String;
     function RemoverCharControle(const AXML: String): String;
     function DefinirDadosSenha(ATexto: String): String;
+    function GerarXmlNotaEL(const aXmlRps, aXmlRetorno: string): string;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -931,6 +932,44 @@ begin
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
 end;
 
+function TNFSeWebService.GerarXmlNotaEL(const aXmlRps,
+  aXmlRetorno: string): string;
+var
+  aRPS, aRPSp1, aRPSp2, IDNota, Numero, NumeroRPS, Tipo: string;
+begin
+  aRPS := SeparaDados(aXmlRps, 'Rps', False);
+
+  aRPSp1 := SeparaDados(aRPS, 'LocalPrestacao', True) +
+            SeparaDados(aRPS, 'IssRetido', True) +
+            SeparaDados(aRPS, 'DataEmissao', True);
+
+  aRPSp2 := SeparaDados(aRPS, 'DadosPrestador', True) +
+            SeparaDados(aRPS, 'DadosTomador', True) +
+            SeparaDados(aRPS, 'Servicos', True) +
+            SeparaDados(aRPS, 'Valores', True) +
+            SeparaDados(aRPS, 'Status', True);
+
+  Tipo := SeparaDados(aRPS, 'Tipo', True);
+
+  IDNota := SeparaDados(aXmlRetorno, 'idNota', False);
+  Numero := SeparaDados(aXmlRetorno, 'numero', False);
+  NumeroRPS := SeparaDados(aXmlRetorno, 'rpsnumero', False);
+
+  Result := '<tcListaNFse xmlns="http://www.el.com.br/nfse/xsd/el-nfse.xsd">' +
+              '<Nfse>' +
+                '<Id>' + IDNota + '</Id>' +
+                aRPSp1 +
+                '<IdentificacaoNfse>' +
+                  '<Numero>' + Numero + '</Numero>' +
+                  '<NumeroRps>' + NumeroRPS + '</NumeroRps>' +
+                  '<Serie>NFS-e</Serie>' +
+                  Tipo +
+                '</IdentificacaoNfse>' +
+                aRPSp2 +
+              '</Nfse>' +
+            '</tcListaNFse>';
+end;
+
 function TNFSeWebService.GerarCabecalhoSoap: String;
 begin
   Result := FPCabMsg;
@@ -1227,7 +1266,7 @@ end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
 var
-  FRetNFSe, PathArq, NomeArq, xCNPJ, xIE: String;
+  FRetNFSe, PathArq, NomeArq, xCNPJ, xIE, XmlRps, XmlRetorno: String;
   i, l, ii: Integer;
   xData: TDateTime;
   NovoRetorno, CondicaoNovoRetorno: Boolean;
@@ -1460,10 +1499,17 @@ begin
 
     FNotasFiscais.Items[ii].NFSe.NfseSubstituidora := FRetornoNFSe.ListaNfse.CompNfse.Items[i].NFSe.NfseSubstituidora;
 
-    if FProvedor=proSigIss then
+    if FProvedor = proSigIss then
        FRetNFSe := FNotasFiscais.Items[ii].nfse.XML
     else
        FRetNFSe := GerarRetornoNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML);
+
+    if FProvedor = proEL then
+    begin
+      XmlRps     := FNotasFiscais.Items[ii].XMLAssinado;
+      XmlRetorno := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML;
+      FRetNFSe   := GerarXmlNotaEL(XmlRps, XmlRetorno);
+    end;
 
     if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
       xData := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao

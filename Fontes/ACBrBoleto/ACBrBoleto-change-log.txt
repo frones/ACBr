@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2020
+-- ACBrBancoBRB --
+[*] Ajuste para informar 00, quando as instruções forem relativas a informações que não
+requerem prazo no CNAB400. (Juliana Tamizou)
+https://www.projetoacbr.com.br/forum/topic/58719-arquivo-de-remessa-banco-brb/
+
 15/07/2020
 -- ACBrBancoBrasil --
 [*] Adicionado Novos códigos de Rejeição no retorno CNAB240

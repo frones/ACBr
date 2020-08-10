@@ -264,7 +264,7 @@ begin
      begin
        TipoJuros := '50';
        Instrucao1 := '01'; // 01- Não Dispensar Juros de Mora
-       Prazo1 := '01';
+       Prazo1 := '00';
      end
      else
      begin
@@ -277,7 +277,7 @@ begin
      if PercentualMulta > 0 then
      begin
       Instrucao2 := '03'; // 03- Cobrar multa de ...% sobre o valor do título
-      Prazo2 := '01';
+      Prazo2 := '00';
      end
      else
      begin

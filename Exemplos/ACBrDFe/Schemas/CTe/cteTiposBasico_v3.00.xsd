@@ -4798,7 +4798,7 @@ Somente para Transporte de Valores</xs:documentation>
 																		<xs:documentation>Valor do componente</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element name="xComp">
+																<xs:element name="xComp" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Nome do componente (informar apenas para outros)</xs:documentation>
 																		<xs:documentation>Exemplos: FRETE PESO, FRETE VALOR, SEC/CAT, ADEME, AGENDAMENTO, etc</xs:documentation>

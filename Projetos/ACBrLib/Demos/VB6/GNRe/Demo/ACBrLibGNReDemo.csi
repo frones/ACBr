@@ -1,15 +1,15 @@
 [History]
-1=#P0#=mb	#P1#=cmdConsultaConfiguração_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdConsultaConfiguração_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529152556	#P7#=0	#P8#=4	.
-2=#P0#=mb	#P1#=cmdEnviarEmail_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdEnviarEmail_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529152415	#P7#=0	#P8#=1	.
-3=#P0#=mb	#P1#=cmdImprimirGuia_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdImprimirGuia_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151300	#P7#=0	#P8#=5	.
-4=#P0#=mb	#P1#=cmdGerarPDF_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdGerarPDF_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151257	#P7#=0	#P8#=5	.
-5=#P0#=mb	#P1#=cmdCriarEnviar_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdCriarEnviar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151010	#P7#=0	#P8#=13	.
-6=#P0#=mb	#P1#=cmdGerarGNRe_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdGerarGNRe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529150956	#P7#=0	#P8#=1	.
-7=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibGNReDemo/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529150433	#P7#=0	#P8#=29	.
-8=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibGNReDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529150028	#P7#=0	#P8#=3	.
-9=#P0#=mb	#P1#=cmdSalvar_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdSalvar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529145150	#P7#=0	#P8#=2	.
-10=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibGNReDemo/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529145134	#P7#=0	#P8#=0	.
-11=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibGNReDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529141150	#P7#=0	#P8#=1	.
+1=#P0#=mb	#P1#=cmdConsultaConfiguração_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdConsultaConfiguração_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200601134839	#P7#=0	#P8#=12	.
+2=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibGNReDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200601130903	#P7#=0	#P8#=-1	.
+3=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibGNReDemo/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200601130805	#P7#=0	#P8#=3	.
+4=#P0#=mb	#P1#=cmdSalvar_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdSalvar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200601130729	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=cmdEnviarEmail_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdEnviarEmail_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529152415	#P7#=0	#P8#=1	.
+6=#P0#=mb	#P1#=cmdImprimirGuia_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdImprimirGuia_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151300	#P7#=0	#P8#=17	.
+7=#P0#=mb	#P1#=cmdGerarPDF_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdGerarPDF_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151257	#P7#=0	#P8#=5	.
+8=#P0#=mb	#P1#=cmdCriarEnviar_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdCriarEnviar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529151010	#P7#=0	#P8#=13	.
+9=#P0#=mb	#P1#=cmdGerarGNRe_Click	#P2#=ACBrLibGNReDemo/FrmMain/cmdGerarGNRe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200529150956	#P7#=0	#P8#=1	.
+10=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibGNReDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529150028	#P7#=0	#P8#=4	.
+11=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibGNReDemo/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529145134	#P7#=0	#P8#=0	.
 12=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibGNReDemo/ACBrGNRe/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529120125	#P7#=0	#P8#=11	.
 13=#P0#=mb	#P1#=Imprimir	#P2#=ACBrLibGNReDemo/ACBrGNRe/Imprimir	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529120123	#P7#=0	#P8#=5	.
 14=#P0#=mb	#P1#=ImprimirPDF	#P2#=ACBrLibGNReDemo/ACBrGNRe/ImprimirPDF	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200529120115	#P7#=0	#P8#=5	.

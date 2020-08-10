@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="picpay_vcl.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Principal.View.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="PrincipalView"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="96"/>
+        <CursorPos X="8" Y="113"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="picpay_vcl.lpr"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Principal.View.pas"/>
+        <Caret Line="71" Column="3" TopLine="16"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Principal.View.pas"/>
+        <Caret Line="114" Column="3" TopLine="100"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Principal.View.pas"/>
+        <Caret Line="113" Column="11" TopLine="105"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Principal.View.pas"/>
+        <Caret Line="112" TopLine="100"/>
+      </Position5>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

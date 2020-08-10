@@ -67,7 +67,7 @@ type
   TVersaoCTe = (ve200, ve300);
 
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
-  TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
+  TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe);
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario,
                       tsMultimodal, tsTranspPessoas, tsTranspValores,
                       tsExcessoBagagem, tsGTV);
@@ -325,14 +325,15 @@ end;
 
 function tpCTToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3'],
-                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
 end;
 
 function tpCTToStrText(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO'],
-                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO',
+                               'GTVe'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
 end;
 
 function tpforPagToStr(const t: TpcteFormaPagamento): string;
@@ -355,14 +356,14 @@ end;
 
 function tpCTePagToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2', '3'],
-                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['0','1', '2', '3', '4'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
 end;
 
 function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
-                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
 end;
 
 function TpServPagToStr(const t: TpcteTipoServico): string;

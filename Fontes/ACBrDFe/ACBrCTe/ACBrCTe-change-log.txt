@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2020
+-- Diversos --
+[*] Ajustes para gerar enviar e ler o retorno do GTVe.
+    Ambiente de Homologação já liberado para testes.
+   Por: Italo Jurisato Junior
+
 03/08/2020
 -- pcteCTeW --
 [*] Ajuste nas condições para gerar ou não o grupo referente ao

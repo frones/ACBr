@@ -843,13 +843,26 @@ begin
   case FPConfiguracoesCTe.Geral.ModeloDF of
     moCTe: begin
              if Sincrono then
-               FPLayout := LayCTeRecepcaoSinc
+             begin
+               FPLayout := LayCTeRecepcaoSinc;
+               FPHeaderElement := ''
+             end
              else
+             begin
                FPLayout := LayCTeRecepcao;
+               FPHeaderElement := 'cteCabecMsg';
+             end;
            end;
-    moCTeOS: FPLayout := LayCTeRecepcaoOS;
+    moCTeOS:
+      begin
+        FPLayout := LayCTeRecepcaoOS;
+        FPHeaderElement := 'cteCabecMsg';
+      end
   else
-    FPLayout := LayCTeRecepcaoGTVe;
+    begin
+      FPLayout := LayCTeRecepcaoGTVe;
+      FPHeaderElement := '';
+    end;
   end;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
@@ -915,8 +928,8 @@ begin
 
   else
     begin
-      FPServico    := GetUrlWsd + 'cteRecepcaoGTVe';
-      FPSoapAction := FPServico + '/cteGTVeRecepcao';
+      FPServico    := GetUrlWsd + 'CTeRecepcaoGTVe';
+      FPSoapAction := FPServico + '/CTeRecepcaoGTVe';
     end;
   end;
 end;
@@ -1010,7 +1023,7 @@ begin
                               ,'cteOSRecepcaoResult'
                               ,'cteRecepcaoOSCTResult'
                               ,'cteRecepcaoSincResult'
-                              ,'gtveRecepcaoResult']
+                              ,'CTeRecepcaoGTVeResult']
                              , FPRetornoWS);
 
   case FPConfiguracoesCTe.Geral.ModeloDF of
@@ -1159,8 +1172,8 @@ begin
       end
       else
       begin
-        if pos('retGVTe', FPRetWS) > 0 then
-          AXML := StringReplace(FPRetWS, 'retGVTe', 'retConsSitCTe',
+        if pos('retGTVe', FPRetWS) > 0 then
+          AXML := StringReplace(FPRetWS, 'retGTVe', 'retConsSitCTe',
                                          [rfReplaceAll, rfIgnoreCase])
         else
           AXML := FPRetWS;
@@ -1192,7 +1205,7 @@ begin
         FxMotivo := FCTeRetornoSincrono.xMotivo;
       end;
 
-      // Verificar se a GVT-e foi autorizado com sucesso
+      // Verificar se a GTV-e foi autorizado com sucesso
       Result := (FCTeRetornoSincrono.cStat = 100) and
         (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoSincrono.protCTe.cStat));
 
@@ -1239,7 +1252,7 @@ begin
                   SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
                                Processado;
 
-                  // Salva o XML do GVT-e assinado e protocolado
+                  // Salva o XML do GTV-e assinado e protocolado
                   if SalvarXML then
                   begin
                     NomeXMLSalvo := '';

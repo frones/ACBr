@@ -1431,24 +1431,39 @@ end;
 function TACBrCaixaEconomica.TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): string;
 begin
   case TipoOcorrencia of
-    toRemessaBaixar                        : Result := '02';
-    toRemessaConcederAbatimento            : Result := '04';
-    toRemessaCancelarAbatimento            : Result := '05';
-    toRemessaAlterarVencimento             : Result := '06';
-    toRemessaConcederDesconto              : Result := '07';
-    toRemessaCancelarDesconto              : Result := '08';
-    toRemessaProtestar                     : Result := '09';
-    toRemessaCancelarInstrucaoProtestoBaixa: Result := '10';
-    toRemessaCancelarInstrucaoProtesto     : Result := '11';
-    toRemessaDispensarJuros                : Result := '13';
-    toRemessaAlterarNomeEnderecoSacado     : Result := '31';
+    toRemessaBaixar                               : Result := '02';
+    toRemessaConcederAbatimento                   : Result := '04';
+    toRemessaCancelarAbatimento                   : Result := '05';
+    toRemessaAlterarVencimento                    : Result := '06';
+    toRemessaConcederDesconto                     : Result := '07';
+    toRemessaCancelarDesconto                     : Result := '08';
+    toRemessaProtestar                            : Result := '09';
+    toRemessaCancelarInstrucaoProtestoBaixa       : Result := '10';
+    toRemessaCancelarInstrucaoProtesto            : Result := '11';
+    toRemessaAlterarJurosMora                     : Result := '12';
+    toRemessaDispensarJuros                       : Result := '13';
+    toRemessaAlterarMulta                         : Result := '14';// Alteração de Valor/Percentual de Multa
+    toRemessaDispensarMulta                       : Result := '15';// Dispensar Cobrança de Multa
+    toRemessaAlterarDesconto                      : Result := '16';// Alteração do Valor de Desconto
+    toRemessaNaoConcederDesconto                  : Result := '17';// Não conceder Desconto
+    toRemessaAlterarValorAbatimento               : Result := '18';// Alteração do Valor de Abatimento
+    toRemessaAlterarNomeEnderecoSacado            : Result := '31';
+    toRemessaAlterarDadosRateioCredito            : Result := '33';// Alteração dos Dados do Rateio de Crédito
+    toRemessaPedidoCancelamentoDadosRateioCredito : Result := '34';// Pedido de Cancelamento dos Dados do Rateio de Crédito
+//    toRemessa                                     : Result := '36';// Inclusão no Banco de Pagadores
+    toRemessaAlterarDadosPagador                  : Result := '37';// Alteração no Banco de Pagadores
+//    toRemessa                                     : Result := '38';// Exclusão no Banco de Pagadores
+//    toRemessa                                     : Result := '40';// Serviços
+    toRemessaAlterarValorTitulo                   : Result := '47';// Alteração do Valor Nominal do Título
+//    toRemessaAlterarValorMinimo,
+//    toRemessaAlterarValorMaximo                   : Result := '48';// Alteração valor/percentualmínimo/máximo
   else
     Result := '01';
   end;
 end;
 
 function TACBrCaixaEconomica.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string;
-begin  
+begin
   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
   begin
   case TipoOcorrencia of

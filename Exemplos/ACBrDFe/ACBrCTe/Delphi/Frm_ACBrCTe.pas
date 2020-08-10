@@ -1125,7 +1125,7 @@ begin
     else
       Ide.tpAmb := taHomologacao;
 
-    Ide.tpCTe      := tcNormal; // tcNormal, tcComplemento, tcAnulacao, tcSubstituto
+    Ide.tpCTe      := tcGTVe;
     Ide.verProc    := '3.0';
     Ide.cMunEnv    := StrToInt(edtEmitCodCidade.Text);
     Ide.xMunEnv    := Trim(edtEmitCidade.Text);

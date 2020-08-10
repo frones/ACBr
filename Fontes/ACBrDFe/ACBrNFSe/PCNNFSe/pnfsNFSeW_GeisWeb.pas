@@ -118,8 +118,8 @@ begin
 end;
 
 procedure TNFSeW_GeisWeb.GerarListaServicos;
-var
-  i: integer;
+//var
+//  i: integer;
 begin
 //  for i := 0 to Nfse.Servico.ItemServico.Count -1 do
 //  begin

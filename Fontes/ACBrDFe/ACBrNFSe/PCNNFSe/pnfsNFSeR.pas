@@ -3659,8 +3659,6 @@ begin
 end;
 
 function TNFSeR.LerNFSe_SigIss: Boolean;
-var
-  bOk :Boolean;
 begin
   Result := False;
   if (Leitor.rExtrai(1, 'DadosNota') <> '') then

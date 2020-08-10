@@ -1403,7 +1403,7 @@ begin
       begin
         if Leitor.rCampo(tcStr, 'Resultado') = '1' then
         begin
-          with ListaNFSe.FCompNFSe.add do
+          with ListaNFSe.FCompNFSe.New do
           begin
             NFSe.Numero             := Leitor.rCampo(tcStr, 'Nota');
             NFSe.Link               := Leitor.rCampo(tcStr, 'LinkImpressao');

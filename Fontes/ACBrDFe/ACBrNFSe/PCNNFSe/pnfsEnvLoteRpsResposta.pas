@@ -1393,7 +1393,7 @@ begin
 
              while leitorAux.rExtrai(1, 'DescricaoErros', '', i + 1) <> '' do
               begin
-                FInfRec.MsgRetorno.Add;
+                FInfRec.MsgRetorno.New;
                 FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'id');
                 FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'DescricaoProcesso');
 
@@ -1408,7 +1408,7 @@ begin
 
              while Leitor.rExtrai(1, 'DescricaoErros', '', i + 1) <> '' do
               begin
-                FInfRec.MsgRetorno.Add;
+                FInfRec.MsgRetorno.New;
                 FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'id');
                 FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'DescricaoErro');
 

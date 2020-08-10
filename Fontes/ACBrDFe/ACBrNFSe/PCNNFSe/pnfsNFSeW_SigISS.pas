@@ -169,8 +169,6 @@ begin
 end;
 
 procedure TNFSeW_SigISS.GerarPrestador;
-var
-  xMun: String;
 begin
   Gerador.wGrupo('DadosPrestador');
   Gerador.wCampo(tcStr, '#01', 'ccm', 01, 015, 0, NFSe.Prestador.Usuario, '');

@@ -5,6 +5,7 @@
  */
 package com.acbr;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -17,6 +18,15 @@ public abstract class ACBrLibBase {
     
     protected static final Charset UTF8 = Charset.forName("UTF-8");
     protected static final int STR_BUFFER_LEN = 256;
+    private Pointer libHandler;
+    
+    protected Pointer getHandle() {
+        return this.libHandler;
+    }
+
+    protected void setHandle(Pointer value) {
+        this.libHandler = value;
+    }
     
     /**
      *

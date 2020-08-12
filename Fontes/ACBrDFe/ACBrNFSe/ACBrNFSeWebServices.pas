@@ -4958,6 +4958,11 @@ begin
 
       if FProvedor = proCTA then
         ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso
+      else if FProvedor = proSigep then
+      begin
+        ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
+        CodVerificacaoRPS := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      end
       else
         ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
     end;

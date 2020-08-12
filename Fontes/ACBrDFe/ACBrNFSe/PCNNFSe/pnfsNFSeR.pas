@@ -3107,14 +3107,6 @@ var
 begin
   Leitor.Grupo := Leitor.Arquivo;
   VersaoXML := '1';
-  with FNFSe do
-  begin
-    Numero            := Leitor.rCampo(tcStr, 'NumeroNota');
-    CodigoVerificacao := Leitor.rCampo(tcStr, 'ChaveValidacao');
-    DataEmissaoRps    := Leitor.rCampo(tcDatHor, 'DataEmissao');
-    Competencia       := Leitor.rCampo(tcStr, 'DataEmissao');
-    DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
-  end;
   with NFSe do
   begin
     Numero                  := Leitor.rCampo(tcStr, 'NumeroNota');
@@ -3122,8 +3114,15 @@ begin
     DataEmissaoRps          := Leitor.rCampo(tcDatHor, 'DataEmissao');
     Competencia             := Leitor.rCampo(tcStr, 'DataEmissao');
     DataEmissao             := Leitor.rCampo(tcDatHor, 'DataEmissao');
+    NaturezaOperacao        := StrToNaturezaOperacao(vOk, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
+    Numero                  := Leitor.rCampo(tcStr, 'NumeroNota');
+    CodigoVerificacao       := Leitor.rCampo(tcStr, 'ChaveValidacao');
+    DataEmissaoRps          := Leitor.rCampo(tcDatHor, 'DataEmissao');
+    Competencia             := Leitor.rCampo(tcStr, 'DataEmissao');
+    DataEmissao             := Leitor.rCampo(tcDatHor, 'DataEmissao');
     dhRecebimento           := Leitor.rCampo(tcDatHor, 'DataEmissao');
     Protocolo               := Leitor.rCampo(tcStr, 'ChaveValidacao');
+    OutrasInformacoes       := Leitor.rCampo(tcStr, 'Observacao');
     if (Leitor.rCampo(tcStr, 'SituacaoNf') = 'Cancelada') then
     begin
       Status    := srCancelado;
@@ -3202,7 +3201,6 @@ begin
         AliquotaIR     := 0;
         AliquotaCSLL   := 0;
       end;
-      OutrasInformacoes         := '';
       Discriminacao             := '';
       CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoAtividade');
     end;
@@ -3220,7 +3218,7 @@ begin
           if NFSe.Servico.Discriminacao = '' then
             NFSe.Servico.Discriminacao := Leitor.rCampo(tcStr, 'Servico');
           ItemServico[vItem].Descricao     := Leitor.rCampo(tcStr, 'Servico');
-          ItemServico[vItem].Quantidade    := Leitor.rCampo(tcStr, 'Quantidade');
+          ItemServico[vItem].Quantidade    := Leitor.rCampo(tcDe2, 'Quantidade');
           ItemServico[vItem].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorUnitario');
           ItemServico[vItem].ValorTotal    := Leitor.rCampo(tcDe2, 'ValorTotal');
           ItemServico[vItem].Tributavel    := snSim;

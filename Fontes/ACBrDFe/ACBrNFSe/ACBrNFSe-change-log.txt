@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2020
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/58475-cancelamento-nfse-pela-sigep/
+  Por: TS1 Desenvolvimento
+-- pnfsNFSeW_IPM --
+[*] https://www.projetoacbr.com.br/forum/topic/58794-arredondamento-no-componente-provedor-ipm/
+  Por: Luiz
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/58837-nfse-smarapd-pnfsnfser/
+  Por: Renam Eustaquio
+
 28/07/2020
 -- Diversos --
 [+] Implementação do provedor SigISS

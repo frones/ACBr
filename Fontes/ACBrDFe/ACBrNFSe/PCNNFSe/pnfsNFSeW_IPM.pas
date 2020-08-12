@@ -199,9 +199,9 @@ begin
     Gerador.wCampo(tcStr, '', 'descritivo', 1, 1000, 1, IfThen(NFSe.Servico.ItemServico[I].Descricao = '', NFSe.Servico.Discriminacao, NFSe.Servico.ItemServico[I].Descricao));
 
     if NFSe.Servico.ItemServico[I].Aliquota = 0 then
-      Gerador.wCampo(tcDe2, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.Valores.Aliquota, '')
+      Gerador.wCampo(tcDe4, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.Valores.Aliquota, '')
     else
-      Gerador.wCampo(tcDe2, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.ItemServico[I].Aliquota, '');
+      Gerador.wCampo(tcDe4, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.ItemServico[I].Aliquota, '');
 
     // Até me provem o contario a geração dessa tag vai ficara dessa forma, conforme
     // consta na postagem de: Cleyton
@@ -212,9 +212,9 @@ begin
     Gerador.wCampo(tcDe2, '', 'valor_deducao', 1, 15, 0, NFSe.Servico.ItemServico[I].ValorDeducoes, '');
 
     if NFSe.Servico.Valores.ValorIssRetido > 0 then
-      Gerador.wCampo(tcDe2, '', 'valor_issrf', 1, 15, 0, NFSe.Servico.ItemServico[I].ValorIss, DSC_VISS )
+      Gerador.wCampo(tcDe4, '', 'valor_issrf', 1, 15, 0, NFSe.Servico.ItemServico[I].ValorIss, DSC_VISS )
     else
-      Gerador.wCampo(tcDe2, '', 'valor_issrf', 1, 15, 0, 0, DSC_VISS );
+      Gerador.wCampo(tcDe4, '', 'valor_issrf', 1, 15, 0, 0, DSC_VISS );
 
     Gerador.wGrupo('/lista');
   end;

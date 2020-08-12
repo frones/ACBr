@@ -46,9 +46,10 @@ type
     cbFormaPagamento: TComboBox;
     Label14: TLabel;
     Label16: TLabel;
-    seValorPago: TSpinEdit;
+    seValorPago: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure seValorPagoChange(Sender: TObject);
+    procedure seValorPagoKeyPress(Sender: TObject; var Key: Char);
   private
 
   public
@@ -58,7 +59,8 @@ type
 implementation
 
 uses
-  frPrincipal;
+  frPrincipal,
+  ACBrUtil;
 
 {$R *.dfm}
 
@@ -79,8 +81,21 @@ begin
 end;
 
 procedure TFormIncluirPagamento.seValorPagoChange(Sender: TObject);
+var
+  AValor: Double;
 begin
-  btGravar.Enabled := (seValorPago.Value > 0) and (cbFormaPagamento.ItemIndex >= 0);
+  AValor := StrToIntDef(OnlyNumber(seValorPago.Text), 0)/100;
+  seValorPago.Text := FormatFloatBr(AValor);
+  seValorPago.SelStart := Length(seValorPago.Text);
+
+  btGravar.Enabled := (AValor > 0) and (cbFormaPagamento.ItemIndex >= 0);
+end;
+
+procedure TFormIncluirPagamento.seValorPagoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if not CharInSet(Key, ['0'..'9',#8,#13,#27])  then
+    Key := #0;
 end;
 
 end.

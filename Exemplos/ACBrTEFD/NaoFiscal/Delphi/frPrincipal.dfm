@@ -558,38 +558,32 @@ object FormPrincipal: TFormPrincipal
               Color = clBtnFace
               ParentColor = False
             end
-            object seValorInicialVenda: TSpinEdit
+            object seValorInicialVenda: TEdit
               Left = 24
               Top = 40
               Width = 89
-              Height = 22
-              MaxValue = 100000
-              MinValue = 0
+              Height = 21
               TabOrder = 0
-              Value = 0
               OnChange = seValorInicialVendaChange
+              OnKeyPress = seValorInicialVendaKeyPress
             end
-            object seTotalDesconto: TSpinEdit
+            object seTotalDesconto: TEdit
               Left = 136
               Top = 40
               Width = 89
-              Height = 22
-              MaxValue = 100000
-              MinValue = 0
+              Height = 21
               TabOrder = 1
-              Value = 0
               OnChange = seTotalDescontoChange
+              OnKeyPress = seValorInicialVendaKeyPress
             end
-            object seTotalAcrescimo: TSpinEdit
+            object seTotalAcrescimo: TEdit
               Left = 248
               Top = 40
               Width = 89
-              Height = 22
-              MaxValue = 100000
-              MinValue = 0
+              Height = 21
               TabOrder = 2
-              Value = 0
               OnChange = seTotalAcrescimoChange
+              OnKeyPress = seValorInicialVendaKeyPress
             end
             object edTotalVenda: TEdit
               Left = 25
@@ -911,6 +905,7 @@ object FormPrincipal: TFormPrincipal
       Font.Style = []
       ParentFont = False
       ReadOnly = True
+      ScrollBars = ssBoth
       TabOrder = 0
       WordWrap = False
     end

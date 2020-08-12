@@ -139,10 +139,10 @@ type
     seEspLinhas: TSpinEdit;
     seLinhasPular: TSpinEdit;
     seMaxCartoes: TSpinEdit;
-    seTotalAcrescimo: TSpinEdit;
-    seTotalDesconto: TSpinEdit;
+    seTotalAcrescimo: TEdit;
+    seTotalDesconto: TEdit;
     seTrocoMaximo: TSpinEdit;
-    seValorInicialVenda: TSpinEdit;
+    seValorInicialVenda: TEdit;
     sbLimparLog: TSpeedButton;
     Splitter1: TSplitter;
     sgPagamentos: TStringGrid;
@@ -215,6 +215,7 @@ type
     procedure seTotalAcrescimoChange(Sender: TObject);
     procedure seTotalDescontoChange(Sender: TObject);
     procedure seValorInicialVendaChange(Sender: TObject);
+    procedure seValorInicialVendaKeyPress(Sender: TObject; var Key: Char);
   private
     FVenda: TVenda;
     FTipoBotaoOperacao: TTipoBotaoOperacao;
@@ -567,14 +568,30 @@ begin
 end;
 
 procedure TFormPrincipal.seTotalAcrescimoChange(Sender: TObject);
+var
+  AValor: Double;
 begin
-  Venda.TotalAcrescimo := seTotalAcrescimo.Value;
+  AValor := StrToIntDef(OnlyNumber(seTotalAcrescimo.Text), 0)/100;
+  seTotalAcrescimo.Text := FormatFloatBr(AValor);
+  seTotalAcrescimo.SelStart := Length(seTotalAcrescimo.Text);
+
+  Venda.TotalAcrescimo := AValor;
   AtualizarTotaisVendaNaInterface;
 end;
 
 procedure TFormPrincipal.seTotalDescontoChange(Sender: TObject);
+var
+  AValor, DescontoMax: Double;
 begin
-  Venda.TotalDesconto := seTotalDesconto.Value;
+  DescontoMax := StringToFloat(seValorInicialVenda.Text);
+  AValor := StrToIntDef(OnlyNumber(seTotalDesconto.Text), 0)/100;
+  if AValor > DescontoMax then
+    AValor := DescontoMax;
+    
+  seTotalDesconto.Text := FormatFloatBr(AValor);
+  seTotalDesconto.SelStart := Length(seTotalDesconto.Text);
+
+  Venda.TotalDesconto := AValor;
   AtualizarTotaisVendaNaInterface;
 end;
 
@@ -641,15 +658,17 @@ end;
 procedure TFormPrincipal.btIncluirPagamentosClick(Sender: TObject);
 var
   FormIncluirPagamento: TFormIncluirPagamento;
+  AValor: Double;
 begin
   FormIncluirPagamento := TFormIncluirPagamento.Create(Self);
   try
     FormIncluirPagamento.cbFormaPagamento.ItemIndex := 2;
-    FormIncluirPagamento.seValorPago.Value := -Trunc(Venda.Troco);
+    FormIncluirPagamento.seValorPago.Text := FormatFloatBr(Venda.Troco);
     if (FormIncluirPagamento.ShowModal = mrOK) then
     begin
+      AValor := StrToIntDef(OnlyNumber(FormIncluirPagamento.seValorPago.Text), 0)/100;
       AdicionarPagamento( cPagamentos[FormIncluirPagamento.cbFormaPagamento.ItemIndex, 0],
-                          FormIncluirPagamento.seValorPago.Value );
+                          AValor );
     end;
   finally
     FormIncluirPagamento.Free;
@@ -1420,17 +1439,22 @@ begin
 end;
 
 procedure TFormPrincipal.seValorInicialVendaChange(Sender: TObject);
+var
+  AValor: Double;
 begin
-  seTotalDesconto.MaxValue := seValorInicialVenda.Value;
-  if (seValorInicialVenda.Value <> 0) and (StatusVenda = stsLivre) then
+  AValor := StrToIntDef(OnlyNumber(seValorInicialVenda.Text), 0)/100;
+  seValorInicialVenda.Text := FormatFloatBr(AValor);
+  seValorInicialVenda.SelStart := Length(seValorInicialVenda.Text);
+
+  if (AValor <> 0) and (StatusVenda = stsLivre) then
   begin
     IniciarOperacao;
-    Venda.ValorInicial := seValorInicialVenda.Value;
+    Venda.ValorInicial := AValor;
     StatusVenda := stsIniciada;
   end
   else
   begin
-    Venda.ValorInicial := seValorInicialVenda.Value;
+    Venda.ValorInicial := AValor;
     AtualizarTotaisVendaNaInterface;
   end;
 end;
@@ -1691,14 +1715,14 @@ end;
 procedure TFormPrincipal.AtualizarVendaNaInterface;
 begin
   lNumOperacao.Caption := FormatFloat('000000',Venda.NumOperacao);
-  seValorInicialVenda.Value := Trunc(Venda.ValorInicial);
+  seValorInicialVenda.Text := FormatFloatBr(Venda.ValorInicial);
   AtualizarPagamentosVendaNaInterface;
 end;
 
 procedure TFormPrincipal.AtualizarTotaisVendaNaInterface;
 begin
-  seTotalDesconto.Value := Trunc(Venda.TotalDesconto);
-  seTotalAcrescimo.Value := Trunc(Venda.TotalAcrescimo);
+  seTotalDesconto.Text := FormatFloatBr(Venda.TotalDesconto);
+  seTotalAcrescimo.Text := FormatFloatBr(Venda.TotalAcrescimo);
   edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
   edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
   edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
@@ -1826,6 +1850,13 @@ begin
   AdicionarLinhaLog('- Desativar');
   ACBrPosPrinter1.Desativar;
   ACBrTEFD1.DesInicializar(TACBrTEFDTipo(cbxGP.ItemIndex));
+end;
+
+procedure TFormPrincipal.seValorInicialVendaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if not CharInSet(Key, ['0'..'9',#8,#13,#27])  then
+    Key := #0;
 end;
 
 end.

@@ -41,7 +41,7 @@ object FormIncluirPagamento: TFormIncluirPagamento
     Height = 21
     Style = csDropDownList
     ItemHeight = 13
-    TabOrder = 1
+    TabOrder = 0
     OnChange = seValorPagoChange
   end
   object btGravar: TBitBtn
@@ -58,7 +58,7 @@ object FormIncluirPagamento: TFormIncluirPagamento
     Font.Style = []
     ModalResult = 1
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
   end
   object btCancelar: TBitBtn
     Left = 19
@@ -74,17 +74,15 @@ object FormIncluirPagamento: TFormIncluirPagamento
     Font.Style = []
     ModalResult = 2
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 3
   end
-  object seValorPago: TSpinEdit
+  object seValorPago: TEdit
     Left = 227
     Top = 22
     Width = 86
-    Height = 22
-    MaxValue = 1000000
-    MinValue = 1
-    TabOrder = 0
-    Value = 1
+    Height = 21
+    TabOrder = 1
     OnChange = seValorPagoChange
+    OnKeyPress = seValorPagoKeyPress
   end
 end

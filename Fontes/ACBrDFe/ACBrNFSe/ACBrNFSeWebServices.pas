@@ -2562,7 +2562,7 @@ begin
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
     if (ChaveAcessoPrefeitura = '') and
        (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS,
-                     proGiap, proiiBrasilv2]) then
+                     proGiap, proiiBrasilv2, proAEG]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
   end;
@@ -2929,7 +2929,7 @@ begin
                         FTagF;
         end;
 
-      proISSNET:
+      proISSNET, proAEG:
         begin
           FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote +
                                 FDadosSenha +

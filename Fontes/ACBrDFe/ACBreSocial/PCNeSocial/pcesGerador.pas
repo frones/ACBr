@@ -137,7 +137,6 @@ type
     procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
     procedure GerarIdeTrabalhador(pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean = True);
     procedure GerarIdeTrabalhador2(pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
-//    procedure GerarIdeTrabalhador3(pideTrabalhador: TideTrabalhador3);
     procedure GerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
     procedure GerarEmitente(pEmitente: TEmitente; ATipoEvento: TTipoEvento);
     procedure GerarEndExt(pEndExt: TEndExt);
@@ -1544,17 +1543,6 @@ begin
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
 end;
-
-//procedure TeSocialEvento.GerarIdeTrabalhador3(pideTrabalhador: TideTrabalhador3: boolean);
-//begin
-//  Gerador.wGrupo('ideTrabalhador');
-//
-//  Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pideTrabalhador.CpfTrab);
-//
-//  GerarProcJudTrab(pideTrabalhador.procJudTrab, False);
-//
-//  Gerador.wGrupo('/ideTrabalhador');
-//end;
 
 procedure TeSocialEvento.GerarIdeFolhaPagto(
   pIdeFolhaPagto: TIdeFolhaPagto);

@@ -1174,6 +1174,11 @@ begin
         Inc(I);
       end;
 
+      sSecao := 'infoInterm';
+      if INIRec.SectionExists(sSecao) then
+        if INIRec.ReadString(sSecao, 'qtdDiasInterm', '') <> '' then
+          ideTrabalhador.infoInterm.qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', 0);
+
       I := 1;
       while true do
       begin

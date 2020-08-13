@@ -440,28 +440,28 @@ end;
 
 procedure TACBrDFeReport.SetMargemDireita(const AValue: Double);
 begin
-  if (FMargemDireita = 0) and (csDesigning in ComponentState) then
+  if (AValue = 0) and (csDesigning in ComponentState) then
     Exit;
   FMargemDireita := AValue;
 end;
 
 procedure TACBrDFeReport.SetMargemEsquerda(const AValue: Double);
 begin
-  if (FMargemEsquerda = 0) and (csDesigning in ComponentState) then
+  if (AValue = 0) and (csDesigning in ComponentState) then
     Exit;
   FMargemEsquerda := AValue;
 end;
 
 procedure TACBrDFeReport.SetMargemInferior(const AValue: Double);
 begin
-  if (FMargemInferior = 0) and (csDesigning in ComponentState) then
+  if (AValue = 0) and (csDesigning in ComponentState) then
     Exit;
   FMargemInferior := AValue;
 end;
 
 procedure TACBrDFeReport.SetMargemSuperior(const AValue: Double);
 begin
-  if (FMargemSuperior = 0) and (csDesigning in ComponentState) then
+  if (AValue = 0) and (csDesigning in ComponentState) then
     Exit;
   FMargemSuperior := AValue;
 end;

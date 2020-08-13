@@ -166,6 +166,11 @@ type
     procedure SetPathPDF(const AValue: String);
     function GetPathPDF: String;
     procedure SetNomeDocumento(const AValue: String);
+    procedure SetMargemInferior(const AValue: Double);
+    procedure SetMargemSuperior(const AValue: Double);
+    procedure SetMargemEsquerda(const AValue: Double);
+    procedure SetMargemDireita(const AValue: Double);
+
   protected
     FPArquivoPDF: String;
     function GetSeparadorPathPDF(const aInitialPath: String): String; virtual;
@@ -232,16 +237,16 @@ type
     property Email: String read FEmail write FEmail;
     {@prop MargemInferior - Define/retorna a margem inferior.
      @links TACBrDFeReport.MargemInferior :/}
-    property MargemInferior: Double read FMargemInferior write FMargemInferior;
+    property MargemInferior: Double read FMargemInferior write SetMargemInferior;
     {@prop MargemSuperior - Define/retorna a margem superior.
      @links TACBrDFeReport.MargemSuperior :/}
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
+    property MargemSuperior: Double read FMargemSuperior write SetMargemSuperior;
     {@prop MargemEsquerda - Define/retorna a margem esquerda.
      @links TACBrDFeReport.MargemEsquerda :/}
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
+    property MargemEsquerda: Double read FMargemEsquerda write SetMargemEsquerda;
     {@prop MargemDireita - Define/retorna a margem direita.
      @links TACBrDFeReport.MargemDireita :/}
-    property MargemDireita: Double read FMargemDireita write FMargemDireita;
+    property MargemDireita: Double read FMargemDireita write SetMargemDireita;
     {@prop ExpandirLogoMarca - Define/retorna se de expandir a logomarca na impressão.
      @links TACBrDFeReport.ExpandeLogoMarca :/}
     property ExpandeLogoMarca: Boolean read FExpandeLogoMarca write FExpandeLogoMarca default False;
@@ -367,7 +372,7 @@ begin
   FMargemInferior := 8;
   FMargemSuperior := 8;
   FMargemEsquerda := 6;
-  FMargemDireita := 5.1;
+  FMargemDireita  := 5.1;
   FExpandeLogoMarca := False;
   FAlterarEscalaPadrao := False;
   FNovaEscala := 96;
@@ -431,6 +436,34 @@ begin
 
   if FUsaSeparadorPathPDF then
     Result := PathWithDelim(GetSeparadorPathPDF(Result));
+end;
+
+procedure TACBrDFeReport.SetMargemDireita(const AValue: Double);
+begin
+  if (FMargemDireita = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemDireita := AValue;
+end;
+
+procedure TACBrDFeReport.SetMargemEsquerda(const AValue: Double);
+begin
+  if (FMargemEsquerda = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemEsquerda := AValue;
+end;
+
+procedure TACBrDFeReport.SetMargemInferior(const AValue: Double);
+begin
+  if (FMargemInferior = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemInferior := AValue;
+end;
+
+procedure TACBrDFeReport.SetMargemSuperior(const AValue: Double);
+begin
+  if (FMargemSuperior = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemSuperior := AValue;
 end;
 
 procedure TACBrDFeReport.SetNomeDocumento(const AValue: String);

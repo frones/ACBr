@@ -1412,17 +1412,33 @@ function TACBrCaixaEconomica.CodOcorrenciaToTipoRemessa(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
-    02: Result :=     toRemessaBaixar;
-    04: Result :=     toRemessaConcederAbatimento;
-    05: Result :=     toRemessaCancelarAbatimento;
-    06: Result :=     toRemessaAlterarVencimento;
-    07: Result :=     toRemessaConcederDesconto;
-    08: Result :=     toRemessaCancelarDesconto;
-    09: Result :=     toRemessaProtestar;
-    10: Result :=     toRemessaCancelarInstrucaoProtestoBaixa;
-    11: Result :=     toRemessaCancelarInstrucaoProtesto;
-    13: Result :=     toRemessaDispensarJuros;
-    31: Result :=     toRemessaAlterarNomeEnderecoSacado;
+    02: Result := toRemessaBaixar;
+    04: Result := toRemessaConcederAbatimento;
+    05: Result := toRemessaCancelarAbatimento;
+    06: Result := toRemessaAlterarVencimento;
+    07: Result := toRemessaConcederDesconto;
+    08: Result := toRemessaCancelarDesconto;
+    09: Result := toRemessaProtestar;
+    10: Result := toRemessaCancelarInstrucaoProtestoBaixa;
+    11: Result := toRemessaCancelarInstrucaoProtesto;
+    12: Result := toRemessaAlterarJurosMora;
+    13: Result := toRemessaDispensarJuros;
+    14: Result := toRemessaAlterarMulta; // Alteração de Valor/Percentual de Multa
+    15: Result := toRemessaDispensarMulta;// Dispensar Cobrança de Multa
+    16: Result := toRemessaAlterarDesconto;// Alteração do Valor de Desconto
+    17: Result := toRemessaNaoConcederDesconto;// Não conceder Desconto
+    18: Result := toRemessaAlterarValorAbatimento;// Alteração do Valor de Abatimento
+    31: Result := toRemessaAlterarNomeEnderecoSacado;
+    33: Result := toRemessaAlterarDadosRateioCredito;// Alteração dos Dados do Rateio de Crédito
+    34: Result := toRemessaPedidoCancelamentoDadosRateioCredito;// Pedido de Cancelamento dos Dados do Rateio de Crédito
+//    36: Result := toRemessa;// Inclusão no Banco de Pagadores
+    37: Result := toRemessaAlterarDadosPagador;// Alteração no Banco de Pagadores
+//    38: Result := toRemessa;// Exclusão no Banco de Pagadores
+//    40: Result := toRemessa;// Serviços
+    47: Result := toRemessaAlterarValorTitulo;// Alteração do Valor Nominal do Título
+    48: Result := toRemessaAlterarValorMinimo;
+//    48: Result := toRemessaAlterarValorMaximo; // '48' é "Alteração valor/percentualmínimo/máximo"
+
   else
     Result := toRemessaRegistrar;
   end;

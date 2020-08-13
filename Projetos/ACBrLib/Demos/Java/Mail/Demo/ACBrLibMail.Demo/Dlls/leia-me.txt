@@ -1,0 +1,5 @@
+Copie nessa pasta, os seguintes arquivos, versão Cdecl:
+- ACBrMail32.dll
+- ACBrMail64.dll
+
+Lembrando que as dlls acima dependem das dlls do openssl.

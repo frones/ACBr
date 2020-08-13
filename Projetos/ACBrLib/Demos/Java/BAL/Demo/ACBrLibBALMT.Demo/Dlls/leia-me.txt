@@ -1,0 +1,3 @@
+Copie nessa pasta, os seguintes arquivos, versão Cdecl:
+- ACBrPosPrinter32.dll
+- ACBrPosPrinter64.dll

@@ -29,6 +29,132 @@ import java.util.Date;
  */
 
 public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
+    
+    private interface ACBrCTeLib extends Library {
+    static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
+    public final static ACBrCTeLib INSTANCE = LibraryLoader.getInstance();
+
+    int CTE_Inicializar( String eArqConfig, String eChaveCrypt );
+
+    int CTE_Finalizar();
+
+    int CTE_Nome( ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_Versao( ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_UltimoRetorno( ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_ConfigLer( String eArqConfig );
+
+    int CTE_ConfigGravar( String eArqConfig );
+
+    int CTE_ConfigLerValor( String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_ConfigGravarValor( String eSessao, String eChave, String valor );
+
+    int CTE_CarregarXML( String eArquivoOuXML );
+
+    int CTE_CarregarINI( String eArquivoOuINI );
+    
+    int CTE_ObterXml( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GravarXml( Integer AIndex, String eNomeArquivo, String ePathArquivo );
+    
+    int CTE_ObterIni( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GravarIni( Integer AIndex, String eNomeArquivo, String ePathArquivo );
+
+    int CTE_LimparLista();
+
+    int CTE_CarregarEventoXML( String eArquivoOuXml );
+
+    int CTE_CarregarEventoINI( String eArquivoOuIni );
+
+    int CTE_LimparListaEventos();
+
+    int CTE_Assinar();
+
+    int CTE_Validar();
+
+    int CTE_ValidarRegrasdeNegocios( ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_VerificarAssinatura( ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
+                int ATpEmi, String AEmissao, String CPFCNPJ, ByteBuffer buffer, IntByReference bufferSize);
+    
+    int CTE_ObterCertificados( ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GetPath( int tipo, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GetPathEvento( String aCodEvento, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_StatusServico( ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_Consultar( String eChaveOuNFe, boolean AExtrairEventos, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_Inutilizar( String ACNPJ, String AJustificativa, int Ano, int Modelo, int Serie,
+                        int NumeroInicial, int NumeroFinal, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_Enviar( int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_ConsultaCadastro( String cUF, String nDocumento, Boolean nIE, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_Cancelar( String eChave, String eJustificativa, String eCNPJ, int ALote,
+                      ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_EnviarEvento( int idLote, ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_DistribuicaoDFePorUltNSU( int AcUFAutor, String eCNPJCPF, String eultNsu, ByteBuffer buffer,
+                                      IntByReference bufferSize );
+
+    int CTE_DistribuicaoDFePorNSU( int AcUFAutor, String eCNPJCPF, String eNSU,
+                                   ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_DistribuicaoDFePorChave( int AcUFAutor, String eCNPJCPF, String echNFe,
+                                     ByteBuffer buffer, IntByReference bufferSize );
+
+    int CTE_EnviarEmail( String ePara, String eChaveNFe, boolean AEnviaPDF, String eAssunto,
+                         String eCC, String eAnexos, String eMensagem );
+
+    int CTE_EnviarEmailEvento( String ePara, String eChaveEvento, String eChaveNFe,
+                               boolean AEnviaPDF, String eAssunto, String eCC, String eAnexos, String eMensagem );
+
+    int CTE_Imprimir(String cImpressora, int nNumCopias, String cProtocolo, String bMostrarPreview);
+
+    int CTE_ImprimirPDF();
+
+    int CTE_ImprimirEvento( String eArquivoXmlCTe, String eArquivoXmlEvento );
+
+    int CTE_ImprimirEventoPDF( String eArquivoXmlCTe, String eArquivoXmlEvento );
+
+    int CTE_ImprimirInutilizacao( String eArquivoXml );
+
+    int CTE_ImprimirInutilizacaoPDF( String eArquivoXml );
+
+    class LibraryLoader {
+      private static String library = "";
+      private static ACBrCTeLib instance = null;
+
+      private static String getLibraryName() {
+        if ( library.isEmpty() ) {
+          library = Platform.is64Bit() ? "ACBrCTe64" : "ACBrCTe32";
+        }
+        return library;
+      }
+
+      public static ACBrCTeLib getInstance() {
+        if ( instance == null ) {
+          instance = ( ACBrCTeLib ) Native.synchronizedLibrary(
+              ( Library ) Native.loadLibrary( JNA_LIBRARY_NAME, ACBrCTeLib.class ) );
+        }
+
+        return instance;
+      }
+    }
+  }
 
   public ACBrCTe() throws Exception {
     File iniFile = Paths.get( System.getProperty( "user.dir" ), "ACBrLib.ini" ).toFile();
@@ -451,130 +577,5 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrCTeLib.INSTANCE.CTE_UltimoRetorno( buffer, bufferLen );
   }
-
-  private interface ACBrCTeLib extends Library {
-    static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
-    public final static ACBrCTeLib INSTANCE = LibraryLoader.getInstance();
-
-    int CTE_Inicializar( String eArqConfig, String eChaveCrypt );
-
-    int CTE_Finalizar();
-
-    int CTE_Nome( ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_Versao( ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_UltimoRetorno( ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_ConfigLer( String eArqConfig );
-
-    int CTE_ConfigGravar( String eArqConfig );
-
-    int CTE_ConfigLerValor( String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_ConfigGravarValor( String eSessao, String eChave, String valor );
-
-    int CTE_CarregarXML( String eArquivoOuXML );
-
-    int CTE_CarregarINI( String eArquivoOuINI );
-    
-    int CTE_ObterXml( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_GravarXml( Integer AIndex, String eNomeArquivo, String ePathArquivo );
-    
-    int CTE_ObterIni( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_GravarIni( Integer AIndex, String eNomeArquivo, String ePathArquivo );
-
-    int CTE_LimparLista();
-
-    int CTE_CarregarEventoXML( String eArquivoOuXml );
-
-    int CTE_CarregarEventoINI( String eArquivoOuIni );
-
-    int CTE_LimparListaEventos();
-
-    int CTE_Assinar();
-
-    int CTE_Validar();
-
-    int CTE_ValidarRegrasdeNegocios( ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_VerificarAssinatura( ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
-                int ATpEmi, String AEmissao, String CPFCNPJ, ByteBuffer buffer, IntByReference bufferSize);
-    
-    int CTE_ObterCertificados( ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_GetPath( int tipo, ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_GetPathEvento( String aCodEvento, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_StatusServico( ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_Consultar( String eChaveOuNFe, boolean AExtrairEventos, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_Inutilizar( String ACNPJ, String AJustificativa, int Ano, int Modelo, int Serie,
-                        int NumeroInicial, int NumeroFinal, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_Enviar( int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
-    
-    int CTE_ConsultaCadastro( String cUF, String nDocumento, Boolean nIE, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_Cancelar( String eChave, String eJustificativa, String eCNPJ, int ALote,
-                      ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_EnviarEvento( int idLote, ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_DistribuicaoDFePorUltNSU( int AcUFAutor, String eCNPJCPF, String eultNsu, ByteBuffer buffer,
-                                      IntByReference bufferSize );
-
-    int CTE_DistribuicaoDFePorNSU( int AcUFAutor, String eCNPJCPF, String eNSU,
-                                   ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_DistribuicaoDFePorChave( int AcUFAutor, String eCNPJCPF, String echNFe,
-                                     ByteBuffer buffer, IntByReference bufferSize );
-
-    int CTE_EnviarEmail( String ePara, String eChaveNFe, boolean AEnviaPDF, String eAssunto,
-                         String eCC, String eAnexos, String eMensagem );
-
-    int CTE_EnviarEmailEvento( String ePara, String eChaveEvento, String eChaveNFe,
-                               boolean AEnviaPDF, String eAssunto, String eCC, String eAnexos, String eMensagem );
-
-    int CTE_Imprimir(String cImpressora, int nNumCopias, String cProtocolo, String bMostrarPreview);
-
-    int CTE_ImprimirPDF();
-
-    int CTE_ImprimirEvento( String eArquivoXmlCTe, String eArquivoXmlEvento );
-
-    int CTE_ImprimirEventoPDF( String eArquivoXmlCTe, String eArquivoXmlEvento );
-
-    int CTE_ImprimirInutilizacao( String eArquivoXml );
-
-    int CTE_ImprimirInutilizacaoPDF( String eArquivoXml );
-
-    class LibraryLoader {
-      private static String library = "";
-      private static ACBrCTeLib instance = null;
-
-      private static String getLibraryName() {
-        if ( library.isEmpty() ) {
-          library = Platform.is64Bit() ? "ACBrCTe64" : "ACBrCTe32";
-        }
-        return library;
-      }
-
-      public static ACBrCTeLib getInstance() {
-        if ( instance == null ) {
-          instance = ( ACBrCTeLib ) Native.synchronizedLibrary(
-              ( Library ) Native.loadLibrary( JNA_LIBRARY_NAME, ACBrCTeLib.class ) );
-        }
-
-        return instance;
-      }
-    }
-  }
+  
 }

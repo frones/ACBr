@@ -21,6 +21,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+201804 - Fiy - VGS - Refactor FixedFloatToStr (best use case and optimization)
+201805 - Add - VGS - Add OBjectToJson and JsonToObject, rtti based, cross platform Delphi10+ and FPC 3+Refactor
+201807 - Fix - VGS - String unicode (\uxxx) encoding and decoding.
+
 ****************************************************************************}
 
 {$I ACBr.inc}
@@ -29,7 +34,7 @@ unit Jsons;
 
 interface
 
-uses Classes, SysUtils, ACBrUtil;
+uses Classes, SysUtils, jsonsutilsEx;
 
 type
   TJsonValueType = (jvNone, jvNull, jvString, jvNumber, jvBoolean, jvObject, jvArray);
@@ -312,113 +317,6 @@ type
 
 implementation
 
-{$ifndef fpc}
-  {$if not defined(CompilerVersion) or (CompilerVersion < 15)}
-       {$define fixfloattostrreplace}
-  {$ifend}
-{$endif}
-
-{$IfDef HAS_FORMATSETTINGS}
-  {$UnDef fixfloattostrreplace}
-{$EndIf}
-
-{**
- * Fixed FloatToStr to convert DecimalSeparator to dot (.) decimal separator, FloatToStr returns
- * DecimalSeparator as decimal separator, but JSON uses dot (.) as decimal separator.
- *}
-function FixedFloatToStr(const Value: Extended): string;
-{$ifdef fixfloattostrreplace}
-  var
-    S: string;
-  begin
-    try
-      S := FloatToStr(Value);
-      if (DecimalSeparator <> '.') and (Pos(DecimalSeparator, S) <> 0) then
-        Result := StringReplace(S, DecimalSeparator, '.', [rfReplaceAll])
-      else
-        Result := S;
-    finally
-      SetLength(S, 0);
-    end;
-  end;
-{$else}
-  var
-    LFormatSettings: TFormatSettings;
-  begin
-    LFormatSettings := CreateFormatSettings;
-    with LFormatSettings do
-    begin
-      DecimalSeparator:= '.';
-    end;
-    Result := FloatToStr(Value, LFormatSettings);
-  end;
-{$endif}
-
-{**
- * Fixed TryStrToFloat to convert dot (.) decimal separator to DecimalSeparator, TryStrToFloat expects
- * decimal separator to be DecimalSeparator, but JSON uses dot (.) as decimal separator.
- *}
-function FixedTryStrToFloat(const S: string; out Value: Extended): Boolean;
-{$ifdef fixfloattostrreplace}
-  var
-    FixedS: string;
-  begin
-    try
-      if (DecimalSeparator <> '.') and (Pos('.', S) <> 0) then
-        FixedS := StringReplace(S, '.', DecimalSeparator, [rfReplaceAll])
-      else
-        FixedS := S;
-      Result := TryStrToFloat(FixedS, Value);
-    finally
-      SetLength(FixedS, 0);
-    end;
-  end;
-{$else}
-  var
-    LFormatSettings: TFormatSettings;
-  begin
-    LFormatSettings := CreateFormatSettings;
-    with LFormatSettings do
-    begin
-      DecimalSeparator:= '.';
-    end;
-    Result := TryStrToFloat(S, Value, LFormatSettings);
-  end;
-{$endif}
-
-{**
- * Fixed StrToFloat to convert dot (.) decimal separator to DecimalSeparator, StrToFloat expects
- * decimal separator to be DecimalSeparator, but JSON uses dot (.) as decimal separator.
- *}
-function FixedStrToFloat(const S: string): Extended;
-{$ifdef fixfloattostrreplace}
-  var
-    FixedS: string;
-  begin
-    try
-      if (DecimalSeparator <> '.') and (Pos('.', S) <> 0) then
-        FixedS := StringReplace(S, '.', DecimalSeparator, [rfReplaceAll])
-      else
-        FixedS := S;
-
-      Result := StrToFloat(FixedS);
-    finally
-      SetLength(FixedS, 0);
-    end;
-  end;
-{$else}
-  var
-    LFormatSettings: TFormatSettings;
-  begin
-    LFormatSettings := CreateFormatSettings;
-    with LFormatSettings do
-    begin
-      DecimalSeparator:= '.';
-    end;
-    Result := StrToFloat(S, LFormatSettings);
-  end;
-{$endif}
-
 { TJsonBase }
 
 function TJsonBase.AnalyzeJsonValueType(const S: String): TJsonValueType;
@@ -457,19 +355,10 @@ function TJsonBase.Decode(const S: String): String;
     end;
   end;
 
-  function HexToUnicode(Hex: String): String;
-  begin
-    try
-      Result := Char((HexValue(Hex[3]) shl 4) + HexValue(Hex[4]))
-              + Char((HexValue(Hex[1]) shl 4) + HexValue(Hex[2]));
-    except
-      raise Exception.Create('Illegal four-hex-digits "' + Hex + '"');
-    end;
-  end;
-
 var
   I: Integer;
   C: Char;
+  ubuf : integer;
 begin
   Result := '';
   I := 1;
@@ -488,10 +377,12 @@ begin
         'f': Result := Result + #12;
         'r': Result := Result + #13;
         'u':
-          begin
-            Result := Result + HexToUnicode(Copy(S, I, 4));
-            Inc(I, 4);
-          end;
+        begin
+          if not TryStrToInt('$' + Copy(S, I, 4), ubuf) then
+            raise Exception.Create(format('Invalid unicode \u%s',[Copy(S, I, 4)]));
+          result := result + WideChar(ubuf);
+          Inc(I, 4);
+        end;
         else Result := Result + C;
       end;
     end
@@ -506,7 +397,7 @@ end;
 
 function TJsonBase.Encode(const S: String): String;
 var
-  I: Integer;
+  I, UnicodeValue : Integer;
   C: Char;
 begin
   Result := '';
@@ -514,13 +405,27 @@ begin
   begin
     C := S[I];
     case C of
-      '"', '\', '/': Result := Result + '\' + C;
+      '"':Result := Result + '\' + C;
+      '\': Result := Result + '\' + C;
+      '/': Result := Result + '\' + C;
       #8: Result := Result + '\b';
       #9: Result := Result + '\t';
       #10: Result := Result + '\n';
       #12: Result := Result + '\f';
       #13: Result := Result + '\r';
-      else Result := Result + C;
+      else
+      if (WideChar(C) < WideChar(32)) or (WideChar(C) > WideChar(127)) then
+      begin
+        Result := result + '\u';
+        UnicodeValue := Ord(C);
+        Result := result + lowercase(IntToHex((UnicodeValue and 61440) shr 12,1));
+        Result := result + lowercase(IntToHex((UnicodeValue and 3840) shr 8,1));
+        Result := result + lowercase(IntToHex((UnicodeValue and 240) shr 4,1));
+        Result := result + lowercase(IntToHex((UnicodeValue and 15),1));
+      end
+      else
+       Result := Result + C;
+
     end;
   end;
 end;
@@ -558,7 +463,7 @@ end;
 
 function TJsonBase.IsJsonBoolean(const S: String): Boolean;
 begin
-  Result := SameText(S, 'true') or SameText(S, 'false');
+  Result := SameText(lowercase(S), 'true') or SameText(lowercase(S), 'false');
 end;
 
 function TJsonBase.IsJsonNull(const S: String): Boolean;
@@ -613,8 +518,6 @@ end;
 
 procedure TJsonBase.Split(const S: String; const Delimiter: Char;
   Strings: TStrings);
-var
-  L: Integer;
 
   function IsPairBegin(C: Char): Boolean;
   begin
@@ -631,18 +534,18 @@ var
     end;
   end;
 
-  function MoveToPair(const i: Integer): Integer;
+  function MoveToPair(P: PChar): PChar;
   var
     PairBegin, PairEnd: Char;
     C: Char;
   begin
-    PairBegin := S[i];
+    PairBegin := P^;
     PairEnd := GetPairEnd(PairBegin);
-    Result := i;
-    while Result <= L do
+    Result := P;
+    while Result^ <> #0 do
     begin
       Inc(Result);
-      C := S[Result];
+      C := Result^;
       if C = PairEnd then Break
       else if (PairBegin = '"') and (C = '\') then Inc(Result)
       else if (PairBegin <> '"') and IsPairBegin(C) then Result := MoveToPair(Result);
@@ -650,28 +553,27 @@ var
   end;
 
 var
-  b, e: Integer;
+  PtrBegin, PtrEnd: PChar;
   C: Char;
   StrItem: String;
 begin
-  b := 1;
-  e := 1;
-  L := Length(S);
-  while e <= L do
+  PtrBegin := PChar(S);
+  PtrEnd := PtrBegin;
+  while PtrEnd^ <> #0 do
   begin
-    C := S[e];
+    C := PtrEnd^;
     if C = Delimiter then
     begin
-      StrItem := Trim(Copy(S, b, e - b));
+      StrItem := Trim(Copy(PtrBegin, 1, PtrEnd - PtrBegin));
       Strings.Add(StrItem);
-      b := e+1;
-      e := b;
+      PtrBegin := PtrEnd + 1;
+      PtrEnd := PtrBegin;
       Continue;
     end
-    else if IsPairBegin(C) then e := MoveToPair(e);
-    Inc(e);
+    else if IsPairBegin(C) then PtrEnd := MoveToPair(PtrEnd);
+    Inc(PtrEnd);
   end;
-  StrItem := Trim(Copy(S, b, e - b));
+  StrItem := Trim(Copy(PtrBegin, 1, PtrEnd - PtrBegin));
   if StrItem <> '' then Strings.Add(StrItem);
 end;
 
@@ -773,7 +675,7 @@ begin
   Result := False;
   case FValueType of
     jvNone, jvNull: Result := False;
-    jvString: Result := SameText(FStringValue, 'true');
+    jvString: Result := SameText(lowercase(FStringValue), 'true');
     jvNumber: Result := (FNumberValue <> 0);
     jvBoolean: Result := FBooleanValue;
     jvObject, jvArray: RaiseValueTypeError(jvBoolean);
@@ -785,7 +687,7 @@ begin
   Result := 0;
   case FValueType of
     jvNone, jvNull: Result := 0;
-    jvString: Result := Trunc(FixedStrToFloat(FStringValue));
+    jvString: Result := Trunc(StrToInt(FStringValue));
     jvNumber: Result := Trunc(FNumberValue);
     jvBoolean: Result := Ord(FBooleanValue);
     jvObject, jvArray: RaiseValueTypeError(jvNumber);

@@ -1186,7 +1186,7 @@ begin
         else
           Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
 
-        Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
+        Gerador.wCampo(tcDe2, 'LA03d', 'vPart', 01, 15, 1, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
       end;
     end;
 

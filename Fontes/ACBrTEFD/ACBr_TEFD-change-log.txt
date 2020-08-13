@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/08/20
+-- ACBrTEFDCliSiTef.pas --
+[+] Chamada de Evento "OnAguardaResp", quando comando 52, é recebido pela CliSiTef,
+    permitindo que a aplicação atualize a msg do QRCode ou cancele a espera
+    (por: Joao Victor Syspan)
+
 07/08/2020
 -- ACBrPOS, ACBrPOSPGWebAPI --
 [+] Adicionado métodos para permitir ao Servidor, derrubar conexões de Terminais:

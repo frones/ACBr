@@ -1014,6 +1014,13 @@ begin
                    begin
                      DoExibeMsg( opmRemoverMsgOperador, '' ) ;
                    end;
+                 52 :
+                   begin
+                     Interromper := False;
+                     OnAguardaResp('52', 0, Interromper);
+                     if Interromper then
+                        Continua := -1 ;
+                   end;
               end;
             end
             else

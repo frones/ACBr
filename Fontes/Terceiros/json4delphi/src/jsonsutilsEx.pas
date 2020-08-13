@@ -13,7 +13,7 @@ function FixedFloatToStr(const Value: Extended): string;
 function FixedTryStrToFloat(const S: string; out Value: Extended): Boolean;
 function FixedStrToFloat(const S: string): Extended;
 
-{$IFDEF DELPHI2009_UP}
+{$IFDEF DELPHIXE_UP}
 Function __ObjectToJson(aObject : TObject) : String;
 Procedure __jsonToObject(Const aJSONString : String; Var aObject : TObject);
 {$ENDIF}
@@ -104,7 +104,7 @@ var
   {$ENDIF}
 begin
   {$IFNDEF FPC}
-  {$IFDEF DELPHI2009_UP}
+  {$IFDEF DELPHIXE_UP}
   Result :=  FormatSettings.DecimalSeparator;
   {$ELSE}
   Result :=  DecimalSeparator;
@@ -194,7 +194,7 @@ begin
 end;
 
 
-{$IFDEF DELPHI2009_UP}
+{$IFDEF DELPHIXE_UP}
 function InternalObjectToJSON(Obj : Tobject; PropList : array of String; WriteClass : boolean = false) : String; overload;
 const lcst_exceptheader = 'ObjectToJson : ';
 var

@@ -686,7 +686,7 @@ var
   Resposta : AnsiString;
   SL : TStringList ;
   Interromper, Digitado, GerencialAberto, FechaGerencialAberto, ImpressaoOk,
-     HouveImpressao, Voltar : Boolean ;
+     HouveImpressao, Voltar, FinalizarTransacaoInterrompida : Boolean ;
   Est : AnsiChar;
 
   function ProcessaMensagemTela( AMensagem : String ) : String ;
@@ -715,6 +715,7 @@ begin
    fArqBackUp        := '' ;
    Resposta          := '' ;
 
+   FinalizarTransacaoInterrompida := False;
    fpAguardandoResposta := True ;
    FechaGerencialAberto := True ;
 
@@ -1019,7 +1020,10 @@ begin
                      Interromper := False;
                      OnAguardaResp('52', 0, Interromper);
                      if Interromper then
-                        Continua := -1 ;
+                     begin
+                       Continua := -1 ;
+                       FinalizarTransacaoInterrompida := True;
+                     end;
                    end;
               end;
             end
@@ -1053,6 +1057,9 @@ begin
 
          if HouveImpressao or ( ImprimirComprovantes and fCancelamento) then
             FinalizarTransacao( ImpressaoOk, Resp.DocumentoVinculado );
+
+         if FinalizarTransacaoInterrompida then
+             FinalizarTransacao( False, Resp.DocumentoVinculado );
 
          BloquearMouseTeclado( False );
 

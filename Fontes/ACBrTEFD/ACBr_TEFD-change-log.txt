@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/20
+-- ACBrTEFDCliSiTef.pas --
+[*] Modificação em "ContinuarRequisicao", para chamar o método "FinalizarTransacao",
+    quando a transação de leitura de QRCode, for interrompida pelo Operador
+    (por: Intelliware e DSA)
+
 13/08/20
 -- ACBrTEFDCliSiTef.pas --
 [+] Chamada de Evento "OnAguardaResp", quando comando 52, é recebido pela CliSiTef,

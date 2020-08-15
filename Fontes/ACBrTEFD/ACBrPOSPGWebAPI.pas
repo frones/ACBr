@@ -780,13 +780,7 @@ begin
   AvaliarErro(iRet, TerminalId);
 
   if (TempoEspera > 0) then
-  begin
-    try
-      AguardarTecla(TerminalId, TempoEspera);
-    except
-      {Suprime erros}
-    end;
-  end;
+    AguardarTecla(TerminalId, TempoEspera);
 end;
 
 procedure TACBrPOSPGWebAPI.LimparTeclado(const TerminalId: String);
@@ -807,14 +801,10 @@ var
 begin
   GravarLog('PTI_WaitKey( '+TerminalId+', '+IntToStr(Integer(Espera))+' )');
   VerificarConexao(TerminalId);
+  iKey := 0; iRet := 0;
   xPTI_WaitKey( TerminalId, Espera, iKey, iRet);
   GravarLog('  '+PTIRETToString(iRet)+', '+IntToStr(iKey));
-  if (iRet = PTIRET_OK) then
-    Result := iKey
-  else if (iRet = PTIRET_TIMEOUT) then
-    Result := 0
-  else
-    AvaliarErro(iRet, TerminalId);
+  Result := iKey
 end;
 
 function TACBrPOSPGWebAPI.ObterDado(const TerminalId: String;
@@ -856,7 +846,7 @@ begin
     GravarLog('  '+PTIRETToString(iRet)+', '+Result);
     if (iRet = PTIRET_OK) then
       Result := String(pszData)
-    else if (iRet <> PTIRET_TIMEOUT) or (iRet <> PTIRET_CANCEL) then
+    else if (iRet <> PTIRET_TIMEOUT) and (iRet <> PTIRET_CANCEL) then
       AvaliarErro(iRet, TerminalId);
   finally
     Freemem(pszData);
@@ -1356,7 +1346,9 @@ begin
   l := Length(AMsg);
   if (l > Colunas) then
   begin
-    MsgFormatada := TiraAcentos(AMsg);
+    MsgFormatada := StringReplace(AMsg, CRLF, LF, [rfReplaceAll]) ;
+    MsgFormatada := StringReplace(MsgFormatada, CR, LF, [rfReplaceAll]) ;
+    MsgFormatada := TiraAcentos(MsgFormatada);
     MsgFormatada := AjustaLinhas(MsgFormatada, Colunas);
     MsgFormatada := StringReplace(MsgFormatada, LF, CR, [rfReplaceAll]);
 

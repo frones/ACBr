@@ -2445,11 +2445,11 @@ begin
   VTexto := String(Texto);
   { Trocando todos os #13+#10 por #10 }
   CurrLineBreak := sLineBreak ;
-  if (CurrLineBreak <> #13+#10) then
-     VTexto := StringReplace(VTexto, #13+#10, #10, [rfReplaceAll]) ;
+  if (CurrLineBreak <> CRLF) then
+     VTexto := StringReplace(VTexto, CRLF, LF, [rfReplaceAll]) ;
 
-  if (CurrLineBreak <> #10) then
-     VTexto := StringReplace(VTexto, CurrLineBreak, #10, [rfReplaceAll]) ;
+  if (CurrLineBreak <> LF) then
+     VTexto := StringReplace(VTexto, CurrLineBreak, LF, [rfReplaceAll]) ;
 
   { Ajustando a largura das Linhas para o máximo permitido em  "Colunas"
     e limitando em "NumMaxLinhas" o total de Linhas}

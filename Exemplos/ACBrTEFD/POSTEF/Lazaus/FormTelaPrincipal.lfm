@@ -17,11 +17,11 @@ object frPOSTEFServer: TfrPOSTEFServer
     Height = 409
     Top = 0
     Width = 790
-    ActivePage = tsMenuPrincipal
+    ActivePage = tsConfiguracao
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     object tsMenuPrincipal: TTabSheet
       Caption = 'Menu Principal'
@@ -6300,6 +6300,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 'Fechamento de Mesa'
                 'Posto de Gasolina'
               )
+              Style = csDropDownList
               TabOrder = 9
             end
             object Label20: TLabel

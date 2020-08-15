@@ -161,25 +161,22 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="6">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
       <Item2>
-        <Name Value="ECodetoolError"/>
+        <Name Value="Exception"/>
       </Item2>
       <Item3>
-        <Name Value="EFOpenError"/>
+        <Name Value="EACBrPOSPGWeb"/>
       </Item3>
       <Item4>
-        <Name Value="EACBrPOSPGWeb"/>
+        <Name Value="EFluxoInterrompido"/>
       </Item4>
       <Item5>
-        <Name Value="Exception"/>
-      </Item5>
-      <Item6>
         <Name Value="EACBrDFeException"/>
-      </Item6>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

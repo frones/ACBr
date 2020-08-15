@@ -893,6 +893,8 @@ begin
 end;
 
 procedure TACBrNFeFRClass.CarregaCalculoImposto;
+var
+  lvTroco: Currency;
 begin
   with cdsCalculoImposto do
   begin
@@ -928,17 +930,12 @@ begin
 
       if NaoEstaVazio(FDANFEClassOwner.FonteTributos) then
         FieldByName('VTribFonte').AsString := '(Fonte: '+FDANFEClassOwner.FonteTributos+')';
-    end;
 
-    if FNFe.pag.vTroco > 0 then
-    begin
-      FieldByName('vTroco').AsCurrency    := FNFe.pag.vTroco;
-      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VNF').AsFloat;
-    end
-    else if (FDANFEClassOwner is TACBrNFeDANFCEClass) then
-    begin
-      FieldByName('vTroco').AsCurrency    := TACBrNFeDANFCEClass(DANFEClassOwner).vTroco;
-      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VNF').AsFloat;
+      lvTroco := FNFe.pag.vTroco;
+      if (lvTroco = 0) and (FDANFEClassOwner is TACBrNFeDANFCEClass) then
+        lvTroco := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
+      FieldByName('vTroco').AsCurrency    := lvTroco;
+      FieldByName('vTotPago').AsCurrency  := lvTroco + vNF;
     end;
 
     Post;

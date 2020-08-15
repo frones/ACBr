@@ -933,12 +933,12 @@ begin
     if FNFe.pag.vTroco > 0 then
     begin
       FieldByName('vTroco').AsCurrency    := FNFe.pag.vTroco;
-      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VProd').AsFloat;
+      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VNF').AsFloat;
     end
     else if (FDANFEClassOwner is TACBrNFeDANFCEClass) then
     begin
       FieldByName('vTroco').AsCurrency    := TACBrNFeDANFCEClass(DANFEClassOwner).vTroco;
-      FieldByName('vTotPago').AsCurrency  := TACBrNFeDANFCEClass(DANFEClassOwner).vTroco + FieldByName('VProd').AsFloat;
+      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VNF').AsFloat;
     end;
 
     Post;
@@ -1124,7 +1124,7 @@ begin
               IfThen(Length(CNPJCPF) = 11, 'CONSUMIDOR CPF: ', 'CONSUMIDOR CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
         end;
 
-        if NaoEstaVazio(Trim(FieldByName('XNome').AsString)) then
+        if NaoEstaVazio(Trim(FieldByName('XLgr').AsString)) then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
         if NaoEstaVazio(Trim(FieldByName('XCpl').AsString)) then

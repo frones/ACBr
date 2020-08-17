@@ -64,7 +64,8 @@ contains
   ACBrFeriado in '..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas',
   ACBrFeriadoWSClass in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas',
   ACBrFeriadoWSCalendario in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas',
-  ACBrFeriadoWSJSON in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas';
+  ACBrFeriadoWSJSON in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas',
+  ACBrFrenet in '..\..\..\Fontes\ACBrTCP\ACBrFrenet.pas';
 
 end.
 

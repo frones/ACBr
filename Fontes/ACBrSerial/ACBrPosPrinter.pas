@@ -1522,7 +1522,8 @@ begin
   {$IfDef MSWINDOWS}
   LiberarHook;
   {$EndIf}
-  FPosPrinterClass.Free;
+  if (FPosPrinterClass <> FModeloExterno) then
+    FPosPrinterClass.Free;
   FBuffer.Free;
   FPosCheques.Free;
   FTagProcessor.Free;

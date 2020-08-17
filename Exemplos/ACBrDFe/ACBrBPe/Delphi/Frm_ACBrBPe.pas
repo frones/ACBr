@@ -248,6 +248,10 @@ type
     btnStatusServ: TButton;
     btnAlteracaoPoltrona: TButton;
     chkLogoLateral: TCheckBox;
+    Label30: TLabel;
+    cbModeloDF: TComboBox;
+    btnExcessoBagagem: TButton;
+
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathBPeClick(Sender: TObject);
@@ -302,6 +306,7 @@ type
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
     procedure btnNaoEmbarqueClick(Sender: TObject);
     procedure btnAlteracaoPoltronaClick(Sender: TObject);
+    procedure btnExcessoBagagemClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -309,6 +314,7 @@ type
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
     procedure AlimentarBPe(NumDFe: String);
+    procedure AlimentarBPeTM(NumDFe: String);
     Procedure AlimentarComponente(NumDFe: String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
@@ -420,7 +426,11 @@ procedure TfrmACBrBPe.AlimentarComponente(NumDFe: String);
 begin
   ACBrBPe1.Bilhetes.Clear;
 
-  AlimentarBPe(NumDFe)
+  case ACBrBPe1.Configuracoes.Geral.ModeloDF of
+    moBPeTM: AlimentarBPeTM(NumDFe);
+  else
+    AlimentarBPe(NumDFe);
+  end;
 end;
 
 procedure TfrmACBrBPe.AlimentarBPe(NumDFe: String);
@@ -453,7 +463,9 @@ begin
     Ide.cMunIni := 3503208;
     Ide.UFFim   := 'SP';
     Ide.cMunFim := 3550308;
-//   Ide.dhCont  := Now;
+    Ide.tpBPe   := tbNormal;
+
+    //   Ide.dhCont  := Now;
 //   Ide.xJust   := 'Motivo da Contingência';
 
     //
@@ -645,8 +657,156 @@ begin
     infAdic.infAdFisco := '';
     infAdic.infCpl     := 'Informações Complementares';
   end;
+end;
 
-// ACBrBPe1.Bilhetes.GerarBPe;
+procedure TfrmACBrBPe.AlimentarBPeTM(NumDFe: String);
+begin
+  with ACBrBPe1.Bilhetes.Add.BPe do
+  begin
+    //
+    // Dados de Identificação do BP-e TM
+    //
+    Ide.cUF := UFtoCUF(edtEmitUF.Text);
+
+    // TpcnTipoAmbiente = (taProducao, taHomologacao);
+    case rgTipoAmb.ItemIndex of
+      0: Ide.tpAmb := taProducao;
+      1: Ide.tpAmb := taHomologacao;
+    end;
+
+    Ide.modelo  := 63;
+    Ide.serie   := 1;
+    Ide.nBP    := StrToIntDef(NumDFe, 0);
+    Ide.cBP    := GerarCodigoDFe(Ide.nBP);
+    // ( moRodoviario, moAquaviario, moFerroviario );
+    Ide.modal   := moRodoviario;
+    Ide.dhEmi   := Now;
+    Ide.dCompet := Date;
+    // TpcnTipoEmissao = (teNormal, teOffLine);
+    Ide.tpEmis  := teNormal;
+    Ide.verProc := '1.0.0.0'; //Versão do seu sistema
+    Ide.indPres := pcPresencial;
+    Ide.UFIni   := 'SP';
+    Ide.cMunIni := 3503208;
+    Ide.UFFim   := 'SP';
+    Ide.cMunFim := 3550308;
+    Ide.tpBPe   := tbBPeTM;
+    Ide.CFOP    := 5104;
+
+//   Ide.dhCont  := Now;
+//   Ide.xJust   := 'Motivo da Contingência';
+
+    //
+    // Dados do Emitente
+    //
+    Emit.CNPJ  := edtEmitCNPJ.Text;
+    Emit.IE    := edtEmitIE.Text;
+    Emit.IEST  := '';
+    Emit.xNome := edtEmitRazao.Text;
+    Emit.xFant := edtEmitFantasia.Text;
+    Emit.IM    := '123';
+    Emit.CNAE  := '1234567';
+    Emit.CRT   := crtRegimeNormal;
+    Emit.TAR   := '';
+
+    Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
+    Emit.EnderEmit.Nro     := edtEmitNumero.Text;
+    Emit.EnderEmit.xCpl    := edtEmitComp.Text;
+    Emit.EnderEmit.xBairro := edtEmitBairro.Text;
+    Emit.EnderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.EnderEmit.xMun    := edtEmitCidade.Text;
+    Emit.EnderEmit.CEP     := StrToIntDef(edtEmitCEP.Text, 0);
+    Emit.EnderEmit.UF      := edtEmitUF.Text;
+    Emit.EnderEmit.fone    := edtEmitFone.Text;
+    Emit.enderEmit.email   := 'endereco@provedor.com.br';
+
+    //
+    // Informações sobre o Detalhamento do BPe TM
+    //
+    with detBPeTM.New do
+    begin
+      idEqpCont := 1;
+      UFIniViagem := 'SP';
+      UFFimViagem := 'SP';
+      Placa := 'XYZ1234';
+      Prefixo := '123';
+
+      //
+      // Detalhamento da viagem por trechos do BPe TM
+      //
+      with detBPeTM[0].det.New do
+      begin
+        nViagem := 1;
+        cMunIni := 3554003;
+        cMunFim := 3554003;
+        nContInicio := '1';
+        nContFim := '2';
+        qPass := '10';
+        vBP := 100;
+
+        //
+        // Informações sobre o Imposto
+        //
+        Imp.ICMS.CST   := cst00;
+        Imp.ICMS.vBC   := 98.00;
+        Imp.ICMS.pICMS := 18.00;
+        Imp.ICMS.vICMS := 17.64;
+
+        Imp.infAdFisco := '';
+
+        //
+        // Informações sobre os Componentes da Viagem
+        //
+        with detBPeTM[0].det[0].Comp.New do
+        begin
+          xNome := 'IDOSOS';
+          qComp := 1;
+        end;
+
+        with detBPeTM[0].det[0].Comp.New do
+        begin
+          xNome := 'VT';
+          qComp := 9;
+        end;
+      end;
+    end;
+
+    //
+    // Informações sobre o Total de Valores
+    //
+    total.qPass := 10;
+    total.vBP   := 100;
+    total.vBC   := 100;
+    total.vICMS := 18;
+
+    //
+    // Autorizados para o Download do XML do BPe
+    //
+    (*
+    with autXML.New do
+    begin
+      CNPJCPF := '00000000000000';
+    end;
+
+    with autXML.New do
+    begin
+      CNPJCPF := '11111111111111';
+    end;
+    *)
+
+    //
+    // Informações Adicionais
+    //
+    infAdic.infAdFisco := '';
+    infAdic.infCpl     := 'Informações Complementares';
+
+    //
+    // Informações do Responsável Técnico pela emissão do DF-e
+    //
+    infRespTec.xContato := '';
+    infRespTec.email    := '';
+    infRespTec.fone     := '';
+  end;
 end;
 
 procedure TfrmACBrBPe.AtualizarSSLLibsCombo;
@@ -1108,6 +1268,63 @@ begin
   end;
 end;
 
+procedure TfrmACBrBPe.btnExcessoBagagemClick(Sender: TObject);
+var
+  Chave, idLote, CNPJ, Protocolo, qBagagem, vTotBag: string;
+begin
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'Chave da BP-e', Chave)) then
+     exit;
+  Chave := Trim(OnlyNumber(Chave));
+  idLote := '1';
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+     exit;
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+  Protocolo:='';
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'Protocolo de Autorização', Protocolo)) then
+     exit;
+  qBagagem := '1';
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'Quantidade de volumes de bagagem carregados', qBagagem)) then
+     exit;
+  vTotBag := '1';
+  if not(InputQuery('WebServices Eventos: Excesso de Bagagem', 'Valor total do serviço', vTotBag)) then
+     exit;
+
+  qBagagem := OnlyNumber(qBagagem);
+
+  if Trim(qBagagem) = '' then
+  begin
+    MessageDlg('Quantidade de volumes de bagagem carregados inválida.', mtError,[mbok], 0);
+    exit;
+  end;
+
+  if Trim(vTotBag) = '' then
+  begin
+    MessageDlg('Valor total do serviço inválido.', mtError,[mbok], 0);
+    exit;
+  end;
+
+  ACBrBPe1.EventoBPe.Evento.Clear;
+
+  with ACBrBPe1.EventoBPe.Evento.New do
+  begin
+    infevento.chBPe := Chave;
+    infevento.CNPJ := CNPJ;
+    infEvento.dhEvento := now;
+    infEvento.tpEvento := teExcessoBagagem;
+    infEvento.detEvento.nProt := Protocolo;
+    infEvento.detEvento.qBagagem := StrToIntDef(qBagagem, 0);
+    infEvento.detEvento.vTotBag := StrToFloatDef(vTotBag, 0);
+  end;
+
+  ACBrBPe1.EnviarEvento(StrToInt(idLote));
+
+  MemoResp.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetWS;
+  memoRespWS.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetornoWS;
+  LoadXML(ACBrBPe1.WebServices.EnvEvento.RetornoWS, WBResposta);
+end;
+
 procedure TfrmACBrBPe.btnGerarPDFClick(Sender: TObject);
 var
   CarregarMaisXML: Boolean;
@@ -1545,6 +1762,7 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   l: Integer;
+  J: TModeloBPe;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -1588,6 +1806,11 @@ begin
   cbxPagCodigo.Items.Clear ;
   for O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
+
+  cbModeloDF.Items.Clear;
+  for J := Low(TModeloBPe) to High(TModeloBPe) do
+     cbModeloDF.Items.Add( GetEnumName(TypeInfo(TModeloBPe), integer(J) ) );
+  cbModeloDF.ItemIndex := 0;
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
@@ -1637,6 +1860,7 @@ begin
     Ini.WriteString( 'Geral', 'PathSalvar',       edtPathLogs.Text);
     Ini.WriteString( 'Geral', 'PathSchemas',      edtPathSchemas.Text);
     Ini.WriteInteger('Geral', 'VersaoDF',         cbVersaoDF.ItemIndex);
+    Ini.WriteInteger('Geral', 'ModeloDF',         cbModeloDF.ItemIndex);
 
     Ini.WriteString( 'WebService', 'UF',         cbUF.Text);
     Ini.WriteInteger('WebService', 'Ambiente',   rgTipoAmb.ItemIndex);
@@ -1767,6 +1991,7 @@ begin
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
     cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
     cbVersaoDF.ItemIndex        := Ini.ReadInteger('Geral', 'VersaoDF',         0);
+    cbModeloDF.ItemIndex        := Ini.ReadInteger('Geral', 'ModeloDF',         0);
 
     ckSalvar.Checked          := Ini.ReadBool(  'Geral', 'Salvar',         True);
     cbxRetirarAcentos.Checked := Ini.ReadBool(  'Geral', 'RetirarAcentos', True);
@@ -1876,6 +2101,7 @@ begin
     FormatoAlerta    := edtFormatoAlerta.Text;
     FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
     VersaoDF         := TVersaoBPe(cbVersaoDF.ItemIndex);
+    ModeloDF         := TModeloBPe(cbModeloDF.ItemIndex);
   end;
 
   with ACBrBPe1.Configuracoes.WebServices do
@@ -1923,7 +2149,7 @@ begin
     PathSchemas      := edtPathSchemas.Text;
     PathBPe          := edtPathBPe.Text;
     PathEvento       := edtPathEvento.Text;
-    PathMensal       := GetPathBPe(0);
+    PathMensal       := GetPathBPe(0, '', '', ACBrBPe1.Configuracoes.Geral.ModeloDF);
     PathSalvar       := PathMensal;
   end;
 

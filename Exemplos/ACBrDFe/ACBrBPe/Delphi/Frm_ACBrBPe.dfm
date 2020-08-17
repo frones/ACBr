@@ -466,10 +466,17 @@ object frmACBrBPe: TfrmACBrBPe
               end
               object Label32: TLabel
                 Left = 8
-                Top = 133
+                Top = 165
                 Width = 119
                 Height = 13
                 Caption = 'Vers'#227'o Documento Fiscal'
+              end
+              object Label30: TLabel
+                Left = 8
+                Top = 126
+                Width = 120
+                Height = 13
+                Caption = 'Modelo Documento Fiscal'
               end
               object edtPathLogs: TEdit
                 Left = 8
@@ -539,10 +546,17 @@ object frmACBrBPe: TfrmACBrBPe
               end
               object cbVersaoDF: TComboBox
                 Left = 8
-                Top = 149
+                Top = 181
                 Width = 248
                 Height = 21
                 TabOrder = 8
+              end
+              object cbModeloDF: TComboBox
+                Left = 8
+                Top = 142
+                Width = 248
+                Height = 21
+                TabOrder = 9
               end
             end
           end
@@ -1673,8 +1687,8 @@ object frmACBrBPe: TfrmACBrBPe
           OnClick = btnNaoEmbarqueClick
         end
         object btnImprimirEvento: TButton
-          Left = 191
-          Top = 40
+          Left = 8
+          Top = 110
           Width = 177
           Height = 25
           Caption = 'Imprimir Evento'
@@ -1682,8 +1696,8 @@ object frmACBrBPe: TfrmACBrBPe
           OnClick = btnImprimirEventoClick
         end
         object btnEnviarEventoEmail: TButton
-          Left = 374
-          Top = 40
+          Left = 191
+          Top = 110
           Width = 177
           Height = 25
           Caption = 'Enviar Evento Email'
@@ -1698,6 +1712,15 @@ object frmACBrBPe: TfrmACBrBPe
           Caption = 'Altera'#231#227'o de Poltrona'
           TabOrder = 5
           OnClick = btnAlteracaoPoltronaClick
+        end
+        object btnExcessoBagagem: TButton
+          Left = 191
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Excesso de Bagagem'
+          TabOrder = 6
+          OnClick = btnExcessoBagagemClick
         end
       end
       object tsDistribuicao: TTabSheet
@@ -1719,7 +1742,7 @@ object frmACBrBPe: TfrmACBrBPe
       Top = 166
       Width = 567
       Height = 445
-      ActivePage = TabSheet5
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1804,7 +1827,6 @@ object frmACBrBPe: TfrmACBrBPe
             '')
           ScrollBars = ssVertical
           TabOrder = 0
-          WordWrap = False
         end
       end
     end

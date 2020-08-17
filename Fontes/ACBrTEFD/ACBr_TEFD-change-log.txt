@@ -50,6 +50,7 @@ Símbolo : Significado
 -- ACBrPOSPGWebAPI --
 [*] Correção da chamada a PTI_GetData, para funcionar corretamente em D7 e Delphi
     com Unicode
+[-] Correção de A.V., em TACBrPOSPGWebAPI.Destroy, quando Servidor está ativo
     (por: DSA)
 
 15/08/20

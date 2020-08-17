@@ -629,6 +629,7 @@ end;
 
 destructor TACBrPOSPGWebAPI.Destroy;
 begin
+  fOnGravarLog := nil;
   DesInicializar;
   Sleep(CACBrPOSPGWebEsperaLoop);  // Aguarda, caso esteja dentro do Evento "OnAguardaConexao"
 

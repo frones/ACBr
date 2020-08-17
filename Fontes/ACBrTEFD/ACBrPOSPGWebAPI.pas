@@ -274,8 +274,8 @@ type
       out piKey: SmallInt; out piRet: SmallInt); cdecl;
     xPTI_ClearKey: procedure(pszTerminalId: AnsiString; out piRet: SmallInt); cdecl;
     xPTI_GetData: procedure(pszTerminalId: AnsiString; pszPrompt: AnsiString;
-      pszFormat: AnsiString; uiLenMin: Word; uiLenMax: Word; fFromLeft: Boolean;
-      fAlpha: Boolean; fMask: Boolean; uiTimeOutSec: Word; pszData: PAnsiChar;
+      pszFormat: AnsiString; uiLenMin: Word; uiLenMax: Word; fFromLeft: ByteBool;
+      fAlpha: ByteBool; fMask: ByteBool; uiTimeOutSec: Word; pszData: PAnsiChar;
       uiCaptureLine: Word; out piRet: SmallInt); cdecl;
     xPTI_StartMenu: procedure(pszTerminalId: AnsiString; out piRet: SmallInt); cdecl;
     xPTI_AddMenuOption: procedure(pszTerminalId: AnsiString; pszOption: AnsiString;
@@ -815,6 +815,7 @@ function TACBrPOSPGWebAPI.ObterDado(const TerminalId: String;
 var
   iRet: SmallInt;
   pszData: PAnsiChar;
+  AValorInicial: AnsiString;
 begin
   if (IntervaloMaxTeclas = 0) then
     IntervaloMaxTeclas := fTempoDesconexaoAutomatica;
@@ -829,10 +830,11 @@ begin
 
   VerificarConexao(TerminalId);
   Result := '';
+  AValorInicial := AnsiString(ValorInicial);
   pszData := AllocMem(50);
   try
     if (Length(ValorInicial) > 0) then
-      Move(ValorInicial[1], pszData^, Length(ValorInicial)+1 );
+      Move(AValorInicial[1], pszData^, Length(AValorInicial)+1 );
 
     xPTI_GetData( TerminalId,
                   Titulo,

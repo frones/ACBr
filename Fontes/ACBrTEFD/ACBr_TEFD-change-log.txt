@@ -46,7 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-15/05/20
+17/08/20
+-- ACBrPOSPGWebAPI --
+[*] Correção da chamada a PTI_GetData, para funcionar corretamente em D7 e Delphi
+    com Unicode
+    (por: DSA)
+
+15/08/20
 -- ACBrPOSPGWebAPI --
 [*] Método "AguardarTecla" não mais dispara Exception de resultado não for OK
 [-] Método "ObterDado", corrigido para não disparar Exception quando o erro for

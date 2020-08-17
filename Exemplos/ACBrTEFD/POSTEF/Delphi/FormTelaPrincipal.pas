@@ -1049,9 +1049,9 @@ begin
   if (Linha < 0) then
   begin
     Linha := sgTerminais.RowCount-1;
-    if (sgTerminais.Rows[Linha][0] <> '') the
+    if (sgTerminais.Rows[Linha][0] <> '') then
     begin
-      Linha := Linha + 1
+      Linha := Linha + 1;
       sgTerminais.RowCount := sgTerminais.RowCount + 1
     end;
   end;

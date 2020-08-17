@@ -746,7 +746,6 @@ begin
   
   if FPIniParams.ReadString('SoapAction', 'Cabecalho_' + CodIBGE, '') <> '' then
   begin
-  end
     FConfigSchemas.Cabecalho := FPIniParams.ReadString('Schemas', 'Cabecalho_' + CodIBGE, '');
     FConfigSchemas.ServicoTeste  := FPIniParams.ReadString('Schemas', 'ServicoTeste_' + CodIBGE, '');
     FConfigSchemas.ServicoEnviar := FPIniParams.ReadString('Schemas', 'ServicoEnviar_' + CodIBGE, '');
@@ -760,6 +759,7 @@ begin
     FConfigSchemas.ServicoSubstituir := FPIniParams.ReadString('Schemas', 'ServicoSubstituir_' + CodIBGE, '');
     FConfigSchemas.ServicoAbrirSessao := FPIniParams.ReadString('Schemas', 'ServicoAbrirSessao_' + CodIBGE, '');
     FConfigSchemas.ServicoFecharSessao := FPIniParams.ReadString('Schemas', 'ServicoFecharSessao_' + CodIBGE, '');
+  end	
   else
   begin
     FConfigSchemas.Cabecalho := FPIniParams.ReadString('Schemas', 'Cabecalho', '');

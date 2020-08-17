@@ -2967,7 +2967,7 @@ begin
     edtSATCodigoAtivacao.Text := StrCrypt(DecodeBase64(Ini.ReadString('SAT','CodigoAtivacao', '')), CACBR_URL);
     seSATNumeroCaixa.Value := Ini.ReadInteger('SAT','NumeroCaixa', 1);
     cbSATAmbiente.ItemIndex := Ini.ReadInteger('SAT','Ambiente', 1);
-    seSATPagCod.Value := Ini.ReadInteger('SAT','PaginaDeCodigo', CP_UTF8);
+    seSATPagCod.Value := Ini.ReadInteger('SAT','PaginaDeCodigo', CUTF8CodPage);
     seSATVersaoEnt.Value := Ini.ReadFloat('SAT','versaoDadosEnt', ACBrSAT1.Config.infCFe_versaoDadosEnt);
     ckEmuladorSEFAZ.Checked :=  Ini.ReadBool('SAT','Emulador', False);
     edtSATSwHCNPJ.Text := Ini.ReadString('SAT.SwH','CNPJ', '');

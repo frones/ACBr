@@ -17,11 +17,11 @@ object frPOSTEFServer: TfrPOSTEFServer
     Height = 409
     Top = 0
     Width = 790
-    ActivePage = tsConfiguracao
+    ActivePage = tsOperacao
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     object tsMenuPrincipal: TTabSheet
       Caption = 'Menu Principal'
@@ -5700,6 +5700,7 @@ object frPOSTEFServer: TfrPOSTEFServer
         Width = 213
         Anchors = []
         Center = True
+        Enabled = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963692D000089504E47
           0D0A1A0A0000000D4948445200000090000000900806000000E746E2B8000001
@@ -6089,10 +6090,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Height = 344
           Top = 0
           Width = 782
-          ActivePage = tsConfPosTef
+          ActivePage = tsConfSAT
           Align = alClient
           Images = ImageList1
-          TabIndex = 0
+          TabIndex = 3
           TabOrder = 0
           object tsConfPosTef: TTabSheet
             Caption = 'POS TEF'
@@ -7803,7 +7804,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Width = 140
                 Caption = 'Status SAT'
                 Images = ImageList1
-                ImageIndex = 13
+                ImageIndex = 20
                 OnClick = btStatusSATClick
                 TabOrder = 10
               end
@@ -7820,7 +7821,6 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Top = 116
                 Width = 107
                 Caption = 'Emulador SEFAZ'
-                OnChange = ckSATUTF8Change
                 ParentFont = False
                 TabOrder = 7
               end

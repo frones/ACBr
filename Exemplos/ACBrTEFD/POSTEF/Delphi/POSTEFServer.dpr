@@ -2,7 +2,9 @@ program POSTEFServer;
 
 uses
   Forms,
-  FormTelaPrincipal in 'FormTelaPrincipal.pas';
+  FormTelaPrincipal in 'FormTelaPrincipal.pas',
+  FormConsultaCNPJ in 'FormConsultaCNPJ.pas' {frConsultaCNPJ},
+  FormSelecionarCertificado in 'FormSelecionarCertificado.pas' {frmSelecionarCertificado};
 
 {$R *.res}
 

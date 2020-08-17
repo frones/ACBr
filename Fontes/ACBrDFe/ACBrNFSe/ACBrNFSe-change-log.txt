@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2020
+-- ACBrNFSeConfiguracoes --
+[*] Alteração visando resolver o problema do provedor VersaTecnologia que tem
+    URLs de SoapAction diferentes para as cidades atendidas pelo provedor.
+  Por: Italo Jurisato Junior
+
 12/08/2020
 -- Diversos --
 [+] Implementação do provedor AEG

@@ -744,7 +744,7 @@ begin
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');
   
-  if FPIniParams.ReadString('SoapAction', 'Cabecalho_' + CodIBGE, '') <> '' then
+  if FPIniParams.ReadString('Schemas', 'Cabecalho_' + CodIBGE, '') <> '' then
   begin
     FConfigSchemas.Cabecalho := FPIniParams.ReadString('Schemas', 'Cabecalho_' + CodIBGE, '');
     FConfigSchemas.ServicoTeste  := FPIniParams.ReadString('Schemas', 'ServicoTeste_' + CodIBGE, '');

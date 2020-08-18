@@ -13,7 +13,7 @@ function FixedFloatToStr(const Value: Extended): string;
 function FixedTryStrToFloat(const S: string; out Value: Extended): Boolean;
 function FixedStrToFloat(const S: string): Extended;
 
-{$IFDEF DELPHIXE_UP}
+{$IFDEF DELPHIXE6_UP}
 Function __ObjectToJson(aObject : TObject) : String;
 Procedure __jsonToObject(Const aJSONString : String; Var aObject : TObject);
 {$ENDIF}
@@ -194,7 +194,7 @@ begin
 end;
 
 
-{$IFDEF DELPHIXE_UP}
+{$IFDEF DELPHIXE6_UP}
 function InternalObjectToJSON(Obj : Tobject; PropList : array of String; WriteClass : boolean = false) : String; overload;
 const lcst_exceptheader = 'ObjectToJson : ';
 var

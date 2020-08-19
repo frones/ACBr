@@ -73,7 +73,7 @@ type
     Items: array of TItemPedido;
     ValorTotal: Currency;
     Pessoas: Integer;
-    Pagametos: array of TPagtoPedido;
+    Pagamentos: array of TPagtoPedido;
     TotalPago: Currency;
   end;
 
@@ -1266,7 +1266,7 @@ begin
           cbxEmitCidadeChange(nil);
         end;
       except
-        MessageDlg('Errro ao Consultar CNPJ'+sLineBreak+'Verifique o Captcha', mtError, [mbOK], 0);
+        MessageDlg('Erro ao Consultar CNPJ'+sLineBreak+'Verifique o Captcha', mtError, [mbOK], 0);
       end;
     end;
   finally
@@ -1965,15 +1965,15 @@ begin
 
     Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
 
-    for i := 0 to Length(fPedidos[IndicePedido].Pagametos)-1 do
+    for i := 0 to Length(fPedidos[IndicePedido].Pagamentos)-1 do
     begin
       APag := pag.New;
       with APag do
       begin
         indPag := ipVista;
-        vPag := fPedidos[IndicePedido].Pagametos[i].ValorPago;
+        vPag := fPedidos[IndicePedido].Pagamentos[i].ValorPago;
 
-        case fPedidos[IndicePedido].Pagametos[i].FormaPagto of
+        case fPedidos[IndicePedido].Pagamentos[i].FormaPagto of
           CPAG_DEBITO: tPag := fpCartaoDebito;
           CPAG_CREDITO: tPag := fpCartaoCredito;
         else
@@ -2228,12 +2228,12 @@ begin
       end;
     end;
 
-    for i := 0 to Length(fPedidos[IndicePedido].Pagametos)-1 do
+    for i := 0 to Length(fPedidos[IndicePedido].Pagamentos)-1 do
     begin
       APag := Pagto.New;
-      APag.vMP := fPedidos[IndicePedido].Pagametos[i].ValorPago;
+      APag.vMP := fPedidos[IndicePedido].Pagamentos[i].ValorPago;
 
-      case fPedidos[IndicePedido].Pagametos[i].FormaPagto of
+      case fPedidos[IndicePedido].Pagamentos[i].FormaPagto of
         CPAG_DEBITO: APag.cMP := mpCartaodeDebito;
         CPAG_CREDITO: APag.cMP := mpCartaodeCredito;
       else
@@ -2415,7 +2415,7 @@ begin
         TituloMenu := 'EFETUAR PAGAMENTO'
       else
         TituloMenu := 'Saldo '+FormatFloatBr(SaldoRestante)+
-                      ' Pag '+IntToStr(Length(fPedidos[IndicePedido].Pagametos)+1)+
+                      ' Pag '+IntToStr(Length(fPedidos[IndicePedido].Pagamentos)+1)+
                       '/'+IntToStr(fPedidos[IndicePedido].Pessoas);
 
       OPPagto := ACBrPOS1.ExecutarMenu(TerminalId, SL, TituloMenu);
@@ -2424,7 +2424,7 @@ begin
 
       TipoPagamento := SL[OPPagto];
       if (fPedidos[IndicePedido].Pessoas < 2) or  // Apenas 1 pessoa
-         (Length(fPedidos[IndicePedido].Pagametos) >= fPedidos[IndicePedido].Pessoas-1) then  // Só falta 1 pessoa
+         (Length(fPedidos[IndicePedido].Pagamentos) >= fPedidos[IndicePedido].Pessoas-1) then  // Só falta 1 pessoa
         ValorAPagar := SaldoRestante
 
       else
@@ -2559,10 +2559,10 @@ procedure TfrPOSTEFServer.IncluirPagamentoPedido(IndicePedido: Integer;
 var
   i: Integer;
 begin
-  i := Length(fPedidos[IndicePedido].Pagametos);
-  SetLength(fPedidos[IndicePedido].Pagametos, i+1);
-  fPedidos[IndicePedido].Pagametos[i].FormaPagto := TipoPagamento;
-  fPedidos[IndicePedido].Pagametos[i].ValorPago := ValorPago;
+  i := Length(fPedidos[IndicePedido].Pagamentos);
+  SetLength(fPedidos[IndicePedido].Pagamentos, i+1);
+  fPedidos[IndicePedido].Pagamentos[i].FormaPagto := TipoPagamento;
+  fPedidos[IndicePedido].Pagamentos[i].ValorPago := ValorPago;
   fPedidos[IndicePedido].TotalPago := fPedidos[IndicePedido].TotalPago + ValorPago;
 end;
 
@@ -2738,6 +2738,7 @@ begin
   fPedidos[0].Items[0].PrecoUnit := 9.00;
   fPedidos[0].Items[0].Qtd := 1;
   fPedidos[0].Items[0].UN := 'UN';
+  SetLength(fPedidos[0].Pagamentos, 0);
 
   fPedidos[1].NumPedido := 102;
   fPedidos[1].DataHora := IncMinute(Now, -30);
@@ -2745,7 +2746,7 @@ begin
   fPedidos[1].Email := 'homer.simpson@fox.com';
   fPedidos[1].ValorTotal := 40;
   fPedidos[1].TotalPago := 0;
-  fPedidos[0].Pessoas := 0;
+  fPedidos[1].Pessoas := 0;
   SetLength(fPedidos[1].Items, 2);
   fPedidos[1].Items[0].CodItem := 10;
   fPedidos[1].Items[0].Descricao := 'DUFF BEER 12 PACK';
@@ -2757,6 +2758,7 @@ begin
   fPedidos[1].Items[1].PrecoUnit := 10;
   fPedidos[1].Items[1].Qtd := 1;
   fPedidos[1].Items[1].UN := 'PC';
+  SetLength(fPedidos[1].Pagamentos, 0);
 
   fPedidos[2].NumPedido := 113;
   fPedidos[2].DataHora := IncMinute(Now, -20);
@@ -2764,7 +2766,7 @@ begin
   fPedidos[2].Email := '';
   fPedidos[2].ValorTotal := 115;
   fPedidos[2].TotalPago := 0;
-  fPedidos[0].Pessoas := 0;
+  fPedidos[2].Pessoas := 0;
   SetLength(fPedidos[2].Items, 3);
   fPedidos[2].Items[0].CodItem := 200;
   fPedidos[2].Items[0].Descricao := 'CANETAS LUXO AZUL';
@@ -2781,6 +2783,7 @@ begin
   fPedidos[2].Items[2].PrecoUnit := 50;
   fPedidos[2].Items[2].Qtd := 1;
   fPedidos[2].Items[2].UN := 'LT';
+  SetLength(fPedidos[2].Pagamentos, 0);
 
   fPedidos[3].NumPedido := 212;
   fPedidos[3].DataHora := IncMinute(Now, -10);
@@ -2788,7 +2791,7 @@ begin
   fPedidos[3].Email := 'lara.croft@riders.com';
   fPedidos[3].ValorTotal := 25.50;
   fPedidos[3].TotalPago := 0;
-  fPedidos[0].Pessoas := 0;
+  fPedidos[3].Pessoas := 0;
   SetLength(fPedidos[3].Items, 2);
   fPedidos[3].Items[0].CodItem := 101;
   fPedidos[3].Items[0].Descricao := 'CAMISA HERING';
@@ -2800,6 +2803,7 @@ begin
   fPedidos[3].Items[1].PrecoUnit := 0.50;
   fPedidos[3].Items[1].Qtd := 1;
   fPedidos[3].Items[1].UN := 'UN';
+  SetLength(fPedidos[3].Pagamentos, 0);
 end;
 
 procedure TfrPOSTEFServer.IncluirPedidosSimuladosRestaurante;
@@ -2818,6 +2822,7 @@ begin
   fPedidos[0].Items[0].PrecoUnit := 25;
   fPedidos[0].Items[0].Qtd := 1;
   fPedidos[0].Items[0].UN := 'UN';
+  SetLength(fPedidos[0].Pagamentos, 0);
 
   fPedidos[1].NumPedido := 102;
   fPedidos[1].DataHora := IncMinute(Now, -30);
@@ -2825,7 +2830,7 @@ begin
   fPedidos[1].Email := '';
   fPedidos[1].ValorTotal := 75;
   fPedidos[1].TotalPago := 0;
-  fPedidos[0].Pessoas := 1;
+  fPedidos[1].Pessoas := 1;
   SetLength(fPedidos[1].Items, 2);
   fPedidos[1].Items[0].CodItem := 100;
   fPedidos[1].Items[0].Descricao := 'PIZZA BROTO PEPPERONI';
@@ -2837,6 +2842,7 @@ begin
   fPedidos[1].Items[1].PrecoUnit := 50;
   fPedidos[1].Items[1].Qtd := 1;
   fPedidos[1].Items[1].UN := 'PC';
+  SetLength(fPedidos[1].Pagamentos, 0);
 
   fPedidos[2].NumPedido := 113;
   fPedidos[2].DataHora := IncMinute(Now, -20);
@@ -2844,7 +2850,7 @@ begin
   fPedidos[2].Email := '';
   fPedidos[2].ValorTotal := 115;
   fPedidos[2].TotalPago := 0;
-  fPedidos[0].Pessoas := 1;
+  fPedidos[2].Pessoas := 1;
   SetLength(fPedidos[2].Items, 3);
   fPedidos[2].Items[0].CodItem := 200;
   fPedidos[2].Items[0].Descricao := 'PIZZA GRANDE PEPPERONI';
@@ -2861,6 +2867,7 @@ begin
   fPedidos[2].Items[2].PrecoUnit := 15;
   fPedidos[2].Items[2].Qtd := 1;
   fPedidos[2].Items[2].UN := 'LT';
+  SetLength(fPedidos[2].Pagamentos, 0);
 
   fPedidos[3].NumPedido := 212;
   fPedidos[3].DataHora := IncMinute(Now, -10);
@@ -2868,7 +2875,7 @@ begin
   fPedidos[3].Email := '';
   fPedidos[3].ValorTotal := 25.50;
   fPedidos[3].TotalPago := 0;
-  fPedidos[0].Pessoas := 1;
+  fPedidos[3].Pessoas := 1;
   SetLength(fPedidos[3].Items, 2);
   fPedidos[3].Items[0].CodItem := 101;
   fPedidos[3].Items[0].Descricao := 'PIZZA BROTO MARGUERITA';
@@ -2880,6 +2887,7 @@ begin
   fPedidos[3].Items[1].PrecoUnit := 0.50;
   fPedidos[3].Items[1].Qtd := 1;
   fPedidos[3].Items[1].UN := 'UN';
+  SetLength(fPedidos[3].Pagamentos, 0);
 end;
 
 procedure TfrPOSTEFServer.IncluirPedidosSimuladosPosto;
@@ -3381,7 +3389,4 @@ end;
 
 end.
 
-
-fPedidos[1].Nome := 'INDIANA JONES';
-fPedidos[1].Email := 'indiana.jones@marshallcollege.com';
 

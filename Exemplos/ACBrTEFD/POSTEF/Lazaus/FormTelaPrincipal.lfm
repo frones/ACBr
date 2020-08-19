@@ -1,7 +1,7 @@
 object frPOSTEFServer: TfrPOSTEFServer
-  Left = 475
+  Left = 322
   Height = 440
-  Top = 191
+  Top = 132
   Width = 790
   Caption = 'ACBr POS TEF Server'
   ClientHeight = 440
@@ -17,11 +17,11 @@ object frPOSTEFServer: TfrPOSTEFServer
     Height = 409
     Top = 0
     Width = 790
-    ActivePage = tsOperacao
+    ActivePage = tsConfiguracao
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     object tsMenuPrincipal: TTabSheet
       Caption = 'Menu Principal'
@@ -6090,10 +6090,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Height = 344
           Top = 0
           Width = 782
-          ActivePage = tsConfSAT
+          ActivePage = tsConfPosTef
           Align = alClient
           Images = ImageList1
-          TabIndex = 3
+          TabIndex = 0
           TabOrder = 0
           object tsConfPosTef: TTabSheet
             Caption = 'POS TEF'

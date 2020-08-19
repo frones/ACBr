@@ -536,7 +536,7 @@ begin
       Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
 
       // Somente o provedor SimplISS permite infomar mais de 1 serviço
-      with Servico.ItemServico.Add do
+      with Servico.ItemServico.New do
       begin
         codLCServ := '123';
         Descricao := 'SERVICO 1';
@@ -738,9 +738,12 @@ procedure TfrmACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
 var
   DataInicial, DataFinal, NumeroNFSe: String;
 begin
+  DataInicial := DateToStr(Date);
   if not(InputQuery('Consultar NFSe por Período', 'Data Inicial (DD/MM/AAAA):',
     DataInicial)) then
     exit;
+
+  DataFinal := DateToStr(Date);
   if not(InputQuery('Consultar NFSe por Período', 'Data Final (DD/MM/AAAA):',
     DataFinal)) then
     exit;
@@ -748,6 +751,12 @@ begin
   if not(InputQuery('Consultar NFSe por Período', 'Numero da NFSe:',
     NumeroNFSe)) then
     exit;
+
+  if Trim(DataInicial) = '' then
+    DataInicial := DateToStr(Date);
+
+  if Trim(DataFinal) = '' then
+    DataFinal := DateToStr(Date);
 
   ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal), NumeroNFSe);
 

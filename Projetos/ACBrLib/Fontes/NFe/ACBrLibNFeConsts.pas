@@ -96,6 +96,7 @@ const
   CChaveFonteNegrito = 'Fonte.Negrito';
   CChaveFonteTamanhoFonteRazaoSocial = 'Fonte.TamanhoFonteRazaoSocial';
   CChaveFonteTamanhoFonteEndereco = 'Fonte.TamanhoFonteEndereco';
+  CChaveFonteTamanhoFonteInformacoesComplementares = 'Fonte.TamanhoFonteInformacoesComplementares';
   CChaveFonteTamanhoFonteDemaisCampos = 'Fonte.TamanhoFonteDemaisCampos';
 
   CSessaoDANFENFCE = 'DANFENFCe';

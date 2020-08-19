@@ -378,6 +378,7 @@ begin
     Negrito := AIni.ReadBool(CSessaoDANFENFE, CChaveFonteNegrito, Negrito);
     TamanhoFonteRazaoSocial := AIni.ReadInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteRazaoSocial, TamanhoFonteRazaoSocial);
     TamanhoFonteEndereco := AIni.ReadInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteEndereco, TamanhoFonteEndereco);
+    TamanhoFonteInformacoesComplementares := AIni.ReadInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteInformacoesComplementares, TamanhoFonteInformacoesComplementares);
     TamanhoFonteDemaisCampos := AIni.ReadInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteDemaisCampos, TamanhoFonteDemaisCampos);
   end;
 end;
@@ -427,6 +428,7 @@ begin
     AIni.WriteBool(CSessaoDANFENFE, CChaveFonteNegrito, Negrito);
     AIni.WriteInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteRazaoSocial, TamanhoFonteRazaoSocial);
     AIni.WriteInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteEndereco, TamanhoFonteEndereco);
+    AIni.WriteInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteInformacoesComplementares, TamanhoFonteInformacoesComplementares);
     AIni.WriteInteger(CSessaoDANFENFE, CChaveFonteTamanhoFonteDemaisCampos, TamanhoFonteDemaisCampos);
   end;
 end;
@@ -478,6 +480,7 @@ begin
       Negrito := FFonte.Negrito;
       TamanhoFonteRazaoSocial := FFonte.TamanhoFonteRazaoSocial;
       TamanhoFonteEndereco := FFonte.TamanhoFonteEndereco;
+      TamanhoFonteInformacoesComplementares := FFonte.TamanhoFonteInformacoesComplementares;
       TamanhoFonteDemaisCampos := FFonte.TamanhoFonteDemaisCampos;
     end;
   end;

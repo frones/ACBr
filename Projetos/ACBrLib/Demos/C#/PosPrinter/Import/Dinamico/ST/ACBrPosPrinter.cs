@@ -133,12 +133,6 @@ namespace ACBrLibPosPrinter
 
         #endregion InnerTypes
 
-        #region Fields
-
-        private const int BUFFER_LEN = 256;
-
-        #endregion Fields
-
         #region Constructors
 
         public ACBrPosPrinter(string eArqConfig = "", string eChaveCrypt = "") : base("ACBrPosPrinter64.dll", "ACBrPosPrinter32.dll")

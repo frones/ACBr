@@ -30,6 +30,7 @@ public enum  ACBrSessao {
     DANFENFe,
     DANFENFCe,
     CTe,
+    GNRe,
     DACTe,
     MDFe,
     DAMDFe,
@@ -37,5 +38,5 @@ public enum  ACBrSessao {
     BoletoCedenteConfig,
     BoletoBancoConfig,
     BoletoDiretorioConfig,
-    BoletoBancoFCFortesConfig,    
+    BoletoBancoFCFortesConfig,;
 }

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2020
+-- pnfsNFSeG --
+[+] Acrescentado a Consulta NFS-e por numero ou periodo para o provedor Equiplano.
+  Por: Italo Jurisato Junior
+
 18/08/2020
 -- ACBrNFSeConfiguracoes --
 [*] Corrigido o nome da seção para fazer a leitura correta do nome dos arquivos

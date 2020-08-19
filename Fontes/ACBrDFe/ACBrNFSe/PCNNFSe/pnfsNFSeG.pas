@@ -1440,7 +1440,22 @@ begin
 
     proEquiplano:
       begin
-        // Nao Possui
+        Gerador.Prefixo := '';
+        Gerador.wGrupo('prestador');
+        Gerador.wCampo(tcStr, '#1', 'nrInscricaoMunicipal', 01, 15, 1, IM, '');
+        Gerador.wCampo(tcStr, '#1', 'cnpj', 14, 14, 1, CNPJ, '');
+        Gerador.wCampo(tcStr, '#1', 'idEntidade', 01, 03, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+        Gerador.wGrupo('/prestador');
+
+        if NumeroNFSe <> '' then
+          Gerador.wCampo(tcStr, '#1', 'nrNfse', 01, 14, 1, NumeroNFSe, '')
+        else
+        begin
+          Gerador.wGrupo('periodoEmissao');
+          Gerador.wCampo(tcDat, '#3', 'dtInicial', 10, 10, 1, DataInicial, '');
+          Gerador.wCampo(tcDat, '#4', 'dtFinal', 10, 10, 1, DataFinal, '');
+          Gerador.wGrupo('/periodoEmissao');
+        end;
       end;
 
     proEL:

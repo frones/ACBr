@@ -120,7 +120,6 @@ begin
       EditNumero.Text      := ACBrConsultaCNPJ1.Numero;
       EditComplemento.Text := ACBrConsultaCNPJ1.Complemento;
       EditBairro.Text      := ACBrConsultaCNPJ1.Bairro;
-      EditComplemento.Text := ACBrConsultaCNPJ1.Complemento;
       EditCidade.Text      := ACBrConsultaCNPJ1.Cidade;
       EditUF.Text          := ACBrConsultaCNPJ1.UF;
       EditCEP.Text         := ACBrConsultaCNPJ1.CEP;

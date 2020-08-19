@@ -43,7 +43,12 @@ uses
    {$IFEND}
 {$ENDIF}
 
-{.$DEFINE SUPPORT_PNG}  // Remova o Ponto, se seu Delphi suporta PNG
+// Remova o Ponto do DEFINE abaixo, se seu Delphi suporta PNG. 
+//    - Se não suportar (D7), 
+//  	- Acesse: https://sourceforge.net/projects/pngdelphi/
+//      - Instale o projeto e depois remova o Ponto da Linha abaixo
+
+{.$DEFINE SUPPORT_PNG}  
 
 {$IFDEF DELPHI2009_UP}
   {$DEFINE SUPPORT_PNG}

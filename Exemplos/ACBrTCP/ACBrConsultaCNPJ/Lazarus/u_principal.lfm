@@ -1,7 +1,7 @@
 object Fprincipal: TFprincipal
-  Left = 619
+  Left = 277
   Height = 500
-  Top = 255
+  Top = 127
   Width = 706
   BorderStyle = bsDialog
   Caption = 'Consulta de CNPJ'
@@ -9,6 +9,7 @@ object Fprincipal: TFprincipal
   ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
+  LCLVersion = '2.0.10.0'
   object Panel2: TPanel
     Left = 9
     Height = 329
@@ -549,14 +550,14 @@ object Fprincipal: TFprincipal
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    left = 564
-    top = 288
+    Left = 564
+    Top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
     TimeOut = 5000
     PesquisarIBGE = False
-    left = 404
-    top = 196
+    Left = 404
+    Top = 196
   end
 end

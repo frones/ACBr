@@ -423,7 +423,7 @@ begin
 
   With fpNFSe do
   begin
-    rllNatOperacao.Caption    := ACBrStr(NaturezaOperacaoDescricao( NaturezaOperacao ));
+    rllNatOperacao.Caption    := ACBrStr(NaturezaOperacaoDescricao( NaturezaOperacao, fpDANFSe.Provedor ));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
     RLLabel137.Visible        := MostrarNaturezaOperacao;
     rllRegimeEspecial.Caption := ACBrStr(nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao ));

@@ -67,7 +67,7 @@ type
   TnfseStatusNFSe = ( snNormal, snCancelado );
 
   TnfseNaturezaOperacao = ( no0, no1, no2, no3, no4, no5, no6, no7, no8,
-                            no9, no10, no11, no12, no13, no14, no15,
+                            no9, no10, no11, no12, no13, no14, no15, no17, no18,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79, no101, no102, no103, no104, no105,
@@ -330,7 +330,7 @@ function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): String;
 begin
   result := EnumeradoToStr(t,
                            ['0', '1', '2', '3', '4', '5', '6', '7', '8',
-                            '9', '10', '11', '12', '13', '14', '15',
+                            '9', '10', '11', '12', '13', '14', '15', '17', '18',
                             '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
                             '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
                             '70', '71', '72', '78', '79', '101', '102', '103', '104',
@@ -342,7 +342,7 @@ begin
                             '952', '971', '981', '991'
                            ],
                            [no0, no1, no2, no3, no4, no5, no6, no7, no8,
-                            no9, no10, no11, no12, no13, no14, no15,
+                            no9, no10, no11, no12, no13, no14, no15, no17, no18,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79, no101, no102, no103, no104,
@@ -359,7 +359,7 @@ function StrToNaturezaOperacao(out ok: boolean; const s: String): TnfseNaturezaO
 begin
   result := StrToEnumerado(ok, s,
                           ['0', '1', '2', '3', '4', '5', '6', '7', '8',
-                            '9', '10', '11', '12', '13', '14', '15',
+                            '9', '10', '11', '12', '13', '14', '15', '17', '18',
                             '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
                             '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
                             '70', '71', '72', '78', '79', '101', '102', '103' , '104',
@@ -371,7 +371,7 @@ begin
                             '952', '971', '981', '991'
                            ],
                            [no0, no1, no2, no3, no4, no5, no6, no7, no8,
-                            no9, no10, no11, no12, no13, no14, no15,
+                            no9, no10, no11, no12, no13, no14, no15, no17, no18,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79, no101, no102, no103, no104,
@@ -18353,8 +18353,17 @@ begin
     no59 : Result := '7 - Simples Nacional (Dentro Estado)';
     no61 : Result := '6.1 - Tributacao No Municipio Com Retenção de ISS';
     no62 : Result := '6.2 - Tributacao No Municipio Sem Retenção de ISS';
-    no63 : Result := '6.3 - Tributação fora do municipio com retenção de ISS';
-    no64 : Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
+    
+    no63 : if AProvedor = proThema then
+               Result := '6.3 - Tributação fora do municipio sem retenção de ISS'
+            else
+               Result := '6.3 - Tributação fora do municipio com retenção de ISS';
+         
+    no64 : if AProvedor = proThema then
+               Result := '6.4 - Tributacao fora do municipio com retenção de ISS'
+            else
+               Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
+               
     no68 : Result := '6.8 - Não tributável';
     no69 : Result := '8 - Simples Nacional (Fora Estado)';
     no78 : Result := '7.8 - Não tributável';

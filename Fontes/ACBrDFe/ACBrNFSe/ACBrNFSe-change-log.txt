@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/08/2020
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/58998-t%C3%ADtulo-natureza-de-opera%C3%A7%C3%A3o-thema-reten%C3%A7%C3%A3o-de-iss/
+  Por: Douglas GV
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/51590-alterar-provedor-de-canoinhas-sc/?do=findComment&comment=387452
+  Por: João Paulo Muller
+-- pnfsEnvLoteRpsResposta --
+[*] https://www.projetoacbr.com.br/forum/topic/48200-nfse-ponta-por%C3%A2ms-assinatura-substitu%C3%ADda-por-chavecontrachave/?do=findComment&comment=387313
+  Por: Marcos
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração visando atender as duas versões (2.01 e 2.02) do provedor VersaTecnologia.
   Por: Italo Jurisato Junior

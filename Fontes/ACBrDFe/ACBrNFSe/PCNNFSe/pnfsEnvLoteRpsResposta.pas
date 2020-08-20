@@ -431,6 +431,19 @@ begin
 
       inc(i);
     end;
+
+    if ((Provedor in [proAEG]) and (Leitor.Arquivo.Contains('ResultadoErro'))) then
+    begin
+      while Leitor.rExtrai(iNivel, 'Resultado', '', i + 1) <> '' do
+      begin
+        InfRec.FMsgRetorno.New;
+        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'ResultadoCodigo');
+        InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ResultadoErro');
+        InfRec.FMsgRetorno[i].FCorrecao := '';
+
+        inc(i);
+      end;
+    end;
   except
     Result := False;
   end;

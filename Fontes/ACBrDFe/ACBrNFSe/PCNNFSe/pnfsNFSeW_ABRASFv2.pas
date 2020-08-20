@@ -150,9 +150,10 @@ begin
      (NFSe.Tomador.RazaoSocial <> '') or (NFSe.Tomador.Endereco.Endereco <> '') or
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
-    if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
+    if (FProvedor in [proActcon, proELv2, proISSJoinville,
         proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2, profintelISS]) or
-       ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
+       ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) or
+       ((FProvedor = proVersaTecnologia) and (NFSe.Servico.CodigoMunicipio <> '3115300')) then
       Gerador.wGrupo('TomadorServico')
     else
       Gerador.wGrupo('Tomador');
@@ -274,9 +275,10 @@ begin
       Gerador.wCampo(tcStr, '#', 'TomadorExterior', 01, 01, 1, SimNaoToStr(NFSe.Tomador.TomadorExterior), '****');
     end;
 
-    if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
+    if (FProvedor in [proActcon, proELv2, proISSJoinville,
         proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2, proiiBrasilv2, profintelISS]) or
-        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
+        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) or
+       ((FProvedor = proVersaTecnologia) and (NFSe.Servico.CodigoMunicipio <> '3115300')) then
       Gerador.wGrupo('/TomadorServico')
     else
       Gerador.wGrupo('/Tomador');

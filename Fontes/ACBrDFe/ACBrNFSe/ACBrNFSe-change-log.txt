@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/08/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alteração visando atender as duas versões (2.01 e 2.02) do provedor VersaTecnologia.
+  Por: Italo Jurisato Junior
+
 19/08/2020
 -- pnfsNFSeG --
 [+] Acrescentado a Consulta NFS-e por numero ou periodo para o provedor Equiplano.

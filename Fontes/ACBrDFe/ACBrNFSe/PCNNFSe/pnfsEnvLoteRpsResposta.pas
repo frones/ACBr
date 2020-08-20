@@ -432,7 +432,7 @@ begin
       inc(i);
     end;
 
-    if ((Provedor in [proAEG]) and (Leitor.Arquivo.Contains('ResultadoErro'))) then
+    if (Provedor in [proAEG]) and (Pos('ResultadoErro', Leitor.Arquivo) > 0) then
     begin
       while Leitor.rExtrai(iNivel, 'Resultado', '', i + 1) <> '' do
       begin

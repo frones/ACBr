@@ -116,10 +116,6 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\ACBrLib.ETQ.csproj">
-      <Project>{8dbe4ee3-f18f-4e21-a445-f706c5d9948b}</Project>
-      <Name>ACBrLib.ETQ</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,7 @@
 object frConsultaCNPJ: TfrConsultaCNPJ
-  Left = 637
+  Left = 639
   Height = 111
-  Top = 237
+  Top = 239
   Width = 319
   BorderStyle = bsDialog
   Caption = 'Informe o CAPTCHA'

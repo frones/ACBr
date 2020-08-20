@@ -461,8 +461,12 @@ type
 
     procedure ExecutarFluxoFechamentoBomba(const TerminalId: String);
 
+    procedure ExecutarFluxoHomologacaoPayGo(const TerminalId: String);
+    procedure ExibirTestesVendaHomologacao(const TerminalId: String);
+
     procedure ExecutarReimpressao(const TerminalId: String);
     procedure EfetuarAdministrativo(const TerminalId: String);
+    procedure EfetuarCancelamento(const TerminalId: String);
 
     procedure EfetuarMultiplosPagamento(const TerminalId: String; IndicePedido: Integer);
     procedure EfetuarPagamento(const TerminalId: String; IndicePedido: Integer);
@@ -1066,7 +1070,8 @@ begin
   try
     case cbTipoAplicacao.ItemIndex of
       1: ExecutarFluxoFechamentoMesa(TerminalId);
-      2: ExecutarFluxoFechamentoBomba(TerminalId)
+      2: ExecutarFluxoFechamentoBomba(TerminalId);
+      3: ExecutarFluxoHomologacaoPayGo(TerminalId);
     else
       ExecutarFluxoPapaFila(TerminalId)
     end;
@@ -1567,8 +1572,8 @@ begin
   if (cbTipoAplicacao.ItemIndex < 0) then
     MsgErro := MsgErro + sLineBreak + '- Tipo de Aplicação não definido';
 
-  if (cbTipoAplicacao.ItemIndex > 1) then
-    MsgErro := MsgErro + sLineBreak + Format('- Aplicação %s ainda não implementada :(', [cbTipoAplicacao.Text]);
+  if (cbTipoAplicacao.ItemIndex = 2) then
+    MsgErro := MsgErro + sLineBreak + Format('- Aplicação "%s" ainda não implementada :(', [cbTipoAplicacao.Text]);
 
   MsgErro := Trim(MsgErro);
   if (MsgErro <> '') then
@@ -1690,6 +1695,7 @@ begin
                                'VER PEDIDOS|'+
                                'REIMPRESSAO|'+
                                'ADMINISTRATIVO|'+
+                               'CANCELAMENTO|'+
                                'S A I R',
                                PadCenter('PAPA-FILA - ACBR', CACBrPOSPGWebColunasDisplay)
                              );
@@ -1697,8 +1703,8 @@ begin
     0: ExibirMenuPedidos(TerminalId);
     1: ExecutarReimpressao(TerminalId);
     2: EfetuarAdministrativo(TerminalId);
+    3: EfetuarCancelamento(TerminalId);
   end;
-  ACBrPosPrinter1.ConfigGaveta.SinalInvertido := True;
 end;
 
 procedure TfrPOSTEFServer.ExibirMenuPedidos(const TerminalId: String);
@@ -2322,6 +2328,7 @@ begin
                                'MESAS ABERTAS|'+
                                'REIMPRESSAO|'+
                                'ADMINISTRATIVO|'+
+                               'CANCELAMENTO|'+
                                'S A I R',
                                PadCenter('RESTAURANTE - ACBR', CACBrPOSPGWebColunasDisplay)
                              );
@@ -2329,8 +2336,8 @@ begin
     0: ExibirMenuMesasEmAberto(TerminalId);
     1: ExecutarReimpressao(TerminalId);
     2: EfetuarAdministrativo(TerminalId);
+    3: EfetuarCancelamento(TerminalId);
   end;
-  ACBrPosPrinter1.ConfigGaveta.SinalInvertido := True;
 end;
 
 procedure TfrPOSTEFServer.ExibirMenuMesasEmAberto(const TerminalId: String);
@@ -2402,7 +2409,79 @@ end;
 procedure TfrPOSTEFServer.ExecutarFluxoFechamentoBomba(const TerminalId: String);
 begin
   // TODO
+end;
 
+procedure TfrPOSTEFServer.ExecutarFluxoHomologacaoPayGo(const TerminalId: String);
+var
+  OP: SmallInt;
+begin
+  OP := 0;
+  while (OP < 3) do
+  begin
+    OP := ACBrPOS1.ExecutarMenu( TerminalId,
+                                 'VENDAS|'+
+                                 'ADMINISTRATIVO|'+
+                                 'CANCELAMENTO|'+
+                                 'S A I R',
+                                 PadCenter('TESTES HOMOLOGACAO', CACBrPOSPGWebColunasDisplay)
+                               );
+    case OP of
+      0: ExibirTestesVendaHomologacao(TerminalId);
+      1: EfetuarAdministrativo(TerminalId);
+      2: EfetuarCancelamento(TerminalId);
+    end;
+  end;
+end;
+
+procedure TfrPOSTEFServer.ExibirTestesVendaHomologacao(const TerminalId: String);
+var
+  OP: SmallInt;
+  ValorVenda: Currency;
+  TipoCartao: Char;
+  Parcelas: Integer;
+begin
+  ValorVenda := 0;
+  TipoCartao := '1';   // credito
+  Parcelas := 1;
+
+  OP := ACBrPOS1.ExecutarMenu( TerminalId,
+                               'VENDA CRED   84,00|'+
+                               'VENDA CRED 1500,00|'+
+                               'VENDA DEB   200,00|'+
+                               'VENDA CRED    1,53|'+
+                               'V O L T A R',
+                               PadCenter('TESTES VENDA', CACBrPOSPGWebColunasDisplay)
+                             );
+  case OP of
+    0:
+      begin
+        ValorVenda := 84;
+        Parcelas := 3;
+      end;
+    1:
+      ValorVenda := 1500;
+    2:
+      begin
+        ValorVenda := 200;
+        TipoCartao := '2';  // Debito
+      end;
+    3:
+      ValorVenda := 1.53;
+  else
+    Exit;
+  end;
+
+  ACBrPOS1.ParametrosAdicionais.Clear;
+  ACBrPOS1.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE] := TipoCartao;
+  if (Parcelas = 1) then
+    ACBrPOS1.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '1' //1: à vista
+  else
+  begin
+    ACBrPOS1.ParametrosAdicionais.ValueInfo[PWINFO_INSTALLMENTS] := IntToStr(Parcelas);
+    ACBrPOS1.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '2'; //2: parcelado pelo emissor
+  end;
+
+  ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorVenda, prnAmbas);
 end;
 
 procedure TfrPOSTEFServer.ExecutarReimpressao(const TerminalId: String);
@@ -2422,6 +2501,12 @@ procedure TfrPOSTEFServer.EfetuarAdministrativo(const TerminalId: String);
 begin
   ACBrPOS1.ParametrosAdicionais.Clear;
   ACBrPOS1.ExecutarTransacaoTEF(TerminalId, operAdmin);
+end;
+
+procedure TfrPOSTEFServer.EfetuarCancelamento(const TerminalId: String);
+begin
+  ACBrPOS1.ParametrosAdicionais.Clear;
+  ACBrPOS1.ExecutarTransacaoTEF(TerminalId, operCancelarVenda);
 end;
 
 procedure TfrPOSTEFServer.EfetuarMultiplosPagamento(const TerminalId: String;
@@ -2932,7 +3017,7 @@ end;
 
 procedure TfrPOSTEFServer.IncluirPedidosSimuladosPosto;
 begin
-
+  // TODO
 end;
 
 procedure TfrPOSTEFServer.LerConfiguracao;

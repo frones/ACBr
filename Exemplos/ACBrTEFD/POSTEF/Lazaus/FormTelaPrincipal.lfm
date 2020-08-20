@@ -1,7 +1,7 @@
 object frPOSTEFServer: TfrPOSTEFServer
-  Left = 322
+  Left = 471
   Height = 440
-  Top = 132
+  Top = 178
   Width = 790
   Caption = 'ACBr POS TEF Server'
   ClientHeight = 440
@@ -6300,6 +6300,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 'Papa Fila'
                 'Fechamento de Mesa'
                 'Posto de Gasolina'
+                'Roteiro de Homologação'
               )
               Style = csDropDownList
               TabOrder = 9

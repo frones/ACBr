@@ -1,9 +1,9 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Left = 424
   Top = 133
-  Width = 1370
-  Height = 700
   Caption = 'ACBRBoletoFCFortesFr'
+  ClientHeight = 600
+  ClientWidth = 1200
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -336,9 +336,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object imgBanco4: TRLImage
         Left = 1
-        Top = -1
+        Top = 3
         Width = 179
-        Height = 42
+        Height = 38
         Scaled = True
       end
       object txtNumeroBanco4: TRLLabel
@@ -708,11 +708,11 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Left = 15
       Top = 425
       Width = 768
-      Height = 429
+      Height = 422
       BeforePrint = RLBand1BeforePrint
       object RLDraw75: TRLDraw
         Left = 570
-        Top = 264
+        Top = 262
         Width = 193
         Height = 5
         DrawKind = dkLine
@@ -720,7 +720,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw74: TRLDraw
         Left = 570
-        Top = 187
+        Top = 185
         Width = 193
         Height = 5
         DrawKind = dkLine
@@ -728,7 +728,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw28: TRLDraw
         Left = 562
-        Top = 46
+        Top = 44
         Width = 17
         Height = 246
         Angle = 90.000000000000000000
@@ -736,7 +736,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw21: TRLDraw
         Left = 117
-        Top = 108
+        Top = 106
         Width = 17
         Height = 56
         Angle = 90.000000000000000000
@@ -744,7 +744,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw24: TRLDraw
         Left = 241
-        Top = 107
+        Top = 105
         Width = 17
         Height = 57
         Angle = 90.000000000000000000
@@ -752,7 +752,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw25: TRLDraw
         Left = 387
-        Top = 107
+        Top = 105
         Width = 17
         Height = 56
         Angle = 90.000000000000000000
@@ -760,7 +760,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw29: TRLDraw
         Left = 5
-        Top = 399
+        Top = 397
         Width = 763
         Height = 16
         DrawKind = dkLine
@@ -768,35 +768,35 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw39: TRLDraw
         Left = 0
-        Top = 348
+        Top = 346
         Width = 763
         Height = 8
         DrawKind = dkLine
       end
       object RLDraw38: TRLDraw
         Left = 0
-        Top = 284
+        Top = 282
         Width = 763
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw37: TRLDraw
         Left = 570
-        Top = 233
+        Top = 231
         Width = 193
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw34: TRLDraw
         Left = 570
-        Top = 207
+        Top = 205
         Width = 193
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw27: TRLDraw
         Left = 312
-        Top = 109
+        Top = 107
         Width = 17
         Height = 25
         Angle = 90.000000000000000000
@@ -804,7 +804,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw26: TRLDraw
         Left = 179
-        Top = 133
+        Top = 131
         Width = 17
         Height = 29
         Angle = 90.000000000000000000
@@ -812,42 +812,42 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw23: TRLDraw
         Left = 0
-        Top = 156
+        Top = 154
         Width = 763
         Height = 13
         DrawKind = dkLine
       end
       object RLDraw22: TRLDraw
         Left = 1
-        Top = 124
+        Top = 122
         Width = 763
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw20: TRLDraw
         Left = 0
-        Top = 65
+        Top = 63
         Width = 763
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw19: TRLDraw
         Left = 0
-        Top = 99
+        Top = 97
         Width = 763
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw18: TRLDraw
         Left = 0
-        Top = 40
+        Top = 38
         Width = 763
         Height = 13
         DrawKind = dkLine
       end
       object RLDraw17: TRLDraw
         Left = 279
-        Top = 10
+        Top = 8
         Width = 17
         Height = 36
         Angle = 90.000000000000000000
@@ -855,7 +855,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw16: TRLDraw
         Left = 173
-        Top = 10
+        Top = 8
         Width = 17
         Height = 36
         Angle = 90.000000000000000000
@@ -863,14 +863,14 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object imgBanco2: TRLImage
         Left = 1
-        Top = 5
+        Top = 3
         Width = 179
         Height = 38
         Scaled = True
       end
       object txtNumeroBanco2: TRLLabel
         Left = 184
-        Top = 14
+        Top = 12
         Width = 102
         Height = 29
         Alignment = taCenter
@@ -885,7 +885,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel67: TRLLabel
         Left = 289
-        Top = 21
+        Top = 19
         Width = 465
         Height = 18
         Alignment = taRightJustify
@@ -900,7 +900,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel68: TRLLabel
         Left = 4
-        Top = 47
+        Top = 45
         Width = 70
         Height = 10
         Caption = 'Local de Pagamento'
@@ -913,7 +913,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object lblLocalPagto: TRLMemo
         Left = 9
-        Top = 56
+        Top = 54
         Width = 557
         Height = 17
         AutoSize = False
@@ -927,7 +927,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel69: TRLLabel
         Left = 4
-        Top = 75
+        Top = 73
         Width = 44
         Height = 10
         Caption = 'Benefici'#225'rio'
@@ -940,7 +940,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtNomeCedente2: TRLLabel
         Left = 49
-        Top = 74
+        Top = 72
         Width = 519
         Height = 14
         AutoSize = False
@@ -955,7 +955,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel70: TRLLabel
         Left = 4
-        Top = 109
+        Top = 107
         Width = 68
         Height = 10
         Caption = 'Data do Documento'
@@ -968,7 +968,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtDataDocumento2: TRLLabel
         Left = 4
-        Top = 118
+        Top = 116
         Width = 120
         Height = 14
         Alignment = taCenter
@@ -983,7 +983,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel71: TRLLabel
         Left = 127
-        Top = 109
+        Top = 107
         Width = 79
         Height = 10
         Caption = 'Numero do Documento'
@@ -996,7 +996,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtNumeroDocumento2: TRLLabel
         Left = 127
-        Top = 119
+        Top = 117
         Width = 122
         Height = 13
         Alignment = taCenter
@@ -1011,7 +1011,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel72: TRLLabel
         Left = 252
-        Top = 109
+        Top = 107
         Width = 47
         Height = 10
         Caption = 'Especie Doc.'
@@ -1024,7 +1024,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtEspecieDoc2: TRLLabel
         Left = 252
-        Top = 119
+        Top = 117
         Width = 68
         Height = 13
         Alignment = taCenter
@@ -1039,7 +1039,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel73: TRLLabel
         Left = 322
-        Top = 108
+        Top = 106
         Width = 23
         Height = 10
         Caption = 'Aceite'
@@ -1052,7 +1052,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtAceite2: TRLLabel
         Left = 322
-        Top = 119
+        Top = 117
         Width = 66
         Height = 13
         Alignment = taCenter
@@ -1067,7 +1067,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel74: TRLLabel
         Left = 399
-        Top = 109
+        Top = 107
         Width = 82
         Height = 10
         Caption = 'Data do Processamento'
@@ -1080,7 +1080,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtDataProcessamento2: TRLLabel
         Left = 399
-        Top = 118
+        Top = 116
         Width = 124
         Height = 14
         Alignment = taCenter
@@ -1095,7 +1095,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtUsoBanco2: TRLLabel
         Left = 4
-        Top = 143
+        Top = 141
         Width = 120
         Height = 12
         Alignment = taCenter
@@ -1111,7 +1111,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel75: TRLLabel
         Left = 4
-        Top = 133
+        Top = 131
         Width = 49
         Height = 10
         Caption = 'Uso do Banco'
@@ -1124,7 +1124,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtCarteira2: TRLLabel
         Left = 127
-        Top = 142
+        Top = 140
         Width = 58
         Height = 13
         Alignment = taCenter
@@ -1139,7 +1139,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel76: TRLLabel
         Left = 127
-        Top = 133
+        Top = 131
         Width = 30
         Height = 10
         Caption = 'Carteira'
@@ -1152,7 +1152,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel77: TRLLabel
         Left = 188
-        Top = 133
+        Top = 131
         Width = 29
         Height = 10
         Caption = 'Especie'
@@ -1165,7 +1165,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtEspecie2: TRLLabel
         Left = 190
-        Top = 143
+        Top = 141
         Width = 58
         Height = 14
         Alignment = taCenter
@@ -1180,7 +1180,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel78: TRLLabel
         Left = 252
-        Top = 133
+        Top = 131
         Width = 40
         Height = 10
         Caption = 'Quantidade'
@@ -1193,7 +1193,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtQuantidade2: TRLLabel
         Left = 252
-        Top = 143
+        Top = 141
         Width = 140
         Height = 14
         Alignment = taCenter
@@ -1207,7 +1207,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel79: TRLLabel
         Left = 399
-        Top = 137
+        Top = 135
         Width = 20
         Height = 10
         Caption = 'Valor'
@@ -1220,7 +1220,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtValorMoeda2: TRLLabel
         Left = 399
-        Top = 147
+        Top = 145
         Width = 124
         Height = 13
         Alignment = taCenter
@@ -1234,7 +1234,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel80: TRLMemo
         Left = 4
-        Top = 163
+        Top = 161
         Width = 461
         Height = 26
         Behavior = [beSiteExpander]
@@ -1249,7 +1249,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtInstrucoes2: TRLMemo
         Left = 4
-        Top = 184
+        Top = 182
         Width = 529
         Height = 83
         AutoSize = False
@@ -1270,7 +1270,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel81: TRLLabel
         Left = 574
-        Top = 52
+        Top = 50
         Width = 41
         Height = 10
         Caption = 'Vencimento'
@@ -1283,7 +1283,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtDataVencimento2: TRLLabel
         Left = 575
-        Top = 59
+        Top = 57
         Width = 172
         Height = 13
         Alignment = taRightJustify
@@ -1298,7 +1298,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel82: TRLLabel
         Left = 574
-        Top = 76
+        Top = 74
         Width = 103
         Height = 10
         Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
@@ -1311,7 +1311,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtCodigoCedente2: TRLLabel
         Left = 575
-        Top = 89
+        Top = 87
         Width = 172
         Height = 14
         Alignment = taRightJustify
@@ -1326,7 +1326,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel83: TRLLabel
         Left = 574
-        Top = 108
+        Top = 106
         Width = 53
         Height = 10
         Caption = 'Nosso N'#250'mero'
@@ -1339,7 +1339,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtNossoNumero2: TRLLabel
         Left = 575
-        Top = 117
+        Top = 115
         Width = 172
         Height = 15
         Alignment = taRightJustify
@@ -1354,7 +1354,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel84: TRLLabel
         Left = 574
-        Top = 135
+        Top = 133
         Width = 87
         Height = 10
         Caption = '( = ) Valor do Documento'
@@ -1367,7 +1367,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtValorDocumento2: TRLLabel
         Left = 575
-        Top = 146
+        Top = 144
         Width = 172
         Height = 13
         Alignment = taRightJustify
@@ -1382,7 +1382,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel85: TRLLabel
         Left = 573
-        Top = 164
+        Top = 162
         Width = 92
         Height = 10
         Caption = '( - ) Desconto / Abatimento'
@@ -1395,7 +1395,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtDesconto2: TRLLabel
         Left = 575
-        Top = 173
+        Top = 171
         Width = 172
         Height = 16
         Alignment = taRightJustify
@@ -1409,7 +1409,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel86: TRLLabel
         Left = 574
-        Top = 217
+        Top = 215
         Width = 87
         Height = 10
         Caption = '( + ) Mora / Multa / Juros'
@@ -1422,7 +1422,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtMoraMulta2: TRLLabel
         Left = 575
-        Top = 227
+        Top = 225
         Width = 172
         Height = 14
         Alignment = taRightJustify
@@ -1436,7 +1436,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel87: TRLLabel
         Left = 575
-        Top = 270
+        Top = 268
         Width = 68
         Height = 10
         Caption = '( = ) Valor Cobrado'
@@ -1449,7 +1449,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtValorCobrado2: TRLLabel
         Left = 575
-        Top = 278
+        Top = 276
         Width = 172
         Height = 13
         Alignment = taRightJustify
@@ -1463,7 +1463,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object lblPagador2: TRLLabel
         Left = 3
-        Top = 294
+        Top = 292
         Width = 46
         Height = 14
         Caption = 'Pagador:'
@@ -1476,7 +1476,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtNomePagador2: TRLLabel
         Left = 53
-        Top = 294
+        Top = 292
         Width = 514
         Height = 12
         AutoSize = False
@@ -1490,7 +1490,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtEndPagador2: TRLLabel
         Left = 53
-        Top = 308
+        Top = 306
         Width = 514
         Height = 12
         AutoSize = False
@@ -1504,7 +1504,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel89: TRLLabel
         Left = 573
-        Top = 294
+        Top = 292
         Width = 45
         Height = 10
         Caption = 'CPF / CNPJ'
@@ -1517,7 +1517,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtCpfCnpjPagador2: TRLLabel
         Left = 574
-        Top = 306
+        Top = 304
         Width = 181
         Height = 14
         AutoSize = False
@@ -1531,7 +1531,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel90: TRLLabel
         Left = 574
-        Top = 325
+        Top = 323
         Width = 57
         Height = 10
         Caption = 'C'#243'digo de Baixa'
@@ -1544,7 +1544,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtCodigoBaixa2: TRLLabel
         Left = 574
-        Top = 336
+        Top = 334
         Width = 181
         Height = 14
         AutoSize = False
@@ -1557,7 +1557,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLMemo2: TRLMemo
         Left = 1
-        Top = 353
+        Top = 351
         Width = 179
         Height = 45
         AutoSize = False
@@ -1576,7 +1576,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel91: TRLLabel
         Left = 664
-        Top = 353
+        Top = 351
         Width = 96
         Height = 10
         Caption = 'Autentica'#231#227'o Mec'#226'nica'
@@ -1589,7 +1589,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel98: TRLLabel
         Left = 0
-        Top = 400
+        Top = 398
         Width = 26
         Height = 14
         Caption = '"'
@@ -1602,7 +1602,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object lblSacador2a: TRLLabel
         Left = 3
-        Top = 323
+        Top = 321
         Width = 47
         Height = 14
         Caption = 'Sacador/'
@@ -1615,7 +1615,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtEndSacadorAval2: TRLLabel
         Left = 53
-        Top = 337
+        Top = 335
         Width = 514
         Height = 14
         AutoSize = False
@@ -1629,7 +1629,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtReferencia2: TRLLabel
         Left = 638
-        Top = 320
+        Top = 318
         Width = 116
         Height = 14
         AutoSize = False
@@ -1643,7 +1643,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel92: TRLLabel
         Left = 575
-        Top = 190
+        Top = 188
         Width = 76
         Height = 10
         Caption = '( - ) Outras Deducoes'
@@ -1657,7 +1657,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel96: TRLLabel
         Left = 575
-        Top = 244
+        Top = 242
         Width = 84
         Height = 10
         Caption = '( + ) Outros Acrescimos'
@@ -1671,7 +1671,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtOrientacoesBanco: TRLMemo
         Left = 187
-        Top = 353
+        Top = 351
         Width = 296
         Height = 49
         Alignment = taCenter
@@ -1691,7 +1691,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw1: TRLDraw
         Left = 182
-        Top = 352
+        Top = 350
         Width = 3
         Height = 53
         Angle = 80.000000000000000000
@@ -1699,7 +1699,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object rlBarraOrientbanco: TRLDraw
         Left = 482
-        Top = 351
+        Top = 349
         Width = 10
         Height = 56
         Angle = 90.000000000000000000
@@ -1707,7 +1707,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object lblSacador2b: TRLLabel
         Left = 3
-        Top = 337
+        Top = 335
         Width = 45
         Height = 14
         Caption = 'Avalista:'
@@ -1720,7 +1720,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtNomeSacadorAval2: TRLLabel
         Left = 53
-        Top = 323
+        Top = 321
         Width = 514
         Height = 12
         AutoSize = False
@@ -1734,7 +1734,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtEndCedente: TRLMemo
         Left = 51
-        Top = 85
+        Top = 83
         Width = 503
         Height = 22
         AutoSize = False
@@ -1750,9 +1750,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand2: TRLBand
       Left = 15
-      Top = 854
+      Top = 847
       Width = 768
-      Height = 472
+      Height = 466
       RealBounds.UsedUnit = buMilimeters
       BeforePrint = RLBand2BeforePrint
       object RLDraw76: TRLDraw
@@ -2962,9 +2962,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object imgBanco5: TRLImage
         Left = 1
-        Top = -1
+        Top = 3
         Width = 179
-        Height = 42
+        Height = 38
         Scaled = True
       end
       object txtDataDocumento5: TRLLabel
@@ -7497,8 +7497,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 82
-    Top = 25
+    Left = 74
+    Top = 97
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000

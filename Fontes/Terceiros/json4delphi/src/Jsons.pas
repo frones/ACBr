@@ -34,7 +34,7 @@ unit Jsons;
 
 interface
 
-uses Classes, SysUtils, jsonsutilsEx;
+uses Classes, SysUtils, JsonsUtilsEx;
 
 type
   TJsonValueType = (jvNone, jvNull, jvString, jvNumber, jvBoolean, jvObject, jvArray);

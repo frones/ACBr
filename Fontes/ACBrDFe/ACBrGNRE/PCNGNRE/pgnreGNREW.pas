@@ -267,7 +267,10 @@ function TGNREW.GerarXml2: boolean;
 var
   i  : Integer;
   Doc: string;
+  LValorGNRE : Currency;
 begin
+  LValorGNRE := 0;
+  
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
@@ -322,8 +325,10 @@ begin
 
   Gerador.wCampo(tcInt, '', 'receita            ', 06, 06, 1, GNRE.c02_receita, '');
   Gerador.wCampo(tcInt, '', 'detalhamentoReceita', 06, 06, 0, GNRE.c25_detalhamentoReceita, '');
-  Gerador.wCampo(tcStr, '', 'documentoOrigem    ', 01, 18, 1, GNRE.c04_docOrigem, '',
-                         True, 'tipo="' + FormatFloat('00', GNRE.c28_tipoDocOrigem) + '"');
+
+  if GNRE.c04_docOrigem <> '' then
+    Gerador.wCampo(tcStr, '', 'documentoOrigem    ', 01, 18, 1, GNRE.c04_docOrigem, '',
+                   True, 'tipo="' + FormatFloat('00', GNRE.c28_tipoDocOrigem) + '"');
   Gerador.wCampo(tcInt, '', 'produto            ', 01, 04, 0, GNRE.c26_produto, '');
 
   if (GNRE.referencia.periodo >= 0) or (GNRE.referencia.mes <> '') or
@@ -331,7 +336,9 @@ begin
   begin
     Gerador.wGrupo('referencia');
 
-    Gerador.wCampo(tcInt, '', 'periodo', 1, 1, 1, GNRE.referencia.periodo, '');
+    if GNRE.referencia.periodo >= 0 then
+      Gerador.wCampo(tcInt, '', 'periodo', 1, 1, 1, GNRE.referencia.periodo, '');
+
     Gerador.wCampo(tcInt, '', 'mes    ', 2, 2, 0, GNRE.referencia.mes, '');
     Gerador.wCampo(tcInt, '', 'ano    ', 4, 4, 0, GNRE.referencia.ano, '');
     Gerador.wCampo(tcInt, '', 'parcela', 1, 3, 0, GNRE.referencia.parcela, '');
@@ -339,7 +346,8 @@ begin
     Gerador.wGrupo('/referencia');
   end;
 
-  Gerador.wCampo(tcDat, '', 'dataVencimento', 10, 10, 1, GNRE.c14_dataVencimento, '');
+  if GNRE.c14_dataVencimento > 0 then
+    Gerador.wCampo(tcDat, '', 'dataVencimento', 10, 10, 1, GNRE.c14_dataVencimento, '');
 
 {
 11 - Valor Principal ICMS
@@ -358,8 +366,11 @@ begin
                          True, 'tipo="11"');
 
   if GNRE.ValorFECP > 0 then
+  begin
     Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.ValorFECP, '',
                          True, 'tipo="12"');
+    LValorGNRE := GNRE.ValorFECP;
+  end;
 
   if GNRE.c10_valorTotal > 0 then
     Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.c10_valorTotal, '',
@@ -450,10 +461,16 @@ begin
   Gerador.wGrupo('/itensGNRE');
 
   if GNRE.c06_valorPrincipal > 0 then
-    Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, GNRE.c06_valorPrincipal, '')
+  begin
+  	LValorGNRE := LValorGNRE + GNRE.c06_valorPrincipal;
+    Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
+  end
   else
     if GNRE.c10_valorTotal > 0 then
-      Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, GNRE.c10_valorTotal, '');
+    begin
+      LValorGNRE := LValorGNRE + GNRE.c10_valorTotal;
+      Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
+    end;
 
   Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
   Gerador.wCampo(tcStr, '', 'identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');

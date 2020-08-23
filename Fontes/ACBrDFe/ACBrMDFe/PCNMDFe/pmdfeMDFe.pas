@@ -618,15 +618,15 @@ type
 
   Taereo = class(TObject)
   private
-    Fnac: Integer;
-    Fmatr: Integer;
+    Fnac: String;
+    Fmatr: String;
     FnVoo: String;
     FcAerEmb: String;
     FcAerDes: String;
     FdVoo: TDateTime;
   public
-    property nac: Integer    read Fnac     write Fnac;
-    property matr: Integer   read Fmatr    write Fmatr;
+    property nac: String     read Fnac     write Fnac;
+    property matr: String    read Fmatr    write Fmatr;
     property nVoo: String    read FnVoo    write FnVoo;
     property cAerEmb: String read FcAerEmb write FcAerEmb;
     property cAerDes: String read FcAerDes write FcAerDes;
@@ -2359,7 +2359,7 @@ begin
   FinfContratante.Free;
   FvalePed.Free;
   FinfPag.Free;
-  
+
   inherited;
 end;
 

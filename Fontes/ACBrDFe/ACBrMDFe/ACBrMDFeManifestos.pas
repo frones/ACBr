@@ -742,7 +742,7 @@ begin
         moAereo:
         begin
           sSecao := 'aereo';
-          INIRec.WriteInteger(sSecao, 'matr', Aereo.matr);
+          INIRec.WriteString(sSecao, 'matr', Aereo.matr);
           INIRec.WriteString(sSecao, 'nVoo', Aereo.nVoo);
           INIRec.WriteString(sSecao, 'cAerEmb', Aereo.cAerEmb);
           INIRec.WriteString(sSecao, 'cAerDes', Aereo.cAerDes);
@@ -1705,10 +1705,10 @@ begin
       //
       //*********************************************************************
 
-      Aereo.nac := INIRec.ReadInteger('aereo', 'nac', 0);
-      if (Aereo.nac <> 0) then
+      Aereo.nac := INIRec.ReadString('aereo', 'nac', '');
+      if (Aereo.nac <> '') then
       begin
-        Aereo.matr    := INIRec.ReadInteger('aereo', 'matr', 0);
+        Aereo.matr    := INIRec.ReadString('aereo', 'matr', '');
         Aereo.nVoo    := INIRec.ReadString('aereo', 'nVoo', '');
         Aereo.cAerEmb := INIRec.ReadString('aereo', 'cAerEmb', '');
         Aereo.cAerDes := INIRec.ReadString('aereo', 'cAerDes', '');

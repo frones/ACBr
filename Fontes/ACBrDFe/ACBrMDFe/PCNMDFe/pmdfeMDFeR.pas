@@ -374,8 +374,8 @@ begin
     (* Grupo da TAG <aereo> ***************************************************)
     if Leitor.rExtrai(2, 'aereo') <> '' then
     begin
-      MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
-      MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
+      MDFe.Aereo.nac     := Leitor.rCampo(tcStr, 'nac');
+      MDFe.Aereo.matr    := Leitor.rCampo(tcStr, 'matr');
       MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
       MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
       MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');

@@ -670,8 +670,8 @@ end;
 procedure TMDFeW.GerarAereo;
 begin
   Gerador.wGrupo('aereo', '#01');
-  Gerador.wCampo(tcInt, '#02', 'nac    ', 01, 04, 1, MDFe.Aereo.nac, DSC_NAC);
-  Gerador.wCampo(tcInt, '#03', 'matr   ', 01, 06, 1, MDFe.Aereo.matr, DSC_MATR);
+  Gerador.wCampo(tcStr, '#02', 'nac    ', 01, 04, 1, MDFe.Aereo.nac, DSC_NAC);
+  Gerador.wCampo(tcStr, '#03', 'matr   ', 01, 06, 1, MDFe.Aereo.matr, DSC_MATR);
   Gerador.wCampo(tcStr, '#04', 'nVoo   ', 05, 09, 1, MDFe.Aereo.nVoo, DSC_NVOO);
   Gerador.wCampo(tcStr, '#05', 'cAerEmb', 03, 04, 1, MDFe.Aereo.cAerEmb, DSC_CAEREMB);
   Gerador.wCampo(tcStr, '#06', 'cAerDes', 03, 04, 1, MDFe.Aereo.cAerDes, DSC_CAERDES);

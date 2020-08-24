@@ -306,8 +306,8 @@ begin
     Close;
     Clear;
     // Aereo
-    Add('nac', ftInteger);
-    Add('matr', ftInteger);
+    Add('nac', ftString, 4);
+    Add('matr', ftString, 6);
     Add('nVoo', ftString, 9);
     Add('cAerEmb', ftString, 4);
     Add('cAerDes', ftString, 4);

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2020
+-- pcnConversao --
+[+] Acrescentado o tipo de evento "teEncerramentoFisco".
+   Por: Italo Jurisato Junior
+
 23/07/2020
 -- Diversos --
 [+] Acrescentado na unit pcnConsts as constantes que estavam no pcnGerador.

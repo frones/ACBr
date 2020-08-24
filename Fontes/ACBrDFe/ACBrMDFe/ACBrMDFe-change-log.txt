@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2020
+-- pmdfeConversaoMDFe/pmdfeEventoMDFe --
+[+] Incluido os tipos de eventos: teEncerramentoFisco e teRegistroPassagemBRId.
+   Por: Italo Jurisato Junior
+
 31/07/2020
 -- ACBrMDFeManifestos --
 [*] Ajuste e padronização na leitura do .ini ref campo autXML

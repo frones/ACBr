@@ -391,9 +391,11 @@ end;
 function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
-            ['-99999', '110111', '110112', '110114', '110115', '110116'],
+            ['-99999', '110111', '110112', '110114', '110115', '110116',
+             '310112', '510620'],
             [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
-             teInclusaoDFe, tePagamentoOperacao]);
+             teInclusaoDFe, tePagamentoOperacao, teEncerramentoFisco,
+             teRegistroPassagemBRId]);
 end;
 
 initialization

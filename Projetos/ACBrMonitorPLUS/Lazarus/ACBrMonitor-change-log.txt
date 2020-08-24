@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2020
+-- DoACBrNFeUnit --
+[*] Ajuste ao ler arquivo .ini e atualizar dados validados pelo componente
+
 31/07/2020
 -- ACBrMonitor1 --
 [*] Ajuste na Definição de geração de path para os DFes "Salvar Arquivos Em Pastas Separadas"

@@ -691,17 +691,32 @@ begin
 end;
 
 procedure TACBrObjetoNFe.LerIniNFe(ArqINI: String);
+var
+  AXML: String;
+  CargaDFe: TACBrCarregarNFe;
 begin
+  AXML:= '';
   with fACBrNFe do
   begin
     NotasFiscais.Clear;
-    NotasFiscais.LoadFromIni(ArqINI);
+    NotasFiscais.LoadFromIni( ArqINI );
 
     //Campos preenchidos em tela
     if (NotasFiscais.Count > 0) and
        ( NaoEstaVazio(MonitorConfig.DFE.WebService.NFe.CNPJContador) ) then
       with NotasFiscais.Items[0].NFe.autXML.New do
         CNPJCPF := MonitorConfig.DFE.WebService.NFe.CNPJContador;
+
+    //Deve recarregar os dados do XML validado pelo componente
+    AXML := NotasFiscais.Items[0].XMLOriginal;
+    NotasFiscais.Clear;
+    CargaDFe := TACBrCarregarNFe.Create(fACBrNFe, AXML, False);
+    try
+      if (NotasFiscais.Count = 0) then
+        Raise Exception.Create('Nenhuma NFe gerada no componente!');
+    finally
+      CargaDFe.Free;
+    end;
 
   end;
 end;
@@ -979,7 +994,7 @@ begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     try
-      fpCmd.Resposta := GerarNFeIni(AXML);
+      fpCmd.Resposta := sLineBreak + GerarNFeIni(AXML);
     except
       on E: Exception do
         raise Exception.Create('Erro ao gerar INI da NFe.' + sLineBreak + E.Message);

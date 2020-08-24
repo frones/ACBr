@@ -156,6 +156,7 @@ const
 
   LockfileDirectory = '/var/lock'; {HGJ}
   PortIsClosed = -1;               {HGJ}
+  ErrAccessDenied = 9990;          {DSA}
   ErrAlreadyOwned = 9991;          {HGJ}
   ErrAlreadyInUse = 9992;          {HGJ}
   ErrWrongParameter = 9993;        {HGJ}
@@ -995,7 +996,11 @@ begin
     if FLinuxLock then
       if not cpomComportAccessible then
       begin
-        RaiseSynaError(ErrAlreadyOwned);
+        if FileExists(LockfileName) then
+          RaiseSynaError(ErrAlreadyOwned)
+        else
+          RaiseSynaError(ErrAccessDenied);
+
         Exit;
       end;
   {$ENDIF}
@@ -2270,8 +2275,13 @@ end;
 
 procedure TBlockSerial.CreateLockfile(PidNr: integer);
 var
-  f: TextFile;
   s: string;
+{$IFDEF FPC}
+  m: Word;
+  FS: TFileStream;
+{$ELSE}
+  f: TextFile;
+{$ENDIF}
 begin
   // Create content for file
   s := IntToStr(PidNr);
@@ -2279,6 +2289,7 @@ begin
     s := ' ' + s;
   // Create file
   try
+{$IFNDEF FPC}
     AssignFile(f, LockfileName);
     try
       Rewrite(f);
@@ -2286,6 +2297,21 @@ begin
     finally
       CloseFile(f);
     end;
+{$ELSE}
+    s := s + sLineBreak;
+    if FileExists(LockfileName) then
+      m := fmOpenReadWrite
+    else
+      m := fmCreate;
+    FS := TFileStream.Create(LockfileName, m or fmShareDenyWrite);
+    try
+      FS.Seek(0, soEnd);  // vai para EOF
+      FS.Write(Pointer(s)^, Length(s));
+    finally
+      FS.Free ;
+    end;
+{$ENDIF}
+
     // Allow all users to enjoy the benefits of cpom
     s := 'chmod a+rw ' + LockfileName;
 {$IFNDEF FPC}
@@ -2332,10 +2358,10 @@ begin
   if not DirectoryExists(LockfileDirectory) then
     CreateDir(LockfileDirectory);
   // Check the Lockfile
-  if not FileExists (Filename) then
+  if not FileExists(Filename) then
   begin // comport is not locked. Lock it for us.
     CreateLockfile(MyPid);
-    result := true;
+    result := FileExists(Filename);
     exit;  // done.
   end;
   // Is port owned by orphan? Then it's time for error recovery.
@@ -2345,7 +2371,7 @@ begin
   begin //  Lockfile was left from former desaster
     DeleteFile(Filename); // error recovery
     CreateLockfile(MyPid);
-    result := true;
+    result := FileExists(Filename);
     exit;
   end;
   {$ENDIF}

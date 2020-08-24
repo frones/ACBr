@@ -44,7 +44,7 @@ type
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite, tbBancoPreEmite);
   TACBrCaracTitulo = (tcSimples, tcVinculada, tcCaucionada, tcDescontada, tcVendor, tcDireta,
                       tcSimplesRapComReg, tcCaucionadaRapComReg, tcDiretaEspecial);
-  TACBrPessoa = (pFisica,pJuridica,pOutras, pNenhum);
+  TACBrPessoa = (pFisica,pJuridica,pOutras);
   TACBrPessoaCedente = pFisica..pJuridica;
   TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal, lTermica80mm);
 
@@ -75,7 +75,7 @@ type
   TACBrCodigoMulta       = (cmValorFixo, cmPercentual);
 
   {Definir se o titulo será protestado, não protestado ou negativado }
-  TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar);
+  TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar, cnCancelamento);
 
   {Definir Tipo de Operação para Registro de Cobrança via WebService}
   TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta);

@@ -1264,6 +1264,7 @@ type
   end;
 
   { TListadeNFes }
+
   TACBrListadeNFes = class(TObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrDadosNFe);
@@ -1274,7 +1275,6 @@ type
     property Objects [Index: Integer]: TACBrDadosNFe
       read GetObject write SetObject; default;
   end;
-
 
   { TACBrTitulo }
 
@@ -1359,8 +1359,8 @@ type
 
     fCodigoGeracao        : String;
     fValorPago            : Currency;
-    fCaracTitulo          :TACBrCaracTitulo;
-	fListaDadosNFe        : TACBrListadeNFes;
+    fCaracTitulo          : TACBrCaracTitulo;
+    fListaDadosNFe        : TACBrListadeNFes;
     fTipoPagamento: TTipo_Pagamento;
     fQtdePagamentoParcial: Integer;
     fQtdeParcelas: Integer;
@@ -1741,7 +1741,6 @@ begin
    Result := inherited Add(Obj) ;
 end;
 
-
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
 {$ENDIF}
@@ -1919,6 +1918,7 @@ begin
    fCNPJCPF       := '';
    fDigitoVerificadorAgenciaConta:= '';
    fResponEmissao := tbCliEmite;
+   fIdentDistribuicao := tbClienteDistribui;
    fCaracTitulo   := tcSimples;
    fTipoInscricao := pJuridica;
    fAcbrBoleto    := TACBrBoleto(AOwner);
@@ -4037,7 +4037,8 @@ begin
         pFisica   : Result := '1';
         pJuridica : Result := '2';
         pOutras   : Result := '9';
-        pNenhum   : Result := '0';
+     else
+        Result := '0';
      end;
   end;
 end;

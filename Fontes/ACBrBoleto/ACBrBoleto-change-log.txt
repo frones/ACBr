@@ -49,6 +49,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2020
+-- ACBrBoletoW_Caixa --
+[*] Ajustes no calculo de Hash para geração do WebService.
+
+18/08/2020
+-- ACBrBancoSafra --
+[*] Ajuste na leitura do campo Seu numero
+https://www.projetoacbr.com.br/forum/topic/58867-retorno-400-do-banco-safra-422/
+
+-- ACBrBancoBanestes --
+[+] Adicionado geração de remessa e Retorno CNAB240
+Contribuição: Patrick Alves
+https://www.projetoacbr.com.br/forum/topic/58863-cnab240-banestes/
+
 10/08/2020
 -- ACBrBancoBRB --
 [*] Ajuste para informar 00, quando as instruções forem relativas a informações que não

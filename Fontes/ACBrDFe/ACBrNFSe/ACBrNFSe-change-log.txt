@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2020
+-- pnfsEnvLoteRpsResposta --
+[*] https://www.projetoacbr.com.br/forum/topic/59041-altera%C3%A7%C3%A3o-leitura-xml-provedor-governa/
+  Por: Diego Reckziegel
+
 20/08/2020
 -- pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/58998-t%C3%ADtulo-natureza-de-opera%C3%A7%C3%A3o-thema-reten%C3%A7%C3%A3o-de-iss/

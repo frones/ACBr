@@ -936,7 +936,7 @@ begin
         while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
         begin
           Msg  := Leitor.rCampo(tcStr, 'DesOco');
-          if (Pos('OK!', Msg) = 0) and (Pos('importado com sucesso', Msg) = 0) then
+          if (Pos('OK!', Msg) = 0) and (Pos('Importado com sucesso', Msg) = 0) then
           begin
             InfRec.FMsgRetorno.New;
             InfRec.FMsgRetorno[MsgErro].FMensagem := Msg;

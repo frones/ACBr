@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_ADRCST"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrADRCST\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - ADRC ST - (http://www.projetoacbr.com.br/)"/>
+    <Version Major="1"/>
+    <Files Count="10">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <UnitName Value="ACBrADRCST"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco0.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco0"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco0_Class.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco0_Class"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco1"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco1_Class"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco9"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
+        <UnitName Value="ACBrADRCST_Bloco9_Class"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Blocos.pas"/>
+        <UnitName Value="ACBrADRCST_Blocos"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCSTReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrADRCSTReg"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCSTConversao.pas"/>
+        <UnitName Value="ACBrADRCSTConversao"/>
+      </Item10>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

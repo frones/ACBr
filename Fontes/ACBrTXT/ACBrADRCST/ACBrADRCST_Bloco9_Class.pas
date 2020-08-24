@@ -1,0 +1,114 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Ribamar M. Santos                               }
+{                              Juliomar Marchetti                              }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit ACBrADRCST_Bloco9_Class;
+
+interface
+
+Uses
+  SysUtils, Classes, DateUtils, ACBrADRCST_Bloco9, ACBrTXTClass;
+
+type
+  { TBloco_9}
+  TBloco_9 = class(TACBrTXTClass)
+  private
+    FRegistro9000: TRegistro9000;
+    FRegistro9999: TRegistro9999;
+
+  public
+    constructor Create;
+    destructor Destroy;override;
+    property Registro9000 : TRegistro9000 read FRegistro9000 write FRegistro9000;
+
+    property Registro9999 : TRegistro9999 read FRegistro9999 write FRegistro9999;
+
+    procedure WriteRegistro9000;
+    procedure WriteRegistro9999(const AQTD_LIN : integer);
+  end;
+
+
+
+implementation
+
+{ TBloco_9 }
+
+constructor TBloco_9.Create;
+begin
+  inherited Create;
+  FRegistro9999 := TRegistro9999.Create;
+  FRegistro9999.Incrementa;
+  FRegistro9000 := TRegistro9000.Create;
+  FRegistro9999.Incrementa;
+
+end;
+
+destructor TBloco_9.Destroy;
+begin
+  FRegistro9999.Destroy;
+  FRegistro9000.Destroy;
+  inherited Destroy;
+end;
+
+procedure TBloco_9.WriteRegistro9000;
+begin
+  with Registro9000 do
+  begin
+    Add(
+        LFill(REG) +
+        lFill(REG1200_ICMSST_RECUPERAR_RESSARCIR, 9, 2) +
+        lFill(REG1200_ICMSST_COMPLEMENTAR, 9, 2) +
+        lFill(REG1300_ICMSST_RECUPERAR_RESSARCIR, 9, 2) +
+        lFill(REG1400_ICMSST_RECUPERAR_RESSARCIR, 9, 2) +
+        lFill(REG1500_ICMSST_RECUPERAR_RESSARCIR, 9, 2) +
+        lFill(REG9000_FECOP_RESSARCIR, 9, 2) +
+        lFill(REG9000_FECOP_COMPLEMENTAR, 9, 2)
+    );
+  end;
+end;
+
+procedure TBloco_9.WriteRegistro9999(const AQTD_LIN: integer);
+var
+   LQTD_LIN : integer;
+begin
+  with Registro9999 do
+  begin
+    LQTD_LIN := QTD_LIN + AQTD_LIN;
+    Add(
+        LFill(REG)+
+        LFill(LQTD_LIN,4));
+  end;
+end;
+
+end.

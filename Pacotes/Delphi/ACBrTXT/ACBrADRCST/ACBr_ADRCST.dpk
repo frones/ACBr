@@ -1,0 +1,49 @@
+package ACBr_ADRCST;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - ADRCST e CD - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  designide,
+  ACBr_TXTComum,
+  ACBr_PCNComum;
+
+contains
+  ACBrADRCST in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas',
+  ACBrADRCST_Bloco0 in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco0.pas',
+  ACBrADRCST_Bloco0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco0_Class.pas',
+  ACBrADRCST_Bloco1 in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1.pas',
+  ACBrADRCST_Bloco1_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas',
+  ACBrADRCST_Bloco9 in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9.pas',
+  ACBrADRCST_Bloco9_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas',
+  ACBrADRCST_Blocos in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Blocos.pas',
+  ACBrADRCSTConversao in '..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCSTConversao.pas';
+
+end.

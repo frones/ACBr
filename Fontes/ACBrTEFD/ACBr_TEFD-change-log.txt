@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/20
+-- ACBrTEFD --
+[-] Correção para SetNumVias, em classes que não são descendentes de TACBrTEFDClassTXT
+    https://www.projetoacbr.com.br/forum/topic/59076-quantidade-de-vias/
+    (por: DSA)
+
 17/08/20
 -- ACBrPOSPGWebAPI --
 [*] Correção da chamada a PTI_GetData, para funcionar corretamente em D7 e Delphi

@@ -1718,9 +1718,9 @@ var
 begin
   For I := 0 to fTEFList.Count-1 do
   begin
-    if fTEFList[I] is TACBrTEFDClassTXT then
+    if fTEFList[I] is TACBrTEFDClass then
     begin
-       with TACBrTEFDClassTXT( fTEFList[I] ) do
+       with TACBrTEFDClass( fTEFList[I] ) do
        begin
           if NumVias = fNumVias then
              NumVias := AValue;

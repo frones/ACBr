@@ -74,7 +74,7 @@ const
    CACBrTEFPGWebLib = 'PGWebLib.so';
   {$ENDIF}
 
-  CACBrTEFPGWebLibMinVersion = '0004.0000.0082.0003';
+  CACBrTEFPGWebLibMinVersion = '0004.0000.0064.0000';
 
   CSleepNothing = 300;
   CMilissegundosMensagem = 5000;  // 5 seg
@@ -319,6 +319,7 @@ const
 //==========================================================================================
 // Tipos utilizados na captura de dados dinamica
 //==========================================================================================
+  PWDAT_NONE         = 0;   // tipo inválido, ignorar...
   PWDAT_MENU         = 1;   // menu de opções
   PWDAT_TYPED        = 2;   // entrada digitada
   PWDAT_CARDINF      = 3;   // dados de cartão
@@ -1418,11 +1419,10 @@ begin
       iRet := PWRET_OK;
       while (iRet = PWRET_OK) or (iRet = PWRET_NOTHING) or (iRet = PWRET_MOREDATA) do
       begin
-        NumParams := Length(ArrParams);
+        Initialize(ArrParams);
+        NumParams := Length(ArrParams)-1;
         GravarLog('PW_iExecTransac()');
-        {$warnings off}
         iRet := xPW_iExecTransac(ArrParams, NumParams);
-        {$warnings on}
         GravarLog('  '+PWRETToString(iRet)+', NumParams: '+IntToStr(NumParams));
 
         case iRet of
@@ -1742,6 +1742,8 @@ begin
       while (iRet = PWRET_OK) and (j <= max(AGetData.bNumeroCapturas,1)) do
       begin
         case AGetData.bTipoDeDado of
+          PWDAT_NONE:
+            ;  // Registro inválido, ignore...
           PWDAT_MENU:
             iRet := ObterDadoMenu(AGetData);
           PWDAT_TYPED, PWDAT_USERAUTH:
@@ -1882,6 +1884,7 @@ function TACBrTEFPGWebAPI.ObterDadoDigitado(AGetData: TPW_GetData): SmallInt;
 var
   AResposta: String;
 begin
+  AResposta := '';
   if ObterDadoDigitadoGenerico(AGetData, AResposta) then
   begin
     if (AGetData.wIdentificador = PWINFO_MERCHCNPJCPF) then
@@ -2538,7 +2541,7 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect('PW_iPPGetUserData', @xPW_iPPGetUserData);
    PGWebFunctionDetect('PW_iPPWaitEvent', @xPW_iPPWaitEvent);
    PGWebFunctionDetect('PW_iPPRemoveCard', @xPW_iPPRemoveCard);
-   PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock);
+   //PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock);
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
    //try
    //  PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx);

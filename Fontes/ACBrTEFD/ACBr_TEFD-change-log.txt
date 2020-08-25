@@ -50,6 +50,15 @@ Símbolo : Significado
 -- ACBrTEFD --
 [-] Correção para SetNumVias, em classes que não são descendentes de TACBrTEFDClassTXT
     https://www.projetoacbr.com.br/forum/topic/59076-quantidade-de-vias/
+
+-- ACBrTEFPayGoComum --
+[-] Correção para considerar Via Completa, como do estabelecimento, quando não
+    receber PWINFO_RCPTPRN
+
+-- ACBrTEFPayGoWebComum --
+[*] Versão mínima modificada para "0004.0000.0064.0000", pois é a atual no Linux
+[*] Remoção de Hints
+[*] Ajustes para correto funcionamento da "PGWebLib.so" (Linux)
     (por: DSA)
 
 17/08/20

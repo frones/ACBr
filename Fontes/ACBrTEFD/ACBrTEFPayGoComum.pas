@@ -262,9 +262,9 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
       begin
         ImprimirViaCliente := (Trim(LeInformacao(PWINFO_RCPTCHOLDER, 0).AsBinary) <> '') or
                               (Trim(LeInformacao(PWINFO_RCPTCHSHORT, 0).AsBinary) <> '');
-        ImprimirViaEstabelecimento := (Trim(LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary) <> '');
+        ImprimirViaEstabelecimento := (Trim(LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary) <> '') or
+                                      (Trim(LeInformacao(PWINFO_RCPTFULL, 0).AsBinary) <> '');
       end;
-
 
       ViaCompleta := LeInformacao(PWINFO_RCPTFULL, 0).AsBinary;
 

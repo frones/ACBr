@@ -695,7 +695,7 @@ begin
              Gerador.wCampoCNPJCPF('', '', Cnpj);
              Gerador.wGrupo('/CPFCNPJRemetente');
 //             Gerador.wCampo(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
-             Gerador.wCampo(tcStr, '#1', 'transacao', 01, 05, 0, LowerCase(BooltoStr(Transacao, True)), '');
+             Gerador.wCampo(tcStr, '#1', 'transacao', 01, 05, 0, iif(Transacao,'true','false'), '');
              Gerador.wCampo(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
              Gerador.wCampo(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
              Gerador.wCampo(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
@@ -1893,7 +1893,7 @@ begin
         Gerador.wCampoCNPJCPF('', '', Cnpj);
         Gerador.wGrupo('/CPFCNPJRemetente');
 
-        Gerador.wCampo(tcStr, '#3', 'transacao', 01, 05, 0, LowerCase(BooltoStr(Transacao, True)), '');
+        Gerador.wCampo(tcStr, '#3', 'transacao', 01, 05, 0, iif(Transacao,'true','false'), '');
 
         Gerador.wGrupo('/Cabecalho');
 

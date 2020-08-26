@@ -303,6 +303,29 @@ type
 
   end;
 
+  TRejeicao = class
+  private
+    FCampo: String;
+    FMensagem: String;
+    FValor: String;
+  public
+    property Campo: String  read FCampo write FCampo;
+    property Mensagem: String  read FMensagem write FMensagem;
+    property Valor: String read FValor write FValor;
+  end;
+
+  { TListaRejeicao }
+  TListaRejeicao = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TRejeicao);
+    function  GetObject (Index: Integer): TRejeicao;
+    procedure Insert (Index: Integer; Obj: TRejeicao);
+  public
+    function Add (Obj: TRejeicao): Integer;
+    property Objects [Index: Integer]: TRejeicao read GetObject write SetObject; default;
+  end;
+
+
   { TRetEnvio }
   TRetEnvio = class
   private
@@ -311,15 +334,18 @@ type
     FOriRetorno: String;
     FMsgRetorno: String;
     FDadosRet: TDadosRet;
+    FListaRejeicao: TListaRejeicao;
   public
     constructor Create;
     destructor Destroy; override;
 
+    function CriarRejeicaoLista: TRejeicao;
     property Header: THeader     read FHeader     write FHeader;
     property CodRetorno: String  read FCodRetorno write FCodRetorno;
     property OriRetorno: String  read FOriRetorno write FOriRetorno;
     property MsgRetorno: String  read FMsgRetorno write FMsgRetorno;
     property DadosRet: TDadosRet read FDadosRet   write FDadosRet;
+    property ListaRejeicao: TListaRejeicao read FListaRejeicao;
   end;
 
   { TListaRetEnvio }
@@ -334,6 +360,28 @@ type
   end;
 
 implementation
+
+{ TListaRejeicao }
+
+procedure TListaRejeicao.SetObject(Index: Integer; Item: TRejeicao);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TListaRejeicao.GetObject(Index: Integer): TRejeicao;
+begin
+  Result := inherited GetItem(Index) as TRejeicao ;
+end;
+
+procedure TListaRejeicao.Insert(Index: Integer; Obj: TRejeicao);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TListaRejeicao.Add(Obj: TRejeicao): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
 
 { TTituloRet }
 
@@ -378,13 +426,23 @@ constructor TRetEnvio.Create;
 begin
   FHeader    := THeader.Create;
   FDadosRet  := TDadosRet.Create;
+  FListaRejeicao := TListaRejeicao.Create(true);
 end;
 
 destructor TRetEnvio.Destroy;
 begin
   FHeader.Free;
   FDadosRet.Free;
+  FListaRejeicao.Free;
   inherited;
+end;
+
+function TRetEnvio.CriarRejeicaoLista: TRejeicao;
+var
+  I: Integer;
+begin
+   I      := FListaRejeicao.Add(TRejeicao.Create);
+   Result := FListaRejeicao[I];
 end;
 
 { TDadosRet }

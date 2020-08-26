@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2020
+-- ACBrBoletoW_Itau, ACBrBoletoRet_Itau, ACBrBoletoWS --
+[+] Implementação de integração Web do Banco Itaú.
+
 18/08/2020
 -- ACBrBoletoW_Caixa --
 [*] Ajustes no calculo de Hash para geração do WebService.

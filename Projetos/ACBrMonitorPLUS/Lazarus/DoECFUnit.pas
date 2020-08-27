@@ -1557,12 +1557,15 @@ procedure TMetodoReprocessarArquivo.Executar;
 var
   cRecibo: String;
   wXML: String;
+  cMotivo : string;
 begin
   cRecibo := fpCmd.Params(0);
+  cMotivo := fpCmd.Params(1);
 
   with TACBrObjetoECF(fpObjetoDono) do
   begin
     ACBrBlocoX.ReprocessarArquivo.Recibo:= cRecibo;
+    ACBrBlocoX.ReprocessarArquivo.Motivo := cMotivo;
     ACBrBlocoX.ReprocessarArquivo.RemoverEncodingXMLAssinado:= True;
     ACBrBlocoX.ReprocessarArquivo.GerarXML(True);
     wXML:= ACBrBlocoX.ReprocessarArquivo.XMLAssinado;

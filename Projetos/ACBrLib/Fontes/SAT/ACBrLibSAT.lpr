@@ -63,6 +63,7 @@ exports
   SAT_InicializarSAT,
   SAT_DesInicializar,
 
+  SAT_AtivarSAT,
   SAT_AssociarAssinatura,
   SAT_BloquearSAT,
   SAT_DesbloquearSAT,

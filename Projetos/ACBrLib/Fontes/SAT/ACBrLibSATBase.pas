@@ -61,6 +61,8 @@ type
 
     function InicializarSAT: longint;
     function DesInicializar: longint;
+    function AtivarSAT(CNPJvalue: PChar; cUF: longint;
+      const sResposta: PChar; var esTamanho: longint):longint;
     function AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
                                 const sResposta: PChar; var esTamanho: longint): longint;
     function BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
@@ -169,6 +171,44 @@ begin
         Result := SetRetorno(ErrOK);
       end;
     finally
+      SatDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibSAT.AtivarSAT(CNPJvalue: PChar; cUF: longint;
+                              const sResposta: PChar; var esTamanho: longint):longint;
+var
+  CNPJ, Assinatura, Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
+begin
+  try
+    CNPJ := ansistring(CNPJvalue);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('SAT_AtivarSAT(' + CNPJ + ',' + IntToStr(cUF) + ' )', logCompleto, True)
+    else
+      GravarLog('SAT_AtivarSAT', logNormal);
+
+    SatDM.Travar;
+
+    RespSat := TACBrLibSATResposta.Create(Config.TipoResposta, Config.CodResposta);
+    try
+     Resposta := '';
+     SatDM.ACBrSAT1.AtivarSAT(1, CNPJ, cUF);
+     RespSat.Processar(SatDM.ACBrSAT1);
+     Resposta := RespSat.Gerar;
+
+     MoverStringParaPChar(Resposta, sResposta, esTamanho);
+     Result := SetRetorno(ErrOK, Resposta);
+    finally
+      RespSat.Free;
       SatDM.Destravar;
     end;
   except

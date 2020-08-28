@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2020
+-- ACBrLibSATClass --
+[+] Adicionado o metodo SAT_AtivarSAT.
+    (por: Rafael Dias)
+
 21/04/2020
 -- ACBrLibSATClass, ACBrLibSatDataModule --
 [-] Correções e ajustes nas rotinas de Geração de PDF.

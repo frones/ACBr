@@ -69,7 +69,7 @@ type
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False; NomeArqPDF: String = '');
     procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring);
-    procedure CarregarDadosCancelamento(aStr: String; aNomePDF: String = '');
+    procedure CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -346,19 +346,19 @@ begin
   end;
 end;
 
-procedure TLibSatDM.CarregarDadosCancelamento(aStr: String; aNomePDF: String);
+procedure TLibSatDM.CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);
 begin
-  if Trim(aStr) = '' then exit;
+  if Trim(XmlArquivoOuString) = '' then exit;
 
-  if FileExists(aStr) then
+  if FileExists(XmlArquivoOuString) then
   begin
-    GravarLog('Carregando arquivo xml cancelamento [' + aStr + ']', logParanoico);
-    ACBrSAT1.CFeCanc.LoadFromFile(aStr);
+    GravarLog('Carregando arquivo xml cancelamento [' + XmlArquivoOuString + ']', logParanoico);
+    ACBrSAT1.CFeCanc.LoadFromFile(XmlArquivoOuString);
   end
   else
   begin
-    GravarLog('Carregando xml string de cancelamento  [' + aStr + ']', logParanoico);
-    ACBrSAT1.CFeCanc.AsXMLString := aStr;
+    GravarLog('Carregando xml string de cancelamento  [' + XmlArquivoOuString + ']', logParanoico);
+    ACBrSAT1.CFeCanc.AsXMLString := XmlArquivoOuString;
   end;
 end;
 

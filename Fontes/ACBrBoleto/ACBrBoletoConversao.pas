@@ -44,7 +44,7 @@ type
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite, tbBancoPreEmite);
   TACBrCaracTitulo = (tcSimples, tcVinculada, tcCaucionada, tcDescontada, tcVendor, tcDireta,
                       tcSimplesRapComReg, tcCaucionadaRapComReg, tcDiretaEspecial);
-  TACBrPessoa = (pFisica,pJuridica,pOutras);
+  TACBrPessoa = (pFisica,pJuridica,pOutras, pNenhum);
   TACBrPessoaCedente = pFisica..pJuridica;
   TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal, lTermica80mm);
 

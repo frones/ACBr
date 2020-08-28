@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2020
+-- ACBrBoletoConversao
+[+] Adicionado enum pNenhum em TACBrPessoa
+
 19/08/2020
 -- ACBrBoletoW_Itau, ACBrBoletoRet_Itau, ACBrBoletoWS --
 [+] Implementação de integração Web do Banco Itaú.

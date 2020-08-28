@@ -1041,7 +1041,7 @@ begin
     Gerador.wCampo(tcStr, 'J05', 'xCor    ', 01, 40, 1, nfe.Det[i].Prod.veicProd.xCor, DSC_XCOR);
     Gerador.wCampo(tcStr, 'J06', 'pot     ', 01, 04, 1, nfe.Det[i].Prod.veicProd.pot, DSC_POT);
     if NFe.infNFe.Versao >= 2 then
-       Gerador.wCampo(tcStr, 'J07', 'cilin   ', 04, 04, 1, nfe.Det[i].Prod.veicProd.cilin, DSC_CILIN)
+       Gerador.wCampo(tcStr, 'J07', 'cilin   ', 01, 04, 1, nfe.Det[i].Prod.veicProd.cilin, DSC_CILIN)
     else
        Gerador.wCampo(tcStr, 'J07', 'CM3     ', 04, 04, 1, nfe.Det[i].Prod.veicProd.cilin, DSC_CILIN);
     Gerador.wCampo(tcStr, 'J08', 'pesoL   ', 00, 09, 1, nfe.Det[i].Prod.veicProd.pesoL, DSC_PESOL);

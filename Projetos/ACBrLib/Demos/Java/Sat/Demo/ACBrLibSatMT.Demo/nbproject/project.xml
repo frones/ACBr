@@ -6,7 +6,7 @@
             <extension file="build-native.xml" id="j2sedeploy"/>
         </buildExtensions>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>ACBrLibSat.Demo</name>
+            <name>ACBrLibSatMT.Demo</name>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.dir"/>
@@ -17,7 +17,7 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>ACBrLibSat</foreign-project>
+                <foreign-project>ACBrLibSatMT</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>

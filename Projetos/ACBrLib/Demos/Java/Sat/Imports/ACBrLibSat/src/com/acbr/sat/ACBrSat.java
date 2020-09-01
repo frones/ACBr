@@ -57,6 +57,8 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
 
     int SAT_DesInicializar();
 
+    int SAT_AtivarSAT(String CNPJValue, Integer cUF, ByteBuffer buffer, IntByReference bufferSize);
+    
     int SAT_AssociarAssinatura(String CNPJValue, String assinaturaCNPJs, ByteBuffer buffer, IntByReference bufferSize);
 
     int SAT_BloquearSAT(ByteBuffer buffer, IntByReference bufferSize);
@@ -191,6 +193,15 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
     public void desInicializar() throws Exception  { 
         int ret = ACBrSatLib.INSTANCE.SAT_DesInicializar();
         checkResult(ret);
+    }
+    
+    public String ativarSAT(String CNPJValue, Integer cUF) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);          
+        
+        int ret = ACBrSatLib.INSTANCE.SAT_AtivarSAT(toUTF8(CNPJValue), cUF, buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
     }
     
     public String associarAssinatura(String CNPJValue, String assinaturaCNPJs) throws Exception {

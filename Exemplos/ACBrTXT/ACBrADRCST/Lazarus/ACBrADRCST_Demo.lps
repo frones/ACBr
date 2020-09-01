@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="15">
+    <Units Count="14">
       <Unit0>
         <Filename Value="ACBrADRCST_Demo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -28,7 +28,7 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCSTReg.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="29"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="114"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Blocos.pas"/>
@@ -41,8 +41,8 @@
       <Unit4>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="350"/>
-        <CursorPos Y="364"/>
+        <TopLine Value="151"/>
+        <CursorPos Y="185"/>
         <UsageCount Value="110"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -67,12 +67,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos X="25" Y="36"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="96"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="585"/>
+        <TopLine Value="580"/>
         <CursorPos X="16" Y="610"/>
         <UsageCount Value="110"/>
         <Loaded Value="True"/>
@@ -100,20 +101,13 @@
       </Unit10>
       <Unit11>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="86"/>
-        <CursorPos X="72" Y="99"/>
+        <TopLine Value="80"/>
+        <CursorPos X="75" Y="95"/>
         <UsageCount Value="120"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrSpedPisCofins.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="25"/>
-        <UsageCount Value="2"/>
-      </Unit12>
-      <Unit13>
         <Filename Value="..\..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
         <ComponentName Value="ACBRBoletoFCFortesFr"/>
         <HasResources Value="True"/>
@@ -121,135 +115,135 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="31"/>
         <CursorPos X="74" Y="7"/>
-        <UsageCount Value="36"/>
-      </Unit13>
-      <Unit14>
+        <UsageCount Value="31"/>
+      </Unit12>
+      <Unit13>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ADRCST.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1260"/>
-        <UsageCount Value="11"/>
-      </Unit14>
+        <UsageCount Value="6"/>
+      </Unit13>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="368" TopLine="357"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <Caret Line="83" Column="15" TopLine="68"/>
       </Position1>
       <Position2>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="102" Column="15" TopLine="85"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <Caret Line="609" TopLine="582"/>
       </Position2>
       <Position3>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="388" Column="3" TopLine="372"/>
+        <Caret Line="236" Column="5" TopLine="233"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="571" Column="3" TopLine="570"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="96" TopLine="83"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="83" Column="32" TopLine="68"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="364" Column="29" TopLine="342"/>
       </Position5>
       <Position6>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="606" Column="17" TopLine="587"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="120" Column="14" TopLine="107"/>
       </Position6>
       <Position7>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="83" Column="15" TopLine="68"/>
+        <Caret Line="77" Column="15" TopLine="60"/>
       </Position7>
       <Position8>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="609" TopLine="582"/>
+        <Caret Line="551" Column="3" TopLine="548"/>
       </Position8>
       <Position9>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="236" Column="5" TopLine="233"/>
+        <Caret Line="120" Column="14" TopLine="107"/>
       </Position9>
       <Position10>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="96" TopLine="83"/>
+        <Caret Line="115" Column="35" TopLine="107"/>
       </Position10>
       <Position11>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="364" Column="29" TopLine="342"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <Caret Line="87" Column="63" TopLine="68"/>
       </Position11>
       <Position12>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="120" Column="14" TopLine="107"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
+        <Caret Line="78" Column="25" TopLine="67"/>
       </Position12>
       <Position13>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="77" Column="15" TopLine="60"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="362" Column="24" TopLine="350"/>
       </Position13>
       <Position14>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="551" Column="3" TopLine="548"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="364" Column="28" TopLine="350"/>
       </Position14>
       <Position15>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="120" Column="14" TopLine="107"/>
+        <Caret Line="105" Column="32" TopLine="92"/>
       </Position15>
       <Position16>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="115" Column="35" TopLine="107"/>
+        <Caret Line="337" Column="35" TopLine="321"/>
       </Position16>
       <Position17>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="87" Column="63" TopLine="68"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="116" Column="27" TopLine="103"/>
       </Position17>
       <Position18>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco1_Class.pas"/>
-        <Caret Line="78" Column="25" TopLine="67"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="246" Column="17" TopLine="222"/>
       </Position18>
       <Position19>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="115" Column="35" TopLine="336"/>
+        <Caret Line="337" Column="35" TopLine="313"/>
       </Position19>
       <Position20>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="362" Column="24" TopLine="350"/>
+        <Caret Line="364" TopLine="350"/>
       </Position20>
       <Position21>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="364" Column="28" TopLine="350"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
+        <Caret Line="104" TopLine="83"/>
       </Position21>
       <Position22>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="105" Column="32" TopLine="92"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
+        <Caret Line="105" TopLine="86"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="337" Column="35" TopLine="321"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
+        <Caret Line="107" TopLine="86"/>
       </Position23>
       <Position24>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="116" Column="27" TopLine="103"/>
+        <Caret Line="313" Column="32" TopLine="291"/>
       </Position24>
       <Position25>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="246" Column="17" TopLine="222"/>
+        <Caret Line="114" Column="27" TopLine="98"/>
       </Position25>
       <Position26>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="337" Column="35" TopLine="313"/>
+        <Caret Line="241" Column="8" TopLine="214"/>
       </Position26>
       <Position27>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Caret Line="364" TopLine="350"/>
+        <Caret Line="212" Column="3" TopLine="210"/>
       </Position27>
       <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
-        <Caret Line="104" TopLine="83"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="113" Column="15" TopLine="97"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
-        <Caret Line="105" TopLine="86"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="224" Column="30" TopLine="209"/>
       </Position29>
       <Position30>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST_Bloco9_Class.pas"/>
-        <Caret Line="107" TopLine="86"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
+        <Caret Line="247" TopLine="226"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -264,7 +258,7 @@
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\..\..\..\Fontes\ACBrTXT\ACBrADRCST\ACBrADRCST.pas"/>
-        <Line Value="364"/>
+        <Line Value="365"/>
       </Item1>
     </BreakPoints>
   </Debugging>

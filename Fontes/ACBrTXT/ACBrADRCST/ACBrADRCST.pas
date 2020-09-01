@@ -218,11 +218,12 @@ begin
   fACBrTXT.NomeArquivo := FPath + FArquivo;
   {Apaga o Arquivo existente e limpa memória}
   fACBrTXT.Reset;
-
-  InicializaBloco(Bloco_0);
-  InicializaBloco(Bloco_1);
-  InicializaBloco(Bloco_9);
-
+  if Layout = lyADRCST  then
+  begin
+    InicializaBloco(Bloco_0);
+    InicializaBloco(Bloco_1);
+    InicializaBloco(Bloco_9);
+  end;
   fInicializado := True;
 end;
 
@@ -238,12 +239,12 @@ procedure TACBrADRCST.SaveFileTXT;
 begin
   try
     IniciaGeracao;
-
-    WriteBloco_0;
-
-    WriteBloco_1;
-
-    WriteBloco_9;
+    if Layout = lyADRCST  then
+    begin
+      WriteBloco_0;
+      WriteBloco_1;
+      WriteBloco_9;
+    end;
   finally
     fACBrTXT.Conteudo.Clear;
     fInicializado := False;

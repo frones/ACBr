@@ -73,7 +73,7 @@ type
     procedure WriteRegistro1510(const ARegistro1500: TRegistro1500);
     procedure WriteRegistro1520(const ARegistro1500: TRegistro1500);
 
-    procedure WriteRegistro1999(const ARegistro1000: TRegistro1000);
+    procedure WriteRegistro1999(const ARegistro1999: TRegistro1999);
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -540,9 +540,9 @@ begin
   end
 end;
 
-procedure TBloco_1.WriteRegistro1999(const ARegistro1000: TRegistro1000);
+procedure TBloco_1.WriteRegistro1999(const ARegistro1999: TRegistro1999);
 begin
-   with ARegistro1000.Registro1999 do
+   with ARegistro1999 do
    begin
      Add(LFill(REG)+
          LFill(QTD_LIN,4));
@@ -606,7 +606,7 @@ begin
         WriteRegistro1500(FRegistro1000List.Items[i]);
       end;
     end;
-    WriteRegistro1999( FRegistro1000List.Items[i]);
+    WriteRegistro1999( FRegistro1000List.Registro1999);
   end;
 end;
 

@@ -170,6 +170,7 @@ type
     ACBr_EDI_dpk: TCheckBox;
     ACBr_NF3e_dpk: TCheckBox;
     ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox;
+    ACBr_ADRCST_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -410,7 +411,8 @@ begin
       if ACBr_SPED_dpk.Checked or ACBr_Sintegra_dpk.Checked or
          ACBr_Convenio115_dpk.Checked or ACBr_DeSTDA_dpk.Checked or
          ACBr_EDI_dpk.Checked or ACBr_LCDPR_dpk.Checked or
-         ACBr_LFD_dpk.Checked or ACBr_Ponto_dpk.Checked then
+         ACBr_LFD_dpk.Checked or ACBr_Ponto_dpk.Checked or
+         ACBr_SPEDImportar_dpk.Checked or ACBr_ADRCST_dpk.Checked then
       begin
         ACBr_TXTComum_dpk.Checked := True;
       end;

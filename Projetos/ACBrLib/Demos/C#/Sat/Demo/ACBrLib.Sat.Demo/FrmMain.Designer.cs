@@ -59,6 +59,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnSelDll = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chkQrCodeLateral = new System.Windows.Forms.CheckBox();
+            this.chkLogoLateral = new System.Windows.Forms.CheckBox();
             this.label24 = new System.Windows.Forms.Label();
             this.cbbImpressora = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -114,8 +116,11 @@
             this.btnEmail = new System.Windows.Forms.Button();
             this.btnImprimirCFeCanc = new System.Windows.Forms.Button();
             this.btnImpMFe = new System.Windows.Forms.Button();
-            this.chkLogoLateral = new System.Windows.Forms.CheckBox();
-            this.chkQrCodeLateral = new System.Windows.Forms.CheckBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtCNPJContribuinte = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtCodEstFederacao = new System.Windows.Forms.TextBox();
+            this.btnAtivarSAT = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -135,7 +140,7 @@
             // 
             // btnIniDesini
             // 
-            this.btnIniDesini.Location = new System.Drawing.Point(12, 194);
+            this.btnIniDesini.Location = new System.Drawing.Point(12, 237);
             this.btnIniDesini.Name = "btnIniDesini";
             this.btnIniDesini.Size = new System.Drawing.Size(112, 23);
             this.btnIniDesini.TabIndex = 22;
@@ -155,7 +160,7 @@
             // 
             // btnCriarCFe
             // 
-            this.btnCriarCFe.Location = new System.Drawing.Point(12, 252);
+            this.btnCriarCFe.Location = new System.Drawing.Point(12, 295);
             this.btnCriarCFe.Name = "btnCriarCFe";
             this.btnCriarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnCriarCFe.TabIndex = 29;
@@ -165,7 +170,7 @@
             // 
             // btnCriarEnviarCFe
             // 
-            this.btnCriarEnviarCFe.Location = new System.Drawing.Point(130, 252);
+            this.btnCriarEnviarCFe.Location = new System.Drawing.Point(130, 295);
             this.btnCriarEnviarCFe.Name = "btnCriarEnviarCFe";
             this.btnCriarEnviarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnCriarEnviarCFe.TabIndex = 30;
@@ -176,7 +181,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.rtbRespostas);
-            this.groupBox4.Location = new System.Drawing.Point(248, 194);
+            this.groupBox4.Location = new System.Drawing.Point(248, 237);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(482, 211);
             this.groupBox4.TabIndex = 31;
@@ -185,7 +190,7 @@
             // 
             // btnEnviarCFe
             // 
-            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 281);
+            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 324);
             this.btnEnviarCFe.Name = "btnEnviarCFe";
             this.btnEnviarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnEnviarCFe.TabIndex = 32;
@@ -195,7 +200,7 @@
             // 
             // btnImprimirCFe
             // 
-            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 310);
+            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 353);
             this.btnImprimirCFe.Name = "btnImprimirCFe";
             this.btnImprimirCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirCFe.TabIndex = 33;
@@ -205,7 +210,7 @@
             // 
             // btnImprimiCFeRed
             // 
-            this.btnImprimiCFeRed.Location = new System.Drawing.Point(130, 310);
+            this.btnImprimiCFeRed.Location = new System.Drawing.Point(130, 353);
             this.btnImprimiCFeRed.Name = "btnImprimiCFeRed";
             this.btnImprimiCFeRed.Size = new System.Drawing.Size(112, 23);
             this.btnImprimiCFeRed.TabIndex = 34;
@@ -221,11 +226,15 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(718, 176);
+            this.tabControl1.Size = new System.Drawing.Size(718, 219);
             this.tabControl1.TabIndex = 35;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtCodEstFederacao);
+            this.tabPage1.Controls.Add(this.label26);
+            this.tabPage1.Controls.Add(this.txtCNPJContribuinte);
+            this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.txtSignAc);
             this.tabPage1.Controls.Add(this.label4);
@@ -243,7 +252,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(710, 150);
+            this.tabPage1.Size = new System.Drawing.Size(710, 193);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuração CFe";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -260,9 +269,9 @@
             // 
             // txtSignAc
             // 
-            this.txtSignAc.Location = new System.Drawing.Point(6, 111);
+            this.txtSignAc.Location = new System.Drawing.Point(6, 164);
             this.txtSignAc.Name = "txtSignAc";
-            this.txtSignAc.Size = new System.Drawing.Size(541, 20);
+            this.txtSignAc.Size = new System.Drawing.Size(455, 20);
             this.txtSignAc.TabIndex = 59;
             this.txtSignAc.Text = "123456";
             // 
@@ -270,7 +279,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 95);
+            this.label4.Location = new System.Drawing.Point(3, 148);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 58;
@@ -490,6 +499,28 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Impressão";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chkQrCodeLateral
+            // 
+            this.chkQrCodeLateral.AutoSize = true;
+            this.chkQrCodeLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.chkQrCodeLateral.Location = new System.Drawing.Point(219, 125);
+            this.chkQrCodeLateral.Name = "chkQrCodeLateral";
+            this.chkQrCodeLateral.Size = new System.Drawing.Size(111, 17);
+            this.chkQrCodeLateral.TabIndex = 81;
+            this.chkQrCodeLateral.Text = "QrCode Lateral";
+            this.chkQrCodeLateral.UseVisualStyleBackColor = true;
+            // 
+            // chkLogoLateral
+            // 
+            this.chkLogoLateral.AutoSize = true;
+            this.chkLogoLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.chkLogoLateral.Location = new System.Drawing.Point(219, 102);
+            this.chkLogoLateral.Name = "chkLogoLateral";
+            this.chkLogoLateral.Size = new System.Drawing.Size(97, 17);
+            this.chkLogoLateral.TabIndex = 80;
+            this.chkLogoLateral.Text = "Logo Lateral";
+            this.chkLogoLateral.UseVisualStyleBackColor = true;
             // 
             // label24
             // 
@@ -994,7 +1025,7 @@
             // 
             // btnImprimirPDFCFe
             // 
-            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 339);
+            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 382);
             this.btnImprimirPDFCFe.Name = "btnImprimirPDFCFe";
             this.btnImprimirPDFCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirPDFCFe.TabIndex = 36;
@@ -1004,7 +1035,7 @@
             // 
             // btnConsultarStatus
             // 
-            this.btnConsultarStatus.Location = new System.Drawing.Point(130, 223);
+            this.btnConsultarStatus.Location = new System.Drawing.Point(130, 266);
             this.btnConsultarStatus.Name = "btnConsultarStatus";
             this.btnConsultarStatus.Size = new System.Drawing.Size(112, 23);
             this.btnConsultarStatus.TabIndex = 38;
@@ -1014,7 +1045,7 @@
             // 
             // btnConsultarSAT
             // 
-            this.btnConsultarSAT.Location = new System.Drawing.Point(12, 223);
+            this.btnConsultarSAT.Location = new System.Drawing.Point(12, 266);
             this.btnConsultarSAT.Name = "btnConsultarSAT";
             this.btnConsultarSAT.Size = new System.Drawing.Size(112, 23);
             this.btnConsultarSAT.TabIndex = 37;
@@ -1024,7 +1055,7 @@
             // 
             // btnCancelarCFe
             // 
-            this.btnCancelarCFe.Location = new System.Drawing.Point(130, 281);
+            this.btnCancelarCFe.Location = new System.Drawing.Point(130, 324);
             this.btnCancelarCFe.Name = "btnCancelarCFe";
             this.btnCancelarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnCancelarCFe.TabIndex = 39;
@@ -1034,7 +1065,7 @@
             // 
             // btnEmail
             // 
-            this.btnEmail.Location = new System.Drawing.Point(12, 368);
+            this.btnEmail.Location = new System.Drawing.Point(12, 411);
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(112, 23);
             this.btnEmail.TabIndex = 40;
@@ -1044,7 +1075,7 @@
             // 
             // btnImprimirCFeCanc
             // 
-            this.btnImprimirCFeCanc.Location = new System.Drawing.Point(130, 339);
+            this.btnImprimirCFeCanc.Location = new System.Drawing.Point(130, 382);
             this.btnImprimirCFeCanc.Name = "btnImprimirCFeCanc";
             this.btnImprimirCFeCanc.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirCFeCanc.TabIndex = 41;
@@ -1054,7 +1085,7 @@
             // 
             // btnImpMFe
             // 
-            this.btnImpMFe.Location = new System.Drawing.Point(130, 368);
+            this.btnImpMFe.Location = new System.Drawing.Point(130, 411);
             this.btnImpMFe.Name = "btnImpMFe";
             this.btnImpMFe.Size = new System.Drawing.Size(112, 23);
             this.btnImpMFe.TabIndex = 42;
@@ -1062,33 +1093,58 @@
             this.btnImpMFe.UseVisualStyleBackColor = true;
             this.btnImpMFe.Click += new System.EventHandler(this.btnImpMFe_Click);
             // 
-            // chkLogoLateral
+            // label25
             // 
-            this.chkLogoLateral.AutoSize = true;
-            this.chkLogoLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkLogoLateral.Location = new System.Drawing.Point(219, 102);
-            this.chkLogoLateral.Name = "chkLogoLateral";
-            this.chkLogoLateral.Size = new System.Drawing.Size(97, 17);
-            this.chkLogoLateral.TabIndex = 80;
-            this.chkLogoLateral.Text = "Logo Lateral";
-            this.chkLogoLateral.UseVisualStyleBackColor = true;
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(3, 100);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(110, 13);
+            this.label25.TabIndex = 61;
+            this.label25.Text = "CNPJ Contribuinte";
             // 
-            // chkQrCodeLateral
+            // txtCNPJContribuinte
             // 
-            this.chkQrCodeLateral.AutoSize = true;
-            this.chkQrCodeLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkQrCodeLateral.Location = new System.Drawing.Point(219, 125);
-            this.chkQrCodeLateral.Name = "chkQrCodeLateral";
-            this.chkQrCodeLateral.Size = new System.Drawing.Size(111, 17);
-            this.chkQrCodeLateral.TabIndex = 81;
-            this.chkQrCodeLateral.Text = "QrCode Lateral";
-            this.chkQrCodeLateral.UseVisualStyleBackColor = true;
+            this.txtCNPJContribuinte.Location = new System.Drawing.Point(6, 116);
+            this.txtCNPJContribuinte.Name = "txtCNPJContribuinte";
+            this.txtCNPJContribuinte.Size = new System.Drawing.Size(301, 20);
+            this.txtCNPJContribuinte.TabIndex = 62;
+            this.txtCNPJContribuinte.Text = "11111111111111";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(310, 100);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(189, 13);
+            this.label26.TabIndex = 63;
+            this.label26.Text = "Codigo do Estado da Federação";
+            // 
+            // txtCodEstFederacao
+            // 
+            this.txtCodEstFederacao.Location = new System.Drawing.Point(313, 116);
+            this.txtCodEstFederacao.Name = "txtCodEstFederacao";
+            this.txtCodEstFederacao.Size = new System.Drawing.Size(181, 20);
+            this.txtCodEstFederacao.TabIndex = 64;
+            this.txtCodEstFederacao.Text = "35";
+            // 
+            // btnAtivarSAT
+            // 
+            this.btnAtivarSAT.Location = new System.Drawing.Point(130, 237);
+            this.btnAtivarSAT.Name = "btnAtivarSAT";
+            this.btnAtivarSAT.Size = new System.Drawing.Size(112, 23);
+            this.btnAtivarSAT.TabIndex = 43;
+            this.btnAtivarSAT.Text = "Ativar SAT";
+            this.btnAtivarSAT.UseVisualStyleBackColor = true;
+            this.btnAtivarSAT.Click += new System.EventHandler(this.BtnAtivarSAT_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 417);
+            this.ClientSize = new System.Drawing.Size(742, 458);
+            this.Controls.Add(this.btnAtivarSAT);
             this.Controls.Add(this.btnImpMFe);
             this.Controls.Add(this.btnImprimirCFeCanc);
             this.Controls.Add(this.btnEmail);
@@ -1223,6 +1279,11 @@
         private System.Windows.Forms.Button btnImpMFe;
         private System.Windows.Forms.CheckBox chkQrCodeLateral;
         private System.Windows.Forms.CheckBox chkLogoLateral;
+        private System.Windows.Forms.TextBox txtCNPJContribuinte;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox txtCodEstFederacao;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Button btnAtivarSAT;
     }
 }
 

@@ -123,6 +123,7 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     }
 
     public ACBrPosPrinter() throws Exception {
+        addPath();
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
             iniFile.createNewFile();

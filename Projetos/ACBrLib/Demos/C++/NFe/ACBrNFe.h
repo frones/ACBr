@@ -1,6 +1,5 @@
-#include <cstdint>
+#pragma once
 #include <string>
-#include "ACBrNFeDinamico.h"
 
 // Check windows
 #if _WIN32 || _WIN64

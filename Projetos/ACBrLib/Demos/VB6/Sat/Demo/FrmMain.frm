@@ -6,7 +6,7 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibSat Demo - Visual Basic 6"
-   ClientHeight    =   5850
+   ClientHeight    =   6480
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   11280
@@ -23,15 +23,23 @@ Begin VB.Form FrmMain
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5850
+   ScaleHeight     =   6480
    ScaleWidth      =   11280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton btnAtivarSAT 
+      Caption         =   "Ativar SAT"
+      Height          =   360
+      Left            =   1800
+      TabIndex        =   87
+      Top             =   3240
+      Width           =   1590
+   End
    Begin VB.CommandButton cmdCancelarCFe 
       Caption         =   "Cancelar CFe"
       Height          =   360
       Left            =   1800
       TabIndex        =   86
-      Top             =   4080
+      Top             =   4680
       Width           =   1590
    End
    Begin VB.CommandButton cmdImprimirCFeCanc 
@@ -39,7 +47,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   1800
       TabIndex        =   85
-      Top             =   5040
+      Top             =   5640
       Width           =   1590
    End
    Begin VB.CommandButton cmdConsultarStatus 
@@ -47,7 +55,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   1800
       TabIndex        =   84
-      Top             =   3120
+      Top             =   3720
       Width           =   1590
    End
    Begin VB.CommandButton cmdConsultarSAT 
@@ -55,12 +63,12 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   83
-      Top             =   3120
+      Top             =   3720
       Width           =   1590
    End
    Begin MSComDlg.CommonDialog CommonDialog1 
-      Left            =   5640
-      Top             =   3480
+      Left            =   3840
+      Top             =   4200
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -70,7 +78,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   28
-      Top             =   5040
+      Top             =   5640
       Width           =   1590
    End
    Begin VB.CommandButton btnImprimiCFeRed 
@@ -78,7 +86,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   1800
       TabIndex        =   27
-      Top             =   4560
+      Top             =   5160
       Width           =   1590
    End
    Begin VB.CommandButton btnImprimirCFe 
@@ -86,7 +94,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   26
-      Top             =   4560
+      Top             =   5160
       Width           =   1590
    End
    Begin VB.CommandButton btnEnviarCFe 
@@ -94,7 +102,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   25
-      Top             =   4080
+      Top             =   4680
       Width           =   1590
    End
    Begin VB.CommandButton btnCriarEnviarCFe 
@@ -102,7 +110,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   1800
       TabIndex        =   24
-      Top             =   3600
+      Top             =   4200
       Width           =   1590
    End
    Begin VB.CommandButton btnCriarCFe 
@@ -110,7 +118,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   23
-      Top             =   3600
+      Top             =   4200
       Width           =   1590
    End
    Begin VB.CommandButton btnIniDesini 
@@ -118,17 +126,17 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   22
-      Top             =   2640
+      Top             =   3240
       Width           =   1590
    End
    Begin TabDlg.SSTab SSTTab0 
-      Height          =   2535
+      Height          =   3015
       Left            =   0
       TabIndex        =   2
       Top             =   0
       Width           =   11175
       _ExtentX        =   19711
-      _ExtentY        =   4471
+      _ExtentY        =   5318
       _Version        =   393216
       Style           =   1
       TabHeight       =   520
@@ -147,25 +155,33 @@ Begin VB.Form FrmMain
       Tab(0).Control(4).Enabled=   0   'False
       Tab(0).Control(5)=   "lblSignAC"
       Tab(0).Control(5).Enabled=   0   'False
-      Tab(0).Control(6)=   "txtDllPath"
+      Tab(0).Control(6)=   "Label2"
       Tab(0).Control(6).Enabled=   0   'False
-      Tab(0).Control(7)=   "btnSelDll"
+      Tab(0).Control(7)=   "Label3"
       Tab(0).Control(7).Enabled=   0   'False
-      Tab(0).Control(8)=   "cmbModeloSat"
+      Tab(0).Control(8)=   "txtDllPath"
       Tab(0).Control(8).Enabled=   0   'False
-      Tab(0).Control(9)=   "txtAtivacao"
+      Tab(0).Control(9)=   "btnSelDll"
       Tab(0).Control(9).Enabled=   0   'False
-      Tab(0).Control(10)=   "txtPaginaCodigo"
+      Tab(0).Control(10)=   "cmbModeloSat"
       Tab(0).Control(10).Enabled=   0   'False
-      Tab(0).Control(11)=   "nudPaginaCodigo"
+      Tab(0).Control(11)=   "txtAtivacao"
       Tab(0).Control(11).Enabled=   0   'False
-      Tab(0).Control(12)=   "FraSalvarXMLs"
+      Tab(0).Control(12)=   "txtPaginaCodigo"
       Tab(0).Control(12).Enabled=   0   'False
-      Tab(0).Control(13)=   "txtSignAC"
+      Tab(0).Control(13)=   "nudPaginaCodigo"
       Tab(0).Control(13).Enabled=   0   'False
-      Tab(0).Control(14)=   "txtVersaoCFe"
+      Tab(0).Control(14)=   "FraSalvarXMLs"
       Tab(0).Control(14).Enabled=   0   'False
-      Tab(0).ControlCount=   15
+      Tab(0).Control(15)=   "txtSignAC"
+      Tab(0).Control(15).Enabled=   0   'False
+      Tab(0).Control(16)=   "txtVersaoCFe"
+      Tab(0).Control(16).Enabled=   0   'False
+      Tab(0).Control(17)=   "txtCNPJContribuinte"
+      Tab(0).Control(17).Enabled=   0   'False
+      Tab(0).Control(18)=   "txtCodEstFederacao"
+      Tab(0).Control(18).Enabled=   0   'False
+      Tab(0).ControlCount=   19
       TabCaption(1)   =   "Impressão"
       TabPicture(1)   =   "FrmMain.frx":25E6
       Tab(1).ControlEnabled=   0   'False
@@ -205,6 +221,22 @@ Begin VB.Form FrmMain
       Tab(2).Control(13)=   "ckbSSL"
       Tab(2).Control(14)=   "ckbTLS"
       Tab(2).ControlCount=   15
+      Begin VB.TextBox txtCodEstFederacao 
+         Height          =   315
+         Left            =   4560
+         TabIndex        =   91
+         Text            =   "35"
+         Top             =   1920
+         Width           =   2655
+      End
+      Begin VB.TextBox txtCNPJContribuinte 
+         Height          =   315
+         Left            =   120
+         TabIndex        =   90
+         Text            =   "11111111111111"
+         Top             =   1920
+         Width           =   4335
+      End
       Begin VB.TextBox txtVersaoCFe 
          Alignment       =   1  'Right Justify
          Height          =   315
@@ -791,8 +823,8 @@ Begin VB.Form FrmMain
          Left            =   120
          TabIndex        =   21
          Text            =   "123456"
-         Top             =   1920
-         Width           =   8775
+         Top             =   2520
+         Width           =   7095
       End
       Begin VB.Frame FraSalvarXMLs 
          Caption         =   "Salvar XMLs"
@@ -1000,6 +1032,44 @@ Begin VB.Form FrmMain
          SyncBuddy       =   -1  'True
          BuddyProperty   =   0
          Enabled         =   -1  'True
+      End
+      Begin VB.Label Label3 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Codigo do Estado da Federação"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   4560
+         TabIndex        =   89
+         Top             =   1680
+         Width           =   2625
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "CNPJ Contribuinte"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   120
+         TabIndex        =   88
+         Top             =   1680
+         Width           =   1500
       End
       Begin VB.Label lblPortaMail 
          AutoSize        =   -1  'True
@@ -1226,7 +1296,7 @@ Begin VB.Form FrmMain
          Height          =   195
          Left            =   120
          TabIndex        =   14
-         Top             =   1680
+         Top             =   2280
          Width           =   585
       End
       Begin VB.Label lblPaginaDe 
@@ -1330,7 +1400,7 @@ Begin VB.Form FrmMain
       Height          =   3135
       Left            =   3600
       TabIndex        =   0
-      Top             =   2640
+      Top             =   3240
       Width           =   7575
       Begin VB.TextBox rtbRespostas 
          Height          =   2775
@@ -1348,6 +1418,12 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim sat As ACBrSat
+
+Private Sub btnAtivarSAT_Click()
+    Dim retorno As String
+    retorno = sat.AtivarSAT(txtCNPJContribuinte.Text, txtCodEstFederacao.Text)
+    SetResposta retorno
+End Sub
 
 Private Sub btnCriarCFe_Click()
     On Error Resume Next

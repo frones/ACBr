@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <string>
 #include "ACBrNFe.h"
+#include "ACBrNFeDinamico.h"
 #include <algorithm>
 #include <functional>
 #if defined(ISWINDOWS)
@@ -123,7 +124,8 @@ void ACBrNFe::check_result(int ret) const
 	throw(std::exception(trim(buffer).c_str()));
 }
 
-std::string ACBrNFe::process_result(std::string buffer, int buffer_len) {
+std::string ACBrNFe::process_result(std::string buffer, int buffer_len)
+{
 	if (buffer_len > BUFFER_LEN) {
 		NFE_UltimoRetorno method;
 

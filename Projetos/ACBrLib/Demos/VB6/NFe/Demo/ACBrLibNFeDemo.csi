@@ -12,11 +12,11 @@
 11=#P0#=mb	#P1#=StatusServico	#P2#=ACBrLibNFeDemo/ACBrNFe/StatusServico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200302012709	#P7#=0	#P8#=10	.
 12=#P0#=mb	#P1#=GetPathEvento	#P2#=ACBrLibNFeDemo/ACBrNFe/GetPathEvento	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200124144514	#P7#=0	#P8#=0	.
 13=#P0#=mb	#P1#=GetPath	#P2#=ACBrLibNFeDemo/ACBrNFe/GetPath	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200124143029	#P7#=0	#P8#=0	.
-14=#P0#=mb	#P1#=ObterCertificados	#P2#=ACBrLibNFeDemo/ACBrNFe/ObterCertificados	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200124142514	#P7#=0	#P8#=0	.
+14=#P0#=mb	#P1#=ObterCertificados	#P2#=ACBrLibNFeDemo/ACBrNFe/ObterCertificados	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200124142514	#P7#=0	#P8#=5	.
 15=#P0#=mb	#P1#=SetLibPath	#P2#=ACBrLibNFeDemo/ACBrComum/SetLibPath	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200122154921	#P7#=0	#P8#=3	.
 16=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibNFeDemo/ACBrNFe/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200122153342	#P7#=0	#P8#=11	.
 17=#P0#=mb	#P1#=ImprimirInutilizacaoPDF	#P2#=ACBrLibNFeDemo/ACBrNFe/ImprimirInutilizacaoPDF	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200122152734	#P7#=0	#P8#=0	.
-18=#P0#=mb	#P1#=GerarChave	#P2#=ACBrLibNFeDemo/ACBrNFe/GerarChave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200108231901	#P7#=0	#P8#=0	.
+18=#P0#=mb	#P1#=GerarChave	#P2#=ACBrLibNFeDemo/ACBrNFe/GerarChave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200108231901	#P7#=0	#P8#=15	.
 19=#P0#=mb	#P1#=VerificarAssinatura	#P2#=ACBrLibNFeDemo/ACBrNFe/VerificarAssinatura	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200108231703	#P7#=0	#P8#=0	.
 20=#P0#=mb	#P1#=FileExists	#P2#=ACBrLibNFeDemo/ACBrComum/FileExists	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107143013	#P7#=0	#P8#=8	.
 21=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibNFeDemo/ACBrComum/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107142954	#P7#=0	#P8#=-2	.

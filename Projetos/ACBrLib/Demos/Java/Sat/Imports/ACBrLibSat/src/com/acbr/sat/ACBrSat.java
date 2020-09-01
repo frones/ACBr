@@ -38,7 +38,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
     int SAT_Inicializar(String eArqConfig, String eChaveCrypt);
 
     int SAT_Finalizar();
-
+    
     int SAT_Nome(ByteBuffer buffer, IntByReference bufferSize);
 
     int SAT_Versao(ByteBuffer buffer, IntByReference bufferSize);

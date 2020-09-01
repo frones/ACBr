@@ -309,6 +309,7 @@ begin
     teEventoFiscoCPP1,
     teEventoFiscoCPP2          : Result := 'Evento Fisco';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
   else
     Result := '';
   end;
@@ -365,6 +366,7 @@ begin
     teEventoFiscoCPP1,
     teEventoFiscoCPP2          : Result := 'Evento Fisco';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
   else
     Result := 'Não Definido';
   end;

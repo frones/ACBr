@@ -597,8 +597,14 @@ begin
     sEndereco := PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' ' + Sacado.Complemento , 40, ' ');
 
     fpQtdRegsLote := 1;
+
     if sCodMovimento = '01' then
-      fpQtdRegsLote := 4;
+    begin
+      if (PercentualMulta = 0) then
+        fpQtdRegsLote := 3
+      else
+        fpQtdRegsLote := 4;
+    end;
 
     ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * fpQtdRegsLote) + 1;
 
@@ -681,30 +687,33 @@ begin
                 Space(19)                                        ); // 230 – 240 / Reservado (uso Banco)
       {SEGMENTO Q - FIM}
 
-      Inc(ISequencia);
-      {SEGMENTO R}
-        ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)               + // 001 - 003 / Código do Banco na compensação
-                '0001'                                                     + // 004 - 007 / Numero do lote remessa
-                '3'                                                        + // 008 - 008 / Tipo de registro
-                IntToStrZero(ISequencia ,5)                                + // 009 - 013 / Número seqüencial do registro no lote
-                'R'                                                        + // 014 - 014 / Cód. Segmento do registro detalhe
-                Space(1)                                                   + // 015 - 015 / Reservado (uso Banco)
-                sCodMovimento                                              + // 016 - 017 / Código de movimento remessa
-                '0'                                                        + // 018 - 018 / Código do desconto 2
-                PadLeft('', 8, '0')                                        + // 019 - 026 / Data do desconto 2
-                IntToStrZero(0, 15)                                        + // 027 - 041 / Valor/Percentual a ser concedido
-                Space(24)                                                  + // 042 – 065 / Reservado (uso Banco)
-                IfThen((PercentualMulta > 0),
-                       IfThen(MultaValorFixo,'1','2'), '2')                                           + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
-                IfThen((PercentualMulta > 0),
-                        FormatDateTime('ddmmyyyy', DataMulta), '00000000')                            + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
-                IfThen((PercentualMulta > 0), IntToStrZero(round(PercentualMulta * 100), 15),
-                       PadRight('', 15, '0'))                                                         + // 075 - 089 / Valor/Percentual a ser aplicado
-                Space(10)                                                  + // 090 - 099 / Reservado (uso Banco)
-                MontaInstrucoes1CNAB240(ACBrTitulo)                        + // 100 - 139 / Mensagem 3
-                                                                             // 140 - 179 / Mensagem 4
-                Space(61)                                                  ); // 180 - 240 / Reservado (uso Banco)
-      {SEGMENTO R - FIM}
+      if (PercentualMulta > 0) then
+      begin
+        Inc(ISequencia);
+        {SEGMENTO R}
+          ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)               + // 001 - 003 / Código do Banco na compensação
+                  '0001'                                                     + // 004 - 007 / Numero do lote remessa
+                  '3'                                                        + // 008 - 008 / Tipo de registro
+                  IntToStrZero(ISequencia ,5)                                + // 009 - 013 / Número seqüencial do registro no lote
+                  'R'                                                        + // 014 - 014 / Cód. Segmento do registro detalhe
+                  Space(1)                                                   + // 015 - 015 / Reservado (uso Banco)
+                  sCodMovimento                                              + // 016 - 017 / Código de movimento remessa
+                  '0'                                                        + // 018 - 018 / Código do desconto 2
+                  PadLeft('', 8, '0')                                        + // 019 - 026 / Data do desconto 2
+                  IntToStrZero(0, 15)                                        + // 027 - 041 / Valor/Percentual a ser concedido
+                  Space(24)                                                  + // 042 – 065 / Reservado (uso Banco)
+                  IfThen((PercentualMulta > 0),
+                         IfThen(MultaValorFixo,'1','2'), '2')                                           + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
+                  IfThen((PercentualMulta > 0),
+                          FormatDateTime('ddmmyyyy', DataMulta), '00000000')                            + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+                  IfThen((PercentualMulta > 0), IntToStrZero(round(PercentualMulta * 100), 15),
+                         PadRight('', 15, '0'))                                                         + // 075 - 089 / Valor/Percentual a ser aplicado
+                  Space(10)                                                  + // 090 - 099 / Reservado (uso Banco)
+                  MontaInstrucoes1CNAB240(ACBrTitulo)                        + // 100 - 139 / Mensagem 3
+                                                                               // 140 - 179 / Mensagem 4
+                  Space(61)                                                  ); // 180 - 240 / Reservado (uso Banco)
+        {SEGMENTO R - FIM}
+      end;
 
       Inc(ISequencia);
       {SEGMENTO S}

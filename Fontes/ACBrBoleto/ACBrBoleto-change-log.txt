@@ -49,6 +49,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2020
+
+--ACBrBancoSicred--
+[*] Ajustes leitura CNAB400 ref códigos ainda não validados.
+https://www.projetoacbr.com.br/forum/topic/56114-erro-na-leitura-do-arquivo-de-retorno-do-sicredi/
+
+--ACBrBancoItau--
+[*] Ajustes relativos a códigos de negativação
+https://www.projetoacbr.com.br/forum/topic/58790-negativação-no-banco-itau-cnab-400/
+
+--ACBrBancoSantander--
+[+] Adicionado validação para geração do segmento R
+https://www.projetoacbr.com.br/forum/topic/58665-d%C3%BAvida-gerar-remessa-sem-segmento-r/
+
+-- ACBrBancoBrasil --
+[+] Adicionado novos códigos de Motivo Rejeiçao.
+https://www.projetoacbr.com.br/forum/topic/57211-correção-do-retorno-do-bb-cnab-240/
+
+-- ACBrBancoUnicredES, ACBrBoleto --
+[+] Atualizado códigos de retorno conforme novo manual Unicred 136.
+https://www.projetoacbr.com.br/forum/topic/57230-arquivo-de-retorno-unicred-136/
+
+-- ACBrBancoNordeste --
+[*] Ajuste código de rejeiçao no arquivo de retorno.
+https://www.projetoacbr.com.br/forum/topic/58530-ajuste-retorno-bnb-codigo-rejeição-errado/
+
 28/08/2020
 -- ACBrBoletoConversao
 [+] Adicionado enum pNenhum em TACBrPessoa

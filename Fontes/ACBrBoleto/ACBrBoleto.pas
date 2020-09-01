@@ -55,7 +55,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..296] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..305] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -130,7 +130,9 @@ const
     'Remessa Pedido de negativação',
     'Remessa Excluir negativação e baixar',
     'Remessa Excluir negativação e manter em carteira',	
-	
+    'Remessa Protestar Automaticamente',
+    'Remessa Alteração de Status Desconto',
+
     'Retorno Abatimento Cancelado',
     'Retorno Abatimento Concedido',
     'Retorno Acerto Controle Participante',
@@ -353,7 +355,14 @@ const
     'Retorno Ocorrência Informacional por Outros Motivos',
     'Retorno Inclusão de Negativação',
     'Retorno Exclusão de Negativação',
-    'Retorno Em Transito'
+    'Retorno Em Transito',
+    'Retorno Liquidação em Condicional em Cartório Com Cheque do Próprio Devedor',
+    'Retorno Título Protestado Sustado Judicialmente em definitivo',
+    'Retorno Liquidação de Título Descontado',
+    'Retorno Protesto Em Cartório',
+    'Retorno Sustação Solicitada',
+    'Retorno Título Utilizado Como Garantia em Operação de Desconto',
+    'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto'
 );
 
 type
@@ -498,7 +507,9 @@ type
     toRemessaSustarProtestoBaixarTitulo,
     toRemessaSustarProtestoManterCarteira,
     toRemessaRecusaAlegacaoSacado,
-	
+    toRemessaProtestoAutomatico,
+    toRemessaAlterarStatusDesconto,
+
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
     toRetornoAbatimentoConcedido,
@@ -722,7 +733,14 @@ type
     toRetornoOcorrenciaInfOutrosMotivos,
     toRetornoInclusaoNegativacao,
     toRetornoExclusaoNegativacao,
-    toRetornoEmTransito
+    toRetornoEmTransito,
+    toRetornoLiquidadoEmCartorioEmCondicionalComChequeDoDevedor,
+    toRetornoProtestoSustadoDefinitivo,
+    toRetornoLiquidadoTituloDescontado,
+    toRetornoProtestadoEmCartorio,
+    toRetornoSustacaoSolicitada,
+    toRetornoTituloDescontado,
+    toRetornoTituloDescontavel
   );
 
   //Complemento de instrução para alterar outros dados

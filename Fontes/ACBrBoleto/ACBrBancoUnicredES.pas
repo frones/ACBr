@@ -57,6 +57,11 @@ type
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     Procedure LerRetorno400(ARetorno:TStringList); override;
+    function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    function CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia; override;
+    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
+    function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
   end;
 
@@ -335,6 +340,113 @@ begin
     cmPercentual : result := '2';
   else
     result := '3';
+  end;
+end;
+
+function TACBrBancoUnicredES.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+var
+  CodOcorrencia: Integer;
+begin
+  Result        := EmptyStr;
+  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+
+  case CodOcorrencia of
+    01: Result := '01-Título Protestado Pago em Cartório';
+    02: Result := '02-Instrução Confirmada';
+    03: Result := '03-Instrução Rejeitada';
+    04: Result := '04-Título protestado sustado judicialmente';
+    06: Result := '06-Liquidação Normal';
+    07: Result := '07-Título Liquidado em Cartório Com Cheque do Próprio Devedor';
+    08: Result := '08-Título Protestado Sustado Judicialmente em Definitivo';
+    09: Result := '09-Liquidação de Título Descontado';
+    10: Result := '10-Protesto Solicitado';
+    11: Result := '11-Protesto em Cartório';
+    12: Result := '12-Sustação Solicitada';
+    13: Result := '13-Título Utilizado Como Garantia em Operação de Desconto';
+    14: Result := '14-Título Com Desistência de Garantia em Operação de Desconto';
+  end;
+end;
+
+function TACBrBancoUnicredES.CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;
+begin
+
+  case CodOcorrencia of
+    01: Result := toRetornoLiquidadoEmCartorio;
+    02: Result := toRetornoRegistroConfirmado;
+    03: Result := toRetornoInstrucaoRejeitada;
+    04: Result := toRetornoSustadoJudicial;
+    06: Result := toRetornoLiquidado;
+    07: Result := toRetornoLiquidadoEmCartorioEmCondicionalComChequeDoDevedor;
+    08: Result := toRetornoProtestoSustadoDefinitivo;
+    09: Result := toRetornoLiquidadoTituloDescontado;
+    10: Result := toRetornoProtestado;
+    11: Result := toRetornoProtestadoEmCartorio;
+    12: Result := toRetornoSustacaoSolicitada;
+    13: Result := toRetornoTituloDescontado;
+    14: Result := toRetornoTituloDescontavel;
+  else
+    Result := toRetornoOutrasOcorrencias;
+  end;
+end;
+
+function TACBrBancoUnicredES.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+begin
+  Result := '';
+
+  case TipoOcorrencia of
+    toRetornoLiquidadoEmCartorio                                : Result := '01';
+    toRetornoRegistroConfirmado                                 : Result := '02';
+    toRetornoInstrucaoRejeitada                                 : Result := '03';
+    toRetornoSustadoJudicial                                    : Result := '04';
+    toRetornoLiquidado                                          : Result := '06';
+    toRetornoLiquidadoEmCartorioEmCondicionalComChequeDoDevedor : Result := '07';
+    toRetornoProtestoSustadoDefinitivo                          : Result := '08';
+    toRetornoLiquidadoTituloDescontado                          : Result := '09';
+    toRetornoProtestado                                         : Result := '10';
+    toRetornoProtestadoEmCartorio                               : Result := '11';
+    toRetornoSustacaoSolicitada                                 : Result := '12';
+    toRetornoTituloDescontado                                   : Result := '13';
+    toRetornoTituloDescontavel                                  : Result := '14';
+  else
+    Result := '02';
+  end;
+end;
+
+function TACBrBancoUnicredES.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    11 : Result:= toRemessaSustarProtestoManterCarteira;    {Sustar protesto e manter em carteira}
+    22 : Result:= toRemessaAlterarSeuNumero;                {Alteração do seu número}
+    23 : Result:= toRemessaAlterarDadosPagador;             {Alteração de dados do pagador}
+    25 : Result:= toRemessaSustarProtestoBaixarTitulo;      {Sustar protesto e baixar título}
+    26 : Result:= toRemessaProtestoAutomatico;              {Protesto automático}
+    40 : Result:= toRemessaAlterarStatusDesconto;           {Alteração de status desconto}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
+end;
+
+function TACBrBancoUnicredES.TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String;
+begin
+  case ATipoOcorrencia of
+         toRemessaBaixar                         : Result := '02'; {Pedido de Baixa}
+         toRemessaConcederAbatimento             : Result := '04'; {Concessão de Abatimento}
+         toRemessaCancelarAbatimento             : Result := '05'; {Cancelamento de Abatimento concedido}
+         toRemessaAlterarVencimento              : Result := '06'; {Alteração de vencimento}
+         toRemessaProtestar                      : Result := '09'; {Pedido de protesto}
+         toRemessaSustarProtestoManterCarteira   : Result := '11'; {Sustar protesto e manter em carteira}
+         toRemessaAlterarSeuNumero               : Result := '22'; {Alteração do seu número}
+         toRemessaAlterarDadosPagador            : Result := '23'; {Alteração de dados do pagador}
+         toRemessaSustarProtestoBaixarTitulo     : Result := '25'; {Sustar protesto e baixar título}
+         toRemessaProtestoAutomatico             : Result := '26'; {Protesto automático}
+         toRemessaAlterarStatusDesconto          : Result := '40'; {Alteração de status desconto}
+       else
+         Result := '01';                                           {Remessa}
   end;
 end;
 

@@ -64,6 +64,13 @@ Private Declare Function SAT_InicializarSAT Lib "ACBrSAT32.dll" (ByVal libHandle
 
 Private Declare Function SAT_DesInicializar Lib "ACBrSAT32.dll" (ByVal libHandler As Long) As Long
 
+Private Declare Function SAT_AtivarSAT _
+                Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
+                                     ByVal CNPJValue As String, _
+                                     ByVal cUF As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+
 Private Declare Function SAT_AssociarAssinatura _
                 Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
                                      ByVal CNPJValue As String, _
@@ -302,6 +309,22 @@ Public Sub DesInicializar()
     retorno = SAT_DesInicializar(libHandler)
     CheckResult (retorno)
 End Sub
+
+Public Function AtivarSAT(ByVal CNPJValue As String, ByVal cUF As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = SAT_AtivarSAT(libHandler, CNPJValue, cUF, buffer, bufferLen)
+    CheckResult (retorno)
+    
+    AtivarSAT = processResult(buffer, bufferLen)
+End Function
 
 Public Function AssociarAssinatura(ByVal CNPJValue As String, ByVal assinaturaCNPJs As String) As String
 

@@ -48,7 +48,7 @@ uses
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto, RLRichText , ACBrBase, ACBrBoletoConversao;
+  ACBrBoleto, RLRichText , ACBrBase, ACBrBoletoConversao, ACBrValidador;
 
 type
 
@@ -1328,7 +1328,7 @@ begin
         txtNomePagador2.Caption       := NomeSacado;
         txtEndPagador2.Caption        := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                                          Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
-        txtCpfCnpjPagador2.Caption    := CNPJCPF;
+        txtCpfCnpjPagador2.Caption    := FormatarCNPJouCPF(CNPJCPF);
       end;
 
       with Titulo.Sacado.SacadoAvalista do
@@ -1342,7 +1342,7 @@ begin
 
         if NomeAvalista <> '' then
         begin
-          txtNomeSacadorAval2.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF;
+          txtNomeSacadorAval2.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF);
           txtEndSacadorAval2.Caption    := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                                            Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         end
@@ -1477,8 +1477,8 @@ begin
                                          ' ' + Titulo.Sacado.Bairro;
       txtCidadeSacado.Caption         := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Cidade +
                                          ' '+Titulo.Sacado.UF;
-      txtCPF.Caption                  := 'CPF/CNPJ: '+Titulo.Sacado.CNPJCPF;
-      txtCPFCarne2.Caption            := Titulo.Sacado.CNPJCPF;
+      txtCPF.Caption                  := 'CPF/CNPJ: '+ FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
+      txtCPFCarne2.Caption            := FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
       mIntrucoes.Lines.Text           := MensagemPadrao.Text;
 
       txtLinhaDigitavelCarne.Caption := LinhaDigitavel;
@@ -1496,7 +1496,7 @@ begin
 
         if (NomeAvalista <> '') then
         begin
-          txtNomeSacadorAval4.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF+ ' ' +
+          txtNomeSacadorAval4.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF)+ ' ' +
             Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
             Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         end
@@ -1628,7 +1628,7 @@ begin
                                           ' ' + Titulo.Sacado.Bairro;
       txtCidadeSacadoRecTop1.Caption   := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Cidade +
                                           ' '+Titulo.Sacado.UF;
-      txtCpfCnpjSacadoRecTop1.Caption  := Titulo.Sacado.CNPJCPF;
+      txtCpfCnpjSacadoRecTop1.Caption  := FormatarCNPJouCPF( Titulo.Sacado.CNPJCPF );
       mIntrucoesRecTop1.Lines.Text     := MensagemPadrao.Text;
 
       txtOrientacoesBancoRecTop1.Lines.Text  := Banco.OrientacoesBanco.Text;
@@ -1691,7 +1691,7 @@ begin
     txtValorDocumentoRecPagDet.Caption := IfThen(Titulo.ValorDocumento > 0, FormatFloat('###,###,##0.00', Titulo.ValorDocumento));
     //Pagador
     txtNomePagadorRecPagDet.Caption    := Titulo.Sacado.NomeSacado + '  ' +
-                                          IfThen(Titulo.Sacado.Pessoa = pJuridica, 'CNPJ: ', 'CPF: ')+ Titulo.Sacado.CNPJCPF;
+                                          IfThen(Titulo.Sacado.Pessoa = pJuridica, 'CNPJ: ', 'CPF: ')+ FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
     txtEndPagadorRecPagDet.Caption     := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento +
                                           '  CEP: '+Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
   end;
@@ -1752,7 +1752,7 @@ begin
         lTertxtNomePagador.Caption    := NomeSacado;
         lTertxtEndPagador.Caption     := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                                          Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
-        lTertxtCpfCnpjPagador.Caption := CNPJCPF;
+        lTertxtCpfCnpjPagador.Caption := FormatarCNPJouCPF(CNPJCPF);
       end;
 
       with Titulo.Sacado.SacadoAvalista do
@@ -1766,7 +1766,7 @@ begin
 
         if NomeAvalista <> '' then
         begin
-          lTertxtNomeSacado.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF+
+          lTertxtNomeSacado.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF)+
                                           Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                                           Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         end
@@ -1845,7 +1845,7 @@ begin
     txtNomeSacadoDet.Caption                := Titulo.Sacado.NomeSacado;
     txtEnderecoSacadoDet.Caption            := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
     txtCidadeSacadoDet.Caption              := 'CEP: '+ Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
-    txtCpfCnpjSacadoDet.Caption             := Titulo.Sacado.CNPJCPF;
+    txtCpfCnpjSacadoDet.Caption             := FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
 
     txtInstrucoesDet.Lines.Text             := MensagemPadrao.Text;
     //txtOrientacoesBanco.Lines.Text        := Banco.OrientacoesBanco.Text;
@@ -1964,7 +1964,7 @@ begin
         else
           TipoDoc:= 'CPF: ';
         rlmPagador5.Lines.Clear;
-        rlmPagador5.Lines.Add(NomeSacado + ' - ' + TipoDoc + CNPJCPF);
+        rlmPagador5.Lines.Add(NomeSacado + ' - ' + TipoDoc + FormatarCNPJouCPF(CNPJCPF));
         rlmPagador5.Lines.Add(Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                               Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP)
       end;

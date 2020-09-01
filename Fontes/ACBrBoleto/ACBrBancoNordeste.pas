@@ -452,7 +452,7 @@ begin
 
   case CodOcorrencia of
     02: Result:='02-Entrada Confirmada' ;
-    03: Result:='03-Entrada Rejeitada' ;
+    51: Result:='51-Entrada Rejeitada' ;
     06: Result:='06-Liquidação normal' ;
     09: Result:='09-Baixado Automaticamente via Arquivo' ;
     10: Result:='10-Baixado conforme instruções da Agência' ;
@@ -490,7 +490,7 @@ function TACBrBancoNordeste.CodOcorrenciaToTipo(const CodOcorrencia:
 begin
    case CodOcorrencia of
       02: Result := toRetornoRegistroConfirmado;
-      03: Result := toRetornoRegistroRecusado;
+      51: Result := toRetornoRegistroRecusado;
       06: Result := toRetornoLiquidado;
       09: Result := toRetornoBaixadoViaArquivo;
       10: Result := toRetornoBaixadoInstAgencia;
@@ -516,7 +516,6 @@ begin
       33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
       34: Result := toRetornoRetiradoDeCartorio;
       35: Result := toRetornoDesagendamentoDebitoAutomatico;
-      51: Result := toRetornoEntradaRejeitadaCarne;
       99: Result := toRetornoRegistroRecusado;
    else
       Result := toRetornoOutrasOcorrencias;
@@ -545,7 +544,7 @@ function TACBrBancoNordeste.TipoOCorrenciaToCod (
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado : Result:='02';
-      toRetornoRegistroRecusado   : Result:='03';
+      toRetornoRegistroRecusado   : Result:='51';
       toRetornoLiquidado          : Result:='06';
       toRetornoBaixadoViaArquivo  : Result:='09';
       toRetornoBaixadoInstAgencia : Result:='10';

@@ -1269,6 +1269,7 @@ begin
           end
          else if copy(Linha, 14, 1) = 'U' then // segmento U
           begin
+            CodigoLiquidacao    := copy(Linha, 16, 2);  //Código de Movimento Retorno  página 156
             ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
             ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
             ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;

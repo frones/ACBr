@@ -770,6 +770,7 @@ begin
   if ARetorno.Count = 0 then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno + ' está vazio.'));
 
+  Titulo := nil;
   for I := 0 to ARetorno.Count - 1 do
   begin
     // Header do arquivo
@@ -816,50 +817,57 @@ begin
 
     // Detalhe "T"
     if (Length(ARetorno[I]) = 240) and (ARetorno[I][8] = '3') and (ARetorno[I][14] = 'T') then
-    begin
       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-      Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(ARetorno[I],16,2),0));
-      Titulo.NossoNumero := Copy(ARetorno[I], 38, 10);
-      Titulo.Carteira := ARetorno[I][58];
-      Titulo.NumeroDocumento := Copy(ARetorno[I], 59, 15);
-      Titulo.Vencimento := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 74, 8)), Date);
-      Titulo.ValorDocumento := StrToFloatDef(Copy(ARetorno[I], 82, 15), 0) / 100;
-      Titulo.SeuNumero := Copy(ARetorno[I], 106, 25);
-      Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(ARetorno[I], 199, 15), 0) / 100;
-
-      Titulo.Sacado.Pessoa := CodToACBrPessoa(ARetorno[I][133]);
-      Titulo.Sacado.CNPJCPF := FloatToStr(StrToFloatDef(Copy(ARetorno[I], 134, 15),0));
-      Titulo.Sacado.NomeSacado := Copy(ARetorno[I], 149, 40);
-
-      idxMotivoOcor := 214;
-      while idxMotivoOcor <= 220 do
+    if Assigned(Titulo) then
+    begin
+      if (Length(ARetorno[I]) = 240) and (ARetorno[I][8] = '3') and (ARetorno[I][14] = 'T') then
       begin
-        if Trim(Copy(ARetorno[I], idxMotivoOcor, 2)) <> '' then
+
+        Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(ARetorno[I],16,2),0));
+        Titulo.NossoNumero := Copy(ARetorno[I], 38, 10);
+        Titulo.Carteira := ARetorno[I][58];
+        Titulo.NumeroDocumento := Copy(ARetorno[I], 59, 15);
+        Titulo.Vencimento := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 74, 8)), Date);
+        Titulo.ValorDocumento := StrToFloatDef(Copy(ARetorno[I], 82, 15), 0) / 100;
+        Titulo.SeuNumero := Copy(ARetorno[I], 106, 25);
+        Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(ARetorno[I], 199, 15), 0) / 100;
+
+        Titulo.Sacado.Pessoa := CodToACBrPessoa(ARetorno[I][133]);
+        Titulo.Sacado.CNPJCPF := FloatToStr(StrToFloatDef(Copy(ARetorno[I], 134, 15),0));
+        Titulo.Sacado.NomeSacado := Copy(ARetorno[I], 149, 40);
+
+        idxMotivoOcor := 214;
+        while idxMotivoOcor <= 220 do
         begin
-          Titulo.MotivoRejeicaoComando.Add(Copy(ARetorno[I], idxMotivoOcor, 2));
-          Titulo.DescricaoMotivoRejeicaoComando.Add(
-            CodMotivoRejeicaoToDescricao(Titulo.OcorrenciaOriginal.Tipo, Copy(ARetorno[I], idxMotivoOcor, 2)));
+          if Trim(Copy(ARetorno[I], idxMotivoOcor, 2)) <> '' then
+          begin
+            Titulo.MotivoRejeicaoComando.Add(Copy(ARetorno[I], idxMotivoOcor, 2));
+            Titulo.DescricaoMotivoRejeicaoComando.Add(
+              CodMotivoRejeicaoToDescricao(Titulo.OcorrenciaOriginal.Tipo, Copy(ARetorno[I], idxMotivoOcor, 2)));
+          end;
+
+          Inc(idxMotivoOcor, 2);
         end;
 
-        Inc(idxMotivoOcor, 2);
+        Titulo.EspecieDoc := CodToEspecieTitulo(Copy(ARetorno[I], 222, 2));
       end;
 
-      Titulo.EspecieDoc := CodToEspecieTitulo(Copy(ARetorno[I], 222, 2));
+      if (Length(ARetorno[I]) = 240) and (ARetorno[I][8] = '3') and (ARetorno[I][14] = 'U') then
+      begin
+        Titulo.ValorMoraJuros := StrToFloatDef(Copy(ARetorno[I], 18, 15), 0) / 100;
+        Titulo.ValorDesconto := StrToFloatDef(Copy(ARetorno[I], 33, 15), 0) / 100;
+        Titulo.ValorAbatimento := StrToFloatDef(Copy(ARetorno[I], 48, 15), 0) / 100;
+        Titulo.ValorIOF := StrToFloatDef(Copy(ARetorno[I], 63, 15), 0) / 100;
+        Titulo.ValorPago := StrToFloatDef(Copy(ARetorno[I], 78, 15), 0) / 100;
+        Titulo.ValorRecebido := StrToFloatDef(Copy(ARetorno[I], 93, 15), 0) / 100;
+        Titulo.ValorOutrasDespesas := StrToFloatDef(Copy(ARetorno[I], 108, 15), 0) / 100;
+        Titulo.ValorOutrosCreditos := StrToFloatDef(Copy(ARetorno[I], 123, 15), 0) / 100;
+        Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 138, 8)), Date);
+      end;
+
     end;
 
-    if (Length(ARetorno[I]) = 240) and (ARetorno[I][8] = '3') and (ARetorno[I][14] = 'U') then
-    begin
-      Titulo.ValorMoraJuros := StrToFloatDef(Copy(ARetorno[I], 18, 15), 0) / 100;
-      Titulo.ValorDesconto := StrToFloatDef(Copy(ARetorno[I], 33, 15), 0) / 100;
-      Titulo.ValorAbatimento := StrToFloatDef(Copy(ARetorno[I], 48, 15), 0) / 100;
-      Titulo.ValorIOF := StrToFloatDef(Copy(ARetorno[I], 63, 15), 0) / 100;
-      Titulo.ValorPago := StrToFloatDef(Copy(ARetorno[I], 78, 15), 0) / 100;
-      Titulo.ValorRecebido := StrToFloatDef(Copy(ARetorno[I], 93, 15), 0) / 100;
-      Titulo.ValorOutrasDespesas := StrToFloatDef(Copy(ARetorno[I], 108, 15), 0) / 100;
-      Titulo.ValorOutrosCreditos := StrToFloatDef(Copy(ARetorno[I], 123, 15), 0) / 100;
-      Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 138, 8)), Date);
-    end;
   end;
 end;
 

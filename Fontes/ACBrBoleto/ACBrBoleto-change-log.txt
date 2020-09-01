@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2020
+
+--ACBrBancoBanestes--
+[*] Ajustes leitura Retorno CNAB240, validando Criação de Titulos na lista.
+
+
 27/08/2020
 
 --ACBrBancoSicred--

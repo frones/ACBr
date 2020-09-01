@@ -46,6 +46,9 @@ namespace ACBrLib.Sat
             public delegate int SAT_DesInicializar();
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_AtivarSAT(string CNPJValue, int cUF, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_AssociarAssinatura(string CNPJValue, string assinaturaCNPJs, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -127,8 +130,8 @@ namespace ACBrLib.Sat
         }
 
         #endregion Constructors
-		
-		#region Properties
+
+        #region Properties
 
         public string Nome
         {
@@ -224,6 +227,19 @@ namespace ACBrLib.Sat
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
+        }
+
+        public string SAT_AtivarSAT(string CNPJValue, int cUF)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.SAT_AtivarSAT>();
+            var ret = ExecuteMethod(() => method(ToUTF8(CNPJValue), cUF, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
         }
 
         public string AssociarAssinatura(string CNPJValue, string assinaturaCNPJs)
@@ -507,6 +523,7 @@ namespace ACBrLib.Sat
             AddMethod<Delegates.SAT_ConfigGravarValor>("SAT_ConfigGravarValor");
             AddMethod<Delegates.SAT_InicializarSAT>("SAT_InicializarSAT");
             AddMethod<Delegates.SAT_DesInicializar>("SAT_DesInicializar");
+            AddMethod<Delegates.SAT_AtivarSAT>("SAT_AtivarSAT");
             AddMethod<Delegates.SAT_AssociarAssinatura>("SAT_AssociarAssinatura");
             AddMethod<Delegates.SAT_BloquearSAT>("SAT_BloquearSAT");
             AddMethod<Delegates.SAT_DesbloquearSAT>("SAT_DesbloquearSAT");

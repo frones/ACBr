@@ -1311,6 +1311,9 @@ begin
     }
     if (FProvedor = proIPM) then
     begin
+      if (FNotasFiscais.Count = 0) then
+        FNotasFiscais.Add;
+
       FNotasFiscais.Items[0].NFSe.Autenticador      := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Autenticador;
       FNotasFiscais.Items[0].NFSe.Link              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Link;
       FNotasFiscais.Items[0].NFSe.Numero            := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Numero;

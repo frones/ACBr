@@ -226,7 +226,7 @@ implementation
 
 uses
   Math, DateUtils, StrUtils,
-  ACBrConsts;
+  ACBrConsts, ACBrUtil;
 
 procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 
@@ -302,7 +302,7 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
   procedure ConteudoToParcelas;
   var
     DataParcela: TDateTime;
-    ValorParcela: Double;
+    ValorPrimeiraParcela, ValorParcelas, SaldoParcelas: Currency;
     I: Integer;
     Parc: TACBrTEFRespParcela;
   begin
@@ -314,18 +314,35 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
       if (QtdParcelas > 0) then
       begin
         DataParcela := LeInformacao(PWINFO_INSTALLMDATE, 0).AsDate;
-        ValorParcela := LeInformacao(PWINFO_INSTALLM1AMT, 0).AsFloat;
+        if (DataParcela = 0) then
+          DataParcela := IncDay(DateOf(DataHoraTransacaoLocal), 30);
+
+        ValorParcelas := LeInformacao(PWINFO_INSTALLMAMNT, 0).AsFloat;
+        if (ValorParcelas = 0) then
+          ValorParcelas := RoundABNT((ValorTotal / QtdParcelas), -2);
+
+        ValorPrimeiraParcela := LeInformacao(PWINFO_INSTALLM1AMT, 0).AsFloat;
+        if (ValorPrimeiraParcela = 0) then
+          ValorPrimeiraParcela := ValorParcelas;
+
+        SaldoParcelas := ValorTotal;
 
         for I := 1 to QtdParcelas do
         begin
           Parc := TACBrTEFRespParcela.create;
           Parc.Vencimento := DataParcela;
-          Parc.Valor := ValorParcela;
+          if (I = QtdParcelas) then
+            Parc.Valor := SaldoParcelas
+          else if (I = 1) then
+            Parc.Valor := ValorPrimeiraParcela
+          else
+            Parc.Valor := ValorParcelas;
+
           Parc.NSUParcela := NSU;
           Parcelas.Add(Parc);
 
-          ValorParcela := LeInformacao(PWINFO_INSTALLMAMNT, 0).AsFloat;
           DataParcela := IncDay(DataParcela,30);
+          SaldoParcelas := SaldoParcelas - Parc.Valor;
         end;
       end;
     end;

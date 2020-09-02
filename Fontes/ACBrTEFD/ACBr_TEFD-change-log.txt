@@ -46,6 +46,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/20
+-- ACBrTEFPayGoComum --
+[*] Ajuste em "ConteudoToParcelas", para considerar que o Retorno, pode não
+    conter as informações: PWINFO_INSTALLMDATE, e PWINFO_INSTALLM1AMT e
+    PWINFO_INSTALLMAMNT.. Aplicando nesses casos, o calculo padrão, da Data das
+    Parcelas de 30 dias entre parcelas, e o Valor da Parcela sendo o Total
+    dividido pelo número de parcelas
+    (por: DSA)
+
 25/08/20
 -- ACBrTEFD --
 [-] Correção para SetNumVias, em classes que não são descendentes de TACBrTEFDClassTXT

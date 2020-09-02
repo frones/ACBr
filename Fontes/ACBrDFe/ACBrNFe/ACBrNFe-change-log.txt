@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2020
+-- pcnConversaoNFe --
+[*] Acrescentado mais enumeradores, pois o serviço DistribuicaoDFe
+    estava retornado teNaoMapeado (tipo de evento).
+   Por: Victor H. Gonzales - Panda
+
 01/09/2020
 -- pcnConversaoNFe/pcnEventoNFe --
 [*] Acrescentado o enumerador teComprEntrega, pois o serviço DistribuicaoDFe

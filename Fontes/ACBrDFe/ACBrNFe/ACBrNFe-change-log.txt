@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/09/2020
+-- ACBrNFeNotasFiscais --
+[*] Atualização na leitura do .ini com tags prioritarias seguindo nomenclatura do manual SEFAZ
+Por: José M S Junior
+
+02/09/2020
 -- pcnConversaoNFe --
 [*] Acrescentado mais enumeradores, pois o serviço DistribuicaoDFe
     estava retornado teNaoMapeado (tipo de evento).

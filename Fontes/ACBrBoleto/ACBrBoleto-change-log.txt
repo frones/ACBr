@@ -62,7 +62,7 @@ Símbolo : Significado
 https://www.projetoacbr.com.br/forum/topic/56114-erro-na-leitura-do-arquivo-de-retorno-do-sicredi/
 
 --ACBrBancoItau--
-[*] Ajustes relativos a códigos de negativação
+[*] Validação relativos a códigos de negativação na geracao CNAB400
 https://www.projetoacbr.com.br/forum/topic/58790-negativação-no-banco-itau-cnab-400/
 
 --ACBrBancoSantander--

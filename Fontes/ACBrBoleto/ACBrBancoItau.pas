@@ -682,6 +682,7 @@ begin
 
      {Pegando campo Intruções conforme código protesto}
      InstrucoesProtesto(ACBrTitulo);
+     DefineDataProtestoNegativacao(ACBrTitulo);
 
     with ACBrBoleto do
     begin
@@ -790,8 +791,8 @@ begin
                    PadRight(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')                          + // NOME DO SACADOR/AVALISTA
                    space(4)                                                                       + // COMPLEMENTO DO REGISTRO
                    ADataMoraJuros                                                                 + // DATA DE MORA
-                   IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
-                           PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00')+ // PRAZO
+                   IfThen((DataProtestoNegativacao <> 0) and (DataProtestoNegativacao > Vencimento),
+                        PadLeft(DiasProtestoNegativacao , 2, '0'), '00')+ // PRAZO
                    space(1)                                                                       + // BRANCOS
                    IntToStrZero(aRemessa.Count + 1, 6);                                             // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 

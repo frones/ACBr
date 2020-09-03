@@ -157,6 +157,7 @@ begin
   fsDinheiroList := TDinheiroList.Create( true ) ;
 
   { Inserindo valores Defaults }
+  InserirDinheiro('Duzentos Reais', 200.00);
   InserirDinheiro('Cem Reais', 100.00);
   InserirDinheiro('Cinquenta Reais', 50.00);
   InserirDinheiro('Vinte Reais', 20.00);

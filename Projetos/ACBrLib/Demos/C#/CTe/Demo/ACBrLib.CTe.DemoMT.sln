@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe.Demo", "ACBrLib.CTe.Demo\ACBrLib.CTe.Demo.csproj", "{D1C86B1A-F07B-4A36-A077-729396AC5AD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe.DemoMT", "ACBrLib.CTe.Demo\ACBrLib.CTe.DemoMT.csproj", "{D1C86B1A-F07B-4A36-A077-729396AC5AD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe", "..\Imports\Dinamico\MT\ACBrLib.CTe\ACBrLib.CTe.csproj", "{F06A5296-B362-47B7-939F-49FCDE534763}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe", "..\Imports\Dinamico\MT\ACBrLib.CTe.csproj", "{F06A5296-B362-47B7-939F-49FCDE534763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

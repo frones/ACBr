@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibBoleto.Demo", "ACBrL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Boleto", "..\Imports\Dinamico\ST\ACBrLib.Boleto\ACBrLib.Boleto.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Boleto", "..\Imports\Dinamico\ST\ACBrLib.Boleto.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

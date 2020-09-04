@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C4ADDF7F-2B4B-4D9A-ACC8-DD68BE3859A4}</ProjectGuid>
+    <ProjectGuid>{C6AAB316-8B0B-41EC-A5E1-A4A0C543A53B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ACBrLib.GNRe.Demo</RootNamespace>
-    <AssemblyName>ACBrLib.GNRe.Demo</AssemblyName>
+    <RootNamespace>ACBrLibPosPrinter.Demo</RootNamespace>
+    <AssemblyName>ACBrLibPosPrinter.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -31,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ACBrMonitor.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,26 +49,17 @@
     <Compile Include="..\..\..\Shared\Helpers.cs">
       <Link>Helpers.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\Shared\InputBox.cs">
-      <Link>InputBox.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Shared\ISplash.cs">
-      <Link>ISplash.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\Shared\ItemData.cs">
       <Link>ItemData.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Shared\SplashInfo.cs">
-      <Link>SplashInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Shared\SplashScreenManager.cs">
-      <Link>SplashScreenManager.cs</Link>
     </Compile>
     <Compile Include="..\..\..\Shared\UIExtensions.cs">
       <Link>UIExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\Shared\User32.cs">
-      <Link>User32.cs</Link>
+    <Compile Include="FrmSerial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSerial.Designer.cs">
+      <DependentUpon>FrmSerial.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -74,20 +67,10 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\Shared\FrmWait.cs">
-      <Link>FrmWait.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\..\..\Shared\FrmWait.Designer.cs">
-      <DependentUpon>FrmWait.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\..\Shared\FrmWait.resx">
-      <DependentUpon>FrmWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +82,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="FrmSerial.resx">
+      <DependentUpon>FrmSerial.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,15 +96,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ativar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ACBrMonitor.ico" />
+    <None Include="Resources\limpar.png" />
+    <None Include="Resources\imprimir.png" />
+    <None Include="Resources\serial.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\ST\ACBrLib.GNRe.csproj">
-      <Project>{c839513c-378b-43d0-b9eb-183d5d55bec8}</Project>
-      <Name>ACBrLib.GNRe</Name>
+    <ProjectReference Include="..\..\Import\Dinamico\ST\ACBrLib.PosPrinter.csproj">
+      <Project>{f44a03bc-e5aa-45da-a2b1-5d000d513152}</Project>
+      <Name>ACBrLib.PosPrinter</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

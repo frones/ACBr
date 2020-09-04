@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibETQ.Demo", "ACBrLibETQ.Demo\ACBrLibETQ.Demo.csproj", "{FD0336F0-43E7-4A41-9564-2572AF11A08D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibETQMT.Demo", "ACBrLibETQ.Demo\ACBrLibETQMT.Demo.csproj", "{FD0336F0-43E7-4A41-9564-2572AF11A08D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject

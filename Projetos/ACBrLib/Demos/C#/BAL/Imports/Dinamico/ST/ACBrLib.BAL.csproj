@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9463292-54C9-4290-BF95-0F4A35025715}</ProjectGuid>
+    <ProjectGuid>{3989A535-1E78-4E45-B3AE-47335EA6A359}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ACBrLib.MDFe</RootNamespace>
-    <AssemblyName>ACBrLib.MDFe</AssemblyName>
+    <RootNamespace>ACBrLib.BAL</RootNamespace>
+    <AssemblyName>ACBrLib.BAL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -40,11 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACBrMDFe.cs" />
+    <Compile Include="ACBrBAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
+    <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>

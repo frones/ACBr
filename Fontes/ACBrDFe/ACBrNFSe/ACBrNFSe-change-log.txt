@@ -47,6 +47,10 @@ Símbolo : Significado
 [*] Remoção de código comentado ou não utilizado
   Por: Italo Jurisato Junior
 
+-- pnfsNFSeR --
+[-] Correção para leitura do ISS retido para o provedor WebISSv2.
+  Por: BigWings
+
 02/09/2020
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/58697-xml-de-retorno-do-servidor-ipm/?do=findComment&comment=388507

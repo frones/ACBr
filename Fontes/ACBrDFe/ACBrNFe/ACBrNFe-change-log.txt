@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2020
+-- pcnConversaoNFe --
+[*] Acrescentado o enumerador: teMDFeAutorizado, pois o serviço DistribuicaoDFe
+    estava retornado teNaoMapeado.
+   Por: Victor H. Gonzales - Panda
+
 02/09/2020
 -- ACBrNFeNotasFiscais --
 [*] Atualização na leitura do .ini com tags prioritarias seguindo nomenclatura do manual SEFAZ

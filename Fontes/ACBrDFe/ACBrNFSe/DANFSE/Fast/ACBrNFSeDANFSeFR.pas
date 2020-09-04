@@ -186,13 +186,14 @@ begin
       frxPDFExport.ShowDialog := False;
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-
         NomeArqXML := Trim(DANFSEClassOwner.NomeDocumento);
+
         if EstaVazio(NomeArqXML) then
           with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
           begin
             NomeArqXML :=  TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
           end;
+
         frxPDFExport.FileName := PathWithDelim(DANFSEClassOwner.PathPDF) + NomeArqXML;
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
@@ -289,7 +290,6 @@ begin
     begin
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-
         CarregaDados(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe);
 
         if (I > 0) then
@@ -303,7 +303,6 @@ begin
   end;
 
   AjustaMargensReports;
-
 end;
 
 procedure TACBrNFSeDANFSeFR.CriarDataSetsFrx;
@@ -434,6 +433,9 @@ begin
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('Tributacao', ftString, 1);
       Add('OutrosDescontos', ftCurrency);
+      Add('DescricaoTotalRetencoesDemonstrativo', ftString, 19);
+      Add('DescriçãoTributosFederais', ftString, 35);
+
       // Provedor SP
       Add('ValorCargaTributaria', ftCurrency);
       Add('PercentualCargaTributaria', ftCurrency);
@@ -452,8 +454,8 @@ begin
       Add('ExigibilidadeISS', ftString, 60);
       Add('CodigoMunicipio', ftString, 60);
       Add('MunicipioIncidencia', ftString, 60);
-      Add('OutrasInformacoes', ftString, 500);
-      Add('InformacoesComplementares', ftString, 500);
+      Add('OutrasInformacoes', ftString, 1000);
+      Add('InformacoesComplementares', ftString, 1000);
       Add('CodigoObra', ftString, 60);
       Add('Art', ftString, 60);
       Add('Imagem', ftString, 256);
@@ -469,9 +471,9 @@ begin
       Add('Site', ftString, 50);
       Add('NaturezaOperacao', ftString, 50);
       Add('RegimeEspecialTributacao', ftString, 80);
-      Add('OptanteSimplesNacional', ftString, 10);
+      Add('OptanteSimplesNacional', ftString, 11);
       Add('IncentivadorCultural', ftString, 10);
-      Add('TipoRecolhimento', ftString, 10);
+      Add('TipoRecolhimento', ftString, 15);
       //
       Add('ValorCredito', ftCurrency);
     end;
@@ -639,7 +641,8 @@ begin
     end;
 
     frxTransportadora := TfrxDBDataset.Create(Self);
-    with frxTransportadora do begin
+    with frxTransportadora do
+    begin
       UserName        := 'Transportadora';
       CloseDataSource := False;
       OpenDataSource  := False;
@@ -703,6 +706,8 @@ begin
         Add('TotalNota=TotalNota');
         Add('Tributacao=Tributacao');
         Add('OutrosDescontos=OutrosDescontos');
+        Add('DescricaoTotalRetencoesDemonstrativo=DescricaoTotalRetencoesDemonstrativo');
+        Add('DescriçãoTributosFederais=DescriçãoTributosFederais');
         // Provedor SP
         Add('ValorCargaTributaria=ValorCargaTributaria');
         Add('PercentualCargaTributaria=PercentualCargaTributaria');
@@ -847,39 +852,13 @@ begin
         cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, ',0.00');
         cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, ',0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
-
-//        if Provedor = proEL then
-//          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota * 100, '0.00')
-//        else
-        // A multiplicação por 100 agora é feita pela rotina que lê o XML
-          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota, '0.00');
-
+        cdsItensServico.FieldByName('Aliquota').AsString             := FormatFloatBr( Aliquota, '0.00');
         cdsItensServico.FieldByName('Unidade').AsString              := Unidade;
         cdsItensServico.FieldByName('AliquotaISSST').AsString        := FormatFloatBr( AlicotaISSST, '0.00');
         cdsItensServico.FieldByName('ValorISSST').AsString           := FormatFloatBr( ValorISSST, '0.00');
         cdsItensServico.FieldByName('DescontoIncondicionado').AsString := FormatFloatBr( DescontoIncondicionado, '0.00');
         Post;
       end;
-
-    if (ANFSe.Servico.ItemServico.Count > 0) AND (ANFSe.Servico.ItemServico.Count < 12) then
-      begin
-        for I := 1 to 12 - ANFSe.Servico.ItemServico.Count do
-          begin
-            Append;
-            cdsItensServico.FieldByName('DiscriminacaoServico').AsString := EmptyStr;
-            cdsItensServico.FieldByName('Quantidade').AsString           := EmptyStr;
-            cdsItensServico.FieldByName('ValorUnitario').AsString        := EmptyStr;
-            cdsItensServico.FieldByName('ValorTotal').AsString           := EmptyStr;
-            cdsItensServico.FieldByName('Tributavel').AsString           := EmptyStr;
-            cdsItensServico.FieldByName('Aliquota').AsString             := EmptyStr;
-            cdsItensServico.FieldByName('Unidade').AsString              := EmptyStr;
-            cdsItensServico.FieldByName('AliquotaISSST').AsString        := EmptyStr;
-            cdsItensServico.FieldByName('ValorISSST').AsString           := EmptyStr;
-            cdsItensServico.FieldByName('DescontoIncondicionado').AsString := EmptyStr;
-            Post;
-          end;
-      end;
-
   end;
 end;
 
@@ -914,18 +893,18 @@ begin
           FieldByName('CodigoMunicipio').AsString  := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
           FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
 
-//          if proEL = proEL then
-//            FieldByName('MunicipioIncidencia').AsString := 'No Município'
-//          else
-//            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
-          FieldByName('MunicipioIncidencia').AsString := 'No Município';
+          if NaturezaOperacao = no2 then
+            FieldByName('MunicipioIncidencia').AsString := 'Fora do Município'
+          else
+            FieldByName('MunicipioIncidencia').AsString := 'No Município';
 
           if Valores.IssRetido = stRetencao then
-            FieldByName('TipoRecolhimento').AsString := 'Retido'
+            FieldByName('TipoRecolhimento').AsString := 'Retido na Fonte'
           else
             FieldByName('TipoRecolhimento').AsString := 'Não Retido';
         end;
-      end else
+      end
+      else
       begin
         FieldByName('RegimeEspecialTributacao').AsString := nfseRegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
         FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
@@ -1047,8 +1026,9 @@ begin
       if Provedor = proEL then
       begin
         FieldByName('ItemListaServico').AsString  := ItemListaServico;
-        FieldByName('xItemListaServico').AsString := CodigoToDesc(ItemListaServico);
-      end else
+        FieldByName('xItemListaServico').AsString := CodigoToDesc(StringReplace(ItemListaServico, '.', '', [rfReplaceAll, rfIgnoreCase]));
+      end
+      else
       begin
         FieldByName('ItemListaServico').AsString  := ItemListaServico;
         FieldByName('xItemListaServico').AsString := xItemListaServico;
@@ -1076,17 +1056,24 @@ begin
         FieldByName('ValorIss').AsFloat               := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat        := OutrasRetencoes;
         FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
-//        if Provedor = proWebISS then
-//          FieldByName('Aliquota').AsFloat := Aliquota * 100
-//        else
-        // Agora a multiplicação por 100 é feita pela rotina que lê o XML
-          FieldByName('Aliquota').AsFloat := Aliquota;
-
+        FieldByName('Aliquota').AsFloat               := Aliquota;
         FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;
         FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
         FieldByName('DescontoIncondicionado').AsFloat := DescontoIncondicionado;
-        FieldByName('OutrosDescontos').AsCurrency := OutrosDescontos;
+        FieldByName('OutrosDescontos').AsCurrency     := OutrosDescontos;
+
+        if IssRetido = stRetencao then
+        begin
+          FieldByName('DescricaoTotalRetencoesDemonstrativo').AsString := 'TOTAL RETENÇÕES';
+          FieldByName('DescriçãoTributosFederais').AsString            := 'RETENÇÕES DOS TRIBUTOS FEDERAIS';
+        end
+        else
+        begin
+          FieldByName('DescricaoTotalRetencoesDemonstrativo').AsString := 'TOTAL DEMONSTRATIVO';
+          FieldByName('DescriçãoTributosFederais').AsString            := 'DEMONSTRATIVO DOS TRIBUTOS FEDERAIS';
+        end;
+
         // Provedor SP
         FieldByName('ValorCargaTributaria').AsCurrency := ValorCargaTributaria;
         FieldByName('PercentualCargaTributaria').AsCurrency := PercentualCargaTributaria;
@@ -1106,7 +1093,6 @@ begin
 
     with ANFSe.Tomador do
     begin
-
       FieldByName('RazaoSocial').AsString        := RazaoSocial;
       FieldByName('CpfCnpj').AsString            := ManterDocumento(IdentificacaoTomador.CpfCnpj);
       FieldByName('InscricaoMunicipal').AsString := IdentificacaoTomador.InscricaoMunicipal;
@@ -1130,7 +1116,6 @@ begin
         FieldByName('Telefone').AsString := FormatarFone(Telefone);
         FieldByName('Email').AsString    := Email;
       end;
-
     end;
     Post;
   end;
@@ -1138,10 +1123,12 @@ end;
 
 procedure TACBrNFSeDANFSeFR.CarregaTransortadora(ANFSe: TNFSe);
 begin
-  with cdsTransportadora do begin
+  with cdsTransportadora do
+  begin
     EmptyDataSet;
     Append;
-    with ANFSe.Transportadora do begin
+    with ANFSe.Transportadora do
+    begin
       FieldByName('Cnpj').AsString              := xCpfCnpjTrans;
       FieldByName('RazaoSocial').AsString       := xNomeTrans;
       FieldByName('InscicaoEstadual').AsString  := xInscEstTrans;
@@ -1165,7 +1152,6 @@ var
 begin
   With DANFSeClassOwner do
   begin
-
     cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prefeitura
     cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
     if NaoEstaVazio(DANFSeClassOwner.Logo) then
@@ -1197,12 +1183,9 @@ procedure TACBrNFSeDANFSeFR.CarregaImagemPrestadora;
 var
   vStream      : TMemoryStream;
   vStringStream: TStringStream;
-
 begin
-
   With DANFSeClassOwner do
   begin
-
     cdsParametros.FieldByName('LogoExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prestador
 
     if NaoEstaVazio(PrestLogo) then

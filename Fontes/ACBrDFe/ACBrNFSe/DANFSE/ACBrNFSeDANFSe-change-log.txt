@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2020
+-- ACBrNFSeDANFSeFR --
+[*] Correções e melhorias para atender o provedor Vitoria.
+  Por: Gumercino Breder Paulino
+
 20/08/2020
 -- ACBrNFSeDANFSeRLRetrato --
 [*] Na função NaturezaOperacaoDescricao estava faltando o segundo parâmentro.

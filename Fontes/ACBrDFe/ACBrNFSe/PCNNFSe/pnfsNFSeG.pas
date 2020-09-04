@@ -475,14 +475,7 @@ begin
                   end;
 
                   GerarGrupoCNPJCPF(Cnpj, True);
-//                  Gerador.wGrupo('CpfCnpj');
 
-//                  if Length(Cnpj) <= 11 then
-//                    Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//                  else
-//                    Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
-//                  Gerador.wGrupo('/CpfCnpj');
                   Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
                   if VersaoNFSe = ve100 then
@@ -529,21 +522,22 @@ begin
                 else
                 begin
                   case ExigibilidadeISS of
-                    exiExigivel:                       Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 1 , '');
+                    exiExigivel:
+                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 1 , '');
+
                     exiNaoIncidencia,
                     exiIsencao,
-                    exiImunidade:                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
-                    exiSuspensaDecisaoJudicial,
-                    exiSuspensaProcessoAdministrativo: Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
-                    exiExportacao:                     Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 5 , '');
-                  end;
-                  // Data de adesao ao simples nacional
-                  Gerador.wCampo(tcStr, '', 'DtAdeSN'    , 01, 10, 0, '', '');
-                  Gerador.wCampo(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, '' , '');
-                end;
+                    exiImunidade:
+                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
 
-                if RegimeEspecialTributacao = retMicroempresarioIndividual then
-                  Gerador.wCampo(tcStr, '', 'AlqIssSN_IP', 001, 6, 0, '' , '');
+                    exiSuspensaDecisaoJudicial,
+                    exiSuspensaProcessoAdministrativo:
+                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
+
+                    exiExportacao:
+                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 5 , '');
+                  end;
+                end;
 
                 Gerador.wCampo(tcStr, '', 'Versao', 001, 4, 0, '2.00' , '');
 
@@ -614,7 +608,7 @@ begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupo('envioLote versao="1.0"');
                     Gerador.wCampo(tcStr, '', 'CNPJ'   , 01, 14, 1, Cnpj, '');
-                    Gerador.wCampo(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');  {@/\@}
+                    Gerador.wCampo(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');
                     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
                     Gerador.wGrupo('/envioLote');
                   end;
@@ -694,7 +688,7 @@ begin
              Gerador.wGrupo('CPFCNPJRemetente');
              Gerador.wCampoCNPJCPF('', '', Cnpj);
              Gerador.wGrupo('/CPFCNPJRemetente');
-//             Gerador.wCampo(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+
              Gerador.wCampo(tcStr, '#1', 'transacao', 01, 05, 0, iif(Transacao,'true','false'), '');
              Gerador.wCampo(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
              Gerador.wCampo(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
@@ -724,13 +718,6 @@ begin
 
             GerarGrupoCNPJCPF(Cnpj, True);
 
-//            Gerador.wGrupo('CpfCnpj');
-//            if Length(Cnpj) <= 11 then
-//              Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//            else
-//              Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//            Gerador.wGrupo('/CpfCnpj');
-
             Gerador.wGrupo('/Prestador');
             Gerador.wCampo(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
@@ -753,13 +740,6 @@ begin
            Gerador.wGrupo('Prestador');
 
             GerarGrupoCNPJCPF(Cnpj, True);
-
-//           Gerador.wGrupo('CpfCnpj');
-//           if Length(Cnpj) <= 11 then
-//             Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//           else
-//             Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//           Gerador.wGrupo('/CpfCnpj');
 
            Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
            Gerador.wGrupo('/Prestador');
@@ -953,18 +933,6 @@ begin
 
       GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
 
-//      if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
-//      begin
-//        Gerador.wGrupo('CpfCnpj');
-//        if Length(Cnpj) <= 11 then
-//          Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//        else
-//          Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//        Gerador.wGrupo('/CpfCnpj');
-//      end
-//      else
-//        Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
       if (Provedor <> proBetha) or (IM <> '') then
         Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
@@ -1001,15 +969,6 @@ begin
                   Gerador.wCampo(tcStr, '', 'ChaveDigital', 1, 32, 1, ChaveAcessoPrefeitura, '');
 
                   GerarGrupoCNPJCPF(Cnpj, True);
-
-//                  Gerador.wGrupo('CpfCnpj');
-
-//                  if Length(Cnpj) <= 11 then
-//                    Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//                  else
-//                    Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
-//                  Gerador.wGrupo('/CpfCnpj');
 
                   Gerador.wCampo(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
                   Gerador.wGrupo('/IdentificacaoPrestador');
@@ -1086,7 +1045,7 @@ begin
                   Gerador.wGrupo('CPFCNPJRemetente');
                   Gerador.wCampoCNPJCPF('', '', Cnpj);
                   Gerador.wGrupo('/CPFCNPJRemetente');
-//                Gerador.wCampo(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+
                   Gerador.wCampo(tcStr, '#3', 'NumeroLote', 01, 14, 1, NumeroLote, '');
                   Gerador.wGrupo('/Cabecalho');
                 end;
@@ -1199,15 +1158,6 @@ begin
 
                   GerarGrupoCNPJCPF(Cnpj, True);
 
-//                  Gerador.wGrupo('CpfCnpj');
-
-//                  if Length(Cnpj) <= 11 then
-//                    Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//                  else
-//                    Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
-//                  Gerador.wGrupo('/CpfCnpj');
-
                   Gerador.wCampo(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
                   Gerador.Prefixo := Prefixo3;
                   Gerador.wGrupo('/IdentificacaoPrestador');
@@ -1313,7 +1263,6 @@ begin
                   Gerador.wGrupo('CPFCNPJRemetente');
                   Gerador.wCampoCNPJCPF('', '', Cnpj);
                   Gerador.wGrupo('/CPFCNPJRemetente');
-//                  Gerador.wCampo(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
                   Gerador.wGrupo('/Cabecalho');
 
                   Gerador.wGrupo('Detalhe xmlns=""');
@@ -1346,18 +1295,6 @@ begin
       Gerador.Prefixo := Prefixo4;
 
       GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon, pro4R]));
-
-//      if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon, pro4R]) then
-//      begin
-//        Gerador.wGrupo('CpfCnpj');
-//        if Length(Cnpj) <= 11 then
-//          Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//        else
-//          Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//        Gerador.wGrupo('/CpfCnpj');
-//      end
-//      else
-//        Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
       if Provedor = proTecnos then
         Gerador.wCampo(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');
@@ -1407,15 +1344,6 @@ begin
         Gerador.wCampo(tcStr, '', 'ChaveDigital', 1, 32, 1, ChaveAcessoPrefeitura, '');
 
         GerarGrupoCNPJCPF(Cnpj, True);
-
-//                  Gerador.wGrupo('CpfCnpj');
-
-//                  if Length(Cnpj) <= 11 then
-//                    Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//                  else
-//                    Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
-//                  Gerador.wGrupo('/CpfCnpj');
 
         Gerador.wCampo(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
         Gerador.wGrupo('/IdentificacaoPrestador');
@@ -1516,7 +1444,6 @@ begin
         Gerador.wGrupo('CPFCNPJRemetente');
         Gerador.wCampoCNPJCPF('', '', Cnpj);
         Gerador.wGrupo('/CPFCNPJRemetente');
-//             Gerador.wCampo(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
         Gerador.wGrupo('/Cabecalho');
 
         Gerador.wGrupo('Detalhe xmlns=""');

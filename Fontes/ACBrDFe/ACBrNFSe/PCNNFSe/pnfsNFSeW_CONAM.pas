@@ -55,7 +55,6 @@ type
     FQtdReg30: Integer;
     FValReg30: Real;
   protected
-    procedure GerarIdentificacaoRPS;
     procedure GerarListaServicos;
     procedure GeraTributos;
     procedure GerarValoresServico;
@@ -92,41 +91,6 @@ begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
-procedure TNFSeW_CONAM.GerarIdentificacaoRPS;
-begin
-  Gerador.wCampo(tcStr, '', 'Ano'    , 01, 04, 0, FormatDateTime('yyyy', FNFSe.DataEmissaoRps) , '');
-  Gerador.wCampo(tcStr, '', 'Mes'    , 01, 02, 0, FormatDateTime('mm', FNFSe.DataEmissaoRps) , '');
-  Gerador.wCampo(tcStr, '', 'CPFCNPJ', 01, 14, 0, FNFSe.Prestador.Cnpj , '');
-  Gerador.wCampo(tcStr, '', 'DTIni'  , 01, 10, 0, FormatDateTime('dd/mm/yyyy', FNFSe.DataEmissaoRps) , '');
-  Gerador.wCampo(tcStr, '', 'DTFin'  , 01, 10, 0, FormatDateTime('dd/mm/yyyy', FNFSe.DataEmissaoRps) , '');
-
-  if FNFSe.OptanteSimplesNacional = snSim then
-  begin
-    Gerador.wCampo(tcInt, '', 'TipoTrib'   , 01, 01, 0, 4 , '');
-    Gerador.wCampo(tcStr, '', 'DtAdeSN'    , 01, 10, 0, FormatDateTime('dd/mm/yyyy', NFSe.DataOptanteSimplesNacional) , ''); //data de adesao ao simples nacional
-    Gerador.wCampo(tcDe2, '', 'AlqIssSN_IP', 01, 06, 0, NFSe.ValoresNfse.Aliquota, '');
-  end
-  else begin
-    case FNFSe.Servico.ExigibilidadeISS of
-      exiExigivel:                       Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 1 , '');
-      exiNaoIncidencia:                  Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
-      exiIsencao:                        Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
-      exiExportacao:                     Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 5 , '');
-      exiImunidade:                      Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
-      exiSuspensaDecisaoJudicial:        Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
-      exiSuspensaProcessoAdministrativo: Gerador.wCampo(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
-    end;
-
-    Gerador.wCampo(tcStr, '', 'DtAdeSN'    , 01, 10, 0, '', ''); //data de adesao ao simples nacional
-    Gerador.wCampo(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, '' , '');
-  end;
-
-  if FNFSe.RegimeEspecialTributacao = retMicroempresarioIndividual then
-    Gerador.wCampo(tcStr, '', 'AlqIssSN_IP', 001, 6, 0, '' , '');
-
-  Gerador.wCampo(tcStr, '', 'Versao', 001, 4, 0, '2.00' , '');
-end;
-
 procedure TNFSeW_CONAM.GerarListaServicos;
 var
   i: Integer;
@@ -134,11 +98,8 @@ var
   MunTomador: String;
   MunPrestador: String;
 begin
-  //Gerador.wGrupoNFSe('Reg20');
-
-  Gerador.ArquivoFormatoXML := '';
-
   Gerador.wGrupo('Reg20Item');
+
   if FNFSe.IdentificacaoRps.Tipo = trRPS then
     Gerador.wCampo(tcStr, '', 'TipoNFS', 01, 3, 1, 'RPS' , '')
   else
@@ -234,7 +195,6 @@ begin
      GeraTributos;
 
   Gerador.wGrupo('/Reg20Item');
-  //Gerador.wGrupo('/Reg20');
 end;
 
 procedure TNFSeW_CONAM.GeraTributos;
@@ -309,12 +269,12 @@ begin
     end;
 
   Gerador.wGrupo('/Reg30');
-
 end;
 
 procedure TNFSeW_CONAM.GerarValoresServico;
 begin
   Gerador.wGrupo('Reg90');
+
   Gerador.wCampo(tcStr, '', 'QtdRegNormal'  , 01, 05, 1, '1', '');
   Gerador.wCampo(tcDe2, '', 'ValorNFS'      , 01, 16, 2, NFSe.Servico.Valores.ValorServicos, '');
   Gerador.wCampo(tcDe2, '', 'ValorISS'      , 01, 16, 2, NFSe.Servico.Valores.ValorIss, '');
@@ -329,6 +289,8 @@ end;
 function TNFSeW_CONAM.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+  Gerador.ArquivoFormatoXML := '';
+
   GerarXML_CONAM;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -336,21 +298,10 @@ end;
 
 procedure TNFSeW_CONAM.GerarXML_CONAM;
 begin
-(*
-  Gerador.Opcoes.RetirarEspacos := False;
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo           := FPrefixo4;
-*)
-  //Gerador.Opcoes.IdentarXML:=True;
-
-  //Gerador.wGrupo(('SDTRPS');
-  //GerarIdentificacaoRPS;
   Gerador.Opcoes.DecimalChar := ',';
   Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   GerarListaServicos;
-  //GerarValoresServico;
-  //Gerador.wGrupo(('/SDTRPS');
 end;
 
 end.

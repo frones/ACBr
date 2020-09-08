@@ -1360,11 +1360,11 @@ begin
     try
       infCFe.versaoDadosEnt := StringToFloatDef(INIRec.ReadString('infCFe','versao',''), infCFe.versaoDadosEnt);
       Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF', CodigoParaUF(Ide.cUF))));
-      Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,Ide.cNF));
-      Ide.modelo     := INIRec.ReadInteger( 'Identificacao','Modelo' ,INIRec.ReadInteger( 'Identificacao','mod' ,Ide.modelo));
+      Ide.cNF        := INIRec.ReadInteger( 'Identificacao','cNF' ,INIRec.ReadInteger( 'Identificacao','Codigo' ,Ide.cNF));
+      Ide.modelo     := INIRec.ReadInteger( 'Identificacao','mod' ,INIRec.ReadInteger( 'Identificacao','Modelo' ,Ide.modelo));
       Ide.nserieSAT  := INIRec.ReadInteger( 'Identificacao','nserieSAT'  ,Ide.nserieSAT);
       Ide.nCFe       := INIRec.ReadInteger( 'Identificacao','nCFe' ,INIRec.ReadInteger( 'Identificacao','nNF' ,Ide.nCFe));
-      Ide.dEmi       := StrToDateDef(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi',''))),Ide.dEmi);
+      Ide.dEmi       := StrToDateDef(INIRec.ReadString( 'Identificacao','dhEmi',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','Emissao',''))),Ide.dEmi);
       Ide.hEmi       := StrToTimeDef(INIRec.ReadString( 'Identificacao','hEmi',''),Ide.hEmi);
       Ide.cDV        := INIRec.ReadInteger( 'Identificacao','cDV' , Ide.cDV);
       Ide.tpAmb      := StrToTpAmb(OK,INIRec.ReadString( 'Identificacao','tpAmb',TpAmbToStr(Ide.tpAmb)));
@@ -1373,9 +1373,9 @@ begin
       Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,Ide.assinaturaQRCODE );
       Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , Ide.numeroCaixa);
 
-      Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', Emit.CNPJ ));
-      Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome', Emit.xNome));
-      Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant', Emit.xFant));
+      Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ',INIRec.ReadString(  'Emitente','CNPJCPF', Emit.CNPJ ));
+      Emit.xNome             := INIRec.ReadString(  'Emitente','xNome',INIRec.ReadString(  'Emitente','Razao', Emit.xNome));
+      Emit.xFant             := INIRec.ReadString(  'Emitente','xFant',INIRec.ReadString(  'Emitente','Fantasia', Emit.xFant));
       Emit.IE                := INIRec.ReadString(  'Emitente','IE', Emit.IE );
       Emit.IM                := INIRec.ReadString(  'Emitente','IM', Emit.IM );
 
@@ -1383,15 +1383,15 @@ begin
       Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNToStr(Emit.cRegTribISSQN)));
       Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNToStr(Emit.indRatISSQN)));
 
-      Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
-      Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));
-      Emit.EnderEmit.xCpl    := INIRec.ReadString(  'Emitente','Complemento',INIRec.ReadString(  'Emitente','xCpl', Emit.EnderEmit.xCpl));
-      Emit.EnderEmit.xBairro := INIRec.ReadString(  'Emitente','Bairro'     ,INIRec.ReadString(  'Emitente','xBairro', Emit.EnderEmit.xBairro));
-      Emit.EnderEmit.xMun    := INIRec.ReadString(  'Emitente','Cidade'     ,INIRec.ReadString(  'Emitente','xMun', Emit.EnderEmit.xMun));
+      Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','xLgr' ,INIRec.ReadString(  'Emitente','Logradouro', Emit.EnderEmit.xLgr));
+      Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','nro'  ,INIRec.ReadString(  'Emitente','Numero', Emit.EnderEmit.nro));
+      Emit.EnderEmit.xCpl    := INIRec.ReadString(  'Emitente','xCpl',INIRec.ReadString(  'Emitente','Complemento', Emit.EnderEmit.xCpl));
+      Emit.EnderEmit.xBairro := INIRec.ReadString(  'Emitente','xBairro',INIRec.ReadString(  'Emitente','Bairro', Emit.EnderEmit.xBairro));
+      Emit.EnderEmit.xMun    := INIRec.ReadString(  'Emitente','xMun',INIRec.ReadString(  'Emitente','Cidade', Emit.EnderEmit.xMun));
       Emit.EnderEmit.CEP     := INIRec.ReadInteger( 'Emitente','CEP', Emit.EnderEmit.CEP);
 
-      Dest.CNPJCPF           := INIRec.ReadString(  'Destinatario','CNPJ'       ,INIRec.ReadString(  'Destinatario','CNPJCPF',INIRec.ReadString(  'Destinatario','CPF','')));
-      Dest.xNome             := INIRec.ReadString(  'Destinatario','NomeRazao'  ,INIRec.ReadString(  'Destinatario','xNome'  ,''));
+      Dest.CNPJCPF           := INIRec.ReadString(  'Destinatario','CNPJ',INIRec.ReadString(  'Destinatario','CNPJCPF',INIRec.ReadString(  'Destinatario','CPF','')));
+      Dest.xNome             := INIRec.ReadString(  'Destinatario','xNome',INIRec.ReadString(  'Destinatario','NomeRazao'  ,''));
 
       if INIRec.ReadString(  'Entrega','xLgr','') <> '' then
       begin
@@ -1415,25 +1415,25 @@ begin
           nItem := I;
           infAdProd     := INIRec.ReadString(sSecao,'infAdProd','');
 
-          Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
-          Prod.cEAN     := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
-          Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
+          Prod.cProd    := INIRec.ReadString( sSecao,'cProd',INIRec.ReadString( sSecao,'Codigo',''));
+          Prod.cEAN     := INIRec.ReadString( sSecao,'cEAN' ,INIRec.ReadString( sSecao,'EAN',''));
+          Prod.xProd    := INIRec.ReadString( sSecao,'xProd',INIRec.ReadString( sSecao,'Descricao',''));
           Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
           Prod.CEST     := INIRec.ReadString( sSecao,'CEST'     ,'');
           Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
-          Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
+          Prod.uCom     := INIRec.ReadString( sSecao,'uCom'  ,INIRec.ReadString( sSecao,'Unidade' ,''));
           Prod.EhCombustivel := (INIRec.ReadInteger( sSecao,'Combustivel',0)=1);
-          Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0);
-          Prod.vUnCom   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorUnitario',INIRec.ReadString(sSecao,'vUnCom','')) ,0);
-          Prod.vProd    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorTotal'   ,INIRec.ReadString(sSecao,'vProd' ,'')) ,0);
+          Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'qCom'   ,INIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
+          Prod.vUnCom   := StringToFloatDef( INIRec.ReadString(sSecao,'vUnCom',INIRec.ReadString(sSecao,'ValorUnitario','')) ,0);
+          Prod.vProd    := StringToFloatDef( INIRec.ReadString(sSecao,'vProd'   ,INIRec.ReadString(sSecao,'ValorTotal' ,'')) ,0);
           Prod.indRegra := StrToindRegra(ok, INIRec.ReadString(sSecao,'indRegra','A'));
-          Prod.vDesc    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDesconto',INIRec.ReadString(sSecao,'vDesc','')) ,0);
+          Prod.vDesc    := StringToFloatDef( INIRec.ReadString(sSecao,'vDesc',INIRec.ReadString(sSecao,'ValorDesconto','')) ,0);
           Prod.vOutro   := StringToFloatDef( INIRec.ReadString(sSecao,'vOutro','') ,0);
           Prod.vItem    := StringToFloatDef( INIRec.ReadString(sSecao,'vItem','') ,0);
           Prod.vRatDesc := StringToFloatDef( INIRec.ReadString(sSecao,'vRatDesc','') ,0);
           Prod.vRatAcr  := StringToFloatDef( INIRec.ReadString(sSecao,'vRatAcr','') ,0);
 
-          Imposto.vItem12741 := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib',INIRec.ReadString(sSecao,'vItem12741','')) ,0);
+          Imposto.vItem12741 := StringToFloatDef( INIRec.ReadString(sSecao,'vItem12741',INIRec.ReadString(sSecao,'vTotTrib','')) ,0);
 
           J := 1;
           while true do
@@ -1461,11 +1461,11 @@ begin
             begin
               with ICMS do
               begin
-                ICMS.orig  := StrToOrig(     OK, INIRec.ReadString(sSecao,'Origem'    ,INIRec.ReadString(sSecao,'orig'    ,'0' ) ));
+                ICMS.orig  := StrToOrig(     OK, INIRec.ReadString(sSecao,'orig'    ,INIRec.ReadString(sSecao,'Origem'    ,'0' ) ));
                 CST        := StrToCSTICMS(  OK, INIRec.ReadString(sSecao,'CST'       ,'00'));
                 CSOSN      := StrToCSOSNIcms(OK, INIRec.ReadString(sSecao,'CSOSN'     ,''  ));     //NFe2
-                ICMS.pICMS := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
-                ICMS.vICMS := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
+                ICMS.pICMS := StringToFloatDef( INIRec.ReadString(sSecao,'pICMS' ,INIRec.ReadString(sSecao,'Aliquota','')) ,0);
+                ICMS.vICMS := StringToFloatDef( INIRec.ReadString(sSecao,'vICMS'    ,INIRec.ReadString(sSecao,'Valor','')) ,0);
               end;
             end;
 
@@ -1477,11 +1477,11 @@ begin
               begin
                 CST :=  StrToCSTPIS(OK, INIRec.ReadString( sSecao,'CST','01'));
 
-                PIS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                PIS.pPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pPIS'     ,'')) ,0);
-                PIS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                PIS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'ValorAliquota',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                PIS.vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'        ,INIRec.ReadString(sSecao,'vPIS'     ,'')) ,0);
+                PIS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'vBC'      ,INIRec.ReadString(sSecao,'ValorBase'   ,'')) ,0);
+                PIS.pPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'pPIS'     ,INIRec.ReadString(sSecao,'Aliquota'    ,'')) ,0);
+                PIS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'qBCProd'  ,INIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
+                PIS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'vAliqProd',INIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
+                PIS.vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'vPIS'     ,INIRec.ReadString(sSecao,'Valor'        ,'')) ,0);
               end;
             end;
 
@@ -1494,11 +1494,11 @@ begin
             begin
               with PISST do
               begin
-                vBc       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                pPis      := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaPerc' ,INIRec.ReadString(sSecao,'pPis'     ,'')) ,0);
-                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaValor',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorPISST'   ,INIRec.ReadString(sSecao,'vPIS'     ,'')) ,0);
+                vBc       := StringToFloatDef( INIRec.ReadString(sSecao,'vBC'  ,INIRec.ReadString(sSecao,'ValorBase'      ,'')) ,0);
+                pPis      := StringToFloatDef( INIRec.ReadString(sSecao,'pPis' ,INIRec.ReadString(sSecao,'AliquotaPerc'   ,'')) ,0);
+                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'qBCProd' ,INIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
+                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'vAliqProd',INIRec.ReadString(sSecao,'AliquotaValor','')) ,0);
+                vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'vPIS'   ,INIRec.ReadString(sSecao,'ValorPISST'     ,'')) ,0);
               end;
             end;
 
@@ -1510,11 +1510,11 @@ begin
               begin
                 CST := StrToCSTCOFINS(OK, INIRec.ReadString( sSecao,'CST','01'));
 
-                COFINS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                COFINS.pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
-                COFINS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                COFINS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'ValorAliquota',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                COFINS.vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'        ,INIRec.ReadString(sSecao,'vCOFINS'  ,'')) ,0);
+                COFINS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'vBC'      ,INIRec.ReadString(sSecao,'ValorBase','')) ,0);
+                COFINS.pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'pCOFINS'  ,INIRec.ReadString(sSecao,'Aliquota' ,'')) ,0);
+                COFINS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'qBCProd'  ,INIRec.ReadString(sSecao,'Quantidade','')) ,0);
+                COFINS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'vAliqProd',INIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
+                COFINS.vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'vCOFINS'  ,INIRec.ReadString(sSecao,'Valor'    ,'')) ,0);
               end;
             end;
 
@@ -1527,11 +1527,11 @@ begin
             begin
               with COFINSST do
               begin
-                vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaPerc' ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
-                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaValor',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorCOFINSST',INIRec.ReadString(sSecao,'vCOFINS'  ,'')) ,0);
+                vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'vBC'    ,INIRec.ReadString(sSecao,'ValorBase'      ,'')) ,0);
+                pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'pCOFINS' ,INIRec.ReadString(sSecao,'AliquotaPerc'  ,'')) ,0);
+                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'qBCProd'   ,INIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
+                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'vAliqProd',INIRec.ReadString(sSecao,'AliquotaValor','')) ,0);
+                vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'vCOFINS',INIRec.ReadString(sSecao,'ValorCOFINSST'  ,'')) ,0);
               end;
             end;
 
@@ -1541,11 +1541,11 @@ begin
               with ISSQN do
               begin
                 vDeducISSQN  := StringToFloatDef( INIRec.ReadString(sSecao,'vDeducISSQN','') ,0);
-                vBC          := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
-                vAliq        := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
-                vISSQN       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                cMunFG       := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador', INIRec.ReadInteger(sSecao,'cMunFG',0));
-                cListServ    := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
+                vBC          := StringToFloatDef( INIRec.ReadString(sSecao,'vBC',INIRec.ReadString(sSecao,'ValorBase'   ,'')) ,0);
+                vAliq        := StringToFloatDef( INIRec.ReadString(sSecao,'vAliq',INIRec.ReadString(sSecao,'Aliquota' ,'')) ,0);
+                vISSQN       := StringToFloatDef( INIRec.ReadString(sSecao,'vISSQN',INIRec.ReadString(sSecao,'ValorISSQN','')) ,0);
+                cMunFG       := INIRec.ReadInteger(sSecao,'cMunFG', INIRec.ReadInteger(sSecao,'MunicipioFatoGerador',0));
+                cListServ    := INIRec.ReadString(sSecao,'cListServ',INIRec.ReadString(sSecao,'CodigoServico',''));
                 cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
                 cNatOp       := INIRec.ReadInteger(sSecao,'cNatOp',0);
                 indIncFisc   := StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
@@ -1557,24 +1557,24 @@ begin
         Inc(I);
       end;
 
-      Total.ICMSTot.vICMS     := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0);
-      Total.ICMSTot.vProd     := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0);
-      Total.ICMSTot.vDesc     := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0);
-      Total.ICMSTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0);
-      Total.ICMSTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0);
-      Total.ICMSTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','ValorPISST'     ,INIRec.ReadString('Total','vPISST'   ,'')) ,0);
-      Total.ICMSTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINSST'  ,INIRec.ReadString('Total','vCOFINSST','')) ,0);
-      Total.ICMSTot.vOutro    := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0);
+      Total.ICMSTot.vICMS     := StringToFloatDef( INIRec.ReadString('Total','vICMS'    ,INIRec.ReadString('Total','ValorICMS'   ,'')) ,0);
+      Total.ICMSTot.vProd     := StringToFloatDef( INIRec.ReadString('Total','vProd' ,INIRec.ReadString('Total','ValorProduto'  ,'')) ,0);
+      Total.ICMSTot.vDesc     := StringToFloatDef( INIRec.ReadString('Total','vDesc',INIRec.ReadString('Total','ValorDesconto'  ,'')) ,0);
+      Total.ICMSTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','vPIS'     ,INIRec.ReadString('Total','ValorPIS'   ,'')) ,0);
+      Total.ICMSTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','vCOFINS'  ,INIRec.ReadString('Total','ValorCOFINS','')) ,0);
+      Total.ICMSTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','vPISST'     ,INIRec.ReadString('Total','ValorPISST'   ,'')) ,0);
+      Total.ICMSTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','vCOFINSST'  ,INIRec.ReadString('Total','ValorCOFINSST','')) ,0);
+      Total.ICMSTot.vOutro    := StringToFloatDef( INIRec.ReadString('Total','vOutro',INIRec.ReadString('Total','ValorOutrasDespesas','')) ,0);
 
-      Total.vCFe         := StringToFloatDef( INIRec.ReadString('Total','ValorNota'    ,INIRec.ReadString('Total','vCFe'    ,'')) ,0);
-      Total.vCFeLei12741 := StringToFloatDef( INIRec.ReadString('Total','vTotTrib'     ,INIRec.ReadString('Total','vCFeLei12741'     ,'')),0);
+      Total.vCFe         := StringToFloatDef( INIRec.ReadString('Total','vCFe'    ,INIRec.ReadString('Total','ValorNota'    ,'')) ,0);
+      Total.vCFeLei12741 := StringToFloatDef( INIRec.ReadString('Total','vCFeLei12741'     ,INIRec.ReadString('Total','vTotTrib','')),0);
 
-      Total.ISSQNTot.vBC       := StringToFloatDef( INIRec.ReadString('Total','ValorBaseISS' ,INIRec.ReadString('ISSQNtot','vBC'  ,'')) ,0);
-      Total.ISSQNTot.vISS      := StringToFloatDef( INIRec.ReadString('Total','ValorISSQN'   ,INIRec.ReadString('ISSQNtot','vISS' ,'')) ,0);
-      Total.ISSQNTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','ValorPISISS'  ,INIRec.ReadString('ISSQNtot','vPIS' ,'')) ,0);
-      Total.ISSQNTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISS',INIRec.ReadString('ISSQNtot','vCOFINS','')) ,0);
-      Total.ISSQNTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','ValorPISISSST'  ,INIRec.ReadString('ISSQNtot','vPISST' ,'')) ,0);
-      Total.ISSQNTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISSST',INIRec.ReadString('ISSQNtot','vCOFINSST','')) ,0);
+      Total.ISSQNTot.vBC       := StringToFloatDef( INIRec.ReadString('Total','vBC' ,INIRec.ReadString('ISSQNtot','ValorBaseISS'  ,'')) ,0);
+      Total.ISSQNTot.vISS      := StringToFloatDef( INIRec.ReadString('Total','vISS'   ,INIRec.ReadString('ISSQNtot','ValorISSQN' ,'')) ,0);
+      Total.ISSQNTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','vPIS'  ,INIRec.ReadString('ISSQNtot','ValorPISISS' ,'')) ,0);
+      Total.ISSQNTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','vCOFINS',INIRec.ReadString('ISSQNtot','ValorCONFINSISS','')) ,0);
+      Total.ISSQNTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','vPISST'  ,INIRec.ReadString('ISSQNtot','ValorPISISSST' ,'')) ,0);
+      Total.ISSQNTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','vCOFINSST',INIRec.ReadString('ISSQNtot','ValorCONFINSISSST','')) ,0);
 
       Total.DescAcrEntr.vAcresSubtot := StringToFloatDef( INIRec.ReadString('Total','vAcresSubtot',INIRec.ReadString('DescAcrEntr','vAcresSubtot','')) ,0);
       Total.DescAcrEntr.vDescSubtot  := StringToFloatDef( INIRec.ReadString('Total','vDescSubtot',INIRec.ReadString('DescAcrEntr','vDescSubtot','')) ,0);
@@ -1602,13 +1602,13 @@ begin
         Inc(I);
       end;
 
-      InfAdic.infCpl :=  INIRec.ReadString( 'DadosAdicionais','Complemento',INIRec.ReadString( 'DadosAdicionais','infCpl'    ,''));
+      InfAdic.infCpl :=  INIRec.ReadString( 'DadosAdicionais','infCpl',INIRec.ReadString( 'DadosAdicionais','Complemento'    ,''));
 
       I := 1;
       while true do
       begin
         sSecao := 'ObsFisco'+IntToStrZero(I,3);
-        sFim   := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM'));
+        sFim   := INIRec.ReadString(sSecao,'xCampo',INIRec.ReadString(sSecao,'Campo','FIM'));
         if (sFim = 'FIM') or (Length(sFim) <= 0) then break;
 
         if infCFe.versaoDadosEnt <= 0.07  then
@@ -1616,7 +1616,7 @@ begin
           with InfAdic.obsFisco.New do
           begin
             xCampo := sFim;
-            xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
+            xTexto := INIRec.ReadString( sSecao,'xTexto',INIRec.ReadString( sSecao,'Texto',''));
           end;
         end
         else
@@ -1624,7 +1624,7 @@ begin
           with obsFisco.New do
           begin
             xCampo := sFim;
-            xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
+            xTexto := INIRec.ReadString( sSecao,'xTexto',INIRec.ReadString( sSecao,'Texto',''));
           end;
         end;
 

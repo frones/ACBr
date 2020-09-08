@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+04/09/2020
+-- pcnCFe --
+[*] Melhorias na leitura .ini do CFe, validando primeiramente pelas tags com nomenclaturas padrão SEFAZ
+    (por: José M S Junior)
+
 04/08/2020
 -- ACBrSATExtratoESCPOS --
 [*] Ajustes para melhor impressão, em 40 colunas

@@ -71,7 +71,6 @@ type
 
   protected
     procedure DefinirValoresPadroesChild; override;
-    procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
     procedure ApplyChild(const DFeReport: TACBrSATExtratoClass; const Lib: TACBrLib); override;
@@ -230,7 +229,6 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -263,7 +261,7 @@ type
 implementation
 
 uses
-  ACBrMonitorConsts, ACBrLibConsts, ACBrLibSATConsts,
+  ACBrLibConsts, ACBrLibSATConsts,
   ACBrLibSATBase, ACBrUtil, ACBrConsts, ACBrSATExtratoFortesFr;
 
 { TExtratoConfig }
@@ -293,11 +291,6 @@ begin
   FImprimeChaveEmUmaLinha := rAuto;
   FImprimeQRCodeLateral := True;
   FImprimeLogoLateral := True;
-end;
-
-procedure TExtratoConfig.ImportChild(const AIni: TCustomIniFile);
-begin
-
 end;
 
 procedure TExtratoConfig.LerIniChild(const AIni: TCustomIniFile);
@@ -667,11 +660,6 @@ procedure TLibSATConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibSAT(Owner).SatDM.AplicarConfiguracoes;
-end;
-
-procedure TLibSATConfig.ImportarIni(FIni: TCustomIniFile);
-begin
-
 end;
 
 procedure TLibSATConfig.Travar;

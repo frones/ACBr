@@ -22,6 +22,8 @@ exports
   GNRE_Nome,
   GNRE_Versao,
   GNRE_UltimoRetorno,
+  GNRE_ConfigImportar,
+  GNRE_ConfigExportar,
   GNRE_ConfigLer,
   GNRE_ConfigGravar,
   GNRE_ConfigLerValor,

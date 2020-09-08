@@ -61,7 +61,6 @@ type
     FImprimirDescPorc: boolean;
 
   protected
-    procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
     procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL; const Lib: TACBrLib); override;
@@ -93,7 +92,6 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -109,8 +107,8 @@ type
 implementation
 
 uses
-  blcksock, pcnAuxiliar, pcteConversaoCTe, ACBrDFeSSL,
-  ACBrMonitorConsts, ACBrLibConsts, ACBrLibCTeConsts,
+  blcksock, pcnAuxiliar, pcteConversaoCTe,
+  ACBrLibConsts, ACBrLibCTeConsts,
   ACBrLibCTeBase, ACBrUtil;
 
 { TDACTeConfig }
@@ -134,11 +132,6 @@ begin
   FProtocoloCTe := '';
   FUsuario := '';
   FTamanhoPapel := tpA4;
-end;
-
-procedure TDACTeConfig.ImportChild(const AIni: TCustomIniFile);
-begin
-  TamanhoPapel := TpcnTamanhoPapel(AIni.ReadInteger(CSecDACTE, CKeyDACTETamanhoPapel, Integer(TamanhoPapel)));
 end;
 
 procedure TDACTeConfig.LerIniChild(const AIni: TCustomIniFile);
@@ -233,103 +226,6 @@ begin
 
   if Assigned(Owner) then
     TACBrLibCTe(Owner).CTeDM.AplicarConfiguracoes;
-end;
-
-procedure TLibCTeConfig.ImportarIni(AIni: TCustomIniFile);
-Var
-  AuxStr: String;
-  Ok: Boolean;
-begin
-  with CTe.Certificados do
-  begin
-    //Sessão Certificado
-    ArquivoPFX := AIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
-    NumeroSerie := AIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
-
-    AuxStr := '';
-    AuxStr := AIni.ReadString(CSecCertificado, CKeySenha, '');
-    if NaoEstaVazio(AuxStr) then
-      Senha := AuxStr;
-  end;
-
-  with CTe.Geral do
-  begin
-    //Sessão Certificado
-    SSLCryptLib := TSSLCryptLib(AIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
-    SSLHttpLib := TSSLHttpLib(AIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
-    SSLXmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
-
-    //ACBrNFeMonitor
-    RetirarAcentos := AIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
-    ValidarDigest := AIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
-
-    //Webservices
-    FormaEmissao := TpcnTipoEmissao(AIni.ReadInteger(CSecWebService, CKeyVersaoCTe, Integer(FormaEmissao)));
-    VersaoDF := StrToVersaoCTe(Ok, AIni.ReadString(CSecWebService, CKeyVersaoCTe, VersaoCTeToStr(VersaoDF)));
-  end;
-
-  with CTe.Arquivos do
-  begin
-    //ACBrNFeMonitor
-    IniServicos := AIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServices, IniServicos);
-
-    //Arquivos
-    Salvar := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
-    SepararPorMes := AIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
-    SepararPorCNPJ := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    AdicionarLiteral := AIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
-    SalvarApenasCTeProcessados := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasCTeProcessados);
-    NormatizarMunicipios := AIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
-    EmissaoPathCTe := AIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathCTe);
-    PathCTe := AIni.ReadString(CSecArquivos, CKeyArquivosPathNFe, PathCTe);
-    PathInu := AIni.ReadString(CSecArquivos, CKeyArquivosPathInu, PathInu);
-    PathEvento := AIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
-
-    AuxStr := AIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
-    if NaoEstaVazio(AuxStr) then
-      PathSchemas := PathWithDelim(AuxStr) + 'CTe';
-
-    with DownloadDFe do
-    begin
-      SepararPorNome := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
-      PathDownload := AIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
-    end;
-  end;
-
-  with CTe.WebServices do
-  begin
-    // ACBrNFeMonitor
-    TimeOut := AIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
-
-    // Certificado
-    SSLType := TSSLType(AIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
-
-    //Webservices
-    Ambiente := TpcnTipoAmbiente(AIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
-    UF := AIni.ReadString(CSecWebService, CKeyUF, UF);
-    AjustaAguardaConsultaRet := AIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
-    AguardarConsultaRet := AIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
-    Tentativas := AIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
-    IntervaloTentativas := AIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
-
-    with TimeZoneConf do
-    begin
-      ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
-      TimeZoneStr := AIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
-    end;
-  end;
-
-  with CTe.RespTec do
-  begin
-    // RespTecnico
-    IdCSRT := AIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
-    CSRT := AIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
-  end;
-
-  //Impressão
-  DACTe.Import(AIni);
 end;
 
 procedure TLibCTeConfig.Travar;

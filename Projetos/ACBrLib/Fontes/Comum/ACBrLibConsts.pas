@@ -43,6 +43,7 @@ const
   CACBrLib = 'ACBrLib';
   CACBrLibVersaoConfig = '0.0.2';
   CLibChaveCrypt = 'tYk*5W@';
+  CLibMemory = '[Memory]';
 
   {$IfDef MSWINDOWS}
   CNomeArqConf = 'ACBrLib.ini';

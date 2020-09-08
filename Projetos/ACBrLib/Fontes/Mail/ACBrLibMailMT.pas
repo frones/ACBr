@@ -54,8 +54,10 @@ function MAIL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTa
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function MAIL_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
@@ -143,10 +145,16 @@ begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function MAIL_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function MAIL_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(libHandle, eArqConfig);
+  Result := LIB_ConfigImportar(libHandle, eArqConfig);
+end;
+
+function MAIL_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
 function MAIL_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibCHQMT, ACBrLibCHQST ---
+[+] Removido o metodo CHQ_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo CHQ_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo CHQ_ImportarConfig.
+   Por: Rafael Dias
+
 06/01/2020
 --- ACBrLibCHQConfig, ACBrLibCHQClass ---
 [+] Adicionaodo o metodo CHQ_ImportarConfig.

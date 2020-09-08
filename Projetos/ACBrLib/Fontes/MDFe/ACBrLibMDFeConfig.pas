@@ -56,7 +56,6 @@ type
 
   protected
     procedure DefinirValoresPadroesChild; override;
-    procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
     procedure ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL; const Lib: TACBrLib); override;
@@ -83,7 +82,6 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -100,8 +98,7 @@ implementation
 
 uses
   blcksock, pcnAuxiliar, pmdfeConversaoMDFe,
-  ACBrDFeSSL, ACBrLibMDFeBase, ACBrMonitorConsts,
-  ACBrLibMDFeConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibMDFeBase, ACBrLibMDFeConsts, ACBrLibConsts, ACBrUtil;
 
 { TDAMDFeConfig }
 constructor TDAMDFeConfig.Create;
@@ -118,11 +115,6 @@ begin
   FEncerrado := False;
   FTipoDAMDFe := tiRetrato;
   FTamanhoPapel := tpA4;
-end;
-
-procedure TDAMDFeConfig.ImportChild(const AIni: TCustomIniFile);
-begin
-  //Não Achei config especifica da DAMDFe
 end;
 
 procedure TDAMDFeConfig.LerIniChild(const AIni: TCustomIniFile);
@@ -203,102 +195,6 @@ begin
 
   if Assigned(Owner) then
     TACBrLibMDFe(Owner).MDFeDM.AplicarConfiguracoes;
-end;
-
-procedure TLibMDFeConfig.ImportarIni(AIni: TCustomIniFile);
-Var
-  AuxStr: String;
-  Ok: Boolean;
-begin
-  with MDFe.Certificados do
-  begin
-    //Sessão Certificado
-    ArquivoPFX := AIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
-    NumeroSerie := AIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
-
-    AuxStr := '';
-    AuxStr := AIni.ReadString(CSecCertificado, CKeySenha, '');
-    if NaoEstaVazio(AuxStr) then
-      Senha := AuxStr;
-  end;
-
-  with MDFe.Geral do
-  begin
-    //Sessão Certificado
-    SSLCryptLib := TSSLCryptLib(AIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
-    SSLHttpLib := TSSLHttpLib(AIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
-    SSLXmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
-
-    //ACBrNFeMonitor
-    RetirarAcentos := AIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
-    ValidarDigest := AIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
-
-    //Webservices
-    FormaEmissao := TpcnTipoEmissao(AIni.ReadInteger(CSecWebService, CKeyFormaEmissaoMDFe, Integer(FormaEmissao)));
-    VersaoDF := StrToVersaoMDFe(Ok, AIni.ReadString(CSecWebService, CKeyVersaoMDFe, VersaoMDFeToStr(VersaoDF)));
-  end;
-
-
-  with MDFe.Arquivos do
-  begin
-    //ACBrNFeMonitor
-    IniServicos := AIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServicesMDFe, IniServicos);
-
-    //Arquivos
-    Salvar := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
-    SepararPorMes := AIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
-    SepararPorCNPJ := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    AdicionarLiteral := AIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
-    SalvarApenasMDFeProcessados := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasMDFeProcessados);
-    NormatizarMunicipios := AIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
-    EmissaoPathMDFe := AIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathMDFe);
-    PathEvento := AIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
-
-    AuxStr := AIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
-    if NaoEstaVazio(AuxStr) then
-      PathSchemas := PathWithDelim(AuxStr) + 'MDFe';
-
-    with DownloadDFe do
-    begin
-      SepararPorNome := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
-      PathDownload := AIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
-    end;
-  end;
-
-  with MDFe.WebServices do
-  begin
-    // ACBrNFeMonitor
-    TimeOut := AIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
-
-    // Certificado
-    SSLType := TSSLType(AIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
-
-    //Webservices
-    Ambiente := TpcnTipoAmbiente(AIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
-    UF := AIni.ReadString(CSecWebService, CKeyUF, UF);
-    AjustaAguardaConsultaRet := AIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
-    AguardarConsultaRet := AIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
-    Tentativas := AIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
-    IntervaloTentativas := AIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
-
-    with TimeZoneConf do
-    begin
-      ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
-      TimeZoneStr := AIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
-    end;
-  end;
-
-  with MDFe.RespTec do
-  begin
-    // RespTecnico
-    IdCSRT := AIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
-    CSRT := AIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
-  end;
-
-  //Impressão
-  DAMDFe.Import(AIni);
 end;
 
 procedure TLibMDFeConfig.Travar;

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibBoletoMT, ACBrLibBoletoST ---
+[+] Removido o metodo Boleto_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo Boleto_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo Boleto_ImportarConfig.
+   Por: Rafael Dias
+
 09/06/2020
 --- ACBrLibBoletoClass, ACBrLibBoletoConfig --
 [-] Ajuste de declaração de USES

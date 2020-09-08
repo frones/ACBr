@@ -52,8 +52,10 @@ function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImportarConfig(const eArqConfig: PChar): longint;
+function CTE_ConfigImportar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ConfigGravar(const eArqConfig: PChar): longint;
@@ -199,10 +201,16 @@ begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function CTE_ImportarConfig(const eArqConfig: PChar): longint;
+function CTE_ConfigImportar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(pLib, eArqConfig);
+  Result := LIB_ConfigImportar(pLib, eArqConfig);
+end;
+
+function CTE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
 function CTE_ConfigLer(const eArqConfig: PChar): longint;

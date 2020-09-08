@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibBALMT, ACBrLibBALST ---
+[+] Removido o metodo BAL_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo BAL_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo BAL_ImportarConfig.
+   Por: Rafael Dias
+
 02/04/2020
 --- ACBrLibBALClass ---
 [+] Adicionado os métodos BAL_LePesoStr, BAL_UltimoPesoLidoStr e BAL_InterpretarRespostaPesoStr, para ser usadas em linguagens de programação que não tem tipagem. Ex.: [x]Harbour.

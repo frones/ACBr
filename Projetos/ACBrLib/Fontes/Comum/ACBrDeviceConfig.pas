@@ -83,7 +83,7 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibConsts, ACBrUtil;
 
 { TLogConfig }
 

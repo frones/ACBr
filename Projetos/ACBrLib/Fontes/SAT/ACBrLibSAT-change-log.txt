@@ -42,8 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibSATMT, ACBrLibSATST ---
+[+] Removido o metodo SAT_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo SAT_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo SAT_ImportarConfig.
+   Por: Rafael Dias
+
 28/08/2020
--- ACBrLibSATClass --
+--- ACBrLibSATMT, ACBrLibSATST ---
 [+] Adicionado o metodo SAT_AtivarSAT.
     (por: Rafael Dias)
 

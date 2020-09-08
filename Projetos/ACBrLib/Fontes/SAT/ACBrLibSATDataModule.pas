@@ -81,8 +81,8 @@ type
 implementation
 
 uses
-  strutils, FileUtil, ACBrDeviceConfig, ACBrLibConsts, ACBrDeviceSerial,
-  ACBrUtil, ACBrLibSATBase, ACBrLibSATConfig, ACBrLibIntegradorResposta;
+  FileUtil, ACBrDeviceConfig, ACBrDeviceSerial,
+  ACBrUtil, ACBrLibSATConfig, ACBrLibIntegradorResposta;
 
 {$R *.lfm}
 

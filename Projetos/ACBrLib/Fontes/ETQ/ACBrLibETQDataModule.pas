@@ -66,7 +66,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDeviceSerial,
-  ACBrLibETQConfig, ACBrLibETQBase;
+  ACBrLibETQConfig;
 
 {$R *.lfm}
 

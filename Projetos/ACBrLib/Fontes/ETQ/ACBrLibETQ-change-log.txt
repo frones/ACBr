@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibETQMT, ACBrLibETQST ---
+[+] Removido o metodo ETQ_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo ETQ_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo ETQ_ImportarConfig.
+   Por: Rafael Dias
+
 24/04/2020
 --- ACBrLibETQClass ---
 [+] Adicionado o metodo ETQ_ImprimirQRCode.

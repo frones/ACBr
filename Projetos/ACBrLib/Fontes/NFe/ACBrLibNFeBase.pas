@@ -680,7 +680,6 @@ end;
 function TACBrLibNFe.GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: string;
-  ok: boolean;
 begin
   try
     if Config.Log.Nivel > logNormal then

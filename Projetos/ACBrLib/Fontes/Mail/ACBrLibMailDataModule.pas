@@ -66,7 +66,7 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrLibMailConfig, ACBrLibMailBase;
+  ACBrLibMailConfig;
 
 {$R *.lfm}
 

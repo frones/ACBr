@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibMDFeMT, ACBrLibMDFeST ---
+[+] Removido o metodo MDFE_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo MDFE_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo MDFE_ImportarConfig.
+   Por: Rafael Dias
+
 27/02/2020
 --- ACBrLibMDFeClass ---
 [+] Adicionado o metodo um novo parametro ao metodo MDFE_Consultar, para definir se deve ou não extrair os eventos, se houverem, da resposta.

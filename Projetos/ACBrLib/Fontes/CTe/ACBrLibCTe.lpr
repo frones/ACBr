@@ -22,6 +22,8 @@ exports
   CTE_Nome,
   CTE_Versao,
   CTE_UltimoRetorno,
+  CTE_ConfigImportar,
+  CTE_ConfigExportar,
   CTE_ConfigLer,
   CTE_ConfigGravar,
   CTE_ConfigLerValor,

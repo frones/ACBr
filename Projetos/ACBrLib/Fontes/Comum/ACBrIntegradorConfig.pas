@@ -66,8 +66,7 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibComum,
-  ACBrUtil;
+  ACBrLibConsts, ACBrUtil;
 
 { TIntegradorConfig }
 constructor TIntegradorConfig.Create;

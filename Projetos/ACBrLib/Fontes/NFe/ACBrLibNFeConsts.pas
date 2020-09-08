@@ -37,7 +37,7 @@ unit ACBrLibNFeConsts;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibComum;
+  Classes, SysUtils;
 
 const
   CSessaoDANFE = 'DANFE';

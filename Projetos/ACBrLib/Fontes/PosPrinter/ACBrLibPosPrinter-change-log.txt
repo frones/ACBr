@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibPosPrinterMT, ACBrLibPosPrinterST ---
+[+] Removido o metodo PosPrinter_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo PosPrinter_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo PosPrinter_ImportarConfig.
+   Por: Rafael Dias
+
 19/05/2020
 -- ACBrLibPosPrinterClass --
 [*] Trocado StrToFloat por StringToFloatDef no metodo POS_ImprimirCheque.

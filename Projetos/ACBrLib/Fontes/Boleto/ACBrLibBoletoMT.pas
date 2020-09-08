@@ -51,7 +51,9 @@ function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PChar; var es
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -147,10 +149,16 @@ begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function Boleto_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(libHandle, eArqConfig);
+  Result := LIB_ConfigImportar(libHandle, eArqConfig);
+end;
+
+function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
 function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;

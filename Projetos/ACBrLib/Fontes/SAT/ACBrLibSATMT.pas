@@ -52,8 +52,10 @@ function SAT_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTam
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
@@ -175,10 +177,16 @@ begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function SAT_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(libHandle, eArqConfig);
+  Result := LIB_ConfigImportar(libHandle, eArqConfig);
+end;
+
+function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
 function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;

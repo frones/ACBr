@@ -41,6 +41,7 @@ uses
 
 const
   CSessaoBAL = 'BAL';
+  CSessaoBALDevice = 'BAL_Device';
 
   CChaveLog = 'ArqLog';
   CChaveModelo = 'Modelo';

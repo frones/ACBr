@@ -105,8 +105,8 @@ type
 implementation
 
 uses
-  ACBrLibGNReBase, ACBrLibGNReConsts, ACBrLibConsts, ACBrLibComum,
-  ACBrUtil;
+  ACBrLibGNReBase, ACBrLibGNReConsts,
+  ACBrLibConsts, ACBrUtil;
 
 { TGuiaConfig }
 

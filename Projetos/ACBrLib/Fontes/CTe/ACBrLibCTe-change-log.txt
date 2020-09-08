@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2020
+--- ACBrLibCTEMT, ACBrLibCTEST ---
+[+] Removido o metodo CTE_ConfigImportar.
+   Por: Rafael Dias
+[+] Removido o metodo CTE_ConfigExportar.
+   Por: Rafael Dias
+[-] Removido o metodo CTE_ImportarConfig.
+   Por: Rafael Dias
+
 23/07/2020
 --- ACBrLibCTeRespostas ---
 [-] Corrigindo erro de compilação a propriedade CTeRetornoOS foi renomeada para CTeRetornoSincrono.

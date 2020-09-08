@@ -69,7 +69,6 @@ type
 
  protected
     procedure DefinirValoresPadroesChild; virtual; abstract;
-    procedure ImportChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure LerIniChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure GravarIniChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure ApplyChild(const DFeReport: T; const Lib: TACBrLib); virtual; abstract;
@@ -79,7 +78,6 @@ type
    destructor Destroy; override;
 
    procedure DefinirValoresPadroes;
-   procedure Import(const AIni: TCustomIniFile);
    procedure LerIni(const AIni: TCustomIniFile);
    procedure GravarIni(const AIni: TCustomIniFile);
    procedure Apply(const DFeReport: T; const Lib: TACBrLib);
@@ -106,9 +104,6 @@ type
  end;
 
 implementation
-
-uses
-  ACBrMonitorConsts;
 
 constructor TDFeReportConfig<T>.Create(ASessao: String);
 begin
@@ -155,29 +150,6 @@ begin
   FCasasDecimais := TCasasDecimais.Create(nil);
 
   DefinirValoresPadroesChild;
-end;
-
-procedure TDFeReportConfig<T>.Import(const AIni: TCustomIniFile);
-begin
-  //Arquivos
-  UsaSeparadorPathPDF := AIni.ReadBool(CSecArquivos, CKeyArquivosUsarSeparadorPathPDF, UsaSeparadorPathPDF);
-
-  //Geral
-  Impressora := AIni.ReadString(CSecGeral, CKeyImpressora, Impressora);
-  Logo := AIni.ReadString(CSecGeral, CKeyLogomarca, Logo);
-
-  //DANFe
-  PathPDF := AIni.ReadString(CSecDANFE, CKeyDANFEPathPDF, PathPDF);
-  MargemInferior := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargem, MargemInferior);
-  MargemSuperior := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargemSup, MargemSuperior);
-  MargemEsquerda := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargemEsq, MargemEsquerda);
-  MargemDireita := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargemDir, MargemDireita);
-  NumCopias := AIni.ReadInteger(CSecDANFE, CKeyDANFECopias, NumCopias);
-  MostraPreview := AIni.ReadBool(CSecDANFE, CKeyDANFEMostrarPreview, MostraPreview);
-  MostraStatus := AIni.ReadBool(CSecDANFE, CKeyDANFEMostrarStatus, MostraStatus);
-  ExpandeLogoMarca := AIni.ReadBool(CSecDANFE, CKeyDANFEExpandirLogo, ExpandeLogoMarca);
-
-  ImportChild(AIni);
 end;
 
 procedure TDFeReportConfig<T>.LerIni(const AIni: TCustomIniFile);

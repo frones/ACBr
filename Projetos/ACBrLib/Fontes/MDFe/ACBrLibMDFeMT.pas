@@ -52,8 +52,10 @@ function MDFE_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTa
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFE_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function MDFE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
@@ -194,10 +196,16 @@ begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function MDFE_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function MDFE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ImportarConfig(libHandle, eArqConfig);
+  Result := LIB_ConfigImportar(libHandle, eArqConfig);
+end;
+
+function MDFE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
 function MDFE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;

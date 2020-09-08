@@ -42,21 +42,22 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Finalizar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Nome(const sNome: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_Finalizar: longint;
+function GNRE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function GNRE_ConfigImportar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function GNRE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_ConfigLer(const eArqConfig: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_ConfigGravar(const eArqConfig: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRe_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function GNRE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function GNRE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
@@ -139,6 +140,18 @@ function GNRE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): lon
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
+end;
+
+function GNRE_ConfigImportar(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigImportar(pLib, eArqConfig);
+end;
+
+function GNRE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
 function GNRE_ConfigLer(const eArqConfig: PChar): longint;

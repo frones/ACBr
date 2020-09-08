@@ -37,15 +37,13 @@ unit ACBrLibPosPrinterConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
-  ACBrLibConfig;
+  Classes, SysUtils, ACBrLibConfig;
 
 type
   { TLibPosPrinterConfig }
   TLibPosPrinterConfig = class(TLibConfig)
   protected
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -55,18 +53,13 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterBase, ACBrLibComum, ACBrUtil;
+  ACBrLibPosPrinterBase, ACBrUtil;
 
 { TLibPosPrinterConfig }
 procedure TLibPosPrinterConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibPosPrinter(Owner).PosDM.AplicarConfiguracoes;
-end;
-
-procedure TLibPosPrinterConfig.ImportarIni(FIni: TCustomIniFile);
-begin
-  //
 end;
 
 procedure TLibPosPrinterConfig.Travar;

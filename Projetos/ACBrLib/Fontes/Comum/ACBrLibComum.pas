@@ -104,6 +104,7 @@ type
 
 
     function ImportarConfig(const eArqConfig: PChar): longint;
+    function ExportarConfig(sValor: PChar; var esTamanho: longint): longint;
     function ConfigLer(const eArqConfig: PChar): longint;
 
     function ConfigGravar(const eArqConfig: PChar): longint;
@@ -136,7 +137,8 @@ function LIB_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; 
 {%endregion}
 
 {%region Ler/Gravar Config }
-function LIB_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function LIB_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function LIB_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
 function LIB_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
 function LIB_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
 function LIB_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
@@ -338,7 +340,7 @@ begin
     GravarLog('LIB_Nome', logNormal);
     MoverStringParaPChar(Nome, sNome, esTamanho);
     if Config.Log.Nivel >= logCompleto then
-      GravarLog('   Nome:' + strpas(sNome) + ', len:' + IntToStr(esTamanho), logCompleto, True);
+      GravarLog('   Nome:' + string(sNome) + ', len:' + IntToStr(esTamanho), logCompleto, True);
     Result := SetRetorno(ErrOK, Nome);
   except
     on E: EACBrLibException do
@@ -355,7 +357,7 @@ begin
     GravarLog('LIB_Versao', logNormal);
     MoverStringParaPChar(Versao, sVersao, esTamanho);
     if Config.Log.Nivel >= logCompleto then
-      GravarLog('   Versao:' + strpas(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
+      GravarLog('   Versao:' + string(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
     Result := SetRetorno(ErrOK, Versao);
   except
     on E: EACBrLibException do
@@ -373,7 +375,7 @@ begin
     MoverStringParaPChar(Retorno.Mensagem, sMensagem, esTamanho);
     Result := Retorno.Codigo;
     if (Config.Log.Nivel >= logCompleto) then
-      GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + strpas(sMensagem), logCompleto, True);
+      GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + string(sMensagem), logCompleto, True);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -387,15 +389,33 @@ function TACBrLib.ImportarConfig(const eArqConfig: PChar): longint;
 var
   ArqConfig: String;
 begin
-  try
-    ArqConfig := strpas(eArqConfig);
-    GravarLog('LIB_ImportarConfig(' + ArqConfig + ')', logNormal);
+  ArqConfig := string(eArqConfig);
+   try
+     GravarLog('LIB_ImportarConfig(' + ArqConfig + ')', logNormal);
 
     if NaoEstaVazio(ArqConfig) then
       Config.Importar(ArqConfig);
 
-    Config.Gravar;
     Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigLer, E.Message);
+  end;
+
+end;
+
+function TACBrLib.ExportarConfig(sValor: PChar; var esTamanho: longint): longint;
+var
+  ArqIni: String;
+begin
+  try
+    GravarLog('LIB_ExportarConfig', logNormal);
+    ArqIni := Config.Exportar;
+    MoverStringParaPChar(ArqIni, sValor, esTamanho);
+    Result := SetRetorno(ErrOK, ArqIni);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -407,16 +427,22 @@ end;
 
 function TACBrLib.ConfigLer(const eArqConfig: PChar): longint;
 var
-  ArqConfig: String;
+  ArqConfigOuIni: String;
 begin
   try
-    ArqConfig := strpas(eArqConfig);
-    GravarLog('LIB_ConfigLer(' + ArqConfig + ')', logNormal);
+    ArqConfigOuIni := string(eArqConfig);
+    GravarLog('LIB_ConfigLer(' + IfThen(Config.EhMemory, CLibMemory, ArqConfigOuIni) + ')', logNormal);
+    if Config.EhMemory then
+      GravarLog('   Memory: Configuração em memória favor usar o método ImportarConfig)', logNormal);
 
-    if NaoEstaVazio(ArqConfig) then
-      Config.NomeArquivo := ArqConfig;
+    if not Config.EhMemory then
+    begin
 
-    Config.Ler;
+      if NaoEstaVazio(ArqConfigOuIni) then
+        Config.NomeArquivo := ArqConfigOuIni;
+
+      Config.Ler;
+    end;
     Result := SetRetorno(ErrOK);
   except
     on E: EACBrLibException do
@@ -432,13 +458,19 @@ var
   ArqConfig: String;
 begin
   try
-    ArqConfig := strpas(eArqConfig);
-    GravarLog('LIB_ConfigGravar(' + ArqConfig + ')', logNormal);
+    ArqConfig := string(eArqConfig);
+    GravarLog('LIB_ConfigGravar(' + IfThen(Config.EhMemory, CLibMemory, eArqConfig) + ')', logNormal);
+    if Config.EhMemory then
+      GravarLog('   Memory: Configuração em memória favor usar o método ExportarConfig)', logNormal);
 
-    if NaoEstaVazio(ArqConfig) then
-      Config.NomeArquivo := ArqConfig;
+    if not Config.EhMemory then
+    begin
+      if NaoEstaVazio(ArqConfig) then
+        Config.NomeArquivo := ArqConfig;
 
-    Config.Gravar;
+      Config.Gravar;
+    end;
+
     Result := SetRetorno(ErrOK);
   except
     on E: EACBrLibException do
@@ -509,13 +541,13 @@ var
   ArqConfig, ChaveCrypt: String;
 begin
   try
-    ArqConfig := strpas(eArqConfig);
-    ChaveCrypt := strpas(eChaveCrypt);
+    ArqConfig := string(eArqConfig);
+    ChaveCrypt := string(eChaveCrypt);
 
     New(libHandle);
     libHandle^.Lib := pLibClass.Create(eArqConfig, eChaveCrypt);
     libHandle^.Lib.Inicializar;
-    libHandle^.Lib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
+    libHandle^.Lib.GravarLog('LIB_Inicializar( ' + IfThen(libHandle^.Lib.Config.EhMemory, CLibMemory, ArqConfig) + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
     libHandle^.Lib.GravarLog('   ' + libHandle^.Lib.Nome + ' - ' + libHandle^.Lib.Versao, logSimples);
 
     with libHandle^.Lib.Retorno do
@@ -609,11 +641,25 @@ end;
 
 {%region Ler/Gravar Config }
 
-function LIB_ImportarConfig(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function LIB_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
 begin
   try
     VerificarLibInicializada(libHandle);
     Result := libHandle^.Lib.ImportarConfig(eArqConfig);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function LIB_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := libHandle^.Lib.ExportarConfig(sMensagem, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -758,11 +804,7 @@ end;
 
 function StringEhArquivo(AString: String): Boolean;
 begin
-  Result := (AString <> '') and
-    (Length(AString) <= 255) and
-    (pos(LF, AString) = 0) and
-    (pos('<', AString) = 0) and
-    (pos('=', AString) = 0);
+  Result := FileExists(AString);
 end;
 
 end.

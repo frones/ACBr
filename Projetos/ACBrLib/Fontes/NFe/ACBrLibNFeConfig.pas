@@ -212,7 +212,6 @@ type
     FNFCeConfig: TDANFeNFCeConfig;
 
   protected
-    procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
     procedure ApplyChild(const DFeReport: TACBrDFeDANFeReport; const Lib: TACBrLib); override;
@@ -250,13 +249,12 @@ type
     FIntegradorConfig: TIntegradorConfig;
 
   protected
+    procedure Travar; override;
+    procedure Destravar; override;
+
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
-
-    procedure Travar; override;
-    procedure Destravar; override;
 
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
@@ -275,8 +273,8 @@ implementation
 
 uses
   typinfo, strutils, synacode, blcksock, pcnAuxiliar,
-  ACBrLibNFeBase, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
-  ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
+  ACBrLibNFeBase, ACBrLibNFeConsts, ACBrLibConsts,
+  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
 
 { TDANFeNFeConfig }
@@ -689,71 +687,6 @@ begin
 
 end;
 
-procedure TDANFeReportConfig.ImportChild(const AIni: TCustomIniFile);
-begin
-  //DANFE
-  TipoDANFE := TpcnTipoImpressao(AIni.ReadInteger(CKeyDANFE, CKeyDANFEModelo, Integer(TipoDANFE)));
-  ExibeInforAdicProduto := TinfAdcProd(AIni.ReadInteger(CKeyDANFE, CKeyDANFEExibirBandInforAdicProduto, Integer(ExibeInforAdicProduto)));
-  QuebraLinhaEmDetalhamentos := AIni.ReadBool(CKeyDANFE, CKeyDANFEQuebrarLinhasDetalheItens, QuebraLinhaEmDetalhamentos);
-  ImprimeTotalLiquido := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirValLiq, ImprimeTotalLiquido);
-  ImprimeTributos := TpcnTributos(AIni.ReadInteger(CKeyDANFE, CKeyDANFEImprimirTributosItem, Integer(ImprimeTributos)));
-
-  //DANFCe
-  ImprimeCodigoEan := AIni.ReadBool(CSecNFCe, CKeyNFCeUsaCodigoEanImpressao, ImprimeCodigoEan);
-  ImprimeNomeFantasia := AIni.ReadBool(CSecNFCe, CKeyNFCeImprimeNomeFantasia, ImprimeNomeFantasia);
-  ExibeTotalTributosItem := AIni.ReadBool(CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
-
-  FvTribFed := AIni.ReadFloat(CSessaoDANFE, CChavevTribFed, FvTribFed);
-  FvTribEst := AIni.ReadFloat(CSessaoDANFE, CChavevTribEst, FvTribEst);
-  FvTribMun := AIni.ReadFloat(CSessaoDANFE, CChavevTribMun, FvTribMun);
-  FFonteTributos := AIni.ReadString(CSessaoDANFE, CChaveFonteTributos, FFonteTributos);
-  FChaveTributos := AIni.ReadString(CSessaoDANFE, CChaveChaveTributos, FChaveTributos);
-
-  with NFe do
-  begin
-    //DANFE
-    FormularioContinuo := AIni.ReadBool(CKeyDANFE, CKeyDANFEPreImpresso, FormularioContinuo);
-    ImprimeDescPorPercentual := AIni.ReadBool(CKeyDANFE, CKeyDANFEImpDescPorc, ImprimeDescPorPercentual);
-    LarguraCodProd := AIni.ReadInteger(CKeyDANFE, CKeyDANFELarguraCodigoProduto, LarguraCodProd);
-    AltLinhaComun := AIni.ReadInteger(CKeyDANFE, CKeyDANFEAlturaCampos, AltLinhaComun);
-    ExibeEAN := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibirEAN, ExibeEAN);
-    ExibeResumoCanhoto := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibeResumo, ExibeResumoCanhoto);
-    TextoResumoCanhoto := AIni.ReadString(CKeyDANFE, CKeyDANFETextoResumoCanhoto, TextoResumoCanhoto);
-    PosCanhoto := TPosRecibo(AIni.ReadInteger(CKeyDANFE, CKeyDANFELocalCanhoto, Integer(PosCanhoto)));
-    PosCanhotoLayout := TPosReciboLayout(AIni.ReadInteger(CKeyDANFE, CKeyDANFELayoutCanhoto, Integer(PosCanhotoLayout)));
-    ExibeCampoFatura := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibirCampoFatura, ExibeCampoFatura);
-    ExibeDadosDocReferenciados := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDadosDocReferenciados, ExibeDadosDocReferenciados);
-    ImprimeContDadosAdPrimeiraPagina := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
-    ImprimeDetalhamentoEspecifico := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDetalhamentoEspecifico, ImprimeDetalhamentoEspecifico);
-    ImprimeValor := TImprimirUnidQtdeValor(AIni.ReadInteger(CKeyDANFE, CKeyDANFEUNComercialETributavel, Integer(ImprimeValor)));
-    ExpandirDadosAdicionaisAuto := AIni.ReadBool(CKeyDANFE, CKeyDANFEExpandirDadosAdicionaisAuto, FExpandirDadosAdicionaisAuto);
-
-    with Fonte do
-    begin
-      Nome := TNomeFonte(AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonte, Integer(Nome)));
-      TamanhoFonteRazaoSocial := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteRazao, TamanhoFonteRazaoSocial);
-      TamanhoFonteEndereco := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteEndereco, TamanhoFonteEndereco);
-      TamanhoFonteDemaisCampos := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteCampos, TamanhoFonteDemaisCampos);
-    end;
-  end;
-
-  with NFCe do
-  begin
-    //DANFE
-    TipoRelatorioBobina := TTipoRelatorioBobina(AIni.ReadInteger(CKeyDANFE, CKeyDANFEModelo, Integer(TipoRelatorioBobina)));
-    ImprimeDescAcrescItem := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeDescAcrescItemNFe, ImprimeDescAcrescItem);
-
-    //DANFCe
-    LarguraBobina := AIni.ReadInteger(CSecDANFCe, CKeyDANFCeLarguraBobina, LarguraBobina);
-
-    //NFCe
-    ImprimeEmUmaLinha := AIni.ReadBool(CSecNFCe, CKeyNFCeImprimirItem1Linha, ImprimeEmUmaLinha);
-    TipoRelatorioEvento := TTipoRelatorioEvento(AIni.ReadInteger(CSecNFCe, CKeyNFCeModoImpressaoEvento, Integer(TipoRelatorioEvento)));
-    ImprimeQRCodeLateral := AIni.ReadBool(CSecNFCe, CKeyNFCeQRCodeLateral, ImprimeQRCodeLateral);
-    ImprimeLogoLateral := AIni.ReadBool(CSecNFCe, CKeyNFCeLogoLateral, ImprimeLogoLateral);
-  end;
-end;
-
 procedure TDANFeReportConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
   FProtocolo := AIni.ReadString(CSessaoDANFE, CChaveProtocolo, FProtocolo);
@@ -881,113 +814,6 @@ begin
 
   if Assigned(Owner) then
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
-end;
-
-procedure TLibNFeConfig.ImportarIni(AIni: TCustomIniFile);
-Var
-  AuxStr: String;
-  Ok: Boolean;
-begin
-  with NFe.Certificados do
-  begin
-    //Sessão Certificado
-    ArquivoPFX := AIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
-    NumeroSerie := AIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
-
-    AuxStr := '';
-    AuxStr := AIni.ReadString(CSecCertificado, CKeySenha, '');
-    if NaoEstaVazio(AuxStr) then
-      Senha := AuxStr;
-  end;
-
-  with NFe.Geral do
-  begin
-    //Sessão Certificado
-    SSLCryptLib := TSSLCryptLib(AIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
-    SSLHttpLib := TSSLHttpLib(AIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
-    SSLXmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
-
-    //ACBrNFeMonitor
-    RetirarAcentos := AIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
-    ValidarDigest := AIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
-
-    //Webservices
-    FormaEmissao := TpcnTipoEmissao(AIni.ReadInteger(CSecWebService, CKeyFormaEmissaoNFe, Integer(FormaEmissao)));
-    VersaoDF := StrToVersaoDF(Ok, AIni.ReadString(CSecWebService, CKeyVersao, VersaoDFToStr(VersaoDF)));
-    VersaoQRCode := TpcnVersaoQrCode(AIni.ReadInteger(CSecWebService, CKeyVersaoQRCode, Integer(VersaoQRCode)));
-    CamposFatObrigatorios := AIni.ReadBool(CSecWebService, CKeyCamposFatObrig, CamposFatObrigatorios);
-    ForcarGerarTagRejeicao938 := TForcarGeracaoTag(AIni.ReadInteger(CSecWebService, CKeyTagRejeicao938, Integer(ForcarGerarTagRejeicao938)));
-
-    //Arquivos
-    AtualizarXMLCancelado := AIni.ReadBool(CSecArquivos, CKeyArquivosAtualizarXMLCancelado, AtualizarXMLCancelado);
-
-    //NFCe
-    IdCSC := AIni.ReadString(CSecNFCe, CKeyNFCeIdToken, IdCSC);
-    CSC := AIni.ReadString(CSecNFCe, CKeyNFCeToken, CSC);
-  end;
-
-  with NFe.Arquivos do
-  begin
-    //ACBrNFeMonitor
-    IniServicos := AIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServices, IniServicos);
-
-    //Arquivos
-    Salvar := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
-    SepararPorMes := AIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
-    SepararPorCNPJ := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    SepararPorModelo := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
-    AdicionarLiteral := AIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
-    SalvarApenasNFeProcessadas := AIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasNFeProcessadas);
-    NormatizarMunicipios := AIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
-    EmissaoPathNFe := AIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathNFe);
-    PathNFe := AIni.ReadString(CSecArquivos, CKeyArquivosPathNFe, PathNFe);
-    PathInu := AIni.ReadString(CSecArquivos, CKeyArquivosPathInu, PathInu);
-    PathEvento := AIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
-
-    AuxStr := AIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
-    if NaoEstaVazio(AuxStr) then
-      PathSchemas := PathWithDelim(AuxStr) + 'NFe';
-
-    with DownloadDFe do
-    begin
-      SepararPorNome := AIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
-      PathDownload := AIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
-    end;
-  end;
-
-  with NFe.WebServices do
-  begin
-    // ACBrNFeMonitor
-    TimeOut := AIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
-
-    // Certificado
-    SSLType := TSSLType(AIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
-
-    //Webservices
-    Ambiente := TpcnTipoAmbiente(AIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
-    UF := AIni.ReadString(CSecWebService, CKeyUF, UF);
-    AjustaAguardaConsultaRet := AIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
-    AguardarConsultaRet := AIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
-    Tentativas := AIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
-    IntervaloTentativas := AIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
-
-    with TimeZoneConf do
-    begin
-      ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
-      TimeZoneStr := AIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
-    end;
-  end;
-
-  with NFe.RespTec do
-  begin
-    // RespTecnico
-    IdCSRT := AIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
-    CSRT := AIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
-  end;
-
-  //Impressão
-  DANFe.Import(AIni);
 end;
 
 procedure TLibNFeConfig.Travar;

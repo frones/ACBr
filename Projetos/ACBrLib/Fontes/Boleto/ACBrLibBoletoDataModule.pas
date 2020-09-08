@@ -72,7 +72,7 @@ var
 implementation
 
 uses
-  ACBrUtil, FileUtil, ACBrLibBoletoConfig, ACBrLibBoletoBase;
+  ACBrUtil, FileUtil, ACBrLibBoletoConfig;
 
 {$R *.lfm}
 

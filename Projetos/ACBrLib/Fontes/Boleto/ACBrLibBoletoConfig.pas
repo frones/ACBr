@@ -233,7 +233,6 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -254,8 +253,8 @@ type
 implementation
 
 uses
-  ACBrMonitorConsts, ACBrLibBoletoConsts, ACBrLibComum,
-  ACBrUtil, ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
+  ACBrLibBoletoConsts, ACBrUtil,
+  ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
 
 { TLibBoletoConfig }
 procedure TLibBoletoConfig.INIParaClasse;
@@ -285,66 +284,6 @@ procedure TLibBoletoConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibBoleto(Owner).BoletoDM.AplicarConfiguracoes;
-end;
-
-procedure TLibBoletoConfig.ImportarIni(AIni: TCustomIniFile);
-begin
-
-  with BoletoConfig do
-  begin
-    emailAssuntoBoleto:= AIni.ReadString(CSecBOLETO, CKeyBOLETOEmailAssuntoBoleto, emailAssuntoBoleto );
-    emailMensagemBoleto:= AIni.ReadString(CSecBOLETO, CKeyBOLETOEmailMensagemBoleto, emailMensagemBoleto );
-  end;
-
-  with BoletoCedenteConfig do
-  begin
-    Agencia:= AIni.ReadString(CSecBOLETO, CKeyBOLETOAgencia, Agencia);
-    AgenciaDigito:= AIni.ReadString(CSecBOLETO, CKeyBOLETODigitoAgencia, AgenciaDigito );
-    Bairro:= AIni.ReadString(CSecBOLETO, CKeyBOLETOBairro, Bairro );
-    CEP:= AIni.ReadString(CSecBOLETO, CKeyBOLETOCEP, CEP );
-    Cidade:= AIni.ReadString(CSecBOLETO, CKeyBOLETOCidade, Cidade );
-    CNPJCPF:= AIni.ReadString(CSecBOLETO, CKeyBOLETOCNPJCPF, CNPJCPF );
-    CodigoCedente:= AIni.ReadString(CSecBOLETO, CKeyBOLETOCodCedente, CodigoCedente );
-    CodigoTransmissao:= AIni.ReadString(CSecBOLETO, CKeyBOLETOCodTransmissao, CodigoTransmissao );
-    Complemento:= AIni.ReadString(CSecBOLETO, CKeyBOLETOComplemento, Complemento );
-    Conta:= AIni.ReadString(CSecBOLETO, CKeyBOLETOConta, Conta );
-    ContaDigito:= AIni.ReadString(CSecBOLETO, CKeyBOLETODigitoConta, ContaDigito);
-    Convenio:= AIni.ReadString(CSecBOLETO, CKeyBOLETOConvenio, Convenio );
-    Logradouro:= AIni.ReadString(CSecBOLETO, CKeyBOLETOLogradouro, Logradouro );
-    Modalidade:= AIni.ReadString(CSecBOLETO, CKeyBOLETOModalidade, Modalidade );
-    Nome:= AIni.ReadString(CSecBOLETO, CKeyBOLETONome, Nome );
-    NumeroRes:= AIni.ReadString(CSecBOLETO, CKeyBOLETONumero, NumeroRes );
-    ResponEmissao:= TACBrResponEmissao(AIni.ReadInteger(CSecBOLETO, CKeyBOLETORespEmis, integer(ResponEmissao) ));
-    TipoInscricao:= TACBrPessoaCedente( AIni.ReadInteger(CSecBOLETO, CKeyBOLETOPessoa, integer(TipoInscricao) ));
-    UF:= AIni.ReadString(CSecBOLETO, CKeyBOLETOUF, UF );
-    DigitoVerificadorAgenciaConta:= AIni.ReadString(CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoVerificadorAgenciaConta );
-  end;
-
-  with BoletoBancoConfig do
-  begin
-    LocalPagamento:= AIni.ReadString(CSecBOLETO, CKeyBOLETOLocalPagamento, LocalPagamento );
-    TipoCobranca:= TACBrTipoCobranca( AIni.ReadInteger(CSecBOLETO, CKeyBOLETOBanco, integer(TipoCobranca) ));
-  end;
-
-  with BoletoDiretorioConfig do
-  begin
-    DirArqRemessa := AIni.ReadString(CSecBOLETO, CKeyBOLETODirArquivoRemessa, DirArqRemessa);
-    DirArqRetorno := AIni.ReadString(CSecBOLETO, CKeyBOLETODirArquivoRetorno, DirArqRetorno);
-    LayoutRemessa := TACBrLayoutRemessa(AIni.ReadInteger(CSecBOLETO, CKeyBOLETOCNAB, integer(LayoutRemessa)));
-    LeCedenteRetorno := AIni.ReadBool(CSecBOLETO, CKeyBOLETOLerCedenteRetorno, LeCedenteRetorno);
-  end;
-
-  with BoletoFCFortesConfig do
-  begin
-    DirLogo:= AIni.ReadString(CSecBOLETO, CKeyBOLETODirLogos, DirLogo );
-    Filtro:= TACBrBoletoFCFiltro( AIni.Readinteger(CSecBOLETO, CKeyBOLETOFiltro, integer(Filtro)) );
-    Layout:= TACBrBolLayOut( AIni.ReadInteger(CSecBOLETO, CKeyBOLETOLayout, integer(Layout)) );
-    MostrarPreview:= AIni.ReadBool(CSecBOLETO, CKeyBOLETOPreview, MostrarPreview );
-    MostrarProgresso:= AIni.ReadBool(CSecBOLETO, CKeyBOLETOProgresso, MostrarProgresso );
-    MostrarSetup:= AIni.ReadBool(CSecBOLETO, CKeyBOLETOSetup, MostrarSetup );
-    NomeArquivo:= AIni.ReadString(CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivo );
-  end;
-
 end;
 
 procedure TLibBoletoConfig.Travar;

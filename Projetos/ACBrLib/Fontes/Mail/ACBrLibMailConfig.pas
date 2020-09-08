@@ -37,7 +37,7 @@ unit ACBrLibMailConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, SysUtils,
   SynaChar, ACBrLibConfig, ACBrMail;
 
 type
@@ -46,7 +46,6 @@ type
   TLibMailConfig = class(TLibConfig)
   protected
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(AIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -59,7 +58,7 @@ type
 implementation
 
 uses
-  ACBrLibMailBase, ACBrLibComum, ACBrUtil;
+  ACBrLibMailBase, ACBrUtil;
 
 { TLibMailConfig }
 
@@ -77,11 +76,6 @@ procedure TLibMailConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibMail(Owner).MailDM.AplicarConfiguracoes;
-end;
-
-procedure TLibMailConfig.ImportarIni(AIni: TCustomIniFile);
-begin
-  //Faz nada pois é importadado na classe base
 end;
 
 procedure TLibMailConfig.Travar;

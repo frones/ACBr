@@ -69,8 +69,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     Procedure LerRetorno240(ARetorno:TStringList); override;
     procedure LerRetorno400(ARetorno: TStringList); override;
-    function CodMotivoRejeicaoToDescricao(
-      const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
     {function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;}
    end;
@@ -173,13 +172,17 @@ end;
 
 function TACBrBancoCredisis.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 var
-  ANossoNumero :string;
-  aAgencia, aConvenio :string;
+  aSeqBoleto, aAgencia, aConvenio :string;
 begin
-  ANossoNumero := PadLeft(ACBrTitulo.NossoNumero, 6, '0');
   aAgencia     := PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Agencia), 4, '0');
   aConvenio    := PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Convenio), 6, '0');
-  Result := IntToStrZero(ACBrBanco.Numero, 3) + CalcularDigitoVerificador(ACBrTitulo) + aAgencia + aConvenio + ANossoNumero;
+
+  aSeqBoleto   := PadLeft( IntToStr( StrToInt( OnlyNumber(ACBrTitulo.NossoNumero) ) ), 6, '0');
+                  {retira 0 zeros esquerda (Layout do Banco precisa de 6 digitos) }
+
+  Result       := IntToStrZero(ACBrBanco.Numero, 3) + CalcularDigitoVerificador(ACBrTitulo) + aAgencia + aConvenio + aSeqBoleto;
+                  {numero banco na requsicao "097"                   1 digito                  4 digitos   6 digitos  6 digitos (sequencial do boleto)}
+
 end;
 
 function TACBrBancoCredisis.GerarRegistroHeader240(NumeroRemessa : Integer): String;
@@ -282,18 +285,12 @@ begin
 
      {Pegando o Tipo de Ocorrencia}
      case OcorrenciaOriginal.Tipo of
-       toRemessaBaixar                    : ATipoOcorrencia := '02';
-       toRemessaConcederAbatimento        : ATipoOcorrencia := '04';
-       toRemessaCancelarAbatimento        : ATipoOcorrencia := '05';
-       toRemessaAlterarVencimento         : ATipoOcorrencia := '06';
-       toRemessaConcederDesconto          : ATipoOcorrencia := '07';
-       toRemessaCancelarDesconto          : ATipoOcorrencia := '08';
-       toRemessaProtestar                 : ATipoOcorrencia := '09';
-       toRemessaCancelarInstrucaoProtesto : ATipoOcorrencia := '10';
-       toRemessaAlterarNomeEnderecoSacado : ATipoOcorrencia := '12';
-       toRemessaDispensarJuros            : ATipoOcorrencia := '31';
+       toRemessaRegistrar                     : ATipoOcorrencia := '01';
+       toRemessaAlterarDadosEmissaoBloqueto   : ATipoOcorrencia := '31';
+       toRemessaBaixar                        : ATipoOcorrencia := '50';
+       toRemessaCancelarInstrucao             : ATipoOcorrencia := '51';
      else
-       ATipoOcorrencia := '01';
+       ATipoOcorrencia := '01';   //default registrar
      end;
 
      { Pegando o tipo de EspecieDoc }
@@ -442,23 +439,40 @@ begin
 
      {SEGMENTO R}
      Result:= Result + #13#10 +
-              IntToStrZero(ACBrBanco.Numero, 3)                                       + // 1 - 3 Código do banco
-              '0001'                                                                  + // 4 - 7 Número do lote
-              '3'                                                                     + // 8 - 8 Tipo do registro: Registro detalhe
-              IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 3 ,5) + // 9 - 13 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
-              'R'                                                                     + // 14 - 14 Código do segmento do registro detalhe
-              ' '                                                                     + // 15 - 15 Uso exclusivo FEBRABAN/CNAB: Branco
-              ATipoOcorrencia                                                         + // 16 - 17 Tipo Ocorrencia
-              PadLeft('', 48, '0')                                                    + // 18 - 65 Brancos (Não definido pelo FEBRAN)
-              IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')   + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
+              IntToStrZero(ACBrBanco.Numero, 3)                                        + // 1 - 3 Código do banco
+              '0001'                                                                   + // 4 - 7 Número do lote {TODO: Criar propriedade para receber o número do lote}
+              '3'                                                                      + // 8 - 8 Tipo do registro: Registro detalhe
+              IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 3 ,5)  + // 9 - 13 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+              'R'                                                                      + // 14 - 14 Código do segmento do registro detalhe
+              ' '                                                                      + // 15 - 15 Uso exclusivo FEBRABAN/CNAB: Branco
+              ATipoOcorrencia                                                          + // 16 - 17 Código de Movimento Remessa (01/50/51/31) *C004 (Manual)
+              TipoDescontoToString(TipoDesconto2)                                      + // 18 - 18 Código do Desconto 2   (0/1/2)  *C021 (Manual)  (isento,valor,percentual)
+              IfThen(TipoDescontoToString(TipoDesconto2)='0',
+                    PadRight('', 8, '0'),FormatDateTime('ddmmyyyy', DataDesconto2))    + // 19 - 26 Data do Desconto 2 (se anterior for 0, não enviar data)
+              IfThen((ValorDesconto2 <> null) and (ValorDesconto2 > 0),
+                    IntToStrZero(round(ValorDesconto2 * 100 ),15),PadRight('',15,' ')) + // 27 - 41 Valor/Percentual Desconto 2,  *C023 (Manual)
+              '0'                    {código desconto 3, ainda não implementado}       + // 42 - 42 Código de Desconto 3 (0/1/2)  *C021 (Manual)
+              PadRight('',8,' ')     {data desconto 3, ainda não implementado}         + // 43 - 50 Data Desconto 3               *C022 (Manual)
+              PadRight('',15,' ')    {valor/percentual 3, ainda não implementado}      + // 51 - 65 Valor/Percentual Desconto 3,  *C023 (Manual)
+              IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '1')    + // 66 - 66 Código da Multa 1-Valor Fixo / 2-Percentual
               IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
-                      FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')          + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+                    FormatDateTime('ddmmyyyy', DataMoraJuros), PadRight('',8,' '))     + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe EM BRANCO para CONSIDERAR a DATA DO VENCIMENTO
               IfThen(PercentualMulta > 0,
                      IntToStrZero(round(PercentualMulta * 100), 13) + '00',
-              PadRight('', 15, '0'))                                                  + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
-              PadRight('',110,' ')                                                    + // 90 - 199
-              PadRight('',8,' ')                                                      + // 200 - 207
-              StringOfChar(' ', 33);                                                    // 208 - 240 Zeros (De acordo com o manual de particularidades BB)
+                     PadRight('', 15, '0'))                                            + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
+              PadRight('',10,' ')                                                      + // 90 - 99 Brancos
+              PadRight( Instrucao1, 40, ' ')                                           + // 100 - 139 - Instrucao 1
+              PadRight( Instrucao2, 40, ' ')                                           + // 140 - 179 - Instrucao 2
+              PadRight('', 20, ' ')                                                    + // 180 - 199 - Uso exclusivo FEBRABAN/CNAB: Brancos
+              PadRight('', 8 , ' ')                                                    + // 200 - 207 - Brancos
+              PadRight('', 3 , ' ')                                                    + // 208 - 210 - Brancos
+              PadRight('', 5 , ' ')                                                    + // 211 - 215 - Brancos
+              PadRight('', 1 , ' ')                                                    + // 216 - 216 - Brancos
+              PadRight('', 12, ' ')                                                    + // 217 - 228 - Brancos
+              PadRight('', 1 , ' ')                                                    + // 229 - 229 - Brancos
+              PadRight('', 1 , ' ')                                                    + // 230 - 230 - Brancos
+              PadRight('', 1 , ' ')                                                    + // 231 - 231 - Brancos
+              StringOfChar(' ', 9);                                                      // 232 - 240 - Uso exclusivo FEBRABAN/CNAB: Brancos
    end;
 end;
 

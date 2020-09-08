@@ -791,14 +791,19 @@ begin
            raise Exception.Create(ACBrStr('Conta do arquivo inválida.'));
       end else
       begin
-        ACBrBanco.ACBrBoleto.Cedente.CNPJCPF := FloatToStr(StrToFloatDef(Copy(ARetorno[I], 19, 14),0));
         ACBrBanco.ACBrBoleto.Cedente.Conta := FloatToStr(StrToFloatDef(Copy(ARetorno[I], 59, 12),0));
         ACBrBanco.ACBrBoleto.Cedente.Nome := Copy(ARetorno[I], 73, 30);
 
         if ARetorno[I][18] = '1' then
-          ACBrBanco.ACBrBoleto.Cedente.TipoInscricao := pFisica
+        begin
+          ACBrBanco.ACBrBoleto.Cedente.TipoInscricao := pFisica;
+          ACBrBanco.ACBrBoleto.Cedente.CNPJCPF := Copy(ARetorno[I], 22, 11);
+        end
         else
+        begin
           ACBrBanco.ACBrBoleto.Cedente.TipoInscricao := pJuridica;
+          ACBrBanco.ACBrBoleto.Cedente.CNPJCPF := Copy(ARetorno[I], 19, 14);
+        end;
       end;
 
       ACBrBanco.ACBrBoleto.DataArquivo :=
@@ -834,7 +839,14 @@ begin
         Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(ARetorno[I], 199, 15), 0) / 100;
 
         Titulo.Sacado.Pessoa := CodToACBrPessoa(ARetorno[I][133]);
-        Titulo.Sacado.CNPJCPF := FloatToStr(StrToFloatDef(Copy(ARetorno[I], 134, 15),0));
+
+        case Titulo.Sacado.Pessoa of
+          pFisica: Titulo.Sacado.CNPJCPF := Copy(ARetorno[I], 138, 11);
+          pJuridica: Titulo.Sacado.CNPJCPF := Copy(ARetorno[I], 135, 14);
+        else
+          Titulo.Sacado.CNPJCPF := Trim(Copy(ARetorno[I], 134, 15));
+        end;
+
         Titulo.Sacado.NomeSacado := Copy(ARetorno[I], 149, 40);
 
         idxMotivoOcor := 214;
@@ -863,7 +875,7 @@ begin
         Titulo.ValorRecebido := StrToFloatDef(Copy(ARetorno[I], 93, 15), 0) / 100;
         Titulo.ValorOutrasDespesas := StrToFloatDef(Copy(ARetorno[I], 108, 15), 0) / 100;
         Titulo.ValorOutrosCreditos := StrToFloatDef(Copy(ARetorno[I], 123, 15), 0) / 100;
-        Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 138, 8)), Date);
+        Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 138, 8)), ACBrBanco.ACBrBoleto.DataArquivo);
       end;
 
     end;

@@ -303,13 +303,12 @@ begin
   begin
     Result := PadLeft(Carteira, 1, '0' );
 
-    if Carteira = '101'  then
+    if ((Carteira = '101') or (Carteira = '005'))  then
        Result:= '5'
-    else if Carteira = '201' then
+    else if ((Carteira = '201') or (Carteira = '006')) then
        Result:= '6'
-    else if Carteira = '102' then
+    else if ((Carteira = '102') or (Carteira = '004')) then
        Result:= '4';
-
   end;
 end;
 

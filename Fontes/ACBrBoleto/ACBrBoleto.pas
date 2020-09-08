@@ -5247,11 +5247,14 @@ end;
 
 function TACBrBoletoFCClass.GetNomeArquivoPdfIndividual(const ANomeArquivo: String;
          const AIndex: Integer): String;
+var
+  lNumDocumento: String;
 begin
+  lNumDocumento := OnlyNumber(ACBrBoleto.ListadeBoletos[AIndex].NumeroDocumento);
   if ANomeArquivo = '' then
-    Result := PathWithDelim( ApplicationPath ) + ChangeFileExt(ACBrBoleto.ListadeBoletos[AIndex].NumeroDocumento, '.pdf')
+    Result := PathWithDelim( ApplicationPath ) + ChangeFileExt(lNumDocumento, '.pdf')
   else
-    Result := ChangeFileExt( ChangeFileExt(ANomeArquivo,'') + '_' + ACBrBoleto.ListadeBoletos[AIndex].NumeroDocumento, '.pdf');
+    Result := ChangeFileExt( ChangeFileExt(ANomeArquivo,'') + '_' + lNumDocumento, '.pdf');
 end;
 
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;

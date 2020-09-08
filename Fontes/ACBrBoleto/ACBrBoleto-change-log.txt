@@ -49,6 +49,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2020
+
+--ACBrBancoUnicredES--
+[+] Adicionado Remessa CNAB240 ao Banco Unicred236.
+https://www.projetoacbr.com.br/forum/topic/58186-n%C3%A3o-gerou-os-registros-da-remessa-unicred-136-ref-aos-dados-do-t%C3%ADtulo/?tab=comments#comment-381460
+
+--ACBrBancoSantander--
+[+] Melhoria no validação do código de Carteira.
+
+--ACBrBancoCredSis--
+[*] Ajustes e melhorias na Remessa CNAB240 Segmento R.
+
+--ACBrBancoBanestes--
+[*] Ajustes e melhorias na leitura do Retorno CNAB240.
+
+--ACBrBoleto--
+[*] Ajustes na geraçao do nome do PDF utilizando da lista de títulos para pdf individual.
+
 01/09/2020
 
 --ACBrBancoBanestes--

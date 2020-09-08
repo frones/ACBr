@@ -71,8 +71,12 @@ const
   {$IFDEF MSWINDOWS}
    CACBrTEFPGWebLib = 'PGWebLib.dll';
   {$ELSE}
-   CACBrTEFPGWebLib = 'PGWebLib.so';
-  {$ENDIF}
+   {$IFDEF ANDROID}
+    CACBrTEFPGWebLib = 'libPOSPlug.so';
+   {$ELSE}
+    CACBrTEFPGWebLib = 'PGWebLib.so';
+   {$ENDIF}
+ {$ENDIF}
 
   CACBrTEFPGWebLibMinVersion = '0004.0000.0064.0000';
 
@@ -766,7 +770,10 @@ implementation
 
 uses
   StrUtils, dateutils, math, typinfo,
-  ACBrConsts, ACBrUtil, ACBrValidador;
+  ACBrConsts, ACBrUtil, ACBrValidador
+  {$IfDef ANDROID}
+   ,System.IOUtils
+  {$EndIf};
 
 function PWRETToString(iRET: SmallInt): String;
 begin
@@ -1132,7 +1139,17 @@ begin
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
 
+  {$IfDef ANDROID}
+   if (PathLib = '') then     // Try to load from "./assets/internal/" first
+   begin
+     PathLib := TPath.GetDocumentsPath;
+     if not FileExists(LibFullName) then
+       PathLib := '';
+   end;
+  {$EndIf}
+
   LoadLibFunctions;
+
   if not DirectoryExists(fDiretorioTrabalho) then
     ForceDirectories(fDiretorioTrabalho);
 
@@ -1504,8 +1521,15 @@ begin
         if (iRet = PWRET_OK) then
         begin
           AData := BinaryStringToString(AnsiString(pszData));
-          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));  // Add é mais rápido que usar "ValueInfo[i]"
           GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
+
+          if (i = PWINFO_RCPTCHSHORT) and (not ImprimirViaClienteReduzida) then
+          begin
+            GravarLog('    PWINFO_RCPTCHSHORT ignored, ImprimirViaClienteReduzida = False');
+            Continue;
+          end;
+
+          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));  // Add é mais rápido que usar "ValueInfo[i]"
           if (i = PWINFO_IDLEPROCTIME) then
             TempoOcioso := AData;
         end;

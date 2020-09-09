@@ -46,11 +46,7 @@ type
   TACBrMemIniFileHelper = class helper for TMemIniFile
     procedure LoadFromString(const IniString: string);
     procedure LoadFromFile(const FileName: string); overload;
-    procedure LoadFromFile(const FileName: string; IgnoreEncoding : Boolean); overload;
-    procedure LoadFromFile(const FileName: string; AEncoding: TEncoding); overload;
     procedure LoadFromStream(Stream: TStream); overload;
-    procedure LoadFromStream(Stream: TStream; IgnoreEncoding : Boolean); overload;
-    procedure LoadFromStream(Stream: TStream; AEncoding: TEncoding); overload;
     function AsString: string;
   end;
  
@@ -89,34 +85,6 @@ begin
   end;
 end;
 
-procedure TACBrMemIniFileHelper.LoadFromFile(const FileName: string; IgnoreEncoding : Boolean); overload;
-Var
-  FIniFile: TStringList;
-begin
-  FIniFile := TStringList.Create;
-
-  try
-    FIniFile.LoadFromFile(FileName, IgnoreEncoding);
-    Self.SetStrings(FIniFile);
-  finally
-    FIniFile.Free;
-  end;
-end;
-
-procedure TACBrMemIniFileHelper.LoadFromFile(const FileName: string; AEncoding: TEncoding); overload;
-Var
-  FIniFile: TStringList;
-begin
-  FIniFile := TStringList.Create;
-
-  try
-    FIniFile.LoadFromFile(FileName, AEncoding);
-    Self.SetStrings(FIniFile);
-  finally
-    FIniFile.Free;
-  end;
-end;
-
 procedure TACBrMemIniFileHelper.LoadFromStream(Stream: TStream); overload;
 Var
   FIniFile: TStringList;
@@ -125,34 +93,6 @@ begin
 
   try
     FIniFile.LoadFromStream(Stream);
-    Self.SetStrings(FIniFile);
-  finally
-    FIniFile.Free;
-  end;
-end;
-
-procedure TACBrMemIniFileHelper.LoadFromStream(Stream: TStream; IgnoreEncoding : Boolean); overload;
-Var
-  FIniFile: TStringList;
-begin
-  FIniFile := TStringList.Create;
-
-  try
-    FIniFile.LoadFromStream(Stream, IgnoreEncoding);
-    Self.SetStrings(FIniFile);
-  finally
-    FIniFile.Free;
-  end;
-end;
-
-procedure TACBrMemIniFileHelper.LoadFromStream(Stream: TStream; AEncoding: TEncoding); overload;
-Var
-  FIniFile: TStringList;
-begin
-  FIniFile := TStringList.Create;
-
-  try
-    FIniFile.LoadFromStream(Stream, AEncoding);
     Self.SetStrings(FIniFile);
   finally
     FIniFile.Free;

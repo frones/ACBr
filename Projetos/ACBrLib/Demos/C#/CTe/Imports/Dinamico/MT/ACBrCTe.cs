@@ -30,6 +30,12 @@ namespace ACBrLib.CTe
             public delegate int CTE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_ConfigImportar(IntPtr handle, string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_ConfigExportar(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_ConfigLer(IntPtr handle, string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -252,6 +258,27 @@ namespace ACBrLib.CTe
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.CTE_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.CTE_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -658,6 +685,8 @@ namespace ACBrLib.CTe
             AddMethod<Delegates.CTE_Nome>("CTE_Nome");
             AddMethod<Delegates.CTE_Versao>("CTE_Versao");
             AddMethod<Delegates.CTE_UltimoRetorno>("CTE_UltimoRetorno");
+            AddMethod<Delegates.CTE_ConfigImportar>("CTE_ConfigImportar");
+            AddMethod<Delegates.CTE_ConfigExportar>("CTE_ConfigExportar");
             AddMethod<Delegates.CTE_ConfigLer>("CTE_ConfigLer");
             AddMethod<Delegates.CTE_ConfigGravar>("CTE_ConfigGravar");
             AddMethod<Delegates.CTE_ConfigLerValor>("CTE_ConfigLerValor");

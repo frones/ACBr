@@ -29,6 +29,12 @@ namespace ACBrLib.GNRe
             public delegate int GNRE_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int GNRE_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int GNRE_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int GNRE_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -184,6 +190,27 @@ namespace ACBrLib.GNRe
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.GNRE_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.GNRE_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -358,6 +385,8 @@ namespace ACBrLib.GNRe
             AddMethod<Delegates.GNRE_Nome>("GNRE_Nome");
             AddMethod<Delegates.GNRE_Versao>("GNRE_Versao");
             AddMethod<Delegates.GNRE_UltimoRetorno>("GNRE_UltimoRetorno");
+            AddMethod<Delegates.GNRE_ConfigImportar>("GNRE_ConfigImportar");
+            AddMethod<Delegates.GNRE_ConfigExportar>("GNRE_ConfigExportar");
             AddMethod<Delegates.GNRE_ConfigLer>("GNRE_ConfigLer");
             AddMethod<Delegates.GNRE_ConfigGravar>("GNRE_ConfigGravar");
             AddMethod<Delegates.GNRE_ConfigLerValor>("GNRE_ConfigLerValor");

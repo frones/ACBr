@@ -31,7 +31,10 @@ namespace ACBrLibPosPrinter
             public delegate int POS_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int POS_ImportarConfig(string eArqConfig);
+            public delegate int POS_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ConfigExportar(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int POS_ConfigLer(string eArqConfig);
@@ -195,11 +198,25 @@ namespace ACBrLibPosPrinter
 
         public void ImportarConfig(string eArqConfig)
         {
-            var lerIni = GetMethod<Delegates.POS_ImportarConfig>();
+            var lerIni = GetMethod<Delegates.POS_ConfigImportar>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
         }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.POS_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
 
         public void ConfigLer(string eArqConfig = "")
         {
@@ -533,7 +550,8 @@ namespace ACBrLibPosPrinter
             AddMethod<Delegates.POS_Nome>("POS_Nome");
             AddMethod<Delegates.POS_Versao>("POS_Versao");
             AddMethod<Delegates.POS_UltimoRetorno>("POS_UltimoRetorno");
-            AddMethod<Delegates.POS_ImportarConfig>("POS_ImportarConfig");
+            AddMethod<Delegates.POS_ConfigImportar>("POS_ConfigImportar");
+            AddMethod<Delegates.POS_ConfigExportar>("POS_ConfigExportar");
             AddMethod<Delegates.POS_ConfigLer>("POS_ConfigLer");
             AddMethod<Delegates.POS_ConfigGravar>("POS_ConfigGravar");
             AddMethod<Delegates.POS_ConfigLerValor>("POS_ConfigLerValor");

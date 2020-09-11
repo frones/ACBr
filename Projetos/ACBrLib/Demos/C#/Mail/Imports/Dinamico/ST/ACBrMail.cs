@@ -75,6 +75,12 @@ namespace ACBrLib.Mail
             public delegate int MAIL_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MAIL_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MAIL_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MAIL_Versao(StringBuilder buffer, ref int bufferSize);
         }
 
@@ -174,6 +180,27 @@ namespace ACBrLib.Mail
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.MAIL_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MAIL_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public void SetSubject(string subject)
         {
@@ -305,6 +332,8 @@ namespace ACBrLib.Mail
             AddMethod<Delegates.MAIL_Nome>("MAIL_Nome");
             AddMethod<Delegates.MAIL_Versao>("MAIL_Versao");
             AddMethod<Delegates.MAIL_UltimoRetorno>("MAIL_UltimoRetorno");
+            AddMethod<Delegates.MAIL_ConfigImportar>("MAIL_ConfigImportar");
+            AddMethod<Delegates.MAIL_ConfigExportar>("MAIL_ConfigExportar");
             AddMethod<Delegates.MAIL_ConfigLer>("MAIL_ConfigLer");
             AddMethod<Delegates.MAIL_ConfigGravar>("MAIL_ConfigGravar");
             AddMethod<Delegates.MAIL_ConfigLerValor>("MAIL_ConfigLerValor");

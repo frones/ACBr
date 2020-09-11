@@ -26,6 +26,8 @@ namespace ACBrLib.NFe.Demo
         {
             InitializeComponent();
 
+            //ACBrNFe = new ACBrNFe(File.ReadAllText("ACBrLib2.ini"));
+            //ACBrNFe = new ACBrNFe("[Memory]");
             ACBrNFe = new ACBrNFe();
         }
 
@@ -181,7 +183,9 @@ namespace ACBrLib.NFe.Demo
                 ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Porta", nudPorta.Text);
                 ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "SSL", ckbSSL.Checked);
                 ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "TLS", ckbTLS.Checked);
-                ACBrNFe.ConfigGravar("");
+
+                ACBrNFe.ConfigGravar();
+                //rtbRespostas.AppendLine(ACBrNFe.ConfigExportar());
 
                 Application.DoEvents();
             }
@@ -194,6 +198,8 @@ namespace ACBrLib.NFe.Demo
         private void LoadConfig(string file = "ACBrLib.ini")
         {
             ACBrNFe.ConfigLer(file);
+            //if (File.Exists(file))
+            //    ACBrNFe.ConfigImportar(file);
 
             //Config Geral
             ckbAtualizarXML.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");

@@ -29,6 +29,12 @@ namespace ACBrLib.ETQ
             public delegate int ETQ_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int ETQ_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int ETQ_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int ETQ_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -181,6 +187,27 @@ namespace ACBrLib.ETQ
 
         #endregion Ini
 
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.ETQ_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.ETQ_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public void Ativar()
         {
             var method = GetMethod<Delegates.ETQ_Ativar>();
@@ -309,6 +336,8 @@ namespace ACBrLib.ETQ
             AddMethod<Delegates.ETQ_Nome>("ETQ_Nome");
             AddMethod<Delegates.ETQ_Versao>("ETQ_Versao");
             AddMethod<Delegates.ETQ_UltimoRetorno>("ETQ_UltimoRetorno");
+            AddMethod<Delegates.ETQ_ConfigImportar>("ETQ_ConfigImportar");
+            AddMethod<Delegates.ETQ_ConfigExportar>("ETQ_ConfigExportar");
             AddMethod<Delegates.ETQ_ConfigLer>("ETQ_ConfigLer");
             AddMethod<Delegates.ETQ_ConfigGravar>("ETQ_ConfigGravar");
             AddMethod<Delegates.ETQ_ConfigLerValor>("ETQ_ConfigLerValor");

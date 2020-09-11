@@ -30,6 +30,12 @@ namespace ACBrLib.MDFe
             public delegate int MDFE_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -245,6 +251,27 @@ namespace ACBrLib.MDFe
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.MDFE_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -634,6 +661,8 @@ namespace ACBrLib.MDFe
             AddMethod<Delegates.MDFE_Finalizar>("MDFE_Finalizar");
             AddMethod<Delegates.MDFE_Nome>("MDFE_Nome");
             AddMethod<Delegates.MDFE_Versao>("MDFE_Versao");
+            AddMethod<Delegates.MDFE_ConfigImportar>("MDFE_ConfigImportar");
+            AddMethod<Delegates.MDFE_ConfigExportar>("MDFE_ConfigExportarz");
             AddMethod<Delegates.MDFE_UltimoRetorno>("MDFE_UltimoRetorno");
             AddMethod<Delegates.MDFE_ConfigLer>("MDFE_ConfigLer");
             AddMethod<Delegates.MDFE_ConfigGravar>("MDFE_ConfigGravar");

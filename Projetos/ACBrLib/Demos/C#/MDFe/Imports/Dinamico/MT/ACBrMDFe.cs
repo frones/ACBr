@@ -30,6 +30,12 @@ namespace ACBrLib.MDFe
             public delegate int MDFE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ConfigImportar(IntPtr handle, string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ConfigExportar(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_ConfigLer(IntPtr handle, string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -245,6 +251,27 @@ namespace ACBrLib.MDFe
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.MDFE_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -635,6 +662,8 @@ namespace ACBrLib.MDFe
             AddMethod<Delegates.MDFE_Nome>("MDFE_Nome");
             AddMethod<Delegates.MDFE_Versao>("MDFE_Versao");
             AddMethod<Delegates.MDFE_UltimoRetorno>("MDFE_UltimoRetorno");
+            AddMethod<Delegates.MDFE_ConfigImportar>("MDFE_ConfigImportar");
+            AddMethod<Delegates.MDFE_ConfigExportar>("MDFE_ConfigExportar");
             AddMethod<Delegates.MDFE_ConfigLer>("MDFE_ConfigLer");
             AddMethod<Delegates.MDFE_ConfigGravar>("MDFE_ConfigGravar");
             AddMethod<Delegates.MDFE_ConfigLerValor>("MDFE_ConfigLerValor");

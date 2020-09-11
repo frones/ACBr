@@ -28,6 +28,12 @@ namespace ACBrLib.Sat
             public delegate int SAT_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ConfigImportar(IntPtr handle, string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ConfigExportar(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_ConfigLer(IntPtr handle, string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -227,6 +233,27 @@ namespace ACBrLib.Sat
             var ret = ExecuteMethod(() => method(libHandle));
 
             CheckResult(ret);
+        }
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.SAT_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.SAT_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
         }
 
         public string AtivarSAT(string CNPJValue, int cUF)
@@ -517,6 +544,8 @@ namespace ACBrLib.Sat
             AddMethod<Delegates.SAT_Nome>("SAT_Nome");
             AddMethod<Delegates.SAT_Versao>("SAT_Versao");
             AddMethod<Delegates.SAT_UltimoRetorno>("SAT_UltimoRetorno");
+            AddMethod<Delegates.SAT_ConfigImportar>("SAT_ConfigImportar");
+            AddMethod<Delegates.SAT_ConfigExportar>("SAT_ConfigExportar");
             AddMethod<Delegates.SAT_ConfigLer>("SAT_ConfigLer");
             AddMethod<Delegates.SAT_ConfigGravar>("SAT_ConfigGravar");
             AddMethod<Delegates.SAT_ConfigLerValor>("SAT_ConfigLerValor");

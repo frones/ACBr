@@ -26,6 +26,12 @@ namespace ACBrLib.BAL
             public delegate int BAL_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int BAL_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int BAL_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int BAL_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -153,6 +159,27 @@ namespace ACBrLib.BAL
 
         #endregion Ini
 
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.BAL_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.BAL_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public void Ativar()
         {
             var method = GetMethod<Delegates.BAL_Ativar>();
@@ -219,6 +246,8 @@ namespace ACBrLib.BAL
             AddMethod<Delegates.BAL_Nome>("BAL_Nome");
             AddMethod<Delegates.BAL_Versao>("BAL_Versao");
             AddMethod<Delegates.BAL_UltimoRetorno>("BAL_UltimoRetorno");
+            AddMethod<Delegates.BAL_ConfigImportar>("BAL_ConfigImportar");
+            AddMethod<Delegates.BAL_ConfigExportar>("BAL_ConfigExportar");
             AddMethod<Delegates.BAL_ConfigLer>("BAL_ConfigLer");
             AddMethod<Delegates.BAL_ConfigGravar>("BAL_ConfigGravar");
             AddMethod<Delegates.BAL_ConfigLerValor>("BAL_ConfigLerValor");

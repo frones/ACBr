@@ -28,6 +28,12 @@ namespace ACBrLib.Boleto
             public delegate int Boleto_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int Boleto_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int Boleto_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int Boleto_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -202,6 +208,27 @@ namespace ACBrLib.Boleto
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.Boleto_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.Boleto_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
 
         public string ConfigurarDados(string eArquivoIni)
         {
@@ -454,6 +481,8 @@ namespace ACBrLib.Boleto
             AddMethod<Delegates.Boleto_Nome>("Boleto_Nome");
             AddMethod<Delegates.Boleto_Versao>("Boleto_Versao");
             AddMethod<Delegates.Boleto_UltimoRetorno>("Boleto_UltimoRetorno");
+            AddMethod<Delegates.Boleto_ConfigImportar>("Boleto_ConfigImportar");
+            AddMethod<Delegates.Boleto_ConfigExportar>("Boleto_ConfigExportar");
             AddMethod<Delegates.Boleto_ConfigLer>("Boleto_ConfigLer");
             AddMethod<Delegates.Boleto_ConfigGravar>("Boleto_ConfigGravar");
             AddMethod<Delegates.Boleto_ConfigLerValor>("Boleto_ConfigLerValor");

@@ -30,6 +30,12 @@ namespace ACBrLib.NFe
             public delegate int NFE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ConfigImportar(IntPtr handle, string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ConfigExportar(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_ConfigLer(IntPtr handle, string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -251,6 +257,28 @@ namespace ACBrLib.NFe
         }
 
         #endregion Ini
+
+        public void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.NFE_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -669,6 +697,8 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_Nome>("NFE_Nome");
             AddMethod<Delegates.NFE_Versao>("NFE_Versao");
             AddMethod<Delegates.NFE_UltimoRetorno>("NFE_UltimoRetorno");
+            AddMethod<Delegates.NFE_ConfigImportar>("NFE_ConfigImportar");
+            AddMethod<Delegates.NFE_ConfigExportar>("NFE_ConfigExportar");
             AddMethod<Delegates.NFE_ConfigLer>("NFE_ConfigLer");
             AddMethod<Delegates.NFE_ConfigGravar>("NFE_ConfigGravar");
             AddMethod<Delegates.NFE_ConfigLerValor>("NFE_ConfigLerValor");

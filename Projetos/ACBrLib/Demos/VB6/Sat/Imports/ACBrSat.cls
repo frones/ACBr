@@ -33,6 +33,13 @@ Private Declare Function SAT_UltimoRetorno _
                 Lib "ACBrSAT32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
+Private Declare Function SAT_ConfigImportar _
+                Lib "ACBrSAT32.dll" (ByVal eArqConfig As String) As Long
+                   
+Private Declare Function SAT_ConfigExportar _
+                Lib "ACBrSAT32.dll" (ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+
 Private Declare Function SAT_ConfigLer _
                 Lib "ACBrSAT32.dll" (ByVal eArqConfig As String) As Long
 
@@ -187,6 +194,32 @@ Public Sub FinalizarLib()
     retorno = SAT_Finalizar
     CheckResult (retorno)
 End Sub
+
+Public Sub ConfigImportar(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = SAT_ConfigImportar(eArqConfig)
+    CheckResult (retorno)
+    
+End Sub
+    
+Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = SAT_ConfigExportar(buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional eArqConfig As String = "")
 

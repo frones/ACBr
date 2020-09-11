@@ -37,7 +37,16 @@ Private Declare Function GNRE_UltimoRetorno _
                 Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
+                                      
+Private Declare Function GNRE_ConfigImportar _
+                Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
+                                      ByVal eArqConfig As String) As Long
                    
+Private Declare Function GNRE_ConfigExportar _
+                Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
+
 Private Declare Function GNRE_ConfigLer _
                 Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
                                       ByVal eArqConfig As String) As Long
@@ -147,6 +156,32 @@ Public Sub FinalizarLib()
     retorno = GNRE_Finalizar(libHandler)
     CheckResult retorno
 End Sub
+
+Public Sub ConfigImportar(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = GNRE_ConfigImportar(libHandler, eArqConfig)
+    CheckResult (retorno)
+    
+End Sub
+    
+Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = GNRE_ConfigExportar(libHandler, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional eArqConfig As String = "")
 

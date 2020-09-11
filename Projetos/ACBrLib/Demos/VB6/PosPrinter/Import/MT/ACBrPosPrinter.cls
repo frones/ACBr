@@ -42,6 +42,11 @@ Private Declare Function POS_UltimoRetorno _
 Private Declare Function POS_ImportarConfig _
                 Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _
                                             ByVal eArqConfig As String) As Long
+                                            
+Private Declare Function POS_ExportarConfig _
+                Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
                    
 Private Declare Function POS_ConfigLer _
                 Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _
@@ -205,13 +210,30 @@ Public Sub FinalizarLib()
     CheckResult (retorno)
 End Sub
 
-Public Sub ImportarConfig(ByVal eArqConfig As String)
+Public Sub ConfigImportar(ByVal eArqConfig As String)
 
     Dim retorno As Long
 
-    retorno = POS_ImportarConfig(libHandler, eArqConfig)
+    retorno = POS_ConfigImportar(libHandler, eArqConfig)
     CheckResult (retorno)
 End Sub
+
+Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = POS_ConfigExportar(libHandler, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional ByVal eArqConfig As String = "")
 

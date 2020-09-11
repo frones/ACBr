@@ -39,6 +39,15 @@ Private Declare Function MDFE_UltimoRetorno _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
+Private Declare Function MDFE_ConfigImportar _
+                Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
+                                      ByVal eArqConfig As String) As Long
+                   
+Private Declare Function MDFE_ConfigExportar _
+                Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
+                   
 Private Declare Function MDFE_ConfigLer _
                 Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
                                       ByVal eArqConfig As String) As Long
@@ -270,6 +279,32 @@ Public Sub FinalizarLib()
     retorno = MDFE_Finalizar(libHandler)
     CheckResult retorno
 End Sub
+
+Public Sub ConfigImportar(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = MDFE_ConfigImportar(libHandler, eArqConfig)
+    CheckResult (retorno)
+    
+End Sub
+    
+Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_ConfigExportar(libHandler, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional eArqConfig As String = "")
 

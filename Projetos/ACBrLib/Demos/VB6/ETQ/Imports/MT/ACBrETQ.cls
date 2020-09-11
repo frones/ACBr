@@ -39,6 +39,15 @@ Private Declare Function ETQ_UltimoRetorno _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
                    
+Private Declare Function ETQ_ConfigImportar _
+                Lib "ACBrETQ32.dll" (ByVal libHandler As Long, _
+                                     ByVal eArqConfig As String) As Long
+                   
+Private Declare Function ETQ_ConfigExportar _
+                Lib "ACBrETQ32.dll" (ByVal libHandler As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                   
 Private Declare Function ETQ_ConfigLer _
                 Lib "ACBrETQ32.dll" (ByVal libHandler As Long, _
                                      ByVal eArqConfig As String) As Long
@@ -169,6 +178,32 @@ Public Sub FinalizarLib()
     retorno = ETQ_Finalizar(libHandler)
     CheckResult (retorno)
 End Sub
+
+Public Sub ConfigImportar(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = ETQ_ConfigImportar(libHandler, eArqConfig)
+    CheckResult (retorno)
+    
+End Sub
+    
+Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = ETQ_ConfigExportar(libHandler, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional eArqConfig As String = "")
 

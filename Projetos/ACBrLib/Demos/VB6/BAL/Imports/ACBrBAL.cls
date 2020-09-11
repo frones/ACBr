@@ -33,6 +33,13 @@ Private Declare Function BAL_UltimoRetorno _
                 Lib "ACBrBAL32.dll" (ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
                    
+Private Declare Function BAL_ConfigImportar _
+                Lib "ACBrBAL32.dll" (ByVal eArqConfig As String) As Long
+                   
+Private Declare Function BAL_ConfigExportar _
+                Lib "ACBrBAL32.dll" (ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                   
 Private Declare Function BAL_ConfigLer _
                 Lib "ACBrBAL32.dll" (ByVal eArqConfig As String) As Long
 
@@ -85,6 +92,32 @@ Public Sub FinalizarLib()
     retorno = BAL_Finalizar
     CheckResult retorno
 End Sub
+
+Public Sub ConfigImportar(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = BAL_ConfigImportar(eArqConfig)
+    CheckResult (retorno)
+    
+End Sub
+
+ Public Function ConfigExportar() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = BAL_ConfigExportar(buffer, bufferLen)
+    CheckResult retorno
+    
+    ConfigExportar = processResult(buffer, bufferLen)
+    
+End Function
 
 Public Sub ConfigLer(Optional eArqConfig As String = "")
 
@@ -156,6 +189,7 @@ Public Function Versao() As String
     CheckResult retorno
     
     Versao = processResult(buffer, bufferLen)
+    
 End Function
 
 Public Sub Ativar()

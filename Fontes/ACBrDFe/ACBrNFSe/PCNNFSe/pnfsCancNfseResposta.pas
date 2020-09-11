@@ -525,7 +525,8 @@ begin
         if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or
            (leitor.rExtrai(1, 'Cancelarnfseresposta') <> '') or
            (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') or
-           (leitor.rExtrai(1, 'CancelarNfseResult') <> '') then
+           (leitor.rExtrai(1, 'CancelarNfseResult') <> '') or
+           (leitor.rExtrai(1, 'GerarNfseResposta') <> '') then
         begin
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
           if infCanc.DataHora = 0 then

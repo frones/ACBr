@@ -807,7 +807,7 @@ begin
       end;
 
       ACBrBanco.ACBrBoleto.DataArquivo :=
-        StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 144, 8)), Date);
+        StrToDateDef(FormatMaskText('00/00/0000;0', Copy(ARetorno[I], 144, 8)), Date);
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
     end;
@@ -830,10 +830,11 @@ begin
       begin
 
         Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(ARetorno[I],16,2),0));
-        Titulo.NossoNumero := Copy(ARetorno[I], 38, 10);
+        Titulo.NossoNumero := Copy(ARetorno[I], 38, 8);
         Titulo.Carteira := ARetorno[I][58];
         Titulo.NumeroDocumento := Copy(ARetorno[I], 59, 15);
-        Titulo.Vencimento := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 74, 8)), Date);
+        Titulo.Vencimento := StrToDateDef(FormatMaskText('00/00/0000;0', Copy(ARetorno[I], 74, 8)),
+        	ACBrBanco.ACBrBoleto.DataArquivo);
         Titulo.ValorDocumento := StrToFloatDef(Copy(ARetorno[I], 82, 15), 0) / 100;
         Titulo.SeuNumero := Copy(ARetorno[I], 106, 25);
         Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(ARetorno[I], 199, 15), 0) / 100;
@@ -856,7 +857,8 @@ begin
           begin
             Titulo.MotivoRejeicaoComando.Add(Copy(ARetorno[I], idxMotivoOcor, 2));
             Titulo.DescricaoMotivoRejeicaoComando.Add(
-              CodMotivoRejeicaoToDescricao(Titulo.OcorrenciaOriginal.Tipo, Copy(ARetorno[I], idxMotivoOcor, 2)));
+               ACBrBanco.CodMotivoRejeicaoToDescricao(Titulo.OcorrenciaOriginal.Tipo,
+              StrToIntDef(Copy(ARetorno[I], idxMotivoOcor, 2),0)));
           end;
 
           Inc(idxMotivoOcor, 2);
@@ -875,7 +877,7 @@ begin
         Titulo.ValorRecebido := StrToFloatDef(Copy(ARetorno[I], 93, 15), 0) / 100;
         Titulo.ValorOutrasDespesas := StrToFloatDef(Copy(ARetorno[I], 108, 15), 0) / 100;
         Titulo.ValorOutrosCreditos := StrToFloatDef(Copy(ARetorno[I], 123, 15), 0) / 100;
-        Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000', Copy(ARetorno[I], 138, 8)), ACBrBanco.ACBrBoleto.DataArquivo);
+        Titulo.DataOcorrencia := StrToDateDef(FormatMaskText('00/00/0000;0', Copy(ARetorno[I], 138, 8)), ACBrBanco.ACBrBoleto.DataArquivo);
       end;
 
     end;

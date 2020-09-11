@@ -47,6 +47,10 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         int Boleto_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
 
+        int Boleto_ConfigImportar(Pointer libHandler, String eArqConfig);
+        
+		int Boleto_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+        
         int Boleto_ConfigLer(Pointer libHandler, String eArqConfig);
 
         int Boleto_ConfigGravar(Pointer libHandler, String eArqConfig);
@@ -375,6 +379,25 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }    
         
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigImportar(getHandle(), eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigExportar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+    
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrBoletoLib.INSTANCE.Boleto_UltimoRetorno(getHandle(), buffer, bufferLen);

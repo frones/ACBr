@@ -418,6 +418,25 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
+  public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrMDFeLib.INSTANCE.MDFE_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrMDFeLib.INSTANCE.MDFE_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+  
   @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrMDFeLib.INSTANCE.MDFE_UltimoRetorno( buffer, bufferLen );
@@ -437,6 +456,10 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
 
     int MDFE_UltimoRetorno( ByteBuffer buffer, IntByReference bufferSize );
 
+    int MDFE_ConfigImportar(String eArqConfig);
+        
+    int MDFE_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+    
     int MDFE_ConfigLer( String eArqConfig );
 
     int MDFE_ConfigGravar( String eArqConfig );

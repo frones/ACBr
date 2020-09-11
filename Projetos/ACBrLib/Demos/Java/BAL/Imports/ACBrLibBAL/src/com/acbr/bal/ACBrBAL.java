@@ -48,6 +48,10 @@ public final class ACBrBAL extends ACBrLibBase implements AutoCloseable {
 
         int BAL_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
+        int BAL_ConfigImportar(String eArqConfig);
+        
+        int BAL_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+        
         int BAL_ConfigLer(String eArqConfig);
 
         int BAL_ConfigGravar(String eArqConfig);
@@ -196,6 +200,23 @@ public final class ACBrBAL extends ACBrLibBase implements AutoCloseable {
         
         return peso.getValue();
     } 
+    
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrBALLib.INSTANCE.BAL_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrBALLib.INSTANCE.BAL_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+    }
     
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {

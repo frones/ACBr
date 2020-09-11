@@ -47,6 +47,10 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
 
         int ETQ_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
+        int ETQ_ConfigImportar(String eArqConfig);
+        
+	    int ETQ_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+        
         int ETQ_ConfigLer(String eArqConfig);
 
         int ETQ_ConfigGravar(String eArqConfig);
@@ -269,6 +273,25 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
         checkResult(ret);
     }
 
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrETQLib.INSTANCE.ETQ_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrETQLib.INSTANCE.ETQ_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+    
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrETQLib.INSTANCE.ETQ_UltimoRetorno(buffer, bufferLen);

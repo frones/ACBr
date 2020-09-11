@@ -50,6 +50,10 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
         
         int MAIL_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
         
+        int MAIL_ConfigImportar(Pointer libHandler, String eArqConfig);
+        
+	    int MAIL_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+        
         int MAIL_ConfigLer(Pointer libHandler, String eArqConfig);
         
         int MAIL_ConfigGravar(Pointer libHandler, String eArqConfig);
@@ -228,6 +232,25 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
     public void send() throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_Send(getHandle());
         checkResult(ret);
+    }
+    
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrMailLib.INSTANCE.MAIL_ConfigImportar(getHandle(), eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrMailLib.INSTANCE.MAIL_ConfigExportar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
     }
     
     @Override

@@ -68,6 +68,10 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     int NFE_UltimoRetorno( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
+    int NFE_ConfigImportar(Pointer libHandler, String eArqConfig);
+        
+    int NFE_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+    
     int NFE_ConfigLer( Pointer libHandler, String eArqConfig );
 
     int NFE_ConfigGravar( Pointer libHandler, String eArqConfig );
@@ -586,7 +590,26 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacaoPDF( getHandle(), toUTF8(eArquivoXml) );
     checkResult( ret );
   }
+  
+  public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrNFeLib.INSTANCE.NFE_ConfigImportar(getHandle(), eArqConfig);
+        checkResult(ret);
+        
+    }
     
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrNFeLib.INSTANCE.NFE_ConfigExportar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+  
     @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrNFeLib.INSTANCE.NFE_UltimoRetorno(getHandle(), buffer, bufferLen );

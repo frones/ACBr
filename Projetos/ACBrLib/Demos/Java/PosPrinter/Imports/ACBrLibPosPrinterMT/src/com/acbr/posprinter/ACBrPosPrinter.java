@@ -56,8 +56,10 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
         int POS_ConfigLer(Pointer libHandler, String eArqConfig);
         
-        int POS_ImportarConfig(Pointer libHandler, String eArqConfig);
+        int POS_ConfigImportar(Pointer libHandler, String eArqConfig);
 
+        int POS_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+        
         int POS_ConfigGravar(Pointer libHandler, String eArqConfig);
 
         int POS_ConfigLerValor(Pointer libHandler, String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
@@ -189,8 +191,8 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         checkResult(ret);
     }
 
-    public void importarConfig(String eArqConfig) throws Exception {
-        int ret = PosPrinterLib.INSTANCE.POS_ImportarConfig(getHandle(), toUTF8(eArqConfig));
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_ConfigImportar(getHandle(), toUTF8(eArqConfig));
         checkResult(ret);
     }
 
@@ -441,6 +443,18 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         return processResult(buffer, bufferLen);
     }
 
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = PosPrinterLib.INSTANCE.POS_ConfigExportar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+    
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         PosPrinterLib.INSTANCE.POS_UltimoRetorno(getHandle(), buffer, bufferLen);

@@ -45,6 +45,10 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
 
     int SAT_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
+    int SAT_ConfigImportar(String eArqConfig);
+        
+    int SAT_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+    
     int SAT_ConfigLer(String eArqConfig);
 
     int SAT_ConfigGravar(String eArqConfig);
@@ -389,6 +393,25 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrSatLib.INSTANCE.SAT_EnviarEmail(toUTF8(eArquivoXml), toUTF8(ePara), toUTF8(eAssunto),
                 toUTF8(eNomeArquivo), toUTF8(sMensagem), toUTF8(sCC), toUTF8(eAnexos));
         checkResult(ret);
+    }
+    
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrSatLib.INSTANCE.SAT_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrSatLib.INSTANCE.SAT_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
     }
     
     @Override

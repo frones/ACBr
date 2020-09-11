@@ -44,6 +44,10 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
 
     int CTE_UltimoRetorno( ByteBuffer buffer, IntByReference bufferSize );
 
+    int CTE_ConfigImportar(String eArqConfig);
+        
+    int CTE_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+    
     int CTE_ConfigLer( String eArqConfig );
 
     int CTE_ConfigGravar( String eArqConfig );
@@ -573,6 +577,25 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
+  public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrCTeLib.INSTANCE.CTE_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+  public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrCTeLib.INSTANCE.CTE_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+  }
+  
   @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrCTeLib.INSTANCE.CTE_UltimoRetorno( buffer, bufferLen );

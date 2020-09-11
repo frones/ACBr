@@ -454,6 +454,25 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
     
+  public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrNFeLib.INSTANCE.NFE_ConfigImportar(eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrNFeLib.INSTANCE.NFE_ConfigExportar(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+  
     @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrNFeLib.INSTANCE.NFE_UltimoRetorno( buffer, bufferLen );
@@ -475,6 +494,10 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     int NFE_UltimoRetorno( ByteBuffer buffer, IntByReference bufferSize );
 
+    int NFE_ConfigImportar(String eArqConfig);
+        
+    int NFE_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+    
     int NFE_ConfigLer( String eArqConfig );
 
     int NFE_ConfigGravar( String eArqConfig );

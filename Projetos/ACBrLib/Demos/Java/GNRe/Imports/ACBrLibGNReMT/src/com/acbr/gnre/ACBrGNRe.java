@@ -73,6 +73,10 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
 
     int GNRE_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
+    int GNRE_ConfigImportar(Pointer libHandler, String eArqConfig);
+        
+    int GNRE_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+    
     int GNRE_ConfigLer(Pointer libHandler, String eArqConfig );
 
     int GNRE_ConfigGravar(Pointer libHandler, String eArqConfig );
@@ -326,6 +330,25 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
     int ret = ACBrGNReLib.INSTANCE.GNRE_ImprimirPDF(getHandle());
     checkResult( ret );
   }
+  
+  public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrGNReLib.INSTANCE.GNRE_ConfigImportar(getHandle(), eArqConfig);
+        checkResult(ret);
+        
+    }
+    
+    public String ConfigExportar() throws Exception {
+		
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrGNReLib.INSTANCE.GNRE_ConfigExportar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
   
   @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {

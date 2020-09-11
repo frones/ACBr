@@ -46,6 +46,7 @@ type
 
   TACBrBancoABCBrasil = class(TACBrBancoClass)
   private
+    ISequencia: integer;
   protected
     vTotalTitulos: Double;
 
@@ -103,6 +104,7 @@ begin
   fpTamanhoAgencia := 4;
   fpTamanhoConta := 8;
   fpTamanhoCarteira := 3;
+  ISequencia := 0;
 end;
 
 function TACBrBancoABCBrasil.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): string;
@@ -167,6 +169,7 @@ var
   ATipoInscricao,
     aModalidade: string;
 begin
+  ISequencia := 0;
   fpQtdCobrancaSimples := 0;
   fpQtdCobrancaVinculada := 0;
   fpQtdCobrancaCaucionada := 0;
@@ -266,7 +269,7 @@ end;
 
 function TACBrBancoABCBrasil.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): string;
 var
-  ISequencia: Integer;
+
   sCodMovimento: string;
   sDigitoNossoNumero, sTipoCobranca, sTipoDocto, sTipoCarteira: string;
   sEspecie, sDataMoraJuros, sDataDesconto: string;
@@ -586,7 +589,8 @@ begin
     //      tsCorrespondenteEspecificoNaoCEPNN: sServicoClassificacao := '7';
     //    end;
 
-    ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * 3) + 1;
+
+    Inc(ISequencia);
     {SEGMENTO P}
     Result := '246' + // 001 - 003 / Código do Banco na compensação
     '0001' + // 004 - 007 / Numero do lote remessa
@@ -685,30 +689,39 @@ begin
     Space(10) + // 090 - 099 / Reservado (uso Banco)
     MontarInstrucoes1 + // 100 - 139 / Mensagem 3
     // 140 - 179 / Mensagem 4
-
     Space(61); // 180 - 240 / Reservado (uso Banco)
-    //    {SEGMENTO R - FIM}
-    //
-    //    Inc(ISequencia);
-    //    {SEGMENTO S}
-    //    // Existe um Formmulário 1 - Especial, que não será implementado
-    //    // Será implementado do Formulário 2
-    //    Result := Result + #13#10 +
-    //              '033'                                            + // 001 - 003 / Código do Banco na compensação
-    //              '0001'                                           + // 004 - 007 / Numero do lote remessa
-    //              '3'                                              + // 008 - 008 / Tipo de registro
-    //              IntToStrZero(ISequencia ,5)                      + // 009 - 013 / Número seqüencial do registro no lote
-    //              'S'                                              + // 014 - 014 / Cód. Segmento do registro detalhe
-    //              Space(1)                                         + // 015 - 015 / Reservado (uso Banco)
-    //              sCodMovimento                                    + // 016 - 017 / Código de movimento remessa
-    //              '2'                                              + // 018 - 018 / Identificação da impressão
-    //              MontarInstrucoes2                                + // 019 - 058 / Mensagem 5
-    //                                                                 // 059 - 098 / Mensagem 6
-    //                                                                 // 099 - 138 / Mensagem 7
-    //                                                                 // 139 - 178 / Mensagem 8
-    //                                                                 // 179 - 218 / Mensagem 9
-    //              Space(22)                                        ; // 219 - 240 / Reservado (uso Banco)
-    //    {SEGMENTO S - FIM}
+
+    if ACBrTitulo.ListaDadosNFe.Count > 0 then // Se tem informacoes de NFe associadas ao titulo
+    begin
+      Inc(ISequencia);
+      {SEGMENTO Y-52}
+      Result := Result + #13#10 +
+        '246' + // 001 - 003 / Código do Banco na compensação
+        '0001' + // 004 - 007 / Numero do lote remessa
+        '3' + // 008 - 008 / Tipo de registro
+        IntToStrZero(ISequencia, 5) + // 009 - 013 / Número seqüencial do registro no lote
+        'Y' + // 014 - 014 / Cód. Segmento do registro detalhe
+        ' ' + // 015 - 015 / Reservado (uso Banco)
+        sCodMovimento + // 016 - 017 / Código de movimento remessa
+        '52' + // Identificação Registro Opcional 18 19 2
+        PadRight(ListaDadosNFe[0].NumNFe, 15, ' ') +  // Nota Fiscal 1 Número da Nota Fiscal 1 20 34 15
+        IntToStrZero(round(ListaDadosNFe[0].ValorNFe * 100), 15) + // Valor N. Fiscal Valor da Nota Fiscal 1 35 49 13 2
+        FormatDateTime('ddmmyyyy', ListaDadosNFe[0].EmissaoNFe) + // Data Emissão Data Emissão da Nota Fiscal 1 50 57 8
+        PadRight(ListaDadosNFe[0].ChaveNFe, 44, ' '); //Chave Acesso Chave de Acesso DANFE NF 1 58 101 44
+
+      if ACBrTitulo.ListaDadosNFe.Count <  2 then
+        Result := Result + Space(15) + StringOfChar('0',67) +
+          Space (57) // Uso Exclusivo FEBRABAN/CNAB 184 240 57
+      else
+      begin
+        Result := Result +
+          PadRight(ListaDadosNFe[1].NumNFe, 15, ' ') +  // Nota Fiscal 1 Número da Nota Fiscal 1 20 34 15
+          IntToStrZero(round(ListaDadosNFe[1].ValorNFe * 100), 15) + // Valor N. Fiscal Valor da Nota Fiscal 1 35 49 13 2
+          FormatDateTime('ddmmyyyy', ListaDadosNFe[1].EmissaoNFe) + // Data Emissão Data Emissão da Nota Fiscal 1 50 57 8
+          PadRight(ListaDadosNFe[1].ChaveNFe, 44, ' ') + //Chave Acesso Chave de Acesso DANFE NF 1 58 101 44
+          Space (57); // Uso Exclusivo FEBRABAN/CNAB 184 240 57
+      end;
+    end;
   end;
 end;
 
@@ -864,10 +877,9 @@ end;
 
 function TACBrBancoABCBrasil.GerarRegistroTrailler240(
   ARemessa: TStringList): string;
-var
-  wRegsLote: Integer;
+
 begin
-  wRegsLote := (ARemessa.Count - 1) * 3;
+
 
   // by Jéter Rabelo Ferreira - 06/2014
      {REGISTRO TRAILER DO LOTE}
@@ -875,7 +887,7 @@ begin
   '0001' + // 004 - 007 / Numero do lote remessa
   '5' + // 008 - 008 / Tipo de registro
   Space(9) + // 009 - 017 / Reservado (uso Banco
-  IntToStrZero(wRegsLote + 2, 6) + // 018 - 023 / Quantidade de registros do lote
+  IntToStrZero(ISequencia + 2, 6) + // 018 - 023 / Quantidade de registros do lote
   IntToStrZero(fpQtdCobrancaSimples, 6) + // 024 - 029 / Quantidade de títulos em cobrança simples
   IntToStrZero(round(fpTotalCobrancaSimples * 100), 17) + // 030 - 046 / Valor dos títulos em cobrança simples
   IntToStrZero(fpQtdCobrancaVinculada, 6) + // 047 - 052 / Quantidade títulos em cobrança vinculada
@@ -894,7 +906,7 @@ begin
   '9' + // 008 - 008 / Tipo de registro
   space(9) + // 009 - 017 / Reservado (uso Banco)
   '000001' + // 018 - 023 / Quantidade de lotes do arquivo
-  IntToStrZero(wRegsLote + 4, 6) + // 024 - 029 / Quantidade de registros do arquivo
+  IntToStrZero(ISequencia + 4, 6) + // 024 - 029 / Quantidade de registros do arquivo
   PadLeft('', 6, '0') + // 030 - 035 / Qtde. de Contas Conciliação
   space(205); // 036 - 240 / Reservado (uso Banco)
 end;

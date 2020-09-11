@@ -49,6 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2020
+
+--ACBrBancoABCBrasil--
+[+] Adicionado Segmento Y para CNAB240.
+
+--ACBrBancoBanestes--
+[*] Ajustes e melhorias na leitura do Retorno CNAB240.
+https://www.projetoacbr.com.br/forum/topic/58863-cnab240-banestes/
+
+--ACBrBoleto--
+[+] Adicionado campo Telefone na leitura dos dados Cedente no arquivo .ini.
+
 04/09/2020
 
 --ACBrBancoUnicredES--

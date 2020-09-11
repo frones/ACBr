@@ -4730,6 +4730,7 @@ begin
         CEP           := IniBoletos.ReadString(CCedente,'CEP',CEP);
         Complemento   := IniBoletos.ReadString(CCedente,'Complemento',Complemento);
         UF            := IniBoletos.ReadString(CCedente,'UF',UF);
+        Telefone      := IniBoletos.ReadString(CCedente,'Telefone',Telefone);
         CodigoCedente := IniBoletos.ReadString(CCedente,'CodigoCedente',CodigoCedente);
         Modalidade    := IniBoletos.ReadString(CCedente,'MODALIDADE',Modalidade);
         CodigoTransmissao:= IniBoletos.ReadString(CCedente,'CODTRANSMISSAO',CodigoTransmissao);

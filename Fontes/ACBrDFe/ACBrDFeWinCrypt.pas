@@ -858,7 +858,7 @@ begin
     StoreFlag := CERT_SYSTEM_STORE_CURRENT_USER;
   end;
 
-  {$IfDef UNICODE}
+  {$IfDef DELPHI2009_UP}
    StoreProvider := CERT_STORE_PROV_SYSTEM_W;
   {$ELSE}
    StoreProvider := CERT_STORE_PROV_SYSTEM_A;

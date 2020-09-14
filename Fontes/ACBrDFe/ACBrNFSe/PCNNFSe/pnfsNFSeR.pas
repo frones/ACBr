@@ -197,6 +197,9 @@ begin
 
     ProRJ, ProSisPMJP:
       NFSe.Servico.ItemListaServico := ItemServico;
+
+    ProTecnos:
+      NFSe.Servico.ItemListaServico := RemoveZerosEsquerda(Copy(ItemServico, 1, 2)) + '.' + Copy(ItemServico, 3, 2);
   else
     NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
                                      Copy(ItemServico, 3, 2);

@@ -123,7 +123,7 @@ begin
     GNRE.c16_razaoSocialEmitente           := Leitor.rCampo(tcStr, 'c16_razaoSocialEmitente');
     GNRE.c17_inscricaoEstadualEmitente     := Leitor.rCampo(tcStr, 'c17_inscricaoEstadualEmitente');
     GNRE.c18_enderecoEmitente              := Leitor.rCampo(tcStr, 'c18_enderecoEmitente');
-    GNRE.c19_municipioEmitente             := Leitor.rCampo(tcInt, 'c19_municipioEmitente');
+    GNRE.c19_municipioEmitente             := Leitor.rCampo(tcStr, 'c19_municipioEmitente');
     GNRE.c20_ufEnderecoEmitente            := Leitor.rCampo(tcStr, 'c20_ufEnderecoEmitente');
     GNRE.c21_cepEmitente                   := Leitor.rCampo(tcStr, 'c21_cepEmitente');
     GNRE.c22_telefoneEmitente              := Leitor.rCampo(tcStr, 'c22_telefoneEmitente');
@@ -196,7 +196,7 @@ begin
 
       GNRE.c16_razaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
       GNRE.c18_enderecoEmitente    := Leitor.rCampo(tcStr, 'endereco');
-      GNRE.c19_municipioEmitente   := Leitor.rCampo(tcInt, 'municipio');
+      GNRE.c19_municipioEmitente   := Leitor.rCampo(tcStr, 'municipio');
       GNRE.c20_ufEnderecoEmitente  := Leitor.rCampo(tcStr, 'uf');
       GNRE.c21_cepEmitente         := Leitor.rCampo(tcStr, 'cep');
       GNRE.c22_telefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');

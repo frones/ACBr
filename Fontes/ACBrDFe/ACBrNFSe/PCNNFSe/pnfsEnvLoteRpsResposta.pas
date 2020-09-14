@@ -399,6 +399,22 @@ begin
       end;
     end;
 
+    if Provedor in [proAbase] then
+    begin
+      i := InfRec.FMsgRetorno.Count;
+      if (Leitor.rExtrai(1, 'ListaMensagemRetornoLote', '', 1) <> '') then
+      begin
+        InfRec.FMsgRetorno.New;
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
+
+        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+      end;
+    end;
+
     if Provedor in [proElotech] then
     begin
       i := 0;

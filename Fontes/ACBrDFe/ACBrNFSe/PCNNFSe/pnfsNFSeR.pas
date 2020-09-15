@@ -1005,7 +1005,8 @@ end;
 
 function TNFSeR.LerRPS_AssessorPublico: boolean;
 var
-  serv : integer;
+  serv: integer;
+  DataHorBR: String;
 begin
   Leitor.rExtrai(1,'NOTA');
   NFSe.Link := Leitor.rCampo(tcStr, 'LINK');
@@ -1014,7 +1015,10 @@ begin
   NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'RPS');
   NFSe.IdentificacaoRps.Serie := Leitor.rCampo(tcStr, 'SEQUENCIA');
   NFSe.Competencia := Leitor.rCampo(tcStr, 'MESCOMP')+'/'+Leitor.rCampo(tcStr, 'ANOCOMP');
-  NFSe.DataEmissao := StrToDate(Leitor.rCampo(tcStr, 'DATA'))+StrToDateTime(Leitor.rCampo(tcStr, 'HORA'));
+
+  DataHorBR := Leitor.rCampo(tcStr, 'DATA')+Leitor.rCampo(tcStr, 'HORA');
+  NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
+
   NFSe.Servico.Discriminacao := Leitor.rCampo(tcStr, 'OBSSERVICO');
 
   if Leitor.rCampo(tcStr, 'RETIDO') = 'N' then
@@ -1078,9 +1082,11 @@ begin
   NFSe.Tomador.Contato.Telefone         := '';
   NFSe.Tomador.Contato.Email            := '';
 
-  if (Leitor.rExtrai(1, 'SERVICOS') <> '') then begin
-    serv := 0 ;
-    while (Leitor.rExtrai(1, 'SERVICO', '', serv + 1) <> '') do begin
+  if (Leitor.rExtrai(1, 'SERVICOS') <> '') then
+  begin
+    serv := 0;
+    while (Leitor.rExtrai(1, 'SERVICO', '', serv + 1) <> '') do
+    begin
       NFSe.Servico.ItemServico.New;
       NFSe.Servico.ItemServico[serv].Codigo        := Leitor.rCampo(tcStr, 'CODIGO');
       NFSe.Servico.ItemServico[serv].Descricao     := Leitor.rCampo(tcStr, 'DESCRICAO');
@@ -1137,7 +1143,7 @@ begin
     NFSe.Tomador.Endereco.TipoBairro      := Leitor.rCampo(tcStr, 'TipoBairroTomador');
     NFSe.Tomador.Endereco.Bairro          := Leitor.rCampo(tcStr, 'BairroTomador');
     NFSe.Tomador.Endereco.CEP             := Leitor.rCampo(tcStr, 'CEPTomador');
-   	NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
+   	NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador'));
     NFSe.Tomador.Endereco.xMunicipio      := Leitor.rCampo(tcStr, 'CidadeTomadorDescricao');
    	NFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Uf');
    	NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
@@ -1208,7 +1214,7 @@ begin
 
     if (Leitor.rExtrai(1, 'Itens') <> '') then
     begin
-      Item := 0 ;
+      Item := 0;
       while (Leitor.rExtrai(1, 'Item', '', Item + 1) <> '') do
       begin
         FNfse.Servico.ItemServico.New;
@@ -2958,8 +2964,8 @@ begin
 
     if (Leitor.rCampo(tcStr, 'CidadeTomador') <> '') then
     begin
-      NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
-      NFSe.Tomador.Endereco.xMunicipio      := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) ) ;
+      NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador'));
+      NFSe.Tomador.Endereco.xMunicipio      := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) );
       NFSe.Tomador.Endereco.UF              := CodigoParaUF( StrToInt(Copy(NFSe.Tomador.Endereco.CodigoMunicipio,1,2) ));
     end;
 
@@ -3106,7 +3112,7 @@ function TNFSeR.LerNFSe_Smarapd: Boolean;
 var
   vOk: Boolean;
   vItem: Integer;
-  vLinha: String ;
+  vLinha: String;
 begin
   Leitor.Grupo := Leitor.Arquivo;
   VersaoXML := '1';
@@ -3212,7 +3218,7 @@ begin
     IntermediarioServico.CpfCnpj := '';
     if (Leitor.rExtrai(1, 'ITENS') <> '') then
     begin
-      vItem := 0 ;
+      vItem := 0;
       while (Leitor.rExtrai(1, 'ITENS', '', vItem + 1) <> '') do
       begin
         with  FNfse.Servico do
@@ -5013,7 +5019,7 @@ begin
     NFSe.Tomador.Endereco.TipoBairro      := Leitor.rCampo(tcStr, 'TipoBairroTomador');
     NFSe.Tomador.Endereco.Bairro          := Leitor.rCampo(tcStr, 'BairroTomador');
     NFSe.Tomador.Endereco.CEP             := Leitor.rCampo(tcStr, 'CEPTomador');
-   	NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
+   	NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador'));
     NFSe.Tomador.Endereco.xMunicipio      := Leitor.rCampo(tcStr, 'CidadeTomadorDescricao');
    	NFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Uf');
    	NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
@@ -5083,7 +5089,7 @@ begin
 
     if (Leitor.rExtrai(1, 'Itens') <> '') then
     begin
-      Item := 0 ;
+      Item := 0;
       while (Leitor.rExtrai(1, 'Item', '', Item + 1) <> '') do
       begin
         FNfse.Servico.ItemServico.New;
@@ -5162,8 +5168,8 @@ begin
 
     if (Leitor.rCampo(tcStr, 'CidadeTomador') <> '') then
     begin
-      NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
-      NFSe.Tomador.Endereco.xMunicipio      := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) ) ;
+      NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador'));
+      NFSe.Tomador.Endereco.xMunicipio      := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) );
       NFSe.Tomador.Endereco.UF              := CodigoParaUF( StrToInt(Copy(NFSe.Tomador.Endereco.CodigoMunicipio,1,2) ));
     end;
 

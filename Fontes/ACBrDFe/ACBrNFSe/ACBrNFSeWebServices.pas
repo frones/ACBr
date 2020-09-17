@@ -662,7 +662,8 @@ type
     function CancelaNFSe(const ACodigoCancelamento: String;
                          const ANumeroNFSe: String = '';
                          const AMotivoCancelamento: String = '';
-                         const ANumLote: String = ''): Boolean;
+                         const ANumLote: String = '';
+                         const ACodigoVerificacao: String = ''): Boolean;
 
     function SubstituiNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
                            const AMotivoCancelamento: String = ''): Boolean;
@@ -4799,7 +4800,7 @@ begin
       proSMARAPD,
       proGiap,
       proIPM,
-	  proSigISS: FURI := '';
+      proSigISS: FURI := '';
 
       proGovDigital,
       proTecnos: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4832,17 +4833,29 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        for i := 0 to FNotasFiscais.Count-1 do
+        if FNotasFiscais.Count > 0 then
         begin
-          with FNotasFiscais.Items[I] do
+          for i := 0 to FNotasFiscais.Count-1 do
           begin
-            Gerador.wGrupo('Nota Id="nota:' + NFSe.Numero + '"');
-            Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
-            Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
-            Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
-            Gerador.wGrupo('/Nota');
+            with FNotasFiscais.Items[I] do
+            begin
+              Gerador.wGrupo('Nota Id="nota:' + NFSe.Numero + '"');
+              Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
+              Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
+              Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+              Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
+              Gerador.wGrupo('/Nota');
+            end;
           end;
+        end
+        else
+        begin
+          Gerador.wGrupo('Nota Id="nota:' + FNumeroNFSe + '"');
+          Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
+          Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, FNumeroNFSe, '');
+          Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, FCodigoVerificacao, '');
+          Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, FMotivoCancelamento, '');
+          Gerador.wGrupo('/Nota');
         end;
 
         FvNotas := Gerador.ArquivoFormatoXML;
@@ -6145,12 +6158,13 @@ end;
 
 function TWebServices.CancelaNFSe(const ACodigoCancelamento: String;
   const ANumeroNFSe: String = ''; const AMotivoCancelamento: String = '';
-  const ANumLote: String = ''): Boolean;
+  const ANumLote: String = ''; const ACodigoVerificacao: String = ''): Boolean;
 begin
   FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
   FCancNfse.FNumeroNFSe         := ANumeroNFSe;
   FCancNfse.FMotivoCancelamento := AMotivoCancelamento;
   FCancNfse.FNumeroLote         := ANumLote;
+  FCancNFSe.FCodigoVerificacao  := ACodigoVerificacao;
 
   Result := FCancNfse.Executar;
 

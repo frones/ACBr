@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/09/2020
+-- ACBrNFSe/ACBrNFSeWebServices --
+[-] Possível correção para o cancelamento de NFS-e - Provedor ISSDSF.
+  Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/59423-altera%C3%A7%C3%A3o-do-cancelamento-nfse-provedor-assessorpublico/
   Por: Diego Reckziegel

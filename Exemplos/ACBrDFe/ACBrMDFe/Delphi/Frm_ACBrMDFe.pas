@@ -231,8 +231,8 @@ type
     btnInclusaoCondutor: TButton;
     btnInclusaoDFe: TButton;
     btnConsultarNaoEncerrados: TButton;
-    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     btnPagOperacaoTransp: TButton;
+    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     btnEnviarEventoEmail: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -453,6 +453,15 @@ begin
     Ide.verProc := '1.0';
     Ide.UFIni   := 'SP';
     Ide.UFFim   := 'SP';
+
+    // incluir a o percurso caso a URIni seja diferente de UFFim e que exista UF
+    // entre elas. (exemplo: UFIni = SP, UFFim = BA, UF de percuso = MG
+    {
+    with Ide.infPercurso.New do
+    begin
+      UFPer := 'XX';
+    end;
+    }
 
     with Ide.infMunCarrega.New do
     begin
@@ -2239,14 +2248,14 @@ begin
     ACBrMDFe1.DAMDFe.PathPDF      := PathMensal;
     ACBrMDFe1.DAMDFe.TamanhoPapel := tpA4;
 
-    ACBrMDFe1.DAMDFe.MargemDireita  := 7;
-    ACBrMDFe1.DAMDFe.MargemEsquerda := 7;
-    ACBrMDFe1.DAMDFe.MargemSuperior := 5;
-    ACBrMDFe1.DAMDFe.MargemInferior := 5;
+    ACBrMDFe1.DAMDFe.MargemDireita  := 4;
+    ACBrMDFe1.DAMDFe.MargemEsquerda := 4;
+    ACBrMDFe1.DAMDFe.MargemSuperior := 7;
+    ACBrMDFe1.DAMDFe.MargemInferior := 7;
 
 //    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [];
 //    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deRelacaoDFe];
-    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deValorTotal];
+    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deRelacaoDFe, deValorTotal];
   end;
 end;
 

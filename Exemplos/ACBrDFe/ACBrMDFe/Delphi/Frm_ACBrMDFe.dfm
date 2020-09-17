@@ -1581,7 +1581,7 @@ object frmACBrMDFe: TfrmACBrMDFe
       Top = 198
       Width = 567
       Height = 413
-      ActivePage = TabSheet5
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1664,7 +1664,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Align = alClient
           Lines.Strings = (
             '')
-          ScrollBars = ssVertical
+          ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
         end
@@ -1714,7 +1714,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     MargemInferior = 8.000000000000000000
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.099999999999999000
+    MargemDireita = 5.100000000000000000
     ExpandeLogoMarcaConfig.Altura = 0
     ExpandeLogoMarcaConfig.Esquerda = 0
     ExpandeLogoMarcaConfig.Topo = 0
@@ -1734,7 +1734,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
-    Left = 432
-    Top = 240
+    Left = 430
+    Top = 238
   end
 end

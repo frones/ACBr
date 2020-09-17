@@ -343,7 +343,7 @@ begin
     referencia.ano := 2019;
     referencia.parcela := 1;
 
-    with camposExtras.Add do
+    with camposExtras.New do
     begin
       CampoExtra.codigo := 123;
       CampoExtra.tipo := '1';

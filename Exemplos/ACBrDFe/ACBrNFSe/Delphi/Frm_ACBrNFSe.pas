@@ -387,6 +387,9 @@ begin
 //    Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
     Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSE';
 
+    if Configuracoes.Geral.Provedor = proAgili then
+      Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSETLXX4JN38KXTRNSE';
+
     with Configuracoes.Geral.Emitente.DadosSenhaParams.Add do
     begin
       Param := 'ChaveAutorizacao';
@@ -415,6 +418,10 @@ begin
 
       DataEmissao := Date;
       DataEmissaoRPS := Date;
+
+      // Provedor Conam
+      DataOptanteSimplesNacional := Date;
+
       (*
         TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
         no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
@@ -431,7 +438,7 @@ begin
 //      RegimeEspecialTributacao := retLucroReal;
 
       // TnfseSimNao = ( snSim, snNao );
-      OptanteSimplesNacional := snNao;
+      OptanteSimplesNacional := snSim;
 
       // TnfseSimNao = ( snSim, snNao );
       IncentivadorCultural := snNao;
@@ -489,6 +496,8 @@ begin
       // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
       // do valor do ISS devemos dividir por 100
       Servico.Valores.Aliquota := 4;
+      // Provedor Conam
+      Servico.Valores.AliquotaSN := 2.01;
 
       // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
       ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
@@ -540,6 +549,7 @@ begin
       begin
         codLCServ := '123';
         Descricao := 'SERVICO 1';
+        Discriminacao := 'Servico 1';
         Quantidade := 1;
         ValorUnitario := 15.00;
         ValorServicos := Quantidade * ValorUnitario;
@@ -551,6 +561,9 @@ begin
       // Para o provedor ISSDigital deve-se informar também:
       Prestador.Senha := edtSenhaWeb.Text;
       Prestador.FraseSecreta := edtFraseSecWeb.Text;
+      // Provedor Agili
+      Prestador.ChaveAcesso := ACBrNFSe1.Configuracoes.Geral.Emitente.WebChaveAcesso;
+
       Prestador.cUF := 33;
 
       // Provedor WebFisco

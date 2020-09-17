@@ -11,20 +11,17 @@
 			<xs:sequence>
 				<xs:element name="Cabecalho">
 					<xs:complexType>
-						<xs:sequence>
+						<xs:all>
 							<xs:element name="CodCid" type="tipos:tpCodCidade"  minOccurs="1" maxOccurs="1"/>
 							<xs:element name="IMPrestador" type="tipos:tpInscricaoMunicipal" minOccurs="1" maxOccurs="1"/>
 							<xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1"/>
-							<xs:element name="SeriePrestacao" type="tipos:tpSeriePrestacao" minOccurs="0" maxOccurs="1"/>
 							<xs:element name="Versao" type="tipos:tpVersao" fixed="1" minOccurs="1" maxOccurs="1"/>
-						</xs:sequence>
+							<xs:element name="SeriePrestacao" type="tipos:tpSeriePrestacao" minOccurs="0" maxOccurs="1"/>
+						</xs:all>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
-
-
-
+	
 </xs:schema>

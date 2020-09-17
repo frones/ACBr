@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] Ajustes para gerar corretamente o XML do RPS do provedor Tecnos.
+  Por: Alexandre Storti
+
 16/09/2020
 -- pnfsNFSeW_ABRASFv1 --
 [-] Ao gerar a tag Aliquota estava multiplicando o percentual por 100.

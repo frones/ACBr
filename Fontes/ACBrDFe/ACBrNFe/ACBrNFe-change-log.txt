@@ -46,6 +46,10 @@ Símbolo : Significado
 
 17/09/2020
 -- ACBrNFeNotasFiscais --
+[*] Adicionado prioridade de leitura do total ISSQNtot com nomes padrão do manual
+Por: José M S Junior
+
+-- ACBrNFeNotasFiscais --
 [*] Possível correção na leitura do arquivo INI
 Por: Italo Jurisato Junior
 

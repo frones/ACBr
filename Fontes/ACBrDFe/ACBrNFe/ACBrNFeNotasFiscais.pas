@@ -2295,11 +2295,12 @@ begin
       Total.ICMSTot.vICMSUFDest := StringToFloatDef( INIRec.ReadString('Total','vICMSUFDest',''),0);
       Total.ICMSTot.vICMSUFRemet:= StringToFloatDef( INIRec.ReadString('Total','vICMSUFRemet',''),0);
 
-      Total.ISSQNtot.vServ       := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'ValorServicos', ''), 0);
-      Total.ISSQNTot.vBC         := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'ValorBaseISS', ''), 0);
-      Total.ISSQNTot.vISS        := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'ValorISSQN', ''), 0);
-      Total.ISSQNTot.vPIS        := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'ValorPISISS', ''), 0);
-      Total.ISSQNTot.vCOFINS     := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'ValorCONFINSISS', ''), 0);
+
+      Total.ISSQNtot.vServ  := StringToFloatDef(  INIRec.ReadString('ISSQNtot','vServ',INIRec.ReadString('ISSQNtot','ValorServicos','')) ,0) ;
+      Total.ISSQNTot.vBC    := StringToFloatDef(  INIRec.ReadString('ISSQNtot','vBC'  ,INIRec.ReadString('ISSQNtot','ValorBaseISS'  ,'')) ,0) ;
+      Total.ISSQNTot.vISS   := StringToFloatDef(  INIRec.ReadString('ISSQNtot','vISS' ,INIRec.ReadString('ISSQNtot','ValorISSQN' ,'')) ,0) ;
+      Total.ISSQNTot.vPIS   := StringToFloatDef(  INIRec.ReadString('ISSQNtot','vPIS' ,INIRec.ReadString('ISSQNtot','ValorPISISS' ,'')) ,0) ;
+      Total.ISSQNTot.vCOFINS:= StringToFloatDef(  INIRec.ReadString('ISSQNtot','vCOFINS',INIRec.ReadString('ISSQNtot','ValorCONFINSISS','')) ,0) ;
       Total.ISSQNtot.dCompet     := StringToDateTime( INIRec.ReadString('ISSQNtot', 'dCompet', '0'));
       Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'vDeducao', ''), 0);
       Total.ISSQNtot.vOutro      := StringToFloatDef( INIRec.ReadString('ISSQNtot', 'vOutro', ''), 0);

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/09/2020
+-- ACBrNFSeNotasFiscais/ACBrNFSeWebServices --
+[-] Possível correção para o Provedor Tecnos.
+  Por: Italo Jurisato Junior
 -- ACBrNFSe/ACBrNFSeWebServices --
 [-] Possível correção para o cancelamento de NFS-e - Provedor ISSDSF.
   Por: Italo Jurisato Junior

@@ -1833,6 +1833,7 @@ begin
                             RetornarConteudoEntre(RPS,
                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
                             '</Signature>'+
+                          '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>' +
                          '</' + FPrefixo4 + 'Rps>';
 
              proFriburgo: FvNotas := FvNotas +
@@ -1845,7 +1846,7 @@ begin
 
              proTcheInfov2,
              proSimplISSv2,
-			 proFintelISS: FvNotas := FvNotas +
+             proFintelISS: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps' +
                           RetornarConteudoEntre(RPS,
                             '<' + FPrefixo4 + 'Rps', '</Signature>') +
@@ -1863,7 +1864,8 @@ begin
            end;
 
     // RPS versão 1.00
-    else begin
+  else
+    begin
       case FProvedor of
         proEgoverneISS: FvNotas := FvNotas +
                           '<rgm:NotaFiscal' +

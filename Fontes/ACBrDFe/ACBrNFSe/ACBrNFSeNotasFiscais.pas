@@ -271,6 +271,7 @@ begin
       proSMARAPD: DocElemento := 'tbnfd';
       proGiap:    DocElemento := 'nfe';
       proInfiscv11: DocElemento := 'infNFSe';
+      proTecnos: DocElemento := 'tcDeclaracaoPrestacaoServico';
     else
       DocElemento := 'Rps';
     end;

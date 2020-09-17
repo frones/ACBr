@@ -5341,6 +5341,9 @@ begin
                  SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
                  FvNotas  + FTagF;
 
+  if Provedor in [proWebISSv2] then
+    AssinarXML(FPDadosMsg, 'SubstituirNfseEnvio', 'SubstituicaoNfse', 'Falha ao Assinar - SubstituirNfseEnvio: ');
+
   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
     FNotasFiscais.ValidarLote(FPDadosMsg,
                               FPConfiguracoes.Arquivos.PathSchemas +
@@ -6157,7 +6160,7 @@ begin
   with TACBrNFSe(FACBrNFSe) do
   begin
     if not (Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet,
-                                             proSMARAPD, proIPM, proCenti, proSigISS]) then
+                                             proSMARAPD, proIPM, proCenti, proSigISS, proAssessorPublico]) then
     begin
       if Configuracoes.Geral.Provedor in [proSystemPro] then
       begin

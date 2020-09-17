@@ -1955,7 +1955,8 @@ begin
 
     proRecife,
     proRJ,
-    proSimplISS:
+    proSimplISS,
+    proWebISSv2:
       begin
         TagI := '<' + Prefixo3 + 'Pedido' + FNameSpaceDad + '>' +
                    '<' + Prefixo4 + 'InfPedidoCancelamento' + FaIdentificadorCanc + '>';

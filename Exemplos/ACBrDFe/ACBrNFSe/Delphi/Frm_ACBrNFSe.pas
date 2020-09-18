@@ -232,6 +232,7 @@ type
     btnConsultarNFSeRPS: TButton;
     btnConsultarNFSePeriodo: TButton;
     btnCancNFSe: TButton;
+    btnCancelarNFSeSemXML: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFSeClick(Sender: TObject);
@@ -279,6 +280,7 @@ type
     procedure btnConsultarNFSePeriodoClick(Sender: TObject);
     procedure btnCancNFSeClick(Sender: TObject);
     procedure cbCidadesChange(Sender: TObject);
+    procedure btnCancelarNFSeSemXMLClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -434,7 +436,7 @@ begin
       // NaturezaOperacao := no51;
 
       // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
-       RegimeEspecialTributacao := retNenhum;
+       RegimeEspecialTributacao := retMicroempresaMunicipal;
 //      RegimeEspecialTributacao := retLucroReal;
 
       // TnfseSimNao = ( snSim, snNao );
@@ -663,6 +665,44 @@ begin
   cbXmlSignLib.ItemIndex := Integer(ACBrNFSe1.Configuracoes.Geral.SSLXmlSignLib);
 
   cbSSLType.Enabled := (ACBrNFSe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+end;
+
+procedure TfrmACBrNFSe.btnCancelarNFSeSemXMLClick(Sender: TObject);
+var
+  Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao: String;
+begin
+  // Codigo de Cancelamento
+  // 1 - Erro de emissão
+  // 2 - Serviço não concluido
+  // 3 - RPS Cancelado na Emissão
+
+  if not (InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo)) then
+    exit;
+
+  if not (InputQuery('Cancelar NFSe', 'Numero da NFS-e', NumeroNFSe)) then
+    exit;
+
+  if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
+    exit;
+
+  if not (InputQuery('Cancelar NFSe', 'Numero do Lote', NumeroLote)) then
+    exit;
+
+  if not (InputQuery('Cancelar NFSe', 'Codigo de Verificação', CodVerificacao)) then
+    exit;
+
+  ACBrNFSe1.CancelarNFSe(Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao);
+
+  MemoDados.Lines.Add('Retorno do Cancelamento:');
+
+  MemoDados.Lines.Add('Cód. Cancelamento: ' +
+    ACBrNFSe1.WebServices.CancNfse.CodigoCancelamento);
+  if ACBrNFSe1.WebServices.CancNfse.DataHora <> 0 then
+    MemoDados.Lines.Add('Data / Hora      : ' +
+      DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora));
+  LoadXML(MemoResp.Text, WBResposta);
+
+  pgRespostas.ActivePageIndex := 1;
 end;
 
 procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);

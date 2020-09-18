@@ -4852,10 +4852,10 @@ begin
         end
         else
         begin
-          Gerador.wGrupo('Nota Id="nota:' + FNumeroNFSe + '"');
+          Gerador.wGrupo('Nota Id="nota:' + TNFSeCancelarNfse(Self).FNumeroNFSe + '"');
           Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
-          Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, FNumeroNFSe, '');
-          Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, FCodigoVerificacao, '');
+          Gerador.wCampo(tcStr, '#1', 'NumeroNota', 01, 12, 1, TNFSeCancelarNfse(Self).FNumeroNFSe, '');
+          Gerador.wCampo(tcStr, '', 'CodigoVerificacao', 01, 255,  1, TNFSeCancelarNfse(Self).FCodigoVerificacao, '');
           Gerador.wCampo(tcStr, '', 'MotivoCancelamento', 01, 80, 1, FMotivoCancelamento, '');
           Gerador.wGrupo('/Nota');
         end;

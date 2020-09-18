@@ -4754,9 +4754,6 @@ var
   Gerador: TGerador;
   sAssinatura: String;
 begin
-  if FNotasFiscais.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
-
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.DadosStr;
   FTagGrupo     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.TagGrupo;
@@ -4868,6 +4865,9 @@ begin
 
     if (FProvedor in [proInfisc, proInfiscv11] ) then
     begin
+      if FNotasFiscais.Count <= 0 then
+        GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
+
       Gerador := TGerador.Create;
       try
         Gerador.ArquivoFormatoXML := '';
@@ -4888,6 +4888,9 @@ begin
 
     if FProvedor in [proGoverna] then
     begin
+      if FNotasFiscais.Count <= 0 then
+        GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
+
       Gerador := TGerador.Create;
       try
         Gerador.ArquivoFormatoXML := '';
@@ -4916,6 +4919,9 @@ begin
 
     if FProvedor=proSigISS then
     begin
+      if FNotasFiscais.Count <= 0 then
+        GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
+
       Gerador := TGerador.Create;
       try
         with FNotasFiscais.Items[0] do
@@ -4940,7 +4946,9 @@ begin
         Gerador.Free;
       end;
     end;
+
     InicializarGerarDadosMsg;
+
     with GerarDadosMsg do
     begin
       if FProvedor in [proSP, proNotaBlu] then
@@ -4964,10 +4972,13 @@ begin
       CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
 
-      SerieNFSe  := FNotasFiscais.Items[0].NFSe.SeriePrestacao;
-      NumeroRPS  := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-      SerieRps   := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
-      ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
+      if FNotasFiscais.Count > 0 then
+      begin
+        SerieNFSe  := FNotasFiscais.Items[0].NFSe.SeriePrestacao;
+        NumeroRPS  := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+        SerieRps   := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+        ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
+      end;
 
       // Necessário para o provedor ISSDSF
       Transacao  := FNotasFiscais.Transacao;
@@ -4983,6 +4994,10 @@ begin
       if FProvedor = proEGoverneISS then
         Transacao := (SimNaoToStr(FNotasFiscais.Items[0].NFSe.Producao) = '2');
 
+      ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
+      CodVerificacaoRPS     := TNFSeCancelarNfse(Self).FCodigoVerificacao;
+
+      {
       if FProvedor = proCTA then
         ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso
       else if FProvedor = proSigep then
@@ -4992,6 +5007,7 @@ begin
       end
       else
         ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+      }
     end;
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
@@ -6176,13 +6192,13 @@ begin
   with TACBrNFSe(FACBrNFSe) do
   begin
     if not (Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet,
-                                             proSMARAPD, proIPM, proCenti, proSigISS, proAssessorPublico]) then
+              proSMARAPD, proIPM, proCenti, proSigISS, proAssessorPublico]) then
     begin
       if Configuracoes.Geral.Provedor in [proSystemPro] then
       begin
         Sleep(Configuracoes.WebServices.AguardarConsultaRet);
 
-        FConsNfse.FNumeroNFSe := NotasFiscais.Items[0].NFSe.Numero;
+        FConsNfse.FNumeroNFSe := ANumeroNFSe;
         // Utilizado por alguns provedores para realizar a consulta de uma NFS-e
         FConsNfse.FPagina     := 1;
 
@@ -6202,13 +6218,18 @@ begin
           proTcheInfov2 : Result := True
         else
           begin
-            Sleep(Configuracoes.WebServices.AguardarConsultaRet);
+            if NotasFiscais.Count > 0 then
+            begin
+              Sleep(Configuracoes.WebServices.AguardarConsultaRet);
 
-            FConsNfseRps.FNumeroRps := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-            FConsNfseRps.FSerie     := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
-            FConsNfseRps.FTipo      := TipoRPSToStr(NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+              FConsNfseRps.FNumeroRps := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+              FConsNfseRps.FSerie     := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+              FConsNfseRps.FTipo      := TipoRPSToStr(NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
-            Result := FConsNfseRps.Executar;
+              Result := FConsNfseRps.Executar;
+            end
+            else
+              Result := True;
           end;
         end;
 

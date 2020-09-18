@@ -568,21 +568,21 @@ function TACBrNFSe.CancelarNFSe(const ACodigoCancelamento: String;
   const ANumeroNFSe: String = ''; const AMotivoCancelamento: String = '';
   const ANumLote: String = ''; const ACodigoVerificacao: String = ''): Boolean;
 begin
-  if NotasFiscais.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
-
   if( Configuracoes.Geral.Provedor = proIPM )then
-    begin
-      NotasFiscais.Items[0].NFSe.Status := srCancelado;
+  begin
+    if NotasFiscais.Count <= 0 then
+      GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
-      if (ANumeroNFSe <> '') then
-        NotasFiscais.Items[0].NFSe.Numero := ANumeroNFSe;
+    NotasFiscais.Items[0].NFSe.Status := srCancelado;
 
-      if (AMotivoCancelamento <> '') then
-        NotasFiscais.Items[0].NFSe.OutrasInformacoes := AMotivoCancelamento;
+    if (ANumeroNFSe <> '') then
+      NotasFiscais.Items[0].NFSe.Numero := ANumeroNFSe;
 
-      Result := Gerar( StrToIntDef( NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero, 0 ), 1, False )
-    end
+    if (AMotivoCancelamento <> '') then
+      NotasFiscais.Items[0].NFSe.OutrasInformacoes := AMotivoCancelamento;
+
+    Result := Gerar( StrToIntDef( NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero, 0 ), 1, False )
+  end
   else
     Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
                              AMotivoCancelamento, ANumLote, ACodigoVerificacao);

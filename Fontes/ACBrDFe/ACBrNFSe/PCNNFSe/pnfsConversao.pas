@@ -18182,6 +18182,12 @@ begin
     XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
   end;
 
+  // Provedor eGoverneISS, retorna url "http//"
+  if AProvedor =  proEgoverneISS then
+  begin
+    XML := StringReplace( XML, 'http//', 'https://', [rfReplaceAll] );
+  end;
+
   result := XML;
 end;
 

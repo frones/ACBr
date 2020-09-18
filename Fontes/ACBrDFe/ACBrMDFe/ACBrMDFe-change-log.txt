@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2020
+-- pmdfeMDFeW--
+[*] https://www.projetoacbr.com.br/forum/topic/59433-segcodbarra-validar-wcampo-tamanho-m%C3%ADnimo-44-errado-correto-36/
+   Por: Theiller
+
 24/08/2020
 -- pmdfeConversaoMDFe/pmdfeEventoMDFe --
 [+] Incluido os tipos de eventos: teEncerramentoFisco e teRegistroPassagemBRId.

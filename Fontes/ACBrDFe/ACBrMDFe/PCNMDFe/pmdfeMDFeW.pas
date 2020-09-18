@@ -831,7 +831,7 @@ begin
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
             if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) then
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
-           Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
+           Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 36, 36, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
            if VersaoDF >= ve300 then
              Gerador.wCampo(tcStr, '#050', 'indReentrega', 1, 1, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].indReentrega, DSC_INDREENTREGA);
@@ -965,7 +965,7 @@ begin
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) <> '' then
             if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) then
              Gerador.wAlerta('#058', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
-           Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
+           Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 36, 36, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
 
            if VersaoDF >= ve300 then
              Gerador.wCampo(tcStr, '#050', 'indReentrega', 1, 1, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].indReentrega, DSC_INDREENTREGA);

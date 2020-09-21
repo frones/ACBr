@@ -46,12 +46,16 @@ type
   { TACBrBancoCecred}
 
   TACBrBancoCecred = class(TACBrBancoClass)
-   protected
-    fCountRegR:Integer;
-   private
+  private
     fValorTotalDocs : Double;
+    fDataProtestoNegativacao : TDateTime;
+    fDiasProtestoNegativacao : String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
-   public
+  protected
+    fCountRegR:Integer;
+    procedure DefineDataProtestoNegativacao(const ACBrTitulo: TACBrTitulo);
+    function DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String; override;
+  public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
@@ -78,7 +82,10 @@ type
     function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-   end;
+
+    property DataProtestoNegativacao : TDateTime read  fDataProtestoNegativacao ;
+    property DiasProtestoNegativacao : String read fDiasProtestoNegativacao ;
+  end;
 
 implementation
 
@@ -90,6 +97,8 @@ uses
 constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
+   fDataProtestoNegativacao:=0;
+   fDiasProtestoNegativacao:='';
    fpDigito                := 1;
    fpNome                  := 'Banco Cecred';
    fpNumero                := 085;
@@ -147,6 +156,51 @@ begin
       ANossoNumero := PadLeft(AConta, 8, '0') + PadLeft(ANossoNumero, 9, '0')
    end;
    Result := ANossoNumero;
+end;
+
+procedure TACBrBancoCecred.DefineDataProtestoNegativacao(
+  const ACBrTitulo: TACBrTitulo);
+var
+  ACodProtesto: String;
+begin
+
+  with ACBrTitulo do
+  begin
+    ACodProtesto :=  DefineCodigoProtesto(ACBrTitulo);
+    if ACodProtesto = '1' then
+    begin
+      fDataProtestoNegativacao := DataProtesto;
+      fDiasProtestoNegativacao := IntToStr(DiasDeProtesto);
+    end
+    else
+    if ACodProtesto = '2' then
+    begin
+      fDataProtestoNegativacao := DataNegativacao;
+      fDiasProtestoNegativacao := IntToStr(DiasDeNegativacao);
+    end
+    else
+    begin
+      fDataProtestoNegativacao := 0;
+      fDiasProtestoNegativacao := '3';
+    end;
+
+  end;
+
+end;
+
+function TACBrBancoCecred.DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    case CodigoNegativacao of
+       cnProtestarCorrido, cnProtestarUteis : Result := '1';
+       cnNegativar                          : Result := '2';
+       cnNaoProtestar,cnNaoNegativar        : Result := '3';
+      else
+       Result := '3';
+    end;
+
+  end;
 end;
 
 
@@ -317,8 +371,9 @@ var
   ADataMoraJuros, ADataDesconto: String;
   ANossoNumero, ATipoAceite    : String;
   aAgencia, aConta             : String;
-  aCodJuros, aCodDesc, aCodNeg : String;
+  aCodJuros, aCodDesc          : String;
   aCodMulta, aValorMulta       : String;
+  ACodigoNegativacao           : String;
   ACaracTitulo  : Char;
 begin
   with ACBrTitulo do
@@ -376,13 +431,9 @@ begin
     else
       aCodDesc := '1'; // Valor Fixo Até a Data Informada
 
-    case CodigoNegativacao of
-      cnProtestarCorrido, cnProtestarUteis : aCodNeg := '1';
-      cnNegativar                          : aCodNeg := '2';
-      cnNaoProtestar,cnNaoNegativar        : aCodNeg := '3';
-     else
-      aCodNeg := '3';
-    end;
+    {Código de Protesto/Negativação }
+    ACodigoNegativacao := DefineCodigoProtesto(ACBrTitulo);
+    DefineDataProtestoNegativacao(ACBrTitulo);
 
     if CodigoMulta = cmValorFixo then
     begin
@@ -468,10 +519,10 @@ begin
              IntToStrZero( round(ValorIOF * 100), 15)                                  + // 166 a 180 - Valor do IOF a ser recolhido
              IntToStrZero( round(ValorAbatimento * 100), 15)                           + // 181 a 195 - Valor do abatimento
              PadRight(SeuNumero, 25, ' ')                                              + // 196 a 220 - Identificação do título na empresa
-             aCodNeg                                                                   + // 221 - Código para negativacao
-             IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
-                    PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'),
-                    '00')                                                              + // 222 a 223 - Prazo para negativar (em dias corridos)
+             ACodigoNegativacao                                                        + // 221 - Código para negativacao
+             IfThen((DataProtestoNegativacao <> 0) and
+                       (DataProtestoNegativacao > Vencimento),
+                        PadLeft(DiasProtestoNegativacao , 2, '0'), '00')               + //222 a 223 - Prazo para protesto
              '2'                                                                       + // 224 - Codigo para Baixa/Devolucao
              StringOfChar(' ', 3)                                                      + // 225 a 227 - Número de dias para Baixa/Devolucao
              '09'                                                                      + // 228 a 229 - Código da moeda: Real

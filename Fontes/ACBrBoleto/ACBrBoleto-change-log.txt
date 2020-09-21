@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2020
+--ACBrBancoCecred--
+[+] Adicionado validação de Protesto e Negativação para CNAB240
+https://www.projetoacbr.com.br/forum/topic/59013-acbrboleto-bb/
+
 10/09/2020
 
 --ACBrBancoABCBrasil--

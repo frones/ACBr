@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2020
+-- pnfsNFSeW_Elotech --
+[*] https://www.projetoacbr.com.br/forum/topic/59469-altera%C3%A7%C3%A3o-campos-do-layout-elotech-palotinapr/
+  Por: Eazschornack
+
 18/09/2020
 -- ACBrNFSe/ACBrNFSeWebServices --
 [*] Alteração visando realizar o cancelamento de uma NFS-e sem a necessidade do XML da mesma.

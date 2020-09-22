@@ -300,6 +300,7 @@ begin
     Gerador.wCampo(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), DSC_CNPJ);
   Gerador.wGrupo('/CpfCnpj');
 
+  Gerador.wCampo(tcStr, '', 'InscricaoMunicipal', 1, 10, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal);
   Gerador.wGrupo('/IdentificacaoTomador');
 end;
 
@@ -320,7 +321,9 @@ procedure TNFSeW_Elotech.GerarContatoTomador;
 begin
   Gerador.wGrupo('Contato');
   Gerador.wCampo(tcStr, '', 'Telefone', 1, 20, 0, NFSe.Tomador.Contato.Telefone);
+  Gerador.wCampo(tcStr, '', 'Email', 1, 80, 0, NFSe.Tomador.Contato.Email);
   Gerador.wGrupo('/Contato');
+  Gerador.wCampo(tcStr, '', 'InscricaoEstadual', 1, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual);
 end;
 
 procedure TNFSeW_Elotech.GerarXML_Elotech;

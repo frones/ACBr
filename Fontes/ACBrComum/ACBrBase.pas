@@ -231,14 +231,20 @@ TACBrThreadTimer = class(TThread)
     property Enabled : Boolean read fsEnabled write SetEnabled ;
   end;
 
+  TACBrInformacaoTipo = ( tiString, tiAnsiString, tiBoolean,
+                          tiInteger, tiInt64, tiFloat,
+                          tiDate, tiTime, tiDateTime);
+
 { TACBrInformacao - está classe emula campos TField, permitindo montar listas
-de campos quando necessário}
+  de campos quando necessário}
   TACBrInformacao = class
   private
     fFloatDecimalDigits: Integer;
     fInfo: String;
-    fName: String;
+    fNome: String;
+    fTipo: TACBrInformacaoTipo;
     function GetAsBinary: AnsiString;
+    function GetAsBoolean: Boolean;
     function GetAsDate: TDateTime;
     function GetAsFloat: Double;
     function GetAsInt64: Int64;
@@ -248,6 +254,7 @@ de campos quando necessário}
     function GetAsTimeStamp: TDateTime;
     function GetAsTimeStampSQL: TDateTime;
     procedure SetAsBinary(AValue: AnsiString);
+    procedure SetAsBoolean(AValue: Boolean);
     procedure SetAsDate(const AValue: TDateTime);
     procedure SetAsFloat(const AValue: Double);
     procedure SetAsInteger(const AValue: Integer);
@@ -259,7 +266,8 @@ de campos quando necessário}
     procedure SetFloatDecimalDigits(AValue: Integer);
   public
     constructor Create;
-    property Nome          : String     read fName             write fName;
+    property Nome          : String     read fNome             write fNome;
+    property Tipo          : TACBrInformacaoTipo read fTipo;
     property AsString      : String     read GetAsString       write SetAsString;
     property AsDate        : TDateTime  read GetAsDate         write SetAsDate;
     property AsTime        : TDateTime  read GetAsTime         write SetAsTime;
@@ -269,6 +277,7 @@ de campos quando necessário}
     property AsInt64       : Int64      read GetAsInt64        write SetAsInt64;
     property AsFloat       : Double     read GetAsFloat        write SetAsFloat;
     property AsBinary      : AnsiString read GetAsBinary       write SetAsBinary;
+    property AsBoolean     : Boolean    read GetAsBoolean      write SetAsBoolean;
 
     property FloatDecimalDigits : Integer read fFloatDecimalDigits write SetFloatDecimalDigits default 2;
   end ;
@@ -285,7 +294,8 @@ de campos quando necessário}
     procedure Insert (Index: Integer; Obj: TACBrInformacao);
     function New: TACBrInformacao;
 
-    function AddField(const AName: String; const AValue: String): TACBrInformacao;
+    function AddField(const AName: String): TACBrInformacao; overload;
+    function AddField(const AName: String; const AValue: String): TACBrInformacao; overload;
     function FindFieldByName(const AName: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
 
@@ -522,7 +532,18 @@ begin
   if AValue = 0 then
      Enabled := False ;
 end;
+
 { TACBrInformacao }
+
+constructor TACBrInformacao.Create;
+begin
+  inherited Create;
+
+  fFloatDecimalDigits := 2;
+  fNome := '';
+  fInfo := '';
+  fTipo := tiString;
+end;
 
 function TACBrInformacao.GetAsDate : TDateTime;
 var
@@ -537,17 +558,22 @@ begin
   end;
 
   try
-     Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
-                           StrToInt(copy(DataStr,3,2)),
-                           StrToInt(copy(DataStr,1,2)) ) ;
+    Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
+                          StrToInt(copy(DataStr,3,2)),
+                          StrToInt(copy(DataStr,1,2)) ) ;
   except
-     Result := 0 ;
+    Result := 0 ;
   end;
 end;
 
 function TACBrInformacao.GetAsBinary: AnsiString;
 begin
   Result := StringToBinaryString(fInfo);
+end;
+
+function TACBrInformacao.GetAsBoolean: Boolean;
+begin
+  Result := (fInfo = '1');
 end;
 
 function TACBrInformacao.GetAsFloat : Double;
@@ -575,39 +601,39 @@ end;
 
 function TACBrInformacao.GetAsString: String;
 begin
-   Result := fInfo ;
+  Result := fInfo ;
 end;
 
 function TACBrInformacao.GetAsTime : TDateTime;
 var
-   TimeStr : String;
+  TimeStr : String;
 begin
   TimeStr := OnlyNumber( Trim(fInfo) );
 
   try
-     Result := EncodeTime( StrToInt(copy(TimeStr,1,2)),
-                           StrToInt(copy(TimeStr,3,2)),
-                           StrToInt(copy(TimeStr,5,2)), 0) ;
+    Result := EncodeTime( StrToInt(copy(TimeStr,1,2)),
+                          StrToInt(copy(TimeStr,3,2)),
+                          StrToInt(copy(TimeStr,5,2)), 0) ;
   except
-     Result := 0 ;
+    Result := 0 ;
   end;
 end;
 
 function TACBrInformacao.GetAsTimeStamp : TDateTime;
 var
-   DateTimeStr : String;
+  DateTimeStr : String;
 begin
   DateTimeStr := OnlyNumber( Trim(fInfo) );
 
   try
-     Result := EncodeDateTime( YearOf(now),
-                               StrToInt(copy(DateTimeStr,3,2)),
-                               StrToInt(copy(DateTimeStr,1,2)),
-                               StrToIntDef(copy(DateTimeStr,5,2),0),
-                               StrToIntDef(copy(DateTimeStr,7,2),0),
-                               StrToIntDef(copy(DateTimeStr,9,2),0), 0) ;
+    Result := EncodeDateTime( YearOf(now),
+                              StrToInt(copy(DateTimeStr,3,2)),
+                              StrToInt(copy(DateTimeStr,1,2)),
+                              StrToIntDef(copy(DateTimeStr,5,2),0),
+                              StrToIntDef(copy(DateTimeStr,7,2),0),
+                              StrToIntDef(copy(DateTimeStr,9,2),0), 0) ;
   except
-     Result := 0 ;
+    Result := 0 ;
   end;
 end;
 
@@ -618,28 +644,41 @@ begin
   DateTimeStr := OnlyNumber( Trim(fInfo) );
 
   try
-     Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
-                               StrToInt(copy(DateTimeStr,5,2)),
-                               StrToInt(copy(DateTimeStr,7,2)),
-                               StrToIntDef(copy(DateTimeStr,9,2),0),
-                               StrToIntDef(copy(DateTimeStr,11,2),0),
-                               StrToIntDef(copy(DateTimeStr,13,2),0), 0) ;
+    Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
+                              StrToInt(copy(DateTimeStr,5,2)),
+                              StrToInt(copy(DateTimeStr,7,2)),
+                              StrToIntDef(copy(DateTimeStr,9,2),0),
+                              StrToIntDef(copy(DateTimeStr,11,2),0),
+                              StrToIntDef(copy(DateTimeStr,13,2),0), 0) ;
   except
-     Result := 0 ;
+    Result := 0 ;
   end;
 end;
 
 procedure TACBrInformacao.SetAsBinary(AValue: AnsiString);
 begin
   fInfo := String(BinaryStringToString(AValue));
+  fTipo := tiAnsiString;
+end;
+
+procedure TACBrInformacao.SetAsBoolean(AValue: Boolean);
+begin
+  if AValue then
+    fInfo := '1'
+  else
+    fInfo := '0';
+
+  fTipo := tiBoolean;;
 end;
 
 procedure TACBrInformacao.SetAsDate(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := FormatDateTime('DDMMYYYY',AValue);
+    fInfo := FormatDateTime('DDMMYYYY',AValue);
+
+  fTipo := tiDate;
 end;
 
 procedure TACBrInformacao.SetAsFloat(const AValue : Double);
@@ -647,59 +686,72 @@ var
   Pow: Extended;
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
   begin
     Pow  := IntPower(10, FloatDecimalDigits);
     fInfo := IntToStr(Trunc(SimpleRoundTo(AValue * Pow, 0)));
     if Length(fInfo) < 3 then
-      fInfo := PadLeft(fInfo,3,'0') ;
-  end ;
+      fInfo := PadLeft(fInfo,3,'0');
+  end;
+
+  fTipo := tiFloat;
 end;
 
 procedure TACBrInformacao.SetAsInteger(const AValue : Integer);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := IntToStr( AValue ) ;
+    fInfo := IntToStr( AValue ) ;
+
+  fTipo := tiInteger;
 end;
 
 procedure TACBrInformacao.SetAsInt64(const AValue: Int64);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := IntToStr( AValue ) ;
+    fInfo := IntToStr( AValue ) ;
+
+  fTipo := tiInt64;
 end;
 
 procedure TACBrInformacao.SetAsString(const AValue: String);
 begin
-   fInfo := AValue;
+  fInfo := AValue;
+  fTipo := tiString;
 end;
 
 procedure TACBrInformacao.SetAsTime(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := FormatDateTime('HHNNSS', AValue);
+    fInfo := FormatDateTime('HHNNSS', AValue);
+
+  fTipo := tiTime;
 end;
 
 procedure TACBrInformacao.SetAsTimeStamp(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := FormatDateTime('DDMMHHNNSS', AValue);
+    fInfo := FormatDateTime('DDMMHHNNSS', AValue);
+
+  fTipo := tiDateTime;
 end;
 
 procedure TACBrInformacao.SetAsTimeStampSQL(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInfo := ''
+    fInfo := ''
   else
-     fInfo := FormatDateTime('YYYYMMDDHHNNSS', AValue);
+    fInfo := FormatDateTime('YYYYMMDDHHNNSS', AValue);
+
+  fTipo := tiDateTime;
 end;
 
 procedure TACBrInformacao.SetFloatDecimalDigits(AValue: Integer);
@@ -710,13 +762,12 @@ begin
   fFloatDecimalDigits := abs(AValue);
 end;
 
-constructor TACBrInformacao.Create;
-begin
-  inherited Create;
-  fFloatDecimalDigits := 2;
-end;
-
 { TACBrInformacoes }
+
+function TACBrInformacoes.AddField(const AName: String): TACBrInformacao;
+begin
+  Result := AddField(AName, '');
+end;
 
 function TACBrInformacoes.AddField(const AName: String; const AValue: String
   ): TACBrInformacao;

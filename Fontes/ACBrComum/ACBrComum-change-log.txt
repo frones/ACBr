@@ -37,6 +37,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/09/2020
+-- ACBrBase --
+[+] TACBrInformacao, adicionada a propriedade: "AsBoolean"
+[+] TACBrInformacao, adicionada a propriedade: "Tipo: TACBrInformacaoTipo"
+      TACBrInformacaoTipo = ( tiString, tiAnsiString, tiBoolean,
+                              tiInteger, tiInt64, tiFloat,
+                              tiDate, tiTime, tiDateTime);
+[+] TACBrInformacoes, adicionado sobrecarga no método:
+    function AddField(const AName: String): TACBrInformacao;
+    (por: DSA)
+
 Data: 07/07/2020
 -- ACBrBase --
 [+] Nova propriedade na Classe TACBrInformacao.AsInt64

@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
-  ACBrDevice, ACBrCMC7;
+  ACBrDevice, ACBrCMC7, ACBrPosPrinterElginE1Service;
 
 type
 
@@ -201,6 +201,7 @@ type
     procedure cbxPagCodigoChange(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
     procedure seGavetaTempoOFFChange(Sender: TObject);
@@ -221,6 +222,8 @@ type
     procedure seQRCodeTipoChange(Sender: TObject);
   private
     { private declarations }
+    fE1Printer: TACBrPosPrinterElginE1Service;
+
     Procedure GravarINI ;
     Procedure LerINI ;
     procedure LimparTexto;
@@ -261,7 +264,20 @@ begin
   btSearchPortsClick(Sender);
   pgAbas.ActivePageIndex := 0;
 
+  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  fE1Printer.Modelo := prnI9;
+  // Usar por TXT
+  fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
+  fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
+  // Usar por TCP
+  //fE1Printer.IPePortaE1 := '192.168.56.1:89';
+
   LerINI;
+end;
+
+procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
+begin
+  fE1Printer.Free;
 end;
 
 procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
@@ -368,8 +384,8 @@ begin
   mImp.Lines.Add('<in><a>INVERTIDA E ALT.DUPLA</a></in>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
-  mImp.Lines.Add('</FB>FONTE TIPO B');
-  mImp.Lines.Add('<n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('</fb>FONTE TIPO B');
+  mImp.Lines.Add('</fn><n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
@@ -825,9 +841,24 @@ end;
 procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
 begin
   try
-     ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex ) ;
+    if cbxModelo.ItemIndex = Integer(ppExterno) then
+    begin
+      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      ACBrPosPrinter1.Modelo := ppExterno;
+      cbxPorta.Text := 'NULL';
+      cbxPorta.Enabled := False;
+    end
+    else
+    begin
+      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+      if (cbxPorta.Text = 'NULL') then
+        cbxPorta.Text := '';
+
+      cbxPorta.Enabled := True;
+    end;
   except
      cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
+     cbxPorta.Enabled := True;
      raise ;
   end ;
 end;
@@ -1012,9 +1043,10 @@ begin
 
   INI := TIniFile.Create(ArqINI);
   try
-     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
      cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
      cbxPortaChange(nil);
+     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
+     cbxModeloChange(nil);
      ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
      seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
@@ -1152,8 +1184,8 @@ begin
   begin
     try
        Self.Enabled := False;
-       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
        ACBrPosPrinter1.Porta  := cbxPorta.Text;
+       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
        ACBrPosPrinter1.ArqLOG := edLog.Text;
        //ACBrPosPrinter1.Device.ArqLOG := ACBrPosPrinter1.ArqLOG;
        ACBrPosPrinter1.LinhasBuffer := seLinhasBuffer.Value;
@@ -1176,6 +1208,7 @@ begin
        ACBrPosPrinter1.ConfigLogo.FatorX := seLogoFatorX.Value;
        ACBrPosPrinter1.ConfigLogo.FatorY := seLogoFatorY.Value;
        GravarINI ;
+
        ACBrPosPrinter1.Ativar ;
     finally
        Self.Enabled := True;

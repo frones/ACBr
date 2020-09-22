@@ -7,8 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  sysutils,
-  Forms, Unit1, ConfiguraSerial, ACBrDeviceClass;
+  sysutils, Forms, Unit1, ConfiguraSerial, ACBrDeviceClass,
+  ACBrPosPrinterElginE1Service;
 
 {$R *.res}
 

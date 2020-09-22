@@ -1,6 +1,6 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 536
-  Top = 240
+  Left = 548
+  Top = 248
   Width = 1022
   Height = 592
   ActiveControl = bTagFormtacaoCaracter
@@ -17,6 +17,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -921,7 +922,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Caption = 'TraduzirTags'
         Checked = True
         State = cbChecked
-        TabOrder = 0
+        TabOrder = 9
       end
       object cbIgnorarTags: TCheckBox
         Left = 15
@@ -930,7 +931,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 19
         Hint = 'N'#227'o processa as Tags, imprime-as como texto normal'
         Caption = 'IgnorarTags'
-        TabOrder = 1
+        TabOrder = 10
       end
       object cbxModelo: TComboBox
         Left = 16
@@ -939,7 +940,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 21
         Style = csDropDownList
         ItemHeight = 13
-        TabOrder = 2
+        TabOrder = 0
         OnChange = cbxModeloChange
       end
       object cbxPorta: TComboBox
@@ -948,7 +949,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 169
         Height = 21
         ItemHeight = 13
-        TabOrder = 3
+        TabOrder = 1
         OnChange = cbxPortaChange
       end
       object seColunas: TSpinEdit
@@ -958,7 +959,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 22
         MaxValue = 999
         MinValue = 1
-        TabOrder = 4
+        TabOrder = 2
         Value = 48
         OnChange = seColunasChange
       end
@@ -971,7 +972,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
           'ta Serial ap'#243's o envio'
         Caption = 'Controle Porta'
-        TabOrder = 5
+        TabOrder = 7
       end
       object seEspLinhas: TSpinEdit
         Left = 72
@@ -980,7 +981,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 22
         MaxValue = 255
         MinValue = 0
-        TabOrder = 6
+        TabOrder = 3
         Value = 0
         OnChange = seEspLinhasChange
       end
@@ -992,7 +993,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
         Style = csDropDownList
         ItemHeight = 13
-        TabOrder = 7
+        TabOrder = 12
         OnChange = cbxPagCodigoChange
       end
       object seLinhasBuffer: TSpinEdit
@@ -1002,7 +1003,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 22
         MaxValue = 255
         MinValue = 0
-        TabOrder = 8
+        TabOrder = 4
         Value = 0
         OnChange = seLinhasBufferChange
       end
@@ -1013,7 +1014,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 21
         Cursor = crIBeam
         Hint = 'Arquivo de Log para gravar os comandos enviados e recebidos'
-        TabOrder = 9
+        TabOrder = 11
         Text = 'PosPrinter.log'
       end
       object bAtivar: TBitBtn
@@ -1031,7 +1032,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Font.Style = [fsBold]
         ModalResult = 1
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 6
         OnClick = bAtivarClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
@@ -1069,7 +1070,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 22
         MaxValue = 255
         MinValue = 0
-        TabOrder = 11
+        TabOrder = 5
         Value = 0
         OnChange = seLinhasPularChange
       end
@@ -1084,7 +1085,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Caption = 'Cortar Papel'
         Checked = True
         State = cbChecked
-        TabOrder = 12
+        TabOrder = 8
       end
     end
     object gbCodBarrasConfig: TGroupBox
@@ -1223,7 +1224,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Height = 49
       Align = alTop
       Caption = 'Cheque'
-      TabOrder = 3
+      TabOrder = 4
       object cbAguardarCheque: TCheckBox
         Left = 51
         Top = 17
@@ -1242,7 +1243,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Height = 64
       Align = alTop
       Caption = 'Gaveta'
-      TabOrder = 4
+      TabOrder = 3
       object Label21: TLabel
         Left = 63
         Top = 16

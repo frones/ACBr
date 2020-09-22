@@ -38,6 +38,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/09/2020
+-- ACBrDevice --
+[+] TACBrTagProcessor, Adicionado Evento: "OnAdicionarBlocoResposta", que será
+    invocado, a cada novo bloco de Dados adicionado no Buffer final de resposta.
+
+-- ACBrDeviceBlueTooth --
+[-] Correção da verificação do resultado de TACBrDeviceBlueTooth.PedirPermissoes
+[*] Ajuste em TACBrDeviceBlueTooth.AtivarBlueTooth, para só verificar estado do
+    BlueTooth, após chamar PedirPermissoes
+
+-- ACBrPosPrinter --
+[+] TACBrPosComandos, adicionado o método "Clear".
+[+] TACBrPosPrinterClass, adicionado os métodos virtuais:
+    procedure AntesDecodificar(var ABinaryString: AnsiString);
+    procedure AdicionarBlocoResposta(const ConteudoBloco: AnsiString);
+    procedure DepoisDecodificar(var ABinaryString: AnsiString);
+    - Métodos para permitir que a Classe de Impressora, interfira e costumize o
+      processo de Decodificação das Tags em "TACBrTagProcessor"
+[*] TACBrPosPrinter, expondo a classe: "TagProcessor" como Pública, Read Only.
+[-] Tag '</fn>', não estava desligando "ftFonteB";
+[-] TACBrPosPrinter.EnviarStringDevice, corrigido para não tentar enviar
+    "ComandoInicializa", se o mesmo for vazio.
+
 Data: 17/08/2020
 -- ACBrPosPrinter --
 [-] Correção de A.V., quando destruindo TACBrPosPrinter, que está usando

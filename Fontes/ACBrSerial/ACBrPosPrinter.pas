@@ -106,6 +106,7 @@ type
     FZera: AnsiString;
   public
     constructor Create;
+    procedure Clear;
 
     property Zera: AnsiString read FZera write FZera;
     property EspacoEntreLinhas: AnsiString read FEspacoEntreLinhas
@@ -196,9 +197,13 @@ type
     fpPosPrinter: TACBrPosPrinter;
 
   public
+    procedure AntesDecodificar(var ABinaryString: AnsiString); virtual;
+    procedure AdicionarBlocoResposta(const ConteudoBloco: AnsiString); virtual;
+    procedure DepoisDecodificar(var ABinaryString: AnsiString); virtual;
     function TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString): Boolean; virtual;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString): Boolean; virtual;
+
     function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
@@ -476,8 +481,11 @@ type
     {$EndIf}
 
     procedure EnviarStringDevice(AString: AnsiString);
-    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
-    procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
+
+    function DecodificarTagsFormatacao(ABinaryString: AnsiString): AnsiString;
+    procedure DoTraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
+    procedure DoAdicionarBlocoResposta(const ConteudoBloco: AnsiString);
+    procedure DoTraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString);
 
     procedure AtivarPorta;
@@ -525,6 +533,8 @@ type
     function TxRx(const ACmd: AnsiString; BytesToRead: Byte = 1;
       ATimeOut: Integer = 500; WaitForTerminator: Boolean = False): AnsiString;
 
+    property TagProcessor: TACBrTagProcessor read FTagProcessor;
+    property TagsNaoSuportadas: TStringList read GetTagsNaoSuportadas;
     procedure RetornarTags(AStringList: TStrings; IncluiAjuda: Boolean = True);
     procedure ImprimirTags;
 
@@ -566,8 +576,6 @@ type
     property Alinhamento: TACBrPosTipoAlinhamento read FTipoAlinhamento;
     property Inicializada: Boolean read FInicializada;
     property ModoPagina: Boolean read FModoPaginaLigado;
-
-    property TagsNaoSuportadas: TStringList read GetTagsNaoSuportadas;
 
     function PodeLerDaPorta: Boolean;
     property TemGuilhotina: Integer read GetTemGuilhotina;
@@ -898,6 +906,11 @@ end;
 constructor TACBrPosComandos.Create;
 begin
   inherited;
+  Clear;
+end;
+
+procedure TACBrPosComandos.Clear;
+begin
   FPuloDeLinha := LF;
   FPuloDePagina := FF;
   FBeep := '';
@@ -1012,16 +1025,32 @@ begin
   inherited;
 end;
 
+procedure TACBrPosPrinterClass.AntesDecodificar(var ABinaryString: AnsiString);
+begin
+  { não altera ABinaryString aqui, sobreescrever se necessário }
+end;
+
+procedure TACBrPosPrinterClass.AdicionarBlocoResposta(
+  const ConteudoBloco: AnsiString);
+begin
+  { não faz nada aqui, sobreescrever se necessário }
+end;
+
+procedure TACBrPosPrinterClass.DepoisDecodificar(var ABinaryString: AnsiString);
+begin
+  { não altera ABinaryString aqui, sobreescrever se necessário }
+end;
+
 function TACBrPosPrinterClass.TraduzirTag(const ATag: AnsiString;
   var TagTraduzida: AnsiString): Boolean;
 begin
-  Result := False;  // Não traduziu
+  Result := False;  // Não traduziu aqui, sobreescrever se necessário;
 end;
 
 function TACBrPosPrinterClass.TraduzirTagBloco(const ATag,
   ConteudoBloco: AnsiString; var BlocoTraduzido: AnsiString): Boolean;
 begin
-  Result := False;  // Não traduziu
+  Result := False;  // Não traduziu aqui, sobreescrever se necessário
 end;
 
 function TACBrPosPrinterClass.ComandoCodBarras(const ATag: String;
@@ -1495,8 +1524,9 @@ begin
     EhBloco := True;
   end;
 
-  FTagProcessor.OnTraduzirTag := TraduzirTag;
-  FTagProcessor.OnTraduzirTagBloco := TraduzirTagBloco;
+  FTagProcessor.OnTraduzirTag := DoTraduzirTag;
+  FTagProcessor.OnAdicionarBlocoResposta := DoAdicionarBlocoResposta;
+  FTagProcessor.OnTraduzirTagBloco := DoTraduzirTagBloco;
 
   FBuffer := TStringList.Create;
   FBuffer.OnChange := DoLinesChange;
@@ -1819,7 +1849,7 @@ begin
   RelPos.y := trunc(max(ADimensao.y-APos.y,1) * 6.2);
 
   Result := FPosPrinterClass.ComandoPosicionaModoPagina(RelPos) +
-            FTagProcessor.DecodificarTagsFormatacao( CodificarPaginaDeCodigo(AText) ) +
+            DecodificarTagsFormatacao( CodificarPaginaDeCodigo(AText) ) +
             FPosPrinterClass.Cmd.PuloDeLinha;
 end;
 
@@ -1834,7 +1864,7 @@ begin
   Result := FPosPrinterClass.LeituraCheque;
 end;
 
-procedure TACBrPosPrinter.TraduzirTag(const ATag: AnsiString;
+procedure TACBrPosPrinter.DoTraduzirTag(const ATag: AnsiString;
   var TagTraduzida: AnsiString);
 begin
   // GravarLog(AnsiString('TraduzirTag(' + ATag + ')'));   // DEBUG - permite medir de tradução de cada Tag
@@ -1920,7 +1950,7 @@ begin
   begin
     TagTraduzida := FPosPrinterClass.Cmd.FonteNormal;
     FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
-                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido, ftFonteB];
   end
 
   else if ATag = cTagZera then
@@ -2053,7 +2083,13 @@ begin
   GravarLog(AnsiString('TraduzirTag(' + ATag + ') -> ') + TagTraduzida, True);
 end;
 
-procedure TACBrPosPrinter.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
+procedure TACBrPosPrinter.DoAdicionarBlocoResposta(
+  const ConteudoBloco: AnsiString);
+begin
+  FPosPrinterClass.AdicionarBlocoResposta(ConteudoBloco);
+end;
+
+procedure TACBrPosPrinter.DoTraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
   var BlocoTraduzido: AnsiString);
 var
   ACodBar: AnsiString;
@@ -2193,7 +2229,6 @@ begin
 
   else if (AnsiIndexText(ATag, cTAGS_BARRAS) >= 0) then
   begin
-
     // Ajustando os Códigos de Barras, conforme regras do Tipo do Código //
     if (ATag = cTagBarraUPCA) then
       // Apenas números, sempre 11 digitos, e 1 digito verificador
@@ -2466,7 +2501,7 @@ begin
   if not FInicializada then
   begin
     CmdInit := FPosPrinterClass.ComandoInicializa;
-    FInicializada := (pos( CmdInit, AString ) > 0);
+    FInicializada := (CmdInit = '') or (pos( CmdInit, AString ) > 0);
 
     if (not FInicializada) and (AString <> FPosPrinterClass.Cmd.Zera) then
     begin
@@ -2492,6 +2527,14 @@ begin
     if ControlePorta then
       DesativarPorta;
   end;
+end;
+
+function TACBrPosPrinter.DecodificarTagsFormatacao(ABinaryString: AnsiString
+  ): AnsiString;
+begin
+  FPosPrinterClass.AntesDecodificar( ABinaryString );
+  Result := FTagProcessor.DecodificarTagsFormatacao(ABinaryString);
+  FPosPrinterClass.DepoisDecodificar( Result );
 end;
 
 procedure TACBrPosPrinter.GravarLog(AString: AnsiString; Traduz: Boolean;
@@ -3063,11 +3106,11 @@ begin
   if (FPosPrinterClass.Cmd.PuloDeLinha <> LF) then
     StrToPrint := ReplaceString(StrToPrint, LF, FPosPrinterClass.Cmd.PuloDeLinha);
 
-  if DecodificarTags then
-    StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
-
   if PulaLinha then
     StrToPrint := StrToPrint + FPosPrinterClass.Cmd.PuloDeLinha;
+
+  if DecodificarTags then
+    StrToPrint := DecodificarTagsFormatacao(StrToPrint);
 
   //DEBUG
   //WriteLog('c:\temp\teste3.txt', StrToPrint, True);

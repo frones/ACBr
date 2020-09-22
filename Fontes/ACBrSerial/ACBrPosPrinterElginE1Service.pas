@@ -922,9 +922,9 @@ end;
      Resp := ASocket.RecvPacket(cTimeoutResp);
      if (ASocket.LastError = 0) then
      begin
-       fREspostaE1 := StringReplace(Resp, LF+'}'+LF+'{'+LF, ',', [rfReplaceAll]);
+       fREspostaE1 := StringReplace(Resp, LF+'}'+LF+'{', ',', [rfReplaceAll]);
        //DEBUG
-       WriteToFile('c:\temp\E1JsonResp.txt', fREspostaE1);
+       //WriteToFile('c:\temp\E1JsonResp.txt', fREspostaE1);
      end;
    finally
      ASocket.Free;

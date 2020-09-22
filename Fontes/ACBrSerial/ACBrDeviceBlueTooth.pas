@@ -136,13 +136,17 @@ begin
       var
         GR: TPermissionStatus;
       begin
-        Ok := True;
-        for GR in AGrantResults do
+        Ok := (Length(AGrantResults) = 2);
+
+        if Ok then
         begin
-          if (GR <> TPermissionStatus.Granted) then
+          for GR in AGrantResults do
           begin
-            Ok := False;
-            Break;
+            if (GR <> TPermissionStatus.Granted) then
+            begin
+              Ok := False;
+              Break;
+            end;
           end;
         end;
       end );
@@ -179,13 +183,11 @@ end;
 
 procedure TACBrDeviceBlueTooth.AtivarBlueTooth;
 begin
+  if not PedirPermissoes then
+    DoException( Exception.Create(ACBrStr(SErrSemPermissaoParaBlueTooth)));
+
   if not fsBluetooth.Enabled then
-  begin
-    if not PedirPermissoes then
-      DoException( Exception.Create(ACBrStr(SErrSemPermissaoParaBlueTooth)))
-    else
-      fsBluetooth.Enabled := True;
-  end;
+    fsBluetooth.Enabled := True;
 end;
 
 procedure TACBrDeviceBlueTooth.Conectar(const APorta: String;

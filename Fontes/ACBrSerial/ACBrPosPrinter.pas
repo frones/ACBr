@@ -1278,7 +1278,7 @@ end;
 
 procedure TACBrPosPrinterClass.Configurar;
 begin
-  {nada aqui, método virtual}
+  fpPosPrinter.OnEnviarStringDevice := Nil;
 end;
 
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);

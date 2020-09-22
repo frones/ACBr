@@ -55,8 +55,11 @@ const
   CmodImpressor = 'Impressor';
 
   CColunasImpressoraSmartPosElgin = 40;
+  cTimeoutResp = 5000; // 5 seg
 
 type
+
+  EACBrPosPrinterElginE1Service = class(Exception);
 
   { TE1Funcao }
 
@@ -114,11 +117,22 @@ type
     fE1JSon: TE1Json;
     fModelo: TElginE1Printers;
     fPastaEntradaE1: String;
+    fPastaSaidaE1: String;
     fSeqArqE1: Integer;
+    fIPePortaE1: String;
+    fREspostaE1: String;
 
   protected
     procedure Imprimir(const LinhasImpressao: String; var Tratado: Boolean);
+    {$IfDef ANDROID}
+     procedure EnviarPorIntent(const LinhasImpressao: String);
+    {$Else}
+     procedure EnviarPorTCP(const LinhasImpressao: String);
+     procedure EnviarPorTXT(const LinhasImpressao: String);
+    {$EndIf}
 
+    procedure AddCmdAbreConexaoImpressora;
+    procedure AddCmdFechaConexaoImpressora;
     procedure AddCmdImprimirTexto(const ConteudoBloco: String);
     procedure AddCmdPuloDeLinhas(const Linhas: Integer);
   public
@@ -140,20 +154,28 @@ type
     function ComandoConfiguraModoPagina: AnsiString; override;
     function ComandoPosicionaModoPagina(APoint: TPoint): AnsiString; override;
 
+    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
+    function LerInfo: String; override;
+
     property E1JSon: TE1Json read fE1JSon;
     property Modelo: TElginE1Printers read fModelo write fModelo;
     property PastaEntradaE1: String read fPastaEntradaE1 write fPastaEntradaE1;
+    property PastaSaidaE1: String read fPastaSaidaE1 write fPastaSaidaE1;
+    property IPePortaE1: String read fIPePortaE1 write fIPePortaE1;
+    property REspostaE1: string read fREspostaE1;
   end;
 
 implementation
 
 uses
-  StrUtils, Math,
+  StrUtils, Math, DateUtils,
   {$IfDef ANDROID}
   System.Messaging, System.IOUtils,
   Androidapi.Helpers,  Androidapi.JNI.GraphicsContentViewText,
   Androidapi.JNI.JavaTypes, Androidapi.JNI.App,
   FMX.Platform.Android,
+  {$Else}
+   blcksock,
   {$EndIf}
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
     JsonDataObjects_ACBr,
@@ -401,6 +423,9 @@ begin
   fpModeloStr := 'PosPrinterElginE1Service';
   fModelo := prnSmartPOS;
   fPastaEntradaE1 := '';
+  fPastaSaidaE1 := '';
+  fIPePortaE1 := '';
+  fREspostaE1 := '';
   fSeqArqE1 := 0;
 
   TagsNaoSuportadas.Add( cTagBarraMSI );
@@ -427,17 +452,7 @@ procedure TACBrPosPrinterElginE1Service.AntesDecodificar(
 begin
   // Troca todos Pulo de Linha, por Tag, para conseguir pegar os Blocos de impressão em TagProcessos
   ABinaryString := StringReplace(ABinaryString, Cmd.PuloDeLinha, cTagPulodeLinha, [rfReplaceAll]);
-
-  // Limpa o objeto com o E1JSON
-  fE1JSon.Clear;
-
-  with fE1JSon.Comandos.New('AbreConexaoImpressora') do
-  begin
-    Parametros.AddField('tipo').AsInteger := IfThen(fModelo=prnSmartPOS, 5, IfThen(fModelo=prnM8, 6, 1));
-    Parametros.AddField('modelo').AsString := IfThen(fModelo=prnSmartPOS, 'SmartPOS', IfThen(fModelo=prnM8, 'M8', 'i9'));
-    Parametros.AddField('conexao').AsString := 'USB';
-    Parametros.AddField('parametro').AsInteger := 0;
-  end;
+  AddCmdAbreConexaoImpressora;
 end;
 
 procedure TACBrPosPrinterElginE1Service.AdicionarBlocoResposta(
@@ -449,7 +464,7 @@ end;
 procedure TACBrPosPrinterElginE1Service.DepoisDecodificar(
   var ABinaryString: AnsiString);
 begin
-  fE1JSon.Comandos.New('FechaConexaoImpressora');
+  AddCmdFechaConexaoImpressora;
   ABinaryString := fE1JSon.JSON;
 end;
 
@@ -714,6 +729,103 @@ begin
   Result := '';
 end;
 
+procedure TACBrPosPrinterElginE1Service.LerStatus(var AStatus: TACBrPosPrinterStatus);
+
+  function LerStatusImpressora(AParam: Integer): Integer;
+  const
+    cFuncaoStatus = 'StatusImpressora';
+  var
+    Tratado: Boolean;
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     AJSon: TJsonObject;
+    {$Else}
+     AJSon: TJson;
+    {$EndIf}
+  begin
+    AddCmdAbreConexaoImpressora;
+    fE1JSon.Comandos.New(cFuncaoStatus).Parametros.AddField('param').AsInteger := AParam;
+    AddCmdFechaConexaoImpressora;
+
+    Result := 0;
+    Tratado := False;
+    Imprimir(fE1JSon.JSON, Tratado);
+
+    if (fREspostaE1 <> '') then
+    begin
+      {$IfDef USE_JSONDATAOBJECTS_UNIT}
+       AJSon := TJsonBaseObject.Parse(AValue) as TJsonObject;
+       try
+         Result := AJSon.I[cFuncaoStatus];
+       finally
+         AJSon.Free;
+       end;
+      {$Else}
+       AJSon := TJson.Create;
+       try
+         AJSon.Parse(fREspostaE1);
+         Result := AJSon[cFuncaoStatus].AsInteger;
+       finally
+         AJSon.Free;
+       end;
+      {$EndIf}
+    end;
+  end;
+
+var
+  S: Integer;
+begin
+  S := LerStatusImpressora(3);
+  if (S < 0) then
+    AStatus := AStatus + [stErro];
+
+  case S of
+    6: AStatus := AStatus + [stPoucoPapel];
+    7: AStatus := AStatus + [stSemPapel];
+  end;
+
+  if (S >= 0) and (Modelo = prnI9) then
+  begin
+    S := LerStatusImpressora(5);
+    if (S > 0) then
+    begin
+      if TestBit(S, 0) then
+        AStatus := AStatus + [stGavetaAberta];
+      if TestBit(S, 1) then
+        AStatus := AStatus + [stTampaAberta];
+      if TestBit(S, 2) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(S, 3) then
+        AStatus := AStatus + [stSemPapel];
+    end;
+  end;
+
+end;
+
+function TACBrPosPrinterElginE1Service.LerInfo: String;
+begin
+  Result := inherited LerInfo;
+end;
+
+
+procedure TACBrPosPrinterElginE1Service.AddCmdAbreConexaoImpressora;
+begin
+  // Limpa o objeto com o E1JSON
+  fE1JSon.Clear;
+
+  with fE1JSon.Comandos.New('AbreConexaoImpressora') do
+  begin
+    Parametros.AddField('tipo').AsInteger := IfThen(fModelo=prnSmartPOS, 5, IfThen(fModelo=prnM8, 6, 1));
+    Parametros.AddField('modelo').AsString := IfThen(fModelo=prnSmartPOS, 'SmartPOS', IfThen(fModelo=prnM8, 'M8', 'i9'));
+    Parametros.AddField('conexao').AsString := 'USB';
+    Parametros.AddField('parametro').AsInteger := 0;
+  end;
+end;
+
+procedure TACBrPosPrinterElginE1Service.AddCmdFechaConexaoImpressora;
+begin
+  fE1JSon.Comandos.New('FechaConexaoImpressora');
+end;
+
 procedure TACBrPosPrinterElginE1Service.AddCmdImprimirTexto(
   const ConteudoBloco: String);
 var
@@ -758,36 +870,121 @@ end;
 
 procedure TACBrPosPrinterElginE1Service.Imprimir(const LinhasImpressao: String;
   var Tratado: Boolean);
-var
-  {$IfDef ANDROID}
-   intentPrint: JIntent;
-  {$Else}
-   ArqJSON: String;
-  {$EndIf}
 begin
+  Tratado := True;
+  fREspostaE1 := '';
   {$IfDef ANDROID}
+   EnviarPorIntent(LinhasImpressao)
+  {$Else}
+   if (fIPePortaE1 <> '') then
+     EnviarPorTCP(LinhasImpressao)
+   else
+     EnviarPorTXT(LinhasImpressao);
+  {$EndIf}
+end;
+
+{$IfDef ANDROID}
+ procedure TACBrPosPrinterElginE1Service.EnviarPorIntent(const LinhasImpressao: String);
+ var
+   intentPrint: JIntent;
+ begin
    FMessageSubscriptionID := TMessageManager.DefaultManager.SubscribeToMessage(TMessageResultNotification, HandleActivityMessage);
 
-   intentPrint := TJIntent.JavaClass.init(StringToJString('com.elgin.e1.intentservice.IMPRESSAO'));
-   intentPrint.putExtra(StringToJString('direta'), StringToJString(LinhasImpressao));
-   TAndroidHelper.Activity.startActivityForResult(intentPrint, requestCodeImpressora);
-  {$Else}
+      intentPrint := TJIntent.JavaClass.init(StringToJString('com.elgin.e1.intentservice.IMPRESSAO'));
+      intentPrint.putExtra(StringToJString('direta'), StringToJString(LinhasImpressao));
+      TAndroidHelper.Activity.startActivityForResult(intentPrint, requestCodeImpressora);
+
+ end;
+{$Else}
+ procedure TACBrPosPrinterElginE1Service.EnviarPorTCP(
+   const LinhasImpressao: String);
+ var
+   ASocket: TBlockSocket;
+   IP, Porta: String;
+   Resp: AnsiString;
+   p: Integer;
+ begin
+   fREspostaE1 := '';
+   ASocket := TBlockSocket.Create;
+   try
+     IP := fIPePortaE1;
+     p := pos(':',IP);
+     if (p=0) then
+       Porta := '89'
+     else
+     begin
+       Porta := Copy(IP, P+1, Length(IP));
+       IP := copy(IP, 1, P-1);
+     end;
+
+     ASocket.Connect(IP, Porta);
+     ASocket.SendString(LinhasImpressao);
+     Resp := ASocket.RecvPacket(cTimeoutResp);
+     if (ASocket.LastError = 0) then
+     begin
+       fREspostaE1 := StringReplace(Resp, LF+'}'+LF+'{'+LF, ',', [rfReplaceAll]);
+       //DEBUG
+       WriteToFile('c:\temp\E1JsonResp.txt', fREspostaE1);
+     end;
+   finally
+     ASocket.Free;
+   end;
+ end;
+
+ procedure TACBrPosPrinterElginE1Service.EnviarPorTXT(
+   const LinhasImpressao: String);
+ var
+   ArqIN, ArqOUT: String;
+   TempoLimite: TDateTime;
+   SL: TStringList;
+   Ok: Boolean;
+ begin
    inc(fSeqArqE1);
    if fSeqArqE1 > 999 then
      fSeqArqE1 := 1;
 
    if (fPastaEntradaE1 = '') then
-      ArqJSON := ApplicationPath + 'in'
+      ArqIN := ApplicationPath + 'E1'+PathDelim+'pathIN'
     else
-      ArqJSON := fPastaEntradaE1;
+      ArqIN := fPastaEntradaE1;
+   ArqIN := PathWithDelim(ArqIN) + 'Comando' + IntToStrZero(fSeqArqE1, 3) + '.txt';
 
-   if not DirectoryExists(ArqJSON) then
-     ForceDirectories(ArqJSON);
+   if (fPastaSaidaE1 = '') then
+      ArqOUT := ApplicationPath + 'E1'+PathDelim+'pathOUT'
+    else
+      ArqOUT := fPastaSaidaE1;
+   ArqOUT := PathWithDelim(ArqOUT) + 'Comando' + IntToStrZero(fSeqArqE1, 3) + '*.txt';
 
-   ArqJSON := PathWithDelim(ArqJSON) + 'Comando' + IntToStrZero(fSeqArqE1, 3) + '.txt';
-   WriteToFile(ArqJSON, LinhasImpressao);
-  {$EndIf}
-end;
+   WriteToFile(ArqIN, LinhasImpressao);
+
+   Ok := False;
+   TempoLimite  := IncMilliSecond(Now, cTimeoutResp);
+   SL := TStringList.Create;
+   try
+     while (Now < TempoLimite) do
+     begin
+       FindFiles(ArqOUT, SL);
+       if (SL.Count > 0) then
+       begin
+         ArqOUT := SL[0];
+         SL.Clear;
+         SL.LoadFromFile(ArqOUT);
+         fREspostaE1 := SL.Text;
+         SysUtils.DeleteFile(ArqOUT);
+         Ok := True;
+         Break;
+       end;
+
+       Sleep(200);
+     end;
+   finally
+     SL.Free;
+   end;
+
+   if (not Ok) then
+     raise EACBrPosPrinterElginE1Service.Create('TimeOut');
+ end;
+{$EndIf}
 
 end.
 

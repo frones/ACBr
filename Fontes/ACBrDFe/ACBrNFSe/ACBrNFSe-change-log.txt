@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/59507-erro-convers%C3%A3o-data-retorno-nfs-e-provedor-elv2-stringtodatetime/
+  Por: Paulo R G Oliveira
+
 22/09/2020
 -- pnfsNFSeW_Elotech --
 [*] https://www.projetoacbr.com.br/forum/topic/59469-altera%C3%A7%C3%A3o-campos-do-layout-elotech-palotinapr/

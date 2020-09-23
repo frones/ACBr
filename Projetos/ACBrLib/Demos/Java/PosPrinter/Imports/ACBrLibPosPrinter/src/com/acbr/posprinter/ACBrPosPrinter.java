@@ -303,7 +303,10 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int ret = PosPrinterLib.INSTANCE.POS_AcharPortas(buffer, bufferLen);
         checkResult(ret);
 
-        return processResult(buffer, bufferLen).split("|");
+        String portas = processResult(buffer, bufferLen);
+        return Arrays.stream(portas.split("\\|"))
+                     .filter(x -> !x.isBlank() && !x.isEmpty())
+                     .toArray(String[]::new);
     }
     
     public void gravarLogoArquivo(String aPath) throws Exception {

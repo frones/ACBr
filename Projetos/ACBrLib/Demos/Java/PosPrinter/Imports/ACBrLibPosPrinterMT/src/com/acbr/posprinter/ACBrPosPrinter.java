@@ -8,12 +8,14 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;  
 import com.sun.jna.ptr.IntByReference;
+import com.sun.tools.javac.util.StringUtils;
 import java.io.File;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
@@ -125,7 +127,6 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     }
 
     public ACBrPosPrinter() throws Exception {
-        addPath();
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
             iniFile.createNewFile();
@@ -312,7 +313,10 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int ret = PosPrinterLib.INSTANCE.POS_AcharPortas(getHandle(), buffer, bufferLen);
         checkResult(ret);
 
-        return processResult(buffer, bufferLen).split("|");
+        String portas = processResult(buffer, bufferLen);
+        return Arrays.stream(portas.split("\\|"))
+                     .filter(x -> !x.isBlank() && !x.isEmpty())
+                     .toArray(String[]::new);
     }
     
     public void gravarLogoArquivo(String aPath) throws Exception {

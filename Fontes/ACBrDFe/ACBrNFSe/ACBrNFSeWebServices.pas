@@ -754,7 +754,8 @@ begin
           FPSoapAction := StringReplace(FPSoapAction, 'https://www.ereceita', 'http://www3.ereceita', [rfReplaceAll]);
       end;
 
-    proActconv202:
+    proActconv202,
+    proActconv204:
       begin
         if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
           Ambiente := 'nfse'
@@ -1013,7 +1014,7 @@ begin
     begin
       FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll]);
 
-      if FProvedor in [proActcon, proActconv202] then
+      if FProvedor in [proActcon, proActconv202, proActconv204] then
       begin
         if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
           FNameSpace := StringReplace(FNameSpace, '//nfse', '//homologacao', [rfReplaceAll])

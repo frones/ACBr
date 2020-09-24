@@ -731,6 +731,7 @@ begin
      proELv2,
      proGiss,
      proTcheInfov2,
+     proActconv204,
      proSmarAPDABRASF:
           begin
            Gerador.Prefixo := Prefixo3;

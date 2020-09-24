@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/09/2020
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/59532-ipatinga-mudou-para-abrasf-2-provedor-actcom/
+  Por: Leandro Rezende
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/59515-dados-de-retorno-de-nfse-faltando/
   Por: Farol TI

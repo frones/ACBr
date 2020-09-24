@@ -5965,7 +5965,7 @@ begin
           proIPM,
           proIssDSF,
           proSmarapd,
-		  proSiat: Result := True
+          proSiat: Result := True
         else
           Result := FConsSitLoteRPS.Executar;
         end;
@@ -6210,12 +6210,13 @@ begin
       else
       begin
         case Configuracoes.Geral.Provedor of
+          proGiap,
           proInfisc,
           proInfiscv11,
           proSafeWeb,
           proTiplanv2,
           proWebISSv2,
-          proTcheInfov2 : Result := True
+          proTcheInfov2: Result := True
         else
           begin
             if NotasFiscais.Count > 0 then

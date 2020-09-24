@@ -70,12 +70,22 @@ var
 
 implementation
 
-{$R *.lfm}
+uses
+  FileCtrl, TypInfo;
+
+{$R *.dfm}
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  I: TACBrCargaBalModelo;
 begin
-  cbxModelo.ItemIndex := 0;
   edtDiretorio.Clear;
+
+  cbxModelo.Items.Clear ;
+  for I := Low(TACBrCargaBalModelo) to High(TACBrCargaBalModelo) do
+    cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrCargaBalModelo), integer(I) ) ) ;
+
+  cbxModelo.ItemIndex := 0;
 end;
 
 procedure TfrmPrincipal.btnEscolherDiretorioClick(Sender: TObject);
@@ -112,7 +122,11 @@ begin
         Descricao       := Format('Descricao item %d', [I]);
         ValorVenda      := 1.23;
         Validade        := 15;
-        Tecla           := 0;
+
+        // Teclado
+        Teclado.Codigo_Teclado := 0; // Preencher no caso de Toledo (Código do Teclado)
+        Teclado.Pagina_Teclado := 0; // Preencher no caso de Toledo (Pagina do Teclado)
+        Teclado.Tecla          := 0; // Código da Tecla
         InformacaoExtra.Receita := Format('Receita do item %d', [I]);
 //        Nutricional     := Format('Informação Nutricional do item %d', [I]);;
 

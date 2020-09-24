@@ -62,6 +62,20 @@ type
                                   tpTablete, tpSache, tpAlmodega, tpBife, tpFile, tpConcha, tpBala, tpPratoFundo, tpPitada, tpLata);
 
 
+  // Criado por causa da balanca toledo
+  TAcbrCargaBalTeclado = class
+  private
+    fTecla: integer;
+    fPaginaTeclado: integer;
+    fCodTeclado: integer;
+  public
+    constructor create;
+    property Codigo_Teclado : integer read fCodTeclado write fCodTeclado;
+    property Pagina_Teclado : integer read fPaginaTeclado write fPaginaTeclado;
+    property Tecla : integer read fTecla write fTecla;
+  end;
+
+
   TACBrCargaBalSetor = class
   private
     FCodigo: Integer;
@@ -159,7 +173,6 @@ type
 
   TACBrCargaBalItem = class
   private
-    FTecla: Integer;
     FValorVenda: Currency;
     FModeloEtiqueta: Smallint;
     FDescricao: String;
@@ -179,6 +192,7 @@ type
     FCodigoFornecedor: Smallint;
     FEAN13Fornecedor: string;
     FInformacaoExtra: TACBrCargaBalInformacaoExtra;
+    FTeclado: TAcbrCargaBalTeclado;
     function ObterCodigoInfoExtra(AModelo : TACBrCargaBalModelo) : Integer;
   Public
     constructor Create;
@@ -192,7 +206,7 @@ type
     property Validade: Smallint read FValidade write FValidade;
     property Descricao: String read FDescricao write FDescricao;
     property InformacaoExtra: TACBrCargaBalInformacaoExtra read FInformacaoExtra write FInformacaoExtra;
-    property Tecla: Integer read FTecla write FTecla;
+    property Teclado: TAcbrCargaBalTeclado read FTeclado write FTeclado;
     property Nutricional: TACBrCargaBalNutricional Read FNutricional Write FNutricional;
     property Tara: TACBrCargaBalTaras Read FTara Write FTara;
     property Fornecedor: TACBrCargaBalFornecedor Read FFornecedor Write FFornecedor;
@@ -342,6 +356,7 @@ begin
   FTara            := TACBrCargaBalTaras.Create;
   FFornecedor      := TACBrCargaBalFornecedor.Create;
   FInformacaoExtra := TACBrCargaBalInformacaoExtra.Create;
+  FTeclado         := TAcbrCargaBalTeclado.create;
 
   FCodigoTexto1    := 0;
   FCodigoTexto2    := 0;
@@ -351,6 +366,7 @@ end;
 
 destructor TACBrCargaBalItem.Destroy;
 begin
+  FTeclado.Free;
   FInformacaoExtra.Free;
   FFornecedor.Free;
   FSetor.Free;
@@ -659,12 +675,12 @@ begin
       LFIll(Produtos[i].Validade, 3)
     );
 
-    if (Produtos[i].Setor.Descricao <> '') or (Produtos[i].Tecla > 0) then
+    if (Produtos[i].Setor.Descricao <> '') or (Produtos[i].Teclado.Tecla > 0) then
     stlSetor.Add(
       RFill(Produtos[i].Setor.Descricao, 12) +
       LFIll(Produtos[i].Codigo, 6) +
       LFIll(i + 1, 4) +
-      LFill(Produtos[i].Tecla, 3)
+      LFill(Produtos[i].Teclado.Tecla, 3)
     );
 
     if (Produtos[i].Nutricional.Descricao <> '') then
@@ -921,12 +937,12 @@ begin
         LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
       );
 
-      if Produtos[i].Tecla > 0 then
+      if Produtos[i].Teclado.Tecla > 0 then
       begin
         stlTeclado.Add(
-          '01' +
-          '1' +
-          LFIll(Produtos[i].Tecla, 2) +
+          LFill(Produtos[i].Teclado.Codigo_Teclado, 2) +
+          LFill(Produtos[i].Teclado.Pagina_Teclado, 1) +
+          LFIll(Produtos[i].Teclado.Tecla, 2) +
           LFIll(Produtos[i].Codigo, 6) +
           '0' +
           RFIll(Produtos[i].Descricao, 24) +
@@ -1536,6 +1552,15 @@ begin
   fCodigo     := 0;
   FReceita    := EmptyStr;
   FObservacao := EmptyStr;
+end;
+
+{ TAcbrCargaBalTecla }
+
+constructor TAcbrCargaBalTeclado.create;
+begin
+  fCodTeclado := 1; //  Padrao por causa da toledo e pensando para que os outros programadores nao precisem mandar caso nao tenham
+  fPaginaTeclado := 1; // Padrao por causa da toledo
+  fTecla := 0;
 end;
 
 end.

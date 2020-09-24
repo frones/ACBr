@@ -45,6 +45,9 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
+  {$IfDef ANDROID}
+   System.Messaging,
+  {$EndIf}
   ACBrDevice, ACBrPosPrinter, ACBrBase;
 
 const
@@ -56,10 +59,15 @@ const
 
   CColunasImpressoraSmartPosElgin = 40;
   cTimeoutResp = 5000; // 5 seg
+  CRequestCodeImpressora = 30;
 
 type
 
   EACBrPosPrinterElginE1Service = class(Exception);
+
+  {$IfDef ANDROID}
+   TACBrPosPrinterElginErroMsg = procedure(const MsgErro: string) of object;
+  {$EndIf}
 
   { TE1Funcao }
 
@@ -122,10 +130,15 @@ type
     fIPePortaE1: String;
     fREspostaE1: String;
 
-  protected
+    {$IfDef ANDROID}
+     fMessageSubscriptionID: Integer;
+     fOnErroImpressao: TACBrPosPrinterElginErroMsg;
+    {$EndIf}
+ protected
     procedure Imprimir(const LinhasImpressao: String; var Tratado: Boolean);
     {$IfDef ANDROID}
      procedure EnviarPorIntent(const LinhasImpressao: String);
+     procedure HandleActivityMessage(const Sender: TObject; const M: TMessage);
     {$Else}
      procedure EnviarPorTCP(const LinhasImpressao: String);
      procedure EnviarPorTXT(const LinhasImpressao: String);
@@ -163,6 +176,9 @@ type
     property PastaSaidaE1: String read fPastaSaidaE1 write fPastaSaidaE1;
     property IPePortaE1: String read fIPePortaE1 write fIPePortaE1;
     property REspostaE1: string read fREspostaE1;
+    {$IfDef ANDROID}
+     property OnErroImpressao: TACBrPosPrinterElginErroMsg read fOnErroImpressao write fOnErroImpressao;
+    {$EndIf}
   end;
 
 implementation
@@ -170,7 +186,7 @@ implementation
 uses
   StrUtils, Math, DateUtils,
   {$IfDef ANDROID}
-  System.Messaging, System.IOUtils,
+  System.IOUtils,
   Androidapi.Helpers,  Androidapi.JNI.GraphicsContentViewText,
   Androidapi.JNI.JavaTypes, Androidapi.JNI.App,
   FMX.Platform.Android,
@@ -277,11 +293,13 @@ begin
          begin
            case FComandos[i].Parametros.Items[j].Tipo of
              tiBoolean:
-               JSParametro[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsBoolean;
+               JSParametro.B[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsBoolean;
              tiFloat:
-               JSParametro[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsFloat;
+               JSParametro.F[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsFloat;
+             tiInteger, tiInt64:
+               JSParametro.I[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsInteger;
            else
-              JSParametro[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsString;
+              JSParametro.S[ FComandos[i].Parametros.Items[j].Nome ] := FComandos[i].Parametros.Items[j].AsString;
            end;
          end;
        end;
@@ -311,9 +329,12 @@ begin
            JSParamPair := JSParametro.AsObject.Add( FComandos[i].Parametros.Items[j].Nome);
 
            case FComandos[i].Parametros.Items[j].Tipo of
-             tiBoolean: JSParamPair.Value.AsBoolean := FComandos[i].Parametros.Items[j].AsBoolean;
-             tiFloat: JSParamPair.Value.AsNumber := FComandos[i].Parametros.Items[j].AsFloat;
-             tiInteger, tiInt64: JSParamPair.Value.AsInteger := FComandos[i].Parametros.Items[j].AsInteger;
+             tiBoolean:
+               JSParamPair.Value.AsBoolean := FComandos[i].Parametros.Items[j].AsBoolean;
+             tiFloat:
+               JSParamPair.Value.AsNumber := FComandos[i].Parametros.Items[j].AsFloat;
+             tiInteger, tiInt64:
+               JSParamPair.Value.AsInteger := FComandos[i].Parametros.Items[j].AsInteger;
            else
               JSParamPair.Value.AsString := FComandos[i].Parametros.Items[j].AsString;
            end;
@@ -431,6 +452,11 @@ begin
   TagsNaoSuportadas.Add( cTagBarraMSI );
   TagsNaoSuportadas.Add( cTagLigaItalico );
   TagsNaoSuportadas.Add( cTagDesligaItalico );
+
+  {$IfDef ANDROID}
+   fMessageSubscriptionID := 0;
+   fOnErroImpressao := Nil;
+  {$EndIf}
 end;
 
 destructor TACBrPosPrinterElginE1Service.Destroy;
@@ -473,8 +499,11 @@ function TACBrPosPrinterElginE1Service.TraduzirTag(const ATag: AnsiString;
 begin
   TagTraduzida := '';
 
-  if (ATag = cTagZera) or (ATag = cTagReset) then
-    fE1JSon.Comandos.New('InicializaImpressora')
+  if ((ATag = cTagZera) or (ATag = cTagReset)) then
+  begin
+    if not (fModelo in [prnSmartPOS, prnM8])  then
+      fE1JSon.Comandos.New('InicializaImpressora')
+  end
 
   else if ATag = cTagPuloDeLinhas then
   begin
@@ -486,24 +515,28 @@ begin
           ((ATag = cTagCorteTotal) or ( (ATag = cTagCorte) and (fpPosPrinter.TipoCorte = ctTotal) ) ) then
   begin
     AddCmdPuloDeLinhas(fpPosPrinter.LinhasEntreCupons);
-    if fpPosPrinter.CortaPapel then
+    if fpPosPrinter.CortaPapel and (fModelo <> prnSmartPOS) then
       fE1JSon.Comandos.New('Corte').Parametros.AddField('avanco').AsInteger := 0;
     Result := True;
   end
 
   else if ATag = cTagAbreGaveta then
   begin
-    fE1JSon.Comandos.New('Corte').Parametros.AddField('avanco').AsInteger := 0;
+    if (fModelo <> prnSmartPOS)  then
+      fE1JSon.Comandos.New('AbreGavetaElgin');
     Result := True;
   end
 
   else if ATag = cTagBeep then
   begin
-    with fE1JSon.Comandos.New('SinalSonoro') do
+    if not (fModelo in [prnSmartPOS, prnM8])  then
     begin
-      Parametros.AddField('qtd').AsInteger := 1;
-      Parametros.AddField('tempoInicio').AsInteger := 5; // seg
-      Parametros.AddField('tempoFim').AsInteger := 0;
+      with fE1JSon.Comandos.New('SinalSonoro') do
+      begin
+        Parametros.AddField('qtd').AsInteger := 1;
+        Parametros.AddField('tempoInicio').AsInteger := 5; // seg
+        Parametros.AddField('tempoFim').AsInteger := 0;
+      end;
     end;
     Result := True;
   end
@@ -753,7 +786,7 @@ procedure TACBrPosPrinterElginE1Service.LerStatus(var AStatus: TACBrPosPrinterSt
     if (fREspostaE1 <> '') then
     begin
       {$IfDef USE_JSONDATAOBJECTS_UNIT}
-       AJSon := TJsonBaseObject.Parse(AValue) as TJsonObject;
+       AJSon := TJsonBaseObject.Parse(fREspostaE1) as TJsonObject;
        try
          Result := AJSon.I[cFuncaoStatus];
        finally
@@ -816,7 +849,7 @@ begin
   begin
     Parametros.AddField('tipo').AsInteger := IfThen(fModelo=prnSmartPOS, 5, IfThen(fModelo=prnM8, 6, 1));
     Parametros.AddField('modelo').AsString := IfThen(fModelo=prnSmartPOS, 'SmartPOS', IfThen(fModelo=prnM8, 'M8', 'i9'));
-    Parametros.AddField('conexao').AsString := 'USB';
+    Parametros.AddField('conexao').AsString := IfThen(fModelo=prnI9, 'USB', '');
     Parametros.AddField('parametro').AsInteger := 0;
   end;
 end;
@@ -887,14 +920,70 @@ end;
  procedure TACBrPosPrinterElginE1Service.EnviarPorIntent(const LinhasImpressao: String);
  var
    intentPrint: JIntent;
+   //JSON: string;
  begin
-   FMessageSubscriptionID := TMessageManager.DefaultManager.SubscribeToMessage(TMessageResultNotification, HandleActivityMessage);
-
-      intentPrint := TJIntent.JavaClass.init(StringToJString('com.elgin.e1.intentservice.IMPRESSAO'));
-      intentPrint.putExtra(StringToJString('direta'), StringToJString(LinhasImpressao));
-      TAndroidHelper.Activity.startActivityForResult(intentPrint, requestCodeImpressora);
-
+//     JSON :=
+//    '{"Modulo":"Impressor","Comando":[' +
+//    '{"Funcao":"AbreConexaoImpressora","Parametros":[{"tipo":5,"modelo":"SmartPOS","conexao":"","parametro":0}]},' +
+//    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":1}]},' +
+//    '{"Funcao":"ImpressaoTexto","Parametros":[{"dados":"Impressao Texto","posicao":1,"stilo":1,"tamanho":0}]},' +
+//    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":1}]},' +
+//    '{"Funcao":"ImpressaoTexto","Parametros":[{"dados":"Impressao Texto Expandido","posicao":1,"stilo":0,"tamanho":17}]},' +
+//    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":1}]},' +
+//    '{"Funcao":"ImpressaoTexto","Parametros":[{"dados":"Impressao de Texto Longo, muito Longo com mais linhas que a impressora suporta","posicao":0,"stilo":8,"tamanho":0}]},' +
+//    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":1}]},' +
+//    '{"Funcao":"DefinePosicao","Parametros":[{"posicao":1}]},' +
+//    '{"Funcao":"ImpressaoCodigoBarras","Parametros":[{"tipo":8,"dados":"{C0123456789","altura":20,"largura":1,"HRI":2}]},' +
+//    '{"Funcao":"DefinePosicao","Parametros":[{"posicao":1}]},' +
+//    '{"Funcao":"ImpressaoQRCode","Parametros":[{"dados":"www.clubeautomacaoelgin.com.br","tamanho":5,"nivelCorrecao":2}]},' +
+//    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":3}]},' +
+//    '{"Funcao":"FechaConexaoImpressora"}]}';
+
+   fMessageSubscriptionID := TMessageManager.DefaultManager.SubscribeToMessage(TMessageResultNotification, HandleActivityMessage);
+   intentPrint := TJIntent.JavaClass.init(StringToJString('com.elgin.e1.intentservice.IMPRESSAO'));
+   intentPrint.putExtra(StringToJString('direta'), StringToJString(LinhasImpressao));
+   TAndroidHelper.Activity.startActivityForResult(intentPrint, CRequestCodeImpressora);
  end;
+
+procedure TACBrPosPrinterElginE1Service.HandleActivityMessage(const Sender: TObject; const M: TMessage);
+var
+  resultIntent: JIntent;
+  requestCode, resultCode: Integer;
+  erroStr, retorno: String;
+begin
+  if M is TMessageResultNotification then
+  begin
+    TMessageManager.DefaultManager.Unsubscribe(TMessageResultNotification, fMessageSubscriptionID);
+    fMessageSubscriptionID := 0;
+
+    if Assigned(fOnErroImpressao) then
+    begin
+      resultIntent := TMessageResultNotification(M).Value;
+      requestCode := TMessageResultNotification(M).RequestCode;
+      resultCode := TMessageResultNotification(M).ResultCode;
+
+      if( requestCode = CRequestCodeImpressora ) then
+      begin
+        if  (resultCode = TJActivity.JavaClass.RESULT_OK) then
+        begin
+          retorno := JStringToString(resultIntent.getStringExtra(StringToJString('retorno')));
+
+          if (retorno <> '1') then
+          begin
+            if resultIntent.hasExtra(StringToJString('erro')) then
+            begin
+              erroStr := 'Erro na impressão.' + sLineBreak +
+                         JStringToString(resultIntent.getStringExtra(StringToJString('erro')));
+              fOnErroImpressao(erroStr);
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+
 {$Else}
  procedure TACBrPosPrinterElginE1Service.EnviarPorTCP(
    const LinhasImpressao: String);

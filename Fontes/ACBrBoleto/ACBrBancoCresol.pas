@@ -377,13 +377,13 @@ var
   CodMotivo_19, rAgencia    :String;
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
-  rCodEmpresa               :String;
+  rCodConvenio              :String;
 begin
    if StrToIntDef(copy(ARetorno.Strings[0], 77, 3), -1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
 
-   rCodEmpresa:= trim(Copy(ARetorno[0], 27, 20));
+   rCodConvenio := trim(Copy(ARetorno[0], 27, 20)); 
    rCedente   := trim(Copy(ARetorno[0], 47, 30));
 
    rAgencia := trim(Copy(ARetorno[1], 25, ACBrBanco.TamanhoAgencia));
@@ -412,7 +412,8 @@ begin
 
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
+
+      if (not LeCedenteRetorno) and (rCodConvenio <> PadLeft(OnlyNumber(Cedente.Convenio),20,'0')) then 
          raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
 
       case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
@@ -430,7 +431,6 @@ begin
            // Retorno quando é CPF está vindo errado por isso ignora erro na atribuição
          end;
 
-         Cedente.CodigoCedente:= rCodEmpresa;
          Cedente.Nome         := rCedente;
          Cedente.Agencia      := rAgencia;
          Cedente.AgenciaDigito := '0';

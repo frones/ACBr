@@ -44,6 +44,8 @@ Símbolo : Significado
 
 24/09/2020
 -- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/59515-dados-de-retorno-de-nfse-faltando/
+  Por: Farol TI
 [*] https://www.projetoacbr.com.br/forum/topic/57689-erro-401-ao-enviar-nfse-provedor-giap/?do=findComment&comment=390720&_rid=63
   Por: Carlos Junior
 

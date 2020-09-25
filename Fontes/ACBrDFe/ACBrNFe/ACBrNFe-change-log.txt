@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/09/2020
+-- ACBrNFeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/59543-sugest%C3%A3o-de-melhoria-no-retorno-da-nfe-do-sefaz/
+   Por: Higor Craco Baltieri
+
 17/09/2020
 -- ACBrNFeNotasFiscais --
 [*] Adicionado prioridade de leitura do total ISSQNtot com nomes padrão do manual

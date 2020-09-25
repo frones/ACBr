@@ -2416,7 +2416,13 @@ begin
                   AProcNFe := TProcNFe.Create;
                   try
                     AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
-                    AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
+//                    AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
+
+                    // A SEFAZ-PR esta retornado o XML de processamento da NFe
+                    // fora do padrão, os atributos versao e Id estão sendo
+                    // gerados com apostrofe em vez de aspas.
+                    AProcNFe.XML_Prot := StringReplace(NFeRetorno.XMLprotNFe, '''', '"', [rfReplaceAll]);
+
                     AProcNFe.Versao := NFeRetorno.protNFe.Versao;
                     if AProcNFe.Versao = '' then
                       AProcNFe.Versao := FPVersaoServico;

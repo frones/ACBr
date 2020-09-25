@@ -34,11 +34,13 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl, FMX.StdCtrls, FMX.Controls.Presentation,
-  FMX.Gestures, System.Actions, FMX.ActnList, ACBrBase, ACBrPosPrinter,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
+  FMX.StdCtrls, FMX.Controls.Presentation, FMX.Gestures, System.Actions, FMX.ActnList,
+  ACBrBase, ACBrPosPrinter, ACBrPosPrinterElginE1Service,
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
-  FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard;
+  FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
+  FMX.Memo.Types;
 
 type
   TPosPrinterAndroidTesteForm = class(TForm)
@@ -122,8 +124,11 @@ type
     procedure btnLimparClick(Sender: TObject);
     procedure btAcentosClick(Sender: TObject);
     procedure btBeepClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure cbxModeloChange(Sender: TObject);
   private
     { Private declarations }
+    fE1Printer: TACBrPosPrinterElginE1Service;
     FVKService: IFMXVirtualKeyboardService;
 
     function CalcularNomeArqINI: String;
@@ -131,6 +136,8 @@ type
     procedure GravarConfiguracao;
     procedure ConfigurarACBrPosPrinter;
     function PedirPermissoes: Boolean;
+
+    procedure ExibirErroImpressaoE1(const MsgErro: string);
   public
     { Public declarations }
   end;
@@ -176,7 +183,25 @@ begin
   if cbxModelo.Items.Count > 0 then
     cbxModelo.ItemIndex := 0;
 
+  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  {$IfDef ANDROID}
+   fE1Printer.Modelo := prnSmartPOS;  // prnM8
+   fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
+  {$Else}
+   fE1Printer.Modelo := prnI9;
+   // Usar por TXT
+   fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
+   fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
+   // Usar por TCP
+   //fE1Printer.IPePortaE1 := '192.168.56.1:89';
+  {$EndIf}
+
   LerConfiguracao;
+end;
+
+procedure TPosPrinterAndroidTesteForm.FormDestroy(Sender: TObject);
+begin
+  fE1Printer.Free;
 end;
 
 function TPosPrinterAndroidTesteForm.PedirPermissoes: Boolean;
@@ -192,12 +217,17 @@ begin
       var
         GR: TPermissionStatus;
       begin
-        for GR in AGrantResults do
-          if (GR <> TPermissionStatus.Granted) then
-          begin
-            Ok := False;
-            Break;
-          end;
+        Ok := (Length(AGrantResults) = 3);
+
+        if Ok then
+        begin
+          for GR in AGrantResults do
+            if (GR <> TPermissionStatus.Granted) then
+            begin
+              Ok := False;
+              Break;
+            end;
+        end;
       end );
 
   if not OK then
@@ -411,6 +441,7 @@ begin
   cbxImpressorasBth.Items.Clear;
   try
     ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+    cbxImpressorasBth.Items.Add('NULL');
   except
   end;
 end;
@@ -491,6 +522,31 @@ begin
   Result := ApplicationPath + 'ACBrPosPrinter.ini';
 end;
 
+procedure TPosPrinterAndroidTesteForm.cbxModeloChange(Sender: TObject);
+begin
+  try
+    if cbxModelo.ItemIndex = Integer(ppExterno) then
+    begin
+      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      ACBrPosPrinter1.Modelo := ppExterno;
+      cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
+      lbImpressoras.Enabled := False;
+    end
+    else
+    begin
+      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+      if cbxImpressorasBth.ItemIndex = cbxImpressorasBth.Items.IndexOf('NULL') then
+        cbxImpressorasBth.ItemIndex := -1;
+
+      lbImpressoras.Enabled := True;
+    end;
+  except
+    cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
+    lbImpressoras.Enabled := True;
+    raise ;
+  end ;
+end;
+
 procedure TPosPrinterAndroidTesteForm.ConfigurarACBrPosPrinter;
 begin
   if not PedirPermissoes then
@@ -511,6 +567,14 @@ begin
   ACBrPosPrinter1.ConfigLogo.KeyCode1 := 1;
   ACBrPosPrinter1.ConfigLogo.KeyCode2 := 0;
   ACBrPosPrinter1.ControlePorta := cbControlePorta.IsChecked;
+end;
+
+procedure TPosPrinterAndroidTesteForm.ExibirErroImpressaoE1(
+  const MsgErro: string);
+begin
+  TDialogService.MessageDialog( MsgErro,
+                                TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],
+                                TMsgDlgBtn.mbOk, 0, nil, nil);
 end;
 
 procedure TPosPrinterAndroidTesteForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);

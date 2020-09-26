@@ -1314,7 +1314,7 @@ end;
 procedure TTestCaseACBrValidadorPlaca.SetUp;
 begin
   fACBrValidador := TACBrValidador.Create(nil);
-  fACBrValidador.TipoDocto := docPlaca;
+  fACBrValidador.TipoDocto := docPlacaMercosul;
 end;
 
 procedure TTestCaseACBrValidadorPlaca.TearDown;

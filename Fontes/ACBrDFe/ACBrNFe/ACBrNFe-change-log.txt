@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2020
+-- pcnInutNFe --
+[*] Ajuste na leitura do XML de retorno de inutilização em UTF-8 com caracteres especiais.
+    https://www.projetoacbr.com.br/forum/topic/59542-sugestão-de-melhoria-na-impressão-da-inutilização-de-nota-fiscal/
+   Por: BigWings
+
 25/09/2020
 -- ACBrNFeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/59543-sugest%C3%A3o-de-melhoria-no-retorno-da-nfe-do-sefaz/

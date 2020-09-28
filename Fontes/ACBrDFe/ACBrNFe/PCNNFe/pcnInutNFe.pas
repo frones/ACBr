@@ -206,7 +206,7 @@ begin
   RetornoInutNFe := TRetInutNFe.Create;
   try
     // Lendo dados do pedido de inutilização, se houver...
-    Leitor.Arquivo := AXML;
+    Leitor.Arquivo := DecodeToString(AXML, True);
 
     Result := ( leitor.rExtrai(1, 'infInut') <> '');
     if Result then
@@ -234,7 +234,7 @@ begin
     end;
 
     // Lendo dados do retorno, se houver
-    RetornoInutNFe.Leitor.Arquivo := AXML;
+    RetornoInutNFe.Leitor.Arquivo := DecodeToString(AXML, True);
 
     Result := RetornoInutNFe.LerXml;
 

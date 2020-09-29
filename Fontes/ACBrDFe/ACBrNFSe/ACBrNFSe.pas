@@ -100,7 +100,8 @@ type
                                const ANumLote: String = ''): Boolean;
     function ConsultarLoteRps(const ANumLote, AProtocolo: string): Boolean;
     function ConsultarNFSeporRps(const ANumero, ASerie, ATipo: String;
-                                 const ANumLote: String = ''): Boolean;
+                                 const ANumLote: String = '';
+                                 const ACodMunicipioTOM: Integer = 0): Boolean;
     function ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;
       const ANumeroNFSe: String = ''; APagina: Integer = 1;
       const ACNPJTomador: String = ''; const AIMTomador: String = '';
@@ -546,13 +547,14 @@ begin
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(const ANumero, ASerie, ATipo: String;
-                                       const ANumLote: String = ''): Boolean;
+                                       const ANumLote: String = '';
+                                       const ACodMunicipioTOM: Integer = 0): Boolean;
 begin
 //Removido por não ter necessidade de preencher o componente.
 //  if NotasFiscais.Count <= 0 then
 //    GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
-  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ANumLote);
+  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ANumLote, ACodMunicipioTOM);
 end;
 
 function TACBrNFSe.ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;

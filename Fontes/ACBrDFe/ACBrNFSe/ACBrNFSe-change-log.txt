@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2020
+-- Diversos --
+[*] Implementado a consulta da NFSe por RPS para o provedor IPM
+  Por: Marcos
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/59083-mudan%C3%A7a-de-provedor-de-nfs-e-para-cidade-de-farroupilhars/?do=findComment&comment=391199&_rid=63
+  Por: Windel
+
 24/09/2020
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/59532-ipatinga-mudou-para-abrasf-2-provedor-actcom/

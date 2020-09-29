@@ -369,6 +369,7 @@ type
     FSerie: String;
     FTipo: String;
     FNumeroLote: String;
+    FCodMunicipioTOM: Integer;
 
   protected
     procedure DefinirURL; override;
@@ -379,8 +380,7 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
-      reintroduce; overload;
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais); reintroduce; overload;
     destructor Destroy; override;
     procedure Clear; override;
 
@@ -389,6 +389,7 @@ type
     property Tipo: String       read FTipo       write FTipo;
     //usado pelo provedor IssDsf
     property NumeroLote: String read FNumeroLote write FNumeroLote;
+    property CodMunicipioTOM: Integer read FCodMunicipioTOM write FCodMunicipioTOM; //IPM
   end;
 
 { TNFSeConsultarNFSe }
@@ -647,7 +648,8 @@ type
                               const ANumLote: String = ''): Boolean;
     function ConsultaLoteRps(const ANumLote, AProtocolo: String): Boolean;
     function ConsultaNFSeporRps(const ANumero, ASerie, ATipo: String;
-                                const ANumLote: String = ''): Boolean;
+                                const ANumLote: String = '';
+                                const ACodMunicipioTOM: Integer = 0): Boolean;
     function ConsultaNFSe(ADataInicial,
                           ADataFinal: TDateTime;
                           const NumeroNFSe: String = '';
@@ -4433,9 +4435,10 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroRps := FNumeroRPS;
-      SerieRps  := FSerie;
-      TipoRps   := FTipo;
+      NumeroRps       := FNumeroRPS;
+      SerieRps        := FSerie;
+      TipoRps         := FTipo;
+      CodMunicipioTOM := FCodMunicipioTOM;
 
       // Necessário para o provedor ISSDSF e CTA
       if FProvedor in [proIssDSF, proCTA, proSiat] then 
@@ -4511,7 +4514,7 @@ begin
       FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
   end;
 
-  if (FPDadosMsg = '') or (FDadosEnvelope = '') then
+  if (FPDadosMsg = '') or ((FDadosEnvelope = '') and (Provedor <> proIPM)) then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
 end;
@@ -6142,12 +6145,14 @@ begin
 end;
 
 function TWebServices.ConsultaNFSeporRps(const ANumero, ASerie, ATipo: String;
-                                         const ANumLote: String = ''): Boolean;
+                                         const ANumLote: String = '';
+                                         const ACodMunicipioTOM: Integer = 0): Boolean;
 begin
-  FConsNfseRps.FNumeroRps  := ANumero;
-  FConsNfseRps.FSerie      := ASerie;
-  FConsNfseRps.FTipo       := ATipo;
-  FConsNfseRps.FNumeroLote := ANumLote;
+  FConsNfseRps.FNumeroRps       := ANumero;
+  FConsNfseRps.FSerie           := ASerie;
+  FConsNfseRps.FTipo            := ATipo;
+  FConsNfseRps.FNumeroLote      := ANumLote;
+  FConsNfseRps.FCodMunicipioTOM := ACodMunicipioTOM;
 
   Result := FConsNfseRps.Executar;
 

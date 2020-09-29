@@ -662,9 +662,14 @@ begin
     end;
   end;
 
-  if (FProvedor in [ ProTecnos] ) then
+  {
+  if (FProvedor in [ ProTecnos]) then
     Gerador.wCampo(tcStr, '#37', 'NumeroProcesso', 01, 30, 1, NFSe.Servico.NumeroProcesso, DSC_NPROCESSO)
   else
+    Gerador.wCampo(tcStr, '#37', 'NumeroProcesso', 01, 30, 0, NFSe.Servico.NumeroProcesso, DSC_NPROCESSO);
+  }
+
+  if not (FProvedor in [ ProTecnos]) then
     Gerador.wCampo(tcStr, '#37', 'NumeroProcesso', 01, 30, 0, NFSe.Servico.NumeroProcesso, DSC_NPROCESSO);
 
   if FProvedor in [proTecnos] then
@@ -987,11 +992,11 @@ begin
 
   if FProvedor in [proTecnos] then
   begin
-   Gerador.wCampo(tcStr, '#1' , 'TipoNota        ' ,01,01,1 , '0' , DSC_TPAMB );
+   Gerador.wCampo(tcStr, '#1' , 'TipoNota        ' ,01,01,1 , '1' , DSC_TPAMB );
    Gerador.wCampo(tcStr, '#44', 'SiglaUF         ' , 2, 2,0 , NFSe.PrestadorServico.Endereco.UF, DSC_UF);
    Gerador.wCampo(tcStr, '#4' , 'IdCidade        ' , 7, 7,1 , NFSe.PrestadorServico.Endereco.CodigoMunicipio, DSC_CMUN);
-   Gerador.wCampo(tcStr, '#1' , 'EspecieDocumento' ,01,01,1 , '0' , DSC_TPAMB );
-   Gerador.wCampo(tcStr, '#1' , 'SerieTalonario  ' ,01,01,1 , '0' , DSC_TPAMB );
+//   Gerador.wCampo(tcStr, '#1' , 'EspecieDocumento' ,01,01,1 , '0' , DSC_TPAMB );
+//   Gerador.wCampo(tcStr, '#1' , 'SerieTalonario  ' ,01,01,1 , '0' , DSC_TPAMB );
    Gerador.wCampo(tcStr, '#1' , 'FormaPagamento  ' ,01,01,1 , '0' , DSC_TPAMB );
    Gerador.wCampo(tcStr, '#1' , 'NumeroParcelas  ' ,01,01,1 , '0' , DSC_TPAMB );
   end;

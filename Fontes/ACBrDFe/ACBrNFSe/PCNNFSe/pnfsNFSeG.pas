@@ -91,6 +91,7 @@ type
     FNomeInter: String;
 
     FCodMunicipio: Integer;
+    FCodMunicipioTOM: Integer;
     FCodigoCanc: String;
     FMotivoCanc: String;
     FIdLote: String;
@@ -200,9 +201,10 @@ type
     property IMInter: String        read FIMInter     write FIMInter;
     property NomeInter: String      read FNomeInter   write FNomeInter;
 
-    property CodMunicipio: Integer read FCodMunicipio write FCodMunicipio;
-    property CodigoCanc: String    read FCodigoCanc   write FCodigoCanc;
-    property MotivoCanc: String    read FMotivoCanc   write FMotivoCanc;
+    property CodMunicipio: Integer    read FCodMunicipio write FCodMunicipio;
+    property CodMunicipioTOM: Integer read FCodMunicipioTOM write FCodMunicipioTOM;
+    property CodigoCanc: String       read FCodigoCanc   write FCodigoCanc;
+    property MotivoCanc: String       read FMotivoCanc   write FMotivoCanc;
 
     // Layout - ISSDSF
     property VersaoXML: String            read FVersaoXML          write FVersaoXML;
@@ -1274,6 +1276,14 @@ begin
                   Gerador.wGrupo('/ChaveRPS');
                   Gerador.wGrupo('/Detalhe');
                 end;
+    proIPM: begin
+               Gerador.wGrupo('consulta_rps');
+               Gerador.wCampo(tcStr, '', 'cidade', 01, 04, 1, CodMunicipioTOM, '');
+               Gerador.wCampo(tcStr, '', 'serie_rps', 01, 02, 1, SerieRPS, '');
+               Gerador.wCampo(tcStr, '', 'numero_rps', 01, 09, 1, NumeroRPS, '');
+               Gerador.wGrupo('/consulta_rps');
+            end
+
   else
     begin
       Gerador.Prefixo := Prefixo3;

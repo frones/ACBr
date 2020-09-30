@@ -79,6 +79,30 @@ type
 
   TPedidos = array of TPedido;
 
+  TAbastecimento = record
+    DataHora: TDateTime;
+    Sequencia: Integer;
+    Bico: Integer;
+    Qtd: Double;
+    FormaPagto: Byte;
+    ValorPago: Currency;
+  end;
+
+  TAbastecimentos = array of TAbastecimento;
+
+  TBico = record
+    Bomba: Integer;
+    Tanque: Integer;
+    CodProduto: Integer;
+    Descricao: String;
+    CodigoANP: Integer;
+    CEST: String;
+    PrecoUnit: Currency;
+    Encrerrante: Double;
+  end;
+
+  TBicos = array of TBico;
+
   EFluxoInterrompido = class(Exception);
 
   { TfrPOSTEFServer }
@@ -407,6 +431,8 @@ type
     procedure tiIniciarTimer(Sender: TObject);
   private
     fPedidos: TPedidos;
+    fAbastecimentos: TAbastecimentos;
+    fBicos: TBicos;
     fcUF: Integer;
     fcMunList: TStringList;
     fDocFiscalCS: TCriticalSection;
@@ -459,6 +485,15 @@ type
     procedure PerguntarNumeroPessoas(const TerminalId: String; IndicePedido: Integer);
 
     procedure ExecutarFluxoFechamentoBomba(const TerminalId: String);
+    procedure ExibirMenuAbastecimentos(const TerminalId: String);
+    function ExibirAbastecimento(const TerminalId: String; IndiceAbastec: Integer): Boolean;
+    procedure EfetuarPagamentoAbastec(const TerminalId: String; IndiceAbastec: Integer);
+    procedure EfetuarPagamentoAbastecCartao(const TerminalId: String; IndiceAbastec: Integer);
+    function EfetuarPagamentoAbastecDinheiro(const TerminalId: String; IndiceAbastec: Integer): Boolean;
+    procedure EfetuarDocumentoFiscalAbastec(const TerminalId: String; IndiceAbastec: Integer);
+    procedure GerarDocumentoFiscalAbastec(IndiceAbastec: Integer);
+    procedure GerarNFCeAbastec(IndiceAbastec: Integer);
+    procedure GerarSATAbastec(IndiceAbastec: Integer);
 
     procedure ExecutarFluxoHomologacaoPayGo(const TerminalId: String);
     procedure ExibirTestesVendaHomologacao(const TerminalId: String);
@@ -503,7 +538,7 @@ type
 
     procedure IncluirPedidosSimuladosLoja;
     procedure IncluirPedidosSimuladosRestaurante;
-    procedure IncluirPedidosSimuladosPosto;
+    procedure IncluirAbastecimentosSimulados;
 
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
@@ -1476,7 +1511,7 @@ begin
   case cbTipoAplicacao.ItemIndex of
     0: IncluirPedidosSimuladosLoja;
     1: IncluirPedidosSimuladosRestaurante;
-    2: IncluirPedidosSimuladosPosto;
+    2: IncluirAbastecimentosSimulados;
   end;
 
   sgTerminais.Clear;
@@ -1531,9 +1566,6 @@ begin
 
   if (cbTipoAplicacao.ItemIndex < 0) then
     MsgErro := MsgErro + sLineBreak + '- Tipo de Aplicação não definido';
-
-  if (cbTipoAplicacao.ItemIndex = 2) then
-    MsgErro := MsgErro + sLineBreak + Format('- Aplicação "%s" ainda não implementada :(', [cbTipoAplicacao.Text]);
 
   MsgErro := Trim(MsgErro);
   if (MsgErro <> '') then
@@ -1821,7 +1853,8 @@ end;
 
 procedure TfrPOSTEFServer.GerarNFCe(IndicePedido: Integer);
 var
-  BaseCalculo, BaseCalculoTotal, ValorICMS, ValorICMSTotal, TotalItem, ValorTotalItens: Double;
+  BaseCalculo, BaseCalculoTotal, ValorICMS, ValorICMSTotal, TotalItem,
+    ValorTotalItens: Currency;
   i: Integer;
   APag: TpagCollectionItem;
 begin
@@ -2191,7 +2224,7 @@ end;
 
 procedure TfrPOSTEFServer.GerarSAT(IndicePedido: Integer);
 var
-  TotalItem, TotalGeral: Double;
+  TotalItem, TotalGeral: Currency;
   i: Integer;
   APag: TMPCollectionItem;
 begin
@@ -2218,7 +2251,7 @@ begin
         Prod.uCom     := fPedidos[IndicePedido].Items[i].UN;
         Prod.qCom     := fPedidos[IndicePedido].Items[i].Qtd;
         Prod.vUnCom   := fPedidos[IndicePedido].Items[i].PrecoUnit;
-        Prod.indRegra := irTruncamento;
+        Prod.indRegra := irArredondamento;
 
         TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
         TotalGeral := TotalGeral + TotalItem;
@@ -2367,8 +2400,471 @@ begin
 end;
 
 procedure TfrPOSTEFServer.ExecutarFluxoFechamentoBomba(const TerminalId: String);
+var
+  OP: SmallInt;
 begin
-  // TODO
+  OP := ACBrPOS1.ExecutarMenu( TerminalId,
+                               'ABASTECIMENTOS|'+
+                               'REIMPRESSAO|'+
+                               'ADMINISTRATIVO|'+
+                               'CANCELAMENTO|'+
+                               'S A I R',
+                               PadCenter('POSTO - ACBR', CACBrPOSPGWebColunasDisplay)
+                             );
+  case OP of
+    0: ExibirMenuAbastecimentos(TerminalId);
+    1: ExecutarReimpressao(TerminalId);
+    2: EfetuarAdministrativo(TerminalId);
+    3: EfetuarCancelamento(TerminalId);
+  end;
+end;
+
+procedure TfrPOSTEFServer.ExibirMenuAbastecimentos(const TerminalId: String);
+var
+  SL: TStringList;
+  OP: SmallInt;
+  i, l, IndiceAbastec, NumAbastec: Integer;
+  AbastecListados: array of Integer;
+  TotalItem: Currency;
+begin
+  SL := TStringList.Create;
+  try
+    {
+      *** NOTA ***
+      Aqui você deve ler os Pedidos Pendentes no Seu Banco de Dados, com algum
+      Filtro, para Exibir apenas os Pedidos em aberto e relacionados a esse POS
+    }
+    NumAbastec := Length(fAbastecimentos)-1;
+    SetLength(AbastecListados, 0);
+    for i := 0 to NumAbastec do
+      if (fAbastecimentos[i].FormaPagto = 0) then  // não foi pago ?
+      begin
+        l := Length(AbastecListados);
+        SetLength(AbastecListados, l+1);
+        AbastecListados[l] := i;
+        TotalItem := Trunc(fAbastecimentos[i].Qtd * fBicos[fAbastecimentos[i].Bico].PrecoUnit * 100) / 100;
+        SL.Add( PadRight(fBicos[fAbastecimentos[i].Bico].Descricao,7) + ' ' +
+                IntToStrZero(fAbastecimentos[i].Bico+1, 2) +
+                PadLeft('$'+FormatFloatBr(TotalItem), 8) );
+      end;
+
+    SL.Add('C A N C E L A R');
+    OP := ACBrPOS1.ExecutarMenu(TerminalId, SL, 'ABASTECIMENTO ?');
+
+    if (OP >= 0) and (OP < SL.Count-1) then
+    begin
+      IndiceAbastec := AbastecListados[OP];
+      // Exibindo o Abastecimento na Tela, para confirmação //
+      if not ExibirAbastecimento(TerminalId, IndiceAbastec) then
+        Exit;
+
+      // Efetuando pagamento do Abastecimento
+      EfetuarPagamentoAbastec(TerminalId, IndiceAbastec);
+
+      // Gerando e transmitindo o Documento Fiscal
+      EfetuarDocumentoFiscalAbastec(TerminalId, IndiceAbastec);
+    end;
+  finally
+    SL.Free;
+  end;
+end;
+
+function TfrPOSTEFServer.ExibirAbastecimento(const TerminalId: String;
+  IndiceAbastec: Integer): Boolean;
+var
+  Tecla: Integer;
+  TotalItem: Currency;
+begin
+  // Exibindo o Abastecimento na Tela, para confirmação //
+  with fAbastecimentos[IndiceAbastec] do
+  begin
+    TotalItem := Trunc(Qtd * fBicos[Bico].PrecoUnit * 100) / 100;
+    ACBrPOS1.ExibirMensagem(TerminalId,
+      PadCenter(FormatDateTime('HH:NN', DataHora) + ' ' +
+                fBicos[Bico].Descricao,
+                CACBrPOSPGWebColunasDisplay) +
+      PadRight( FormatFloatBr(msk6x3, Qtd) + 'L x ' +
+                FormatFloatBr(msk6x3, fBicos[Bico].PrecoUnit),
+                CACBrPOSPGWebColunasDisplay) +
+      'B:'+IntToStrZero(Bico+1, 2)+
+      PadLeft( 'Total: '+
+               FormatFloatBr(TotalItem, '0.00'),
+               CACBrPOSPGWebColunasDisplay-4) +
+      'C O N T I N U A R ?', 0);
+  end;
+
+  Tecla := ACBrPOS1.AguardarTecla(TerminalId, ACBrPOS1.TempoDesconexaoAutomatica);
+  Result := (Tecla = PTIKEY_OK);
+end;
+
+procedure TfrPOSTEFServer.EfetuarPagamentoAbastec(const TerminalId: String;
+  IndiceAbastec: Integer);
+var
+  OP: SmallInt;
+begin
+  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
+
+  case OP of
+    0: EfetuarPagamentoAbastecCartao(TerminalId, IndiceAbastec);
+    1:
+    begin
+      if not EfetuarPagamentoAbastecDinheiro(TerminalId, IndiceAbastec) then
+        raise EFluxoInterrompido.Create('');
+    end
+  else
+    raise EFluxoInterrompido.Create('');
+  end;
+end;
+
+procedure TfrPOSTEFServer.EfetuarPagamentoAbastecCartao(
+  const TerminalId: String; IndiceAbastec: Integer);
+var
+  FormaPagto: Byte;
+  MsgErro: String;
+  ValorTotal: Currency;
+begin
+  try
+    ValorTotal := Trunc(fAbastecimentos[IndiceAbastec].Qtd * fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit * 100) / 100;
+    ACBrPOS1.ParametrosAdicionais.Clear;
+    ACBrPOS1.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '01'; //01: à vista
+    ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorTotal);
+    if ACBrPOS1.TEFResp.Debito then
+      FormaPagto := CPAG_DEBITO
+    else
+      FormaPagto := CPAG_CREDITO;
+
+    fAbastecimentos[IndiceAbastec].FormaPagto := FormaPagto;
+    fAbastecimentos[IndiceAbastec].ValorPago := ValorTotal;
+  except
+    on EACBrPOSPGWeb do
+    begin
+      MsgErro := StringToBinaryString(ACBrPOS1.DadosDaTransacao.ValueInfo[PWINFO_RESULTMSG]);
+      if (Trim(MsgErro) = '') then
+        MsgErro := 'ERRO AO PROCESSAR' + CR + 'PAGAMENTO EM CARTAO';
+
+      ACBrPOS1.ExibirMensagem(TerminalId, MsgErro, 2);
+      raise;
+    end;
+
+    on Exception do
+      raise;
+  end;
+end;
+
+function TfrPOSTEFServer.EfetuarPagamentoAbastecDinheiro(
+  const TerminalId: String; IndiceAbastec: Integer): Boolean;
+var
+  ValorPago: Double;
+  AStr, MsgTroco: String;
+  ValorTotal, Troco: Currency;
+  TempoEspera: Integer;
+begin
+  Result := True;
+  ValorTotal := Trunc(fAbastecimentos[IndiceAbastec].Qtd * fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit * 100) / 100;
+  ValorPago := 0;
+  while Result and (ValorPago < ValorTotal) do
+  begin
+    AStr := IntToStr(Trunc(ValorTotal*100));
+    AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO DINHEIRO', '@@@.@@@,@@', 3, 8,
+                                False, False, False, 0, AStr, 3);
+    ValorPago := StrToIntDef(OnlyNumber(AStr),0)/100;
+    Result := (ValorPago > 0);
+
+    if Result  then
+    begin
+      if (ValorPago < ValorTotal) then
+        ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + CR +
+                                            'PAGAMENTO MINIMO:' + CR +
+                                            FormatFloatBr(ValorTotal), 3)
+      else
+      begin
+        fAbastecimentos[IndiceAbastec].FormaPagto := CPAG_DINHEIRO;
+        fAbastecimentos[IndiceAbastec].ValorPago := ValorPago;
+        MsgTroco := '';
+        TempoEspera := 0;
+        if ValorPago > ValorTotal then
+        begin
+          Troco := ValorPago - ValorTotal;
+          MsgTroco := CR + '* CONFIRA O TROCO *' + CR +
+                           'R$ '+FormatFloatBr(Troco);
+          TempoEspera := 3;
+        end;
+
+        ACBrPOS1.ExibirMensagem(TerminalId,
+          'PAGO.: R$ '+FormatFloatBr(ValorPago) + CR +
+          '* D I N H E I R O *' +
+          MsgTroco, TempoEspera);
+      end;
+    end;
+  end;
+end;
+
+procedure TfrPOSTEFServer.EfetuarDocumentoFiscalAbastec(
+  const TerminalId: String; IndiceAbastec: Integer);
+begin
+  TravarDocumentoFiscal(TerminalId);
+  try
+    GerarDocumentoFiscalAbastec(IndiceAbastec);
+    TransmitirDocumentoFiscal(TerminalId);
+    ImprimirDocumentoFiscal(TerminalId);
+  finally
+    LiberarDocumentoFiscal;
+  end;
+end;
+
+procedure TfrPOSTEFServer.GerarDocumentoFiscalAbastec(IndiceAbastec: Integer);
+begin
+  if DeveFazerEmissaoDeNFCe then
+    GerarNFCeAbastec(IndiceAbastec)
+  else if DeveFazerEmissaoDeSAT then
+    GerarSATAbastec(IndiceAbastec);
+end;
+
+procedure TfrPOSTEFServer.GerarNFCeAbastec(IndiceAbastec: Integer);
+var
+  BaseCalculo, BaseCalculoTotal, ValorICMS, ValorICMSTotal, TotalItem, ValorTotalItens: Currency;
+  i: Integer;
+  APag: TpagCollectionItem;
+begin
+  {
+    *** NOTA ***
+    1 - Aqui você deve consultar seu Banco de Dados, Ler o Pedido e calcular os Impostos
+        corretamente
+  }
+
+  ACBrNFe1.NotasFiscais.Clear;
+  with ACBrNFe1.NotasFiscais.Add.NFe do
+  begin
+    Ide.natOp     := 'VENDA';
+    Ide.indPag    := ipVista;
+    Ide.modelo    := 65;
+    Ide.serie     := 1;
+    Ide.nNF       := Trunc(seNFCeNumero.Value);
+    Ide.cNF       := GerarCodigoDFe(Ide.nNF);
+    Ide.dEmi      := now;
+    Ide.dSaiEnt   := now;
+    Ide.hSaiEnt   := now;
+    Ide.tpNF      := tnSaida;
+    Ide.tpEmis    := teNormal;  // Implementar NFCe OffLine
+    Ide.tpAmb     := TpcnTipoAmbiente(cbTipoAmb.ItemIndex);
+    Ide.cUF       := StrToInt(pEmitCodUF.Caption);
+    Ide.cMunFG    := StrToInt(pEmitCodCidade.Caption);
+    Ide.finNFe    := fnNormal;
+    Ide.tpImp     := tiNFCe;
+    Ide.indFinal  := cfConsumidorFinal;
+    Ide.indPres   := pcPresencial;
+
+    //if not swOnLine.IsChecked then
+    //begin
+    //  Ide.dhCont := date;
+    //  Ide.xJust  := 'Justificativa Contingencia';
+    //end;
+
+    Emit.CNPJCPF           := OnlyNumber(edtEmitCNPJ.Text);
+    Emit.IE                := OnlyNumber(edtEmitIE.Text);
+    Emit.IEST              := '';
+    Emit.xNome             := edtEmitRazao.Text;
+    Emit.xFant             := edtEmitFantasia.Text;
+    Emit.CRT := TpcnCRT(cbxTipoEmpresa.ItemIndex);
+
+    Emit.EnderEmit.fone    := edtEmitFone.Text;
+    Emit.EnderEmit.CEP     := StrToInt(OnlyNumber(edtEmitCEP.Text));
+    Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
+    Emit.EnderEmit.nro     := edtEmitNumero.Text;
+    Emit.EnderEmit.xCpl    := edtEmitComp.Text;
+    Emit.EnderEmit.xBairro := edtEmitBairro.Text;
+    Emit.EnderEmit.cMun    := StrToInt(pEmitCodCidade.Caption);
+    Emit.EnderEmit.xMun    := cbxEmitCidade.Text;
+    Emit.EnderEmit.UF      := cbxEmitUF.Text;
+    Emit.enderEmit.cPais   := 1058;
+    Emit.enderEmit.xPais   := 'BRASIL';
+
+    BaseCalculoTotal := 0;
+    ValorICMSTotal := 0;
+    ValorTotalItens := 0;
+    TotalItem := Trunc(fAbastecimentos[IndiceAbastec].Qtd * fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit * 100) / 100;
+    //Adicionando Produtos
+    with Det.New do
+    begin
+      Prod.nItem    := 1;
+      Prod.cProd    := IntToStr(fBicos[fAbastecimentos[IndiceAbastec].Bico].CodProduto);
+      Prod.xProd    := fBicos[fAbastecimentos[IndiceAbastec].Bico].Descricao;
+      Prod.cEAN     := 'SEM GTIN';
+      Prod.NCM      := '27101259';
+      Prod.CFOP     := '5656';
+      Prod.uCom     := 'LT';
+      Prod.qCom     := fAbastecimentos[IndiceAbastec].Qtd;
+      Prod.vUnCom   := fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit;
+      Prod.vProd    := TotalItem;
+
+      Prod.cEANTrib  := 'SEM GTIN';
+      Prod.uTrib     := 'LT';
+      Prod.qTrib     := fAbastecimentos[IndiceAbastec].Qtd;
+      Prod.vUnTrib   := fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit;
+      Prod.CEST      := fBicos[fAbastecimentos[IndiceAbastec].Bico].CEST;
+//    infAdProd := 'Informação Adicional do Produto';
+
+      with Prod.comb do
+      begin
+        cProdANP := fBicos[fAbastecimentos[IndiceAbastec].Bico].CodigoANP;
+        descANP := fBicos[fAbastecimentos[IndiceAbastec].Bico].Descricao;
+        UFcons := cbxEmitUF.Text ;
+        with encerrante do
+        begin
+          nBico := fAbastecimentos[IndiceAbastec].Bico+1;
+          nBomba := fBicos[fAbastecimentos[IndiceAbastec].Bico].Bomba;
+          nTanque := fBicos[fAbastecimentos[IndiceAbastec].Bico].Tanque;
+          vEncIni := fBicos[fAbastecimentos[IndiceAbastec].Bico].Encrerrante;
+          vEncFin := vEncIni + fAbastecimentos[IndiceAbastec].Qtd;
+
+          fBicos[fAbastecimentos[IndiceAbastec].Bico].Encrerrante := vEncFin;
+        end;
+      end;
+
+      with Imposto do
+      begin
+        // lei da transparencia nos impostos
+        vTotTrib := 0;
+
+        with ICMS do
+        begin
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            CST := cst60
+          else
+            CSOSN := csosn500;
+
+          orig  := oeNacional;
+          modBC := dbiValorOperacao;
+
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            BaseCalculo := TotalItem
+          else
+            BaseCalculo := 0;
+
+          BaseCalculoTotal := BaseCalculoTotal + BaseCalculo;
+
+          vBC     := BaseCalculo;
+          pICMS   := 18;
+
+          ValorICMS := vBC * pICMS;
+          ValorICMSTotal := ValorICMSTotal + ValorICMS;
+          ValorTotalItens := ValorTotalItens + TotalItem;
+
+          vICMS   := ValorICMS;
+          modBCST := dbisMargemValorAgregado;
+
+          vBCFCPST := TotalItem;
+        end;
+
+        PIS.CST := pis99;
+        COFINS.CST := cof99;
+      end;
+    end;
+
+    Total.ICMSTot.vBC     := BaseCalculoTotal;
+    Total.ICMSTot.vICMS   := ValorICMSTotal;
+    Total.ICMSTot.vProd   := ValorTotalItens;
+    Total.ICMSTot.vNF     := ValorTotalItens;
+
+    Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
+
+    APag := pag.New;
+    with APag do
+    begin
+      indPag := ipVista;
+      vPag := fAbastecimentos[IndiceAbastec].ValorPago;
+
+      case fAbastecimentos[IndiceAbastec].FormaPagto of
+        CPAG_DEBITO: tPag := fpCartaoDebito;
+        CPAG_CREDITO: tPag := fpCartaoCredito;
+      else
+        tPag :=  fpDinheiro;
+      end;
+
+      if tPag in [fpCartaoCredito, fpCartaoDebito] then
+      begin
+        DeduzirCredenciadoraNFCe(APag);
+        DeduzirBandeiraNFCe(APag);
+      end;
+    end;
+
+    if fAbastecimentos[IndiceAbastec].ValorPago > TotalItem then
+      pag.vTroco := (fAbastecimentos[IndiceAbastec].ValorPago - TotalItem);
+  end;
+
+  ACBrNFe1.NotasFiscais.GerarNFe;
+  ACBrNFe1.NotasFiscais.Assinar;
+  ACBrNFe1.NotasFiscais.GravarXML;
+
+  // Incrementando o número da NFCe
+  seNFCeNumero.Value := seNFCeNumero.Value + 1;
+  GravarConfiguracao;
+end;
+
+procedure TfrPOSTEFServer.GerarSATAbastec(IndiceAbastec: Integer);
+var
+  TotalItem, TotalGeral: Currency;
+  i: Integer;
+  APag: TMPCollectionItem;
+begin
+  TotalGeral := 0;
+
+  ACBrSAT1.InicializaCFe ;
+
+  // Montando uma Venda //
+  with ACBrSAT1.CFe do
+  begin
+    ide.numeroCaixa := seSATNumeroCaixa.Value;
+    ide.cNF := Random(999999);
+
+    //Dest.xNome := fAbastecimentos[IndiceAbastec].Nome;
+
+    with Det.New do
+    begin
+      nItem := i+1;
+      Prod.EhCombustivel := True;
+      Prod.cProd    := IntToStr(fBicos[fAbastecimentos[IndiceAbastec].Bico].CodProduto);
+      Prod.xProd    := fBicos[fAbastecimentos[IndiceAbastec].Bico].Descricao;
+      Prod.CFOP     := '5656';
+      Prod.uCom     := 'LT';
+      Prod.qCom     := fAbastecimentos[IndiceAbastec].Qtd;
+      Prod.vUnCom   := fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit;
+      Prod.CEST     := fBicos[fAbastecimentos[IndiceAbastec].Bico].CEST;
+
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
+      TotalGeral := TotalGeral + TotalItem;
+      Imposto.vItem12741 := TotalItem * 0.12;
+
+      with Prod.obsFiscoDet.Add do
+      begin
+        xCampoDet := 'Cod. Produto ANP';
+        xTextoDet := IntToStr(fBicos[fAbastecimentos[IndiceAbastec].Bico].CodigoANP);
+      end;
+
+      Imposto.ICMS.orig := oeNacional;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn500
+      else
+        Imposto.ICMS.CST := cst60;
+
+      Imposto.ICMS.pICMS := 18;
+    end;
+
+    APag := Pagto.New;
+    APag.vMP := fAbastecimentos[IndiceAbastec].ValorPago;
+
+    case fAbastecimentos[IndiceAbastec].FormaPagto of
+      CPAG_DEBITO: APag.cMP := mpCartaodeDebito;
+      CPAG_CREDITO: APag.cMP := mpCartaodeCredito;
+    else
+      APag.cMP := mpDinheiro;
+    end;
+
+    if APag.cMP in [mpCartaodeCredito, mpCartaodeDebito] then
+      DeduzirCredenciadoraSAT(APag);
+  end;
+
+  ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
 end;
 
 procedure TfrPOSTEFServer.ExecutarFluxoHomologacaoPayGo(const TerminalId: String);
@@ -2604,6 +3100,7 @@ begin
         MsgErro := 'ERRO AO PROCESSAR' + CR + 'PAGAMENTO EM CARTAO';
 
       ACBrPOS1.ExibirMensagem(TerminalId, MsgErro, 2);
+      raise;
     end;
 
     on Exception do
@@ -2630,8 +3127,8 @@ begin
     if Result  then
     begin
       if (ValorPago < ValorMinimo) then
-        ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + sLineBreak +
-                                            'PAGAMENTO MINIMO:' + sLineBreak +
+        ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + CR +
+                                            'PAGAMENTO MINIMO:' + CR +
                                             FormatFloatBr(ValorMinimo), 3)
       else
         IncluirPagamentoPedidoDinheiro(TerminalId, IndicePedido, ValorPago);
@@ -2656,12 +3153,15 @@ procedure TfrPOSTEFServer.IncluirPagamentoPedidoDinheiro(
 var
   MsgTroco: String;
   Troco: Double;
+  TempoEspera: Integer;
 begin
   IncluirPagamentoPedido(IndicePedido, CPAG_DINHEIRO, ValorPago);
   MsgTroco := '';
+  TempoEspera := 0;
   if fPedidos[IndicePedido].TotalPago > fPedidos[IndicePedido].ValorTotal then
   begin
     Troco := fPedidos[IndicePedido].TotalPago - fPedidos[IndicePedido].ValorTotal;
+    TempoEspera := 3;
     MsgTroco := CR + '* CONFIRA O TROCO *' + CR +
                      'R$ '+FormatFloatBr(Troco);
   end;
@@ -2669,7 +3169,7 @@ begin
   ACBrPOS1.ExibirMensagem(TerminalId,
     'PAGO.: R$ '+FormatFloatBr(ValorPago) + CR +
     '* D I N H E I R O *' +
-    MsgTroco);
+    MsgTroco, TempoEspera);
 end;
 
 procedure TfrPOSTEFServer.ImprimirDocumentoFiscal(const TerminalId: String);
@@ -2975,9 +3475,71 @@ begin
   SetLength(fPedidos[3].Pagamentos, 0);
 end;
 
-procedure TfrPOSTEFServer.IncluirPedidosSimuladosPosto;
+procedure TfrPOSTEFServer.IncluirAbastecimentosSimulados;
 begin
-  // TODO
+  SetLength(fBicos, 3);
+  fBicos[0].CodProduto := 1;
+  fBicos[0].Descricao := 'GASOLINA COMUM';
+  fBicos[0].CodigoANP := 320102001;
+  fBicos[0].CEST := '06.002.00';
+  fBicos[0].PrecoUnit := 4.268;
+  fBicos[0].Bomba := 1;
+  fBicos[0].Tanque := 1;
+  fBicos[0].Encrerrante := 100;
+
+  fBicos[1].CodProduto := 2;
+  fBicos[1].Descricao := 'ETANOL COMUM';
+  fBicos[1].CodigoANP := 810101001;
+  fBicos[1].CEST := '06.001.00';
+  fBicos[1].PrecoUnit := 2.782;
+  fBicos[1].Bomba := 2;
+  fBicos[1].Tanque := 2;
+  fBicos[1].Encrerrante := 1000;
+
+  fBicos[2].CodProduto := 3;
+  fBicos[2].Descricao := 'DIESEL BS10';
+  fBicos[2].CodigoANP := 820101030;
+  fBicos[2].CEST := '06.006.05';
+  fBicos[2].PrecoUnit := 3.661;
+  fBicos[2].Bomba := 3;
+  fBicos[2].Tanque := 3;
+  fBicos[2].Encrerrante := 2000;
+
+  SetLength(fAbastecimentos, 5);
+  fAbastecimentos[0].DataHora := IncMinute(Now,-80);
+  fAbastecimentos[0].Sequencia := 1;
+  fAbastecimentos[0].Bico := 0;
+  fAbastecimentos[0].Qtd := 50;
+  fAbastecimentos[0].FormaPagto := 0;
+  fAbastecimentos[0].ValorPago := 0;
+
+  fAbastecimentos[1].DataHora := IncMinute(Now,-70);
+  fAbastecimentos[1].Sequencia := 2;
+  fAbastecimentos[1].Bico := 1;
+  fAbastecimentos[1].Qtd := 25;
+  fAbastecimentos[1].FormaPagto := 0;
+  fAbastecimentos[1].ValorPago := 0;
+
+  fAbastecimentos[2].DataHora := IncMinute(Now,-50);
+  fAbastecimentos[2].Sequencia := 3;
+  fAbastecimentos[2].Bico := 2;
+  fAbastecimentos[2].Qtd := 63;
+  fAbastecimentos[2].FormaPagto := 0;
+  fAbastecimentos[2].ValorPago := 0;
+
+  fAbastecimentos[3].DataHora := IncMinute(Now,-30);
+  fAbastecimentos[3].Sequencia := 4;
+  fAbastecimentos[3].Bico := 0;
+  fAbastecimentos[3].Qtd := 11.715;
+  fAbastecimentos[3].FormaPagto := 0;
+  fAbastecimentos[3].ValorPago := 0;
+
+  fAbastecimentos[4].DataHora := IncMinute(Now,-10);
+  fAbastecimentos[4].Sequencia := 5;
+  fAbastecimentos[4].Bico := 1;
+  fAbastecimentos[4].Qtd := 50;
+  fAbastecimentos[4].FormaPagto := 0;
+  fAbastecimentos[4].ValorPago := 0;
 end;
 
 procedure TfrPOSTEFServer.LerConfiguracao;

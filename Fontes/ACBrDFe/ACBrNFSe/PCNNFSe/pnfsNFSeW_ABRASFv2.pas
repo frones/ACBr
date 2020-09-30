@@ -159,7 +159,7 @@ begin
       Gerador.wGrupo('Tomador');
 
     if (((NFSe.Tomador.Endereco.UF <> 'EX') and (NFSe.Tomador.Endereco.UF <> '')) or
-        ((FProvedor = proGoiania) and (NFSe.Tomador.Endereco.UF = ''))) and
+        ((FProvedor in [proGoiania, proMegaSoft]) and (NFSe.Tomador.Endereco.UF = ''))) and
        ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then

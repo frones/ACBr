@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/59611-corre%C3%A7%C3%A3o-megasoft-do-cpf-do-tomador/
+  Por: Haroldo
+
 29/09/2020
 -- Diversos --
 [*] Implementado a consulta da NFSe por RPS para o provedor IPM

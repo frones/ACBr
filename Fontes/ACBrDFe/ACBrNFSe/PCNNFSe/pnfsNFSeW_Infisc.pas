@@ -186,15 +186,15 @@ begin
   Gerador.wGrupo('/end');
 
   case Nfse.RegimeEspecialTributacao of
-    retNenhum,
-    retMicroempresaMunicipal,
-    retEstimativa,
-    retSociedadeProfissionais,
-    retCooperativa,
-    retMicroempresarioIndividual    : ; // Não tem informação no manual
-    retSimplesNacional              : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
-    retMicroempresarioEmpresaPP     : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '2', ''); // 2 - SIMEI
-    retLucroReal, retLucroPresumido : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '3', ''); // 3 - Normal
+    retSimplesNacional:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
+    retMicroempresarioEmpresaPP:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '2', ''); // 2 - SIMEI
+    retLucroReal,
+    retLucroPresumido:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '3', ''); // 3 - Normal
+  else
+    Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
   end;
 
   Gerador.wGrupo('/emit');
@@ -414,7 +414,7 @@ end;
 
 procedure TNFSeW_Infisc.GerarXML_Infisc_v10;
 begin
-  Gerador.Prefixo := '';
+  Gerador.Prefixo := FPrefixo4;
 
   Gerador.wGrupo('NFS-e');
 
@@ -512,15 +512,15 @@ begin
   Gerador.wCampo(tcStr, '', 'IE'    , 01, 015, 1, NFSe.Prestador.InscricaoEstadual, '');
 
   case Nfse.RegimeEspecialTributacao of
-    retNenhum,
-    retMicroempresaMunicipal,
-    retEstimativa,
-    retSociedadeProfissionais,
-    retCooperativa,
-    retMicroempresarioIndividual    : ; // Não tem informação no manual
-    retSimplesNacional              : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
-    retMicroempresarioEmpresaPP     : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '2', ''); // 2 - SIMEI
-    retLucroReal, retLucroPresumido : Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '3', ''); // 3 - Normal
+    retSimplesNacional:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
+    retMicroempresarioEmpresaPP:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '2', ''); // 2 - SIMEI
+    retLucroReal,
+    retLucroPresumido:
+      Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '3', ''); // 3 - Normal
+  else
+    Gerador.wCampo(tcStr, '', 'regimeTrib', 01, 01, 1, '1', ''); // 1 - Simples
   end;
 
   Gerador.wGrupo('/prest');
@@ -759,7 +759,7 @@ var
   lResultadoSobra: Word;
   lIndex: Integer;
 begin
-  Gerador.Prefixo := '';
+  Gerador.Prefixo := FPrefixo4;
 
   Gerador.wGrupo('NFS-e');
 

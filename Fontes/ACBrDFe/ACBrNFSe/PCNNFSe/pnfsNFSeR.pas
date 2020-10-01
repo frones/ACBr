@@ -1015,6 +1015,7 @@ begin
   NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'RPS');
   NFSe.IdentificacaoRps.Serie := Leitor.rCampo(tcStr, 'SEQUENCIA');
   NFSe.Competencia := Leitor.rCampo(tcStr, 'MESCOMP')+'/'+Leitor.rCampo(tcStr, 'ANOCOMP');
+  NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'RPS');
 
   DataHorBR := Leitor.rCampo(tcStr, 'DATA')+Leitor.rCampo(tcStr, 'HORA');
   NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');

@@ -702,7 +702,8 @@ begin
   FPMsg      := FGNRERetorno.descricao + #13 + Trim(SL.Text);
   SL.Free;
   //
-  Result := (FGNRERetorno.codigo = 401); // Lote em Processamento
+  Result := (FGNRERetorno.codigo = 401) or// Lote em Processamento
+            (FGNRERetorno.codigo = 0); // Para retornos do SEFAZ onde tem apenas o numero do recibo
 end;
 
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;

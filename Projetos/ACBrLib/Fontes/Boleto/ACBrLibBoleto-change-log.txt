@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2020
+--- ACBrLibBoletoBase --
+[-] Ajuste na passagem do parametro de Indice para os metodos:
+RetornarLinhaDigitavel, RetornarCodigoBarras, RetornarNossoNumero
+    (Por: José M S Junior)
+
 07/09/2020
 --- ACBrLibBoletoMT, ACBrLibBoletoST ---
 [+] Removido o metodo Boleto_ConfigImportar.

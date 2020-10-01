@@ -717,7 +717,10 @@ var
    Indice : Integer;
 begin
   try
-    Indice := StrToInt( IntToStrZero( eIndice,1 ));
+    Indice := 0;
+    if (eIndice >= 0) then
+      Indice := eIndice;
+
     GravarLog('Boleto_MontarNossoNumero', logNormal);
 
     BoletoDM.Travar;
@@ -750,7 +753,10 @@ var
    ABarras : String;
 begin
   try
-    Indice := StrToInt( IntToStrZero( eIndice, 1 ));
+    Indice := 0;
+    if (eIndice >= 0) then
+      Indice := eIndice;
+
     GravarLog('RetornaLinhaDigitavel', logNormal);
 
     BoletoDM.Travar;
@@ -782,7 +788,10 @@ var
    Indice : Integer;
 begin
   try
-    Indice := StrToInt( IntToStrZero( eIndice,1 ));
+    Indice := 0;
+    if (eIndice >= 0) then
+      Indice := eIndice;
+
     GravarLog('Boleto_RetornaCodigoBarras', logNormal);
 
     BoletoDM.Travar;

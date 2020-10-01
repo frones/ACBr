@@ -1402,8 +1402,10 @@ begin
      txtCpfCnpjPagador3.Caption      := txtCpfCnpjPagador2.Caption;
      txtNomeSacadorAval3.Caption     := txtNomeSacadorAval2.Caption;
      txtEndSacadorAval3.Caption      := txtEndSacadorAval2.Caption;
+     imgCodigoBarra.AutoSize         := False;
+     imgCodigoBarra.Width            := 432;
      imgCodigoBarra.Caption          := CodBarras;
-	 imgCodigoBarra.Margins.LeftMargin := 5; 
+     imgCodigoBarra.Margins.LeftMargin := 5;
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
      txtInstrucoes3.Lines.Text       := txtInstrucoes2.Lines.Text;
    end;
@@ -1482,6 +1484,8 @@ begin
       mIntrucoes.Lines.Text           := MensagemPadrao.Text;
 
       txtLinhaDigitavelCarne.Caption := LinhaDigitavel;
+      imgBarrasCarne.AutoSize         := False;
+      imgBarrasCarne.Width            := 432;
       imgBarrasCarne.Caption := CodBarras;
       txtOrientacoesBancoCarne.Lines.Text:=Banco.OrientacoesBanco.Text;
 
@@ -1635,6 +1639,8 @@ begin
 
       txtLinhaDigitavelRecTop.Caption  := LinhaDigitavel;
       txtLinhaDigitavelRecTopRecPag.Caption  := LinhaDigitavel;
+      imgBarrasRecTop1.AutoSize        := False;
+      imgBarrasRecTop1.Width           := 432;
       imgBarrasRecTop1.Caption         := CodBarras;
 	  imgBarrasRecTop1.Margins.LeftMargin := 5; 
    end;
@@ -1719,6 +1725,8 @@ begin
       end;
 
       lTertxtLinhaDigitavel.Caption   := LinhaDigitavel;
+      lTertxtCodBarras.AutoSize       := False;
+      lTertxtCodBarras.Width          := 432;
       lTertxtCodBarras.Caption        := CodBarras;
 
       MensagemPadrao.Clear;
@@ -1859,7 +1867,8 @@ begin
       txtEndCedenteDet.Caption              := Logradouro + ' ' + NumeroRes + ' ' + Complemento + ' ' +
                                                 'CEP: ' + CEP +', '+ Bairro + ', ' + Cidade + ' ' + UF;
     end;
-
+    imgCodigoBarraDet.AutoSize              := False;
+    imgCodigoBarraDet.Width                 := 432;
     imgCodigoBarraDet.Caption               := CodBarras;
     txtLinhaDigitavelDet.Caption            := LinhaDigitavel;
 

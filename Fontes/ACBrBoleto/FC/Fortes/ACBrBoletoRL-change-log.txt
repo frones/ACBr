@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2020
+ACBrBoletoFCFortesFr
+[*] Ajustes na configuração de impressão do código de barras, mantendo as barras em tamanho fixo. 
+A solução é para sanar problemas de impressão de Código de barras colorido em Linux
+
 27/08/2020
 ACBrBoletoFCFortesFr
 [*] Adicionado formatação CNPJCPF nos dados do sacado e avalista

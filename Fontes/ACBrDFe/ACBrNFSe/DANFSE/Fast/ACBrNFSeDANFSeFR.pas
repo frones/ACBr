@@ -433,7 +433,7 @@ begin
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('Tributacao', ftString, 1);
       Add('OutrosDescontos', ftCurrency);
-      Add('DescricaoTotalRetencoesDemonstrativo', ftString, 19);
+      Add('DescricaoTotalRetDemo', ftString, 19);
       Add('DescriçãoTributosFederais', ftString, 35);
 
       // Provedor SP
@@ -706,7 +706,7 @@ begin
         Add('TotalNota=TotalNota');
         Add('Tributacao=Tributacao');
         Add('OutrosDescontos=OutrosDescontos');
-        Add('DescricaoTotalRetencoesDemonstrativo=DescricaoTotalRetencoesDemonstrativo');
+        Add('DescricaoTotalRetDemo=DescricaoTotalRetDemo');
         Add('DescriçãoTributosFederais=DescriçãoTributosFederais');
         // Provedor SP
         Add('ValorCargaTributaria=ValorCargaTributaria');
@@ -1065,13 +1065,13 @@ begin
 
         if IssRetido = stRetencao then
         begin
-          FieldByName('DescricaoTotalRetencoesDemonstrativo').AsString := 'TOTAL RETENÇÕES';
-          FieldByName('DescriçãoTributosFederais').AsString            := 'RETENÇÕES DOS TRIBUTOS FEDERAIS';
+          FieldByName('DescricaoTotalRetDemo').AsString     := 'TOTAL RETENÇÕES';
+          FieldByName('DescriçãoTributosFederais').AsString := 'RETENÇÕES DOS TRIBUTOS FEDERAIS';
         end
         else
         begin
-          FieldByName('DescricaoTotalRetencoesDemonstrativo').AsString := 'TOTAL DEMONSTRATIVO';
-          FieldByName('DescriçãoTributosFederais').AsString            := 'DEMONSTRATIVO DOS TRIBUTOS FEDERAIS';
+          FieldByName('DescricaoTotalRetDemo').AsString     := 'TOTAL DEMONSTRATIVO';
+          FieldByName('DescriçãoTributosFederais').AsString := 'DEMONSTRATIVO DOS TRIBUTOS FEDERAIS';
         end;
 
         // Provedor SP

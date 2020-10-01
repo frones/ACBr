@@ -615,6 +615,7 @@ type
     PanelScroll: TPanel;
     PanelTitle: TPanel;
     rgImprimeDescAcrescItemNFe: TRadioGroup;
+    rgInfFormaPagNFe: TRadioGroup;
     rgrMsgCanhoto: TRadioGroup;
     rgImprimeTributos: TRadioGroup;
     rgInfAdicProduto: TRadioGroup;
@@ -1790,6 +1791,7 @@ var
   IForcarTagICMSSubs: TForcarGeracaoTag;
   IpcnImprimeDescAcrescItem: TpcnImprimeDescAcrescItem;
   IACBrLibRespostaTipo: TACBrLibRespostaTipo;
+  IInformacoesDePagamento : TpcnInformacoesDePagamento;
   iETQModelo : TACBrETQModelo ;
   iETQDPI: TACBrETQDPI;
   iETQUnidade: TACBrETQUnidade;
@@ -2258,6 +2260,11 @@ begin
   for IACBrLibRespostaTipo := Low(TACBrLibRespostaTipo) to High(TACBrLibRespostaTipo) do
     cbTipoResposta.Items.Add(copy( GetEnumName(TypeInfo(TACBrLibRespostaTipo), integer(IACBrLibRespostaTipo)), 4, 4) );
   cbTipoResposta.ItemIndex := 0;
+
+  rgInfFormaPagNFe.Items.Clear;
+  for IInformacoesDePagamento := Low(TpcnInformacoesDePagamento) to High(TpcnInformacoesDePagamento) do
+    rgInfFormaPagNFe.Items.Add(copy( GetEnumName(TypeInfo(TpcnInformacoesDePagamento), integer(IInformacoesDePagamento)), 4, 10) );
+  rgInfFormaPagNFe.ItemIndex := 0;
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
   try
@@ -4991,6 +4998,7 @@ begin
       cbxExpandirDadosAdicionaisAuto.Checked:= ExpandirDadosAdicionaisAuto;
       cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked:= ImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
       rgImprimeDescAcrescItemNFe.ItemIndex:= ImprimeDescAcrescItemNFe;
+      rgInfFormaPagNFe.ItemIndex          := ImprimirCampoFormaPagamento;
     end;
 
     with Impressao.DACTE do
@@ -6172,6 +6180,7 @@ begin
         ExpandirDadosAdicionaisAuto    := cbxExpandirDadosAdicionaisAuto.Checked;
         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
         ImprimeDescAcrescItemNFe   := rgImprimeDescAcrescItemNFe.ItemIndex;
+        ImprimirCampoFormaPagamento:= rgInfFormaPagNFe.ItemIndex;
       end;
 
       with Impressao.DACTE do
@@ -9027,6 +9036,7 @@ begin
       ACBrNFeDANFeRL1.ExpandirDadosAdicionaisAuto:= cbxExpandirDadosAdicionaisAuto.Checked;
       ACBrNFeDANFeRL1.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
       ACBrNFeDANFeRL1.ImprimeDescAcrescItem:= TpcnImprimeDescAcrescItem(rgImprimeDescAcrescItemNFe.ItemIndex);
+      ACBrNFeDANFeRL1.ExibeCampoDePagamento:= TpcnInformacoesDePagamento(rgInfFormaPagNFe.ItemIndex);
 
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then

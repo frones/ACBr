@@ -343,6 +343,7 @@ type
     LogoEmCima                       : Boolean;
     ExpandirDadosAdicionaisAuto      : Boolean;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
+    ImprimirCampoFormaPagamento      : Integer;
   end;
 
   TDACTE = record
@@ -1137,6 +1138,8 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFELogoEmCima                     , LogoEmCima );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
+      Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento, ImprimirCampoFormaPagamento);
+
     end;
 
     with DFe.Impressao.DACTE do
@@ -1806,6 +1809,8 @@ begin
       ExpandirDadosAdicionaisAuto:= Ini.ReadBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto      , ExpandirDadosAdicionaisAuto );
       ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina,
                                                         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
+      ImprimirCampoFormaPagamento   := Ini.ReadInteger( CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento  , ImprimirCampoFormaPagamento );
+
     end;
 
     with DFe.Impressao.DACTE do
@@ -2464,6 +2469,7 @@ begin
     ImprimirDadosDocReferenciados := True;
     ExibirBandInforAdicProduto := 0;
     ImprimeDescAcrescItemNFe   := 0;
+    ImprimirCampoFormaPagamento:= 0;
     LogoEmCima                 := False;
     ExpandirDadosAdicionaisAuto := False;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= False;

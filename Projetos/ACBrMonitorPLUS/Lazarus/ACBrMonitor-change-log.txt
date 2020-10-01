@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/09/2020
+-- ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts --
+[+] Adicionado configuração para impressão das Formas de Pagamento na NFe  (Menu: DFe/NFe/Impressao)
+
 19/08/2020
 -- DoACBrNFeUnit --
 [*] Ajuste ao ler arquivo .ini e atualizar dados validados pelo componente

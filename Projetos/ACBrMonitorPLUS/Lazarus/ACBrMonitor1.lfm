@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.10.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -10119,8 +10119,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 262
                     Height = 21
                     Top = 201
-                    Width = 222
-                    Caption = 'Imprimir Valor Líquido do Produto'
+                    Width = 179
+                    Caption = 'Imprimir Valor Líq. Produto'
                     Font.Height = -13
                     ParentFont = False
                     TabOrder = 13
@@ -10236,19 +10236,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 18
                   end
                   object cbxExpandirDadosAdicionaisAuto: TCheckBox
-                    Left = 555
+                    Left = 8
                     Height = 21
-                    Top = 179
-                    Width = 281
-                    Caption = 'Expandir Dados Adicionais Automaticamente'
+                    Top = 266
+                    Width = 246
+                    Caption = 'Expandir Dados Adicionais Automático'
                     Font.Height = -13
                     ParentFont = False
                     TabOrder = 19
                   end
                   object cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox
-                    Left = 555
+                    Left = 262
                     Height = 21
-                    Top = 201
+                    Top = 266
                     Width = 344
                     Caption = 'Imprime Continuação Dados Adicionais Primeira Pagina'
                     Font.Height = -13
@@ -10258,7 +10258,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object rgrMsgCanhoto: TRadioGroup
                     Left = 448
                     Height = 101
-                    Top = 66
+                    Top = 120
                     Width = 528
                     Anchors = [akTop, akLeft, akRight]
                     AutoFill = False
@@ -10327,6 +10327,33 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Sempre'
                     )
                     TabOrder = 22
+                  end
+                  object rgInfFormaPagNFe: TRadioGroup
+                    Left = 448
+                    Height = 43
+                    Top = 64
+                    Width = 272
+                    AutoFill = True
+                    Caption = 'Exibir Inf. Forma Pag.'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 3
+                    ClientHeight = 21
+                    ClientWidth = 268
+                    Columns = 3
+                    Font.Height = -13
+                    ItemIndex = 0
+                    Items.Strings = (
+                      'Nunca'
+                      'Adicionais'
+                      'Quadro'
+                    )
+                    ParentFont = False
+                    TabOrder = 23
                   end
                 end
                 object tsImpNFCe: TTabSheet
@@ -16719,6 +16746,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     ACBrNFe = ACBrNFe1
+    ExibeTotalTributosItem = True
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
     TributosPercentualPersonalizado = 0

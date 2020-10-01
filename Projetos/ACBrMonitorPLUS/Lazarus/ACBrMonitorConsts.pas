@@ -1017,6 +1017,7 @@ const
   CKeyDANFEExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
   CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContinuacaoDadosAdicionaisPrimeiraPagina';
   CKeyDANFEImprimeDescAcrescItemNFe = 'ImprimeDescAcrescItemNFe';
+  CKeyDANFEImprimirCampoFormaPagamento = 'ImprimirCampoFormaPagamento';
 
   CSecDANFCe =                         'DANFCe';
   CKeyDANFCeMargemInf =                'MargemInf';

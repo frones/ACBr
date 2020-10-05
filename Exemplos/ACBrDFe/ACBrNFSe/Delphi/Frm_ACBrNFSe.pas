@@ -604,7 +604,7 @@ begin
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
-      Tomador.Contato.Telefone := '22223333';
+      Tomador.Contato.Telefone := '1622223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
       Tomador.AtualizaTomador := snNao;

@@ -1,0 +1,11 @@
+-hbexe
+-inc
+-trace
+-gtcgi
+-icon=ACBrMonitor.ico
+
+ACBrMailDemo.prg
+ACBrMail.prg
+Debugger.prg
+xhb.hbc
+hbxpp.hbc

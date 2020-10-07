@@ -1543,6 +1543,7 @@ begin
             NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
           end;
 
+        proELv2,
         proSigCorp:
         begin
           DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');

@@ -93,7 +93,7 @@ begin
   Gerador.wCampo(tcStr, '', 'NomCidTmd', 01, 060, 1, NFSe.Tomador.Endereco.xMunicipio, '');
   Gerador.wCampo(tcStr, '', 'CodEstTmd', 02, 002, 1, NFSe.Tomador.Endereco.UF, '');
   Gerador.wCampo(tcStr, '', 'CEPTmd'   , 08, 008, 1, NFSe.Tomador.Endereco.CEP, '');
-  Gerador.wCampo(tcStr, '', 'EmlTmd'   , 01, 050, 1, '','');
+  Gerador.wCampo(tcStr, '', 'EmlTmd'   , 01, 050, 1, NFSe.Tomador.Contato.Email,'');
 end;
 
 procedure TNFSeW_Governa.GerarListaServicos;

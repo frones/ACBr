@@ -37,7 +37,14 @@ unit ACBrTEFDClass ;
 interface
 
 uses
-  Classes, Contnrs,
+  Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrTEFComum
   {$IFNDEF NOGUI}
     {$IfDef MSWINDOWS}
@@ -121,10 +128,11 @@ type
     fpOrdemPagamento: Integer;
     fpIndiceFPG_ECF: String;
 
-    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
     procedure SetIndiceFPG_ECF(const AValue: String);
     procedure SetOrdemPagamento(const AValue: Integer);
   public
+    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
+
     procedure Clear; override;
     procedure Assign(Source: TACBrTEFResp); override;
 
@@ -159,6 +167,8 @@ type
 
   TACBrTEFDExibeMsg = procedure( Operacao : TACBrTEFDOperacaoMensagem;
      Mensagem : String; var AModalResult : TModalResult ) of object ;
+
+  TACBrTEFDExibeQRCode = procedure(const Dados: String) of object ;
 
   TACBrTEFDOperacaoECF = ( opeAbreGerencial, opeFechaGerencial,
                            opePulaLinhas, opeSubTotalizaCupom, opeFechaCupom,
@@ -427,6 +437,8 @@ type
         Valor : Double) : Boolean; overload; virtual;
      Function PRE(Valor : Double; DocumentoVinculado : String = '';
         Moeda : Integer = 0) : Boolean; virtual;
+
+     procedure ExibirMensagemPinPad(const MsgPinPad: String); virtual;
    published
      property ArqLOG : String read fArqLOG write fArqLOG ;
      property LogDebug : Boolean read fLogDebug write fLogDebug default false;
@@ -440,7 +452,7 @@ type
 
    { TACBrTEFDClasses }
 
-   TACBrTEFDClassList = class(TObjectList)
+   TACBrTEFDClassList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
      protected
        procedure SetObject (Index: Integer; Item: TACBrTEFDClass);
        function GetObject (Index: Integer): TACBrTEFDClass;
@@ -1492,6 +1504,11 @@ begin
   end;
 end;
 
+procedure TACBrTEFDClass.ExibirMensagemPinPad(const MsgPinPad: String);
+begin
+  raise EACBrTEFDErro.Create('ExibirMensagemPinPad não disponível para: '+ClassName) ;
+end;
+
 procedure TACBrTEFDClass.ProcessarResposta ;
 var
    RespostaPendente: TACBrTEFDResp;
@@ -2216,12 +2233,12 @@ end;
 
 procedure TACBrTEFDClassList.SetObject(Index : Integer; Item : TACBrTEFDClass);
 begin
-  inherited SetItem (Index, Item) ;
+  inherited Items[Index] := Item;
 end;
 
 function TACBrTEFDClassList.GetObject(Index : Integer) : TACBrTEFDClass;
 begin
-  Result := inherited GetItem(Index) as TACBrTEFDClass ;
+  Result := TACBrTEFDClass(inherited Items[Index]);
 end;
 
 procedure TACBrTEFDClassList.Insert(Index : Integer; Obj : TACBrTEFDClass);

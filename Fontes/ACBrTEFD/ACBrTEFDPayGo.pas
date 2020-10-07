@@ -116,9 +116,8 @@ type
   { TACBrTEFDRespPayGo }
 
   TACBrTEFDRespPayGo = class( TACBrTEFDRespTXT )
-  protected
-    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
   public
+    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
     procedure ConteudoToProperty; override;
   end;
 

@@ -37,7 +37,14 @@ unit ACBrTEFComum;
 interface
 
 uses
-  Classes, SysUtils, contnrs,
+  Classes, SysUtils,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase;
 
 type
@@ -135,7 +142,7 @@ type
 
   { TACBrTEFRespListaCB - Lista para armazenar Objetos do tipo TACBrTEFRespCB }
 
-  TACBrTEFRespListaCB = class(TObjectList)
+  TACBrTEFRespListaCB = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
   protected
     FTotalTitulos: Double;
     FTotalTitulosNaoPago: Double;
@@ -173,7 +180,7 @@ type
   { TACBrTEFRespParcelas }
   { Lista de Objetos do tipo TACBrTEFParcela }
 
-  TACBrTEFRespParcelas = class(TObjectList)
+  TACBrTEFRespParcelas = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
   protected
     procedure SetObject(Index: Integer; Item: TACBrTEFRespParcela);
     function GetObject(Index: Integer): TACBrTEFRespParcela;
@@ -402,7 +409,7 @@ type
 
   { TACBrTEFRespostasPendentes }
 
-  TACBrTEFRespostasPendentes = class(TObjectList)
+  TACBrTEFRespostasPendentes = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
   private
     function GetTotalPago: Double;
     function GetTotalDesconto: Double;
@@ -672,12 +679,12 @@ end;
 
 procedure TACBrTEFRespListaCB.SetObject(Index: Integer; Item: TACBrTEFRespCB);
 begin
-  inherited SetItem(Index, Item);
+  inherited Items[Index] := Item;
 end;
 
 function TACBrTEFRespListaCB.GetObject(Index: Integer): TACBrTEFRespCB;
 begin
-  Result := inherited GetItem(Index) as TACBrTEFRespCB;
+  Result := TACBrTEFRespCB(inherited Items[Index]);
 end;
 
 function TACBrTEFRespListaCB.Add(Obj: TACBrTEFRespCB): Integer;
@@ -709,12 +716,12 @@ end;
 
 procedure TACBrTEFRespParcelas.SetObject(Index: Integer; Item: TACBrTEFRespParcela);
 begin
-  inherited SetItem(Index, Item);
+  inherited Items[Index] := Item;
 end;
 
 function TACBrTEFRespParcelas.GetObject(Index: Integer): TACBrTEFRespParcela;
 begin
-  Result := inherited GetItem(Index) as TACBrTEFRespParcela;
+  Result := TACBrTEFRespParcela(inherited Items[Index]);
 end;
 
 function TACBrTEFRespParcelas.Add(Obj: TACBrTEFRespParcela): Integer;
@@ -959,12 +966,12 @@ end;
 
 procedure TACBrTEFRespostasPendentes.SetObject(Index: Integer; Item: TACBrTEFResp);
 begin
-  inherited SetItem(Index, Item);
+  inherited Items[Index] := Item;
 end;
 
 function TACBrTEFRespostasPendentes.GetObject(Index: Integer): TACBrTEFResp;
 begin
-  Result := inherited GetItem(Index) as TACBrTEFResp;
+  Result := TACBrTEFResp(inherited Items[Index]);
 end;
 
 function TACBrTEFRespostasPendentes.Add(Obj: TACBrTEFResp): Integer;

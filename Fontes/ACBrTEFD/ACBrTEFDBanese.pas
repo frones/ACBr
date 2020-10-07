@@ -69,8 +69,8 @@ type
   TACBrTEFDRespBanese = class( TACBrTEFDResp )
   protected
     function GetTransacaoAprovada : Boolean; override;
-    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
   public
+    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
     procedure ConteudoToProperty; override;
     procedure GravaInformacao( const Identificacao : Integer;
       const Informacao : AnsiString );

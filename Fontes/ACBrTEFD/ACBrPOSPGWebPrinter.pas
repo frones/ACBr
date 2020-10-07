@@ -38,7 +38,14 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrPOS, ACBrPOSPGWebAPI;
+  ACBrPosPrinter, ACBrPOS, ACBrPOSPGWebAPI, ACBrConsts;
+
+const
+  // Essas Tags serão interpretadas no momento da Impressão, pois usam comandos específicos
+  CTAGS_POST_PROCESS: array[0..2] of string =
+    ( cTagFonteAlinhadaEsquerda, cTagfonteAlinhadaCentro, cTagFonteAlinhadaDireita );
+  CTAGS_AVANCO: array[0..3] of string =
+    (cTagCorte, cTagCorteParcial, cTagCorteTotal, cTagPulodePagina);
 
 type
 
@@ -66,7 +73,7 @@ implementation
 
 uses
   StrUtils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil;
 
 constructor TACBrPOSPGWebPrinter.Create(AOwner: TACBrPosPrinter;
   AACBrPOS: TACBrPOS);
@@ -236,12 +243,6 @@ end;
 
 function TACBrPOSPGWebPrinter.TraduzirTag(const ATag: AnsiString;
   var TagTraduzida: AnsiString): Boolean;
-const
-  // Essas Tags serão interpretadas no momento da Impressão, pois usam comandos específicos
-  CTAGS_POST_PROCESS: array[0..2] of string =
-    ( cTagFonteAlinhadaEsquerda, cTagfonteAlinhadaCentro, cTagFonteAlinhadaDireita );
-  CTAGS_AVANCO: array[0..3] of string =
-    (cTagCorte, cTagCorteParcial, cTagCorteTotal, cTagPulodePagina);
 begin
   TagTraduzida := '';
   Result := True;

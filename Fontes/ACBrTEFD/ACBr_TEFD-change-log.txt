@@ -46,6 +46,63 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/10/20
+-- ACBrPOSPGWebPrinter --
+[*] Remoção de Hints
+
+-- ACBrTEFComum --
+[*] Ajustes para usar Generics quando disponível
+
+-- ACBrTEFD, ACBrTEFDClass --
+[+] Adicionado o evento: OnExibeQRCode: TACBrTEFDExibeQRCode
+    TACBrTEFDExibeQRCode = procedure(const Dados: String) of object ;
+[+] Adicionado o Método:
+    procedure ExibirMensagemPinPad(const MsgPinPad: String);
+    - Para definir uma mensagem no PinPad
+[*] Ajustes para usar Generics quando disponível
+
+-- ACBrTEFDCliSiTef --
+[*] Ajustes para usar evento "OnExibeQRCode"
+[+] Implementado "ExibirMensagemPinPad"
+
+-- ACBrTEFDBanese, ACBrTEFDClass, ACBrTEFDPayGo --
+[*] Remoção de Warning, corrigndo a visibildade do método "ProcessarTipoInterno"
+
+-- ACBrTEFDPayGoWeb --
+[+] Implementado "ExibirMensagemPinPad"
+[+] Adicionada a propriedade "PortaPinPad: Integer"  default 0;  // -1 = Sem PinPad
+[+] Adicionada a propriedade "ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode"
+[*] Ajustes para usar evento "OnExibeQRCode"
+
+-- ACBrTEFPayGoComum --
+[+] Mapeado novos valores de PWINFO_ e PWOPER_, seguindo manual 1.22
+
+-- ACBrTEFPayGoWebComum --
+[*] Ajustes para inicio de suporte em Android
+[+] Mapeado novos valores de PWRET_
+[+] Adicionado suporte aos comandos:
+    PWDAT_DSPCHECKOUT  = 18;  // Mensagem a ser exibida no checkout
+    PWDAT_TSTKEY       = 19;  // Teste de chaves presentes no PIN-pad.
+    PWDAT_DSPQRCODE    = 20;  // QR Code, a ser exibido no checkout.
+[*] Método "ImprimirViaClienteReduzida" renomeado para "ImprimeViaClienteReduzida"
+[+] Adicionada as propriedades:
+    RemocaoCartaoPinPad: Boolean;
+    ExibeMensagemCheckout: Boolean;
+    ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode
+      TACBrTEFPGWebAPIExibicaoQRCode = (qrNaoSuportado, qrExibirNoPinPad, qrExibirNoCheckOut);
+[*] Método "IniciarTransacao" com tipo de parametro mudado de:
+    "iOPER: SmallInt" para "iOPER: Byte"
+[*] Remoção de Hint, em Delphi, no método "ExecutarTransacao"
+[+] Implementado "ExibirMensagemPinPad"
+[*] "AdicionarDadosObrigatorios", modificado para informar suporte a QRCode
+[*] "CalcularCapacidadesDaAutomacao", modificado para considerar
+    RemocaoCartaoPinPad, ExibeMensagemCheckout, ExibicaoQRCode
+[*] Método "PGWebFunctionDetect", modificado com novo parâmetro "FuncIsRequired"
+    PGWebFunctionDetect( FuncName: AnsiString; var LibPointer: Pointer;
+                         FuncIsRequired: Boolean = True) ;
+    - Permite carregar versões antigas da DLL sem erros em métodos que não existam
+    (por: DSA)
+
 02/09/20
 -- ACBrTEFPayGoComum --
 [*] Ajuste em "ConteudoToParcelas", para considerar que o Retorno, pode não

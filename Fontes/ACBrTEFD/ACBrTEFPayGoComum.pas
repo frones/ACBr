@@ -52,6 +52,11 @@ const
   PWOPER_REPRINT     = 16;  // Obtém o último comprovante gerado por uma transação
   PWOPER_RPTTRUNC    = 17;  // Obtém um relatório sintético das transações realizadas desde a última obtenção deste relatório
   PWOPER_RPTDETAIL   = 18;  // Relatório detalhado das transações realizadas na data informada, ou data atual.
+  PWOPER_REPRNTNTRANSACTION = 19; // Realiza uma reimpressão de qualquer transação
+  PWOPER_COMMTEST    = 20;  // Realiza um teste de comunicação com a adquirente.
+  PWOPER_RPTSUMMARY  = 21;  // Realiza um Relatório resumido das transações realizadas na data informada, ou data atual
+  PWOPER_TRANSACINQ  = 22;  // Realiza uma consulta de uma transação.
+  PWOPER_ROUTINGINQ  = 23;  // Realiza uma consulta de roteamento.
   PWOPER_ADMIN       = 32;  // Acessa qualquer transação que não seja disponibilizada pelo comando PWOPER_SALE. Um menu é apresentado para o operador selecionar a transação desejada.
   PWOPER_SALE        = 33;  // (Venda) Realiza o pagamento de mercadorias e/ou serviços vendidos pelo Estabelecimento ao Cliente (tipicamente, com cartão de crédito/débito), transferindo fundos entre as respectivas contas.
   PWOPER_SALEVOID    = 34;  // (Cancelamento de venda) Cancela uma transação PWOPER_SALE, realizando a transferência de fundos inversa
@@ -72,7 +77,26 @@ const
   PWOPER_LOYCREDVOID = 49;  // Cancela uma transação PWOPER_LOYCREDIT
   PWOPER_LOYDEBIT    = 50;  // Registra o resgate de pontos/prêmio pelo Cliente, a partir de um programa de fidelidade.
   PWOPER_LOYDEBVOID  = 51;  // Cancela uma transação PWOPER_LOYDEBIT
+  PWOPER_BILLPAYMENT = 52;  // Realiza um pagamento de conta/boleto/fatura.
+  PWOPER_DOCPAYMENTQ = 53;  // Realiza uma consulta de documento de cobrança.
+  PWOPER_LOGON       = 54;  // Realiza uma operação de logon no servidor.
+  PWOPER_SRCHPREAUTH = 55;  // Realiza uma busca de pré-autorização.
+  PWOPER_ADDPREAUTH  = 56;  // Realiza uma alteração no valor de uma pré-autorização.
   PWOPER_VOID        = 57;  // Exibe um menu com os cancelamentos disponíveis, caso só exista um tipo, este é selecionado automaticamente
+  PWOPER_STATISTICS  = 64;  // Realiza uma transação de estatísticas.
+  PWOPER_CARDPAYMENT = 65;  // Realiza um pagamento de cartão de crédito.
+  PWOPER_CARDPAYMENTVOID = 68;  // Cancela uma transação PWOPER_CARDPAYMENT.
+  PWOPER_CASHWDRWLVOID = 69;  // Cancela uma transação PWOPER_CASHWDRWL.
+  PWOPER_CARDUNLOCK  = 70;  // Realiza um desbloqueio de cartão.
+  PWOPER_UPDATEDCHIP = 72;  // Realiza uma atualização no chip do cartão.
+  PWOPER_RPTPROMOTIONAL = 73;  // Realiza uma transação de relatório promocional.
+  PWOPER_SALESUMMARY = 74;  // Imprime um resumo das transações de vendas.
+  PWOPER_STATISTICSAUTHORIZER = 75;  // Realiza uma estatística específica do autorizador.
+  PWOPER_OTHERADMIN  = 76;   // Realiza uma transação administrativa especificada pelo autorizador.
+  PWOPER_BILLPAYMENTVOID = 78;  // Cancela uma transação PWOPER_BILLPAYMENT.
+  PWOPER_TSTKEY      = 240; // Teste de chaves de criptografia do PIN-pad
+  PWOPER_COMMONDATA  = 250; // Realiza uma operação para obter os dados básicos do PdC. O resultado dessa operação deve ser consultado por meio da chamada de PW_iGetResult para as informações: PWINFO_AUTADDRESS, PWINFO_APN, PWINFO_LIBVERSION, PWINFO_POSID, PWINFO_DESTTCPIP, PWINFO_LOCALIP, PWINFO_GATEWAY, PWINFO_SUBNETMASK, PWINFO_PPPPWD , PWINFO_SSID.
+  PWOPER_SHOWPDC     = 251; // Exibe o ponto de captura configurado.
   PWOPER_VERSION     = 252; // (Versão) Permite consultar a versão da biblioteca atualmente em uso.
   PWOPER_CONFIG      = 253; // (Configuração) Visualiza e altera os parâmetros de operação locais da biblioteca
   PWOPER_MAINTENANCE = 254; // (Manutenção) Apaga todas as configurações do Ponto de Captura, devendo ser novamente realizada uma transação de Instalação.
@@ -82,6 +106,11 @@ const
   //==========================================================================================
   PWINFO_RET            = 0;      // Código do último Retorno (PWRET)  (uso interno do ACBr)
   PWINFO_OPERATION      = 2;      // Tipo de transação (PWOPER_xxx). Consultar os valores possíveis na descrição da função PW_iNewTransac
+  PWINFO_PPPPWD         = 3;      // Usuário para autenticação PPP.
+  PWINFO_LOCALIP        = 9;      // Endereço local no formato “VVV:VVV:VVV:VVV”, para conexão com IP fixo.
+  PWINFO_GATEWAY        = 10;     // Endereço de gateway, no formato “VVV.VVV.VVV.VVV”.
+  PWINFO_SUBNETMASK     = 11;     // Máscara de subrede, no formato “VVV.VVV.VVV.VVV”.
+  PWINFO_SSID           = 12;     // SSID da rede Wi-Fi cadastrada
   PWINFO_POSID          = 17;     // Identificador do Ponto de Captura.
   PWINFO_AUTNAME        = 21;     // Nome do aplicativo de Automação
   PWINFO_AUTVER         = 22;     // Versão do aplicativo de Automação
@@ -136,6 +165,7 @@ const
   PWINFO_CNCDSPMSG      = 116;    // Mensagem a ser exibida para o operador no terminal no caso da transação ser abortada (cancelamento ou timeout).
   PWINFO_CNCPPMSG       = 117;    // Mensagem a ser exibida para o portador no PIN-pad no caso da transação ser abortada (cancelamento ou timeout).
   PWINFO_TRNORIGLOCREF  = 120;    // Referência local da transação original, no caso de um cancelamento.
+  PWINFO_AUTHSYSTEXTENDED=135;    // Nome do provedor, independente do emissor e/ou subadquirencia
   PWINFO_CARDENTMODE    = 192;    // Modo(s) de entrada do cartão: 1: digitado 2: tarja magnética 4: chip com contato 16: fallback de chip para tarja 32: chip sem contato simulando tarja (cliente informa tipo efetivamente utilizado) 64: chip sem contato EMV (cliente informa tipo efetivamente utilizado) 256: fallback de tarja para digitado
   PWINFO_CARDFULLPAN    = 193;    // Número do cartão completo, para transação digitada. Este dado não pode ser recuperado pela função PW_iGetResult
   PWINFO_CARDEXPDATE    = 194;    // Data de vencimento do cartão (formato “MMAA”).
@@ -159,18 +189,22 @@ const
   PWINFO_PRODCLIRCPT    = 252;    // Descrição do produto/cartão utilizado na transação, para o cliente.
   PWINFO_EMVCRYPTTYPE   = 253;    // Tipo de criptograma gerado no 1º Generate AC do processo   EMV:   “ARQC” para transações submetidas à autorização do   emissor.   “TC” para transações efetuadas sem autorização do emissor.
   PWINFO_TRNORIGAUTHCODE= 254;    // Código de autorização da transação original, no caso de um cancelamento.
-  PWINFO_PAYMNTMODE     = 7969;   // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
+  PWINFO_PAYMNTTYPE     = 7969;   // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
   PWINFO_GRAPHICRCPHEADER= 7990;  // Até 100 Cabeçalho do comprovante gráfico recebido do servidor.
   PWINFO_GRAPHICRCPFOOTER= 7991;  // Rodapé do comprovante gráfico recebido do servidor.
   PWINFO_CHOLDERNAME    = 7992;   // Nome do portador do cartão utilizado, o tamanho segue o mesmo padrão da tag 5F20 EMV.
   PWINFO_MERCHNAMEPDC   = 7993;   // Nome do estabelecimento em que o ponto de captura está cadastrado. (até 100)
   PWINFO_TRANSACDESCRIPT= 8000;   // Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
   PWINFO_ARQC           = 8001;   // ARQC
-  PWINFO_DEFAULTCARDPARCPAN = 8002; // Número do cartão mascarado no formato BIN + *** + 4 últimos dígitos. Ex: 543211******987
-  PWINFO_SOFTDESCRIPTOR = 8003;   // Texto que será de identificação na fatura do portador do cartão
+  PWINFO_DEFAULTCARDPARCPAN  = 8002; // Número do cartão mascarado no formato BIN + *** + 4 últimos dígitos. Ex: 543211******987
+  PWINFO_SOFTDESCRIPTOR      = 8003; // Texto que será de identificação na fatura do portador do cartão
+  PWINFO_RCPTADDINFOESTABCLI = 8004; // Até 500 - Mensagem texto destinada a ambos: ao cliente e ao estabelecimento.
+  PWINFO_RCPTADDINFOCLI      = 8005; // Até 500 - Mensagem texto destinada ao cliente.
+  PWINFO_RCPTADDINFOESTAB    = 8006; // Até 500 - Mensagem texto destinada ao estabelecimento.
   PWINFO_SPLITPAYMENT   = 8025;   // O campo PWINFO_SPLITPAYMENT deverá possuir as seguintes informações separadas por vírgula ‘,’: Afiliação: Identificador do lojista do ponto de vista do adquirente. Valor: Valor parcial a ser enviado para a afiliação do split. OBS: A soma de todos os valores referente ao split de pagamento deverá ser igual a PWINFO_TOTAMNT Exemplo: 8DA10E01A6A6213, 1200 Para cada conjunto de informações de split de pagamento, conforme o exemplo acima, deverá ser feito o PW_iAddParam informando a tag PWINFO_SPLITPAYMENT e as informações atualizadas.
   PWINFO_AUTHPOSQRCODE  = 8055;   // Conteúdo do QR Code identificando o checkout para o autorizador.
   PWINFO_WALLETUSERIDTYPE=8065;   // Forma de identificação do portador da carteira virtual: 1: QRCode do checkout (lido pelo celular do portador) 2: CPF 128: outros
+  PWINFO_RCPTECVID      = 8081;   // Até 10 - Identificador do estabelecimento virtual que está processando a transação. O campo é utilizado na montagem do comprovante próprio.
   PWINFO_USINGPINPAD    = 32513;  // Indica se o ponto de captura faz ou não o uso de PIN-pad: 0: Não utiliza PIN-pad; 1: Utiliza PIN-pad.
   PWINFO_PPCOMMPORT     = 32514;  // Número da porta serial à qual o PIN-pad está conectado. O valor 0 (zero) indica uma busca automática desta porta
   PWINFO_IDLEPROCTIME   = 32516;  // Próxima data e horário em que a função PW_iIdleProc deve ser chamada pela Automação. Formato “AAMMDDHHMMSS”
@@ -191,13 +225,42 @@ const
   PWINFO_CTLSCAPTURE    = 32540;  // Deve ser adicionado para sinalizar que a automação deseja fazer uma captura de cartão sem contato. Se o autorizador permitir, a captura será executada. Não deverá ser adicionada caso já tenha sido capturado cartão digitado, trilha magnética ou chip.
   PWINFO_CHOLDERGRARCP  = 32541;  // Deve ser adicionado para sinalizar que a vila do cliente foi impressa utilizando o comprovante gráfico.
   PWINFO_MERCHGRARCP    = 32542;  // Deve ser adicionado para sinalizar que a via do estabelecimento foi impressa utilizando o comprovante gráfico.
+  PWINFO_AUTADDRESS     = 32543;  // Endereço TCP/IP para comunicação com automação comercial quando terminal POS operando integrado à automação no formato <endereço IP >:<porta TCP> ou <nome do servidor>:<porta TCP>
+  PWINFO_APN            = 32544;  // APN caso terminal esteja configurado para operar utilizando GPRS.
+  PWINFO_LIBVERSION     = 32545;  // Versão da biblioteca no formato “VVV.VVV.VVV.VVV”.
+  PWINFO_TSTKEYTYPE     = 32560;  // Tipo de teste de chaves que será executado pela biblioteca, essa informação só será considerada caso a opção for PWOPER_TSTKEY: 1: PIN – DUKPT 3DES; 2: PIN – MK 3DES; 4: PIN – MK DES; 8: DADOS – DUKPT 3DES; 16: DADOS – MK 3DES; 32: DADOS – MK DES; Atenção: Caso a criptografia não seja suportada pelo PIN-pad, a mesma não será executada. Para a realização do teste completo, os valores devem ser enviados somados.
+  PWINFO_TKPINDUKPT3DES   = 32562;  // Sequência de valores que indicam a situação das chaves de PIN DUKPT 3DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida.; 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “12221212111111122211111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está presente, assim sucessivamente.
+  PWINFO_TKPINMK3DES      = 32563;  // Sequência de valores que indicam a situação das chaves de PIN MK 3DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida.; 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “13331413111111133311111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está válida, assim sucessivamente.
+  PWINFO_TKPINMKDES       = 32564;  // Sequência de valores que indicam a situação das chaves de PIN MK DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida.; 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “13331413111111133311111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está válida, assim sucessivamente.
+  PWINFO_TKDADOSDUKPT3DES = 32565;  // Sequência de valores que indicam a situação das chaves de DADOS DUKPT 3DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida.; 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “12221212111111122211111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está presente, assim sucessivamente.
+  PWINFO_TKDADOSMK3DES    = 32566;  // Sequência de valores que indicam a situação das chaves de DADOS MK 3DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida. 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “13331413111111133311111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está válida, assim sucessivamente.
+  PWINFO_TKDADOSMKDES     = 32567;  // Sequência de valores que indicam a situação das chaves de DADOS MK DES. O significado dos valores são: 1 – Chave ausente.; 2 – Chave presente.; 3 – Chave válida.; 4 – Chave inválida.; 5 – Chave não validada (Durante o teste o usuário pressionou “anula” no equipamento). Exemplo de dado retornado: “13331413111111133311111111111111111”, ou seja, a chave da posição 1 está ausente, a chave da posição 2 está válida, assim sucessivamente.
+  PWINFO_DSPTESTKEY       = 32568;  // Mensagem a ser exibida no cliente durante as transições de determinadas capturas. A automação deverá informar a capacidade desse tratamento no PWINFO_AUTCAP.
+  PWINFO_GETKSNPIN        = 32569;  // Retorna o KSN de uma dada chave DUKPT3DES de PIN cujo resultado do teste tenha sido 1 (chave presente). Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o KSN já em caracteres imprimíveis.
+  PWINFO_GETKSNDATA       = 32576;  // Retorna o KSN de uma dada chave DUKPT3DES de PIN cujo resultado do teste tenha sido 1 (chave presente). Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o KSN já em caracteres imprimíveis.
+  PWINFO_PINDUKPT3DESNAME = 32577;  // Retorna o nome relacionado a um item do teste de chaves para uma chave DUKPT3DES de PIN. Para Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome .
+  PWINFO_PINMK3DESNAME    = 32578;  // Retorna o nome relacionado a um item do teste de chaves para uma chave MK3DES de PIN. Para Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_PINMKDESNAME     = 32579;  // Retorna o nome relacionado a um item do teste de chaves para uma chave MKDES de PIN. Para Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_DATADUKPT3DESNAME= 32580;  // Retorna o nome relacionado a um item do teste de chaves para uma chave DUKPT3DES de dados. Para Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_DATAMK3DESNAME   = 32581;  // Retorna o nome relacionado a um item do teste de chaves para uma chave MK3DES de dados. Para Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_DATAMKDESNAME    = 32582;  // Retorna o nome relacionado a um item do teste de chaves para uma chave MKDES. Para indicar qual item deve ser consultado, primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_SERNUM           = 32583;  // Retorna o número serial do terminal, para plataformas em que isso faça sentido.
+  PWINFO_MACADDR          = 32584;  // Endereço MAC do terminal, no formato “XX:XX:XX:XX”
+  PWINFO_IMEI             = 32585;  // IMEI do SIMCARD caso disponível.
+  PWINFO_IPADDRESS        = 32586;  // Endereço IP do terminal.
+  PWINFO_SSID_IDX         = 32587;  // Retorna o SSID relacionado a um índice caso plataforma seja compilada com a funcionalidade de múltiplos SSID’s. Para consulta primeiro deve-se adicionar o índice, por exemplo, “01”, chamando a função PW_iAddParam. Em seguida, consultar o resultado por meio de PW_iGetResult. Nesse resultado, é retornado o nome.
+  PWINFO_DNSSERVER_P      = 32588;  // Servidor de DNS primário configurado.
+  PWINFO_DNSSERVER_S      = 32589;  // Servidor de DNS secundário configurado.
+  PWINFO_OSVERSION        = 32590;  // Versão do sistema operacional.
+  PWINFO_APPDOWNLOADVER   = 32591;  // Versão da biblioteca de telecarga.
+  PWINFO_DSPQRPREF        = 32592;  // Caso a exibição de QR Code seja suportada pela Automação Comercial e pelo PIN-Pad, indica a preferência do local de exibição: 1: exibe no PIN-Pad; 2: exibe no checkout; OBS: Caso esse dado não seja informado e o ponto de captura esteja configurado no Muxx como autoatendimento, exibe no checkout, caso contrário, exibe no PIN-pad.
+  PWINFO_DUEAMNT          = 48902;  // Valor devido pelo usuário, considerando PWINFO_CURREXP, já deduzido em PWINFO_TOTAMNT
+  PWINFO_READJUSTEDAMNT   = 48905;  // Valor total da transação reajustado, este campo será utilizado caso o autorizador, por alguma regra de negócio específica dele, resolva alterar o valor total que foi solicitado para a transação
+  PWINFO_TRNORIGDATETIME  = 48909;  // Data e hora da transação original, no formato “AAAAMMDDhhmmss”, no caso de um cancelamento.
+  PWINFO_DATETIMERCPT     = 48910;  // Data/hora da transação para exibição no comprovante, no formato “AAAAMMDDhhmmss”.
+  PWINFO_UNIQUEID         = 49040;  // ID único da transação armazenada no banco de dados
   PWINFO_GRAPHICRCP     = 40722;  // Indica, se possível, a necessidade de impressão de um comprovante gráfico: 0: Não necessário. 1: Necessário.
   PWINFO_OPERATIONORIG  = 40727;  // Tipo de transação (PWOPER_xxx) da transação original, no caso de reimpressões. Consultar os valores possíveis na descrição da função PW_iNewTransac (página 14)
-  PWINFO_DUEAMNT        = 48902;  // Valor devido pelo usuário, considerando PWINFO_CURREXP, já deduzido em PWINFO_TOTAMNT
-  PWINFO_READJUSTEDAMNT = 48905;  // Valor total da transação reajustado, este campo será utilizado caso o autorizador, por alguma regra de negócio específica dele, resolva alterar o valor total que foi solicitado para a transação
-  PWINFO_TRNORIGDATETIME= 48909;  // Data e hora da transação original, no formato “AAAAMMDDhhmmss”, no caso de um cancelamento.
-  PWINFO_DATETIMERCPT   = 48910;  // Data/hora da transação para exibição no comprovante, no formato “AAAAMMDDhhmmss”.
-  PWINFO_UNIQUEID       = 49040;  // ID único da transação armazenada no banco de dados
 
   MIN_PWINFO = PWINFO_OPERATION;
   MAX_PWINFO = PWINFO_UNIQUEID;
@@ -217,7 +280,7 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 
 function ParseKeyValue(AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
 function PWINFOToString(iINFO: Word): String;
-function PWOPERToString(iOPER: SmallInt): String;
+function PWOPERToString(iOPER: Byte): String;
 
 function MoedaToISO4217(AMoeda: Byte): Word;
 function ISO4217ToMoeda(AIso4217: Word): Byte;
@@ -573,6 +636,11 @@ function PWINFOToString(iINFO: Word): String;
 begin
   case iINFO of
     PWINFO_OPERATION:       Result := 'PWINFO_OPERATION';
+    PWINFO_PPPPWD:          Result := 'PWINFO_PPPPWD';
+    PWINFO_LOCALIP:         Result := 'PWINFO_LOCALIP';
+    PWINFO_GATEWAY:         Result := 'PWINFO_GATEWAY';
+    PWINFO_SUBNETMASK:      Result := 'PWINFO_SUBNETMASK';
+    PWINFO_SSID:            Result := 'PWINFO_SSID';
     PWINFO_POSID:           Result := 'PWINFO_POSID';
     PWINFO_AUTNAME:         Result := 'PWINFO_AUTNAME';
     PWINFO_AUTVER:          Result := 'PWINFO_AUTVER';
@@ -627,6 +695,7 @@ begin
     PWINFO_CNCDSPMSG:       Result := 'PWINFO_CNCDSPMSG';
     PWINFO_CNCPPMSG:        Result := 'PWINFO_CNCPPMSG';
     PWINFO_TRNORIGLOCREF:   Result := 'PWINFO_TRNORIGLOCREF';
+    PWINFO_AUTHSYSTEXTENDED:Result := 'PWINFO_AUTHSYSTEXTENDED';
     PWINFO_CARDENTMODE:     Result := 'PWINFO_CARDENTMODE';
     PWINFO_CARDFULLPAN:     Result := 'PWINFO_CARDFULLPAN';
     PWINFO_CARDEXPDATE:     Result := 'PWINFO_CARDEXPDATE';
@@ -650,7 +719,7 @@ begin
     PWINFO_PRODCLIRCPT:     Result := 'PWINFO_PRODCLIRCPT';
     PWINFO_EMVCRYPTTYPE:    Result := 'PWINFO_EMVCRYPTTYPE';
     PWINFO_TRNORIGAUTHCODE: Result := 'PWINFO_TRNORIGAUTHCODE';
-    PWINFO_PAYMNTMODE:      Result := 'PWINFO_PAYMNTMODE';
+    PWINFO_PAYMNTTYPE:      Result := 'PWINFO_PAYMNTMODE';
     PWINFO_GRAPHICRCPHEADER: Result := 'PWINFO_GRAPHICRCPHEADER';
     PWINFO_GRAPHICRCPFOOTER: Result := 'PWINFO_GRAPHICRCPFOOTER';
     PWINFO_CHOLDERNAME:     Result := 'PWINFO_CHOLDERNAME';
@@ -659,9 +728,13 @@ begin
     PWINFO_ARQC:            Result := 'PWINFO_ARQC';
     PWINFO_DEFAULTCARDPARCPAN: Result := 'PWINFO_DEFAULTCARDPARCPAN';
     PWINFO_SOFTDESCRIPTOR:  Result := 'PWINFO_SOFTDESCRIPTOR';
+    PWINFO_RCPTADDINFOESTABCLI: Result := 'PWINFO_RCPTADDINFOESTABCLI';
+    PWINFO_RCPTADDINFOCLI:  Result := 'PWINFO_RCPTADDINFOCLI';
+    PWINFO_RCPTADDINFOESTAB:Result := 'PWINFO_RCPTADDINFOESTAB';
     PWINFO_SPLITPAYMENT:    Result := 'PWINFO_SPLITPAYMENT';
     PWINFO_AUTHPOSQRCODE:   Result := 'PWINFO_AUTHPOSQRCODE';
     PWINFO_WALLETUSERIDTYPE:Result := 'PWINFO_WALLETUSERIDTYPE';
+    PWINFO_RCPTECVID:       Result := 'PWINFO_RCPTECVID';
     PWINFO_USINGPINPAD:     Result := 'PWINFO_USINGPINPAD';
     PWINFO_PPCOMMPORT:      Result := 'PWINFO_PPCOMMPORT';
     PWINFO_IDLEPROCTIME:    Result := 'PWINFO_IDLEPROCTIME';
@@ -682,6 +755,35 @@ begin
     PWINFO_CTLSCAPTURE:     Result := 'PWINFO_CTLSCAPTURE';
     PWINFO_CHOLDERGRARCP:   Result := 'PWINFO_CHOLDERGRARCP';
     PWINFO_MERCHGRARCP:     Result := 'PWINFO_MERCHGRARCP';
+    PWINFO_AUTADDRESS:      Result := 'PWINFO_AUTADDRESS';
+    PWINFO_APN:             Result := 'PWINFO_APN';
+    PWINFO_LIBVERSION:      Result := 'PWINFO_LIBVERSION';
+    PWINFO_TSTKEYTYPE:      Result := 'PWINFO_TSTKEYTYPE';
+    PWINFO_TKPINDUKPT3DES:  Result := 'PWINFO_TKPINDUKPT3DES';
+    PWINFO_TKPINMK3DES:     Result := 'PWINFO_TKPINMK3DES';
+    PWINFO_TKPINMKDES:      Result := 'PWINFO_TKPINMKDES';
+    PWINFO_TKDADOSDUKPT3DES:Result := 'PWINFO_TKDADOSDUKPT3DES';
+    PWINFO_TKDADOSMK3DES:   Result := 'PWINFO_TKDADOSMK3DES';
+    PWINFO_TKDADOSMKDES:    Result := 'PWINFO_TKDADOSMKDES';
+    PWINFO_DSPTESTKEY:      Result := 'PWINFO_DSPTESTKEY';
+    PWINFO_GETKSNPIN:       Result := 'PWINFO_GETKSNPIN';
+    PWINFO_GETKSNDATA:      Result := 'PWINFO_GETKSNDATA';
+    PWINFO_PINDUKPT3DESNAME:Result := 'PWINFO_PINDUKPT3DESNAME';
+    PWINFO_PINMK3DESNAME:   Result := 'PWINFO_PINMK3DESNAME';
+    PWINFO_PINMKDESNAME:    Result := 'PWINFO_PINMKDESNAME';
+    PWINFO_DATADUKPT3DESNAME:Result := 'PWINFO_DATADUKPT3DESNAME';
+    PWINFO_DATAMK3DESNAME:  Result := 'PWINFO_DATAMK3DESNAME';
+    PWINFO_DATAMKDESNAME:   Result := 'PWINFO_DATAMKDESNAME';
+    PWINFO_SERNUM:          Result := 'PWINFO_SERNUM';
+    PWINFO_MACADDR:         Result := 'PWINFO_MACADDR';
+    PWINFO_IMEI:            Result := 'PWINFO_IMEI';
+    PWINFO_IPADDRESS:       Result := 'PWINFO_IPADDRESS';
+    PWINFO_SSID_IDX:        Result := 'PWINFO_SSID_IDX';
+    PWINFO_DNSSERVER_P:     Result := 'PWINFO_DNSSERVER_P';
+    PWINFO_DNSSERVER_S:     Result := 'PWINFO_DNSSERVER_S';
+    PWINFO_OSVERSION:       Result := 'PWINFO_OSVERSION';
+    PWINFO_APPDOWNLOADVER:  Result := 'PWINFO_APPDOWNLOADVER';
+    PWINFO_DSPQRPREF:       Result := 'PWINFO_DSPQRPREF';
     PWINFO_GRAPHICRCP:      Result := 'PWINFO_GRAPHICRCP';
     PWINFO_OPERATIONORIG:   Result := 'PWINFO_OPERATIONORIG';
     PWINFO_DUEAMNT:         Result := 'PWINFO_DUEAMNT';
@@ -694,7 +796,7 @@ begin
   end;
 end;
 
-function PWOPERToString(iOPER: SmallInt): String;
+function PWOPERToString(iOPER: Byte): String;
 begin
   case iOPER of
     PWOPER_NULL:         Result := 'PWOPER_NULL';
@@ -703,6 +805,11 @@ begin
     PWOPER_REPRINT:      Result := 'PWOPER_REPRINT';
     PWOPER_RPTTRUNC:     Result := 'PWOPER_RPTTRUNC';
     PWOPER_RPTDETAIL:    Result := 'PWOPER_RPTDETAIL';
+    PWOPER_REPRNTNTRANSACTION: Result := 'PWOPER_REPRNTNTRANSACTION';
+    PWOPER_COMMTEST:     Result := 'PWOPER_COMMTEST';
+    PWOPER_RPTSUMMARY:   Result := 'PWOPER_RPTSUMMARY';
+    PWOPER_TRANSACINQ:   Result := 'PWOPER_TRANSACINQ';
+    PWOPER_ROUTINGINQ:   Result := 'PWOPER_ROUTINGINQ';
     PWOPER_ADMIN:        Result := 'PWOPER_ADMIN';
     PWOPER_SALE:         Result := 'PWOPER_SALE';
     PWOPER_SALEVOID:     Result := 'PWOPER_SALEVOID';
@@ -723,7 +830,26 @@ begin
     PWOPER_LOYCREDVOID:  Result := 'PWOPER_LOYCREDVOID';
     PWOPER_LOYDEBIT:     Result := 'PWOPER_LOYDEBIT';
     PWOPER_LOYDEBVOID:   Result := 'PWOPER_LOYDEBVOID';
+    PWOPER_BILLPAYMENT:  Result := 'PWOPER_BILLPAYMENT';
+    PWOPER_DOCPAYMENTQ:  Result := 'PWOPER_DOCPAYMENTQ';
+    PWOPER_LOGON:        Result := 'PWOPER_LOGON';
+    PWOPER_SRCHPREAUTH:  Result := 'PWOPER_SRCHPREAUTH';
+    PWOPER_ADDPREAUTH:   Result := 'PWOPER_ADDPREAUTH';
     PWOPER_VOID:         Result := 'PWOPER_VOID';
+    PWOPER_STATISTICS:   Result := 'PWOPER_STATISTICS';
+    PWOPER_CARDPAYMENT:  Result := 'PWOPER_CARDPAYMENT';
+    PWOPER_CARDPAYMENTVOID: Result := 'PWOPER_CARDPAYMENTVOID';
+    PWOPER_CASHWDRWLVOID:   Result := 'PWOPER_CASHWDRWLVOID';
+    PWOPER_CARDUNLOCK:   Result := 'PWOPER_CARDUNLOCK';
+    PWOPER_UPDATEDCHIP:  Result := 'PWOPER_UPDATEDCHIP';
+    PWOPER_RPTPROMOTIONAL:  Result := 'PWOPER_RPTPROMOTIONAL';
+    PWOPER_SALESUMMARY:  Result := 'PWOPER_SALESUMMARY';
+    PWOPER_STATISTICSAUTHORIZER: Result := 'PWOPER_STATISTICSAUTHORIZER';
+    PWOPER_OTHERADMIN:   Result := 'PWOPER_OTHERADMIN';
+    PWOPER_BILLPAYMENTVOID:  Result := 'PWOPER_BILLPAYMENTVOID';
+    PWOPER_TSTKEY:       Result := 'PWOPER_TSTKEY';
+    PWOPER_COMMONDATA:   Result := 'PWOPER_COMMONDATA';
+    PWOPER_SHOWPDC:      Result := 'PWOPER_SHOWPDC';
     PWOPER_VERSION:      Result := 'PWOPER_VERSION';
     PWOPER_CONFIG:       Result := 'PWOPER_CONFIG';
     PWOPER_MAINTENANCE:  Result := 'PWOPER_MAINTENANCE';

@@ -100,6 +100,7 @@ type
      fAutoEfetuarPagamento : Boolean;
      fCHQEmGerencial: Boolean;
      fConfirmarAntesDosComprovantes: Boolean;
+     fOnExibeQRCode: TACBrTEFDExibeQRCode;
      fTrocoMaximo: Double;
      fEsperaSleep : Integer;
      fEstadoReq : TACBrTEFDReqEstado;
@@ -192,7 +193,8 @@ type
         DefaultValue: Integer = -98787158) : Double ;
      Function EstadoECF : AnsiChar ;
      function DoExibeMsg( Operacao : TACBrTEFDOperacaoMensagem;
-        Mensagem : String; ManterTempoMinimo : Boolean = False ) : TModalResult;
+        const Mensagem : String; ManterTempoMinimo : Boolean = False ) : TModalResult;
+     procedure DoExibeQRCode(const Dados: String);
      function ComandarECF(Operacao : TACBrTEFDOperacaoECF) : Integer;
      function ECFSubtotaliza(DescAcres: Double) : Integer;
      function ECFPagamento(Indice : String; Valor : Double) : Integer;
@@ -263,6 +265,7 @@ type
 
      procedure AgruparRespostasPendentes(
         var Grupo : TACBrTEFDArrayGrupoRespostasPendentes) ;
+     procedure ExibirMensagemPinPad(const MsgPinPad: String);
 
    published
      property Identificacao : TACBrTEFDIdentificacao read fIdentificacao
@@ -322,6 +325,8 @@ type
         write fOnAguardaResp ;
      property OnExibeMsg    : TACBrTEFDExibeMsg read fOnExibeMsg
         write fOnExibeMsg ;
+     property OnExibeQRCode: TACBrTEFDExibeQRCode read fOnExibeQRCode
+        write fOnExibeQRCode;
      property OnBloqueiaMouseTeclado : TACBrTEFDBloqueiaMouseTeclado
         read fOnBloqueiaMouseTeclado write fOnBloqueiaMouseTeclado ;
      property OnRestauraFocoAplicacao : TACBrTEFDExecutaAcao
@@ -449,6 +454,7 @@ begin
   fOnComandaECFImprimeVia     := nil ;
   fOnInfoECF                  := nil ;
   fOnExibeMsg                 := nil ;
+  fOnExibeQRCode              := nil ;
   fOnMudaEstadoReq            := nil ;
   fOnMudaEstadoResp           := nil ;
   fOnBloqueiaMouseTeclado     := nil ;
@@ -1205,7 +1211,7 @@ begin
 end;
 
 function TACBrTEFD.DoExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
-  Mensagem: String; ManterTempoMinimo: Boolean): TModalResult;
+  const Mensagem: String; ManterTempoMinimo: Boolean): TModalResult;
 var
   OldTecladoBloqueado : Boolean;
   TempoInicial : TDateTime;
@@ -1245,6 +1251,14 @@ begin
      fTempoInicialMensagemCliente  := TempoInicial
   else
      fTempoInicialMensagemOperador := TempoInicial ;
+end;
+
+procedure TACBrTEFD.DoExibeQRCode(const Dados: String);
+begin
+  if not Assigned(fOnExibeQRCode) then
+    DoExibeMsg( opmExibirMsgCliente, 'QRCODE=' + Dados)
+  else
+    fOnExibeQRCode(Dados);
 end;
 
 function TACBrTEFD.ComandarECF(Operacao: TACBrTEFDOperacaoECF): Integer;
@@ -1612,6 +1626,10 @@ begin
   until not Trocou;
 end;
 
+procedure TACBrTEFD.ExibirMensagemPinPad(const MsgPinPad: String);
+begin
+  fTefClass.ExibirMensagemPinPad(MsgPinPad);
+end;
 
 function TACBrTEFD.Inicializado( GP : TACBrTEFDTipo = gpNenhum ) : Boolean;
 begin

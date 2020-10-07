@@ -72,7 +72,7 @@ const
    CACBrTEFPGWebLib = 'PGWebLib.dll';
   {$ELSE}
    {$IFDEF ANDROID}
-    CACBrTEFPGWebLib = 'libPOSPlug.so';
+    CACBrTEFPGWebLib = 'libPGWebLib.so';
    {$ELSE}
     CACBrTEFPGWebLib = 'PGWebLib.so';
    {$ENDIF}
@@ -175,6 +175,9 @@ const
   PWRET_QRCODEERR          = -2556;  // Erro no processamento do QR Code.
   PWRET_QRCODENOTSUPPORTED = -2555;  // Erro QR Code não suportado pelo terminal.
   PWRET_QRCODENOTFOUND     = -2554;  // Erro QR Code não encontrado.
+  PWRET_DEFAULT_COMM_ERROR = -2553;  // Erro genérico de comunicação.
+  PWRET_CTLSMAGSTRIPENOTALLOW= -2552; // Aplicação não permite fallback contactless.
+  PWRET_PARAMSFILEERRSIZE  = -2551;  //Erro de tamanho do arquivo de parâmetros.
   PWRET_INVPARAM           = -2499;  // Parâmetro inválido passado à função
   PWRET_NOTINST            = -2498;  // Ponto de Captura não instalado. É necessário acionar a função de Instalação.
   PWRET_MOREDATA           = -2497;  // Ainda existem dados que precisam ser capturados para a transação poder ser realizada
@@ -199,6 +202,7 @@ const
   PWRET_OFFNOTABLECARDRANGE= -2478;  // Falha quando não existir tabela de cartão para o range inserido.
   PWRET_OFFNOTABLEPRODUCT  = -2477;  // Falha quando não existir tabela de produto para a transação em execução.
   PWRET_OFFNOCARDFULLPAN   = -2475;  // Falha obtendo o número do cartão.
+  PWRET_OFFINVCARDEXPDT    = -2474;  // Falha de data de validade do cartão inválida
   PWRET_OFFCARDEXP         = -2473;  // Falha cartão expirado.
   PWRET_OFFNOTRACKS        = -2472;  // Falha cartão sem trilha.
   PWRET_OFFTRACKERR        = -2471;  // Falha erro na leitura da trilha do cartão.
@@ -210,6 +214,8 @@ const
   PWRET_OFFLOWERAMNT       = -2465;  // Falha valor não atinge o mínimo permitido.
   PWRET_OFFGREATERINST     = -2464;  // Falha valor da parcela excede o valor permitido.
   PWRET_OFFLOWERINST       = -2463;  // Falha valor da parcela não atinge o mínimo permitido.
+  PWRET_OFFINVCARDTYPE     = -2462;  // Falha tipo de cartão inválido.
+  PWRET_OFFINVFINTYPE      = -2461;  // Falha tipo de financiamento inválido.
   PWRET_OFFINVINST         = -2460;  // Falha número de parcelas inválida.
   PWRET_OFFGREATERINSTNUM  = -2459;  // Falha número de parcelas excede o máximo permitido.
   PWRET_OFFLOWERINSTNUM    = -2458;  // Falha número de parcelas não atinge o mínimo permitido.
@@ -337,7 +343,9 @@ const
   PWDAT_PPGENCMD     = 14;  // comando proprietário da rede no PIN-pad.
   PWDAT_PPDATAPOSCNF = 16;  // confirmação positiva de dados no PIN-pad.
   PWDAT_USERAUTH     = 17;  // validação da senha.
-
+  PWDAT_DSPCHECKOUT  = 18;  // Mensagem a ser exibida no checkout
+  PWDAT_TSTKEY       = 19;  // Teste de chaves presentes no PIN-pad.
+  PWDAT_DSPQRCODE    = 20;  // QR Code, a ser exibido no checkout.
 //==========================================================================================
 // Tipos de operação, utilizados na função PW_iGetOperations
 //==========================================================================================
@@ -493,6 +501,8 @@ type
      pgbLeitor = 2,
      pgbDigitadoOuLeitor = 3);
 
+  TACBrTEFPGWebAPIExibicaoQRCode = (qrNaoSuportado, qrExibirNoPinPad, qrExibirNoCheckOut);
+
   TACBrTEFPGWebAPIExibeMenu = procedure(
     Titulo: String;
     Opcoes: TStringList;
@@ -534,9 +544,11 @@ type
     MilissegundosExibicao: Integer  // 0 - Para com OK; Positivo - aguarda Ok ou N milissegundos; Negativo - Apenas exibe a Msg (não aguarda)
     ) of object;
 
+  TACBrTEFPGWebAPIExibeQRCode = procedure(const Dados: String) of object;
+
   TACBrTEFPGWebAPIOperacaoPinPad = (ppGetCard, ppGetPIN, ppGetData, ppGoOnChip,
     ppFinishChip, ppConfirmData, ppGenericCMD, ppDataConfirmation, ppDisplay,
-    ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock);
+    ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock, ppTestKey);
 
   TACBrTEFPGWebAPIAguardaPinPad = procedure(
     OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean)
@@ -555,7 +567,9 @@ type
     fDadosTransacao: TACBrTEFPGWebAPIParametros;
     fDiretorioTrabalho: String;
     fEnderecoIP: String;
-    fImprimirViaClienteReduzida: Boolean;
+    fExibeMensagemCheckout: Boolean;
+    fExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode;
+    fImprimeViaClienteReduzida: Boolean;
     fInicializada: Boolean;
     fEmTransacao: Boolean;
     fNomeAplicacao: String;
@@ -564,6 +578,7 @@ type
     fOnAvaliarTransacaoPendente: TACBrTEFPGWebAPIAvaliarTransacaoPendente;
     fOnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem;
     fOnExibeMenu: TACBrTEFPGWebAPIExibeMenu;
+    fOnExibeQRCode: TACBrTEFPGWebAPIExibeQRCode;
     fOnGravarLog: TACBrGravarLog;
     fOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
     fParametrosAdicionais: TACBrTEFPGWebAPIParametros;
@@ -571,6 +586,7 @@ type
     fPontoCaptura: String;
     fPortaPinPad: Integer;
     fPortaTCP: String;
+    fRemocaoCartaoPinPad: Boolean;
     fSoftwareHouse: String;
     fSuportaDesconto: Boolean;
     fSuportaSaque: Boolean;
@@ -579,6 +595,7 @@ type
     fVersaoAplicacao: String;
     fTimerOcioso: TACBrThreadTimer;
     fTempoOcioso: TDateTime;
+    fUltimoQRCode: String;
 
     fTempoTarefasAutomaticas: String;
 
@@ -595,6 +612,8 @@ type
     xPW_iConfirmation: function(ulResult: LongWord; const pszReqNum: PAnsiChar;
               const pszLocRef: PAnsiChar; const pszExtRef: PAnsiChar;
               const pszVirtMerch: PAnsiChar; const pszAuthSyst: PAnsiChar): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iWaitConfirmation: function(): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iIdleProc: function(): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -623,6 +642,8 @@ type
     xPW_iPPGenericCMD: function(uiIndex: Word): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPDataConfirmation: function(uiIndex: Word): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iPPTestKey: function(uiIndex: Word): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPDisplay: function(const pszMsg: PAnsiChar): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -681,6 +702,7 @@ type
     function RealizarOperacaoPinPad(AGetData: TPW_GetData; OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
     function AguardarOperacaoPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
     procedure ExibirMensagem(const AMsg: String; Terminal: TACBrTEFPGWebAPITerminalMensagem = tmOperador; TempoEspera: Integer = -1);
+    procedure ExibirQRCode(const Dados: String);
 
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
     procedure LogPWGetData(AGetData: TPW_GetData);
@@ -698,7 +720,7 @@ type
     function ObterInfo(iINFO: Word): String;
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
 
-    procedure IniciarTransacao(iOPER: SmallInt; ParametrosAdicionaisTransacao: TStrings = nil);
+    procedure IniciarTransacao(iOPER: Byte; ParametrosAdicionaisTransacao: TStrings = nil);
     procedure AdicionarParametro(iINFO: Word; const AValor: AnsiString); overload;
     procedure AdicionarParametro(AKeyValueStr: String); overload;
     function ExecutarTransacao: Boolean;
@@ -708,6 +730,7 @@ type
       pszAuthSyst: String);
     procedure AbortarTransacao;
     procedure TratarTransacaoPendente;
+    procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
       TimeOutSec: SmallInt): String;
     function VersaoLib: String;
@@ -737,12 +760,18 @@ type
 
     Property SuportaSaque: Boolean read fSuportaSaque write fSuportaSaque;
     Property SuportaDesconto: Boolean read fSuportaDesconto write fSuportaDesconto;
-    property ImprimirViaClienteReduzida : Boolean read fImprimirViaClienteReduzida
-      write fImprimirViaClienteReduzida;
+    property ImprimeViaClienteReduzida: Boolean read fImprimeViaClienteReduzida
+      write fImprimeViaClienteReduzida;
     property SuportaViasDiferenciadas: Boolean read fSuportaViasDiferenciadas
       write fSuportaViasDiferenciadas;
     property UtilizaSaldoTotalVoucher: Boolean read fUtilizaSaldoTotalVoucher
       write fUtilizaSaldoTotalVoucher;
+    property RemocaoCartaoPinPad: Boolean read fRemocaoCartaoPinPad
+      write fRemocaoCartaoPinPad;
+    property ExibeMensagemCheckout: Boolean read fExibeMensagemCheckout
+      write fExibeMensagemCheckout;
+    property ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode read fExibicaoQRCode
+      write fExibicaoQRCode;
 
     property ConfirmarTransacoesPendentesNoHost: Boolean read fConfirmarTransacoesPendentesNoHost
       write fConfirmarTransacoesPendentesNoHost;
@@ -753,6 +782,8 @@ type
       write fOnObtemCampo;
     property OnExibeMensagem: TACBrTEFPGWebAPIExibeMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
+    property OnExibeQRCode: TACBrTEFPGWebAPIExibeQRCode read fOnExibeQRCode
+      write fOnExibeQRCode;
     property OnAguardaPinPad: TACBrTEFPGWebAPIAguardaPinPad read fOnAguardaPinPad
       write fOnAguardaPinPad;
     property OnAvaliarTransacaoPendente: TACBrTEFPGWebAPIAvaliarTransacaoPendente
@@ -825,6 +856,9 @@ begin
     PWRET_QRCODEERR:            Result := 'PWRET_QRCODEERR';
     PWRET_QRCODENOTSUPPORTED:   Result := 'PWRET_QRCODENOTSUPPORTED';
     PWRET_QRCODENOTFOUND:       Result := 'PWRET_QRCODENOTFOUND';
+    PWRET_DEFAULT_COMM_ERROR:   Result := 'PWRET_DEFAULT_COMM_ERROR';
+    PWRET_CTLSMAGSTRIPENOTALLOW:Result := 'PWRET_CTLSMAGSTRIPENOTALLOW';
+    PWRET_PARAMSFILEERRSIZE:    Result := 'PWRET_PARAMSFILEERRSIZE';
     PWRET_INVPARAM:             Result := 'PWRET_INVPARAM';
     PWRET_NOTINST:              Result := 'PWRET_NOTINST';
     PWRET_MOREDATA:             Result := 'PWRET_MOREDATA';
@@ -849,6 +883,7 @@ begin
     PWRET_OFFNOTABLECARDRANGE:  Result := 'PWRET_OFFNOTABLECARDRANGE';
     PWRET_OFFNOTABLEPRODUCT:    Result := 'PWRET_OFFNOTABLEPRODUCT';
     PWRET_OFFNOCARDFULLPAN:     Result := 'PWRET_OFFNOCARDFULLPAN';
+    PWRET_OFFINVCARDEXPDT:      Result := 'PWRET_OFFINVCARDEXPDT';
     PWRET_OFFCARDEXP:           Result := 'PWRET_OFFCARDEXP';
     PWRET_OFFNOTRACKS:          Result := 'PWRET_OFFNOTRACKS';
     PWRET_OFFTRACKERR:          Result := 'PWRET_OFFTRACKERR';
@@ -860,6 +895,8 @@ begin
     PWRET_OFFLOWERAMNT:         Result := 'PWRET_OFFLOWERAMNT';
     PWRET_OFFGREATERINST:       Result := 'PWRET_OFFGREATERINST';
     PWRET_OFFLOWERINST:         Result := 'PWRET_OFFLOWERINST';
+    PWRET_OFFINVCARDTYPE:       Result := 'PWRET_OFFINVCARDTYPE';
+    PWRET_OFFINVFINTYPE:        Result := 'PWRET_OFFINVFINTYPE';
     PWRET_OFFINVINST:           Result := 'PWRET_OFFINVINST';
     PWRET_OFFGREATERINSTNUM:    Result := 'PWRET_OFFGREATERINSTNUM';
     PWRET_OFFLOWERINSTNUM:      Result := 'PWRET_OFFLOWERINSTNUM';
@@ -1002,6 +1039,9 @@ begin
     PWDAT_PPGENCMD:     Result := 'PWDAT_PPGENCMD';
     PWDAT_PPDATAPOSCNF: Result := 'PWDAT_PPDATAPOSCNF';
     PWDAT_USERAUTH:     Result := 'PWDAT_USERAUTH';
+    PWDAT_DSPCHECKOUT:  Result := 'PWDAT_DSPCHECKOUT';
+    PWDAT_TSTKEY:       Result := 'PWDAT_TSTKEY';
+    PWDAT_DSPQRCODE:    Result := 'PWDAT_DSPQRCODE';
   else
     Result := 'PWDAT_'+IntToStr(bTipoDeDado);
   end;
@@ -1072,12 +1112,16 @@ begin
   fSuportaSaque := False;
   fSuportaDesconto := False;
   fSuportaViasDiferenciadas := True;
-  fImprimirViaClienteReduzida := False;
+  fImprimeViaClienteReduzida := False;
   fUtilizaSaldoTotalVoucher := False;
+  fRemocaoCartaoPinPad := True;
+  fExibeMensagemCheckout := True;
+  fExibicaoQRCode := qrNaoSuportado;
   fInicializada := False;
   fDiretorioTrabalho := '';
   fEmTransacao := False;
   fTempoTarefasAutomaticas := '';
+  fUltimoQRCode := '';
 
   fSoftwareHouse := '';
   fNomeAplicacao := '';
@@ -1096,6 +1140,7 @@ begin
   fOnExibeMenu := Nil;
   fOnObtemCampo := Nil;
   fOnExibeMensagem := Nil;
+  fOnExibeQRCode := Nil;
   fOnAguardaPinPad := Nil;
   fOnAvaliarTransacaoPendente := Nil;
 
@@ -1135,6 +1180,9 @@ begin
     DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMensagem']));
   if not Assigned(fOnAguardaPinPad) then
     DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnAguardaPinPad']));
+
+  if (not Assigned(fOnExibeQRCode)) and (ExibicaoQRCode = qrExibirNoCheckOut) then
+    ExibicaoQRCode := qrExibirNoPinPad;
 
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
@@ -1191,6 +1239,7 @@ begin
   xPW_iAddParam := Nil;
   xPW_iExecTransac := Nil;
   xPW_iConfirmation := Nil;
+  xPW_iWaitConfirmation := Nil;
   xPW_iIdleProc := Nil;
   xPW_iGetOperations := Nil;
   xPW_iGetOperationsEx := Nil;
@@ -1204,6 +1253,7 @@ begin
   xPW_iPPConfirmData := Nil;
   xPW_iPPGenericCMD := Nil;
   xPW_iPPDataConfirmation := Nil;
+  xPW_iPPTestKey := Nil;
   xPW_iPPDisplay := Nil;
   xPW_iPPGetUserData := Nil;
   xPW_iPPWaitEvent := Nil;
@@ -1335,7 +1385,7 @@ begin
   fOnGravarLog(AStringLog, Tratado);
 end;
 
-procedure TACBrTEFPGWebAPI.IniciarTransacao(iOPER: SmallInt;
+procedure TACBrTEFPGWebAPI.IniciarTransacao(iOPER: Byte;
   ParametrosAdicionaisTransacao: TStrings);
 var
   iRet: SmallInt;
@@ -1426,6 +1476,7 @@ var
   MsgError, MsgProcess, MsgPinPad: String;
 begin
   GravarLog('TACBrTEFPGWebAPI.ExecutarTransacao');
+  fUltimoQRCode := '';
   iRet := PWRET_CANCEL;
   try
     try
@@ -1436,7 +1487,9 @@ begin
       iRet := PWRET_OK;
       while (iRet = PWRET_OK) or (iRet = PWRET_NOTHING) or (iRet = PWRET_MOREDATA) do
       begin
+        {$IfDef FPC}
         Initialize(ArrParams);
+        {$EndIf}
         NumParams := Length(ArrParams)-1;
         GravarLog('PW_iExecTransac()');
         iRet := xPW_iExecTransac(ArrParams, NumParams);
@@ -1450,6 +1503,12 @@ begin
           PWRET_MOREDATA:
             iRet := ObterDados(ArrParams, NumParams);
         end;
+      end;
+
+      if (fUltimoQRCode <> '') then // Remove QRCode da tela, Se houver...
+      begin
+        fUltimoQRCode := '';
+        ExibirQRCode(fUltimoQRCode);
       end;
 
       case iRet of
@@ -1523,7 +1582,7 @@ begin
           AData := BinaryStringToString(AnsiString(pszData));
           GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
 
-          if (i = PWINFO_RCPTCHSHORT) and (not ImprimirViaClienteReduzida) then
+          if (i = PWINFO_RCPTCHSHORT) and (not ImprimeViaClienteReduzida) then
           begin
             GravarLog('    PWINFO_RCPTCHSHORT ignored, ImprimirViaClienteReduzida = False');
             Continue;
@@ -1624,6 +1683,24 @@ begin
   end;
 
   FinalizarTransacao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
+end;
+
+procedure TACBrTEFPGWebAPI.ExibirMensagemPinPad(const MsgPinPad: String);
+var
+  iRetPP: SmallInt;
+  MsgError, AMsg: String;
+begin
+  AMsg := StringReplace(MsgPinPad, '|', CR, [rfReplaceAll]);
+  GravarLog('xPW_iPPDisplay( '+AMsg+' )');
+  iRetPP := xPW_iPPDisplay( PAnsiChar(AnsiString(AMsg)) );
+  GravarLog('  '+PWRETToString(iRetPP));
+
+  MsgError := '';
+  if (iRetPP <> PWRET_OK) then
+    MsgError := ObterUltimoRetorno;
+
+  if (MsgError <> '') then
+    DoException(ACBrStr(MsgError));
 end;
 
 function TACBrTEFPGWebAPI.ObterDadoPinPad(iMessageId: Word; MinLen,
@@ -1743,7 +1820,7 @@ function TACBrTEFPGWebAPI.ObterDados(ArrGetData: TArrPW_GetData;
 var
   AGetData: TPW_GetData;
   i, j: Integer;
-  MsgPrevia: String;
+  AMsg, DadosQRCode: String;
   iRet: SmallInt;
 begin
   GravarLog('TACBrTEFPGWebAPI.ObterDados( '+IntToStr(ArrLen)+' )');
@@ -1758,9 +1835,9 @@ begin
 
     if not ObterDadosDeParametrosAdicionais(AGetData) then
     begin
-      MsgPrevia := Trim(AGetData.szMsgPrevia);
-      if (MsgPrevia <> '') then
-        ExibirMensagem(MsgPrevia, tmOperador, CMilissegundosMensagem);
+      AMsg := Trim(AGetData.szMsgPrevia);
+      if (AMsg <> '') then
+        ExibirMensagem(AMsg, tmOperador, CMilissegundosMensagem);
 
       j := 1;
       while (iRet = PWRET_OK) and (j <= max(AGetData.bNumeroCapturas,1)) do
@@ -1793,8 +1870,33 @@ begin
           end;
           PWDAT_PPGENCMD:
             iRet := RealizarOperacaoPinPad(AGetData, ppGenericCMD);
-        //PWDAT_PPDATAPOSCNF:
-        //  iRet := RealizarOperacaoPinPad(AGetData, ppDataConfirmation);
+          PWDAT_PPDATAPOSCNF:
+            iRet := RealizarOperacaoPinPad(AGetData, ppDataConfirmation);
+          PWDAT_TSTKEY:
+            iRet := RealizarOperacaoPinPad(AGetData, ppTestKey);
+          PWDAT_DSPCHECKOUT:
+          begin
+            AMsg := Trim(AGetData.szPrompt);
+            if (AMsg <> '') then
+              ExibirMensagem(AMsg, tmCliente);
+
+            AdicionarParametro(AGetData.wIdentificador, '');
+          end;
+          PWDAT_DSPQRCODE:
+          begin
+            DadosQRCode := ObterInfo(PWINFO_AUTHPOSQRCODE);
+            if (fUltimoQRCode <> DadosQRCode) then
+            begin
+              fUltimoQRCode := DadosQRCode;
+              ExibirQRCode(DadosQRCode);
+            end;
+
+            AMsg := Trim(AGetData.szPrompt);
+            if (AMsg <> '') then
+              ExibirMensagem(AMsg, tmCliente);
+
+            AdicionarParametro(AGetData.wIdentificador, '');
+          end
         else
           DoException(Format(ACBrStr(sErrPWDAT_UNKNOWN), [AGetData.bTipoDeDado]));
         end;
@@ -2061,11 +2163,22 @@ begin
       GravarLog('PW_iPPGenericCMD( '+IntToStr(AGetData.bIndice)+' )');
       iRet := xPW_iPPGenericCMD(AGetData.bIndice);
     end;
-    //ppDataConfirmation:
-    //begin
-    //  GravarLog('PW_iPPDataConfirmation( '+IntToStr(AGetData.bIndice)+' )');
-    //  iRet := xPW_iPPDataConfirmation(AGetData.bIndice);
-    //end
+    ppDataConfirmation:
+    begin
+      if Assigned(xPW_iPPDataConfirmation) then
+      begin
+        GravarLog('PW_iPPDataConfirmation( '+IntToStr(AGetData.bIndice)+' )');
+        iRet := xPW_iPPDataConfirmation(AGetData.bIndice);
+      end;
+    end;
+    ppTestKey:
+    begin
+      if Assigned(xPW_iPPTestKey) then
+      begin
+        GravarLog('PW_iPPTestKey( '+IntToStr(AGetData.bIndice)+' )');
+        iRet := xPW_iPPTestKey(AGetData.bIndice);
+      end;
+    end
   else
     DoException(ACBrStr(sErrPWRET_NOMANDATORY));
   end;
@@ -2215,6 +2328,12 @@ begin
   fOnExibeMensagem(wMsg, Terminal, TempoEspera);
 end;
 
+procedure TACBrTEFPGWebAPI.ExibirQRCode(const Dados: String);
+begin
+  GravarLog('  OnExibeQRCode( '+Dados+' )');
+  fOnExibeQRCode(Dados);
+end;
+
 function TACBrTEFPGWebAPI.PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData
   ): TACBrTEFPGWebAPIDefinicaoCampo;
 begin
@@ -2362,6 +2481,8 @@ begin
   AdicionarParametro(PWINFO_AUTDEV, SoftwareHouse);
   AdicionarParametro(PWINFO_AUTCAP, IntToStr(CalcularCapacidadesDaAutomacao));
   AdicionarParametro(PWINFO_MERCHADDDATA4, CACBrTEFPGWebAPIName+' '+CACBrTEFPGWebAPIVersao);
+  if (fExibicaoQRCode > qrNaoSuportado) then
+    AdicionarParametro(PWINFO_DSPQRPREF, IfThen(fExibicaoQRCode=qrExibirNoCheckOut, '2', '1') );
 end;
 
 function TACBrTEFPGWebAPI.CalcularCapacidadesDaAutomacao: Integer;
@@ -2373,10 +2494,16 @@ begin
     Inc(Result, 2);       // 2: funcionalidade de desconto;
   if fSuportaViasDiferenciadas then
     Inc(Result, 8);       // 8: impressão das vias diferenciadas do comprovante para Cliente/Estabelecimento;
-  if fImprimirViaClienteReduzida then
+  if fImprimeViaClienteReduzida then
     Inc(Result, 16);      // 16: impressão do cupom reduzido
   if fUtilizaSaldoTotalVoucher then
     Inc(Result, 32);      // 32: utilização de saldo total do voucher para abatimento do valor da compra
+  if fRemocaoCartaoPinPad then
+    Inc(Result, 64);      // 64: Remoção do cartão do PIN-pad
+  if fExibeMensagemCheckout then
+    Inc(Result, 128);     // 128: exibição de mensagem no checkout.
+  if (fExibicaoQRCode > qrNaoSuportado) then
+    Inc(Result, 256);     // 256: exibição de QR Code no checkout
 end;
 
 procedure TACBrTEFPGWebAPI.SetInicializada(AValue: Boolean);
@@ -2520,7 +2647,8 @@ end;
 
 procedure TACBrTEFPGWebAPI.LoadLibFunctions;
 
-  procedure PGWebFunctionDetect( FuncName: AnsiString; var LibPointer: Pointer ) ;
+  procedure PGWebFunctionDetect( FuncName: AnsiString; var LibPointer: Pointer;
+    FuncIsRequired: Boolean = True) ;
   var
     sLibName: string;
   begin
@@ -2532,8 +2660,11 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
       if not FunctionDetect(sLibName, FuncName, LibPointer) then
       begin
         LibPointer := NIL ;
-        DoException(Format(ACBrStr('Erro ao carregar a função: %s de: %s'),[FuncName, sLibName]));
-      end ;
+        if FuncIsRequired then
+          DoException(Format(ACBrStr('Erro ao carregar a função: %s de: %s'),[FuncName, sLibName]))
+        else
+          GravarLog(Format(ACBrStr('     Função não requerida: %s não encontrada em: %s'),[FuncName, sLibName]));
+        end ;
     end ;
   end;
 
@@ -2560,19 +2691,16 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect('PW_iPPFinishChip', @xPW_iPPFinishChip);
    PGWebFunctionDetect('PW_iPPConfirmData', @xPW_iPPConfirmData);
    PGWebFunctionDetect('PW_iPPGenericCMD', @xPW_iPPGenericCMD);
-   //PGWebFunctionDetect('PW_iPPDataConfirmation', @xPW_iPPDataConfirmation);
    PGWebFunctionDetect('PW_iPPDisplay', @xPW_iPPDisplay);
    PGWebFunctionDetect('PW_iPPGetUserData', @xPW_iPPGetUserData);
    PGWebFunctionDetect('PW_iPPWaitEvent', @xPW_iPPWaitEvent);
    PGWebFunctionDetect('PW_iPPRemoveCard', @xPW_iPPRemoveCard);
-   //PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock);
+   PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock, False);
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
-   //try
-   //  PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx);
-   //except
-   //  xPW_iGetOperationsEx := Nil;  // Não suportado nessa versão da DLL
-   //end;
-
+   PGWebFunctionDetect('PW_iPPDataConfirmation', @xPW_iPPDataConfirmation, False);
+   PGWebFunctionDetect('PW_iPPTestKey', @xPW_iPPTestKey, False);
+   PGWebFunctionDetect('PW_iWaitConfirmation', @xPW_iWaitConfirmation, False);
+   PGWebFunctionDetect('PW_iGetOperationsEx', @xPW_iGetOperationsEx, False);
 end;
 
 procedure TACBrTEFPGWebAPI.UnLoadLibFunctions;

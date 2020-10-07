@@ -88,8 +88,11 @@ type
     fOperacaoPRE: Word;
     fsPGWebAPI: TACBrTEFPGWebAPI;
     function GetConfirmarTransacoesPendentes: Boolean;
+    function GetExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode;
     function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    function GetPortaPinPad: Integer;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
+    procedure EXibirQRCodeAPI(const Dados: String);
 
     function GetCNPJEstabelecimento: String;
     function GetDiretorioTrabalho: String;
@@ -104,12 +107,14 @@ type
     procedure SetCNPJEstabelecimento(AValue: String);
     procedure SetConfirmarTransacoesPendentes(AValue: Boolean);
     procedure SetDiretorioTrabalho(AValue: String);
+    procedure SetExibicaoQRCode(AValue: TACBrTEFPGWebAPIExibicaoQRCode);
     procedure SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
     procedure SetOnExibeMensagem(AValue: TACBrTEFPGWebAPIExibeMensagem);
     procedure SetOnExibeMenu(AValue: TACBrTEFPGWebAPIExibeMenu);
     procedure SetOnObtemCampo(AValue: TACBrTEFPGWebAPIObtemCampo);
     procedure SetPathDLL(AValue: string);
     procedure SetPontoCaptura(AValue: String);
+    procedure SetPortaPinPad(AValue: Integer);
     procedure SetSuportaViasDiferenciadas(AValue: Boolean);
     procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
   protected
@@ -168,16 +173,21 @@ type
        Moeda : Integer = 0) : Boolean; override;
     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
 
+    procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
+
     procedure VerificarTransacoesPendentesClass(aVerificarCupom: Boolean); override;
   published
     property CNPJEstabelecimento: String read GetCNPJEstabelecimento write SetCNPJEstabelecimento;
     property PontoCaptura: String read GetPontoCaptura write SetPontoCaptura;
+    property PortaPinPad: Integer read GetPortaPinPad write SetPortaPinPad default 0;  // -1 = Sem PinPad
     property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas
       write SetSuportaViasDiferenciadas;
     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher
       write SetUtilizaSaldoTotalVoucher;
     property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes
       write SetConfirmarTransacoesPendentes;
+    property ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode read GetExibicaoQRCode
+      write SetExibicaoQRCode;
 
     property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_NULL;
     property OperacaoADM: Word read fOperacaoADM write fOperacaoADM default PWOPER_ADMIN;
@@ -219,6 +229,7 @@ begin
   fsPGWebAPI := TACBrTEFPGWebAPI.Create;
   fsPGWebAPI.OnGravarLog := GravaLogAPI;
   fsPGWebAPI.OnAvaliarTransacaoPendente := AvaliarTransacaoPendenteAPI;
+  fsPGWebAPI.OnExibeQRCode := EXibirQRCodeAPI;
 
   ArqReq := '';
   ArqResp := '';
@@ -259,7 +270,7 @@ begin
   fsPGWebAPI.VersaoAplicacao := TACBrTEFD(Owner).Identificacao.VersaoAplicacao;
   fsPGWebAPI.SuportaDesconto := TACBrTEFD(Owner).SuportaDesconto;
   fsPGWebAPI.SuportaSaque := TACBrTEFD(Owner).SuportaSaque;
-  fsPGWebAPI.ImprimirViaClienteReduzida := TACBrTEFD(Owner).ImprimirViaClienteReduzida;
+  fsPGWebAPI.ImprimeViaClienteReduzida := TACBrTEFD(Owner).ImprimirViaClienteReduzida;
 
   fsPGWebAPI.Inicializada := True;
   GravaLog( Name +' Inicializado '+Name );
@@ -477,6 +488,11 @@ begin
 
   Resposta := fsPGWebAPI.ObterDadoPinPad(TipoMsg, MinLen, MaxLen, 30);  // 30 Segundos de Timeout
   Result := (Resposta <> '');
+end;
+
+procedure TACBrTEFDPayGoWeb.ExibirMensagemPinPad(const MsgPinPad: String);
+begin
+  fsPGWebAPI.ExibirMensagemPinPad(MsgPinPad);
 end;
 
 procedure TACBrTEFDPayGoWeb.VerificarTransacoesPendentesClass(
@@ -779,6 +795,11 @@ begin
   fsPGWebAPI.DiretorioTrabalho := AValue;
 end;
 
+procedure TACBrTEFDPayGoWeb.SetExibicaoQRCode(AValue: TACBrTEFPGWebAPIExibicaoQRCode);
+begin
+  fsPGWebAPI.ExibicaoQRCode := AValue;
+end;
+
 procedure TACBrTEFDPayGoWeb.SetOnAguardaPinPad(AValue: TACBrTEFPGWebAPIAguardaPinPad);
 begin
   fsPGWebAPI.OnAguardaPinPad := AValue;
@@ -810,14 +831,29 @@ begin
   GravaLog(ALogLine);
 end;
 
+procedure TACBrTEFDPayGoWeb.EXibirQRCodeAPI(const Dados: String);
+begin
+  TACBrTEFD(Owner).DoExibeQRCode(Dados);
+end;
+
 function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
 begin
   Result := fsPGWebAPI.ParametrosAdicionais;
 end;
 
+function TACBrTEFDPayGoWeb.GetPortaPinPad: Integer;
+begin
+  Result := fsPGWebAPI.PortaPinPad;
+end;
+
 function TACBrTEFDPayGoWeb.GetConfirmarTransacoesPendentes: Boolean;
 begin
   Result := fsPGWebAPI.ConfirmarTransacoesPendentesNoHost;
+end;
+
+function TACBrTEFDPayGoWeb.GetExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode;
+begin
+  Result := fsPGWebAPI.ExibicaoQRCode;
 end;
 
 procedure TACBrTEFDPayGoWeb.SetSuportaViasDiferenciadas(AValue: Boolean);
@@ -833,6 +869,11 @@ end;
 procedure TACBrTEFDPayGoWeb.SetPontoCaptura(AValue: String);
 begin
   fsPGWebAPI.PontoCaptura := AValue;
+end;
+
+procedure TACBrTEFDPayGoWeb.SetPortaPinPad(AValue: Integer);
+begin
+  fsPGWebAPI.PortaPinPad := AValue;
 end;
 
 end.

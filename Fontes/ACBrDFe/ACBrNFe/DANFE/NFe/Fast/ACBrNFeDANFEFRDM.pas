@@ -104,6 +104,7 @@ type
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
     FOtimizaImpressaoPdf: Boolean;
+    FThreadSafe: Boolean;
 
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure frxReportPreview(Sender: TObject);
@@ -156,6 +157,7 @@ type
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
     property OtimizaImpressaoPdf: Boolean read FOtimizaImpressaoPdf write FOtimizaImpressaoPdf;
+    property ThreadSafe: Boolean read FThreadSafe write FThreadSafe;
 
     function PrepareReport(ANFE: TNFe = nil): Boolean;
     function PrepareReportEvento(ANFE: TNFe = nil): Boolean;
@@ -188,6 +190,7 @@ begin
   if not (AOwner is TACBrDFeDANFeReport) then
     raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrDFeDANFeReport');
 
+  FThreadSafe := False;
   FFastFile := '';
   FExibeCaptionButton := False;
   FZoomModePadrao := ZMDEFAULT;
@@ -2008,6 +2011,16 @@ begin
   frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
   frxReport.PreviewOptions.ZoomMode     := FZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
+
+  if FThreadSafe then
+  begin
+    // Desabilita todo e qualquer tipo de mensagem
+    frxReport.EngineOptions.SilentMode := True;
+    // Habilita o FR a trabalhar com multiplas threads com segurança
+    frxReport.EngineOptions.EnableThreadSafe := True;
+    // Desabilita o cache, que no caso de múltiplas threas pode dar conflito de conteúdo entre arquivos.
+    frxReport.EngineOptions.UseFileCache := false;
+  end;
 
   if NaoEstaVazio(DANFEClassOwner.NomeDocumento) then
     frxReport.FileName := DANFEClassOwner.NomeDocumento;

@@ -56,6 +56,7 @@ type
     btLerParametros: TBitBtn;
     btLimparImpressora: TBitBtn;
     btMudaPagina: TBitBtn;
+    btMsgPinPad: TButton;
     btOperacao: TBitBtn;
     btEfetuarPagamentos: TBitBtn;
     btSalvarParametros: TBitBtn;
@@ -64,6 +65,7 @@ type
     btTestarPosPrinter: TBitBtn;
     btTestarTEF: TBitBtn;
     btObterCPF: TButton;
+    cbQRCodeTela: TCheckBox;
     cbTestePayGo: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
     cbMultiplosCartoes: TCheckBox;
@@ -85,6 +87,7 @@ type
     gbConfigTEF: TGroupBox;
     gbPagamentos: TGroupBox;
     GroupBox1: TGroupBox;
+    imgQRCode: TImage;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -109,6 +112,7 @@ type
     lURLTEF: TLabel;
     mImpressao: TMemo;
     mLog: TMemo;
+    pQRCode: TPanel;
     pImpressoraBotes: TPanel;
     pImpressao: TPanel;
     pMensagem: TPanel;
@@ -170,6 +174,7 @@ type
       RespostasPendentes: TACBrTEFDRespostasPendentes);
     procedure ACBrTEFD1ExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
       Mensagem: String; var AModalResult: TModalResult);
+    procedure ACBrTEFD1ExibeQRCode(const Dados: String);
     procedure ACBrTEFD1GravarLog(const GP: TACBrTEFDTipo; ALogLine: String;
       var Tratado: Boolean);
     procedure ACBrTEFD1InfoECF(Operacao: TACBrTEFDInfoECF;
@@ -177,6 +182,7 @@ type
     procedure btAdministrativoClick(Sender: TObject);
     procedure btEfetuarPagamentosClick(Sender: TObject);
     procedure btIncluirPagamentosClick(Sender: TObject);
+    procedure btMsgPinPadClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
     procedure btMudaPaginaClick(Sender: TObject);
@@ -257,6 +263,8 @@ type
     procedure AtualizarPagamentosVendaNaInterface;
     procedure MensagemTEF(const MsgOperador, MsgCliente: String);
     procedure LimparMensagensTEF;
+    procedure ExibirPainelQRCode;
+    procedure OcultatPainelQRCode;
 
     procedure AdicionarLinhaLog(AMensagem: String);
     procedure AdicionarLinhaImpressao(ALinha: String);
@@ -279,7 +287,7 @@ uses
   IniFiles, typinfo, dateutils, math, strutils,
   frIncluirPagamento, frMenuTEF, frObtemCampo, frExibeMensagem,
   configuraserial,
-  ACBrUtil;
+  ACBrUtil, ACBrDelphiZXingQRCode;
 
 {$R *.dfm}
 
@@ -496,6 +504,14 @@ begin
   { NOTA: Se DefinicaoCampo.ValidacaoDado = "pgvSenhaLojista"
           Você deve chamar a Tela de Senha do seu sistema, e retornar o NOME do
           Operador, NUNCA a Senha digitada
+
+  if (DefinicaoCampo.ValidacaoDado = pgvSenhaLojista) then
+  begin
+    Validado := True;
+    Cancelado := False;
+    Resposta := fOperador;
+    Exit;
+  end;
   }
 
   FormObtemCampo := TFormObtemCampo.Create(self);
@@ -675,6 +691,14 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.btMsgPinPadClick(Sender: TObject);
+var
+  Msg: String;
+begin
+  Msg := 'PROJETO ACBR|'+FormatDateTimeBr(now,'DD/MM HH:NN:SS');
+  ACBrTEFD1.ExibirMensagemPinPad(Msg);
+end;
+
 procedure TFormPrincipal.ACBrTEFD1ExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
   Mensagem: String; var AModalResult: TModalResult);
 var
@@ -719,6 +743,48 @@ begin
           MensagemTEF(OldMensagem, '');
         end;
       end;
+  end;
+end;
+
+procedure TFormPrincipal.ACBrTEFD1ExibeQRCode(const Dados: String);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  if (Dados <> '') then
+    ExibirPainelQRCode
+  else
+  begin
+    OcultatPainelQRCode;
+    Exit;
+  end;
+
+  QRCode := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.QuietZone := 2;
+    QRCode.Data      := widestring(Dados);
+
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    imgQRCode.Picture.Bitmap.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
   end;
 end;
 
@@ -1084,6 +1150,7 @@ begin
     seTrocoMaximo.Value := Trunc(INI.ReadFloat('TEF', 'TrocoMaximo', seTrocoMaximo.Value));
     cbImprimirViaReduzida.Checked := INI.ReadBool('TEF', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
     cbMultiplosCartoes.Checked := INI.ReadBool('TEF', 'MultiplosCartoes', cbMultiplosCartoes.Checked);
+    cbQRCodeTela.Checked := INI.ReadBool('TEF', 'ExibirQRCodeTela', cbQRCodeTela.Checked);
     cbSuportaDesconto.Checked := INI.ReadBool('TEF', 'SuportaDesconto', cbSuportaDesconto.Checked);
     cbSuportaSaque.Checked := INI.ReadBool('TEF', 'SuportaSaque', cbSuportaSaque.Checked);
     cbSuportaReajusteValor.Checked := INI.ReadBool('TEF', 'SuportaReajusteValor', cbSuportaReajusteValor.Checked);
@@ -1119,6 +1186,7 @@ begin
     INI.WriteFloat('TEF', 'TrocoMaximo', seTrocoMaximo.Value);
     INI.WriteBool('TEF', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
     INI.WriteBool('TEF', 'MultiplosCartoes', cbMultiplosCartoes.Checked);
+    INI.WriteBool('TEF', 'ExibirQRCodeTela', cbQRCodeTela.Checked);
     INI.WriteBool('TEF', 'SuportaDesconto', cbSuportaDesconto.Checked);
     INI.WriteBool('TEF', 'SuportaSaque', cbSuportaSaque.Checked);
     INI.WriteBool('TEF', 'SuportaReajusteValor', cbSuportaReajusteValor.Checked);
@@ -1499,7 +1567,10 @@ var
     if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
     begin
       ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='01'; //01: crédito
-      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='01'; //01: à vista
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='1'; //01: crédito
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='1'; //01: à vista, 2: parcelado
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]:='REDE';
+      //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_INSTALLMENTS]:='3';
     end
     else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
       ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 3;
@@ -1515,6 +1586,15 @@ var
     end
     else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
       ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 2;
+  end;
+
+  procedure InformarParametrosCarteiraDigital;
+  begin
+    // Instruindo CRT a apenas transações de Débito
+    if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
+      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='8'; // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
+    //else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
+    //  ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 2;
   end;
 
 begin
@@ -1555,6 +1635,7 @@ begin
     else if (Indice = '05') then    // 05-CARTEIRA DIGITAL
     begin
       FTestePayGo := 27;
+      InformarParametrosCarteiraDigital;
       Ok := ACBrTEFD1.CRT(AValor, '01');
       TemTEF := True;
     end
@@ -1776,6 +1857,27 @@ begin
   MensagemTEF(' ',' ');
 end;
 
+procedure TFormPrincipal.ExibirPainelQRCode;
+begin
+  if pQRCode.Visible then
+    Exit;
+
+  mImpressao.Visible := False;
+  lSaidaImpressao.Visible := False;
+  pQRCode.Visible := True;
+  pQRCode.Align := alClient;
+end;
+
+procedure TFormPrincipal.OcultatPainelQRCode;
+begin
+  if not pQRCode.Visible then
+    Exit;
+
+  pQRCode.Visible := False;
+  mImpressao.Visible := True;
+  lSaidaImpressao.Visible := True;
+end;
+
 procedure TFormPrincipal.ConfigurarTEF;
 begin
   AdicionarLinhaLog('- ConfigurarTEF');
@@ -1795,6 +1897,13 @@ begin
   ACBrTEFD1.TEFPayGo.SuportaReajusteValor := cbSuportaReajusteValor.Checked;
   ACBrTEFD1.TEFPayGo.SuportaNSUEstendido := True;
   ACBrTEFD1.TEFPayGo.SuportaViasDiferenciadas := True;
+
+  if cbQRCodeTela.Checked then
+    ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qrExibirNoCheckOut
+  else
+    ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qrExibirNoPinPad;
+
+  //ACBrTEFD1.TEFPayGoWeb.DiretorioTrabalho := 'C:\PAYGOWEB';
 
   // Configurações abaixo são obrigatórios, para funcionamento de Não Fiscal //
   ACBrTEFD1.AutoEfetuarPagamento := False;

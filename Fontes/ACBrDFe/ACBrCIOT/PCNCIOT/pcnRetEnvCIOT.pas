@@ -139,7 +139,7 @@ begin
 
           if PDF <> '' then
             PDF := DecodeBase64(PDF);
-
+          PDFNomeArquivo              := '';
           CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
           Data                        := leitor.rCampo(tcDatHor, 'Data');
           Protocolo                   := leitor.rCampo(tcStr, 'Protocolo');

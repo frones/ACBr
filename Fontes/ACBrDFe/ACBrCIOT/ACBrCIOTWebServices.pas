@@ -676,6 +676,8 @@ begin
       NomeArq := PathWithDelim(GerarPathDownload) + FNomePDF + '.pdf';
 
     WriteToTXT(NomeArq, FRetornoEnvio.RetEnvio.PDF, False, False, True);
+
+    FRetornoEnvio.RetEnvio.PDFNomeArquivo := NomeArq;
   end;
 
   FPMsg := '';

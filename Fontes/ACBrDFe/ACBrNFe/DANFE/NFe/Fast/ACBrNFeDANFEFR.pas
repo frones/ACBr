@@ -151,7 +151,8 @@ type
     procedure SetIncorporarFontesPdf(const Value: Boolean);
     function GetOtimizaImpressaoPdf: Boolean;
     procedure SetOtimizaImpressaoPdf(const Value: Boolean);
-
+    function GetThreadSafe: Boolean;
+    procedure SetThreadSafe(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -180,6 +181,7 @@ type
     property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf default True;
     property IncorporarFontesPdf: Boolean read GetIncorporarFontesPdf write SetIncorporarFontesPdf default True;
     property OtimizaImpressaoPdf: Boolean read GetOtimizaImpressaoPdf write SetOtimizaImpressaoPdf default True;
+    property ThreadSafe: Boolean read GetThreadSafe write SetThreadSafe;
   end;
 
 implementation
@@ -460,6 +462,11 @@ begin
   Result := FdmDanfe.PrintOnSheet;
 end;
 
+function TACBrNFeDANFCEFR.GetThreadSafe: Boolean;
+begin
+  Result := FdmDanfe.ThreadSafe;
+end;
+
 procedure TACBrNFeDANFCEFR.ImprimirDANFE(NFE: TNFe);
 begin
   FdmDanfe.ImprimirDANFE(NFE);
@@ -552,6 +559,11 @@ end;
 procedure TACBrNFeDANFCEFR.SetPrintOnSheet(const Value: Integer);
 begin
   FdmDanfe.PrintOnSheet := Value;
+end;
+
+procedure TACBrNFeDANFCEFR.SetThreadSafe(const Value: Boolean);
+begin
+  FdmDanfe.ThreadSafe := Value;
 end;
 
 end.

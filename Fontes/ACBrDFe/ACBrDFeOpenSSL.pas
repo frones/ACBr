@@ -382,6 +382,7 @@ begin
     DataVenc := GetNotAfter( cert );
     IssuerName := GetIssuerName( cert );
     DERBase64 := CertToDERBase64( cert );
+    Tipo := tpcA1;  // OpenSSL somente suporta A1
   end;
 end;
 

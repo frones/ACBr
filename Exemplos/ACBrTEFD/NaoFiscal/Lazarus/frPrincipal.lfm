@@ -1,7 +1,7 @@
 object FormPrincipal: TFormPrincipal
-  Left = 448
+  Left = 450
   Height = 500
-  Top = 252
+  Top = 117
   Width = 1081
   Caption = 'ACBrTEFD - Demo não fiscal'
   ClientHeight = 500
@@ -247,9 +247,9 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
             end
             object cbMultiplosCartoes: TCheckBox
-              Left = 160
+              Left = 280
               Height = 19
-              Top = 92
+              Top = 26
               Width = 113
               Caption = 'Multiplos Cartões'
               TabOrder = 7
@@ -285,7 +285,7 @@ object FormPrincipal: TFormPrincipal
               Width = 72
               Alignment = taCenter
               MaxValue = 20
-              TabOrder = 9
+              TabOrder = 8
             end
             object cbIMprimirViaReduzida: TCheckBox
               Left = 160
@@ -336,7 +336,7 @@ object FormPrincipal: TFormPrincipal
               Width = 72
               Alignment = taCenter
               MaxValue = 100000
-              TabOrder = 10
+              TabOrder = 9
             end
             object cbSuportaReajusteValor: TCheckBox
               Left = 160
@@ -365,7 +365,7 @@ object FormPrincipal: TFormPrincipal
               Caption = 'Software House e Aplicação'
               ClientHeight = 100
               ClientWidth = 298
-              TabOrder = 11
+              TabOrder = 10
               object Label14: TLabel
                 Left = 8
                 Height = 15
@@ -431,13 +431,31 @@ object FormPrincipal: TFormPrincipal
                 Text = '1.0'
               end
             end
-            object cbQRCodeTela: TCheckBox
+            object cbxQRCode: TComboBox
               Left = 160
-              Height = 19
-              Top = 114
-              Width = 136
-              Caption = 'Exibir QRCode na Tela'
-              TabOrder = 8
+              Height = 23
+              Top = 110
+              Width = 128
+              ItemHeight = 15
+              ItemIndex = 1
+              Items.Strings = (
+                'Não Suportado'
+                'Auto'
+                'Exibir no PinPad'
+                'Exibir na Tela'
+                'Imprimir'
+              )
+              Style = csDropDownList
+              TabOrder = 11
+              Text = 'Auto'
+            end
+            object Label9: TLabel
+              Left = 160
+              Height = 15
+              Top = 94
+              Width = 44
+              Caption = 'QRCode'
+              ParentColor = False
             end
           end
           object pBotoesConfiguracao: TPanel
@@ -1153,7 +1171,7 @@ object FormPrincipal: TFormPrincipal
     TEFPayGoWeb.SuportaViasDiferenciadas = True
     TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
     TEFPayGoWeb.ConfirmarTransacoesPendentes = True
-    TEFPayGoWeb.ExibicaoQRCode = qrNaoSuportado
+    TEFPayGoWeb.ExibicaoQRCode = qreAuto
     TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
     TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
     TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem

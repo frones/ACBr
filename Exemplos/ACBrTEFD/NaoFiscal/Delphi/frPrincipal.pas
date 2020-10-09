@@ -65,7 +65,6 @@ type
     btTestarPosPrinter: TBitBtn;
     btTestarTEF: TBitBtn;
     btObterCPF: TButton;
-    cbQRCodeTela: TCheckBox;
     cbTestePayGo: TComboBox;
     cbIMprimirViaReduzida: TCheckBox;
     cbMultiplosCartoes: TCheckBox;
@@ -74,6 +73,7 @@ type
     cbSuportaReajusteValor: TCheckBox;
     cbSuportaSaque: TCheckBox;
     cbxGP: TComboBox;
+    cbxQRCode: TComboBox;
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
@@ -97,6 +97,7 @@ type
     Label18: TLabel;
     Label19: TLabel;
     Label8: TLabel;
+    Label9: TLabel;
     lMensagemCliente: TLabel;
     lMensagemOperador: TLabel;
     lNumOperacao: TLabel;
@@ -752,6 +753,17 @@ var
   QRCodeBitmap: TBitmap;
   Row, Column: Integer;
 begin
+  if (cbxQRCode.ItemIndex = 4) then  // 4 - Imprimir
+  begin
+    if (Dados <> '') then
+      AdicionarLinhaImpressao( '</zera></ce>'+
+                               '<qrcode_largura>8</qrcode_largura>'+
+                               '<qrcode>'+Dados+'</qrcode>'+
+                               '</lf></lf></corte_total>');
+
+    Exit;
+  end;
+
   if (Dados <> '') then
     ExibirPainelQRCode
   else
@@ -1150,7 +1162,7 @@ begin
     seTrocoMaximo.Value := Trunc(INI.ReadFloat('TEF', 'TrocoMaximo', seTrocoMaximo.Value));
     cbImprimirViaReduzida.Checked := INI.ReadBool('TEF', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
     cbMultiplosCartoes.Checked := INI.ReadBool('TEF', 'MultiplosCartoes', cbMultiplosCartoes.Checked);
-    cbQRCodeTela.Checked := INI.ReadBool('TEF', 'ExibirQRCodeTela', cbQRCodeTela.Checked);
+    cbxQRCode.ItemIndex := INI.ReadInteger('TEF', 'QRCode', cbxQRCode.ItemIndex);
     cbSuportaDesconto.Checked := INI.ReadBool('TEF', 'SuportaDesconto', cbSuportaDesconto.Checked);
     cbSuportaSaque.Checked := INI.ReadBool('TEF', 'SuportaSaque', cbSuportaSaque.Checked);
     cbSuportaReajusteValor.Checked := INI.ReadBool('TEF', 'SuportaReajusteValor', cbSuportaReajusteValor.Checked);
@@ -1186,7 +1198,7 @@ begin
     INI.WriteFloat('TEF', 'TrocoMaximo', seTrocoMaximo.Value);
     INI.WriteBool('TEF', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
     INI.WriteBool('TEF', 'MultiplosCartoes', cbMultiplosCartoes.Checked);
-    INI.WriteBool('TEF', 'ExibirQRCodeTela', cbQRCodeTela.Checked);
+    INI.WriteInteger('TEF', 'QRCode', cbxQRCode.ItemIndex);
     INI.WriteBool('TEF', 'SuportaDesconto', cbSuportaDesconto.Checked);
     INI.WriteBool('TEF', 'SuportaSaque', cbSuportaSaque.Checked);
     INI.WriteBool('TEF', 'SuportaReajusteValor', cbSuportaReajusteValor.Checked);
@@ -1898,10 +1910,13 @@ begin
   ACBrTEFD1.TEFPayGo.SuportaNSUEstendido := True;
   ACBrTEFD1.TEFPayGo.SuportaViasDiferenciadas := True;
 
-  if cbQRCodeTela.Checked then
-    ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qrExibirNoCheckOut
+  case cbxQRCode.ItemIndex of
+    0: ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qreNaoSuportado;
+    2: ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qreExibirNoPinPad;
+    3, 4: ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qreExibirNoCheckOut;
   else
-    ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qrExibirNoPinPad;
+    ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qreAuto;
+  end;
 
   //ACBrTEFD1.TEFPayGoWeb.DiretorioTrabalho := 'C:\PAYGOWEB';
 

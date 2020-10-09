@@ -252,10 +252,19 @@ object FormPrincipal: TFormPrincipal
             end
             object Label12: TLabel
               Left = 312
-              Top = 104
+              Top = 107
               Width = 67
               Height = 13
               Caption = 'Troco M'#225'ximo'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label9: TLabel
+              Left = 160
+              Top = 110
+              Width = 41
+              Height = 13
+              Caption = 'QRCode'
               Color = clBtnFace
               ParentColor = False
             end
@@ -269,9 +278,9 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 0
             end
             object cbMultiplosCartoes: TCheckBox
-              Left = 160
-              Top = 109
-              Width = 113
+              Left = 288
+              Top = 49
+              Width = 105
               Height = 19
               Caption = 'Multiplos Cart'#245'es'
               TabOrder = 7
@@ -299,7 +308,7 @@ object FormPrincipal: TFormPrincipal
               Height = 22
               MaxValue = 20
               MinValue = 0
-              TabOrder = 9
+              TabOrder = 8
               Value = 0
             end
             object cbIMprimirViaReduzida: TCheckBox
@@ -320,12 +329,12 @@ object FormPrincipal: TFormPrincipal
             end
             object seTrocoMaximo: TSpinEdit
               Left = 312
-              Top = 121
+              Top = 124
               Width = 73
               Height = 22
               MaxValue = 100000
               MinValue = 0
-              TabOrder = 10
+              TabOrder = 9
               Value = 0
             end
             object cbSuportaReajusteValor: TCheckBox
@@ -351,7 +360,7 @@ object FormPrincipal: TFormPrincipal
               Width = 286
               Height = 120
               Caption = 'Software House e Aplica'#231#227'o'
-              TabOrder = 11
+              TabOrder = 10
               object Label14: TLabel
                 Left = 8
                 Top = 16
@@ -421,13 +430,22 @@ object FormPrincipal: TFormPrincipal
                 Text = '1.0'
               end
             end
-            object cbQRCodeTela: TCheckBox
+            object cbxQRCode: TComboBox
               Left = 160
-              Top = 130
-              Width = 136
-              Height = 19
-              Caption = 'Exibir QRCode na Tela'
-              TabOrder = 8
+              Top = 126
+              Width = 128
+              Height = 21
+              Style = csDropDownList
+              ItemHeight = 13
+              ItemIndex = 1
+              TabOrder = 11
+              Text = 'Auto'
+              Items.Strings = (
+                'N'#227'o Suportado'
+                'Auto'
+                'Exibir no PinPad'
+                'Exibir na Tela'
+                'Imprimir')
             end
           end
           object pBotoesConfiguracao: TPanel
@@ -1113,7 +1131,6 @@ object FormPrincipal: TFormPrincipal
     TEFPayGoWeb.SuportaViasDiferenciadas = True
     TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
     TEFPayGoWeb.ConfirmarTransacoesPendentes = True
-    TEFPayGoWeb.ExibicaoQRCode = qrExibirNoPinPad
     TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
     TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
     TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem

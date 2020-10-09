@@ -187,7 +187,7 @@ type
     property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes
       write SetConfirmarTransacoesPendentes;
     property ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode read GetExibicaoQRCode
-      write SetExibicaoQRCode;
+      write SetExibicaoQRCode default qreAuto;
 
     property OperacaoATV: Word read fOperacaoATV write fOperacaoATV default PWOPER_NULL;
     property OperacaoADM: Word read fOperacaoADM write fOperacaoADM default PWOPER_ADMIN;

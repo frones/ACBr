@@ -501,7 +501,7 @@ type
      pgbLeitor = 2,
      pgbDigitadoOuLeitor = 3);
 
-  TACBrTEFPGWebAPIExibicaoQRCode = (qrNaoSuportado, qrExibirNoPinPad, qrExibirNoCheckOut);
+  TACBrTEFPGWebAPIExibicaoQRCode = (qreNaoSuportado, qreAuto, qreExibirNoPinPad, qreExibirNoCheckOut);
 
   TACBrTEFPGWebAPIExibeMenu = procedure(
     Titulo: String;
@@ -1116,7 +1116,7 @@ begin
   fUtilizaSaldoTotalVoucher := False;
   fRemocaoCartaoPinPad := True;
   fExibeMensagemCheckout := True;
-  fExibicaoQRCode := qrNaoSuportado;
+  fExibicaoQRCode := qreAuto;
   fInicializada := False;
   fDiretorioTrabalho := '';
   fEmTransacao := False;
@@ -1181,8 +1181,8 @@ begin
   if not Assigned(fOnAguardaPinPad) then
     DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnAguardaPinPad']));
 
-  if (not Assigned(fOnExibeQRCode)) and (ExibicaoQRCode = qrExibirNoCheckOut) then
-    ExibicaoQRCode := qrExibirNoPinPad;
+  if (not Assigned(fOnExibeQRCode)) and (ExibicaoQRCode = qreExibirNoCheckOut) then
+    ExibicaoQRCode := qreExibirNoPinPad;
 
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
@@ -2481,8 +2481,8 @@ begin
   AdicionarParametro(PWINFO_AUTDEV, SoftwareHouse);
   AdicionarParametro(PWINFO_AUTCAP, IntToStr(CalcularCapacidadesDaAutomacao));
   AdicionarParametro(PWINFO_MERCHADDDATA4, CACBrTEFPGWebAPIName+' '+CACBrTEFPGWebAPIVersao);
-  if (fExibicaoQRCode > qrNaoSuportado) then
-    AdicionarParametro(PWINFO_DSPQRPREF, IfThen(fExibicaoQRCode=qrExibirNoCheckOut, '2', '1') );
+  if (fExibicaoQRCode > qreAuto) then
+    AdicionarParametro(PWINFO_DSPQRPREF, IfThen(fExibicaoQRCode=qreExibirNoCheckOut, '2', '1') );
 end;
 
 function TACBrTEFPGWebAPI.CalcularCapacidadesDaAutomacao: Integer;
@@ -2502,7 +2502,7 @@ begin
     Inc(Result, 64);      // 64: Remoção do cartão do PIN-pad
   if fExibeMensagemCheckout then
     Inc(Result, 128);     // 128: exibição de mensagem no checkout.
-  if (fExibicaoQRCode > qrNaoSuportado) then
+  if (fExibicaoQRCode > qreNaoSuportado) then
     Inc(Result, 256);     // 256: exibição de QR Code no checkout
 end;
 

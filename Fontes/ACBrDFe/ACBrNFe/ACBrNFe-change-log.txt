@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2020
+-- pcnNFeW --
+[*] Remoção da seção "CDATA" na geração da tag qrCode versão 2.00.
+[*] Inclusão de alerta para validação do NCM se tamanho informado for diferente
+    de 8 ou 2.
+[*] Remoção da validação da DI/DSI/DIRE por a regra ainda estar como implementação
+    futura e as SEFAZ aceitam tipos não validados.
+  Por: BigWings
+
 28/09/2020
 -- pcnInutNFe --
 [*] Ajuste na leitura do XML de retorno de inutilização em UTF-8 com caracteres especiais.

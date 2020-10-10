@@ -233,6 +233,7 @@ var
   Gerar: Boolean;
   xProtNFe : String;
   xCNPJCPF : string;
+  qrCode: string;
 begin
   Gerador.ListaDeAlertas.Clear;
 
@@ -275,8 +276,11 @@ begin
   if nfe.infNFeSupl.qrCode <> '' then
   begin
     Gerador.wGrupo('infNFeSupl');
-    Gerador.wCampo(tcStr, 'ZX02', 'qrCode', 100, 600, 1,
-                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', DSC_INFQRCODE,False);
+
+    qrCode := nfe.infNFeSupl.qrCode;
+    if Pos('?p=', qrCode) = 0 then
+      qrCode := '<![CDATA[' + qrCode + ']]>';
+    Gerador.wCampo(tcStr, 'ZX02', 'qrCode', 100, 600, 1, qrCode, DSC_INFQRCODE,False);
 
     if nfe.infNFe.Versao >= 4 then
       Gerador.wCampo(tcStr, 'ZX03', 'urlChave', 21, 85, 1, nfe.infNFeSupl.urlChave, DSC_URLCHAVE, False);
@@ -843,6 +847,9 @@ begin
   else
     Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
+  if not (Length(OnlyNumber(nfe.Det[i].Prod.NCM)) in [2, 8]) then
+    Gerador.wAlerta('I05', 'NCM', DSC_NCM, ERR_MSG_INVALIDO);
+
   {**}GerarDetProdNVE(i);
 
   if NFe.infNFe.Versao >= 4 then
@@ -914,8 +921,9 @@ begin
     Gerador.wGrupo('DI', 'I18');
     Gerador.wCampo(tcStr, 'I19', 'nDI', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
 
-    if not ValidaDIRE(nfe.Det[i].Prod.DI[j].nDI) and not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
-      Gerador.wAlerta('I19', 'nDI', DSC_NDI, ERR_MSG_INVALIDO);
+    // RV I19-10 consta como implementação futura
+    // if not ValidaDIRE(nfe.Det[i].Prod.DI[j].nDI) and not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
+    //   Gerador.wAlerta('I19', 'nDI', DSC_NDI, ERR_MSG_INVALIDO);
 
     Gerador.wCampo(tcDat, 'I20', 'dDI        ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDI, DSC_DDi);
     Gerador.wCampo(tcStr, 'I21', 'xLocDesemb ', 01, 60, 1, nfe.Det[i].Prod.DI[j].xLocDesemb, DSC_XLOCDESEMB);

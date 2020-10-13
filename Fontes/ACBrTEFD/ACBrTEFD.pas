@@ -1198,7 +1198,7 @@ begin
       try ComandarECF(opeCancelaCupom); except {Exceção Muda} end;
       CancelarTransacoesPendentes;
     end
-    else
+    else if (not fConfirmarAntesDosComprovantes) then
       ConfirmarTransacoesPendentes;
 
     BloquearMouseTeclado( False );

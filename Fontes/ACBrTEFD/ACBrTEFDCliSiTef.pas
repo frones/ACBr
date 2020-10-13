@@ -1375,9 +1375,6 @@ function TACBrTEFDCliSiTef.CDP(const EntidadeCliente: string; out Resposta: stri
 var
   ATipo: Integer;
 begin
-  if (PinPadChaveAcesso = '') or (PinPadIdentificador = '') then
-    raise EACBrTEFDErro.Create( 'PinPadChaveAcesso e PinPadIdentificador devem ser informados' ) ;
-
   if EntidadeCliente = 'F' then
     ATipo := 1
   else if EntidadeCliente = 'J' then

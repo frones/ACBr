@@ -818,11 +818,14 @@ begin
                   '0'                                                                                   + // 018 - 018 / Código do desconto 2
                   PadLeft('', 8, '0')                                                                   + // 019 - 026 / Data do desconto 2
                   IntToStrZero(0, 15)                                                                   + // 027 - 041 / Valor/Percentual a ser concedido
-                  sTipoDesconto                                                                         + // 42 - 42 1 = Valor Fixo ate a Data Informada / 2 = Percentual ate a Data Informada / 3 = Valor por Antecipação dia Corrido
-                                                                                                          //         5 = Percentual por Antecipação dia corrido
+                  '0'                                                                                   + // 042 - 042 / Código do desconto 3
+                  PadLeft('', 8, '0')                                                                   + // 043 - 050 / Data do desconto 3
+                  IntToStrZero(0, 15)                                                                   + // 051 - 065 / Valor/Percentual a ser concedido
+                  {sTipoDesconto                                                                        + // 042 - 042 1 = Valor Fixo ate a Data Informada / 2 = Percentual ate a Data Informada / 3 = Valor por Antecipação dia Corrido
+                                                                                                          //           5 = Percentual por Antecipação dia corrido
                   IfThen((ACBrTitulo.ValorDesconto > 0),
-                          FormatDateTime('ddmmyyyy', ACBrTitulo.DataDesconto), '00000000')              + // 43 - 50 Campo numerico e deve ser preenchido, caso não tenha desconto manter o campo zerado. DDMMAAAA
-                  IntToStrZero(round(ACBrTitulo.ValorDesconto), 15)                                     + // 51 - 65 / Valor/Percentual a ser aplicado
+                          FormatDateTime('ddmmyyyy', ACBrTitulo.DataDesconto), '00000000')              + // 043 - 050 Campo numerico e deve ser preenchido, caso não tenha desconto manter o campo zerado. DDMMAAAA
+                  IntToStrZero(round(ACBrTitulo.ValorDesconto), 15)                                     + // 051 - 065 / Valor/Percentual a ser aplicado}
                   IfThen((ACBrTitulo.PercentualMulta > 0),
                          IfThen(ACBrTitulo.MultaValorFixo,'1','2'), '0')                + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
                   IfThen((ACBrTitulo.PercentualMulta > 0),

@@ -654,7 +654,7 @@ begin
                          fACBrNFe.NotasFiscais.Items[J].NFe.Ide.nNF)) +']' + sLineBreak +
                          'Arquivo=' + fACBrNFe.NotasFiscais.Items[J].NomeArq;
 
-          if pPDF then
+          if (NotasFiscais.Items[J].Confirmada) and (pPDF) then
           begin
             DoConfiguraDANFe(pPDF, Trim(pPreview) );
             NotasFiscais.Items[J].ImprimirPDF;

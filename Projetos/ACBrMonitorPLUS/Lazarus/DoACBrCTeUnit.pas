@@ -587,7 +587,7 @@ begin
           if pCopias > 0 then
             DACTE.NumCopias := pCopias;
 
-          if pPDF then
+          if (Conhecimentos.Items[I].Confirmado) and  (pPDF) then
           begin
             Conhecimentos.Items[I].ImprimirPDF;
             ArqPDF := OnlyNumber(ACBrCTe.Conhecimentos.Items[I].CTe.infCTe.ID)+'-cte.pdf';
@@ -596,11 +596,11 @@ begin
               'PDF='+ PathWithDelim(ACBrCTe.DACTE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
-          if (Conhecimentos.Items[i].Confirmado) and (pImprimir) then
+          if (Conhecimentos.Items[I].Confirmado) and (pImprimir) then
           begin
             try
               DoAntesDeImprimir((pPreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
-              Conhecimentos.Items[i].Imprimir;
+              Conhecimentos.Items[I].Imprimir;
             finally
               DoDepoisDeImprimir;
             end;

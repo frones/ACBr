@@ -588,7 +588,7 @@ begin
 
           DAMDFE.Encerrado:= pEncerrado;
 
-          if pPDF then
+          if (Manifestos.Items[I].Confirmado) and  (pPDF) then
           begin
             Manifestos.Items[I].ImprimirPDF;
             ArqPDF := OnlyNumber(ACBrMDFe.Manifestos.Items[I].MDFe.infMDFe.Id)+'-mdfe.pdf';
@@ -597,11 +597,11 @@ begin
               'PDF='+ PathWithDelim(ACBrMDFe.DAMDFE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
-          if (Manifestos.Items[i].Confirmado) and (pImprimir) then
+          if (Manifestos.Items[I].Confirmado) and (pImprimir) then
           begin
             try
               DoAntesDeImprimir( ( StrToBoolDef( pPreview, False ) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ) );
-              Manifestos.Items[i].Imprimir;
+              Manifestos.Items[I].Imprimir;
             finally
               DoDepoisDeImprimir;
             end;

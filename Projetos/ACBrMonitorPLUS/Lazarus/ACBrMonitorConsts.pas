@@ -944,6 +944,8 @@ const
   CKeyEmailSegundoPlano =            'SegundoPlano';
   CKeyEmailCodificacao =             'Codificacao';
   CKeyEmailHTML =                    'HTML';
+  CKeyAttemptsMail =                 'AttemptsMail';
+  CKeyTimeoutMail =                  'TimeOutMail';
   CKeyMensagemNFe =                  'MensagemNFe';
   CKeyMensagemCTe =                  'MensagemCTe';
   CKeyMensagemMDFe =                 'MensagemMDFe';
@@ -988,6 +990,7 @@ const
   CKeyDANFEFonteRazao =                'FonteRazao';
   CKeyDANFEFonteEndereco =             'FonteEndereco';
   CKeyDANFEFonteCampos =               'FonteCampos';
+  CKeyDANFEFonteAdicionais =           'FonteAdicionais';
   CKeyDANFEAlturaCampos =              'AlturaCampos';
   CKeyDANFEMargem =                    'Margem';
   CKeyDANFEMargemSup =                 'MargemSup';

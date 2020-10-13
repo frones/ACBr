@@ -565,6 +565,9 @@ type
     Label243: TLabel;
     Label245: TLabel;
     Label246: TLabel;
+    Label249: TLabel;
+    Label250: TLabel;
+    Label251: TLabel;
     lbTipoResp: TLabel;
     lblMsgCanhoto: TLabel;
     Label26: TLabel;
@@ -649,6 +652,7 @@ type
     spedtSATCasasDecimaisQtd: TSpinEdit;
     spedtSATDecimaisVUnit: TSpinEdit;
     speEspEntreProd: TSpinEdit;
+    speFonteAdic: TSpinEdit;
     speFonteCampos: TSpinEdit;
     speFonteEndereco: TSpinEdit;
     speFonteRazao: TSpinEdit;
@@ -685,8 +689,10 @@ type
     sbArquivoWebServicesMDFe: TSpeedButton;
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
+    spnTimeOutMail: TSpinEdit;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
+    spnAttemptsMail: TSpinEdit;
     TabSheet1: TTabSheet;
     gbxWSeSocial: TTabSheet;
     gbxWSReinf: TTabSheet;
@@ -4771,6 +4777,8 @@ begin
     cbEmailThread.Checked              := SegundoPlano;
     cbEmailCodificacao.Text            := Codificacao;
     cbEmailHTML.Checked                := HTML;
+    spnAttemptsMail.Value              := AttemptsMail;
+    spnTimeOutMail.Value               := TimeoutMail;
   end;
 
   {Parametro Sedex}
@@ -4968,6 +4976,7 @@ begin
       speFonteRazao.Value                 := FonteRazao;
       speFonteEndereco.Value              := FonteEndereco;
       speFonteCampos.Value                := FonteCampos;
+      speFonteAdic.Value                  := FonteAdicionais;
       speAlturaCampos.Value               := AlturaCampos;
       fspeMargemInf.Value                 := Margem;
       fspeMargemSup.Value                 := MargemSup;
@@ -5500,6 +5509,8 @@ begin
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
     IsHTML := cbEmailHTML.Checked;
+    Attempts := spnAttemptsMail.Value;
+    TimeOut := spnTimeOutMail.Value;
   end;
 
   with ACBrIBGE1 do
@@ -5962,6 +5973,8 @@ begin
       SegundoPlano            := cbEmailThread.Checked;
       Codificacao             := cbEmailCodificacao.Text;
       HTML                    := cbEmailHTML.Checked;
+      AttemptsMail            := spnAttemptsMail.Value;
+      TimeoutMail             := spnTimeOutMail.Value;
     end;
 
     { Parametros Sedex }
@@ -6151,6 +6164,7 @@ begin
         FonteRazao                 := speFonteRazao.Value;
         FonteEndereco              := speFonteEndereco.Value;
         FonteCampos                := speFonteCampos.Value;
+        FonteAdicionais            := speFonteAdic.Value;
         AlturaCampos               := speAlturaCampos.Value;
         Margem                     := fspeMargemInf.Value;
         MargemSup                  := fspeMargemSup.Value;
@@ -9019,6 +9033,7 @@ begin
       ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
       ACBrNFeDANFeRL1.Fonte.TamanhoFonteDemaisCampos := speFonteCampos.Value;
       ACBrNFeDANFeRL1.Fonte.TamanhoFonteEndereco     := speFonteEndereco.Value;
+      ACBrNFeDANFeRL1.Fonte.TamanhoFonteInformacoesComplementares := speFonteAdic.Value;
       ACBrNFeDANFeRL1.LarguraCodProd := speLargCodProd.Value;
       ACBrNFeDANFeRL1.ExibeEAN := cbxExibirEAN.Checked;
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
@@ -9037,6 +9052,7 @@ begin
       ACBrNFeDANFeRL1.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
       ACBrNFeDANFeRL1.ImprimeDescAcrescItem:= TpcnImprimeDescAcrescItem(rgImprimeDescAcrescItemNFe.ItemIndex);
       ACBrNFeDANFeRL1.ExibeCampoDePagamento:= TpcnInformacoesDePagamento(rgInfFormaPagNFe.ItemIndex);
+      ACBrNFeDANFeRL1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
 
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then

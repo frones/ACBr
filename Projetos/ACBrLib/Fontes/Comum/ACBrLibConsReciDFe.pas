@@ -239,7 +239,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, Formato);
+      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(ExtrairNumeroChaveAcesso( ProtDFe.Items[i].chDFe ))), Tipo, Formato);
       Item.Processar(ProtDFe.Items[i]);
       FItems.Add(Item);
     end;

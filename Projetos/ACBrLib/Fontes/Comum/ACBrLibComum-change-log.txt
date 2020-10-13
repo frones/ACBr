@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2020
+--- ACBrLibConsReciDFe ---
+[*] Compatibilização da seção [NFe...] no resposta de Envio da NFe retornando apenas numero da NFe no retorno.
+    Por: José M S Junior
+
 22/06/2020
 --- ACBrLibCertUtils ---
 [*] Ajuste para obter dados do certificado utilizando OpenSSL

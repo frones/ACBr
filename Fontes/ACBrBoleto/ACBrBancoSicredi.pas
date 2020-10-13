@@ -339,7 +339,7 @@ begin
                      Space(6)                                                           +  // 057 a 062 - Filler - Brancos
                      FormatDateTime( 'yyyymmdd', date)                                  +  // 063 a 070 - Data da instrução
                      IfThen(Ocorrencia = '31', CompOcorrenciaOutrosDados, Space(1))     +  // 071 a 071 - Campo alterado, quando instrução "31" Conforme tabela de instruções
-                     IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
+                     IfThen(CarteiraEnvio = tceBanco, 'S', 'N')                         +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(1)                                                           +  // 073 a 073 - Filler Brancos
                      TipoBoleto                                                         +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
                      IfThen((TipoImpressao = tipCarne) and (Parcela > 0), 
@@ -351,7 +351,7 @@ begin
                      Space(1)                                                           +  // 057 a 057 - Filler - Brancos
                      'B'                                                                +  // 058 a 058 - Tipo Impressão (Completa)
                      Space(13)                                                          +  // 059 a 071 - Filler - Brancos
-                     IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
+                     IfThen(CarteiraEnvio = tceBanco, 'S', 'N')                         +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(2)                                                           +  // 073 a 074 - Filler Brancos
                      IfThen((TipoImpressao = tipCarne) and (Parcela > 0),
                              PadLeft(IntToStr(Parcela),2,'0'), '  ')                    +  // 075 a 076 - Número da parcela do carnê --Anderson

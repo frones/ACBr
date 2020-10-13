@@ -49,6 +49,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2020
+
+-- ACBrBancoSicred --
+[*] Correção na validação Postagem Titulo CNAB400 posição72 da remessa com o campo: CarteiraEnvio
+Contribuição: https://www.projetoacbr.com.br/forum/topic/41349-remessa-sicredi/
+
+-- ACBrBancoSafra --
+[*] Correção no tratamento do desconto 2 e 3 para CNB240 seguindo manual atualizado
+Contribuição: https://www.projetoacbr.com.br/forum/topic/58445-banco-safra-n%C3%A3o-trata-desconto-segmento-r/
+
+-- ACBrBancoCresol --
+[*] Ajuste na validação Código de ocorrências conforme manual atualizado função: CodMotivoRejeicaoToDescricao
+Contribuição: https://www.projetoacbr.com.br/forum/topic/59352-problema-ao-processar-arquivo-de-retorno-do-banco-cresol-c%C3%B3digo-do-motivo-a4-is-not-a-valid-integer-value/
+
+-- ACBrBancoCaixaSicob --
+[*] Ajuste na validação da função: CalcularTamanhoNossoNumero
+Contribuição: https://www.projetoacbr.com.br/forum/topic/58457-acbrbancocaixasicoob-calculartammaximonossonumero/
+
 24/09/2020
 -- ACBrBancoCresol --
 [*] Ajuste na validação código Convenio na leitura Retorno CNAB400.

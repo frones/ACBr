@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2020
+--- ACBrLibNFeRepostas ---
+[*] Compatibilização da seção [NFe...] no resposta de Envio Sincrono da NFe retornando apenas numero da NFe no retorno.
+    Por: José M S Junior
+
 19/08/2020
 --- ACBrLibNFeConfig ---
 [+] Adicionado a nova propriedade Fonte.TamanhoFonteInformacoesComplementares.

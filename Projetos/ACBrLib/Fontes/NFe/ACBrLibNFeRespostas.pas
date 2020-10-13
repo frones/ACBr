@@ -913,7 +913,7 @@ begin
 
   if (ACBrNFe.WebServices.Enviar.Sincrono) and (ACBrNFe.NotasFiscais.Count > 0) then
   begin
-    FItemRetorno := TRetornoItemResposta.Create('NFe' + Trim(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe), Tipo, Formato);
+    FItemRetorno := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(ExtrairNumeroChaveAcesso( ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe ))), Tipo, Formato);
     FItemRetorno.Id := 'ID' + ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
     FItemRetorno.tpAmb := TpAmbToStr(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.tpAmb);
     FItemRetorno.verAplic := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.verAplic;

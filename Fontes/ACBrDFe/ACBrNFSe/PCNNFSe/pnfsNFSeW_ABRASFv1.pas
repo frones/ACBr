@@ -300,10 +300,14 @@ begin
   case FProvedor of
     proThema :  Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
+    proGINFES:   if NFSe.OptanteSimplesNacional = snSim then
+                   Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ)
+                 else
+                   Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+
     proRJ,
     proPublica,
     proBHISS,
-    proGINFES,
     proAbaco:   Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proGovBR,

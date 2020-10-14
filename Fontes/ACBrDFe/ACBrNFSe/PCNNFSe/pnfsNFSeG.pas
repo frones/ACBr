@@ -410,6 +410,7 @@ begin
   case IBGE of
     4102307: Result :=  '23'; // Balsa Nova/PR
     4104501: Result :=  '50'; // Capanema/PR
+    4104451: Result :=  '51'; // Cantagalo/PR
     4104659: Result := '141'; // Carambei/PR
     4107207: Result :=  '68'; // Dois Vizinhos/PR
     4107736: Result := '140'; // Fernandes Pinheiro/PR
@@ -607,8 +608,8 @@ begin
 
     proInfisc,
     proInfiscv11: begin
-                    Gerador.Prefixo := '';
-                    Gerador.wGrupo('envioLote versao="1.0"');
+                    Gerador.Prefixo := Prefixo3;
+                    Gerador.wGrupo('envioLote versao="1.0" xmlns:ws="http://ws.pc.gif.com.br/"');
                     Gerador.wCampo(tcStr, '', 'CNPJ'   , 01, 14, 1, Cnpj, '');
                     Gerador.wCampo(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');
                     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;

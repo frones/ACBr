@@ -1171,7 +1171,6 @@ object FormPrincipal: TFormPrincipal
     TEFPayGoWeb.SuportaViasDiferenciadas = True
     TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
     TEFPayGoWeb.ConfirmarTransacoesPendentes = True
-    TEFPayGoWeb.ExibicaoQRCode = qreAuto
     TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
     TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
     TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem

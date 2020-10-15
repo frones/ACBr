@@ -422,7 +422,7 @@ begin
   ACBrTEFD1ExibeMsg( opmYesNo, Mensagem + sLineBreak + sLineBreak + 'Confirmar ?', MR);
 
   if (MR = mrNo) then
-    Status := PWCNF_REV_PWR_AUT
+    Status := PWCNF_REV_MANU_AUT
   else
     Status := PWCNF_CNF_MANU_AUT;
 end;

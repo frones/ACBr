@@ -1745,17 +1745,29 @@ end;
 procedure TFormPrincipal.AtualizarVendaNaInterface;
 begin
   lNumOperacao.Caption := FormatFloat('000000',Venda.NumOperacao);
-  seValorInicialVenda.Value := Venda.ValorInicial;
+  seValorInicialVenda.OnChange := Nil;
+  try
+    seValorInicialVenda.Value := Venda.ValorInicial;
+  finally
+    seValorInicialVenda.OnChange := @seValorInicialVendaChange;
+  end;
   AtualizarPagamentosVendaNaInterface;
 end;
 
 procedure TFormPrincipal.AtualizarTotaisVendaNaInterface;
 begin
-  seTotalDesconto.Value := Venda.TotalDesconto;
-  seTotalAcrescimo.Value := Venda.TotalAcrescimo;
-  edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
-  edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
-  edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
+  seTotalDesconto.OnChange := Nil;
+  seTotalAcrescimo.OnChange := Nil;
+  try
+    seTotalDesconto.Value := Venda.TotalDesconto;
+    seTotalAcrescimo.Value := Venda.TotalAcrescimo;
+    edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
+    edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
+    edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
+  finally
+    seTotalDesconto.OnChange := @seTotalDescontoChange;
+    seTotalAcrescimo.OnChange := @seTotalAcrescimoChange;
+  end;
 end;
 
 procedure TFormPrincipal.AtualizarPagamentosVendaNaInterface;

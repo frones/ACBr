@@ -49,10 +49,6 @@ type
     ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrNFe1: TACBrNFe;
-    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
-    ACBrNFeDANFCeFortesA4: TACBrNFeDANFCeFortesA4;
-    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
-    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
 
     procedure DataModuleCreate(Sender: TObject);
@@ -60,15 +56,20 @@ type
   private
     FLock: TCriticalSection;
     fpLib: TACBrLib;
+    DANFCeFortes: TACBrNFeDANFCeFortes;
+    DANFCeA4: TACBrNFeDANFCeFortesA4;
+    DANFCeEscPos: TACBrNFeDANFeESCPOS;
+    NFeDANFe: TACBrNFeDANFeRL;
 
   public
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ValidarIntegradorNFCe();
+    procedure ValidarIntegradorNFCe;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
                                   ViaConsumidor: String = ''; Simplificado: String = '');
+    procedure FinalizarImpressao;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -213,28 +214,36 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-  ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+  if ACBrNFe1.NotasFiscais.Count < 1 then Exit;
 
-  if ACBrNFe1.NotasFiscais.Count > 0 then
+  if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
   begin
-    if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+    if not GerarPDF and (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes) then
     begin
-      if (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes) then
-        ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
-      else if (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
-        ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA4
-      else
-        ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
-
-      if GerarPDF and not (LibConfig.DANFe.NFCe.TipoRelatorioBobina in [tpFortes, tpFortesA4]) then
-        ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
-    end;
-
-    if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
-      ACBrNFe1.DANFE.Cancelada := True
+      DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
+      ACBrNFe1.DANFE := DANFCeFortes
+    end
+    else if not GerarPDF and (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
+    begin
+      DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
+      ACBrNFe1.DANFE := DANFCeA4
+    end
     else
-      ACBrNFe1.DANFE.Cancelada := False;
+    begin
+      DANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
+      ACBrNFe1.DANFE := DANFCeEscPos;
+    end;
+  end
+  else
+  begin
+     NFeDANFe := TACBrNFeDANFeRL.Create(nil);
+     ACBrNFe1.DANFE := NFeDANFe;
   end;
+
+  if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
+    ACBrNFe1.DANFE.Cancelada := True
+  else
+    ACBrNFe1.DANFE.Cancelada := False;
 
   if GerarPDF then
   begin
@@ -261,13 +270,13 @@ begin
      if NaoEstaVazio(ViaConsumidor) then
        TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
 
-     if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+     if ACBrNFe1.DANFE = DANFCeEscPos then
      begin
-        if not ACBrNFeDANFeESCPOS1.PosPrinter.ControlePorta then
+        if not DANFCeEscPos.PosPrinter.ControlePorta then
         begin
-          ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
-          if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
-            ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
+          DANFCeEscPos.PosPrinter.Ativar;
+          if not DANFCeEscPos.PosPrinter.Device.Ativo then
+            DANFCeEscPos.PosPrinter.Device.Ativar;
         end;
      end;
   end
@@ -276,16 +285,28 @@ begin
     if NaoEstaVazio(Simplificado) then
     begin
       if StrToBoolDef(Simplificado, False) then
-        ACBrNFeDANFeRL1.TipoDANFE := tiSimplificado;
+        NFeDANFe.TipoDANFE := tiSimplificado;
     end;
 
      if NaoEstaVazio(MarcaDagua) then
-       ACBrNFeDANFeRL1.MarcaDagua := MarcaDagua
+       NFeDANFe.MarcaDagua := MarcaDagua
      else
-       ACBrNFeDANFeRL1.MarcaDagua := '';
+       NFeDANFe.MarcaDagua := '';
   end;
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibNFeDM.FinalizarImpressao;
+begin
+  if ACBrPosPrinter1.Ativo then
+          ACBrPosPrinter1.Desativar;
+
+  ACBrNFe1.DANFE := nil;
+  if Assigned(NFeDANFe) then FreeAndNil(NFeDANFe);
+  if Assigned(DANFCeFortes) then FreeAndNil(DANFCeFortes);
+  if Assigned(DANFCeA4) then FreeAndNil(DANFCeA4);
+  if Assigned(DANFCeEscPos) then FreeAndNil(DANFCeEscPos);
 end;
 
 procedure TLibNFeDM.ValidarIntegradorNFCe;

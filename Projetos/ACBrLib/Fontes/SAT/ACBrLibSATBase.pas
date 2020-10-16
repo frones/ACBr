@@ -185,11 +185,11 @@ end;
 function TACBrLibSAT.AtivarSAT(CNPJvalue: PChar; cUF: longint;
                               const sResposta: PChar; var esTamanho: longint):longint;
 var
-  CNPJ, Assinatura, Resposta: ansistring;
+  CNPJ, Resposta: Ansistring;
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CNPJ := ansistring(CNPJvalue);
+    CNPJ := ConverterAnsiParaUTF8(CNPJvalue);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_AtivarSAT(' + CNPJ + ',' + IntToStr(cUF) + ' )', logCompleto, True)
@@ -227,8 +227,8 @@ var
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CNPJ := ansistring(CNPJvalue);
-    Assinatura := ansistring(assinaturaCNPJs);
+    CNPJ := ConverterAnsiParaUTF8(CNPJvalue);
+    Assinatura := ConverterAnsiParaUTF8(assinaturaCNPJs);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' + Assinatura + ' )', logCompleto, True)
@@ -326,8 +326,8 @@ var
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CodigoAtivacao := ansistring(codigoDeAtivacaoOuEmergencia);
-    NovoCodigoAtv := ansistring(novoCodigo);
+    CodigoAtivacao := ConverterAnsiParaUTF8(codigoDeAtivacaoOuEmergencia);
+    NovoCodigoAtv := ConverterAnsiParaUTF8(novoCodigo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_TrocarCodigoDeAtivacao(' + CodigoAtivacao + ',' + IntToStr(opcao) + ',' + NovoCodigoAtv +
@@ -534,7 +534,7 @@ var
   RespSat: TACBrLibSATResposta;
 begin
   try
-    cCertificado := ansistring(certificado);
+    cCertificado := ConverterAnsiParaUTF8(certificado);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ComunicarCertificadoICPBRASIL(' + cCertificado + ' )', logCompleto, True)
@@ -569,7 +569,7 @@ var
   cArquivo: ansistring;
 begin
   try
-    cArquivo := ansistring(eArquivo);
+    cArquivo := ConverterAnsiParaUTF8(eArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ExtrairLogs(' + cArquivo + ' )', logCompleto, True)
@@ -600,7 +600,7 @@ var
   Resp: TRetornoTesteFimaFim;
 begin
   try
-    ArquivoXmlVenda := ansistring(eArquivoXmlVenda);
+    ArquivoXmlVenda := ConverterAnsiParaUTF8(eArquivoXmlVenda);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_TesteFimAFim(' + ArquivoXmlVenda + ' )', logCompleto, True)
@@ -635,8 +635,8 @@ Var
   cCNPJShw, cCNPJEmitente, cCodigoVinculacao, Resposta: String;
 begin
   try
-    cCNPJShw := OnlyNumber(StrPas(eCNPJSHW));
-    cCNPJEmitente := OnlyNumber(StrPas(eCNPJEmitente));
+    cCNPJShw := OnlyNumber(ConverterAnsiParaUTF8(eCNPJSHW));
+    cCNPJEmitente := OnlyNumber(ConverterAnsiParaUTF8(eCNPJEmitente));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarAssinaturaSAT(' + cCNPJShw + ', ' + cCNPJEmitente + ' )', logCompleto, True)
@@ -679,7 +679,7 @@ var
   ArquivoIni: String;
 begin
    try
-    ArquivoIni := String(eArquivoIni);
+    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CriarCFe(' + ArquivoIni + ' )', logCompleto, True)
@@ -718,7 +718,7 @@ var
   ArquivoIni: String;
 begin
    try
-    ArquivoIni := String(eArquivoIni);
+    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CriarEnviarCFe(' + ArquivoIni + ' )', logCompleto, True)
@@ -759,7 +759,7 @@ var
   ArquivoXml: Ansistring;
 begin
    try
-    ArquivoXml := Ansistring(eArquivoXml);
+    ArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_EnviarCFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -801,7 +801,7 @@ var
   ArquivoXml: String;
 begin
    try
-    ArquivoXml := String(eArquivoXml);
+    ArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CancelarCFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -841,8 +841,8 @@ var
   ArquivoXml, NomeImpressora: String;
 begin
    try
-    ArquivoXml := String(eArqXMLVenda);
-    NomeImpressora := String(eNomeImpressora);
+    ArquivoXml := ConverterAnsiParaUTF8(eArqXMLVenda);
+    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ImprimirExtratoVenda(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
@@ -859,8 +859,7 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
-      if SatDM.ACBrPosPrinter1.Ativo then
-          SatDM.ACBrPosPrinter1.Desativar;
+      SatDM.FinalizarImpressao;
       SatDM.Destravar;
     end;
   except
@@ -894,8 +893,7 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
-      if SatDM.ACBrPosPrinter1.Ativo then
-          SatDM.ACBrPosPrinter1.Desativar;
+      SatDM.FinalizarImpressao;
       SatDM.Destravar;
     end;
   except
@@ -912,9 +910,9 @@ var
   ArqXMLVenda, ArqXMLCancelamento, NomeImpressora: String;
 begin
    try
-    ArqXMLVenda := String(eArqXMLVenda);
-    ArqXMLCancelamento := String(eArqXMLCancelamento);
-    NomeImpressora := String(eNomeImpressora);
+    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
+    ArqXMLCancelamento := ConverterAnsiParaUTF8(eArqXMLCancelamento);
+    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ImprimirExtratoCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
@@ -932,8 +930,7 @@ begin
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
     finally
-      if SatDM.ACBrPosPrinter1.Ativo then
-          SatDM.ACBrPosPrinter1.Desativar;
+      SatDM.FinalizarImpressao;
       SatDM.Destravar;
     end;
   except
@@ -950,7 +947,7 @@ var
   ArquivoXml,  Resposta: String;
 begin
    try
-    ArquivoXml := String(eArqXMLVenda);
+    ArquivoXml := ConverterAnsiParaUTF8(eArqXMLVenda);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -964,7 +961,7 @@ begin
       Resposta := '';
 
       SatDM.CarregarDadosVenda(ArquivoXml);
-      Resposta := SatDM.ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe(SatDM.ACBrSAT1.CFe);
+      Resposta := SatDM.GerarImpressaoFiscalMFe;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
 
       Result := SetRetorno(ErrOK, Resposta);
@@ -987,8 +984,8 @@ var
   ArqXMLVenda, NomeArquivo, Resposta: String;
 begin
   try
-    ArqXMLVenda := String(eArqXMLVenda);
-    NomeArquivo := String(eNomeArquivo);
+    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
+    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarPDFExtratoVenda(' + ArqXMLVenda + ',' + NomeArquivo + ' )', logCompleto, True)
@@ -1015,6 +1012,7 @@ begin
       Result := SetRetorno(ErrOK, Resposta);
     finally
       Resp.Free;
+      SatDM.FinalizarImpressao;
       SatDM.Destravar;
     end;
   except
@@ -1033,9 +1031,9 @@ var
   ArqXMLVenda, ArqXMLCancelamento, NomeArquivo, Resposta: String;
 begin
    try
-    ArqXMLVenda := String(eArqXMLVenda);
-    ArqXMLCancelamento := String(eArqXMLCancelamento);
-    NomeArquivo := String(eNomeArquivo);
+    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
+    ArqXMLCancelamento := ConverterAnsiParaUTF8(eArqXMLCancelamento);
+    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarPDFCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
@@ -1061,6 +1059,7 @@ begin
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
+      SatDM.FinalizarImpressao;
       SatDM.Destravar;
     end;
   except
@@ -1079,13 +1078,13 @@ var
   slMensagem, slCC, slAnexos: TStrings;
 begin
    try
-    ArqXMLVenda := String(eArqXMLVenda);
-    Para := String(sPara);
-    Assunto := String(sAssunto);
-    NomeArquivo := String(eNomeArquivo);
-    Mensagem := String(sMensagem);
-    CC := String(sCC);
-    Anexos := String(eAnexos);
+    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
+    Para := ConverterAnsiParaUTF8(sPara);
+    Assunto := ConverterAnsiParaUTF8(sAssunto);
+    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    Mensagem := ConverterAnsiParaUTF8(sMensagem);
+    CC := ConverterAnsiParaUTF8(sCC);
+    Anexos := ConverterAnsiParaUTF8(eAnexos);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_EnviarEmail(' + ArqXMLVenda + ',' + Para + ',' + Assunto

@@ -92,7 +92,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
-  ACBrBoleto, ACBrBoletoConversao, ACBrLibBoletoConfig, ACBrMail;
+  ACBrLibResposta, ACBrBoleto, ACBrBoletoConversao, ACBrLibBoletoConfig, ACBrMail;
   
 constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
@@ -122,11 +122,10 @@ end;
 function TACBrLibBoleto.ConfigurarDados(eArquivoIni: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;  
 var
-  Resposta : AnsiString;
-  ArquivoIni : String;
+  Resposta, ArquivoIni: AnsiString;
 begin
   try
-    ArquivoIni := String(eArquivoIni);
+    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Boleto_ConfigurarDados(' + ArquivoIni + ' )', logCompleto, True)
@@ -157,21 +156,20 @@ end;
 function TACBrLibBoleto.IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;  
 var
-  Resposta : AnsiString;
-  ArquivoIni : String;
-  TpSaida : String;
+  Resposta, ArquivoIni, TpSaida : AnsiString;
   Mensagem : TStringList;
 begin
   try
-    ArquivoIni := String(eArquivoIni);
-    TpSaida := String(eTpSaida);
+    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
+    TpSaida := ConverterAnsiParaUTF8(eTpSaida);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('Boleto_IncluirTitulos(' + ArquivoIni + ' )', logCompleto, True)
+      GravarLog('Boleto_IncluirTitulos(' + ArquivoIni + ', ' + TpSaida + ' )', logCompleto, True)
     else
       GravarLog('Boleto_IncluirTitulos', logNormal);
 
     BoletoDM.Travar;
+
     try
       Resposta := '';
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
@@ -179,14 +177,30 @@ begin
       else
       begin
         if TpSaida = 'I' then
-          BoletoDM.ACBrBoleto1.Imprimir
+        begin
+          try
+            BoletoDM.ConfigurarImpressao;
+            BoletoDM.ACBrBoleto1.Imprimir
+          finally
+            BoletoDM.FinalizarImpressao;
+          end;
+        end
         else if TpSaida = 'P' then
-          BoletoDM.ACBrBoleto1.GerarPDF
+        begin
+          try
+            BoletoDM.ConfigurarImpressao;
+            BoletoDM.ACBrBoleto1.GerarPDF
+          finally
+            BoletoDM.FinalizarImpressao;
+          end;
+        end
         else if TpSaida = 'E' then
         begin
           with TLibBoletoConfig(Config).BoletoConfig do
           begin
             Mensagem := TStringList.Create;
+            Mensagem.Duplicates := dupAccept;
+
             try
               Mensagem.Add(emailMensagemBoleto);
               if Config.Log.Nivel > logNormal then
@@ -270,10 +284,10 @@ end;
 
 function TACBrLibBoleto.Imprimir(eNomeImpressora: PChar): longint;  
 var
-  NomeImpressora : String;
+  NomeImpressora : AnsiString;
 begin
   try
-    NomeImpressora := String(eNomeImpressora);
+    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Boleto_Imprimir(' + NomeImpressora + ' )', logCompleto, True)
@@ -282,12 +296,11 @@ begin
 
     BoletoDM.Travar;
     try
-      if NaoEstaVazio(NomeImpressora) then
-        BoletoDM.ACBrBoleto1.ACBrBoletoFC.PrinterName := NomeImpressora;
-
+      BoletoDM.ConfigurarImpressao(NomeImpressora);
       BoletoDM.ACBrBoleto1.Imprimir;
       Result := SetRetorno(ErrOK);
     finally
+      BoletoDM.FinalizarImpressao;
       BoletoDM.Destravar;
     end;
   except
@@ -301,10 +314,10 @@ end;
 
 function TACBrLibBoleto.ImprimirBoleto(eIndice: longint; eNomeImpressora: PChar): longint;  
 var
-  NomeImpressora : String;
+  NomeImpressora : AnsiString;
 begin
   try
-    NomeImpressora := String(eNomeImpressora);
+    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Boleto_ImprimirBoleto(' + IntToStr(eIndice) + ', ' + NomeImpressora + ' )', logCompleto, True)
@@ -313,18 +326,12 @@ begin
 
     BoletoDM.Travar;
     try
-      if NaoEstaVazio(NomeImpressora) then
-        BoletoDM.ACBrBoleto1.ACBrBoletoFC.PrinterName := NomeImpressora;
-
+      BoletoDM.ConfigurarImpressao(NomeImpressora);
       BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := eIndice;
-      try
-        BoletoDM.ACBrBoleto1.Imprimir;
-      finally
-        BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := -1;
-      end;
-
+      BoletoDM.ACBrBoleto1.Imprimir;
       Result := SetRetorno(ErrOK);
     finally
+      BoletoDM.FinalizarImpressao;
       BoletoDM.Destravar;
     end;
   except
@@ -343,9 +350,11 @@ begin
 
     BoletoDM.Travar;
     try
+      BoletoDM.ConfigurarImpressao;
       BoletoDM.ACBrBoleto1.GerarPDF;
       Result := SetRetorno(ErrOK);
     finally
+      BoletoDM.FinalizarImpressao;
       BoletoDM.Destravar;
     end;
   except
@@ -364,9 +373,11 @@ begin
 
     BoletoDM.Travar;
     try
+      BoletoDM.ConfigurarImpressao;
       BoletoDM.ACBrBoleto1.GerarHTML;
       Result := SetRetorno(ErrOK);
     finally
+      BoletoDM.FinalizarImpressao;
       BoletoDM.Destravar;
     end;
   except
@@ -380,14 +391,13 @@ end;
 
 function TACBrLibBoleto.GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;  
 var
-  Dir: String;
+  Dir, NomeArq: AnsiString;
   NumArquivo: Integer;
-  NomeArq: String;
 begin
   try
-    Dir := String(eDir);
+    Dir := ConverterAnsiParaUTF8(eDir);
     NumArquivo:= StrToIntDef( IntToStr( eNumArquivo ), 0);
-    NomeArq:= String(eNomeArq);
+    NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
     GravarLog('Boleto_GerarRemessa', logNormal);
 
     BoletoDM.Travar;
@@ -413,12 +423,11 @@ end;
 
 function TACBrLibBoleto.LerRetorno(eDir, eNomeArq: PChar): longint;  
 var
-  Dir: String;
-  NomeArq: String;
+  Dir, NomeArq: AnsiString;
 begin
   try
-    Dir := String(eDir);
-    NomeArq:= String(eNomeArq);
+    Dir := ConverterAnsiParaUTF8(eDir);
+    NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
     GravarLog('Boleto_LerRetorno', logNormal);
 
     BoletoDM.Travar;
@@ -445,14 +454,14 @@ end;
 
 function TACBrLibBoleto.EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;  
 var
-  Para, Assunto, Mensagem, CC: String;
+  Para, Assunto, Mensagem, CC: AnsiString;
   slMensagem, slCC: TStrings;
 begin
   try
-    Para := String(ePara);
-    Assunto := String(eAssunto);
-    Mensagem := String(eMensagem);
-    CC := String(eCC);
+    Para := ConverterAnsiParaUTF8(ePara);
+    Assunto := ConverterAnsiParaUTF8(eAssunto);
+    Mensagem := ConverterAnsiParaUTF8(eMensagem);
+    CC := ConverterAnsiParaUTF8(eCC);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Boleto_EnviarEmail(' + Para + ',' + Assunto
@@ -490,13 +499,11 @@ end;
 
 function TACBrLibBoleto.SetDiretorioArquivo(eDir, eArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
 var
-  Resposta : AnsiString;
-  Dir : String;
-  Arq : String;
+  Resposta, Dir, Arq : AnsiString;
 begin
    try
-     Dir := String(eDir);
-     Arq := String(eArq);
+     Dir := ConverterAnsiParaUTF8(eDir);
+     Arq := ConverterAnsiParaUTF8(eArq);
 
      if Config.Log.Nivel > logNormal then
        GravarLog('Boleto_SetDiretorioArquivo( Diretorio: ' + Dir +
@@ -544,6 +551,7 @@ begin
     try
       Resposta := '';
       Resposta := ListaBancos;
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -568,6 +576,7 @@ begin
     try
       Resposta := '';
       Resposta := ListaCaractTitulo();
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -592,6 +601,7 @@ begin
     try
       Resposta := '';
       Resposta := ListaOcorrencias();
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -616,6 +626,7 @@ begin
     try
       Resposta := '';
       Resposta := ListaOcorrenciasEX();
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -631,13 +642,12 @@ end;
 
 function TACBrLibBoleto.TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
 var
-   Resposta : AnsiString;
-   Carteira, NossoNumero, Convenio : String;
+   Resposta, Carteira, NossoNumero, Convenio : AnsiString;
 begin
   try
-    Carteira := String(eCarteira);
-    NossoNumero:= String(enossoNumero);
-    Convenio:= String(eConvenio);
+    Carteira := ConverterAnsiParaUTF8(eCarteira);
+    NossoNumero:= ConverterAnsiParaUTF8(enossoNumero);
+    Convenio:= ConverterAnsiParaUTF8(eConvenio);
 
     GravarLog('Boleto_TamNossoNumero', logNormal);
 
@@ -645,6 +655,7 @@ begin
     try
       Resposta := '';
       Resposta := IntToStr(BoletoDM.ACBrBoleto1.Banco.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio));
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -669,6 +680,7 @@ begin
     try
       Resposta := '';
       Resposta := BoletoDM.ACBrBoleto1.Banco.CodigosMoraAceitos;
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -684,11 +696,10 @@ end;
 
 function TACBrLibBoleto.SelecionaBanco(eCodBanco: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
 var
-   Resposta : AnsiString;
-   CodBanco : String;
+   Resposta, CodBanco : AnsiString;
 begin
   try
-    CodBanco := String(eCodBanco);
+    CodBanco := ConverterAnsiParaUTF8(eCodBanco);
 
     GravarLog('Boleto_SelecionaBanco', logNormal);
 
@@ -698,6 +709,7 @@ begin
       BoletoDM.ACBrBoleto1.Banco.TipoCobranca := BoletoDM.ACBrBoleto1.GetTipoCobranca(StrToInt64Def(Trim(CodBanco),0));
 
       Resposta := CodBanco;
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -732,6 +744,7 @@ begin
       begin
         Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCampoNossoNumero(
                     BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -768,6 +781,7 @@ begin
       begin
         ABarras := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
         Resposta := BoletoDM.ACBrBoleto1.Banco.MontarLinhaDigitavel(ABarras, BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -802,6 +816,7 @@ begin
       else
       begin
         Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;

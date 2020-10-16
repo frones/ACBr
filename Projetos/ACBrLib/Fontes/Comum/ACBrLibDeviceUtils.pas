@@ -61,7 +61,6 @@ begin
   finally
     ListPorts.Free;
   end;
-
 end;
 
 function PortasUSB(const Device: TACBrDevice): ansistring;
@@ -103,7 +102,6 @@ begin
   finally
     ListPorts.Free;
   end;
-
 end;
 
 end.

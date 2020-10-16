@@ -256,9 +256,9 @@ begin
   FreeAndNil(fpConfig);
 end;
 
-procedure TACBrLib.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
+procedure TACBrLib.CriarConfiguracao(ArqConfig: Ansistring; ChaveCrypt: AnsiString);
 begin
-  fpConfig := TLibConfig.Create(Self, ArqConfig, ChaveCrypt);
+  fpConfig := TLibConfig.Create(Self, ConverterAnsiParaUTF8(ArqConfig), ConverterAnsiParaUTF8(ChaveCrypt));
 end;
 
 procedure TACBrLib.Executar;
@@ -335,10 +335,13 @@ begin
 end;
 
 function TACBrLib.ObterNome(const sNome: PChar; var esTamanho: longint): longint;
+Var
+  Ret: Ansistring;
 begin
   try
     GravarLog('LIB_Nome', logNormal);
-    MoverStringParaPChar(Nome, sNome, esTamanho);
+    Ret := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Nome), Nome);
+    MoverStringParaPChar(Ret, sNome, esTamanho);
     if Config.Log.Nivel >= logCompleto then
       GravarLog('   Nome:' + string(sNome) + ', len:' + IntToStr(esTamanho), logCompleto, True);
     Result := SetRetorno(ErrOK, Nome);
@@ -352,10 +355,13 @@ begin
 end;
 
 function TACBrLib.ObterVersao(const sVersao: PChar; var esTamanho: longint): longint;
+Var
+  Ret: Ansistring;
 begin
   try
     GravarLog('LIB_Versao', logNormal);
-    MoverStringParaPChar(Versao, sVersao, esTamanho);
+    Ret := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Versao), Versao);
+    MoverStringParaPChar(Ret, sVersao, esTamanho);
     if Config.Log.Nivel >= logCompleto then
       GravarLog('   Versao:' + string(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
     Result := SetRetorno(ErrOK, Versao);
@@ -369,10 +375,13 @@ begin
 end;
 
 function TACBrLib.UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+Var
+  Ret: Ansistring;
 begin
   try
     GravarLog('LIB_UltimoRetorno', logNormal);
-    MoverStringParaPChar(Retorno.Mensagem, sMensagem, esTamanho);
+    Ret := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Retorno.Mensagem), Retorno.Mensagem);
+    MoverStringParaPChar(Ret, sMensagem, esTamanho);
     Result := Retorno.Codigo;
     if (Config.Log.Nivel >= logCompleto) then
       GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + string(sMensagem), logCompleto, True);
@@ -389,7 +398,7 @@ function TACBrLib.ImportarConfig(const eArqConfig: PChar): longint;
 var
   ArqConfig: String;
 begin
-  ArqConfig := string(eArqConfig);
+  ArqConfig := ConverterAnsiParaUTF8(eArqConfig);
    try
      GravarLog('LIB_ImportarConfig(' + ArqConfig + ')', logNormal);
 
@@ -409,11 +418,11 @@ end;
 
 function TACBrLib.ExportarConfig(sValor: PChar; var esTamanho: longint): longint;
 var
-  ArqIni: String;
+  ArqIni: Ansistring;
 begin
   try
     GravarLog('LIB_ExportarConfig', logNormal);
-    ArqIni := Config.Exportar;
+    ArqIni := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Config.Exportar), Config.Exportar);
     MoverStringParaPChar(ArqIni, sValor, esTamanho);
     Result := SetRetorno(ErrOK, ArqIni);
   except
@@ -430,7 +439,7 @@ var
   ArqConfigOuIni: String;
 begin
   try
-    ArqConfigOuIni := string(eArqConfig);
+    ArqConfigOuIni := ConverterAnsiParaUTF8(eArqConfig);
     GravarLog('LIB_ConfigLer(' + IfThen(Config.EhMemory, CLibMemory, ArqConfigOuIni) + ')', logNormal);
     if Config.EhMemory then
       GravarLog('   Memory: Configuração em memória favor usar o método ImportarConfig)', logNormal);
@@ -458,7 +467,7 @@ var
   ArqConfig: String;
 begin
   try
-    ArqConfig := string(eArqConfig);
+    ArqConfig := ConverterAnsiParaUTF8(eArqConfig);
     GravarLog('LIB_ConfigGravar(' + IfThen(Config.EhMemory, CLibMemory, eArqConfig) + ')', logNormal);
     if Config.EhMemory then
       GravarLog('   Memory: Configuração em memória favor usar o método ExportarConfig)', logNormal);
@@ -487,8 +496,8 @@ var
   Sessao, Chave, Valor: Ansistring;
 begin
   try
-    Sessao := Ansistring(eSessao);
-    Chave := Ansistring(eChave);
+    Sessao := ConverterAnsiParaUTF8(eSessao);
+    Chave := ConverterAnsiParaUTF8(eChave);
     GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
 
     Valor := Config.LerValor(Sessao, Chave);
@@ -515,9 +524,9 @@ var
   Sessao, Chave, Valor: Ansistring;
 begin
   try
-    Sessao := Ansistring(eSessao);
-    Chave := Ansistring(eChave);
-    Valor := Ansistring(eValor);
+    Sessao := ConverterAnsiParaUTF8(eSessao);
+    Chave := ConverterAnsiParaUTF8(eChave);
+    Valor := ConverterAnsiParaUTF8(eValor);
 
     GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' +
                                           IfThen(Config.PrecisaCriptografar(Sessao, Chave),
@@ -538,11 +547,11 @@ end;
 
 function LIB_Inicializar(var libHandle: PLibHandle; pLibClass: TACBrLibClass; const eArqConfig, eChaveCrypt: PChar): longint;
 var
-  ArqConfig, ChaveCrypt: String;
+  ArqConfig, ChaveCrypt: Ansistring;
 begin
   try
-    ArqConfig := string(eArqConfig);
-    ChaveCrypt := string(eChaveCrypt);
+    ArqConfig := Ansistring(eArqConfig);
+    ChaveCrypt := Ansistring(eChaveCrypt);
 
     New(libHandle);
     libHandle^.Lib := pLibClass.Create(eArqConfig, eChaveCrypt);

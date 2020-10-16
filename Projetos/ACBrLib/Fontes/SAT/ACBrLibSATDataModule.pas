@@ -50,8 +50,6 @@ type
     ACBrMail1: TACBrMail;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1: TACBrSAT;
-    ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
-    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
 
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
@@ -60,6 +58,8 @@ type
   private
     FLock: TCriticalSection;
     fpLib: TACBrLib;
+    ExtratoEscPos: TACBrSATExtratoESCPOS;
+    ExtratoFortes: TACBrSATExtratoFortes;
 
   public
     property Lib: TACBrLib read fpLib write fpLib;
@@ -68,6 +68,8 @@ type
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False; NomeArqPDF: String = '');
+    procedure FinalizarImpressao;
+    function GerarImpressaoFiscalMFe: Ansistring;
     procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring);
     procedure CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
@@ -307,9 +309,15 @@ begin
   with LibConfig.Extrato do
   begin
     if GerarPDF or (TipoExtrato = teFortes) then
-      ACBrSAT1.Extrato := ACBrSATExtratoFortes1
+    begin
+      ExtratoFortes := TACBrSATExtratoFortes.Create(nil);
+      ACBrSAT1.Extrato := ExtratoFortes;
+    end
     else
-      ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+    begin
+      ExtratoEscPos := TACBrSATExtratoESCPOS.Create(nil);
+      ACBrSAT1.Extrato := ExtratoEscPos;
+    end;
 
     LibConfig.Extrato.Apply(ACBrSAT1.Extrato, Lib);
 
@@ -327,6 +335,31 @@ begin
         if not DirectoryExists(PathWithDelim(LibConfig.Extrato.PathPDF))then
           ForceDirectories(PathWithDelim(LibConfig.Extrato.PathPDF));
     end;
+  end;
+end;
+
+procedure TLibSatDM.FinalizarImpressao;
+begin
+  if ACBrPosPrinter1.Ativo then
+    ACBrPosPrinter1.Desativar;
+
+  ACBrSAT1.Extrato := nil;
+  if Assigned(ExtratoFortes) then FreeAndNil(ExtratoFortes);
+  if Assigned(ExtratoEscPos) then FreeAndNil(ExtratoEscPos);
+end;
+
+function TLibSatDM.GerarImpressaoFiscalMFe: Ansistring;
+var
+  LibConfig: TLibSATConfig;
+begin
+  LibConfig := TLibSATConfig(Lib.Config);
+
+  try
+    ExtratoEscPos := TACBrSATExtratoESCPOS.Create(nil);
+    LibConfig.Extrato.Apply(ExtratoEscPos, Lib);
+    Result := ExtratoEscPos.GerarImpressaoFiscalMFe(ACBrSAT1.CFe);
+  finally
+    FreeAndNil(ExtratoEscPos);
   end;
 end;
 

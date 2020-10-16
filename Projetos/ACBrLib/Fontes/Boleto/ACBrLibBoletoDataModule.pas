@@ -46,7 +46,6 @@ type
 
   TLibBoletoDM = class(TDataModule)
     ACBrBoleto1: TACBrBoleto;
-    ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
     ACBrMail1: TACBrMail;
 
     procedure DataModuleCreate(Sender: TObject);
@@ -54,9 +53,12 @@ type
   private
     FLock: TCriticalSection;
     fpLib: TACBrLib;
+    BoletoFortes: TACBrBoletoFCFortes;
 
   public
     procedure AplicarConfiguracoes;
+    procedure ConfigurarImpressao(NomeImpressora: String = '');
+    procedure FinalizarImpressao;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -150,7 +152,19 @@ begin
     end;
   end;
 
-  with ACBrBoletoFCFortes1 do
+  AplicarConfigMail;
+
+end;
+
+procedure TLibBoletoDM.ConfigurarImpressao(NomeImpressora: String = '');
+var
+  LibConfig: TLibBoletoConfig;
+begin
+  LibConfig := TLibBoletoConfig(Lib.Config);
+
+  BoletoFortes := TACBrBoletoFCFortes.Create(nil);
+
+  with BoletoFortes do
   begin
      DirLogo := LibConfig.BoletoFCFortesConfig.DirLogo;
      Filtro := LibConfig.BoletoFCFortesConfig.Filtro;
@@ -164,8 +178,16 @@ begin
      SoftwareHouse := LibConfig.BoletoFCFortesConfig.SoftwareHouse;
   end;
 
-  AplicarConfigMail;
+  if NaoEstaVazio(NomeImpressora) then
+    BoletoFortes.PrinterName := NomeImpressora;
 
+  ACBrBoleto1.ACBrBoletoFC := BoletoFortes;
+end;
+
+procedure TLibBoletoDM.FinalizarImpressao;
+begin
+  ACBrBoleto1.ACBrBoletoFC := nil;
+  if Assigned(BoletoFortes) then FreeAndNil(BoletoFortes);
 end;
 
 procedure TLibBoletoDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

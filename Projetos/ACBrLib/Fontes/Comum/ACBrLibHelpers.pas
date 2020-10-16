@@ -38,9 +38,10 @@
 unit ACBrLibHelpers;
   
 interface
- 
+
 uses
-  Classes, SysUtils, IniFiles;
+  Classes, SysUtils, IniFiles,
+  rttiutils, ACBrRtti;
  
 type
   TACBrMemIniFileHelper = class helper for TMemIniFile
@@ -48,6 +49,10 @@ type
     procedure LoadFromFile(const FileName: string); overload;
     procedure LoadFromStream(Stream: TStream); overload;
     function AsString: string;
+  end;
+
+  TACBrPropInfoListHelper = class helper for TPropInfoList
+    function GetProperties: TArray<TRttiProperty>;
   end;
  
 implementation
@@ -110,6 +115,17 @@ begin
     Result := FIniFile.Text;
   finally
     FIniFile.Free;
+  end;
+end;
+
+function TACBrPropInfoListHelper.GetProperties: TArray<TRttiProperty>;
+Var
+  i: Integer;
+begin
+  SetLength(Result, Self.Count);
+  for i := 0 to Self.Count - 1 do
+  begin
+    Result[i] := TRttiProperty.Create(Self.Items[i]);
   end;
 end;
 

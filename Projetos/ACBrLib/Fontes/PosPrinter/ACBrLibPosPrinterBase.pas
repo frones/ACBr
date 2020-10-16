@@ -101,7 +101,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig,
-  ACBrLibDeviceUtils, ACBrUtil;
+  ACBrLibDeviceUtils, ACBrUtil, StrUtils;
 
 { TACBrLibPosPrinter }
 
@@ -676,8 +676,7 @@ end;
 
 function TACBrLibPosPrinter.AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;  
 Var
-  Resposta: string;
-  Portas: TStringList;
+  Resposta, Portas: string;
 begin
   try
     GravarLog('POS_AcharPortas', logNormal);
@@ -685,16 +684,20 @@ begin
     PosDM.Travar;
 
     Resposta := '';
-    Portas := TStringList.Create;
     try
       Resposta := PortasSeriais(PosDM.ACBrPosPrinter1.Device);
-      Resposta := Resposta + '|' + PortasUSB(PosDM.ACBrPosPrinter1.Device);
-      Resposta := Resposta + '|' + PortasRAW(PosDM.ACBrPosPrinter1.Device);
+
+      Portas := '';
+      Portas := PortasUSB(PosDM.ACBrPosPrinter1.Device);
+      Resposta := IfThen(Portas.IsEmpty, Resposta,  Resposta + '|' + Portas);
+
+      Portas := '';
+      Portas := PortasRAW(PosDM.ACBrPosPrinter1.Device);
+      Resposta := IfThen(Portas.IsEmpty, Resposta, Resposta + '|' + Portas);
 
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      Portas.Free;
       PosDM.Destravar;
     end;
   except

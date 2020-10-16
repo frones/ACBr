@@ -160,8 +160,6 @@ type
     FultNSU: string;
     FItems: TObjectList;
 
-    function GetItem(Index: Integer): TDistribuicaoDFeItemResposta;
-
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
@@ -169,9 +167,6 @@ type
     procedure Processar(const retDistDFeInt: TretDistDFeInt;
                         const msg, arquivo: String;
                         const ListaArqs: TStringList);
-    function Gerar: Ansistring; override;
-
-    property Items[Index: Integer]: TDistribuicaoDFeItemResposta read GetItem;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -187,6 +182,7 @@ type
     property maxNSU: string read FmaxNSU write FmaxNSU;
     property arquivo: string read Farquivo write Farquivo;
     property indCont: string read FindCont write FindCont;
+    property Items: TObjectList read FItems;
 
   end;
 
@@ -315,23 +311,6 @@ begin
   FItems.Free;
 
   inherited Destroy;
-end;
-
-function TDistribuicaoDFeResposta.Gerar: Ansistring;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-
-  for i := 0 to FItems.Count - 1  do
-  begin
-    Result := Result + sLineBreak + TDistribuicaoDFeItemResposta(FItems.Items[i]).Gerar;
-  end;
-end;
-
-function TDistribuicaoDFeResposta.GetItem(Index: Integer): TDistribuicaoDFeItemResposta;
-begin
-  Result := TDistribuicaoDFeItemResposta(FItems.Items[Index]);
 end;
 
 procedure TDistribuicaoDFeResposta.Processar(const retDistDFeInt: TretDistDFeInt; const msg, arquivo: String; const ListaArqs: TStringList);

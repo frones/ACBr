@@ -2,10 +2,10 @@ object LibSatDM: TLibSatDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  Height = 257
+  Height = 153
   HorizontalOffset = 388
   VerticalOffset = 250
-  Width = 393
+  Width = 210
   object ACBrSAT1: TACBrSAT
     MAIL = ACBrMail1
     Config.infCFe_versaoDadosEnt = 0.07
@@ -26,61 +26,14 @@ object LibSatDM: TLibSatDM
     Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
-    Left = 61
-    Top = 80
-  end
-  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    Site = 'http://www.projetoacbr.com.br'
-    MargemInferior = 0.8
-    MargemSuperior = 0.8
-    MargemEsquerda = 0.6
-    MargemDireita = 0.51
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
-    FormularioContinuo = True
-    PosPrinter = ACBrPosPrinter1
-    Left = 200
-    Top = 160
-  end
-  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    Site = 'http://www.projetoacbr.com.br'
-    MargemInferior = 4
-    MargemSuperior = 2
-    MargemEsquerda = 2
-    MargemDireita = 2
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
-    FormularioContinuo = True
-    Left = 61
-    Top = 160
+    Left = 32
+    Top = 24
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    Left = 200
-    Top = 80
+    Left = 120
+    Top = 24
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -90,7 +43,7 @@ object LibSatDM: TLibSatDM
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    Left = 328
+    Left = 120
     Top = 80
   end
   object ACBrPosPrinter1: TACBrPosPrinter
@@ -102,7 +55,7 @@ object LibSatDM: TLibSatDM
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    Left = 328
-    Top = 160
+    Left = 32
+    Top = 88
   end
 end

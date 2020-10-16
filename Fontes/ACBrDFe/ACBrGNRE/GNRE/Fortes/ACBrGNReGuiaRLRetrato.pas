@@ -346,6 +346,15 @@ procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boo
 
   function FormaDoc( iTipoDocEmitente : Integer; sDocEmitente : String ): String;
   begin
+    if iTipoDocEmitente = 0 then
+    begin
+      case Length(sDocEmitente) of
+        11: iTipoDocEmitente := 1;
+        14: iTipoDocEmitente := 2;
+      else
+        iTipoDocEmitente := 3;
+      end;
+    end;
     case iTipoDocEmitente of
       1: result := FormatMaskText('000\.000\.000\-00;0', sDocEmitente);
       2: result := FormatMaskText('00\.000\.000\/0000\-00;0', sDocEmitente);

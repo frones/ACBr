@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="tbnfd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nfd">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="numeronfd"/>
+              <xs:element type="xs:int" name="codseriedocumento"/>
+              <xs:element type="xs:int" name="codnaturezaoperacao"/>
+              <xs:element type="xs:byte" name="codigocidade"/>
+              <xs:element type="xs:int" name="inscricaomunicipalemissor"/> 
+              <xs:element name="dataemissao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]{2}/){2}[0-9]{4}"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="razaotomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="nomefantasiatomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="enderecotomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="cidadetomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="estadotomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="paistomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="fonetomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="faxtomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="ceptomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="bairrotomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="emailtomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="cpfcnpjtomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="18"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="inscricaoestadualtomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="inscricaomunicipaltomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="observacao">	
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="0"/>
+                    <xs:maxLength value="255"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>	
+			  
+              <xs:element name="tbfatura" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="fatura" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:int" name="numfatura"/>
+                          <xs:element name="vencimentofatura">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:pattern value="([0-9]{2}/){2}[0-9]{4}"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>						  
+                          <xs:element name="valorfatura">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:pattern value="[0-9]+([,]?)[0-9]{0,9}"/>
+                              </xs:restriction>
+                            </xs:simpleType>						  
+						  </xs:element>	
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+			  
+              <xs:element name="tbservico">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="servico" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="quantidade">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:pattern value="[0-9]+([,]?)[0-9]{0,4}"/>
+                              </xs:restriction>
+                            </xs:simpleType>						  
+						  </xs:element>	
+						  
+                          <xs:element name="descricao">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255"/>
+								</xs:restriction>
+							</xs:simpleType>
+						  </xs:element>
+						   
+                          <xs:element type="xs:int" name="codatividade"/>
+                          <xs:element name="valorunitario">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:pattern value="[0-9]+([,]?)[0-9]{0,9}"/>
+                              </xs:restriction>
+                            </xs:simpleType>						  
+						  </xs:element>							  
+                          <xs:element name="aliquota">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:pattern value="[0-9]+([,]?)[0-9]{0,2}"/>
+                              </xs:restriction>
+                            </xs:simpleType>						  
+						  </xs:element>		
+						  
+                          <xs:element name="impostoretido">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						  </xs:element>
+						  
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+			  
+			  <xs:element name="razaotransportadora">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="cpfcnpjtransportadora">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="enderecotransportadora">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="tipofrete">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="quantidade">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>	
+			  
+              <xs:element name="especie">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+              </xs:element>
+			  
+              <xs:element name="pesoliquido">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>		
+			  
+              <xs:element name="pesobruto">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>		
+			  
+              <xs:element name="pis">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>
+			  
+              <xs:element name="cofins">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>			
+			  
+              <xs:element name="csll">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>		
+			  
+              <xs:element name="irrf">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>			
+			  
+              <xs:element name="inss">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>			
+			  
+              <xs:element type="xs:string" name="descdeducoesconstrucao"/>
+              <xs:element name="totaldeducoesconstrucao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([0-9]*)([,]?)[0-9]{0,9}"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>			  
+              <xs:element type="xs:string" name="tributadonomunicipio"/>
+
+              <xs:element name="numerort">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]*"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>				  
+              <xs:element name="codigoseriert">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]*"/>
+                  </xs:restriction>
+                </xs:simpleType>						  
+              </xs:element>					  
+              <xs:element name="dataemissaort">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="(([0-9]{2}/){2}[0-9]{4})?"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            <xs:element type="xs:int" name="numerofatura" minOccurs="0"/> 			  
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

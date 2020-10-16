@@ -8,6 +8,12 @@
 <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd"/>
 
 <!-- definition of simple elements -->
+    <xsd:simpleType name="tsPagina">
+	<xsd:restriction base="xsd:nonNegativeInteger">
+	    <xsd:minInclusive value="1" />
+	    <xsd:maxInclusive value="999999" />
+	</xsd:restriction>
+    </xsd:simpleType>
     <xsd:simpleType name="tsNumeroNfse">
 		<xsd:restriction base="xsd:nonNegativeInteger">
 			<xsd:totalDigits value="15"/>
@@ -717,7 +723,7 @@
     	o usuário sobre o fato, além de outros possíveis erros nessa lista como vínculo indevido de inscrição municipal e CNPJ informado
     	nos parâmetros da pesquisa.
     -->
-    <xsd:element name="ConsultarNfseResposta">
+    <xsd:element name="ConsultarNfseFaixaResposta">
         <xsd:complexType>
             <xsd:choice>
                 <xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
@@ -733,22 +739,20 @@
     </xsd:element>
     <!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
-    <xsd:element name="ConsultarNfseEnvio">
+    <xsd:element name="ConsultarNfseFaixaEnvio">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="NumeroNfse" type="tsNumeroNfse" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="PeriodoEmissao" minOccurs="0" maxOccurs="1">
+		<xsd:element name="Faixa" minOccurs="1" maxOccurs="1">
                     <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="DataInicial" type="xsd:date" minOccurs="1" maxOccurs="1"/>
-                            <xsd:element name="DataFinal" type="xsd:date" minOccurs="1" maxOccurs="1"/>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                </xsd:element>
-                <xsd:element name="Tomador" type="tcIdentificacaoTomador" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
-            </xsd:sequence>
+			<xsd:sequence>
+		            <xsd:element name="NumeroNfseInicial" type="tsNumeroNfse" minOccurs="1" maxOccurs="1" />
+			    <xsd:element name="NumeroNfseFinal" type="tsNumeroNfse" minOccurs="0" maxOccurs="1" />
+			</xsd:sequence>
+		    </xsd:complexType>
+		</xsd:element>
+		<xsd:element name="Pagina" type="tsPagina" minOccurs="1" maxOccurs="1"/>
+           </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
 

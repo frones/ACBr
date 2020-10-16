@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/20
+-- ACBrTEFPayGoWebComum --
+[*] Aplicado woraround, para o caso de comando PWDAT_CARDINF, a informação em
+    PW_GetData.ulTipoEntradaCartao, vir com o valor 0 (Zero)
+    (por: DSA)
+
 07/10/20
 -- ACBrPOSPGWebPrinter --
 [*] Remoção de Hints

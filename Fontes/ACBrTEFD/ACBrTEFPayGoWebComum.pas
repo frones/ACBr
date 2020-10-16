@@ -78,7 +78,7 @@ const
    {$ENDIF}
  {$ENDIF}
 
-  CACBrTEFPGWebLibMinVersion = '0004.0000.0064.0000';
+  CACBrTEFPGWebLibMinVersion = '0004.0000.0103.0001';
 
   CSleepNothing = 300;
   CMilissegundosMensagem = 5000;  // 5 seg
@@ -2094,16 +2094,18 @@ var
   iRet: SmallInt;
 begin
   iRet := PWRET_CANCEL;
-  ObterDigitado := (AGetData.ulTipoEntradaCartao = 1);
+  ObterDigitado := False;
 
   case AGetData.ulTipoEntradaCartao of
+    1: ObterDigitado := True;
+
     2:
     begin
       iRet := RealizarOperacaoPinPad(AGetData, ppGetCard);
       ObterDigitado := (iRet = PWRET_FALLBACK);
     end;
 
-    3:
+  else  // 0 ou 3
     begin
       iRet := RealizarOperacaoPinPad(AGetData, ppGetCard);
       ObterDigitado := (iRet = PWRET_CANCEL) or (iRet = PWRET_FALLBACK);

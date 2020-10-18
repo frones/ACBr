@@ -78,7 +78,7 @@ const
    {$ENDIF}
  {$ENDIF}
 
-  CACBrTEFPGWebLibMinVersion = '0004.0000.0103.0001';
+  CACBrTEFPGWebLibMinVersion = '0004.0000.0082.0003';
 
   CSleepNothing = 300;
   CMilissegundosMensagem = 5000;  // 5 seg
@@ -1187,6 +1187,9 @@ begin
   if (fDiretorioTrabalho = '') then
     fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PGWeb';
 
+  if not DirectoryExists(fDiretorioTrabalho) then
+    ForceDirectories(fDiretorioTrabalho);
+
   {$IfDef ANDROID}
    if (PathLib = '') then     // Try to load from "./assets/internal/" first
    begin
@@ -1197,9 +1200,6 @@ begin
   {$EndIf}
 
   LoadLibFunctions;
-
-  if not DirectoryExists(fDiretorioTrabalho) then
-    ForceDirectories(fDiretorioTrabalho);
 
   GravarLog('PW_iInit( '+fDiretorioTrabalho+' )');
   iRet := xPW_iInit(PAnsiChar(AnsiString(fDiretorioTrabalho)));

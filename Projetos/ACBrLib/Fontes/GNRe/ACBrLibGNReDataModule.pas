@@ -15,7 +15,6 @@ type
 
   TLibGNReDM = class(TDataModule)
     ACBrGNRE1: TACBrGNRE;
-    ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     ACBrMail1: TACBrMail;
 
     procedure DataModuleCreate(Sender: TObject);
@@ -23,11 +22,13 @@ type
   private
     FLock: TCriticalSection;
     fpLib: TACBrLib;
+    GNREGuia: TACBrGNREGuiaRL;
 
   public
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure ConfigurarImpressao(GerarPDF: Boolean; NomeImpressora: String = ''; MostrarPreview: String = '');
+    procedure FinalizarImpressao;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -98,9 +99,10 @@ begin
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
   LibConfig := TLibGNReConfig(Lib.Config);
-  ACBrGNRE1.GNREGuia := ACBrGNREGuiaRL1;
+  GNREGuia := TACBrGNREGuiaRL.Create(nil);
+  ACBrGNRE1.GNREGuia := GNREGuia;
 
-  with ACBrGNREGuiaRL1 do
+  with GNREGuia do
   begin
     Impressora := LibConfig.GuiaConfig.Impressora;
     MargemInferior := LibConfig.GuiaConfig.MargemInferior;
@@ -128,12 +130,18 @@ begin
   end;
 
   if NaoEstaVazio(NomeImpressora) then
-    ACBrGNREGuiaRL1.Impressora := NomeImpressora;
+    GNREGuia.Impressora := NomeImpressora;
 
   if NaoEstaVazio(MostrarPreview) then
-    ACBrGNREGuiaRL1.MostrarPreview := StrToBoolDef(MostrarPreview, False);
+    GNREGuia.MostrarPreview := StrToBoolDef(MostrarPreview, False);
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibGNReDM.FinalizarImpressao;
+begin
+  ACBrGNRE1.GNREGuia := nil;
+  if Assigned(GNREGuia) then FreeAndNil(GNREGuia);
 end;
 
 procedure TLibGNReDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

@@ -143,11 +143,11 @@ end;
 function TACBrLibGNRe.CarregarXML(const eArquivoOuXML: PChar): longint;  
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
     
-    ArquivoOuXml := string(eArquivoOuXML);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -180,10 +180,10 @@ end;
 
 function TACBrLibGNRe.CarregarINI(const eArquivoOuINI: PChar): longint;  
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := string(eArquivoOuINI);
+    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -211,7 +211,7 @@ end;
 
 function TACBrLibGNRe.ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;  
 Var
-  Resposta: String;
+  Resposta: Ansistring;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -244,11 +244,11 @@ end;
 
 function TACBrLibGNRe.GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;    
 Var
-  ANomeArquivo, APathArquivo: String;
+  ANomeArquivo, APathArquivo: Ansistring;
 begin
   try
-    ANomeArquivo := String(eNomeArquivo);
-    APathArquivo := String(ePathArquivo);
+    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -300,10 +300,10 @@ end;
 function TACBrLibGNRe.CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := string(eArquivoOuXml);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarGuiaRetorno(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -396,6 +396,7 @@ begin
     try
       Erros := '';
       GNReDM.ACBrGNRe1.Guias.VerificarAssinatura(Erros);
+      Erros := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Erros), Erros);
       MoverStringParaPChar(Erros, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Erros);
     finally
@@ -422,6 +423,7 @@ begin
     try
       Resposta := '';
       Resposta := ObterCerticados(GNReDM.ACBrGNRe1.SSL);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -467,9 +469,9 @@ begin
 
         Resp.Processar(GNReDM.ACBrGNRe1);
 
-        Resposta := Resposta + Resp.Gerar;
+        Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       end;
     finally
       GNReDM.Destravar;
@@ -486,10 +488,10 @@ function TACBrLibGNRe.Consultar(const eUF: PChar; const AReceita: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TLibGNReConsulta;
-  AUF, Resposta: string;
+  AUF, Resposta: Ansistring;
 begin
   try
-    AUF := string(eUF);
+    AUF := ConverterAnsiParaUTF8(eUF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_Consultar(' + AUF + ',' + IntToStr(AReceita) +' )', logCompleto, True)
@@ -510,7 +512,7 @@ begin
         Resposta := Resp.Gerar;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       end;
     finally
       GNReDM.Destravar;
@@ -527,17 +529,17 @@ end;
 function TACBrLibGNRe.EnviarEmail(const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 var
-  APara, ArquivoOuXml, AAssunto, ACC, AAnexos, AMensagem: string;
+  APara, ArquivoOuXml, AAssunto, ACC, AAnexos, AMensagem: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
 begin
   try
-    APara := string(ePara);
-    ArquivoOuXml := string(eArquivoOuXml);
-    AAssunto := string(eAssunto);
-    ACC := string(eCC);
-    AAnexos := string(eAnexos);
-    AMensagem := string(eMensagem);
+    APara := ConverterAnsiParaUTF8(ePara);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXml);
+    AAssunto := ConverterAnsiParaUTF8(eAssunto);
+    ACC := ConverterAnsiParaUTF8(eCC);
+    AAnexos := ConverterAnsiParaUTF8(eAnexos);
+    AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_EnviarEmail(' + APara + ',' + ArquivoOuXml + ',' +
@@ -580,6 +582,9 @@ begin
               slAnexos.DelimitedText := sLineBreak;
               slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+              if AEnviaPDF then
+                GNReDM.ConfigurarImpressao(True);
+
               try
                 GNReDM.ACBrGNRe1.Guias.Items[0].EnviarEmail(APara,
                                                             AAssunto,
@@ -598,6 +603,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            GNReDM.FinalizarImpressao;
           end;
         end;
       end;
@@ -636,10 +642,11 @@ begin
         begin
           GNReDM.ConfigurarImpressao(False, NomeImpressora, MostrarPreview);
           GuiasRetorno.Imprimir;
-          Result := SetRetornoGNReCarregados(GuiasRetorno.Count);
+          Result := SetRetorno(ErrOK);
         end;
         end;
     finally
+      GNReDM.FinalizarImpressao;
       GNReDM.Destravar;
     end;
   except
@@ -666,9 +673,10 @@ begin
         begin
           GNReDM.ConfigurarImpressao(True);
           GuiasRetorno.ImprimirPDF;
-          Result := SetRetornoGNReCarregados(GuiasRetorno.Count);
+          Result := SetRetorno(ErrOK);
         end;
       finally
+        GNReDM.FinalizarImpressao;
         GNReDM.Destravar;
       end;
     end;

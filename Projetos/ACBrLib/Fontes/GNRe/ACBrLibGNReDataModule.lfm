@@ -4,10 +4,10 @@ object LibGNReDM: TLibGNReDM
   OldCreateOrder = False
   Left = 346
   Top = 174
-  Height = 231
+  Height = 94
   HorizontalOffset = 238
   VerticalOffset = 116
-  Width = 491
+  Width = 178
   object ACBrGNRE1: TACBrGNRE
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
@@ -19,23 +19,8 @@ object LibGNReDM: TLibGNReDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    GNREGuia = ACBrGNREGuiaRL1
-    Left = 46
-    Top = 52
-  end
-  object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
-    ACBrGNRE = ACBrGNRE1
-    MostrarPreview = True
-    MostrarStatus = True
-    TamanhoPapel = tpA4
-    NumCopias = 1
-    MargemInferior = 0.8
-    MargemSuperior = 0.8
-    MargemEsquerda = 0.6
-    MargemDireita = 0.51
-    PrintDialog = True
-    Left = 176
-    Top = 56
+    Left = 40
+    Top = 24
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -45,7 +30,7 @@ object LibGNReDM: TLibGNReDM
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    Left = 289
-    Top = 77
+    Left = 112
+    Top = 24
   end
 end

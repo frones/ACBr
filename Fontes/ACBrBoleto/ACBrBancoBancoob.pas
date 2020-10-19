@@ -815,6 +815,13 @@ begin
         toRemessaProtestar                     : ATipoOcorrencia := '09';
         toRemessaCancelarInstrucaoProtestoBaixa: ATipoOcorrencia := '10';
         toRemessaCancelarInstrucaoProtesto     : ATipoOcorrencia := '11';
+        toRemessaAlterarJurosMora              : ATipoOcorrencia := '12';
+        toRemessaDispensarJuros                : ATipoOcorrencia := '13';
+        toRemessaAlterarMulta                  : ATipoOcorrencia := '14';
+        toRemessaDispensarMulta                : ATipoOcorrencia := '15';
+        toRemessaAlterarPrazoLimiteRecebimento : ATipoOcorrencia := '19';
+        toRemessaDispensarPrazoLimiteRecebimento:ATipoOcorrencia := '20';
+        toRemessaAlterarDadosPagador           : ATipoOcorrencia := '23';
         toRemessaOutrasOcorrencias             : ATipoOcorrencia := '31';
       else
        ATipoOcorrencia := '01';

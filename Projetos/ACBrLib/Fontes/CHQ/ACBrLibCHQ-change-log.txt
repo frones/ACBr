@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2020
+--- ACBrLibCHQBase, ACBrLibCHQDataModule ---
+[-] Corrigindo retornos da ACBrLibCHQ.
+    (Por: Rafael Dias)
+
 07/09/2020
 --- ACBrLibCHQMT, ACBrLibCHQST ---
 [+] Removido o metodo CHQ_ConfigImportar.

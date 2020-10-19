@@ -194,7 +194,7 @@ var
   ALinha: AnsiString;
 begin
   try
-    ALinha := AnsiString(eLinha);
+    ALinha := ConverterAnsiParaUTF8(eLinha);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_ImprimirLinha( ' + ALinha + ' )', logCompleto, True)
@@ -223,7 +223,7 @@ var
   Linhas: TStringList;
 begin
   try
-    ALinha := AnsiString(eLinhas);
+    ALinha := ConverterAnsiParaUTF8(eLinhas);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_ImprimirVerso( ' + ALinha + ' )', logCompleto, True)
@@ -296,7 +296,7 @@ var
   ABanco: AnsiString;
 begin
   try
-    ABanco := AnsiString(eBanco);
+    ABanco := ConverterAnsiParaUTF8(eBanco);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetBanco( ' + ABanco + ' )', logCompleto, True)
@@ -348,7 +348,7 @@ Var
   Data: TDateTime;
 begin
   try
-    Data := StrToDateTime(eData);
+    Data := StrToDateTime(ConverterAnsiParaUTF8(eData));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetData( ' + DateTimeToStr(Data) + ' )', logCompleto, True)
@@ -376,7 +376,7 @@ var
   ACidade: AnsiString;
 begin
   try
-    ACidade := AnsiString(eCidade);
+    ACidade := ConverterAnsiParaUTF8(eCidade);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetCidade( ' + ACidade + ' )', logCompleto, True)
@@ -404,7 +404,7 @@ var
   AFavorecido: AnsiString;
 begin
   try
-    AFavorecido := AnsiString(eFavorecido);
+    AFavorecido := ConverterAnsiParaUTF8(eFavorecido);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetFavorecido( ' + AFavorecido + ' )', logCompleto, True)
@@ -432,7 +432,7 @@ var
   AObservacao: AnsiString;
 begin
   try
-    AObservacao := AnsiString(eObservacao);
+    AObservacao := ConverterAnsiParaUTF8(eObservacao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetObservacao( ' + AObservacao + ' )', logCompleto, True)
@@ -460,7 +460,7 @@ Var
   BomPara: TDateTime;
 begin
   try
-    BomPara := StrToDateTime(eBomPara);
+    BomPara := StrToDateTime(ConverterAnsiParaUTF8(eBomPara));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetBomPara( ' + DateTimeToStr(BomPara) + ' )', logCompleto, True)
@@ -488,7 +488,7 @@ Var
   ArquivoBemaFiINI: String;
 begin
   try
-    ArquivoBemaFiINI := String(eArquivoBemaFiINI);
+    ArquivoBemaFiINI := ConverterAnsiParaUTF8(eArquivoBemaFiINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetArquivoBemaFiINI( ' + ArquivoBemaFiINI + ' )', logCompleto, True)

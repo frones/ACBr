@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2020
+--- ACBrLibETQBase, ACBrLibETQDataModule ---
+[-] Corrigindo retornos da ACBrLibETQ.
+    (Por: Rafael Dias)
+
 07/09/2020
 --- ACBrLibETQMT, ACBrLibETQST ---
 [+] Removido o metodo ETQ_ConfigImportar.

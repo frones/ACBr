@@ -215,8 +215,8 @@ var
   ANomeImagem: AnsiString;
 begin
   try
-    AArquivoImagem := AnsiString(eArquivoImagem);
-    ANomeImagem := AnsiString(eNomeImagem);
+    AArquivoImagem := ConverterAnsiParaUTF8(eArquivoImagem);
+    ANomeImagem := ConverterAnsiParaUTF8(eNomeImagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_CarregarImagem( ' + AArquivoImagem + ',' +
@@ -270,10 +270,9 @@ function TACBrLibETQ.ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;  
 var
   ATexto: AnsiString;
-  UTF8Str: String;
 begin
   try
-    ATexto := AnsiString(eTexto);
+    ATexto := ConverterAnsiParaUTF8(eTexto);
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirTexto( ' + IntToStr(Orientacao) + ',' +
         IntToStr(Fonte) + ',' + IntToStr(MultiplicadorH) + ',' +
@@ -285,9 +284,8 @@ begin
 
     ETQDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(ATexto);
       ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), Fonte, MultiplicadorH,
-                                   MultiplicadorV, Vertical, Horizontal, UTF8Str,
+                                   MultiplicadorV, Vertical, Horizontal, ATexto,
                                    SubFonte, ImprimirReverso);
       Result := SetRetorno(ErrOK);
     finally
@@ -307,12 +305,11 @@ function TACBrLibETQ.ImprimirTextoStr(const Orientacao: Integer; const Fonte: PC
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;  
 var
   ATexto, AFonte: AnsiString;
-  UTF8Str: String;
 begin
   try
     
-    ATexto := AnsiString(eTexto);
-    AFonte := AnsiString(Fonte);
+    ATexto := ConverterAnsiParaUTF8(eTexto);
+    AFonte := ConverterAnsiParaUTF8(Fonte);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirTextoStr( ' + IntToStr(Orientacao) + ',' +
@@ -325,9 +322,8 @@ begin
 
     ETQDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(ATexto);
       ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), AFonte, MultiplicadorH,
-                                   MultiplicadorV, Vertical, Horizontal, UTF8Str,
+                                   MultiplicadorV, Vertical, Horizontal, ATexto,
                                    SubFonte, ImprimirReverso);
       Result := SetRetorno(ErrOK);
     finally
@@ -347,10 +343,9 @@ function TACBrLibETQ.ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLa
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;  
 var
   ATexto: AnsiString;
-  UTF8Str: String;
 begin
   try
-    ATexto := AnsiString(eTexto);
+    ATexto := ConverterAnsiParaUTF8(eTexto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirBarras( ' + IntToStr(Orientacao) + ',' +
@@ -363,9 +358,8 @@ begin
 
     ETQDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(ATexto);
       ETQDM.ACBrETQ1.ImprimirBarras(TACBrETQOrientacao(Orientacao), TACBrTipoCodBarra(TipoBarras), LarguraBarraLarga,
-                                    LarguraBarraFina, Vertical, Horizontal, UTF8Str, AlturaCodBarras,
+                                    LarguraBarraFina, Vertical, Horizontal, ATexto, AlturaCodBarras,
                                     TACBrETQBarraExibeCodigo(ExibeCodigo));
       Result := SetRetorno(ErrOK);
     finally
@@ -440,7 +434,7 @@ var
   ANomeImagem: AnsiString;
 begin
   try
-    ANomeImagem := AnsiString(eNomeImagem);
+    ANomeImagem := ConverterAnsiParaUTF8(eNomeImagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirImagem( ' + IntToStr(MultiplicadorImagem) + ',' +
@@ -469,10 +463,9 @@ function TACBrLibETQ.ImprimirQRCode(const Vertical, Horizontal: Integer; const T
           LarguraModulo, ErrorLevel, Tipo: Integer): longint;  
 Var
   ATexto: string;
-  UTF8Str: String;
 begin
   try
-    ATexto := AnsiString(Texto);
+    ATexto := ConverterAnsiParaUTF8(Texto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirQRCode( ' + IntToStr(Vertical) + ',' +
@@ -483,8 +476,7 @@ begin
 
     ETQDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(ATexto);
-      ETQDM.ACBrETQ1.ImprimirQRCode(Vertical, Horizontal, UTF8Str, LarguraModulo, ErrorLevel, Tipo);
+      ETQDM.ACBrETQ1.ImprimirQRCode(Vertical, Horizontal, ATexto, LarguraModulo, ErrorLevel, Tipo);
       Result := SetRetorno(ErrOK);
     finally
       ETQDM.Destravar;

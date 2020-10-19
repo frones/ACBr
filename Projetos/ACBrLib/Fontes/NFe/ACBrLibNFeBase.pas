@@ -117,7 +117,7 @@ type
       var esTamanho: longint): longint;
     function EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: boolean;
       const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
-    function EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
+    function EnviarEmailEvento(const ePara, eXmlEvento, eXmlNFe: PChar;
       const AEnviaPDF: boolean;
       const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
     function Imprimir(const cImpressora: PChar; nNumCopias: integer;
@@ -1550,6 +1550,7 @@ begin
 
               if (AEnviaPDF) then
                 NFeDM.ConfigurarImpressao('', True);
+
               NotasFiscais.Items[0].EnviarEmail(
                   APara,
                   AAssunto,
@@ -1568,6 +1569,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            if (AEnviaPDF) then NFeDM.FinalizarImpressao;
           end;
         end;
       end;
@@ -1583,25 +1585,25 @@ begin
   end;
 end;
 
-function TACBrLibNFe.EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar; const AEnviaPDF: boolean;
+function TACBrLibNFe.EnviarEmailEvento(const ePara, eXmlEvento, eXmlNFe: PChar; const AEnviaPDF: boolean;
                                               const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 var
-  APara, AChaveEvento, AChaveNFe, AAssunto, ACC, AAnexos, AMensagem, ArqPDF: string;
+  APara, AXmlEvento, AXmlNFe, AAssunto, ACC, AAnexos, AMensagem, ArqPDF: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
   Resposta: TLibNFeResposta;
 begin
   try
     APara := ConverterAnsiParaUTF8(ePara);
-    AChaveEvento := ConverterAnsiParaUTF8(eChaveEvento);
-    AChaveNFe := ConverterAnsiParaUTF8(eChaveNFe);
+    AXmlEvento := ConverterAnsiParaUTF8(eXmlEvento);
+    AXmlNFe := ConverterAnsiParaUTF8(eXmlNFe);
     AAssunto := ConverterAnsiParaUTF8(eAssunto);
     ACC := ConverterAnsiParaUTF8(eCC);
     AAnexos := ConverterAnsiParaUTF8(eAnexos);
     AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFe_EnviarEmailEvento(' + APara + ',' + AChaveEvento + ',' + AChaveNFe + ',' +
+      GravarLog('NFe_EnviarEmailEvento(' + APara + ',' + AXmlEvento + ',' + AXmlNFe + ',' +
                  BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto + ',' + ACC + ',' + AAnexos + ',' + AMensagem +
                  ' )', logCompleto, True)
     else
@@ -1615,21 +1617,21 @@ begin
         EventoNFe.Evento.Clear;
         NotasFiscais.Clear;
 
-        EhArquivo := StringEhArquivo(AChaveEvento);
+        EhArquivo := StringEhArquivo(AXmlEvento);
 
         if EhArquivo then
-          VerificarArquivoExiste(AChaveEvento);
+          VerificarArquivoExiste(AXmlEvento);
 
         if EhArquivo then
-          EventoNFe.LerXML(AChaveEvento);
+          EventoNFe.LerXML(AXmlEvento);
 
-        EhArquivo := StringEhArquivo(AChaveNFe);
-
-        if EhArquivo then
-          VerificarArquivoExiste(AChaveNFe);
+        EhArquivo := StringEhArquivo(AXmlNFe);
 
         if EhArquivo then
-          NotasFiscais.LoadFromFile(AchaveNFe);
+          VerificarArquivoExiste(AXmlNFe);
+
+        if EhArquivo then
+          NotasFiscais.LoadFromFile(AXmlNFe);
 
         if EventoNFe.Evento.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfEventosCarregados, [EventoNFe.Evento.Count]))
@@ -1665,7 +1667,7 @@ begin
               slAnexos.DelimitedText := sLineBreak;
               slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
-              slAnexos.Add(AChaveEvento);
+              slAnexos.Add(AXmlEvento);
 
               if AEnviaPDF then
                 slAnexos.Add(ArqPDF);
@@ -1690,6 +1692,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            if (AEnviaPDF) then NFeDM.FinalizarImpressao;
           end;
         end;
       end;

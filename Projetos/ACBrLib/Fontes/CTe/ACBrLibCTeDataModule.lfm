@@ -4,10 +4,10 @@ object LibCTeDM: TLibCTeDM
   OldCreateOrder = False
   Left = 346
   Top = 174
-  Height = 231
+  Height = 89
   HorizontalOffset = 199
   VerticalOffset = 121
-  Width = 491
+  Width = 153
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
@@ -20,38 +20,8 @@ object LibCTeDM: TLibCTeDM
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DACTE = ACBrCTeDACTeRL1
-    Left = 96
-    Top = 32
-  end
-  object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 0.8
-    MargemSuperior = 0.8
-    MargemEsquerda = 0.6
-    MargemDireita = 0.51
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrCTE = ACBrCTe1
-    ImprimirHoraSaida = False
-    TipoDACTE = tiSemGeracao
-    TamanhoPapel = tpA4
-    Cancelada = False
-    ExibeResumoCanhoto = False
-    EPECEnviado = False
-    ImprimeDescPorc = False
-    PrintDialog = False
-    Left = 200
-    Top = 32
+    Left = 24
+    Top = 24
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -61,7 +31,7 @@ object LibCTeDM: TLibCTeDM
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    Left = 217
-    Top = 112
+    Left = 88
+    Top = 24
   end
 end

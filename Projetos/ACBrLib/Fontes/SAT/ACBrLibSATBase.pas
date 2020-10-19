@@ -1118,6 +1118,7 @@ begin
        slMensagem.Free;
        slCC.Free;
        slAnexos.Free;
+       SatDM.FinalizarImpressao;
        SatDM.Destravar;
      end;
   except

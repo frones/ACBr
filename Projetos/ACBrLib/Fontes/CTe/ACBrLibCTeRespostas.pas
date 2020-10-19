@@ -220,23 +220,18 @@ type
   private
     FidLote: Integer;
     FcOrgao: Integer;
-    FItens: TObjectList;
-
-    function GetItem(Index: Integer): TEventoItemResposta;
+    FItems: TObjectList;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-
     destructor Destroy; override;
 
     procedure Processar(const ACBrCTe: TACBrCTe); override;
-    function Gerar: String; override;
-
-    property Items[Index: Integer]: TEventoItemResposta read GetItem;
 
   published
     property idLote: Integer read FidLote write FidLote;
     property cOrgao: Integer read FcOrgao write FcOrgao;
+    property Items: TObjectList read FItems;
 
   end;
 
@@ -278,32 +273,15 @@ end;
 constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
-  FItens := TObjectList.Create(True);
+  FItems := TObjectList.Create(True);
 end;
 
 destructor TEventoResposta.Destroy;
 begin
-  FItens.Clear;
-  FItens.Free;
+  FItems.Clear;
+  FItems.Free;
 
   inherited Destroy;
-end;
-
-function TEventoResposta.Gerar: String;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-
-  for i := 0 to FItens.Count - 1  do
-  begin
-    Result := Result + sLineBreak + TEventoItemResposta(FItens.Items[i]).Gerar;
-  end;
-end;
-
-function TEventoResposta.GetItem(Index: Integer): TEventoItemResposta;
-begin
-  Result := TEventoItemResposta(FItens.Items[Index]);
 end;
 
 procedure TEventoResposta.Processar(const ACBrCTe: TACBrCTe);
@@ -326,7 +304,7 @@ begin
       begin
         Item := TEventoItemResposta.Create('EVENTO' + Trim(IntToStrZero(i +1, 3)), Tipo, Formato);
         Item.Processar(retEvento.Items[i].RetInfevento);
-        FItens.Add(Item);
+        FItems.Add(Item);
       end;
     end;
   end;

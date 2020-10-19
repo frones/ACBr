@@ -47,7 +47,6 @@ type
 
   TLibCTeDM = class(TDataModule)
     ACBrCTe1: TACBrCTe;
-    ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrMail1: TACBrMail;
 
     procedure DataModuleCreate(Sender: TObject);
@@ -55,11 +54,13 @@ type
   private
     FLock: TCriticalSection;
     fpLib: TACBrLib;
+    DACTe: TACBrCTeDACTeRL;
 
   public
     procedure AplicarConfiguracoes;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = '');
+    procedure FinalizarImpressao;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -132,26 +133,32 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-   LibConfig.DACTe.Apply(ACBrCTeDACTeRL1, Lib);
+  DACTe := TACBrCTeDACTeRL.Create(nil);
+  ACBrCTe1.DACTE := DACTe;
 
-   if NaoEstaVazio(NomeImpressora) then
-     ACBrCTeDACTeRL1.Impressora := NomeImpressora;
+  LibConfig.DACTe.Apply(DACTe, Lib);
 
-   if GerarPDF and not DirectoryExists(PathWithDelim(LibConfig.DACTe.PathPDF))then
-        ForceDirectories(PathWithDelim(LibConfig.DACTe.PathPDF));
+  if GerarPDF and not DirectoryExists(PathWithDelim(LibConfig.DACTe.PathPDF))then
+    ForceDirectories(PathWithDelim(LibConfig.DACTe.PathPDF));
 
-   if NaoEstaVazio(NomeImpressora) then
-     ACBrCTeDACTeRL1.Impressora := NomeImpressora;
+  if NaoEstaVazio(NomeImpressora) then
+    DACTe.Impressora := NomeImpressora;
 
-   if NaoEstaVazio(MostrarPreview) then
-     ACBrCTeDACTeRL1.MostraPreview := StrToBoolDef(MostrarPreview, False);
+  if NaoEstaVazio(MostrarPreview) then
+    DACTe.MostraPreview := StrToBoolDef(MostrarPreview, False);
 
-   if NaoEstaVazio(Protocolo) then
-     ACBrCTeDACTeRL1.Protocolo := Protocolo
-   else
-     ACBrCTeDACTeRL1.Protocolo := '';
+  if NaoEstaVazio(Protocolo) then
+    DACTe.Protocolo := Protocolo
+  else
+    DACTe.Protocolo := '';
 
-   GravarLog('ConfigurarImpressao - Feito', logNormal);
+  GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibCTeDM.FinalizarImpressao;
+begin
+  ACBrCTe1.DACTE := nil;
+  if Assigned(DACTe) then FreeAndNil(DACTe);
 end;
 
 procedure TLibCTeDM.Travar;

@@ -116,7 +116,7 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibCTeConsts, ACBrLibConfig, ACBrLibResposta,
+  StrUtils, ACBrLibConsts, ACBrLibCTeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrLibConsultaCadastro,
   ACBrLibCTeConfig, ACBrLibCTeRespostas, ACBrCTe, ACBrMail, ACBrLibCertUtils,
   pcnConversao, pcnAuxiliar, pcteConversaoCTe, blcksock, ACBrUtil, ACBrDFeUtil;
@@ -152,10 +152,10 @@ end;
 function TACBrLibCTe.CarregarXML(const eArquivoOuXML: PChar): longint;  
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := string(eArquivoOuXML);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_CarregarXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -188,10 +188,10 @@ end;
 
 function TACBrLibCTe.CarregarINI(const eArquivoOuINI: PChar): longint;  
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := string(eArquivoOuINI);
+    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_CarregarINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -252,11 +252,11 @@ end;
 
 function TACBrLibCTe.GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;    
 Var
-  ANomeArquivo, APathArquivo: String;
+  ANomeArquivo, APathArquivo: AnsiString;
 begin
   try
-    ANomeArquivo := String(eNomeArquivo);
-    APathArquivo := String(ePathArquivo);
+    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -286,7 +286,7 @@ end;
 
 function TACBrLibCTe.ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;    
 Var
-  Resposta: String;
+  Resposta: Ansistring;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -303,6 +303,7 @@ begin
         CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarXML;
 
       Resposta := CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarCTeIni;
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -319,11 +320,11 @@ end;
 
 function TACBrLibCTe.GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;    
 Var
-  ACTeIni, ANomeArquivo, APathArquivo: String;
+  ACTeIni, ANomeArquivo, APathArquivo: AnsiString;
 begin
   try
-    ANomeArquivo := String(eNomeArquivo);
-    APathArquivo := String(ePathArquivo);
+    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_GravarIni(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -371,10 +372,10 @@ end;
 function TACBrLibCTe.CarregarEventoXML(const eArquivoOuXML: PChar): longint;  
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := string(eArquivoOuXML);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_CarregarEventoXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -407,10 +408,10 @@ end;
 
 function TACBrLibCTe.CarregarEventoINI(const eArquivoOuINI: PChar): longint;  
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := string(eArquivoOuINI);
+    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_CarregarEventoINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -534,7 +535,7 @@ end;
 
 function TACBrLibCTe.ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;  
 Var
-  Erros: string;
+  Erros: Ansistring;
 begin
   try
     GravarLog('CTE_ValidarRegrasdeNegocios', logNormal);
@@ -543,6 +544,7 @@ begin
     try
       Erros := '';
       CTeDM.ACBrCTe1.Conhecimentos.ValidarRegrasdeNegocios(Erros);
+      Erros := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Erros), Erros);
       MoverStringParaPChar(Erros, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Erros);
     finally
@@ -559,7 +561,7 @@ end;
 
 function TACBrLibCTe.VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;  
 Var
-  Erros: string;
+  Erros: Ansistring;
 begin
   try
     GravarLog('CTE_VerificarAssinatura', logNormal);
@@ -568,6 +570,7 @@ begin
     try
       Erros := '';
       CTeDM.ACBrCTe1.Conhecimentos.VerificarAssinatura(Erros);
+      Erros := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Erros), Erros);
       MoverStringParaPChar(Erros, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Erros);
     finally
@@ -585,12 +588,12 @@ end;
 function TACBrLibCTe.GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
   AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
 Var
-  Resposta, CNPJCPF: string;
+  Resposta, CNPJCPF: Ansistring;
   Emissao: TDateTime;
 begin
   try
     Emissao := StrToDate(AEmissao);
-    CNPJCPF := String(ACNPJCPF);
+    CNPJCPF := ConverterAnsiParaUTF8(ACNPJCPF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
@@ -604,6 +607,7 @@ begin
     try
       Resposta := '';
       Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -630,6 +634,7 @@ begin
     try
       Resposta := '';
       Resposta := ObterCerticados(CTeDM.ACBrCTe1.SSL);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -646,8 +651,7 @@ end;
 
 function TACBrLibCTe.GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;    
 Var
-  Resposta: string;
-  ok: Boolean;
+  Resposta: Ansistring;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -669,6 +673,7 @@ begin
           3: Resposta := ACBrCTe1.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
         end;
 
+        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -686,11 +691,11 @@ end;
 
 function TACBrLibCTe.GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;    
 Var
-  Resposta, CodEvento: string;
+  Resposta, CodEvento: Ansistring;
   ok: Boolean;
 begin
   try
-    CodEvento := String(ACodEvento);
+    CodEvento := ConverterAnsiParaUTF8(ACodEvento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_GetPathEvento(' + CodEvento +' )', logCompleto, True)
@@ -704,6 +709,7 @@ begin
       begin
         Resposta := '';
         Resposta := ACBrCTe1.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoCTe(ok, CodEvento));
+        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -754,11 +760,11 @@ end;
 function TACBrLibCTe.Consultar(const eChaveOuCTe: PChar; AExtrairEventos: Boolean; const sResposta: PChar; var esTamanho: longint): longint;    
 var
   EhArquivo: boolean;
-  Resposta, ChaveOuCTe: string;
+  Resposta, ChaveOuCTe: Ansistring;
   Resp: TConsultaCTeResposta;
 begin
   try
-    ChaveOuCTe := string(eChaveOuCTe);
+    ChaveOuCTe := ConverterAnsiParaUTF8(eChaveOuCTe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_Consultar(' + ChaveOuCTe + ', ' + BoolToStr(AExtrairEventos, True) + ' )', logCompleto, True)
@@ -817,11 +823,11 @@ function TACBrLibCTe.Inutilizar(const ACNPJ, AJustificativa: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;    
 var
   Resp: TInutilizarCTeResposta;
-  Resposta, CNPJ, Justificativa: string;
+  Resposta, CNPJ, Justificativa: Ansistring;
 begin
   try
-    Justificativa := string(AJustificativa);
-    CNPJ := string(ACNPJ);
+    Justificativa := ConverterAnsiParaUTF8(AJustificativa);
+    CNPJ := ConverterAnsiParaUTF8(ACNPJ);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_Inutilizar(' + CNPJ + ',' + Justificativa + ',' + IntToStr(Ano) + ',' +
@@ -980,10 +986,10 @@ end;
 function TACBrLibCTe.ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TReciboResposta;
-  sRecibo, Resposta: string;
+  sRecibo, Resposta: Ansistring;
 begin
   try
-    sRecibo := string(ARecibo);
+    sRecibo := ConverterAnsiParaUTF8(ARecibo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ConsultarRecibo(' + sRecibo + ' )', logCompleto, True)
@@ -1025,13 +1031,13 @@ function TACBrLibCTe.Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote:
   const sResposta: PChar; var esTamanho: longint): longint;  
 var
   Resp: TCancelamentoResposta;
-  AChave, AJustificativa, ACNPJ: string;
+  AChave, AJustificativa, ACNPJ: Ansistring;
   Resposta: string;
 begin
   try
-    AChave := string(eChave);
-    AJustificativa := string(eJustificativa);
-    ACNPJ := string(eCNPJ);
+    AChave := ConverterAnsiParaUTF8(eChave);
+    AJustificativa := ConverterAnsiParaUTF8(eJustificativa);
+    ACNPJ := ConverterAnsiParaUTF8(eCNPJ);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_Cancelar(' + AChave + ',' + AJustificativa + ',' +
@@ -1105,7 +1111,7 @@ function TACBrLibCTe.EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;  
 var
   i, j: Integer;
-  chCTe, Resposta: String;
+  chCTe, Resposta: Ansistring;
   Resp: TEventoResposta;
 begin
   try
@@ -1207,12 +1213,12 @@ function TACBrLibCTe.ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
     const sResposta: PChar; var esTamanho: longint): longint;    
 var
   Resp: TConsultaCadastroResposta;
-  AUF, ADocumento: string;
+  AUF, ADocumento: Ansistring;
   Resposta: string;
 begin
   try
-    AUF := string(cUF);
-    ADocumento := string(nDocumento);
+    AUF := ConverterAnsiParaUTF8(cUF);
+    ADocumento := ConverterAnsiParaUTF8(nDocumento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ConsultaCadastro(' + AUF + ',' + ADocumento + ',' + BoolToStr(nIE, True) + ' )', logCompleto, True)
@@ -1258,13 +1264,13 @@ end;
 function TACBrLibCTe.DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;  
 var
-  AultNSU, ACNPJCPF: string;
+  AultNSU, ACNPJCPF: Ansistring;
   Resposta: string;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    AultNSU := string(eultNSU);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    AultNSU := ConverterAnsiParaUTF8(eultNSU);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_DistribuicaoDFePorUltNSU(' + IntToStr(AcUFAutor) + ',' +
@@ -1321,13 +1327,13 @@ end;
 function TACBrLibCTe.DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;  
 var
-  ANSU, ACNPJCPF: string;
+  ANSU, ACNPJCPF: Ansistring;
   Resposta: string;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    ANSU := string(eNSU);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    ANSU := ConverterAnsiParaUTF8(eNSU);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_DistribuicaoDFePorNSU(' + IntToStr(AcUFAutor) + ',' +
@@ -1384,13 +1390,13 @@ end;
 function TACBrLibCTe.DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echCTe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;  
 var
-  AchCTe, ACNPJCPF: string;
+  AchCTe, ACNPJCPF: Ansistring;
   Resposta: string;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    AchCTe := string(echCTe);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    AchCTe := ConverterAnsiParaUTF8(echCTe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_DistribuicaoDFePorChave(' + IntToStr(AcUFAutor) + ',' +
@@ -1450,17 +1456,17 @@ end;
 function TACBrLibCTe.EnviarEmail(const ePara, eChaveCTe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;  
 var
-  APara, AChaveCTe, AAssunto, ACC, AAnexos, AMensagem: string;
+  APara, AChaveCTe, AAssunto, ACC, AAnexos, AMensagem: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
 begin
   try
-    APara := string(ePara);
-    AChaveCTe := string(eChaveCTe);
-    AAssunto := string(eAssunto);
-    ACC := string(eCC);
-    AAnexos := string(eAnexos);
-    AMensagem := string(eMensagem);
+    APara := ConverterAnsiParaUTF8(ePara);
+    AChaveCTe := ConverterAnsiParaUTF8(eChaveCTe);
+    AAssunto := ConverterAnsiParaUTF8(eAssunto);
+    ACC := ConverterAnsiParaUTF8(eCC);
+    AAnexos := ConverterAnsiParaUTF8(eAnexos);
+    AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_EnviarEmail(' + APara + ',' + AChaveCTe + ',' +
@@ -1490,6 +1496,7 @@ begin
           slMensagemEmail := TStringList.Create;
           slCC := TStringList.Create;
           slAnexos := TStringList.Create;
+
           try
             with mail do
             begin
@@ -1524,6 +1531,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            if AEnviaPDF then CTeDM.FinalizarImpressao;
           end;
         end;
       end;
@@ -1543,18 +1551,18 @@ function TACBrLibCTe.EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PCh
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;  
 var
   APara, AChaveEvento, AChaveCTe, AAssunto, ACC, AAnexos, AMensagem,
-  ArqPDF: string;
+  ArqPDF: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
 begin
   try
-    APara := string(ePara);
-    AChaveEvento := string(eChaveEvento);
-    AChaveCTe := string(eChaveCTe);
-    AAssunto := string(eAssunto);
-    ACC := string(eCC);
-    AAnexos := string(eAnexos);
-    AMensagem := string(eMensagem);
+    APara := ConverterAnsiParaUTF8(ePara);
+    AChaveEvento := ConverterAnsiParaUTF8(eChaveEvento);
+    AChaveCTe := ConverterAnsiParaUTF8(eChaveCTe);
+    AAssunto := ConverterAnsiParaUTF8(eAssunto);
+    ACC := ConverterAnsiParaUTF8(eCC);
+    AAnexos := ConverterAnsiParaUTF8(eAnexos);
+    AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_EnviarEmailEvento(' + APara + ',' + AChaveEvento + ',' +
@@ -1643,6 +1651,7 @@ begin
               slCC.Free;
               slAnexos.Free;
               slMensagemEmail.Free;
+              if AEnviaPDF then CTeDM.FinalizarImpressao;
             end;
           end;
         end;
@@ -1662,14 +1671,13 @@ function TACBrLibCTe.Imprimir(const cImpressora: PChar; nNumCopias: Integer; con
   bMostrarPreview: PChar): longint; 
 Var
   Resposta: TLibImpressaoResposta;
-  NumCopias: Integer;
   Impressora, Protocolo,
-  MostrarPreview: String;
+  MostrarPreview: Ansistring;
 begin
   try
-    Impressora := String(cImpressora);
-    Protocolo := String(cProtocolo);
-    MostrarPreview := String(bMostrarPreview);
+    Impressora := ConverterAnsiParaUTF8(cImpressora);
+    Protocolo := ConverterAnsiParaUTF8(cProtocolo);
+    MostrarPreview := ConverterAnsiParaUTF8(bMostrarPreview);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias) + ','
@@ -1683,14 +1691,13 @@ begin
     try
       CTeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview);
 
-      NumCopias := CTeDM.ACBrCTe1.DACTE.NumCopias;
       if nNumCopias > 0 then
         CTeDM.ACBrCTe1.DACTE.NumCopias := nNumCopias;
 
       CTeDM.ACBrCTe1.Conhecimentos.Imprimir;
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
-      CTeDM.ACBrCTe1.DACTE.NumCopias := NumCopias;
+      CTeDM.FinalizarImpressao;
       Resposta.Free;
       CTeDM.Destravar;
     end;
@@ -1714,6 +1721,7 @@ begin
       CTeDM.ACBrCTe1.Conhecimentos.ImprimirPDF;
       Result := SetRetornoCTesCarregados(CTeDM.ACBrCTe1.Conhecimentos.Count);
     finally
+      CTeDM.FinalizarImpressao;
       CTeDM.Destravar;
     end;
   except
@@ -1728,12 +1736,11 @@ end;
 function TACBrLibCTe.ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;  
 var
   EhArquivo: boolean;
-  AArquivoXmlCTe: string;
-  AArquivoXmlEvento: string;
+  AArquivoXmlCTe, AArquivoXmlEvento: Ansistring;
 begin
   try
-    AArquivoXmlCTe := string(eArquivoXmlCTe);
-    AArquivoXmlEvento := string(eArquivoXmlEvento);
+    AArquivoXmlCTe := ConverterAnsiParaUTF8(eArquivoXmlCTe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ImprimirEvento(' + AArquivoXmlCTe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
@@ -1764,6 +1771,7 @@ begin
 
       Result := SetRetorno(ErrOK);
     finally
+      CTeDM.FinalizarImpressao;
       CTeDM.Destravar;
     end;
   except
@@ -1778,12 +1786,11 @@ end;
 function TACBrLibCTe.ImprimirEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;  
 var
   EhArquivo: boolean;
-  AArquivoXmlCTe: string;
-  AArquivoXmlEvento: string;
+  AArquivoXmlCTe, AArquivoXmlEvento: Ansistring;
 begin
   try
-    AArquivoXmlCTe := string(eArquivoXmlCTe);
-    AArquivoXmlEvento := string(eArquivoXmlEvento);
+    AArquivoXmlCTe := ConverterAnsiParaUTF8(eArquivoXmlCTe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ImprimirEventoPDF(' + AArquivoXmlCTe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
@@ -1814,6 +1821,7 @@ begin
 
       Result := SetRetorno(ErrOK);
     finally
+      CTeDM.FinalizarImpressao;
       CTeDM.Destravar;
     end;
   except
@@ -1828,10 +1836,10 @@ end;
 function TACBrLibCTe.ImprimirInutilizacao(const eArquivoXml: PChar): longint;  
 var
   EhArquivo: boolean;
-  AArquivoXml: string;
+  AArquivoXml: Ansistring;
 begin
   try
-    AArquivoXml := string(eArquivoXml);
+    AArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ImprimirInutilizacao(' + AArquivoXml + ' )', logCompleto, True)
@@ -1854,6 +1862,7 @@ begin
 
       Result := SetRetorno(ErrOK);
     finally
+      CTeDM.FinalizarImpressao;
       CTeDM.Destravar;
     end;
   except
@@ -1868,10 +1877,10 @@ end;
 function TACBrLibCTe.ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;  
 var
   EhArquivo: boolean;
-  AArquivoXml: string;
+  AArquivoXml: Ansistring;
 begin
   try
-    AArquivoXml := string(eArquivoXml);
+    AArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_ImprimirInutilizacaoPDF(' + AArquivoXml + ' )', logCompleto, True)
@@ -1893,6 +1902,7 @@ begin
 
       Result := SetRetorno(ErrOK);
     finally
+      CTeDM.FinalizarImpressao;
       CTeDM.Destravar;
     end;
   except

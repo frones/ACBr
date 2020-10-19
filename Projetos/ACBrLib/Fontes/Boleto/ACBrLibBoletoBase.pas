@@ -176,48 +176,41 @@ begin
         Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni])
       else
       begin
-        if TpSaida = 'I' then
-        begin
-          try
-            BoletoDM.ConfigurarImpressao;
-            BoletoDM.ACBrBoleto1.Imprimir
-          finally
-            BoletoDM.FinalizarImpressao;
-          end;
-        end
-        else if TpSaida = 'P' then
-        begin
-          try
-            BoletoDM.ConfigurarImpressao;
-            BoletoDM.ACBrBoleto1.GerarPDF
-          finally
-            BoletoDM.FinalizarImpressao;
-          end;
-        end
-        else if TpSaida = 'E' then
-        begin
-          with TLibBoletoConfig(Config).BoletoConfig do
+        try
+          BoletoDM.ConfigurarImpressao;
+
+          if TpSaida = 'I' then
           begin
-            Mensagem := TStringList.Create;
-            Mensagem.Duplicates := dupAccept;
+            BoletoDM.ACBrBoleto1.Imprimir
+          end
+          else if TpSaida = 'P' then
+          begin
+            BoletoDM.ACBrBoleto1.GerarPDF
+          end
+          else if TpSaida = 'E' then
+          begin
+            with TLibBoletoConfig(Config).BoletoConfig do
+            begin
+              Mensagem := TStringList.Create;
+              Mensagem.Duplicates := dupAccept;
 
-            try
-              Mensagem.Add(emailMensagemBoleto);
-              if Config.Log.Nivel > logNormal then
-                GravarLog('Boleto_EnviarEmail(' + BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email +
-                          ',' + emailAssuntoBoleto + ',' + Mensagem.Text, logCompleto, True)
-              else
-                GravarLog('Boleto_EnviarEmail', logNormal);
+              try
+                Mensagem.Add(emailMensagemBoleto);
+                if Config.Log.Nivel > logNormal then
+                  GravarLog('Boleto_EnviarEmail(' + BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email +
+                            ',' + emailAssuntoBoleto + ',' + Mensagem.Text, logCompleto, True)
+                else
+                  GravarLog('Boleto_EnviarEmail', logNormal);
 
-              BoletoDM.ACBrBoleto1.EnviarEmail( BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
-                                               emailAssuntoBoleto,
-                                               Mensagem,
-                                               True );
-              Result := SetRetorno(ErrOK);
-            finally
-              Mensagem.Free;
+                BoletoDM.ACBrBoleto1.EnviarEmail( BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
+                                                  emailAssuntoBoleto, Mensagem, True );
+              finally
+                Mensagem.Free;
+              end;
             end;
           end;
+        finally
+          BoletoDM.FinalizarImpressao;
         end;
         Resposta := 'OK';
       end;
@@ -481,11 +474,13 @@ begin
       slCC := TStringList.Create;
       slCC.Text := CC;
 
+      BoletoDM.ConfigurarImpressao;
       BoletoDM.ACBrBoleto1.EnviarEmail(Para, Assunto, slMensagem, True, slCC);
       Result := SetRetorno(ErrOK);
     finally
       slMensagem.Free;
       slCC.Free;
+      BoletoDM.FinalizarImpressao;
       BoletoDM.Destravar;
     end;
   except

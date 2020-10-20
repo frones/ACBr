@@ -223,7 +223,7 @@ begin
       DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
       ACBrNFe1.DANFE := DANFCeFortes
     end
-    else if not GerarPDF and (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
+    else if GerarPDF or (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
     begin
       DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
       ACBrNFe1.DANFE := DANFCeA4

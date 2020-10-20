@@ -140,8 +140,12 @@ end;
 
 procedure TLibGNReDM.FinalizarImpressao;
 begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
   ACBrGNRE1.GNREGuia := nil;
   if Assigned(GNREGuia) then FreeAndNil(GNREGuia);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 procedure TLibGNReDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

@@ -340,12 +340,16 @@ end;
 
 procedure TLibSatDM.FinalizarImpressao;
 begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
   if ACBrPosPrinter1.Ativo then
     ACBrPosPrinter1.Desativar;
 
   ACBrSAT1.Extrato := nil;
   if Assigned(ExtratoFortes) then FreeAndNil(ExtratoFortes);
   if Assigned(ExtratoEscPos) then FreeAndNil(ExtratoEscPos);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 function TLibSatDM.GerarImpressaoFiscalMFe: Ansistring;

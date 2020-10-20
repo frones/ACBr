@@ -145,10 +145,10 @@ end;
 function TACBrLibMDFe.CarregarXML(const eArquivoOuXML: PChar): longint;
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := string(eArquivoOuXML);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_CarregarXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -181,10 +181,10 @@ end;
 
 function TACBrLibMDFe.CarregarINI(const eArquivoOuINI: PChar): longint;
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := string(eArquivoOuINI);
+    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_CarregarINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -245,11 +245,11 @@ end;
 
 function TACBrLibMDFe.GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
 Var
-  ANomeArquivo, APathArquivo: String;
+  ANomeArquivo, APathArquivo: Ansistring;
 begin
   try
-    ANomeArquivo := String(eNomeArquivo);
-    APathArquivo := String(ePathArquivo);
+    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -312,11 +312,11 @@ end;
 
 function TACBrLibMDFe.GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
 Var
-  AMDFeIni, ANomeArquivo, APathArquivo: String;
+  AMDFeIni, ANomeArquivo, APathArquivo: Ansistring;
 begin
   try
-    ANomeArquivo := String(eNomeArquivo);
-    APathArquivo := String(ePathArquivo);
+    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_GravarIni(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -364,10 +364,10 @@ end;
 function TACBrLibMDFe.CarregarEventoXML(const eArquivoOuXML: PChar): longint;
 var
   EhArquivo: boolean;
-  ArquivoOuXml: string;
+  ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := string(eArquivoOuXML);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_CarregarEventoXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -400,10 +400,10 @@ end;
 
 function TACBrLibMDFe.CarregarEventoINI(const eArquivoOuINI: PChar): longint;
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := string(eArquivoOuINI);
+    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_CarregarEventoINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -536,6 +536,7 @@ begin
     try
       Erros := '';
       MDFeDM.ACBrMDFe1.Manifestos.ValidarRegrasdeNegocios(Erros);
+      Erros := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Erros), Erros);
       MoverStringParaPChar(Erros, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Erros);
     finally
@@ -561,6 +562,7 @@ begin
     try
       Erros := '';
       MDFeDM.ACBrMDFe1.Manifestos.VerificarAssinatura(Erros);
+      Erros := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Erros), Erros);
       MoverStringParaPChar(Erros, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Erros);
     finally
@@ -578,12 +580,12 @@ end;
 function TACBrLibMDFe.GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
   AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 Var
-  Resposta, CNPJCPF: string;
+  Resposta, CNPJCPF: Ansistring;
   Emissao: TDateTime;
 begin
   try
     Emissao := StrToDate(AEmissao);
-    CNPJCPF := String(ACNPJCPF);
+    CNPJCPF := ConverterAnsiParaUTF8(ACNPJCPF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
@@ -598,6 +600,7 @@ begin
     try
       Resposta := '';
       Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
+      Resposta := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -623,6 +626,7 @@ begin
     try
       Resposta := '';
       Resposta := ObterCerticados(MDFeDM.ACBrMDFe1.SSL);
+      Resposta := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -640,7 +644,6 @@ end;
 function TACBrLibMDFe.GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
 Var
   Resposta: string;
-  ok: Boolean;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -659,6 +662,7 @@ begin
           1: Resposta := ACBrMDFe1.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
         end;
 
+        Resposta := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -693,6 +697,7 @@ begin
       begin
         Resposta := '';
         Resposta := ACBrMDFe1.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoMDFe(ok, CodEvento));
+        Resposta := IfThen<Ansistring>(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       end;
@@ -749,12 +754,11 @@ function TACBrLibMDFe.Consultar(const eChaveOuMDFe: PChar; AExtrairEventos: Bool
   var esTamanho: longint): longint;
 var
   EhArquivo: boolean;
-  ChaveOuMDFe: string;
+  ChaveOuMDFe, Resposta: Ansistring;
   Resp: TConsultaResposta;
-  Resposta: string;
 begin
   try
-    ChaveOuMDFe := string(eChaveOuMDFe);
+    ChaveOuMDFe := ConverterAnsiParaUTF8(eChaveOuMDFe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_Consultar(' + ChaveOuMDFe  + ', ' + BoolToStr(AExtrairEventos, True) +  ' )', logCompleto, True)
@@ -811,7 +815,7 @@ end;
 function TACBrLibMDFe.Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
-  Resposta: String;
+  Resposta: Ansistring;
   RespEnvio: TEnvioResposta;
   RespRetorno: TRetornoResposta;
   ImpResp: TLibImpressaoResposta;
@@ -921,11 +925,11 @@ end;
 function TACBrLibMDFe.ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TReciboResposta;
-  sRecibo, Resposta: string;
+  sRecibo, Resposta: Ansistring;
   i, j: Integer;
 begin
   try
-    sRecibo := string(ARecibo);
+    sRecibo := ConverterAnsiParaUTF8(ARecibo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_ConsultarRecibo(' + sRecibo + ' )', logCompleto, True)
@@ -967,14 +971,13 @@ end;
 function TACBrLibMDFe.Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
-  AChave, AJustificativa, ACNPJCPF: string;
+  AChave, AJustificativa, ACNPJCPF, Resposta: Ansistring;
   Resp: TCancelamentoResposta;
-  Resposta: string;
 begin
   try
-    AChave := string(eChave);
-    AJustificativa := string(eJustificativa);
-    ACNPJCPF := string(eCNPJCPF);
+    AChave := ConverterAnsiParaUTF8(eChave);
+    AJustificativa := ConverterAnsiParaUTF8(eJustificativa);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_Cancelar(' + AChave + ',' + AJustificativa + ',' +
@@ -1154,15 +1157,15 @@ function TACBrLibMDFe.EncerrarMDFe(const eChaveOuMDFe, eDtEnc, cMunicipioDescarg
   const sResposta: PChar; var esTamanho: longint): longint;
 Var
   Resp: TEncerramentoResposta;
-  ChaveOuMDFe, MunicipioDescarga, CNPJ, Protocolo, Resposta: string;
+  ChaveOuMDFe, MunicipioDescarga, CNPJ, Protocolo, Resposta: Ansistring;
   DtEnc: TDateTime;
 begin
   try
-    ChaveOuMDFe := String(eChaveOuMDFe);
-    DtEnc := StrToDateTime(eDtEnc);
-    MunicipioDescarga := String(cMunicipioDescarga);
-    CNPJ := String(nCNPJ);
-    Protocolo := String(nProtocolo);
+    ChaveOuMDFe := ConverterAnsiParaUTF8(eChaveOuMDFe);
+    DtEnc := StrToDateTime(ConverterAnsiParaUTF8(eDtEnc));
+    MunicipioDescarga := ConverterAnsiParaUTF8(cMunicipioDescarga);
+    CNPJ := ConverterAnsiParaUTF8(nCNPJ);
+    Protocolo := ConverterAnsiParaUTF8(nProtocolo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_EncerrarMDFe(' + ChaveOuMDFe + ',' + DateTimeToStr(DtEnc) + ',' +
@@ -1267,11 +1270,11 @@ end;
 
 function TACBrLibMDFe.ConsultaMDFeNaoEnc(const nCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 Var
-  CNPJ, Resposta: String;
+  CNPJ, Resposta: Ansistring;
   Resp: TNaoEncerradosResposta ;
 begin
   try
-    CNPJ := String(nCNPJ);
+    CNPJ := ConverterAnsiParaUTF8(nCNPJ);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFE_ConsultaMDFeNaoEnc(' + CNPJ + ' )', logCompleto, True)
@@ -1314,13 +1317,12 @@ end;
 function TACBrLibMDFe.DistribuicaoDFePorUltNSU(eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
-  AultNSU, ACNPJCPF: string;
-  Resposta: string;
+  AultNSU, ACNPJCPF, Resposta: Ansistring;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    AultNSU := string(eultNSU);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    AultNSU := ConverterAnsiParaUTF8(eultNSU);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_DistribuicaoDFePorUltNSU(' + ACNPJCPF + ',' + AultNSU + ',' + ' )', logCompleto, True)
@@ -1370,13 +1372,12 @@ end;
 function TACBrLibMDFe.DistribuicaoDFePorNSU(eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
-  ANSU, ACNPJCPF: string;
-  Resposta: string;
+  ANSU, ACNPJCPF, Resposta: Ansistring;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    ANSU := string(eNSU);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    ANSU := ConverterAnsiParaUTF8(eNSU);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_DistribuicaoDFePorNSU(' + ACNPJCPF + ',' + ANSU + ',' + ' )', logCompleto, True)
@@ -1427,13 +1428,12 @@ end;
 function TACBrLibMDFe.DistribuicaoDFePorChave(eCNPJCPF, echMDFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
 var
-  AchMDFe, ACNPJCPF: string;
-  Resposta: string;
+  AchMDFe, ACNPJCPF, Resposta: Ansistring;
   Resp: TDistribuicaoDFeResposta;
 begin
   try
-    ACNPJCPF := string(eCNPJCPF);
-    AchMDFe := string(echMDFe);
+    ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
+    AchMDFe := ConverterAnsiParaUTF8(echMDFe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_DistribuicaoDFePorChave(' + ACNPJCPF + ',' + AchMDFe + ' )', logCompleto, True)
@@ -1486,18 +1486,18 @@ end;
 function TACBrLibMDFe.EnviarEmail(const ePara, eArquivoXmlMDFe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 var
-  APara, AArquivoXmlMDFe, AAssunto, ACC, AAnexos, AMensagem: string;
+  APara, AArquivoXmlMDFe, AAssunto, ACC, AAnexos, AMensagem: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
   Resposta: TLibMDFeResposta;
 begin
   try
-    APara := string(ePara);
-    AArquivoXmlMDFe := string(eArquivoXmlMDFe);
-    AAssunto := string(eAssunto);
-    ACC := string(eCC);
-    AAnexos := string(eAnexos);
-    AMensagem := string(eMensagem);
+    APara := ConverterAnsiParaUTF8(ePara);
+    AArquivoXmlMDFe := ConverterAnsiParaUTF8(eArquivoXmlMDFe);
+    AAssunto := ConverterAnsiParaUTF8(eAssunto);
+    ACC := ConverterAnsiParaUTF8(eCC);
+    AAnexos := ConverterAnsiParaUTF8(eAnexos);
+    AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_EnviarEmail(' + APara + ',' + AArquivoXmlMDFe + ',' +
@@ -1558,6 +1558,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            if AEnviaPDF then MDFeDM.FinalizarImpressao;
           end;
         end;
       end;
@@ -1577,19 +1578,19 @@ function TACBrLibMDFe.EnviarEmailEvento(const ePara, eArquivoXmlEvento, eArquivo
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 var
   APara, AArquivoXmlEvento, AArquivoXmlMDFe, AAssunto, ACC, AAnexos, AMensagem,
-  ArqPDF: string;
+  ArqPDF: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
   Resposta: TLibMDFeResposta;
 begin
   try
-    APara := string(ePara);
-    AArquivoXmlEvento := string(eArquivoXmlEvento);
-    AArquivoXmlMDFe := string(eArquivoXmlMDFe);
-    AAssunto := string(eAssunto);
-    ACC := string(eCC);
-    AAnexos := string(eAnexos);
-    AMensagem := string(eMensagem);
+    APara := ConverterAnsiParaUTF8(ePara);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
+    AArquivoXmlMDFe := ConverterAnsiParaUTF8(eArquivoXmlMDFe);
+    AAssunto := ConverterAnsiParaUTF8(eAssunto);
+    ACC := ConverterAnsiParaUTF8(eCC);
+    AAnexos := ConverterAnsiParaUTF8(eAnexos);
+    AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_EnviarEmailEvento(' + APara + ',' + AArquivoXmlEvento + ',' +
@@ -1678,6 +1679,7 @@ begin
             slCC.Free;
             slAnexos.Free;
             slMensagemEmail.Free;
+            if AEnviaPDF then MDFeDM.FinalizarImpressao;
           end;
         end;
       end;
@@ -1696,14 +1698,13 @@ end;
 function TACBrLibMDFe.Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo, bMostrarPreview: PChar): longint;
 Var
   Resposta: TLibImpressaoResposta;
-  NumCopias: Integer;
   Impressora, Protocolo,
-  MostrarPreview: String;
+  MostrarPreview: Ansistring;
 begin
   try
-    Impressora := String(cImpressora);
-    Protocolo := String(cProtocolo);
-    MostrarPreview := String(bMostrarPreview);
+    Impressora := ConverterAnsiParaUTF8(cImpressora);
+    Protocolo := ConverterAnsiParaUTF8(cProtocolo);
+    MostrarPreview := ConverterAnsiParaUTF8(bMostrarPreview);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias) + ',' +
@@ -1717,13 +1718,12 @@ begin
 
     try
       MDFeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview);
-      NumCopias := MDFeDM.ACBrMDFe1.DAMDFE.NumCopias;
       if nNumCopias > 0 then
         MDFeDM.ACBrMDFe1.DAMDFE.NumCopias := nNumCopias;
       MDFeDM.ACBrMDFe1.Manifestos.Imprimir;
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
-      MDFeDM.ACBrMDFe1.DAMDFE.NumCopias := NumCopias;
+      MDFeDM.FinalizarImpressao;
       Resposta.Free;
       MDFeDM.Destravar;
     end;
@@ -1755,6 +1755,7 @@ begin
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
       Resposta.Free;
+      MDFeDM.FinalizarImpressao;
       MDFeDM.Destravar;
     end;
   except
@@ -1769,13 +1770,12 @@ end;
 function TACBrLibMDFe.ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
 var
   EhArquivo: boolean;
-  AArquivoXmlMDFe: string;
-  AArquivoXmlEvento: string;
+  AArquivoXmlMDFe, AArquivoXmlEvento: Ansistring;
   Resposta: TLibImpressaoResposta;
 begin
   try
-    AArquivoXmlMDFe := string(eArquivoXmlMDFe);
-    AArquivoXmlEvento := string(eArquivoXmlEvento);
+    AArquivoXmlMDFe := ConverterAnsiParaUTF8(eArquivoXmlMDFe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_ImprimirEvento(' + AArquivoXmlMDFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
@@ -1809,6 +1809,7 @@ begin
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
       Resposta.Free;
+      MDFeDM.FinalizarImpressao;
       MDFeDM.Destravar;
     end;
   except
@@ -1823,13 +1824,12 @@ end;
 function TACBrLibMDFe.ImprimirEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
 var
   EhArquivo: boolean;
-  AArquivoXmlMDFe: string;
-  AArquivoXmlEvento: string;
+  AArquivoXmlMDFe, AArquivoXmlEvento: Ansistring;
   Resposta: TLibImpressaoResposta;
 begin
   try
-    AArquivoXmlMDFe := string(eArquivoXmlMDFe);
-    AArquivoXmlEvento := string(eArquivoXmlEvento);
+    AArquivoXmlMDFe := ConverterAnsiParaUTF8(eArquivoXmlMDFe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MDFe_ImprimirEventoPDF(' + AArquivoXmlMDFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
@@ -1863,6 +1863,7 @@ begin
       Result := SetRetorno(ErrOK, Resposta.Gerar);
     finally
       Resposta.Free;
+      MDFeDM.FinalizarImpressao;
       MDFeDM.Destravar;
     end;
   except

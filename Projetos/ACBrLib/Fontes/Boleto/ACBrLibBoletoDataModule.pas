@@ -186,8 +186,12 @@ end;
 
 procedure TLibBoletoDM.FinalizarImpressao;
 begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
   ACBrBoleto1.ACBrBoletoFC := nil;
   if Assigned(BoletoFortes) then FreeAndNil(BoletoFortes);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 procedure TLibBoletoDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

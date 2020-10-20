@@ -299,6 +299,8 @@ end;
 
 procedure TLibNFeDM.FinalizarImpressao;
 begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
   if ACBrPosPrinter1.Ativo then
           ACBrPosPrinter1.Desativar;
 
@@ -307,6 +309,8 @@ begin
   if Assigned(DANFCeFortes) then FreeAndNil(DANFCeFortes);
   if Assigned(DANFCeA4) then FreeAndNil(DANFCeA4);
   if Assigned(DANFCeEscPos) then FreeAndNil(DANFCeEscPos);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 procedure TLibNFeDM.ValidarIntegradorNFCe;

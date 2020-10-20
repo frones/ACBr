@@ -48,12 +48,12 @@ type
   TLibMDFeDM = class(TDataModule)
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
-    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     fpLib: TACBrLib;
+    DAMDFe: TACBrMDFeDAMDFeRL;
 
   protected
     FLock: TCriticalSection;
@@ -63,6 +63,7 @@ type
     procedure AplicarConfigMail;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = '');
+    procedure FinalizarImpressao;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -130,6 +131,9 @@ procedure TLibMDFeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: 
 begin
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
+  DAMDFe := TACBrMDFeDAMDFeRL.Create(nil);
+  ACBrMDFe1.DAMDFE := DAMDFe;
+
   if ACBrMDFe1.Manifestos.Count > 0 then
   begin
     if (ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.cStat in [101, 151, 155]) then
@@ -138,7 +142,7 @@ begin
       ACBrMDFe1.DAMDFe.Cancelada := False;
   end;
 
-  TLibMDFeConfig(Lib.Config).DAMDFe.Apply(ACBrMDFeDAMDFeRL1, Lib);
+  TLibMDFeConfig(Lib.Config).DAMDFe.Apply(DAMDFe, Lib);
 
   if NaoEstaVazio(NomeImpressora) then
     ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;
@@ -155,6 +159,16 @@ begin
         ForceDirectories(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF));
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibMDFeDM.FinalizarImpressao;
+begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
+  ACBrMDFe1.DAMDFE := nil;
+  if Assigned(DAMDFe) then FreeAndNil(DAMDFe);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 procedure TLibMDFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

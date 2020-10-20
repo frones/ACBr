@@ -117,7 +117,7 @@ var
   ASubject: String;
 begin
   try    
-    ASubject := String(eSubject);
+    ASubject := ConverterAnsiParaUTF8(eSubject);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_SetSubject( ' + ASubject + ' )', logCompleto, True)
@@ -142,12 +142,11 @@ end;
 
 function TACBrLibMail.AddAddress(const eEmail, eName: PChar): longint;
 var
-  AEmail: AnsiString;
-  AName: AnsiString;
+  AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := AnsiString(eEmail);
-    AName := AnsiString(eName);
+    AEmail := ConverterAnsiParaUTF8(eEmail);
+    AName := ConverterAnsiParaUTF8(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddAddress( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -172,12 +171,11 @@ end;
 
 function TACBrLibMail.AddReplyTo(const eEmail, eName: PChar): longint;
 var
-  AEmail: AnsiString;
-  AName: AnsiString;
+  AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := AnsiString(eEmail);
-    AName := AnsiString(eName);
+    AEmail := ConverterAnsiParaUTF8(eEmail);
+    AName := ConverterAnsiParaUTF8(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddReplyTo( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -202,12 +200,11 @@ end;
 
 function TACBrLibMail.AddCC(const eEmail, eName: PChar): longint;
 var
-  AEmail: AnsiString;
-  AName: AnsiString;
+  AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := AnsiString(eEmail);
-    AName := AnsiString(eName);
+    AEmail := ConverterAnsiParaUTF8(eEmail);
+    AName := ConverterAnsiParaUTF8(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddCC( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -235,7 +232,7 @@ var
   AEmail: AnsiString;
 begin
   try    
-    AEmail := AnsiString(eEmail);
+    AEmail := ConverterAnsiParaUTF8(eEmail);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddBCC( ' + AEmail + ' )', logCompleto, True)
@@ -342,12 +339,11 @@ end;
 function TACBrLibMail.AddAttachment(const eFileName, eDescription: PChar;
   const aDisposition: Integer): longint;
 var
-  AFileName: AnsiString;
-  ADescription: AnsiString;
+  AFileName, ADescription: AnsiString;
 begin
   try    
-    AFileName := AnsiString(eFileName);
-    ADescription := AnsiString(eDescription);
+    AFileName := ConverterAnsiParaUTF8(eFileName);
+    ADescription := ConverterAnsiParaUTF8(eDescription);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddAttachment( ' + AFileName + ',' + ADescription + ',' +
@@ -376,7 +372,7 @@ var
   AFileName: AnsiString;
 begin
   try   
-    AFileName := AnsiString(eFileName);
+    AFileName := ConverterAnsiParaUTF8(eFileName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_MailProcess( ' + AFileName + ' )', logCompleto, True)

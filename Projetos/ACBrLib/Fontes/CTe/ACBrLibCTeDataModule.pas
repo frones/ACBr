@@ -157,8 +157,12 @@ end;
 
 procedure TLibCTeDM.FinalizarImpressao;
 begin
+  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
   ACBrCTe1.DACTE := nil;
   if Assigned(DACTe) then FreeAndNil(DACTe);
+
+  GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 procedure TLibCTeDM.Travar;

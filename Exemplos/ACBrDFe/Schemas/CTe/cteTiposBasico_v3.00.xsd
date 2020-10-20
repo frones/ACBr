@@ -303,7 +303,7 @@
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
 																<xs:whiteSpace value="preserve"/>
-																<xs:enumeration value="2"/>
+																<xs:enumeration value="4"/>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
@@ -779,8 +779,6 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 															<xs:whiteSpace value="preserve"/>
 															<xs:enumeration value="1"/>
 															<xs:enumeration value="2"/>
-															<xs:enumeration value="3"/>
-															<xs:enumeration value="4"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>

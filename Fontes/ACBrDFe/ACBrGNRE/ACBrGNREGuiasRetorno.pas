@@ -307,8 +307,8 @@ begin
             GNRERetorno.CodReceita     := Leitor.rCampo(tcInt, 'receita');
             GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
 
-            if Leitor.rAtributo('tipo=', 'documentoOrigem') = '10' then
-              GNRERetorno.NumDocOrigem := Leitor.rCampo(tcDe2, 'documentoOrigem');
+            if Leitor.rExtrai(Nivel, 'documentoOrigem', '', 1) <> '' then
+              GNRERetorno.NumDocOrigem := Leitor.rCampo(tcStr, 'documentoOrigem');
 
             Inc(Nivel);
             if Leitor.rExtrai(Nivel, 'referencia') <> '' then

@@ -1656,7 +1656,7 @@ begin
               end;
             end;
 
-            with mail do
+            with Mail do
             begin
               slMensagemEmail.DelimitedText := sLineBreak;
               slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);

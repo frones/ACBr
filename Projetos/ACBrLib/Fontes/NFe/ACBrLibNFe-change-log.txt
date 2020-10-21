@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2020
+--- ACBrLibNFeDataModule ---
+[-] Correção da impressão em PDF da NFCe quando setado tipo de impressão EscPos ou Fortes.
+	Por: Rafael Dias
+
 20/10/2020
 --- ACBrLibNFeDataModule ---
 [-] Correção na geração de PDF quando é NFCe.

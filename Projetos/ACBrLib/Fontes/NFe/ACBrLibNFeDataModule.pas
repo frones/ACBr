@@ -218,12 +218,17 @@ begin
 
   if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
   begin
-    if not GerarPDF and (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes) then
+    if GerarPDF and not (LibConfig.DANFe.NFCe.TipoRelatorioBobina in [tpFortes, tpFortesA4]) then
     begin
       DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
       ACBrNFe1.DANFE := DANFCeFortes
     end
-    else if GerarPDF or (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
+    else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes then
+    begin
+      DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
+      ACBrNFe1.DANFE := DANFCeFortes
+    end
+    else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4 then
     begin
       DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
       ACBrNFe1.DANFE := DANFCeA4

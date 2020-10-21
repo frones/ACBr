@@ -1929,25 +1929,26 @@ end;
 
 constructor TACBrCedente.Create( AOwner : TComponent );
 begin
-   inherited Create(AOwner);
+	inherited Create(AOwner);
 
-   fNomeCedente   := '';
-   fAgencia       := '';
-   fAgenciaDigito := '';
-   fConta         := '';
-   fContaDigito   := '';
-   fModalidade    := '';
-   fConvenio      := '';
-   fCNPJCPF       := '';
-   fDigitoVerificadorAgenciaConta:= '';
-   fResponEmissao := tbCliEmite;
-   fIdentDistribuicao := tbClienteDistribui;
-   fCaracTitulo   := tcSimples;
-   fTipoInscricao := pJuridica;
-   fAcbrBoleto    := TACBrBoleto(AOwner);
+	fNomeCedente   := '';
+	fAgencia       := '';
+	fAgenciaDigito := '';
+	fConta         := '';
+	fContaDigito   := '';
+	fModalidade    := '';
+	fConvenio      := '';
+	fCNPJCPF       := '';
+	fDigitoVerificadorAgenciaConta:= '';
+	fResponEmissao := tbCliEmite;
+	fIdentDistribuicao := tbClienteDistribui;
+	fCaracTitulo   := tcSimples;
+	fTipoInscricao := pJuridica;
+	fAcbrBoleto    := TACBrBoleto(AOwner);
+	fTipoDocumento := Tradicional;
 
-   fCedenteWS := TACBrCedenteWS.Create(self);
-  fCedenteWS.Name := 'CedenteWS';
+	fCedenteWS := TACBrCedenteWS.Create(self);
+	fCedenteWS.Name := 'CedenteWS';
   {$IFDEF COMPILER6_UP}
   fCedenteWS.SetSubComponent(True);
   {$ENDIF}

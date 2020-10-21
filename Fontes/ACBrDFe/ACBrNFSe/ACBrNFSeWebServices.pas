@@ -1945,6 +1945,7 @@ begin
                    '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
 
         proEL,
+        proGeisWeb,
         proGoverna: FvNotas :=  FvNotas + RPS;
 
         proCTA: FvNotas := FvNotas + '<RPS xmlns=""' +
@@ -2577,10 +2578,10 @@ begin
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebFraseSecr seja informada.'));
 
-    // Agili, Agiliv2, CTA, Governa, proEGoverneISS
+    // Agili, Agiliv2, CTA, Governa, proGiap, proiiBrasilv2, proAEG
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
     if (ChaveAcessoPrefeitura = '') and
-       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS,
+       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna,
                      proGiap, proiiBrasilv2, proAEG]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
@@ -2991,6 +2992,9 @@ begin
 
     if FProvedor in [proSMARAPD, proGiap] then
       FPDadosMsg := StringReplace(FPDadosMsg, '<?xml version="1.0" encoding="UTF-8"?>', '', [rfReplaceAll]);
+
+//    if FProvedor in [proInfiscv11] then
+//      FPDadosMsg := StringReplace(FPDadosMsg, 'envioLote', 'ws:envioLote', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,

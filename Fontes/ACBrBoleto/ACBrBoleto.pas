@@ -55,7 +55,8 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..305] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..308] of String = (
+    {Ocorrências para arquivo remessa}
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -129,10 +130,14 @@ const
     'Remessa Excluir Negativacao Serasa e Baixar',
     'Remessa Pedido de negativação',
     'Remessa Excluir negativação e baixar',
-    'Remessa Excluir negativação e manter em carteira',	
+    'Remessa Excluir negativação e manter em carteira',
+    'Remessa Sustar Protesto e baixar',
+    'Remessa Sustar Protesto e manter em carteira',
+    'Remessa Resusa Alegação do Sacado',
     'Remessa Protestar Automaticamente',
     'Remessa Alteração de Status Desconto',
 
+    {Ocorrências para arquivo retorno}
     'Retorno Abatimento Cancelado',
     'Retorno Abatimento Concedido',
     'Retorno Acerto Controle Participante',

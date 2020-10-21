@@ -1231,6 +1231,12 @@ begin
   end;
 
   rllInscSuframa.Caption := fpCTe.Dest.ISUF;
+
+  if (fpCTe.ide.modelo = 67) then
+  begin
+    RLLabel17.Caption := 'DACTE OS';
+    RLLabel18.Caption := 'Documento Auxiliar do Conhecimento de Transporte Eletrônico para Outros Serviços';
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_03_DadosDACTeBeforePrint(Sender: TObject;

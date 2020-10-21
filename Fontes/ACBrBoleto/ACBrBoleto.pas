@@ -4635,8 +4635,15 @@ begin
         GravarIniRetornoWeb( Configuracoes.Arquivos.PathGravarRegistro , 'ret' + FormatDateTime('ddmmyyhhnn',Now) + '.txt' );
 
     Except
-      raise Exception.Create(ACBrStr('Erro: '+ IntToStr(RemessaWS.RetornoBanco.CodRetorno) + sLineBreak +
-                        RemessaWS.RetornoBanco.Msg) );
+      on E:Exception do
+      begin
+        if ( ( RemessaWS.RetornoBanco.CodRetorno = 0 ) and
+             ( Trim( RemessaWS.RetornoBanco.Msg ) = '' ) ) then
+          raise Exception.Create(ACBrStr('Erro: ' + E.Message))
+        else
+          raise Exception.Create(ACBrStr('Erro: ' + IntToStr(RemessaWS.RetornoBanco.CodRetorno) + sLineBreak +
+                                 RemessaWS.RetornoBanco.Msg + sLineBreak));
+      end;
     end;
 
   finally
@@ -5039,7 +5046,7 @@ procedure TACBrBoleto.GravarIniRetornoWeb(DirRetorno: string;
 var
   IniRetorno: TMemIniFile;
   wSessao: string;
-  i: integer;
+  i, j: integer;
 begin
   if EstaVazio(DirRetorno) then
     DirRetorno:= PathWithDelim(ApplicationPath);
@@ -5063,6 +5070,14 @@ begin
         IniRetorno.WriteString(wSessao, 'Cod_Retorno',ListaRetornoWeb[i].CodRetorno);
         IniRetorno.WriteString(wSessao, 'Msg_Retorno',ListaRetornoWeb[i].MsgRetorno);
         IniRetorno.WriteString(wSessao, 'Ori_Retorno',ListaRetornoWeb[i].OriRetorno);
+
+        for j:= 0 to ListaRetornoWeb[i].ListaRejeicao.Count -1 do
+        begin
+          wSessao := 'REJEICAO' + IntToStr(j + 1);
+          IniRetorno.WriteString(wSessao, 'Campo', ListaRetornoWeb[i].ListaRejeicao[j].Campo);
+          IniRetorno.WriteString(wSessao, 'Mensagem', ListaRetornoWeb[i].ListaRejeicao[j].Mensagem);
+          IniRetorno.WriteString(wSessao, 'Valor', ListaRetornoWeb[i].ListaRejeicao[j].Valor);
+        end;
 
         wSessao := 'HEADER';
         IniRetorno.WriteString(wSessao, 'Versao',ListaRetornoWeb[i].Header.Versao);

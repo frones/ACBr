@@ -230,7 +230,7 @@ begin
     Gerador.wCampo(tcInt, '#14', PrefixTag('codigoTipoJuroMora'    ), 01, 01, 1, lCodMora, DSC_CODIGO_MORA_JUROS);
 
     if lCodMora = 2 then
-      Gerador.wCampo(tcDe4, '#15', PrefixTag('percentualJuroMoraTitulo'), 01, 05, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS)
+      Gerador.wCampo(tcDe2, '#15', PrefixTag('percentualJuroMoraTitulo'), 01, 05, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS)
     else
       Gerador.wCampo(tcDe2, '#16', PrefixTag('valorJuroMoraTitulo'     ), 01, 19, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS);
 

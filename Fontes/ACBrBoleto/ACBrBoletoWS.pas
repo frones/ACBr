@@ -65,10 +65,12 @@ type
     FToken : String;
     FExpire : TDateTime;
     FErroComunicacao : String;
+    FPayload : Boolean;
 
     procedure setURL(const AValue: String);
     procedure setContentType(const AValue: String);
     procedure setGrantType(const AValue: String);
+    procedure setPayload(const AValue: Boolean);
 
     function getURL: String;
     function getContentType: String;
@@ -97,6 +99,7 @@ type
     property Expire : TDateTime read FExpire;
     property ErroComunicacao : String read FErroComunicacao;
     property Token : String read FToken;
+    property Payload : Boolean read FPayLoad write setPayload;
 
   end;
 
@@ -114,6 +117,7 @@ type
 
   protected
     FPDadosMsg: String;
+    FTipoRegistro: String;
 
   public
     constructor Create(ABoletoWS: TBoletoWS ); virtual;
@@ -128,6 +132,7 @@ type
     property RetornoBanco: TRetornoEnvioClass read FRetornoBanco;
     property RetornoWS: String read FRetornoWS write FRetornoWS;
     property Titulos: TACBrTitulo read FTitulos write FTitulos;
+    property TipoRegistro: String read FTipoRegistro;
     property DadosMsg: String read FPDadosMsg;
     property OAuth: TOAuth read FOAuth;
   end;
@@ -143,6 +148,7 @@ type
     FBoleto: TACBrBoleto;
     FRetornoBanco: TRetornoEnvioClass;
     FRetornoWS: String;
+
     procedure SetBanco(ABanco: TACBrTipoCobranca);
 
   public
@@ -272,18 +278,18 @@ type
 
   protected
     FPURL: String;
-    FPAuthorization: String;
     FPContentType: String;
-    FPAccept: String;
     FPKeyUser: String;
     FPIdentificador: String;
+    FPAccept: String;
+    FPAuthorization: String;
 
+    procedure setDefinirAccept(const AValue: String);
+    procedure DefinirAuthorization; virtual;
     procedure DefinirContentType; virtual;
-    procedure DefinirAccept; virtual;
     procedure DefinirURL; virtual;
     procedure GerarHeader; virtual;
     procedure GerarDados; virtual;
-    procedure DefinirAuthorization; virtual;
     function GerarTokenAutenticacao: String; virtual;
 
     procedure Executar;
@@ -296,7 +302,7 @@ type
 
     property URL: String read FPURL;
     property Authorization: String read FPAuthorization;
-    property Accept: String read FPAccept;
+    property Accept: String read FPAccept write setDefinirAccept;
     property KeyUser: String read FPKeyUser;
     property Identificador: String read FPIdentificador;
 
@@ -343,6 +349,8 @@ Const
   C_AUTHORIZATION = 'Authorization';
   C_ACCESS_TOKEN = 'access_token';
   C_ACCEPT = 'Accept';
+  C_XML = 'xml';
+  C_JSON = 'json';
 
   C_RETORNO_REGISTRO = 'retorno_registro';
   C_ERRO = 'erro';
@@ -378,6 +386,12 @@ begin
   if FGrantType <> AValue then
     FGrantType := AValue;
 
+end;
+
+procedure TOAuth.setPayload(const AValue: Boolean);
+begin
+  if FPayload <> AValue then
+    FPayload := AValue;
 end;
 
 function TOAuth.getURL: String;
@@ -489,6 +503,9 @@ begin
 end;
 
 function TOAuth.Executar(const AAuthBase64: String): Boolean;
+var
+  Stream: TMemoryStream;
+  FParams: String;
 begin
   FErroComunicacao := '';
 
@@ -508,8 +525,21 @@ begin
 
   try
     //Utiliza HTTPMethod para envio
-    FSSL.HTTPMethod('POST', URL + '?' + C_GRANT_TYPE + '=' + GrantType
-                                + '&' + C_SCOPE + '=' + Scope);
+    Stream:= TMemoryStream.Create;
+    try
+      FParams:= C_GRANT_TYPE + '=' + GrantType
+              + '&' + C_SCOPE + '=' + Scope;
+      if FPayload then
+      begin
+        WriteStrToStream(Stream, FParams);
+        FSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
+        FSSL.HTTPMethod('POST', URL);
+      end
+      else
+        FSSL.HTTPMethod('POST', URL + '?' + FParams);
+    finally
+      Stream.Free;
+    end;
 
     FSSL.SSLHttpClass.DataResp.Position:= 0;
     ProcessarRespostaOAuth( ReadStrFromStream(FSSL.SSLHttpClass.DataResp, FSSL.SSLHttpClass.DataResp.Size ) );
@@ -538,6 +568,7 @@ begin
   FToken := '';
   FExpire := 0;
   FErroComunicacao := '';
+  fPayload := False;
 
 end;
 
@@ -579,9 +610,10 @@ begin
     FPContentType:= S_CONTENT_TYPE;
 end;
 
-procedure TBoletoWSREST.DefinirAccept;
+procedure TBoletoWSREST.setDefinirAccept(const AValue: String);
 begin
-  FPAccept := '';
+  if AValue <> '' then
+    FPAccept := AValue;
 end;
 
 procedure TBoletoWSREST.DefinirURL;
@@ -628,22 +660,22 @@ begin
         begin
           Clear;
           if FPAccept <> '' then
-            Add(C_ACCEPT +': '+FPAccept);
+            Add(C_ACCEPT +': '+ FPAccept);
           if FPAuthorization <> '' then
             Add(FPAuthorization);
           if FPKeyUser <> '' then
             Add(FPKeyUser);
           if FPIdentificador <> '' then
             Add(FPIdentificador);
-          if FPContentType <> '' then
-            Add(C_CONTENT_TYPE +': '+ FPContentType);
+          //if FPContentType <> '' then
+           // Add(C_CONTENT_TYPE +': '+ FPContentType);
         end;
 
         Stream:= TMemoryStream.Create;
         try
           WriteStrToStream(Stream, FPDadosMsg);
           FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          FDFeSSL.HTTPMethod('POST', FPURL);
+          FDFeSSL.HTTPMethod('POST', FPURL );
         finally
           Stream.Free;
         end;
@@ -664,6 +696,7 @@ end;
 constructor TBoletoWSREST.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
+  FTipoRegistro:= C_JSON;
   FPContentType:= '';
   FPAccept:= '';
   FPDadosMsg:= '';
@@ -689,8 +722,8 @@ function TBoletoWSREST.Enviar: Boolean;
 begin
   FBoletoWS.FRetornoBanco.CodRetorno:= 0;
   FBoletoWS.FRetornoBanco.Msg := '';
-  FPAuthorization:= '';
 
+  DefinirAuthorization;
   DefinirURL;
   DefinirContentType;
 
@@ -703,10 +736,10 @@ begin
   finally
     Result := (FDFeSSL.HTTPResultCode in [200, 201, 202]);
 
-    if Result then //Grava xml retorno
+    if Result then //Grava retorno
       WriteToTXT( ifthen( EstaVazio(Boleto.Configuracoes.Arquivos.PathGravarRegistro),
                   PathWithDelim( ApplicationPath ), PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro ))
-                  + Titulos.NumeroDocumento +'-'+ C_RETORNO_REGISTRO + '.xml', FRetornoWS ,False, False);
+                  + Titulos.NumeroDocumento +'-'+ C_RETORNO_REGISTRO + '.' + C_JSON, FRetornoWS ,False, False);
   end;
 end;
 
@@ -822,6 +855,7 @@ end;
 constructor TBoletoWSSOAP.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
+  FTipoRegistro := C_XML;
   FPSoapVersion := S_SOAP_VERSION;
   FPMimeType := S_MIME_TYPE;
   FPContentType:= S_CONTENT_TYPE;
@@ -932,6 +966,7 @@ end;
 constructor TBoletoWSClass.Create(ABoletoWS: TBoletoWS);
 begin
   FTitulos := Nil;
+  FTipoRegistro := C_XML;
   FBoletoWS := ABoletoWS;
   FGerador := TGerador.Create;
 
@@ -1054,9 +1089,9 @@ begin
     lPath := PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro );
 
   if (Boleto.ListadeBoletos.Count > 0) then
-    Result := lPath + FBoletoWSClass.Titulos.NumeroDocumento + '-'+ C_REGISTRO_BOLETO + '.xml'
+    Result := lPath + OnlyNumber(FBoletoWSClass.Titulos.NumeroDocumento) + '-'+ C_REGISTRO_BOLETO + '.' + FBoletoWSClass.TipoRegistro
   else
-    Result := lPath + 'Rem' + FormatDateTime('ddmmyyhhnn',Now) +'-'+ C_REGISTRO_BOLETO + '.xml';
+    Result := lPath + 'Rem' + FormatDateTime('ddmmyyhhnn',Now) +'-'+ C_REGISTRO_BOLETO + '.' + FBoletoWSClass.TipoRegistro;
 
 end;
 

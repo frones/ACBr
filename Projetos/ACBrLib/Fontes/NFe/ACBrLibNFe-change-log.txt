@@ -46,6 +46,8 @@ Símbolo : Significado
 --- ACBrLibNFeDataModule ---
 [-] Correção da impressão em PDF da NFCe quando setado tipo de impressão EscPos ou Fortes.
 	Por: Rafael Dias
+[-] Correção de erro na impressão EscPos.
+	Por: Rafael Dias
 
 20/10/2020
 --- ACBrLibNFeDataModule ---

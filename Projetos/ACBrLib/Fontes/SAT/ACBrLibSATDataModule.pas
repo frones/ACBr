@@ -316,6 +316,7 @@ begin
     else
     begin
       ExtratoEscPos := TACBrSATExtratoESCPOS.Create(nil);
+      ExtratoEscPos.PosPrinter := ACBrPosPrinter1;
       ACBrSAT1.Extrato := ExtratoEscPos;
     end;
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2020
+--- ACBrLibSATeDataModule ---
+[-] Correção de erro na impressão EscPos.
+	Por: Rafael Dias
+
 07/09/2020
 --- ACBrLibSATMT, ACBrLibSATST ---
 [+] Removido o metodo SAT_ConfigImportar.

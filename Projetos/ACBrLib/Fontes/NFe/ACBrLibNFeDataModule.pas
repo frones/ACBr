@@ -236,6 +236,7 @@ begin
     else
     begin
       DANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
+      DANFCeEscPos.PosPrinter := ACBrPosPrinter1;
       ACBrNFe1.DANFE := DANFCeEscPos;
     end;
   end

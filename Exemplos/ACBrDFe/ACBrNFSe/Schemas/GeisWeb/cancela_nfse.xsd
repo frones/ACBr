@@ -7,7 +7,7 @@
           <xs:complexType>
             <xs:sequence>
                <xs:element type="xs:string" name="CnpjCpfPrestador"/>
-              <xs:element type="xs:string" name="NumeroNfse"/>
+               <xs:element type="xs:string" name="NumeroNfse"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

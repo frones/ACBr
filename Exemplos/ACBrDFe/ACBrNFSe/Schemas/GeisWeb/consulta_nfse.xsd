@@ -12,7 +12,7 @@
               <xs:element type="xs:string" name="DtFinal"/>
               <xs:element type="xs:string" name="NumeroInicial"/>
               <xs:element type="xs:string" name="NumeroFinal"/>
-			        <xs:element type="xs:string" name="Pagina"/>
+              <xs:element type="xs:string" name="Pagina"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

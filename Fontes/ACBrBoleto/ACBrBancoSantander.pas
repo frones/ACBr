@@ -138,7 +138,7 @@ begin
       tcSimples            : Result := '1'; {Cobrança Simples (Sem Registro e Eletrônica com Registro)}
       tcCaucionada         : Result := '3'; {Cobrança Caucionada (Eletrônica com Registro e Convencional com Registro)}
       tcDescontada         : Result := '4'; {Cobrança Descontada (Eletrônica com Registro)}
-      tcVinculada,
+      tcVinculada, tcDireta,
       tcSimplesRapComReg   : Result := '5'; {Cobrança Simples (Rápida com Registro)}
       tcCaucionadaRapComReg: Result := '6'; {Cobrança Caucionada (Rápida com Registro)}
       { TODO :

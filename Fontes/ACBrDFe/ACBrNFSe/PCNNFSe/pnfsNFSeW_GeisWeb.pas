@@ -75,7 +75,7 @@ uses
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }
-{ layout do GeisWeb.                                                       }
+{ layout do GeisWeb.                                                           }
 { Sendo assim só será criado uma nova unit para um novo layout.                }
 {==============================================================================}
 
@@ -118,40 +118,32 @@ begin
 end;
 
 procedure TNFSeW_GeisWeb.GerarListaServicos;
-//var
-//  i: integer;
 begin
-//  for i := 0 to Nfse.Servico.ItemServico.Count -1 do
-//  begin
-    Gerador.wGrupo('servico');
-    Gerador.Prefixo := Prefixo3;
+  Gerador.wGrupo('Servico');
+  Gerador.Prefixo := Prefixo3;
 
-    GerarValoresServico;
+  GerarValoresServico;
 
-    Gerador.wCampo(tcStr, '', 'CodigoServico', 01, 04, 1, NFSe.Servico.ItemListaServico, '');
-    Gerador.wCampo(tcStr, '', 'TipoLancamento', 01, 01, 1, 'P', ''); {revisar}
-    Gerador.wCampo(tcStr, '', 'Discriminacao ', 01, 1500, 1, Nfse.Servico.Discriminacao, '');
-    Gerador.wCampo(tcStr, '', 'MunicipioPrestacaoServico', 01, 100, 1, Nfse.Servico.CodigoMunicipio, ''); {revisar}
-    Gerador.wGrupo('/servico');
-//  end;
+  Gerador.wCampo(tcStr, '', 'CodigoServico', 01, 04, 1, NFSe.Servico.ItemListaServico, '');
+  Gerador.wCampo(tcStr, '', 'TipoLancamento', 01, 01, 1, 'P', ''); {revisar}
+  Gerador.wCampo(tcStr, '', 'Discriminacao ', 01, 1500, 1, Nfse.Servico.Discriminacao, '');
+  Gerador.wCampo(tcStr, '', 'MunicipioPrestacaoServico', 01, 100, 1, Nfse.Servico.CodigoMunicipio, ''); {revisar}
+  Gerador.wGrupo('/Servico');
 end;
 
 procedure TNFSeW_GeisWeb.GerarValoresServico;
 begin
-    Gerador.wGrupo('valores');
-    Gerador.Prefixo := Prefixo3;
-    Gerador.wCampo(tcDe2, '', 'ValorServicos', 01, 13, 1, Nfse.Servico.Valores.ValorServicos, '');
-    Gerador.wCampo(tcDe2, '', 'BaseCalculo', 01, 013, 1, Nfse.Servico.Valores.BaseCalculo, '');
-    Gerador.wCampo(tcDe2, '', 'Aliquota', 01, 013, 1, Nfse.Servico.Valores.Aliquota, '');
-    Gerador.wGrupo('/valores');
+  Gerador.wGrupo('Valores');
+  Gerador.Prefixo := Prefixo3;
+  Gerador.wCampo(tcDe2, '', 'ValorServicos', 01, 13, 1, Nfse.Servico.Valores.ValorServicos, '');
+  Gerador.wCampo(tcDe2, '', 'BaseCalculo', 01, 013, 1, Nfse.Servico.Valores.BaseCalculo, '');
+  Gerador.wCampo(tcDe2, '', 'Aliquota', 01, 013, 1, Nfse.Servico.Valores.Aliquota, '');
+  Gerador.wGrupo('/Valores');
 end;
 
 procedure TNFSeW_GeisWeb.GerarXML_GeisWeb;
 begin
   Gerador.Prefixo := Prefixo4;
-//  Gerador.wGrupo('EnviaLoteRps');
-//  Gerador.wCampo(tcStr, '', 'CnpjCpf', 01, 14, 1, NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,'');
-//  Gerador.wCampo(tcStr, '', 'NumeroLote', 01, 10, 1, {NFSe.PrestadorServico.IdentificacaoPrestador,}''); {revisar}
 
   Gerador.wGrupo('Rps');
   Gerador.wGrupo('IdentificacaoRps');
@@ -179,7 +171,6 @@ begin
   Gerador.wGrupo('/OutrosImpostos');
 
   Gerador.wGrupo('/Rps');
-//  Gerador.wGrupo('/EnviaLoteRps');
 end;
 
 constructor TNFSeW_GeisWeb.Create(ANFSeW: TNFSeW);

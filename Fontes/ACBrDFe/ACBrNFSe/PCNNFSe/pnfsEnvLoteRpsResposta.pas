@@ -154,6 +154,7 @@ type
     function LerXML_proAssessorPublica: Boolean;
     function LerXML_proSiat: Boolean; 
     function LerXML_proSigIss: Boolean;
+    function LerXML_proGeisWeb: Boolean;
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -317,6 +318,7 @@ begin
     proAssessorPublico : Result := LerXML_proAssessorPublica;
     proSiat:       Result := LerXML_proSiat;
     proSigIss:     Result := LerXML_proSigIss;
+    proGeisWeb:    Result := LerXML_proGeisWeb;
   else
     Result := LerXml_ABRASF;
   end;
@@ -1210,6 +1212,38 @@ begin
           FMensagem := 'Usuário e/ou senha informados são inválidos'
         else
           FMensagem := leitor.Arquivo;
+      end;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proGeisWeb: Boolean;
+var
+  i: Integer;
+begin
+  try
+    Result := True;
+
+//    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'nrLote');
+//    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dtRecebimento');
+//    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'nrProtocolo');
+
+    if leitor.rExtrai(1, 'EnviaLoteRpsResposta') <> '' then
+    begin
+      if leitor.rExtrai(2, 'EnviaLoteRpsResposta') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'Msg', '', i + 1) <> '' do
+        begin
+          InfRec.FMsgRetorno.New;
+          InfRec.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Erro');
+          InfRec.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'Status');
+          InfRec.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, '');
+
+          inc(i);
+        end;
       end;
     end;
   except

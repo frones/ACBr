@@ -3199,7 +3199,13 @@ begin
       with Valores do
       begin
         Aliquota       := Leitor.rCampo(tcDe3, 'Aliquota');
-        IssRetido      := StrToEnumerado( vOk, Leitor.rCampo(tcStr, 'ImpostoRetido'),['A','R'], [stNormal, stRetencao]);
+        if Leitor.rCampo(tcStr, 'ImpostoRetido') = 'true' then
+        begin
+          IssRetido := stRetencao;
+          ValorIssRetido := Leitor.rCampo(tcDe2, 'ISSQNCliente');
+        end
+        else
+          IssRetido := stNormal;
         ValorPis       := Leitor.rCampo(tcDe2, 'Pis');
         ValorCofins    := Leitor.rCampo(tcDe2, 'Cofins');
         ValorInss      := Leitor.rCampo(tcDe2, 'Inss');

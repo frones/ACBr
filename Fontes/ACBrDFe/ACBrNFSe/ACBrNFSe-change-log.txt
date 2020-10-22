@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2020
+-- Diversos --
+[*] Ajustes na implementação do provedor GeisWeb
+  Por: Italo Jurisato Junior
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/59892-altera%C3%A7%C3%A3o-leitura-xml-provedor-smarapd/
+  Por: Diego Reckziegel
+
 21/10/2020
 -- pnfsNFSeW_ABRASFv1 --
 [*] Para o provedor Ginfes a aliquota tem que ser informada já dividida por 100.

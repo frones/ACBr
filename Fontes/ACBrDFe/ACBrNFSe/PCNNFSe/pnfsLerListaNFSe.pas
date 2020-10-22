@@ -321,6 +321,8 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '');
     if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultaLoteRpsResposta') <> '');
+    if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '');
 
     if not Nivel1 then
@@ -1330,7 +1332,7 @@ begin
           else
             ListaNfse.FMsgRetorno[i].FMensagem := leitor.Arquivo;
         end;
-     except
+      except
         Result := False;
       end;
     end;
@@ -1439,6 +1441,28 @@ begin
             Mensagem:= 'Nota Não Existe';
           end;
           Result := False;
+        end;
+      end;
+    end;
+
+    if FProvedor = proGeisWeb then
+    begin
+      if (leitor.rExtrai(1, 'ConsultaLoteRpsResposta') <> '') or
+         (leitor.rExtrai(1, 'ConsultaNfseResposta') <> '') then
+      begin
+        if (leitor.rExtrai(2, 'ConsultaLoteRpsResposta') <> '') or
+           (leitor.rExtrai(2, 'ConsultaNfseResposta') <> '') then
+        begin
+          i := 0;
+          while Leitor.rExtrai(3, 'Msg', '', i + 1) <> '' do
+          begin
+            ListaNFSe.FMsgRetorno.New;
+            ListaNFSe.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Erro');
+            ListaNFSe.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'Status');
+            ListaNFSe.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, '');
+
+            inc(i);
+          end;
         end;
       end;
     end;

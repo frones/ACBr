@@ -2043,7 +2043,7 @@ begin
            proInfiscv11,
            proIPM,
            proSMARAPD,
-		   proSigISS: FTagI := '';
+           proSigISS: FTagI := '';
 
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
@@ -2125,6 +2125,7 @@ begin
 
            proEL,
            proTinus,
+           proGeisWeb,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
@@ -2222,6 +2223,7 @@ begin
            proSimplISS,
            proSP, 
            proTinus,
+           proGeisWeb,
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
 
            proAssessorPublico,
@@ -2285,6 +2287,7 @@ begin
            proInfiscv11,
            proPronimv2,
            proTinus,
+           proGeisWeb,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +

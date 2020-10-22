@@ -162,6 +162,7 @@ type
     function LerXml_proAssessorPublico: Boolean;
     function LerXml_proSiat: Boolean;
     function LerXml_proSigISS: Boolean;
+    function LerXml_proGeisWeb: Boolean;
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
@@ -312,7 +313,8 @@ begin
     proIPM:         Result := LerXml_proIPM;
     proAssessorPublico:  Result := LerXml_proAssessorPublico;
     proSiat:        Result := LerXml_proSiat; 
-    proSigIss:       Result := LerXml_proSigIss; 
+    proSigIss:      Result := LerXml_proSigIss;
+    proGeisWeb:     Result := LerXml_proGeisWeb;
   else
     Result := LerXml_ABRASF;
   end;
@@ -865,6 +867,38 @@ begin
     Result := True;
   except
     result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proGeisWeb: Boolean;
+var
+  i: Integer;
+begin
+  try
+    Result := True;
+
+//    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'nrLote');
+//    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dtRecebimento');
+//    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'nrProtocolo');
+
+    if leitor.rExtrai(1, 'CancelaNfseResposta') <> '' then
+    begin
+      if leitor.rExtrai(2, 'CancelaNfseResposta') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'Msg', '', i + 1) <> '' do
+        begin
+          FInfCanc.FMsgRetorno.New;
+          FInfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Erro');
+          FInfCanc.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'Status');
+          FInfCanc.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, '');
+
+          inc(i);
+        end;
+      end;
+    end;
+  except
+    Result := False;
   end;
 end;
 

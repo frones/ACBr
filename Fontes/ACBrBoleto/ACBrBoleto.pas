@@ -4751,10 +4751,11 @@ begin
         CaracTitulo  := TACBrCaracTitulo(IniBoletos.ReadInteger(CCedente,'CaracTitulo',Integer(CaracTitulo) ));
         TipoCarteira := TACBrTipoCarteira(IniBoletos.ReadInteger(CCedente,'TipoCarteira', Integer(TipoCarteira) ));
         TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento', Integer(TipoDocumento) ));
-
-        wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL', Integer(Self.ACBrBoletoFC.LayOut) );
-        Self.ACBrBoletoFC.LayOut  := TACBrBolLayOut(wLayoutBoleto);
-
+        if Assigned(Self.ACBrBoletoFC) then
+        begin
+          wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL', Integer(Self.ACBrBoletoFC.LayOut) );
+          Self.ACBrBoletoFC.LayOut  := TACBrBolLayOut(wLayoutBoleto);
+        end;
         wRespEmissao := IniBoletos.ReadInteger(CCedente,'RespEmis', Integer(ResponEmissao) );
         try
           ResponEmissao := TACBrResponEmissao( wRespEmissao );

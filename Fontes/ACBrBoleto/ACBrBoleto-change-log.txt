@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/10/2020
+
+-- ACBrBoleto --
+[*] Validação do componente ACBrBoletoFC na leitura do .ini.
+
 21/10/2020
 
 -- ACBrBoleto, ACBrBoletoWS, ACBrBoletoW_BancoBrasil, ACBrBoletoW_Itau  --

@@ -161,6 +161,7 @@ var
   StreamLastPos, RowStart, BytesPerRow, i, RealWidth: Int64;
   IsPadByte, HasPadBits: Boolean;
   BytesPerWidth, PadBits, j: Integer;
+  WidthExtended: Extended;
 begin
   // Inspiração:
   // http://www.nonov.io/convert_bmp_to_ascii
@@ -212,9 +213,13 @@ begin
   if (bSizePixelArr <= 0) then
     bSizePixelArr := ABMPStream.Size-bPixelOffset;
 
-  RealWidth := trunc((bSizePixelArr*8)/bHeight);
-  StreamLastPos := bPixelOffset + bSizePixelArr - 1;
+  WidthExtended := (bSizePixelArr*8)/bHeight;
+  RealWidth := trunc(WidthExtended);
   BytesPerWidth := ceil(RealWidth / 8);
+  if RealWidth < WidthExtended then
+    bSizePixelArr := (BytesPerWidth * bHeight) ;
+
+  StreamLastPos := min(bPixelOffset + bSizePixelArr - 1, ABMPStream.Size-1);
 
   while (StreamLastPos >= bPixelOffset) do
   begin

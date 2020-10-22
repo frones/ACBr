@@ -38,6 +38,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 22/10/2020
+-- ACBrUtil --
+[+] Adicionado novo método, PosExA, para funcionar sem a necessidade de converter
+    AnsiStrings para Strings.
+    function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
+    (por: DSA)
+
 -- ACBrImage --
 [-] Ajuste em "BMPMonoToRasterStr", para imagens que informam o valor de
     "Pixel Array", inválido.

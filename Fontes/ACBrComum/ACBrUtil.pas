@@ -211,6 +211,7 @@ function RandomName(const LenName : Integer = 8) : String ;
 {$IFNDEF COMPILER7_UP}
 function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 {$ENDIF}
+function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
 
 {$IFNDEF COMPILER6_UP}
   type TRoundToRange = -37..37;
@@ -1385,11 +1386,11 @@ var
    PosTagAux, FimTag, LenTag : Integer ;
 begin
   ATag   := '';
-  PosTag := PosEx( '<', ABinaryString, PosIni);
+  PosTag := PosExA( '<', ABinaryString, PosIni);
   if PosTag > 0 then
   begin
-    PosTagAux := PosEx( '<', ABinaryString, PosTag + 1);  // Verificando se Tag é inválida
-    FimTag    := PosEx( '>', ABinaryString, PosTag + 1);
+    PosTagAux := PosExA( '<', ABinaryString, PosTag + 1);  // Verificando se Tag é inválida
+    FimTag    := PosExA( '>', ABinaryString, PosTag + 1);
     if FimTag = 0 then                             // Tag não fechada ?
     begin
       PosTag := 0;
@@ -1399,7 +1400,7 @@ begin
     while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
     begin
       PosTag    := PosTagAux;
-      PosTagAux := PosEx( '<', ABinaryString, PosTag + 1);
+      PosTagAux := PosExA( '<', ABinaryString, PosTag + 1);
     end ;
 
     LenTag := FimTag - PosTag + 1 ;
@@ -1560,7 +1561,16 @@ begin
     Result := 0;
   end;
 end;
-{$endif}
+{$EndIf}
+
+function PosExA(const SubStr, S: AnsiString; Offset: Integer): Integer;
+begin
+  {$IFDEF DELPHIXE3_UP}
+   Result := Pos(SubStr, S, Offset);
+  {$Else}
+   Result := PosEx(SubStr, S, Offset);
+  {$EndIf}
+end;
 
 {-----------------------------------------------------------------------------
   Verifica se "AValue" é vazio, se for retorna "DefaultValue". "DoTrim", se

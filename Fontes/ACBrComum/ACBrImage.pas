@@ -219,7 +219,7 @@ begin
   if RealWidth < WidthExtended then
     bSizePixelArr := (BytesPerWidth * bHeight) ;
 
-  StreamLastPos := min(bPixelOffset + bSizePixelArr - 1, ABMPStream.Size-1);
+  StreamLastPos := min(Int64(bPixelOffset + bSizePixelArr - 1), ABMPStream.Size-1);
 
   while (StreamLastPos >= bPixelOffset) do
   begin

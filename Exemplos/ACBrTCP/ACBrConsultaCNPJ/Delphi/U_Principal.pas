@@ -48,7 +48,7 @@ uses
 //  	- Acesse: https://sourceforge.net/projects/pngdelphi/
 //      - Instale o projeto e depois remova o Ponto da Linha abaixo
 
-{.$DEFINE SUPPORT_PNG}  
+{$DEFINE SUPPORT_PNG}  
 
 {$IFDEF DELPHI2009_UP}
   {$DEFINE SUPPORT_PNG}

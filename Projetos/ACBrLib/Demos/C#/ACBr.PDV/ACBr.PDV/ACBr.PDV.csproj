@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF4AD91C-4EE4-4D42-8CE4-8551A80A9830}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ACBr.PDV</RootNamespace>
+    <AssemblyName>ACBr.PDV</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ACBrMonitor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\Helpers.cs">
+      <Link>Includes\Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\InputBox.cs">
+      <Link>Includes\InputBox.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\ISplash.cs">
+      <Link>Includes\ISplash.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\ItemData.cs">
+      <Link>Includes\ItemData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\SplashInfo.cs">
+      <Link>Includes\SplashInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\SplashScreenManager.cs">
+      <Link>Includes\SplashScreenManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\UIExtensions.cs">
+      <Link>Includes\UIExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\User32.cs">
+      <Link>Includes\User32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\FrmWait.cs">
+      <Link>Includes\FrmWait.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\..\Shared\FrmWait.Designer.cs">
+      <DependentUpon>FrmWait.cs</DependentUpon>
+      <Link>Includes\FrmWait.Designer.cs</Link>
+    </Compile>
+    <Compile Include="FrmRetorno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRetorno.Designer.cs">
+      <DependentUpon>FrmRetorno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RetornoEventArgs.cs" />
+    <EmbeddedResource Include="..\..\Shared\FrmWait.resx">
+      <DependentUpon>FrmWait.cs</DependentUpon>
+      <Link>Includes\FrmWait.resx</Link>
+    </EmbeddedResource>
+    <Compile Include="CaixaPDV.cs" />
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPagamento.Designer.cs">
+      <DependentUpon>FrmPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVenderItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVenderItem.Designer.cs">
+      <DependentUpon>FrmVenderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Cliente.cs" />
+    <Compile Include="Model\Configuracao.cs" />
+    <Compile Include="Model\DocumentoFiscal.cs" />
+    <Compile Include="Model\Emitente.cs" />
+    <Compile Include="Model\Pagamento.cs" />
+    <Compile Include="Model\Produto.cs" />
+    <Compile Include="Model\RegistroBobina.cs" />
+    <Compile Include="Model\RegistroVenda.cs" />
+    <Compile Include="Model\StatusVenda.cs" />
+    <Compile Include="Model\TipoDFe.cs" />
+    <Compile Include="Model\Venda.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPagamento.resx">
+      <DependentUpon>FrmPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRetorno.resx">
+      <DependentUpon>FrmRetorno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVenderItem.resx">
+      <DependentUpon>FrmVenderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BAL\Imports\Dinamico\MT\ACBrLib.BAL.csproj">
+      <Project>{3989a535-1e78-4e45-b3ae-47335ea6a359}</Project>
+      <Name>ACBrLib.BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NFe\Imports\Dinamico\MT\ACBrLib.NFe.csproj">
+      <Project>{fd128f90-7a85-4431-8853-0f7df7301e7e}</Project>
+      <Name>ACBrLib.NFe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PosPrinter\Import\Dinamico\MT\ACBrLib.PosPrinter.csproj">
+      <Project>{f44a03bc-e5aa-45da-a2b1-5d000d513152}</Project>
+      <Name>ACBrLib.PosPrinter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sat\Imports\Dinamico\MT\ACBrLib.Sat.csproj">
+      <Project>{84bc69d8-a7ae-4b5e-a8d9-73540f869e78}</Project>
+      <Name>ACBrLib.Sat</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
+      <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
+      <Name>ACBrLib.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancelar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cartao.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\done.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-open%4016px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add-to-photos%4016px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ACBrMonitor.ico" />
+    <None Include="Resources\file-upload%4016px.png" />
+    <None Include="Resources\person%4016px.png" />
+    <None Include="Resources\file-download%4016px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ACBr.Net.Core">
+      <Version>1.2.4.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

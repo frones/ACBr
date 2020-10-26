@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/10/2020
+-- pnfsNFSeG --
+[*] Possível correção na consulta a NFS-e provedor ISSSDF.
+  Por: Italo Giurizzato Junior
+
+26/10/2020
 -- Diversos --
 [+] Inicio da implementação do provedor SiapSistemas
   Por: Italo Giurizzato Junior

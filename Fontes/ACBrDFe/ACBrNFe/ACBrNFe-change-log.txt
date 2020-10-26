@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2020
+-- pncNFeRTXT --
+[-] Correção na leitura da tag vIPIDevol.
+    https://www.projetoacbr.com.br/forum/topic/59946-ipi-devolu%C3%A7%C3%A3o-n%C3%A3o-aparece-no-xml/
+  Por: BigWings
+
 10/10/2020
 -- pcnNFeW --
 [*] Remoção da seção "CDATA" na geração da tag qrCode versão 2.00.

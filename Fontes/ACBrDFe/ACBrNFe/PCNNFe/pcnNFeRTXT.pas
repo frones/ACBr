@@ -1045,7 +1045,8 @@ begin
     NFe.Det[i].pDevol := LerCampo(tcDe2, 'pDevol');
   end;
 
-  if ID = 'UA3' then  (* Grupo da TAG <det><impostoDevol> **********************)
+  // UA3 não existe no layout, mantido por retrocompatibilidade
+  if (ID = 'UA03') or (ID = 'UA3') then  (* Grupo da TAG <det><impostoDevol> **********************)
   begin
     i := NFe.Det.Count - 1;
     NFe.Det[i].vIPIDevol := LerCampo(tcDe2, 'vIPIDevol');

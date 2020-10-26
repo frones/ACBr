@@ -4760,16 +4760,20 @@ end;
 procedure TfrmACBreSocial.btnCarregarXMLClick(Sender: TObject);
 var
   i: Integer;
+  LidoXML: Boolean;
 begin
-  OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
-  OpenDialog1.DefaultExt := '*.xml';
-  OpenDialog1.Filter :=
-    'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
+  repeat
+    OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
+    OpenDialog1.DefaultExt := '*.xml';
+    OpenDialog1.Filter :=
+      'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+    OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
-    ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
+    LidoXML := OpenDialog1.Execute;
 
+    if LidoXML then
+      ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
+  until not LidoXML;
 
   MemoResp.Clear;
   MemoResp.Lines.Clear;

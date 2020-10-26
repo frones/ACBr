@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/20/20
+-- ACBrTEFDPayGoWeb --
+[-] Correção em "VerificarTransacoesPendentesClass", para processar primeiro,
+    as transações em aberto, ou seja, as que não receberam Confirmação
+    (por: DSA)
+
 16/10/20
 -- ACBrTEFPayGoWebComum --
 [*] Aplicado woraround, para o caso de comando PWDAT_CARDINF, a informação em

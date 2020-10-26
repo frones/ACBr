@@ -323,7 +323,7 @@ begin
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
                     proSJP, proWebISS, proSystemPro, proMetropolisWeb,
-                    progeNFe] then
+                    progeNFe, proSiapSistemas] then
       FaVersao := '';
   end
   else
@@ -381,6 +381,7 @@ begin
 
     case Provedor of
       proGovBR,
+      proSiapSistemas,
       proPronim: FaIdentificador := '';
 
 //      proSimplISSv2: FaIdentificador := ' id="' + IdLote + '"';
@@ -1450,18 +1451,26 @@ begin
 
     proISSDSF,
     proCTA,
-    proSiat: begin 
+    proSiat:
+      begin
         Gerador.Prefixo := '';
         Gerador.wGrupo('Cabecalho');
+
         if Provedor = proCTA then
           Gerador.wCampo(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+
         Gerador.wCampo(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
         Gerador.wCampo(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
         Gerador.wCampo(tcStr, '#1', 'InscricaoMunicipalPrestador', 01, 15, 1, IM, '');
         Gerador.wCampo(tcDat, '#1', 'dtInicio', 10, 10, 1, DataInicial, '');
         Gerador.wCampo(tcDat, '#1', 'dtFim', 10, 10, 1, DataFinal, '');
+
         if Provedor in [proISSDSF, proSiat] then
           Gerador.wCampo(tcStr, '#1', 'NotaInicial', 01, 15, 1, NumeroNFSe, '');
+
+        if Provedor in [proISSDSF] then
+          Gerador.wCampo(tcStr, '#1', 'NumeroLote', 01, 15, 1, '1' {NumeroLote}, '');
+
         Gerador.wCampo(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
         Gerador.wGrupo('/Cabecalho');
       end;
@@ -2251,14 +2260,20 @@ procedure TNFSeG.GerarGrupoCNPJCPF(const CNPJCPF: string; Codicao: Boolean);
 begin
   if (Codicao) then
   begin
-    Gerador.wGrupo('CpfCnpj');
+    if Provedor = proSiapSistemas then
+      Gerador.wGrupo('Cnpj')
+    else
+      Gerador.wGrupo('CpfCnpj');
 
     if Length(CNPJCPF) <= 11 then
       Gerador.wCampo(tcStr, '#2', 'Cpf', 11, 11, 1, CNPJCPF, '')
     else
       Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, CNPJCPF, '');
 
-    Gerador.wGrupo('/CpfCnpj');
+    if Provedor = proSiapSistemas then
+      Gerador.wGrupo('/Cnpj')
+    else
+      Gerador.wGrupo('/CpfCnpj');
   end
   else
     Gerador.wCampo(tcStr, '#2', 'Cnpj', 14, 14, 1, CNPJCPF, '');

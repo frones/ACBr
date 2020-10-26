@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2020
+-- Diversos --
+[+] Inicio da implementação do provedor SiapSistemas
+  Por: Italo Giurizzato Junior
+
 22/10/2020
 -- Diversos --
 [*] Ajustes na implementação do provedor GeisWeb

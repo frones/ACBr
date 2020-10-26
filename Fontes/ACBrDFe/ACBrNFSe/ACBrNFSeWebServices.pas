@@ -2048,6 +2048,8 @@ begin
 //           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
 //                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
 //                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+
+           proSiapSistemas: FTagI := '<san:' + FTagGrupo + FNameSpaceDad + '>';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2425,7 +2427,9 @@ begin
            proGoverna,
            proIPM,
            proSMARAPD,
-		   proSigISS: FTagF := '';
+           proSigISS: FTagF := '';
+
+           proSiapSistemas: FTagF := '</san:' + FTagGrupo + '>';
          else
            FTagF := '</' + FTagGrupo + '>';
          end;

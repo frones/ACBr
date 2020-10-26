@@ -24,8 +24,25 @@ Begin VB.Form FrmMain
    ScaleWidth      =   12525
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.ListBox lstAnexos 
+      Height          =   1035
+      ItemData        =   "FrmMain.frx":25CA
+      Left            =   6000
+      List            =   "FrmMain.frx":25D1
+      TabIndex        =   27
+      Top             =   6240
+      Width           =   6375
+   End
+   Begin VB.CommandButton btnAnexos 
+      Caption         =   "Anexar Arquivos"
+      Height          =   360
+      Left            =   6000
+      TabIndex        =   26
+      Top             =   5760
+      Width           =   1455
+   End
    Begin VB.TextBox txtBody 
-      Height          =   2895
+      Height          =   1215
       Left            =   6000
       MultiLine       =   -1  'True
       TabIndex        =   9
@@ -117,7 +134,7 @@ Begin VB.Form FrmMain
          _ExtentY        =   661
          _Version        =   327681
          BuddyControl    =   "txtPorta"
-         BuddyDispid     =   196619
+         BuddyDispid     =   196621
          OrigLeft        =   5400
          OrigTop         =   1800
          OrigRight       =   5655
@@ -266,6 +283,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim mail As ACBrMail
 
+
+
 Private Sub Form_Load()
 
     nupPorta.Value = 0
@@ -279,7 +298,7 @@ Private Sub Form_Load()
     LogPath = App.Path & "\Docs\"
     
     If Dir(LogPath) = vbNullString Then
-        MkDir LogPath
+        'MkDir LogPath
     End If
         
     mail.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", "4"
@@ -291,8 +310,31 @@ Private Sub Form_Unload(Cancel As Integer)
     mail.FinalizarLib
 End Sub
 
+Private Sub btnAnexos_Click()
+    
+    On Error GoTo Erro:
+    Dim arquivo As String
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo (*.arq)|*.arq|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+            
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    arquivo = CommonDialog1.FileName
+    
+    lstAnexos.AddItem (arquivo)
+
+   
+Erro:
+    MsgBox Err.Description
+    
+
+End Sub
+
 Private Sub cmdSalvar_Click()
-    mail.ConfigGravarValor SESSAO_EMAIL, "Conta", txtEmail.Text
+    mail.ConfigGravarValor SESSAO_EMAIL, "Nome", txtNome.Text
     mail.ConfigGravarValor SESSAO_EMAIL, "Conta", txtEmail.Text
     mail.ConfigGravarValor SESSAO_EMAIL, "Usuario", txtUsuario.Text
     mail.ConfigGravarValor SESSAO_EMAIL, "Senha", txtSenha.Text

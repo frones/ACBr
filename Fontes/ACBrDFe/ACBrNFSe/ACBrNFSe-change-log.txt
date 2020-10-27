@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2020
+-- Diversos --
+[+] Implementação final provedor SiapSistemas
+  Por: Italo Giurizzato Junior
+
 26/10/2020
 -- pnfsNFSeG --
 [*] Possível correção na consulta a NFS-e provedor ISSSDF.

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 369
+  Left = 407
   Height = 648
-  Top = 179
+  Top = 285
   Width = 1228
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -1656,7 +1656,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnKeyPress = seUSUGTCadastroKeyPress
                 ParentFont = False
                 TabOrder = 8
-                Value = 0
               end
               object Label68: TLabel
                 AnchorSideRight.Control = bvCadastro
@@ -9521,7 +9520,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 0
                       Value = 0.8
@@ -9533,7 +9531,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 1
                       Value = 0.8
@@ -9545,7 +9542,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 2
                       Value = 0.51
@@ -9557,7 +9553,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 3
                       Value = 0.6
@@ -10729,7 +10724,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 0
                       Value = 0.8
@@ -10741,7 +10735,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 1
                       Value = 0.8
@@ -10753,7 +10746,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 2
                       Value = 0.51
@@ -10765,7 +10757,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 64
                       Font.Height = -13
                       Increment = 0.1
-                      MinValue = 0
                       ParentFont = False
                       TabOrder = 3
                       Value = 0.6
@@ -12374,7 +12365,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Height = -13
                 Increment = 0.01
                 MaxValue = 10
-                MinValue = 0
                 OnChange = sfeVersaoEntChange
                 ParentFont = False
                 TabOrder = 7
@@ -16460,32 +16450,32 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigBarras.Altura = 10
     ConfigBarras.Margem = 0
     InfoRodapeCupom.Imposto.ModoCompacto = False
-    left = 432
-    top = 554
+    Left = 432
+    Top = 554
   end
   object ACBrCHQ1: TACBrCHQ
     Porta = 'COM1'
-    left = 464
-    top = 554
+    Left = 464
+    Top = 554
   end
   object ACBrGAV1: TACBrGAV
     Modelo = gavSerialGerbo
     Porta = 'COM1'
     AberturaIntervalo = 5000
     AberturaAntecipada = aaException
-    left = 495
-    top = 552
+    Left = 495
+    Top = 552
   end
   object ACBrDIS1: TACBrDIS
     Porta = 'COM1'
     IntervaloEnvioBytes = 3
-    left = 526
-    top = 554
+    Left = 526
+    Top = 554
   end
   object pmTray: TPopupMenu
     Images = ImageList1
-    left = 440
-    top = 688
+    Left = 440
+    Top = 688
     object Restaurar1: TMenuItem
       Caption = 'Restaurar'
       ImageIndex = 7
@@ -16511,15 +16501,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ExcluirSufixo = False
     Intervalo = 100
     OnLeCodigo = ACBrLCB1LeCodigo
-    left = 558
-    top = 554
+    Left = 558
+    Top = 554
   end
   object Timer1: TTimer
     Enabled = False
     Interval = 200
     OnTimer = DoACBrTimer
-    left = 312
-    top = 554
+    Left = 312
+    Top = 554
   end
   object TcpServer: TACBrTCPServer
     IP = '0.0.0.0'
@@ -16529,30 +16519,30 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnConecta = TcpServerConecta
     OnDesConecta = TcpServerDesConecta
     OnRecebeDados = TcpServerRecebeDados
-    left = 280
-    top = 544
+    Left = 280
+    Top = 544
   end
   object OpenDialog1: TOpenDialog
     Filter = 'Arquivos ini|*.ini|Arquivos INI|*.INI'
     FilterIndex = 0
-    left = 368
-    top = 556
+    Left = 368
+    Top = 556
   end
   object ACBrRFD1: TACBrRFD
     OnGetKeyRSA = ACBrRFD1GetKeyRSA
-    left = 589
-    top = 554
+    Left = 589
+    Top = 554
   end
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'
-    left = 619
-    top = 554
+    Left = 619
+    Top = 554
   end
   object ACBrETQ1: TACBrETQ
     Porta = 'LPT1'
     Ativo = False
-    left = 589
-    top = 600
+    Left = 589
+    Top = 600
   end
   object TCPServerTC: TACBrTCPServer
     IP = '0.0.0.0'
@@ -16561,15 +16551,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnConecta = TCPServerTCConecta
     OnDesConecta = TCPServerTCDesConecta
     OnRecebeDados = TCPServerTCRecebeDados
-    left = 244
-    top = 544
+    Left = 244
+    Top = 544
   end
   object TimerTC: TTimer
     Enabled = False
     Interval = 3000
     OnTimer = TimerTCTimer
-    left = 342
-    top = 556
+    Left = 342
+    Top = 556
   end
   object TrayIcon1: TTrayIcon
     BalloonFlags = bfInfo
@@ -16617,16 +16607,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Visible = True
     OnClick = TrayIcon1Click
     OnDblClick = Restaurar1Click
-    left = 200
-    top = 616
+    Left = 200
+    Top = 616
   end
   object ApplicationProperties1: TApplicationProperties
     HintHidePause = 5000
     OnException = ApplicationProperties1Exception
     OnMinimize = ApplicationProperties1Minimize
     OnRestore = ApplicationProperties1Restore
-    left = 357
-    top = 656
+    Left = 357
+    Top = 656
   end
   object ACBrBoleto1: TACBrBoleto
     Banco.Numero = 104
@@ -16641,12 +16631,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0
-    DataArquivo = 0
-    DataCreditoLanc = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
     Configuracoes.Arquivos.LogRegistro = False
     Configuracoes.WebService.SSLHttpLib = httpOpenSSL
@@ -16654,37 +16641,37 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebService.Ambiente = taHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
-    left = 724
-    top = 494
+    Left = 724
+    Top = 494
   end
   object ACBrValidador1: TACBrValidador
     IgnorarChar = './-'
     PermiteVazio = True
     RaiseExcept = True
-    left = 620
-    top = 600
+    Left = 620
+    Top = 600
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
     PesquisarIBGE = True
-    left = 464
-    top = 600
+    Left = 464
+    Top = 600
   end
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
     CacheArquivo = 'ACBrIBGE.txt'
-    left = 496
-    top = 600
+    Left = 496
+    Top = 600
   end
   object ACBrEAD1: TACBrEAD
     OnGetChavePrivada = ACBrEAD1GetChavePrivada
     OnGetChavePublica = ACBrEAD1GetChavePublica
-    left = 433
-    top = 600
+    Left = 433
+    Top = 600
   end
   object SelectDirectoryDialog1: TSelectDirectoryDialog
-    left = 396
-    top = 558
+    Left = 396
+    Top = 558
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -16696,28 +16683,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
     IDECharset = UTF_8
     OnMailProcess = ACBrMail1MailProcess
     OnMailException = ACBrMail1MailException
-    left = 526
-    top = 600
+    Left = 526
+    Top = 600
   end
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
-    Peso = 0
     Formato = TpfCaixaPacote
-    Comprimento = 0
-    Altura = 0
-    Largura = 0
-    ValorDeclarado = 0
     Servico = Tps04510PAC
-    Diametro = 0
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
-    left = 558
-    top = 600
+    Left = 558
+    Top = 600
   end
   object ACBrNCMs1: TACBrNCMs
     ProxyPort = '8080'
     UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
-    left = 648
-    top = 554
+    Left = 648
+    Top = 554
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
@@ -16735,8 +16716,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
-    left = 552
-    top = 448
+    Left = 552
+    Top = 448
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -16760,8 +16741,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     DescricaoPagamentos = [icaTipo, icaBandeira, icaAutorizacao]
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
-    left = 619
-    top = 448
+    Left = 619
+    Top = 448
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -16786,8 +16767,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     FormularioContinuo = True
     FonteLinhaItem.Height = -9
     FonteLinhaItem.Name = 'Lucida Console'
-    left = 648
-    top = 448
+    Left = 648
+    Top = 448
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     MostraPreview = False
@@ -16812,20 +16793,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ACBrNFe = ACBrNFe1
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
-    TributosPercentualPersonalizado = 0
-    left = 589
-    top = 448
+    Left = 589
+    Top = 448
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 232
-    top = 616
+    Left = 232
+    Top = 616
   end
   object ImageList1: TImageList
-    left = 206
-    top = 554
+    Left = 206
+    Top = 554
     Bitmap = {
       4C691D0000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
@@ -17784,8 +17764,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
     OnGetNumeroSessao = ACBrSAT1GetNumeroSessao
-    left = 552
-    top = 496
+    Left = 552
+    Top = 496
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Sistema = 'Projeto ACBr'
@@ -17808,8 +17788,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
-    left = 589
-    top = 496
+    Left = 589
+    Top = 496
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     Sistema = 'Projeto ACBr'
@@ -17832,12 +17812,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ACBrSAT = ACBrSAT1
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     FormularioContinuo = True
-    left = 624
-    top = 492
+    Left = 624
+    Top = 492
   end
   object PrintDialog1: TPrintDialog
-    left = 656
-    top = 488
+    Left = 656
+    Top = 488
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -17850,8 +17830,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
-    left = 720
-    top = 448
+    Left = 720
+    Top = 448
   end
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
@@ -17867,8 +17847,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
-    left = 496
-    top = 448
+    Left = 496
+    Top = 448
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -17897,8 +17877,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     EPECEnviado = False
     ImprimeDescPorc = False
     PrintDialog = False
-    left = 496
-    top = 488
+    Left = 496
+    Top = 488
   end
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
@@ -17914,8 +17894,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
-    left = 456
-    top = 453
+    Left = 456
+    Top = 453
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -17943,12 +17923,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = False
-    left = 456
-    top = 488
+    Left = 456
+    Top = 488
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    left = 690
-    top = 494
+    Left = 690
+    Top = 494
   end
   object ACBrBlocoX1: TACBrBlocoX
     Configuracoes.VersaoER = erv0204
@@ -17960,8 +17940,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 336
-    top = 520
+    Left = 336
+    Top = 520
   end
   object ACBrGNRE1: TACBrGNRE
     MAIL = ACBrMail1
@@ -17977,8 +17957,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     GNREGuia = ACBrGNREGuiaRL1
-    left = 357
-    top = 456
+    Left = 357
+    Top = 456
   end
   object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
@@ -17991,27 +17971,27 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     PrintDialog = True
-    left = 400
-    top = 453
+    Left = 400
+    Top = 453
   end
   object CHMHelpDatabase1: TCHMHelpDatabase
     AutoRegister = True
     Filename = 'ACBrMonitor.chm'
     KeywordPrefix = 'ACBrMonitor'
-    left = 804
-    top = 496
+    Left = 804
+    Top = 496
   end
   object LHelpConnector1: TLHelpConnector
     LHelpPath = '.\lhelp\lhelp'
     AutoRegister = True
-    left = 840
-    top = 496
+    Left = 840
+    Top = 496
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    left = 680
-    top = 556
+    Left = 680
+    Top = 556
   end
   object ACBreSocial1: TACBreSocial
     Configuracoes.Geral.SSLLib = libNone
@@ -18023,8 +18003,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 716
-    top = 555
+    Left = 716
+    Top = 555
   end
   object ACBrReinf1: TACBrReinf
     Configuracoes.Geral.SSLLib = libNone
@@ -18036,14 +18016,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 752
-    top = 556
+    Left = 752
+    Top = 556
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0
     MaxFontSize = 0
-    left = 804
-    top = 557
+    Left = 804
+    Top = 557
   end
   object ACBrNFeDANFCeFortesA4_1: TACBrNFeDANFCeFortesA4
     Impressora = 'PDFCreator'
@@ -18065,8 +18045,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     FormularioContinuo = True
-    left = 680
-    top = 446
+    Left = 680
+    Top = 446
   end
   object ACBrBPe1: TACBrBPe
     MAIL = ACBrMail1
@@ -18081,8 +18061,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DABPE = ACBrBPeDABPeESCPOS1
-    left = 776
-    top = 448
+    Left = 776
+    Top = 448
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -18107,18 +18087,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ViaConsumidor = True
     ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
-    left = 808
-    top = 446
+    Left = 808
+    Top = 446
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
     PesquisarIBGE = False
-    left = 968
-    top = 448
+    Left = 968
+    Top = 448
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
     ProxyPort = '8080'
-    left = 1000
-    top = 448
+    Left = 1000
+    Top = 448
   end
 end

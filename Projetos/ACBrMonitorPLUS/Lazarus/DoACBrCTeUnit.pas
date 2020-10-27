@@ -2070,64 +2070,117 @@ end;
 
 { TMetodoGetPathCTe }
 
+{ Params: 0 - Data: TDateTime - Data para geração do path
+          1 - CNPJ: String - CNPJ para geração do path
+          2 - IE: String - IE para geração do path
+          3 - Modelo: Integer -  Modelo para geração
+}
 procedure TMetodoGetPathCTe.Executar;
+var
+  AData: TDateTime;
+  ACNPJ: String;
+  AIE: String;
+  AModelo: Integer;
 begin
+  AData:= StrToDateTimeDef(fpCmd.Params(0),0);
+  ACNPJ:= fpCmd.Params(1);
+  AIE:= fpCmd.Params(2);
+  AModelo := StrToIntDef( fpCmd.Params(3), 0);
+
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathCTe();
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathCTe(AData, ACNPJ, AIE, AModelo);
   end;
 end;
 
 { TMetodoGetPathCCe }
 
+{ Params: 0 - CNPJ: String - CNPJ para geração do path
+          1 - IE: String - IE para geração do path
+          2 - Data: TDateTime - Data para geração do path
+}
 procedure TMetodoGetPathCCe.Executar;
+var
+  ACNPJ: String;
+  AIE: String;
+  AData: TDateTime;
 begin
+  ACNPJ:= fpCmd.Params(0);
+  AIE:= fpCmd.Params(1);
+  AData:= StrToDateTimeDef(fpCmd.Params(2),0);
+
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(teCCe);
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(teCCe, ACNPJ, AIE, AData);
   end;
 end;
 
 { TMetodoGetPathCan }
 
+{ Params: 0 - CNPJ: String - CNPJ para geração do path
+          1 - IE: String - IE para geração do path
+          2 - Data: TDateTime - Data para geração do path
+}
 procedure TMetodoGetPathCan.Executar;
+var
+  ACNPJ: String;
+  AIE: String;
+  AData: TDateTime;
 begin
+  ACNPJ:= fpCmd.Params(0);
+  AIE:= fpCmd.Params(1);
+  AData:= StrToDateTimeDef(fpCmd.Params(2),0);
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(teCancelamento, ACNPJ, AIE, AData);
   end;
 end;
 
 { TMetodoGetPathEvento }
 
 { Params: 0 - Código do evento
+          1 - CNPJ: String - CNPJ para geração do path
+          2 - IE: String - IE para geração do path
+          3 - Data: TDateTime - Data para geração do path
 }
 procedure TMetodoGetPathEvento.Executar;
 var
   CodEvento: String;
+  ACNPJ: String;
+  AIE: String;
+  AData: TDateTime;
   ok: Boolean;
 begin
   CodEvento := fpCmd.Params(0);
+  ACNPJ:= fpCmd.Params(1);
+  AIE:= fpCmd.Params(2);
+  AData:= StrToDateTimeDef(fpCmd.Params(3),0);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoCTe(ok ,CodEvento));
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoCTe(ok ,CodEvento), ACNPJ, AIE, AData);
   end;
 end;
 
 { TMetodoGetPathInu }
 
+{ Params: 0 - Data: TDateTime - Data para geração do path
+          1 - CNPJ: String - CNPJ para geração do path
+          2 - IE: String - IE para geração do path
+}
 procedure TMetodoGetPathInu.Executar;
 var
   AData: TDateTime;
   ACNPJ: String;
+  AIE: String;
 begin
   AData := StrToDateTime(fpCmd.Params(0));
   ACNPJ := fpCmd.Params(1);
+  AIE := fpCmd.Params(2);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathInu(AData, ACNPJ);
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathInu(AData, ACNPJ, AIE);
   end;
 end;
 

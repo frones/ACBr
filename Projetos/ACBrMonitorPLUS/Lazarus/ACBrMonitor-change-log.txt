@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2020
+-- DoACBrNFe --
+[+] Adicionado parâmetros para validação de retorno nos métodos getPathNFe, GetPathEvento, GetPathInu
+-- DoACBrCTe --
+[+] Adicionado parâmetros para validação de retorno nos métodos getPathNFe, GetPathEvento, GetPathInu
+-- DoACBrMDFe --
+[+] Adicionado parâmetros para validação de retorno nos métodos getPathNFe, GetPathEvento, GetPathInu
+
 07/10/2020
 -- ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts --
 [+] Adicionado campo de configuração do tamanho de Fonte para informações complementares no menu DFe / Impressao / NFe

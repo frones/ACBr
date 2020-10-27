@@ -345,36 +345,71 @@ uses IniFiles, DateUtils, Forms, strutils,
 
 { TMetodoGetPathEvento }
 
+{ Params: 0 - Código do evento
+          1 - CNPJ: String - CNPJ para geração do path
+          2 - IE: String - IE para geração do path
+          3 - Data: TDateTime - Data para geração do path
+}
 procedure TMetodoGetPathEvento.Executar;
 var
   CodEvento: String;
+  ACNPJ: String;
+  AIE: String;
+  AData: TDateTime;
   Ok: Boolean;
 begin
   CodEvento := fpCmd.Params(0);
+  ACNPJ:= fpCmd.Params(1);
+  AIE:= fpCmd.Params(2);
+  AData:= StrToDateTimeDef(fpCmd.Params(3),0);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrMDfe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoMDFe(ok ,CodEvento));
+    fpCmd.Resposta := ACBrMDfe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoMDFe(ok ,CodEvento),ACNPJ, AIE, AData);
   end;
 end;
 
 { TMetodoGetPathCan }
 
+{ Params: 0 - CNPJ: String - CNPJ para geração do path
+          1 - IE: String - IE para geração do path
+          2 - Data: TDateTime - Data para geração do path
+}
 procedure TMetodoGetPathCan.Executar;
+var
+  ACNPJ: String;
+  AIE: String;
+  AData: TDateTime;
 begin
+  ACNPJ:= fpCmd.Params(0);
+  AIE:= fpCmd.Params(1);
+  AData:= StrToDateTimeDef(fpCmd.Params(2),0);
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrMDFe.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
+    fpCmd.Resposta := ACBrMDFe.Configuracoes.Arquivos.GetPathEvento(teCancelamento, ACNPJ, AIE, AData);
   end;
+
 end;
 
 { TMetodoGetPathMDFe }
 
+{ Params: 0 - Data: TDateTime - Data para geração do path
+          1 - CNPJ: String - CNPJ para geração do path
+          2 - IE: String - IE para geração do path
+}
 procedure TMetodoGetPathMDFe.Executar;
+var
+  AData: TDateTime;
+  ACNPJ: String;
+  AIE: String;
 begin
+  AData:= StrToDateTimeDef(fpCmd.Params(0),0);
+  ACNPJ:= fpCmd.Params(1);
+  AIE:= fpCmd.Params(2);
+
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrMDFe.Configuracoes.Arquivos.GetPathMDFe();
+    fpCmd.Resposta := ACBrMDFe.Configuracoes.Arquivos.GetPathMDFe(AData, ACNPJ, AIE);
   end;
 end;
 

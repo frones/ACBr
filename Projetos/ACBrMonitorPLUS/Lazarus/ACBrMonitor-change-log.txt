@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2020
+-- DoACBrCTeUnit --
+[+] Adicionado a Procedure LerIniCTe aos moldes do que foi implementado no DoACBrNFeUnit.
+   Por: Italo Giurizzato Junior
+
 26/10/2020
 -- DoACBrNFe --
 [+] Adicionado parâmetros para validação de retorno nos métodos getPathNFe, GetPathEvento, GetPathInu

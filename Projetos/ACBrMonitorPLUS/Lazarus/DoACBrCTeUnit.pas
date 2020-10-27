@@ -58,6 +58,7 @@ public
   function GerarCTeIni(XML: string): string;
   procedure RespostaConhecimentos(pImprimir: Boolean; pImpressora: String;
             pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+  Procedure LerIniCTe(ArqINI: String);
   procedure ImprimirCTe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
 
   property ACBrCTe: TACBrCTe read fACBrCTe;
@@ -651,6 +652,15 @@ begin
 
     end;
 
+  end;
+end;
+
+procedure TACBrObjetoCTe.LerIniCTe(ArqINI: String);
+begin
+  with fACBrCTe do
+  begin
+    Conhecimentos.Clear;
+    Conhecimentos.LoadFromIni(ArqINI);
   end;
 end;
 
@@ -1479,8 +1489,7 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    ACBrCTe.Conhecimentos.Clear;
-    ACBrCTe.Conhecimentos.LoadFromIni(AIni);
+    LerIniCTe(AIni);
 
     Salva := ACBrCTe.Configuracoes.Arquivos.Salvar;
     if not Salva then
@@ -1568,8 +1577,7 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    ACBrCTe.Conhecimentos.Clear;
-    ACBrCTe.Conhecimentos.LoadFromIni(AIni);
+    LerIniCTe(AIni);
 
     ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) +
       'Lotes' + PathDelim + 'Lote' + trim(ANumeroLote));
@@ -1794,8 +1802,7 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    ACBrCTe.Conhecimentos.Clear;
-    ACBrCTe.Conhecimentos.LoadFromIni(AIni);
+    LerIniCTe(AIni);
 
     Salva := ACBrCTe.Configuracoes.Arquivos.Salvar;
     if not Salva then

@@ -2562,7 +2562,7 @@ begin
   Result := True;
   ValorTotal := Trunc(fAbastecimentos[IndiceAbastec].Qtd * fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit * 100) / 100;
   ValorPago := 0;
-  while Result and (ValorPago < ValorTotal) do
+  while Result and (CompareValue(ValorPago, ValorTotal, 0.001) < 0) do
   begin
     AStr := IntToStr(Trunc(ValorTotal*100));
     AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO DINHEIRO', '@@@.@@@,@@', 3, 8,
@@ -2570,9 +2570,9 @@ begin
     ValorPago := StrToIntDef(OnlyNumber(AStr),0)/100;
     Result := (ValorPago > 0);
 
-    if Result  then
+    if Result then
     begin
-      if (ValorPago < ValorTotal) then
+      if (CompareValue(ValorPago, ValorTotal, 0.001) < 0) then
         ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + CR +
                                             'PAGAMENTO MINIMO:' + CR +
                                             FormatFloatBr(ValorTotal), 3)
@@ -2582,7 +2582,7 @@ begin
         fAbastecimentos[IndiceAbastec].ValorPago := ValorPago;
         MsgTroco := '';
         TempoEspera := 0;
-        if ValorPago > ValorTotal then
+        if (CompareValue(ValorPago, ValorTotal, 0.001) > 0) then
         begin
           Troco := ValorPago - ValorTotal;
           MsgTroco := CR + '* CONFIRA O TROCO *' + CR +
@@ -2788,7 +2788,7 @@ begin
       end;
     end;
 
-    if fAbastecimentos[IndiceAbastec].ValorPago > TotalItem then
+    if (CompareValue(fAbastecimentos[IndiceAbastec].ValorPago, TotalItem, 0.001) > 0) then
       pag.vTroco := (fAbastecimentos[IndiceAbastec].ValorPago - TotalItem);
   end;
 
@@ -3116,7 +3116,7 @@ var
 begin
   Result := True;
   ValorPago := 0;
-  while Result and (ValorPago < ValorMinimo) do
+  while Result and (CompareValue(ValorPago, ValorMinimo, 0.001) < 0) do
   begin
     AStr := IntToStr(Trunc(ValorMinimo*100));
     AStr := ACBrPOS1.ObterDado(TerminalId, 'VALOR PAGO DINHEIRO', '@@@.@@@,@@', 3, 8,
@@ -3126,7 +3126,7 @@ begin
 
     if Result  then
     begin
-      if (ValorPago < ValorMinimo) then
+      if (CompareValue(ValorPago, ValorMinimo, 0.001) < 0) then
         ACBrPOS1.ExibirMensagem(TerminalId, 'VALOR INFERIOR !' + CR +
                                             'PAGAMENTO MINIMO:' + CR +
                                             FormatFloatBr(ValorMinimo), 3)
@@ -3516,7 +3516,7 @@ begin
   fAbastecimentos[1].DataHora := IncMinute(Now,-70);
   fAbastecimentos[1].Sequencia := 2;
   fAbastecimentos[1].Bico := 1;
-  fAbastecimentos[1].Qtd := 25;
+  fAbastecimentos[1].Qtd := 35.9454;
   fAbastecimentos[1].FormaPagto := 0;
   fAbastecimentos[1].ValorPago := 0;
 

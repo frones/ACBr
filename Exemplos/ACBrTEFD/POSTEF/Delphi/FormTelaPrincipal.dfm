@@ -43,7 +43,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     Top = 0
     Width = 790
     Height = 420
-    ActivePage = tsConfiguracao
+    ActivePage = tsMenuPrincipal
     Align = alClient
     Constraints.MinHeight = 350
     Images = ImageList1
@@ -1667,7 +1667,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btOperacao: TBitBtn
         Left = 66
-        Top = 201
+        Top = 198
         Width = 168
         Height = 112
         Anchors = []
@@ -1677,7 +1677,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btConfiguracao: TBitBtn
         Left = 316
-        Top = 201
+        Top = 198
         Width = 168
         Height = 112
         Anchors = []
@@ -1995,7 +1995,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfEmissor: TGroupBox
               Left = 96
-              Top = 12
+              Top = 9
               Width = 568
               Height = 288
               Anchors = []
@@ -2491,7 +2491,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gbBibliotecas: TGroupBox
               Left = 16
-              Top = 0
+              Top = -3
               Width = 240
               Height = 169
               Anchors = []
@@ -2645,7 +2645,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbCertificado: TGroupBox
               Left = 269
-              Top = 0
+              Top = -3
               Width = 240
               Height = 233
               Anchors = []
@@ -2782,7 +2782,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbWebService: TGroupBox
               Left = 520
-              Top = 0
+              Top = -3
               Width = 240
               Height = 233
               Anchors = []
@@ -2949,7 +2949,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbProxy: TGroupBox
               Left = 16
-              Top = 177
+              Top = 174
               Width = 240
               Height = 108
               Anchors = []
@@ -3046,7 +3046,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbToken: TGroupBox
               Left = 269
-              Top = 227
+              Top = 221
               Width = 291
               Height = 50
               Anchors = []
@@ -3110,7 +3110,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbNFCeNumeros: TGroupBox
               Left = 568
-              Top = 227
+              Top = 221
               Width = 192
               Height = 50
               Anchors = []
@@ -3188,7 +3188,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfSAT: TGroupBox
               Left = 88
-              Top = 25
+              Top = 22
               Width = 568
               Height = 260
               Anchors = []
@@ -3541,7 +3541,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gEmailConta: TGroupBox
               Left = 8
-              Top = 5
+              Top = 2
               Width = 496
               Height = 291
               Anchors = [akLeft]
@@ -3652,7 +3652,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Width = 232
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 8
               end
               object edtEmailFrom: TEdit
@@ -3706,7 +3706,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Width = 232
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 7
               end
               object seEmailPort: TSpinEdit
@@ -3769,13 +3769,13 @@ object frPOSTEFServer: TfrPOSTEFServer
               Left = 514
               Top = 13
               Width = 240
-              Height = 276
+              Height = 270
               Anchors = [akLeft, akTop, akRight, akBottom]
               Caption = 'Mensagem'
               TabOrder = 1
               DesignSize = (
                 240
-                276)
+                270)
               object lblFrom2: TLabel
                 Left = 8
                 Top = 21
@@ -3808,7 +3808,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 8
                 Top = 84
                 Width = 221
-                Height = 181
+                Height = 175
                 Anchors = [akLeft, akTop, akRight, akBottom]
                 Lines.Strings = (
                   'Voc'#234' est'#225' recebendo uma NFC-e.'
@@ -3916,7 +3916,7 @@ object frPOSTEFServer: TfrPOSTEFServer
           object Label2: TLabel
             Left = 1
             Top = 1
-            Width = 548
+            Width = 93
             Height = 13
             Align = alTop
             Caption = 'Log das Opera'#231#245'es'

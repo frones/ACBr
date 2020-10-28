@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas.softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/one" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/one" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="tiposGeralONE_v2.00.xsd"/>
 	<xs:simpleType name="TVersao">
@@ -107,6 +107,17 @@ E-Entrada, S-Saida, I - Indeterminado</xs:documentation>
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="1"/>
 						<xs:enumeration value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="xRefCompl" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Permite detalhar melhor a localização do equipamento, como ponto de referencia ou mesmo sentido de instalação do equipamento em relação a muncípios adjacentes</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="200"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>

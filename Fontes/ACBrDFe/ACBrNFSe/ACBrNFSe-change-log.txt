@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2020
+-- Diversos --
+[+] Implementação do provedor DSFv2
+  Por: Italo Giurizzato Junior
+
 27/10/2020
 -- Diversos --
 [*] Correção no nome do campo TagTransform ao realizar a leitura do arquivo INI

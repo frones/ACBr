@@ -531,7 +531,7 @@ end;
 
 function NotaFiscal.CorrigirAssinatura(const AXML: string): string;
 var
-  XML:string;
+  XML: string;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin

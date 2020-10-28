@@ -682,7 +682,7 @@ begin
   FConfigRemover.EComercial            := FPIniParams.ReadBool('Remover', 'EComercial', False);
   FConfigRemover.Tabulacao             := FPIniParams.ReadBool('Remover', 'Tabulacao', False);
   FConfigRemover.TagQuebradeLinhaUnica := FPIniParams.ReadBool('Remover', 'TagQuebradeLinhaUnica', False);
-  FConfigRemover.TagTransform          := FPIniParams.ReadBool('Remover', 'TagTransfom', False);
+  FConfigRemover.TagTransform          := FPIniParams.ReadBool('Remover', 'TagTransform', False);
 
 
   if FPIniParams.ReadString('NameSpace', 'Producao_' + CodIBGE, '') <> '' then

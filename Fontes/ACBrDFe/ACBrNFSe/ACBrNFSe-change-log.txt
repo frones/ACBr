@@ -44,6 +44,12 @@ Símbolo : Significado
 
 27/10/2020
 -- Diversos --
+[*] Correção no nome do campo TagTransform ao realizar a leitura do arquivo INI
+    do provedor
+  Por: Italo Giurizzato Junior
+
+27/10/2020
+-- Diversos --
 [+] Implementação final provedor SiapSistemas
   Por: Italo Giurizzato Junior
 

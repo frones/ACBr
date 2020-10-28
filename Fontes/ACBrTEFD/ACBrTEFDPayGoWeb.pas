@@ -572,13 +572,16 @@ begin
             if not CNC then
               Confirmar := True;  // Se não conseguiu cancelar a transação, informe que foi confirmada
           end
-          else
-            FinalizarTransacao( ulResult,
-                                IntToStr(AResposta.NumeroLoteTransacao),
-                                AResposta.Finalizacao,
-                                AResposta.NSU,
-                                AResposta.Estabelecimento,
-                                AResposta.Rede);
+
+          else if not Resp.CNFEnviado then
+          begin
+              FinalizarTransacao( ulResult,
+                                  IntToStr(AResposta.NumeroLoteTransacao),
+                                  AResposta.Finalizacao,
+                                  AResposta.NSU,
+                                  AResposta.Estabelecimento,
+                                  AResposta.Rede);
+          end;
 
           if Confirmar then
           begin

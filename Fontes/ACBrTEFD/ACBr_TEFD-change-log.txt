@@ -46,7 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-26/20/20
+28/10/20
+-- ACBrTEFDPayGoWeb --
+[-] Correção para não enviar comando de Finalização, para uma transação que já
+    está confirmada, evitando o erro: PWRET_INVCALL
+    (por: DSA)
+
+26/10/20
 -- ACBrTEFDPayGoWeb --
 [-] Correção em "VerificarTransacoesPendentesClass", para processar primeiro,
     as transações em aberto, ou seja, as que não receberam Confirmação

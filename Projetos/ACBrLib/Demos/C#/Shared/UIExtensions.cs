@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -28,12 +29,16 @@ namespace ACBrLib
             cmb.SelectedItem = dataSource.SingleOrDefault(x => x.Content.Equals(valorPadrao));
         }
 
-        public static T GetSelectedValue<T>(this ComboBox cmb) where T : struct
+        public static void SetDataSource<T>(this ComboBox cmb, T valorPadrao)
+        {
+        }
+
+        public static T GetSelectedValue<T>(this ComboBox cmb)
         {
             return ((ItemData<T>)cmb.SelectedItem).Content;
         }
 
-        public static void SetSelectedValue<T>(this ComboBox cmb, T valor) where T : struct
+        public static void SetSelectedValue<T>(this ComboBox cmb, T valor)
         {
             var dataSource = (ItemData<T>[])cmb.DataSource;
             cmb.SelectedItem = dataSource.SingleOrDefault(x => x.Content.Equals(valor));
@@ -69,6 +74,15 @@ namespace ACBrLib
             {
                 source.AppendLine(value);
             }
+        }
+
+        public static void HideTabHeaders(this TabControl tabControl)
+        {
+            tabControl.Appearance = TabAppearance.FlatButtons;
+            tabControl.ItemSize = new Size(0, 1);
+            tabControl.SizeMode = TabSizeMode.Fixed;
+
+            tabControl.SelectedTab = tabControl.TabPages[0];
         }
     }
 }

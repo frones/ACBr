@@ -11,6 +11,7 @@ namespace ACBrLib
         #region Fields
 
         private Form splashForm;
+        private bool isShowning;
 
         #endregion Fields
 
@@ -18,11 +19,11 @@ namespace ACBrLib
 
         public static SplashScreenManager Default { get; protected set; }
 
-        private Type SplashForm { get; set; }
+        public Type SplashForm { get; }
 
-        private Form Owner { get; set; }
+        public Form Owner { get; }
 
-        private Thread Thread { get; set; }
+        public Thread Thread { get; private set; }
 
         #endregion Properties
 
@@ -40,6 +41,8 @@ namespace ACBrLib
 
         private void ShowForm()
         {
+            isShowning = false;
+
             Thread = new Thread(() =>
             {
                 splashForm = (Form)Activator.CreateInstance(SplashForm);
@@ -47,6 +50,8 @@ namespace ACBrLib
                 splashForm.SizeGripStyle = SizeGripStyle.Hide;
                 splashForm.StartPosition = Owner != null ? FormStartPosition.Manual : FormStartPosition.CenterScreen;
                 splashForm.ShowInTaskbar = false;
+                splashForm.Shown += (sender, args) => isShowning = true;
+
                 if (Owner != null)
                 {
                     var offset = Owner.OwnedForms.Length * 38;  // approx. 10mm
@@ -55,30 +60,34 @@ namespace ACBrLib
                 }
 
                 splashForm.ShowDialog();
+                splashForm.FormClosed += (sender, args) =>
+                {
+                    Thread?.Abort();
+                    Thread = null;
+                    splashForm = null;
+                };
             });
 
             Thread.SetApartmentState(ApartmentState.STA);
             Thread.IsBackground = true;
             Thread.Start();
 
-            while (Default.splashForm == null) Thread.Sleep(10);
+            Application.DoEvents();
         }
 
         private void CloseForm()
         {
-            Thread.Sleep(2000);
-
-            if (!splashForm.InvokeRequired)
+            try
             {
-                splashForm.Close();
+                if (!splashForm.InvokeRequired)
+                    splashForm.Close();
+                else
+                    splashForm.Invoke(new Action(splashForm.Close));
             }
-            else
+            catch (Exception)
             {
-                splashForm.Invoke(new Action(splashForm.Close));
+                //
             }
-
-            Thread.Abort();
-            Thread = null;
         }
 
         public void ShowInfo(SplashInfo tipo, params object[] args)
@@ -87,7 +96,7 @@ namespace ACBrLib
 
             if (!splashForm.InvokeRequired)
             {
-                (SplashForm as ISplash)?.ShowInfo(tipo, args);
+                ((ISplash)SplashForm).ShowInfo(tipo, args);
             }
             else
             {
@@ -107,6 +116,7 @@ namespace ACBrLib
 
             Default = new SplashScreenManager(typeof(T), owner);
             Default.ShowForm();
+            while (!Default.isShowning) { Thread.Sleep(500); }
         }
 
         public static void Close(bool thowIfNotRunning = false)

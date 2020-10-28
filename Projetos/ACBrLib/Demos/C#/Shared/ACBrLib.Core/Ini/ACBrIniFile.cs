@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace ACBrLib.Core
@@ -49,6 +48,8 @@ namespace ACBrLib.Core
         public int BufferSize { get; set; }
 
         public int SectionCount => sections.Count;
+
+        public ACBrIniSection this[int idx] => sections[idx];
 
         public ACBrIniSection this[string section]
         {
@@ -126,24 +127,42 @@ namespace ACBrLib.Core
 
         public void Save()
         {
+            if (string.IsNullOrEmpty(IniFilePath)) throw new ArgumentNullException();
+            if (string.IsNullOrEmpty(IniFileName)) throw new ArgumentNullException();
+
             var file = Path.Combine(IniFilePath, IniFileName);
 
             using (var writer = new StreamWriter(file, false, Encoding, 1024))
+                Save(writer);
+        }
+
+        public void Save(string file)
+        {
+            using (var writer = new StreamWriter(file, false, Encoding, 1024))
+                Save(writer);
+        }
+
+        public void Save(Stream stream)
+        {
+            using (var writer = new StreamWriter(stream))
+                Save(writer);
+        }
+
+        private void Save(TextWriter stream)
+        {
+            foreach (var section in sections)
             {
-                foreach (var section in sections)
+                stream.WriteLine($"[{section.Name}]");
+
+                foreach (var iniData in section)
                 {
-                    writer.WriteLine($"[{section.Name}]");
-
-                    foreach (var iniData in section)
-                    {
-                        writer.WriteLine($"{iniData.Key}={iniData.Value}");
-                    }
-
-                    writer.WriteLine("");
+                    stream.WriteLine($"{iniData.Key}={iniData.Value}");
                 }
 
-                writer.Flush();
+                stream.WriteLine("");
             }
+
+            stream.Flush();
         }
 
         public static ACBrIniFile Load(string file, Encoding encoding = null)
@@ -153,7 +172,7 @@ namespace ACBrLib.Core
             var path = Path.GetDirectoryName(file);
             var iniFileName = Path.GetFileName(file);
 
-            var ret = ParseIni(File.ReadAllText(file, encoding), encoding);
+            var ret = Parse(File.ReadAllText(file, encoding), encoding);
 
             ret.IniFileName = iniFileName;
             ret.IniFilePath = path;
@@ -168,10 +187,10 @@ namespace ACBrLib.Core
             var iniFile = new ACBrIniFile { Encoding = encoding };
 
             using (var reader = new StreamReader(stream, iniFile.Encoding))
-                return ParseIni(reader.ReadToEnd(), encoding);
+                return Parse(reader.ReadToEnd(), encoding);
         }
 
-        public static ACBrIniFile ParseIni(string iniData, Encoding encoding = null)
+        public static ACBrIniFile Parse(string iniData, Encoding encoding = null)
         {
             if (string.IsNullOrEmpty(iniData) || string.IsNullOrWhiteSpace(iniData)) throw new ArgumentNullException(nameof(iniData));
 
@@ -199,13 +218,27 @@ namespace ACBrLib.Core
                         if (string.IsNullOrEmpty(section) || string.IsNullOrWhiteSpace(section)) continue;
 
                         var iniSection = iniFile[section];
-                        var properties = line.Split('=');
-                        iniSection.Add(properties[0], properties[1]);
+                        var idx = line.IndexOf('=', 0);
+                        if (idx < 0) continue;
+
+                        var key = line.Substring(0, idx);
+                        var value = idx >= line.Length - 1 ? "" : line.Substring(idx + 1);
+                        iniSection.Add(key, value);
                     }
                 }
             }
 
             return iniFile;
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            using (var writer = new StringWriter(builder))
+                Save(writer);
+
+            return builder.ToString();
         }
 
         #endregion Methods

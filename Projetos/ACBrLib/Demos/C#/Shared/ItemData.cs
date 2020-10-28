@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace ACBrLib
 {
-    public sealed class ItemData<T> where T : struct
+    public sealed class ItemData<T>
     {
         #region Constructors
 

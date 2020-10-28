@@ -7,10 +7,10 @@ namespace ACBrLib.Core.NFe
         [Description("Sem Impressão")]
         tiSemGeracao = 0,
 
-        [Description("Normal Retrato")]
+        [Description("Retrato")]
         tiRetrato = 1,
 
-        [Description("Normal Paisagem")]
+        [Description("Paisagem")]
         tiPaisagem = 2,
 
         [Description("Simplificado")]

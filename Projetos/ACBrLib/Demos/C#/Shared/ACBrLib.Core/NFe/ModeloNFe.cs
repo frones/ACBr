@@ -1,4 +1,6 @@
-﻿namespace ACBrLib.Core.NFe
+﻿using System;
+
+namespace ACBrLib.Core.NFe
 {
     public enum ModeloNFe
     {

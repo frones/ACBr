@@ -203,6 +203,11 @@ begin
   fpFileVerInfo := TFileVersionInfo.Create(Nil);
   fpFileVerInfo.ReadFileInfo;
 
+  FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+  FormatSettings.LongTimeFormat := 'hh:nn:ss';
+  FormatSettings.DateSeparator := '/';
+  FormatSettings.TimeSeparator := ':';
+
   CriarConfiguracao(ArqConfig, ChaveCrypt);
 end;
 

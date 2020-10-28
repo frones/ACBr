@@ -413,7 +413,7 @@ end;
 
 {
 --Utiliza WebService dos Bancos para realizar o Registro dos Boletos--
-Até o momento disponível para Caixa Economica e Banco do Brasil
+Até o momento disponível para Caixa Economica, Banco do Brasil e Itau
 É necessario realizar a configuração previa para acesso ao WebService
 No Object Inspector verifique as propriedades: CedenteWS e Configuracoes/WebService
 Verifique no arquivo "configWebService.txt" quais as configurações necessárias para cada Banco
@@ -421,7 +421,7 @@ Verifique no arquivo "configWebService.txt" quais as configurações necessárias p
 procedure TfrmDemo.btnRegistroClick(Sender: TObject);
 var
   SLRemessa: TStringList;
-  i: Integer;
+  i, j: Integer;
 begin
   with dm.ACBrBoleto do
   begin
@@ -438,8 +438,16 @@ begin
           //Ler todos os campos da classe Retorno
            SLRemessa.Add('Cod_Retorno='+ ListaRetornoWeb[i].CodRetorno + sLineBreak +
                        'Msg_Retorno='+ ListaRetornoWeb[i].MsgRetorno + sLineBreak +
-                       'Ori_Retorno='+ ListaRetornoWeb[i].OriRetorno + sLineBreak +
-                       'HEADER' + sLineBreak +
+                       'Ori_Retorno='+ ListaRetornoWeb[i].OriRetorno + sLineBreak );
+           for j:= 0 to ListaRetornoWeb[i].ListaRejeicao.Count -1 do
+           begin
+             SLRemessa.Add('[Rejeicao'+IntToStr(j)+']' + sLineBreak +
+                           'Campo=' + ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
+                           'Mensagem=' + ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
+                           'Valor='+ ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
+           end;
+
+           SLRemessa.Add('HEADER' + sLineBreak +
                        'Versao='+ ListaRetornoWeb[i].Header.Versao + sLineBreak +
                        'Autenticacao=' + ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
                        'Usuario_Servico=' + ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +

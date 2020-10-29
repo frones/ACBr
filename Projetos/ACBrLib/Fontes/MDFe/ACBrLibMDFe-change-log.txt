@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2020
+--- ACBrLiMDFeBase ---
+[-] Correção nos métodos de impressão de evento para carregar o conteudo do xml quando passado o mesmo.
+	Por: Rafael Dias
+[-] Correção nos métodos de envio de email para carregar o conteudo do xml quando passado o mesmo.
+	Por: Rafael Dias
+
 07/09/2020
 --- ACBrLibMDFeMT, ACBrLibMDFeST ---
 [+] Removido o metodo MDFE_ConfigImportar.

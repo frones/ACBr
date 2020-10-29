@@ -1487,7 +1487,9 @@ begin
           VerificarArquivoExiste(AChaveCTe);
 
         if EhArquivo then
-          Conhecimentos.LoadFromFile(AchaveCTe);
+          Conhecimentos.LoadFromFile(AchaveCTe)
+        else
+          Conhecimentos.LoadFromString(AchaveCTe);
 
         if Conhecimentos.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfCTeCarregados, [Conhecimentos.Count]))
@@ -1585,7 +1587,9 @@ begin
             VerificarArquivoExiste(AChaveEvento);
 
           if EhArquivo then
-            EventoCTe.LerXML(AChaveEvento);
+            EventoCTe.LerXML(AChaveEvento)
+          else
+            EventoCTe.LerXMLFromString(AChaveEvento);
 
           EhArquivo := StringEhArquivo(AChaveCTe);
 
@@ -1593,7 +1597,9 @@ begin
             VerificarArquivoExiste(AChaveCTe);
 
           if EhArquivo then
-            Conhecimentos.LoadFromFile(AchaveCTe);
+            Conhecimentos.LoadFromFile(AchaveCTe)
+          else
+            Conhecimentos.LoadFromString(AchaveCTe);
 
           if EventoCTe.Evento.Count = 0 then
             raise EACBrLibException.Create(ErrEnvio, Format(SInfEventosCarregados, [EventoCTe.Evento.Count]))
@@ -1756,7 +1762,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlCTe);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe);
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe)
+      else
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromString(AArquivoXmlCTe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1764,7 +1772,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento);
+        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento)
+      else
+        CTeDM.ACBrCTe1.EventoCTe.LerXMLFromString(AArquivoXmlEvento);
 
       CTeDM.ConfigurarImpressao;
       CTeDM.ACBrCTe1.ImprimirEvento;
@@ -1806,7 +1816,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlCTe);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe);
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe)
+      else
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromString(AArquivoXmlCTe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1814,7 +1826,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento);
+        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento)
+      else
+        CTeDM.ACBrCTe1.EventoCTe.LerXMLFromString(AArquivoXmlEvento);
 
       CTeDM.ConfigurarImpressao('', True);
       CTeDM.ACBrCTe1.ImprimirEventoPDF;
@@ -1855,7 +1869,9 @@ begin
 
     try
       if EhArquivo then
-        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml);
+        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml)
+      else
+        CTeDM.ACBrCTe1.InutCTe.LerXMLFromString(AArquivoXml);
 
       CTeDM.ConfigurarImpressao;
       CTeDM.ACBrCTe1.ImprimirInutilizacao;
@@ -1895,7 +1911,9 @@ begin
     CTeDM.Travar;
     try
       if EhArquivo then
-        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml);
+        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml)
+      else
+        CTeDM.ACBrCTe1.InutCTe.LerXMLFromString(AArquivoXml);
 
       CTeDM.ConfigurarImpressao('', True);
       CTeDM.ACBrCTe1.ImprimirInutilizacaoPDF;

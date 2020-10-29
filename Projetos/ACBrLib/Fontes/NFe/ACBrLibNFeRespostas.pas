@@ -790,6 +790,8 @@ begin
 end;
 
 procedure TEnvioResposta.Processar(const ACBrNFe: TACBrNFe);
+Var
+  NumeroNota: string;
 begin
   if Assigned(FItemRetorno) then FreeAndNil(FItemRetorno);
 
@@ -810,7 +812,10 @@ begin
 
   if (ACBrNFe.WebServices.Enviar.Sincrono) and (ACBrNFe.NotasFiscais.Count > 0) then
   begin
-    FItemRetorno := TRetornoItemResposta.Create('NFe' + IntToStr(ExtrairNumeroChaveAcesso(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe)), Tipo, Formato);
+    NumeroNota := IntToStr(ExtrairNumeroChaveAcesso(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe));
+    if Trim(NumeroNota) = '' then Exit;
+
+    FItemRetorno := TRetornoItemResposta.Create('NFe' + NumeroNota, Tipo, Formato);
     FItemRetorno.Id := 'ID' + ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
     FItemRetorno.tpAmb := TpAmbToStr(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.tpAmb);
     FItemRetorno.verAplic := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.verAplic;

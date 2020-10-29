@@ -1517,7 +1517,9 @@ begin
           VerificarArquivoExiste(AArquivoXmlMDFe);
 
         if EhArquivo then
-          ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe);
+          ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
+        else
+          ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe);
 
         if ACBrMDFe1.Manifestos.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfMDFeCarregados, [ACBrMDFe1.Manifestos.Count]))
@@ -1612,7 +1614,9 @@ begin
           VerificarArquivoExiste(AArquivoXmlEvento);
 
         if EhArquivo then
-          EventoMDFe.LerXML(AArquivoXmlEvento);
+          EventoMDFe.LerXML(AArquivoXmlEvento)
+        else
+          EventoMDFe.LerXMLFromString(AArquivoXmlEvento);
 
         EhArquivo := StringEhArquivo(AArquivoXmlMDFe);
 
@@ -1620,7 +1624,9 @@ begin
           VerificarArquivoExiste(AArquivoXmlMDFe);
 
         if EhArquivo then
-          Manifestos.LoadFromFile(AArquivoXmlMDFe);
+          Manifestos.LoadFromFile(AArquivoXmlMDFe)
+        else
+          Manifestos.LoadFromString(AArquivoXmlMDFe);
 
         if EventoMDFe.Evento.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfEventosCarregados, [EventoMDFe.Evento.Count]))
@@ -1793,7 +1799,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlMDFe);
 
       if EhArquivo then
-        MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe);
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
+      else
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe)
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1801,7 +1809,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        MDFeDM.ACBrMDFe1.EventoMDFe.LerXML(AArquivoXmlEvento);
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXML(AArquivoXmlEvento)
+      else
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXMLFromString(AArquivoXmlEvento);
 
       MDFeDM.ConfigurarImpressao;
       MDFeDM.ACBrMDFe1.ImprimirEvento;
@@ -1846,7 +1856,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlMDFe);
 
       if EhArquivo then
-        MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe);
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
+      else
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe)
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1854,7 +1866,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        MDFeDM.ACBrMDFe1.EventoMDFe.LerXML(AArquivoXmlEvento);
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXML(AArquivoXmlEvento)
+      else
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXMLFromString(AArquivoXmlEvento);
 
       MDFeDM.ConfigurarImpressao('', True);
       MDFeDM.ACBrMDFe1.ImprimirEventoPDF;

@@ -115,7 +115,7 @@ type
     function DistribuicaoDFePorChave(const AcUFAutor: integer;
       eCNPJCPF, echNFe: PChar; const sResposta: PChar;
       var esTamanho: longint): longint;
-    function EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: boolean;
+    function EnviarEmail(const ePara, eXmlNFe: PChar; const AEnviaPDF: boolean;
       const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
     function EnviarEmailEvento(const ePara, eXmlEvento, eXmlNFe: PChar;
       const AEnviaPDF: boolean;
@@ -1491,24 +1491,24 @@ begin
   end;
 end;
 
-function TACBrLibNFe.EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: boolean;
+function TACBrLibNFe.EnviarEmail(const ePara, eXmlNFe: PChar; const AEnviaPDF: boolean;
                                         const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 var
-  Resposta, APara, AChaveNFe, AAssunto, ACC, AAnexos, AMensagem: string;
+  Resposta, APara, AXmlNFe, AAssunto, ACC, AAnexos, AMensagem: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
   Resp: TLibNFeResposta;
 begin
   try
     APara := ConverterAnsiParaUTF8(ePara);
-    AChaveNFe := ConverterAnsiParaUTF8(eChaveNFe);
+    AXmlNFe := ConverterAnsiParaUTF8(eXmlNFe);
     AAssunto := ConverterAnsiParaUTF8(eAssunto);
     ACC := ConverterAnsiParaUTF8(eCC);
     AAnexos := ConverterAnsiParaUTF8(eAnexos);
     AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFe_EnviarEmail(' + APara + ',' + AChaveNFe + ',' + BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto
+      GravarLog('NFe_EnviarEmail(' + APara + ',' + AXmlNFe + ',' + BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto
                  + ',' + ACC + ',' + AAnexos + ',' + AMensagem + ' )', logCompleto, True)
     else
       GravarLog('NFe_EnviarEmail', logNormal);
@@ -1518,13 +1518,15 @@ begin
     try
       with NFeDM do
       begin
-        EhArquivo := StringEhArquivo(AChaveNFe);
+        EhArquivo := StringEhArquivo(AXmlNFe);
 
         if EhArquivo then
-          VerificarArquivoExiste(AChaveNFe);
+          VerificarArquivoExiste(AXmlNFe);
 
         if EhArquivo then
-          ACBrNFe1.NotasFiscais.LoadFromFile(AchaveNFe);
+          ACBrNFe1.NotasFiscais.LoadFromFile(AXmlNFe)
+        else
+          ACBrNFe1.NotasFiscais.LoadFromString(AXmlNFe);
 
         if ACBrNFe1.NotasFiscais.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [ACBrNFe1.NotasFiscais.Count]))
@@ -1623,7 +1625,9 @@ begin
           VerificarArquivoExiste(AXmlEvento);
 
         if EhArquivo then
-          EventoNFe.LerXML(AXmlEvento);
+          EventoNFe.LerXML(AXmlEvento)
+        else
+         EventoNFe.LerXMLFromString(AXmlEvento);
 
         EhArquivo := StringEhArquivo(AXmlNFe);
 
@@ -1631,7 +1635,9 @@ begin
           VerificarArquivoExiste(AXmlNFe);
 
         if EhArquivo then
-          NotasFiscais.LoadFromFile(AXmlNFe);
+          NotasFiscais.LoadFromFile(AXmlNFe)
+        else
+          NotasFiscais.LoadFromString(AXmlNFe);
 
         if EventoNFe.Evento.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfEventosCarregados, [EventoNFe.Evento.Count]))
@@ -1864,7 +1870,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlNFe);
 
       if EhArquivo then
-        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe);
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe)
+      else
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(AArquivoXmlNFe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1872,7 +1880,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento);
+        NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento)
+      else
+        NFeDM.ACBrNFe1.EventoNFe.LerXMLFromString(AArquivoXmlEvento);
 
       NFeDM.ConfigurarImpressao('', True);
       NFeDM.ACBrNFe1.ImprimirEventoPDF;
@@ -1917,7 +1927,9 @@ begin
 
     try
       if EhArquivo then
-        NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml);
+        NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml)
+      else
+        NFeDM.ACBrNFe1.InutNFe.LerXMLFromString(AArquivoXml);
 
       NFeDM.ConfigurarImpressao;
       NFeDM.ACBrNFe1.ImprimirInutilizacao;
@@ -1960,7 +1972,9 @@ begin
     Resposta := TLibImpressaoResposta.Create(1, Config.TipoResposta, Config.CodResposta);
     try
       if EhArquivo then
-        NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml);
+        NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml)
+      else
+        NFeDM.ACBrNFe1.InutNFe.LerXMLFromString(AArquivoXml);
 
       NFeDM.ConfigurarImpressao('', True);
       NFeDM.ACBrNFe1.ImprimirInutilizacaoPDF;

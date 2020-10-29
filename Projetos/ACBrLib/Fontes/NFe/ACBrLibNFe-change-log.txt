@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2020
+--- ACBrLibNFeBase ---
+[-] Correção nos métodos de impressão de evento e inutilização para carregar o conteudo do xml quando passado o mesmo.
+	Por: Rafael Dias
+[-] Correção nos métodos de envio de email para carregar o conteudo do xml quando passado o mesmo.
+	Por: Rafael Dias
+
 21/10/2020
 --- ACBrLibNFeDataModule ---
 [-] Correção da impressão em PDF da NFCe quando setado tipo de impressão EscPos ou Fortes.

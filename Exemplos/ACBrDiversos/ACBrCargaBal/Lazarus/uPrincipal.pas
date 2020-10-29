@@ -73,7 +73,7 @@ implementation
 uses
   FileCtrl, TypInfo;
 
-{$R *.dfm}
+{$R *.lfm}
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
@@ -124,9 +124,9 @@ begin
         Validade        := 15;
 
         // Teclado
-        Teclado.Codigo_Teclado := 0; // Preencher no caso de Toledo (Código do Teclado)
-        Teclado.Pagina_Teclado := 0; // Preencher no caso de Toledo (Pagina do Teclado)
-        Teclado.Tecla          := 0; // Código da Tecla
+        Teclado.Codigo_Teclado := 4; // Preencher no caso de Toledo (Código do Teclado)
+        Teclado.Pagina_Teclado := 2; // Preencher no caso de Toledo (Pagina do Teclado)
+        Teclado.Tecla          := 1; // Código da Tecla
         InformacaoExtra.Receita := Format('Receita do item %d', [I]);
 //        Nutricional     := Format('Informação Nutricional do item %d', [I]);;
 

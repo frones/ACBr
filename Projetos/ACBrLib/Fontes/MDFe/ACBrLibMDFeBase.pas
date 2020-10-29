@@ -1801,7 +1801,7 @@ begin
       if EhArquivo then
         MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
       else
-        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe)
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1858,7 +1858,7 @@ begin
       if EhArquivo then
         MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
       else
-        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe)
+        MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 

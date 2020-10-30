@@ -214,42 +214,48 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-  if ACBrNFe1.NotasFiscais.Count < 1 then Exit;
-
-  if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+  if ACBrNFe1.NotasFiscais.Count > 0 then
   begin
-    if GerarPDF and not (LibConfig.DANFe.NFCe.TipoRelatorioBobina in [tpFortes, tpFortesA4]) then
+    if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
-      ACBrNFe1.DANFE := DANFCeFortes
-    end
-    else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes then
-    begin
-      DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
-      ACBrNFe1.DANFE := DANFCeFortes
-    end
-    else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4 then
-    begin
-      DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
-      ACBrNFe1.DANFE := DANFCeA4
+      if GerarPDF and not (LibConfig.DANFe.NFCe.TipoRelatorioBobina in [tpFortes, tpFortesA4]) then
+      begin
+        DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
+        ACBrNFe1.DANFE := DANFCeFortes
+      end
+      else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes then
+      begin
+        DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
+        ACBrNFe1.DANFE := DANFCeFortes
+      end
+      else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4 then
+      begin
+        DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
+        ACBrNFe1.DANFE := DANFCeA4
+      end
+      else
+      begin
+         DANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
+         DANFCeEscPos.PosPrinter := ACBrPosPrinter1;
+         ACBrNFe1.DANFE := DANFCeEscPos;
+      end;
     end
     else
     begin
-      DANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
-      DANFCeEscPos.PosPrinter := ACBrPosPrinter1;
-      ACBrNFe1.DANFE := DANFCeEscPos;
+       NFeDANFe := TACBrNFeDANFeRL.Create(nil);
+       ACBrNFe1.DANFE := NFeDANFe;
     end;
+
+    if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
+      ACBrNFe1.DANFE.Cancelada := True
+    else
+      ACBrNFe1.DANFE.Cancelada := False;
   end
   else
   begin
-     NFeDANFe := TACBrNFeDANFeRL.Create(nil);
-     ACBrNFe1.DANFE := NFeDANFe;
+    NFeDANFe := TACBrNFeDANFeRL.Create(nil);
+    ACBrNFe1.DANFE := NFeDANFe;
   end;
-
-  if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
-    ACBrNFe1.DANFE.Cancelada := True
-  else
-    ACBrNFe1.DANFE.Cancelada := False;
 
   if GerarPDF then
   begin

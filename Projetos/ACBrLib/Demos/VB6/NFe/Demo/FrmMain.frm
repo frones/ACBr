@@ -85,43 +85,28 @@ Begin VB.Form FrmMain
       TabPicture(1)   =   "FrmMain.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "btnStatusServicos"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "btnConsultarRecibo"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "btnConsultaXXML"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "btnConsultarCadastro"
-      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "btnConsultaChave"
-      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).ControlCount=   5
       TabCaption(2)   =   "Eventos"
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "btnCancelarNFe"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "btnCarregarEvento"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "btnImprimirEvento"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "btnEnviarEmailEvento"
-      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "btnEnviarEvento"
-      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "btnLimparListaEvento"
-      Tab(2).Control(5).Enabled=   0   'False
       Tab(2).Control(6)=   "btnImprimirEventoPDF"
-      Tab(2).Control(6).Enabled=   0   'False
       Tab(2).ControlCount=   7
       TabCaption(3)   =   "Inutilização"
       TabPicture(3)   =   "FrmMain.frx":0054
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "btnInutilizarNumeracao"
-      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "btnImprimirInutilizacao"
-      Tab(3).Control(1).Enabled=   0   'False
       Tab(3).Control(2)=   "btnImprimirInutilizacaoPDF"
-      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Distribuição DFe"
       TabPicture(4)   =   "FrmMain.frx":0070
@@ -1168,11 +1153,12 @@ Begin VB.Form FrmMain
          _Version        =   393216
          Style           =   1
          Tabs            =   4
+         Tab             =   2
          TabsPerRow      =   4
          TabHeight       =   520
          TabCaption(0)   =   "Geral"
          TabPicture(0)   =   "FrmMain.frx":01C7
-         Tab(0).ControlEnabled=   -1  'True
+         Tab(0).ControlEnabled=   0   'False
          Tab(0).Control(0)=   "lblFormatoAlerta"
          Tab(0).Control(0).Enabled=   0   'False
          Tab(0).Control(1)=   "lblFormaEmissao"
@@ -1236,40 +1222,64 @@ Begin VB.Form FrmMain
          Tab(1).ControlCount=   12
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":01FF
-         Tab(2).ControlEnabled=   0   'False
+         Tab(2).ControlEnabled=   -1  'True
          Tab(2).Control(0)=   "lblCryptLib"
+         Tab(2).Control(0).Enabled=   0   'False
          Tab(2).Control(1)=   "lblHttpLib"
+         Tab(2).Control(1).Enabled=   0   'False
          Tab(2).Control(2)=   "lblXMLSignLib"
+         Tab(2).Control(2).Enabled=   0   'False
          Tab(2).Control(3)=   "cmbCrypt"
+         Tab(2).Control(3).Enabled=   0   'False
          Tab(2).Control(4)=   "cmbHttp"
+         Tab(2).Control(4).Enabled=   0   'False
          Tab(2).Control(5)=   "cmbXmlSign"
+         Tab(2).Control(5).Enabled=   0   'False
          Tab(2).Control(6)=   "frmCertificados"
+         Tab(2).Control(6).Enabled=   0   'False
          Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).Control(7).Enabled=   0   'False
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":021B
          Tab(3).ControlEnabled=   0   'False
          Tab(3).Control(0)=   "lblPastaArqNFe"
+         Tab(3).Control(0).Enabled=   0   'False
          Tab(3).Control(1)=   "lblPastaArqInutilizacao"
+         Tab(3).Control(1).Enabled=   0   'False
          Tab(3).Control(2)=   "lblPastaArqEvento"
+         Tab(3).Control(2).Enabled=   0   'False
          Tab(3).Control(3)=   "chkSalvarArqs"
+         Tab(3).Control(3).Enabled=   0   'False
          Tab(3).Control(4)=   "chkPastaMensal"
+         Tab(3).Control(4).Enabled=   0   'False
          Tab(3).Control(5)=   "chkAdicionaLiteral"
+         Tab(3).Control(5).Enabled=   0   'False
          Tab(3).Control(6)=   "chkEmissaoPathNFe"
+         Tab(3).Control(6).Enabled=   0   'False
          Tab(3).Control(7)=   "chkSalvaPathEvento"
+         Tab(3).Control(7).Enabled=   0   'False
          Tab(3).Control(8)=   "chkSepararPorCNPJ"
+         Tab(3).Control(8).Enabled=   0   'False
          Tab(3).Control(9)=   "chkSepararPorModelo"
+         Tab(3).Control(9).Enabled=   0   'False
          Tab(3).Control(10)=   "txtArqNFe"
+         Tab(3).Control(10).Enabled=   0   'False
          Tab(3).Control(11)=   "btnArqNFe"
+         Tab(3).Control(11).Enabled=   0   'False
          Tab(3).Control(12)=   "txtArqInu"
+         Tab(3).Control(12).Enabled=   0   'False
          Tab(3).Control(13)=   "btnArqInu"
+         Tab(3).Control(13).Enabled=   0   'False
          Tab(3).Control(14)=   "btnArqEvento"
+         Tab(3).Control(14).Enabled=   0   'False
          Tab(3).Control(15)=   "txtArqEvento"
+         Tab(3).Control(15).Enabled=   0   'False
          Tab(3).ControlCount=   16
          Begin VB.ComboBox cmbModeloDocumento 
             Height          =   315
             ItemData        =   "FrmMain.frx":0237
-            Left            =   120
+            Left            =   -74880
             List            =   "FrmMain.frx":023E
             Style           =   2  'Dropdown List
             TabIndex        =   173
@@ -1380,28 +1390,28 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnObterCertificados 
             Caption         =   "Obter Certificados"
             Height          =   375
-            Left            =   -74640
+            Left            =   360
             TabIndex        =   120
             Top             =   5160
             Width           =   1575
          End
          Begin VB.TextBox txtCSC 
             Height          =   285
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   87
             Top             =   6840
             Width           =   4695
          End
          Begin VB.TextBox txtIdCSC 
             Height          =   285
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   86
             Top             =   6240
             Width           =   4695
          End
          Begin VB.TextBox txtSchemaPath 
             Height          =   285
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   85
             Top             =   5640
             Width           =   4215
@@ -1409,14 +1419,14 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnSelectSchema 
             Caption         =   "..."
             Height          =   260
-            Left            =   4440
+            Left            =   -70560
             TabIndex        =   84
             Top             =   5640
             Width           =   390
          End
          Begin VB.TextBox txtLogs 
             Height          =   285
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   83
             Top             =   5040
             Width           =   4215
@@ -1424,7 +1434,7 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnSelectLog 
             Caption         =   "..."
             Height          =   260
-            Left            =   4440
+            Left            =   -70560
             TabIndex        =   82
             Top             =   5040
             Width           =   390
@@ -1432,7 +1442,7 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkSalvarArqEnvResp 
             Caption         =   "Salvar Arquivos de Envio e Resposta"
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   81
             Top             =   4440
             Width           =   3375
@@ -1440,14 +1450,14 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkRetirarAcentosXMLEnv 
             Caption         =   "Retirar Acentos dos XMLs enviados"
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   80
             Top             =   4080
             Width           =   3375
          End
          Begin VB.ComboBox cmbVersaoDocFiscal 
             Height          =   315
-            Left            =   120
+            Left            =   -74880
             Style           =   2  'Dropdown List
             TabIndex        =   79
             Top             =   3600
@@ -1455,7 +1465,7 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cmbFormaEmissao 
             Height          =   315
-            Left            =   120
+            Left            =   -74880
             Style           =   2  'Dropdown List
             TabIndex        =   78
             Top             =   2400
@@ -1463,7 +1473,7 @@ Begin VB.Form FrmMain
          End
          Begin VB.TextBox txtFormatoAlerta 
             Height          =   285
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   77
             Top             =   1680
             Width           =   4695
@@ -1471,7 +1481,7 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkAtualizarXML 
             Caption         =   "Atualizar XML"
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   76
             Top             =   600
             Width           =   3375
@@ -1479,7 +1489,7 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkExibirErroSchema 
             Caption         =   "Exibir Erro Schema"
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   75
             Top             =   960
             Width           =   3375
@@ -1896,7 +1906,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   2655
-            Left            =   -74640
+            Left            =   360
             TabIndex        =   40
             Top             =   2400
             Width           =   4215
@@ -2027,7 +2037,7 @@ Begin VB.Form FrmMain
          Begin VB.ComboBox cmbXmlSign 
             Height          =   315
             ItemData        =   "FrmMain.frx":036F
-            Left            =   -74640
+            Left            =   360
             List            =   "FrmMain.frx":0382
             Style           =   2  'Dropdown List
             TabIndex        =   39
@@ -2037,8 +2047,8 @@ Begin VB.Form FrmMain
          Begin VB.ComboBox cmbHttp 
             Height          =   315
             ItemData        =   "FrmMain.frx":03BC
-            Left            =   -74640
-            List            =   "FrmMain.frx":03CF
+            Left            =   360
+            List            =   "FrmMain.frx":03CC
             Style           =   2  'Dropdown List
             TabIndex        =   38
             Top             =   1320
@@ -2046,9 +2056,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cmbCrypt 
             Height          =   315
-            ItemData        =   "FrmMain.frx":0409
-            Left            =   -74640
-            List            =   "FrmMain.frx":041C
+            ItemData        =   "FrmMain.frx":0401
+            Left            =   360
+            List            =   "FrmMain.frx":0411
             Style           =   2  'Dropdown List
             TabIndex        =   37
             Top             =   720
@@ -2140,7 +2150,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   102
             Top             =   6600
             Width           =   4575
@@ -2157,7 +2167,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   101
             Top             =   6000
             Width           =   4575
@@ -2174,7 +2184,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   100
             Top             =   5400
             Width           =   4575
@@ -2191,7 +2201,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   99
             Top             =   4800
             Width           =   4575
@@ -2208,7 +2218,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   98
             Top             =   3360
             Width           =   4575
@@ -2225,7 +2235,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   97
             Top             =   2760
             Width           =   4575
@@ -2242,7 +2252,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   96
             Top             =   2160
             Width           =   4575
@@ -2259,7 +2269,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   95
             Top             =   1440
             Width           =   4575
@@ -2336,7 +2346,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   -74640
+            Left            =   360
             TabIndex        =   91
             Top             =   1680
             Width           =   915
@@ -2355,7 +2365,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   -74640
+            Left            =   360
             TabIndex        =   90
             Top             =   1080
             Width           =   615
@@ -2374,7 +2384,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   -74640
+            Left            =   360
             TabIndex        =   89
             Top             =   480
             Width           =   705

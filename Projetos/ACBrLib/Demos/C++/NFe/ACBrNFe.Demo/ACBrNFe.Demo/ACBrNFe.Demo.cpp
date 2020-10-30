@@ -2,14 +2,18 @@
 //
 
 #include <iostream>
+#include <istream>
 #include "../../ACBrNFe.h"
 
 using namespace std;
 
 int main()
 {
-	std::shared_ptr<ACBrNFe> nfe = std::make_shared<ACBrNFe>();
+	auto* const nfe = new ACBrNFe();
 	cout << nfe->nome() + " " + nfe->versao() << std::endl;
+
+	std::cout << "Press ENTER to continue...";
+	std::cin.ignore();
 
 	return 0;
 }

@@ -18380,9 +18380,15 @@ begin
     no101 : Result := '101 - ISS devido no município';
     no103 : Result := '103 - ISENTO';
     no106 : Result := '106 - ISS FIXO';
-    no111 : Result := '111 - ISS devido para outro município';
+    no107 : Result := '107 - ISS devido para o Municipio (Simples Nacional)';
+    no108 : Result := '108 - ISS devido para outro Muinicipio (Simples Nacional)';
+    no110 : Result := '110 - ISS retido pelo tomador devido para outros municipios (Simples Nacional)';
+//    no111 : Result := '111 - ISS devido para outro município';
+    no111 : Result := '111 - ISS RECOLHIDO NO PROJETO';
     no112 : Result := '112 - ISS NÃO TRIBUTÁVEL';
+    no113 : Result := '113 - Nota Eletronica Avulsa';
     no114 : Result := '104 - ISS devido para origem prestado outro Município';
+    no115 : Result := '115 - ISS devido para municipio, prestado em outro municipio';
     no121 : Result := '121 - ISS Fixo (Sociedade de Profissionais)';
     no201 : Result := '201 - ISS retido pelo tomador ou intermediário do serviço';
     no301 : Result := '301 - Operação imune, isenta ou não tributada';

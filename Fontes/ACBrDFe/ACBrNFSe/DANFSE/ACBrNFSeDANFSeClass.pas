@@ -67,6 +67,7 @@ type
     FT_Complemento   : String;
     FT_Email         : String;
     FEMail_Prestador : String;
+    FCNPJ_Prestador  : String;
     FFormatarNumeroDocumentoNFSe  : Boolean;
     FUF : String;
     FAtividade : String;
@@ -99,6 +100,7 @@ type
     property OutrasInformacaoesImp: String read FOutrasInformacaoesImp write FOutrasInformacaoesImp;
     property InscMunicipal: String read FInscMunicipal write FInscMunicipal;
     property EMail_Prestador: String read FEMail_Prestador write FEMail_Prestador;
+    property CNPJ_Prestador: String read FCNPJ_Prestador write FCNPJ_Prestador;
 
     property T_InscEstadual: String read FT_InscEstadual write FT_InscEstadual;
     property T_InscMunicipal: String read FT_InscMunicipal write FT_InscMunicipal;

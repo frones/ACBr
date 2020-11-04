@@ -47,6 +47,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/11/20
+-- ACBrTEFPayGoWebComum --
+[*] Ajuste para evitar a exibição da mensagem "RETIRE O CARTAO", ao operador,
+    quando PinPad não foi acionado.
+
 -- ACBrTEFPayGoComum --
 [+] Mapeamento de PWINFO_DEFAULTCARDPARCPAN para Resp.BIN
     (por: DSA)

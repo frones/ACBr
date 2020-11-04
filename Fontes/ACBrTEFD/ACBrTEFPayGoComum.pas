@@ -473,7 +473,7 @@ begin
 
         PWINFO_CARDFULLPAN:
         begin
-          Bin := LinStr;
+          BIN := LinStr;
           NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
         end;
 
@@ -484,7 +484,10 @@ begin
         end;
 
         PWINFO_DEFAULTCARDPARCPAN:
+        begin
+          BIN := LinStr;
           NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
+        end;
 
         PWINFO_CARDEXPDATE:
           NFCeSAT.DataExpiracao := LinStr;

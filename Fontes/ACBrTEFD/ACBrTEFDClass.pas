@@ -1630,6 +1630,15 @@ begin
               with RespostasCanceladas[I] do
               begin
                  JaCancelado := (Resp.DocumentoVinculado = DocumentoVinculado) ;
+
+                 // Se a resposta já foi cancelada em outro arquivo, adiciona a lista de respostas canceladas para que no evento
+                 // OnDepoisCancelarTransacoes a lista retornada no argumento RespostasCanceladas esteja devidamente preenchida com todas transações canceladas.
+                 if JaCancelado then
+                 begin
+                   RespostaCancela := CriarResposta( Tipo );
+                   RespostaCancela.Assign( Resp );
+                   RespostasCanceladas.Add( RespostaCancela );
+                 end;
               end;
             end;
 

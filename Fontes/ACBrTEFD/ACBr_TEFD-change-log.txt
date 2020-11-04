@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/20
+-- ACBrTEFDClass --
+[-] Ajuste em "CancelarTransacoesPendentesClass', para que se a resposta já tiver
+    sido cancelada em outro arquivo, adicionar a mesma na lista de respostas canceladas
+    para o correto funcionamento do evento "OnDepoisCancelarTransacoes"
+    https://www.projetoacbr.com.br/forum/topic/60052-rotina-cancelartransacoespendentesclass-retorna-lista-de-tacbrtefdrespostaspendentes-incompleta/
+
 28/10/20
 -- ACBrTEFDPayGoWeb --
 [-] Correção para não enviar comando de Finalização, para uma transação que já

@@ -680,11 +680,9 @@ begin
     '0' + // 042 - 042 / Código do desconto 3
     PadLeft('', 8, '0') + // 043 - 050 / Data do desconto 3
     IntToStrZero(0, 15) + // 051 - 065 / '1'  =  Valor Fixo      '2'  =  Percentual
-    IfThen((PercentualMulta > 0), '2', '1') + // 066 - 066 / Código da multa
-    sDataMoraJuros + // 067 - 074 / Data da multa
-    IfThen(PercentualMulta > 0,
-      IntToStrZero(round(PercentualMulta * 10000), 15),
-      IntToStrZero(0, 15)) + // 075 - 089 / Valor/Percentual a ser aplicado
+    IfThen((PercentualMulta > 0), '2', '0') + // 066 - 066 / Código da multa
+    IfThen((PercentualMulta > 0), FormatDateTime('ddmmyyyy', DataMulta), '00000000') + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+    IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 10000), 15), IntToStrZero(0, 15)) + // 075 - 089 / Valor/Percentual a ser aplicado
     // IntToStrZero(round(MultaValorFixo * 100), 15))
     Space(10) + // 090 - 099 / Reservado (uso Banco)
     MontarInstrucoes1 + // 100 - 139 / Mensagem 3

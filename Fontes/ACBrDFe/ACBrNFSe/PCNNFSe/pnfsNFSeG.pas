@@ -381,6 +381,7 @@ begin
   begin
 
     case Provedor of
+      proElotech,
       proGovBR,
       proSiapSistemas,
       proPronim: FaIdentificador := '';
@@ -801,7 +802,21 @@ begin
         Gerador.wGrupo('/credenciais');
       end;
 
+      if Provedor = proElotech then
+      begin
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupo('IdentificacaoRequerente');
+
+        GerarGrupoCNPJCPF(Cnpj, True, False);
+
+        Gerador.wCampo(tcStr, '#01', 'InscricaoMunicipal', 01, 15, 1, IM);
+        Gerador.wCampo(tcStr, '#02', 'Senha  ', 01, 05, 1, SenhaWeb);
+        Gerador.wCampo(tcStr, '#03', 'Homologa', 01, 01, 5, LowerCase(booltostr(Transacao, True)));
+        Gerador.wGrupo('/IdentificacaoRequerente');
+      end;
+
       Gerador.Prefixo := Prefixo3;
+
       if Provedor in [proCoplan, proSIAPNet] then
         Gerador.wGrupo('LoteRps' + FaVersao + FaIdentificador)
       else

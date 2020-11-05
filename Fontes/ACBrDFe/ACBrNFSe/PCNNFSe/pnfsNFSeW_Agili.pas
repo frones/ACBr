@@ -122,9 +122,9 @@ function _ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): String;
 begin
   // -8 = Fixo
   result := EnumeradoToStr(t,
-                           ['-1','-2','-3','-4','-5','-6','-7'],
+                           ['-1','-2','-3','-4','-5','-6','-7', '-8'],
                            [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
-                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
+                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo, exiISSFixo]);
 end;
 
 function _TipoRPSToStr(const t: TnfseTipoRPS): String;
@@ -516,10 +516,10 @@ begin
   GerarRegimeEspecialTributacao;
 
   Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+  Gerador.wCampo(tcStr, '', 'OptanteMEISimei', 01, 01, 1, SimNaoToStr(NFSe.OptanteMEISimei), '');
 
   if VersaoNFSe = ve100 then
   begin
-    Gerador.wCampo(tcStr, '', 'OptanteMEISimei', 01, 01, 1, SimNaoToStr(snNao), '');
 
     if NFSe.Servico.Valores.IssRetido = stRetencao then
       Gerador.wCampo(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snSim), '')

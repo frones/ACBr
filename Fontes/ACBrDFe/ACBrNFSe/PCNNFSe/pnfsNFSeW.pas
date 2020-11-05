@@ -193,10 +193,11 @@ begin
   case ALayOutXML of
     loABRASFv1:    FNFSeWClass := TNFSeW_ABRASFv1.Create(Self);
     loABRASFv2:    FNFSeWClass := TNFSeW_ABRASFv2.Create(Self);
+
     loEGoverneISS: FNFSeWClass := TNFSeW_EGoverneISS.Create(Self);
     loEL:          FNFSeWClass := TNFSeW_EL.Create(Self);
     loEquiplano:   FNFSeWClass := TNFSeW_Equiplano.Create(Self);
-    loElotech:     FNFSeWClass := TNFSeW_Elotech.Create(Self);
+//    loElotech:     FNFSeWClass := TNFSeW_Elotech.Create(Self);
     loGoverna:     FNFSeWClass := TNFSeW_Governa.Create(Self);
     loInfisc:      FNFSeWClass := TNFSeW_Infisc.Create(Self);
     loISSDSF:      FNFSeWClass := TNFSeW_ISSDSF.Create(Self);
@@ -205,13 +206,13 @@ begin
     loAgili:       FNFSeWClass := TNFSeW_Agili.Create(Self);
     loSMARAPD:     FNFSeWClass := TNFSeW_SMARAPD.Create(Self);
     loIPM:         FNFSeWClass := TNFSeW_IPM.Create(Self);
-    loAssessorPublico : FNFSeWClass := TNFSeW_AssesorPublico.Create(Self);
+    loAssessorPublico: FNFSeWClass := TNFSeW_AssesorPublico.Create(Self);
     loWebFisco:    FNFSeWClass := TNFSeW_WebFisco.Create(Self);
     loLencois:     FNFSeWClass := TNFSeW_Lencois.Create(Self);
     loGiap:        FNFSeWClass := TNFSeW_Giap.Create(Self);
     loSiat:        FNFSeWClass := TNFSeW_Siat.Create(Self);
     loGeisWeb:     FNFSeWClass := TNFSeW_GeisWeb.Create(Self);
-	loSigIss:      FNFSeWClass := TNFSeW_SigISS.Create(Self);
+    loSigIss:      FNFSeWClass := TNFSeW_SigISS.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;

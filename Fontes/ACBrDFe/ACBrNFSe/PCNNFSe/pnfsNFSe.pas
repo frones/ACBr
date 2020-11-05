@@ -776,6 +776,7 @@ type
     FNaturezaOperacao: TnfseNaturezaOperacao;
     FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     FOptanteSimplesNacional: TnfseSimNao;
+    FOptanteMEISimei: TnfseSimNao;
     //Provedor Conam
     FDataOptanteSimplesNacional: TDateTime;
     FLogradouroLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico;
@@ -863,6 +864,7 @@ type
     property NaturezaOperacao: TnfseNaturezaOperacao read FNaturezaOperacao write FNaturezaOperacao;
     property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
+    property OptanteMEISimei: TnfseSimNao read FOptanteMEISimei write FOptanteMEISimei;
     //Provedor Conam
     property DataOptanteSimplesNacional: TDateTime read FDataOptanteSimplesNacional write FDataOptanteSimplesNacional;
     property LogradouLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
@@ -1114,6 +1116,7 @@ begin
   FNaturezaOperacao             := no1;
   FRegimeEspecialTributacao     := retNenhum;
   FOptanteSimplesNacional       := snNao;
+  FOptanteMEISimei              := snNao;
   FIncentivadorCultural         := snNao;
   FStatus                       := srNormal;
   FRpsSubstituido               := TIdentificacaoRps.Create;

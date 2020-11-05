@@ -18512,7 +18512,7 @@ begin
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
     proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, proiiBrasilv2,
     proSimplISSv2, proMegasoft, proModernizacaoPublica, proFuturize, proAEG,
-    proSiapSistemas, proDSFv2: Result := loABRASFv2;
+    proSiapSistemas, proDSFv2, proElotech: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;
@@ -18533,7 +18533,7 @@ begin
     proGiap:        Result := loGiap;
     proAssessorPublico: Result := loAssessorPublico;
     proSigIss:      Result := loSigIss;
-    proElotech:     Result := loElotech;
+//    proElotech:     Result := loElotech;
     proWebFisco:    Result := loWebFisco;
     proLencois:     Result := loLencois;    
     proGeisWeb:     Result := loGeisWeb;
@@ -18558,7 +18558,7 @@ begin
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2, proSigep,
     proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, proGiap,
     proSimplISSv2, proMegasoft, proModernizacaoPublica, proFuturize, proAEG,
-    proSiapSistemas, proDSFv2: Result := ve200;
+    proSiapSistemas, proDSFv2, proElotech: Result := ve200;
 
     proInfiscv11, proLencois: Result := ve110;
   else

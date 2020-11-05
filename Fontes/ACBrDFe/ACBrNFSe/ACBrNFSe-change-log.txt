@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/60077-ajuste-para-gera%C3%A7%C3%A3o-do-regimeespecialtributacao-blumenau/
+  Por: João Paulo Muller
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/60028-deiss-indaiatubasp/
+  Por: Danny
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/60023-optante-meisimei-agili/
+  Por: Plenustech
+
 03/11/2020
 -- ACBrNFSeWebServices --
 [*] Ajustes visando o provedor Tinus

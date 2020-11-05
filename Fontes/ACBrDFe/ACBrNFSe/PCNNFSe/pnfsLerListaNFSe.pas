@@ -688,6 +688,7 @@ begin
               FNFSe.NaturezaOperacao         := NFSeLida.NFSe.NaturezaOperacao;
               FNFSe.RegimeEspecialTributacao := NFSeLida.NFSe.RegimeEspecialTributacao;
               FNFSe.OptanteSimplesNacional   := NFSeLida.NFSe.OptanteSimplesNacional;
+              FNFSe.OptanteMEISimei          := NFSeLida.NFSe.OptanteMEISimei;
               FNFSe.IncentivadorCultural     := NFSeLida.NFSe.IncentivadorCultural;
 
               FNFSe.Competencia       := NFSeLida.NFSe.Competencia;

@@ -49,6 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2020
+
+-- ACBrBancoABCBrasil --
+[*] Adicionado campo DataMoraJuros para CNAB240.
+
+-- ACBrBancoCaixa --
+[*] Adicionado validação para leitura do código Cedente CNAB240 Layout de 7 posições.
+
+26/10/2020
+
+-- ACBrBancoCaixa --
+[*] Adicionado Instrução "03" para CNAB400
 
 22/10/2020
 

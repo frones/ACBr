@@ -51,6 +51,10 @@ type
     function AsString: string;
   end;
 
+  TACBrCustomIniFileHelper = class helper for TCustomIniFile
+    procedure WriteStringLine(const Section, Ident, Value: String);
+  end;
+
   TACBrPropInfoListHelper = class helper for TPropInfoList
     function GetProperties: TArray<TRttiProperty>;
   end;
@@ -58,7 +62,7 @@ type
 implementation
 
 uses
-  ACBrLibComum;
+  ACBrLibComum, ACBrUtil;
 
 procedure TACBrMemIniFileHelper.LoadFromString(const IniString: string);
 Var
@@ -76,7 +80,7 @@ begin
   end;
 end;
 
-procedure TACBrMemIniFileHelper.LoadFromFile(const FileName: string); overload;
+procedure TACBrMemIniFileHelper.LoadFromFile(const FileName: string);
 Var
   FIniFile: TStringList;
 begin
@@ -90,7 +94,7 @@ begin
   end;
 end;
 
-procedure TACBrMemIniFileHelper.LoadFromStream(Stream: TStream); overload;
+procedure TACBrMemIniFileHelper.LoadFromStream(Stream: TStream);
 Var
   FIniFile: TStringList;
 begin
@@ -116,6 +120,11 @@ begin
   finally
     FIniFile.Free;
   end;
+end;
+
+procedure TACBrCustomIniFileHelper.WriteStringLine(const Section, Ident, Value: String);
+begin
+  Self.WriteString(Section, Ident, ChangeLineBreak(Value, ''));
 end;
 
 function TACBrPropInfoListHelper.GetProperties: TArray<TRttiProperty>;

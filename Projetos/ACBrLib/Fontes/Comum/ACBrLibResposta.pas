@@ -382,7 +382,7 @@ begin
             //Aparentemente ainda não funciona direito apesar de ter colocado um TObject da erro ao fazer cast.
           end;
         tkSet:
-            AIni.WriteString(ASessao, Propertie.Name, GetSetProp(Target, Propertie.Name, True));
+            AIni.WriteStringLine(ASessao, Propertie.Name, GetSetProp(Target, Propertie.Name, True));
         tkBool:
           AIni.WriteBool(ASessao, Propertie.Name, AValue.AsBoolean);
         tkEnumeration:
@@ -396,7 +396,7 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          AIni.WriteString(ASessao, Propertie.Name, AValue.AsString);
+          AIni.WriteStringLine(ASessao, Propertie.Name, AValue.AsString);
         tkFloat:
           begin
             FValue := AValue.AsExtended;

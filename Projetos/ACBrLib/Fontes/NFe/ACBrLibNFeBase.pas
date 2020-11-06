@@ -991,26 +991,31 @@ begin
 
         if AImprimir then
         begin
-          NFeDM.ConfigurarImpressao();
+          try
+            NFeDM.ConfigurarImpressao;
 
-          ImpCount := 0;
-          for I := 0 to NotasFiscais.Count - 1 do
-          begin
-            if NotasFiscais.Items[I].Confirmada then
+            ImpCount := 0;
+            for I := 0 to NotasFiscais.Count - 1 do
             begin
-              NotasFiscais.Items[I].Imprimir;
-              Inc(ImpCount);
+              if NotasFiscais.Items[I].Confirmada then
+              begin
+                NotasFiscais.Items[I].Imprimir;
+                Inc(ImpCount);
+              end;
             end;
-          end;
 
-          if ImpCount > 0 then
-          begin
-            ImpResp := TLibImpressaoResposta.Create(ImpCount, Config.TipoResposta, Config.CodResposta);
-            try
-              Resposta := Resposta + sLineBreak + ImpResp.Gerar;
-            finally
-              ImpResp.Free;
+            if ImpCount > 0 then
+            begin
+              ImpResp := TLibImpressaoResposta.Create(ImpCount, Config.TipoResposta, Config.CodResposta);
+
+              try
+                Resposta := Resposta + sLineBreak + ImpResp.Gerar;
+              finally
+                ImpResp.Free;
+              end;
             end;
+          finally
+            NFeDM.FinalizarImpressao;
           end;
         end;
 

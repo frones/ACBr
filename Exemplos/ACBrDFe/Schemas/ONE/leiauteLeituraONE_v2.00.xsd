@@ -306,6 +306,19 @@ solicitante possa atualizar o último NSU pesquisado.</xs:documentation>
 															<xs:documentation>Nome Operador</xs:documentation>
 														</xs:annotation>
 													</xs:element>
+													<xs:element name="tpLeitura">
+														<xs:annotation>
+															<xs:documentation>Tipo da leitura:
+1-Leitura SLD
+2-Leitura OCR</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:enumeration value="1"/>
+																<xs:enumeration value="2"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
 													<xs:element name="cEQP" type="TNSU">
 														<xs:annotation>
 															<xs:documentation>Identificador do equipamento </xs:documentation>

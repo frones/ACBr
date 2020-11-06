@@ -1,6 +1,7 @@
 Configuracoes/WebService
 
-SSLHTTPLib: httpOpenSSL
+SSLHTTPLib: httpWinHTTP
+SSCryptLib: cryWinCry
 SSLType: TLS 1.2
 TimeOut: 30000
 UseCertificateHTTP: False
@@ -36,3 +37,17 @@ Caixa Econômica  //Dados para Homologaçao
   	ValorMaxPagamento:=0;
   	Carteira  := 'RG'; 
   	EspecieDoc:= '99'; 
+
+--------------------------------------------------------------------------------------
+
+Itau   //Campos para homologacao de acordo com dados fornecidos pelo banco
+
+    ACBrBoleto1.Cedente.CedenteWS.ClientID:= ....
+    ACBrBoleto1.Cedente.CedenteWS.ClientSecret:= .....
+    ACBrBoleto1.Cedente.CedenteWS.Scope:= 'readonly';
+    ACBrBoleto1.Cedente.CedenteWS.KeyUser:= ....;
+
+//Campos devem ser preenchidos conforme dados do Banco
+
+    ACBrBoleto1.Cedente.CodigoCedente:= ......
+    ACBrBoleto1.Cedente.Modalidade:= '19';     

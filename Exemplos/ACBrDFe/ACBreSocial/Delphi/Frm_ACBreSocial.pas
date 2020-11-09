@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{															                                      				   }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -27,6 +27,15 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
+{******************************************************************************
+|* Historico
+|*
+|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
+|*  - Doação do componente para o Projeto ACBr
+|* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
+|*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
+******************************************************************************}
 
 unit Frm_ACBreSocial;
 

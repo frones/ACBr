@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2020
+-- pnfsNFSeG --
+[*] O provedor SystemPro requer o atribuito versao.
+  Por: Italo Giurizzato Junior
+
 05/11/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/60077-ajuste-para-gera%C3%A7%C3%A3o-do-regimeespecialtributacao-blumenau/

@@ -323,7 +323,7 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP, proWebISS, proSystemPro, proMetropolisWeb,
+                    proSJP, proWebISS, proMetropolisWeb,
                     progeNFe, proSiapSistemas] then
       FaVersao := '';
   end

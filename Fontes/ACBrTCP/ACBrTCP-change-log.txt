@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2020
+-- ACBrConsultaCNPJ --
+[-] Correção para leitura de várias páginas de CNAE2
+    https://www.projetoacbr.com.br/forum/topic/60071-acbrconsultacnpj-problemas-cnae2/
+
 29/06/2020
 -- ACBrWinReqRespClass --
 [-] Correção em "CalculateHeaderReq", para não iserir "Content-Type", caso

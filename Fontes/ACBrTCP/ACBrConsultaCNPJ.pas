@@ -294,14 +294,21 @@ begin
     FMotivoSituacaoCad := LerCampo(Resposta, ACBrStr('MOTIVO DE SITUAÇÃO CADASTRAL'));
 
     FCNAE2.Clear;
-    StrAux := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS'));
-    FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
     repeat
-      StrAux := LerCampo(Resposta, StrAux);
-      if StrAux <> '' then
-        FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
-    until StrAux = '';
+      StrAux := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS'));
+      if trim(StrAux) = '' then
+        Break;
 
+      FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+
+      repeat
+        StrAux := LerCampo(Resposta, StrAux);
+        if trim(StrAux) = '' then
+          Break;
+
+        FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+      until False;
+    until False;
   finally
     Resposta.Free;
   end ;

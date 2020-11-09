@@ -1005,7 +1005,7 @@ begin
       infoDeslig.nrCertObito  := INIRec.ReadString(sSecao, 'nrCertObito', EmptyStr);
       infoDeslig.nrProcTrab   := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
       infoDeslig.indCumprParc := eSStrToTpCumprParcialAviso(Ok, INIRec.ReadString(sSecao, 'indCumprParc', '0'));
-      infoDeslig.qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', 0);
+      infoDeslig.qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', -1);
       infoDeslig.Observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
 
       sSecao := 'sucessaoVinc';

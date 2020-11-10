@@ -44,7 +44,7 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
 
             private static String getLibraryName() {
                 if ( library.isEmpty() ) {
-                library = Platform.is64Bit() ? "ACBrCTe64" : "ACBrCTe32";
+                library = Platform.is64Bit() ? "ACBrMDFe64" : "ACBrMDFe32";
                 }
                 return library;
             }

@@ -549,6 +549,7 @@ begin
       // Somente o provedor SimplISS permite infomar mais de 1 serviço
       with Servico.ItemServico.New do
       begin
+        ItemListaServico := '09.01';
         codLCServ := '123';
         Descricao := 'SERVICO 1';
         Discriminacao := 'Servico 1';

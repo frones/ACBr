@@ -203,6 +203,7 @@ type
     btnManutencao: TButton;
     btnRecepcaoLeitura: TButton;
     btnDistLeituras: TButton;
+    btnConsultaFoto: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathONEClick(Sender: TObject);
@@ -236,6 +237,7 @@ type
     procedure btnManutencaoClick(Sender: TObject);
     procedure btnRecepcaoLeituraClick(Sender: TObject);
     procedure btnDistLeiturasClick(Sender: TObject);
+    procedure btnConsultaFotoClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -325,6 +327,26 @@ begin
   ShowMessage(ACBrONE1.SSL.CertCNPJ);
 end;
 
+procedure TfrmACBrONE.btnConsultaFotoClick(Sender: TObject);
+var
+  VerAplic, NSULeitura: string;
+begin
+  VerAplic := '';
+  if not(InputQuery('Consultar Foto', 'Versão do Aplicativo', VerAplic)) then
+     exit;
+
+  NSULeitura := '';
+  if not(InputQuery('Consultar Foto', 'NSU Leitura', NSULeitura)) then
+     exit;
+
+  ACBrONE1.ConsultarFoto(VerAplic, NSULeitura);
+
+  MemoResp.Lines.Text := ACBrONE1.WebServices.ConsultarFoto.RetWS;
+  memoRespWS.Lines.Text := ACBrONE1.WebServices.ConsultarFoto.RetornoWS;
+
+  LoadXML(ACBrONE1.WebServices.ConsultarFoto.RetWS, WBResposta);
+end;
+
 procedure TfrmACBrONE.btnDataValidadeClick(Sender: TObject);
 begin
   ShowMessage(FormatDateBr(ACBrONE1.SSL.CertDataVenc));
@@ -351,8 +373,6 @@ begin
   memoRespWS.Lines.Text := ACBrONE1.WebServices.DistLeituras.RetornoWS;
 
   LoadXML(ACBrONE1.WebServices.DistLeituras.RetWS, WBResposta);
-
-  ACBrONE1.Free;
 end;
 
 procedure TfrmACBrONE.btnHTTPSClick(Sender: TObject);
@@ -395,7 +415,7 @@ procedure TfrmACBrONE.btnLeituraX509Click(Sender: TObject);
 begin
   with ACBrONE1.SSL do
   begin
-     CarregarCertificadoPublico(MemoDados.Lines.Text);
+     CarregarCertificadoPublico(AnsiString(MemoDados.Lines.Text));
      MemoResp.Lines.Add(CertIssuerName);
      MemoResp.Lines.Add(CertRazaoSocial);
      MemoResp.Lines.Add(CertCNPJ);
@@ -429,6 +449,7 @@ begin
     Latitude  := 10;
     Longitude := 20;
     tpEQP     := teSLD;
+    xRefCompl := 'Equipamento instalado proximo ao pedagio XYZ';
   end;
 
   ACBrONE1.WebServices.EnvManutencao.Executar;
@@ -457,23 +478,27 @@ procedure TfrmACBrONE.btnRecepcaoLeituraClick(Sender: TObject);
 begin
   with ACBrONE1.WebServices.EnvLeitura.EnvRecepcaoLeitura do
   begin
-    verAplic        := ACBrONE1.Configuracoes.Geral.verAplic;
-    CNPJOper        := ACBrONE1.Configuracoes.Geral.CNPJOper;
-    cUF             := ACBrONE1.Configuracoes.WebServices.UFCodigo;
-    tpTransm        := ttNormal;
-    dhTransm        := Now;
-    dhPass          := Now;
-    cEQP            := '123';
-    latitude        := 10;
-    longitude       := 20;
-    tpSentido       := tsEntrada;
-    placa           := 'ABC1234';
-    tpVeiculo       := tvCarga;
-    velocidade      := 80;
-    foto            := '';
-    indiceConfianca := 84;
-    pesoBrutoTotal  := 5;
-    nroEixos        := 3;
+    verAplic := ACBrONE1.Configuracoes.Geral.verAplic;
+    tpTransm := ttNormal;
+    dhTransm := Now;
+
+    with infLeitura do
+    begin
+      CNPJOper        := ACBrONE1.Configuracoes.Geral.CNPJOper;
+      cUF             := ACBrONE1.Configuracoes.WebServices.UFCodigo;
+      dhPass          := Now;
+      cEQP            := '123';
+      latitude        := 10;
+      longitude       := 20;
+      tpSentido       := tsEntrada;
+      placa           := 'ABC1234';
+      tpVeiculo       := tvCarga;
+      velocidade      := 80;
+      foto            := '';
+      indiceConfianca := 84;
+      pesoBrutoTotal  := 5;
+      nroEixos        := 3;
+    end;
   end;
 
   ACBrONE1.WebServices.EnvLeitura.Executar;
@@ -503,7 +528,7 @@ var
   Ahash: AnsiString;
 begin
   Ahash := ACBrONE1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
-  MemoResp.Lines.Add( Ahash );
+  MemoResp.Lines.Add(String(Ahash));
   pgRespostas.ActivePageIndex := 0;
 end;
 

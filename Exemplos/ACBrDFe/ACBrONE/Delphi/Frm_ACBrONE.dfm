@@ -1296,6 +1296,15 @@ object frmACBrONE: TfrmACBrONE
           TabOrder = 2
           OnClick = btnDistLeiturasClick
         end
+        object btnConsultaFoto: TButton
+          Left = 9
+          Top = 41
+          Width = 177
+          Height = 25
+          Caption = 'Consultar Foto'
+          TabOrder = 3
+          OnClick = btnConsultaFotoClick
+        end
       end
     end
     object pgRespostas: TPageControl

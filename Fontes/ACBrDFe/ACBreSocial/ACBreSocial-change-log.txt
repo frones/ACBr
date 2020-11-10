@@ -52,6 +52,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2020
+-- pcesS1005/pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/58569-erro-indsubstpatrobra-e-caepf/?do=findComment&comment=385001&_rid=63
+   Por: Luiz Neto
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/59020-corre%C3%A7%C3%B5es-para-os-eventos-s2205-s2230-e-s2299/
+   Por: Gustavo Ribeiro Croscato
+
 22/07/2020
 -- Diversos --
 [+] Acrescentado a unit pcnConsts em algumas units do componente.

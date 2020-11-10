@@ -461,7 +461,8 @@ end;
 
 procedure TEvtTabEstab.GerarInfoCaepf;
 begin
-  if infoEstab.DadosEstab.infoCaepfInst() then
+  if infoEstab.DadosEstab.infoCaepfInst() and
+     (infoEstab.DadosEstab.infoCaepf.tpCaepf <> tcVazio) then
   begin
     Gerador.wGrupo('infoCaepf');
 
@@ -473,7 +474,8 @@ end;
 
 procedure TEvtTabEstab.GerarInfoObra;
 begin
-  if infoEstab.DadosEstab.infoObraInst() then
+  if infoEstab.DadosEstab.infoObraInst() and
+    (infoEstab.DadosEstab.InfoObra.indSubstPatrObra <> ispVazio) then
   begin
     Gerador.wGrupo('infoObra');
 

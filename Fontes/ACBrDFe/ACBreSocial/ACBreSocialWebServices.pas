@@ -282,7 +282,7 @@ end;
 
 function TeSocialWebService.GerarPrefixoArquivo: String;
 begin
-  Result := 'eSocial';
+  Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
 function TeSocialWebService.GerarVersaoDadosSoap: String;
@@ -382,6 +382,10 @@ begin
       TpInsc := tiCPF;
 
     NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador;
+
+    OrgaoPublico := TACBreSocial(FPDFeOwner).Configuracoes.Geral.TipoEmpregador in [tePessoaFisica,
+                                                                                    teOrgaoPublicoExecutivoFederal, teOrgaoPublicoLegislativoFederal,
+                                                                                    teOrgaoPublicoJudiciarioFederal, teOrgaoPublicoAutonomoFederal];
   end;
 
   with FLote.IdeTransmissor do

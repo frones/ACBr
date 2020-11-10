@@ -85,6 +85,7 @@ type
   TEvtAltCadastral = class(TeSocialEvento)
   private
     FdtAlteracao: TDateTime;
+    FCodCateg: integer;
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
@@ -100,6 +101,7 @@ type
     function LerArqIni(const AIniString: String): Boolean;
 
     property dtAlteracao: TDateTime read FdtAlteracao write FdtAlteracao;
+    property CodCateg: integer read FCodCateg write FCodCateg;
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property Trabalhador: TTrabalhador read FTrabalhador write FTrabalhador;
@@ -159,6 +161,7 @@ constructor TEvtAltCadastral.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
+  FCodCateg       := 0;
   FIdeEvento      := TIdeEvento2.Create;
   FIdeEmpregador  := TIdeEmpregador.Create;
   FTrabalhador    := TTrabalhador.Create;
@@ -183,7 +186,7 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtAlteracao', 10, 10, 1, self.dtAlteracao);
 
-  GerarTrabalhador(self.Trabalhador, tpSim, 'dadosTrabalhador');
+  GerarTrabalhador(self.Trabalhador, tpSim, 'dadosTrabalhador', 1, self.CodCateg);
 
   GerarModoFechamento(mlAlteracao);
 end;

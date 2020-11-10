@@ -487,7 +487,11 @@ begin
 
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
 
-    if objInfoAfast.iniAfastamento.infoAtestadoInst then
+    // Critério de geração: F (Se {codMotAfast} = [01, 03, 35]); N (Nos demais casos)
+    if ((objInfoAfast.iniAfastamento.infoAtestadoInst) and
+        (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho,
+                                                   mtvAcidenteDoencaNaoTrabalho,
+                             mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
       GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
 
     if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
@@ -517,7 +521,7 @@ begin
     Gerador.wGrupo('infoAtestado');
 
     Gerador.wCampo(tcStr, '', 'codCID',       1, 4, 0, objInfoAtestado[i].codCID);
-    Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 1, 3, 1, objInfoAtestado[i].qtDiasAfast);
+    Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 1, 3, 0, objInfoAtestado[i].qtDiasAfast);
 
     if objInfoAtestado[i].emitenteInst then
       GerarEmitente(objInfoAtestado[i].Emitente, teS2230);

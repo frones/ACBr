@@ -155,6 +155,8 @@ type
     FtransfTit: TtransfTit;
     FQtdDiasInterm: Integer;
     FMudancaCPF: TMudancaCPF3;
+    FCodCateg: Integer;
+
     function getVerbasResc: TVerbasRescS2299;
   public
     constructor Create;
@@ -182,6 +184,7 @@ type
     property transfTit: TtransfTit read FtransfTit write FtransfTit;
     property mudancaCPF: TMudancaCPF3 read FMudancaCPF write FMudancaCPF;
     property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
+    property CodCateg: Integer read FCodCateg write FCodCateg;
   end;
 
   TIdePeriodoCollection = class(TACBrObjectList)
@@ -721,15 +724,19 @@ begin
 
   Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
 
-  If (obj.QtdDiasInterm >= 0) And (VersaoDF >= ve02_05_00) Then
-     Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
+  //O campo é sempre obrigatório para a categoria 111 (Intermitente)
+  if (VersaoDF <> ve02_04_01) and
+     ((obj.QtdDiasInterm > 0) or (obj.CodCateg = 111))  then
+    Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
 
   if (VersaoDF = ve02_04_01) then
     Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
   else
     GerarObservacoes(obj.observacoes);
+
   if (StrToIntDef(obj.mtvDeslig,0) in [11, 12, 13, 25, 28, 29, 30]) then
      GerarSucessaoVinc(obj.SucessaoVinc);
+
   if (obj.transfTit.cpfSubstituto <> '') And (obj.mtvDeslig='34') then
     GerarTransfTit(obj.transfTit);
 

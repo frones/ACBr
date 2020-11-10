@@ -5405,7 +5405,7 @@ begin
                    SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
                    FvNotas  + FTagF;
 
-  if Provedor in [proWebISSv2] then
+  if Provedor in [proWebISSv2, proDeISS] then
     AssinarXML(FPDadosMsg, 'SubstituirNfseEnvio', 'SubstituicaoNfse', 'Falha ao Assinar - SubstituirNfseEnvio: ');
 
   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
@@ -6013,7 +6013,8 @@ begin
         proGoverna,
         proIPM,
         proInfisc,
-        proInfiscv11: Result := True
+        proInfiscv11,
+        proGiap: Result := True
       else
         begin
           Sleep(Configuracoes.WebServices.AguardarConsultaRet);

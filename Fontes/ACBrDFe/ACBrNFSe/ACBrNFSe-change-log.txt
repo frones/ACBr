@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2020
+-- ACBrNFSeWebServices --
+[*] Incluido o enumerador do provedor DeISS para que seja gerado a terceira
+    assinatura no XML de pedido de Substituição de NFSe
+  Por: Italo Giurizzato Junior
+
 09/11/2020
 -- pnfsNFSeG --
 [*] O provedor SystemPro requer o atribuito versao.

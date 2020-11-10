@@ -43,6 +43,7 @@ uses
   pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
   pcnEnvRecepcaoLeitura, pcnRetRecepcaoLeitura,
   pcnDistLeitura, pcnRetDistLeitura,
+  pcnConsFoto, pcnRetConsFoto,
   ACBrONEConfiguracoes;
 
 type
@@ -231,6 +232,44 @@ type
     property RetDistLeitura: TRetDistLeitura read FRetDistLeitura;
   end;
 
+  { TONEConsultaFoto }
+
+  TONEConsultaFoto = class(TONEWebService)
+  private
+    FtpAmb: TpcnTipoAmbiente;
+    Fversao: String;
+    FverAplic: String;
+    FcStat: integer;
+    FxMotivo: String;
+    FdhResp: TDateTime;
+    Ffoto: String;
+    FNSULeitura: String;
+
+    FRetConsFoto: TRetConsFoto;
+
+  protected
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+
+    property tpAmb: TpcnTipoAmbiente read FtpAmb;
+    property versao: String read Fversao;
+    property cStat: integer read FcStat;
+    property xMotivo: String read FxMotivo;
+    property dhResp: TDateTime read FdhResp;
+    property foto: String read Ffoto;
+    property verAplic: String read FverAplic;
+    property NSULeitura: String read FNSULeitura;
+
+    property RetConsFoto: TRetConsFoto read FRetConsFoto;
+  end;
+
   { TWebServices }
 
   TWebServices = class
@@ -241,9 +280,12 @@ type
     FEnvManutencao: TEnvManutencao;
     FEnvLeitura: TEnvLeitura;
     FDistLeituras: TDistLeituras;
+    FConsultarFoto: TONEConsultaFoto;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
+
+    function ConsultaFoto(const aVerAplic, aNSULeitura: string): Boolean;
 
     property ACBrONE: TACBrDFe read FACBrONE write FACBrONE;
 
@@ -251,6 +293,7 @@ type
     property EnvManutencao: TEnvManutencao read FEnvManutencao write FEnvManutencao;
     property EnvLeitura: TEnvLeitura read FEnvLeitura write FEnvLeitura;
     property DistLeituras: TDistLeituras read FDistLeituras write FDistLeituras;
+    property ConsultarFoto: TONEConsultaFoto read FConsultarFoto write FConsultarFoto;
   end;
 
 implementation
@@ -333,6 +376,20 @@ end;
 
 { TWebServices }
 
+function TWebServices.ConsultaFoto(const aVerAplic, aNSULeitura: string): Boolean;
+begin
+  ConsultarFoto.Clear;
+  ConsultarFoto.Clear;
+
+  ConsultarFoto.FverAplic   := aVerAplic;
+  ConsultarFoto.FNSULeitura := aNSULeitura;
+
+  if not ConsultarFoto.Executar then
+    ConsultarFoto.GerarException( ConsultarFoto.Msg );
+
+  Result := True;
+end;
+
 constructor TWebServices.Create(AOwner: TACBrDFe);
 begin
   FACBrONE := TACBrONE(AOwner);
@@ -345,6 +402,7 @@ begin
   FDistLeituras  := TDistLeituras.Create(FACBrONE);
 
   FEnvioWebService := TONEEnvioWebService.Create(FACBrONE);
+  FConsultarFoto := TONEConsultaFoto.Create(FACBrONE);
 end;
 
 destructor TWebServices.Destroy;
@@ -353,6 +411,7 @@ begin
   FEnvLeitura.Free;
   FDistLeituras.Free;
   FEnvioWebService.Free;
+  FConsultarFoto.Free;
 
   inherited Destroy;
 end;
@@ -589,7 +648,7 @@ function TEnvManutencao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  FRetManutencaoEQP.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetManutencaoEQP.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FRetManutencaoEQP.LerXml;
 
   Fversao   := FRetManutencaoEQP.versao;
@@ -678,20 +737,23 @@ begin
       verAplic        := FEnvRecepcaoLeitura.verAplic;
       tpTransm        := FEnvRecepcaoLeitura.tpTransm;
       dhTransm        := FEnvRecepcaoLeitura.dhTransm;
-      cUF             := FEnvRecepcaoLeitura.cUF;
-      dhPass          := FEnvRecepcaoLeitura.dhPass;
-      CNPJOper        := FEnvRecepcaoLeitura.CNPJOper;
-      cEQP            := FEnvRecepcaoLeitura.cEQP;
-      latitude        := FEnvRecepcaoLeitura.latitude;
-      longitude       := FEnvRecepcaoLeitura.longitude;
-      tpSentido       := FEnvRecepcaoLeitura.tpSentido;
-      placa           := FEnvRecepcaoLeitura.placa;
-      tpVeiculo       := FEnvRecepcaoLeitura.tpVeiculo;
-      velocidade      := FEnvRecepcaoLeitura.velocidade;
-      foto            := FEnvRecepcaoLeitura.foto;
-      indiceConfianca := FEnvRecepcaoLeitura.indiceConfianca;
-      pesoBrutoTotal  := FEnvRecepcaoLeitura.pesoBrutoTotal;
-      nroEixos        := FEnvRecepcaoLeitura.nroEixos;
+      with infLeitura do
+      begin
+        cUF             := FEnvRecepcaoLeitura.infLeitura.cUF;
+        dhPass          := FEnvRecepcaoLeitura.infLeitura.dhPass;
+        CNPJOper        := FEnvRecepcaoLeitura.infLeitura.CNPJOper;
+        cEQP            := FEnvRecepcaoLeitura.infLeitura.cEQP;
+        latitude        := FEnvRecepcaoLeitura.infLeitura.latitude;
+        longitude       := FEnvRecepcaoLeitura.infLeitura.longitude;
+        tpSentido       := FEnvRecepcaoLeitura.infLeitura.tpSentido;
+        placa           := FEnvRecepcaoLeitura.infLeitura.placa;
+        tpVeiculo       := FEnvRecepcaoLeitura.infLeitura.tpVeiculo;
+        velocidade      := FEnvRecepcaoLeitura.infLeitura.velocidade;
+        foto            := FEnvRecepcaoLeitura.infLeitura.foto;
+        indiceConfianca := FEnvRecepcaoLeitura.infLeitura.indiceConfianca;
+        pesoBrutoTotal  := FEnvRecepcaoLeitura.infLeitura.pesoBrutoTotal;
+        nroEixos        := FEnvRecepcaoLeitura.infLeitura.nroEixos;
+      end;
     end;
     {*)}
 
@@ -747,12 +809,12 @@ function TEnvLeitura.GerarPrefixoArquivo: String;
 var
   vUF, vData, vCNPJ, vtpTra, vcEQP, vdhPass: String;
 begin
-  vUF     := Poem_Zeros(FEnvRecepcaoLeitura.cUF, 2);
+  vUF     := Poem_Zeros(FEnvRecepcaoLeitura.infLeitura.cUF, 2);
   vData   := FormatDateTime('YYMM', FEnvRecepcaoLeitura.dhTransm);
-  vCNPJ   := PadLeft(OnlyNumber(FEnvRecepcaoLeitura.CNPJOper), 14, '0');
+  vCNPJ   := PadLeft(OnlyNumber(FEnvRecepcaoLeitura.infLeitura.CNPJOper), 14, '0');
   vtpTra  := Poem_Zeros(tpTransmToStr(FEnvRecepcaoLeitura.tpTransm), 1);
-  vcEQP   := Poem_Zeros(FEnvRecepcaoLeitura.cEQP, 15);
-  vdhPass := FormatDateTime('YYYYMMDDHHMMSS', FEnvRecepcaoLeitura.dhPass);
+  vcEQP   := Poem_Zeros(FEnvRecepcaoLeitura.infLeitura.cEQP, 15);
+  vdhPass := FormatDateTime('YYYYMMDDHHMMSS', FEnvRecepcaoLeitura.infLeitura.dhPass);
 
   Result := vUF + vData + vCNPJ + vtpTra + vcEQP + vdhPass;
 end;
@@ -761,7 +823,7 @@ function TEnvLeitura.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  FRetRecepcaoLeitura.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetRecepcaoLeitura.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FRetRecepcaoLeitura.LerXml;
 
   Fversao   := FRetRecepcaoLeitura.versao;
@@ -878,7 +940,7 @@ begin
     vCNPJ   := PadLeft(OnlyNumber(CNPJOper), 14, '0');
     vtpTra  := Poem_Zeros(tpTransmToStr(tpTransm), 1);
     vcEQP   := Poem_Zeros(cEQP, 15);
-    vdhPass := FormatDateTime('YYYYMMDDHHMMSS', dhPass);
+    vdhPass := FormatDateTime('YYYYMMDDHHMMSS', infLeitura.dhPass);
   end;
 
   Result := vUF + vData + vCNPJ + vtpTra + vcEQP + vdhPass;
@@ -912,7 +974,7 @@ begin
   FRetDistLeitura.Free;   // Limpando a lista
   FRetDistLeitura := TRetDistLeitura.Create;
 
-  FRetDistLeitura.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetDistLeitura.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FRetDistLeitura.LerXml;
 
   FPMsg := FRetDistLeitura.xMotivo;
@@ -951,6 +1013,108 @@ begin
                                                         FPConfiguracoesONE.Geral.CNPJOper,
                                                         '',
                                                         Now);
+end;
+
+{ TONEConsultaFoto }
+
+procedure TONEConsultaFoto.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stConsFoto;
+  FPLayout := LayConsFoto;
+  FPArqEnv := 'cons-foto';
+  FPArqResp := 'foto';
+
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+
+  if Assigned(FPConfiguracoesONE) then
+  begin
+    FtpAmb := FPConfiguracoesONE.WebServices.Ambiente;
+  end;
+
+  if Assigned(FRetConsFoto) then
+    FRetConsFoto.Free;
+
+  FRetConsFoto := TRetConsFoto.Create;
+end;
+
+constructor TONEConsultaFoto.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+
+end;
+
+procedure TONEConsultaFoto.DefinirDadosMsg;
+var
+  ConsFoto: TConsFoto;
+begin
+  ConsFoto := TConsFoto.Create;
+  try
+    ConsFoto.TpAmb      := TpAmb;
+    ConsFoto.verAplic   := verAplic;
+    ConsFoto.NSULeitura := NSULeitura;
+    ConsFoto.Versao     := FPVersaoServico;
+
+    AjustarOpcoes( ConsFoto.Gerador.Opcoes );
+
+    ConsFoto.GerarXML;
+
+    FPDadosMsg := ConsFoto.Gerador.ArquivoFormatoXML;
+  finally
+    ConsFoto.Free;
+  end;
+end;
+
+procedure TONEConsultaFoto.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'oneConsFoto';
+  FPSoapAction := FPServico + '/oneConsFoto';
+end;
+
+destructor TONEConsultaFoto.Destroy;
+begin
+  FRetConsFoto.Free;
+
+  inherited Destroy;
+end;
+
+function TONEConsultaFoto.GerarMsgLog: String;
+begin
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'Resposta: %s ' + LineBreak),
+                   [FRetConsFoto.versao,
+                    TpAmbToStr(FRetConsFoto.TpAmb),
+                    FRetConsFoto.verAplic,
+                    IntToStr(FRetConsFoto.cStat),
+                    FRetConsFoto.xMotivo,
+                    IfThen(FRetConsFoto.dhResp = 0, '',
+                           FormatDateTimeBr(FRetConsFoto.dhResp))]);
+end;
+
+function TONEConsultaFoto.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
+
+  FRetConsFoto.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  FRetConsFoto.LerXml;
+
+  Fversao   := FRetConsFoto.versao;
+  FtpAmb    := FRetConsFoto.tpAmb;
+  FverAplic := FRetConsFoto.verAplic;
+  FcStat    := FRetConsFoto.cStat;
+  FxMotivo  := FRetConsFoto.xMotivo;
+  FdhResp   := FRetConsFoto.dhResp;
+  Ffoto     := FRetConsFoto.foto;
+  FPMsg     := FxMotivo;
+
+  Result := (FcStat = 104);
 end;
 
 end.

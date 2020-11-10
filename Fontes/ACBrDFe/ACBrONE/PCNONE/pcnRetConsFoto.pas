@@ -32,39 +32,94 @@
 
 {$I ACBr.inc}
 
-unit pcnONEConsts;
+unit pcnRetConsFoto;
 
 interface
 
 uses
-  SysUtils;
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase, ACBrUtil, synacode,
+  pcnAuxiliar, pcnConversao, pcnLeitor;
 
-const
-  NAME_SPACE_ONE  = 'xmlns="http://www.portalfiscal.inf.br/one"';
-  DSC_verAplic = 'Versão do Aplicativo';
-  DSC_tpMan = 'Tipo de Manutenção';
-  DSC_CNPJOper = 'CNPJ do Operador';
-  DSC_cEQP = 'Código do Equipamento';
-  DSC_xEQP = 'Descrição do Equipamento';
-  DSC_cUF = 'Código IBGE da UF';
-  DSC_tpSentido = 'Tipo de Sentido';
-  DSC_Latitude = 'Latitude';
-  DSC_Longitude = 'Longitude';
-  DSC_tpEQP = 'Tipo de Equipamento';
-  DSC_tpTransm = 'Tipo de Transmissão';
-  DSC_Placa = 'Placa';
-  DSC_tpVeiculo = 'Tipo de Veiculo';
-  DSC_Velocidade = 'Velocidade do Veiculo';
-  DSC_foto = 'Foto';
-  DSC_IndicadorConfianca = 'Indicador de Confiança do Equipamento';
-  DSC_PesoBrutoTotal = 'Peso Bruto Total';
-  DSC_NroEixos = 'Numero de Eixos do Veiculo';
-  DSC_tpDist = 'Tipo de Distribuição';
-  DSC_NSUFin = 'NSU Final';
-  DSC_xREFCOMPL = 'Detalhe da Localização do Equiplamento';
-  DSC_NSULeitura = 'NSU Geral da leitura';
+type
+
+  TRetConsFoto = class(TObject)
+  private
+    FLeitor: TLeitor;
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FdhResp: TDateTime;
+    Ffoto: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function LerXml: boolean;
+
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao   write Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property dhResp: TDateTime       read FdhResp   write FdhResp;
+    property foto: String            read Ffoto     write Ffoto;
+  end;
 
 implementation
+
+{ TRetConsFoto }
+
+constructor TRetConsFoto.Create;
+begin
+  inherited Create;
+  FLeitor     := TLeitor.Create;
+end;
+
+destructor TRetConsFoto.Destroy;
+begin
+  FLeitor.Free;
+
+  inherited;
+end;
+
+function TRetConsFoto.LerXml: boolean;
+var
+  ok: boolean;
+  auxStr: AnsiString;
+begin
+  Result := False;
+
+  FcStat := 0;
+
+  try
+    if Leitor.rExtrai(1, 'retOneConsFoto') <> '' then
+    begin
+      versao   := Leitor.rAtributo('versao', 'retOneConsFoto');
+      tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      verAplic := Leitor.rCampo(tcStr, 'verAplic');
+      cStat    := Leitor.rCampo(tcInt, 'cStat');
+      xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      dhResp   := Leitor.rCampo(tcDatHor, 'dhResp');
+
+      auxStr := Leitor.rCampo(tcStr, 'foto');
+
+      if auxStr <> '' then
+        foto   := UnZip(DecodeBase64(auxStr));
+
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
+end;
 
 end.
 

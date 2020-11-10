@@ -43,12 +43,70 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase,
-  pcnConversao, pcnLeitor, pcnEnvRecepcaoLeitura;
+  ACBrBase, synacode,
+  pcnConversao, pcnLeitor, pcnConversaoONE, pcnEnvRecepcaoLeitura;
 
 type
-  TLeituraCollection     = class;
-  TLeituraCollectionItem = class;
+  TinfMDFeCollectionItem = class(TObject)
+  private
+    FchMDFe: String;
+
+  public
+    property chMDFe: String read FchMDFe write FchMDFe;
+  end;
+
+  TinfMDFeCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfMDFeCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfMDFeCollectionItem);
+  public
+    function New: TinfMDFeCollectionItem;
+    property Items[Index: Integer]: TinfMDFeCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfCompl = class(TObject)
+  private
+    FtpLeitura: TtpLeitura;
+    FxEQP: String;
+    Flatitude: Double;
+    Flongitude: Double;
+    Fplaca: String;
+    FtpSentido: TtpSentido;
+    FNSULeitura: String;
+  public
+    property tpLeitura: TtpLeitura read FtpLeitura  write FtpLeitura;
+    property xEQP: String          read FxEQP       write FxEQP;
+    property latitude: Double      read Flatitude   write Flatitude;
+    property longitude: Double     read Flongitude  write Flongitude;
+    property placa: String         read Fplaca      write Fplaca;
+    property tpSentido: TtpSentido read FtpSentido  write FtpSentido;
+    property NSULeitura: String    read FNSULeitura write FNSULeitura;
+  end;
+
+  TLeituraCollectionItem = class(TObject)
+  private
+    // Atributos
+    FNSU: String;
+    Fschema: TSchemaDFe;
+
+    FXML: String;
+
+    FRecepcaoLeitura: TRecepcaoLeitura;
+    FinfMDFe: TinfMDFeCollection;
+    FinfCompl: TinfCompl;
+    procedure SetinfMDFe(const Value: TinfMDFeCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property NSU: String        read FNSU    write FNSU;
+    property schema: TSchemaDFe read Fschema write Fschema;
+    property XML: String        read FXML    write FXML;
+
+    property RecepcaoLeitura: TRecepcaoLeitura read FRecepcaoLeitura write FRecepcaoLeitura;
+    property infMDFe: TinfMDFeCollection read FinfMDFe  write SetinfMDFe;
+    property infCompl: TinfCompl         read FinfCompl write FinfCompl;
+  end;
 
   TLeituraCollection = class(TACBrObjectList)
   private
@@ -59,22 +117,70 @@ type
     property Items[Index: Integer]: TLeituraCollectionItem read GetItem write SetItem; default;
   end;
 
-  TLeituraCollectionItem = class(TObject)
+  TLeituraResumoCollectionItem = class(TObject)
   private
-    // Atributos do resumo do DFe ou Evento
+    // Atributos
     FNSU: String;
     Fschema: TSchemaDFe;
-    FRecepcaoLeitura: TRecepcaoLeitura;
+
     FXML: String;
 
+    FinfLeitura: TinfLeitura;
+    FinfMDFe: TinfMDFeCollection;
+
+    procedure SetinfMDFe(const Value: TinfMDFeCollection);
   public
     constructor Create;
     destructor Destroy; override;
 
-    property NSU: String             read FNSU        write FNSU;
-    property schema: TSchemaDFe      read Fschema     write Fschema;
-    property RecepcaoLeitura: TRecepcaoLeitura read FRecepcaoLeitura write FRecepcaoLeitura;
-    property XML: String             read FXML        write FXML;
+    property NSU: String        read FNSU    write FNSU;
+    property schema: TSchemaDFe read Fschema write Fschema;
+    property XML: String        read FXML    write FXML;
+
+    property infLeitura: TinfLeitura     read FinfLeitura write FinfLeitura;
+    property infMDFe: TinfMDFeCollection read FinfMDFe    write SetinfMDFe;
+  end;
+
+  TLeituraResumoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TLeituraResumoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TLeituraResumoCollectionItem);
+  public
+    function New: TLeituraResumoCollectionItem;
+    property Items[Index: Integer]: TLeituraResumoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TLeituraCompactaCollectionItem = class(TObject)
+  private
+    // Atributos
+    FNSU: String;
+    Fschema: TSchemaDFe;
+
+    FXML: String;
+
+    FleituraComp: String;
+    FinfMDFe: TinfMDFeCollection;
+
+    procedure SetinfMDFe(const Value: TinfMDFeCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property NSU: String        read FNSU    write FNSU;
+    property schema: TSchemaDFe read Fschema write Fschema;
+    property XML: String        read FXML    write FXML;
+
+    property leituraComp: String         read FleituraComp write FleituraComp;
+    property infMDFe: TinfMDFeCollection read FinfMDFe     write SetinfMDFe;
+  end;
+
+  TLeituraCompactaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TLeituraCompactaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TLeituraCompactaCollectionItem);
+  public
+    function New: TLeituraCompactaCollectionItem;
+    property Items[Index: Integer]: TLeituraCompactaCollectionItem read GetItem write SetItem; default;
   end;
 
   TRetDistLeitura = class
@@ -90,34 +196,44 @@ type
     FultNSU: String;
     FultNSUONE: String;
 
-    FXML: AnsiString;
+    FXML: String;
+
     FLeitura: TLeituraCollection;
+    FleituraCompacta: TLeituraCompactaCollection;
+    FleituraResumo: TLeituraResumoCollection;
 
     procedure SetLeitura(const Value: TLeituraCollection);
+    procedure SetleituraCompacta(const Value: TLeituraCompactaCollection);
+    procedure SetleituraResumo(const Value: TLeituraResumoCollection);
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXMLFromFile(Const CaminhoArquivo: String): Boolean;
 
-    property Leitor: TLeitor             read FLeitor    write FLeitor;
-    property versao: String              read Fversao    write Fversao;
-    property tpAmb: TpcnTipoAmbiente     read FtpAmb     write FtpAmb;
-    property verAplic: String            read FverAplic  write FverAplic;
-    property cStat: Integer              read FcStat     write FcStat;
-    property xMotivo: String             read FxMotivo   write FxMotivo;
-    property dhResp: TDateTime           read FdhResp    write FdhResp;
-    property ultNSU: String              read FultNSU    write FultNSU;
-    property ultNSUONE: String           read FultNSUONE write FultNSUONE;
+    property Leitor: TLeitor         read FLeitor    write FLeitor;
+    property XML: String             read FXML       write FXML;
+    property versao: String          read Fversao    write Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
+    property verAplic: String        read FverAplic  write FverAplic;
+    property cStat: Integer          read FcStat     write FcStat;
+    property xMotivo: String         read FxMotivo   write FxMotivo;
+    property dhResp: TDateTime       read FdhResp    write FdhResp;
+    property ultNSU: String          read FultNSU    write FultNSU;
+    property ultNSUONE: String       read FultNSUONE write FultNSUONE;
+
     property Leitura: TLeituraCollection read FLeitura   write SetLeitura;
-    property XML: AnsiString             read FXML       write FXML;
+
+    property leituraResumo: TLeituraResumoCollection read FleituraResumo   write SetleituraResumo;
+
+    property leituraCompacta: TLeituraCompactaCollection read FleituraCompacta   write SetleituraCompacta;
   end;
 
 implementation
 
 uses
   pcnAuxiliar,
-  ACBrUtil, pcnConversaoONE;
+  ACBrUtil;
 
 { TLeituraCollection }
 
@@ -145,13 +261,22 @@ begin
   inherited Create;
 
   FRecepcaoLeitura := TRecepcaoLeitura.Create;
+  FinfMDFe := TinfMDFeCollection.Create();
+  FinfCompl := TinfCompl.Create;
 end;
 
 destructor TLeituraCollectionItem.Destroy;
 begin
   FRecepcaoLeitura.Free;
+  FinfMDFe.Free;
+  FinfCompl.Free;
 
   inherited;
+end;
+
+procedure TLeituraCollectionItem.SetinfMDFe(const Value: TinfMDFeCollection);
+begin
+  FinfMDFe := Value;
 end;
 
 { TRetDistLeitura }
@@ -162,12 +287,16 @@ begin
 
   FLeitor  := TLeitor.Create;
   FLeitura := TLeituraCollection.Create();
+  FleituraResumo := TLeituraResumoCollection.Create();
+  FleituraCompacta := TLeituraCompactaCollection.Create();
 end;
 
 destructor TRetDistLeitura.Destroy;
 begin
   FLeitor.Free;
   FLeitura.Free;
+  FleituraResumo.Free;
+  FleituraCompacta.Free;
 
   inherited;
 end;
@@ -177,11 +306,23 @@ begin
   FLeitura := Value;
 end;
 
+procedure TRetDistLeitura.SetleituraCompacta(
+  const Value: TLeituraCompactaCollection);
+begin
+  FleituraCompacta := Value;
+end;
+
+procedure TRetDistLeitura.SetleituraResumo(
+  const Value: TLeituraResumoCollection);
+begin
+  FleituraResumo := Value;
+end;
+
 function TRetDistLeitura.LerXml: boolean;
 var
   Ok: boolean;
-  i: Integer;
-//  StrAux, StrDecod: AnsiString;
+  i, j: Integer;
+  StrAux: AnsiString;
 begin
   Result := False;
 
@@ -203,41 +344,147 @@ begin
       while Leitor.rExtrai(2, 'leitura', '', i + 1) <> '' do
       begin
         FLeitura.New;
-        FLeitura.Items[i].FNSU   := Leitor.rAtributo('NSU', 'leitura');
-        FLeitura.Items[i].schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'leitura'));
-        FLeitura.Items[i].XML    := RetornarConteudoEntre(Leitor.Grupo, '>', '</leitura');
 
-        if (Leitor.rExtrai(3, 'oneRecepLeitura')) <> '' then
+        with FLeitura.Items[i] do
         begin
-          with FLeitura.Items[i].RecepcaoLeitura do
-          begin
-            Versao   := Leitor.rAtributo('versao', 'oneRecepLeitura');
-            tpAmb    := StrToTpAmb(Ok, Leitor.rCampo(tcStr, 'tpAmb'));
-            verAplic := Leitor.rCampo(tcStr, 'verAplic');
-            tpTransm := StrtotpTransm(Ok, Leitor.rCampo(tcStr, 'tpTransm'));
-            dhTransm := Leitor.rCampo(tcDatHor, 'dhTransm');
+          FNSU   := Leitor.rAtributo('NSU', 'leitura');
+          schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'leitura'));
+          XML    := RetornarConteudoEntre(Leitor.Grupo, '>', '</leitura');
 
-            if (Leitor.rExtrai(3, 'infLeitura')) <> '' then
+          if (Leitor.rExtrai(3, 'oneRecepLeitura')) <> '' then
+          begin
+            with RecepcaoLeitura do
             begin
-              cUF             := Leitor.rCampo(tcInt, 'cUF');
-              dhPass          := Leitor.rCampo(tcDatHor, 'dhPass');
-              CNPJOper        := Leitor.rCampo(tcStr, 'CNPJOper');
-              cEQP            := Leitor.rCampo(tcStr, 'cEQP');
-              latitude        := Leitor.rCampo(tcDe6, 'latitude');
-              longitude       := Leitor.rCampo(tcDe6, 'longitude');
-              tpSentido       := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
-              placa           := Leitor.rCampo(tcStr, 'placa');
-              tpVeiculo       := StrTotpVeiculo(Ok, Leitor.rCampo(tcStr, 'tpVeiculo'));
-              velocidade      := Leitor.rCampo(tcInt, 'velocidade');
-              foto            := Leitor.rCampo(tcStr, 'foto');
-              indiceConfianca := Leitor.rCampo(tcInt, 'indiceConfianca');
-              pesoBrutoTotal  := Leitor.rCampo(tcInt, 'pesoBrutoTotal');
-              nroEixos        := Leitor.rCampo(tcInt, 'nroEixos');
+              Versao   := Leitor.rAtributo('versao', 'oneRecepLeitura');
+              tpAmb    := StrToTpAmb(Ok, Leitor.rCampo(tcStr, 'tpAmb'));
+              verAplic := Leitor.rCampo(tcStr, 'verAplic');
+              tpTransm := StrtotpTransm(Ok, Leitor.rCampo(tcStr, 'tpTransm'));
+              dhTransm := Leitor.rCampo(tcDatHor, 'dhTransm');
+
+              if (Leitor.rExtrai(3, 'infLeitura')) <> '' then
+              begin
+                with infLeitura do
+                begin
+                  cUF             := Leitor.rCampo(tcInt, 'cUF');
+                  dhPass          := Leitor.rCampo(tcDatHor, 'dhPass');
+                  CNPJOper        := Leitor.rCampo(tcStr, 'CNPJOper');
+                  cEQP            := Leitor.rCampo(tcStr, 'cEQP');
+                  latitude        := Leitor.rCampo(tcDe6, 'latitude');
+                  longitude       := Leitor.rCampo(tcDe6, 'longitude');
+                  tpSentido       := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+                  placa           := Leitor.rCampo(tcStr, 'placa');
+                  tpVeiculo       := StrTotpVeiculo(Ok, Leitor.rCampo(tcStr, 'tpVeiculo'));
+                  velocidade      := Leitor.rCampo(tcInt, 'velocidade');
+                  foto            := Leitor.rCampo(tcStr, 'foto');
+                  indiceConfianca := Leitor.rCampo(tcInt, 'indiceConfianca');
+                  pesoBrutoTotal  := Leitor.rCampo(tcInt, 'pesoBrutoTotal');
+                  nroEixos        := Leitor.rCampo(tcInt, 'nroEixos');
+                end;
+              end;
+            end;
+          end;
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infMDFe', '', j + 1) <> '' do
+          begin
+            FinfMDFe.New;
+            FinfMDFe.Items[j].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
+
+            Inc(j);
+          end;
+
+          if (Leitor.rExtrai(3, 'infCompl')) <> '' then
+          begin
+            with infCompl do
+            begin
+              tpLeitura  := StrTotpLeitura(Ok, Leitor.rCampo(tcStr, 'tpLeitura'));
+              xEQP       := Leitor.rCampo(tcStr, 'xEQP');
+              latitude   := Leitor.rCampo(tcDe6, 'latitude');
+              longitude  := Leitor.rCampo(tcDe6, 'longitude');
+              placa      := Leitor.rCampo(tcStr, 'placa');
+              tpSentido  := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+              NSULeitura := Leitor.rCampo(tcStr, 'NSULeitura');
             end;
           end;
         end;
 
         inc(i);
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'leituraResumo', '', i + 1) <> '' do
+      begin
+        FleituraResumo.New;
+
+        with FleituraResumo.Items[i] do
+        begin
+          FNSU   := Leitor.rAtributo('NSU', 'leituraResumo');
+          schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'leituraResumo'));
+          XML    := RetornarConteudoEntre(Leitor.Grupo, '>', '</leituraResumo');
+
+          if (Leitor.rExtrai(3, 'infLeitura')) <> '' then
+          begin
+            with infLeitura do
+            begin
+              tpTransm       := StrtotpTransm(Ok, Leitor.rCampo(tcStr, 'tpTransm'));
+              dhTransm       := Leitor.rCampo(tcDatHor, 'dhTransm');
+              cUF            := Leitor.rCampo(tcInt, 'cUF');
+              dhPass         := Leitor.rCampo(tcDatHor, 'dhPass');
+              CNPJOper       := Leitor.rCampo(tcStr, 'CNPJOper');
+              xOper          := Leitor.rCampo(tcStr, 'xOper');
+              tpLeitura      := StrTotpLeitura(Ok, Leitor.rCampo(tcStr, 'tpLeitura'));
+              cEQP           := Leitor.rCampo(tcStr, 'cEQP');
+              xEQP           := Leitor.rCampo(tcStr, 'xEQP');
+              latitude       := Leitor.rCampo(tcDe6, 'latitude');
+              longitude      := Leitor.rCampo(tcDe6, 'longitude');
+              tpSentido      := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+              placa          := Leitor.rCampo(tcStr, 'placa');
+              tpVeiculo      := StrTotpVeiculo(Ok, Leitor.rCampo(tcStr, 'tpVeiculo'));
+              velocidade     := Leitor.rCampo(tcInt, 'velocidade');
+              pesoBrutoTotal := Leitor.rCampo(tcInt, 'pesoBrutoTotal');
+              nroEixos       := Leitor.rCampo(tcInt, 'nroEixos');
+              NSULeitura     := Leitor.rCampo(tcStr, 'NSULeitura');
+            end;
+          end;
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infMDFe', '', j + 1) <> '' do
+          begin
+            FinfMDFe.New;
+            FinfMDFe.Items[j].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
+
+            Inc(j);
+          end;
+        end;
+
+        inc(i);
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'leituraCompacta', '', i + 1) <> '' do
+      begin
+        FleituraCompacta.New;
+
+        with FleituraCompacta.Items[i] do
+        begin
+          FNSU   := Leitor.rAtributo('NSU', 'leituraCompacta');
+          schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'leituraCompacta'));
+          XML    := RetornarConteudoEntre(Leitor.Grupo, '>', '</leituraCompacta');
+
+          StrAux      := Leitor.rCampo(tcStr, 'leituraComp');
+          leituraComp := UnZip(DecodeBase64(StrAux));
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infMDFe', '', j + 1) <> '' do
+          begin
+            FinfMDFe.New;
+            FinfMDFe.Items[j].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
+
+            Inc(j);
+          end;
+        end;
+
+        Inc(i);
       end;
 
       Result := True;
@@ -256,15 +503,121 @@ var
   ArqDist: TStringList;
 begin
   ArqDist := TStringList.Create;
+
   try
-     ArqDist.LoadFromFile(CaminhoArquivo);
+    ArqDist.LoadFromFile(CaminhoArquivo);
 
-     Self.Leitor.Arquivo := ArqDist.Text;
+    Self.Leitor.Arquivo := ArqDist.Text;
 
-     Result := LerXml;
+    Result := LerXml;
   finally
-     ArqDist.Free;
+    ArqDist.Free;
   end;
+end;
+
+{ TLeituraCompactaCollectionItem }
+
+constructor TLeituraCompactaCollectionItem.Create;
+begin
+  inherited Create;
+
+  FinfMDFe := TinfMDFeCollection.Create();
+end;
+
+destructor TLeituraCompactaCollectionItem.Destroy;
+begin
+  FinfMDFe.Free;
+
+  inherited;
+end;
+
+procedure TLeituraCompactaCollectionItem.SetinfMDFe(
+  const Value: TinfMDFeCollection);
+begin
+  FinfMDFe := Value;
+end;
+
+{ TLeituraCompactaCollection }
+
+function TLeituraCompactaCollection.GetItem(
+  Index: Integer): TLeituraCompactaCollectionItem;
+begin
+  Result := TLeituraCompactaCollectionItem(inherited Items[Index]);
+end;
+
+function TLeituraCompactaCollection.New: TLeituraCompactaCollectionItem;
+begin
+  Result := TLeituraCompactaCollectionItem.Create;
+  Add(Result);
+end;
+
+procedure TLeituraCompactaCollection.SetItem(Index: Integer;
+  Value: TLeituraCompactaCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TinfMDFeCollection }
+
+function TinfMDFeCollection.GetItem(Index: Integer): TinfMDFeCollectionItem;
+begin
+  Result := TinfMDFeCollectionItem(inherited Items[Index]);
+end;
+
+function TinfMDFeCollection.New: TinfMDFeCollectionItem;
+begin
+  Result := TinfMDFeCollectionItem.Create;
+  Add(Result);
+end;
+
+procedure TinfMDFeCollection.SetItem(Index: Integer;
+  Value: TinfMDFeCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TLeituraResumoCollectionItem }
+
+constructor TLeituraResumoCollectionItem.Create;
+begin
+  inherited Create;
+
+  FinfLeitura := TinfLeitura.Create;
+  FinfMDFe := TinfMDFeCollection.Create();
+end;
+
+destructor TLeituraResumoCollectionItem.Destroy;
+begin
+  FinfLeitura.Free;
+  FinfMDFe.Free;
+
+  inherited;
+end;
+
+procedure TLeituraResumoCollectionItem.SetinfMDFe(
+  const Value: TinfMDFeCollection);
+begin
+  FinfMDFe := Value;
+end;
+
+{ TLeituraResumoCollection }
+
+function TLeituraResumoCollection.GetItem(
+  Index: Integer): TLeituraResumoCollectionItem;
+begin
+  Result := TLeituraResumoCollectionItem(inherited Items[Index]);
+end;
+
+function TLeituraResumoCollection.New: TLeituraResumoCollectionItem;
+begin
+  Result := TLeituraResumoCollectionItem.Create;
+  Add(Result);
+end;
+
+procedure TLeituraResumoCollection.SetItem(Index: Integer;
+  Value: TLeituraResumoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

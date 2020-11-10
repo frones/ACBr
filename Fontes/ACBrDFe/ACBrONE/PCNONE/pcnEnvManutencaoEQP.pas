@@ -67,6 +67,7 @@ type
     Flatitude: Double;
     Flongitude: Double;
     FtpEQP: TtpEQP;
+    FxRefCompl: String;
 
   public
     constructor Create;
@@ -92,6 +93,7 @@ type
     property latitude: Double        read Flatitude  write Flatitude;
     property longitude: Double       read Flongitude write Flongitude;
     property tpEQP: TtpEQP           read FtpEQP     write FtpEQP;
+    property xRefCompl: String       read FxRefCompl write FxRefCompl;
   end;
 
 implementation
@@ -127,19 +129,20 @@ begin
 
   Gerador.wGrupo('oneManEQP ' + NAME_SPACE_ONE + ' versao="' + Versao + '"');
 
-  Gerador.wCampo(tcStr, 'AP03', 'tpAmb    ', 01, 01, 1, TpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'AP04', 'verAplic ', 01, 20, 1, FverAplic, DSC_verAplic);
-  Gerador.wCampo(tcStr, 'AP05', 'tpMan    ', 01, 01, 1, TpManToStr(FtpMan), DSC_tpMan);
-  Gerador.wCampo(tcStr, 'AP06', 'dhReg    ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhReg) +
+  Gerador.wCampo(tcStr, 'AP03', 'tpAmb    ', 01, 001, 1, TpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'AP04', 'verAplic ', 01, 020, 1, FverAplic, DSC_verAplic);
+  Gerador.wCampo(tcStr, 'AP05', 'tpMan    ', 01, 001, 1, TpManToStr(FtpMan), DSC_tpMan);
+  Gerador.wCampo(tcStr, 'AP06', 'dhReg    ', 01, 050, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhReg) +
                                                            GetUTC(CodigoParaUF(FcUF), FdhReg));
-  Gerador.wCampo(tcStr, 'AP07', 'CNPJOper ', 01, 14, 1, FCNPJOper, DSC_CNPJOper);
-  Gerador.wCampo(tcStr, 'AP08', 'cEQP     ', 01, 15, 1, sEQP, DSC_cEQP);
-  Gerador.wCampo(tcStr, 'AP09', 'xEQP     ', 01, 50, 1, FxEQP, DSC_xEQP);
-  Gerador.wCampo(tcInt, 'AP10', 'cUF      ', 01, 02, 1, FcUF, DSC_cUF);
-  Gerador.wCampo(tcStr, 'AP11', 'tpSentido', 01, 01, 1, TpSentidoToStr(FtpSentido), DSC_tpSentido);
-  Gerador.wCampo(tcDe6, 'AP12', 'latitude ', 01, 10, 1, Flatitude, DSC_latitude);
-  Gerador.wCampo(tcDe6, 'AP13', 'longitude', 01, 10, 1, Flongitude, DSC_longitude);
-  Gerador.wCampo(tcStr, 'AP14', 'tpEQP    ', 01, 01, 1, TpEQPToStr(FtpEQP), DSC_tpEQP);
+  Gerador.wCampo(tcStr, 'AP07', 'CNPJOper ', 01, 014, 1, FCNPJOper, DSC_CNPJOper);
+  Gerador.wCampo(tcStr, 'AP08', 'cEQP     ', 01, 015, 1, sEQP, DSC_cEQP);
+  Gerador.wCampo(tcStr, 'AP09', 'xEQP     ', 01, 050, 1, FxEQP, DSC_xEQP);
+  Gerador.wCampo(tcInt, 'AP10', 'cUF      ', 01, 002, 1, FcUF, DSC_cUF);
+  Gerador.wCampo(tcStr, 'AP11', 'tpSentido', 01, 001, 1, TpSentidoToStr(FtpSentido), DSC_tpSentido);
+  Gerador.wCampo(tcDe6, 'AP12', 'latitude ', 01, 010, 1, Flatitude, DSC_latitude);
+  Gerador.wCampo(tcDe6, 'AP13', 'longitude', 01, 010, 1, Flongitude, DSC_longitude);
+  Gerador.wCampo(tcStr, 'AP14', 'tpEQP    ', 01, 001, 1, TpEQPToStr(FtpEQP), DSC_tpEQP);
+  Gerador.wCampo(tcStr, 'AP15', 'xRefCompl', 02, 200, 0, xRefCompl, DSC_xREFCOMPL);
 
   Gerador.wGrupo('/oneManEQP');
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2020
+-- Diversos --
+[+] Novo método de Consulta a Foto.
+   Por: Italo Giurizzato Junior
+
 22/07/2020
 -- Diversos --
 [+] Acrescentado a unit pcnConsts em algumas units do componente.

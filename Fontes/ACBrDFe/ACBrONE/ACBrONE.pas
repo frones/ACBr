@@ -112,6 +112,8 @@ type
     function DistLeiturasPorEQP(TipoDist: TtpDist;
                                  const ultNSU, cEQP: string;
                                  const NSUFin: string = ''): Boolean;
+
+    function ConsultarFoto(const aVerAplic, aNSULeitura: string): Boolean;
   published
     property Configuracoes: TConfiguracoesONE read GetConfiguracoes write SetConfiguracoes;
   end;
@@ -132,6 +134,14 @@ uses
 {$ENDIF}
 
 { TACBrONE }
+
+function TACBrONE.ConsultarFoto(const aVerAplic, aNSULeitura: string): Boolean;
+begin
+  Result := WebServices.ConsultaFoto(aVerAplic, aNSULeitura);
+
+  if not Result then
+    GerarException( WebServices.ConsultarFoto.Msg );
+end;
 
 constructor TACBrONE.Create(AOwner: TComponent);
 begin

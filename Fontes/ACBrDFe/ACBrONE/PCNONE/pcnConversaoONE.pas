@@ -44,12 +44,12 @@ type
   TVersaoONE = (ve200);
 
   TStatusACBrONE = (stIdleONE, stManutencao, stRecepcaoLeitura,
-                    stDistLeitura);
+                    stDistLeitura, stConsFoto);
 
-  TLayOutONE = (LayManutencao, LayRecepcaoLeitura, LayDistLeitura);
+  TLayOutONE = (LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto);
 
   TSchemaONE = (schErro, schONEManutencaoEQP, schONERecepcaoLeitura,
-                schONEDistLeitura);
+                schONEDistLeitura, schONEConsFoto);
 
   TtpMan = (tmCadastramento, tmAlteracao, tmDesativacao, tmReativacao);
 
@@ -62,6 +62,8 @@ type
   TtpVeiculo = (tvCarga, tvPassageiro, tvPasseio);
 
   TtpDist = (tdUFMDFe, tdEquipamento, tdOperador, tdUFCaptura);
+
+  TtpLeitura = (tlSLD, tlOCR);
 
 function StrToVersaoONE(out ok: Boolean; const s: String): TVersaoONE;
 function VersaoONEToStr(const t: TVersaoONE): String;
@@ -96,6 +98,9 @@ function StrTotpVeiculo(out ok: Boolean; const s: String): TtpVeiculo;
 
 function tpDistToStr(const t: TtpDist): String;
 function StrTotpDist(out ok: Boolean; const s: String): TtpDist;
+
+function tpLeituraToStr(const t: TtpLeitura): String;
+function StrTotpLeitura(out ok: Boolean; const s: String): TtpLeitura;
 
 implementation
 
@@ -140,6 +145,7 @@ begin
     LayManutencao:       Result := schONEManutencaoEQP;
     LayRecepcaoLeitura:  Result := schONERecepcaoLeitura;
     LayDistLeitura:      Result := schONEDistLeitura;
+    LayConsFoto:         Result := schONEConsFoto;
   else
     Result := schErro;
   end;
@@ -179,15 +185,15 @@ end;
 function LayOutONEToServico(const t: TLayOutONE): String;
 begin
   Result := EnumeradoToStr(t,
-    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura'],
-    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura] );
+    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto'],
+    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto] );
 end;
 
 function ServicoToLayOutONE(out ok: Boolean; const s: String): TLayOutONE;
 begin
   Result := StrToEnumerado(ok, s,
-    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura'],
-    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura] );
+    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto'],
+    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto] );
 end;
 
 function StrToTpEventoONE(out ok: boolean; const s: string): TpcnTpEvento;
@@ -279,6 +285,20 @@ begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],
                            [tdUFMDFe, tdEquipamento, tdOperador, tdUFCaptura]);
+end;
+
+function tpLeituraToStr(const t: TtpLeitura): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [tlSLD, tlOCR]);
+end;
+
+function StrTotpLeitura(out ok: Boolean; const s: String): TtpLeitura;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [tlSLD, tlOCR]);
 end;
 
 initialization

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/11/2020
+-- pnfsNFSeG --
+[*] O provedor Sigep requer o grupo <credenciais> nas mensagens de dados.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterações visando atender o provedor fintelISS.
   Por: Italo Giurizzato Junior

@@ -1126,6 +1126,16 @@ begin
        end;
   else
     begin
+      if Provedor = proSigep then
+      begin
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupo('credenciais');
+        Gerador.wCampo(tcStr, '#01', 'usuario     ', 01, 15, 1, UserWeb);
+        Gerador.wCampo(tcStr, '#02', 'senha       ', 01, 05, 1, SenhaWeb);
+        Gerador.wCampo(tcStr, '#03', 'chavePrivada', 01, 01, 1, ChaveAcessoPrefeitura);
+        Gerador.wGrupo('/credenciais');
+      end;
+
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupo('Prestador' + FaNameSpace);
 
@@ -1326,6 +1336,16 @@ begin
 
   else
     begin
+      if Provedor = proSigep then
+      begin
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupo('credenciais');
+        Gerador.wCampo(tcStr, '#01', 'usuario     ', 01, 15, 1, UserWeb);
+        Gerador.wCampo(tcStr, '#02', 'senha       ', 01, 05, 1, SenhaWeb);
+        Gerador.wCampo(tcStr, '#03', 'chavePrivada', 01, 01, 1, ChaveAcessoPrefeitura);
+        Gerador.wGrupo('/credenciais');
+      end;
+
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupo('IdentificacaoRps' + FaNameSpace);
 
@@ -1510,6 +1530,7 @@ begin
         Gerador.wGrupo('/ChaveNFe');
         Gerador.wGrupo('/Detalhe');
       end;
+
     proSigISS:
      begin
         Gerador.ArquivoFormatoXML := '';
@@ -1558,6 +1579,16 @@ begin
        end;
   else
     begin
+      if Provedor = proSigep then
+      begin
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupo('credenciais');
+        Gerador.wCampo(tcStr, '#01', 'usuario     ', 01, 15, 1, UserWeb);
+        Gerador.wCampo(tcStr, '#02', 'senha       ', 01, 05, 1, SenhaWeb);
+        Gerador.wCampo(tcStr, '#03', 'chavePrivada', 01, 01, 1, ChaveAcessoPrefeitura);
+        Gerador.wGrupo('/credenciais');
+      end;
+
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupo('Prestador' + FaNameSpace);
 
@@ -2041,6 +2072,21 @@ begin
         TagF :=    '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                 '</' + Prefixo3 + 'Pedido>';
       end;
+
+    proSigep:
+      begin
+        TagI := '<' + Prefixo4 + 'credenciais>' +
+                 '<' + Prefixo4 + 'usuario>' + UserWeb + '</' + Prefixo4 + 'usuario>' +
+                 '<' + Prefixo4 + 'senha>' + SenhaWeb + '</' + Prefixo4 + 'senha>' +
+                 '<' + Prefixo4 + 'chavePrivada>' + ChaveAcessoPrefeitura + '</' + Prefixo4 + 'chavePrivada>' +
+                '</' + Prefixo4 + 'credenciais>' +
+                '<' + Prefixo3 + 'Pedido>' +
+                   '<' + Prefixo4 + 'InfPedidoCancelamento' + FaIdentificadorCanc + '>';
+
+        TagF :=    '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                '</' + Prefixo3 + 'Pedido>';
+      end;
+
     proSpeedGov:
       begin
         TagI := '<Pedido>' +

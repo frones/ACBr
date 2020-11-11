@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2020
+-- ACBrGNREWebServices --
+[*] Ajustes na definição do path do XML Retorno seguindo a estrutura de diretórios do componente, para gravação das Guias.xml
+  Por: José M S Junior
+
 01/10/2020
 -- ACBrGNREWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/59481-mensagem-vazia/

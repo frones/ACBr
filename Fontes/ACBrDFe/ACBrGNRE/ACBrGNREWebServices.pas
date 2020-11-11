@@ -144,7 +144,8 @@ type
 
     function Executar: Boolean; override;
     function SalvarTXT(AResultado: String): Boolean;
-    function SalvarXML(AGuia, ANumero: String): Boolean;
+    function SalvarXML(AGuia, ANumero: String; aData: TDateTime;
+      aCNPJ, aIE: string): Boolean;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
@@ -709,8 +710,10 @@ end;
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
   I: Integer;
+  xData: TDateTime;
 begin
   Result := False;
+
   //Verificando se existe alguma guia confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
@@ -718,11 +721,20 @@ begin
     begin
       Result := True;
 
-      if FGNRERetorno.resGuia.Items[i].Versao = ve100 then
+      if FGNRERetorno.resGuia.Items[I].Versao = ve100 then
         Self.SalvarTXT(FGNRERetorno.resultado)
       else
-        Self.SalvarXML(FGNRERetorno.resGuia.Items[i].XML,
-                       FGNRERetorno.resGuia.Items[i].NumeroControle);
+      begin
+        with FGNRERetorno.resGuia.Items[I] do
+        begin
+          if FPConfiguracoesGNRE.Arquivos.EmissaoPathGNRE then
+            xData := StrToDateDef(DataVencimento,Now)
+          else
+            xData := Now;
+
+          Self.SalvarXML(XML, NumeroControle, xData, DocEmitente, '');
+        end;
+      end;
     end;
   end;
 
@@ -790,16 +802,18 @@ begin
   end;
 end;
 
-function TGNRERetRecepcao.SalvarXML(AGuia, ANumero: String): Boolean;
+function TGNRERetRecepcao.SalvarXML(AGuia, ANumero: String; aData: TDateTime;
+  aCNPJ, aIE: string): Boolean;
 var
-  NomeArq: string;
+  NomeArq, Path: string;
 begin
   Result := True;
 
   if FPConfiguracoesGNRE.Arquivos.Salvar then
   begin
-    NomeArq := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathGNRE) +
-               ANumero + '-guia.xml';
+    Path := FPConfiguracoesGNRE.Arquivos.GetPathGNRE(aData, aCNPJ, aIE);
+
+    NomeArq := PathWithDelim(Path) + ANumero + '-guia.xml';
 
     Result := FPDFeOwner.Gravar(NomeArq, AGuia);
   end;

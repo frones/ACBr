@@ -2178,15 +2178,17 @@ end;
 
 procedure TACBrTitulo.SetParcela ( const AValue: Integer ) ;
 begin
-   if (AValue > TotalParcelas) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
-      raise Exception.Create( ACBrStr('Numero da Parcela Atual deve ser menor ' +
-                                      'que o Total de Parcelas do Carnê') );
+  if Assigned(ACBrBoleto.ACBrBoletoFC) then
+    if (AValue > TotalParcelas) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
+       raise Exception.Create( ACBrStr('Numero da Parcela Atual deve ser menor ' +
+                                       'que o Total de Parcelas do Carnê') );
    fParcela := AValue;
 end;
 
 procedure TACBrTitulo.SetTotalParcelas ( const AValue: Integer ) ;
 begin
-   if (AValue < Parcela) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
+  if Assigned(ACBrBoleto.ACBrBoletoFC) then
+    if (AValue < Parcela) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
       raise Exception.Create( ACBrStr('Numero da Parcela Atual deve ser menor ou igual ' +
                                       'o Total de Parcelas do Carnê') );
    fTotalParcelas := AValue;

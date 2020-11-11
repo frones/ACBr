@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2020
+-- Diversos --
+[*] Alterações visando atender o provedor fintelISS.
+  Por: Italo Giurizzato Junior
+
 10/11/2020
 -- ACBrNFSeWebServices --
 [*] Incluido o enumerador do provedor DeISS para que seja gerado a terceira

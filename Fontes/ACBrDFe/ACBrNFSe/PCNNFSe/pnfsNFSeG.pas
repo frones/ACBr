@@ -314,14 +314,17 @@ begin
   // Atributo versao ===========================================================
   if VersaoDados <> '' then
   begin
-    if Provedor in [proFintelISS, proSP, proNotaBlu] then
+    if Provedor in [proSP, proNotaBlu] then
       FaVersao := ' Versao="' + VersaoDados + '"'
     else
       FaVersao := ' versao="' + VersaoDados + '"';
 
+    if (Provedor = proFintelISS) and (CodMunicipio <> 3136702) then
+      FaVersao := '';
+
     if Provedor in [proAbaco, proBetha, proDBSeller, proGinfes, proGoiania,
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
-                    proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
+                    proTinus, proRecife, proRJ, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
                     proSJP, proWebISS, proMetropolisWeb,
                     progeNFe, proSiapSistemas] then
@@ -2186,10 +2189,10 @@ begin
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
-                  proBetim, proBHISS, proDBSeller, proEquiplano, profintelISS,
+                  proBetim, proBHISS, proDBSeller, proEquiplano,
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
                   proISSIntel, proISSNet, proLexsom, proNatal,
-                  proTinus, proProdemge, proPublica, proRecife, proRJ, //proSaatri,
+                  proTinus, proProdemge, proPublica, proRecife, proRJ,
                   proFreire, proSimplISS, proThema, proTiplan, proWebISS,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
                   proNFSEBrasil] then

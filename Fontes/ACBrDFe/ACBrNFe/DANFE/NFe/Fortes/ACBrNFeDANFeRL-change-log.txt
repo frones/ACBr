@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2020
+-- ACBrNFeDANFeRLRetrado --
+[*] Ajuste no posicionamento e tamanho do campo Codigo de Barras (referente correção codigo imprimindo colorido em linux) no DFM e LFM. 
+
 19/05/2020
 -- ACBrNFeDANFeRLClass --
 [-] Correção para gravar as informações da propriedade "Fonte" no DFM.

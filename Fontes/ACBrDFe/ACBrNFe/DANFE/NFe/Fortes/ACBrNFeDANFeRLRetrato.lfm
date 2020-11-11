@@ -1075,11 +1075,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object rlbCodigoBarras: TRLBarcode
-        Left = 520
+        Left = 435
         Height = 40
         Top = 5
-        Width = 132
+        Width = 298
         Alignment = taCenter
+        Anchors = [fkLeft, fkTop]
+        AutoSize = False
         BarcodeType = bcCode128C
         Margins.LeftMargin = 1
         Margins.RightMargin = 1

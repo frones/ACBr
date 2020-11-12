@@ -1749,40 +1749,33 @@ const
   );
 begin
   ValidarGTIN;
-  if fsMsgErro = '' then
-  begin
-    CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
+  if NaoEstaVazio(fsMsgErro) then
+    Exit;
 
-    if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
-      sPrefixo := copy(CodigoNormalizado, 7, 3)
-//   else if StrToInt(Copy(CodigoNormalizado, 1, 2)) = 0 then //gtin12
-//     sPrefixo := copy(CodigoNormalizado, 3, 3)
-    else
-      sPrefixo := copy(CodigoNormalizado, 2, 3);
+  CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
 
-    iPrefixo := StrtoIntDef(sPrefixo, 0);
-    if iPrefixo = 0 then
-      fsMsgErro := 'Prefixo do código GTIN inválido!'
-    else
-    begin
+  if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
+    sPrefixo := copy(CodigoNormalizado, 7, 3)
+  else
+    sPrefixo := copy(CodigoNormalizado, 2, 3);
+
+  iPrefixo := StrtoIntDef(sPrefixo, 0);
 {$IFNDEF COMPILER23_UP}
-      bEncontrado := False;
+  bEncontrado := False;
 {$ENDIF}
-      for I := Low(ARRAY_PREFIX_GTIN) to High(ARRAY_PREFIX_GTIN) do
-      begin
-        bEncontrado := InRange(iPrefixo, ARRAY_PREFIX_GTIN[I].fxPrefixIni, ARRAY_PREFIX_GTIN[I].fxPrefixFim);
-        if bEncontrado then
-          Break;
-      end;
-
-      if bEncontrado then
-        fsMsgErro := ''
-      else
-        fsMsgErro := Format(
-          'Prefixo "%d" do GTIN "%s" informado inválido', [iPrefixo, Documento]
-        );
-    end;
+  for I := Low(ARRAY_PREFIX_GTIN) to High(ARRAY_PREFIX_GTIN) do
+  begin
+    bEncontrado := InRange(iPrefixo, ARRAY_PREFIX_GTIN[I].fxPrefixIni, ARRAY_PREFIX_GTIN[I].fxPrefixFim);
+    if bEncontrado then
+      Break;
   end;
+
+  if bEncontrado then
+    fsMsgErro := ''
+  else
+    fsMsgErro := Format(
+      'Prefixo "%d" do GTIN "%s" informado inválido', [iPrefixo, Documento]
+    );
 end;
 
 procedure TACBrValidador.ValidarRenavam;

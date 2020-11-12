@@ -133,7 +133,11 @@ begin
     LogoStream := TStringStream.Create(ALogo);
     try
       try
-        ALogoImage.Picture.Bitmap.LoadFromStream(LogoStream);
+        {$if defined(DELPHIXE2_UP) or defined(FPC)}
+         ALogoImage.Picture.LoadFromStream(LogoStream);
+        {$Else}
+         ALogoImage.Picture.Bitmap.LoadFromStream(LogoStream);
+        {$IfEnd}
         Result := True;
       except
         ALogoImage.Picture := nil;

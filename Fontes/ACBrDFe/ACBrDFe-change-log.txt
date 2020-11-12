@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2020
+-- ACBrDFeReportFortes --
+[*] Ajuste para permitir a leitura de imagens em formato PNG e JPG, se a IDE permitir
+    https://www.projetoacbr.com.br/forum/topic/60096-wrong-format-invalid-danfe/
+
 14/09/2020
 -- ACBrDFeWinCrypt --
 [-] Revertendo diretiva para funcionamento correto em Lazarus.

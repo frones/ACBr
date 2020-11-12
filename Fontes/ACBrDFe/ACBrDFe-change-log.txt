@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/11/2020
+-- ACBrDFeSSL, ACBrDFeWebService --
+[+] Adicionado o parâmetro ""AuthorizationHeader", no método "Enviar"
+    https://www.projetoacbr.com.br/forum/topic/60033-nfse-em-bragança-paulista/
+
 -- ACBrDFeReportFortes --
 [*] Ajuste para permitir a leitura de imagens em formato PNG e JPG, se a IDE permitir
     https://www.projetoacbr.com.br/forum/topic/60096-wrong-format-invalid-danfe/

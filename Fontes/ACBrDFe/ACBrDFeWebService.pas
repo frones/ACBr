@@ -83,7 +83,7 @@ type
     FPServico: String;
     FPSoapAction: String;
     FPMimeType: String;
-
+    FPAuthorizationHeader: string;
   protected
     procedure FazerLog(const Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(const Msg: String; E: Exception = nil); virtual;
@@ -129,6 +129,7 @@ type
     property Servico: String read FPServico;
     property SoapAction: String read FPSoapAction;
     property MimeType: String read FPMimeType;
+    property AuthorizationHeader: String read FPAuthorizationHeader;
     property URL: String read FPURL;
     property VersaoServico: String read FPVersaoServico;
     property CabMsg: String read FPCabMsg;
@@ -172,6 +173,7 @@ begin
   FPServico := '';
   FPSoapAction := '';
   FPMimeType := '';  // Vazio, usará por default: 'application/soap+xml'
+  FPAuthorizationHeader := '';
 
   Clear;
 end;
@@ -409,7 +411,8 @@ begin
       else   // Envio interno, por TDFeSSL
       begin
         try
-          FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
+          FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction,
+                                             FPMimeType, FPAuthorizationHeader);
         finally
           HTTPResultCode := FPDFeOwner.SSL.HTTPResultCode;
           InternalErrorCode := FPDFeOwner.SSL.InternalErrorCode;

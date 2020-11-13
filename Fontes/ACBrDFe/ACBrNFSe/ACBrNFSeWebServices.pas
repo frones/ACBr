@@ -932,6 +932,9 @@ begin
 
   FPDFeOwner.SSL.UseCertificateHTTP := FPConfiguracoesNFSe.Geral.ConfigGeral.UseCertificateHTTP;
 
+  if FProvedor = proGiap then
+    self.FPAuthorizationHeader := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
+
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
 end;
 

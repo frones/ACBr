@@ -282,7 +282,7 @@ end;
 
 procedure Manifesto.Validar;
 var
-  Erro, AXML, DeclaracaoXML, AXMLModal, TagModal: String;
+  Erro, AXML, AXMLModal, TagModal: String;
   MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
@@ -311,25 +311,30 @@ begin
     ALayout := LayMDFeRecepcao;
 
     // Extraindo apenas os dados da MDFe (sem mdfeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<MDFe xmlns' +
-            RetornarConteudoEntre(AXML, '<MDFe xmlns', '</MDFe>') +
-            '</MDFe>';
+    AXML := ObterDFeXML(AXML, 'MDFe', ACBRMDFE_NAMESPACE);
 
-    ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
-
-    if not ModalEhValido then
+    if EstaVazio(AXML) then
     begin
-      FErroValidacao := ACBrStr('Falha na validação do Modal do Manifesto: ') +
-        IntToStr(MDFe.Ide.nMDF) + sLineBreak + FAlertas ;
-      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+      Erro := ACBrStr('MDFe não encontrada no XML');
+      MDFeEhValida := False;
+    end
+    else
+    begin
+      ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
 
-      raise EACBrMDFeException.CreateDef(
-        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
-        ErroValidacao));
+      if not ModalEhValido then
+      begin
+        FErroValidacao := ACBrStr('Falha na validação do Modal do Manifesto: ') +
+          IntToStr(MDFe.Ide.nMDF) + sLineBreak + FAlertas ;
+        FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+
+        raise EACBrMDFeException.CreateDef(
+          IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+          ErroValidacao));
+      end;
+
+      MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro);
     end;
-
-    MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro);
 
     if not MDFeEhValida then
     begin
@@ -346,21 +351,23 @@ end;
 
 function Manifesto.VerificarAssinatura: Boolean;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML: String;
   AssEhValida: Boolean;
 begin
   AXML := XMLAssinado;
 
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
+    // Extraindo apenas os dados da MDFe (sem mdfeProc)
+    AXML := ObterDFeXML(AXML, 'MDFe', ACBRMDFE_NAMESPACE);
 
-    // Extraindo apenas os dados do MDFe (sem mdfeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<MDFe xmlns' +
-            RetornarConteudoEntre(AXML, '<MDFe xmlns', '</MDFe>') +
-            '</MDFe>';
-
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infMDFe');
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr('MDFe não encontrada no XML');
+      AssEhValida := False;
+    end
+    else
+      AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infMDFe');
 
     if not AssEhValida then
     begin

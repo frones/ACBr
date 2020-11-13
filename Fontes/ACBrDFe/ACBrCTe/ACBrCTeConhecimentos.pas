@@ -296,7 +296,7 @@ end;
 
 procedure Conhecimento.Validar;
 var
-  Erro, AXML, DeclaracaoXML, AXMLModal: String;
+  Erro, AXML, AXMLModal, Grupo: String;
   CTeEhValido, ModalEhValido, ok: Boolean;
   ALayout: TLayOutCTe;
   Modelo: TModeloCTe;
@@ -362,54 +362,56 @@ begin
   begin
     Modelo  := StrToModeloCTe(ok, IntToStr(FCTe.Ide.modelo));
 
-    // Extraindo apenas os dados do CTe (sem cteProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-
     case Modelo of
       moCTeOS:
         begin
           ALayout := LayCTeRecepcaoOS;
-          AXML := DeclaracaoXML + '<CTeOS xmlns' +
-                  RetornarConteudoEntre(AXML, '<CTeOS xmlns', '</CTeOS>') +
-                  '</CTeOS>';
+          Grupo := 'CTeOS';
         end;
       moGTVe:
         begin
           ALayout := LayCTeRecepcaoGTVe;
-          AXML := DeclaracaoXML + '<GTVe xmlns' +
-                  RetornarConteudoEntre(AXML, '<GTVe xmlns', '</GTVe>') +
-                  '</GTVe>';
+          Grupo := 'GTVe';
         end;
     else
       begin
         ALayout := LayCTeRecepcao;
-        AXML := DeclaracaoXML + '<CTe xmlns' +
-                RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
-                '</CTe>';
+        Grupo := 'CTe';
       end;
     end;
 
-    if ((FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto)) and
-       ((FCTe.ide.modelo = 57) or ((FCTe.ide.modelo = 67) and
-        (FCTe.ide.modal = mdRodoviario) and (FCTe.ide.tpServ <> tsTranspValores))) then
+    // Extraindo apenas os dados da CTe (sem cteProc)
+    AXML := ObterDFeXML(AXML, Grupo, ACBRCTE_NAMESPACE);
+
+    if EstaVazio(AXML) then
     begin
-      ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
-
-      if not ModalEhValido then
-      begin
-        FErroValidacao := ACBrStr('Falha na validação do Modal do Conhecimento: ') +
-          IntToStr(CTe.Ide.nCT) + sLineBreak + FAlertas ;
-        FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
-
-        raise EACBrCTeException.CreateDef(
-          IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
-          ErroValidacao));
-      end;
-
-      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
+      Erro := ACBrStr(Grupo + ' não encontrada no XML');
+      CTeEhValido := False;
     end
     else
-      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
+    begin
+      if ((FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto)) and
+         ((FCTe.ide.modelo = 57) or ((FCTe.ide.modelo = 67) and
+          (FCTe.ide.modal = mdRodoviario) and (FCTe.ide.tpServ <> tsTranspValores))) then
+      begin
+        ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
+
+        if not ModalEhValido then
+        begin
+          FErroValidacao := ACBrStr('Falha na validação do Modal do Conhecimento: ') +
+            IntToStr(CTe.Ide.nCT) + sLineBreak + FAlertas ;
+          FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+
+          raise EACBrCTeException.CreateDef(
+            IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+            ErroValidacao));
+        end;
+
+        CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
+      end
+      else
+        CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
+    end;
 
     if not CTeEhValido then
     begin
@@ -426,7 +428,7 @@ end;
 
 function Conhecimento.VerificarAssinatura: Boolean;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML, Grupo: String;
   AssEhValida, Ok: Boolean;
   Modelo: TModeloCTe;
 begin
@@ -434,34 +436,27 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-
-    // Extraindo apenas os dados do CTe (sem cteProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-
     Modelo := StrToModeloCTe(ok, IntToStr(FCTe.Ide.modelo));
 
     case Modelo of
       moCTeOS:
-        begin
-          AXML := DeclaracaoXML + '<CTeOS xmlns' +
-                  RetornarConteudoEntre(AXML, '<CTeOS xmlns', '</CTeOS>') +
-                  '</CTeOS>';
-        end;
+        Grupo := 'CTeOS';
       moGTVe:
-        begin
-          AXML := DeclaracaoXML + '<GTVe xmlns' +
-                  RetornarConteudoEntre(AXML, '<GTVe xmlns', '</GTVe>') +
-                  '</GTVe>';
-        end;
+        Grupo := 'GTVe';
     else
-      begin
-        AXML := DeclaracaoXML + '<CTe xmlns' +
-                RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
-                '</CTe>';
-      end;
+      Grupo := 'CTe';
     end;
 
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infCte');
+    // Extraindo apenas os dados da CTe (sem cteProc)
+    AXML := ObterDFeXML(AXML, Grupo, ACBRCTE_NAMESPACE);
+
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr(Grupo + ' não encontrada no XML');
+      AssEhValida := False;
+    end
+    else
+      AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infCte');
 
     if not AssEhValida then
     begin

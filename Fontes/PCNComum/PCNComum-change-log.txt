@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2020
+-- pcnConversao --
+[+] Acrescentado os tipos de eventos: teComprEntregaNFe, teCancComprEntregaNFe e
+    teAtorInteressadoNFe.
+   Por: Italo Giurizzato Junior
+
 24/08/2020
 -- pcnConversao --
 [+] Acrescentado o tipo de evento "teEncerramentoFisco".

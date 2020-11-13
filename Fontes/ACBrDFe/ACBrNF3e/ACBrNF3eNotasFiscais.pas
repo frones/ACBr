@@ -304,7 +304,7 @@ end;
 
 procedure NotaFiscal.Validar;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML: String;
   NotaEhValida{, ok}: Boolean;
   ALayout: TLayOut;
   VerServ: Real;
@@ -324,13 +324,16 @@ begin
 //    else
       ALayout := LayNF3eRecepcao;
 
-    // Extraindo apenas os dados da NF3e (sem NF3eProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<NF3e xmlns' +
-            RetornarConteudoEntre(AXML, '<NF3e xmlns', '</NF3e>') +
-            '</NF3e>';
+    // Extraindo apenas os dados da NF3e (sem nf3eProc)
+    AXML := ObterDFeXML(AXML, 'NF3e', ACBRNF3e_NAMESPACE);
 
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr('NF3e não encontrada no XML');
+      NotaEhValida := False;
+    end
+    else
+      NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
     if not NotaEhValida then
     begin
@@ -347,7 +350,7 @@ end;
 
 function NotaFiscal.VerificarAssinatura: Boolean;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML: String;
   AssEhValida: Boolean;
 begin
   AXML := FXMLAssinado;
@@ -356,14 +359,16 @@ begin
 
   with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
   begin
+    // Extraindo apenas os dados da NF3e (sem nf3eProc)
+    AXML := ObterDFeXML(AXML, 'NF3e', ACBRNF3e_NAMESPACE);
 
-    // Extraindo apenas os dados da NF3e (sem NF3eProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<NF3e xmlns' +
-            RetornarConteudoEntre(AXML, '<NF3e xmlns', '</NF3e>') +
-            '</NF3e>';
-
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infNF3e');
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr('NF3e não encontrada no XML');
+      AssEhValida := False;
+    end
+    else
+      AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infNF3e');
 
     if not AssEhValida then
     begin

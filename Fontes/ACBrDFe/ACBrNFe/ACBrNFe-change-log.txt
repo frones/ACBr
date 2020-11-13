@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2020
+-- ACBrNFeNotasFiscais --
+[*] Uso da função ObterDFeXML nos métodos Validar e VerificarAssinatura
+   Por: Italo Giurizzato Junior
+
 26/10/2020
 -- pncNFeRTXT --
 [-] Correção na leitura da tag vIPIDevol.

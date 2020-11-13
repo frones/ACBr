@@ -86,7 +86,6 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
-    function ObterNFeXML(const AXML: String): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -352,7 +351,9 @@ begin
     else
       ALayout := LayNfeRecepcao;
 
-    AXML := ObterNFeXML(AXML);  // Extraindo apenas os dados da NFe (sem nfeProc)
+    // Extraindo apenas os dados da NFe (sem nfeProc)
+    AXML := ObterDFeXML(AXML, 'NFe', ACBRNFE_NAMESPACE);
+
     if EstaVazio(AXML) then
     begin
       Erro := ACBrStr('NFe não encontrada no XML');
@@ -385,7 +386,8 @@ begin
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    AXML := ObterNFeXML(AXML);  // Extraindo apenas os dados da NFe (sem nfeProc)
+    // Extraindo apenas os dados da NFe (sem nfeProc)
+    AXML := ObterDFeXML(AXML, 'NFe', ACBRNFE_NAMESPACE);
 
     if EstaVazio(AXML) then
     begin
@@ -3626,27 +3628,6 @@ begin
 
     Result := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Data, FNFe.Emit.CNPJCPF, FNFe.Emit.IE, FNFe.Ide.modelo));
   end;
-end;
-
-// Extraindo apenas os dados da NFe (sem nfeProc)
-function NotaFiscal.ObterNFeXML(const AXML: String): String;
-var
-  DeclaracaoXML: String;
-begin
-  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-
-  Result := RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>');
-  if not EstaVazio(Result) then
-    Result := '<NFe xmlns' + Result + '</NFe>'
-  else
-  begin
-    Result := LerTagXML(AXML, 'NFe');
-    if not EstaVazio(Result) then
-      Result := '<NFe>' + Result + '</NFe>'
-  end;
-
-  if not EstaVazio(Result) then
-    Result := DeclaracaoXML + Result;
 end;
 
 function NotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;

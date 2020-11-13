@@ -46,6 +46,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/11/2020
+-- ACBrBPeBilhetes --
+[*] Uso da função ObterDFeXML nos métodos Validar e VerificarAssinatura
+   Por: Italo Giurizzato Junior
 -- ACBrBPeServicos --
 [*] Correção nas URLs para recepcção do BP-e TM
    Por: Italo Giurizzato Junior

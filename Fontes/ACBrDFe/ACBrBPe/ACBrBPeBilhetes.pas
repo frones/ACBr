@@ -300,11 +300,10 @@ end;
 
 procedure Bilhete.Validar;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML, Grupo: String;
   BilheteEhValida, Ok: Boolean;
   ALayout: TLayOutBPe;
   VerServ: Real;
-  Modelo: TModeloBPe;
 begin
   AXML := FXMLAssinado;
   if AXML = '' then
@@ -314,32 +313,27 @@ begin
   begin
     VerServ := FBPe.infBPe.Versao;
 
-    // Extraindo apenas os dados da BPe (sem BPeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-
     if Pos('BPeTM', AXML) > 0 then
-      Modelo := moBPeTM
-    else
-      Modelo := moBPe;
-
-//    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
-
-    if Modelo = moBPe then
     begin
-      ALayout := LayBPeRecepcao;
-      AXML := DeclaracaoXML + '<BPe xmlns' +
-              RetornarConteudoEntre(AXML, '<BPe xmlns', '</BPe>') +
-              '</BPe>';
+      ALayout := LayBPeRecepcaoTM;
+      Grupo := 'BPeTM';
     end
     else
     begin
-      ALayout := LayBPeRecepcaoTM;
-      AXML := DeclaracaoXML + '<BPeTM xmlns' +
-              RetornarConteudoEntre(AXML, '<BPeTM xmlns', '</BPeTM>') +
-              '</BPeTM>';
+      ALayout := LayBPeRecepcao;
+      Grupo := 'BPe';
     end;
 
-    BilheteEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
+    // Extraindo apenas os dados da BPe (sem bpeProc)
+    AXML := ObterDFeXML(AXML, Grupo, ACBRBPE_NAMESPACE);
+
+    if EstaVazio(AXML) then
+    begin
+      Erro := ACBrStr(Grupo + ' não encontrada no XML');
+      BilheteEhValida := False;
+    end
+    else
+      BilheteEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
     if not BilheteEhValida then
     begin
@@ -356,7 +350,7 @@ end;
 
 function Bilhete.VerificarAssinatura: Boolean;
 var
-  Erro, AXML, DeclaracaoXML: String;
+  Erro, AXML, Grupo: String;
   AssEhValida, Ok: Boolean;
   Modelo: TModeloBPe;
 begin
@@ -366,31 +360,21 @@ begin
 
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
-
-    // Extraindo apenas os dados do BPe (sem bpeProc)
-    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-
     if Pos('BPeTM', AXML) > 0 then
-      Modelo := moBPeTM
+      Grupo := 'BPeTM'
     else
-      Modelo := moBPe;
+      Grupo := 'BPe';
 
-//    Modelo  := StrToModeloBPe(Ok, IntToStr(FBPe.Ide.modelo));
+    // Extraindo apenas os dados da BPe (sem bpeProc)
+    AXML := ObterDFeXML(AXML, Grupo, ACBRBPE_NAMESPACE);
 
-    if Modelo = moBPe then
+    if EstaVazio(AXML) then
     begin
-      AXML := DeclaracaoXML + '<BPe xmlns' +
-              RetornarConteudoEntre(AXML, '<BPe xmlns', '</BPe>') +
-              '</Bpe>';
+      Erro := ACBrStr(Grupo + ' não encontrada no XML');
+      AssEhValida := False;
     end
     else
-    begin
-      AXML := DeclaracaoXML + '<BPeTM xmlns' +
-              RetornarConteudoEntre(AXML, '<BPeTM xmlns', '</BPeTM>') +
-              '</BPeTM>';
-    end;
-
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infBPe');
+      AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infBPe');
 
     if not AssEhValida then
     begin

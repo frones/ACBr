@@ -72,6 +72,8 @@ function CalcularHashCSRT(const ACSRT, AChave: String): string;
 function CalcularHashDados(const ADados: TStream; AChave: String): string;
 function CalcularHashArquivo(const APathArquivo: String; AChave: String): string;
 
+function ObterDFeXML(const AXML, Grupo, NameSpace: String): String;
+
 var
   ACBrIBGE1: TACBrIBGE;
 
@@ -495,6 +497,28 @@ begin
   finally
     FS.Free;
   end;
+end;
+
+function ObterDFeXML(const AXML, Grupo, NameSpace: String): String;
+var
+  DeclaracaoXML: String;
+begin
+  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+
+  Result := RetornarConteudoEntre(AXML, '<' + Grupo + ' xmlns', '</' + Grupo + '>');
+
+  if not EstaVazio(Result) then
+    Result := '<' + Grupo + ' xmlns' + Result + '</' + Grupo + '>'
+  else
+  begin
+    Result := LerTagXML(AXML, Grupo);
+    if not EstaVazio(Result) then
+      Result := '<' + Grupo + ' xmlns="' + NameSpace +'">' +
+                Result + '</' + Grupo + '>'
+  end;
+
+  if not EstaVazio(Result) then
+    Result := DeclaracaoXML + Result;
 end;
 
 initialization

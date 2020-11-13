@@ -164,7 +164,6 @@ var
   Tamanho: integer;
   Ocorrencia: integer;
 begin
-  Result := nil;
   CNPJCPF := OnlyNumber(trim(CNPJCPF));
   Tamanho := length(CNPJCPF);
   Ocorrencia := integer(obrigatorio);
@@ -201,17 +200,19 @@ end;
 function TACBrXmlWriter.AddNodeCNPJ(const ID: string; CNPJ: string;
   const cPais: integer; obrigatorio: boolean): TACBrXmlNode;
 begin
-  Result := nil;
   if cPais <> 1058 then
   begin
     Result := AddNode(tcStr, ID, 'CNPJ', 00, 00, 1, '');
     exit;
   end;
+
   CNPJ := OnlyNumber(Trim(CNPJ));
+
   if obrigatorio then
     Result := AddNode(tcEsp, ID, 'CNPJ', 14, 14, 1, CNPJ, DSC_CNPJ)
   else
     Result := AddNode(tcEsp, ID, 'CNPJ', 14, 14, 0, CNPJ, DSC_CNPJ);
+
   if not ValidarCNPJ(CNPJ) then
     wAlerta(ID, 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 end;
@@ -219,17 +220,19 @@ end;
 function TACBrXmlWriter.AddNodeCPF(const ID: string; CPF: string;
   const cPais: integer; obrigatorio: boolean): TACBrXmlNode;
 begin
-  Result := nil;
   if cPais <> 1058 then
   begin
     Result := AddNode(tcStr, ID, 'CPF', 00, 00, 1, '');
     exit;
   end;
+
   CPF := OnlyNumber(Trim(CPF));
+
   if obrigatorio then
     Result := AddNode(tcEsp, ID, 'CPF', 11, 11, 1, CPF, DSC_CPF)
   else
     Result := AddNode(tcEsp, ID, 'CPF', 11, 11, 0, CPF, DSC_CPF);
+
   if not ValidarCPF(CPF) then
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;

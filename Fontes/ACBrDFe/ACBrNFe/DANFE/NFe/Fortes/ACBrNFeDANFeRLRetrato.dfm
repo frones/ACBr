@@ -21,7 +21,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
-    ExplicitTop = 0
     object rliMarcaDagua1: TRLImage
       Left = 241
       Top = 670

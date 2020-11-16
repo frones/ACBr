@@ -560,14 +560,20 @@ begin
     toma.email             := '';
 
     {Carrega valores da prestacao de servico}
-    vPrest.vTPrest         := 100.00;
-    vPrest.vRec            := 100.00;
+    vPrest.vTPrest := 100.00;
+    vPrest.vRec    := 100.00;
 
     {Carrega componentes do valor da prestacao}
-    with vPrest.comp.New do
+    with vPrest.comp.Add do
     begin
-      xNome                := 'DFRNER KRTJ';
-      vComp                := 374347.00;
+      xNome := 'Componente 1';
+      vComp := 30.00;
+    end;
+
+    with vPrest.comp.Add do
+    begin
+      xNome := 'Componente 2';
+      vComp := 70.00;
     end;
 
     {Carrega Impostos}

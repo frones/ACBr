@@ -56,12 +56,15 @@ type
     FDelimitador: String;     /// Caracter delimitador de campos
     FTrimString: boolean;     /// Retorna a string sem espaços em branco iniciais e finais
     FCurMascara: String;      /// Mascara para valores tipo currency
+    FReplaceDelimitador: boolean; ///remove do texto o caracter delimitador, somente usado no LFill com parametro value:string;
 
     FConteudo : TStringList;
+
 
     procedure AssignError(const MsnError: String);
     procedure SetLinhasBuffer(const AValue: Integer);
     procedure SetNomeArquivo(const AValue: String);
+    procedure SetReplaceDelimitador(const Value: boolean);
   public
     constructor Create ;
     destructor Destroy ; override ;
@@ -104,6 +107,7 @@ type
     property NomeArquivo : String read FNomeArquivo write SetNomeArquivo ;
     property LinhasBuffer : Integer read FLinhasBuffer write SetLinhasBuffer ;
     property Delimitador: String read FDelimitador write FDelimitador;
+    property ReplaceDelimitador:boolean read FReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read FTrimString write FTrimString;
     property CurMascara: String read FCurMascara write FCurMascara;
     property OnError: TErrorEvent read FOnError write FOnError;
@@ -121,13 +125,14 @@ Uses
 
 constructor TACBrTXTClass.Create;
 begin
-   FConteudo     := TStringList.Create ;
-   FOnError      := Nil;
-   FNomeArquivo  := '';
-   FDelimitador  := '';
-   FTrimString   := False;
-   FCurMascara   := '';
-   FLinhasBuffer := 0 ; // 0 = Sem tratamento de buffer
+   FConteudo           := TStringList.Create ;
+   FOnError            := Nil;
+   FNomeArquivo        := '';
+   FDelimitador        := '';
+   FTrimString         := False;
+   FCurMascara         := '';
+   FLinhasBuffer       := 0 ; // 0 = Sem tratamento de buffer
+   FReplaceDelimitador := False;
 end;
 
 destructor TACBrTXTClass.Destroy;
@@ -252,8 +257,10 @@ begin
      Result := FDelimitador;
      Exit;
   end;
-
-  Result := Value;
+  if FReplaceDelimitador then
+    Result := StringReplace(Value,FDelimitador,'',[rfReplaceAll])
+  else
+    Result := Value;
   /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
   /// iniciais e finais.
   if FTrimString then
@@ -367,6 +374,11 @@ procedure TACBrTXTClass.SetNomeArquivo(const AValue: String);
 begin
    if FNomeArquivo = AValue then exit;
    FNomeArquivo := AValue;
+end;
+
+procedure TACBrTXTClass.SetReplaceDelimitador(const Value: boolean);
+begin
+  FReplaceDelimitador := Value;
 end;
 
 function TACBrTXTClass.VLFill(Value: Variant;

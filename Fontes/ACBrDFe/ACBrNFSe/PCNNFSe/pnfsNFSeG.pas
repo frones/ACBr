@@ -1509,6 +1509,9 @@ begin
         if Provedor in [proISSDSF, proSiat] then
           Gerador.wCampo(tcStr, '#1', 'NotaInicial', 01, 15, 0, NumeroNFSe, '');
 
+        if Provedor = proSiat then
+          Gerador.wCampo(tcStr, '#1', 'NumeroLote', 01, 12, 1, NumeroLote, '');
+
         Gerador.wCampo(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
         Gerador.wGrupo('/Cabecalho');
       end;

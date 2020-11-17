@@ -106,7 +106,7 @@ type
       const ANumeroNFSe: String = ''; APagina: Integer = 1;
       const ACNPJTomador: String = ''; const AIMTomador: String = '';
       const ANomeInter: String = ''; const ACNPJInter: String = ''; const AIMInter: String = '';
-      const ASerie: String = ''): Boolean;
+      const ASerie: String = ''; const ANumeroLote: String = ''): Boolean;
 
     function CancelarNFSe(const ACodigoCancelamento: String;
                           const ANumeroNFSe: String = '';
@@ -559,11 +559,11 @@ end;
 
 function TACBrNFSe.ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;
   const ANumeroNFSe: String; APagina: Integer; const ACNPJTomador, AIMTomador,
-  ANomeInter, ACNPJInter, AIMInter, ASerie: String): Boolean;
+  ANomeInter, ACNPJInter, AIMInter, ASerie, ANumeroLote: String): Boolean;
 begin
   Result := WebServices.ConsultaNFSe(ADataInicial, ADataFinal, ANumeroNFSe,
             APagina, ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter,
-            ASerie);
+            ASerie, ANumeroLote);
 end;
 
 function TACBrNFSe.CancelarNFSe(const ACodigoCancelamento: String;

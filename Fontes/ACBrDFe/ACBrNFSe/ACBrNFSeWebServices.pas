@@ -407,6 +407,7 @@ type
     FCNPJInter: String;
     FIMInter: String;
     FSerie: String;
+    FNumeroLote: String;
 
   protected
     procedure DefinirURL; override;
@@ -432,6 +433,7 @@ type
     property CNPJInter: String      read FCNPJInter    write FCNPJInter;
     property IMInter: String        read FIMInter      write FIMInter;
     property Serie: String          read FSerie        write FSerie;
+    property NumeroLote: String     read FNumeroLote   write FNumeroLote;
   end;
 
 { TNFSeCancelarNFSe }
@@ -659,7 +661,8 @@ type
                           const ANomeInter: String = '';
                           const ACNPJInter: String = '';
                           const AIMInter: String = '';
-                          const ASerie: String = ''): Boolean;
+                          const ASerie: String = '';
+                          const ANumLote: String = ''): Boolean;
 
     function CancelaNFSe(const ACodigoCancelamento: String;
                          const ANumeroNFSe: String = '';
@@ -4406,7 +4409,8 @@ begin
             end;
             Gerador.wGrupo('/RPSConsulta');
           end
-          else begin
+          else
+          begin
             Gerador.wGrupo('NotaConsulta');
             for i := 0 to FNotasFiscais.Count-1 do
             begin
@@ -4656,6 +4660,7 @@ begin
       NomeInter   := TNFSeConsultarNfse(Self).FNomeInter;
       CNPJInter   := TNFSeConsultarNfse(Self).FCNPJInter;
       IMInter     := TNFSeConsultarNfse(Self).FIMInter;
+      NumeroLote  := TNFSeConsultarNfse(Self).FNumeroLote;
 
       // Necessario para o provedor Infisc
       SerieNFSe := TNFSeConsultarNfse(Self).Serie;
@@ -6194,7 +6199,7 @@ end;
 
 function TWebServices.ConsultaNFSe(ADataInicial, ADataFinal: TDateTime;
   const NumeroNFSe: String; APagina: Integer; const ACNPJTomador, AIMTomador, ANomeInter,
-  ACNPJInter, AIMInter, ASerie: String): Boolean;
+  ACNPJInter, AIMInter, ASerie, ANumLote: String): Boolean;
 begin
   FConsNfse.FDataInicial := ADataInicial;
   FConsNfse.FDataFinal   := ADataFinal;
@@ -6206,6 +6211,7 @@ begin
   FConsNfse.FCNPJInter   := ACNPJInter;
   FConsNfse.FIMInter     := AIMInter;
   FConsNfse.FSerie       := ASerie;
+  FConsNfse.FNumeroLote  := ANumLote;
 
   Result := FConsNfse.Executar;
 

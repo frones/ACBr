@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/11/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/60184-nfse-campinas-n%C3%A3o-traz-valor-do-iss-retido/
+  Por: Fellipe
 -- pnfsNFSeW_ABRASFv2 --
 [*] Removida uma condição que estava provocando erro na validação do Lote para o 
     provedor SystemPro

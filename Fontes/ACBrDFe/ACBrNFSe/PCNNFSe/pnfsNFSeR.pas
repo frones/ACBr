@@ -3083,6 +3083,16 @@ begin
     end;
   end;
 
+  if ((FNFSe.Servico.Valores.ValorIssRetido = 0) or (FNFSe.Servico.Valores.ValorIss = 0)) and
+      (FNFSe.Servico.Valores.Aliquota > 0)  then
+  begin
+    if FNFSe.Servico.Valores.IssRetido = stRetencao then
+       FNFSe.Servico.Valores.ValorIssRetido := (FNFSe.Servico.Valores.ValorServicos * (FNFSe.Servico.Valores.Aliquota / 100));
+
+    FNFSe.Servico.Valores.ValorIss := (FNFSe.Servico.Valores.ValorServicos * (FNFSe.Servico.Valores.Aliquota / 100));
+  end;
+
+
   (**** calculo anterior
   FNFSe.Servico.Valores.ValorLiquidoNfse := (FNfse.Servico.Valores.ValorServicos -
                                             (FNfse.Servico.Valores.ValorDeducoes +

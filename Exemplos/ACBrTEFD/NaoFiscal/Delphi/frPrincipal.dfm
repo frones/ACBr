@@ -44,7 +44,7 @@ object FormPrincipal: TFormPrincipal
       Top = 0
       Width = 699
       Height = 376
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
       TabOrder = 0
@@ -758,6 +758,7 @@ object FormPrincipal: TFormPrincipal
               FixedCols = 0
               RowCount = 1
               FixedRows = 0
+              Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
               TabOrder = 0
             end
             object pBotoesPagamentos: TPanel
@@ -794,7 +795,6 @@ object FormPrincipal: TFormPrincipal
                 Height = 28
                 Anchors = [akTop, akRight]
                 Caption = 'Excluir'
-                Enabled = False
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clWindowText
                 Font.Height = -11
@@ -802,6 +802,7 @@ object FormPrincipal: TFormPrincipal
                 Font.Style = []
                 ParentFont = False
                 TabOrder = 1
+                OnClick = btExcluirPagamentoClick
               end
             end
           end
@@ -825,7 +826,7 @@ object FormPrincipal: TFormPrincipal
               Left = 597
               Top = 4
               Width = 85
-              Height = 29
+              Height = 42
               Align = alRight
               Caption = '000000'
               Color = clBtnFace
@@ -1225,6 +1226,7 @@ object FormPrincipal: TFormPrincipal
     OnInfoECF = ACBrTEFD1InfoECF
     OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
     OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
+    OnDepoisCancelarTransacoes = ACBrTEFD1DepoisCancelarTransacoes
     OnGravarLog = ACBrTEFD1GravarLog
     Left = 968
     Top = 184

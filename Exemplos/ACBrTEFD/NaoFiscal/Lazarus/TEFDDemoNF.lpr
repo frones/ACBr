@@ -3,9 +3,9 @@ program TEFDDemoNF;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}
+  {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
-  {$ENDIF}
+  {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   sysutils,
   Forms, frPrincipal, uVendaClass, frIncluirPagamento, frExibeMensagem

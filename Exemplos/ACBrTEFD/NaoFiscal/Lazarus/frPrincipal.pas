@@ -37,8 +37,8 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   Spin, Buttons, DBCtrls, ExtCtrls, Grids, ACBrTEFD, ACBrPosPrinter,
-  ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef, ACBrTEFPayGoWebComum,
-  ACBrTEFPayGoComum, ACBrTEFComum, ACBrTEFDPayGoWeb;
+  ACBrTEFDClass, uVendaClass, ACBrTEFDCliSiTef, ACBrTEFPayGoComum, ACBrTEFPayGoWebComum,
+  ACBrTEFComum, ACBrTEFDPayGoWeb;
 
 type
 
@@ -171,6 +171,8 @@ type
       var RetornoECF: Integer);
     procedure ACBrTEFD1ComandaECFSubtotaliza(DescAcre: Double;
       var RetornoECF: Integer);
+    procedure ACBrTEFD1DepoisCancelarTransacoes(
+      RespostasPendentes: TACBrTEFDRespostasPendentes);
     procedure ACBrTEFD1DepoisConfirmarTransacoes(
       RespostasPendentes: TACBrTEFDRespostasPendentes);
     procedure ACBrTEFD1ExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
@@ -182,6 +184,7 @@ type
       var RetornoECF: String);
     procedure btAdministrativoClick(Sender: TObject);
     procedure btEfetuarPagamentosClick(Sender: TObject);
+    procedure btExcluirPagamentoClick(Sender: TObject);
     procedure btIncluirPagamentosClick(Sender: TObject);
     procedure btMsgPinPadClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
@@ -253,6 +256,8 @@ type
 
     procedure IniciarOperacao;
     procedure AdicionarPagamento(const Indice: String; AValor: Double);
+    procedure ExcluirPagamento(IndicePagto: Integer);
+    function AcharTransacaoTEFPendente(IndicePagto: Integer): TACBrTEFResp;
     procedure CancelarVenda;
     procedure FinalizarVenda; // Em caso de Venda, Gere e transmita seu Documento Fiscal
     procedure VerificarTestePayGo;
@@ -386,7 +391,17 @@ begin
   if (MR = mrNo) then
     Status := PWCNF_REV_MANU_AUT
   else
+  begin
+    // Imprimindo comrovante pendente //
+    AdicionarLinhaImpressao( Resp.ImagemComprovante1aVia.Text );
+    AdicionarLinhaImpressao('</pular_linhas>');
+    AdicionarLinhaImpressao('</corte>');
+    AdicionarLinhaImpressao( Resp.ImagemComprovante2aVia.Text );
+    AdicionarLinhaImpressao('</pular_linhas>');
+    AdicionarLinhaImpressao('</corte>');
+
     Status := PWCNF_CNF_MANU_AUT;
+  end;
 end;
 
 procedure TFormPrincipal.PayGoWebExibeMensagem(Mensagem: String;
@@ -618,6 +633,14 @@ begin
   btIncluirPagamentos.Click;
 end;
 
+procedure TFormPrincipal.btExcluirPagamentoClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := sgPagamentos.Row-1;
+  ExcluirPagamento(i);
+end;
+
 procedure TFormPrincipal.btIncluirPagamentosClick(Sender: TObject);
 var
   FormIncluirPagamento: TFormIncluirPagamento;
@@ -744,37 +767,49 @@ begin
   end;
 end;
 
-procedure TFormPrincipal.ACBrTEFD1DepoisConfirmarTransacoes(
+procedure TFormPrincipal.ACBrTEFD1DepoisCancelarTransacoes(
   RespostasPendentes: TACBrTEFDRespostasPendentes);
 var
-  i , j: Integer;
+  i: Integer;
 begin
   for i := 0 to RespostasPendentes.Count-1  do
   begin
-     with RespostasPendentes[i] do
-     begin
-        AdicionarLinhaLog('Confirmado: '+Header+' ID: '+IntToStr( ID ) );
+    with RespostasPendentes[i] do
+    begin
+      AdicionarLinhaLog('Cancelada: '+Header+' ID: '+IntToStr( ID ) );
+      AdicionarLinhaLog('- Rede: '  + Rede + ', NSU: '  + NSU );
 
-        // Lendo os campos mapeados //
-        AdicionarLinhaLog('- Rede: '  + Rede + ', NSU: '  + NSU );
-        //AdicionarLinhaLog('- Parcelas: '+ IntToStr(QtdParcelas) +
-        //                  ', parcelado por: '+ GetEnumName(TypeInfo(TACBrTEFRespParceladoPor), integer(ParceladoPor) ));
-        AdicionarLinhaLog('- É Débito: '+BoolToStr(Debito)+
-                          ', É Crédito: '+BoolToStr(Credito)+
-                          ', Valor: '+ FormatFloat('###,###,##0.00',ValorTotal)) ;
+      Venda.Pagamentos.CancelarPagamento(Rede, NSU, ValorTotal);
+    end;
+  end;
 
-        // Lendo um Campo Específico //
-        //AdicionarLinhaLog('- Campo 11: ' + LeInformacao(11,0).AsString );
+  AtualizarPagamentosVendaNaInterface;
+end;
 
-        for j := 0 to Venda.Pagamentos.Count-1 do
-        begin
-          if NSU = Venda.Pagamentos[j].NSU then
-          begin
-            Venda.Pagamentos[j].Confirmada := True;
-            Break;
-          end;
-        end;
-     end;
+procedure TFormPrincipal.ACBrTEFD1DepoisConfirmarTransacoes(
+  RespostasPendentes: TACBrTEFDRespostasPendentes);
+var
+  i: Integer;
+begin
+  for i := 0 to RespostasPendentes.Count-1  do
+  begin
+    with RespostasPendentes[i] do
+    begin
+      AdicionarLinhaLog('Confirmado: '+Header+' ID: '+IntToStr( ID ) );
+
+      // Lendo os campos mapeados //
+      AdicionarLinhaLog('- Rede: '  + Rede + ', NSU: '  + NSU );
+      //AdicionarLinhaLog('- Parcelas: '+ IntToStr(QtdParcelas) +
+      //                  ', parcelado por: '+ GetEnumName(TypeInfo(TACBrTEFRespParceladoPor), integer(ParceladoPor) ));
+      AdicionarLinhaLog('- É Débito: '+BoolToStr(Debito)+
+                        ', É Crédito: '+BoolToStr(Credito)+
+                        ', Valor: '+ FormatFloat('###,###,##0.00',ValorTotal)) ;
+
+      // Lendo um Campo Específico //
+      //AdicionarLinhaLog('- Campo 11: ' + LeInformacao(11,0).AsString );
+
+      Venda.Pagamentos.ConfirmarPagamento(Rede, NSU, ValorTotal);
+    end;
   end;
 
   AtualizarPagamentosVendaNaInterface;
@@ -1289,6 +1324,7 @@ begin
   AdicionarLinhaLog('***************' + E.ClassName + '***************');
   AdicionarLinhaLog(E.Message);
   AdicionarLinhaLog('');
+  //MessageDlg(E.Message, mtError, [mbOK], 0);
 end;
 
 procedure TFormPrincipal.btSerialClick(Sender: TObject);
@@ -1515,7 +1551,7 @@ var
     // Isso é Opcional, e está aqui apenas para demonstração
     if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
     begin
-      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='01'; //01: crédito
+      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='01'; //01: crédito;  3 = 1 crédito + 2 débito
       //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='1'; //01: crédito
       //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE]:='1'; //01: à vista, 2: parcelado
       //ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]:='REDE';
@@ -1644,13 +1680,90 @@ begin
           //   com outra forma de Pagamento
           ValorPago := ValorPago + ReajusteValor;
         end;
-      end;
+      end
+      else
+        Confirmada := True;
     end;
 
     AtualizarPagamentosVendaNaInterface;
 
     if (Venda.TotalPago >= Venda.TotalVenda) then
       FinalizarVenda;
+  end;
+end;
+
+procedure TFormPrincipal.ExcluirPagamento(IndicePagto: Integer);
+var
+  i: Integer;
+  AResp: TACBrTEFResp;
+  Cancelada: Boolean;
+begin
+  if (IndicePagto < 0) or (IndicePagto >=  Venda.Pagamentos.Count) then
+    raise Exception.CreateFmt( 'Indice de pagamento [%d] inválido', [IndicePagto]);
+
+  if Venda.Pagamentos[IndicePagto].Cancelada then
+    raise Exception.CreateFmt( 'Pagamento [%d] já foi Cancelado', [IndicePagto]);
+
+  Cancelada := False;
+  AResp := AcharTransacaoTEFPendente(IndicePagto);
+  if Assigned(AResp) then
+  begin
+    if AResp.CNFEnviado then
+      raise Exception.CreateFmt( 'Pagamento TEF [%s] já foi Confirmado.'+sLineBreak+
+                                 'Para cancelar o mesmo, cancele Toda a Operação',
+                                 [AResp.NSU])
+    else
+    begin
+      ACBrTEFD1.NCN( AResp.Rede,
+                     AResp.NSU,
+                     AResp.Finalizacao,
+                     AResp.ValorTotal,
+                     AResp.DocumentoVinculado);
+      Cancelada := True;
+    end;
+
+    if Cancelada then
+    begin
+      if (AResp.ArqBackup <> '') and FileExists(AResp.ArqBackup) then
+        DeleteFile( AResp.ArqBackup );
+
+      ACBrTEFD1.RespostasPendentes.Remove(AResp);
+    end;
+  end
+  else
+  begin
+    if (Venda.Pagamentos[IndicePagto].NSU <> '') then
+      raise Exception.CreateFmt( 'Transação TEF [%s] não foi Localizada.',
+                                 [Venda.Pagamentos[IndicePagto].NSU])
+    else
+      Cancelada := True;
+  end;
+
+  if Cancelada then
+  begin
+    Venda.Pagamentos[IndicePagto].Cancelada := True;
+    AtualizarPagamentosVendaNaInterface;
+  end;
+end;
+
+function TFormPrincipal.AcharTransacaoTEFPendente(IndicePagto: Integer
+  ): TACBrTEFResp;
+var
+  i: Integer;
+begin
+  Result := Nil;
+  if (IndicePagto < 0) and (IndicePagto >=  Venda.Pagamentos.Count) then
+    Exit;
+
+  i := 0;
+  while (i < ACBrTEFD1.RespostasPendentes.Count) and (Result = Nil) do
+  begin
+    if (ACBrTEFD1.RespostasPendentes[i].Rede = Venda.Pagamentos[IndicePagto].Rede) and
+       (ACBrTEFD1.RespostasPendentes[i].NSU = Venda.Pagamentos[IndicePagto].NSU) and
+       (ACBrTEFD1.RespostasPendentes[i].ValorTotal = Venda.Pagamentos[IndicePagto].ValorPago) then
+      Result := ACBrTEFD1.RespostasPendentes[i];
+
+    Inc(i);
   end;
 end;
 
@@ -1708,8 +1821,9 @@ begin
       begin
         with Venda.Pagamentos[i] do
         begin
-          SL.Add(PadSpace( TipoPagamento+' - '+DescricaoTipoPagamento(TipoPagamento)+'|'+
-                           FormatFloatBr(ValorPago)+'|'+Rede, ACBrPosPrinter1.Colunas, '|') );
+          if not Cancelada then
+            SL.Add(PadSpace( TipoPagamento+' - '+DescricaoTipoPagamento(TipoPagamento)+'|'+
+                             FormatFloatBr(ValorPago)+'|'+Rede, ACBrPosPrinter1.Colunas, '|') );
         end;
       end;
       SL.Add('</linha_simples>');
@@ -1737,8 +1851,9 @@ var
   P: Integer;
   ATeste: String;
 begin
-  P := pos('-',cbTestePayGo.Text);
-  ATeste := copy(cbTestePayGo.Text, 1, P-1);
+  ATeste := cbTestePayGo.Text;
+  P := pos('-',ATeste);
+  ATeste := Trim(copy(ATeste, 1, P-1));
   FTestePayGo := StrToIntDef(ATeste, 0);
 end;
 
@@ -1773,6 +1888,7 @@ end;
 procedure TFormPrincipal.AtualizarPagamentosVendaNaInterface;
 var
   i, ARow: Integer;
+  AResp: TACBrTEFResp;
 begin
   sgPagamentos.RowCount := 1;
   for i := 0 to Venda.Pagamentos.Count-1 do
@@ -1782,12 +1898,19 @@ begin
 
     with Venda.Pagamentos[i] do
     begin
+      if not Cancelada then
+      begin
+        AResp := AcharTransacaoTEFPendente(i);
+        if Assigned(AResp) then
+          Confirmada := AResp.CNFEnviado;
+      end;
+
       sgPagamentos.Cells[0, ARow] := FormatFloat('000', ARow);
       sgPagamentos.Cells[1, ARow] := TipoPagamento + ' - ' + DescricaoTipoPagamento(TipoPagamento);
       sgPagamentos.Cells[2, ARow] := FormatFloatBr(ValorPago);
       sgPagamentos.Cells[3, ARow] := NSU;
       sgPagamentos.Cells[4, ARow] := Rede;
-      sgPagamentos.Cells[5, ARow] := ifthen(Confirmada, 'Sim', 'Não');
+      sgPagamentos.Cells[5, ARow] := ifthen(Cancelada, 'Cancelada', ifthen(Confirmada, 'Confirmada', 'Pendente'));
       sgPagamentos.Cells[6, ARow] := RedeCNPJ;
     end;
   end;

@@ -38,10 +38,10 @@ object FormPrincipal: TFormPrincipal
       Height = 376
       Top = 0
       Width = 747
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
@@ -773,8 +773,8 @@ object FormPrincipal: TFormPrincipal
                   Width = 110
                 end              
                 item
-                  Title.Caption = 'CNF'
-                  Width = 50
+                  Title.Caption = 'Status'
+                  Width = 100
                 end              
                 item
                   Title.Caption = 'CNPJ Credenciadora'
@@ -817,9 +817,9 @@ object FormPrincipal: TFormPrincipal
                 Width = 88
                 Anchors = [akTop, akRight]
                 Caption = 'Excluir'
-                Enabled = False
                 Images = ImageList1
                 ImageIndex = 9
+                OnClick = btExcluirPagamentoClick
                 ParentFont = False
                 TabOrder = 1
               end
@@ -1266,6 +1266,7 @@ object FormPrincipal: TFormPrincipal
     OnInfoECF = ACBrTEFD1InfoECF
     OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
     OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
+    OnDepoisCancelarTransacoes = ACBrTEFD1DepoisCancelarTransacoes
     OnGravarLog = ACBrTEFD1GravarLog
     Left = 960
     Top = 296

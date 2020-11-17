@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/11/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] Removida uma condição que estava provocando erro na validação do Lote para o 
+    provedor SystemPro
+  Por: Italo Giurizzato Junior
+
 13/11/2020
 -- ACBrNFSeWebServices --
 [*] Para o provedor Giap é preciso configurar a propriedade FPAutorizationHeader com

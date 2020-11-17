@@ -940,8 +940,7 @@ begin
     Gerador.wGrupo('/Rps');
   end;
 
-  if (FProvedor = proSystemPro) or
-     ((FProvedor = profintelISS) and (NFSe.Servico.CodigoMunicipio <> '3136702')) then
+  if (FProvedor = profintelISS) and (NFSe.Servico.CodigoMunicipio <> '3136702') then
   begin
     GerarListaServicos;
 

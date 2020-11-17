@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/11/2020
+-- ACBrNFSeWebServices --
+[*] Alteração visando gerar o XML da NFS-e do provedor Equiplano.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSe/ACBrNFSeWebServices/pnfsNFSeG --
 [*] https://www.projetoacbr.com.br/forum/topic/60177-m%C3%A9todos-de-consultar-nfse-prefeitura-belem/?tab=comments#comment-395206
   Por: Deivid de Sá Rodrigues

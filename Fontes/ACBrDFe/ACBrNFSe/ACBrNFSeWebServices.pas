@@ -124,6 +124,7 @@ type
     function RemoverCharControle(const AXML: String): String;
     function DefinirDadosSenha(ATexto: String): String;
     function GerarXmlNotaEL(const aXmlRps, aXmlRetorno: string): string;
+    function GerarXmlNotaEquiplano(const aXmlRps, aXmlRetorno: string): string;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -989,6 +990,22 @@ begin
             '</tcListaNFse>';
 end;
 
+function TNFSeWebService.GerarXmlNotaEquiplano(const aXmlRps,
+  aXmlRetorno: string): string;
+var
+  aRPS, aNFSE: string;
+begin
+  aRPS  := SeparaDados(aXmlRps, 'rps', False);
+  aNFSE := SeparaDados(aXmlRetorno, 'nfse', False);
+
+  Result := '<compNfse xmlns="http://www.equiplano.com.br/esnfs">' +
+              '<nfse>' +
+                aNFSE +
+                aRPS +
+              '</nfse>' +
+            '</compNfse>';
+end;
+
 function TNFSeWebService.GerarCabecalhoSoap: String;
 begin
   Result := FPCabMsg;
@@ -1527,11 +1544,19 @@ begin
     else
        FRetNFSe := GerarRetornoNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML);
 
-    if FProvedor = proEL then
+    if FProvedor in [proEL, proEquiplano] then
     begin
       XmlRps     := FNotasFiscais.Items[ii].XMLAssinado;
       XmlRetorno := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML;
-      FRetNFSe   := GerarXmlNotaEL(XmlRps, XmlRetorno);
+
+      case FProvedor of
+        proEL:
+          FRetNFSe := GerarXmlNotaEL(XmlRps, XmlRetorno);
+        proEquiplano:
+          FRetNFSe := GerarXmlNotaEquiplano(XmlRps, XmlRetorno);
+      else
+        FRetNFSe := '';
+      end;
     end;
 
     if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then

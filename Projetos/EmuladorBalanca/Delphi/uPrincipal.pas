@@ -36,7 +36,7 @@ uses
   synaser, ExtCtrls,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls;
+  Dialogs, StdCtrls, ComCtrls, StrUtils;
 
 type
   TfrmPrincipal = class(TForm)
@@ -53,6 +53,8 @@ type
     btnSimularPesoInstavel: TButton;
     btnSimularPesoNegativo: TButton;
     edtPesoAtual: TEdit;
+    LblCmdFormatado: TLabel;
+    edtCmdFormatado: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ckbMonitorarPortaClick(Sender: TObject);
@@ -61,13 +63,15 @@ type
     procedure btnSimularSobrepesoClick(Sender: TObject);
     procedure btnSimularPesoInstavelClick(Sender: TObject);
     procedure btnSimularPesoNegativoClick(Sender: TObject);
+    procedure edtCmdFormatadoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FTimer: TTimer;
     FDevice: TBlockSerial;
     procedure LerSerial(Sender: TObject);
     procedure AtivarComunicacao;
     function FormataPeso(AValor: Real; AZeros: Integer): String;
-    procedure EnviarResposta(AComando: String);
+    function ConverteCmdFormatado(AComando, AValor: String): String;
+    procedure EnviarResposta(AComando: String; CmdFormatado: boolean = false);
     procedure GravarIni(AChave, AValor: String);
     function LerIni(AChave: string): String;
     function ArquivoIni: TFileName;
@@ -164,7 +168,7 @@ end;
 //
 //##############################################################################
 
-procedure TfrmPrincipal.EnviarResposta(AComando: String);
+procedure TfrmPrincipal.EnviarResposta(AComando: String; CmdFormatado: boolean);
 begin
   FTimer.Enabled := False;
 
@@ -173,7 +177,11 @@ begin
 
     FDevice.DeadlockTimeout := 1000;
     FDevice.Purge;
-    FDevice.SendString(STX + AComando + ETX);
+
+    if CmdFormatado then
+      FDevice.SendString(AComando)
+    else
+      FDevice.SendString(STX + AComando + ETX);
   finally
     if ckbMonitorarPorta.Checked then
       FTimer.Enabled := True;
@@ -210,7 +218,10 @@ begin
           StrAEnviar := edtPesoAtual.Text;
         end ;
 
-        EnviarResposta( StrAEnviar )
+        if edtCmdFormatado.Text <> '' then
+          EnviarResposta( ConverteCmdFormatado(edtCmdFormatado.Text, StrAEnviar), true )
+        else
+          EnviarResposta( StrAEnviar );
       end;
     end;
 
@@ -242,6 +253,106 @@ begin
   Mascara := '%' + IntToStr(AZeros) + '.' + IntToStr(AZeros) + 'd';
 
   Result  := Format(Mascara, [Trunc(Valor)]);
+end;
+
+//##############################################################################
+//
+//  Substitui tags no comando formatado
+//
+//##############################################################################
+
+function TfrmPrincipal.ConverteCmdFormatado(AComando, AValor: String): String;
+var
+  i: Integer;
+  Val: String;
+  param1: String;
+  param2: String;
+begin
+  Result := '';
+  Val := '';
+
+  for i:=1 to Length(AComando) do
+  begin
+    // Posição diferente de branco, concatena na val para tratamento posterior 
+    if AComando[i] <> ' ' then
+      Val := Val + AComando[i];
+
+    // Espaço delimita os blocos ou fim do comando
+    if ( ( AComando[i] = ' ' ) or
+         ( i = Length(AComando) ) ) then
+    begin
+      // Se o bloco de dados não tiver o # no início apenas concatena no resultado
+      if Copy(Val,1,1) <> '#' then
+        Result := Result + Val
+      // Iniciando com # requer tratamento
+      else
+      begin
+        try
+          // #PESOX mandar o peso com a quantidade de dígitos na posção 6
+          if Copy(Val,1,5) = '#PESO' then
+          begin
+            // Número de dígitos do peso
+            param1 := Copy(Val,6,Length(Val));
+
+            // Controle de decimais
+            if Pos(',',param1) > 0 then
+            begin
+              // Decimais
+              param2 := Copy(param1,Pos(',',param1)+1,Length(param1));
+
+              // Inteiro
+              param1 := Copy(param1,1,Pos(',',param1)-1);
+            end
+            else
+              param2 := '0';
+
+            Val := Format('%'+param1+'.'+param1+'d', [StrToIntDef(AValor,0)]);
+
+            // Trunca o valor, se for maior que a quantidade de dígitos a enviar
+            if Length(AValor) > StrToIntDef(param1,Length(AValor)) then
+              Val := ReverseString(Copy(ReverseString(Val),1,StrToIntDef(param1,Length(AValor))));
+
+            // Decimais
+            if StrToIntDef(param2,0) > 0 then
+            begin
+              Val := ReverseString(Val);
+
+              Val := Copy(Val,1,StrToIntDef(param2,0)) +
+                     DecimalSeparator +
+                     Copy(Val,StrToIntDef(param2,0)+1,Length(Val));
+
+              Val := Copy(Val,1,Length(Val)-1);
+
+              Val := ReverseString(Val);
+            end;
+
+            Result := Result + Val;
+          end
+          else if Copy(Val,1,7) = '#ESPACO' then
+          begin
+            // Número de espaços
+            param1 := Copy(Val,8,Length(Val));
+
+            Result := Result + Format('%'+param1+'.'+param1+'s', ['']);
+          end
+          else if Copy(Val,1,4) = '#CHR' then
+            Result := Result + Chr(StrToIntDef(Copy(Val,5,Length(Val)),0))
+          // Parâmetro desconhecido
+          else
+            raise Exception.Create('');
+        Except
+          // Manda "E" nas posições do parâmetro desconhecido
+          param1 := Format('%'+IntToStr(Length(Val))+'.'+IntToStr(Length(Val))+'s', ['']);
+
+          param1 := StringReplace(param1,' ','E',[rfReplaceAll]);
+
+          Result := Result + param1;
+        end;
+      end;
+
+      Val := '';
+    end;
+  end;
 end;
 
 //##############################################################################
@@ -329,7 +440,10 @@ begin
     StrAEnviar := edtPesoAtual.Text;
   end ;
 
-  EnviarResposta( StrAEnviar )
+  if edtCmdFormatado.Text <> '' then
+    EnviarResposta( ConverteCmdFormatado(edtCmdFormatado.Text, StrAEnviar), true )
+  else
+    EnviarResposta( StrAEnviar )
 end;
 
 procedure TfrmPrincipal.btnSimularPesoInstavelClick(Sender: TObject);
@@ -348,6 +462,30 @@ procedure TfrmPrincipal.btnSimularSobrepesoClick(Sender: TObject);
 begin
   EnviarResposta(PESO_SOBRECARGA);
   edtPesoAtual.Text := PESO_SOBRECARGA;
+end;
+
+procedure TfrmPrincipal.edtCmdFormatadoKeyDown(Sender: TObject;var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_F1 then
+    ShowMessage('* Deixar em branco para o padrão Filizola / Toleto' + #13 +
+                '* Preencher 1 espaço após valores corridos ou tags' + #13 +
+                #13 + 'Tags' + #13 +
+                '#CHRX: Retorna o ASCII referente ao valor X' + #13 +
+                '#ESPACOX: Preenche X espaços' + #13 +
+                '#PESOX: Preenche o peso com X dígitos' + #13 +
+                '#PESOX,Y: Preenche o peso com X dígitos e Y decimais enviando o separador decimal' + #13 +
+                #13 + 'Exemplos Filizola / Toledo (para validação, mesmo resultado que o padrão)' + #13 +
+                'Peso ok: #CHR2 #PESO5 #CHR3' + #13 +
+                'Instável: #CHR2 IIIII #CHR3' + #13 +
+                'Negativo: #CHR2 NNNNN #CHR3' + #13 +
+                'Sobrepeso:#CHR2 SSSSS #CHR3' + #13 +
+                #13 + 'Exemplos WT27R ETH' + #13 +
+                'Peso ok: EB,kg,B: #ESPACO1 #PESO6 ,T:000000,L: #ESPACO1 #PESO6' + #13 +
+                'C/3dec ok: EB,kg,B: #ESPACO1 #PESO6,3 ,T:000000,L: #ESPACO1 #PESO6,3' + #13 +
+                'Instavel.: IB,kg,B: #ESPACO1 #PESO6 ,T:000000,L: #ESPACO1 #PESO6' + #13 +
+                'Negativo.: EB,kg,B:- #PESO6 ,T:000000,L:- #PESO6' + #13 +
+                'Sobrepeso: EB,kg,B: 999999,T:000000,L: 999999' + #13
+                );
 end;
 
 end.

@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 74
   BorderStyle = bsDialog
   Caption = 'Emulador de balan'#231'a (Filizola / Toledo)'
-  ClientHeight = 235
+  ClientHeight = 266
   ClientWidth = 459
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -110,10 +110,25 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 152
     Width = 459
-    Height = 83
+    Height = 114
     Align = alClient
     Caption = ' Simula'#231#245'es '
     TabOrder = 2
+    object LblCmdFormatado: TLabel
+      Left = 12
+      Top = 60
+      Width = 307
+      Height = 13
+      Caption = 'Comando Formatado (Pressione F1 no campo para informa'#231#245'es)'
+    end
+    object edtCmdFormatado: TEdit
+      Left = 12
+      Top = 76
+      Width = 429
+      Height = 21
+      TabOrder = 3
+      OnKeyDown = edtCmdFormatadoKeyDown
+    end
     object btnSimularSobrepeso: TButton
       Left = 12
       Top = 26

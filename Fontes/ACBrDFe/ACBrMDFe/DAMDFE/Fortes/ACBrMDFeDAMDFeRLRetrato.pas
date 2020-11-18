@@ -309,8 +309,13 @@ begin
   end
   else
   begin
-    rllProtocolo.Lines.Add(ACBrStr('EMISSÃO EM CONTINGÊNCIA. Obrigatória a autorização em 168 horas' +
-      ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', fpMDFe.Ide.dhEmi) + ')');
+    if fpMDFe.procMDFe.nProt <> '' then
+      rllProtocolo.Lines.Add(fpMDFe.procMDFe.nProt + '   ' +
+        IfThen(fpMDFe.procMDFe.dhRecbto <> 0,
+        DateTimeToStr(fpMDFe.procMDFe.dhRecbto), ''))
+    else
+      rllProtocolo.Lines.Add(ACBrStr('EMISSÃO EM CONTINGÊNCIA. Obrigatória a autorização em 168 horas' +
+        ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', fpMDFe.Ide.dhEmi) + ')');
   end;
 
   rllModelo.Caption       := fpMDFe.Ide.modelo;

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2020
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Possível correção para a emissão do numero do protocolo de um MDF-e emitido
+    em contingência.
+   Por: Italo Giurizzato Junior
+
 28/07/2020
 -- ACBrMDFeDAEventoRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/58634-c%C3%B3digo-de-barras-na-impress%C3%A3o-do-evento-de-cancelamento/

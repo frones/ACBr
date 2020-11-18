@@ -729,7 +729,7 @@ begin
   if (aNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (aNFe.procNFe.cStat = 100) then
   begin
     Result := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
-      aNFe.procNFe.nProt + ' ' + FormatDateTimeBr(aNFe.procNFe.dhRecbto);
+      aNFe.procNFe.nProt + ' ' + FormatDateTimeBr(aNFe.procNFe.dhRecbto) + ';';
   end
   else
     Result := '';
@@ -740,7 +740,7 @@ begin
   // Inscrição Suframa
   if NaoEstaVazio(aNFe.Dest.ISUF) then
   begin
-    Result := ACBrStr('INSCRIÇÃO SUFRAMA: ') + aNFe.Dest.ISUF;
+    Result := ACBrStr('INSCRIÇÃO SUFRAMA: ') + aNFe.Dest.ISUF + ';';
   end
   else
     Result := '';

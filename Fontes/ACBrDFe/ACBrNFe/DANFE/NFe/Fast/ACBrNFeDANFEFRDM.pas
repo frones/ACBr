@@ -383,6 +383,7 @@ begin
         FieldDefs.Add('pICMS'     , ftString, 18);
         FieldDefs.Add('vICMS'     , ftString, 18);
         FieldDefs.Add('vIPI'      , ftString, 18);
+        FieldDefs.Add('vIPIDevol'      , ftString, 18);
         FieldDefs.Add('pIPI'      , ftString, 18);
         FieldDefs.Add('VTotTrib'  , ftString, 18);
         FieldDefs.Add('ChaveNFe'  , ftString, 50);
@@ -1064,6 +1065,7 @@ begin
         FieldByName('pICMSST').AsString           := FormatFloatBr( Imposto.ICMS.pICMSST    ,',0.00');
         FieldByName('VICMSST').AsString           := FormatFloatBr( Imposto.ICMS.vICMSST    ,',0.00');
         FieldByName('VIPI').AsString              := FormatFloatBr( Imposto.IPI.VIPI        ,',0.00');
+        FieldByName('vIPIDevol').AsString         := FormatFloatBr( vIPIDevol               ,',0.00');
         FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,',0.00');
         FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
         FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');

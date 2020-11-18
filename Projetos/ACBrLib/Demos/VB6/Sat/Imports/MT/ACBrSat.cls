@@ -197,7 +197,6 @@ Private Declare Function SAT_GerarPDFCancelamento _
                                       
 Private Declare Function SAT_GerarImpressaoFiscalMFe _
                 Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
-                                     ByVal libHandler As Long, _
                                      ByVal eArquivoXml As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
@@ -509,7 +508,7 @@ End Function
 Public Sub ExtrairLogs(ByVal eArquivo As String)
     Dim retorno   As Long
     
-    retorno = SAT_ExtrairLogs(eArquivo)
+    retorno = SAT_ExtrairLogs(libHandler, eArquivo)
     CheckResult (retorno)
 End Sub
 

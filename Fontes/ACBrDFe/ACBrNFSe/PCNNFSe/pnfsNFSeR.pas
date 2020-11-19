@@ -2355,7 +2355,7 @@ begin
         if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica,
                           proFiorilli, proPronimv2, proVitoria, proSmarAPDABRASF,
                           proGovDigital, proDataSmart, proTecnos, proRLZ, proSigCorp,
-                          proSaatri, proSH3]) then
+                          proSaatri, proSH3, profinteliss]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

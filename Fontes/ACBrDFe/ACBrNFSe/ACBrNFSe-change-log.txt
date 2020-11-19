@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2020
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/60238-natureza-opera%C3%A7%C3%A3o-chapec%C3%B3-sc/
+  Por: João Paulo Muller
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/60271-nfse-fintel-iss-retido-consultaimpress%C3%A3o/
+  Por: Renato Lucas Pandolfo
+
 17/11/2020
 -- ACBrNFSeWebServices --
 [*] Alteração visando gerar o XML da NFS-e do provedor Equiplano.

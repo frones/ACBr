@@ -262,6 +262,7 @@ type
      procedure CancelarTransacoesPendentes;
      procedure ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean = True);
      procedure ImprimirTransacoesPendentes;
+     procedure ApagarRespostasPendentes;
 
      procedure AgruparRespostasPendentes(
         var Grupo : TACBrTEFDArrayGrupoRespostasPendentes) ;
@@ -913,7 +914,7 @@ begin
   end;
 
   if fConfirmarAntesDosComprovantes then
-    ConfirmarTransacoesPendentes(False);
+    ConfirmarTransacoesPendentes(False); //Não apaga agora, pois será usado na impressão
 
   ImpressaoOk            := False ;
   Gerencial              := False ;
@@ -1199,13 +1200,43 @@ begin
       CancelarTransacoesPendentes;
     end
     else if (not fConfirmarAntesDosComprovantes) then
-      ConfirmarTransacoesPendentes;
+      ConfirmarTransacoesPendentes
+    else
+      ApagarRespostasPendentes;
+
 
     BloquearMouseTeclado( False );
 
     if (MsgAutenticacaoAExibir <> '') then  // Tem autenticação ?
       DoExibeMsg( opmOK, MsgAutenticacaoAExibir ) ;
   end;
+
+  RespostasPendentes.Clear;
+end;
+
+procedure TACBrTEFD.ApagarRespostasPendentes;
+var
+  I : Integer;
+begin
+  fTefClass.GravaLog( 'ApagarRespostasPendentes' );
+
+  I := 0;
+  while I < RespostasPendentes.Count do
+  begin
+    try
+      with TACBrTEFDResp(RespostasPendentes[I]) do
+      begin
+        GPAtual := TipoGP;   // Seleciona a Classe do GP
+
+        ApagaEVerifica( ArqRespPendente );
+        ApagaEVerifica( ArqBackup );
+
+        Inc( I ) ;
+      end;
+    except
+      { Exceção Muda... Fica em Loop até conseguir confirmar e apagar Backup }
+    end;
+  end ;
 
   RespostasPendentes.Clear;
 end;

@@ -1497,6 +1497,7 @@ begin
     statOcupado: Result := 'Ocupado';
     statDesconectado: Result := 'Desconectado';
     statEsperaConexao: Result := 'Reconectando';
+    statTEF: Result := 'Em Transação';
   else
     Result := 'Desconhecido';
   end;
@@ -1832,6 +1833,9 @@ end;
 procedure TfrPOSTEFServer.EfetuarDocumentoFiscal(const TerminalId: String;
   IndicePedido: Integer);
 begin
+  if not (DeveFazerEmissaoDeNFCe or DeveFazerEmissaoDeSAT) then
+    Exit;
+
   TravarDocumentoFiscal(TerminalId);
   try
     GerarDocumentoFiscal(IndicePedido);

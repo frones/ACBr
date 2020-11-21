@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/20
+-- ACBrPOS, ACBrPOSPGWebAPI --
+[-] Correção para que a verificação de Transação em andamento, seja feita por
+    Terminal
+    (por: DSA)
+
 04/11/20
 -- ACBrTEFPayGoWebComum --
 [*] Ajuste para evitar a exibição da mensagem "RETIRE O CARTAO", ao operador,

@@ -61,7 +61,6 @@ type
      function GetConfirmarTransacoesPendentes: Boolean;
      function GetDadosTransacao: TACBrTEFPGWebAPIParametros;
      function GetDiretorioTrabalho: String;
-     function GetEmTransacao: Boolean;
      function GetImprimirViaClienteReduzida: Boolean;
      function GetInicializada: Boolean;
      function GetMaximoTerminaisConectados: Word;
@@ -169,7 +168,7 @@ type
      function TerminarTodasConexoes: Integer;
 
      property Inicializada: Boolean read GetInicializada write SetInicializada;
-     property EmTransacao: Boolean read GetEmTransacao;
+     function EmTransacao(const TerminalId: String): Boolean;
 
      property DadosDaTransacao: TACBrTEFPGWebAPIParametros read GetDadosTransacao;
      property TEFResp: TACBrTEFResp read fTEFResp;
@@ -270,11 +269,6 @@ end;
 function TACBrPOS.GetDiretorioTrabalho: String;
 begin
   Result := fPOSPGWeb.DiretorioTrabalho;
-end;
-
-function TACBrPOS.GetEmTransacao: Boolean;
-begin
-  Result := fPOSPGWeb.EmTransacao;
 end;
 
 function TACBrPOS.GetImprimirViaClienteReduzida: Boolean;
@@ -681,6 +675,11 @@ end;
 function TACBrPOS.TerminarTodasConexoes: Integer;
 begin
   Result := fPOSPGWeb.TerminarTodasConexoes;
+end;
+
+function TACBrPOS.EmTransacao(const TerminalId: String): Boolean;
+begin
+  Result := (fPOSPGWeb.ObterEstado(TerminalId) = statTEF);
 end;
 
 end.

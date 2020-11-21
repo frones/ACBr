@@ -41,8 +41,8 @@ uses
   ACBrTEFPayGoComum, ACBrBase;
 
 resourcestring
-  sErrTransacaoNaoIniciada = 'Não foi iniciada uma Transação TEF';
-  sErrTransacaoJaIniciada = 'Já foi iniciada uma Transação TEF';
+  sErrTransacaoNaoIniciada = 'Não foi iniciada uma Transação TEF no Temrinal %s';
+  sErrTransacaoJaIniciada = 'Já foi iniciada uma Transação TEF no Temrinal %s';
   sErrLibJaInicializada = 'Biblioteca PTI_DLL já foi inicializada';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrSemComprovante = 'Não há Comprovante a ser impresso';
@@ -154,7 +154,8 @@ type
      statConectado,      // 0 Terminal está on-line e aguardando por comandos.
      statOcupado,        // 1 Terminal está on-line, porém ocupado processando um comando.
      statDesconectado,   // 2 Terminal está offline.
-     statEsperaConexao); // 3 Terminal está off-line. A transação continua sendo executada e após sua finalização, o terminal tentará efetuar a reconexão automaticamente
+     statEsperaConexao,  // 3 Terminal está off-line. A transação continua sendo executada e após sua finalização, o terminal tentará efetuar a reconexão automaticamente
+     statTEF);           // 4 Terminal está executando uma Transação TEF
 
   TACBrPOSPGWebCodBarras = (
      code128 = 2,     // Código de barras padrão 128. Pode-se utilizar aproximadamente 31 caracteres alfanuméricos.
@@ -237,7 +238,6 @@ type
     fConfirmarTransacoesPendentes: Boolean;
     fpszTerminalId, fpszModel, fpszMAC, fpszSerNo: PAnsiChar;
     fInicializada: Boolean;
-    fEmTransacao: Boolean;
     fEmConnectionLoop: Boolean;
     fCNPJEstabelecimento: String;
     fDiretorioTrabalho: String;
@@ -320,7 +320,7 @@ type
     function CalcularCapacidadesDaAutomacao: Integer;
     function FormatarMensagem(const AMsg: String; Colunas: Word): AnsiString;
     procedure AvaliarErro(iRet: SmallInt; const TerminalId: String);
-    procedure VerificarTransacaoFoiIniciada;
+    procedure VerificarTransacaoFoiIniciada(const TerminalId: String);
     procedure AjustarEstadoConexao(const TerminalId: String; NovoEstado: TACBrPOSPGWebEstadoTerminal);
 
     property ListaConexoes: TThreadList read fListaConexoes;
@@ -387,7 +387,6 @@ type
     property PathDLL: String read fPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Inicializada: Boolean read fInicializada write SetInicializada;
-    property EmTransacao: Boolean read fEmTransacao;
 
     property DadosDaTransacao: TACBrTEFPGWebAPIParametros read fDadosTransacao;
 
@@ -533,10 +532,13 @@ var
   NovoEstado: TACBrPOSPGWebEstadoTerminal;
 begin
   // Força a leitura do Estado, se não for Idle ou a cada 5 segundos
-  if (fpEstado <> statConectado) or (SecondsBetween(fUltimaLeituraEstado, Now) > 5) then
+  if (fpEstado <> statTEF) then
   begin
-    fPOSPGWeb.ObterEstado(fTerminalId, NovoEstado, fModel, fMAC, fSerNo);
-    SetEstado(NovoEstado);
+    if (fpEstado <> statConectado) or (SecondsBetween(fUltimaLeituraEstado, Now) > 5) then
+    begin
+      fPOSPGWeb.ObterEstado(fTerminalId, NovoEstado, fModel, fMAC, fSerNo);
+      SetEstado(NovoEstado);
+    end;
   end;
 
   Result := fpEstado;
@@ -590,7 +592,6 @@ begin
   fpszModel := AllocMem(50);
   fpszMAC := AllocMem(50);
   fpszSerNo := AllocMem(50);
-  fEmTransacao := False;
   fEmConnectionLoop := False;
   fInicializada := False;
   fConfirmarTransacoesPendentes := True;
@@ -1000,8 +1001,10 @@ var
   iRet, iStatus: SmallInt;
 begin
   GravarLog('PTI_CheckStatus( '+TerminalId+' )');
-  xPTI_CheckStatus( TerminalId,
-                    iStatus, fpszModel, fpszMAC, fpszSerNo,
+  Move( TerminalId[1], fpszTerminalId^, Length(TerminalId)+1 );
+  xPTI_CheckStatus( fpszTerminalId,
+                    iStatus,
+                    fpszModel, fpszMAC, fpszSerNo,
                     iRet);
   if (iRet = PTIRET_OK) then
   begin
@@ -1078,7 +1081,6 @@ begin
       AvaliarErro(iRet, TerminalId);
     end;
   finally
-    fEmTransacao := False;
     AjustarEstadoConexao(TerminalId, statConectado);
   end;
 end;
@@ -1089,12 +1091,12 @@ var
   iRet: SmallInt;
   i: Integer;
 begin
-  if fEmTransacao then
-    DoException(ACBrStr(sErrTransacaoJaIniciada));
+  if (ObterEstado(TerminalId) = statTEF) then
+    DoException(Format(ACBrStr(sErrTransacaoJaIniciada), [TerminalId]));
 
-  fEmTransacao := True;
   GravarLog('PTI_EFT_Start( '+TerminalId+', '+PWOPERToString(SmallInt(Operacao))+' )');
   VerificarConexao(TerminalId);
+  AjustarEstadoConexao(TerminalId, statTEF);
   xPTI_EFT_Start( TerminalId,
                   SmallInt(Operacao),
                   iRet);
@@ -1116,7 +1118,7 @@ procedure TACBrPOSPGWebAPI.AdicionarParametro(const TerminalId: String;
 var
   iRet: SmallInt;
 begin
-  VerificarTransacaoFoiIniciada;
+  VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_AddParam( '+TerminalId+', '+PWINFOToString(iINFO)+', '+AValor+' )', True);
   VerificarConexao(TerminalId);
   xPTI_EFT_AddParam( TerminalId,
@@ -1145,7 +1147,7 @@ function TACBrPOSPGWebAPI.ExecutarTransacao(const TerminalId: String): SmallInt;
 var
   iRet: SmallInt;
 begin
-  VerificarTransacaoFoiIniciada;
+  VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_Exec( '+TerminalId+' )');
   VerificarConexao(TerminalId);
   xPTI_EFT_Exec( TerminalId,
@@ -1236,7 +1238,7 @@ procedure TACBrPOSPGWebAPI.FinalizarTrancao(const TerminalId: String;
 var
   iRet: SmallInt;
 begin
-  VerificarTransacaoFoiIniciada;
+  VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_Confirm( '+TerminalId+', '+IntToStr(SmallInt(Status))+' )');
   VerificarConexao(TerminalId);
   xPTI_EFT_Confirm( TerminalId, SmallInt(Status), iRet);
@@ -1247,7 +1249,7 @@ begin
   if Assigned(fOnAposFinalizarTransacao) then
     fOnAposFinalizarTransacao(TerminalId, Status);
 
-  fEmTransacao := False;
+  AjustarEstadoConexao(TerminalId, statConectado);
   AvaliarErro(iRet, TerminalId);
 end;
 
@@ -1372,7 +1374,7 @@ begin
     PTIRET_OK:
     begin
       MsgError := '';
-      if not fEmTransacao then
+      if not (ObterEstado(TerminalId) in [statConectado, statTEF]) then
         AjustarEstadoConexao(TerminalId, statConectado);
     end;
 
@@ -1404,10 +1406,14 @@ begin
     DoException( ACBrStr(MsgError) );
 end;
 
-procedure TACBrPOSPGWebAPI.VerificarTransacaoFoiIniciada;
+procedure TACBrPOSPGWebAPI.VerificarTransacaoFoiIniciada(
+  const TerminalId: String);
+var
+  EstadoTerminal: TACBrPOSPGWebEstadoTerminal;
 begin
-  if not fEmTransacao then
-    DoException(ACBrStr(sErrTransacaoNaoIniciada));
+  EstadoTerminal := ObterEstado(TerminalId);
+  if (EstadoTerminal <> statTEF) then
+    DoException(Format(ACBrStr(sErrTransacaoNaoIniciada), [TerminalId]));
 end;
 
 procedure TACBrPOSPGWebAPI.AjustarEstadoConexao(const TerminalId: String;
@@ -1457,32 +1463,13 @@ begin
   end;
 end;
 
-function TACBrPOSPGWebAPI.TerminalEstaConectado(const TerminalId: String
-  ): Boolean;
+function TACBrPOSPGWebAPI.TerminalEstaConectado(const TerminalId: String): Boolean;
 var
-  Alist: TList;
-  i: Integer;
-  AConexao: TACBrPOSPGWebConexao;
+  EstadoTerminal: TACBrPOSPGWebEstadoTerminal;
 begin
   //GravarLog('  TerminalEstaConectado( '+TerminalId+ ' )');
-
-  Result := False;
-  Alist := fListaConexoes.LockList;
-  try
-    for i := 0 to Alist.Count-1 do
-    begin
-      AConexao := TACBrPOSPGWebConexao(Alist[i]);
-      if (AConexao.TerminalId = TerminalId) then
-      begin
-        Result := (AConexao.fpEstado in [statConectado, statOcupado]);
-        Break;
-      end;
-    end;
-  finally
-    fListaConexoes.UnlockList;
-  end;
-
-  //GravarLog('    '+BoolToStr(Result, True));
+  EstadoTerminal := ObterEstado(TerminalId);
+  Result := not (EstadoTerminal in [statDesconectado, statEsperaConexao]);
 end;
 
 procedure TACBrPOSPGWebAPI.VerificarConexao(const TerminalId: String);

@@ -511,14 +511,14 @@ begin
        BoletoDM.Travar;
        try
          Resposta := '';
-         if BoletoDM.ACBrBoleto1.ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
-           BoletoDM.ACBrBoleto1.ACBrBoletoFC.NomeArquivo := PathWithDelim( Dir )  +
+         if TLibBoletoConfig(Config).BoletoFCFortesConfig.Filtro = TACBrBoletoFCFiltro(fiHTML) then
+           TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir )  +
            IfThen(NaoEstaVazio(Arq), Arq , 'boleto.html' )
          else
-           BoletoDM.ACBrBoleto1.ACBrBoletoFC.NomeArquivo := PathWithDelim( Dir ) +
+           TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir ) +
            IfThen(NaoEstaVazio(Arq), Arq , 'boleto.pdf' );
 
-         Resposta := BoletoDM.ACBrBoleto1.ACBrBoletoFC.NomeArquivo;
+         Resposta := TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo;
          MoverStringParaPChar(Resposta, sResposta, esTamanho);
          Result := SetRetorno(ErrOK, Resposta);
        finally

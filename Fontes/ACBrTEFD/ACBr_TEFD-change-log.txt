@@ -46,11 +46,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/20
+-- ACBrTEFPayGoRedes --
+[+] Nova Unit, para implementar uma Tabela de Redes x CNPJ, para todos os ptodutos
+    de TEF, da PayGo
+
+--ACBrTEFDPayGo --
+[*] Remoção de código fonte, referente a Tabela de Redes.
+
+-- ACBrTEFPayGoComum --
+[+] Adicionado suporte a Tabela de Redes, retornando o CNPJ da mesma, quando
+    disponível em "RedesPayGo.txt", mapeando para a propriedade:
+    TACBrTEFResp.NFCeSAT.CNPJCredenciadora
+
+-- ACBrTEFPayGoWebComum --
+[*] Propriedade "RemocaoCartaoPinPad", modificada para Default False
+    (por: DSA)
+
 21/11/20
 -- ACBrPOS, ACBrPOSPGWebAPI --
 [-] Correção para que a verificação de Transação em andamento, seja feita por
-    Terminal
-    (por: DSA)
+    Terminal  (por: DSA)
 
 04/11/20
 -- ACBrTEFPayGoWebComum --

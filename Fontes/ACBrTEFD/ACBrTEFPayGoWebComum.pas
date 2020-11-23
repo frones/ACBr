@@ -1117,7 +1117,7 @@ begin
   fSuportaViasDiferenciadas := True;
   fImprimeViaClienteReduzida := False;
   fUtilizaSaldoTotalVoucher := False;
-  fRemocaoCartaoPinPad := True;
+  fRemocaoCartaoPinPad := False;
   fExibeMensagemCheckout := True;
   fExibicaoQRCode := qreAuto;
   fInicializada := False;

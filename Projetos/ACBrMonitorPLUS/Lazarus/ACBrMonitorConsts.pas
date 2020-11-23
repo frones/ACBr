@@ -43,6 +43,9 @@ ResourceString
   SErrArqConfigNaoDefinido = 'Arquivo de configuração não definido';
   SErrDiretorioInvalido = 'Diretório Invalido: %s';
   SErroNaoImplementado = 'Metodo não Implementado';
+  SErrArqNaoEncontrado = 'Arquivo % não encontrado';
+  SErrSATHashLibInvalido = 'Biblioteca do SAT [%s] com assinatura inválida';
+  SErrSATMarcaNaoEncontrada =  'Marca [%s] não encontrada no arquivo: %s';
 
   SErroNFeAbrir = 'Erro ao abrir o arquivo da Nota Fiscal: %s';
   SErroNFeCarregar = 'Erro ao carregar Nota Fiscal';
@@ -127,6 +130,7 @@ const
   CMetodoSetlogomarcaSAT =             'setlogomarca';
   CMetodoGerarAssinaturaSAT =          'gerarassinaturasat';
   CMetodoEnviarEmailCFe =              'enviaremailcfe';
+  CMetodoConsultarModeloSAT =          'consultarmodelosat';
 
   CMetodoECFachar =                                      'achar';
   CMetodoECFativar =                                     'ativar';
@@ -1081,6 +1085,7 @@ const
 
   CSecSAT =                                 'SAT';
   CKeySATModelo =                           'Modelo';
+  CKeySATMarca =                            'Marca';
   CKeySATArqLog =                           'ArqLog';
   CKeySATNomeDLL =                          'NomeDLL';
   CKeySATCodigoAtivacao =                   'CodigoAtivacao';
@@ -1104,6 +1109,13 @@ const
   CKeySATPathCFeEnvio =                     'PathCFeEnvio';
   CKeySATPrefixoArqCFe =                    'PrefixoArqCFe';
   CKeySATPrefixoArqCFeCanc =                'PrefixoArqCFeCanc';
+  CKeySATPastaOrigemLib =                   'PastaOrigem';
+  CKeySATPastaOrigemLib64 =                 'PastaOrigem64';
+  CKeySATPastaDestLib =                     'PastaDestino';
+  CKeySATLibLinux =                         'LibLinux';
+  CKeySATLibWin32 =                         'LibWin32';
+  CKeySATLibWin64 =                         'LibWin64';
+  //CKeySATHashLib =                          'Hash';
 
   CSecSATExtrato =                          'SATExtrato';
   CKeySATExtParamsString =                  'ParamsString';
@@ -1271,6 +1283,11 @@ const
   CvalueVersaoeSocial =                     '02_04_02';
   CvalueVersaoReinf =                       '1_03_02';
   CvalueVersaoQRCode =                      '0';
+
+  CDirSAT =                                 'SAT';
+  CDFeSATIniFile =                          'dfesat.ini';
+  CObjSAT =                                 'SAT';
+
 
 
 implementation

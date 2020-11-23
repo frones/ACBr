@@ -12201,7 +12201,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label113: TLabel
                 Left = 16
                 Height = 17
-                Top = 7
+                Top = 104
                 Width = 49
                 Alignment = taRightJustify
                 Caption = 'Arq.Log:'
@@ -12213,27 +12213,28 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Cursor = crIBeam
                 Left = 17
                 Height = 25
-                Top = 24
-                Width = 163
+                Top = 121
+                Width = 271
                 Font.Height = -13
                 OnChange = edSATLogChange
                 ParentFont = False
                 TabOrder = 0
               end
               object SbArqLog: TSpeedButton
-                Left = 184
+                Left = 296
                 Height = 22
-                Top = 24
+                Hint = 'Visualizar Log'
+                Top = 124
                 Width = 24
                 Caption = '...'
                 Font.Height = -13
                 OnClick = SbArqLogClick
                 ParentFont = False
               end
-              object Label114: TLabel
-                Left = 217
+              object LabelNomedll: TLabel
+                Left = 296
                 Height = 17
-                Top = 7
+                Top = 5
                 Width = 64
                 Alignment = taRightJustify
                 Caption = 'Nome DLL:'
@@ -12243,10 +12244,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object edNomeDLL: TEdit
                 Cursor = crIBeam
-                Left = 217
+                Left = 296
                 Height = 25
                 Top = 24
-                Width = 752
+                Width = 579
                 Anchors = [akTop, akLeft, akRight]
                 Font.Height = -13
                 ParentFont = False
@@ -12256,7 +12257,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 16
                 Height = 25
                 Top = 73
-                Width = 164
+                Width = 128
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 2
@@ -12272,9 +12273,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
               end
               object Label116: TLabel
-                Left = 217
+                Left = 383
                 Height = 17
-                Top = 56
+                Top = 55
                 Width = 42
                 Caption = 'Cód.UF'
                 Font.Height = -13
@@ -12282,17 +12283,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
               end
               object edtCodUF: TEdit
-                Left = 218
+                Left = 384
                 Height = 25
-                Top = 72
-                Width = 61
+                Top = 73
+                Width = 69
                 Font.Height = -13
                 NumbersOnly = True
                 ParentFont = False
                 TabOrder = 3
               end
               object Label117: TLabel
-                Left = 312
+                Left = 296
                 Height = 17
                 Top = 57
                 Width = 62
@@ -12302,10 +12303,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
               end
               object seNumeroCaixa: TSpinEdit
-                Left = 312
+                Left = 296
                 Height = 25
                 Top = 73
-                Width = 58
+                Width = 72
                 Font.Height = -13
                 MaxValue = 999
                 MinValue = 1
@@ -12314,9 +12315,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Value = 1
               end
               object cbxUTF8: TCheckBox
-                Left = 16
+                Left = 17
                 Height = 21
-                Top = 103
+                Top = 155
                 Width = 49
                 Caption = 'UTF8'
                 Font.Height = -13
@@ -12325,9 +12326,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 5
               end
               object sePagCod: TSpinEdit
-                Left = 156
+                Left = 885
                 Height = 25
-                Top = 123
+                Top = 24
                 Width = 83
                 Font.Height = -13
                 MaxValue = 65001
@@ -12335,11 +12336,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
                 TabOrder = 6
               end
-              object Label118: TLabel
+              object LabelpagCod: TLabel
                 AnchorSideTop.Side = asrCenter
-                Left = 156
+                Left = 885
                 Height = 17
-                Top = 106
+                Top = 5
                 Width = 71
                 BorderSpacing.Right = 5
                 Caption = 'Pág.Código:'
@@ -12348,9 +12349,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
               end
               object Label119: TLabel
-                Left = 257
+                Left = 152
                 Height = 17
-                Top = 106
+                Top = 55
                 Width = 40
                 Caption = 'Versão'
                 Font.Height = -13
@@ -12358,10 +12359,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentFont = False
               end
               object sfeVersaoEnt: TFloatSpinEdit
-                Left = 256
+                Left = 152
                 Height = 25
-                Top = 123
-                Width = 114
+                Top = 73
+                Width = 136
                 Font.Height = -13
                 Increment = 0.01
                 MaxValue = 10
@@ -12371,9 +12372,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Value = 0.05
               end
               object cbxFormatXML: TCheckBox
-                Left = 17
+                Left = 18
                 Height = 21
-                Top = 127
+                Top = 179
                 Width = 103
                 Caption = 'Formatar XML'
                 Checked = True
@@ -12383,10 +12384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 8
               end
               object cbxAmbiente: TComboBox
-                Left = 385
+                Left = 463
                 Height = 25
-                Top = 72
-                Width = 584
+                Top = 73
+                Width = 506
                 Anchors = [akTop, akLeft, akRight]
                 Font.Height = -13
                 ItemHeight = 17
@@ -12395,7 +12396,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 9
               end
               object Label120: TLabel
-                Left = 385
+                Left = 463
                 Height = 17
                 Top = 55
                 Width = 55
@@ -12406,10 +12407,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object cbxModeloSAT: TComboBox
                 AnchorSideLeft.Side = asrCenter
-                Left = 16
+                Left = 152
                 Height = 25
-                Top = 168
-                Width = 133
+                Top = 25
+                Width = 136
                 Font.Height = -13
                 ItemHeight = 17
                 Items.Strings = (
@@ -12427,7 +12428,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object btAtivarsat: TButton
                 Left = 128
                 Height = 25
-                Top = 232
+                Top = 304
                 Width = 104
                 Caption = 'Ativar SAT'
                 Font.Height = -13
@@ -12438,7 +12439,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object btConsultarStatusOPSAT: TButton
                 Left = 17
                 Height = 25
-                Top = 232
+                Top = 304
                 Width = 104
                 Caption = 'Consultar Status'
                 Font.Height = -13
@@ -12450,7 +12451,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Side = asrCenter
                 Left = 16
                 Height = 25
-                Top = 200
+                Top = 272
                 Width = 104
                 Caption = 'Inicializar'
                 Font.Height = -13
@@ -12459,9 +12460,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 11
               end
               object cbxValidarNumeroSessaoResposta: TCheckBox
-                Left = 16
+                Left = 18
                 Height = 21
-                Top = 272
+                Top = 203
                 Width = 235
                 Caption = 'Validar Número de Sessão Resposta'
                 Checked = True
@@ -12715,6 +12716,36 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                   TabOrder = 12
                 end
+              end
+              object cbSATMarca: TComboBox
+                Left = 16
+                Height = 25
+                Top = 24
+                Width = 128
+                ItemHeight = 17
+                OnChange = cbSATMarcaChange
+                Style = csDropDownList
+                TabOrder = 16
+              end
+              object Label252: TLabel
+                Left = 16
+                Height = 17
+                Top = 5
+                Width = 62
+                Caption = 'Marca SAT'
+                Font.Height = -13
+                ParentColor = False
+                ParentFont = False
+              end
+              object labelModeloDll: TLabel
+                Left = 152
+                Height = 17
+                Top = 5
+                Width = 67
+                Caption = 'ModeloDLL'
+                Font.Height = -13
+                ParentColor = False
+                ParentFont = False
               end
             end
             object tsDadosEmit: TTabSheet

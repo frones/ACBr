@@ -272,12 +272,79 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoConsultarModeloSAT }
+
+TMetodoConsultarModeloSAT = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
 uses
-  ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo,
+  ACBrUtil,DoACBrUnit,IniFiles, forms, pcnAuxiliar, typinfo,
   ACBrSATExtratoClass, UtilUnit;
+
+{ TMetodoConsultarModeloSAT }
+
+procedure TMetodoConsultarModeloSAT.Executar;
+  function SectionSAT(N: Integer): String;
+  begin
+    Result := 'SAT'+IntToStr(N);
+  end;
+var
+  dfesat_ini, Marca: String;
+  {$IfNDef MSWINDOWS}
+  LibName: String;
+  {$Else}
+    {$IfDef CPU64}
+    LibNameWin64: String;
+    {$EndIf}
+  {$EndIf}
+  SL: TStringList;
+  Ini: TIniFile;
+  I: Integer;
+begin
+  dfesat_ini := PathWithDelim(ExtractFilePath(Application.ExeName)) + CDirSAT + PathDelim + CDFeSATIniFile;
+  if not FileExists(dfesat_ini) then
+    raise Exception.CreateFmt(SErrArqNaoEncontrado,[dfesat_ini]);
+
+  Ini := TIniFile.Create(dfesat_ini);
+  SL := TStringList.Create;
+  try
+    SL.LineBreak := '|';
+    I := 1;
+    while Ini.SectionExists(SectionSAT(I)) do
+    begin
+      Marca := Ini.ReadString(SectionSAT(I), CKeySATMarca, '');
+      if Marca <> '' then
+      begin
+        {$IfNDef MSWINDOWS}
+         LibName := Ini.ReadString(SectionSAT(I), CKeySATLibLinux, '');
+         if LibName <> '' then
+           SL.Add(Marca);
+        {$Else}
+          {$IfDef CPU64}
+          LibNameWin64 := Ini.ReadString(SectionSAT(I), CKeySATLibWin64, '');
+          if LibNameWin64 <> '' then
+            SL.Add(Marca);
+          {$Else}
+            SL.Add(Marca);
+          {$EndIf}
+        {$EndIf}
+
+      end;
+
+      Inc( I );
+    end;
+
+    fpCmd.Resposta := SL.Text;
+  finally
+    SL.Free;
+    Ini.Free;
+  end;
+end;
 
 procedure TACBrObjetoSAT.CarregarDadosVenda(aStr: String; aNomePDF: String);
 begin
@@ -1124,6 +1191,8 @@ begin
   ListaDeMetodos.Add(CMetodoSetlogomarcaSAT);
   ListaDeMetodos.Add(CMetodoGerarAssinaturaSAT);
   ListaDeMetodos.Add(CMetodoEnviarEmailCFe);
+  ListaDeMetodos.Add(CMetodoConsultarModeloSAT);
+
 
   // DoACBr
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -1189,6 +1258,7 @@ begin
     29 : AMetodoClass := TMetodoSetLogoMarca;
     30 : AMetodoClass := TMetodoGerarAssinaturaSAT;
     31 : AMetodoClass := TMetodoEnviarEmailCFe;
+    32 : AMetodoClass := TMetodoConsultarModeloSAT;
 
     else
       begin

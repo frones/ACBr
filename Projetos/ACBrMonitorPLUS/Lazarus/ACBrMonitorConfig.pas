@@ -515,6 +515,7 @@ type
 
   TSAT = record
     Modelo                       : Integer;
+    Marca                        : String;
     ArqLog                       : String;
     NomeDLL                      : String;
     CodigoAtivacao               : String;
@@ -1179,6 +1180,7 @@ begin
     with SAT do
     begin
       ini.WriteInteger( CSecSAT, CKeySATModelo         , Modelo         );
+      ini.WriteString(  CSecSAT, CKeySATMarca          , Marca          );
       ini.WriteString(  CSecSAT, CKeySATArqLog         , ArqLog         );
       ini.WriteString(  CSecSAT, CKeySATNomeDLL        , NomeDLL        );
       ini.WriteString(  CSecSAT, CKeySATCodigoAtivacao , CodigoAtivacao );
@@ -1874,6 +1876,7 @@ begin
     with SAT do
     begin
       Modelo                    := ini.ReadInteger( CSecSAT, CKeySATModelo         , Modelo         );
+      Marca                     := ini.ReadString(  CSecSAT, CKeySATMarca          , Marca          );
       ArqLog                    := ini.ReadString(  CSecSAT, CKeySATArqLog         , ArqLog         );
       NomeDLL                   := ini.ReadString(  CSecSAT, CKeySATNomeDLL        , NomeDLL        );
       CodigoAtivacao            := ini.ReadString(  CSecSAT, CKeySATCodigoAtivacao , CodigoAtivacao );
@@ -2538,6 +2541,7 @@ begin
   with SAT do
   begin
     Modelo                    := 0;
+    Marca                     := '';
     ArqLog                    := 'ACBrSAT.log';
     NomeDLL                   := AcertaPath('SAT\Emulador\SAT.DLL');
     CodigoAtivacao            := '123456';

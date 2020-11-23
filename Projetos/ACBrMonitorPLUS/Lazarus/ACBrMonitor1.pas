@@ -40,7 +40,7 @@ interface
 uses
   {$IFDEF MSWINDOWS} windows, {$ENDIF}
   SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice,
-  ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
+  ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls, FileUtil,
   ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrConsultaCNPJ,
@@ -66,15 +66,23 @@ const
     ('Não Inicializada', 'Desconhecido', 'Livre', 'Venda',
     'Pagamento', 'Relatório', 'Bloqueada', 'Requer Z', 'Requer X',
     'Não Fiscal');
+
+  CDFeNaoSobreescrever: array[0..7] of String =
+    ( 'libltdl-7.dll', 'libwinpthread-1.dll',
+      'zlib1.dll', 'iconv.dll',
+      'bemasat.xml', 'gersat.conf', 'sat.ini', 'satdimep.ini' );
+
   CBufferMemoResposta = 10000;              { Maximo de Linhas no MemoResposta }
   //_C = 'tYk*5W@';
   UTF8BOM : AnsiString = #$EF#$BB#$BF;
+
   HelpShortcut = 'F1';
   ClHelp = 'lhelp';
   CMODELO_NFCE_FORTES = 0;
   CMODELO_NFCE_ESCPOS = 1;
   CIMPRESSAO_NFCE_A4 = 0;
   CIMPRESSAO_NFCE_BOBINA = 1;
+  CSATManual = 'Manual';
 
 type
   TCores = class
@@ -269,6 +277,7 @@ type
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
     cbRetirarEspacos: TCheckBox;
+    cbSATMarca: TComboBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
     cbxExibeResumo: TCheckBox;
@@ -568,6 +577,8 @@ type
     Label249: TLabel;
     Label250: TLabel;
     Label251: TLabel;
+    Label252: TLabel;
+    labelModeloDll: TLabel;
     lbTipoResp: TLabel;
     lblMsgCanhoto: TLabel;
     Label26: TLabel;
@@ -894,11 +905,11 @@ type
     Label111: TLabel;
     Label112: TLabel;
     Label113: TLabel;
-    Label114: TLabel;
+    LabelNomedll: TLabel;
     Label115: TLabel;
     Label116: TLabel;
     Label117: TLabel;
-    Label118: TLabel;
+    LabelpagCod: TLabel;
     Label119: TLabel;
     Label12: TLabel;
     Label120: TLabel;
@@ -1380,6 +1391,7 @@ type
     procedure cbLogCompClick(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbMonitorarPastaChange(Sender: TObject);
+    procedure cbSATMarcaChange(Sender: TObject);
     procedure cbSSLLibChange(Sender: TObject);
     procedure cbSSLTypeChange(Sender: TObject);
     procedure cbTraduzirTagsChange(Sender: TObject);
@@ -1612,6 +1624,7 @@ type
     pCanClose: boolean;
     fsSLPrecos: TStringList;
     fsDTPrecos: integer;
+    fSATLibsMarcas: String;
 
     FWasHidden: Boolean;
     FLastHandle: Integer;
@@ -1667,6 +1680,8 @@ type
 
     procedure LeDadosRedeSAT;
     procedure ConfiguraRedeSAT;
+    procedure ConsultarModeloSAT;
+    procedure LeConfigMarcaSAT;
 
     procedure SetColorButtons(Sender: TObject);
     procedure SetColorSubButtons(Sender: TObject);
@@ -1722,6 +1737,7 @@ type
     function SubstituirVariaveis(const ATexto: String): String;
     procedure OnFormataDecimalSAT;
     procedure OnMensagemCanhotoNFe;
+    procedure OnSATManual;
 
     property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
@@ -1911,6 +1927,7 @@ begin
   Conexao := nil;
   NewLines := '';
   DISWorking := False;
+  fSATLibsMarcas:= '';
 
   Top := max(Screen.Height - Height - 100,1);
   Left := max(Screen.Width - Width - 50,1);
@@ -4267,6 +4284,15 @@ begin
 
   EscondeConfig;
 
+  // Tenta definir o modelo SAT e DLL usando a "Marca"
+  try
+  if (FMonitorConfig.SAT.Marca <> '') then
+    LeConfigMarcaSAT;
+  except
+    on E: Exception do
+      Erro := Erro + sLineBreak + E.Message;
+  end;
+
   try
     AjustaLinhasLog;  { Diminui / Ajusta o numero de linhas do Log }
   except
@@ -5163,6 +5189,7 @@ begin
 
   with FMonitorConfig.SAT do
   begin
+    ConsultarModeloSAT;
     cbxModeloSAT.ItemIndex             := Modelo;
     edSATLog.Text                      := ArqLog;
     edNomeDLL.Text                     := NomeDLL;
@@ -6230,14 +6257,20 @@ begin
     {Parametro SAT}
     with FMonitorConfig.SAT do
     begin
-      Modelo                           := cbxModeloSAT.ItemIndex;
+      if cbSATMarca.ItemIndex <= 0 then
+        Marca := ''
+      else
+        Marca := cbSATMarca.Text;
+
+      Modelo := cbxModeloSAT.ItemIndex;
+      NomeDLL := edNomeDLL.Text;
+      PaginaDeCodigo := sePagCod.Value;
+
       ArqLog                           := edSATLog.Text;
-      NomeDLL                          := edNomeDLL.Text;
       CodigoAtivacao                   := edtCodigoAtivacao.Text;
       CodigoUF                         := edtCodUF.Text;
       NumeroCaixa                      := seNumeroCaixa.Value;
       Ambiente                         := cbxAmbiente.ItemIndex;
-      PaginaDeCodigo                   := sePagCod.Value;
       versaoDadosEnt                   := sfeVersaoEnt.Value;
       FormatarXML                      := cbxFormatXML.Checked;
       PathCFe                          := edSATPathArqs.Text;
@@ -8629,6 +8662,155 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.ConsultarModeloSAT;
+var
+  comando: String;
+begin
+  comando:= CObjSAT + '.' + CMetodoConsultarModeloSAT;
+  if cbSATMarca.Items.Count <= 1 then
+  begin
+    try
+      cbSATMarca.Items.Clear;
+
+      fsCmd.Comando := comando;
+      FDoSAT.Executar(fsCmd);
+
+      cbSATMarca.Items.Text := StringReplace(fsCmd.Resposta, '|', sLineBreak, [rfReplaceAll]);
+
+    finally
+       cbSATMarca.Items.Insert(0, CSATManual);
+       cbSATMarca.Text := IfEmptyThen( FMonitorConfig.SAT.Marca , CSATManual );
+       cbSATMarcaChange(Self);
+   end;
+  end;
+
+end;
+
+procedure TFrmACBrMonitor.LeConfigMarcaSAT;
+  function SectionSAT(N: Integer): String;
+  begin
+    Result := 'SAT'+IntToStr(N);
+  end;
+
+  function AjustarCaminhoPasta( AIniCaminhoPasta: String): String;
+  begin
+    Result := PathWithDelim( StringReplace(AIniCaminhoPasta,'{app}',
+                             PathWithoutDelim(ExtractFilePath(Application.ExeName)), [rfReplaceAll]));
+  end;
+
+var
+  I: Integer;
+  Ini: TIniFile;
+  dfesat_ini, Sec, Marca, LibName, LibFolder, AFile: String;
+  Encontrada: Boolean;
+  {$IfDef MSWINDOWS}
+   J : Integer;
+   FolderSource, FolderDest: String;
+   SL: TStringList;
+   CopyFlags: TCopyFileFlags;
+  {$EndIf}
+begin
+  if FMonitorConfig.SAT.Marca = '' then
+    exit;
+
+  dfesat_ini := PathWithDelim(ExtractFilePath(Application.ExeName)) + CDirSAT + PathDelim + CDFeSATIniFile;
+  if not FileExists(dfesat_ini) then
+    raise Exception.CreateFmt(SErrArqNaoEncontrado,[dfesat_ini]);
+
+  Encontrada := False;
+  Ini := TIniFile.Create(dfesat_ini);
+  try
+    I := 1;
+    while Ini.SectionExists(SectionSAT(I)) do
+    begin
+      Sec := SectionSAT(I);
+
+      LibFolder := '';
+      Marca := Ini.ReadString(Sec, CKeySATMarca, '');
+      if LowerCase(Marca) = LowerCase(FMonitorConfig.SAT.Marca) then
+      begin
+        {$IfDef MSWINDOWS}
+          {$IfDef CPU64}
+          FolderSource := AjustarCaminhoPasta( Ini.ReadString(Sec, CKeySATPastaOrigemLib64, '' ) );
+          LibName := Ini.ReadString( Sec, CKeySATLibWin64, '');
+          {$Else}
+          FolderSource := AjustarCaminhoPasta( Ini.ReadString(Sec, CKeySATPastaOrigemLib, '' ) );
+          LibName := Ini.ReadString( Sec, CKeySATLibWin32, '');
+          {$EndIf}
+
+        FolderDest := AjustarCaminhoPasta( Ini.ReadString(Sec, CKeySATPastaDestLib, '' ) );
+        if (FolderSource <> '') and (FolderDest <> '') then
+        begin
+          if (fSATLibsMarcas <> Marca) then
+          begin
+            fSATLibsMarcas := Marca;
+
+            // Copiar arquivos de FolderSource to FolderDest
+            SL := TStringList.Create;
+            try
+              FindFiles(FolderSource+'*.*', SL );
+
+              For J := 0 to SL.Count-1 do
+              begin
+                AFile := ExtractFileName(SL[J]);
+
+                // Verifica se Arquivo não pode ser substituido
+                CopyFlags := [cffPreserveTime];
+                if not AnsiMatchStr(LowerCase(AFile) , CDFeNaoSobreescrever ) then
+                  CopyFlags := CopyFlags + [cffOverwriteFile];
+
+                try
+                  CopyFile( SL[J], FolderDest + AFile, CopyFlags );
+                except
+                  { ignora exceção de falha }
+                end;
+              end;
+            finally
+              SL.Free;
+            end;
+          end;
+
+          LibFolder := FolderDest;
+        end
+        else
+          LibFolder := FolderSource;
+
+        if (LibName <> '') then
+        begin
+          LibName := LibFolder + LibName;
+          if not FileExists(LibName) then
+            raise Exception.CreateFmt( SErrArqNaoEncontrado, [LibName] );
+
+        end;
+        {$Else}
+        LibName := Ini.ReadString( Sec, CKeySATLibLinux, '');
+        {$EndIf}
+
+        edNomeDLL.Text := LibName;
+        {$IfDef MSWINDOWS}
+        cbxModeloSAT.ItemIndex := integer(TACBrSATModelo(Ini.ReadInteger(Sec, CKeySATModelo, 2)));  // Default = 2-STDCALL
+        {$Else}
+        cbxModeloSAT.ItemIndex := 1;
+        {$EndIf}
+
+        sePagCod.Value := Ini.ReadInteger(Sec, CKeySATPaginaDeCodigo, CUTF8CodPage);  // Default = UTF8
+
+        Encontrada := True;
+        Break;
+      end;
+
+      Inc( I );
+    end;
+  finally
+    Ini.Free;
+    AjustaACBrSAT;
+  end;
+
+  if not Encontrada then
+    raise Exception.CreateFmt( SErrSATMarcaNaoEncontrada, [FMonitorConfig.SAT.Marca, dfesat_ini] );
+
+end;
+
 procedure TFrmACBrMonitor.AjustaACBrSAT;
 begin
   with ACBrSAT1 do
@@ -8647,6 +8829,7 @@ begin
     Modelo  := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
     ArqLOG  := edSATLog.Text;
     NomeDLL := edNomeDLL.Text;
+
     Config.ide_numeroCaixa := seNumeroCaixa.Value;
     Config.ide_tpAmb       := TpcnTipoAmbiente( cbxAmbiente.ItemIndex );
     Config.ide_CNPJ        := edtSwHCNPJ.Text;
@@ -10022,6 +10205,20 @@ begin
 
 end;
 
+procedure TFrmACBrMonitor.OnSATManual;
+var
+  AVisible : Boolean;
+begin
+  AVisible := (cbSATMarca.ItemIndex <= 0);
+  edNomeDLL.Visible := AVisible;
+  LabelNomedll.Visible := AVisible;
+  sePagCod.Visible := AVisible;
+  LabelpagCod.Visible := AVisible;
+  cbxModeloSAT.Visible := AVisible;
+  labelModeloDll.Visible := AVisible;
+
+end;
+
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);
 var
   frConfiguraSerial: TfrConfiguraSerial;
@@ -10139,6 +10336,11 @@ begin
       'Deseja realmente continuar?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
       cbMonitorarPasta.Checked := False;
   end;
+end;
+
+procedure TFrmACBrMonitor.cbSATMarcaChange(Sender: TObject);
+begin
+  OnSATManual;
 end;
 
 procedure TFrmACBrMonitor.cbSSLLibChange(Sender: TObject);

@@ -374,12 +374,12 @@ begin
       //2) Segundo Verificar dependência de outros pacotes marcados...
 
       //
-      if (ACBr_NFe_dpk.Checked) or (ACBr_CTe_dpk.Checked) or
-        (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) or
-        (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
-        (ACBr_BPe_dpk.Checked) or (ACBr_ANe_dpk.Checked) or
-        (ACBr_CIOT_dpk.Checked) or (ACBr_NF3e_dpk.Checked) or
-        (ACBr_SAT_dpk.Checked) then
+      if (ACBr_NFe_dpk.Checked)    or (ACBr_CTe_dpk.Checked)   or
+         (ACBr_NFSe_dpk.Checked)   or (ACBr_MDFe_dpk.Checked)  or
+         (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
+         (ACBr_BPe_dpk.Checked)    or (ACBr_ANe_dpk.Checked)   or
+         (ACBr_CIOT_dpk.Checked)   or (ACBr_NF3e_dpk.Checked)  or
+         (ACBr_SAT_dpk.Checked)    or (ACBr_Boleto_dpk.Checked) then
       begin
         ACBr_DFeComum_dpk.Checked := True;
       end;

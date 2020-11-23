@@ -51,21 +51,9 @@ type
     rlb_4_Aquav: TRLBand;
     rlb_5_Ferrov: TRLBand;
     rlb_6_Observacao: TRLBand;
-    RLDraw1: TRLDraw;
-    rlLabel2: TRLLabel;
     rlLabel22: TRLLabel;
-    rlLabel25: TRLLabel;
-    rlLabel3: TRLLabel;
-    rlLabel33: TRLLabel;
-    rlLabel4: TRLLabel;
-    RLLabel6: TRLLabel;
-    rlLabel77: TRLLabel;
-    rllEmissao: TRLLabel;
-    rllModelo: TRLLabel;
     rllMsg1: TRLLabel;
     rllDataHoraImpressao: TRLLabel;
-    rllNumMDFe: TRLLabel;
-    rllSerie: TRLLabel;
     rllSistema: TRLLabel;
     rlb_7_Documentos_Titulos: TRLBand;
     rlLabel141: TRLLabel;
@@ -75,28 +63,16 @@ type
     rlLabel109: TRLLabel;
     rlLabel106: TRLLabel;
     rlLabel100: TRLLabel;
-    rllUFCarrega: TRLLabel;
-    rllUFDescarrega: TRLLabel;
     rlmObservacao: TRLMemo;
     rlb_2: TRLBand;
-    RLDraw2: TRLDraw;
-    RLDraw3: TRLDraw;
-    RLDraw4: TRLDraw;
     rlLabel12: TRLLabel;
     rllPesoTotal: TRLLabel;
     rllqNFeMDFe: TRLLabel;
     rllqCTe: TRLLabel;
     lblQTDENFeMDFe: TRLLabel;
     rlLabel5: TRLLabel;
-    rlsLinhaV05: TRLDraw;
-    rlsLinhaV06: TRLDraw;
-    rlsLinhaV07: TRLDraw;
-    rlsLinhaV08: TRLDraw;
-    rlsLinhaV09: TRLDraw;
-    RLSystemInfo1: TRLSystemInfo;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
-    LinhaDivisoria: TRLDraw;
     rlmChave1: TRLMemo;
     rlmChave2: TRLMemo;
     rlb_1_DadosManifesto: TRLBand;
@@ -104,29 +80,21 @@ type
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
     RLPanel7: TRLPanel;
-    rlShape10: TRLDraw;
     rlLabel35: TRLLabel;
     rlLabel9: TRLLabel;
     rlLabel13: TRLLabel;
     rlLabel14: TRLLabel;
     rlLabel15: TRLLabel;
     rlLabel16: TRLLabel;
-    RLDraw5: TRLDraw;
-    RLDraw6: TRLDraw;
     rlmCPF: TRLMemo;
     rlmCondutor: TRLMemo;
     RLDraw7: TRLDraw;
-    RLDraw8: TRLDraw;
     rlmPlaca: TRLMemo;
     rlmRNTRC: TRLMemo;
-    RLDraw9: TRLDraw;
     RLLabel7: TRLLabel;
-    RLDraw10: TRLDraw;
     rlLabel19: TRLLabel;
     rlLabel20: TRLLabel;
     rlLabel21: TRLLabel;
-    rlShape16: TRLDraw;
-    rlShape17: TRLDraw;
     rlmRespCNPJ: TRLMemo;
     rlmFornCNPJ: TRLMemo;
     rlmNumComprovante: TRLMemo;
@@ -144,38 +112,60 @@ type
     rlmNomeCarreg: TRLMemo;
     rlmCodDescarreg: TRLMemo;
     rlmNomeDescarreg: TRLMemo;
-    RLDraw11: TRLDraw;
-    RLDraw12: TRLDraw;
-    RLDraw13: TRLDraw;
-    RLDraw14: TRLDraw;
     rlbMunicipio: TRLLabel;
-    RLDraw15: TRLDraw;
-    rllTituloValorMerc: TRLLabel;
-    rllValorMercadoria: TRLLabel;
     RLLabel28: TRLLabel;
     RLLabel29: TRLLabel;
     rlmRespSeguradora: TRLMemo;
     RLLabel30: TRLLabel;
     rlmRespApolice: TRLMemo;
-    RLDraw16: TRLDraw;
     rlmRespSeguro: TRLLabel;
     rlLabel17: TRLLabel;
     RLMemo1: TRLMemo;
     imgQRCode: TRLImage;
     RLPanel4: TRLPanel;
     RLBarcode1: TRLBarcode;
-    rlLabel74: TRLLabel;
     RLPanel3: TRLPanel;
     rllChave: TRLLabel;
     rlLabel1: TRLLabel;
     rllDescricao: TRLLabel;
-    RLDraw17: TRLDraw;
     rllModal: TRLLabel;
     rllProtocolo: TRLMemo;
     rllMsg2: TRLLabel;
-    RLDraw18: TRLDraw;
-    RLDraw19: TRLDraw;
-    RLSystemInfo2: TRLSystemInfo;
+    RLPanel6: TRLPanel;
+    rlLabel2: TRLLabel;
+    rllModelo: TRLLabel;
+    rlLabel3: TRLLabel;
+    rllSerie: TRLLabel;
+    rlLabel4: TRLLabel;
+    rllNumMDFe: TRLLabel;
+    rlLabel25: TRLLabel;
+    RLSystemInfo1: TRLSystemInfo;
+    rlLabel33: TRLLabel;
+    rllEmissao: TRLLabel;
+    rlLabel77: TRLLabel;
+    rllUFCarrega: TRLLabel;
+    RLLabel6: TRLLabel;
+    rllUFDescarrega: TRLLabel;
+    RLPanel2: TRLPanel;
+    RLPanel5: TRLPanel;
+    RLPanel10: TRLPanel;
+    RLPanel11: TRLPanel;
+    RLPanel1: TRLPanel;
+    RLPanel12: TRLPanel;
+    RLPanel13: TRLPanel;
+    RLPanel14: TRLPanel;
+    RLLabel10: TRLLabel;
+    RLLabel23: TRLLabel;
+    RLDraw1: TRLDraw;
+    RLDraw2: TRLDraw;
+    RLDraw3: TRLDraw;
+    RLDraw4: TRLDraw;
+    RLDraw5: TRLDraw;
+    RLDraw6: TRLDraw;
+    RLDraw8: TRLDraw;
+    RLDraw9: TRLDraw;
+    rlLabel74: TRLLabel;
+    RLPanel_Contingencia: TRLPanel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -267,27 +257,19 @@ begin
       rlmDadosEmitente.Lines.Clear;
       with EnderEmit do
       begin
-        rlmDadosEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro));
+        rlmDadosEmitente.Lines.Add(XLgr + ifthen(XBairro <> '', ', ' + XBairro, '') +  IfThen(Nro = '0', '', ', ' + Nro));
 
         if XCpl <> '' then
           rlmDadosEmitente.Lines.Add(XCpl);
 
-        if XBairro <> '' then
-          rlmDadosEmitente.Lines.Add(XBairro);
-
-        rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(CEP) +
-          ' - ' + XMun + ' - ' + UF);
+        rlmDadosEmitente.Lines.Add(XMun + ' - ' + UF + '   CEP: ' + FormatarCEP(CEP));
       end;
 
-      rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF));
-      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
-      rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
+      rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) + ACBrStr('   IE: ') + IE);
+      rlmDadosEmitente.Lines.Add('TEL.: ' + FormatarFone(EnderEmit.Fone));
+      rlmDadosEmitente.Lines.Add(ifthen(fpDAMDFe.Site <> '', fpDAMDFe.Site, '')
+                                 + '  ' + ifthen(fpDAMDFe.Email <> '', fpDAMDFe.Email, ''));
 
-      if Trim(fpDAMDFe.Site) <> '' then
-        rlmDadosEmitente.Lines.Add('SITE: ' + fpDAMDFe.Site);
-
-      if Trim(fpDAMDFe.Email) <> '' then
-        rlmDadosEmitente.Lines.Add('E-MAIL: ' + fpDAMDFe.Email);
     end;
   end;
 
@@ -298,8 +280,13 @@ begin
   rllProtocolo.Font.Size  := 8;
   rllProtocolo.Font.Style := [fsBold];
 
+  RLPanel_Contingencia.Visible := false;
+  rllProtocolo.Color := clWhite;
+  rllProtocolo.Font.Color := clWindowText;
+
   if fpMDFe.ide.tpEmis = teNormal then
   begin
+
     if fpDAMDFe.Protocolo <> '' then
       rllProtocolo.Lines.Add(fpDAMDFe.Protocolo)
     else
@@ -314,8 +301,14 @@ begin
         IfThen(fpMDFe.procMDFe.dhRecbto <> 0,
         DateTimeToStr(fpMDFe.procMDFe.dhRecbto), ''))
     else
+	begin
+      RLPanel_Contingencia.Visible := true;
+      rllProtocolo.Color := clBlack;
+      rllProtocolo.Font.Color := clBtnFace;
+
       rllProtocolo.Lines.Add(ACBrStr('EMISSÃO EM CONTINGÊNCIA. Obrigatória a autorização em 168 horas' +
         ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', fpMDFe.Ide.dhEmi) + ')');
+	end;
   end;
 
   rllModelo.Caption       := fpMDFe.Ide.modelo;
@@ -353,18 +346,20 @@ begin
     rlLabel12.Caption := 'PESO TOTAL (Kg)';
 
   rllPesoTotal.Caption := FormatFloatBr(fpMDFe.tot.qCarga, ',#0.0000');
-  rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
+ // rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
 
-  if deValorTotal in fpDAMDFe.ImprimeDadosExtras then
+ { if deValorTotal in fpDAMDFe.ImprimeDadosExtras then
   begin
     rllTituloValorMerc.Visible := True;
     rllValorMercadoria.Visible := True;
+    RLPanelVlrMercadoria.Visible := true;
   end
   else
   begin
     rllTituloValorMerc.Visible := False;
     rllValorMercadoria.Visible := False;
-  end;
+    RLPanelVlrMercadoria.Visible := false;
+  end;}
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -622,10 +617,10 @@ begin
   with RLMDFe do
   begin
     Title              := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
-    Borders.DrawTop    := true;
-    Borders.DrawLeft   := true;
-    Borders.DrawRight  := true;
-    Borders.DrawBottom := true;
+    Borders.DrawTop    := False;
+    Borders.DrawLeft   := False;
+    Borders.DrawRight  := False;
+    Borders.DrawBottom := False;
   end;
 
   with rlb_1_DadosManifesto do
@@ -638,7 +633,7 @@ begin
 
   with rlb_2_Rodo do
   begin
-    Borders.DrawTop    := True;
+    Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
     Borders.DrawBottom := False;
@@ -646,7 +641,7 @@ begin
 
   with rlb_2 do
   begin
-    Borders.DrawTop    := True;
+    Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
     Borders.DrawBottom := False;
@@ -654,16 +649,16 @@ begin
 
   with rlb_7_Documentos_Titulos do
   begin
-    Borders.DrawTop    := True;
+    Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
-    Borders.DrawBottom := True;
+    Borders.DrawBottom := False;
   end;
 
   with rlb_6_Observacao do
   begin
     BandType           := btFooter;
-    Borders.DrawTop    := True;
+    Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
     Borders.DrawBottom := False;
@@ -679,7 +674,7 @@ begin
     Borders.DrawTop    := False;
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
-    Borders.DrawBottom := true;
+    Borders.DrawBottom := False;
   end;
 
   rlmChave1.Lines.Clear;
@@ -740,7 +735,7 @@ begin
   begin
     rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
 
-    LinhaDivisoria.Left := (rlbMunicipio.Width div 2) ;
+   // LinhaDivisoria.Left := (rlbMunicipio.Width div 2) ;
 
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do

@@ -169,9 +169,9 @@ Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: 
   Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
   Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {syswow64}; Components: programa; Flags: sharedfile
 
-  ;DLLs de Fabricantes SAT
-  Source: {#ACBrMonitorPLUSDir}\SAT\*.*; DestDir: {app}\SAT; Flags: recursesubdirs; Components: programa;
 #endif
+;DLLs de Fabricantes SAT
+  Source: {#ACBrMonitorPLUSDir}\SAT\*.*; DestDir: {app}\SAT; Flags: recursesubdirs; Components: programa;
 
 [INI]
 Filename: {app}\{#MyAppUrlName}; Section: InternetShortcut; Key: URL; String: {#MyAppURL}; Components: help

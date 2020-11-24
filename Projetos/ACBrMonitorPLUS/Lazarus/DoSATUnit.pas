@@ -308,7 +308,7 @@ var
 begin
   dfesat_ini := PathWithDelim(ExtractFilePath(Application.ExeName)) + CDirSAT + PathDelim + CDFeSATIniFile;
   if not FileExists(dfesat_ini) then
-    raise Exception.CreateFmt(SErrArqNaoEncontrado,[dfesat_ini]);
+    exit;
 
   Ini := TIniFile.Create(dfesat_ini);
   SL := TStringList.Create;

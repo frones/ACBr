@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2020
+-- DoSATUnit --
+[*] Ajuste no método ConsultarModeloSat
+   Por: José M S Junior
+
 19/11/2020
 -- ACBrMonitor1, DoSATUnit, ACBrMonitorConsts, ACBrMonitorConfig --
 [+] Adicionado Configuração Automática do SAT através da Marca do Aparelho

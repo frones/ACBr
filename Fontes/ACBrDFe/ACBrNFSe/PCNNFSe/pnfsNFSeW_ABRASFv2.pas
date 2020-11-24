@@ -969,6 +969,9 @@ begin
         proTecnos,
         proCenti: Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
+        proSigep:
+          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
+
         profintelISS:
           begin
            if NFSe.Servico.CodigoMunicipio <> '3136702' then
@@ -983,7 +986,10 @@ begin
     else
     begin
       case FProvedor of
-        proCenti, proGoiania, proSigep, proMegaSoft, proActconv2:
+        proSigep:
+          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
+
+        proCenti, proGoiania, proMegaSoft, proActconv2:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
 
         profintelISS:

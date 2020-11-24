@@ -996,7 +996,8 @@ var
   aRPS, aNFSE: string;
 begin
   aRPS  := SeparaDados(aXmlRps, 'rps', False);
-  aNFSE := SeparaDados(aXmlRetorno, 'nfse', False);
+//  aNFSE := SeparaDados(aXmlRetorno, 'nfse', False);
+  aNFSE := aXmlRetorno;
 
   Result := '<compNfse xmlns="http://www.equiplano.com.br/esnfs">' +
               '<nfse>' +

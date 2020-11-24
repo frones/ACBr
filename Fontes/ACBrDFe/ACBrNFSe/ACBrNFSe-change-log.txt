@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/11/2020
+-- ACBrNFSeWebServices --
+[*] Possível correção na geração do XML da NFS-e do provedor Equiplano.
+  Por: Italo Giurizzato Junior
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração visando gerar o XML da NFS-e do provedor Sigep.
   Por: Italo Giurizzato Junior

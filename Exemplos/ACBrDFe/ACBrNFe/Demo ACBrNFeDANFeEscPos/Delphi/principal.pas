@@ -183,6 +183,8 @@ begin
   ACBrNFeDANFeESCPOS.ImprimeEmUmaLinha     := chkImprimirItem1Linha.Checked;
   ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := chkImprimirDescAcresItem.Checked;
 
+  ACBrNFeDANFeESCPOS.PosPrinter.LinhasEntreCupons := edtLinhasEntreCupom.Value;
+
 end;
 
 procedure TfrmPrincipal.btnImprimirRelatorioClick(Sender: TObject);

@@ -418,8 +418,8 @@ begin
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
       IdentificacaoRps.Tipo := trRPS;
 
-      DataEmissao := Date;
-      DataEmissaoRPS := Date;
+      DataEmissao := Now;
+      DataEmissaoRPS := Now;
 
       // Provedor Conam
       DataOptanteSimplesNacional := Date;
@@ -586,7 +586,7 @@ begin
       PrestadorServico.RazaoSocial  := edtEmitRazao.Text;
       PrestadorServico.NomeFantasia := edtEmitRazao.Text;
 
-      PrestadorServico.Contato.Telefone := '1633224455';
+      PrestadorServico.Contato.Telefone := '33224455';
 
       Tomador.IdentificacaoTomador.CpfCnpj := '55555555555555';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '17331600';
@@ -605,7 +605,7 @@ begin
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
-      Tomador.Contato.Telefone := '1622223333';
+      Tomador.Contato.Telefone := '22223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
       Tomador.AtualizaTomador := snNao;
@@ -1505,6 +1505,7 @@ var
   Ok: Boolean;
   PathMensal: String;
 begin
+  ACBrNFSe1.Configuracoes.Certificados.DadosPFX    := '';
   ACBrNFSe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFSe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;

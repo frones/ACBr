@@ -1512,6 +1512,8 @@ begin
         proSigCorp: NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
 
         proPublica: NFSe.Link := Leitor.rCampo(tcStr, 'LinkVisualizacaoNfse');
+
+        proSigep: NFSe.Link := Leitor.rCampo(tcStr, 'UrlNfse');
       end;
 
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');

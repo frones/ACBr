@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/11/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/60342-altera%C3%A7%C3%A3o-provedor-centi/
+  Por: Lucio LT
 -- ACBrNFSeWebServices --
 [*] Possível correção na geração do XML da NFS-e do provedor Equiplano.
   Por: Italo Giurizzato Junior

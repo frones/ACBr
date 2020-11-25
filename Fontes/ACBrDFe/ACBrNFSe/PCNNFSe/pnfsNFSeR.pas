@@ -2494,6 +2494,21 @@ begin
     end;
   end; // fim Tomador
 
+  if (Leitor.rExtrai(NivelTemp, 'ValoresServico') <> '') then
+  begin
+    NFSe.Servico.Valores.ValorPis    := Leitor.rCampo(tcDe2, 'ValorPis');
+    NFSe.Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'ValorCofins');
+    NFSe.Servico.Valores.ValorInss   := Leitor.rCampo(tcDe2, 'ValorInss');
+    NFSe.Servico.Valores.ValorIr     := Leitor.rCampo(tcDe2, 'ValorIr');
+    NFSe.Servico.Valores.ValorCsll   := Leitor.rCampo(tcDe2, 'ValorCsll');
+    NFSe.Servico.Valores.ValorIss    := Leitor.rCampo(tcDe2, 'ValorIss');
+
+    NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
+
+    NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
+    NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
+  end;
+
   Result := True;
 end;
 

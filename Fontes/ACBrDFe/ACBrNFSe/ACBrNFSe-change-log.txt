@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2020
+-- pnfsNFSeR --
+[*] Ajustes na leitura do XML da NFS-e, não estava lendo as tags do grupo <ValoresServico>.
+  Por: Italo Giurizzato Junior
+
 24/11/2020
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/60342-altera%C3%A7%C3%A3o-provedor-centi/

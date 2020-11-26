@@ -94,7 +94,9 @@ type
     FRegistroC178Count: Integer;
     FRegistroC179Count: Integer;
     FRegistroC180Count: Integer;
+    FRegistroC181Count: Integer;
     FRegistroC185Count: Integer;
+    FRegistroC186Count: Integer;
     FRegistroC190Count: Integer;
     FRegistroC191Count: Integer;
     FRegistroC195Count: Integer;
@@ -167,7 +169,9 @@ type
     procedure WriteRegistroC178(RegC170: TRegistroC170);
     procedure WriteRegistroC179(RegC170: TRegistroC170);
     procedure WriteRegistroC180(RegC170: TRegistroC170);
+    procedure WriteRegistroC181(RegC170: TRegistroC170);
     procedure WriteRegistroC185(RegC100: TRegistroC100);
+    procedure WriteRegistroC186(RegC100: TRegistroC100);
     procedure WriteRegistroC190(RegC100: TRegistroC100);
     procedure WriteRegistroC191(RegC190: TRegistroC190);
     procedure WriteRegistroC195(RegC100: TRegistroC100);
@@ -253,7 +257,9 @@ type
     function RegistroC178New: TRegistroC178;
     function RegistroC179New: TRegistroC179;
     function RegistroC180New: TRegistroC180;
+    function RegistroC181New: TRegistroC181;
     function RegistroC185New: TRegistroC185;
+    function RegistroC186New: TRegistroC186;
     function RegistroC190New: TRegistroC190;
     function RegistroC191New: TRegistroC191;
     function RegistroC195New: TRegistroC195;
@@ -334,7 +340,9 @@ type
     property RegistroC178Count: Integer read FRegistroC178Count write FRegistroC178Count;
     property RegistroC179Count: Integer read FRegistroC179Count write FRegistroC179Count;
     property RegistroC180Count: Integer read FRegistroC180Count write FRegistroC180Count;
+    property RegistroC181Count: Integer read FRegistroC181Count write FRegistroC181Count;
     property RegistroC185Count: Integer read FRegistroC185Count write FRegistroC185Count;
+    property RegistroC186Count: Integer read FRegistroC186Count write FRegistroC186Count;
     property RegistroC190Count: Integer read FRegistroC190Count write FRegistroC190Count;
     property RegistroC191Count: Integer read FRegistroC191Count write FRegistroC191Count;
     property RegistroC195Count: Integer read FRegistroC195Count write FRegistroC195Count;
@@ -452,7 +460,9 @@ begin
   FRegistroC178Count := 0;
   FRegistroC179Count := 0;
   FRegistroC180Count := 0;
+  FRegistroC181Count := 0;
   FRegistroC185Count := 0;
+  FRegistroC186Count := 0;
   FRegistroC190Count := 0;
   FRegistroC191Count := 0;
   FRegistroC195Count := 0;
@@ -776,10 +786,27 @@ begin
    Result := FRegistroC001.RegistroC100.Items[C100Count].RegistroC170.Items[C170Count].RegistroC180.New;
 end;
 
+function TBloco_C.RegistroC181New: TRegistroC181;
+var
+C100Count: integer;
+C170Count: integer;
+begin
+   C100Count := FRegistroC001.RegistroC100.Count -1;
+   C170Count := FRegistroC001.RegistroC100.Items[C100Count].RegistroC170.Count -1;
+   //
+   Result := FRegistroC001.RegistroC100.Items[C100Count].RegistroC170.Items[C170Count].RegistroC181.New;
+end;
+
 function TBloco_C.RegistroC185New: TRegistroC185;
 begin
    Result := FRegistroC001.RegistroC100.Items[FRegistroC001.RegistroC100.Count -1].RegistroC185.New;
 end;
+
+function TBloco_C.RegistroC186New: TRegistroC186;
+begin
+   Result := FRegistroC001.RegistroC100.Items[FRegistroC001.RegistroC100.Count -1].RegistroC186.New;
+end;
+
 function TBloco_C.RegistroC190New: TRegistroC190;
 begin
    Result := FRegistroC001.RegistroC100.Items[FRegistroC001.RegistroC100.Count -1].RegistroC190.New;
@@ -1357,6 +1384,7 @@ begin
         WriteRegistroC165( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC170( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC185( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC186( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC190( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC195( RegC001.RegistroC100.Items[intFor] ) ;
 
@@ -1951,6 +1979,7 @@ begin
         WriteRegistroC178( RegC100.RegistroC170.Items[intFor] ) ;
         WriteRegistroC179( RegC100.RegistroC170.Items[intFor] ) ;
         WriteRegistroC180( RegC100.RegistroC170.Items[intFor] ) ;
+        WriteRegistroC181( RegC100.RegistroC170.Items[intFor] ) ;
 
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2240,6 +2269,53 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroC180Count := FRegistroC180Count + RegC170.RegistroC180.Count;
+
+  end;
+end;
+
+procedure TBloco_C.WriteRegistroC181(RegC170: TRegistroC170);
+var
+  intFor: integer;
+begin
+  if Assigned( RegC170.RegistroC181 ) then
+  begin
+     if RegC170.RegistroC181.Count > 0 then
+     begin
+        if FBloco_0.Registro0000.IND_PERFIL in [pfPerfilA] then
+           Check(False, 'O RegistroC181, não deve ser gerado em movimentações de saída, no %s, conforme ATO COTEPE 09/08', ['PerfilA']);
+
+     end;
+     for intFor := 0 to RegC170.RegistroC180.Count - 1 do
+     begin
+        with RegC170.RegistroC181.Items[intFor] do
+        begin
+          Add( LFill('C181') +
+               LFill( COD_MOT_REST_COMPL ) +
+               LFill( QUANT_CONV,0,6 ) +
+               LFill( UNID) +
+               LFill( COD_MOD_SAIDA) +
+               LFill( SERIE_SAIDA) +
+               LFill( ECF_FAB_SAIDA) +
+               LFill( NUM_DOC_SAIDA) +
+               LFill( CHV_DFE_SAIDA) +
+               LFill( DT_DOC_SAIDA, 'ddmmyyyy' ) +
+               LFill( NUM_ITEM_SAIDA) +
+               LFill( VL_UNIT_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_ICMS_OP_CONV_SAIDA,0,6 ) +
+               LFill( VL_UNIT_ICMS_ST_CONV_REST,0,6 ) +
+               LFill( VL_UNIT_FCP_ST_CONV_REST,0,6 ) +
+               LFill( VL_UNIT_ICMS_ST_CONV_COMPL,0,6 ) +
+               LFill( VL_UNIT_FCP_ST_CONV_COMPL,0,6 ));
+        end;
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroC181Count := FRegistroC181Count + RegC170.RegistroC181.Count;
+
   end;
 end;
 
@@ -2279,6 +2355,44 @@ begin
      FRegistroC185Count := FRegistroC185Count + RegC100.RegistroC185.Count;
   end;
 end;
+
+procedure TBloco_C.WriteRegistroC186(RegC100: TRegistroC100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegC100.RegistroC186 ) then
+  begin
+     for intFor := 0 to RegC100.RegistroC186.Count - 1 do
+     begin
+        with RegC100.RegistroC186.Items[intFor] do
+        begin
+          Add( LFill('C186') +
+               LFill( NUM_ITEM )+
+               LFill( COD_ITEM )+
+               LFill( CST_ICMS )+
+               LFill( CFOP )+
+               LFill( COD_MOT_REST_COMPL) +
+               LFill( QUANT_CONV ,0,6 ) +
+               LFill( UNID ) +
+               LFill( COD_MOD_ENTRADA ) +
+               LFill( SERIE_ENTRADA ) +
+               LFill( NUM_DOC_ENTRADA ) +
+               LFill( CHV_DFE_ENTRADA ) +
+               LFill( DT_DOC_ENTRADA, 'ddmmyyyy' ) +
+               LFill( NUM_ITEM_ENTRADA ) +
+               LFill( VL_UNIT_CONV_ENTRADA,0,6 ) +
+               LFill( VL_UNIT_ICMS_OP_CONV_CONV_ENTRADA,0,6 ) +
+               LFill( VL_UNIT_BC_ICMS_ST_CONV_ENTRADA,0,6 ) +
+               LFill( VL_UNIT_ICMS_ST_CONV_ENTRADA,0,6 ) +
+               LFill( VL_UNIT_FCP_ST_CONV_ENTRADA,0,6 ));
+        end;
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroC186Count := FRegistroC186Count + RegC100.RegistroC186.Count;
+  end;
+end;
+
 procedure TBloco_C.WriteRegistroC190(RegC100: TRegistroC100);
 var
   intFor: integer;

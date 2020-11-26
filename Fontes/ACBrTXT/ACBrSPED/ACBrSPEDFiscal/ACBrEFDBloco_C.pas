@@ -74,7 +74,9 @@ type
   TRegistroC178List = class;
   TRegistroC179List = class;
   TRegistroC180List = class;
+  TRegistroC181List = class;
   TRegistroC185List = class;
+  TRegistroC186List = class;
   TRegistroC190List = class;
   TRegistroC191List = class;
   TRegistroC195List = class;
@@ -193,6 +195,7 @@ type
     FRegistroC165: TRegistroC165List;  /// BLOCO C - Lista de RegistroC165 (FILHO)
     FRegistroC170: TRegistroC170List;  /// BLOCO C - Lista de RegistroC170 (FILHO)
     FRegistroC185: TRegistroC185List;  /// BLOCO C - Lista de RegistroC185 (FILHO)
+    FRegistroC186: TRegistroC186List;  /// BLOCO C - Lista de RegistroC186 (FILHO)
     FRegistroC190: TRegistroC190List;  /// BLOCO C - Lista de RegistroC190 (FILHO) 
     FRegistroC195: TRegistroC195List;  /// BLOCO C - Lista de RegistroC195 (FILHO)
   public
@@ -239,6 +242,7 @@ type
     property RegistroC165: TRegistroC165List read FRegistroC165 write FRegistroC165;
     property RegistroC170: TRegistroC170List read FRegistroC170 write FRegistroC170;
     property RegistroC185: TRegistroC185List read FRegistroC185 write FRegistroC185;
+    property RegistroC186: TRegistroC186List read FRegistroC186 write FRegistroC186;
     property RegistroC190: TRegistroC190List read FRegistroC190 write FRegistroC190;
     property RegistroC195: TRegistroC195List read FRegistroC195 write FRegistroC195;
   end;
@@ -764,16 +768,17 @@ type
     fCOD_CTA: String;                     /// Código da conta analítica contábil debitada/creditada
     fVL_ABAT_NT: currency;                /// Valor do abatimento não tributado e não comercial
 
-    FRegistroC171: TRegistroC171List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC172: TRegistroC172List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC173: TRegistroC173List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC174: TRegistroC174List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC175: TRegistroC175List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC176: TRegistroC176List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC177: TRegistroC177List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC178: TRegistroC178List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC179: TRegistroC179List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
-    FRegistroC180: TRegistroC180List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
+    FRegistroC171: TRegistroC171List;  /// BLOCO C - Lista de RegistroC171 (FILHO fo FILHO)
+    FRegistroC172: TRegistroC172List;  /// BLOCO C - Lista de RegistroC172 (FILHO fo FILHO)
+    FRegistroC173: TRegistroC173List;  /// BLOCO C - Lista de RegistroC173 (FILHO fo FILHO)
+    FRegistroC174: TRegistroC174List;  /// BLOCO C - Lista de RegistroC174 (FILHO fo FILHO)
+    FRegistroC175: TRegistroC175List;  /// BLOCO C - Lista de RegistroC175 (FILHO fo FILHO)
+    FRegistroC176: TRegistroC176List;  /// BLOCO C - Lista de RegistroC176 (FILHO fo FILHO)
+    FRegistroC177: TRegistroC177List;  /// BLOCO C - Lista de RegistroC177 (FILHO fo FILHO)
+    FRegistroC178: TRegistroC178List;  /// BLOCO C - Lista de RegistroC178 (FILHO fo FILHO)
+    FRegistroC179: TRegistroC179List;  /// BLOCO C - Lista de RegistroC179 (FILHO fo FILHO)
+    FRegistroC180: TRegistroC180List;  /// BLOCO C - Lista de RegistroC180 (FILHO fo FILHO)
+    FRegistroC181: TRegistroC181List;  /// BLOCO C - Lista de RegistroC181 (FILHO fo FILHO)
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -829,6 +834,7 @@ type
     property RegistroC178: TRegistroC178List read FRegistroC178 write FRegistroC178;
     property RegistroC179: TRegistroC179List read FRegistroC179 write FRegistroC179;
     property RegistroC180: TRegistroC180List read FRegistroC180 write FRegistroC180;
+    property RegistroC181: TRegistroC181List read FRegistroC181 write FRegistroC181;
   end;
 
   /// Registro C170 - Lista
@@ -1157,6 +1163,65 @@ type
     property Items[Index: Integer]: TRegistroC180 read GetItem write SetItem;
   end;
 
+  /// REGISTRO C181:  INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE ENTRADA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 01, 1B, 04 e 55).
+
+  TRegistroC181 = class
+  private
+   fCOD_MOT_REST_COMPL : String;   /// Código do motivo da restituição ou complementação conforme Tabela 5.7
+   fQUANT_CONV : currency ;  /// Quantidade do item
+   fUNID : String;   /// Unidade adotada para informar o campoQUANT_CONV.
+   fCOD_MOD_SAIDA : String;   /// Código do modelo do documento fiscal de saída, conforme a tabela indicada no item 4.1.1
+   fSERIE_SAIDA : String;   /// Número de série do documento de saída em papel
+   fECF_FAB_SAIDA : String;   /// Número de série de fabricação do equipamento ECF
+   fNUM_DOC_SAIDA : String;   /// Número do documento fiscal de saída
+   fCHV_DFE_SAIDA : String;   /// Chave do documento fiscal eletrônico de saída
+   fDT_DOC_SAIDA : TDateTime;   /// Data da emissão do documento fiscal de saída
+   fNUM_ITEM_SAIDA : String;   /// Número do item em que foi escriturada a saída em um registro C185, C380, C480 ou C815 quando o contribuinte informar a saída em um arquivo de perfil A.
+   fVL_UNIT_CONV_SAIDA : currency;   /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”, correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA : currency;   /// Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA : currency;   /// Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA : currency;   /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA : currency;   /// Valor unitário para o ICMS na operação, correspondente ao valor do campo VL_UNIT_ICMS_NA_OPERACAO_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_OP_CONV_SAIDA : currency;   /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_ST_CONV_REST : currency;   /// Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, correspondente ao estorno do complemento apurado na operação de saída.
+   fVL_UNIT_FCP_ST_CONV_REST : currency;   /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_COMPL : currency;   /// Valor unitário do estorno do ressarcimento/restituição, incluindo FCP ST, apurado na operação de saída.
+   fVL_UNIT_FCP_ST_CONV_COMPL : currency;   /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+  public
+   property COD_MOT_REST_COMPL: String read fCOD_MOT_REST_COMPL  write fCOD_MOT_REST_COMPL ;
+   property QUANT_CONV: currency read fQUANT_CONV  write fQUANT_CONV ;
+   property UNID: String read fUNID  write fUNID ;
+   property COD_MOD_SAIDA: String read fCOD_MOD_SAIDA  write fCOD_MOD_SAIDA ;
+   property SERIE_SAIDA: String read fSERIE_SAIDA  write fSERIE_SAIDA ;
+   property ECF_FAB_SAIDA: String read fECF_FAB_SAIDA  write fECF_FAB_SAIDA ;
+   property NUM_DOC_SAIDA: String read fNUM_DOC_SAIDA  write fNUM_DOC_SAIDA ;
+   property CHV_DFE_SAIDA: String read fCHV_DFE_SAIDA  write fCHV_DFE_SAIDA ;
+   property DT_DOC_SAIDA: TDateTime read fDT_DOC_SAIDA  write fDT_DOC_SAIDA ;
+   property NUM_ITEM_SAIDA: String read fNUM_ITEM_SAIDA  write fNUM_ITEM_SAIDA ;
+   property VL_UNIT_CONV_SAIDA: currency read fVL_UNIT_CONV_SAIDA  write fVL_UNIT_CONV_SAIDA ;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA: currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA: currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA: currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA: currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA  write fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA ;
+   property VL_UNIT_ICMS_OP_CONV_SAIDA: currency read fVL_UNIT_ICMS_OP_CONV_SAIDA  write fVL_UNIT_ICMS_OP_CONV_SAIDA ;
+   property VL_UNIT_ICMS_ST_CONV_REST: currency read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST ;
+   property VL_UNIT_FCP_ST_CONV_REST: currency read fVL_UNIT_FCP_ST_CONV_REST  write fVL_UNIT_FCP_ST_CONV_REST ;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: currency read fVL_UNIT_ICMS_ST_CONV_COMPL  write fVL_UNIT_ICMS_ST_CONV_COMPL ;
+   property VL_UNIT_FCP_ST_CONV_COMPL: currency read fVL_UNIT_FCP_ST_CONV_COMPL  write fVL_UNIT_FCP_ST_CONV_COMPL ;
+
+  end;
+
+  /// Registro C181 - Lista
+
+  TRegistroC181List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC181; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC181); /// SetItem
+  public
+    function New: TRegistroC181;
+    property Items[Index: Integer]: TRegistroC181 read GetItem write SetItem;
+  end;
+
   /// REGISTRO C185: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 01, 1B, 04, 55 e 65).
 
   TRegistroC185 = class
@@ -1207,6 +1272,62 @@ type
   public
     function New: TRegistroC185;
     property Items[Index: Integer]: TRegistroC185 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C186: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE DEVOLUÇÃO DE ENTRADAS DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO
+  /// TRIBUTÁRIA (CÓDIGO 01, 1B, 04 e 55).INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 01, 1B, 04, 55 e 65).
+
+  TRegistroC186 = class
+  private
+   fNUM_ITEM: String; /// Número sequencial do item no documento fiscal.
+   fCOD_ITEM: String; /// Código do item (campo 02 do Registro 0200).
+   fCST_ICMS: String; /// Código da Situação Tributária referente ao ICMS.
+   fCFOP:String ; /// Código Fiscal de Operação e Prestação.
+   fCOD_MOT_REST_COMPL:String ; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+   fQUANT_CONV: currency ; /// Quantidade do item.
+   fUNID: String; /// Unidade adotada para informar o campo QUANT_CONV.
+   fCOD_MOD_ENTRADA: String; /// Código do modelo do documento fiscal de entrada, conforme a tabela indicada no item 4.1.1
+   fSERIE_ENTRADA: String;  ///  Número de série do documento de entrada em papel
+   fNUM_DOC_ENTRADA: String; /// Número do documento fiscal de entrada
+   fCHV_DFE_ENTRADA: String; /// Chave do documento fiscal eletrônico de entrada
+   fDT_DOC_ENTRADA: TDateTime; /// Data da emissão do documento fiscal de entrada
+   fNUM_ITEM_ENTRADA: String; /// Item do documento fiscal de entrada
+   fVL_UNIT_CONV_ENTRADA: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”, correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da entrada
+   fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA: currency; /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da entrada
+   fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA: currency; /// Valor unitário da base de cálculo do imposto pago ou retido anteriormente por substituição, correspondente ao valor do campo VL_UNIT_BC_ICMS_ST_CONV, preenchido na ocasião da entrada
+   fVL_UNIT_ICMS_ST_CONV_ENTRADA: currency; ///  Valor unitário do imposto pago ou retido anteriormente por substituição, inclusive FCP se devido, correspondente ao valor do campo VL_UNIT_ICMS_ST_CONV, preenchido na ocasião da entrada
+   fVL_UNIT_FCP_ST_CONV_ENTRADA: currency; /// Valor unitário do FCP_ST, correspondente ao valor do campo VL_UNIT_FCP_ST_CONV, preenchido na ocasião da entrada
+
+ public
+   property NUM_ITEM: String read fNUM_ITEM write fNUM_ITEM;
+   property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+   property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
+   property CFOP:String  read fCFOP write fCFOP;
+   property COD_MOT_REST_COMPL:String  read fCOD_MOT_REST_COMPL write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: currency  read fQUANT_CONV write fQUANT_CONV;
+   property UNID: String read fUNID write fUNID;
+   property COD_MOD_ENTRADA: String read fCOD_MOD_ENTRADA write fCOD_MOD_ENTRADA;
+   property SERIE_ENTRADA: String read fSERIE_ENTRADA write fSERIE_ENTRADA;
+   property NUM_DOC_ENTRADA: String read fNUM_DOC_ENTRADA write fNUM_DOC_ENTRADA;
+   property CHV_DFE_ENTRADA: String read fCHV_DFE_ENTRADA write fCHV_DFE_ENTRADA;
+   property DT_DOC_ENTRADA: TDateTime read fDT_DOC_ENTRADA write fDT_DOC_ENTRADA;
+   property NUM_ITEM_ENTRADA: String read fNUM_ITEM_ENTRADA write fNUM_ITEM_ENTRADA;
+   property VL_UNIT_CONV_ENTRADA: currency read fVL_UNIT_CONV_ENTRADA write fVL_UNIT_CONV_ENTRADA;
+   property VL_UNIT_ICMS_OP_CONV_CONV_ENTRADA: currency read fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA write fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA;
+   property VL_UNIT_BC_ICMS_ST_CONV_ENTRADA: currency read fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA write fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA;
+   property VL_UNIT_ICMS_ST_CONV_ENTRADA: currency read fVL_UNIT_ICMS_ST_CONV_ENTRADA write fVL_UNIT_ICMS_ST_CONV_ENTRADA;
+   property VL_UNIT_FCP_ST_CONV_ENTRADA: currency read fVL_UNIT_FCP_ST_CONV_ENTRADA write fVL_UNIT_FCP_ST_CONV_ENTRADA;
+  end;
+
+    /// Registro C186 - Lista
+
+  TRegistroC186List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC186; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC186); /// SetItem
+  public
+    function New: TRegistroC186;
+    property Items[Index: Integer]: TRegistroC186 read GetItem write SetItem;
   end;
 
    /// Registro C190 - REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04 E 55)
@@ -4149,6 +4270,7 @@ begin
   FRegistroC165 := TRegistroC165List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC170 := TRegistroC170List.Create;  /// BLOCO C - Lista de RegistroC170 (FILHO)
   FRegistroC185 := TRegistroC185List.Create;  /// BLOCO C - Lista de RegistroC185 (FILHO)
+  FRegistroC186 := TRegistroC186List.Create;  /// BLOCO C - Lista de RegistroC186 (FILHO)
   FRegistroC190 := TRegistroC190List.Create;  /// BLOCO C - Lista de RegistroC190 (FILHO)
   FRegistroC195 := TRegistroC195List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
 end;
@@ -4165,6 +4287,7 @@ begin
   FRegistroC165.Free;
   FRegistroC170.Free;
   FRegistroC185.Free;
+  FRegistroC186.Free;
   FRegistroC190.Free;
   FRegistroC195.Free;
   inherited;
@@ -4294,6 +4417,7 @@ begin
   FRegistroC178 := TRegistroC178List.Create;
   FRegistroC179 := TRegistroC179List.Create;
   FRegistroC180 := TRegistroC180List.Create;
+  FRegistroC181 := TRegistroC181List.Create;
 end;
 
 destructor TRegistroC170.Destroy;
@@ -4308,6 +4432,7 @@ begin
   FRegistroC178.Free;
   FRegistroC179.Free;
   FRegistroC180.Free;
+  FRegistroC181.Free;
   inherited;
 end;
 
@@ -4813,6 +4938,42 @@ end;
 procedure TRegistroC870List.SetItem(Index: Integer; const Value: TRegistroC870);
 begin
   inherited SetItem(Index, Value);
+end;
+
+{ TRegistroC181List }
+
+function TRegistroC181List.GetItem(Index: Integer): TRegistroC181;
+begin
+   Result := TRegistroC181(Inherited Items[Index]);
+end;
+
+function TRegistroC181List.New: TRegistroC181;
+begin
+  Result := TRegistroC181.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC181List.SetItem(Index: Integer; const Value: TRegistroC181);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC186List }
+
+function TRegistroC186List.GetItem(Index: Integer): TRegistroC186;
+begin
+   Result := TRegistroC186(Inherited Items[Index]);
+end;
+
+function TRegistroC186List.New: TRegistroC186;
+begin
+  Result := TRegistroC186.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC186List.SetItem(Index: Integer; const Value: TRegistroC186);
+begin
+   Put(Index, Value);
 end;
 
 end.

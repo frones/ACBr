@@ -105,17 +105,17 @@ begin
     Origem         := pLibConfig.ETQConfig.Origem;
     DPI            := pLibConfig.ETQConfig.DPI;
 
-    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
-    Device.Data := pLibConfig.PosDeviceConfig.Data;
-    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
-    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
-    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
-    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
-    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
-    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
-    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
-    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
-    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
+    Device.Baud := pLibConfig.ETQDeviceConfig.Baud;
+    Device.Data := pLibConfig.ETQDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.ETQDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.ETQDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.ETQDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.ETQDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.ETQDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.ETQDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.ETQDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.ETQDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.ETQDeviceConfig.SoftFlow;
   end;
 end;
 

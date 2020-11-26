@@ -102,7 +102,7 @@ type
     destructor Destroy; override;
 
     property ETQConfig: TETQConfig read FETQConfig;
-    property DeviceConfig: TDeviceConfig read FDeviceConfig;
+    property ETQDeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation

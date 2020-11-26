@@ -87,7 +87,7 @@ type
     destructor Destroy; override;
 
     property BALConfig: TBALConfig read FBALConfig;
-    property DeviceConfig: TDeviceConfig read FDeviceConfig;
+    property BalDeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation

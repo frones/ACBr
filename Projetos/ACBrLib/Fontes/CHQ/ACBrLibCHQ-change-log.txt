@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2020
+--- ACBrLibCHQDataModule ---
+[+] Correção do na passagem das configurações para o componente estava lendo as configurações do PosPrinter.
+   Por: Rafael Teno Dias
+
 19/10/2020
 --- ACBrLibCHQBase, ACBrLibCHQDataModule ---
 [-] Corrigindo retornos da ACBrLibCHQ.

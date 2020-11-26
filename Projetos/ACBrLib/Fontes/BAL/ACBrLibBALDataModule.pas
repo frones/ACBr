@@ -98,17 +98,17 @@ begin
 
     MonitorarBalanca := pLibConfig.BALConfig.MonitorarBalanca;
 
-    Device.Baud := pLibConfig.PosDeviceConfig.Baud;
-    Device.Data := pLibConfig.PosDeviceConfig.Data;
-    Device.TimeOut := pLibConfig.PosDeviceConfig.TimeOut;
-    Device.Parity := TACBrSerialParity(pLibConfig.PosDeviceConfig.Parity);
-    Device.Stop := TACBrSerialStop(pLibConfig.PosDeviceConfig.Stop);
-    Device.MaxBandwidth := pLibConfig.PosDeviceConfig.MaxBandwidth;
-    Device.SendBytesCount := pLibConfig.PosDeviceConfig.SendBytesCount;
-    Device.SendBytesInterval := pLibConfig.PosDeviceConfig.SendBytesInterval;
-    Device.HandShake := TACBrHandShake(pLibConfig.PosDeviceConfig.HandShake);
-    Device.HardFlow := pLibConfig.PosDeviceConfig.HardFlow;
-    Device.SoftFlow := pLibConfig.PosDeviceConfig.SoftFlow;
+    Device.Baud := pLibConfig.BalDeviceConfig.Baud;
+    Device.Data := pLibConfig.BalDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.BalDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.BalDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.BalDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.BalDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.BalDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.BalDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.BalDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.BalDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.BalDeviceConfig.SoftFlow;
   end;
 end;
 

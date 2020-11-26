@@ -50,6 +50,11 @@ Símbolo : Significado
    Por: Rafael Dias
 [-] Removido o metodo BAL_ImportarConfig.
    Por: Rafael Dias
+   
+26/11/2020
+--- ACBrLibBALDataModule ---
+[+] Correção do na passagem das configurações para o componente estava lendo as configurações do PosPrinter.
+   Por: Rafael Teno Dias
 
 02/04/2020
 --- ACBrLibBALClass ---

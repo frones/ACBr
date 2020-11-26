@@ -93,17 +93,17 @@ begin
     Modelo := LibConfig.CHQConfig.Modelo;
     PaginaDeCodigo := LibConfig.CHQConfig.PaginaDeCodigo;
 
-    Device.Baud := LibConfig.PosDeviceConfig.Baud;
-    Device.Data := LibConfig.PosDeviceConfig.Data;
-    Device.TimeOut := LibConfig.PosDeviceConfig.TimeOut;
-    Device.Parity := TACBrSerialParity(LibConfig.PosDeviceConfig.Parity);
-    Device.Stop := TACBrSerialStop(LibConfig.PosDeviceConfig.Stop);
-    Device.MaxBandwidth := LibConfig.PosDeviceConfig.MaxBandwidth;
-    Device.SendBytesCount := LibConfig.PosDeviceConfig.SendBytesCount;
-    Device.SendBytesInterval := LibConfig.PosDeviceConfig.SendBytesInterval;
-    Device.HandShake := TACBrHandShake(LibConfig.PosDeviceConfig.HandShake);
-    Device.HardFlow := LibConfig.PosDeviceConfig.HardFlow;
-    Device.SoftFlow := LibConfig.PosDeviceConfig.SoftFlow;
+    Device.Baud := LibConfig.CHQDeviceConfig.Baud;
+    Device.Data := LibConfig.CHQDeviceConfig.Data;
+    Device.TimeOut := LibConfig.CHQDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(LibConfig.CHQDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(LibConfig.CHQDeviceConfig.Stop);
+    Device.MaxBandwidth := LibConfig.CHQDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := LibConfig.CHQDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := LibConfig.CHQDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(LibConfig.CHQDeviceConfig.HandShake);
+    Device.HardFlow := LibConfig.CHQDeviceConfig.HardFlow;
+    Device.SoftFlow := LibConfig.CHQDeviceConfig.SoftFlow;
   end;
 end;
 

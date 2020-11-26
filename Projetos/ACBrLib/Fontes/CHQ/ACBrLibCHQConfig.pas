@@ -79,7 +79,7 @@ type
     destructor Destroy; override;
 
     property CHQConfig: TCHQConfig read FCHQConfig;
-    property DeviceConfig: TDeviceConfig read FDeviceConfig;
+    property CHQDeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation

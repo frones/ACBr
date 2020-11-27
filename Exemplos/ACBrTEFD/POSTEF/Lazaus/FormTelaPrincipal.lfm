@@ -1,7 +1,7 @@
 object frPOSTEFServer: TfrPOSTEFServer
-  Left = 471
+  Left = 707
   Height = 440
-  Top = 178
+  Top = 267
   Width = 790
   Caption = 'ACBr POS TEF Server'
   ClientHeight = 440
@@ -9145,42 +9145,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFeESCPOS1
     Left = 379
-  end
-  object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8
-    MargemSuperior = 8
-    MargemEsquerda = 6
-    MargemDireita = 5.1
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrNFe = ACBrNFe1
-    PosPrinter = ACBrPosPrinter1
-    Left = 406
-  end
-  object ACBrPosPrinter1: TACBrPosPrinter
-    PaginaDeCodigo = pcNone
-    ColunasFonteNormal = 40
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
-    ConfigBarras.Margem = 0
-    ConfigQRCode.Tipo = 2
-    ConfigQRCode.LarguraModulo = 4
-    ConfigQRCode.ErrorLevel = 0
-    LinhasEntreCupons = 0
-    Left = 474
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -9259,72 +9224,5 @@ object frPOSTEFServer: TfrPOSTEFServer
     OnTimer = tiIniciarTimer
     Left = 383
     Top = 376
-  end
-  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8
-    MargemSuperior = 8
-    MargemEsquerda = 6
-    MargemDireita = 5.1
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
-    ImprimeEmUmaLinha = False
-    FormularioContinuo = True
-    Left = 712
-  end
-  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 4
-    MargemSuperior = 2
-    MargemEsquerda = 2
-    MargemDireita = 2
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
-    FormularioContinuo = True
-    Left = 742
-  end
-  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostraPreview = False
-    MostraStatus = False
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8
-    MargemSuperior = 8
-    MargemEsquerda = 6
-    MargemDireita = 5.1
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    FormularioContinuo = True
-    FonteLinhaItem.Height = -9
-    FonteLinhaItem.Name = 'Lucida Console'
-    Left = 437
   end
 end

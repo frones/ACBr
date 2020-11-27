@@ -1667,7 +1667,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btOperacao: TBitBtn
         Left = 66
-        Top = 198
+        Top = 197
         Width = 168
         Height = 112
         Anchors = []
@@ -1677,7 +1677,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btConfiguracao: TBitBtn
         Left = 316
-        Top = 198
+        Top = 197
         Width = 168
         Height = 112
         Anchors = []
@@ -1995,7 +1995,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfEmissor: TGroupBox
               Left = 96
-              Top = 9
+              Top = 8
               Width = 568
               Height = 288
               Anchors = []
@@ -2645,7 +2645,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbCertificado: TGroupBox
               Left = 269
-              Top = -3
+              Top = -4
               Width = 240
               Height = 233
               Anchors = []
@@ -2782,7 +2782,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbWebService: TGroupBox
               Left = 520
-              Top = -3
+              Top = -4
               Width = 240
               Height = 233
               Anchors = []
@@ -2949,7 +2949,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbProxy: TGroupBox
               Left = 16
-              Top = 174
+              Top = 173
               Width = 240
               Height = 108
               Anchors = []
@@ -3046,7 +3046,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbToken: TGroupBox
               Left = 269
-              Top = 221
+              Top = 219
               Width = 291
               Height = 50
               Anchors = []
@@ -3110,7 +3110,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbNFCeNumeros: TGroupBox
               Left = 568
-              Top = 221
+              Top = 219
               Width = 192
               Height = 50
               Anchors = []
@@ -3188,7 +3188,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfSAT: TGroupBox
               Left = 88
-              Top = 22
+              Top = 21
               Width = 568
               Height = 260
               Anchors = []
@@ -3541,7 +3541,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gEmailConta: TGroupBox
               Left = 8
-              Top = 2
+              Top = 1
               Width = 496
               Height = 291
               Anchors = [akLeft]
@@ -3769,13 +3769,13 @@ object frPOSTEFServer: TfrPOSTEFServer
               Left = 514
               Top = 13
               Width = 240
-              Height = 270
+              Height = 268
               Anchors = [akLeft, akTop, akRight, akBottom]
               Caption = 'Mensagem'
               TabOrder = 1
               DesignSize = (
                 240
-                270)
+                268)
               object lblFrom2: TLabel
                 Left = 8
                 Top = 21
@@ -3808,7 +3808,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 8
                 Top = 84
                 Width = 221
-                Height = 175
+                Height = 173
                 Anchors = [akLeft, akTop, akRight, akBottom]
                 Lines.Strings = (
                   'Voc'#234' est'#225' recebendo uma NFC-e.'
@@ -4945,42 +4945,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFeESCPOS1
     Left = 379
-  end
-  object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8.000000000000000000
-    MargemSuperior = 8.000000000000000000
-    MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.100000000000000000
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrNFe = ACBrNFe1
-    PosPrinter = ACBrPosPrinter1
-    Left = 406
-  end
-  object ACBrPosPrinter1: TACBrPosPrinter
-    PaginaDeCodigo = pcNone
-    ColunasFonteNormal = 40
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
-    ConfigBarras.Margem = 0
-    ConfigQRCode.Tipo = 2
-    ConfigQRCode.LarguraModulo = 4
-    ConfigQRCode.ErrorLevel = 0
-    LinhasEntreCupons = 0
-    Left = 474
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -5057,79 +5022,5 @@ object frPOSTEFServer: TfrPOSTEFServer
     OnTimer = tiIniciarTimer
     Left = 383
     Top = 376
-  end
-  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8.000000000000000000
-    MargemSuperior = 8.000000000000000000
-    MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.100000000000000000
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 
-      'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
-      'l na AppStore (Apple) e PlayStore (Android)'
-    ImprimeEmUmaLinha = False
-    FormularioContinuo = True
-    Left = 712
-  end
-  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 4.000000000000000000
-    MargemSuperior = 2.000000000000000000
-    MargemEsquerda = 2.000000000000000000
-    MargemDireita = 2.000000000000000000
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    MsgAppQRCode = 
-      'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
-      'l na AppStore (Apple) e PlayStore (Android)'
-    FormularioContinuo = True
-    Left = 742
-  end
-  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostraPreview = False
-    MostraStatus = False
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8.000000000000000000
-    MargemSuperior = 8.000000000000000000
-    MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.100000000000000000
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    FormularioContinuo = True
-    FonteLinhaItem.Charset = DEFAULT_CHARSET
-    FonteLinhaItem.Color = clWindowText
-    FonteLinhaItem.Height = -9
-    FonteLinhaItem.Name = 'Lucida Console'
-    FonteLinhaItem.Style = []
-    Left = 437
   end
 end

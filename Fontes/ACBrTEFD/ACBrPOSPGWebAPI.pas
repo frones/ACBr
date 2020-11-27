@@ -38,6 +38,13 @@ interface
 
 uses
   Classes, SysUtils, syncobjs,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrTEFPayGoComum, ACBrBase;
 
 resourcestring
@@ -222,6 +229,32 @@ type
     property Estado: TACBrPOSPGWebEstadoTerminal read GetEstado write SetEstado;
   end;
 
+  { TACBrPOSPGWebAPIParametros }
+
+  TACBrPOSPGWebAPIParametros = class(TACBrTEFPGWebAPIParametros)
+  private
+    fTerminalId: String;
+  public
+    constructor Create(const TerminalId: String);
+    property TerminalId: String read fTerminalId;
+  end;
+
+  { TACBrTEFPGWebAPIListaParametros }
+
+  TACBrTEFPGWebAPIListaParametros = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
+  private
+    function GetParametrosAdicionaisPorTerminal(const TerminalId: String
+      ): TACBrPOSPGWebAPIParametros;
+  protected
+    procedure SetObject(Index: Integer; Item: TACBrPOSPGWebAPIParametros);
+    function GetObject(Index: Integer): TACBrPOSPGWebAPIParametros;
+  public
+    function Add(Obj: TACBrPOSPGWebAPIParametros): Integer;
+    procedure Insert(Index: Integer; Obj: TACBrPOSPGWebAPIParametros);
+    property Objects[Index: Integer]: TACBrPOSPGWebAPIParametros read GetObject write SetObject; default;
+    property Terminal[const TerminalId: String]: TACBrPOSPGWebAPIParametros read GetParametrosAdicionaisPorTerminal;
+  end;
+
   { TACBrPOSPGWebAPI }
 
   TACBrPOSPGWebAPI = class
@@ -232,8 +265,8 @@ type
     fOnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente;
     fTimerConexao: TACBrThreadTimer;
     fListaConexoes: TThreadList;
-    fDadosTransacao: TACBrTEFPGWebAPIParametros;
-    fParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    fDadosTransacaoList: TACBrTEFPGWebAPIListaParametros;
+    fACBrTEFPGWebAPIListaParametros: TACBrTEFPGWebAPIListaParametros;
     fLogCriticalSection: TCriticalSection;
     fConfirmarTransacoesPendentes: Boolean;
     fpszTerminalId, fpszModel, fpszMAC, fpszSerNo: PAnsiChar;
@@ -301,6 +334,8 @@ type
     xPTI_EFT_Confirm: procedure(pszTerminalId: AnsiString; iStatus: SmallInt;
       out piRet: SmallInt) cdecl;
 
+    function GetDadosTransacao(const TerminalId: String): TACBrPOSPGWebAPIParametros;
+    function GetParametrosAdicionais(const TerminalId: String): TACBrPOSPGWebAPIParametros;
     procedure SetDiretorioTrabalho(AValue: String);
     procedure SetInicializada(AValue: Boolean);
     procedure SetNomeAplicacao(AValue: String);
@@ -388,7 +423,7 @@ type
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Inicializada: Boolean read fInicializada write SetInicializada;
 
-    property DadosDaTransacao: TACBrTEFPGWebAPIParametros read fDadosTransacao;
+    property DadosDaTransacao[const TerminalId: String]: TACBrPOSPGWebAPIParametros read GetDadosTransacao;
 
     property SoftwareHouse: String read fSoftwareHouse write SetSoftwareHouse;
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
@@ -398,7 +433,7 @@ type
     property MaximoTerminaisConectados: Word read fMaximoTerminaisConectados write fMaximoTerminaisConectados;
     property TempoDesconexaoAutomatica: Word read fTempoDesconexaoAutomatica write fTempoDesconexaoAutomatica;
     property MensagemBoasVindas: String read fMensagemBoasVindas write fMensagemBoasVindas;
-    property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read fParametrosAdicionais;
+    property ParametrosAdicionais[const TerminalId: String]: TACBrPOSPGWebAPIParametros read GetParametrosAdicionais;
 
     Property SuportaSaque: Boolean read fSuportaSaque write fSuportaSaque;
     Property SuportaDesconto: Boolean read fSuportaDesconto write fSuportaDesconto;
@@ -562,6 +597,61 @@ begin
     fPOSPGWeb.OnMudaEstadoTerminal(fTerminalId, fpEstado, fpEstadoAnterior);
 end;
 
+{ TACBrPOSPGWebAPIParametros }
+
+constructor TACBrPOSPGWebAPIParametros.Create(const TerminalId: String);
+begin
+  inherited Create;
+  fTerminalId := TerminalId;
+end;
+
+{ TACBrTEFPGWebAPIListaParametros }
+
+function TACBrTEFPGWebAPIListaParametros.GetParametrosAdicionaisPorTerminal(
+  const TerminalId: String): TACBrPOSPGWebAPIParametros;
+var
+  i: Integer;
+begin
+  Result := Nil;
+  for i := 0 to Count-1 do
+  begin
+    if Objects[i].TerminalId = TerminalId then
+    begin
+      Result := Objects[i];
+      Break;
+    end;
+  end;
+
+  if Result = Nil then // Ainda não existe uma Lista para esse Terminal, vamos criá-la
+  begin
+    i := Add( TACBrPOSPGWebAPIParametros.Create(TerminalId) );
+    Result := Objects[i];
+  end;
+end;
+
+procedure TACBrTEFPGWebAPIListaParametros.SetObject(Index: Integer;
+  Item: TACBrPOSPGWebAPIParametros);
+begin
+  inherited Items[Index] := Item;
+end;
+
+function TACBrTEFPGWebAPIListaParametros.GetObject(Index: Integer
+  ): TACBrPOSPGWebAPIParametros;
+begin
+  Result := TACBrPOSPGWebAPIParametros(inherited Items[Index]);
+end;
+
+function TACBrTEFPGWebAPIListaParametros.Add(Obj: TACBrPOSPGWebAPIParametros
+  ): Integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+procedure TACBrTEFPGWebAPIListaParametros.Insert(Index: Integer;
+  Obj: TACBrPOSPGWebAPIParametros);
+begin
+  inherited Insert(Index, Obj);
+end;
 
 { TACBrPOSPGWebAPI }
 
@@ -596,8 +686,8 @@ begin
   fInicializada := False;
   fConfirmarTransacoesPendentes := True;
 
-  fDadosTransacao := TACBrTEFPGWebAPIParametros.Create;
-  fParametrosAdicionais := TACBrTEFPGWebAPIParametros.Create;
+  fDadosTransacaoList := TACBrTEFPGWebAPIListaParametros.Create(True);  // FreeObjects;
+  fACBrTEFPGWebAPIListaParametros := TACBrTEFPGWebAPIListaParametros.Create(True);  // FreeObjects;
   fListaConexoes := TThreadList.Create;
   fTimerConexao := TACBrThreadTimer.Create;
   fTimerConexao.Interval := CACBrPOSPGWebEsperaLoop;
@@ -640,8 +730,8 @@ begin
   Freemem(fpszSerNo);
 
   fLogCriticalSection.Free;
-  fDadosTransacao.Free;
-  fParametrosAdicionais.Free;
+  fDadosTransacaoList.Free;
+  fACBrTEFPGWebAPIListaParametros.Free;
   fListaConexoes.Free;
   fTimerConexao.Free;
 
@@ -1090,6 +1180,7 @@ procedure TACBrPOSPGWebAPI.IniciarTransacao(const TerminalId: String;
 var
   iRet: SmallInt;
   i: Integer;
+  ParametrosAdicionaisTerminal: TACBrPOSPGWebAPIParametros;
 begin
   if (ObterEstado(TerminalId) = statTEF) then
     DoException(Format(ACBrStr(sErrTransacaoJaIniciada), [TerminalId]));
@@ -1103,8 +1194,9 @@ begin
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 
-  For i := 0 to ParametrosAdicionais.Count-1 do
-    AdicionarParametro(TerminalId, ParametrosAdicionais[i]);
+  ParametrosAdicionaisTerminal := ParametrosAdicionais[TerminalId];
+  For i := 0 to ParametrosAdicionaisTerminal.Count-1 do
+    AdicionarParametro(TerminalId, ParametrosAdicionaisTerminal[i]);
 
   if Assigned(ParametrosAdicionaisTransacao) then
   begin
@@ -1200,9 +1292,11 @@ var
   iRet: SmallInt;
   i: Word;
   AData, InfoStr: String;
+  ADadosDaTransacao: TACBrPOSPGWebAPIParametros;
 begin
   GravarLog('TACBrPOSPGWebAPI.ObterDadosDaTransacao');
-  fDadosTransacao.Clear;
+  ADadosDaTransacao := DadosDaTransacao[TerminalId];
+  ADadosDaTransacao.Clear;
   uiBuffLen := 10240;   // 10K
   pszValue := AllocMem(uiBuffLen);
   try
@@ -1216,7 +1310,7 @@ begin
         if (iRet = PTIRET_OK) then
         begin
           AData := BinaryStringToString(AnsiString(pszValue));
-          fDadosTransacao.Add(Format('%d=%s', [i, Adata]));  // Add é mais rápido que usar "ValueInfo[i]"
+          ADadosDaTransacao.Add(Format('%d=%s', [i, Adata]));  // Add é mais rápido que usar "ValueInfo[i]"
           GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
         end;
       end;
@@ -1228,7 +1322,7 @@ end;
 
 function TACBrPOSPGWebAPI.ObterDadoTransacao(const TerminalId: String; iINFO: Word): String;
 begin
-  Result := fDadosTransacao.ValueInfo[iINFO];
+  Result := DadosDaTransacao[TerminalId].ValueInfo[iINFO];
   if (Result = '') then
     Result := Trim(ObterInfo(TerminalId, iINFO));
 end;
@@ -1504,6 +1598,18 @@ begin
     DoException(ACBrStr(sErrLibJaInicializada));
 
   fDiretorioTrabalho := AValue;
+end;
+
+function TACBrPOSPGWebAPI.GetParametrosAdicionais(const TerminalId: String
+  ): TACBrPOSPGWebAPIParametros;
+begin
+  Result := fACBrTEFPGWebAPIListaParametros.Terminal[TerminalId];
+end;
+
+function TACBrPOSPGWebAPI.GetDadosTransacao(const TerminalId: String
+  ): TACBrPOSPGWebAPIParametros;
+begin
+  Result := fDadosTransacaoList.Terminal[TerminalId];
 end;
 
 procedure TACBrPOSPGWebAPI.SetNomeAplicacao(AValue: String);

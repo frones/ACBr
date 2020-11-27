@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/20
+-- ACBrPOS, ACBrPOSPGWebAPI --
+[-] Correções para o correto funcionamento em Multithread
+[*] Método "DadosDaTransacaoParaTEFResp", modificado, para receber o "TerminalId"
+    procedure DadosDaTransacaoParaTEFResp(const TerminalId: String);
+[*] Propriedade "ParametrosAdicionais" modificada, para receber o "TerminalId"
+    property ParametrosAdicionais[const TerminalId: String]: TACBrPOSPGWebAPIParametros
+    - Propriedade deixou de ser Published para ser Public
+[*] Propriedade "DadosDaTransacao" modificada, para receber o "TerminalId"
+    property DadosDaTransacao[const TerminalId: String]: TACBrTEFPGWebAPIParametros
+[*] Propriedade "TEFResp" modificada, para receber o "TerminalId"
+    property TEFResp[const TerminalId: String]: TACBrPOSResp read GetTEFResp;
+    (por: DSA)
+
 23/11/20
 -- ACBrTEFPayGoRedes --
 [+] Nova Unit, para implementar uma Tabela de Redes x CNPJ, para todos os ptodutos

@@ -38,6 +38,13 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrTEFPayGoComum, ACBrPOSPGWebAPI, ACBrTEFComum;
 
 type
@@ -49,168 +56,248 @@ type
   TACBrPOSAposFinalizarTransacao = procedure(const TerminalId: String;
     Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao) of object ;
 
-   { TACBrPOS }
+  { TACBrPOSResp }
 
-   TACBrPOS = class( TACBrComponent )
-   private
-     fPOSPGWeb: TACBrPOSPGWebAPI;
-     fArqLOG: String;
-     fTEFResp: TACBrTEFResp;
-     fOnGravarLog: TACBrGravarLog;
-     fOnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao;
-     function GetConfirmarTransacoesPendentes: Boolean;
-     function GetDadosTransacao: TACBrTEFPGWebAPIParametros;
-     function GetDiretorioTrabalho: String;
-     function GetImprimirViaClienteReduzida: Boolean;
-     function GetInicializada: Boolean;
-     function GetMaximoTerminaisConectados: Word;
-     function GetMensagemBoasVindas: String;
-     function GetNomeAplicacao: String;
+  TACBrPOSResp = class(TACBrTEFResp)
+  private
+    fTerminalId: String;
+  public
+    constructor Create(const TerminalId: String);
+    property TerminalId: String read fTerminalId;
+  end;
 
-     function GetOnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente;
-     function GetOnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal;
-     function GetOnNovaConexao: TACBrPOSPGWebNovaConexao;
-     function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
-     function GetPathDLL: String;
-     function GetPortaTCP: Word;
-     function GetSoftwareHouse: String;
-     function GetSuportaDesconto: Boolean;
-     function GetSuportaSaque: Boolean;
-     function GetSuportaViasDiferenciadas: Boolean;
-     function GetTempoDesconexaoAutomatica: Word;
-     function GetUtilizaSaldoTotalVoucher: Boolean;
-     function GetVersaoAplicacao: String;
-     procedure SetConfirmarTransacoesPendentes(AValue: Boolean);
-     procedure SetDiretorioTrabalho(AValue: String);
-     procedure SetMensagemBoasVindas(AValue: String);
-     procedure SetImprimirViaClienteReduzida(AValue: Boolean);
-     procedure SetInicializada(AValue: Boolean);
-     procedure SetMaximoTerminaisConectados(AValue: Word);
-     procedure SetNomeAplicacao(AValue: String);
-     procedure SetOnAvaliarTransacaoPendente(AValue: TACBrPOSPGWebAvaliarTransacaoPendente);
-     procedure SetOnMudaEstadoTerminal(AValue: TACBrPOSPGWebNovoEstadoTerminal);
-     procedure SetOnNovaConexao(AValue: TACBrPOSPGWebNovaConexao);
-     procedure SetPathDLL(AValue: String);
-     procedure SetPortaTCP(AValue: Word);
-     procedure SetSoftwareHouse(AValue: String);
-     procedure SetSuportaDesconto(AValue: Boolean);
-     procedure SetSuportaSaque(AValue: Boolean);
-     procedure SetSuportaViasDiferenciadas(AValue: Boolean);
-     procedure SetTempoDesconexaoAutomatica(AValue: Word);
-     procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
-     procedure SetVersaoAplicacao(AValue: String);
 
-     procedure DadosDaTransacaoParaTEFResp;
-     procedure GravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-     procedure AposFinalizarTransacaoAPI(const TerminalId: String;
-       Status: TACBrPOSPGWebStatusTransacao);
-   protected
+  { TACBrPOSRespList }
 
-   public
-     constructor Create(AOwner: TComponent); override;
-     destructor Destroy; override;
+  TACBrPOSRespList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TObject>{$EndIf})
+  private
+    function GetRespPorTerminal(const TerminalId: String): TACBrPOSResp;
+  protected
+    procedure SetObject(Index: Integer; Item: TACBrPOSResp);
+    function GetObject(Index: Integer): TACBrPOSResp;
+  public
+    function Add(Obj: TACBrPOSResp): Integer;
+    procedure Insert(Index: Integer; Obj: TACBrPOSResp);
+    property Objects[Index: Integer]: TACBrPOSResp read GetObject write SetObject; default;
+    property Terminal[const TerminalId: String]: TACBrPOSResp read GetRespPorTerminal;
+  end;
 
-     procedure Inicializar;
-     procedure DesInicializar;
+  { TACBrPOS }
 
-     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
-     procedure ExibirMensagem(const TerminalId: String; const AMensagem: String;
-       TempoEspera: Word = 0);
-     procedure LimparTeclado(const TerminalId: String);
-     function AguardarTecla(const TerminalId: String; Espera: Word = 0): Integer;
-     function ObterDado(const TerminalId: String; const Titulo: String;
-       const Mascara: String = ''; uiLenMin: Word = 1; uiLenMax: Word = 20;
-       AlinhaAEsqueda: Boolean = False; PermiteAlfa: Boolean = False;
-       OcultarDigitacao: Boolean = False; IntervaloMaxTeclas: Word = 0;
-       const ValorInicial: String = ''; LinhaCaptura: Word = 2): String;
-     function ExecutarMenu(const TerminalId: String; Opcoes: TStrings;
-       const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
-       OpcaoInicial: SmallInt = 0): SmallInt; overload;
-     function ExecutarMenu(const TerminalId: String; const OpcoesPipe: String;
-       const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
-       OpcaoInicial: SmallInt = 0): SmallInt; overload;
-     procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = beepOK);
-     procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
-     procedure AvancarPapel(const TerminalId: String);
-     procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
-       Tipo: TACBrPOSPGWebCodBarras);
-     procedure ImprimirQRCode(const TerminalId: String; const Conteudo: String);
-     procedure ImprimirComprovantesTEF(const TerminalId: String;
-       Tipo: TACBrPOSPGWebComprovantes = prnAmbas;
-       IgnoraErroSemComprovante: Boolean = True);
-     procedure ObterEstado(const TerminalId: String;
-       out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
-       out Modelo: String; out MAC: String; out Serial: String); overload;
-     function ObterEstado(const TerminalId: String): TACBrPOSPGWebEstadoTerminal; overload;
+  TACBrPOS = class( TACBrComponent )
+  private
+    fPOSPGWeb: TACBrPOSPGWebAPI;
+    fArqLOG: String;
+    fTEFRespList: TACBrPOSRespList;
+    fOnGravarLog: TACBrGravarLog;
+    fOnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao;
+    function GetConfirmarTransacoesPendentes: Boolean;
+    function GetDadosTransacao(const TerminalId: String
+      ): TACBrTEFPGWebAPIParametros;
+    function GetDiretorioTrabalho: String;
+    function GetImprimirViaClienteReduzida: Boolean;
+    function GetInicializada: Boolean;
+    function GetMaximoTerminaisConectados: Word;
+    function GetMensagemBoasVindas: String;
+    function GetNomeAplicacao: String;
 
-     procedure ExecutarTransacaoTEF(const TerminalId: String;
+    function GetOnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente;
+    function GetOnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal;
+    function GetOnNovaConexao: TACBrPOSPGWebNovaConexao;
+    function GetParametrosAdicionais(const TerminalId: String): TACBrPOSPGWebAPIParametros;
+    function GetPathDLL: String;
+    function GetPortaTCP: Word;
+    function GetSoftwareHouse: String;
+    function GetSuportaDesconto: Boolean;
+    function GetSuportaSaque: Boolean;
+    function GetSuportaViasDiferenciadas: Boolean;
+    function GetTEFResp(const TerminalId: String): TACBrPOSResp;
+    function GetTempoDesconexaoAutomatica: Word;
+    function GetUtilizaSaldoTotalVoucher: Boolean;
+    function GetVersaoAplicacao: String;
+    procedure SetConfirmarTransacoesPendentes(AValue: Boolean);
+    procedure SetDiretorioTrabalho(AValue: String);
+    procedure SetMensagemBoasVindas(AValue: String);
+    procedure SetImprimirViaClienteReduzida(AValue: Boolean);
+    procedure SetInicializada(AValue: Boolean);
+    procedure SetMaximoTerminaisConectados(AValue: Word);
+    procedure SetNomeAplicacao(AValue: String);
+    procedure SetOnAvaliarTransacaoPendente(AValue: TACBrPOSPGWebAvaliarTransacaoPendente);
+    procedure SetOnMudaEstadoTerminal(AValue: TACBrPOSPGWebNovoEstadoTerminal);
+    procedure SetOnNovaConexao(AValue: TACBrPOSPGWebNovaConexao);
+    procedure SetPathDLL(AValue: String);
+    procedure SetPortaTCP(AValue: Word);
+    procedure SetSoftwareHouse(AValue: String);
+    procedure SetSuportaDesconto(AValue: Boolean);
+    procedure SetSuportaSaque(AValue: Boolean);
+    procedure SetSuportaViasDiferenciadas(AValue: Boolean);
+    procedure SetTempoDesconexaoAutomatica(AValue: Word);
+    procedure SetUtilizaSaldoTotalVoucher(AValue: Boolean);
+    procedure SetVersaoAplicacao(AValue: String);
+
+    procedure DadosDaTransacaoParaTEFResp(const TerminalId: String);
+    procedure GravarLogAPI(const ALogLine: String; var Tratado: Boolean);
+    procedure AposFinalizarTransacaoAPI(const TerminalId: String;
+      Status: TACBrPOSPGWebStatusTransacao);
+  protected
+
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
+    procedure Inicializar;
+    procedure DesInicializar;
+
+    procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
+    procedure ExibirMensagem(const TerminalId: String; const AMensagem: String;
+      TempoEspera: Word = 0);
+    procedure LimparTeclado(const TerminalId: String);
+    function AguardarTecla(const TerminalId: String; Espera: Word = 0): Integer;
+    function ObterDado(const TerminalId: String; const Titulo: String;
+      const Mascara: String = ''; uiLenMin: Word = 1; uiLenMax: Word = 20;
+      AlinhaAEsqueda: Boolean = False; PermiteAlfa: Boolean = False;
+      OcultarDigitacao: Boolean = False; IntervaloMaxTeclas: Word = 0;
+      const ValorInicial: String = ''; LinhaCaptura: Word = 2): String;
+    function ExecutarMenu(const TerminalId: String; Opcoes: TStrings;
+      const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
+      OpcaoInicial: SmallInt = 0): SmallInt; overload;
+    function ExecutarMenu(const TerminalId: String; const OpcoesPipe: String;
+      const Titulo: String = ''; IntervaloMaxTeclas: Word = 0;
+      OpcaoInicial: SmallInt = 0): SmallInt; overload;
+    procedure Beep(const TerminalId: String; TipoBeep: TACBrPOSPGWebBeep = beepOK);
+    procedure ImprimirTexto(const TerminalId: String; const ATexto: String);
+    procedure AvancarPapel(const TerminalId: String);
+    procedure ImprimirCodBarras(const TerminalId: String; const Codigo: String;
+      Tipo: TACBrPOSPGWebCodBarras);
+    procedure ImprimirQRCode(const TerminalId: String; const Conteudo: String);
+    procedure ImprimirComprovantesTEF(const TerminalId: String;
+      Tipo: TACBrPOSPGWebComprovantes = prnAmbas;
+      IgnoraErroSemComprovante: Boolean = True);
+    procedure ObterEstado(const TerminalId: String;
+      out EstadoAtual: TACBrPOSPGWebEstadoTerminal;
+      out Modelo: String; out MAC: String; out Serial: String); overload;
+    function ObterEstado(const TerminalId: String): TACBrPOSPGWebEstadoTerminal; overload;
+
+    procedure ExecutarTransacaoTEF(const TerminalId: String;
+     Operacao: TACBrPOSPGWebOperacao;
+     Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas;
+     ParametrosAdicionaisTransacao: TStrings = nil);
+    procedure ExecutarTransacaoPagamento(const TerminalId: String;
+     ValorPagto: Double; Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas);
+
+    procedure IniciarTransacao(const TerminalId: String;
       Operacao: TACBrPOSPGWebOperacao;
-      Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas;
       ParametrosAdicionaisTransacao: TStrings = nil);
-     procedure ExecutarTransacaoPagamento(const TerminalId: String;
-      ValorPagto: Double; Comprovantes: TACBrPOSPGWebComprovantes = prnAmbas);
+    procedure AdicionarParametro(const TerminalId: String; iINFO: Word;
+      const AValor: AnsiString); overload;
+    procedure AdicionarParametro(const TerminalId: String; AKeyValueStr: String);
+      overload;
+    function ExecutarTransacao(const TerminalId: String): SmallInt;
+    function ObterInfo(const TerminalId: String; iINFO: Word): String;
+    function ObterUltimoRetorno(const TerminalId: String): String;
+    procedure ObterDadosDaTransacao(const TerminalId: String);
+    procedure FinalizarTrancao(const TerminalId: String; Status: TACBrPOSPGWebStatusTransacao);
 
-     procedure IniciarTransacao(const TerminalId: String;
-       Operacao: TACBrPOSPGWebOperacao;
-       ParametrosAdicionaisTransacao: TStrings = nil);
-     procedure AdicionarParametro(const TerminalId: String; iINFO: Word;
-       const AValor: AnsiString); overload;
-     procedure AdicionarParametro(const TerminalId: String; AKeyValueStr: String);
-       overload;
-     function ExecutarTransacao(const TerminalId: String): SmallInt;
-     function ObterInfo(const TerminalId: String; iINFO: Word): String;
-     function ObterUltimoRetorno(const TerminalId: String): String;
-     procedure ObterDadosDaTransacao(const TerminalId: String);
-     procedure FinalizarTrancao(const TerminalId: String; Status: TACBrPOSPGWebStatusTransacao);
+    function Desconectar(const TerminalId: String; Segundos: Word = 0): Boolean;
+    procedure TerminarConexao(const TerminalId: String);
+    function TerminarTodasConexoes: Integer;
 
-     function Desconectar(const TerminalId: String; Segundos: Word = 0): Boolean;
-     procedure TerminarConexao(const TerminalId: String);
-     function TerminarTodasConexoes: Integer;
+    property Inicializada: Boolean read GetInicializada write SetInicializada;
+    function EmTransacao(const TerminalId: String): Boolean;
 
-     property Inicializada: Boolean read GetInicializada write SetInicializada;
-     function EmTransacao(const TerminalId: String): Boolean;
+    property ParametrosAdicionais[const TerminalId: String]: TACBrPOSPGWebAPIParametros read GetParametrosAdicionais;
+    property DadosDaTransacao[const TerminalId: String]: TACBrTEFPGWebAPIParametros read GetDadosTransacao;
+    property TEFResp[const TerminalId: String]: TACBrPOSResp read GetTEFResp;
 
-     property DadosDaTransacao: TACBrTEFPGWebAPIParametros read GetDadosTransacao;
-     property TEFResp: TACBrTEFResp read fTEFResp;
+  published
+    property PathDLL: String read GetPathDLL write SetPathDLL;
+    property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
+    property ArqLOG: String read fArqLOG write fArqLOG;
 
-   published
-     property PathDLL: String read GetPathDLL write SetPathDLL;
-     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
-     property ArqLOG: String read fArqLOG write fArqLOG;
+    property SoftwareHouse: String read GetSoftwareHouse write SetSoftwareHouse;
+    property NomeAplicacao: String read GetNomeAplicacao write SetNomeAplicacao;
+    property VersaoAplicacao: String read GetVersaoAplicacao write SetVersaoAplicacao;
 
-     property SoftwareHouse: String read GetSoftwareHouse write SetSoftwareHouse;
-     property NomeAplicacao: String read GetNomeAplicacao write SetNomeAplicacao;
-     property VersaoAplicacao: String read GetVersaoAplicacao write SetVersaoAplicacao;
+    property PortaTCP: Word read GetPortaTCP write SetPortaTCP default CACBrPOSPGWebPortaTCP;
+    property MaximoTerminaisConectados: Word read GetMaximoTerminaisConectados write SetMaximoTerminaisConectados default CACBrPOSPGWebMaxTerm;
+    property TempoDesconexaoAutomatica: Word read GetTempoDesconexaoAutomatica write SetTempoDesconexaoAutomatica default CACBrPOSPGWebTempoDesconexao;
+    property MensagemBoasVindas: String read GetMensagemBoasVindas write SetMensagemBoasVindas;
 
-     property PortaTCP: Word read GetPortaTCP write SetPortaTCP default CACBrPOSPGWebPortaTCP;
-     property MaximoTerminaisConectados: Word read GetMaximoTerminaisConectados write SetMaximoTerminaisConectados default CACBrPOSPGWebMaxTerm;
-     property TempoDesconexaoAutomatica: Word read GetTempoDesconexaoAutomatica write SetTempoDesconexaoAutomatica default CACBrPOSPGWebTempoDesconexao;
-     property MensagemBoasVindas: String read GetMensagemBoasVindas write SetMensagemBoasVindas;
-     property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
+    Property SuportaSaque: Boolean read GetSuportaSaque write SetSuportaSaque default False;
+    Property SuportaDesconto: Boolean read GetSuportaDesconto write SetSuportaDesconto default True;
+    property ImprimirViaClienteReduzida : Boolean read GetImprimirViaClienteReduzida write SetImprimirViaClienteReduzida default True;
+    property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas write SetSuportaViasDiferenciadas default True;
+    property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher write SetUtilizaSaldoTotalVoucher default False;
+    property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes write SetConfirmarTransacoesPendentes default True;
 
-     Property SuportaSaque: Boolean read GetSuportaSaque write SetSuportaSaque default False;
-     Property SuportaDesconto: Boolean read GetSuportaDesconto write SetSuportaDesconto default True;
-     property ImprimirViaClienteReduzida : Boolean read GetImprimirViaClienteReduzida write SetImprimirViaClienteReduzida default True;
-     property SuportaViasDiferenciadas: Boolean read GetSuportaViasDiferenciadas write SetSuportaViasDiferenciadas default True;
-     property UtilizaSaldoTotalVoucher: Boolean read GetUtilizaSaldoTotalVoucher write SetUtilizaSaldoTotalVoucher default False;
-     property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes write SetConfirmarTransacoesPendentes default True;
+    property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
+    property OnNovaConexao: TACBrPOSPGWebNovaConexao read GetOnNovaConexao write SetOnNovaConexao;
+    property OnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal read GetOnMudaEstadoTerminal
+      write SetOnMudaEstadoTerminal;
+    property OnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao
+      read fOnAposFinalizarTransacao write fOnAposFinalizarTransacao;
+    property OnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente
+      read GetOnAvaliarTransacaoPendente write SetOnAvaliarTransacaoPendente;
 
-     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
-     property OnNovaConexao: TACBrPOSPGWebNovaConexao read GetOnNovaConexao write SetOnNovaConexao;
-     property OnMudaEstadoTerminal: TACBrPOSPGWebNovoEstadoTerminal read GetOnMudaEstadoTerminal
-       write SetOnMudaEstadoTerminal;
-     property OnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao
-       read fOnAposFinalizarTransacao write fOnAposFinalizarTransacao;
-     property OnAvaliarTransacaoPendente: TACBrPOSPGWebAvaliarTransacaoPendente
-       read GetOnAvaliarTransacaoPendente write SetOnAvaliarTransacaoPendente;
-
-   end;
+  end;
 
 implementation
 
 uses
   math, StrUtils,
   ACBrUtil, ACBrConsts;
+
+{ TACBrPOSResp }
+
+constructor TACBrPOSResp.Create(const TerminalId: String);
+begin
+  inherited Create;
+  fTerminalId := TerminalId;
+end;
+
+{ TACBrPOSRespList }
+
+function TACBrPOSRespList.GetRespPorTerminal(const TerminalId: String
+  ): TACBrPOSResp;
+var
+  i: Integer;
+begin
+  Result := Nil;
+  for i := 0 to Count-1 do
+  begin
+    if Objects[i].TerminalId = TerminalId then
+    begin
+      Result := Objects[i];
+      Break;
+    end;
+  end;
+
+  if Result = Nil then // Ainda não existe uma Resposta para esse Terminal, vamos criá-la
+  begin
+    i := Add( TACBrPOSResp.Create(TerminalId) );
+    Result := Objects[i];
+  end;
+end;
+
+procedure TACBrPOSRespList.SetObject(Index: Integer; Item: TACBrPOSResp);
+begin
+  inherited Items[Index] := Item;
+end;
+
+function TACBrPOSRespList.GetObject(Index: Integer): TACBrPOSResp;
+begin
+  Result := TACBrPOSResp(inherited Items[Index]);
+end;
+
+function TACBrPOSRespList.Add(Obj: TACBrPOSResp): Integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+procedure TACBrPOSRespList.Insert(Index: Integer; Obj: TACBrPOSResp);
+begin
+  inherited Insert(Index, Obj);
+end;
 
 { TACBrPOS }
 
@@ -221,7 +308,7 @@ begin
   fOnGravarLog := Nil;
   fOnAposFinalizarTransacao := Nil;
 
-  fTEFResp := TACBrTEFResp.Create;
+  fTEFRespList := TACBrPOSRespList.Create(True); // FreeObjects;
   fPOSPGWeb := TACBrPOSPGWebAPI.Create;
   fPOSPGWeb.OnGravarLog := GravarLogAPI;
   fPOSPGWeb.OnAposFinalizarTransacao := AposFinalizarTransacaoAPI;
@@ -229,7 +316,7 @@ end;
 
 destructor TACBrPOS.Destroy;
 begin
-  fTEFResp.Free;
+  fTEFRespList.Free;
   fPOSPGWeb.Free;
   inherited Destroy;
 end;
@@ -256,9 +343,10 @@ begin
   GravarLog(ALogLine);
 end;
 
-function TACBrPOS.GetDadosTransacao: TACBrTEFPGWebAPIParametros;
+function TACBrPOS.GetDadosTransacao(const TerminalId: String
+  ): TACBrTEFPGWebAPIParametros;
 begin
-  Result := fPOSPGWeb.DadosDaTransacao;
+  Result := fPOSPGWeb.DadosDaTransacao[TerminalId];
 end;
 
 function TACBrPOS.GetConfirmarTransacoesPendentes: Boolean;
@@ -311,9 +399,10 @@ begin
   Result := fPOSPGWeb.OnNovaConexao;
 end;
 
-function TACBrPOS.GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+function TACBrPOS.GetParametrosAdicionais(const TerminalId: String
+  ): TACBrPOSPGWebAPIParametros;
 begin
-  Result := fPOSPGWeb.ParametrosAdicionais;
+  Result := fPOSPGWeb.ParametrosAdicionais[TerminalId];
 end;
 
 function TACBrPOS.GetPathDLL: String;
@@ -344,6 +433,11 @@ end;
 function TACBrPOS.GetSuportaViasDiferenciadas: Boolean;
 begin
   Result := fPOSPGWeb.SuportaViasDiferenciadas;
+end;
+
+function TACBrPOS.GetTEFResp(const TerminalId: String): TACBrPOSResp;
+begin
+  Result := fTEFRespList.Terminal[TerminalId];
 end;
 
 function TACBrPOS.GetTempoDesconexaoAutomatica: Word;
@@ -456,14 +550,19 @@ begin
   fPOSPGWeb.VersaoAplicacao := AValue;
 end;
 
-procedure TACBrPOS.DadosDaTransacaoParaTEFResp;
+procedure TACBrPOS.DadosDaTransacaoParaTEFResp(const TerminalId: String);
 var
   i, p, AInfo: Integer;
   Lin, AValue: String;
+  DadosDaTransacaoTerminal: TACBrTEFPGWebAPIParametros;
+  TEFRespTerminal: TACBrPOSResp;
 begin
-  for i := 0 to DadosDaTransacao.Count-1 do
+  DadosDaTransacaoTerminal := DadosDaTransacao[TerminalId];
+  TEFRespTerminal := TEFResp[TerminalId];
+
+  for i := 0 to DadosDaTransacaoTerminal.Count-1 do
   begin
-    Lin := DadosDaTransacao[i];
+    Lin := DadosDaTransacaoTerminal[i];
     p := pos('=', Lin);
     if (p > 0) then
     begin
@@ -471,20 +570,20 @@ begin
       if (AInfo >= 0) then
       begin
         AValue := copy(Lin, P+1, Length(Lin));
-        fTEFResp.Conteudo.GravaInformacao(Ainfo, 0, AValue);
+        TEFRespTerminal.Conteudo.GravaInformacao(Ainfo, 0, AValue);
       end;
     end;
   end;
 
-  ConteudoToPropertyPayGoWeb( fTEFResp );
+  ConteudoToPropertyPayGoWeb( TEFRespTerminal );
 end;
 
 procedure TACBrPOS.AposFinalizarTransacaoAPI(const TerminalId: String;
   Status: TACBrPOSPGWebStatusTransacao);
 begin
-  DadosDaTransacaoParaTEFResp;
+  DadosDaTransacaoParaTEFResp(TerminalId);
   if Assigned(fOnAposFinalizarTransacao) then
-    fOnAposFinalizarTransacao( TerminalId, fTEFResp, Status);
+    fOnAposFinalizarTransacao( TerminalId, TEFResp[TerminalId], Status);
 end;
 
 procedure TACBrPOS.Inicializar;
@@ -653,7 +752,7 @@ end;
 procedure TACBrPOS.ObterDadosDaTransacao(const TerminalId: String);
 begin
   fPOSPGWeb.ObterDadosDaTransacao(TerminalId);
-  DadosDaTransacaoParaTEFResp;
+  DadosDaTransacaoParaTEFResp(TerminalId);
 end;
 
 procedure TACBrPOS.FinalizarTrancao(const TerminalId: String;

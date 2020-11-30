@@ -307,10 +307,34 @@ begin
             GNRERetorno.CodReceita     := Leitor.rCampo(tcInt, 'receita');
             GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
 
+            if Trim(GNRERetorno.Produto) = '' then
+            begin
+              if Leitor.rCampo(tcStr, 'produto') = '20' then
+                 GNRERetorno.Produto := 'Peças, Partes, Componentes, Acessórios e demais produtos para Autopropulsados'
+              else if Leitor.rCampo(tcStr, 'produto') = '33' then
+                 GNRERetorno.Produto         := 'Comércio Outros não especificados'
+              else if Leitor.rCampo(tcStr, 'produto') = '41' then
+                 GNRERetorno.Produto         := 'Ferramentas'
+              else if Leitor.rCampo(tcStr, 'produto') = '84' then
+                 GNRERetorno.Produto         := 'ICMS Complementar Conv. 110/2007'
+              else if Leitor.rCampo(tcStr, 'produto') = '34' then
+                 GNRERetorno.Produto         := 'Indústria não especificados'
+              else if Leitor.rCampo(tcStr, 'produto') = '64' then
+                 GNRERetorno.Produto         := 'Lubrificantes'
+              else if Leitor.rCampo(tcStr, 'produto') = '18' then
+                 GNRERetorno.Produto         := 'Materiais de Construção, Acabamentos, Bricolagens ou Adornos'
+              else if Leitor.rCampo(tcStr, 'produto') = '69' then
+                 GNRERetorno.Produto         := 'Motocicletas e ciclomotores'
+              else if Leitor.rCampo(tcStr, 'produto') = '89' then
+                 GNRERetorno.Produto         := 'Outros'
+              else if Leitor.rCampo(tcStr, 'produto') = '90' then
+                 GNRERetorno.Produto         := 'Peças, Partes e Acessórios para Veículos Automotores';
+            end;
+
             if Leitor.rExtrai(Nivel, 'documentoOrigem', '', 1) <> '' then
               GNRERetorno.NumDocOrigem := Leitor.rCampo(tcStr, 'documentoOrigem');
 
-            Inc(Nivel);
+//            Inc(Nivel);
             if Leitor.rExtrai(Nivel, 'referencia') <> '' then
             begin
               GNRERetorno.PeriodoReferencia := Leitor.rCampo(tcStr, 'periodo');

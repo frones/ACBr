@@ -1821,7 +1821,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlNFe);
 
       if EhArquivo then
-        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe);
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe)
+      else
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(AArquivoXmlNFe);
 
       EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
@@ -1829,7 +1831,9 @@ begin
         VerificarArquivoExiste(AArquivoXmlEvento);
 
       if EhArquivo then
-        NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento);
+        NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento)
+      else
+        NFeDM.ACBrNFe1.EventoNFe.LerFromIni(AArquivoXmlEvento);
 
       NFeDM.ConfigurarImpressao;
       NFeDM.ACBrNFe1.ImprimirEvento;

@@ -49,7 +49,7 @@ Símbolo : Significado
 
 29/10/2020
 --- ACBrLibNFeBase ---
-[-] Correção nos métodos de impressão de evento e inutilização para carregar o conteudo do xml quando passado o mesmo.
+[-] Correção nos métodos de impressão de evento e inutilização para carregar o conteúdo do xml quando passado o mesmo.
 	Por: Rafael Dias
 [-] Correção nos métodos de envio de email para carregar o conteudo do xml quando passado o mesmo.
 	Por: Rafael Dias

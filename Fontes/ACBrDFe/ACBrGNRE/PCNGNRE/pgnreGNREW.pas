@@ -461,16 +461,13 @@ begin
   Gerador.wGrupo('/itensGNRE');
 
   if GNRE.c06_valorPrincipal > 0 then
-  begin
-  	LValorGNRE := LValorGNRE + GNRE.c06_valorPrincipal;
-    Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
-  end
+    LValorGNRE := LValorGNRE + GNRE.c06_valorPrincipal
   else
-    if GNRE.c10_valorTotal > 0 then
-    begin
-      LValorGNRE := LValorGNRE + GNRE.c10_valorTotal;
-      Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
-    end;
+  if GNRE.c10_valorTotal > 0 then
+    LValorGNRE := LValorGNRE + GNRE.c10_valorTotal;
+
+  if LValorGNRE > 0 then
+     Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
 
   Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
   Gerador.wCampo(tcStr, '', 'identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');

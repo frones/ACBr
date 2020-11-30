@@ -2270,7 +2270,7 @@ end;
 procedure TfrPOSTEFServer.TransmitirNFCe(AACBrNFe: TACBrNFe;
   const TerminalId: String);
 begin
-  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRASMITINDO', CACBrPOSPGWebColunasDisplay) +
+  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRANSMITINDO', CACBrPOSPGWebColunasDisplay) +
                                        PadCenter( 'NFC-e', CACBrPOSPGWebColunasDisplay) );
   AACBrNFe.Enviar(IntToStr(seNFCeLote.Value), False, True, False);  // NãoImprimir, Sincrono
 end;
@@ -2608,8 +2608,8 @@ begin
         corretamente
   }
 
-  ACBrNFe1.NotasFiscais.Clear;
-  with ACBrNFe1.NotasFiscais.Add.NFe do
+  AACBrNFe.NotasFiscais.Clear;
+  with AACBrNFe.NotasFiscais.Add.NFe do
   begin
     Ide.natOp     := 'VENDA';
     Ide.indPag    := ipVista;
@@ -2769,9 +2769,9 @@ begin
       pag.vTroco := (fAbastecimentos[IndiceAbastec].ValorPago - TotalItem);
   end;
 
-  ACBrNFe1.NotasFiscais.GerarNFe;
-  ACBrNFe1.NotasFiscais.Assinar;
-  ACBrNFe1.NotasFiscais.GravarXML;
+  AACBrNFe.NotasFiscais.GerarNFe;
+  AACBrNFe.NotasFiscais.Assinar;
+  AACBrNFe.NotasFiscais.GravarXML;
 end;
 
 procedure TfrPOSTEFServer.GerarSATAbastec(const TerminalId: String;
@@ -3307,7 +3307,7 @@ end;
 
 procedure TfrPOSTEFServer.TransmitirSAT(const TerminalId: String);
 begin
-  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRASMITINDO', CACBrPOSPGWebColunasDisplay) +
+  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRANSMITINDO', CACBrPOSPGWebColunasDisplay) +
                                        PadCenter( 'SAT CF-e', CACBrPOSPGWebColunasDisplay) );
   ACBrSAT1.EnviarDadosVenda;
   if (ACBrSAT1.Resposta.codigoDeRetorno <> 6000) then

@@ -2232,7 +2232,7 @@ end;
 procedure TfrPOSTEFServer.TransmitirNFCe(AACBrNFe: TACBrNFe;
   const TerminalId: String);
 begin
-  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRASMITINDO', CACBrPOSPGWebColunasDisplay) +
+  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRANSMITINDO', CACBrPOSPGWebColunasDisplay) +
                                        PadCenter( 'NFC-e', CACBrPOSPGWebColunasDisplay) );
   AACBrNFe.Enviar(IntToStr(seNFCeLote.Value), False, True, False);  // NãoImprimir, Sincrono
 end;
@@ -2570,8 +2570,8 @@ begin
         corretamente
   }
 
-  ACBrNFe1.NotasFiscais.Clear;
-  with ACBrNFe1.NotasFiscais.Add.NFe do
+  AACBrNFe.NotasFiscais.Clear;
+  with AACBrNFe.NotasFiscais.Add.NFe do
   begin
     Ide.natOp     := 'VENDA';
     Ide.indPag    := ipVista;
@@ -2731,9 +2731,9 @@ begin
       pag.vTroco := (fAbastecimentos[IndiceAbastec].ValorPago - TotalItem);
   end;
 
-  ACBrNFe1.NotasFiscais.GerarNFe;
-  ACBrNFe1.NotasFiscais.Assinar;
-  ACBrNFe1.NotasFiscais.GravarXML;
+  AACBrNFe.NotasFiscais.GerarNFe;
+  AACBrNFe.NotasFiscais.Assinar;
+  AACBrNFe.NotasFiscais.GravarXML;
 end;
 
 procedure TfrPOSTEFServer.GerarSATAbastec(const TerminalId: String;
@@ -3269,7 +3269,7 @@ end;
 
 procedure TfrPOSTEFServer.TransmitirSAT(const TerminalId: String);
 begin
-  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRASMITINDO', CACBrPOSPGWebColunasDisplay) +
+  ACBrPOS1.ExibirMensagem( TerminalId, PadCenter( 'TRANSMITINDO', CACBrPOSPGWebColunasDisplay) +
                                        PadCenter( 'SAT CF-e', CACBrPOSPGWebColunasDisplay) );
   ACBrSAT1.EnviarDadosVenda;
   if (ACBrSAT1.Resposta.codigoDeRetorno <> 6000) then
@@ -3447,7 +3447,7 @@ begin
   fPedidos[0].NumPedido := 98;
   fPedidos[0].DataHora := IncMinute(Now, -40);
   fPedidos[0].Nome := 'WALTER WHITE';
-  fPedidos[0].Email := 'daniel@projetoacbr.com.br'; // 'w.white@jpwynnehs.edu';
+  fPedidos[0].Email := 'w.white@jpwynnehs.edu';
   fPedidos[0].ValorTotal := 9.00;
   fPedidos[0].TotalPago := 0;
   fPedidos[0].Pessoas := 0;
@@ -3462,7 +3462,7 @@ begin
   fPedidos[1].NumPedido := 102;
   fPedidos[1].DataHora := IncMinute(Now, -30);
   fPedidos[1].Nome := 'HOMER SIMPSON';
-  fPedidos[1].Email := 'dopidaniel@gmail.com'; //'homer.simpson@fox.com';
+  fPedidos[1].Email := 'homer.simpson@fox.com';
   fPedidos[1].ValorTotal := 40;
   fPedidos[1].TotalPago := 0;
   fPedidos[1].Pessoas := 0;

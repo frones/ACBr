@@ -148,6 +148,7 @@ begin
     Gerador.wCampo(tcStr, '', 'DESCRICAO', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Descricao, '');
     Gerador.wCampo(tcDe2, '', 'VALORUNIT', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario, '');
     Gerador.wCampo(tcDe4, '', 'QUANTIDADE', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].Quantidade, '');
+    Gerador.wCampo(tcDe2, '', 'DESCONTO', 1, 1, 1, NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, '');
 
     Gerador.wGrupo('/SERVICO');
   end;

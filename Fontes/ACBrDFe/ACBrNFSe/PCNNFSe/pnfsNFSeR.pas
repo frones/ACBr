@@ -1094,6 +1094,7 @@ begin
       NFSe.Servico.ItemServico[serv].Quantidade    := Leitor.rCampo(tcDe2, 'QUANTIDADE');
       NFSe.Servico.ItemServico[serv].ValorUnitario := Leitor.rCampo(tcDe2, 'VALOR');
       NFSe.Servico.ItemServico[serv].ValorTotal    := NFSe.Servico.ItemServico[serv].Quantidade*NFSe.Servico.ItemServico[serv].ValorUnitario;
+      NFSe.Servico.ItemServico[serv].DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DESCONTO');
       NFSe.Servico.ItemServico[serv].Tributavel    := snSim;
       Inc(serv);
     end;

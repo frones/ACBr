@@ -40,7 +40,7 @@ uses
   ACBrPosPrinter, ACBrMail, ACBrConsultaCNPJ, ACBrCEP, ACBrConsts, ACBrIBGE,
   ACBrSAT, synachar, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
   ACBrSATClass, pcnCFe, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrPOSPGWebPrinter,
+  ACBrPOSPGWebPrinter, ACBrTEFComum,
   pcnConversao, pcnNFe, ACBrSocket, ACBrDFe, ImgList, ACBrBase, jpeg;
 
 const
@@ -453,9 +453,9 @@ type
     function DeveFazerEmissaoDeDocumentoFiscal: Boolean;
     function DeveFazerEnvioDeEmail: Boolean;
 
-    procedure DeduzirCredenciadoraNFCe(APag: TpagCollectionItem; Rede: String);
-    procedure DeduzirBandeiraNFCe(APag: TpagCollectionItem; Bandeira: String);
-    procedure DeduzirCredenciadoraSAT(APag: TMPCollectionItem; Rede: String);
+    procedure DeduzirCredenciadoraNFCe(APag: TpagCollectionItem; ATEFResp: TACBrTEFResp);
+    procedure DeduzirBandeiraNFCe(APag: TpagCollectionItem; ATEFResp: TACBrTEFResp);
+    procedure DeduzirCredenciadoraSAT(APag: TMPCollectionItem; ATEFResp: TACBrTEFResp);
   protected
     procedure IrParaMenuPrincipal;
     procedure IrParaOperacaoPOS;
@@ -1958,7 +1958,7 @@ begin
       //Adicionando Produtos
       with Det.New do
       begin
-        Prod.nItem    := I+1;
+        Prod.nItem    := i+1;
         Prod.cProd    := IntToStr(fPedidos[IndicePedido].Items[i].CodItem);
         Prod.xProd    := fPedidos[IndicePedido].Items[i].Descricao;
         Prod.cEAN     := 'SEM GTIN';
@@ -2058,8 +2058,8 @@ begin
 
         if tPag in [fpCartaoCredito, fpCartaoDebito] then
         begin
-          DeduzirCredenciadoraNFCe(APag, ACBrPOS1.TEFResp[TerminalId].Rede);
-          DeduzirBandeiraNFCe(APag, ACBrPOS1.TEFResp[TerminalId].NFCeSAT.Bandeira);
+          DeduzirCredenciadoraNFCe(APag, ACBrPOS1.TEFResp[TerminalId]);
+          DeduzirBandeiraNFCe(APag, ACBrPOS1.TEFResp[TerminalId]);
         end;
       end;
     end;
@@ -2077,71 +2077,74 @@ function TfrPOSTEFServer.ObterProximaNFCe: Integer;
 begin
   fcsDocFiscal.Acquire;
   try
-  // Incrementando o número da NFCe
-  seNFCeNumero.Value := seNFCeNumero.Value + 1;
+    // Incrementando o número da NFCe
+    seNFCeNumero.Value := seNFCeNumero.Value + 1;
     Result := seNFCeNumero.Value;
-  GravarConfiguracao;
+    GravarConfiguracao;
   finally
     fcsDocFiscal.Release;
   end;
 end;
 
 procedure TfrPOSTEFServer.DeduzirCredenciadoraNFCe(APag: TpagCollectionItem;
-  Rede: String);
+  ATEFResp: TACBrTEFResp);
 var
-  CNPJ: String;
+  CNPJ, Rede: String;
   p: Integer;
 begin
-  CNPJ := '';
-  Rede := LowerCase(Trim(Rede));
+  CNPJ := Trim(ATEFResp.NFCeSAT.CNPJCredenciadora);
+  if (CNPJ = '') then
+  begin
+    Rede := LowerCase(Trim(ATEFResp.Rede));
 
-  // Pega apenas a Perimeira Palavra
-  p := pos(' ',Rede);
-  if (p > 0) then
-    Rede := copy(Rede,1, p-1);
+    // Pega apenas a Perimeira Palavra
+    p := pos(' ',Rede);
+    if (p > 0) then
+      Rede := copy(Rede,1, p-1);
 
-  if (pos('bin', Rede) = 1) or (pos('sipag', Rede) = 1) then
-    CNPJ := '02.038.232/0001-64'
-  else if (pos('tribanco', Rede) = 1) then
-    CNPJ := '17.351.180/0001-59'
-  else if (pos('bigcard', Rede) = 1) then
-    CNPJ := '04.627.085/0001-93'
-  else if (pos('brasilcard', Rede) = 1) then
-    CNPJ := '03.817.702/0001-50'
-  else if (pos('cabal', Rede) = 1) then
-    CNPJ := '03.766.873/0001-06'
-  else if (pos('credpar', Rede) = 1) then
-    CNPJ := '07.599.577/0004-53'
-  else if (pos('ecx', Rede) = 1) then
-    CNPJ := '71.225.700/0001-22'
-  else if (pos('elavon', Rede) = 1) then
-    CNPJ := '12.592.831/0001-89'
-  else if (pos('ecofrotas', Rede) = 1) then
-    CNPJ := '03.506.307/0001-57'
-  else if (pos('jetpar', Rede) = 1) then
-    CNPJ := '12.886.711/0002-75'
-  else if (pos('usacard', Rede) = 1) then
-    CNPJ := '08.011.683/0001-94'
-  else if pos('rede', Rede) > 0 then
-    CNPJ := '01.425.787/0001-04'
-  else if (pos('repon', Rede) = 1) then
-    CNPJ := '65.697.260/0001-03'
-  else if (pos('senffnet', Rede) = 1) then
-    CNPJ := '03.877.288/0001-75'
-  else if (pos('siga', Rede) = 1) then
-    CNPJ := '04.966.359/0001-79'
-  else if (pos('sodexo', Rede) = 1) then
-    CNPJ := '69.034.668/0001-56'
-  else if (pos('stone', Rede) = 1) then
-    CNPJ := '16.501.555/0001-57'
-  else if (pos('tecban', Rede) = 1) then
-    CNPJ := '51.427.102/0001-29'
-  else if (pos('ticket', Rede) = 1) then
-    CNPJ := '47.866.934/0001-74'
-  else if (pos('valeshop', Rede) = 1) then
-    CNPJ := '02.561.118/0001-14'
-  else if (pos('visa', Rede) = 1) then
-    CNPJ := '01.027.058/0001-91';
+    if (pos('bin', Rede) = 1) or (pos('sipag', Rede) = 1) then
+      CNPJ := '02.038.232/0001-64'
+    else if (pos('tribanco', Rede) = 1) then
+      CNPJ := '17.351.180/0001-59'
+    else if (pos('bigcard', Rede) = 1) then
+      CNPJ := '04.627.085/0001-93'
+    else if (pos('brasilcard', Rede) = 1) then
+      CNPJ := '03.817.702/0001-50'
+    else if (pos('cabal', Rede) = 1) then
+      CNPJ := '03.766.873/0001-06'
+    else if (pos('credpar', Rede) = 1) then
+      CNPJ := '07.599.577/0004-53'
+    else if (pos('ecx', Rede) = 1) then
+      CNPJ := '71.225.700/0001-22'
+    else if (pos('elavon', Rede) = 1) then
+      CNPJ := '12.592.831/0001-89'
+    else if (pos('ecofrotas', Rede) = 1) then
+      CNPJ := '03.506.307/0001-57'
+    else if (pos('jetpar', Rede) = 1) then
+      CNPJ := '12.886.711/0002-75'
+    else if (pos('usacard', Rede) = 1) then
+      CNPJ := '08.011.683/0001-94'
+    else if pos('rede', Rede) > 0 then
+      CNPJ := '01.425.787/0001-04'
+    else if (pos('repon', Rede) = 1) then
+      CNPJ := '65.697.260/0001-03'
+    else if (pos('senffnet', Rede) = 1) then
+      CNPJ := '03.877.288/0001-75'
+    else if (pos('siga', Rede) = 1) then
+      CNPJ := '04.966.359/0001-79'
+    else if (pos('sodexo', Rede) = 1) then
+      CNPJ := '69.034.668/0001-56'
+    else if (pos('stone', Rede) = 1) then
+      CNPJ := '16.501.555/0001-57'
+    else if (pos('tecban', Rede) = 1) then
+      CNPJ := '51.427.102/0001-29'
+    else if (pos('ticket', Rede) = 1) then
+      CNPJ := '47.866.934/0001-74'
+    else if (pos('valeshop', Rede) = 1) then
+      CNPJ := '02.561.118/0001-14'
+    else if (pos('visa', Rede) = 1) then
+      CNPJ := '01.027.058/0001-91';
+  end;
 
   if (CNPJ='') then
     APag.tpIntegra := tiPagNaoIntegrado
@@ -2153,14 +2156,15 @@ begin
 end;
 
 procedure TfrPOSTEFServer.DeduzirBandeiraNFCe(APag: TpagCollectionItem;
-  Bandeira: String);
+  ATEFResp: TACBrTEFResp);
 var
   p: Integer;
+  Bandeira: String;
 begin
   if  APag.tpIntegra = tiPagNaoIntegrado then
     Exit;
 
-  Bandeira := LowerCase(Trim(Bandeira));
+  Bandeira := LowerCase(Trim(ATEFResp.NFCeSAT.Bandeira));
   // Pega apenas a Perimeira Palavra
   p := pos(' ',Bandeira);
   if (p > 0) then
@@ -2189,80 +2193,85 @@ begin
 end;
 
 procedure TfrPOSTEFServer.DeduzirCredenciadoraSAT(APag: TMPCollectionItem;
-  Rede: String);
+  ATEFResp: TACBrTEFResp);
 var
   p, CodCred: Integer;
+  Rede: String;
 begin
-  Rede := LowerCase(Trim(Rede));
-  // Pega apenas a Perimeira Palavra
-  p := pos(' ',Rede);
-  if (p > 0) then
-    Rede := copy(Rede,1, p-1);
+  CodCred := StrToIntDef(ATEFResp.NFCeSAT.CodCredenciadora, 999);
+  if (CodCred = 999) then
+  begin
+    Rede := LowerCase(Trim(ATEFResp.Rede));
+    // Pega apenas a Perimeira Palavra
+    p := pos(' ',Rede);
+    if (p > 0) then
+      Rede := copy(Rede,1, p-1);
 
-  if (pos('sicred', Rede) = 1) then
-    CodCred := 1
-  else if (pos('amex', Rede) = 1) then
-    CodCred := 3
-  else if (pos('safra', Rede) = 1) then
-    CodCred := 5
-  else if (pos('topazio', Rede) = 1) then
-    CodCred := 6
-  else if (pos('triangulo', Rede) = 1) then
-    CodCred := 7
-  else if (pos('bigcard', Rede) = 1) then
-    CodCred := 8
-  else if (pos('bourbon', Rede) = 1) then
-    CodCred := 9
-  else if (pos('cabal', Rede) = 1) then
-    CodCred := 10
-  else if (pos('celetem', Rede) = 1) then
-    CodCred := 11
-  else if (pos('cielo', Rede) = 1) then
-    CodCred := 12
-  else if (pos('credi', Rede) = 1) then
-    CodCred := 13
-  else if (pos('ecx', Rede) = 1) then
-    CodCred := 14
-  else if (pos('embtratec', Rede) = 1) then
-    CodCred := 15
-  else if (pos('freedom', Rede) = 1) then
-    CodCred := 17
-  else if (pos('funcional', Rede) = 1) then
-    CodCred := 18
-  else if (pos('hipercard', Rede) = 1) then
-    CodCred := 19
-  else if (pos('mapa', Rede) = 1) then
-    CodCred := 20
-  else if (pos('novo', Rede) = 1) then
-    CodCred := 21
-  else if (pos('pernambucanas', Rede) = 1) then
-    CodCred := 22
-  else if (pos('policard', Rede) = 1) then
-    CodCred := 23
-  else if (pos('provar', Rede) = 1) then
-    CodCred := 24
-  else if (pos('redecard', Rede) = 1) then
-    CodCred := 25
-  else if (pos('renner', Rede) = 1) then
-    CodCred := 26
-  else if (pos('rp', Rede) = 1) then
-    CodCred := 27
-  else if (pos('santinvest', Rede) = 1) then
-    CodCred := 28
-  else if (pos('sodexho', Rede) = 1) then
-    CodCred := 29
-  else if (pos('sorocred', Rede) = 1) then
-    CodCred := 30
-  else if (pos('tecban', Rede) = 1) then
-    CodCred := 31
-  else if (pos('ticket', Rede) = 1) then
-    CodCred := 32
-  else if (pos('trivale', Rede) = 1) then
-    CodCred := 33
-  else if (pos('tricard', Rede) = 1) then
-    CodCred := 34
-  else
-    CodCred := 999;
+    if (pos('sicred', Rede) = 1) then
+      CodCred := 1
+    else if (pos('amex', Rede) = 1) then
+      CodCred := 3
+    else if (pos('safra', Rede) = 1) then
+      CodCred := 5
+    else if (pos('topazio', Rede) = 1) then
+      CodCred := 6
+    else if (pos('triangulo', Rede) = 1) then
+      CodCred := 7
+    else if (pos('bigcard', Rede) = 1) then
+      CodCred := 8
+    else if (pos('bourbon', Rede) = 1) then
+      CodCred := 9
+    else if (pos('cabal', Rede) = 1) then
+      CodCred := 10
+    else if (pos('celetem', Rede) = 1) then
+      CodCred := 11
+    else if (pos('cielo', Rede) = 1) then
+      CodCred := 12
+    else if (pos('credi', Rede) = 1) then
+      CodCred := 13
+    else if (pos('ecx', Rede) = 1) then
+      CodCred := 14
+    else if (pos('embtratec', Rede) = 1) then
+      CodCred := 15
+    else if (pos('freedom', Rede) = 1) then
+      CodCred := 17
+    else if (pos('funcional', Rede) = 1) then
+      CodCred := 18
+    else if (pos('hipercard', Rede) = 1) then
+      CodCred := 19
+    else if (pos('mapa', Rede) = 1) then
+      CodCred := 20
+    else if (pos('novo', Rede) = 1) then
+      CodCred := 21
+    else if (pos('pernambucanas', Rede) = 1) then
+      CodCred := 22
+    else if (pos('policard', Rede) = 1) then
+      CodCred := 23
+    else if (pos('provar', Rede) = 1) then
+      CodCred := 24
+    else if (pos('redecard', Rede) = 1) then
+      CodCred := 25
+    else if (pos('renner', Rede) = 1) then
+      CodCred := 26
+    else if (pos('rp', Rede) = 1) then
+      CodCred := 27
+    else if (pos('santinvest', Rede) = 1) then
+      CodCred := 28
+    else if (pos('sodexho', Rede) = 1) then
+      CodCred := 29
+    else if (pos('sorocred', Rede) = 1) then
+      CodCred := 30
+    else if (pos('tecban', Rede) = 1) then
+      CodCred := 31
+    else if (pos('ticket', Rede) = 1) then
+      CodCred := 32
+    else if (pos('trivale', Rede) = 1) then
+      CodCred := 33
+    else if (pos('tricard', Rede) = 1) then
+      CodCred := 34
+    else
+      CodCred := 999;
+  end;
 
   APag.cAdmC := CodCred;
 end;
@@ -2584,7 +2593,7 @@ begin
     TransmitirSAT(TerminalId);
   finally
     LiberarSAT;
-end;
+  end;
 
   lACBrSAT := TACBrSAT.Create(nil);
   try
@@ -2760,8 +2769,8 @@ begin
 
       if tPag in [fpCartaoCredito, fpCartaoDebito] then
       begin
-        DeduzirCredenciadoraNFCe(APag, ACBrPOS1.TEFResp[TerminalId].Rede);
-        DeduzirBandeiraNFCe(APag, ACBrPOS1.TEFResp[TerminalId].NFCeSAT.Bandeira);
+        DeduzirCredenciadoraNFCe(APag, ACBrPOS1.TEFResp[TerminalId]);
+        DeduzirBandeiraNFCe(APag, ACBrPOS1.TEFResp[TerminalId]);
       end;
     end;
 
@@ -2836,7 +2845,7 @@ begin
     end;
 
     if APag.cMP in [mpCartaodeCredito, mpCartaodeDebito] then
-      DeduzirCredenciadoraSAT(APag, ACBrPOS1.TEFResp[TerminalId].Rede);
+      DeduzirCredenciadoraSAT(APag, ACBrPOS1.TEFResp[TerminalId]);
   end;
 
   ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
@@ -3213,7 +3222,7 @@ begin
     TransmitirSAT(TerminalId);
   finally
     LiberarSAT;
-end;
+  end;
 
   lACBrSAT := TACBrSAT.Create(nil);
   try
@@ -3283,7 +3292,7 @@ begin
 
         Imposto.ICMS.pICMS := 18;
       end;
-end;
+    end;
 
     for i := 0 to Length(fPedidos[IndicePedido].Pagamentos)-1 do
     begin
@@ -3298,7 +3307,7 @@ end;
       end;
 
       if APag.cMP in [mpCartaodeCredito, mpCartaodeDebito] then
-        DeduzirCredenciadoraSAT(APag, ACBrPOS1.TEFResp[TerminalId].Rede);
+        DeduzirCredenciadoraSAT(APag, ACBrPOS1.TEFResp[TerminalId]);
     end;
  end;
 
@@ -3403,8 +3412,8 @@ begin
         try
           AACBrSAT.MAIL := ACBrMail1;  // ACBrMail está enviando por Thread
           AACBrSAT.EnviarEmail( AEmail, ASubject,
-      SL,     // Corpo do Email
-      nil,    // Lista com emails copias - TStrings
+            SL,       // Corpo do Email
+            nil,      // Lista com emails copias - TStrings
             AT);      // Lista de anexos - (PDF)
         finally
           fcsMailBuild.Release;
@@ -3463,12 +3472,12 @@ begin
       try
         AACBrNFe.MAIL := ACBrMail1;    // ACBrMail está enviando por Thread
         AACBrNFe.NotasFiscais.Items[0].EnviarEmail( AEmail, ASubject,
-      SL,     // Corpo do Email
+          SL,     // Corpo do Email
           True,   // Enviar PDF
-      nil,    // Lista com emails copias - TStrings
+          nil,    // Lista com emails copias - TStrings
           nil     // Lista de anexos - TStrings
-    );
-  finally
+        );
+      finally
         fcsMailBuild.Release;
       end;
     finally

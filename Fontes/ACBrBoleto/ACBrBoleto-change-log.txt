@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2020
+
+-- ACBrBancoCaixa --
+[*] Ajuste na geração do campo SeuNumero na remassa CNAB400.
+https://www.projetoacbr.com.br/forum/topic/60240-problema-no-campo-identifica%C3%A7%C3%A3o-do-t%C3%ADtulo-na-empresa-da-remessa-cef/
+
 11/11/2020
 
 -- ACBrBoleto --

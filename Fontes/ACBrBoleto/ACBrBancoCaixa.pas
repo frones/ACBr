@@ -637,7 +637,7 @@ begin
          tbBancoEmite      : ATipoBoleto := '1' + '1';
          tbCliEmite        : ATipoBoleto := '2' + '0';
          tbBancoReemite    : ATipoBoleto := '4' + '1';
-         tbBancoNaoReemite : ATipoBoleto := '5' + '2';
+         tbBancoNaoReemite : ATipoBoleto := '5' + '0';
       end;
 
       {Mora Juros}
@@ -1037,7 +1037,7 @@ begin
                          ACodCedente )                                             + // 22 até 27  - Código do Cedente
                   ATipoBoleto                                                      + // 28 a 29    - Quem emite e quem distribui
                   '00'                                                             + // 30 a 31    - Comissão de permanência - informar 00
-                  PadLeft(OnlyNumber(ACBrTitulo.SeuNumero), 25)                    + // 32 até 56  - Seu numero
+                  PadRight(ACBrTitulo.SeuNumero, 25, ' ')                          + // 32 até 56  - Seu numero
                   PadRight(Copy(AModalidade,1,2), 2, '0')                          + // 57 até 58  - Modalidade identificação
                   PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                      + // 59 até 73  - Nosso Numero
                   Space(3)                                                         + // 74 Até 76  - Brancos

@@ -268,11 +268,6 @@ begin
   CurMascara         := '#0.00';	//Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
   TrimString         := True;   	//Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 
-  // Seta os valores defaults para todos os cdaBlocos
-  SetDelimitador(FDelimitador);
-  SetCurMascara(FCurMascara);
-  SetTrimString(FTrimString);
-
   FEventsBloco_0 := TEventsBloco_0.Create(Self);
   FEventsBloco_0.Name := 'EventsBloco_0';
   FEventsBloco_0.SetSubComponent(True);
@@ -343,7 +338,7 @@ end;
 
 function TACBrSPEDFiscal.GetDelimitador: String;
 begin
-   Result := FDelimitador;
+  Result := FDelimitador;
 end;
 
 function TACBrSPEDFiscal.GetLinhasBuffer: Integer;

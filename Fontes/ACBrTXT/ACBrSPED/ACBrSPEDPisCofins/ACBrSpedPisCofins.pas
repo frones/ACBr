@@ -64,6 +64,7 @@ type
 
     FPath: String;            /// Path do arquivo a ser gerado
     FDelimitador: String;     /// Caracter delimitador de campos
+    FReplaceDelimitador: Boolean;
     FTrimString: boolean;
     /// Retorna a string sem espaços em branco iniciais e finais
     FCurMascara: String;      /// Mascara para valores tipo currency
@@ -78,7 +79,6 @@ type
     FBloco_I: TBloco_I;
     FBloco_M: TBloco_M;
     FBloco_P: TBloco_P;
-    FReplaceDelimitador: Boolean;
 
     function GetConteudo: TStringList;
     function GetDelimitador: String;
@@ -235,6 +235,7 @@ begin
   FBloco_P.Bloco_0 := FBloco_0;
 
   FPath := ExtractFilePath(ParamStr(0));
+
   Delimitador        := '|';   	 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
   ReplaceDelimitador := False;   //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
   CurMascara         := '#0.00'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
@@ -243,7 +244,6 @@ begin
   FEventsBloco_C := TEventsBloco_C.Create(Self);
   FEventsBloco_C.Name := 'EventsBloco_C';
   FEventsBloco_C.SetSubComponent(True);
-
 end;
 
 destructor TACBrSPEDPisCofins.Destroy;
@@ -536,7 +536,7 @@ end;
 
 function TACBrSPEDPisCofins.GetReplaceDelimitador: Boolean;
 begin
-   Result := FReplaceDelimitador;
+  Result := FReplaceDelimitador;
 end;
 
 procedure TACBrSPEDPisCofins.SetOnError(const Value: TErrorEvent);

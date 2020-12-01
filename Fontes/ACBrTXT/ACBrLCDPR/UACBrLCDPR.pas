@@ -42,7 +42,6 @@ type
   TACBrLCDPR = class(TComponent)
   private
     FConteudo : TStringList;
-
     FBloco0000: TRegistro0000;
     FBloco0010: TRegistro0010;
     FBloco9999: TRegistro9999;
@@ -52,8 +51,10 @@ type
     FBloco0030: TRegistro0030;
     FPath: String;
     FDelimitador: String;
+    FReplaceDelimitador: Boolean;
     FArquivo: String;
     FDadosContador: TContador;
+
     procedure SetBloco0000(const Value: TRegistro0000);
     procedure SetBloco0010(const Value: TRegistro0010);
     procedure SetBloco0030(const Value: TRegistro0030);
@@ -63,7 +64,9 @@ type
     procedure SetBlocoQ(const Value: TBlocoQ);
     procedure SetArquivo(const Value: String);
     procedure SetDelimitador(const Value: String);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetPath(const Value: String);
+    procedure SetDadosContador(const Value: TContador);
 
     function GetArquivo : String;
 
@@ -76,7 +79,6 @@ type
     procedure WriteBloco0050;
     procedure WriteBlocoQ100;
     procedure WriteBloco9999;
-    procedure SetDadosContador(const Value: TContador);
   public
     constructor Create(AOwner: TComponent); override; /// Create
     destructor Destroy; override; /// Destroy
@@ -90,7 +92,7 @@ type
   published
     property Path : String read FPath write SetPath;
     property Delimitador : String read FDelimitador write SetDelimitador;
-
+    property ReplaceDelimitador: Boolean read FReplaceDelimitador write SetReplaceDelimitador;
     property Bloco0000 : TRegistro0000 read FBloco0000 write SetBloco0000;
     property Bloco0010 : TRegistro0010 read FBloco0010 write SetBloco0010;
     property Bloco0030 : TRegistro0030 read FBloco0030 write SetBloco0030;
@@ -119,19 +121,19 @@ constructor TACBrLCDPR.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FBloco0000      := TRegistro0000.Create;
-  FBloco0010      := TRegistro0010.Create;
-  FBloco0030      := TRegistro0030.Create;
-  FBloco0040      := TBlocos0040.Create;
-  FBloco0050      := TBloco0050.Create;
-  FBlocoQ         := TBlocoQ.Create;
-  FBloco9999      := TRegistro9999.Create;
-  FDadosContador  := TContador.Create;
+  FBloco0000          := TRegistro0000.Create;
+  FBloco0010          := TRegistro0010.Create;
+  FBloco0030          := TRegistro0030.Create;
+  FBloco0040          := TBlocos0040.Create;
+  FBloco0050          := TBloco0050.Create;
+  FBlocoQ             := TBlocoQ.Create;
+  FBloco9999          := TRegistro9999.Create;
+  FDadosContador      := TContador.Create;
+  FConteudo           := TStringList.Create;
+  FArquivo            := 'LCDPR';
 
-  FConteudo     := TStringList.Create;
-
-  FDelimitador  := '|';
-  FArquivo      := 'LCDPR';
+  Delimitador         := '|';
+  ReplaceDelimitador  := False;
 end;
 
 destructor TACBrLCDPR.Destroy;
@@ -144,9 +146,7 @@ begin
   FBlocoQ.Free;
   FBloco9999.Free;
   FDadosContador.Free;
-
   FConteudo.Free;
-
   inherited;
 end;
 
@@ -252,6 +252,11 @@ begin
     raise Exception.Create('Campo não pode ser vazio!');
 
   FPath := Value;
+end;
+
+procedure TACBrLCDPR.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
 end;
 
 procedure TACBrLCDPR.WriteBloco0000;

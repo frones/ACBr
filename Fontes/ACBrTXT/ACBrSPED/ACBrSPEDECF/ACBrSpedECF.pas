@@ -91,9 +91,11 @@ type
     FBloco_X: TBloco_X;
     FBloco_Y: TBloco_Y;
     FBloco_9: TBloco_9;
+    FReplaceDelimitador: Boolean;
 
     function GetConteudo: TStringList;
     function GetDelimitador: String;
+    function GetReplaceDelimitador: boolean;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
     function GetCurMascara: String;
@@ -102,6 +104,7 @@ type
     procedure InicializaBloco(Bloco: TACBrSPED);
     procedure SetArquivo(const Value: String);
     procedure SetDelimitador(const Value: String);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetLinhasBuffer(const Value: Integer);
     procedure SetPath(const Value: String);
     procedure SetTrimString(const Value: boolean);
@@ -112,7 +115,7 @@ type
     function GetOnError: TErrorEvent; /// Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); /// Método SetError
 
-    procedure LimpaRegistros;    
+    procedure LimpaRegistros;
   protected
     /// BLOCO 0
     procedure WriteRegistro0000;
@@ -212,6 +215,7 @@ type
     property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer default 1000 ;
     property Delimitador: String read GetDelimitador write SetDelimitador;
+    property ReplaceDelimitador: Boolean read GetReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: String read GetCurMascara write SetCurMascara;
 
@@ -276,13 +280,11 @@ begin
   FBloco_Y.Bloco_0 := FBloco_0;
 
   FPath := ExtractFilePath(ParamStr(0));
-  FDelimitador := '|';
-  FCurMascara := '#0.00';
-  FTrimString := True;
 
-  SetDelimitador(FDelimitador);
-  SetCurMascara(FCurMascara);
-  SetTrimString(FTrimString);
+  Delimitador        := '|';   	 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  ReplaceDelimitador := False;   //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  CurMascara         := '#0.00'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  TrimString         := True;		 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 end;
 
 destructor TACBrSPEDECF.Destroy;
@@ -376,6 +378,27 @@ begin
     raise Exception.Create('Campo não pode ser vazio!');
 
   FPath := PathWithDelim( Value );
+end;
+
+procedure TACBrSPEDECF.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
+
+  FBloco_0.ReplaceDelimitador := Value;
+  FBloco_C.ReplaceDelimitador := Value;
+  FBloco_E.ReplaceDelimitador := Value;
+  FBloco_J.ReplaceDelimitador := Value;
+  FBloco_K.ReplaceDelimitador := Value;
+  FBloco_L.ReplaceDelimitador := Value;
+  FBloco_M.ReplaceDelimitador := Value;
+  FBloco_N.ReplaceDelimitador := Value;
+  FBloco_P.ReplaceDelimitador := Value;
+  FBloco_Q.ReplaceDelimitador := Value;
+  FBloco_T.ReplaceDelimitador := Value;
+  FBloco_U.ReplaceDelimitador := Value;
+  FBloco_X.ReplaceDelimitador := Value;
+  FBloco_Y.ReplaceDelimitador := Value;
+  FBloco_9.ReplaceDelimitador := Value;
 end;
 
 function TACBrSPEDECF.GetCurMascara: String;
@@ -588,6 +611,11 @@ end;
 function TACBrSPEDECF.GetOnError: TErrorEvent;
 begin
   Result := FOnError;
+end;
+
+function TACBrSPEDECF.GetReplaceDelimitador: boolean;
+begin
+  Result := FReplaceDelimitador;
 end;
 
 procedure TACBrSPEDECF.SetOnError(const Value: TErrorEvent);

@@ -63,6 +63,7 @@ type
 
     FPath: ansistring;            /// Path do arquivo a ser gerado
     FDelimitador: ansistring;     /// Caracter delimitador de campos
+    FReplaceDelimitador: Boolean;    ///
     FTrimString: boolean;
     /// Retorna a string sem espaços em branco iniciais e finais
     FCurMascara: ansistring;      /// Mascara para valores tipo currency
@@ -73,6 +74,7 @@ type
 
     function GetConteudo: TStringList;
     function GetDelimitador: ansistring;
+    function GetReplaceDelimitador: Boolean;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
     function GetCurMascara: ansistring;
@@ -81,6 +83,7 @@ type
     procedure InicializaBloco(Bloco: TACBrDeSTDA4715);
     procedure SetArquivo(const AValue: ansistring);
     procedure SetDelimitador(const Value: ansistring);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetLinhasBuffer(const AValue: Integer);
     procedure SetPath(const AValue: ansistring);
     procedure SetTrimString(const Value: boolean);
@@ -133,6 +136,7 @@ type
 
     ///
     property Delimitador: ansistring read GetDelimitador write SetDelimitador;
+    property ReplaceDelimitador: Boolean read GetReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: ansistring read GetCurMascara write SetCurMascara;
 
@@ -171,15 +175,11 @@ begin
   FBloco_9 := TBloco_9.Create;
 
   FPath := ExtractFilePath(ParamStr(0));
-  FDelimitador := '|';
-  FCurMascara := '#0.00';
-  FTrimString := True;
 
-  // Seta os valores defaults para todos os cdaBlocos
-  SetDelimitador(FDelimitador);
-  SetCurMascara(FCurMascara);
-  SetTrimString(FTrimString);
-
+  Delimitador := '|'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  ReplaceDelimitador := False; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  CurMascara := '#0.00'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  TrimString := True; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 end;
 
 destructor TACBrDeSTDA.Destroy;
@@ -226,6 +226,11 @@ end;
 function TACBrDeSTDA.GetOnError: TErrorEvent;
 begin
   Result := FOnError;
+end;
+
+function TACBrDeSTDA.GetReplaceDelimitador: Boolean;
+begin
+  Result := FReplaceDelimitador;
 end;
 
 function TACBrDeSTDA.GetTrimString: boolean;
@@ -386,6 +391,15 @@ end;
 procedure TACBrDeSTDA.SetPath(const AValue: ansistring);
 begin
   FPath := PathWithDelim( AValue );
+end;
+
+procedure TACBrDeSTDA.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
+
+  FBloco_0.ReplaceDelimitador := Value;
+  FBloco_G.ReplaceDelimitador := Value;
+  FBloco_9.ReplaceDelimitador := Value;
 end;
 
 procedure TACBrDeSTDA.SetTrimString(const Value: boolean);

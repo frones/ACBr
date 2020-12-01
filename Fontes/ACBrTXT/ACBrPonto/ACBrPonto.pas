@@ -62,6 +62,7 @@ type
 
     FPath: String; // Path do arquivo a ser gerado
     FDelimitador: String; // Caracter delimitador de campos
+    FReplaceDelimitador: Boolean;
     FTrimString: boolean; // Retorna a string sem espaços em branco iniciais e finais
     FCurMascara: String; // Mascara para valores tipo currency
 
@@ -70,9 +71,11 @@ type
     FPonto_ACJEF: TPonto_ACJEF;
 
     function GetDelimitador: String;
+    function GetReplaceDelimitador: Boolean;
     function GetTrimString: boolean;
     function GetCurMascara: String;
     procedure SetDelimitador(const Value: String);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: String);
 
@@ -100,6 +103,7 @@ type
     property Path: String read FPath write FPath;
 
     property Delimitador: String read GetDelimitador write SetDelimitador;
+    property ReplaceDelimitador: Boolean read GetReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString default True;
     property CurMascara: String read GetCurMascara write SetCurMascara;
 
@@ -122,16 +126,13 @@ begin
   FPonto_AFDT := TPonto_AFDT.Create;
   FPonto_ACJEF := TPonto_ACJEF.Create;
 
-  // Define o delimitador
-  SetDelimitador('');
-
-  // Define a mascara dos campos numéricos
-  SetCurMascara('');
 
   FPath := ExtractFilePath(ParamStr(0));
-  FDelimitador := '';
-  FCurMascara := '';
-  FTrimString := True;
+
+  Delimitador        := '';    //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  CurMascara         := '';    //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  TrimString         := True;  //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  ReplaceDelimitador := False; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 end;
 
 destructor TACBrPonto.Destroy;
@@ -190,6 +191,11 @@ begin
   Result := FOnError;
 end;
 
+function TACBrPonto.GetReplaceDelimitador: Boolean;
+begin
+  Result := FReplaceDelimitador;
+end;
+
 procedure TACBrPonto.SetOnError(const Value: TErrorEvent);
 begin
   FOnError := Value;
@@ -197,6 +203,15 @@ begin
   FPonto_AFD.OnError := Value;
   FPonto_AFDT.OnError := Value;
   FPonto_ACJEF.OnError := Value;
+end;
+
+procedure TACBrPonto.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
+
+  FPonto_AFD.ReplaceDelimitador   := Value;
+  FPonto_AFDT.ReplaceDelimitador  := Value;
+  FPonto_ACJEF.ReplaceDelimitador := Value;
 end;
 
 function TACBrPonto.SaveFileTXT_AFD(const Arquivo: String): boolean;

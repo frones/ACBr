@@ -104,9 +104,11 @@ type
     FBloco_Z: TBloco_Z;
     FBloco_8: TBloco_8;
     FBloco_9: TBloco_9;
+    FReplaceDelimitador: Boolean;
 
     function GetConteudo: TStringList;
     function GetDelimitador: ansistring;
+    function GetReplaceDelimitador: Boolean;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
     function GetCurMascara: ansistring;
@@ -115,6 +117,7 @@ type
     procedure InicializaBloco(Bloco: TACBrLFD3505);
     procedure SetArquivo(const AValue: ansistring);
     procedure SetDelimitador(const Value: ansistring);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetLinhasBuffer(const AValue: Integer);
     procedure SetPath(const AValue: ansistring);
     procedure SetTrimString(const Value: boolean);
@@ -221,6 +224,7 @@ type
 
     ///
     property Delimitador: ansistring read GetDelimitador write SetDelimitador;
+    property ReplaceDelimitador: Boolean read GetReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: ansistring read GetCurMascara write SetCurMascara;
 
@@ -270,14 +274,11 @@ begin
   FBloco_9 := TBloco_9.Create;
 
   FPath := ExtractFilePath(ParamStr(0));
-  FDelimitador := '|';
-  FCurMascara := '#0.00';
-  FTrimString := True;
 
-  // Seta os valores defaults para todos os cdaBlocos
-  SetDelimitador(FDelimitador);
-  SetCurMascara(FCurMascara);
-  SetTrimString(FTrimString);
+  Delimitador        := '|';   	 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  ReplaceDelimitador := False;   //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  CurMascara         := '#0.00'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  TrimString         := True;		 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 
   FEventsBloco_0 := TEventsBloco_0.Create(Self);
   FEventsBloco_0.Name := 'EventsBloco_0';
@@ -418,6 +419,26 @@ end;
 procedure TACBrLFD.SetPath(const AValue: ansistring);
 begin
   FPath := PathWithDelim( AValue );
+end;
+
+procedure TACBrLFD.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
+
+  FBloco_0.ReplaceDelimitador := Value;
+  FBloco_A.ReplaceDelimitador := Value;
+  FBloco_B.ReplaceDelimitador := Value;
+  FBloco_C.ReplaceDelimitador := Value;
+  FBloco_D.ReplaceDelimitador := Value;
+  FBloco_E.ReplaceDelimitador := Value;
+  FBloco_H.ReplaceDelimitador := Value;
+  FBloco_I.ReplaceDelimitador := Value;
+  FBloco_J.ReplaceDelimitador := Value;
+  FBloco_K.ReplaceDelimitador := Value;
+  FBloco_L.ReplaceDelimitador := Value;
+  FBloco_Z.ReplaceDelimitador := Value;
+  FBloco_8.ReplaceDelimitador := Value;
+  FBloco_9.ReplaceDelimitador := Value;
 end;
 
 function TACBrLFD.GetCurMascara: ansistring;
@@ -619,6 +640,11 @@ end;
 function TACBrLFD.GetOnError: TErrorEvent;
 begin
   Result := FOnError;
+end;
+
+function TACBrLFD.GetReplaceDelimitador: Boolean;
+begin
+  Result := FReplaceDelimitador;
 end;
 
 procedure TACBrLFD.SetOnError(const Value: TErrorEvent);

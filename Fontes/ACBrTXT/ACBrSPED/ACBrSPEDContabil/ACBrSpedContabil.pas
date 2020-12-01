@@ -82,13 +82,16 @@ type
     FBloco_I: TBloco_I;
     FBloco_J: TBloco_J;
     FBloco_K: TBloco_K;
+    FReplaceDelimitador: Boolean;
 
     function GetDelimitador: String;
+    function GetReplaceDelimitador: Boolean;
     function GetTrimString: boolean;
     function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
     procedure SetDelimitador(const Value: String);
+    procedure SetReplaceDelimitador(const Value: Boolean);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: String);
     procedure SetDT_FIN(const Value: TDateTime);
@@ -182,6 +185,7 @@ type
     property Path: String read FPath write FPath;
     ///
     property Delimitador: String read GetDelimitador write SetDelimitador;
+    property ReplaceDelimitador: Boolean read GetReplaceDelimitador write SetReplaceDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: String read GetCurMascara write SetCurMascara;
 
@@ -224,9 +228,11 @@ begin
 
 
   FPath := ExtractFilePath( ParamStr(0) );
-  FDelimitador := '|';
-  FCurMascara  := '#0.00';
-  FTrimString  := True;
+
+  Delimitador        := '|';   	 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  ReplaceDelimitador := False;   //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  CurMascara         := '#0.00'; //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+  TrimString         := True;		 //Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
 end;
 
 destructor TACBrSPEDContabil.Destroy;
@@ -252,13 +258,13 @@ end;
 
 function TACBrSPEDContabil.GetDelimitador: String;
 begin
-   Result := FDelimitador;
+  Result := FDelimitador;
 end;
 
 procedure TACBrSPEDContabil.SetDelimitador(const Value: String);
 begin
   FDelimitador := Value;
-  //
+
   FBloco_0.Delimitador := Value;
   FBloco_I.Delimitador := Value;
   FBloco_J.Delimitador := Value;
@@ -345,6 +351,11 @@ begin
    Result := FOnError;
 end;
 
+function TACBrSPEDContabil.GetReplaceDelimitador: Boolean;
+begin
+  Result := FReplaceDelimitador;
+end;
+
 procedure TACBrSPEDContabil.SetOnError(const Value: TErrorEvent);
 begin
   FOnError := Value;
@@ -354,6 +365,17 @@ begin
   FBloco_J.OnError := Value;
   FBloco_K.OnError := Value;
   FBloco_9.OnError := Value;
+end;
+
+procedure TACBrSPEDContabil.SetReplaceDelimitador(const Value: Boolean);
+begin
+  FReplaceDelimitador := Value;
+
+  FBloco_0.ReplaceDelimitador := Value;
+  FBloco_I.ReplaceDelimitador := Value;
+  FBloco_J.ReplaceDelimitador := Value;
+  FBloco_K.ReplaceDelimitador := Value;
+  FBloco_9.ReplaceDelimitador := Value;
 end;
 
 procedure TACBrSPEDContabil.SaveFileTXT;

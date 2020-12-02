@@ -100,6 +100,12 @@ type
               pNumeroControle: PAnsiChar): Integer;
               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
+     xTransacaoRecargaCelular : function (
+              pCodigoArea,
+              pNumeroTelefone,
+              pNumeroControle: PChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
       xTransacaoCheque : function (
               pValorTransacao,
               pNumeroCupomVenda,
@@ -135,7 +141,9 @@ type
               pNumeroCupomVenda,
               pNumeroControle: PAnsiChar): Integer;
               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-
+      xTransacaoQRCode : function (pValorTransacao, pNumeroCupom, pNumeroControle, pReservado:
+              PAnsiChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
       xConfirmaCartaoVoucher : function (
               pNumeroControle: PAnsiChar): Integer;
               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
@@ -152,6 +160,10 @@ type
 
       xTransacaoCancelamentoPagamento : function (
               pNumeroControle: PAnsiChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
+      xTransacaoCancelamentoPagamentoCompleta : function (pValorTransacao, pNumeroCupomVenda,
+              pNumeroControle, pPermiteAlteracao, pReservado: PAnsiChar): Integer;
               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
       xTransacaoPreAutorizacaoCartaoCredito : function (
@@ -282,11 +294,19 @@ begin
          end;
        121 : fpImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
        122 : fpImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
+       //recarga celular
+       123 : ;
+       124 : ;
+       125 : fpNumeroRecargaCelular  := LinStr;
+       126 : fpValorRecargaCelular   := StrToFloat(LinStr);
+       127 : fpCodigoOperadoraCelular:= LinStr;
+       128 : fpNomeOperadoraCelular  := LinStr;
+
        130 :
-         begin
-           fpSaque      := Linha.Informacao.AsFloat ;
-           fpValorTotal := fpValorTotal + fpSaque ;
-         end;
+       begin
+         fpSaque      := Linha.Informacao.AsFloat ;
+         fpValorTotal := fpValorTotal + fpSaque ;
+       end;
        131 : fpInstituicao                 := LinStr;
        133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := Linha.Informacao.AsString;
@@ -297,7 +317,11 @@ begin
          fpValorTotal := fpValorTotal - fpDesconto ;
         end;
 
-       //156 : fpRede                      := LinStr;
+//       156 : fpRede                        := LinStr;
+//       157 : fpQRCode                      := LinStr;
+//       158 : fpIdCarteiraDigital           := LinStr;
+//       159 : fpNomeCarteiraDigital         := LinStr;
+
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
        505 : fpQtdParcelas                 := Linha.Informacao.AsInteger ;
@@ -363,6 +387,7 @@ begin
   xTransacaoCartaoDebito := nil;
   xConfirmaCartaoDebito := nil;
   xTransacaoCartaoVoucher := nil;
+  xTransacaoQRCode := nil;
   xConfirmaCartaoVoucher := nil;
   xTransacaoCartaoFrota := nil;
   xConfirmaCartaoFrota := nil;
@@ -377,6 +402,8 @@ begin
   xInicializaDPOS := nil;
   xFinalizaDPOS := nil;
   xTransacaoResgatePremio := nil;
+  xTransacaoRecargaCelular := nil;
+  xTransacaoCancelamentoPagamentoCompleta := nil;
 
   if Assigned( fpResp ) then
      fpResp.Free ;
@@ -409,12 +436,14 @@ procedure TACBrTEFDCliDTEF.LoadDLLFunctions ;
 begin
    CliDTEFFunctionDetect('IdentificacaoAutomacaoComercial', @xIdentificacaoAutomacaoComercial);
    CliDTEFFunctionDetect('TransacaoResgatePremio', @xTransacaoResgatePremio);
+   CliDTEFFunctionDetect('TransacaoRecargaCelular', @xTransacaoRecargaCelular);
    CliDTEFFunctionDetect('TransacaoCheque', @xTransacaoCheque);
    CliDTEFFunctionDetect('TransacaoCartaoCredito', @xTransacaoCartaoCredito);
    CliDTEFFunctionDetect('ConfirmaCartaoCredito', @xConfirmaCartaoCredito);
    CliDTEFFunctionDetect('TransacaoCartaoDebito',@xTransacaoCartaoDebito);
    CliDTEFFunctionDetect('ConfirmaCartaoDebito',@xConfirmaCartaoDebito);
    CliDTEFFunctionDetect('TransacaoCartaoVoucher',@xTransacaoCartaoVoucher);
+   CliDTEFFunctionDetect('TransacaoQRCode',@xTransacaoQRCode);
    CliDTEFFunctionDetect('ConfirmaCartaoVoucher',@xConfirmaCartaoVoucher);
    CliDTEFFunctionDetect('TransacaoCartaoFrota',@xTransacaoCartaoFrota);
    CliDTEFFunctionDetect('ConfirmaCartaoFrota',@xConfirmaCartaoFrota);
@@ -428,6 +457,7 @@ begin
    CliDTEFFunctionDetect('ObtemLogUltimaTransacao',@xObtemLogUltimaTransacao);
    CliDTEFFunctionDetect('InicializaDPOS',@xInicializaDPOS);
    CliDTEFFunctionDetect('FinalizaDPOS',@xFinalizaDPOS);
+   CliDTEFFunctionDetect('TransacaoCancelamentoPagamentoCompleta',@xTransacaoCancelamentoPagamentoCompleta);
 end ;
 
 procedure TACBrTEFDCliDTEF.SetArqResp(const AValue : String);
@@ -453,7 +483,7 @@ begin
 
   pFabricanteAutomacao := TACBrTEFD(Owner).Identificacao.NomeAplicacao;
   pVersaoAutomacao := TACBrTEFD(Owner).Identificacao.VersaoAplicacao;
-  pReservado := '10';
+  pReservado := '11'; //para dizer q a automacao esta preparada para transacao QR Code
 
   xIdentificacaoAutomacaoComercial( PAnsiChar( pFabricanteAutomacao ),
                            PAnsiChar( pVersaoAutomacao ),
@@ -542,8 +572,8 @@ begin
 
   if Sts = 0 then
   begin
-     FinalizarTransacao('0', True, '', '');
-     Result := True;
+    FinalizarTransacao('0', True, '', '');
+    Result := True;
   end;
 end;
 
@@ -571,7 +601,7 @@ var
 begin
   VerificarTransacaoPagamento( Valor );
 
-  Sts := FazerRequisicao(4, 'CHQ', Valor, DocumentoVinculado ) ;
+  Sts := FazerRequisicao(5, 'CHQ', Valor, DocumentoVinculado ) ;
 
   ProcessarRespostaPagamento( IndiceFPG_ECF, Valor );
 
@@ -627,12 +657,16 @@ Var
   ValorStr, DataStr, HoraStr : AnsiString;
   ANow : TDateTime ;
   pValorTransacao, pNumeroCupomVenda, pNumeroControle,
-    pQuantidadeCheques, pPeriodicidadeCheques, pDataPrimeiroCheque,
-    pCarenciaPrimeiroCheque : AnsiString;
+  pQuantidadeCheques, pPeriodicidadeCheques, pDataPrimeiroCheque,
+  pCarenciaPrimeiroCheque : AnsiString;
+  pCodigoArea, pNumeroTelefone: AnsiString;
   cNumeroControle : array [0..5] of AnsiChar;
   SL, ArquivoResposta : TStringList;
   Voltar, Parar : Boolean;
   ItemSelecionado : integer;
+  pNumeroNSU, pControle: array [0..7] of AnsiChar;
+  pPermiteAlteracao, pReservado: array [0..2] of AnsiChar;
+  pValor: array [0..13] of AnsiChar;
 begin
   if fpAguardandoResposta then
     raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
@@ -656,6 +690,8 @@ begin
         SL.Add('Reimpressão');
         SL.Add('Resumo das Vendas');
         SL.Add('Resgate de Prêmios');
+        SL.Add('Recarga de Celular');
+        SL.Add('Cancelamento via Qr Code');
 
         Parar := False;
         while not Parar do
@@ -680,6 +716,8 @@ begin
                    2: Funcao := 7;
                    3: Funcao := 8;
                    4: Funcao := 11;
+                   5: Funcao := 12;
+                   6: Funcao := 14;
                  end;
 
                  Parar := True;
@@ -725,6 +763,7 @@ begin
       Result := xTransacaoCartaoVoucher( PAnsiChar( pValorTransacao ),
                                          PAnsiChar( pNumeroCupomVenda ),
                                          PAnsiChar( pNumeroControle ) );
+
    if Funcao = 5 then // Cheque
    begin
       pQuantidadeCheques     := '00' ;
@@ -764,6 +803,38 @@ begin
    if Funcao = 11 then
       Result := xTransacaoResgatePremio( PAnsiChar( pNumeroCupomVenda),
                                        PAnsiChar( pNumeroControle ) );
+   if Funcao = 12 then
+   begin
+     pCodigoArea:='00';
+     pNumeroTelefone:='000000000';
+     Result := xTransacaoRecargaCelular(PChar(Trim(pCodigoArea)),
+                                        PChar(Trim(pNumeroTelefone)),
+                                        PChar(pNumeroControle));
+   end;
+
+   if Funcao = 13 then
+   begin
+     Result := xTransacaoQRCode(PAnsiChar( pValorTransacao ),
+                                PAnsiChar( pNumeroCupomVenda ),
+                                PAnsiChar( pNumeroControle ),
+                                PAnsiChar('') );
+   end;
+
+   if Funcao = 14 then
+   begin
+     pValor:='';
+     pNumeroNSU:='';
+     pControle:='';
+     pPermiteAlteracao:='S';
+     pReservado:='Q';
+     Result := xTransacaoCancelamentoPagamentoCompleta(pValor,
+                                                       pNumeroNSU,
+                                                       pControle,
+                                                       pPermiteAlteracao,
+                                                       pReservado
+                                                       );
+     pNumeroControle:=pControle;
+   end;
 
    if Result <> 0 then
       raise EACBrTEFDErro.Create( ACBrStr( 'Retorno DTEF -> ' + IntToStr(Result) ) )
@@ -794,29 +865,30 @@ begin
             begin
               ArquivoResposta.LoadFromFile(ArqResp + pNumeroControle + '.' + NumeroTerminal);
 
-              if ((Funcao = 6) or (Funcao = 8)) then
+              if ((Funcao = 4) or (Funcao = 6) or (Funcao = 8) or (Funcao = 12) or (Funcao = 14)) then
               begin
-                 ImprimirComprovantes(ArquivoResposta);
-                 ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
-                 ApagaEVerifica( ArqBackup );
+                ImprimirComprovantes(ArquivoResposta);
+                ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
+                ApagaEVerifica( ArqBackup );
               end
               else
-               begin
-                 MontaArquivoResposta(pNumeroControle, ArquivoResposta);
+              begin
+                MontaArquivoResposta(pNumeroControle, ArquivoResposta);
 
-                 Conteudo.Conteudo.Text := ArquivoResposta.Text;
-                 Conteudo.GravaInformacao(899,100, AHeader ) ;
-                 Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
-                 Conteudo.GravaInformacao(899,102, Documento ) ;
-                 Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
-                 Conteudo.GravaInformacao(899,104, IntToStr(Funcao) );
-                 Conteudo.GravaInformacao(899,130, 'IMPRIMINDO...' ) ;
+                Conteudo.Conteudo.Text := ArquivoResposta.Text;
+                Conteudo.GravaInformacao(899,100, AHeader ) ;
+                Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
+                Conteudo.GravaInformacao(899,102, Documento ) ;
+                Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
+                Conteudo.GravaInformacao(899,104, IntToStr(Funcao) );
+                Conteudo.GravaInformacao(899,130, 'IMPRIMINDO...' ) ;
 
-                 Resp.TipoGP := fpTipo;
-               end;
+                Resp.TipoGP := fpTipo;
+              end;
             end;
          finally
-           if ((Funcao = 6) or (Funcao = 7) or (Funcao = 8) or (Funcao = 9)) then
+           if ( (Funcao = 4) or (Funcao = 6) or (Funcao = 7) or (Funcao = 8) or (Funcao = 9) or (Funcao = 12)
+           or (Funcao = 14) ) then
            begin
              xConfirmaCartaoCredito( PAnsiChar( pNumeroControle ) );
              xFinalizaTransacao;
@@ -859,7 +931,7 @@ begin
             ' Hora: '      +HoraStr ) ;
 
   if Operacao = '0' then
-   exit;
+    Exit;
 
   case TipoTransacao of
     -1 : nStatus := xFinalizaTransacao;
@@ -870,14 +942,13 @@ begin
   //4  : nStatus Private Label
   //5  : nStatus := xConfirmaCartao
     10 : nStatus := xConfirmaCartaoFrota( PAnsiChar( NSU ) );
+    13 : nStatus := xConfirmaCartao( PAnsiChar( NSU ) );
   else
     nStatus := -1 ;
   end;
 
   if ((nStatus = 0) and Confirma) then
-  begin
-     xFinalizaTransacao;
-  end;
+    xFinalizaTransacao;
 
   if (nStatus = 11) then
   begin
@@ -956,19 +1027,29 @@ begin
 end;
 
 procedure TACBrTEFDCliDTEF.MontaArquivoResposta(aNSU: String; aRetorno:TStringList);
-var pDados : array [0..257] of AnsiChar;
-    cDadosEstendido : array [0..257] of AnsiChar;
-    sDados, sDadosEstendido, TipoTransacao, TipoOperacao, txt : String;
-    aResposta, imgCupom : TStringList;
-    i : Integer;
-    ValSaque, ValorTemp: Double;
+var
+  pDados : array [0..257] of AnsiChar;
+  cDadosEstendido : array [0..257] of AnsiChar;
+  sDados, sDadosEstendido, TipoTransacao, TipoOperacao, txt : String;
+  aResposta, imgCupom, imgCupom2Via : TStringList;
+  i : Integer;
+  ValSaque, ValorTemp: Double;
+  FimPrimeiraVia: Boolean;
 begin
   aResposta := TStringList.Create;
   imgCupom := TStringList.Create;
+  imgCupom2Via := TStringList.Create;
   try
-    for i := 0 to aRetorno.Count - 1 do
+    FimPrimeiraVia:=False;
+    for i := 0 to Pred(aRetorno.Count) do
     begin
-       imgCupom.Add(aRetorno[i]);
+      if FimPrimeiraVia then
+        imgCupom2Via.Add(aRetorno[i])
+      else
+      begin
+        imgCupom.Add(aRetorno[i]);
+        FimPrimeiraVia:=Pos('NSU D-TEF', aRetorno[i]) > 0;
+      end;
     end;
 
     xObtemLogUltimaTransacao(pDados);
@@ -1005,6 +1086,18 @@ begin
        txt := 'Cartão tipo Voucher';
     end;
 
+    if copy(sDados,11,3) = 'CEL' then
+    begin
+       TipoTransacao := '04';
+       txt := 'Recarga Celular';
+    end;
+
+    if copy(sDados,11,3) = 'QRC' then
+    begin
+       TipoTransacao := '05';
+       txt := 'QR Code';
+    end;
+
     if copy(sDados,112,2) = 'AV' then
        TipoOperacao := '00';
     if copy(sDados,112,2) = 'PD' then
@@ -1018,9 +1111,22 @@ begin
     aResposta.Add('100-000 = ' + TipoTransacao + TipoOperacao);
     aResposta.Add('101-000 = ' + txt);
     aResposta.Add('102-000 = T.E.F.');
-    aResposta.Add('105-000 = ' + copy(sDados,18,4) + copy(sDados,16,2) + copy(sDados,14,2) + copy(sDados,22,6));
-    aResposta.Add('121-000 = ' +  BinaryStringToString(imgCupom.Text));
-    //aResposta.Add('122-000 = ' +  BinaryStringToString(imgCupom.Text));
+    aResposta.Add('105-000 = ' + Copy(sDados,18,4) + Copy(sDados,16,2) + Copy(sDados,14,2) + Copy(sDados,22,6));
+    aResposta.Add('121-000 = ' + BinaryStringToString(imgCupom.Text));
+    aResposta.Add('122-000 = ' + BinaryStringToString(imgCupom2Via.Text));
+
+    //Recarga Celular
+    {Obs: (122-000) estes codigos não consegui descobrir da onde são tirados
+     por este motivo segui a sequencia, nao sei se isto não vai gerar algum tipo de conflito}
+    if TipoTransacao = '04' then
+    begin
+      aResposta.Add('123-000 = '+ Trim(Copy(sDados,14,8))); //data recarga
+      aResposta.Add('124-000 = '+ Trim(Copy(sDados,22,6))); //hora recarga
+      aResposta.Add('125-000 = '+ Trim(Copy(sDados,47,12))); //numero telefone com ddd
+      aResposta.Add('126-000 = '+ Trim(Copy(sDados,62,12))); //valor da recarga
+      aResposta.Add('127-000 = '+ Trim(Copy(sDados,74,5))); //codigo da operadora
+      aResposta.Add('128-000 = '+ Trim(Copy(sDados,81,40))); //nome da operadora
+    end;
 
     //Debito - Saque
     if TipoTransacao = '01' then
@@ -1032,12 +1138,13 @@ begin
     //Cielo Premia - Desconto
     ValorTemp := StrToFloat(copy(sDadosEstendido,51,12));
     if ValorTemp > 0 then
-    aResposta.Add('135-000 = ' + FloatToStr(ValorTemp));
+      aResposta.Add('135-000 = ' + FloatToStr(ValorTemp));
 
     aRetorno.Text := aResposta.Text;
   finally
     aResposta.Free;
     imgCupom.Free;
+    imgCupom2Via.Free;
   end ;
 end;
 
@@ -1134,6 +1241,7 @@ begin
         end;
       end ;
     finally
+//      BloquearMouseTeclado( False );
       //SL.Free; //Não pode destruir está lista, pois a origem da chamada desta função ainda irá utliza-la.
     end;
   end;

@@ -46,6 +46,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/20
+-- ACBrTEFDCliDTEF --
+[+] Adicionada operação TransacaoQRCode, no metodo "Fazer Requizicao", como sendo
+    mais uma opcao de pagamento, onde o cliente podera usar varias carteiras como:
+    (Ame/MercadoPago/PicPay, etc.), apenas escaneando um Qr Code que estara
+    disponivel no balcao/caixa.
+    A Linx lançou o produto QR Linx que age como um hub de wallets (Ame/MercadoPago/PicPay, etc.)
+    centralizando todas as plataformas de meios de pagamento em uma única ferramenta.
+    Inclusive o PIX também irá utilizar essa estrutura.
+    Para o cliente utilizar esse serviço ele precisa estar credenciado com a LinxPay
+    que poderá ser solicitado através do contato comercial;
+[+] Adicionado operação "Cancelamento via QrCode", para possibilitar o cancelamento,
+    nas operações administrativas, desta nova modalidade de pagamento.
+    https://www.projetoacbr.com.br/forum/topic/59804-qr-code-clidteflinx/
+    (por: Volmir)
+
 27/11/20
 -- ACBrPOS, ACBrPOSPGWebAPI --
 [-] Correções para o correto funcionamento em Multithread

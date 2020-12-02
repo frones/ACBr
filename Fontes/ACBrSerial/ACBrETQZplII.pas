@@ -55,6 +55,7 @@ type
 
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
 
+    function ComandoTamanhoBarras( aBarraFina, aBarraLargaa , aAlturaBarra:Integer ):String;
     function ComandoCoordenadas(aVertical, aHorizontal: Integer): String;
     function ComandoReverso(aImprimirReverso: Boolean): String;
     function ComandoFonte(const aFonte: String; aMultVertical, aMultHorizontal: Integer;
@@ -318,6 +319,11 @@ begin
   Result := '';  // Todos os comandos são convertidos para etqDots;
 end;
 
+function TACBrETQZplII.ComandoTamanhoBarras(aBarraFina, aBarraLargaa , aAlturaBarra:Integer): String;
+begin
+  result := '^BY' + intToStr( aBarraFina )+ ',,'+ intToStr( aAlturaBarra );
+end;
+
 function TACBrETQZplII.ComandoTemperatura: AnsiString;
 begin
   if (Temperatura < 0) or (Temperatura > 30) then
@@ -446,6 +452,7 @@ function TACBrETQZplII.ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
   aExibeCodigo: TACBrETQBarraExibeCodigo): AnsiString;
 begin
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
+            ComandoTamanhoBarras(aBarraFina, aBarraLarga , aAlturaBarras ) +
             ComandoBarras(aTipoBarras, aOrientacao, aAlturaBarras, aExibeCodigo ) +
             ComandoCampo(aTexto);
 end;

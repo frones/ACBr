@@ -1833,7 +1833,7 @@ begin
       if EhArquivo then
         NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento)
       else
-        NFeDM.ACBrNFe1.EventoNFe.LerFromIni(AArquivoXmlEvento);
+        NFeDM.ACBrNFe1.EventoNFe.LerXMLFromString(AArquivoXmlEvento);
 
       NFeDM.ConfigurarImpressao;
       NFeDM.ACBrNFe1.ImprimirEvento;

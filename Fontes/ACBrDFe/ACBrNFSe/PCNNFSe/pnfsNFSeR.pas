@@ -2376,7 +2376,7 @@ begin
         if (NFSe.Servico.Valores.ValorIssRetido = 0) and (NFSe.Servico.Valores.IssRetido=stRetencao) then
         begin
           case FProvedor of
-            proSystemPro, proWebISSv2:
+            proSystemPro, proWebISSv2, proSafeWeb:
                 NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIss;
 
             proGoiania:

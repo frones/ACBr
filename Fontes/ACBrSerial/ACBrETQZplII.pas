@@ -112,6 +112,10 @@ type
     function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
     function ComandoBMP2GRF(aStream: TStream; aNomeImagem: String; Inverter: Boolean = True): AnsiString;
+
+    function ComandoGravaRFIDHexaDecimal(aValue:String): AnsiString; override;
+    function ComandoGravaRFIDASCII( aValue:String ): AnsiString; override;
+
   end;
 
 implementation
@@ -179,6 +183,16 @@ begin
                    ConverterOrientacao(aOrientacao)   + ',' +
                    IntToStr(Max(aMultVertical,1))     + ',' +
                    IntToStr(Max(aMultHorizontal,1));
+end;
+
+function TACBrETQZplII.ComandoGravaRFIDASCII(aValue:String): AnsiString;
+begin
+  result := '^RFW,A^FD' + aValue + '^FS';
+end;
+
+function TACBrETQZplII.ComandoGravaRFIDHexaDecimal(aValue: String): AnsiString;
+begin
+  result := '^RFW,H^FD' + aValue+ '^FS';
 end;
 
 function TACBrETQZplII.ComandoCoordenadas(aVertical, aHorizontal: Integer

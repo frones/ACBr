@@ -127,6 +127,10 @@ TACBrETQClass = class
     function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; virtual;
 
+    function ComandoGravaRFIDHexaDecimal(aValue:String): AnsiString; virtual;
+    function ComandoGravaRFIDASCII( aValue:String ): AnsiString; virtual;
+
+
     property ModeloStr:       String           read fpModeloStr;
     property PaginaDeCodigo:  TACBrETQPaginaCodigo read fPaginaDeCodigo write fPaginaDeCodigo;
     property Temperatura:     Integer          read fTemperatura      write fTemperatura;
@@ -341,6 +345,18 @@ function TACBrETQClass.ComandoCopias(const NumCopias: Integer): AnsiString;
 begin
   VerificarLimiteCopias(NumCopias);
   Result := EmptyStr;
+end;
+
+function TACBrETQClass.ComandoGravaRFIDASCII(aValue: String): AnsiString;
+begin
+  ErroNaoImplementado('ComandoGravaRFIDASCII');
+  result := EmptySTr;
+end;
+
+function TACBrETQClass.ComandoGravaRFIDHexaDecimal(aValue: String): AnsiString;
+begin
+  ErroNaoImplementado('ComandoGravaRFIDHexaDecimal');
+  result := EmptySTr;
 end;
 
 function TACBrETQClass.ComandoImprimir: AnsiString;

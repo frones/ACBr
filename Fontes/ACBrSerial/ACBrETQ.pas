@@ -152,6 +152,9 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
 
     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
 
+    procedure ComandoGravaRFIDHexaDecimal(aValue:String);
+    procedure ComandoGravaRFIDASCII( aValue:String );
+
     property ETQ:             TACBrETQClass    read fsETQ;
     property ListaCmd:        TACBrETQCmdList  read fsListaCmd;
     property ModeloStr:       String           read GetModeloStr;
@@ -343,6 +346,25 @@ begin
   end
   else
     Result := TiraAcentos(ATexto);
+end;
+
+procedure TACBrETQ.ComandoGravaRFIDASCII(aValue: String);
+var
+wCmd:AnsiString;
+
+begin
+  GravarLog('- GravarRFIDASCII : ' +aValue );
+  wCmd := fsEtq.ComandoGravaRFIDASCII(aValue);
+  fsListaCmd.Add(wCmd);
+end;
+
+procedure TACBrETQ.ComandoGravaRFIDHexaDecimal(aValue: String);
+var
+wCmd:AnsiString;
+begin
+  GravarLog('- GravarRFIDHEXADecimal : ' +aValue );
+  wCmd := fsEtq.ComandoGravaRFIDHexaDecimal(aValue);
+  fsListaCmd.Add(wCmd);
 end;
 
 procedure TACBrETQ.SetUnidade(const AValue: TACBrETQUnidade);

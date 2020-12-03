@@ -70,7 +70,7 @@ resourcestring
 
 const
   CACBrPOSPGWebAPIName = 'ACBrPOSPGWebAPI';
-  CACBrPOSPGWebAPIVersao = '1.0.0';
+  CACBrPOSPGWebAPIVersao = '1.1.0';
   CACBrPOSPGWebSubDir = 'POSPGWeb';
   CACBrPOSPGWebColunasDisplay = 20;
   CACBrPOSPGWebColunasImpressora = 40;
@@ -296,7 +296,7 @@ type
     xPTI_End: procedure(); cdecl;
     xPTI_ConnectionLoop: procedure(pszTerminalId: PAnsiChar; pszModel: PAnsiChar;
       pszMAC: PAnsiChar; pszSerNo: PAnsiChar; out piRet: SmallInt); cdecl;
-    xPTI_CheckStatus: procedure(pszTerminalId: AnsiString; out piStatus: SmallInt;
+    xPTI_CheckStatus: procedure(pszTerminalId: PAnsiChar; out piStatus: SmallInt;
       pszModel: PAnsiChar; pszMAC: PAnsiChar; pszSerNo: PAnsiChar;
       out piRet: SmallInt); cdecl;
     xPTI_Disconnect: procedure(pszTerminalId: AnsiString; uiPwrDelay: Word;
@@ -773,7 +773,8 @@ end;
 procedure TACBrPOSPGWebAPI.Inicializar;
 var
   iRet: SmallInt;
-  MsgError, AMsgBoasVindas: String;
+  pszWaitMsg, pszPOS_Version: AnsiString;
+  MsgError: String;
   POSCapabilities: Integer;
 begin
   if fInicializada then
@@ -792,24 +793,27 @@ begin
     ForceDirectories(fDiretorioTrabalho);
 
   POSCapabilities := CalcularCapacidadesDaAutomacao;
-  AMsgBoasVindas := FormatarMensagem(fMensagemBoasVindas, CACBrPOSPGWebColunasDisplay);
+  pszPOS_Version := Trim(fNomeAplicacao + ' ' + fVersaoAplicacao);
+  pszPOS_Version := Trim(pszPOS_Version+ ' ' + CACBrPOSPGWebAPIName + ' '+ CACBrPOSPGWebAPIVersao);
+
+  pszWaitMsg := FormatarMensagem(fMensagemBoasVindas, CACBrPOSPGWebColunasDisplay);
 
   GravarLog('PTI_Init( '+fSoftwareHouse+', '+
-                         fNomeAplicacao+' '+fVersaoAplicacao+', '+
+                         pszPOS_Version+', '+
                          IntToStr(POSCapabilities)+', '+
                          fDiretorioTrabalho+', '+
                          IntToStr(fPortaTCP)+', '+
                          IntToStr(fMaximoTerminaisConectados)+', '+
-                         AMsgBoasVindas+', '+
+                         pszWaitMsg+', '+
                          IntToStr(fTempoDesconexaoAutomatica)+' )', True);
 
   iRet := 0;
   xPTI_Init( fSoftwareHouse,
-             fNomeAplicacao + ' ' + fVersaoAplicacao,
-             IntToStr(POSCapabilities),
-             fDiretorioTrabalho,
+             pszPOS_Version,
+             AnsiString(IntToStr(POSCapabilities)),
+             AnsiString(fDiretorioTrabalho),
              fPortaTCP, fMaximoTerminaisConectados,
-             AMsgBoasVindas,
+             pszWaitMsg,
              fTempoDesconexaoAutomatica,
              iRet );
   GravarLog('  '+PTIRETToString(iRet));
@@ -1089,9 +1093,11 @@ procedure TACBrPOSPGWebAPI.ObterEstado(const TerminalId: String; out
   MAC: String; out Serial: String);
 var
   iRet, iStatus: SmallInt;
+  AAnsiStr: AnsiString;
 begin
   GravarLog('PTI_CheckStatus( '+TerminalId+' )');
-  Move( TerminalId[1], fpszTerminalId^, Length(TerminalId)+1 );
+  AAnsiStr := AnsiString(TerminalId);
+  Move( AAnsiStr[1], fpszTerminalId^, Length(TerminalId)+1 );
   xPTI_CheckStatus( fpszTerminalId,
                     iStatus,
                     fpszModel, fpszMAC, fpszSerNo,

@@ -360,6 +360,9 @@ begin
               if Leitor.rAtributo('tipo=', 'valor') = '11' then
                 GNRERetorno.ValorPrincipal := Leitor.rCampo(tcDe2, 'valor');
 
+              if Leitor.rAtributo('tipo=', 'valor') = '12' then
+                GNRERetorno.ValorFECP := Leitor.rCampo(tcDe2, 'valor');
+
               if Leitor.rAtributo('tipo=', 'valor') = '21' then
                 GNRERetorno.ValorICMS := Leitor.rCampo(tcDe2, 'valor');
 

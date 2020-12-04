@@ -366,7 +366,7 @@ begin
   // 1ª Via
   RLLabel18.Caption             := FGNRe.DocDestinatario;
   RLLabel26.Caption             := IntToStrZero( FGNRe.Parcela,3);
-  RLLabel28.Caption             := FormatFloat('R$ ,0.00',  FGNRe.ValorPrincipal);
+  RLLabel28.Caption             := FormatFloat('R$ ,0.00',  FGNRe.ValorPrincipal + FGNRe.ValorFECP);
   RLLabel30.Caption             := IfThen( FGNRe.AtualizacaoMonetaria = 0 , '' ,
                                     FormatFloat('R$ ,0.00', FGNRe.AtualizacaoMonetaria));
   RLLabel32.Caption             := IfThen( FGNRe.Juros = 0 , '' ,
@@ -376,7 +376,8 @@ begin
   RLLabel36.Caption             := FormatFloat('R$ ,0.00',( FGNRe.ValorPrincipal +
                                                             FGNRe.AtualizacaoMonetaria+
                                                             FGNRe.Juros +
-                                                            FGNRe.Multa));
+                                                            FGNRe.Multa +
+                                                            FGNRe.ValorFECP));
   RLMemo2.Visible               := FGNRe.InfoCabec.Ambiente = 9;
 
   // 2ª Via

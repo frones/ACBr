@@ -146,6 +146,7 @@ begin
     FieldDefs.Add('NumeroControle', ftString, 16);
     FieldDefs.Add('IdentificadorGuia', ftString, 10);
     FieldDefs.Add('Reservado', ftString, 126);
+    FieldDefs.Add('ValorFECP', ftFloat);
     CreateDataSet;
     Append;
 
@@ -212,6 +213,7 @@ begin
       FieldByName('NumeroControle').AsString         := NumeroControle;
       FieldByName('IdentificadorGuia').AsString      := IdentificadorGuia;
       FieldByName('Reservado').AsString              := Reservado;
+      FieldByName('ValorFECP').AsCurrency            := ValorFECP;
 
       if Trim(FieldByName('PeriodoReferencia').AsString) <> '' then
       begin

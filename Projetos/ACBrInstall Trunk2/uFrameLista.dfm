@@ -14,7 +14,6 @@ object framePacotes: TframePacotes
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 1053
     object btnPacotesDesmarcarTodos: TSpeedButton
       AlignWithMargins = True
       Left = 677
@@ -105,7 +104,6 @@ object framePacotes: TframePacotes
     BevelOuter = bvNone
     BorderStyle = bsNone
     TabOrder = 0
-    ExplicitHeight = 1047
     object Label1: TLabel
       Left = 276
       Top = 1

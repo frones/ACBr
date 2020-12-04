@@ -267,22 +267,16 @@ begin
 end;
 
 procedure TfrmPrincipal.MontaListaIDEsSuportadas;
-  function EhSuportada(PlataformaAlvo: TPlataformaDestino): Boolean;
-  Begin
-    Result := (not MatchText(PlataformaAlvo.InstalacaoAtual.VersionNumberStr, ['d3', 'd4', 'd5', 'd6'])) and
-              (PlataformaAlvo.tPlatformAtual in [bpWin32, bpWin64]);
-  End;
 var
   iFor: Integer;
   NomeAlvo: string;
   Habilitado: Boolean;
 begin
   // popular o combobox de versões do delphi instaladas na máquina
-
   for iFor := 0 to FUmaListaPlataformasAlvos.Count - 1 do
   begin
     NomeAlvo := FUmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name + ' ' + FUmaListaPlataformasAlvos[iFor].sPlatform;
-    Habilitado := EhSuportada(FUmaListaPlataformasAlvos[iFor]);
+    Habilitado := FUmaListaPlataformasAlvos[iFor].EhSuportadaPeloACBr;
 
     clbDelphiVersion.Items.Add(NomeAlvo);
     clbDelphiVersion.ItemEnabled[iFor] := Habilitado;

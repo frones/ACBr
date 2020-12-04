@@ -38,6 +38,11 @@ uses SysUtils, StrUtils, Windows, Messages, Classes, Forms, Generics.Collections
   JclIDEUtils, JclCompilerUtils;
 
 
+const
+  PlataformasSuportadasFull = [bpWin32, bpWin64];
+  PlataformasSuportadasBeta = [bpAndroid32, bpAndroid64, bpOSX32, bpOSX64, bpLinux64];
+  PlataformasSuportadas = PlataformasSuportadasFull + PlataformasSuportadasBeta;
+
 type
 
   TACBrPlataformaInstalacaoAlvo = class(TObject)
@@ -50,6 +55,7 @@ type
     sDirLibrary: string;
     function GetDirLibrary: string;
     function EhSuportadaPeloACBr: Boolean;
+    function EhSuportadaPeloACBrBeta: Boolean;
     constructor CreateNew(AInstalacao: TJclBorRADToolInstallation; UmaPlatform: TJclBDSPlatform;
           const UmasPlatform: string);
   end;
@@ -108,12 +114,6 @@ begin
         Result.Add(TACBrPlataformaInstalacaoAlvo.CreateNew(InstalacaoAlvo, bpOSX64, BDSPlatformOSX64));
       end;
 
-      if (bpDelphiLinux64 in InstalacaoAlvo.Personalities) then
-      begin
-        InstalacaoAlvo := Result.FoACBr.Installations[i];
-        Result.Add(TACBrPlataformaInstalacaoAlvo.CreateNew(InstalacaoAlvo, bpLinux64, BDSPlatformLinux64));
-      end;
-
       if (bpDelphiAndroid32 in InstalacaoAlvo.Personalities) then
       begin
         InstalacaoAlvo := Result.FoACBr.Installations[i];
@@ -124,6 +124,12 @@ begin
       begin
         InstalacaoAlvo := Result.FoACBr.Installations[i];
         Result.Add(TACBrPlataformaInstalacaoAlvo.CreateNew(InstalacaoAlvo, bpAndroid64, BDSPlatformAndroid64));
+      end;
+
+      if (bpDelphiLinux64 in InstalacaoAlvo.Personalities) then
+      begin
+        InstalacaoAlvo := Result.FoACBr.Installations[i];
+        Result.Add(TACBrPlataformaInstalacaoAlvo.CreateNew(InstalacaoAlvo, bpLinux64, BDSPlatformLinux64));
       end;
 
     end;
@@ -150,7 +156,13 @@ end;
 function TACBrPlataformaInstalacaoAlvo.EhSuportadaPeloACBr: Boolean;
 begin
   Result := (not MatchText(InstalacaoAtual.VersionNumberStr, ['d3', 'd4', 'd5', 'd6'])) and
-            (tPlatformAtual in [bpWin32, bpWin64, bpAndroid32, bpAndroid64, bpOSX32, bpOSX64, bpLinux64]);
+            (tPlatformAtual in PlataformasSuportadas);
+end;
+
+function TACBrPlataformaInstalacaoAlvo.EhSuportadaPeloACBrBeta: Boolean;
+begin
+  Result := (not MatchText(InstalacaoAtual.VersionNumberStr, ['d3', 'd4', 'd5', 'd6'])) and
+            (tPlatformAtual in PlataformasSuportadasBeta);
 end;
 
 function TACBrPlataformaInstalacaoAlvo.GetDirLibrary: string;

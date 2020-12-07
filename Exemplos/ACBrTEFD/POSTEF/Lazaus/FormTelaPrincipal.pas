@@ -437,6 +437,7 @@ type
     procedure AtualizarSSLLibsCombo;
     function GetNomeArquivoConfiguracao: String;
     procedure TratarException(Sender : TObject; E : Exception);
+    procedure Minimizar(Sender: TObject);
     procedure AdicionarLinhaLog(AMensagem: String);
     function EstadoTerminal(AEstado: TACBrPOSPGWebEstadoTerminal): String;
     procedure ValidarConfigCertificado;
@@ -634,6 +635,7 @@ begin
 
   LerConfiguracao;
   Application.OnException := @TratarException;
+  Application.OnMinimize := @Minimizar;
 
   ImageList1.GetBitmap(16, imgErrCNPJ.Picture.Bitmap);
   ImageList1.GetBitmap(16, imgErrRazaoSocial.Picture.Bitmap);
@@ -1479,9 +1481,15 @@ begin
     MessageDlg(E.Message, mtError, [mbOK], 0);
 end;
 
+procedure TfrPOSTEFServer.Minimizar(Sender: TObject);
+begin
+  mLog.Lines.Clear;
+end;
+
 procedure TfrPOSTEFServer.AdicionarLinhaLog(AMensagem: String);
 begin
-  mLog.Lines.Add(AMensagem);
+  if (Self.WindowState <> wsMinimized) then
+    mLog.Lines.Add(AMensagem);
 end;
 
 function TfrPOSTEFServer.EstadoTerminal(AEstado: TACBrPOSPGWebEstadoTerminal
@@ -2997,7 +3005,12 @@ begin
       end;
 
       case OPPagto of
-        0: EfetuarPagamentoCartao(TerminalId, IndicePedido, ValorAPagar);
+        0:
+        try
+          EfetuarPagamentoCartao(TerminalId, IndicePedido, ValorAPagar);
+        except
+        end;
+
         1:
         begin
           if (ValorAPagar = SaldoRestante) then

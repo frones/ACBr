@@ -6090,10 +6090,10 @@ object frPOSTEFServer: TfrPOSTEFServer
           Height = 344
           Top = 0
           Width = 782
-          ActivePage = tsConfPosTef
+          ActivePage = tsConfNFCe
           Align = alClient
           Images = ImageList1
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 0
           object tsConfPosTef: TTabSheet
             Caption = 'POS TEF'

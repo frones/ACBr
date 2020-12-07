@@ -615,7 +615,7 @@ procedure TFormPrincipal.seTotalDescontoChange(Sender: TObject);
 var
   AValor, DescontoMax: Double;
 begin
-  DescontoMax := StringToFloat(seValorInicialVenda.Text);
+  DescontoMax := StringToFloatDef(seValorInicialVenda.Text,0);
   AValor := StrToIntDef(OnlyNumber(seTotalDesconto.Text), 0)/100;
   if AValor > DescontoMax then
     AValor := DescontoMax;

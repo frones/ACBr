@@ -2381,7 +2381,7 @@ begin
                LFill( DT_DOC_ENTRADA, 'ddmmyyyy' ) +
                LFill( NUM_ITEM_ENTRADA ) +
                LFill( VL_UNIT_CONV_ENTRADA,0,6 ) +
-               LFill( VL_UNIT_ICMS_OP_CONV_CONV_ENTRADA,0,6 ) +
+               LFill( VL_UNIT_ICMS_OP_CONV_ENTRADA,0,6 ) +
                LFill( VL_UNIT_BC_ICMS_ST_CONV_ENTRADA,0,6 ) +
                LFill( VL_UNIT_ICMS_ST_CONV_ENTRADA,0,6 ) +
                LFill( VL_UNIT_FCP_ST_CONV_ENTRADA,0,6 ));

@@ -1293,7 +1293,7 @@ type
    fDT_DOC_ENTRADA: TDateTime; /// Data da emissão do documento fiscal de entrada
    fNUM_ITEM_ENTRADA: String; /// Item do documento fiscal de entrada
    fVL_UNIT_CONV_ENTRADA: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”, correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da entrada
-   fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA: currency; /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da entrada
+   fVL_UNIT_ICMS_OP_CONV_ENTRADA: currency; /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da entrada
    fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA: currency; /// Valor unitário da base de cálculo do imposto pago ou retido anteriormente por substituição, correspondente ao valor do campo VL_UNIT_BC_ICMS_ST_CONV, preenchido na ocasião da entrada
    fVL_UNIT_ICMS_ST_CONV_ENTRADA: currency; ///  Valor unitário do imposto pago ou retido anteriormente por substituição, inclusive FCP se devido, correspondente ao valor do campo VL_UNIT_ICMS_ST_CONV, preenchido na ocasião da entrada
    fVL_UNIT_FCP_ST_CONV_ENTRADA: currency; /// Valor unitário do FCP_ST, correspondente ao valor do campo VL_UNIT_FCP_ST_CONV, preenchido na ocasião da entrada
@@ -1313,7 +1313,7 @@ type
    property DT_DOC_ENTRADA: TDateTime read fDT_DOC_ENTRADA write fDT_DOC_ENTRADA;
    property NUM_ITEM_ENTRADA: String read fNUM_ITEM_ENTRADA write fNUM_ITEM_ENTRADA;
    property VL_UNIT_CONV_ENTRADA: currency read fVL_UNIT_CONV_ENTRADA write fVL_UNIT_CONV_ENTRADA;
-   property VL_UNIT_ICMS_OP_CONV_CONV_ENTRADA: currency read fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA write fVL_UNIT_ICMS_OP_CONV_CONV_ENTRADA;
+   property VL_UNIT_ICMS_OP_CONV_ENTRADA: currency read fVL_UNIT_ICMS_OP_CONV_ENTRADA write fVL_UNIT_ICMS_OP_CONV_ENTRADA;
    property VL_UNIT_BC_ICMS_ST_CONV_ENTRADA: currency read fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA write fVL_UNIT_BC_ICMS_ST_CONV_ENTRADA;
    property VL_UNIT_ICMS_ST_CONV_ENTRADA: currency read fVL_UNIT_ICMS_ST_CONV_ENTRADA write fVL_UNIT_ICMS_ST_CONV_ENTRADA;
    property VL_UNIT_FCP_ST_CONV_ENTRADA: currency read fVL_UNIT_FCP_ST_CONV_ENTRADA write fVL_UNIT_FCP_ST_CONV_ENTRADA;

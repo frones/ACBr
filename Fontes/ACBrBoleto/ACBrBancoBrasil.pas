@@ -890,6 +890,7 @@ var
   aModalidade,wLinha, aTipoCobranca:String;
   TamConvenioMaior6                :Boolean;
   wCarteira: Integer;
+  wDiasPagto : Integer;
 begin
 
    with ACBrTitulo do
@@ -1053,6 +1054,10 @@ begin
      if Mensagem.Text <> '' then
        AMensagem   := Mensagem.Strings[0];
 
+     wDiasPagto := 0;
+     if (ATipoOcorrencia = '01') and ( DataLimitePagto > Vencimento ) then
+       wDiasPagto:= DaysBetween(Vencimento, DataLimitePagto);
+
      with ACBrBoleto do
      begin
        if TamConvenioMaior6 then
@@ -1134,7 +1139,8 @@ begin
                        FormatDateTime('ddmmyy', DataMulta),
                                       '000000')                  + //Data Multa
                 IntToStrZero( round( PercentualMulta * 100), 12) + //Perc. Multa
-                Space(372)                                       + //Brancos
+                IntToStrZero(wDiasPagto ,3)                      + //Qtd dias Recebimento após vencimento
+                Space(369)                                       + //Brancos
                 IntToStrZero(aRemessa.Count + 2 ,6);
 
        aRemessa.Text := aRemessa.Text + UpperCase(wLinha);

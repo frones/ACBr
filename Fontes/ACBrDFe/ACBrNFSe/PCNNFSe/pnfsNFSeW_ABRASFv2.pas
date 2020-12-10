@@ -861,6 +861,9 @@ begin
     proVirtual:
         Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '=""');
 
+    proSmarAPDABRASF:
+        Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="declaracao_' + NFSe.InfID.ID + '"');
+
     proTiplanv2:
         Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + 'xmlns="http://www.abrasf.org.br/nfse.xsd" ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
   else

@@ -1588,8 +1588,8 @@ begin
     PathSchemas      := edtPathSchemas.Text;
     PathNFSe         := edtPathNFSe.Text;
     PathGer          := edtPathLogs.Text;
-    PathCan          := PathMensal;
     PathMensal       := GetPathGer(0);
+    PathCan          := PathMensal;
     PathSalvar       := PathMensal;
   end;
 

@@ -135,6 +135,7 @@ type
     // Layout - EL
     FHashIdent: String;
     FIdCanc: String;
+    FCodigoTribMun: string;
 
     // Provedor iiBrasil
 //    FIntegridade: String;
@@ -161,6 +162,7 @@ type
     function Gera_DadosMsgGerarNFSe: String;
     function Gera_DadosMsgEnviarSincrono: String;
     function Gera_DadosMsgSubstituirNFSe: String;
+    function Gera_DadosMsgConsURLNFSe: String;
 
     function Gera_DadosMsgAbrirSessao: String;
     function Gera_DadosMsgFecharSessao: String;
@@ -206,6 +208,9 @@ type
     property CodMunicipioTOM: Integer read FCodMunicipioTOM write FCodMunicipioTOM;
     property CodigoCanc: String       read FCodigoCanc   write FCodigoCanc;
     property MotivoCanc: String       read FMotivoCanc   write FMotivoCanc;
+
+    // Layout ISSNET.
+    property CodigoTribMun : string read FCodigoTribMun write FCodigoTribMun;
 
     // Layout - ISSDSF
     property VersaoXML: String            read FVersaoXML          write FVersaoXML;
@@ -987,6 +992,43 @@ begin
                   proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSiam,
                   proSisPMJP, proSystemPro] then
     Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgConsURLNFSe: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+
+  Gerador.Prefixo := Prefixo3;
+  Gerador.wGrupo('Prestador' + FaNameSpace);
+
+  Gerador.Prefixo := Prefixo4;
+
+  GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
+
+  if (Provedor <> proBetha) or (IM <> '') then
+    Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+  Gerador.Prefixo := Prefixo3;
+  Gerador.wGrupo('/Prestador');
+
+  Gerador.wCampo(tcStr, '#4', 'Numero', 01, 15, 1, NumeroNFSe, '');
+  Gerador.wCampo(tcStr, '#5', 'CodigoTributacaoMunicipio', 01, 20, 0, CodigoTribMun, '');
+
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
+                  proCoplan, profintelISS, proFiorilli, proFriburgo, proGoiania,
+                  proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
+                  proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSiam,
+                  proSisPMJP, proSystemPro] then
+  begin
+    Result := '';
+  end;
 end;
 
 function TNFSeG.Gera_DadosMsgConsLote: String;

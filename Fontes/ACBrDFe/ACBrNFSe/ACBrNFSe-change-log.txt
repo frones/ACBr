@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/12/2020
+-- ACBrNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/60490-linknfse-provedor-webissv2/
+[+] Criado sobrecarga do método LinkNFSe.
+  Por: Lucio Bittes / Italo Giurizzato Junior
+-- Diversos --
+[+] https://www.projetoacbr.com.br/forum/topic/60377-linknfse-provedor-issnet/?tab=comments#comment-396883
+  Por: Lucio Bittes
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração visando o provedor SmarAPDABRASF
   Por: Marcelo A. Rodrigues

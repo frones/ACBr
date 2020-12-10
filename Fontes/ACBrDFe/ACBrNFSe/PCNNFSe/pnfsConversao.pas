@@ -52,7 +52,7 @@ type
   TLayOutNFSe = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
                  LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
                  LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
-                 LayNfseAbrirSessao, LayNfseFecharSessao);
+                 LayNfseAbrirSessao, LayNfseFecharSessao, LayNfseConsultaURL);
 
   TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe,
                  schAbrirSessao, schFecharSessao);

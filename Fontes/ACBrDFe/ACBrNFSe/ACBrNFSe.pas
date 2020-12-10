@@ -108,6 +108,9 @@ type
       const ANomeInter: String = ''; const ACNPJInter: String = ''; const AIMInter: String = '';
       const ASerie: String = ''; const ANumeroLote: String = ''): Boolean;
 
+    function ConsultarURL(const ACNPJPrestador, AIMPrestador : string;
+                          const ANumeroNFSe, ACodigoTribMun : string) : Boolean;
+
     function CancelarNFSe(const ACodigoCancelamento: String;
                           const ANumeroNFSe: String = '';
                           const AMotivoCancelamento: String = '';
@@ -117,7 +120,9 @@ type
     function SubstituirNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
                             const AMotivoCancelamento: String = ''): Boolean;
 
-    function LinkNFSe(ANumeroNFSe: Integer; const ACodVerificacao: String; const AChaveAcesso: String = ''): String;
+    function LinkNFSe(ANumeroNFSe: Integer; const ACodVerificacao: String; const AChaveAcesso: String = ''): String; overload;
+    function LinkNFSe(ANumeroNFSe: Double; const ACodVerificacao: String; const AChaveAcesso: String = ''): String; overload;
+    function LinkNFSe(ANumeroNFSe: String; const ACodVerificacao: String; const AChaveAcesso: String = ''): String; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -367,6 +372,7 @@ begin
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
       LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.HomAbrirSessao;
       LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.HomFecharSessao;
+      LayNfseConsultaURL:          URL := Configuracoes.Geral.ConfigURL.HomConsultaURL;
     end;
   end
   else begin
@@ -382,6 +388,7 @@ begin
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
       LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.ProAbrirSessao;
       LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.ProFecharSessao;
+      LayNfseConsultaURL:          URL := Configuracoes.Geral.ConfigURL.ProConsultaURL;
     end;
   end;
 end;
@@ -541,6 +548,12 @@ begin
   Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
 end;
 
+function TACBrNFSe.ConsultarURL(const ACNPJPrestador, AIMPrestador, ANumeroNFSe,
+  ACodigoTribMun: string): Boolean;
+begin
+  Result := WebServices.ConsultaURL(ACNPJPrestador, AIMPrestador, ANumeroNFSe, ACodigoTribMun);
+end;
+
 function TACBrNFSe.ConsultarLoteRps(const ANumLote, AProtocolo: string): Boolean;
 begin
   Result := WebServices.ConsultaLoteRps(ANumLote, AProtocolo);
@@ -628,6 +641,18 @@ begin
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; const ACodVerificacao: String; const AChaveAcesso: String = ''): String;
+begin
+  Result := LinkNFSe(IntToStr(ANumeroNFSe), ACodVerificacao, AChaveAcesso);
+end;
+
+function TACBrNFSe.LinkNFSe(ANumeroNFSe: Double; const ACodVerificacao,
+  AChaveAcesso: String): String;
+begin
+  Result := LinkNFSe(FloatToStr(ANumeroNFSe), ACodVerificacao, AChaveAcesso);
+end;
+
+function TACBrNFSe.LinkNFSe(ANumeroNFSe: String; const ACodVerificacao,
+  AChaveAcesso: String): String;
 var
   Texto, xNumeroNFSe, xNomeMunic, xLink: String;
 begin
@@ -649,7 +674,7 @@ begin
   // %InscMunic%     : Representa a Inscrição Municipal do Emitente
   // %Cnpj%          : Representa o CNPJ do Emitente
 
-  xNumeroNFSe := IntToStr(ANumeroNFSe);
+  xNumeroNFSe := ANumeroNFSe;
 
   Texto := StringReplace(Texto, '%CodVerif%', ACodVerificacao, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);

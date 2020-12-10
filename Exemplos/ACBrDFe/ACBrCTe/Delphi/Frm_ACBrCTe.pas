@@ -767,7 +767,7 @@ begin
 
     {Dados do Percurso}
     (*
-    with ide.infPercurso.Add do
+    with ide.infPercurso.New do
       UFPer := 'PR';
     *)
 
@@ -802,7 +802,7 @@ begin
     compl.fluxo.xOrig := '';
 
     (*
-    with compl.fluxo.pass.Add do
+    with compl.fluxo.pass.New do
     begin
       xPass := 'Sigla ou código interno da Filial/Porto/Estação/Aeroporto de Passagem ';
     end;
@@ -1028,13 +1028,58 @@ begin
         // chave da NFe emitida pelo remente da carga
         chave := '33190100127817000125650080000000581000384589';
 
+      // o bloco de código abaixo devemos utilizar para informar documentos
+      // anteriores emitidos por outras transportadoras que chamamos de
+      // Expedidores
+      // Devemos informar o Expedidor quando se tratar de Redespacho ou
+      // Redespacho Intermediário.
+
+      (*
+      // o grupo <emiDocAnt> é uma lista que pode ter de 1-n ocorrências
+      with docAnt.emiDocAnt.New do
+      begin
+        CNPJCPF := 'informar o CNPJ/CPF do Expedidor (transportadora anterior)';
+        IE := 'informar a IE do Expedidor';
+        UF := 'SP'; // UF do Expedidor
+        xNome := 'Nome do Expedidor';
+
+        // o grupo <idDocAnt> é uma lista que pode ter de 1-2 ocorrências
+        with idDocAnt.New do
+        begin
+          {
+          ATENÇÃO: no XML se existir o grupo <idDocAntPap> não pode existir o
+                   grupo <idDocAntEle> e vice-versa
+          }
+
+          // Caso o documento anterior for de Papel ou seja não é um documento eletronico
+          // o grupo <idDocAntPap> é uma lista que pode ter de 1-n ocorrências
+          with idDocAntPap.New do
+          begin
+            // daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daBL
+            tpDoc := daATRE;
+            serie := '1';
+            subser := '';
+            nDoc := '123';
+            dEmi := StrToDate('10/12/2020');
+          end;
+
+          // Caso o documento anterior for eletronico
+          // o grupo <idDocAntEle> é uma lista que pode ter de 1-n ocorrências
+          with idDocAntEle.New do
+          begin
+            chCTe := 'chave do CT-e emitido pelo Expedidor';
+          end;
+        end;
+      end;
+      *)
+
       {Carrega Informacoes do Modal}
       {Rodoviario}
       rodo.RNTRC := '12345678';
 
       {Ordens de Coleta associados}
       (*
-      with rodo.occ.Add do
+      with rodo.occ.New do
       begin
         serie := '001';
         nOcc  := 1;
@@ -1096,7 +1141,7 @@ begin
       //infCteAnu.dEmi  := Date;
 
     {Lista de até 10 CNPJ/CPF de pessoas Autorizadas a baixar o xml}
-    //autXML.Add.CNPJCPF := '';
+    //autXML.New.CNPJCPF := '';
 
     {Informações do Responsável Técnico pela emissão do DF-e}
     infRespTec.xContato := '';

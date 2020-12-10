@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_url_visualizacao_nfse_resposta.xsd"
+            xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_url_visualizacao_nfse_resposta.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xsd:import schemaLocation="tipos_simples.xsd" namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"/>
+    <xsd:import schemaLocation="tipos_complexos.xsd" namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"/>
+    <xsd:element name="ConsultarUrlVisualizacaoNfseResposta">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element name="Prestador" type="tc:tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1" />
+                    <xsd:element name="Numero" type="ts:tsNumeroNfse" minOccurs="1" maxOccurs="1" />
+                    <xsd:element name="UrlVisualizacao" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                </xsd:sequence>
+                <xsd:element name="ListaMensagemRetorno" minOccurs="0" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="MensagemRetorno" type="tc:tcMensagemRetorno" minOccurs="1" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

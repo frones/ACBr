@@ -2285,7 +2285,7 @@ begin
            Check(False, 'O RegistroC181, não deve ser gerado em movimentações de saída, no %s, conforme ATO COTEPE 09/08', ['PerfilA']);
 
      end;
-     for intFor := 0 to RegC170.RegistroC180.Count - 1 do
+     for intFor := 0 to RegC170.RegistroC181.Count - 1 do
      begin
         with RegC170.RegistroC181.Items[intFor] do
         begin

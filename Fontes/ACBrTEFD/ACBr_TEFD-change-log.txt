@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/20
+-- ACBrPOSPGWebAPI --
+[*] Revisão nas chamadas dos métodos da PTI_, corrigindo parâmatros de Entrada
+    para AnsiString e Word conforme assinatura dos métodos
+[-] Método "ObterEstado", melhorado para suporte a Multithread
+    (por: DSA)
+
 03/12/20
 -- ACBrPOSPGWebAPI --
 [-] Correção na assinatura do método: PTI_CheckStatus

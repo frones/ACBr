@@ -808,7 +808,7 @@ begin
                          IntToStr(fTempoDesconexaoAutomatica)+' )', True);
 
   iRet := 0;
-  xPTI_Init( fSoftwareHouse,
+  xPTI_Init( AnsiString(fSoftwareHouse),
              pszPOS_Version,
              AnsiString(IntToStr(POSCapabilities)),
              AnsiString(fDiretorioTrabalho),
@@ -871,7 +871,9 @@ begin
   MsgFormatada := FormatarMensagem(AMensagem, CACBrPOSPGWebColunasDisplay);
   GravarLog('PTI_Display( '+TerminalId+', '+MsgFormatada+' )', True);
   VerificarConexao(TerminalId);
-  xPTI_Display( TerminalId, MsgFormatada, iRet);
+  xPTI_Display( AnsiString(TerminalId),
+                MsgFormatada,
+                iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 
@@ -885,7 +887,8 @@ var
 begin
   GravarLog('PTI_ClearKey( '+TerminalId+' )');
   VerificarConexao(TerminalId);
-  xPTI_ClearKey( TerminalId, iRet);
+  xPTI_ClearKey( AnsiString(TerminalId),
+                 iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -898,7 +901,10 @@ begin
   GravarLog('PTI_WaitKey( '+TerminalId+', '+IntToStr(Integer(Espera))+' )');
   VerificarConexao(TerminalId);
   iKey := 0; iRet := 0;
-  xPTI_WaitKey( TerminalId, Espera, iKey, iRet);
+  xPTI_WaitKey( AnsiString(TerminalId),
+                Espera,
+                iKey,
+                iRet );
   GravarLog('  '+PTIRETToString(iRet)+', '+IntToStr(iKey));
   Result := iKey
 end;
@@ -932,15 +938,15 @@ begin
     if (Length(ValorInicial) > 0) then
       Move(AValorInicial[1], pszData^, Length(AValorInicial)+1 );
 
-    xPTI_GetData( TerminalId,
-                  Titulo,
-                  Mascara,
+    xPTI_GetData( AnsiString(TerminalId),
+                  AnsiString(Titulo),
+                  AnsiString(Mascara),
                   uiLenMin, uiLenMax,
                   AlinhaAEsqueda, PermiteAlfa, OcultarDigitacao,
                   IntervaloMaxTeclas,
                   pszData,
                   LinhaCaptura,
-                  iRet);
+                  iRet );
     GravarLog('  '+PTIRETToString(iRet)+', '+Result);
     if (iRet = PTIRET_OK) then
       Result := String(pszData)
@@ -968,7 +974,8 @@ begin
 
   GravarLog('PTI_StartMenu( '+TerminalId+' )');
   VerificarConexao(TerminalId);
-  xPTI_StartMenu( TerminalId, iRet );
+  xPTI_StartMenu( AnsiString(TerminalId),
+                  iRet );
   GravarLog('  '+PTIRETToString(iRet));
 
   i := 0;
@@ -976,7 +983,7 @@ begin
   begin
     pszOption := LeftStr(Opcoes[i], 18);
     GravarLog('PTI_AddMenuOption( '+TerminalId+', '+pszOption+' )');
-    xPTI_AddMenuOption( TerminalId,
+    xPTI_AddMenuOption( AnsiString(TerminalId),
                         pszOption,
                         iRet );
     GravarLog('  '+PTIRETToString(iRet));
@@ -990,10 +997,11 @@ begin
     GravarLog('PTI_ExecMenu( '+TerminalId+', '+pszPrompt+', '+
                               IntToStr(IntervaloMaxTeclas)+', '+
                               IntToStr(Opcao)+' )');
-    xPTI_ExecMenu( TerminalId,
+    xPTI_ExecMenu( AnsiString(TerminalId),
                    pszPrompt,
                    IntervaloMaxTeclas,
-                   Opcao, iRet );
+                   Opcao,
+                   iRet );
     GravarLog('  '+PTIRETToString(iRet)+', Opcao: '+IntToStr(Opcao));
   end;
 
@@ -1012,7 +1020,9 @@ var
 begin
   GravarLog('PTI_Beep( '+TerminalId+', '+IntToStr(Integer(TipoBeep))+' )');
   VerificarConexao(TerminalId);
-  xPTI_Beep( TerminalId, SmallInt(TipoBeep), iRet);
+  xPTI_Beep( AnsiString(TerminalId),
+             SmallInt(TipoBeep),
+             iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1033,9 +1043,9 @@ begin
 
   GravarLog('PTI_Print( '+TerminalId+', '+TextoFormatado+' )', True);
   VerificarConexao(TerminalId);
-  xPTI_Print( TerminalId,
+  xPTI_Print( AnsiString(TerminalId),
               TextoFormatado,
-              iRet);
+              iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1046,7 +1056,8 @@ var
 begin
   GravarLog('PTI_PrnFeed( '+TerminalId+' )');
   VerificarConexao(TerminalId);
-  xPTI_PrnFeed( TerminalId, iRet);
+  xPTI_PrnFeed( AnsiString(TerminalId),
+                iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1058,9 +1069,10 @@ var
 begin
   GravarLog('PTI_PrnSymbolCode( '+TerminalId+', '+Codigo+', '+IntToStr(SmallInt(Tipo))+' )', True);
   VerificarConexao(TerminalId);
-  xPTI_PrnSymbolCode( TerminalId,
-                      Codigo,
-                      SmallInt(Tipo), iRet);
+  xPTI_PrnSymbolCode( AnsiString(TerminalId),
+                      AnsiString(Codigo),
+                      SmallInt(Tipo),
+                      iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1075,9 +1087,9 @@ begin
 
   GravarLog('PTI_EFT_PrintReceipt( '+TerminalId+', '+IntToStr(Word(Tipo))+' )');
   VerificarConexao(TerminalId);
-  xPTI_EFT_PrintReceipt( TerminalId,
+  xPTI_EFT_PrintReceipt( AnsiString(TerminalId),
                          Word(Tipo),
-                         iRet);
+                         iRet );
   GravarLog('  '+PTIRETToString(iRet));
   if (iRet = PTIRET_NODATA) then
   begin
@@ -1094,25 +1106,39 @@ procedure TACBrPOSPGWebAPI.ObterEstado(const TerminalId: String; out
 var
   iRet, iStatus: SmallInt;
   AAnsiStr: AnsiString;
+  pszTerminalId, pszModel, pszMAC, pszSerNo: PAnsiChar;
 begin
-  GravarLog('PTI_CheckStatus( '+TerminalId+' )');
-  AAnsiStr := AnsiString(TerminalId);
-  Move( AAnsiStr[1], fpszTerminalId^, Length(TerminalId)+1 );
-  xPTI_CheckStatus( fpszTerminalId,
-                    iStatus,
-                    fpszModel, fpszMAC, fpszSerNo,
-                    iRet);
-  if (iRet = PTIRET_OK) then
-  begin
-    EstadoAtual := TACBrPOSPGWebEstadoTerminal(iStatus);
-    Modelo := String(fpszModel);
-    MAC := String(fpszMAC);
-    Serial := String(fpszSerNo);
+  pszTerminalId := AllocMem(50);
+  pszModel := AllocMem(50);
+  pszMAC := AllocMem(50);
+  pszSerNo := AllocMem(50);
+  try
+    GravarLog('PTI_CheckStatus( '+TerminalId+' )');
+    AAnsiStr := AnsiString(TerminalId);
+    Move( AAnsiStr[1], pszTerminalId^, Length(TerminalId)+1 );
+    xPTI_CheckStatus( pszTerminalId,
+                      iStatus,
+                      pszModel,
+                      pszMAC,
+                      pszSerNo,
+                      iRet );
+    if (iRet = PTIRET_OK) then
+    begin
+      EstadoAtual := TACBrPOSPGWebEstadoTerminal(iStatus);
+      Modelo := String(pszModel);
+      MAC := String(pszMAC);
+      Serial := String(pszSerNo);
 
-    GravarLog('  '+PTIRETToString(iRet)+', Estado:'+IntToStr(iStatus)+', Model:'+Modelo+', MAC:'+MAC+', SerNo:'+Serial);
-  end
-  else
-    GravarLog('  '+PTIRETToString(iRet));
+      GravarLog('  '+PTIRETToString(iRet)+', Estado:'+IntToStr(iStatus)+', Model:'+Modelo+', MAC:'+MAC+', SerNo:'+Serial);
+    end
+    else
+      GravarLog('  '+PTIRETToString(iRet));
+  finally
+    Freemem(pszTerminalId);
+    Freemem(pszModel);
+    Freemem(pszMAC);
+    Freemem(pszSerNo);
+  end;
 end;
 
 function TACBrPOSPGWebAPI.ObterEstado(const TerminalId: String): TACBrPOSPGWebEstadoTerminal;
@@ -1194,9 +1220,9 @@ begin
   GravarLog('PTI_EFT_Start( '+TerminalId+', '+PWOPERToString(SmallInt(Operacao))+' )');
   VerificarConexao(TerminalId);
   AjustarEstadoConexao(TerminalId, statTEF);
-  xPTI_EFT_Start( TerminalId,
+  xPTI_EFT_Start( AnsiString(TerminalId),
                   SmallInt(Operacao),
-                  iRet);
+                  iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 
@@ -1219,10 +1245,10 @@ begin
   VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_AddParam( '+TerminalId+', '+PWINFOToString(iINFO)+', '+AValor+' )', True);
   VerificarConexao(TerminalId);
-  xPTI_EFT_AddParam( TerminalId,
+  xPTI_EFT_AddParam( AnsiString(TerminalId),
                      iINFO,
                      AValor,
-                     iRet);
+                     iRet );
   GravarLog('  '+PTIRETToString(iRet));
   AvaliarErro(iRet, TerminalId);
 end;
@@ -1248,8 +1274,8 @@ begin
   VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_Exec( '+TerminalId+' )');
   VerificarConexao(TerminalId);
-  xPTI_EFT_Exec( TerminalId,
-                 iRet);
+  xPTI_EFT_Exec( AnsiString(TerminalId),
+                 iRet );
   GravarLog('  '+PTIRETToString(iRet));
   Result := iRet;
 end;
@@ -1258,7 +1284,7 @@ function TACBrPOSPGWebAPI.ObterInfo(const TerminalId: String; iINFO: Word
   ): String;
 var
   pszValue: PAnsiChar;
-  uiBuffLen: LongWord;
+  uiBuffLen: Word;
   iRet: SmallInt;
 begin
   Result := #0;
@@ -1266,10 +1292,11 @@ begin
   pszValue := AllocMem(uiBuffLen);
   try
     GravarLog('PTI_EFT_GetInfo ( '+TerminalId+', '+ PWINFOToString(iINFO)+' )');
-    xPTI_EFT_GetInfo( TerminalId,
-                      iINFO, uiBuffLen,
+    xPTI_EFT_GetInfo( AnsiString(TerminalId),
+                      iINFO,
+                      uiBuffLen,
                       pszValue,
-                      iRet);
+                      iRet );
     if (iRet = PTIRET_OK) then
     begin
       Result := String(pszValue);
@@ -1294,7 +1321,7 @@ end;
 procedure TACBrPOSPGWebAPI.ObterDadosDaTransacao(const TerminalId: String);
 var
   pszValue: PAnsiChar;
-  uiBuffLen: LongWord;
+  uiBuffLen: Word;
   iRet: SmallInt;
   i: Word;
   AData, InfoStr: String;
@@ -1312,7 +1339,11 @@ begin
       if (i <> PWINFO_PPINFO) and  // Ler PWINFO_PPINFO é lento (e desnecessário)
          (pos(IntToStr(i), InfoStr) = 0) then  // i equivale a um PWINFO_ conhecido ?
       begin
-        xPTI_EFT_GetInfo( TerminalId, i, uiBuffLen, pszValue, iRet);
+        xPTI_EFT_GetInfo( AnsiString(TerminalId),
+                          i,
+                          uiBuffLen,
+                          pszValue,
+                          iRet );
         if (iRet = PTIRET_OK) then
         begin
           AData := BinaryStringToString(AnsiString(pszValue));
@@ -1341,7 +1372,9 @@ begin
   VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_Confirm( '+TerminalId+', '+IntToStr(SmallInt(Status))+' )');
   VerificarConexao(TerminalId);
-  xPTI_EFT_Confirm( TerminalId, SmallInt(Status), iRet);
+  xPTI_EFT_Confirm( AnsiString(TerminalId),
+                    SmallInt(Status),
+                    iRet );
   GravarLog('  '+PTIRETToString(iRet));
 
   ObterDadosDaTransacao( TerminalId );
@@ -1399,7 +1432,9 @@ var
   iRet: SmallInt;
 begin
   GravarLog('PTI_Disconnect( '+TerminalId+', '+IntToStr(Segundos)+' )');
-  xPTI_Disconnect( TerminalId, Segundos, iRet);
+  xPTI_Disconnect( AnsiString(TerminalId),
+                   Segundos,
+                   iRet );
   GravarLog('  '+PTIRETToString(iRet));
   Result := (iRet = PTIRET_OK) or (iRet = PTIRET_NOCONN);
   if not Result then
@@ -1418,7 +1453,11 @@ begin
 
   try
     //GravarLog('PTI_ConnectionLoop');
-    xPTI_ConnectionLoop(fpszTerminalId, fpszModel, fpszMAC, fpszSerNo, iRet);
+    xPTI_ConnectionLoop( fpszTerminalId,
+                         fpszModel,
+                         fpszMAC,
+                         fpszSerNo,
+                         iRet );
     if (iRet = PTIRET_NEWCONN) then
     begin
       TerminalId := String(fpszTerminalId);

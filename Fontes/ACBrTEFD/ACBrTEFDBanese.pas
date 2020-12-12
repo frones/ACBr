@@ -138,7 +138,7 @@ type
      Procedure CNF(Rede, NSU, Finalizacao : String;
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; override;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
    published
      property ArqTemp  : String read fArqTmp    write SetArqTmp ;
      property ArqReq   : String read fArqReq    write SetArqReq ;
@@ -361,13 +361,13 @@ begin
   end;
 end;
 
-Function TACBrTEFDBanese.ADM : Boolean;
+function TACBrTEFDBanese.ADM: Boolean;
 begin
   Result := FazerRequisicao('ADM', 0, '0' );
 end;
 
-Function TACBrTEFDBanese.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDBanese.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
   Result := False;
 
@@ -380,17 +380,17 @@ begin
     end;
 end;
 
-Function TACBrTEFDBanese.CHQ(Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String; CMC7 : String; TipoPessoa : AnsiChar;
-   DocumentoPessoa : String; DataCheque : TDateTime; Banco : String;
-   Agencia : String; AgenciaDC : String; Conta : String; ContaDC : String;
-   Cheque : String; ChequeDC : String; Compensacao: String) : Boolean ;
+function TACBrTEFDBanese.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 begin
   Result := False;
 end;
 
-Procedure TACBrTEFDBanese.CNF(Rede, NSU, Finalizacao : String;
-   DocumentoVinculado : String) ;
+procedure TACBrTEFDBanese.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 var ArquivoReq : TStringList;   
 begin
   {O CNF é sempre padrão, não necessitando ser montado dinamicamente}
@@ -406,22 +406,22 @@ begin
   ArquivoReq.Free;
 end;
 
-Function TACBrTEFDBanese.CNC(Rede, NSU : String;
-   DataHoraTransacao : TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDBanese.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 begin
   {Não existe CNC}
   Result := True;
 end;
 
-Procedure TACBrTEFDBanese.NCN(Rede, NSU, Finalizacao : String;
-   Valor : Double; DocumentoVinculado : String) ;
+procedure TACBrTEFDBanese.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
 begin
   {Não existe NCN}
   //
 end;
 
-Function TACBrTEFDBanese.FazerRequisicao(AHeader : AnsiString = '';
-  Valor : Double = 0; IndiceFPG_ECF : String = '') : Boolean ;
+function TACBrTEFDBanese.FazerRequisicao(AHeader: AnsiString; Valor: Double;
+  IndiceFPG_ECF: String): Boolean;
 Var
   aNSU : AnsiString;
   ArquivoResposta : TStringList;

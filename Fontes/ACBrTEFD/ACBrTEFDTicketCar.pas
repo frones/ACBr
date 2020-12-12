@@ -146,7 +146,7 @@ type
      Procedure CNF(Rede, NSU, Finalizacao : String;
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; override;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
    published
      property ArqTemp  : String read fArqTmp    write SetArqTmp ;
      property ArqReq   : String read fArqReq    write SetArqReq ;
@@ -380,13 +380,13 @@ begin
   end;
 end;
 
-Function TACBrTEFDTicketCar.ADM : Boolean;
+function TACBrTEFDTicketCar.ADM: Boolean;
 begin
   Result := FazerRequisicao('ADM', 0, '0' );
 end;
 
-Function TACBrTEFDTicketCar.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDTicketCar.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
   Result := False;
 
@@ -399,35 +399,36 @@ begin
     end;
 end;
 
-Function TACBrTEFDTicketCar.CHQ(Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String; CMC7 : String; TipoPessoa : AnsiChar;
-   DocumentoPessoa : String; DataCheque : TDateTime; Banco : String;
-   Agencia : String; AgenciaDC : String; Conta : String; ContaDC : String;
-   Cheque : String; ChequeDC : String; Compensacao: String) : Boolean ;
+function TACBrTEFDTicketCar.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 begin
   Result := False;
 end;
 
-Procedure TACBrTEFDTicketCar.CNF(Rede, NSU, Finalizacao : String;
-   DocumentoVinculado : String) ;
+procedure TACBrTEFDTicketCar.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 begin
   //
 end;
 
-Function TACBrTEFDTicketCar.CNC(Rede, NSU : String;
-   DataHoraTransacao : TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDTicketCar.CNC(Rede, NSU: String;
+  DataHoraTransacao: TDateTime; Valor: Double;
+  CodigoAutorizacaoTransacao: String): Boolean;
 begin
   Result := True;
 end;
 
-Procedure TACBrTEFDTicketCar.NCN(Rede, NSU, Finalizacao : String;
-   Valor : Double; DocumentoVinculado : String) ;
+procedure TACBrTEFDTicketCar.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
 begin
   //
 end;
 
-Function TACBrTEFDTicketCar.FazerRequisicao(AHeader : AnsiString = '';
-  Valor : Double = 0; IndiceFPG_ECF : String = '') : Boolean ;
+function TACBrTEFDTicketCar.FazerRequisicao(AHeader: AnsiString; Valor: Double;
+  IndiceFPG_ECF: String): Boolean;
 Var
   Erro, aNSU : AnsiString;
   ArquivoResposta : TStringList;

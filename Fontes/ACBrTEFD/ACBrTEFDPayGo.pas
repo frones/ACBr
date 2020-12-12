@@ -43,6 +43,7 @@ uses
 const
   CACBrTEFDPayGoNome = 'ACBrTEFDPayGo';
   CACBrTEFDPayGoVersao = '1.0.2';
+  CACBrTEFDPayGoVersaoInterface = '225';
 
   CACBrTEFDPayGo_ArqTemp = 'C:\PAYGO\REQ\intpos.tmp';
   CACBrTEFDPayGo_ArqReq  = 'C:\PAYGO\REQ\intpos.001';
@@ -332,6 +333,10 @@ var
 begin
   with TACBrTEFD(Owner) do
   begin
+    // 733-000 Versão da interface n..3 Valor fixo, identificando a versão deste documento
+    // implementada pela Automação Comercial (somente números, por exemplo, 210 para “v2.10”)
+    Req.Conteudo.GravaInformacao(733,000, CACBrTEFDPayGoVersaoInterface);
+
     if (Identificacao.NomeAplicacao  <> '') then
       Req.Conteudo.GravaInformacao(735,000, Identificacao.NomeAplicacao);
 

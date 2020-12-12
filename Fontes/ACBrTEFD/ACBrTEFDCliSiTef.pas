@@ -165,7 +165,7 @@ type
      Procedure CNF(Rede, NSU, Finalizacao : String;
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; override;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
      Function PRE(Valor : Double; DocumentoVinculado : String = '';
         Moeda : Integer = 0) : Boolean; override;
      function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
@@ -554,7 +554,7 @@ begin
 end;
 
 function TACBrTEFDCliSiTef.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
-  Valor: Double): Boolean;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 var
    Restr : AnsiString;
    Sts : Integer;

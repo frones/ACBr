@@ -250,7 +250,7 @@ type
         const Cheque     : String = ''; const ChequeDC  : String = '';
         const Compensacao: String = '' ) : Boolean ;
      Function CNC(const Rede, NSU : String; const DataHoraTransacao :
-        TDateTime; const Valor : Double) : Boolean ;
+        TDateTime; const Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean ;
      procedure CNF(const Rede, NSU, Finalizacao : String;
         const DocumentoVinculado : String = '');
      procedure NCN(const Rede, NSU, Finalizacao : String;
@@ -794,9 +794,10 @@ begin
 end;
 
 function TACBrTEFD.CNC(const Rede, NSU: String;
-  const DataHoraTransacao: TDateTime; const Valor: Double): Boolean;
+  const DataHoraTransacao: TDateTime; const Valor: Double;
+  CodigoAutorizacaoTransacao: String): Boolean;
 begin
-  Result := fTefClass.CNC( Rede, NSU, DataHoraTransacao, Valor);
+  Result := fTefClass.CNC( Rede, NSU, DataHoraTransacao, Valor, CodigoAutorizacaoTransacao);
 end;
 
 procedure TACBrTEFD.CNF(const Rede, NSU, Finalizacao : String;

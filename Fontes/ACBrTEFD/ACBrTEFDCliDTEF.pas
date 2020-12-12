@@ -243,7 +243,7 @@ type
      Procedure CNF(Rede, NSU, Finalizacao : String;
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; override;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
    published
      property NumVias ;
      property ArqResp  : String read fArqResp   write SetArqResp ;
@@ -563,7 +563,7 @@ begin
   end;
 end;
 
-Function TACBrTEFDCliDTEF.ADM : Boolean;
+function TACBrTEFDCliDTEF.ADM: Boolean;
 var
   Sts : Integer;
 begin
@@ -577,8 +577,8 @@ begin
   end;
 end;
 
-Function TACBrTEFDCliDTEF.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDCliDTEF.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 var
   Sts : Integer;
 begin
@@ -591,11 +591,11 @@ begin
   Result := ( Sts = 0 ) ;
 end;
 
-Function TACBrTEFDCliDTEF.CHQ(Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String; CMC7 : String; TipoPessoa : AnsiChar;
-   DocumentoPessoa : String; DataCheque : TDateTime; Banco : String;
-   Agencia : String; AgenciaDC : String; Conta : String; ContaDC : String;
-   Cheque : String; ChequeDC : String; Compensacao: String) : Boolean ;
+function TACBrTEFDCliDTEF.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 var
   Sts : Integer;
 begin
@@ -608,8 +608,8 @@ begin
   Result := ( Sts = 0 ) ;
 end;
 
-Procedure TACBrTEFDCliDTEF.CNF(Rede, NSU, Finalizacao : String;
-   DocumentoVinculado : String) ;
+procedure TACBrTEFDCliDTEF.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 var
   Confirma : Boolean ;
   I : Integer;
@@ -636,23 +636,23 @@ begin
   FinalizarTransacao(Rede, Confirma, NSU, DocumentoVinculado);
 end;
 
-Function TACBrTEFDCliDTEF.CNC(Rede, NSU : String;
-   DataHoraTransacao : TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDCliDTEF.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 begin
   FinalizarTransacao(Rede, True, NSU, '');
   Result := True ;
 end;
 
-Procedure TACBrTEFDCliDTEF.NCN(Rede, NSU, Finalizacao : String;
-   Valor : Double; DocumentoVinculado : String) ;
+procedure TACBrTEFDCliDTEF.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
 begin
   xFinalizaTransacao;
 end;
 
-Function TACBrTEFDCliDTEF.FazerRequisicao( Funcao : Integer;  AHeader : AnsiString = '';
-  Valor : Double = 0; Documento : AnsiString = ''; QuantidadeCheques : AnsiString = '';
-  PeriodicidadeCheques : AnsiString = ''; DataPrimeiroCheque : AnsiString = '';
-  CarenciaPrimeiroCheque : AnsiString = '') : Integer ;
+function TACBrTEFDCliDTEF.FazerRequisicao(Funcao: Integer; AHeader: AnsiString;
+  Valor: Double; Documento: AnsiString; QuantidadeCheques: AnsiString;
+  PeriodicidadeCheques: AnsiString; DataPrimeiroCheque: AnsiString;
+  CarenciaPrimeiroCheque: AnsiString): Integer;
 Var
   ValorStr, DataStr, HoraStr : AnsiString;
   ANow : TDateTime ;
@@ -961,8 +961,8 @@ begin
                                          'Favor reter o Cupom' );       }
 end;
 
-Function TACBrTEFDCliDTEF.ProcessarRespostaPagamento(
-   const IndiceFPG_ECF : String; const Valor : Double) : Boolean;
+function TACBrTEFDCliDTEF.ProcessarRespostaPagamento(
+  const IndiceFPG_ECF: String; const Valor: Double): Boolean;
 var
   ImpressaoOk : Boolean;
   RespostaPendente : TACBrTEFDResp ;

@@ -47,6 +47,41 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/12/20
+-- ACBrTEFD, ACBrTEFDClass, ACBrTEFDPayGoWeb, ACBrTEFDBanese, ACBrTEFDCliDTEF,
+   ACBrTEFDCliSiTef, ACBrTEFDTicketCar, ACBrTEFDVeSPague --
+[*] Método "CNC", assinatura modificada, inserindo novo parâmetro,
+    CodigoAutorizacaoTransacao: String, com valor Dfault = ''.
+    Function CNC(const Rede, NSU : String; const DataHoraTransacao :
+        TDateTime; const Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean ;
+    - Se o novo parâmtro for informado, será usado no tipo:
+      013-000 Código de autorização  (TEFPayGo, TEFDial (TXT))
+
+-- ACBrTEFDClass --
+[+] Classe "TACBrTEFDReq", adicionada a propriedade: "CodigoAutorizacaoTransacao: String"
+[*] Método "TACBrTEFDReq.Clear", agora também limpa as variáveis internas
+
+-- ACBrTEFDPayGo --
+[+] Adicionada informação obrigatória de identificação na Requisição
+     733-000 Versão da interface
+
+-- ACBrTEFDPayGoWeb --
+[-] Correção no método "CNC", para informar corretamente o parâmetro "Rede" na
+    operação de Cancelamento
+[+] Ajuste para usar o novo parâmetro "CodigoAutorizacaoTransacao", quando o
+    mesmo estiver disponível
+[+] Ajuste para usar informação da Transação em memória, apenas se ela for
+    exatamente igual aos dados da transação enviada para Cancelamento por
+    parâmetros
+
+-- ACBrTEFPayGoWebComum, ACBrTEFDPayGoWeb --
+[+] Adicionada a propriedade:
+    "PerguntarCartaoDigitadoAposCancelarLeitura: Boolean; Default False"
+    - Quando a mesma for True, após o usuário Cancelar a operação de leitura do
+      Cartão, o ACBrTEFD perguntará o Cartão de forma Digitada.
+[*] Método "TACBrTEFPGWebAPI.IniciarTransacao", modificado para zerar as
+    informações de "ParametrosAdicionais", após adicionar as mesmas na transação
+    atual
+
 -- ACBrPOSPGWebAPI --
 [*] Revisão nas chamadas dos métodos da PTI_, corrigindo parâmatros de Entrada
     para AnsiString e Word conforme assinatura dos métodos

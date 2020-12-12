@@ -573,6 +573,7 @@ type
     fInicializada: Boolean;
     fCarregada: Boolean;
     fEmTransacao: Boolean;
+    fPerguntarCartaoDigitadoAposCancelarLeitura: Boolean;
     fUsouPinPad: Boolean;
     fNomeAplicacao: String;
     fNomeEstabelecimento: String;
@@ -776,8 +777,13 @@ type
     property ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode read fExibicaoQRCode
       write fExibicaoQRCode;
 
-    property ConfirmarTransacoesPendentesNoHost: Boolean read fConfirmarTransacoesPendentesNoHost
+    property ConfirmarTransacoesPendentesNoHost: Boolean
+      read fConfirmarTransacoesPendentesNoHost
       write fConfirmarTransacoesPendentesNoHost;
+    property PerguntarCartaoDigitadoAposCancelarLeitura: Boolean
+      read fPerguntarCartaoDigitadoAposCancelarLeitura
+      write fPerguntarCartaoDigitadoAposCancelarLeitura;
+
     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
     property OnExibeMenu: TACBrTEFPGWebAPIExibeMenu read fOnExibeMenu
       write fOnExibeMenu;
@@ -1137,6 +1143,7 @@ begin
   fPortaTCP := '';
   fPortaPinPad := 0;
   fConfirmarTransacoesPendentesNoHost := True;
+  fPerguntarCartaoDigitadoAposCancelarLeitura := False;
 
   fDadosTransacao := TACBrTEFPGWebAPIParametros.Create;
   fParametrosAdicionais := TACBrTEFPGWebAPIParametros.Create;
@@ -1421,6 +1428,8 @@ begin
 
     For i := 0 to ParametrosAdicionais.Count-1 do
       AdicionarParametro(ParametrosAdicionais[i]);
+
+    ParametrosAdicionais.Clear;  // Limpa para não usar nas próximas transações
 
     if Assigned(ParametrosAdicionaisTransacao) then
     begin
@@ -2119,7 +2128,8 @@ begin
   else  // 0 ou 3
     begin
       iRet := RealizarOperacaoPinPad(AGetData, ppGetCard);
-      ObterDigitado := (iRet = PWRET_CANCEL) or (iRet = PWRET_FALLBACK);
+      ObterDigitado := (iRet = PWRET_FALLBACK) or
+                       (fPerguntarCartaoDigitadoAposCancelarLeitura and (iRet = PWRET_CANCEL));
     end;
   end;
 

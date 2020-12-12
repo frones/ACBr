@@ -90,6 +90,7 @@ type
     function GetConfirmarTransacoesPendentes: Boolean;
     function GetExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode;
     function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    function GetPerguntarCartaoDigitadoAposCancelarLeitura: Boolean;
     function GetPortaPinPad: Integer;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
     procedure EXibirQRCodeAPI(const Dados: String);
@@ -113,6 +114,7 @@ type
     procedure SetOnExibeMenu(AValue: TACBrTEFPGWebAPIExibeMenu);
     procedure SetOnObtemCampo(AValue: TACBrTEFPGWebAPIObtemCampo);
     procedure SetPathDLL(AValue: string);
+    procedure SetPerguntarCartaoDigitadoAposCancelarLeitura(AValue: Boolean);
     procedure SetPontoCaptura(AValue: String);
     procedure SetPortaPinPad(AValue: Integer);
     procedure SetSuportaViasDiferenciadas(AValue: Boolean);
@@ -167,8 +169,8 @@ type
     Procedure CNF(Rede, NSU, Finalizacao : String;
        DocumentoVinculado : String = ''); overload; override;
     Function CNC : Boolean ; overload; override;
-    Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-       Valor : Double) : Boolean; overload; override;
+    function CNC(Rede, NSU: String; DataHoraTransacao: TDateTime; Valor: Double;
+      CodigoAutorizacaoTransacao: String = ''): Boolean; overload; override;
     Function PRE(Valor : Double; DocumentoVinculado : String = '';
        Moeda : Integer = 0) : Boolean; override;
     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
@@ -186,6 +188,9 @@ type
       write SetUtilizaSaldoTotalVoucher;
     property ConfirmarTransacoesPendentes: Boolean read GetConfirmarTransacoesPendentes
       write SetConfirmarTransacoesPendentes;
+    property PerguntarCartaoDigitadoAposCancelarLeitura: Boolean
+      read GetPerguntarCartaoDigitadoAposCancelarLeitura
+      write SetPerguntarCartaoDigitadoAposCancelarLeitura;
     property ExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode read GetExibicaoQRCode
       write SetExibicaoQRCode default qreAuto;
 
@@ -381,11 +386,11 @@ end;
 
 function TACBrTEFDPayGoWeb.CNC: Boolean;
 begin
-  Result := CNC(Resp.Rede, Resp.NSU, Resp.DataHoraTransacaoLocal, Resp.ValorTotal);
+  Result := CNC(Resp.Rede, Resp.NSU, Resp.DataHoraTransacaoLocal, Resp.ValorTotal, Resp.CodigoAutorizacaoTransacao);
 end;
 
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
-  Valor: Double): Boolean;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 var
   PA: TACBrTEFPGWebAPIParametros;
 
@@ -401,21 +406,30 @@ var
 begin
   PA := TACBrTEFPGWebAPIParametros.Create;
   try
-    PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);
-    PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);
+    PA.ValueInfo[PWINFO_AUTHSYST] := Rede;
+    PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;                                            // Mandatorio
+    PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);   // Mandatorio
+    PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);   // Mandatorio
     PA.ValueInfo[PWINFO_TRNORIGDATETIME] := FormatDateTime('YYYYMMDDhhnnss', DataHoraTransacao);
-    PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
-    PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));
-    PA.ValueInfo[PWINFO_TRNORIGAUTH] := Resp.CodigoAutorizacaoTransacao;
-    PA.ValueInfo[PWINFO_TRNORIGAUTHCODE] := Resp.CodigoAutorizacaoTransacao;
-    PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
-    PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
-    CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
-    CopiarValorDaUltimaResposta(PWINFO_CARDTYPE);
-    CopiarValorDaUltimaResposta(PWINFO_AUTHSYST);
-    CopiarValorDaUltimaResposta(PWINFO_VIRTMERCH);
-    CopiarValorDaUltimaResposta(PWINFO_AUTMERCHID);
-    CopiarValorDaUltimaResposta(PWINFO_FINTYPE);
+    PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));     // Mandatorio
+    if (CodigoAutorizacaoTransacao <> '') then
+    begin
+      PA.ValueInfo[PWINFO_TRNORIGAUTH] := CodigoAutorizacaoTransacao;                  // Mandatorio
+      PA.ValueInfo[PWINFO_TRNORIGAUTHCODE] := CodigoAutorizacaoTransacao;
+    end;
+
+    // Se a transação em memória for a mesma que estamos tentando cancelar, vamos copiar mais dados dela...
+    if (Resp.Rede = Rede) and (Resp.NSU = NSU) and
+       (Resp.ValorTotal = Valor) and (Resp.DataHoraTransacaoLocal = DataHoraTransacao) then
+    begin
+      PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
+      PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
+      CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
+      CopiarValorDaUltimaResposta(PWINFO_CARDTYPE);
+      CopiarValorDaUltimaResposta(PWINFO_VIRTMERCH);
+      CopiarValorDaUltimaResposta(PWINFO_AUTMERCHID);
+      CopiarValorDaUltimaResposta(PWINFO_FINTYPE);
+    end;
 
     FazerRequisicao(fOperacaoCNC, 'CNC', Valor, '', 0, PA);
   finally
@@ -845,6 +859,12 @@ begin
   fsPGWebAPI.PathLib := AValue;
 end;
 
+procedure TACBrTEFDPayGoWeb.SetPerguntarCartaoDigitadoAposCancelarLeitura(
+  AValue: Boolean);
+begin
+  fsPGWebAPI.PerguntarCartaoDigitadoAposCancelarLeitura := AValue;
+end;
+
 procedure TACBrTEFDPayGoWeb.GravaLogAPI(const ALogLine: String;
   var Tratado: Boolean);
 begin
@@ -859,6 +879,11 @@ end;
 function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
 begin
   Result := fsPGWebAPI.ParametrosAdicionais;
+end;
+
+function TACBrTEFDPayGoWeb.GetPerguntarCartaoDigitadoAposCancelarLeitura: Boolean;
+begin
+  Result := fsPGWebAPI.PerguntarCartaoDigitadoAposCancelarLeitura;
 end;
 
 function TACBrTEFDPayGoWeb.GetPortaPinPad: Integer;

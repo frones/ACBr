@@ -221,6 +221,7 @@ type
      fCheque : String;
      fChequeDC : String;
      fCMC7 : String;
+     fCodigoAutorizacaoTransacao: String;
      fConta : String;
      fContaDC : String;
      fConteudo   : TACBrTEFArquivo;
@@ -243,6 +244,7 @@ type
      procedure SetCheque(const AValue : String);
      procedure SetChequeDC(const AValue : String);
      procedure SetCMC7(const AValue : String);
+     procedure SetCodigoAutorizacaoTransacao(AValue: String);
      procedure SetConta(const AValue : String);
      procedure SetContaDC(const AValue : String);
      procedure SetDataCheque(const AValue : TDateTime);
@@ -285,6 +287,7 @@ type
      property Cheque            : String    read fCheque             write SetCheque ;
      property ChequeDC          : String    read fChequeDC           write SetChequeDC ;
      property DataHoraTransacaoComprovante : TDateTime read fDataHoraTransacaoComprovante write SetDataHoraTransacaoComprovante ;
+     property CodigoAutorizacaoTransacao: String read fCodigoAutorizacaoTransacao write SetCodigoAutorizacaoTransacao;
 
      procedure GravaInformacao( const Identificacao : Integer;
         const Sequencia : Integer; const Informacao : String ) ;
@@ -434,7 +437,7 @@ type
         DocumentoVinculado : String = ''); overload; virtual;
      Function CNC : Boolean ; overload; virtual;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; virtual;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; virtual;
      Function PRE(Valor : Double; DocumentoVinculado : String = '';
         Moeda : Integer = 0) : Boolean; virtual;
 
@@ -591,8 +594,27 @@ procedure TACBrTEFDReq.Clear;
 begin
   fConteudo.Clear;
 
-  fID     := 0 ;
+  fID := 0 ;
   fHeader := '' ;
+  fAgencia := '';
+  fAgenciaDC := '';
+  fBanco := '';
+  fCheque := '';
+  fChequeDC := '';
+  fCMC7 := '';
+  fCodigoAutorizacaoTransacao := '';
+  fConta := '';
+  fContaDC := '';
+  fDataCheque := 0;
+  fDataHoraTransacaoComprovante := 0;
+  fDocumentoPessoa := '';
+  fFinalizacao := '';
+  fMoeda := 0;
+  fNSU := '';
+  fRede := '';
+  fTipoPessoa := 'F';
+  fValorTotal := 0;
+  fDocumentoVinculado := '';
 end;
 
 procedure TACBrTEFDReq.GravaInformacao(const Identificacao : Integer;
@@ -669,6 +691,12 @@ procedure TACBrTEFDReq.SetNSU(const AValue : String);
 begin
   fNSU := Trim(AValue);
   fConteudo.GravaInformacao(12,0,fNSU);
+end;
+
+procedure TACBrTEFDReq.SetCodigoAutorizacaoTransacao(AValue: String);
+begin
+  fCodigoAutorizacaoTransacao := Trim(AValue);
+  fConteudo.GravaInformacao(13,0,fCodigoAutorizacaoTransacao);
 end;
 
 procedure TACBrTEFDReq.SetDataHoraTransacaoComprovante(const AValue : TDateTime);
@@ -1164,6 +1192,7 @@ begin
      Req.Rede                         := OldResp.Rede;
      Req.NSU                          := OldResp.NSU;
      Req.DataHoraTransacaoComprovante := OldResp.DataHoraTransacaoComprovante;
+     Req.CodigoAutorizacaoTransacao   := OldResp.CodigoAutorizacaoTransacao;
      Req.Banco                        := OldResp.Banco;
      Req.Agencia                      := OldResp.Agencia;
      Req.AgenciaDC                    := OldResp.AgenciaDC;
@@ -1189,13 +1218,16 @@ begin
 end;
 
 function TACBrTEFDClass.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
-  Valor: Double): Boolean;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 begin
   IniciarRequisicao('CNC');
-  Req.ValorTotal                   := Valor;
-  Req.Rede                         := Rede;
-  Req.NSU                          := NSU;
+  Req.ValorTotal := Valor;
+  Req.Rede := Rede;
+  Req.NSU := NSU;
   Req.DataHoraTransacaoComprovante := DataHoraTransacao;
+  if (CodigoAutorizacaoTransacao <> '') then
+    Req.CodigoAutorizacaoTransacao := CodigoAutorizacaoTransacao;
+
   AdicionarIdentificacao;
   FinalizarRequisicao;
 

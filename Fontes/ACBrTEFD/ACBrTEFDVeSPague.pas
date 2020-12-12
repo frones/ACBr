@@ -209,7 +209,7 @@ type
      Procedure CNF(Rede, NSU, Finalizacao : String;
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
-        Valor : Double) : Boolean; overload; override;
+        Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
    published
      property Aplicacao       : String read fAplicacao       write fAplicacao ;
      property AplicacaoVersao : String read fAplicacaoVersao write fAplicacaoVersao ;
@@ -982,7 +982,7 @@ begin
 end;
 
 function TACBrTEFDVeSPague.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
-  Valor: Double): Boolean;
+  Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 var
    Retorno : Integer;
    ListaParams : AnsiString ;

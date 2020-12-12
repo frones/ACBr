@@ -13,21 +13,31 @@ object Form1: TForm1
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
+  object btnGerarCD: TButton
+    Left = 89
+    Top = 24
+    Width = 75
+    Height = 25
+    Caption = 'Gerar CD'
+    TabOrder = 0
+    OnClick = btnGerarCDClick
+  end
   object Button1: TButton
-    Left = 16
-    Top = 32
+    Left = 8
+    Top = 24
     Width = 75
     Height = 25
     Caption = 'Gerar'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = Button1Click
   end
   object ACBrADRCST1: TACBrADRCST
     Path = 'C:\lazarus\'
     Delimitador = '|'
+    ReplaceDelimitador = False
     TrimString = True
     CurMascara = '#0.00'
-    Left = 368
-    Top = 48
+    Left = 224
+    Top = 152
   end
 end

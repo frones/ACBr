@@ -50,16 +50,20 @@ type
   TBloco_0 = class(TACBrTXTClass)
   private
     FRegistro0000 : TRegistro0000;
+    FRegistro0001 : TRegistro0001;
 
   public
     constructor Create; virtual;
     destructor Destroy; override;
 
     function Registro0000New : TRegistro0000;
+    function Registro0001New : TRegistro0001;
 
     procedure WriteRegistro0000;
+    procedure WriteRegistro0001;
 
     property Registro0000 : TRegistro0000 read FRegistro0000 write FRegistro0000;
+    property Registro0001 : TRegistro0001 read FRegistro0001 write FRegistro0001;
   end;
 
 implementation
@@ -74,15 +78,22 @@ begin
   Result := FRegistro0000;
 end;
 
+function TBloco_0.Registro0001New: TRegistro0001;
+begin
+  Result := FRegistro0001;
+end;
+
 constructor TBloco_0.Create;
 begin
   inherited;
   FRegistro0000 := TRegistro0000.Create;
+  FRegistro0001 := TRegistro0001.Create;
 end;
 
 destructor TBloco_0.Destroy;
 begin
   FRegistro0000.Free;
+  FRegistro0001.Free;
   inherited;
 end;
 
@@ -91,7 +102,7 @@ begin
   if Assigned(FRegistro0000)then
   with FRegistro0000 do
   begin
-    Add( LFill(REG) +
+    Add(  LFill(REG) +
           LFill(ADRCSTVersaoToString( COD_VERSAO)) +
           LFill(MES_ANO,'mmyyyy',false) +
           LFill(CNPJ,14) +
@@ -101,10 +112,28 @@ begin
           LFill(N_REG_ESPECIAL) +
           LFill(CNPJ_CD) +
           LFill(IE_CD)+
-          LFill(OPCAO_R1200,1)+
-          LFill(OPCAO_R1300,1)+
-          LFill(OPCAO_R1400,1)+
-          LFill(OPCAO_R1500,1)
+          LFill(ADRCSTIndicadorReaverRecolherImpostoToString(OPCAO_R1200))+
+          LFill(ADRCSTIndicadorReaverRecolherImpostoToString(OPCAO_R1300))+
+          LFill(ADRCSTIndicadorReaverRecolherImpostoToString(OPCAO_R1400))+
+          LFill(ADRCSTIndicadorReaverRecolherImpostoToString(OPCAO_R1500)),
+          False
+    );
+  end;
+end;
+
+procedure TBloco_0.WriteRegistro0001;
+begin
+  if Assigned(FRegistro0001)then
+  with FRegistro0001 do
+  begin
+    Add(  LFill(REG) +
+          LFill(ADRCSTCDVersaoToString( COD_VERSAO)) +
+          LFill(MES_ANO,'mmyyyy',false) +
+          LFill(CNPJ,14) +
+          LFill(IE,10) +
+          LFill(NOME) +
+          LFill(ADRCSTFinalidadeToString( CD_FIN)),
+          False
     );
   end;
 end;

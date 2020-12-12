@@ -63,7 +63,7 @@ type
     //9000 Apuração do Total do Arquivo
     //9999 Registro de encerramento do arquivo
 
-    lyCD
+    lyADRCSTCD
     //Leiaute do Arquivo de Centro de Distribuição ou de Estabelecimento que centraliza as aquisições dos produtos sujeitos à substituiçãotributária
     //0001 Registro de abertura e identificação do contribuinte
     //1001 Registro analítico do produto
@@ -77,8 +77,8 @@ type
     vlADRCSTVersao110 //Versao 110
     );
   //Versao Leiaute do Arquivo de Centro de Distribuição
-  TCDVersao = (
-    vlCDVersao100 //Versao 100
+  TADRCSTCDVersao = (
+    vlADRCSTCDVersao100 //Versao 100
     );
 
   TADRCSTFinalidade = (
@@ -97,8 +97,18 @@ type
     inRRProprioDeclarante//3 – Próprio declarante
     );
 
+  TADRCSTIndicadorReaverRecolherImposto = (
+    inRRIRecuperacaoContaGrafica,//0 – Recuperação em conta gráfica
+    inRRIRessarcimentoFornecedor,//1 – Ressarcimento para fornecedor
+    inRRIComplementacaoImposto,//2 – Complementação do Imposto
+    inRRISemInformacao// '' Verificar se foi informada a opção de reaver ou complementar o imposto no campo [OPÇÃO_R1X00] quando houver informação no R1X00, caso contrário, o campo fica vazio.
+    );
+
 function ADRCSTVersaoToString(const ALayout: TADRCSTVersao): string;
 function StringToADRCSTVersao(const ALayout: string): TADRCSTVersao;
+
+function ADRCSTCDVersaoToString(const ALayout: TADRCSTCDVersao): string;
+function StringToADRCSTCDVersao(const ALayout: string): TADRCSTCDVersao;
 
 function ADRCSTFinalidadeToString(const AFinalidade: TADRCSTFinalidade): string;
 function StringToADRCSTFinalidade(const AFinalidade: string): TADRCSTFinalidade;
@@ -113,19 +123,41 @@ function ADRCSTIndicadorResponsavelRetencaoToString(
 function StringToADRCSTIndicadorResponsavelRetencao(
   const AIndicador: string): TADRCSTIndicadorResponsavelRetencao;
 
+function ADRCSTIndicadorReaverRecolherImpostoToString(
+  const AIndicador: TADRCSTIndicadorReaverRecolherImposto): string;
+function StringToADRCSTIndicadorReaverRecolherImposto(
+  const AIndicador: string): TADRCSTIndicadorReaverRecolherImposto;  
+
 implementation
 
 function ADRCSTVersaoToString(const ALayout: TADRCSTVersao): string;
 begin
   case ALayout of
     vlADRCSTVersao100: Result := '100';
+    vlADRCSTVersao110: Result := '110';
   end;
 end;
 
 function StringToADRCSTVersao(const ALayout: string): TADRCSTVersao;
 begin
   if ALayout = '100' then
-    Result := vlADRCSTVersao100;
+    Result := vlADRCSTVersao100
+  else
+  if ALayout = '110' then
+    Result := vlADRCSTVersao110;
+end;
+
+function ADRCSTCDVersaoToString(const ALayout: TADRCSTCDVersao): string;
+begin
+  case ALayout of
+    vlADRCSTCDVersao100: Result := '100';
+  end;
+end;
+
+function StringToADRCSTCDVersao(const ALayout: string): TADRCSTCDVersao;
+begin
+  if ALayout = '100' then
+    Result := vlADRCSTCDVersao100;
 end;
 
 
@@ -187,6 +219,32 @@ begin
   else
   if AIndicador = '3' then
     Result := inRRProprioDeclarante;
+end;
+
+function ADRCSTIndicadorReaverRecolherImpostoToString(
+  const AIndicador: TADRCSTIndicadorReaverRecolherImposto): string;
+begin
+  case AIndicador of
+    inRRIRecuperacaoContaGrafica: Result := '0';
+    inRRIRessarcimentoFornecedor: Result := '1';
+    inRRIComplementacaoImposto: Result := '2';
+    inRRISemInformacao: Result := '';
+  end;
+end;
+
+function StringToADRCSTIndicadorReaverRecolherImposto(
+  const AIndicador: string): TADRCSTIndicadorReaverRecolherImposto;
+begin
+  if AIndicador = '0' then
+    Result := inRRIRecuperacaoContaGrafica
+  else
+  if AIndicador = '1' then
+    Result := inRRIRessarcimentoFornecedor
+  else
+  if AIndicador = '2' then
+    Result := inRRIComplementacaoImposto
+  else if AIndicador = '' then
+    Result := inRRISemInformacao;
 end;
 
 end.

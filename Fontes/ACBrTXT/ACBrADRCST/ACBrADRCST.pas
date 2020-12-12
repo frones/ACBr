@@ -96,12 +96,17 @@ type
     function GetOnError: TErrorEvent;
     procedure SetOnError(const Value: TErrorEvent);
 
+    function GetLayout: TADRCSTLayout;
+    procedure SetLayout(const Value: TADRCSTLayout);
+
   protected
     /// BLOCO 0
     procedure WriteRegistro0000;
+    procedure WriteRegistro0001;
 
     /// BLOCO 1
     procedure WriteRegistro1000;
+    procedure WriteRegistro1001;
 
     /// BLOCO 9
     procedure WriteRegistro9000;
@@ -125,7 +130,7 @@ type
     property Bloco_9: TBloco_9 read fBloco_9 write fBloco_9;
   published
 
-    property Layout : TADRCSTLayout read FLayout write FLayout default lyADRCST;
+    property Layout : TADRCSTLayout read GetLayout write SetLayout default lyADRCST;
     property Path: ansistring read fPath write SetPath;
     property Arquivo: ansistring read FArquivo write SetArquivo;
     property LinhasBuffer: integer read GetLinhasBuffer write SetLinhasBuffer default 1000;
@@ -198,6 +203,11 @@ begin
   Result := fDelimitador;
 end;
 
+function TACBrADRCST.GetLayout: TADRCSTLayout;
+begin
+  Result := FLayout;
+end;
+
 function TACBrADRCST.GetLinhasBuffer: integer;
 begin
   Result := fACBrTXT.LinhasBuffer;
@@ -229,12 +239,9 @@ begin
   fACBrTXT.NomeArquivo := FPath + FArquivo;
   {Apaga o Arquivo existente e limpa memória}
   fACBrTXT.Reset;
-  if Layout = lyADRCST  then
-  begin
-    InicializaBloco(Bloco_0);
-    InicializaBloco(Bloco_1);
-    InicializaBloco(Bloco_9);
-  end;
+  InicializaBloco(Bloco_0);
+  InicializaBloco(Bloco_1);
+  InicializaBloco(Bloco_9);
   fInicializado := True;
 end;
 
@@ -250,12 +257,9 @@ procedure TACBrADRCST.SaveFileTXT;
 begin
   try
     IniciaGeracao;
-    if Layout = lyADRCST  then
-    begin
-      WriteBloco_0;
-      WriteBloco_1;
-      WriteBloco_9;
-    end;
+    WriteBloco_0;
+    WriteBloco_1;
+    WriteBloco_9;
   finally
     fACBrTXT.Conteudo.Clear;
     fInicializado := False;
@@ -292,6 +296,12 @@ begin
   fBloco_0.Delimitador := Value;
   fBloco_1.Delimitador := Value;
   fBloco_9.Delimitador := Value;
+end;
+
+procedure TACBrADRCST.SetLayout(const Value: TADRCSTLayout);
+begin
+  FLayout := Value;
+  fBloco_1.Layout := Value;
 end;
 
 procedure TACBrADRCST.SetLinhasBuffer(const Value: integer);
@@ -340,7 +350,10 @@ begin
     raise Exception.Create('Métodos "IniciaGeracao" não foi executado');
 
   /// BLOCO 0
-  WriteRegistro0000;
+  if Layout = lyADRCST then
+    WriteRegistro0000
+  else
+    WriteRegistro0001;
 
   Bloco_0.WriteBuffer;
   Bloco_0.Conteudo.Clear;
@@ -349,7 +362,10 @@ end;
 
 procedure TACBrADRCST.WriteBloco_1;
 begin
-  WriteRegistro1000;
+  if Layout = lyADRCST then
+    WriteRegistro1000
+  else
+    WriteRegistro1001;
 
   Bloco_1.WriteBuffer;
   Bloco_1.Conteudo.Clear;
@@ -362,7 +378,8 @@ begin
 
 
   /// BLOCO 9
-  WriteRegistro9000;
+  if Layout = lyADRCST then
+    WriteRegistro9000;
   WriteRegistro9999;
 
   Bloco_9.WriteBuffer;
@@ -373,6 +390,11 @@ end;
 procedure TACBrADRCST.WriteRegistro0000;
 begin
   Bloco_0.WriteRegistro0000;
+end;
+
+procedure TACBrADRCST.WriteRegistro0001;
+begin
+  Bloco_0.WriteRegistro0001;
 end;
 
 procedure TACBrADRCST.WriteRegistro9000;
@@ -388,6 +410,11 @@ end;
 procedure TACBrADRCST.WriteRegistro1000;
 begin
   Bloco_1.WriteRegistro1000;
+end;
+
+procedure TACBrADRCST.WriteRegistro1001;
+begin
+  Bloco_1.WriteRegistro1001;
 end;
 
 {$IFNDEF NOGUI}

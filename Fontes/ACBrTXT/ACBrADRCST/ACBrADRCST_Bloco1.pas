@@ -47,12 +47,16 @@ uses
 
 type
   TRegistro1000List = class;
+  TRegistro1001List = class;
   TRegistro1010 = class;
   TRegistro1100 = class;
+  TRegistro1101 = class;
 
   TRegistro1110 = class;
+  TRegistro1111 = class;
   TRegistro1120 = class;
   TRegistro1110List = class;
+  TRegistro1111List = class;
   TRegistro1120List = class;
 
   TRegistro1200 = class;
@@ -134,16 +138,16 @@ type
 
     property Registro1100: TRegistro1100 read FRegistro1100 write FRegistro1100;
 
-    property Registro1200: TRegistro1200 read GetRegistro1200;
+    property Registro1200: TRegistro1200 read GetRegistro1200 write FRegistro1200;
     function Registro1200New: TRegistro1200;
 
-    property Registro1300: TRegistro1300 read GetRegistro1300;
+    property Registro1300: TRegistro1300 read GetRegistro1300 write FRegistro1300;
     function Registro1300New: TRegistro1300;
 
-    property Registro1400: TRegistro1400 read GetRegistro1400;
+    property Registro1400: TRegistro1400 read GetRegistro1400 write FRegistro1400;
     function Registro1400New: TRegistro1400;
 
-    property Registro1500: TRegistro1500 read GetRegistro1500;
+    property Registro1500: TRegistro1500 read GetRegistro1500 write FRegistro1500;
     function Registro1500New: TRegistro1500;
 
     property Registro1999: TRegistro1999 read FRegistro1999 write FRegistro1999;
@@ -162,6 +166,57 @@ type
 
     function New(): TRegistro1000;
     property Items[Index: integer]: TRegistro1000 read GetItem write SetItem;
+
+    property Registro1999: TRegistro1999 read FRegistro1999;
+  end;
+
+  TRegistro1001 = class(TBlocos)
+  private
+    FIND_FECOP: TADRCSTIndicadorProdutoFECOP;
+    FCOD_ITEM: string;
+    FCOD_BARRAS: string;
+    FCOD_ANP: string;
+    FNCM: string;
+    FCEST: string;
+    FDESCR_ITEM: string;
+    FRegistro1999: TRegistro1999;
+    FUNID_ITEM: string;
+    FALIQ_ICMS_ITEM: double;
+    FALIQ_FECOP: double;
+
+    FRegistro1101: TRegistro1101;
+  public
+    constructor Create(ARegistro1999: TRegistro1999);overload;
+    destructor Destroy; override;
+
+    property IND_FECOP: TADRCSTIndicadorProdutoFECOP read FIND_FECOP write FIND_FECOP;
+    property COD_ITEM: string read FCOD_ITEM write FCOD_ITEM;
+    property COD_BARRAS: string read FCOD_BARRAS write FCOD_BARRAS;
+    property COD_ANP: string read FCOD_ANP write FCOD_ANP;
+    property NCM: string read FNCM write FNCM;
+    property CEST: string read FCEST write FCEST;
+    property DESCR_ITEM: string read FDESCR_ITEM write FDESCR_ITEM;
+    property UNID_ITEM: string read FUNID_ITEM write FUNID_ITEM;
+    property ALIQ_ICMS_ITEM: double read FALIQ_ICMS_ITEM write FALIQ_ICMS_ITEM;
+    property ALIQ_FECOP: double read FALIQ_FECOP write FALIQ_FECOP;
+
+    property Registro1101: TRegistro1101 read FRegistro1101 write FRegistro1101;
+    property Registro1999: TRegistro1999 read FRegistro1999 write FRegistro1999;
+  end;
+
+  { TRegistro1001List }
+
+  TRegistro1001List = class(TObjectList)
+  private
+    FRegistro1999: TRegistro1999;
+    function GetItem(Index: integer): TRegistro1001;
+    procedure SetItem(Index: integer; const Value: TRegistro1001);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function New(): TRegistro1001;
+    property Items[Index: integer]: TRegistro1001 read GetItem write SetItem;
 
     property Registro1999: TRegistro1999 read FRegistro1999;
   end;
@@ -213,6 +268,31 @@ type
     property Registro1120List: TRegistro1120List read FRegistro1120List write FRegistro1120List;
   end;
 
+  { TRegistro1101 }
+
+  TRegistro1101 = class(TBlocos)
+  private
+    FQTD_TOT_ENTRADA: double;
+    FVL_BC_ICMSST_UNIT_MED: double;
+    FVL_TOT_ICMS_SUPORT_ENTR: double;
+    FVL_UNIT_MED_ICMS_SUPORT_ENTR: double;
+    FQTD_TRANF: double;
+
+    FRegistro1111List: TRegistro1111List;
+  public
+    constructor Create(const ARegistro1001: TRegistro1001);
+    destructor Destroy; override;
+
+    property QTD_TOT_ENTRADA: double read FQTD_TOT_ENTRADA write FQTD_TOT_ENTRADA;
+    property VL_BC_ICMSST_UNIT_MED: double read FVL_BC_ICMSST_UNIT_MED write FVL_BC_ICMSST_UNIT_MED;
+    property VL_TOT_ICMS_SUPORT_ENTR: double read FVL_TOT_ICMS_SUPORT_ENTR write FVL_TOT_ICMS_SUPORT_ENTR;
+    property VL_UNIT_MED_ICMS_SUPORT_ENTR: double read FVL_UNIT_MED_ICMS_SUPORT_ENTR write FVL_UNIT_MED_ICMS_SUPORT_ENTR;
+    property QTD_TRANF: double read FQTD_TRANF write FQTD_TRANF;
+
+
+    property Registro1111List: TRegistro1111List read FRegistro1111List write FRegistro1111List;
+  end;
+
   { TRegistro1110List }
 
   TRegistro1110List = class(TObjectList)
@@ -230,7 +310,7 @@ type
   private
     FDT_DOC: TDateTime;
     FCOD_RESP_RET: TADRCSTIndicadorResponsavelRetencao;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -250,7 +330,60 @@ type
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COD_RESP_RET: TADRCSTIndicadorResponsavelRetencao read FCOD_RESP_RET write FCOD_RESP_RET;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
+    property CHAVE: string read FCHAVE write FCHAVE;
+    property N_NF: integer read FN_NF write FN_NF;
+    property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
+    property UF_EMIT: string read FUF_EMIT write FUF_EMIT;
+    property CNPJ_DEST: string read FCNPJ_DEST write FCNPJ_DEST;
+    property UF_DEST: string read FUF_DEST write FUF_DEST;
+    property CFOP: integer read FCFOP write FCFOP;
+    property N_ITEM: integer read FN_ITEM write FN_ITEM;
+    property UNID_ITEM: string read FUNID_ITEM;
+    property QTD_ENTRADA: double read FQTD_ENTRADA write FQTD_ENTRADA;
+    property VL_UNIT_ITEM: double read FVL_UNIT_ITEM write FVL_UNIT_ITEM;
+    property VL_BC_ICMS_ST: double read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_SUPORT_ENTR: double read FVL_ICMS_SUPORT_ENTR write FVL_ICMS_SUPORT_ENTR;
+  end;
+
+  { TRegistro1111List }
+
+  TRegistro1111List = class(TObjectList)
+  private
+    FRegistro1001: TRegistro1001;
+    function GetItem(Index: integer): TRegistro1111;
+    procedure SetItem(Index: integer; const Value: TRegistro1111);
+  public
+    constructor Create(const ARegistro1001: TRegistro1001);
+    function New(): TRegistro1111;
+    property Items[Index: integer]: TRegistro1111 read GetItem write SetItem;
+  end;
+
+  TRegistro1111 = class(TBlocos)
+  private
+    FDT_DOC: TDateTime;
+    FCOD_RESP_RET: TADRCSTIndicadorResponsavelRetencao;
+    FCST_CSOSN: string;
+    FCHAVE: string;
+    FN_NF: integer;
+    FCNPJ_EMIT: string;
+    FUF_EMIT: string;
+    FCNPJ_DEST: string;
+    FUF_DEST: string;
+    FCFOP: integer;
+    FN_ITEM: integer;
+    FUNID_ITEM: string;
+    FQTD_ENTRADA: double;
+    FVL_UNIT_ITEM: double;
+    FVL_BC_ICMS_ST: double;
+    FVL_ICMS_SUPORT_ENTR: double;
+  public
+    constructor Create(const ARegistro: TRegistro1001);
+    //destructor Destroy; override;
+
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
+    property COD_RESP_RET: TADRCSTIndicadorResponsavelRetencao read FCOD_RESP_RET write FCOD_RESP_RET;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -282,7 +415,7 @@ type
   TRegistro1120 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -303,7 +436,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -373,7 +506,7 @@ type
   TRegistro1210 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -391,7 +524,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -422,7 +555,7 @@ type
   TRegistro1220 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -442,7 +575,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -503,7 +636,7 @@ type
   TRegistro1310 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -521,7 +654,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -552,7 +685,7 @@ type
   TRegistro1320 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -572,7 +705,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -629,7 +762,7 @@ type
   TRegistro1410 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -647,7 +780,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -678,7 +811,7 @@ type
   TRegistro1420 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -698,7 +831,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -756,7 +889,7 @@ type
   TRegistro1510 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -773,7 +906,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -803,7 +936,7 @@ type
   TRegistro1520 = class(TBlocos)
   private
     FDT_DOC: TDateTime;
-    FCST_CSOSN: integer;
+    FCST_CSOSN: string;
     FCHAVE: string;
     FN_NF: integer;
     FCNPJ_EMIT: string;
@@ -822,7 +955,7 @@ type
     //destructor Destroy; override;
 
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property CST_CSOSN: integer read FCST_CSOSN write FCST_CSOSN;
+    property CST_CSOSN: string read FCST_CSOSN write FCST_CSOSN;
     property CHAVE: string read FCHAVE write FCHAVE;
     property N_NF: integer read FN_NF write FN_NF;
     property CNPJ_EMIT: string read FCNPJ_EMIT write FCNPJ_EMIT;
@@ -1340,9 +1473,9 @@ begin
 
 
   FRegistro1200 := nil;
-
+  FRegistro1300 := nil;
+  FRegistro1400 := nil;
   FRegistro1500 := nil;
-
 end;
 
 destructor TRegistro1000.Destroy;
@@ -1429,9 +1562,102 @@ end;
 
 destructor TRegistro1000List.Destroy;
 begin
-  FRegistro1999.Destroy;;
+  FRegistro1999.Destroy;
   inherited Destroy;
 end;
 
+{ TRegistro1001 }
+
+constructor TRegistro1001.Create( ARegistro1999: TRegistro1999);
+begin
+  inherited Create;
+  FRegistro1999 := ARegistro1999;
+  FRegistro1999.Incrementa;
+
+  FRegistro1101 := TRegistro1101.Create(Self);
+end;
+
+destructor TRegistro1001.Destroy;
+begin
+  FRegistro1101.Destroy;
+  inherited;
+end;
+
+{ TRegistro1001List }
+
+constructor TRegistro1001List.Create;
+begin
+  inherited Create;
+  FRegistro1999 := TRegistro1999.Create;
+end;
+
+destructor TRegistro1001List.Destroy;
+begin
+  FRegistro1999.Destroy;
+  inherited Destroy;
+end;
+
+function TRegistro1001List.GetItem(Index: integer): TRegistro1001;
+begin
+  Result := TRegistro1001(inherited Items[Index]);
+end;
+
+function TRegistro1001List.New: TRegistro1001;
+begin
+  Add(Result);
+end;
+
+procedure TRegistro1001List.SetItem(Index: integer; const Value: TRegistro1001);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistro1101 }
+
+constructor TRegistro1101.Create(const ARegistro1001: TRegistro1001);
+begin
+  inherited Create;
+  FRegistro1111List := TRegistro1111List.Create(ARegistro1001);
+  ARegistro1001.Registro1999.Incrementa;
+end;
+
+destructor TRegistro1101.Destroy;
+begin
+  FRegistro1111List.Destroy;
+  inherited;
+end;
+
+{ TRegistro1111 }
+
+constructor TRegistro1111.Create(const ARegistro: TRegistro1001);
+begin
+  inherited Create;
+  FUNID_ITEM := ARegistro.UNID_ITEM;
+  ARegistro.Registro1999.Incrementa;
+end;
+
+{ TRegistro1111List }
+
+constructor TRegistro1111List.Create(const ARegistro1001: TRegistro1001);
+begin
+  inherited Create;
+  FRegistro1001 := ARegistro1001;
+end;
+
+function TRegistro1111List.GetItem(Index: integer): TRegistro1111;
+begin
+  Result := TRegistro1111(inherited Items[Index]);
+end;
+
+function TRegistro1111List.New: TRegistro1111;
+begin
+  Result := TRegistro1111.Create(FRegistro1001);
+  Add(Result);
+end;
+
+procedure TRegistro1111List.SetItem(Index: integer; const Value: TRegistro1111);
+begin
+  Put(Index, Value);
+end;
 
 end.

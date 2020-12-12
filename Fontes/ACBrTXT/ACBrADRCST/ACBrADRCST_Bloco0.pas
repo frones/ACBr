@@ -58,10 +58,10 @@ type
     FN_REG_ESPECIAL: string;
     FCNPJ_CD: string;
     FIE_CD: string;
-    FOPCAO_R1200: integer;
-    FOPCAO_R1300: integer;
-    FOPCAO_R1400: integer;
-    FOPCAO_R1500: integer;
+    FOPCAO_R1200: TADRCSTIndicadorReaverRecolherImposto;
+    FOPCAO_R1300: TADRCSTIndicadorReaverRecolherImposto;
+    FOPCAO_R1400: TADRCSTIndicadorReaverRecolherImposto;
+    FOPCAO_R1500: TADRCSTIndicadorReaverRecolherImposto;
 
   public
     constructor Create;overload;
@@ -76,10 +76,10 @@ type
     property CNPJ_CD: string read FCNPJ_CD write FCNPJ_CD;
     property IE_CD: string read FIE_CD write FIE_CD;
     //mudar abaixo para enumeradores
-    property OPCAO_R1200 : integer read FOPCAO_R1200 write FOPCAO_R1200;
-    property OPCAO_R1300 : integer read FOPCAO_R1300 write FOPCAO_R1300;
-    property OPCAO_R1400 : integer read FOPCAO_R1400 write FOPCAO_R1400;
-    property OPCAO_R1500 : integer read FOPCAO_R1500 write FOPCAO_R1500;
+    property OPCAO_R1200 : TADRCSTIndicadorReaverRecolherImposto read FOPCAO_R1200 write FOPCAO_R1200;
+    property OPCAO_R1300 : TADRCSTIndicadorReaverRecolherImposto read FOPCAO_R1300 write FOPCAO_R1300;
+    property OPCAO_R1400 : TADRCSTIndicadorReaverRecolherImposto read FOPCAO_R1400 write FOPCAO_R1400;
+    property OPCAO_R1500 : TADRCSTIndicadorReaverRecolherImposto read FOPCAO_R1500 write FOPCAO_R1500;
 
   end;
 
@@ -90,14 +90,14 @@ type
   private
     FCD_FIN: TADRCSTFinalidade;
     FCNPJ: string;
-    FCOD_VERSAO: TCDVersao;
+    FCOD_VERSAO: TADRCSTCDVersao;
     FIE: string;
     FMES_ANO: TDateTime;
     FNOME: string;
   public
     constructor Create;overload;
 
-    property COD_VERSAO : TCDVersao read FCOD_VERSAO write FCOD_VERSAO;
+    property COD_VERSAO : TADRCSTCDVersao read FCOD_VERSAO write FCOD_VERSAO;
     property MES_ANO : TDateTime read FMES_ANO write FMES_ANO;
     property CNPJ : string read FCNPJ write FCNPJ;
     property IE : string read FIE write FIE;
@@ -114,7 +114,7 @@ implementation
 constructor TRegistro0001.Create;
 begin
   inherited Create;
-  FCOD_VERSAO := High(TCDVersao);
+  FCOD_VERSAO := High(TADRCSTCDVersao);
   FCD_FIN := afnArquivoOriginal;
 end;
 

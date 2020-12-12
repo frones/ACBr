@@ -49,12 +49,16 @@ type
   { TBloco_1}
   TBloco_1 = class(TACBrTXTClass)
   private
+    FLayout : TADRCSTLayout;
     FRegistro1000List: TRegistro1000List;
+    FRegistro1001List: TRegistro1001List;
     FRegistro1999: TRegistro1999;
 
     procedure WriteRegistro1010(const ARegistro1000: TRegistro1000);
     procedure WriteRegistro1100(const ARegistro1000: TRegistro1000);
+    procedure WriteRegistro1101(const ARegistro1001: TRegistro1001);
     procedure WriteRegistro1110(const ARegistro1100: TRegistro1100);
+    procedure WriteRegistro1111(const ARegistro1101: TRegistro1101);
     procedure WriteRegistro1120(const ARegistro1100: TRegistro1100);
 
     procedure WriteRegistro1200(const ARegistro1000: TRegistro1000);
@@ -74,17 +78,24 @@ type
     procedure WriteRegistro1520(const ARegistro1500: TRegistro1500);
 
     procedure WriteRegistro1999(const ARegistro1999: TRegistro1999);
+
+    function GetLayout: TADRCSTLayout;
+    procedure SetLayout(const Value: TADRCSTLayout);
   public
     constructor Create; virtual;
     destructor Destroy; override;
 
     function Registro1000New: TRegistro1000;
+    function Registro1001New: TRegistro1001;
 
     procedure WriteRegistro1000;
+    procedure WriteRegistro1001;
 
     property Registro1000List: TRegistro1000List read FRegistro1000List write FRegistro1000List;
+    property Registro1001List: TRegistro1001List read FRegistro1001List write FRegistro1001List;
 
     property Registro1999  : TRegistro1999 read FRegistro1999;
+    property Layout : TADRCSTLayout read GetLayout write SetLayout;
   end;
 
 
@@ -105,7 +116,8 @@ begin
         LFill(UNID_ITEM)+
         LFill(QTD,9,3)+
         LFill(VL_TOT_ITEM,9,2)+
-        LFill(TXT_COMPL)
+        LFill(TXT_COMPL),
+        False
         );
     end;
   end;
@@ -123,7 +135,8 @@ begin
         LFill(MENOR_VL_UNIT_ITEM,9,2)+
         LFill(VL_BC_ICMSST_UNIT_MED,9,2)+
         LFill(VL_TOT_ICMS_SUPORT_ENTR,9,2)+
-        LFill(VL_UNIT_MED_ICMS_SUPORT_ENTR,9,2)
+        LFill(VL_UNIT_MED_ICMS_SUPORT_ENTR,9,2),
+        False
         );
       WriteRegistro1110(ARegistro1000.Registro1100);
       WriteRegistro1120(ARegistro1000.Registro1100);
@@ -131,6 +144,28 @@ begin
   end
   else
     raise Exception.Create('Registro 1100 é obrigatório!');
+end;
+
+procedure TBloco_1.WriteRegistro1101(const ARegistro1001: TRegistro1001);
+begin
+  if Assigned(ARegistro1001.Registro1101) then
+  begin
+    with ARegistro1001.Registro1101 do
+    begin
+      Add(
+        LFill(REG) +
+        LFill(QTD_TOT_ENTRADA,9,3)+
+        LFill(VL_BC_ICMSST_UNIT_MED,9,2)+
+        LFill(VL_TOT_ICMS_SUPORT_ENTR,9,2)+
+        LFill(VL_UNIT_MED_ICMS_SUPORT_ENTR,9,2)+
+        LFill(QTD_TRANF,9),
+        False
+        );
+      WriteRegistro1111(ARegistro1001.Registro1101);
+    end;
+  end
+  else
+    raise Exception.Create('Registro 1101 é obrigatório!');
 end;
 
 procedure TBloco_1.WriteRegistro1110(const ARegistro1100: TRegistro1100);
@@ -148,23 +183,59 @@ begin
           LFill(ADRCSTIndicadorResponsavelRetencaoToString( COD_RESP_RET))+
           LFill(CST_CSOSN)+
           LFill(CHAVE,44)+
-          LFill(N_NF)+
+          LFill(N_NF,0)+
           LFill(CNPJ_EMIT,14)+
-          LFill(UF_EMIT)+
+          LFill(UF_EMIT,2)+
           LFill(CNPJ_DEST,14)+
-          LFill(UF_DEST)+
+          LFill(UF_DEST,2)+
           LFill(CFOP,4)+
-          LFill(N_ITEM)+
+          LFill(N_ITEM,0)+
           LFill(UNID_ITEM)+
           LFill(QTD_ENTRADA,9,3)+
           LFill(VL_UNIT_ITEM,9,2)+
           LFill(VL_BC_ICMS_ST,9,2)+
-          LFill(VL_ICMS_SUPORT_ENTR,9,2)
+          LFill(VL_ICMS_SUPORT_ENTR,9,2),
+          False
           );
       end;
   end
   else
     raise Exception.Create('Necessário ter pelo menos um 1110');
+end;
+
+procedure TBloco_1.WriteRegistro1111(const ARegistro1101: TRegistro1101);
+var
+  i: Integer;
+begin
+  if (ARegistro1101.Registro1111List.Count > 0) then
+  begin
+    for i := 0 to ARegistro1101.Registro1111List.Count -1 do
+      with ARegistro1101.Registro1111List.Items[i] do
+      begin
+        Add(
+          LFill(REG)+
+          LFill(DT_DOC)+
+          LFill(ADRCSTIndicadorResponsavelRetencaoToString( COD_RESP_RET))+
+          LFill(CST_CSOSN)+
+          LFill(CHAVE,44)+
+          LFill(N_NF,0)+
+          LFill(CNPJ_EMIT,14)+
+          LFill(UF_EMIT,2)+
+          LFill(CNPJ_DEST,14)+
+          LFill(UF_DEST,2)+
+          LFill(CFOP,4)+
+          LFill(N_ITEM,0)+
+          LFill(UNID_ITEM)+
+          LFill(QTD_ENTRADA,9,3)+
+          LFill(VL_UNIT_ITEM,9,2)+
+          LFill(VL_BC_ICMS_ST,9,2)+
+          LFill(VL_ICMS_SUPORT_ENTR,9,2),
+          False
+          );
+      end;
+  end
+  else
+    raise Exception.Create('Necessário ter pelo menos um 1111');
 end;
 
 procedure TBloco_1.WriteRegistro1120(const ARegistro1100: TRegistro1100);
@@ -181,20 +252,21 @@ begin
           LFill(DT_DOC)+
           LFill(CST_CSOSN)+
           LFill(CHAVE,44)+
-          LFill(N_NF)+
-          LFill(CNPJ_EMIT)+
-          LFill(UF_EMIT)+
-          LFill(CNPJ_DEST)+
-          LFill(UF_DEST)+
-          LFill(CFOP)+
-          LFill(N_ITEM)+
+          LFill(N_NF,0)+
+          LFill(CNPJ_EMIT,14)+
+          LFill(UF_EMIT,2)+
+          LFill(CNPJ_DEST,14)+
+          LFill(UF_DEST,2)+
+          LFill(CFOP,4)+
+          LFill(N_ITEM,0)+
           LFill(UNID_ITEM)+
           LFill(QTD_DEVOLVIDA,9,3)+
           LFill(VL_UNIT_ITEM,9,2)+
           LFill(VL_BC_ICMS_ST,9,2)+
           LFill(VL_ICMS_SUPORT_ENTR,9,2)+
-          LFill(CHAVE_REF)+
-          LFill(N_ITEM_REF)
+          LFill(CHAVE_REF,44)+
+          LFill(N_ITEM_REF,0),
+          False
           );
       end;
   end
@@ -217,7 +289,8 @@ begin
         LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2)+
         LFill(APUR_ICMSST_COMPLEMENTAR,9,2)+
         LFill(APUR_FECOP_RESSARCIR,9,2)+
-        LFill(APUR_FECOP_COMPLEMENTAR,9,2)
+        LFill(APUR_FECOP_COMPLEMENTAR,9,2),
+        False
         );
       WriteRegistro1210(ARegistro1000.Registro1200);
       WriteRegistro1220(ARegistro1000.Registro1200);
@@ -239,17 +312,18 @@ begin
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
-          LFill(N_NF) +
+          LFill(N_NF,0) +
           LFill(CNPJ_EMIT,14) +
           LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
           LFill(UF_DEST,2) +
           LFill(CFOP,4) +
-          LFill(N_ITEM) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM)+
           LFill(QTD_SAIDA,9,3) +
           LFill(VL_UNIT_ITEM,9,2) +
-          LFill(VL_ICMS_EFETIVO,9,2)
+          LFill(VL_ICMS_EFETIVO,9,2),
+          False
           );
       end;
   end
@@ -272,19 +346,20 @@ begin
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
-          LFill(N_NF) +
+          LFill(N_NF,0) +
           LFill(CNPJ_EMIT,14) +
           LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST)+
           LFill(UF_DEST,2)+
           LFill(CFOP,4)+
-          LFill(N_ITEM) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM) +
           LFill(QTD_DEVOLVIDA, 9,3) +
           LFill(VL_UNIT_ITEM,9,2) +
           LFill(VL_ICMS_EFETIVO,9,2) +
           LFill(CHAVE_REF,44)+
-          LFill(N_ITEM_REF)
+          LFill(N_ITEM_REF,0),
+          False
           );
       end;
   end
@@ -303,7 +378,8 @@ begin
         LFill(VL_CONFRONTO_ICMS_ENTRADA,9,2) +
         LFill(RESULT_RECUPERAR_RESSARCIR,9,2)+
         LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2)+
-        LFill(APUR_FECOP_RESSARCIR,9,2)
+        LFill(APUR_FECOP_RESSARCIR,9,2),
+        False
         );
       WriteRegistro1310(ARegistro1000.Registro1300);
       WriteRegistro1320(ARegistro1000.Registro1300);
@@ -324,18 +400,19 @@ begin
           LFill(REG)+
           LFill(DT_DOC)+
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM)+
           LFill(QTD_SAIDA,9,3)+
           LFill(VL_UNIT_ITEM,9,2)+
-          LFill(VL_ICMS_EFETIVO,9,2)
+          LFill(VL_ICMS_EFETIVO,9,2),
+          False
           );
       end;
   end
@@ -356,20 +433,21 @@ begin
           LFill(REG) +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM) +
           LFill(QTD_DEVOLVIDA,9,3) +
           LFill(VL_UNIT_ITEM,9,2) +
           LFill(VL_ICMS_EFETIVO,9,2) +
-          LFill(CHAVE_REF) +
-          LFill(N_ITEM_REF)
+          LFill(CHAVE_REF,44) +
+          LFill(N_ITEM_REF,0),
+          False
           );
       end;
   end
@@ -386,7 +464,8 @@ begin
         LFill(QTD_TOT_SAIDA,9,3)+
         LFill(VL_TOT_ICMS_EFETIVO,9,2)+
         LFill(VL_CONFRONTO_ICMS_ENTRADA,9,2) +
-        LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2)
+        LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2),
+        False
         );
       WriteRegistro1410(ARegistro1000.Registro1400);
       WriteRegistro1420(ARegistro1000.Registro1400);
@@ -407,18 +486,19 @@ begin
           LFill(REG)+
           LFill(DT_DOC)+
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM)+
           LFill(QTD_SAIDA,9,3)+
           LFill(VL_UNIT_ITEM,9,2)+
-          LFill(VL_ICMS_EFETIVO,9,2)
+          LFill(VL_ICMS_EFETIVO,9,2),
+          False
           );
       end;
   end
@@ -439,20 +519,21 @@ begin
           LFill(REG) +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM) +
           LFill(QTD_DEVOLVIDA,9,3) +
           LFill(VL_UNIT_ITEM,9,2) +
           LFill(VL_ICMS_EFETIVO,9,2) +
-          LFill(CHAVE_REF) +
-          LFill(N_ITEM_REF)
+          LFill(CHAVE_REF,44) +
+          LFill(N_ITEM_REF,0),
+          False
           );
       end;
   end
@@ -467,9 +548,10 @@ begin
       Add(
         LFill(REG) +
         LFill(QTD_TOT_SAIDA,9,3)+
-        LFill(VL_ICMSST_UNIT_ENTR,9,2)+
+        LFill(VL_ICMSST_UNIT_ENTR,9,4)+
         LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2) +
-        LFill(MVA_ICMSST,9,2)
+        LFill(MVA_ICMSST,9,2),
+        False
         );
       WriteRegistro1510(ARegistro1000.Registro1500);
       WriteRegistro1520(ARegistro1000.Registro1500);
@@ -490,17 +572,18 @@ begin
           LFill(REG)+
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM) +
           LFill(QTD_SAIDA,9,3) +
-          LFill(VL_UNIT_ITEM,9,2)
+          LFill(VL_UNIT_ITEM,9,2),
+          False
           );
       end;
   end
@@ -522,19 +605,20 @@ begin
           LFill(REG) +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
-          LFill(CHAVE) +
-          LFill(N_NF) +
-          LFill(CNPJ_EMIT) +
-          LFill(UF_EMIT) +
+          LFill(CHAVE,44) +
+          LFill(N_NF,0) +
+          LFill(CNPJ_EMIT,14) +
+          LFill(UF_EMIT,2) +
           LFill(CNPJ_CPF_DEST) +
-          LFill(UF_DEST) +
-          LFill(CFOP) +
-          LFill(N_ITEM) +
+          LFill(UF_DEST,2) +
+          LFill(CFOP,4) +
+          LFill(N_ITEM,0) +
           LFill(UNID_ITEM) +
           LFill(QTD_DEVOLVIDA,9,3)+
           LFill(VL_UNIT_ITEM,9,2)+
-          LFill(CHAVE_REF) +
-          LFill(N_ITEM_REF)
+          LFill(CHAVE_REF,44) +
+          LFill(N_ITEM_REF,0),
+          False
           );
       end;
   end
@@ -544,8 +628,9 @@ procedure TBloco_1.WriteRegistro1999(const ARegistro1999: TRegistro1999);
 begin
    with ARegistro1999 do
    begin
-     Add(LFill(REG)+
-         LFill(QTD_LIN,4));
+     Add(LFill(REG) +
+         LFill(QTD_LIN,4),
+         False);
    end;
 end;
 
@@ -553,19 +638,40 @@ constructor TBloco_1.Create;
 begin
   inherited;
   FRegistro1000List := TRegistro1000List.Create;
-  FRegistro1999 := FRegistro1000List.Registro1999;
+  FRegistro1001List := TRegistro1001List.Create;
 end;
 
 destructor TBloco_1.Destroy;
 begin
   FRegistro1000List.Destroy;
+  FRegistro1001List.Destroy;
   inherited Destroy;
+end;
+
+function TBloco_1.GetLayout: TADRCSTLayout;
+begin
+  Result := FLayout;
 end;
 
 function TBloco_1.Registro1000New: TRegistro1000;
 begin
   Result := TRegistro1000.Create(FRegistro1000List.Registro1999);
   FRegistro1000List.Add(Result);
+end;
+
+function TBloco_1.Registro1001New: TRegistro1001;
+begin
+  Result := TRegistro1001.Create(FRegistro1001List.Registro1999);
+  FRegistro1001List.Add(Result);
+end;
+
+procedure TBloco_1.SetLayout(const Value: TADRCSTLayout);
+begin
+  FLayout := Value;
+  if Layout = lyADRCST then
+    FRegistro1999   := FRegistro1000List.Registro1999
+  else
+    FRegistro1999   := FRegistro1001List.Registro1999;
 end;
 
 procedure TBloco_1.WriteRegistro1000;
@@ -590,7 +696,8 @@ begin
             LFill(ALIQ_ICMS_ITEM,2,2) +
             LFill(ALIQ_FECOP,1,2) +
             LFill(QTD_TOT_ENTRADA,9,3) +
-            LFill(QTD_TOT_SAIDA,9,3)
+            LFill(QTD_TOT_SAIDA,9,3),
+            False
           );
 
         WriteRegistro1010(FRegistro1000List.Items[i]);
@@ -607,6 +714,36 @@ begin
       end;
     end;
     WriteRegistro1999( FRegistro1000List.Registro1999);
+  end;
+end;
+
+procedure TBloco_1.WriteRegistro1001;
+var
+  i : integer;
+begin
+  if Assigned(FRegistro1001List) then
+  begin
+    for i := 0 to FRegistro1001List.Count -1 do
+    begin
+      with FRegistro1001List.Items[i] do
+      begin
+        Add(LFill(REG) +
+            LFill(ADRCSTIndicadorProdutoFECOPToString( IND_FECOP)) +
+            LFill(COD_ITEM) +
+            LFill(COD_BARRAS) +
+            LFill(COD_ANP) +
+            LFill(NCM) +
+            LFill(CEST) +
+            LFill(DESCR_ITEM) +
+            LFill(UNID_ITEM) +
+            LFill(ALIQ_ICMS_ITEM,2,2) +
+            LFill(ALIQ_FECOP,1,2),
+            False
+          );
+
+        WriteRegistro1101(FRegistro1001List.Items[i]);
+      end;
+    end;
   end;
 end;
 

@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2020
+-- ACBrBoletoFCFR --
+[+] Adicionado funcionalidade para impressão e geração de pdf individual utilizando a lista de títulos
+    https://www.projetoacbr.com.br/forum/topic/60463-impress%C3%A3o-boletos-separados-fast-report/
+  Por: José M S Junior
+
 20/01/2020
 -- ACBrBoletoFCFR --
 [-] Correção para geração do PDF após remoção da senha.

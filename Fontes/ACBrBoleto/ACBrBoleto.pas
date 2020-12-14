@@ -1644,6 +1644,7 @@ type
     FAlterarEscalaPadrao: Boolean;
     FNovaEscala: Integer;
     FIndiceImprimirIndividual: Integer;
+    FCalcularNomeArquivoPDFIndividual: Boolean;
     function ComponentStateDesigning: Boolean;
     function GetArquivoLogo: String;
     function GetDirLogo: String;
@@ -1688,6 +1689,7 @@ type
     property PrinterName     : String          read fPrinterName      write fPrinterName;
     property DirLogo         : String          read GetDirLogo        write SetDirLogo;
     property NomeArquivo     : String          read GetNomeArquivo    write SetNomeArquivo ;
+    property CalcularNomeArquivoPDFIndividual: Boolean        read FCalcularNomeArquivoPDFIndividual write FCalcularNomeArquivoPDFIndividual default True ;
     property PdfSenha        : string          read FPdfSenha         write SetPdfSenha;
     property AlterarEscalaPadrao: Boolean      read FAlterarEscalaPadrao write FAlterarEscalaPadrao default False;
     property NovaEscala      : Integer         read FNovaEscala       write FNovaEscala        default 96;
@@ -5152,6 +5154,7 @@ begin
   FAlterarEscalaPadrao := False;
   FNovaEscala          := 96;
   FIndiceImprimirIndividual := -1;
+  FCalcularNomeArquivoPDFIndividual := True;
 
 end;
 
@@ -5341,7 +5344,7 @@ begin
      if fACBrBoleto.ListadeBoletos.Count < 1 then
        raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
-     if FIndiceImprimirIndividual >= 0 then
+     if (FIndiceImprimirIndividual >= 0) and (FCalcularNomeArquivoPDFIndividual) then
      begin
        fPathNomeArquivo:= '';
        NomeArquivo := GetNomeArquivoPdfIndividual(NomeArquivoAntigo, FIndiceImprimirIndividual);

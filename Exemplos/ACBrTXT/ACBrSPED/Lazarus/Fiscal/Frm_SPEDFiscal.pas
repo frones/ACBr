@@ -26,7 +26,7 @@
 {                                                                              }
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
-{******************************************************************************}4
+{******************************************************************************}
 unit Frm_SPEDFiscal;
 
 {$IFDEF FPC}

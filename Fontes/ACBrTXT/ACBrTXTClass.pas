@@ -119,14 +119,14 @@ implementation
 
 Uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
-  ACBrUtil ;
+  ACBrUtil, ACBrConsts ;
 
 (* TACBrTXTClass *)
 
 constructor TACBrTXTClass.Create;
 begin
    FConteudo           := TStringList.Create ;
-   FConteudo.LineBreak := sLineBreak ;
+   FConteudo.LineBreak := CRLF ;
    FOnError            := Nil;
    FNomeArquivo        := '';
    FDelimitador        := '';

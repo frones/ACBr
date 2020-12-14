@@ -126,6 +126,7 @@ Uses
 constructor TACBrTXTClass.Create;
 begin
    FConteudo           := TStringList.Create ;
+   FConteudo.LineBreak := sLineBreak ;
    FOnError            := Nil;
    FNomeArquivo        := '';
    FDelimitador        := '';

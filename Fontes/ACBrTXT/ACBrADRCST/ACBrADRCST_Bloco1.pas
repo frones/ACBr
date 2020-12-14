@@ -163,6 +163,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear; override;
 
     function New(): TRegistro1000;
     property Items[Index: integer]: TRegistro1000 read GetItem write SetItem;
@@ -214,6 +215,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear; override;
 
     function New(): TRegistro1001;
     property Items[Index: integer]: TRegistro1001 read GetItem write SetItem;
@@ -1489,50 +1491,35 @@ end;
 function TRegistro1000.Registro1010New: TRegistro1010;
 begin
   if not Assigned(FRegistro1010) then
-  begin
     FRegistro1010 := TRegistro1010.Create(Self);
-    FRegistro1999.Incrementa;
-  end;
   Result := FRegistro1010;
 end;
 
 function TRegistro1000.Registro1200New: TRegistro1200;
 begin
   if not Assigned(FRegistro1200) then
-  begin
     FRegistro1200 := TRegistro1200.Create(Self);
-    FRegistro1999.Incrementa;
-  end;
   Result := FRegistro1200;
 end;
 
 function TRegistro1000.Registro1300New: TRegistro1300;
 begin
   if not Assigned(FRegistro1300) then
-  begin
     FRegistro1300 := TRegistro1300.Create(Self);
-    FRegistro1999.Incrementa;
-  end;
   Result := FRegistro1300;
 end;
 
 function TRegistro1000.Registro1400New: TRegistro1400;
 begin
   if not Assigned(FRegistro1400) then
-  begin
     FRegistro1400 := TRegistro1400.Create(Self);
-    FRegistro1999.Incrementa;
-  end;
   Result := FRegistro1400;
 end;
 
 function TRegistro1000.Registro1500New: TRegistro1500;
 begin
   if not Assigned(FRegistro1500) then
-  begin
     FRegistro1500 := TRegistro1500.Create(Self);
-    FRegistro1999.Incrementa;
-  end;
   Result := FRegistro1500;
 end;
 
@@ -1554,6 +1541,13 @@ begin
   Put(Index, Value);
 end;
 
+procedure TRegistro1000List.Clear;
+begin
+  inherited;
+  FRegistro1999.Destroy;
+  FRegistro1999 := TRegistro1999.Create;
+end;
+
 constructor TRegistro1000List.Create;
 begin
   inherited Create;
@@ -1562,8 +1556,8 @@ end;
 
 destructor TRegistro1000List.Destroy;
 begin
-  FRegistro1999.Destroy;
   inherited Destroy;
+  FRegistro1999.Destroy;
 end;
 
 { TRegistro1001 }
@@ -1583,6 +1577,13 @@ begin
   inherited;
 end;
 
+procedure TRegistro1001List.Clear;
+begin
+  inherited;
+  FRegistro1999.Destroy;
+  FRegistro1999 := TRegistro1999.Create;
+end;
+
 { TRegistro1001List }
 
 constructor TRegistro1001List.Create;
@@ -1593,8 +1594,8 @@ end;
 
 destructor TRegistro1001List.Destroy;
 begin
-  FRegistro1999.Destroy;
   inherited Destroy;
+  FRegistro1999.Destroy;
 end;
 
 function TRegistro1001List.GetItem(Index: integer): TRegistro1001;

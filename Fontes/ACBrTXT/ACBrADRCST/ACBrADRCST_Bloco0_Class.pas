@@ -102,7 +102,7 @@ begin
   if Assigned(FRegistro0000)then
   with FRegistro0000 do
   begin
-    Add(  LFill(REG) +
+    Add(  REG +
           LFill(ADRCSTVersaoToString( COD_VERSAO)) +
           LFill(MES_ANO,'mmyyyy',false) +
           LFill(CNPJ,14) +
@@ -126,7 +126,7 @@ begin
   if Assigned(FRegistro0001)then
   with FRegistro0001 do
   begin
-    Add(  LFill(REG) +
+    Add(  REG +
           LFill(ADRCSTCDVersaoToString( COD_VERSAO)) +
           LFill(MES_ANO,'mmyyyy',false) +
           LFill(CNPJ,14) +

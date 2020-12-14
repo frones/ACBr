@@ -243,6 +243,9 @@ begin
   InicializaBloco(Bloco_1);
   InicializaBloco(Bloco_9);
   fInicializado := True;
+
+  Bloco_1.Registro1000List.Clear;
+  Bloco_1.Registro1001List.Clear;
 end;
 
 procedure TACBrADRCST.InicializaBloco(Bloco: TACBrTXTClass);

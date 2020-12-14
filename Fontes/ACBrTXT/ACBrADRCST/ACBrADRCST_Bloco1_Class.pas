@@ -111,7 +111,7 @@ begin
     with ARegistro1000.Registro1010 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(COD_ITEM)+
         LFill(UNID_ITEM)+
         LFill(QTD,9,3)+
@@ -130,7 +130,7 @@ begin
     with ARegistro1000.Registro1100 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_ENTRADA,9,3)+
         LFill(MENOR_VL_UNIT_ITEM,9,2)+
         LFill(VL_BC_ICMSST_UNIT_MED,9,2)+
@@ -153,7 +153,7 @@ begin
     with ARegistro1001.Registro1101 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_ENTRADA,9,3)+
         LFill(VL_BC_ICMSST_UNIT_MED,9,2)+
         LFill(VL_TOT_ICMS_SUPORT_ENTR,9,2)+
@@ -178,7 +178,7 @@ begin
       with ARegistro1100.Registro1110List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC)+
           LFill(ADRCSTIndicadorResponsavelRetencaoToString( COD_RESP_RET))+
           LFill(CST_CSOSN)+
@@ -213,7 +213,7 @@ begin
       with ARegistro1101.Registro1111List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC)+
           LFill(ADRCSTIndicadorResponsavelRetencaoToString( COD_RESP_RET))+
           LFill(CST_CSOSN)+
@@ -248,7 +248,7 @@ begin
       with ARegistro1100.Registro1120List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC)+
           LFill(CST_CSOSN)+
           LFill(CHAVE,44)+
@@ -280,7 +280,7 @@ begin
     with ARegistro1000.Registro1200 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_SAIDA,9,3)+
         LFill(VL_TOT_ICMS_EFETIVO,9,2)+
         LFill(VL_CONFRONTO_ICMS_ENTRADA,9,2)+
@@ -308,7 +308,7 @@ begin
       with ARegistro1200.Registro1210List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -342,7 +342,7 @@ begin
       with ARegistro1200.Registro1220List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -372,7 +372,7 @@ begin
     with ARegistro1000.Registro1300 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_SAIDA,9,3)+
         LFill(VL_TOT_ICMS_EFETIVO,9,2)+
         LFill(VL_CONFRONTO_ICMS_ENTRADA,9,2) +
@@ -397,7 +397,7 @@ begin
       with ARegistro1300.Registro1310List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC)+
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -430,7 +430,7 @@ begin
       with ARegistro1300.Registro1320List.Items[i] do
       begin
         Add(
-          LFill(REG) +
+          REG +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -460,7 +460,7 @@ begin
     with ARegistro1000.Registro1400 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_SAIDA,9,3)+
         LFill(VL_TOT_ICMS_EFETIVO,9,2)+
         LFill(VL_CONFRONTO_ICMS_ENTRADA,9,2) +
@@ -483,7 +483,7 @@ begin
       with ARegistro1400.Registro1410List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC)+
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -516,7 +516,7 @@ begin
       with ARegistro1400.Registro1420List.Items[i] do
       begin
         Add(
-          LFill(REG) +
+          REG +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -546,7 +546,7 @@ begin
     with ARegistro1000.Registro1500 do
     begin
       Add(
-        LFill(REG) +
+        REG +
         LFill(QTD_TOT_SAIDA,9,3)+
         LFill(VL_ICMSST_UNIT_ENTR,9,4)+
         LFill(APUR_ICMSST_RECUPERAR_RESSARCIR,9,2) +
@@ -569,7 +569,7 @@ begin
       with ARegistro1500.Registro1510List.Items[i] do
       begin
         Add(
-          LFill(REG)+
+          REG+
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -602,7 +602,7 @@ begin
       with ARegistro1500.Registro1520List.Items[i] do
       begin
         Add(
-          LFill(REG) +
+          REG +
           LFill(DT_DOC) +
           LFill(CST_CSOSN) +
           LFill(CHAVE,44) +
@@ -626,9 +626,11 @@ end;
 
 procedure TBloco_1.WriteRegistro1999(const ARegistro1999: TRegistro1999);
 begin
+   ARegistro1999.Incrementa; //incrementa o 0000
+   ARegistro1999.Incrementa; //incrementa o proprio 1999
    with ARegistro1999 do
    begin
-     Add(LFill(REG) +
+     Add(REG+
          LFill(QTD_LIN,4),
          False);
    end;
@@ -684,7 +686,7 @@ begin
     begin
       with FRegistro1000List.Items[i] do
       begin
-        Add(LFill(REG) +
+        Add(REG +
             LFill(ADRCSTIndicadorProdutoFECOPToString( IND_FECOP)) +
             LFill(COD_ITEM) +
             LFill(COD_BARRAS) +
@@ -727,7 +729,7 @@ begin
     begin
       with FRegistro1001List.Items[i] do
       begin
-        Add(LFill(REG) +
+        Add(REG +
             LFill(ADRCSTIndicadorProdutoFECOPToString( IND_FECOP)) +
             LFill(COD_ITEM) +
             LFill(COD_BARRAS) +

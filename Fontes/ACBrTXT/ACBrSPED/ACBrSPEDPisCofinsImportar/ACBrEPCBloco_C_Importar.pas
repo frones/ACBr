@@ -700,6 +700,7 @@ begin
     COD_INF := Valor;
     VL_PIS := ValorF;
     VL_COFINS := ValorF;
+    CHV_DOCe := Valor;
   end;
 end;
 

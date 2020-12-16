@@ -126,9 +126,13 @@ Uses
 constructor TACBrTXTClass.Create;
 begin
    FConteudo           := TStringList.Create ;
-   {$IFDEF CompilerVersion >=18} // Delphi 2006
-	 FConteudo.LineBreak := CRLF;
-   {$IFEND}
+   {$IFDEF FPC}
+   FConteudo.LineBreak := CRLF;
+   {$ELSE}
+     {$IFDEF DELPHI2006_UP}
+     FConteudo.LineBreak := CRLF;
+     {$ENDIF}
+   {$ENDIF}
    FOnError            := Nil;
    FNomeArquivo        := '';
    FDelimitador        := '';

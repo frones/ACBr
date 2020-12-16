@@ -639,6 +639,7 @@ begin
     DANFeFortes.FonteLinhaItem.Color := FFonteLinhaItem.Color;
     DANFeFortes.FonteLinhaItem.Size := FFonteLinhaItem.Size;
     DANFeFortes.FonteLinhaItem.Style := FFonteLinhaItem.Style;
+    DANFeFortes.FormularioContinuo := True;
   end;
 end;
 

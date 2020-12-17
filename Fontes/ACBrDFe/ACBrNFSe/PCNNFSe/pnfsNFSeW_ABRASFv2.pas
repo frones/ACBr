@@ -992,7 +992,7 @@ begin
         proSigep:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
 
-        proCenti, proGoiania, proMegaSoft, proActconv2:
+        proCenti, proGoiania, proMegaSoft, proActconv2, ProTecnos:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
 
         profintelISS:

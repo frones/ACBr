@@ -379,11 +379,16 @@ end;
 procedure TACBrBancoSafra.GerarRegistroHeader400(NumeroRemessa: integer;
   ARemessa: TStringList);
 var wLinha: String;
+  aAgencia,
+  aConta: String;
 begin
   aTotal := 0;
   aCount := 0;
-  FNumeroRemessa := NumeroRemessa;
+  aAgencia := PadLeft(RightStr( ACBrBanco.ACBrBoleto.Cedente.Agencia, 5), 5, '0');
 
+  aConta := PadLeft(ACBrBanco.ACBrBoleto.Cedente.Conta, 8, '0') +
+              PadLeft(ACBrBanco.ACBrBoleto.Cedente.ContaDigito, 1, '0');
+  FNumeroRemessa := NumeroRemessa;
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
     wLinha := '0'                             + // ID do Registro Header
@@ -391,7 +396,7 @@ begin
               'REMESSA'                       + // Literal de Remessa
               '01'                            + // Código do Tipo de Serviço
               PadRight('COBRANCA', 15)        + // Descrição do tipo de serviço + "brancos"
-              PadLeft(CodigoCedente, 14, '0') + // Codigo da Empresa no Banco
+              aAgencia + aConta               + // Codigo da Empresa no Banco
               Space(6)                        + // "brancos"
               PadRight(Nome, 30)              + // Nome da Empresa
               IntToStr(Numero)                + // Código do Banco - 237

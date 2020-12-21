@@ -60,21 +60,23 @@ type
     FxMotivo: String;
     FdhResp: TDateTime;
     FNSU: String;
+    FindMDFeAberto: Integer;
     FXML: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
 
-    property Leitor: TLeitor         read FLeitor   write FLeitor;
-    property versao: String          read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
-    property dhResp: TDateTime       read FdhResp   write FdhResp;
-    property NSU: String             read FNSU      write FNSU;
-    property XML: AnsiString         read FXML      write FXML;
+    property Leitor: TLeitor         read FLeitor        write FLeitor;
+    property versao: String          read Fversao        write Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb         write FtpAmb;
+    property verAplic: String        read FverAplic      write FverAplic;
+    property cStat: Integer          read FcStat         write FcStat;
+    property xMotivo: String         read FxMotivo       write FxMotivo;
+    property dhResp: TDateTime       read FdhResp        write FdhResp;
+    property NSU: String             read FNSU           write FNSU;
+    property indMDFeAberto: Integer  read FindMDFeAberto write FindMDFeAberto;
+    property XML: AnsiString         read FXML           write FXML;
   end;
 
 implementation
@@ -107,13 +109,14 @@ begin
   try
     if (Leitor.rExtrai(1, 'retOneRecepLeitura') <> '') then
     begin
-      Fversao   := Leitor.rAtributo('versao');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-      FdhResp   := Leitor.rCampo(tcDatHor, 'dhResp');
-      FNSU      := Leitor.rCampo(tcStr, 'NSU');
+      Fversao        := Leitor.rAtributo('versao');
+      FtpAmb         := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      FverAplic      := Leitor.rCampo(tcStr, 'verAplic');
+      FcStat         := Leitor.rCampo(tcInt, 'cStat');
+      FxMotivo       := Leitor.rCampo(tcStr, 'xMotivo');
+      FdhResp        := Leitor.rCampo(tcDatHor, 'dhResp');
+      FNSU           := Leitor.rCampo(tcStr, 'NSU');
+      FindMDFeAberto := Leitor.rCampo(tcInt, 'indMDFeAberto');
 
       Result := True;
     end;

@@ -74,218 +74,272 @@ implementation
 
 uses
   Printers, OSPrinters,
-  ACBrLibSATStaticImport, ACBrLibSATConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibSATStaticImportMT, ACBrLibSATConsts, ACBrLibConsts, ACBrUtil, Dialogs;
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  SAT_Finalizar();
-  AssertEquals(ErrDiretorioNaoExiste, SAT_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+  AssertEquals(ErrDiretorioNaoExiste, SAT_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, SAT_Finalizar());
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Finalizar_Ja_Finalizado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, SAT_Finalizar());
+    Handle := 0;
+    AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+    AssertEquals(ErrOk, SAT_Finalizar(Handle));
+    {
+     try
+       SAT_Finalizar(Handle);
+     except
+       Exit;
+     end;
+     Fail('Não ocorreu erro ao finalizar uma segunda vez');
+    }
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Obtendo_LenBuffer;
 var
+  Handle: longint;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, SAT_Nome(Nil, Bufflen));
+  AssertEquals(ErrOk, SAT_Nome(Handle, Nil, Bufflen));
   AssertEquals(Length(CLibSATNome), Bufflen);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Identico;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := Length(CLibSATNome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_Nome(Handle,PChar(AStr), Bufflen));
   AssertEquals(Length(CLibSATNome), Bufflen);
   AssertEquals(CLibSATNome, AStr);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Maior;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := Length(CLibSATNome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_Nome(Handle,PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibSATNome), Bufflen);
   AssertEquals(CLibSATNome, AStr);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Menor;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := 4;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_Nome(Handle,PChar(AStr), Bufflen));
   AssertEquals(Length(CLibSATNome), Bufflen);
   AssertEquals(copy(CLibSATNome,1,4), AStr);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Versao;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, SAT_Versao(Nil, Bufflen));
+  AssertEquals(ErrOk, SAT_Versao(Handle,Nil, Bufflen));
   Assert(Bufflen > 0);
 
   // Lendo a resSATta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_Versao(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_Versao(Handle,PChar(AStr), Bufflen));
   Assert(Bufflen > 0);
   Assert(AStr <> '');
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_ConfigLerValor(Handle,CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CACBrLibVersaoConfig, AStr);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ConfigGravarValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Gravando o valor
-  AssertEquals('Erro ao Mudar configuração', ErrOk, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, SAT_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, SAT_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_CriarCFe;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
    // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
 
-  AssertEquals('Erro ao tentar criar o CFe', ErrOK, SAT_CriarCFe('..\CFe.ini', PChar(AStr), Bufflen));
+  AssertEquals('Erro ao tentar criar o CFe', ErrOK, SAT_CriarCFe(Handle, '..\CFe.ini', PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_EnviarCFe;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
    // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
 
-  AssertEquals('Erro ao tentar enviar o CFe', ErrOK, SAT_EnviarCFe('..\001-000000-satcfe.xml', PChar(AStr), Bufflen));
+  AssertEquals('Erro ao tentar enviar o CFe', ErrExecutandoMetodo, SAT_EnviarCFe(Handle, '..\001-000000-satcfe.xml', PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_CriarEnviarCFe;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
    // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
 
-  AssertEquals('Erro ao tentar criar e enviar o CFe', ErrOK, SAT_CriarEnviarCFe('..\CFe.ini', PChar(AStr), Bufflen));
+  AssertEquals('Erro ao tentar criar e enviar o CFe', ErrExecutandoMetodo, SAT_CriarEnviarCFe(Handle, '..\CFe.ini', PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoFortes;
 var
+  Handle: longint;
   NomeImpressoraPDF: String;
   I: Integer;
 begin
@@ -299,55 +353,66 @@ begin
     Inc( I );
   end;
 
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePrinterName, PChar(NomeImpressoraPDF)));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
-  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', ''));
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChaveTipo, '0'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePrinterName, PChar(NomeImpressoraPDF)));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
+
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda(Handle, '..\AD35180911111111111111591234567890001684429520.xml', ''));
+
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoEscPOS;
 var
-  SaidaImpressao: String;
+  Handle: longint;
+  //SaidaImpressao: String;
 begin
-  SaidaImpressao := ApplicationPath+'posprinter.txt';
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao)));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
-  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', ''));
+  //SaidaImpressao := ApplicationPath+'posprinter.txt';
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+
+  ////CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChaveTipo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPosPrinter, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao)));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
+
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda(Handle, '..\AD35180911111111111111591234567890001684429520.xml', ''));
+
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Sem_NomeArquivo;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
   PDFFile := ApplicationPath+'pdf'+PathDelim+'CFe-3518_0911_1111_1111_1111_5912_3456_7890_0016_8442_9520.pdf';
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePathPDF, ''));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChaveTipo, '0'));
+  //AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePathPDF, ''));
+  //AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
   if FileExists(PDFFile) then
     DeleteFile(PDFFile);
@@ -357,34 +422,34 @@ begin
   AStr := Space(Bufflen);
 
   AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
-                SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml',
+                SAT_GerarPDFExtratoVenda(Handle, '..\AD35180911111111111111591234567890001684429520.xml',
                                          '', PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
   AssertTrue(FileExists(PDFFile));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Com_NomeArquivo;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
   PDFFile := ApplicationPath+'pdf'+PathDelim+'AD35180911111111111111591234567890001684429520.pdf';
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePathPDF, ''));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChaveTipo, '0'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePathPDF, ''));
+  AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
   if FileExists(PDFFile) then
     DeleteFile(PDFFile);
@@ -394,34 +459,34 @@ begin
   AStr := Space(Bufflen);
 
   AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
-                SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml',
+                SAT_GerarPDFExtratoVenda(Handle, '..\AD35180911111111111111591234567890001684429520.xml',
                                          PChar(PDFFile), PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
   AssertTrue(FileExists(PDFFile));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Com_PathPDF;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
   PDFFile := ApplicationPath+'..'+PathDelim+'AD35180911111111111111591234567890001684429520.pdf';
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePathPDF, PChar(ApplicationPath+'..'+PathDelim)));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChaveTipo, '0'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePathPDF, PChar(ApplicationPath+'..'+PathDelim)));
+  AssertEquals(ErrOK, SAT_ConfigGravar(Handle, ''));
 
   if FileExists(PDFFile) then
     DeleteFile(PDFFile);
@@ -431,18 +496,18 @@ begin
   AStr := Space(Bufflen);
 
   AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
-                SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml',
+                SAT_GerarPDFExtratoVenda(Handle, '..\AD35180911111111111111591234567890001684429520.xml',
                                          'AD35180911111111111111591234567890001684429520.pdf',
                                          PChar(AStr), Bufflen));
 
   if Bufflen > 255 then
   begin
     AStr := Space(Bufflen);
-    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+    AssertEquals(ErrOK, SAT_UltimoRetorno(Handle, PChar(AStr), Bufflen));
   end;
 
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePathPDF, ''));
-  AssertEquals(ErrOK, SAT_Finalizar());
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePathPDF, ''));
+  AssertEquals(ErrOK, SAT_Finalizar(Handle));
   AssertTrue(FileExists(PDFFile));
 end;
 

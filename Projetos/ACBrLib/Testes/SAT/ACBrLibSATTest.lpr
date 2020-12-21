@@ -3,8 +3,7 @@ program ACBrLibSATTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, printer4lazarus, ACBrLibSATTestCase,
-  ACBrLibSATStaticImport;
+  Interfaces, Forms, GuiTestRunner, printer4lazarus, ACBrLibSATTestCase;
 
 {$R *.res}
 

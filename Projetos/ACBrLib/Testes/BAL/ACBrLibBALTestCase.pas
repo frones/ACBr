@@ -71,166 +71,248 @@ type
 implementation
 
 uses
-  ACBrLibBALStaticImport, ACBrLibBALConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibBALStaticImportMT, ACBrLibBALConsts, ACBrLibConsts, ACBrUtil, Dialogs;
 
 procedure TTestACBrBALLib.Test_BAL_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  BAL_Finalizar();
-  AssertEquals(ErrDiretorioNaoExiste, BAL_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+
+  try
+    BAL_Finalizar(Handle);
+    AssertEquals(ErrDiretorioNaoExiste, BAL_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, BAL_Inicializar('',''));
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, BAL_Inicializar('',''));
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, BAL_Finalizar());
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Finalizar_Ja_Finalizado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, BAL_Finalizar());
+
+  try
+    AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+    AssertEquals(ErrOk, BAL_Finalizar(Handle));
+    //AssertEquals(ErrOk, BAL_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Nome_Obtendo_LenBuffer;
 var
+  Handle: longint;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, BAL_Nome(Nil, Bufflen));
+  AssertEquals(ErrOk, BAL_Nome(Handle,Nil, Bufflen));
   AssertEquals(Length(CLibBALNome), Bufflen);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Nome_Lendo_Buffer_Tamanho_Identico;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := Length(CLibBALNome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_Nome(Handle, PChar(AStr), Bufflen));
   AssertEquals(Length(CLibBALNome), Bufflen);
   AssertEquals(CLibBALNome, AStr);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Nome_Lendo_Buffer_Tamanho_Maior;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := Length(CLibBALNome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_Nome(Handle, PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibBALNome), Bufflen);
   AssertEquals(CLibBALNome, AStr);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Nome_Lendo_Buffer_Tamanho_Menor;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := 4;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_Nome(Handle, PChar(AStr), Bufflen));
   AssertEquals(Length(CLibBALNome), Bufflen);
   AssertEquals(copy(CLibBALNome,1,4), AStr);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Versao;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, BAL_Versao(Nil, Bufflen));
+  AssertEquals(ErrOk, BAL_Versao(Handle, Nil, Bufflen));
   Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_Versao(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_Versao(Handle, PChar(AStr), Bufflen));
   Assert(Bufflen > 0);
   Assert(AStr <> '');
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_ConfigLerValor(Handle, CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CACBrLibVersaoConfig, AStr);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_ConfigGravarValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Gravando o valor
-  AssertEquals('Erro ao Mudar configuração', ErrOk, BAL_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, BAL_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Ativar;
+var
+  Handle: longint;
 begin
   // Ativando a Balança
-  AssertEquals('Erro ao Ativar a Balança', ErrOk, BAL_Ativar);
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals('Erro ao Ativar a Balança', ErrOk, BAL_Ativar(Handle));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_Desativar;
+var
+  Handle: longint;
 begin
   // Desativando a Balança
-  AssertEquals('Erro ao Desativar a Balança', ErrOk, BAL_Desativar);
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals('Erro ao Desativar a Balança', ErrOk, BAL_Desativar(Handle));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_LePeso;
 var
+  Handle: longint;
   Peso: Double;
   sPeso: String;
 begin
-  // Iniciando a leitura do peso
-  AssertEquals('Erro ao Iniciar a leitura do peso', ErrOk, BAL_LePeso(3000, Peso));
-  sPeso := FloatToStr(Peso);
-  AssertEquals('Peso= ', sPeso);
+
+  try
+    // Iniciando a leitura do peso
+    AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+    AssertEquals('Erro ao Iniciar a leitura do peso', ErrOk, BAL_LePeso(Handle, 3000, Peso));
+    AssertEquals('Peso= ', FloatToStr(Peso));
+    AssertEquals(ErrOk, BAL_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrBALLib.Test_BAL_SolicitarPeso;
+var
+  Handle: longint;
 begin
   // Solicitar o peso
-  AssertEquals('Erro ao solicitar o peso', ErrOk, BAL_SolicitarPeso);
+  AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+  AssertEquals('Erro ao solicitar o peso', ErrOk, BAL_SolicitarPeso(Handle));
+  AssertEquals(ErrOk, BAL_Finalizar(Handle));
 end;
 
 procedure TTestACBrBALLib.Test_BAL_InterpretarRespostaPeso;
 var
+  Handle: longint;
   Peso: Double;
   sPeso: String;
 begin
-  // Interpretando a resposta
-  AssertEquals('Erro ao interpretar a resposta', ErrOk,
-               BAL_InterpretarRespostaPeso('125', Peso));
-  sPeso := FloatToStr(Peso);
-  AssertEquals('Peso= ', sPeso);
+
+  try
+    // Interpretando a resposta
+    AssertEquals(ErrOk, BAL_Inicializar(Handle,'',''));
+    AssertEquals('Erro ao interpretar a resposta', ErrOk,
+               BAL_InterpretarRespostaPeso(Handle, '125', Peso));
+    sPeso := FloatToStr(Peso);
+    AssertEquals('Peso= ', sPeso);
+    AssertEquals(ErrOk, BAL_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 initialization

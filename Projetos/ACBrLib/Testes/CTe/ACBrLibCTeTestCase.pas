@@ -88,206 +88,324 @@ type
 implementation
 
 uses
-  ACBrLibCTeStaticImport, ACBrLibCTeConsts, ACBrLibConsts;
+  ACBrLibCTeStaticImportMT, ACBrLibCTeConsts, ACBrLibConsts, Dialogs;
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrDiretorioNaoExiste, CTe_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+
+  try
+     AssertEquals(ErrOk, CTE_Finalizar(Handle));
+     AssertEquals(ErrDiretorioNaoExiste, CTe_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CTe_Inicializar('',''));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CTe_Inicializar('',''));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CTe_Finalizar());
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CTe_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Finalizar_Ja_Finalizado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CTe_Finalizar());
+
+  try
+     AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+     AssertEquals(ErrOk, CTE_Finalizar(Handle));
+     //AssertEquals(ErrOk, CTe_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  //AssertEquals(ErrOk, CTe_ConfigLerValor(CSessaoVersao, CLibCTeNome, PChar(AStr), Bufflen));
+  //AssertEquals(ErrOk, CTe_ConfigLerValor(Handle, CSessaoVersao, CLibCTeNome, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   //AssertEquals(CLibCTeVersao, AStr);
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ConfigGravarValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Gravando o valor
-  AssertEquals('Erro ao Mudar configuração', ErrOk, CTe_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, CTe_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CTe_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_StatusServico;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  // Iniciando a consulta ao Status de Serviço
+     // Iniciando a consulta ao Status de Serviço
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
   Resposta := '';
   Tamanho := 0;
 
-  AssertEquals('Erro ao consultar ao Status de Serviço', ErrOk, CTe_StatusServico(Resposta, Tamanho));
+  AssertEquals('Erro ao consultar ao Status de Serviço', ErrExecutandoMetodo, CTe_StatusServico(Handle, Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_LimparLista;
+var
+  Handle: longint;
 begin
   // Iniciando a Limpeza da Lista de CT-e
-  AssertEquals('Erro ao limpar a lista de CT-e', ErrOk, CTe_LimparLista);
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao limpar a lista de CT-e', ErrOk, CTe_LimparLista(Handle));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_CarregarXML;
+var
+  Handle: longint;
 begin
   // Iniciando o Carregamento do XML do CT-e
-  AssertEquals('Erro ao carregar o XML do CT-e', ErrOk,
-   CTe_CarregarXML('C:\ERP\XML\201808\CTe\35180804550110000188570010000009491283342822-cte.xml'));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals('Erro ao carregar o XML do CT-e', ErrOk,
+  //CTe_CarregarXML(Handle, 'C:\ERP\XML\201808\CTe\35180804550110000188570010000009491283342822-cte.xml'));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Imprimir;
+var
+  Handle: longint;
 begin
-  // Iniciando a Impressão do DACTE
-  AssertEquals('Erro ao Imprimir o DACTE', ErrOk, CTe_Imprimir('', 1, '', ''));
+     // Iniciando a Impressão do DACTE
+     AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+     AssertEquals('Erro ao Imprimir o DACTE', ErrExecutandoMetodo, CTe_Imprimir(Handle, '', 1, '', ''));
+     AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirPDF;
+var
+  Handle: Longint;
 begin
-  // Iniciando a geração do PDF do DACTE
-  AssertEquals('Erro ao gerar o PDF do DACTE', ErrOk, CTe_ImprimirPDF);
+     // Iniciando a geração do PDF do DACTE
+     AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+     AssertEquals('Erro ao gerar o PDF do DACTE', ErrExecutandoMetodo, CTe_ImprimirPDF(Handle));
+     AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_CarregarINI;
+var
+  Handle: longint;
 begin
-  Test_CTe_LimparLista;
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  // Iniciando o Carregamento do INI do CT-e
-  AssertEquals('Erro ao carregar o INI do CT-e', ErrOk,
-   CTe_CarregarINI('C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\Modelo-CTe.ini'));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //Test_CTe_LimparLista;
+  //
+  //// Iniciando o Carregamento do INI do CT-e
+  //AssertEquals('Erro ao carregar o INI do CT-e', ErrExecutandoMetodo,
+  // CTe_CarregarINI(Handle, 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\Modelo-CTe.ini'));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Assinar;
+var
+  Handle: longint;
 begin
   // Iniciando a Assinatura
-  AssertEquals('Erro ao Assinar', ErrOk, CTe_Assinar);
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Assinar', ErrOk, CTe_Assinar(Handle));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Validar;
+var
+  Handle: longint;
 begin
   // Iniciando a Validação
-  AssertEquals('Erro ao Validar', ErrOk, CTe_Validar);
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Validar', ErrOk, CTe_Validar(Handle));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ValidarRegrasdeNegocios;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
   // Iniciando a Validação de Regras de Negócios
-  Resposta := '';
-  Tamanho := 0;
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao Validar regras de negócio', ErrOk,
-    CTe_ValidarRegrasdeNegocios(Resposta, Tamanho));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  //Resposta := '';
+  //Tamanho := 0;
+  //
+  //AssertEquals('Erro ao Validar regras de negócio', ErrOk,
+  //  CTe_ValidarRegrasdeNegocios(Handle, Resposta, Tamanho));
+  //
+  //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_VerificarAssinatura;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
   // Iniciando a Verificação de Assinatura
-  Resposta := '';
-  Tamanho := 0;
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao Verificar assinatura', ErrOk,
-    CTe_VerificarAssinatura(Resposta, Tamanho));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  //Resposta := '';
+  //Tamanho := 0;
+  //
+  //AssertEquals('Erro ao Verificar assinatura', ErrOk,
+  //  CTe_VerificarAssinatura(Handle, Resposta, Tamanho));
+  //
+  //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Enviar;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  // Iniciando o Envio do Lote de CT-e
-  Resposta := '';
-  Tamanho := 0;
 
-  AssertEquals('Erro ao Enviar Lote de CT-e', ErrOk,
-    CTe_Enviar(1, True, Resposta, Tamanho));
+  try
+     // Iniciando o Envio do Lote de CT-e
+     AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+     //Resposta := '';
+     //Tamanho := 0;
+     //
+     //AssertEquals('Erro ao Enviar Lote de CT-e', ErrOk,
+     //CTe_Enviar(Handle, 1, True, Resposta, Tamanho));
+     //
+     //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals(ErrOk, CTE_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Consultar;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  Test_CTe_LimparLista;
 
-  // Iniciando a Consulta
-  Resposta := '';
-  Tamanho := 0;
+  try
+      AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao Consultar o CT-e', ErrOk,
-    CTe_Consultar('C:\ERP\XML\201808\CTe\35180804550110000188570010000009491283342822-cte.xml', Resposta, Tamanho));
+      //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      //Test_CTe_LimparLista;
+      //
+      //// Iniciando a Consulta
+      //Resposta := '';
+      //Tamanho := 0;
+      //
+      //AssertEquals('Erro ao Consultar o CT-e', ErrOk,
+      //CTe_Consultar(Handle, 'C:\ERP\XML\201808\CTe\35180804550110000188570010000009491283342822-cte.xml', Resposta, Tamanho));
+      //
+      //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+      //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      //AssertEquals(ErrOk, CTE_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Cancelar;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  Test_CTe_LimparLista;
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  // Iniciando o Cancelamento
-  Resposta := '';
-  Tamanho := 0;
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
 
-  AssertEquals('Erro ao Cancelar o CT-e', ErrOk,
-    CTe_Cancelar('35180804550110000188570010000009491283342822',
-                 'Desacordo comercial', '04550110000188', 1, Resposta, Tamanho));
-
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  //Test_CTe_LimparLista;
+  //
+  //// Iniciando o Cancelamento
+  //Resposta := '';
+  //Tamanho := 0;
+  //
+  //AssertEquals('Erro ao Cancelar o CT-e', ErrExecutandoMetodo,
+  //  CTe_Cancelar(Handle, '35180804550110000188570010000009491283342822',
+  //               'Desacordo comercial', '04550110000188', 1, Resposta, Tamanho));
+  //
+  //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_EnviarEmail;
@@ -297,35 +415,50 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inutilizar;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals('Erro ao Inicializar', ErrOk, CTE_Inicializar('', ''));
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  Resposta := '';
-  Tamanho := 0;
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
 
-  AssertEquals('Erro ao Validar', ErrOk, CTE_Inutilizar('12061411000176', 'teste de homologacao', 2019, 67, 1, 1, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  //Resposta := '';
+  //Tamanho := 0;
+  //
+  //AssertEquals('Erro ao Validar', ErrExecutandoMetodo, CTE_Inutilizar(Handle, '12061411000176', 'teste de homologacao', 2019, 67, 1, 1, 1, Resposta, Tamanho));
+  //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals('Erro ao Finalizar', ErrOk, CTE_Finalizar);
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirInutilizacao;
+var
+  Handle: longint;
 begin
   // Iniciando a Impressão da Inutilização
+   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao imprimir a Inutilização', ErrOk,
-    CTe_ImprimirInutilizacao('C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\1795714200014457017000000009000000010-ProcInutCTe.xml'));
+   //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals('Erro ao imprimir a Inutilização', ErrOk,
+  //  CTe_ImprimirInutilizacao(Handle, 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\1795714200014457017000000009000000010-ProcInutCTe.xml'));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirInutilizacaoPDF;
+var
+  Handle: longint;
 begin
   // Iniciando a Geração do PDF da Inutilização
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao gerar o PDF da Inutilização', ErrOk,
-    CTe_ImprimirInutilizacaoPDF('C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\1795714200014457017000000009000000010-ProcInutCTe.xml'));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //AssertEquals('Erro ao gerar o PDF da Inutilização', ErrExecutandoMetodo,
+  //  CTe_ImprimirInutilizacaoPDF(Handle, 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\1795714200014457017000000009000000010-ProcInutCTe.xml'));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_EnviarEvento;
@@ -335,75 +468,126 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_EnviarEmailEvento;
 var
+  Handle:longint;
   Path, ArqCTe, ArqEvento: String;
 begin
-  // Iniciando o envio do evento por email
-  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
-  ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
-  ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
 
-  AssertEquals('Erro ao enviar email do evento', ErrOk,
-    CTe_EnviarEmailEvento('italo.jurisato@gmail.com', PChar(ArqEvento),
-      PChar(ArqCTe), True, 'Evento', '', '',
-      'Teste de envio de evento por email.'));
+  try
+     // Iniciando o envio do evento por email
+     AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
+
+     //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+     //Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
+     //ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
+     //ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
+     //
+     //AssertEquals('Erro ao enviar email do evento', ErrOk,
+     //CTe_EnviarEmailEvento(Handle, 'italo.jurisato@gmail.com', PChar(ArqEvento),
+     // PChar(ArqCTe), True, 'Evento', '', '',
+     // 'Teste de envio de evento por email.'));
+      AssertEquals(ErrOk, CTE_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirEvento;
 var
+  Handle: longint;
   Path, ArqCTe, ArqEvento: String;
 begin
   // Iniciando a Impressão do Evento
-  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
-  ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
-  ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao imprimir o evento', ErrOk,
-    CTe_ImprimirEvento(PChar(ArqCTe), PChar(ArqEvento)));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
+  //ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
+  //ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
+  //
+  //AssertEquals('Erro ao imprimir o evento', ErrOk,
+  //  CTe_ImprimirEvento(Handle, PChar(ArqCTe), PChar(ArqEvento)));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirEventoPDF;
 var
+  Handle: longint;
   Path, ArqCTe, ArqEvento: String;
 begin
   // Iniciando a geração do PDF do Evento
-  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
-  ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
-  ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
+  AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Erro ao gerar o PDF do evento', ErrOk,
-    CTe_ImprimirEventoPDF(PChar(ArqCTe), PChar(ArqEvento)));
+  //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+  //Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\';
+  //ArqCTe := Path + '28140417957142000144570170000000311556600342-cte.xml';
+  //ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoCTe.xml';
+  //
+  //AssertEquals('Erro ao gerar o PDF do evento', ErrExecutandoMetodo,
+  //  CTe_ImprimirEventoPDF(Handle, PChar(ArqCTe), PChar(ArqEvento)));
+  AssertEquals(ErrOk, CTE_Finalizar(Handle));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_DistribuicaoDFePorUltNSU;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  // Iniciando a Consulta no WebServices DistribuicaoDFe
-  Resposta := '';
-  Tamanho := 0;
 
-  AssertEquals('Erro ao Consultar o DistribuicaoDFePorUltNSU', ErrOk,
-    CTe_DistribuicaoDFePorUltNSU(35, '04550110000188', '0', Resposta, Tamanho));
+  try
+      // Iniciando a Consulta no WebServices DistribuicaoDFe
+      AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+      //Resposta := '';
+      //Tamanho := 0;
+      //
+      //AssertEquals('Erro ao Consultar o DistribuicaoDFePorUltNSU', ErrOk,
+      //CTe_DistribuicaoDFePorUltNSU(Handle, 35, '04550110000188', '0', Resposta, Tamanho));
+      //
+      //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+      //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      AssertEquals(ErrOk, CTE_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_DistribuicaoDFePorNSU;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  // Iniciando a Consulta no WebServices DistribuicaoDFe
-  Resposta := '';
-  Tamanho := 0;
 
-  AssertEquals('Erro ao Consultar o DistribuicaoDFePorNSU', ErrOk,
-    CTe_DistribuicaoDFePorNSU(35, '04550110000188', '100', Resposta, Tamanho));
+  try
+      // Iniciando a Consulta no WebServices DistribuicaoDFe
+      AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      //CONFIGURAÇÃO ESTA SALVO NO ACBrLib.ini
+
+      //Resposta := '';
+      //Tamanho := 0;
+      //
+      //AssertEquals('Erro ao Consultar o DistribuicaoDFePorNSU', ErrOk,
+      //CTe_DistribuicaoDFePorNSU(Handle, 35, '04550110000188', '100', Resposta, Tamanho));
+      //
+      //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+      //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+      AssertEquals(ErrOk, CTE_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_DistribuicaoDFePorChave;

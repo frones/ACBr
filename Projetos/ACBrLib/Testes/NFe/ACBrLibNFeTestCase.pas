@@ -64,111 +64,159 @@ type
 implementation
 
 uses
-  ACBrLibNFeStaticImport, ACBrLibNFeConsts, ACBrLibConsts;
+  ACBrLibNFeStaticImportMT, ACBrLibNFeConsts, ACBrLibConsts, Dialogs;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  NFE_Finalizar();
-  AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+
+  try
+    NFE_Finalizar(Handle);
+    AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar(Handle,'C:\NAOEXISTE\ACBrLib.ini',''));
+  except
+  on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end
+
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, NFE_Inicializar('',''));
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, NFE_Inicializar('',''));
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, NFE_Finalizar());
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Finalizar_Ja_Finalizado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, NFE_Finalizar());
+
+  try
+    AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
+    AssertEquals(ErrOk, NFE_Finalizar(Handle));
+    //AssertEquals(ErrOk, NFE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Obtendo_LenBuffer;
 var
+  Handle: longint;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, NFE_Nome(Nil, Bufflen));
+  AssertEquals(ErrOk, NFE_Nome(Handle,Nil, Bufflen));
   AssertEquals(Length(CLibNFeNome), Bufflen);
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Identico;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := Length(CLibNFeNome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_Nome(Handle ,PChar(AStr), Bufflen));
   AssertEquals(Length(CLibNFeNome), Bufflen);
   AssertEquals(CLibNFeNome, AStr);
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Maior;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := Length(CLibNFeNome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_Nome(Handle,PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibNFeNome), Bufflen);
   AssertEquals(CLibNFeNome, AStr);
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Menor;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := 4;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_Nome(Handle,PChar(AStr), Bufflen));
   AssertEquals(Length(CLibNFeNome), Bufflen);
   AssertEquals(copy(CLibNFeNome,1,4), AStr);
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_Versao;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, NFE_Versao(Nil, Bufflen));
+  AssertEquals(ErrOk, NFE_Versao(Handle,Nil, Bufflen));
   Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_Versao(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_Versao(Handle,PChar(AStr), Bufflen));
   Assert(Bufflen > 0);
   Assert(AStr <> '');
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_ConfigLerValor(Handle,CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CACBrLibVersaoConfig, AStr);
 
-  NFE_ConfigGravarValor('DFe', 'DadosPFX', );
+  NFE_ConfigGravarValor(Handle,'DFe', 'DadosPFX', '');
+  AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
 initialization

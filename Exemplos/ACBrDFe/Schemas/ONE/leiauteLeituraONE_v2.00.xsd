@@ -203,6 +203,17 @@ Campo opcional, se não for informado o serviço de distribuição irá retornar
 					<xs:documentation>Número Sequencial Único da operação</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="indMDFeAberto" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicad se existe pelo menos um MDFe em situação autorizado e não encerrado para a placa e dhPass indicados na leitura</xs:documentation>
+					<xs:documentation>Informar valor 1 quando for Globalizado e não informar a tag quando não tratar de CT-e Globalizado</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVersao" use="required"/>
 	</xs:complexType>

@@ -149,7 +149,9 @@ type
   TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcPresencialForaEstabelecimento, pcOutros);
   TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                         fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                        fpDuplicataMercantil, fpBoletoBancario, fpSemPagamento, fpOutro);
+                        fpDuplicataMercantil, fpBoletoBancario, fpDepositoBancario,
+                        fpPagamentoInstantaneo, fpTransfBancario, fpProgramaFidelidade,
+                        fpSemPagamento, fpRegimeEspecial, fpOutro);
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
                         bcElo, bcHipercard, bcAura, bcCabal, bcOutros);
 
@@ -1235,29 +1237,50 @@ end;
 
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '15', '90', '99'],
-                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
-                               fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpDuplicataMercantil, fpBoletoBancario, fpSemPagamento, fpOutro ]);
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12',
+                               '13', '14', '15', '16', '17', '18', '19', '90',
+                               '98', '99'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
+                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
+                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
+                               fpBoletoBancario, fpDepositoBancario,
+                               fpPagamentoInstantaneo, fpTransfBancario,
+                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
+                               fpOutro]);
 end;
 
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja',
-                               'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível',
-                               'Duplicata Mercantil', 'Boleto Bancário', 'Sem Pagamento', 'Outro'],
-                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
-                               fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpDuplicataMercantil, fpBoletoBancario, fpSemPagamento, fpOutro]);
+  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
+                                'Cartão de Débito', 'Crédito Loja',
+                                'Vale Alimentação', 'Vale Refeição', 'Vale Presente',
+                                'Vale Combustível', 'Duplicata Mercantil',
+                                'Boleto Bancário', 'Deposito Bancário',
+                                'Pagamento Instantâneo', 'Transferência Bancária',
+                                'Programa Fidelidade', 'Sem Pagamento',
+                                'Regime Especial NFF', 'Outro'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
+                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
+                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
+                               fpBoletoBancario, fpDepositoBancario,
+                               fpPagamentoInstantaneo, fpTransfBancario,
+                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
+                               fpOutro]);
 end;
 
 
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '15', '90', '99'],
-                                  [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
-                                   fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                                   fpDuplicataMercantil, fpBoletoBancario, fpSemPagamento, fpOutro]);
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12',
+                                   '13', '14', '15', '16', '17', '18', '19', '90',
+                                   '98', '99'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
+                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
+                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
+                               fpBoletoBancario, fpDepositoBancario,
+                               fpPagamentoInstantaneo, fpTransfBancario,
+                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
+                               fpOutro]);
 end;
 
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;

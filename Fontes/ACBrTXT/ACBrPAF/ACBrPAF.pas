@@ -50,6 +50,7 @@ uses
 //    {$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
    {$ENDIF}
    ACBrTXTClass, ACBrUtil, ACBrEAD, ACBrAAC,
+   ACBrPAFRegistros,
    ACBrPAF_A_Class,
    ACBrPAF_B_Class,
    ACBrPAF_C_Class,
@@ -73,7 +74,6 @@ uses
    ACBrPAF_Z_Class;
 
 type
-
   // DECLARANDO O COMPONENTE - PAF-ECF:
 
   { TACBrPAF }
@@ -116,6 +116,7 @@ type
     FPAF_Z: TPAF_Z;
     fsOnPAFCalcEAD: TACBrEADCalc;
     fsOnPAFGetKeyRSA : TACBrEADGetChave ;
+    FLayout: TLayoutPAF;
 
     function GetPath: String;
     function GetTrimString: boolean;
@@ -130,6 +131,7 @@ type
 
     procedure SetEAD(const AValue: TACBrEAD);
     procedure SetAAC(const AValue: TACBrAAC);
+    procedure setLayout(const Value: TLayoutPAF);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -168,7 +170,9 @@ type
 
     Function GetACBrEAD : TACBrEAD ;
     function AssinaArquivoComEAD(const Arquivo: String): Boolean;
+    procedure LimparTodosRegistros;
   published
+    property Layout: TLayoutPAF read FLayout write setLayout default lpPAFECF;
     property LinesBuffer  : Integer  read FLinesBuffer write SetLinesBuffer ;
     property Path         : String   read GetPath write SetPath ;
     property EAD          : TACBrEAD read fsEAD write SetEAD ;
@@ -199,6 +203,7 @@ Uses
 constructor TACBrPAF.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Layout := lpPAFECF;
 
   FPAF_A := TPAF_A.Create;
   FPAF_B := TPAF_B.Create;
@@ -413,6 +418,15 @@ begin
      end ;
   end ;
 end ;
+
+procedure TACBrPAF.setLayout(const Value: TLayoutPAF);
+begin
+  if Value <> FLayout then
+  begin
+    Self.LimparTodosRegistros;
+    FLayout := Value;
+  end;
+end;
 
 procedure TACBrPAF.SetAAC(const AValue : TACBrAAC) ;
 begin
@@ -680,6 +694,29 @@ begin
   Result := True;
 end;
 
+procedure TACBrPAF.LimparTodosRegistros;
+begin
+  //Limpa de todos os Blocos as listas de todos os registros.
+  FPAF_U.LimpaRegistros;
+  FPAF_A.LimpaRegistros;
+  FPAF_P.LimpaRegistros;
+  FPAF_E.LimpaRegistros;
+  FPAF_D.LimpaRegistros;
+  FPAF_B.LimpaRegistros;
+  FPAF_C.LimpaRegistros;
+  FPAF_F.LimpaRegistros;
+  FPAF_T.LimpaRegistros;
+  FPAF_M.LimpaRegistros;
+  FPAF_L.LimpaRegistros;
+  FPAF_G.LimpaRegistros;
+  FPAF_H.LimpaRegistros;
+  FPAF_S.LimpaRegistros;
+  FPAF_R.LimpaRegistros;
+  FPAF_V.LimpaRegistros;
+  FPAF_Z.LimpaRegistros;
+  FPAF_J.LimpaRegistros;
+end;
+
 function TACBrPAF.SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 begin
 //  Result := False;
@@ -730,7 +767,7 @@ begin
 
   if FPAF_A.RegistroA2.Count > 0 then
   begin
-    FPAF_A.WriteRegistroA2;
+    FPAF_A.WriteRegistroA2(Layout);
     FPAF_A.WriteBuffer;
   end;
 
@@ -742,7 +779,7 @@ begin
 
   if FPAF_E.RegistroE2.Count > 0 then
   begin
-    FPAF_E.WriteRegistroE2;
+    FPAF_E.WriteRegistroE2(Layout);
   end;
 
   if FPAF_E.RegistroE3.DT_EST > 0 then
@@ -753,7 +790,7 @@ begin
 
   if FPAF_D.RegistroD2.Count > 0 then
   begin
-    FPAF_D.WriteRegistroD2;  //D2 e D3 e D4
+    FPAF_D.WriteRegistroD2(Layout);  //D2 e D3 e D4
     FPAF_D.WriteBuffer;
   end;
 
@@ -812,7 +849,7 @@ begin
 
   if FPAF_S.RegistroS2.Count > 0 then        //S2 e S3
   begin
-    FPAF_S.WriteRegistroS2;
+    FPAF_S.WriteRegistroS2(Layout);
     FPAF_S.WriteBuffer;
   end;
 
@@ -821,7 +858,7 @@ begin
 
   if FPAF_J.RegistroJ1.Count > 0 then
   begin
-    FPAF_J.WriteRegistroJ1;  //J1 e J2
+    FPAF_J.WriteRegistroJ1(Layout);  //J1 e J2
     FPAF_J.WriteBuffer;
   end;
 
@@ -829,25 +866,7 @@ begin
   if FAssinar then
     AssinaArquivoComEAD(Arquivo);
 
-  //Limpa de todos os Blocos as listas de todos os registros.
-  FPAF_U.LimpaRegistros;
-  FPAF_A.LimpaRegistros;
-  FPAF_P.LimpaRegistros;
-  FPAF_E.LimpaRegistros;
-  FPAF_D.LimpaRegistros;
-  FPAF_B.LimpaRegistros;
-  FPAF_C.LimpaRegistros;
-  FPAF_F.LimpaRegistros;
-  FPAF_T.LimpaRegistros;
-  FPAF_M.LimpaRegistros;
-  FPAF_L.LimpaRegistros;
-  FPAF_G.LimpaRegistros;
-  FPAF_H.LimpaRegistros;
-  FPAF_S.LimpaRegistros;
-  FPAF_R.LimpaRegistros;
-  FPAF_V.LimpaRegistros;
-  FPAF_Z.LimpaRegistros;
-  FPAF_J.LimpaRegistros;
+  LimparTodosRegistros;
 
   Result := True;
 end;

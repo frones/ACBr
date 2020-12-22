@@ -36,7 +36,7 @@ unit ACBrPAF_S_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass,
+uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAFRegistros,
      ACBrPAF_S;
 
 type
@@ -55,7 +55,7 @@ type
     destructor Destroy; override; 
     procedure LimpaRegistros;
 
-    procedure WriteRegistroS2;
+    procedure WriteRegistroS2(Layout: TLayoutPAF);
 
     property RegistroS2: TRegistroS2List read FRegistroS2 write FRegistroS2;
   end;  
@@ -108,7 +108,7 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-procedure TPAF_S.WriteRegistroS2;
+procedure TPAF_S.WriteRegistroS2(Layout: TLayoutPAF);
 var
   intFor: integer;
 begin
@@ -120,14 +120,28 @@ begin
     begin
       with FRegistroS2.Items[intFor] do
       begin
-        Add( LFill('S2') +
-             LFill(CNPJ, 14) +
-             LFill(DT_ABER, 'yyyymmddhhmmss') +
-             //RFill(SITU, 1) +
-             RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
-             LFill(VL_TOT, 13, 2) +
-             RFill(COO_CM, 9) +
-             RFill(NUM_FAB_CM, 20) );
+        if Layout = lpPAFECF then
+        begin
+          Add( LFill('S2') +
+               LFill(CNPJ, 14) +
+               LFill(DT_ABER, 'yyyymmddhhmmss') +
+               //RFill(SITU, 1) +
+               RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
+               LFill(VL_TOT, 13, 2) +
+               RFill(COO_CM, 9) +
+               RFill(NUM_FAB_CM, 20)
+               );
+        end
+        else
+        begin
+          Add( LFill('S2') +
+               LFill(CNPJ, 14) +
+               LFill(DT_ABER, 'yyyymmddhhmmss') +
+               RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
+               LFill(VL_TOT, 13, 2) +
+               RFill(COO_CM, 9)
+               );
+        end;
       end;
     end;
 

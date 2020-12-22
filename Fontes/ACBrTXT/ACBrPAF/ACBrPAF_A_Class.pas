@@ -36,23 +36,21 @@ unit ACBrPAF_A_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrTXTUtils,
-     ACBrPAF_A;
+uses
+  SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrTXTUtils, ACBrPAFRegistros,
+  ACBrPAF_A;
 
 type
   TPAF_A = class(TACBrTXTClass)
   private
     FRegistroA2: TRegistroA2List;
-
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
     constructor Create;
     destructor Destroy; override;
     procedure LimpaRegistros;
-
-    procedure WriteRegistroA2;
-
+    procedure WriteRegistroA2(Layout: TLayoutPAF);
     property RegistroA2: TRegistroA2List read FRegistroA2 write FRegistroA2;
   end;
 
@@ -92,24 +90,19 @@ end;
 
 function OrdenarA2(const ARegistro1, ARegistro2: Pointer): Integer;
 var
-  Reg1, Reg2: String;
+  Reg1, Reg2: string;
 begin
-  Reg1 :=
-    FormatDateTime('YYYYMMDD', TRegistroA2(ARegistro1).DT) +
-    Format('%-25s', [TRegistroA2(ARegistro1).MEIO_PGTO]) +
-    Format('%-1s', [TRegistroA2(ARegistro1).TIPO_DOC]);
+  Reg1 := FormatDateTime('YYYYMMDD', TRegistroA2(ARegistro1).DT) + Format('%-25s', [TRegistroA2(ARegistro1).MEIO_PGTO]) + Format('%-1s', [TRegistroA2(ARegistro1).TIPO_DOC]);
 
-  Reg2 :=
-    FormatDateTime('YYYYMMDD', TRegistroA2(ARegistro2).DT) +
-    Format('%-25s', [TRegistroA2(ARegistro2).MEIO_PGTO]) +
-    Format('%-1s', [TRegistroA2(ARegistro2).TIPO_DOC]);
+  Reg2 := FormatDateTime('YYYYMMDD', TRegistroA2(ARegistro2).DT) + Format('%-25s', [TRegistroA2(ARegistro2).MEIO_PGTO]) + Format('%-1s', [TRegistroA2(ARegistro2).TIPO_DOC]);
 
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-procedure TPAF_A.WriteRegistroA2;
+procedure TPAF_A.WriteRegistroA2(Layout: TLayoutPAF);
 var
   intFor: integer;
+  RegistroA2: TRegistroA2;
 begin
   if Assigned(FRegistroA2) then
   begin
@@ -117,17 +110,18 @@ begin
 
     for intFor := 0 to FRegistroA2.Count - 1 do
     begin
-      with FRegistroA2.Items[intFor] do
+      RegistroA2 := FRegistroA2.Items[intFor];
+      if Layout = lpPAFECF then
       begin
-        Add(LFill('A2') +
-            LFill(DT, 'yyyymmdd') +
-            RFill(MEIO_PGTO, 25, IfThen(RegistroValido, ' ', '?')) +
-            RFill(TIPO_DOC, 1) +
-            LFill(VL, 12, 2));
+        Add(LFill('A2') + LFill(RegistroA2.DT, 'yyyymmdd') + RFill(RegistroA2.MEIO_PGTO, 25, IfThen(RegistroA2.RegistroValido, ' ', '?')) + RFill(RegistroA2.TIPO_DOC, 1) + LFill(RegistroA2.VL, 12, 2));
+      end
+      else
+      begin
+        Add(LFill('A2') + LFill(RegistroA2.DT, 'yyyymmdd') + RFill(RegistroA2.MEIO_PGTO, 25, IfThen(RegistroA2.RegistroValido, ' ', '?')) + RFill(RegistroA2.TIPO_DOC, 1) + LFill(RegistroA2.VL, 12, 2) + RFill(RegistroA2.CNPJ, 14) + LFill(RegistroA2.NUMDOCUMENTO, 10));
       end;
     end;
   end;
 end;
 
 end.
- 
+

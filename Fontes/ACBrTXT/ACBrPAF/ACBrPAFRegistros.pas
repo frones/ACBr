@@ -38,6 +38,9 @@ uses
   SysUtils, Classes, DateUtils;
 
 type
+  TLayoutPAF = (lpPAFECF, lpPAFNFCe);
+
+
   /// REGISTRO TIPO X1 - IDENTIFICAÇÃO DO ESTABELECIMENTO USUÁRIO DO PAF-ECF:
 
   TRegistroX1 = class

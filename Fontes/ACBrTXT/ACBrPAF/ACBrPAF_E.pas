@@ -69,18 +69,21 @@ type
     fNCM: string;          /// Nomeclatura Comum do Mercosul
     fDESC_MERC: string;    /// Descrição da mercadoria ou produto cadastrada na tabela a que se refere o requisito XI
     fUN_MED: string;       /// Unidade de medida cadastrada na tabela a que se refere o requisito XI
-    fQTDE_EST: currency;   /// Quantidade da mercadoria ou produto constante no estoque, com duas casas decimais.
-    //fDT_EST: TDateTime;    /// Data de emissão do DAV
+    fQTDE_EST: currency;  /// Quantidade da mercadoria ou produto constante no estoque, com duas casas decimais.
+    FDATAESTOQUE: TDateTime;
+    FDATAEMISSAO: TDateTime;
   public
     constructor Create; virtual; /// Create
 
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
-    property COD_MERC: string read FCOD_MERC write FCOD_MERC;
-    property CEST: string read fCEST write fCEST;
-    property NCM: string read fNCM write fNCM;
-    property DESC_MERC: string read FDESC_MERC write FDESC_MERC;
-    property UN_MED: string read FUN_MED write FUN_MED;
-    property QTDE_EST: currency read FQTDE_EST write FQTDE_EST;
+    property COD_MERC: string        read FCOD_MERC       write FCOD_MERC;
+    property CEST: string            read fCEST           write fCEST;
+    property NCM: string             read fNCM            write fNCM;
+    property DESC_MERC: string       read FDESC_MERC      write FDESC_MERC;
+    property UN_MED: string          read FUN_MED         write FUN_MED;
+    property QTDE_EST: currency      read FQTDE_EST       write FQTDE_EST;
+    property DATAEMISSAO: TDateTime  read FDATAEMISSAO    write FDATAEMISSAO;
+    property DATAESTOQUE: TDateTime  read FDATAESTOQUE    write FDATAESTOQUE;
   end;
 
   /// REGISTRO E2 - Lista

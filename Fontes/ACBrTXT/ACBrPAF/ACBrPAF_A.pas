@@ -45,6 +45,8 @@ type
     FMEIO_PGTO: string;       //Meio de pagamento registrado nos documentos emitidos
     FTIPO_DOC: string;        //Código do tipo de documento a que se refere o pagamento, conforme tabela descrita no item 6.2.1.2
     FVL: Currency;            //Valor total, com duas casas decimais
+    FCNPJ: String;
+    FNUMDOCUMENTO: String;
   public
     constructor Create; virtual;
 
@@ -53,6 +55,8 @@ type
     property MEIO_PGTO: string       read FMEIO_PGTO      write FMEIO_PGTO;
     property TIPO_DOC: string        read FTIPO_DOC       write FTIPO_DOC;
     property VL: Currency            read FVL             write FVL;
+    property CNPJ: String            read FCNPJ           write FCNPJ;
+    property NUMDOCUMENTO: String    read FNUMDOCUMENTO   write FNUMDOCUMENTO;
   end;
 
   TRegistroA2List = class(TObjectList)

@@ -64,6 +64,8 @@ type
     fRegistroValido:      Boolean;
 
     fRegistroJ2:          TRegistroJ2List;
+
+    FTIPOEMISSAO:         string;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -86,6 +88,7 @@ type
     property SERIE_NOTA: String read fSERIE_NOTA write fSERIE_NOTA;
     property CHAVE_NF: String read fCHAVE_NF write fCHAVE_NF;
     property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
+    property TIPOEMISSAO: string read FTIPOEMISSAO write FTIPOEMISSAO;
 
     property RegistroJ2: TRegistroJ2List read FRegistroJ2 write FRegistroJ2;
   end;

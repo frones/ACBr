@@ -223,7 +223,6 @@ object Form6: TForm6
       450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1
       FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB4
       66C7FBCFFAD145001BAC7D5FF5A3758FABFEB451401FFFD9}
-    ExplicitWidth = 1024
   end
   object GroupBox1: TGroupBox
     Left = 0
@@ -396,6 +395,15 @@ object Form6: TForm6
     Caption = 'Tipo V'
     TabOrder = 6
     OnClick = Button1Click
+  end
+  object btnRegistrosPAFNFCe: TButton
+    Left = 340
+    Top = 147
+    Width = 204
+    Height = 25
+    Caption = 'Registros PAF-NFC-e'
+    TabOrder = 7
+    OnClick = btnRegistrosPAFNFCeClick
   end
   object ACBrPAF: TACBrPAF
     LinesBuffer = 1000

@@ -36,7 +36,7 @@ unit ACBrPAF_E_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass,
+uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAFRegistros,
      ACBrPAF_E;
 
 type
@@ -58,7 +58,7 @@ type
     procedure LimpaRegistros;
 
     procedure WriteRegistroE1;
-    procedure WriteRegistroE2;
+    procedure WriteRegistroE2(Layout: TLayoutPAF);
     procedure WriteRegistroE3;
     procedure WriteRegistroE9;
 
@@ -144,7 +144,7 @@ begin
   );
 end;
 
-procedure TPAF_E.WriteRegistroE2;
+procedure TPAF_E.WriteRegistroE2(Layout: TLayoutPAF);
 var
 intFor: integer;
 begin
@@ -158,15 +158,32 @@ begin
         with FRegistroE2.Items[intFor] do
         begin
           ///
-          Add( LFill('E2') +
-               LFill(FRegistroE1.CNPJ, 14) +
-               RFill(COD_MERC, 14) +
-               RFill(CEST, 7) +
-               RFill(NCM, 8) +
-               RFill(DESC_MERC, 50) +
-               RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
-               LFill(ifThen(QTDE_EST < 0, '-', '+')) +
-               LFill(ifThen(QTDE_EST < 0, (QTDE_EST * (-1)), QTDE_EST), 9, 3));
+          if Layout = lpPAFECF then
+          begin
+            Add( LFill('E2') +
+                 LFill(FRegistroE1.CNPJ, 14) +
+                 RFill(COD_MERC, 14) +
+                 RFill(CEST, 7) +
+                 RFill(NCM, 8) +
+                 RFill(DESC_MERC, 50) +
+                 RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
+                 LFill(ifThen(QTDE_EST < 0, '-', '+')) +
+                 LFill(ifThen(QTDE_EST < 0, (QTDE_EST * (-1)), QTDE_EST), 9, 3));
+          end
+          else
+          begin
+            Add( LFill('E2') +
+                 LFill(FRegistroE1.CNPJ, 14) +
+                 RFill(COD_MERC, 14) +
+                 RFill(CEST, 7) +
+                 RFill(NCM, 8) +
+                 RFill(DESC_MERC, 50) +
+                 RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
+                 LFill(ifThen(QTDE_EST < 0, '-', '+')) +
+                 LFill(ifThen(QTDE_EST < 0, (QTDE_EST * (-1)), QTDE_EST), 9, 3) +
+                 LFill(DATAEMISSAO, 'yyyymmdd') +
+                 LFill(DATAESTOQUE, 'yyyymmdd'));
+          end;
         end;
         ///
         FRegistroE9.TOT_REG := FRegistroE9.TOT_REG + 1;

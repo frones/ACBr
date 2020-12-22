@@ -45,9 +45,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_V,
-  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPaf_Z, ACBrPAFRegistros, Math, ACBrEAD, jpeg, ExtCtrls,
-  ComCtrls;
+  Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, jpeg, ExtCtrls, ACBrPAFRegistros,
+  ComCtrls, ACBrBase;
 
 type
   TForm6 = class(TForm)
@@ -76,6 +75,7 @@ type
     btnZ: TButton;
     cbEAD: TCheckBox;
     Button1: TButton;
+    btnRegistrosPAFNFCe: TButton;
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
@@ -84,6 +84,7 @@ type
     procedure btnNClick(Sender: TObject);
     procedure btnTITPClick(Sender: TObject);
     procedure btnRegistrosPAFClick(Sender: TObject);
+    procedure btnRegistrosPAFNFCeClick(Sender: TObject);
     procedure btnZClick(Sender: TObject);
     procedure cbEADClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -99,6 +100,10 @@ var
   Form6: TForm6;
 
 implementation
+
+uses
+  ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_V, ACBrPAF_A,
+  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPaf_Z, ACBrPAF_S, ACBrPAF_J;
 
 const
      NUM_FAB      = 'NUMFAB78901234567890';
@@ -224,7 +229,7 @@ end;
 
 procedure TForm6.btnZClick(Sender: TObject);
 var
-  Z4: TRegistroZ4;
+//  Z4: TRegistroZ4;
   i: integer;
 begin
   // registro Z1
@@ -256,7 +261,7 @@ end;
 
 procedure TForm6.Button1Click(Sender: TObject);
 var
-  V4: TRegistroV4;
+//  V4: TRegistroV4;
   i: integer;
 begin
   // registro V1
@@ -305,6 +310,8 @@ procedure TForm6.btnRegistrosPAFClick(Sender: TObject);
 var
   i, j: Integer;
 begin
+  ACBrPAF.Layout := lpPAFNFCe;
+
   //U1
   with ACBrPAF.PAF_U.RegistroU1 do
     begin
@@ -844,6 +851,230 @@ begin
   if FileExists('RegistrosPAF.txt') then
   begin
     mmArquivoGerado.Lines.LoadFromFile('RegistrosPAF.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
+end;
+
+procedure TForm6.btnRegistrosPAFNFCeClick(Sender: TObject);
+var
+  i, j: Integer;
+  NovoRegistroA2: TRegistroA2;
+  NovoRegistroD2: TRegistroD2;
+  NovoRegistroD3: TRegistroD3;
+  NovoRegistroD4: TRegistroD4;
+  NovoRegistroE2: TRegistroE2;
+  NovoRegistroP2: TRegistroP2;
+  NovoRegistroS2: TRegistroS2;
+  NovoRegistroS3: TRegistroS3;
+  NovoRegistroJ1: TRegistroJ1;
+//  NovoRegistroJ2: TRegistroJ2;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros já lançados são apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //U1
+  ACBrPAF.PAF_U.RegistroU1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_U.RegistroU1.IE               := edtIE.Text;
+  ACBrPAF.PAF_U.RegistroU1.IM               := edtIM.Text;
+  ACBrPAF.PAF_U.RegistroU1.RAZAOSOCIAL      := edtRAZAO.Text;
+  ACBrPAF.PAF_U.RegistroU1.InclusaoExclusao := True;
+
+  //A2
+  for I := 1 to 9 do
+  begin
+    NovoRegistroA2 := ACBrPAF.PAF_A.RegistroA2.New;
+
+    NovoRegistroA2.DT             := Date + (i div 4);
+    case ( i mod 4) of
+      1: NovoRegistroA2.MEIO_PGTO := 'Dinheiro';
+      2: NovoRegistroA2.MEIO_PGTO := 'Cartao';
+      3: NovoRegistroA2.MEIO_PGTO := 'Cheque';
+    else
+      NovoRegistroA2.MEIO_PGTO    := 'Pix';
+    end;
+    NovoRegistroA2.TIPO_DOC       := '1'; // 1-NFC-e 2-NF-e 3-Operação não tributável, identificando o CPF ou CNPJ do cliente.
+    NovoRegistroA2.VL             := (1.5 * i);
+    NovoRegistroA2.CNPJ           := ''; // Só é preciso informar para o tipo de documento "3"
+    NovoRegistroA2.NUMDOCUMENTO   := ''; // Só é preciso informar para o tipo de documento "3"
+
+    NovoRegistroA2.RegistroValido := True;
+  end;
+
+  //P2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroP2 := ACBrPAF.PAF_P.RegistroP2.New;
+
+    NovoRegistroP2.COD_MERC_SERV  := GerarDados('I',14);
+    NovoRegistroP2.DESC_MERC_SERV := GerarDados('S',50);
+    NovoRegistroP2.UN_MED         := GerarDados('S',2);
+    NovoRegistroP2.IAT            := 'A';
+    NovoRegistroP2.IPPT           := 'T';
+    NovoRegistroP2.ST             := 'FF';
+    NovoRegistroP2.ALIQ           := 0;
+    NovoRegistroP2.VL_UNIT        := GerarDados('I',2);
+
+    NovoRegistroP2.RegistroValido := True;
+  end;
+
+  //E2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroE2 := ACBrPAF.PAF_E.RegistroE2.New;
+
+    NovoRegistroE2.COD_MERC       := GerarDados('I', 14);
+    NovoRegistroE2.CEST           := GerarDados('I', 7);
+    NovoRegistroE2.NCM            := GerarDados('I', 8);
+    NovoRegistroE2.DESC_MERC      := GerarDados('S', 50);
+    NovoRegistroE2.UN_MED         := GerarDados('S', 2);
+    NovoRegistroE2.QTDE_EST       := GerarDados('I', 3);
+    NovoRegistroE2.DATAEMISSAO    := Date;
+    NovoRegistroE2.DATAESTOQUE    := Date;
+
+    NovoRegistroE2.RegistroValido := True;
+  end;
+
+  //D2 - DAV
+  for I := 1 to 5 do
+  begin
+    NovoRegistroD2 := ACBrPAF.PAF_D.RegistroD2.New;
+
+    NovoRegistroD2.NUM_DAV      := IntToStr(I * QualquerNumero);
+    NovoRegistroD2.DT_DAV       := Date - QualquerNumero;
+    NovoRegistroD2.TIT_DAV      := 'Pedido';
+    NovoRegistroD2.VLT_DAV      := GerarDados('I', 2);
+    NovoRegistroD2.NOME_CLIENTE := 'NOME CLIENTE';
+    NovoRegistroD2.CPF_CNPJ     := '12345678921';
+
+    NovoRegistroD2.RegistroValido := True; // diz quando o registro foi modificado no banco
+
+    //D3
+    for j := 1 to 2 do
+    begin
+      NovoRegistroD3 := NovoRegistroD2.RegistroD3.New;
+
+      NovoRegistroD3.DT_INCLUSAO   := DATE;
+      NovoRegistroD3.NUM_ITEM      := i;
+      NovoRegistroD3.COD_ITEM      := '10';
+      NovoRegistroD3.DESC_ITEM     := 'descricao do item';
+      NovoRegistroD3.QTDE_ITEM     := 10.00;
+      NovoRegistroD3.UNI_ITEM      := 'UN';
+      NovoRegistroD3.VL_UNIT       := 1.00;
+      NovoRegistroD3.VL_DESCTO     := 0.00;
+      NovoRegistroD3.VL_ACRES      := 0.00;
+      NovoRegistroD3.VL_TOTAL      := 10.00;
+      NovoRegistroD3.SIT_TRIB      := 'T'; // T, S, I, N, F
+      NovoRegistroD3.ALIQ          := 7.00; // SOMENTE QUANDO T E S
+      NovoRegistroD3.IND_CANC      := 'N';
+      NovoRegistroD3.DEC_QTDE_ITEM := 2;
+      NovoRegistroD3.DEC_VL_UNIT   := 2;
+
+      NovoRegistroD3.RegistroValido := True;
+    end;
+
+    //D4 - Log alterações DAV
+    for j := 1 to 2 do
+    begin
+      NovoRegistroD4 := NovoRegistroD2.RegistroD4.New;
+
+      NovoRegistroD4.NUM_DAV       := IntToStr(I * QualquerNumero);
+      NovoRegistroD4.DT_ALT        := Now;
+      NovoRegistroD4.COD_ITEM      := '10';
+      NovoRegistroD4.DESC_ITEM     := 'descricao do item';
+      NovoRegistroD4.QTDE_ITEM     := 10.00;
+      NovoRegistroD4.UNI_ITEM      := 'UN';
+      NovoRegistroD4.VL_UNIT       := 1.00;
+      NovoRegistroD4.VL_DESCTO     := 0.00;
+      NovoRegistroD4.VL_ACRES      := 0.00;
+      NovoRegistroD4.VL_TOTAL      := 10.00;
+      NovoRegistroD4.SIT_TRIB      := 'T'; // T, S, I, N, F
+      NovoRegistroD4.ALIQ          := 7.00; // SOMENTE QUANDO T E S
+      NovoRegistroD4.IND_CANC      := 'N';
+      NovoRegistroD4.DEC_QTDE_ITEM := 2;
+      NovoRegistroD4.DEC_VL_UNIT   := 2;
+      NovoRegistroD4.TIP_ALT       := 'I';
+
+      NovoRegistroD4.RegistroValido := True;
+    end;
+
+  end;
+
+  //S2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroS2 := ACBrPAF.PAF_S.RegistroS2.New;
+
+    NovoRegistroS2.CNPJ       := ACBrPAF.PAF_U.RegistroU1.CNPJ;
+    NovoRegistroS2.DT_ABER    := Now;
+    NovoRegistroS2.NUM_MESA   := IntToStr(i);
+    NovoRegistroS2.VL_TOT     := 12.5 * i;
+    //"Nº do Conferencia de Mesa" abaixo "COO_CM" - Deve ser informado apenas quando houver registro destes dados.
+//    NovoRegistroS2.COO_CM     := IntToStr(i);
+
+    //S3
+    for j := 1 to 2 do
+    begin
+      NovoRegistroS3 := NovoRegistroS2.RegistroS3.New;
+
+      NovoRegistroS3.COD_ITEM  := IntToStr(j);
+      NovoRegistroS3.DESC_ITEM := 'descricao do item';
+      NovoRegistroS3.QTDE_ITEM := 1;
+      NovoRegistroS3.UNI_ITEM  := 'UN';
+      NovoRegistroS3.VL_UNIT   := 2;
+    end;
+  end;
+
+  //J1
+  for I := 1 to 3 do
+  begin
+    NovoRegistroJ1 := ACBrPAF.PAF_J.RegistroJ1.New;
+
+    NovoRegistroJ1.CNPJ                  := ACBrPAF.PAF_U.RegistroU1.CNPJ;
+    NovoRegistroJ1.DATA_EMISSAO          := Now;
+    NovoRegistroJ1.SUBTOTAL              := 30;
+    NovoRegistroJ1.DESC_SUBTOTAL         := 0;
+    NovoRegistroJ1.INDICADOR_DESC        := 'V';
+    NovoRegistroJ1.ACRES_SUBTOTAL        := 0;
+    NovoRegistroJ1.INDICADOR_ACRES       := 'V';
+    NovoRegistroJ1.VALOR_LIQUIDO         := 30;
+    NovoRegistroJ1.TIPOEMISSAO           := '1';
+    NovoRegistroJ1.CHAVE_NF              := GerarDados('I', 44);
+    NovoRegistroJ1.NUMERO_NOTA           := GerarDados('I', 10);
+    NovoRegistroJ1.SERIE_NOTA            := '001';
+    NovoRegistroJ1.CPFCNPJ_CLIENTE       := GerarDados('I', 14);
+
+    //J2
+    //Registros J2 são gerados apenas para NFC-e que forem emitidas em Contingência. Não é o caso desse exemplo.
+//    for j := 1 to 2 do
+//    begin
+//      NovoRegistroJ2 := NovoRegistroJ1.RegistroJ2.New;
+//
+//      NovoRegistroJ2.DATA_EMISSAO            := Date;
+//      NovoRegistroJ2.NUMERO_ITEM             := IntToStr(j);
+//      NovoRegistroJ2.COD_ITEM                := IntToStr(j);
+//      NovoRegistroJ2.DESC_ITEM               := 'descricao do item';
+//      NovoRegistroJ2.QTDE_ITEM               := 1;
+//      NovoRegistroJ2.UNI_ITEM                := 'UN';
+//      NovoRegistroJ2.VL_UNIT                 := 2;
+//      NovoRegistroJ2.DESCONTO_ITEM           := 2;
+//      NovoRegistroJ2.ACRESCIMO_ITEM          := 2;
+//      NovoRegistroJ2.VALOR_LIQUIDO           := 2;
+//      NovoRegistroJ2.TOTALIZADOR_PARCIAL     := 2;
+//      NovoRegistroJ2.CASAS_DECIMAIS_QTDE     := 2;
+//      NovoRegistroJ2.CASAS_DECIMAIS_VAL_UNIT := 2;
+//      NovoRegistroJ2.NUMERO_NOTA             := 2;
+//      NovoRegistroJ2.SERIE_NOTA              := 2;
+//      NovoRegistroJ2.CHAVE_NF                := GerarDados('I', 44);;
+//    end;
+  end;
+
+
+  ACBrPAF.SaveToFile_RegistrosPAF('RegistrosPAFNFCe.txt');
+
+  if FileExists('RegistrosPAFNFCe.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCe.txt');
     pc1.ActivePageIndex:= 1;
   end;
 end;

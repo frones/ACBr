@@ -36,7 +36,7 @@ unit ACBrPAF_D_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass,
+uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAFRegistros,
      ACBrPAF_D;
 
 type
@@ -61,7 +61,7 @@ type
     procedure LimpaRegistros;
 
     procedure WriteRegistroD1;
-    procedure WriteRegistroD2;
+    procedure WriteRegistroD2(Layout: TLayoutPAF);
     procedure WriteRegistroD9;
 
     property RegistroD1: TRegistroD1     read FRegistroD1 write FRegistroD1;
@@ -147,7 +147,7 @@ begin
     Result := 0;
 end;
 
-procedure TPAF_D.WriteRegistroD2;
+procedure TPAF_D.WriteRegistroD2(Layout: TLayoutPAF);
 var
   intFor: integer;
 begin
@@ -160,22 +160,36 @@ begin
     begin
       with FRegistroD2.Items[intFor] do
       begin
+        if Layout = lpPAFECF then
+        begin
+          Add( LFill('D2') +
+               LFill(FRegistroD1.CNPJ, 14) +
+               RFill(NUM_FAB, 20) +
+               RFill(MF_ADICIONAL, 1) +
+               RFill(TIPO_ECF, 7) +
+               RFill(MARCA_ECF, 20) +
+               RFill(MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
+               LFill(COO, 9) +
+               RFill(NUM_DAV, 13) +
+               LFill(DT_DAV, 'yyyymmdd') +
+               RFill(TIT_DAV, 30) +
+               LFill(VLT_DAV, 8, 2) +
+               LFill(COO_DFV, 9) +
+               LFill(NUMERO_ECF, 3) +
+               RFill(NOME_CLIENTE, 40) +
+               LFill(CPF_CNPJ, 14) );
+        end
+        else
+        begin
         Add( LFill('D2') +
              LFill(FRegistroD1.CNPJ, 14) +
-             RFill(NUM_FAB, 20) +
-             RFill(MF_ADICIONAL, 1) +
-             RFill(TIPO_ECF, 7) +
-             RFill(MARCA_ECF, 20) +
-             RFill(MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
-             LFill(COO, 9) +
              RFill(NUM_DAV, 13) +
              LFill(DT_DAV, 'yyyymmdd') +
              RFill(TIT_DAV, 30) +
              LFill(VLT_DAV, 8, 2) +
-             LFill(COO_DFV, 9) +
-             LFill(NUMERO_ECF, 3) +
              RFill(NOME_CLIENTE, 40) +
              LFill(CPF_CNPJ, 14) );
+        end;
       end;
       FRegistroD9.TOT_REG_D2 := FRegistroD9.TOT_REG_D2 + 1;
       FRegistroD9.TOT_REG    := FRegistroD9.TOT_REG + 1;

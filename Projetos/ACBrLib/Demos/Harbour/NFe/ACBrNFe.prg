@@ -61,8 +61,8 @@ VISIBLE:
     METHOD DistribuicaoDFePorNSU(acUFAutor, eCNPJCPF, eNSU)
     METHOD DistribuicaoDFePorChave(acUFAutor, eCNPJCPF, echNFe)
 
-    METHOD EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos)
-    METHOD EnviarEmailEvento(ePara, eChaveEvento, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos)
+    METHOD EnviarEmail(ePara, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    METHOD EnviarEmailEvento(ePara, eXMLEvento, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
 
     METHOD Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado)
     METHOD ImprimirPDF()
@@ -90,10 +90,10 @@ METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrNFe
     ::CheckResult(hResult) 
     RETURN Self
 
-PROCEDURE Destroy CLASS ACBrNFe
+METHOD Destroy CLASS ACBrNFe
     DllCall(::hHandle, DLL_OSAPI, "NFE_Finalizar")
     DllUnload(::hHandle)
-    RETURN
+    RETURN nil
 
 METHOD CheckResult(hResult) CLASS ACBrNFe
     local buffer, bufferLen, oErr
@@ -367,15 +367,15 @@ METHOD DistribuicaoDFePorChave(acUFAutor, eCNPJCPF, echNFe) CLASS ACBrNFe
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 
-METHOD EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos) CLASS ACBrNFe
+METHOD EnviarEmail(ePara, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmail", hb_StrToUTF8(ePara), hb_StrToUTF8(eChaveNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eMensagem), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmail", hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
     ::CheckResult(hResult)
     RETURN nil
 
-METHOD EnviarEmailEvento(ePara, eChaveEvento, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos) CLASS ACBrNFe
+METHOD EnviarEmailEvento(ePara, eXMLEvento, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmailEvento", hb_StrToUTF8(ePara), hb_StrToUTF8(eChaveEvento), hb_StrToUTF8(eChaveNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eMensagem), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmailEvento", hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLEvento), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
     ::CheckResult(hResult)
     RETURN nil
 

@@ -21,7 +21,7 @@
     <Description Value="ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fortes Report - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="4">
+    <Files Count="3">
       <Item1>
         <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas"/>
         <UnitName Value="ACBrSATExtratoFortesFr"/>
@@ -31,14 +31,10 @@
         <Type Value="LFM"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas"/>
-        <UnitName Value="ACBrSATExtratoReportClass"/>
-      </Item3>
-      <Item4>
         <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFrReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSATExtratoFortesFrReg"/>
-      </Item4>
+      </Item3>
     </Files>
     <RequiredPkgs Count="4">
       <Item1>

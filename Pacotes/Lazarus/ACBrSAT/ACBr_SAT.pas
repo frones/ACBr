@@ -10,7 +10,7 @@ uses
   ACBrSATReg, ACBrSAT, ACBrSATClass, ACBrSATDinamico_cdecl, pcnCFe, pcnCFeR, 
   pcnCFeW, pcnCFeCanc, pcnCFeCancR, pcnCFeCancW, pcnRede, pcnRedeR, pcnRedeW, 
   ACBrSATDinamico_stdcall, ACBrSATMFe_integrador, ACBrSATExtratoClass, 
-  LazarusPackageIntf;
+  ACBrSATExtratoReportClass, LazarusPackageIntf;
 
 implementation
 

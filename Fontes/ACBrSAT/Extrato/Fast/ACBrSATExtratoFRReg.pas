@@ -36,18 +36,20 @@ unit ACBrSATExtratoFRReg;
 
 interface
 
+uses
+  Classes, ACBrSATExtratoFR;
+	
+procedure Register;
+
 implementation
 
-uses
-  Classes, ACBr_SATExtratoFR;
-
 {$IFNDEF FPC}
-//  {$R ACBrSATExtratoFast.dcr}
+//  {$R ACBrSATExtratoFR.dcr}
 {$ENDIF}
 
 procedure Register;
 begin
-  RegisterComponents('ACBrSAT',[TACBrSATExtratoFast]);
+  RegisterComponents('ACBrSAT',[TACBrSATExtratoFR]);
 end;
 
 

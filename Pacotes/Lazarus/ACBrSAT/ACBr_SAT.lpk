@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
     <Version Minor="1"/>
-    <Files Count="16">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -86,6 +86,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoClass.pas"/>
         <UnitName Value="ACBrSATExtratoClass"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas"/>
+        <UnitName Value="ACBrSATExtratoReportClass"/>
+      </Item17>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

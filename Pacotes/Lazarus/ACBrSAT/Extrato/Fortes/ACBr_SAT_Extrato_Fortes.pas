@@ -8,8 +8,7 @@ unit ACBr_SAT_Extrato_Fortes;
 interface
 
 uses
-  ACBrSATExtratoFortesFr, ACBrSATExtratoReportClass, 
-  ACBrSATExtratoFortesFrReg, LazarusPackageIntf;
+  ACBrSATExtratoFortesFr, ACBrSATExtratoFortesFrReg, LazarusPackageIntf;
 
 implementation
 

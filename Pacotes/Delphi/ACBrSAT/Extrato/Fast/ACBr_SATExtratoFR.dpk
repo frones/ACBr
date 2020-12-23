@@ -59,7 +59,7 @@ package ACBr_SATExtratoFR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fast Report - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
@@ -78,10 +78,10 @@ requires
 {$IFDEF VER240} fs17, frx17, frxe17, frxDB17, {$ENDIF} // XE3
 {$IFDEF VER250} fs18, frx18, frxe18, frxDB18, {$ENDIF} // XE4
 {$IFDEF VER260} fs19, frx19, frxe19, frxDB19, {$ENDIF} // XE5
-{$IFDEF VER270} fs20, frx20, frxe20, frxDB20, {$ENDIF} // XE6
-{$IFDEF VER280} fs21, frx21, frxe21, frxDB21, {$ENDIF} // XE7
-{$IFDEF VER290} fs22, frx22, frxe22, frxDB22, {$ENDIF} // XE8
-{$IFDEF VER300} fs23, frx23, frxe23, frxDB23, {$ENDIF} // Seattle
+{$IFDEF VER270} fs20, frx20, frxe20, frxDB20, dsnap, {$ENDIF} // XE6
+{$IFDEF VER280} fs21, frx21, frxe21, frxDB21, dsnap, {$ENDIF} // XE7
+{$IFDEF VER290} fs22, frx22, frxe22, frxDB22, dsnap, {$ENDIF} // XE8
+{$IFDEF VER300} fs23, frx23, frxe23, frxDB23, dsnap, {$ENDIF} // Seattle
 {$IFDEF VER310} fs24, frx24, frxe24, frxDB24, dsnap, {$ENDIF} // Berlin
 {$IFDEF VER320} fs25, frx25, frxe25, frxDB25, dsnap, {$ENDIF} // Tokyo
 {$IFDEF VER330} fs26, frx26, frxe26, frxDB26, dsnap, {$ENDIF} // Rio

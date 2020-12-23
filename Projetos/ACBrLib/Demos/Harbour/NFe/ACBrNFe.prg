@@ -242,10 +242,12 @@ METHOD Validar() CLASS ACBrNFe
     RETURN nil
 
 METHOD ValidarRegrasdeNegocios() CLASS ACBrNFe
-    local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ValidarRegrasdeNegocios")
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)  
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ValidarRegrasdeNegocios", @buffer, @bufferLen)
     ::CheckResult(hResult)
-    RETURN nil
+    RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD VerificarAssinatura() CLASS ACBrNFe
     local hResult

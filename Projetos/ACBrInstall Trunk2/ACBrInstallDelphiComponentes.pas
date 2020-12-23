@@ -102,7 +102,7 @@ type
     procedure RemoverDiretoriosACBrDoPath;
     procedure RemoverArquivosAntigosDoDisco;
 
-    procedure AdicionaLibraryPathNaDelphiVersaoEspecifica(const AProcurarRemover: string);
+    procedure AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi(const AProcurarRemover: string);
     procedure AddLibrarySearchPath;
     procedure DeixarSomenteLib;
 
@@ -408,11 +408,11 @@ begin
 
     // -- adicionar ao environment variables do delphi
     if tPlatformAtual = bpWin32 then
-begin
-    InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
-    AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
-    InformaSituacao('...OK');
-end;
+    begin
+      InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
+      AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi('acbr');
+      InformaSituacao('...OK');
+    end;
     InformaProgresso;
 
 
@@ -896,7 +896,7 @@ begin
   end;
 end;
 
-procedure TACBrInstallComponentes.AdicionaLibraryPathNaDelphiVersaoEspecifica(const AProcurarRemover: string);
+procedure TACBrInstallComponentes.AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi(const AProcurarRemover: string);
 var
   PathsAtuais: string;
   ListaPaths: TStringList;

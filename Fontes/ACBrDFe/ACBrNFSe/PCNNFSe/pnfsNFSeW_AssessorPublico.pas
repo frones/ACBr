@@ -123,13 +123,32 @@ begin
   Gerador.wCampo(tcStr, '', 'LOGRADOURO', 1, 1, 1, NFSe.Tomador.Endereco.Endereco, '');
   Gerador.wCampo(tcStr, '', 'COMPLEMENTO', 1, 1, 1, NFSe.Tomador.Endereco.Complemento, '');
   Gerador.wCampo(tcStr, '', 'NUMERO', 1, 1, 1, NFSe.Tomador.Endereco.Numero, '');
-//  Gerador.wCampo(tcStr, '', 'EMAIL', 1, 1, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampo(tcStr, '', 'EMAIL', 1, 1, 1, NFSe.Tomador.Contato.Email, '');
   Gerador.wCampo(tcStr, '', 'DENTROPAIS', 1, 1, 1, 'S', '');
   Gerador.wCampo(tcDe2, '', 'PIS', 1, 1, 1,NFSe.Servico.Valores.ValorPis, '');
+
+  if NFSe.Servico.Valores.ValorPis > 0 then
+    Gerador.wCampo(tcStr, '', 'RETPIS', 1, 1, 1, 'S', '');
+
   Gerador.wCampo(tcDe2, '', 'COFINS', 1, 1, 1, NFSe.Servico.Valores.ValorCofins, '');
+
+  if NFSe.Servico.Valores.ValorCofins > 0 then
+    Gerador.wCampo(tcStr, '', 'RETCOFINS', 1, 1, 1, 'S', '');
+
   Gerador.wCampo(tcDe2, '', 'INSS', 1, 1, 1, NFSe.Servico.Valores.ValorInss , '');
+
+  if NFSe.Servico.Valores.ValorInss > 0 then
+    Gerador.wCampo(tcStr, '', 'RETINSS', 1, 1, 1, 'S', '');
+
   Gerador.wCampo(tcDe2, '', 'IR', 1, 1, 1, NFSe.Servico.Valores.ValorIr, '');
+
+  if NFSe.Servico.Valores.ValorIr > 0 then
+    Gerador.wCampo(tcStr, '', 'RETIR', 1, 1, 1, 'S', '');
+
   Gerador.wCampo(tcDe2, '', 'CSLL', 1, 1, 1,  NFSe.Servico.Valores.ValorCsll  , '');
+
+  if NFSe.Servico.Valores.ValorCsll > 0 then
+    Gerador.wCampo(tcStr, '', 'RETCSLL', 1, 1, 1, 'S', '');
 
   GerarServicos;
 

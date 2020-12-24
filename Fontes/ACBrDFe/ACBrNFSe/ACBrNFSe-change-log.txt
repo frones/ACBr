@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/60663-falha-de-valida%C3%A7%C3%A3o-nfse-safeweb-campo-competencia/
+  Por: M Bortolini
+-- pnfsNFSeW_AssessorPublico --
+[*] https://www.projetoacbr.com.br/forum/topic/59634-nfse-provedor-assessor-publico-sem-c%C3%B3digo-de-verifica%C3%A7%C3%A3o-no-retorno/?tab=comments#comment-398159
+  Por: José Jair de Oliveira
+
 17/12/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração visando o provedor Tecnos

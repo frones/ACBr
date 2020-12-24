@@ -989,10 +989,10 @@ begin
     else
     begin
       case FProvedor of
-        proSigep:
+        proSigep, proMegaSoft:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
 
-        proCenti, proGoiania, proMegaSoft, proActconv2, ProTecnos:
+        proCenti, proGoiania, proActconv2, ProTecnos, proSafeWeb:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
 
         profintelISS:

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2020
+-- ACBrDFeSSL --
+[*] Ajuste em "TDFeSSLHttpClass.Enviar", para exibir as informações do Retorno
+    (por: DSA)
+
 13/11/2020
 -- ACBrDFeUtil --
 [+] Incluido a função ObterDFeXML que extrai o XML de um DF-e de um XML informado.

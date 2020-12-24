@@ -1048,6 +1048,7 @@ begin
 
   FSoapAction := ASoapAction;
   FMimeType := AMimeType;
+  Result := '';
   try
     HTTPMethod( AMethod, AURL ) ;
 
@@ -1065,7 +1066,7 @@ begin
     begin
       raise EACBrDFeException.CreateDef( Format(ACBrStr(cACBrDFeSSLEnviarException),
                                          [FpInternalErrorCode, FpHTTPResultCode, FURL] )
-                                         + sLineBreak + LastErrorDesc);
+                                         + sLineBreak + LastErrorDesc + sLineBreak + Result);
     end;
   end;
 

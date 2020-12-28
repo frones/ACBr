@@ -347,14 +347,14 @@ End Sub
 Public Sub GerarPDF()
     Dim retorno   As Long
     
-    retorno = Boleto_GerarPDF(eNomeImpressora)
+    retorno = Boleto_GerarPDF()
     CheckResult retorno
 End Sub
 
 Public Sub GerarHTML()
     Dim retorno   As Long
     
-    retorno = Boleto_GerarHTML(eNomeImpressora)
+    retorno = Boleto_GerarHTML()
     CheckResult retorno
 End Sub
 

@@ -73,6 +73,7 @@ exports
   Boleto_GerarRemessa,
   Boleto_LerRetorno,
   Boleto_EnviarEmail,
+  Boleto_EnviarEmailBoleto,
   Boleto_SetDiretorioArquivo,
   Boleto_ListaBancos,
   Boleto_ListaCaractTitulo,

@@ -74,6 +74,7 @@ type
     function GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
     function LerRetorno(eDir, eNomeArq: PChar): longint;
     function EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
+    function EnviarEmailBoleto(eIndice: longint; ePara, eAssunto, eMensagem, eCC: PChar): longint;
     function SetDiretorioArquivo(eDir, eArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ListaBancos(const sResposta: PChar; var esTamanho: longint): longint;
     function ListaCaractTitulo(const sResposta: PChar; var esTamanho: longint): longint;
@@ -476,6 +477,56 @@ begin
 
       BoletoDM.ConfigurarImpressao;
       BoletoDM.ACBrBoleto1.EnviarEmail(Para, Assunto, slMensagem, True, slCC);
+      Result := SetRetorno(ErrOK);
+    finally
+      slMensagem.Free;
+      slCC.Free;
+      BoletoDM.FinalizarImpressao;
+      BoletoDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibBoleto.EnviarEmailBoleto(eIndice: longint; ePara, eAssunto, eMensagem, eCC: PChar): longint;
+var
+  Para, Assunto, Mensagem, CC: AnsiString;
+  slMensagem, slCC: TStrings;
+begin
+  try
+    Para := ConverterAnsiParaUTF8(ePara);
+    Assunto := ConverterAnsiParaUTF8(eAssunto);
+    Mensagem := ConverterAnsiParaUTF8(eMensagem);
+    CC := ConverterAnsiParaUTF8(eCC);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_EnviarEmailBoleto(' + IntToStr(eIndice) + ',' + Para + ',' + Assunto
+      + ',' + Mensagem + ',' + CC +')', logCompleto, True)
+    else
+      GravarLog('Boleto_EnviarEmailBoleto', logNormal);
+
+    BoletoDM.Travar;
+
+    if eIndice > (BoletoDM.ACBrBoleto1.ListadeBoletos.Count -1) then
+      raise Exception.Create('Título de Indice '+IntToStr(eIndice)+' não identificado na Lista!');
+
+    if EstaVazio(ePara) and (BoletoDM.ACBrBoleto1.ListadeBoletos.Count > 0) then
+      Para := BoletoDM.ACBrBoleto1.ListadeBoletos[eIndice].Sacado.Email;
+
+    try
+      slMensagem := TStringList.Create;
+      slMensagem.Text := Mensagem;
+
+      slCC := TStringList.Create;
+      slCC.Text := CC;
+
+      BoletoDM.ConfigurarImpressao;
+      BoletoDM.ACBrBoleto1.ListadeBoletos[eIndice].EnviarEmail(Para, Assunto, slMensagem, True, slCC);
       Result := SetRetorno(ErrOK);
     finally
       slMensagem.Free;

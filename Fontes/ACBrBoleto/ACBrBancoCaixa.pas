@@ -483,7 +483,7 @@ begin
                '01'                                    + // 10 ate 11   - Código Identificador do Tipo de Serviço
                PadRight('COBRANCA', 15 )               + // 12 ate 26   - Literal correspondente ao códigode Serviço (COBRANÇA)
                RightStr(Agencia,4)                     + // 27 ate 30   - código agência
-               PadRight(ACodCedente, 7, '0')           + // 31 ate 37   - Código Identificador da Empresa na CAIXA (CEDENTE)
+               PadRight(ACodCedente, 7, ' ')           + // 31 ate 37   - Código Identificador da Empresa na CAIXA (CEDENTE)
                Space(9)                                + // 38 ate 46   - brancos
                PadRight(Nome, 30)                      + // 47 ate 76   - Nome da Empresa
                '104'                                   + // 77 ate 79   - Código do Banco (104)
@@ -848,7 +848,7 @@ var
                   ATipoCendente                                                  + //    2 até 3 - Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')         + //   4 até 17 - Numero de Inscrição Empresa
                   RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )           + //  18 até 21 - Código da Agência
-                  PadRight(ACodCedente, 7, '0')                                  + //  22 até 28 - Código do Cedente
+                  PadRight(ACodCedente, 7, ' ')                                  + //  22 até 28 - Código do Cedente
                   Space(3)                                                       + //  29 até 31 - Uso Exclusivo CAIXA
                   Space(25)                                                      + //  32 até 56 - Campo em Branco
                   PadRight(Copy(AModalidade,1,2), 2, '0')                        + //  57 até 58 - Modalidade

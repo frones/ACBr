@@ -2142,7 +2142,7 @@ begin
                ifthen(DT_INI >= EncodeDate(2017,01,01),
                LFill( CHAVE_NFE_ULT_E ) +
                LFill( NUM_ITEM_ULT_E ) +
-               DFill( VL_UNIT_BC_ICMS_ULT_E,2 ) +
+               DFill( VL_UNIT_BC_ICMS_ULT_E,2 ,True) +
                DFill( ALIQ_ICMS_ULT_E,2 ) +
                DFill( VL_UNIT_LIMITE_BC_ICMS_ULT_E,2 ) +
                DFill( VL_UNIT_ICMS_ULT_E,3 ) +

@@ -1868,7 +1868,8 @@ begin
                                     '00000000')                               + // 119 a 126 - Data do juro de mora
              IntToStrZero(Round(ValorMoraJuros * 100), 15)                    + // 127 a 141 - Juros de mora por dia/taxa
              TipoDescontoToString(ACBrTitulo.TipoDesconto)                    + // 142 a 142 - Código do desconto 1
-             IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento))                         + // 143 a 150 - Data do desconto 1
+             IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto)) + // 143 a 150 - Data do desconto 1
+
              IntToStrZero(Round(ValorDesconto * 100), 15)                     + // 151 a 165 - Valor percentual a ser concedido
              IntToStrZero(Round(ValorIOF * 100), 15)                          + // 166 a 180 - Valor do IOF a ser recolhido
              IntToStrZero(Round(ValorAbatimento * 100), 15)                   + // 181 a 195 - Valor do abatimento
@@ -1918,11 +1919,15 @@ begin
                ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
                Ocorrencia                                                  + // 16 a 17 - Código de movimento
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 18  tipo de desconto 2
-               IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento)) + // 19 - 26 Data do Desconto 2
+               IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto2)) + // 19 - 26 Data do Desconto 2
+
                IntToStrZero(Round(ValorDesconto2 * 100), 15)               + // 27 - 41 Valor/Percentual
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 42 tipo de desconto 3
-               PadLeft('0', 8, '0')                                        + // 43-50 data do desconto 3
-               PadLeft('0', 15, '0')                                       + // 51-65 Valor ou percentual a ser concedido
+
+               IfThen(ValorDesconto3 = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto3)) +  // 43-50 data do desconto 3
+
+               IntToStrZero(Round(ValorDesconto3 * 100), 15)               +// 51-65 Valor ou percentual a ser concedido
+
                '2'                                                         + // 66 Código da multa - 2 valor percentual
                IfThen((DataMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMulta),

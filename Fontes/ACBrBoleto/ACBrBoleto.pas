@@ -1349,6 +1349,7 @@ type
     fDataAbatimento       : TDateTime;
     fDataDesconto         : TDateTime;
     fDataDesconto2        : TDateTime;
+    fDataDesconto3        : TDateTime;
     fDataMoraJuros        : TDateTime;
     fDataMulta            : TDateTime;
     fDataProtesto         : TDateTime;
@@ -1361,6 +1362,7 @@ type
     fValorAbatimento      : Currency;
     fValorDesconto        : Currency;
     fValorDesconto2       : Currency;
+    fValorDesconto3       : Currency;
     fValorMoraJuros       : Currency;
     fValorIOF             : Currency;
     fValorOutrasDespesas  : Currency;
@@ -1465,6 +1467,7 @@ type
      property DataAbatimento                 : TDateTime read fDataAbatimento    write fDataAbatimento;
      property DataDesconto                   : TDateTime read fDataDesconto      write fDataDesconto;
      property DataDesconto2                  : TDateTime read fDataDesconto2     write fDataDesconto2;
+     property DataDesconto3                  : TDateTime read fDataDesconto3     write fDataDesconto3;
      property DataMoraJuros                  : TDateTime read fDataMoraJuros     write fDataMoraJuros;
      property DataMulta                      : TDateTime read fDataMulta         write fDataMulta;
      property DataProtesto                   : TDateTime read fDataProtesto      write SetDataProtesto;
@@ -1478,6 +1481,7 @@ type
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;
      property ValorDesconto        : Currency read fValorDesconto         write fValorDesconto;
      property ValorDesconto2       : Currency read fValorDesconto2        write fValorDesconto2;
+     property ValorDesconto3       : Currency read fValorDesconto3        write fValorDesconto3;
      property ValorMoraJuros       : Currency read fValorMoraJuros        write fValorMoraJuros;
      property ValorIOF             : Currency read fValorIOF              write fValorIOF;
      property ValorOutrasDespesas  : Currency read fValorOutrasDespesas   write fValorOutrasDespesas;
@@ -2307,6 +2311,7 @@ begin
    fDataAbatimento       := 0;
    fDataDesconto         := 0;
    fDataDesconto2        := 0;
+   fDataDesconto3        := 0;
    fDataMoraJuros        := 0;
    fDataMulta            := 0;
    fDataProtesto         := 0;
@@ -2319,6 +2324,7 @@ begin
    fValorAbatimento      := 0;
    fValorDesconto        := 0;
    fValorDesconto2       := 0;
+   fValorDesconto3       := 0;
    fValorMoraJuros       := 0;
    fValorIOF             := 0;
    fValorOutrasDespesas  := 0;

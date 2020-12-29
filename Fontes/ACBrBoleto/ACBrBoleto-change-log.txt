@@ -49,6 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2020
+--ACBrBancoSicred, ACBrBoleto--
+[+] Adicionado validação do campo Desconto3 no CNAB240 e validação de todos os descontos pela DataDesconto correspondente
+https://www.projetoacbr.com.br/forum/topic/60604-datadesconto3/
+
+-- ACBrBancoCaixa --
+[*] Ajuste CNAB400 na ultima posição do campo CódigoCedente
+https://www.projetoacbr.com.br/forum/topic/60535-cobran%C3%A7a-sigeb-cnab-400-sugest%C3%A3o-de-ajustes/
+
 18/12/2020
 
 -- ACBrBancoSafra --

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2020
+--- ACBrLibGNReConfig ---
+[-] Corrigido possível problema ao ler senha do certificado.
+    (Por: Rafael Dias)
+
 19/10/2020
 --- ACBrLibGNReBase, ACBrLibGNReDataModule ---
 [-] Corrigindo retornos da ACBrLibGNRe.

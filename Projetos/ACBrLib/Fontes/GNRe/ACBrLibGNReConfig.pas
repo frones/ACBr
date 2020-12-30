@@ -45,7 +45,6 @@ uses
 type
 
   { TGuiaConfig }
-
   TGuiaConfig = class
   private
     FImpressora: String;
@@ -81,7 +80,6 @@ type
   end;
 
   { TLibGNReConfig }
-
   TLibGNReConfig = class(TLibConfig)
   private
     FGuiaConfig: TGuiaConfig;
@@ -109,7 +107,6 @@ uses
   ACBrLibConsts, ACBrUtil;
 
 { TGuiaConfig }
-
 constructor TGuiaConfig.Create;
 begin
   inherited Create;
@@ -165,7 +162,6 @@ begin
 end;
 
 { TLibGNReConfig }
-
 constructor TLibGNReConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
@@ -186,6 +182,8 @@ procedure TLibGNReConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
+  FGNReConfig.ChaveCryptINI := ChaveCrypt;
+
   FGNReConfig.LerIni(Ini);
   FGuiaConfig.LerIni(Ini);
 end;
@@ -194,12 +192,16 @@ procedure TLibGNReConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
+  FGNReConfig.ChaveCryptINI := ChaveCrypt;
+
   FGNReConfig.GravarIni(Ini);
   FGuiaConfig.GravarIni(Ini);
 end;
 
 procedure TLibGNReConfig.ClasseParaComponentes;
 begin
+  FGNReConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibGNRe(Owner).GNReDM.AplicarConfiguracoes;
 end;

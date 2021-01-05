@@ -959,6 +959,13 @@ begin
     FPEnvelopeSoap := Format('{"xml": "%s", "usuario": "%s", "senha": "%s"}',
      [DadosMsg, FPConfiguracoesNFSe.Geral.UserWeb, FPConfiguracoesNFSe.Geral.SenhaWeb]);
   end;
+
+  if (FProvedor = proTinus) and
+     (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 2607208) then
+  begin
+    FPEnvelopeSoap := StringReplace(FPEnvelopeSoap, '"http://www.tinus.com.br"', '"http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
+    FPEnvelopeSoap := StringReplace(FPEnvelopeSoap, '"http://www2.tinus.com.br"', '"http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeWebService.InicializarServico;
@@ -3108,7 +3115,8 @@ begin
   case FProvedor of
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
         case FPConfiguracoesNFSe.Geral.CodigoMunicipio of
@@ -3118,6 +3126,12 @@ begin
 
 //              if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
 //                FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus.com.br', 'tempuri.org', [rfReplaceAll]);
+            end;
+          2607208:
+            begin
+              FPDadosMsg     := StringReplace(FPDadosMsg, '"http://www.tinus.com.br"', '"http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
+              FPDadosMsg     := StringReplace(FPDadosMsg, '"http://www2.tinus.com.br"', '"http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
+              FDadosEnvelope := StringReplace(FDadosEnvelope, 'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"', '', [rfReplaceAll]);
             end;
         else
           begin
@@ -3632,10 +3646,10 @@ begin
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                  FPConfiguracoes.Arquivos.PathSchemas +
                  FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono);
-   end
-   else
-     GerarException(ACBrStr('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' +
-      FPConfiguracoesNFSe.Geral.xProvedor));
+  end
+  else
+    GerarException(ACBrStr('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' +
+     FPConfiguracoesNFSe.Geral.xProvedor));
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono.IncluiEncodingDados);
 
@@ -4091,7 +4105,8 @@ begin
 
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarSituacaoLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
@@ -4340,7 +4355,8 @@ begin
   case FProvedor of
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
@@ -4606,7 +4622,8 @@ begin
   case FProvedor of
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseRpsEnvio', 'Arg', [rfReplaceAll]);
 
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
@@ -4767,7 +4784,8 @@ begin
   case FProvedor of
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseEnvio', 'Arg', [rfReplaceAll]);
 
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
@@ -5205,7 +5223,8 @@ begin
   case FProvedor of
     proTinus:
       begin
-        if FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251 then
+        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
+           (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2607208) then
           FPDadosMsg := StringReplace(FPDadosMsg, 'CancelarNfseEnvio', 'Arg', [rfReplaceAll]);
 
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then

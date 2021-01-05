@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2021
+-- ACBrNFSeWebServices --
+[*] Alterações visando o provedor Tinus.
+  Por: Guilherme Martin Ewz
+-- pnfsLerListaNFSe --
+[*] Alterações visando a leitura do XML da NFS-e do provedor SiapSistemas.
+  Por: Eliezer F.B.
+
 30/12/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] Possivel correção na geração da tag Competencia, provedor Digifred.

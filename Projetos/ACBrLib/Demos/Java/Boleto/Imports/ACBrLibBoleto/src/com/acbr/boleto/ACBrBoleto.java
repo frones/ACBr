@@ -47,7 +47,7 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         int Boleto_ConfigImportar(String eArqConfig);
         
-		int Boleto_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+        int Boleto_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
         
         int Boleto_ConfigLer(String eArqConfig);
 
@@ -79,6 +79,8 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         int Boleto_EnviarEmail(String ePara, String eAssunto, String eMensagem, String eCC);
 
+        int Boleto_EnviarEmailBoleto(int eIndice, String ePara, String eAssunto, String eMensagem, String eCC);
+        
         int Boleto_SetDiretorioArquivo(String eDir, String eArq, ByteBuffer buffer, IntByReference bufferSize);
 
         int Boleto_ListaBancos(ByteBuffer buffer, IntByReference bufferSize);
@@ -262,6 +264,11 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
     public void EnviarEmail(String ePara, String eAssunto, String eMensagem, String eCC) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_EnviarEmail(ePara, eAssunto, eMensagem, eCC);
+        checkResult(ret);
+    }
+    
+    public void EnviarEmailBoleto(int eIndice, String ePara, String eAssunto, String eMensagem, String eCC) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_EnviarEmailBoleto(eIndice, ePara, eAssunto, eMensagem, eCC);
         checkResult(ret);
     }
     

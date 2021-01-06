@@ -52,14 +52,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="jTabbedPane5" min="-2" pref="247" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="btnGravarConfig" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jPanel4" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -88,10 +90,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="197" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <Component id="jScrollPane1" alignment="0" pref="281" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -117,35 +116,53 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnDadosCedente" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnGerarRemessa" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnLerRetorno" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnIncluirTitulo" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnEnviarEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnImprimir" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btnGerarPDF" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnIncluirTitulo" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnGerarPDF" min="-2" pref="139" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnSetDiretorioArquivos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="btnMontarNossoNumero1" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="btnLinhaDigitavel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnListarOcorrencias" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btnListarBancos" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnLimparLista" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnImprimir" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnImprimirBoleto" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnGerarRemessa" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnTotalTitulo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnCodigoBarras" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="btnLerRetorno" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnLimparLista" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnSelecionaBanco" alignment="0" pref="137" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnEnviarEmail" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnEnviarEmailBoleto" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnListarBancos" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnLinhaDigitavel" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCodigoBarras" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnGerarHTML" alignment="0" pref="139" max="32767" attributes="0"/>
+                              <Component id="btnListarOcorrencias" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnListarCaracTitulos" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="btnCodigoMoraAceitos" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnListarOcorrenciasEx" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="btnTamNossoNumero" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -154,38 +171,62 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnDadosCedente" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="btnListarBancos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnListarOcorrencias" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnLinhaDigitavel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnCodigoBarras" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnIncluirTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnTotalTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnGerarRemessa" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnLimparLista" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnLerRetorno" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnEnviarEmail" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnGerarPDF" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnIncluirTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGerarPDF" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEnviarEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnImprimirBoleto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEnviarEmailBoleto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnGerarRemessa" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnListarBancos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnTotalTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLinhaDigitavel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnLerRetorno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCodigoBarras" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnLimparLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGerarHTML" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnSelecionaBanco" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnListarOcorrencias" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnListarCaracTitulos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCodigoMoraAceitos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnListarOcorrenciasEx" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnTamNossoNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnSetDiretorioArquivos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMontarNossoNumero1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -222,7 +263,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnImprimir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Imprimir Boleto"/>
+            <Property name="text" type="java.lang.String" value="Imprimir"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirActionPerformed"/>
@@ -300,6 +341,91 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDadosCedenteActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="btnImprimirBoleto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Imprimir Boleto"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirBoletoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSelecionaBanco">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="actionCommand" type="java.lang.String" value="Seleciona Banco"/>
+            <Property name="label" type="java.lang.String" value="Seleciona Banco"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecionaBancoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnListarCaracTitulos">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="actionCommand" type="java.lang.String" value="Seleciona Banco"/>
+            <Property name="label" type="java.lang.String" value="Listar Carac Titulos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarCaracTitulosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnListarOcorrenciasEx">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Listar Ocorrencias Ex"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarOcorrenciasExActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSetDiretorioArquivos">
+          <Properties>
+            <Property name="label" type="java.lang.String" value="Set Diretorio Arquivos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSetDiretorioArquivosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="btnEnviarEmailBoleto">
+          <Properties>
+            <Property name="label" type="java.lang.String" value="Enviar e-mail Boleto"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnviarEmailBoletoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="btnGerarHTML">
+          <Properties>
+            <Property name="label" type="java.lang.String" value="Gerar HTML"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGerarHTMLActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCodigoMoraAceitos">
+          <Properties>
+            <Property name="label" type="java.lang.String" value="Codigo Mora Aceitos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCodigoMoraAceitosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnTamNossoNumero">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tam Nosso Numero"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTamNossoNumeroActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMontarNossoNumero1">
+          <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="Montar Nosso Numero"/>
+            <Property name="label" type="java.lang.String" value="Montar Nosso Numero"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMontarNossoNumero1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -798,7 +924,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <EmptySpace pref="66" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1028,7 +1154,7 @@
                           <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="txtModalidade" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="64" max="32767" attributes="0"/>
+                      <EmptySpace pref="114" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbRespEmissao" alignment="0" max="32767" attributes="0"/>
@@ -1353,7 +1479,7 @@
                               <Component id="txtNomeRetorno" min="-2" pref="167" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="222" max="32767" attributes="0"/>
+                      <EmptySpace pref="272" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1399,7 +1525,6 @@
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtLocalPagamento" min="-2" pref="20" max="-2" attributes="0"/>
@@ -1605,7 +1730,7 @@
                           <Component id="ckbSSL" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="ckbTLS" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="327" max="32767" attributes="0"/>
+                      <EmptySpace pref="377" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

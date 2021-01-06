@@ -378,14 +378,14 @@ End Sub
 Public Sub GerarPDF()
     Dim retorno   As Long
     
-    retorno = Boleto_GerarPDF(libHandler, eNomeImpressora)
+    retorno = Boleto_GerarPDF(libHandler)
     CheckResult retorno
 End Sub
 
 Public Sub GerarHTML()
     Dim retorno   As Long
     
-    retorno = Boleto_GerarHTML(libHandler, eNomeImpressora)
+    retorno = Boleto_GerarHTML(libHandler)
     CheckResult retorno
 End Sub
 

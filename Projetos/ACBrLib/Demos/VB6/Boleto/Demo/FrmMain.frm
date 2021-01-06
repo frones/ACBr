@@ -5,7 +5,7 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibBoleto Demo"
-   ClientHeight    =   6495
+   ClientHeight    =   8895
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   10440
@@ -21,14 +21,102 @@ Begin VB.Form FrmMain
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6495
+   ScaleHeight     =   8895
    ScaleWidth      =   10440
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton btnMontarNossoNumero 
+      Caption         =   "Montar Nosso Numero"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   113
+      Top             =   8400
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnTamNossoNumero 
+      Caption         =   "Tam Nosso Numero"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   112
+      Top             =   7920
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnSetDiretorioArquivos 
+      Caption         =   "Set Diretorio Arquivos"
+      Height          =   360
+      Left            =   240
+      TabIndex        =   111
+      Top             =   8400
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnCodigoMoraAceitos 
+      Caption         =   "Codigo Mora Aceitos"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   110
+      Top             =   7440
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnListaOcorrenciaEx 
+      Caption         =   "Listar Ocorrencias Ex"
+      Height          =   360
+      Left            =   240
+      TabIndex        =   109
+      Top             =   7920
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnListaOcorrencias 
+      Caption         =   "Listar Ocorrencias"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   108
+      Top             =   6960
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnListaCaracTitulos 
+      Caption         =   "Listar CaracTitulos "
+      Height          =   360
+      Left            =   240
+      TabIndex        =   107
+      Top             =   7440
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnGerarHTML 
+      Caption         =   "Gerar HTML"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   106
+      Top             =   6480
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnSelecionaBanco 
+      Caption         =   "Seleciona Banco"
+      Height          =   360
+      Left            =   240
+      TabIndex        =   105
+      Top             =   6960
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnImprimirBoleto 
+      Caption         =   "Imprimir Boleto"
+      Height          =   360
+      Left            =   240
+      TabIndex        =   104
+      Top             =   4560
+      Width           =   1710
+   End
+   Begin VB.CommandButton btnEnviarEmailBoleto 
+      Caption         =   "Enviar e-mail Boleto"
+      Height          =   360
+      Left            =   2040
+      TabIndex        =   103
+      Top             =   4560
+      Width           =   1710
+   End
    Begin VB.CommandButton btnCodigoBarras 
       Caption         =   "Código de Barras"
       Height          =   360
       Left            =   2040
-      TabIndex        =   103
+      TabIndex        =   102
       Top             =   6000
       Width           =   1710
    End
@@ -36,7 +124,7 @@ Begin VB.Form FrmMain
       Caption         =   "Linha Digitavel"
       Height          =   360
       Left            =   2040
-      TabIndex        =   102
+      TabIndex        =   101
       Top             =   5520
       Width           =   1710
    End
@@ -44,16 +132,8 @@ Begin VB.Form FrmMain
       Caption         =   "Listar Bancos"
       Height          =   360
       Left            =   2040
-      TabIndex        =   101
-      Top             =   5040
-      Width           =   1710
-   End
-   Begin VB.CommandButton btnListarOcorrencias 
-      Caption         =   "Listar Ocorrencias"
-      Height          =   360
-      Left            =   2040
       TabIndex        =   100
-      Top             =   4560
+      Top             =   5040
       Width           =   1710
    End
    Begin VB.CommandButton btnEnviarEmail 
@@ -69,7 +149,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   240
       TabIndex        =   98
-      Top             =   5520
+      Top             =   6000
       Width           =   1710
    End
    Begin VB.CommandButton btnConfigDadosCedente 
@@ -100,7 +180,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   240
       TabIndex        =   49
-      Top             =   6000
+      Top             =   6480
       Width           =   1710
    End
    Begin VB.CommandButton cmdTotalTítulos 
@@ -108,7 +188,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   240
       TabIndex        =   48
-      Top             =   5040
+      Top             =   5520
       Width           =   1710
    End
    Begin VB.CommandButton btnGerarRemessa 
@@ -116,11 +196,11 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   240
       TabIndex        =   47
-      Top             =   4560
+      Top             =   5040
       Width           =   1710
    End
    Begin VB.CommandButton btnImprimir 
-      Caption         =   "Imprimir Boleto"
+      Caption         =   "Imprimir"
       Height          =   360
       Left            =   240
       TabIndex        =   46
@@ -145,13 +225,13 @@ Begin VB.Form FrmMain
    End
    Begin VB.Frame FraRespostas 
       Caption         =   "Respostas"
-      Height          =   2775
+      Height          =   5175
       Left            =   3840
       TabIndex        =   42
       Top             =   3600
       Width           =   6495
       Begin VB.TextBox rtbRespostas 
-         Height          =   2415
+         Height          =   4815
          Left            =   120
          MultiLine       =   -1  'True
          TabIndex        =   44
@@ -272,38 +352,38 @@ Begin VB.Form FrmMain
       TabCaption(3)   =   "Remessa/Retorno"
       TabPicture(3)   =   "FrmMain.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "txtNomeRetorno"
-      Tab(3).Control(1)=   "txtNomeRemessa"
-      Tab(3).Control(2)=   "txtDirRetorno"
-      Tab(3).Control(3)=   "btnDirRetorno"
-      Tab(3).Control(4)=   "ckbCedenteRetorno"
-      Tab(3).Control(5)=   "txtDirRemessa"
+      Tab(3).Control(0)=   "lblLayoutCNAB"
+      Tab(3).Control(1)=   "lblDiretórioArquivo"
+      Tab(3).Control(2)=   "lblDirArquivoRetorno"
+      Tab(3).Control(3)=   "lblNomeArquivoRemessa"
+      Tab(3).Control(4)=   "lblNomeArquivoRetorno"
+      Tab(3).Control(5)=   "cmbLayoutCNAB"
       Tab(3).Control(6)=   "btnDirRemessa"
-      Tab(3).Control(7)=   "cmbLayoutCNAB"
-      Tab(3).Control(8)=   "lblNomeArquivoRetorno"
-      Tab(3).Control(9)=   "lblNomeArquivoRemessa"
-      Tab(3).Control(10)=   "lblDirArquivoRetorno"
-      Tab(3).Control(11)=   "lblDiretórioArquivo"
-      Tab(3).Control(12)=   "lblLayoutCNAB"
+      Tab(3).Control(7)=   "txtDirRemessa"
+      Tab(3).Control(8)=   "ckbCedenteRetorno"
+      Tab(3).Control(9)=   "btnDirRetorno"
+      Tab(3).Control(10)=   "txtDirRetorno"
+      Tab(3).Control(11)=   "txtNomeRemessa"
+      Tab(3).Control(12)=   "txtNomeRetorno"
       Tab(3).ControlCount=   13
       TabCaption(4)   =   "Email"
       TabPicture(4)   =   "FrmMain.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblPorta"
-      Tab(4).Control(1)=   "lblHostSMTP"
-      Tab(4).Control(2)=   "lblSenha"
-      Tab(4).Control(3)=   "lblUsuário"
-      Tab(4).Control(4)=   "lblEmail"
-      Tab(4).Control(5)=   "lblNome"
-      Tab(4).Control(6)=   "nudPorta"
+      Tab(4).Control(0)=   "txtUsuario"
+      Tab(4).Control(1)=   "txtNome"
+      Tab(4).Control(2)=   "txtEmail"
+      Tab(4).Control(3)=   "txtSenha"
+      Tab(4).Control(4)=   "txtHost"
+      Tab(4).Control(5)=   "txtMailPorta"
+      Tab(4).Control(6)=   "chkSSL"
       Tab(4).Control(7)=   "chkTLS"
-      Tab(4).Control(8)=   "chkSSL"
-      Tab(4).Control(9)=   "txtMailPorta"
-      Tab(4).Control(10)=   "txtHost"
-      Tab(4).Control(11)=   "txtSenha"
-      Tab(4).Control(12)=   "txtEmail"
-      Tab(4).Control(13)=   "txtNome"
-      Tab(4).Control(14)=   "txtUsuario"
+      Tab(4).Control(8)=   "nudPorta"
+      Tab(4).Control(9)=   "lblNome"
+      Tab(4).Control(10)=   "lblEmail"
+      Tab(4).Control(11)=   "lblUsuário"
+      Tab(4).Control(12)=   "lblSenha"
+      Tab(4).Control(13)=   "lblHostSMTP"
+      Tab(4).Control(14)=   "lblPorta"
       Tab(4).ControlCount=   15
       Begin VB.TextBox txtUsuario 
          Height          =   315
@@ -603,7 +683,7 @@ Begin VB.Form FrmMain
          Value           =   1
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtCopias"
-         BuddyDispid     =   196655
+         BuddyDispid     =   196666
          OrigLeft        =   1440
          OrigTop         =   1440
          OrigRight       =   1695
@@ -770,7 +850,7 @@ Begin VB.Form FrmMain
          _ExtentY        =   556
          _Version        =   393216
          BuddyControl    =   "chkSetup"
-         BuddyDispid     =   196652
+         BuddyDispid     =   196663
          OrigLeft        =   6240
          OrigTop         =   1320
          OrigRight       =   6495
@@ -1493,7 +1573,27 @@ Attribute VB_Exposed = False
 Dim boleto As ACBrBoleto
 
 Private Sub btnCodigoBarras_Click()
-    boleto.RetornaCodigoBarras 0
+    SetResposta (boleto.RetornaCodigoBarras(0))
+End Sub
+
+Private Sub btnCodigoMoraAceitos_Click()
+    SetResposta (boleto.CodigosMoraAceitos)
+End Sub
+
+Private Sub btnConfigDadosCedente_Click()
+On Error GoTo Erro:
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Cedente (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+            
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    SetResposta (boleto.ConfigurarDados(CommonDialog1.FileName))
+Erro:
+    MsgBox Err.Description
+    
 End Sub
 
 Private Sub btnDirLogo_Click()
@@ -1521,12 +1621,29 @@ Erro:
     MsgBox Err.Description
 End Sub
 
+Private Sub btnEnviarEmailBoleto_Click()
+    On Error GoTo Erro:
+    Dim destinatario As String
+    
+    destinatario = ""
+    destinatario = InputBox("Digite o email do destinatario", "Envio email", "")
+    
+    boleto.EnviarEmailBoleto 0, destinatario, "teste de envio boleto", "boleto em anexo", ""
+    
+Erro:
+    MsgBox Err.Description
+End Sub
+
+Private Sub btnGerarHTML_Click()
+    boleto.GerarHTML
+End Sub
+
 Private Sub btnGerarPDF_Click()
     boleto.GerarPDF
 End Sub
 
 Private Sub btnGerarRemessa_Click()
-    boleto.GerarRemessa txtDirRemessa.Text, 1, txtNomeRemessa.Text
+   boleto.GerarRemessa txtDirRemessa.Text, 1, txtNomeRemessa.Text
 End Sub
 
 Private Sub btnGravarConfig_Click()
@@ -1535,6 +1652,10 @@ End Sub
 
 Private Sub btnImprimir_Click()
     boleto.Imprimir
+End Sub
+
+Private Sub btnImprimirBoleto_Click()
+    boleto.ImprimirBoleto 0
 End Sub
 
 Private Sub btnIncluirTitulo_Click()
@@ -1547,7 +1668,7 @@ Private Sub btnIncluirTitulo_Click()
     CommonDialog1.ShowOpen
             
     If CommonDialog1.FileName = vbNullString Then Exit Sub
-    SetResposta boleto.IncluirTitulos(CommonDialog1.FileName)
+    SetResposta (boleto.IncluirTitulos(CommonDialog1.FileName))
 Erro:
     MsgBox Err.Description
 End Sub
@@ -1557,15 +1678,39 @@ Private Sub btnLerRetorno_Click()
 End Sub
 
 Private Sub btnLinhaDigitavel_Click()
-    boleto.RetornaLinhaDigitavel 0
+    SetResposta (boleto.RetornaLinhaDigitavel(0))
 End Sub
 
 Private Sub btnListaBancos_Click()
-    boleto.ListaBancos
+    SetResposta (boleto.ListaBancos)
 End Sub
 
-Private Sub btnListarOcorrencias_Click()
-    boleto.ListaOcorrenciasEX
+Private Sub btnListaCaracTitulos_Click()
+    SetResposta (boleto.ListaCaractTitulo)
+End Sub
+
+Private Sub btnListaOcorrenciaEx_Click()
+    SetResposta (boleto.ListaOcorrenciasEX)
+End Sub
+
+Private Sub btnListaOcorrencias_Click()
+    SetResposta (boleto.ListaOcorrencias)
+End Sub
+
+Private Sub btnMontarNossoNumero_Click()
+    SetResposta (boleto.MontarNossoNumero(0))
+End Sub
+
+Private Sub btnSelecionaBanco_Click()
+    boleto.SelecionaBanco 0
+End Sub
+
+Private Sub btnSetDiretorioArquivos_Click()
+    boleto.SetDiretorioArquivo BrowseFolder("Selecione o diretorio dos arquivos de retorno"), "NomeArquivo"
+End Sub
+
+Private Sub btnTamNossoNumero_Click()
+    SetResposta (boleto.TamNossoNumero("20", "0000001", ""))
 End Sub
 
 Private Sub cmdLimparLista_Click()
@@ -1702,7 +1847,7 @@ Private Sub SaveConfig()
     boleto.ConfigGravarValor SESSAO_EMAIL, "Usuario", txtUsuario.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Senha", txtSenha.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "Servidor", txtHost.Text
-    boleto.ConfigGravarValor SESSAO_EMAIL, "Porta", CStr(nudPorta.Value)
+    boleto.ConfigGravarValor SESSAO_EMAIL, "Porta", txtMailPorta.Text
     boleto.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(chkSSL.Value)
     boleto.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(chkTLS.Value)
     

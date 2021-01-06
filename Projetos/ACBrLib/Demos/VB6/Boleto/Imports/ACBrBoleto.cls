@@ -14,17 +14,6 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Const BUFFER_LENGTH As Long = 1024
-
-' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
-Const CP_UTF8 As Long = 65001
-
-Private Declare Function MultiByteToWideChar _
-                Lib "kernel32" (ByVal CodePage As Long, _
-                                ByVal dwFlags As Long, _
-                                ByVal lpMultiByteStr As Long, _
-                                ByVal cchMultiByte As Long, _
-                                ByVal lpWideCharStr As Long, _
-                                ByVal cchWideChar As Long) As Long
                                 
 Private Declare Function Boleto_Inicializar _
                 Lib "ACBrBoleto32.dll" (ByVal eArqConfig As String, _
@@ -105,6 +94,13 @@ Private Declare Function Boleto_LerRetorno _
                 Lib "ACBrBoleto32.dll" (ByVal eDir As String, _
                                      ByVal eNomeArq As String) As Long
                                      
+Private Declare Function Boleto_EnviarEmailBoleto _
+                Lib "ACBrBoleto32.dll" (ByVal eIndice As Long, _
+                                     ByVal ePara As String, _
+                                     ByVal eAssunto As String, _
+                                     ByVal eMensagem As String, _
+                                     ByVal eCC As String) As Long
+
 Private Declare Function Boleto_EnviarEmail _
                 Lib "ACBrBoleto32.dll" (ByVal ePara As String, _
                                      ByVal eAssunto As String, _
@@ -337,10 +333,10 @@ Public Sub Imprimir(Optional ByVal eNomeImpressora As String = "")
     CheckResult retorno
 End Sub
 
-Public Sub ImprimirBoleto(ByVal Indice As Long, Optional ByVal eNomeImpressora As String = "")
+Public Sub ImprimirBoleto(ByVal indice As Long, Optional ByVal eNomeImpressora As String = "")
     Dim retorno   As Long
     
-    retorno = Boleto_ImprimirBoleto(Indice, eNomeImpressora)
+    retorno = Boleto_ImprimirBoleto(indice, eNomeImpressora)
     CheckResult retorno
 End Sub
 
@@ -362,6 +358,13 @@ Public Sub GerarRemessa(ByVal eDir As String, ByVal eNumArquivo As Long, ByVal e
     Dim retorno   As Long
     
     retorno = Boleto_GerarRemessa(eDir, eNumArquivo, eNomeArquivo)
+    CheckResult retorno
+End Sub
+
+Public Sub EnviarEmailBoleto(ByVal eIndice As Long, ByVal ePara As String, ByVal eAssunto As String, ByVal eMensagem As String, ByVal eCC As String)
+    Dim retorno As Long
+    
+    retorno = Boleto_EnviarEmailBoleto(eIndice, ePara, eAssunto, eMensagem, eCC)
     CheckResult retorno
 End Sub
 

@@ -1,9 +1,9 @@
 [History]
-1=#P0#=mb	#P1#=btnEnviarEmail_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnEnviarEmail_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20201228142705	#P7#=0	#P8#=10	.
-2=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibBoletoDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228142500	#P7#=0	#P8#=45	.
-3=#P0#=mb	#P1#=GerarHTML	#P2#=ACBrLibBoletoDemo/ACBrBoleto/GerarHTML	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141650	#P7#=0	#P8#=3	.
-4=#P0#=mb	#P1#=GerarPDF	#P2#=ACBrLibBoletoDemo/ACBrBoleto/GerarPDF	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141602	#P7#=0	#P8#=3	.
-5=#P0#=mb	#P1#=btnGerarPDF_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnGerarPDF_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210106135706	#P7#=0	#P8#=1	.
+1=#P0#=mb	#P1#=btnGerarPDF_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnGerarPDF_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210106135706	#P7#=0	#P8#=1	.
+2=#P0#=mb	#P1#=btnEnviarEmail_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnEnviarEmail_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20201228142705	#P7#=0	#P8#=10	.
+3=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibBoletoDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228142500	#P7#=0	#P8#=45	.
+4=#P0#=mb	#P1#=GerarHTML	#P2#=ACBrLibBoletoDemo/ACBrBoleto/GerarHTML	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141650	#P7#=0	#P8#=3	.
+5=#P0#=mb	#P1#=GerarPDF	#P2#=ACBrLibBoletoDemo/ACBrBoleto/GerarPDF	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141602	#P7#=0	#P8#=3	.
 6=#P0#=mb	#P1#=GerarRemessa	#P2#=ACBrLibBoletoDemo/ACBrBoleto/GerarRemessa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141436	#P7#=0	#P8#=0	.
 7=#P0#=mb	#P1#=ImprimirBoleto	#P2#=ACBrLibBoletoDemo/ACBrBoleto/ImprimirBoleto	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141435	#P7#=0	#P8#=7	.
 8=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibBoletoDemo/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20201228141400	#P7#=0	#P8#=0	.

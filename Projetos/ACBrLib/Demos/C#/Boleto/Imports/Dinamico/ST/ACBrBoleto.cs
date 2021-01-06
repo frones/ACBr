@@ -79,6 +79,9 @@ namespace ACBrLib.Boleto
             public delegate int Boleto_EnviarEmail(string ePara, string eAssunto, string eMensagem, string eCC);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int Boleto_EnviarEmailBoleto(int eIndice, string ePara, string eAssunto, string eMensagem, string eCC);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int Boleto_SetDiretorioArquivo(string eDir, string eArq, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -329,6 +332,14 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
+        public void EnviarEmailBoleto(int indice, string ePara, string eAssunto, string eMensagem, string eCC)
+        {
+            var method = GetMethod<Delegates.Boleto_EnviarEmailBoleto>();
+            var ret = ExecuteMethod(() => method(indice, ToUTF8(ePara), ToUTF8(eAssunto), ToUTF8(eMensagem), ToUTF8(eCC)));
+
+            CheckResult(ret);
+        }
+
         public string SetDiretorioArquivo(string eDir, string eArq)
         {
             var bufferLen = BUFFER_LEN;
@@ -498,6 +509,7 @@ namespace ACBrLib.Boleto
             AddMethod<Delegates.Boleto_GerarRemessa>("Boleto_GerarRemessa");
             AddMethod<Delegates.Boleto_LerRetorno>("Boleto_LerRetorno");
             AddMethod<Delegates.Boleto_EnviarEmail>("Boleto_EnviarEmail");
+            AddMethod<Delegates.Boleto_EnviarEmailBoleto>("Boleto_EnviarEmailBoleto");
             AddMethod<Delegates.Boleto_SetDiretorioArquivo>("Boleto_SetDiretorioArquivo");
             AddMethod<Delegates.Boleto_ListaBancos>("Boleto_ListaBancos");
             AddMethod<Delegates.Boleto_ListaCaractTitulo>("Boleto_ListaCaractTitulo");

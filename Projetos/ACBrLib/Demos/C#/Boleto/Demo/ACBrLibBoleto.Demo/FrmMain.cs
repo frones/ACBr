@@ -243,12 +243,6 @@ namespace ACBrLibBoleto.Demo
             rtbRespostas.AppendLine(ret);
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            var ret = boleto.ListaOcorrenciasEX();
-            rtbRespostas.AppendLine(ret);
-        }
-
         private void BtnGerarPDF_Click(object sender, EventArgs e)
         {
             boleto.GerarPDF();
@@ -301,6 +295,107 @@ namespace ACBrLibBoleto.Demo
         {
             boleto.LerRetorno(txtDirRetorno.Text, txtNomeRetorno.Text);
             rtbRespostas.AppendLine("Retorno Gerado.");
+        }
+
+        private void BtnListarOcorrencias_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.ListaOcorrencias();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnListarOcorrenciasEx_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.ListaOcorrenciasEX();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnImprimirBoleto_Click(object sender, EventArgs e)
+        {
+            int indice;
+
+            indice = 0;
+
+            boleto.ImprimirBoleto(indice);
+            rtbRespostas.AppendLine("Boletos impressos.");
+        }
+
+        private void BtnSelecionaBanco_Click(object sender, EventArgs e)
+        {
+            string codBanco;
+
+            codBanco = "001";
+
+            var ret = boleto.SelecionaBanco(codBanco);
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnGerarHTML_Click(object sender, EventArgs e)
+        {
+            boleto.GerarHTML();
+            rtbRespostas.AppendLine("HTML Gerado");
+        }
+
+        private void BtnCaracTitulos_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.ListaCaractTitulo();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnCodigoMoraAceitos_Click(object sender, EventArgs e)
+        {
+            var ret = boleto.CodigosMoraAceitos();
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnSetDiretorioArquivos_Click(object sender, EventArgs e)
+        {
+            string sDiretorio;
+            sDiretorio = Helpers.SelectFolder();
+
+            boleto.SetDiretorioArquivo(sDiretorio, "Arquivo");
+            rtbRespostas.AppendLine("Direto setado");
+
+        }
+
+        private void BtnTamNossoNumero_Click(object sender, EventArgs e)
+        {
+            string sCarteira, sNossoNumero, sConvenio;
+
+            sCarteira = "0";
+            sNossoNumero = "0";
+            sConvenio = "0";
+
+            var ret = boleto.TamNossoNumero(sCarteira, sNossoNumero, sConvenio);
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnMontarNossoNumero_Click(object sender, EventArgs e)
+        {
+            int indice;
+            indice = 0;
+
+            var ret = boleto.MontarNossoNumero(indice);
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void BtnEnviarEmailBoleto_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            Int32.TryParse(boleto.TotalTitulosLista(), out i);
+
+            if (i == 0) return;
+
+            try
+            {
+                boleto.EnviarEmailBoleto(0, txtEmail.Text,
+                    "Teste envio Boleto",
+                    "Boleto em anexo", "");
+                rtbRespostas.AppendLine("e-mail enviado!");
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
         }
     }
 }

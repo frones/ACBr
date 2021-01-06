@@ -131,11 +131,21 @@
             this.btnConfigDados = new System.Windows.Forms.Button();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnGerarPDF = new System.Windows.Forms.Button();
-            this.Button1 = new System.Windows.Forms.Button();
+            this.btnListarOcorrencias = new System.Windows.Forms.Button();
             this.btnLinhaDigitavel = new System.Windows.Forms.Button();
             this.btnListaBancos = new System.Windows.Forms.Button();
             this.btnLerRetorno = new System.Windows.Forms.Button();
             this.btnCodigoBarras = new System.Windows.Forms.Button();
+            this.btnImprimirBoleto = new System.Windows.Forms.Button();
+            this.btnSelecionaBanco = new System.Windows.Forms.Button();
+            this.btnCaracTitulos = new System.Windows.Forms.Button();
+            this.btnListarOcorrenciasEx = new System.Windows.Forms.Button();
+            this.btnSetDiretorioArquivos = new System.Windows.Forms.Button();
+            this.btnEnviarEmailBoleto = new System.Windows.Forms.Button();
+            this.btnGerarHTML = new System.Windows.Forms.Button();
+            this.btnCodigoMoraAceitos = new System.Windows.Forms.Button();
+            this.btnTamNossoNumero = new System.Windows.Forms.Button();
+            this.btnMontarNossoNumero = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1107,9 +1117,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rtbRespostas);
-            this.groupBox1.Location = new System.Drawing.Point(283, 255);
+            this.groupBox1.Location = new System.Drawing.Point(274, 255);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(500, 171);
+            this.groupBox1.Size = new System.Drawing.Size(509, 316);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Respostas";
@@ -1120,7 +1130,7 @@
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
             this.rtbRespostas.ReadOnly = true;
-            this.rtbRespostas.Size = new System.Drawing.Size(494, 152);
+            this.rtbRespostas.Size = new System.Drawing.Size(503, 297);
             this.rtbRespostas.TabIndex = 0;
             this.rtbRespostas.Text = "";
             // 
@@ -1138,7 +1148,7 @@
             // 
             this.btnIncluirTitulo.Location = new System.Drawing.Point(10, 255);
             this.btnIncluirTitulo.Name = "btnIncluirTitulo";
-            this.btnIncluirTitulo.Size = new System.Drawing.Size(110, 23);
+            this.btnIncluirTitulo.Size = new System.Drawing.Size(126, 23);
             this.btnIncluirTitulo.TabIndex = 3;
             this.btnIncluirTitulo.Text = "Incluir Títulos";
             this.btnIncluirTitulo.UseVisualStyleBackColor = true;
@@ -1146,9 +1156,9 @@
             // 
             // btnLimparLista
             // 
-            this.btnLimparLista.Location = new System.Drawing.Point(10, 400);
+            this.btnLimparLista.Location = new System.Drawing.Point(10, 432);
             this.btnLimparLista.Name = "btnLimparLista";
-            this.btnLimparLista.Size = new System.Drawing.Size(110, 23);
+            this.btnLimparLista.Size = new System.Drawing.Size(126, 23);
             this.btnLimparLista.TabIndex = 4;
             this.btnLimparLista.Text = "Limpar Lista";
             this.btnLimparLista.UseVisualStyleBackColor = true;
@@ -1158,17 +1168,17 @@
             // 
             this.btnImprimir.Location = new System.Drawing.Point(10, 284);
             this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(110, 23);
+            this.btnImprimir.Size = new System.Drawing.Size(126, 23);
             this.btnImprimir.TabIndex = 4;
-            this.btnImprimir.Text = "Imprimir Boleto";
+            this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.BtnImprimir_Click);
             // 
             // btnGerarRemessa
             // 
-            this.btnGerarRemessa.Location = new System.Drawing.Point(10, 313);
+            this.btnGerarRemessa.Location = new System.Drawing.Point(12, 342);
             this.btnGerarRemessa.Name = "btnGerarRemessa";
-            this.btnGerarRemessa.Size = new System.Drawing.Size(110, 23);
+            this.btnGerarRemessa.Size = new System.Drawing.Size(124, 23);
             this.btnGerarRemessa.TabIndex = 5;
             this.btnGerarRemessa.Text = "Gerar Remessa";
             this.btnGerarRemessa.UseVisualStyleBackColor = true;
@@ -1176,9 +1186,9 @@
             // 
             // btnTotalTitulo
             // 
-            this.btnTotalTitulo.Location = new System.Drawing.Point(10, 342);
+            this.btnTotalTitulo.Location = new System.Drawing.Point(12, 371);
             this.btnTotalTitulo.Name = "btnTotalTitulo";
-            this.btnTotalTitulo.Size = new System.Drawing.Size(110, 23);
+            this.btnTotalTitulo.Size = new System.Drawing.Size(124, 23);
             this.btnTotalTitulo.TabIndex = 4;
             this.btnTotalTitulo.Text = "Total Títulos";
             this.btnTotalTitulo.UseVisualStyleBackColor = true;
@@ -1186,9 +1196,9 @@
             // 
             // btnConfigDados
             // 
-            this.btnConfigDados.Location = new System.Drawing.Point(12, 226);
+            this.btnConfigDados.Location = new System.Drawing.Point(10, 225);
             this.btnConfigDados.Name = "btnConfigDados";
-            this.btnConfigDados.Size = new System.Drawing.Size(226, 23);
+            this.btnConfigDados.Size = new System.Drawing.Size(258, 23);
             this.btnConfigDados.TabIndex = 6;
             this.btnConfigDados.Text = "Configurar Dados Cedente";
             this.btnConfigDados.UseVisualStyleBackColor = true;
@@ -1196,9 +1206,9 @@
             // 
             // btnEnviarEmail
             // 
-            this.btnEnviarEmail.Location = new System.Drawing.Point(128, 284);
+            this.btnEnviarEmail.Location = new System.Drawing.Point(142, 284);
             this.btnEnviarEmail.Name = "btnEnviarEmail";
-            this.btnEnviarEmail.Size = new System.Drawing.Size(110, 23);
+            this.btnEnviarEmail.Size = new System.Drawing.Size(126, 23);
             this.btnEnviarEmail.TabIndex = 7;
             this.btnEnviarEmail.Text = "Enviar e-mail";
             this.btnEnviarEmail.UseVisualStyleBackColor = true;
@@ -1206,29 +1216,29 @@
             // 
             // btnGerarPDF
             // 
-            this.btnGerarPDF.Location = new System.Drawing.Point(128, 255);
+            this.btnGerarPDF.Location = new System.Drawing.Point(142, 255);
             this.btnGerarPDF.Name = "btnGerarPDF";
-            this.btnGerarPDF.Size = new System.Drawing.Size(110, 23);
+            this.btnGerarPDF.Size = new System.Drawing.Size(126, 23);
             this.btnGerarPDF.TabIndex = 8;
             this.btnGerarPDF.Text = "Gerar PDF";
             this.btnGerarPDF.UseVisualStyleBackColor = true;
             this.btnGerarPDF.Click += new System.EventHandler(this.BtnGerarPDF_Click);
             // 
-            // Button1
+            // btnListarOcorrencias
             // 
-            this.Button1.Location = new System.Drawing.Point(128, 313);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(110, 23);
-            this.Button1.TabIndex = 9;
-            this.Button1.Text = "Listar Ocorrencias";
-            this.Button1.UseVisualStyleBackColor = true;
-            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            this.btnListarOcorrencias.Location = new System.Drawing.Point(142, 461);
+            this.btnListarOcorrencias.Name = "btnListarOcorrencias";
+            this.btnListarOcorrencias.Size = new System.Drawing.Size(126, 23);
+            this.btnListarOcorrencias.TabIndex = 9;
+            this.btnListarOcorrencias.Text = "Listar Ocorrencias";
+            this.btnListarOcorrencias.UseVisualStyleBackColor = true;
+            this.btnListarOcorrencias.Click += new System.EventHandler(this.BtnListarOcorrencias_Click);
             // 
             // btnLinhaDigitavel
             // 
-            this.btnLinhaDigitavel.Location = new System.Drawing.Point(128, 371);
+            this.btnLinhaDigitavel.Location = new System.Drawing.Point(142, 371);
             this.btnLinhaDigitavel.Name = "btnLinhaDigitavel";
-            this.btnLinhaDigitavel.Size = new System.Drawing.Size(110, 23);
+            this.btnLinhaDigitavel.Size = new System.Drawing.Size(126, 23);
             this.btnLinhaDigitavel.TabIndex = 10;
             this.btnLinhaDigitavel.Text = "Linha Digitavel";
             this.btnLinhaDigitavel.UseVisualStyleBackColor = true;
@@ -1236,9 +1246,9 @@
             // 
             // btnListaBancos
             // 
-            this.btnListaBancos.Location = new System.Drawing.Point(128, 342);
+            this.btnListaBancos.Location = new System.Drawing.Point(142, 342);
             this.btnListaBancos.Name = "btnListaBancos";
-            this.btnListaBancos.Size = new System.Drawing.Size(110, 23);
+            this.btnListaBancos.Size = new System.Drawing.Size(126, 23);
             this.btnListaBancos.TabIndex = 11;
             this.btnListaBancos.Text = "Listar Bancos";
             this.btnListaBancos.UseVisualStyleBackColor = true;
@@ -1246,9 +1256,9 @@
             // 
             // btnLerRetorno
             // 
-            this.btnLerRetorno.Location = new System.Drawing.Point(10, 371);
+            this.btnLerRetorno.Location = new System.Drawing.Point(10, 403);
             this.btnLerRetorno.Name = "btnLerRetorno";
-            this.btnLerRetorno.Size = new System.Drawing.Size(110, 23);
+            this.btnLerRetorno.Size = new System.Drawing.Size(126, 23);
             this.btnLerRetorno.TabIndex = 12;
             this.btnLerRetorno.Text = "Ler Retorno";
             this.btnLerRetorno.UseVisualStyleBackColor = true;
@@ -1256,25 +1266,134 @@
             // 
             // btnCodigoBarras
             // 
-            this.btnCodigoBarras.Location = new System.Drawing.Point(128, 400);
+            this.btnCodigoBarras.Location = new System.Drawing.Point(142, 403);
             this.btnCodigoBarras.Name = "btnCodigoBarras";
-            this.btnCodigoBarras.Size = new System.Drawing.Size(110, 23);
+            this.btnCodigoBarras.Size = new System.Drawing.Size(126, 23);
             this.btnCodigoBarras.TabIndex = 13;
             this.btnCodigoBarras.Text = "Código de Barras";
-            this.btnCodigoBarras.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnCodigoBarras.UseVisualStyleBackColor = true;
             this.btnCodigoBarras.Click += new System.EventHandler(this.BtnCodigoBarras_Click);
+            // 
+            // btnImprimirBoleto
+            // 
+            this.btnImprimirBoleto.Location = new System.Drawing.Point(12, 313);
+            this.btnImprimirBoleto.Name = "btnImprimirBoleto";
+            this.btnImprimirBoleto.Size = new System.Drawing.Size(124, 23);
+            this.btnImprimirBoleto.TabIndex = 14;
+            this.btnImprimirBoleto.Text = "Imprimir Boleto";
+            this.btnImprimirBoleto.UseVisualStyleBackColor = true;
+            this.btnImprimirBoleto.Click += new System.EventHandler(this.BtnImprimirBoleto_Click);
+            // 
+            // btnSelecionaBanco
+            // 
+            this.btnSelecionaBanco.Location = new System.Drawing.Point(10, 461);
+            this.btnSelecionaBanco.Name = "btnSelecionaBanco";
+            this.btnSelecionaBanco.Size = new System.Drawing.Size(126, 23);
+            this.btnSelecionaBanco.TabIndex = 15;
+            this.btnSelecionaBanco.Text = "Seleciona Banco";
+            this.btnSelecionaBanco.UseVisualStyleBackColor = true;
+            this.btnSelecionaBanco.Click += new System.EventHandler(this.BtnSelecionaBanco_Click);
+            // 
+            // btnCaracTitulos
+            // 
+            this.btnCaracTitulos.Location = new System.Drawing.Point(10, 490);
+            this.btnCaracTitulos.Name = "btnCaracTitulos";
+            this.btnCaracTitulos.Size = new System.Drawing.Size(126, 23);
+            this.btnCaracTitulos.TabIndex = 16;
+            this.btnCaracTitulos.Text = "Listar CaracTitulos";
+            this.btnCaracTitulos.UseVisualStyleBackColor = true;
+            this.btnCaracTitulos.Click += new System.EventHandler(this.BtnCaracTitulos_Click);
+            // 
+            // btnListarOcorrenciasEx
+            // 
+            this.btnListarOcorrenciasEx.Location = new System.Drawing.Point(10, 519);
+            this.btnListarOcorrenciasEx.Name = "btnListarOcorrenciasEx";
+            this.btnListarOcorrenciasEx.Size = new System.Drawing.Size(126, 23);
+            this.btnListarOcorrenciasEx.TabIndex = 17;
+            this.btnListarOcorrenciasEx.Text = "Listar Ocorrencias Ex";
+            this.btnListarOcorrenciasEx.UseVisualStyleBackColor = true;
+            this.btnListarOcorrenciasEx.Click += new System.EventHandler(this.BtnListarOcorrenciasEx_Click);
+            // 
+            // btnSetDiretorioArquivos
+            // 
+            this.btnSetDiretorioArquivos.Location = new System.Drawing.Point(10, 548);
+            this.btnSetDiretorioArquivos.Name = "btnSetDiretorioArquivos";
+            this.btnSetDiretorioArquivos.Size = new System.Drawing.Size(126, 23);
+            this.btnSetDiretorioArquivos.TabIndex = 18;
+            this.btnSetDiretorioArquivos.Text = "Set Diretorio Arquivos";
+            this.btnSetDiretorioArquivos.UseVisualStyleBackColor = true;
+            this.btnSetDiretorioArquivos.Click += new System.EventHandler(this.BtnSetDiretorioArquivos_Click);
+            // 
+            // btnEnviarEmailBoleto
+            // 
+            this.btnEnviarEmailBoleto.Location = new System.Drawing.Point(142, 313);
+            this.btnEnviarEmailBoleto.Name = "btnEnviarEmailBoleto";
+            this.btnEnviarEmailBoleto.Size = new System.Drawing.Size(126, 23);
+            this.btnEnviarEmailBoleto.TabIndex = 19;
+            this.btnEnviarEmailBoleto.Text = "Enviar e-mail Boleto";
+            this.btnEnviarEmailBoleto.UseVisualStyleBackColor = true;
+            this.btnEnviarEmailBoleto.Click += new System.EventHandler(this.BtnEnviarEmailBoleto_Click);
+            // 
+            // btnGerarHTML
+            // 
+            this.btnGerarHTML.Location = new System.Drawing.Point(142, 432);
+            this.btnGerarHTML.Name = "btnGerarHTML";
+            this.btnGerarHTML.Size = new System.Drawing.Size(126, 23);
+            this.btnGerarHTML.TabIndex = 20;
+            this.btnGerarHTML.Text = "Gerar HTML";
+            this.btnGerarHTML.UseVisualStyleBackColor = true;
+            this.btnGerarHTML.Click += new System.EventHandler(this.BtnGerarHTML_Click);
+            // 
+            // btnCodigoMoraAceitos
+            // 
+            this.btnCodigoMoraAceitos.Location = new System.Drawing.Point(142, 490);
+            this.btnCodigoMoraAceitos.Name = "btnCodigoMoraAceitos";
+            this.btnCodigoMoraAceitos.Size = new System.Drawing.Size(126, 23);
+            this.btnCodigoMoraAceitos.TabIndex = 21;
+            this.btnCodigoMoraAceitos.Text = "Codigo Mora Aceitos";
+            this.btnCodigoMoraAceitos.UseVisualStyleBackColor = true;
+            this.btnCodigoMoraAceitos.Click += new System.EventHandler(this.BtnCodigoMoraAceitos_Click);
+            // 
+            // btnTamNossoNumero
+            // 
+            this.btnTamNossoNumero.Location = new System.Drawing.Point(142, 519);
+            this.btnTamNossoNumero.Name = "btnTamNossoNumero";
+            this.btnTamNossoNumero.Size = new System.Drawing.Size(126, 23);
+            this.btnTamNossoNumero.TabIndex = 22;
+            this.btnTamNossoNumero.Text = "Tam Nosso Numero";
+            this.btnTamNossoNumero.UseVisualStyleBackColor = true;
+            this.btnTamNossoNumero.Click += new System.EventHandler(this.BtnTamNossoNumero_Click);
+            // 
+            // btnMontarNossoNumero
+            // 
+            this.btnMontarNossoNumero.Location = new System.Drawing.Point(142, 548);
+            this.btnMontarNossoNumero.Name = "btnMontarNossoNumero";
+            this.btnMontarNossoNumero.Size = new System.Drawing.Size(126, 23);
+            this.btnMontarNossoNumero.TabIndex = 23;
+            this.btnMontarNossoNumero.Text = "Montar Nosso Numero";
+            this.btnMontarNossoNumero.UseVisualStyleBackColor = true;
+            this.btnMontarNossoNumero.Click += new System.EventHandler(this.BtnMontarNossoNumero_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 440);
+            this.ClientSize = new System.Drawing.Size(800, 581);
+            this.Controls.Add(this.btnMontarNossoNumero);
+            this.Controls.Add(this.btnTamNossoNumero);
+            this.Controls.Add(this.btnCodigoMoraAceitos);
+            this.Controls.Add(this.btnGerarHTML);
+            this.Controls.Add(this.btnEnviarEmailBoleto);
+            this.Controls.Add(this.btnSetDiretorioArquivos);
+            this.Controls.Add(this.btnListarOcorrenciasEx);
+            this.Controls.Add(this.btnCaracTitulos);
+            this.Controls.Add(this.btnSelecionaBanco);
+            this.Controls.Add(this.btnImprimirBoleto);
             this.Controls.Add(this.btnCodigoBarras);
             this.Controls.Add(this.btnLerRetorno);
             this.Controls.Add(this.btnListaBancos);
             this.Controls.Add(this.btnLinhaDigitavel);
-            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.btnListarOcorrencias);
             this.Controls.Add(this.btnGerarPDF);
             this.Controls.Add(this.btnEnviarEmail);
             this.Controls.Add(this.btnConfigDados);
@@ -1417,11 +1536,21 @@
         private System.Windows.Forms.Button btnConfigDados;
         private System.Windows.Forms.Button btnEnviarEmail;
         private System.Windows.Forms.Button btnGerarPDF;
-        private System.Windows.Forms.Button Button1;
+        private System.Windows.Forms.Button btnListarOcorrencias;
         private System.Windows.Forms.Button btnLinhaDigitavel;
         private System.Windows.Forms.Button btnListaBancos;
         private System.Windows.Forms.Button btnLerRetorno;
         private System.Windows.Forms.Button btnCodigoBarras;
+        private System.Windows.Forms.Button btnImprimirBoleto;
+        private System.Windows.Forms.Button btnSelecionaBanco;
+        private System.Windows.Forms.Button btnCaracTitulos;
+        private System.Windows.Forms.Button btnListarOcorrenciasEx;
+        private System.Windows.Forms.Button btnSetDiretorioArquivos;
+        private System.Windows.Forms.Button btnEnviarEmailBoleto;
+        private System.Windows.Forms.Button btnGerarHTML;
+        private System.Windows.Forms.Button btnCodigoMoraAceitos;
+        private System.Windows.Forms.Button btnTamNossoNumero;
+        private System.Windows.Forms.Button btnMontarNossoNumero;
     }
 }
 

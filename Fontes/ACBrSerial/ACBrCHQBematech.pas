@@ -53,6 +53,7 @@ type TACBrCHQBematech = class( TACBrCHQClass )
 
     procedure Ativar ; override ;
 
+    procedure ProgramarImpressao;
     procedure ImprimirCheque ; Override ;
     Procedure TravarCheque ;  Override ;
     Procedure DestravarCheque ;  Override ;
@@ -116,6 +117,12 @@ begin
   DestravarCheque ;
 end;
 
+procedure TACBrCHQBematech.ProgramarImpressao;
+begin
+  // programa ano com 4 dígitos
+  EnviarStr(#27 + #175 + #68 + '4' + #13);
+end;
+
 procedure TACBrCHQBematech.ImprimirCheque;
 Var ValStr, DataStr : String ;
 begin
@@ -123,6 +130,8 @@ begin
     raise Exception.Create(ACBrStr('A impressora de Cheques '+fpModeloStr+
                            ' não está pronta.')) ;
   FImprimeVerso := False;
+
+  ProgramarImpressao;
 
   TravarCheque ;
 
@@ -141,7 +150,7 @@ begin
   EnviarStr( #27 + #161 + fpCidade + #13 ) ;
 
   { Data }
-  DataStr := FormatDateTime('dd/mm/yyyy',fpData) ;
+  DataStr := FormatDateTime('dd/mm/yy',fpData) ;
   DataStr := StringReplace(DataStr,DateSeparator,'/',[rfReplaceAll]) ;
   EnviarStr( #27 + #164 + DataStr + #13 ) ;
 

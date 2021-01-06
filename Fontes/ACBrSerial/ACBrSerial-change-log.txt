@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/01/2021
+-- ACBrCHQBematech --
+[*] Ajuste para impressão do ano com 4 dígitos na Bematech DP-20.
+    https://www.projetoacbr.com.br/forum/topic/56173-impressão-cheque-com-4-digitos-para-ano/
+  Por: BigWings
+
 Data: 22/09/2020
 -- ACBrDevice --
 [+] TACBrTagProcessor, Adicionado Evento: "OnAdicionarBlocoResposta", que será

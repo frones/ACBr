@@ -837,7 +837,7 @@ begin
 
   if (nfe.Det[i].Prod.cEAN <> SEMGTIN) and (nfe.Det[i].Prod.cEAN <> '') then
   begin
-    ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEAN);
+    ErroValidarGTIN := ACBrStrToAnsi( ValidarGTIN(nfe.Det[i].Prod.cEAN) );
     if ErroValidarGTIN <> '' then
       Gerador.wAlerta('I03', 'cEAN', DSC_CEAN, ErroValidarGTIN);
   end;
@@ -880,7 +880,7 @@ begin
 
   if (nfe.Det[i].Prod.cEANTrib <> SEMGTIN) and (nfe.Det[i].Prod.cEANTrib <> '') then
   begin
-    ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEANTrib);
+    ErroValidarGTIN := ACBrStrToAnsi( ValidarGTIN(nfe.Det[i].Prod.cEANTrib) );
     if ErroValidarGTIN <> '' then
       Gerador.wAlerta('I12', 'cEANTrib', DSC_CEANTRIB, ErroValidarGTIN);
   end;

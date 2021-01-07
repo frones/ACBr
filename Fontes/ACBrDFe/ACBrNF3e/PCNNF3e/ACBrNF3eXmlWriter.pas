@@ -984,7 +984,7 @@ begin
 
   if (NF3e.Det[i].Prod.cEAN <> SEMGTIN) and (NF3e.Det[i].Prod.cEAN <> '') then
   begin
-    ErroValidarGTIN := ACBrValidador.ValidarGTIN(NF3e.Det[i].Prod.cEAN);
+    ErroValidarGTIN := ACBrStrToAnsi( ACBrValidador.ValidarGTIN(NF3e.Det[i].Prod.cEAN) );
     if ErroValidarGTIN <> '' then
       wAlerta('I03', 'cEAN', DSC_CEAN, ErroValidarGTIN);
   end;
@@ -1046,7 +1046,7 @@ begin
 
   if (NF3e.Det[i].Prod.cEANTrib <> SEMGTIN) and (NF3e.Det[i].Prod.cEANTrib <> '') then
   begin
-    ErroValidarGTIN := ACBrValidador.ValidarGTIN(NF3e.Det[i].Prod.cEANTrib);
+    ErroValidarGTIN := ACBrStrToAnsi( ACBrValidador.ValidarGTIN(NF3e.Det[i].Prod.cEANTrib) );
     if ErroValidarGTIN <> '' then
       wAlerta('I12', 'cEANTrib', DSC_CEANTRIB, ErroValidarGTIN);
   end;

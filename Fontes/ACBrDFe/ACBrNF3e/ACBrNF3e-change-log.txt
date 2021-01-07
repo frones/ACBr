@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2021
+-- ACBrNF3eXmlWriter --
+[*] Ajuste de conversão de retorno na função ValidarGTIN ao preencher mensagens de Alerta 
+   Por: José M S Junior
+
 13/11/2020
 -- ACBrNF3eNotasFiscais --
 [*] Uso da função ObterDFeXML nos métodos Validar e VerificarAssinatura

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2020
+--ACBrBancoSicred--
+[*] Correção na conversão de código de ocorrências devido Banco trabalhar com códigos Alfanuméricos.
+
 23/12/2020
 --ACBrBancoSicred, ACBrBoleto--
 [+] Adicionado validação do campo Desconto3 no CNAB240 e validação de todos os descontos pela DataDesconto correspondente

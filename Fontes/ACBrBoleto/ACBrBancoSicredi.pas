@@ -905,7 +905,7 @@ begin
         toRetornoBaixado,
         toRetornoLiquidadoAposBaixaouNaoRegistro:
         begin
-          case StrtoInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,0) of
             01: Result := '01 - Por saldo';
             02: Result := '02 - Por conta';
             03: Result := '03 - Liquidação no guichê de caixa em dinheiro';
@@ -920,7 +920,7 @@ begin
             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
           end;
           if (TipoOcorrencia = toRetornoBaixado) then begin
-            case StrtoInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,0) of
               09: Result := '09 - Comandada banco';
               10: Result := '10 - Comandada cliente arquivo';
               11: Result := '11 - Comandada cliente on-line';
@@ -938,7 +938,7 @@ begin
     c400: begin 
       case TipoOcorrencia of
         toRetornoRegistroConfirmado: //02
-          case StrToInt(CodMotivo)  of
+          case StrToIntDef(CodMotivo, -1)  of
             00: Result := '00-Ocorrência aceita, entrada confirmada';
           else
 
@@ -1012,7 +1012,7 @@ begin
             56: Result:= 'L7-Não permitido cadastro de boleto com negativação automática e protesto automático simultaneamente';
             57: Result:= 'D9-Registro mensagem para título não cadastrado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,0) of
               02: Result:= '02-Código do registro detalhe inválido';
               03: Result:= '03-Código da ocorrência inválido';
               04: Result:= '04-Código da ocorrência não permitida para a carteira';
@@ -1062,7 +1062,7 @@ begin
             16: Result:= 'XB-Pago com cheque - bloqueado 144 horas';
             17: Result:= 'C6-Título já Liquidado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,-1) of
                00: Result:= '00-Ocorrência aceita, liquidação normal';
             else
                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
@@ -1070,14 +1070,14 @@ begin
           end;
 
         toRetornoBaixadoViaArquivo: //09
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, baixado automaticamente via arquivo';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
           end;
 
         toRetornoBaixadoInstAgencia: //10
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, baixado cfe. instruções na agência';
             14: Result:= '14-Titulo protestado';
           else
@@ -1085,28 +1085,28 @@ begin
           end;
 
         toRetornoAbatimentoConcedido: //12
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, abatimento concedido';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
           end;
 
         toRetornoAbatimentoCancelado: //13
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, abatimento cancelado';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
           end;
 
         toRetornoVencimentoAlterado: //14
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, vencimento alterado';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
           end;
 
         toRetornoLiquidadoEmCartorio: //15
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, liquidação em cartório';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
@@ -1121,7 +1121,7 @@ begin
             4: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência via compe';
             5: Result:= 'C7-Título já baixado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,-1) of
               00: Result:= '00-Ocorrência aceita, liquidação após baixa';
             else
                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
@@ -1137,7 +1137,7 @@ begin
           end;
 
         toRetornoRecebimentoInstrucaoSustarProtesto: //20
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,-1) of
               00: Result:= '00-Ocorrência aceita, sustação de protesto';
             else
                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
@@ -1155,7 +1155,7 @@ begin
           end;
 
         toRetornoEntradaRejeitaCEPIrregular: //24
-          case StrToInt(CodMotivo) of
+          case StrToIntDef(CodMotivo,-1) of
             48: Result:= '48-CEP irregular';
           else
             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
@@ -1192,7 +1192,7 @@ begin
             6: Result:= 'S4-Tarifa de inclusão negativação';
             7: Result:= 'S5-Tarifa de exclusão negativação';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,0) of
               03 : Result:= '03-Tarifa de sustação';
               04 : Result:= '04-Tarifa de protesto';
               08 : Result:= '08-Tarifa de custas de protesto';
@@ -1214,7 +1214,7 @@ begin
             1 : Result:= 'C6-Título já liquidado';
             2 : Result:= 'C7-Título já baixado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,0) of
               01: Result:= '01-Código do Banco inválido';
               05: Result:= '05-Código da ocorrência não numérico';
               08: Result:= '08-Nosso número inválido';
@@ -1278,7 +1278,7 @@ begin
             37 : Result:= 'L6-Tipo de comando de instrução inválida para beneficiário pessoa física.';
           else
             try
-              case StrToInt(CodMotivo) of
+              case StrToIntDef(CodMotivo,0) of
                 01: Result:= '01-Código do Banco inválido';
                 02: Result:= '02-Código do registro detalhe inválido';
                 03: Result:= '03-Código da ocorrência inválido';

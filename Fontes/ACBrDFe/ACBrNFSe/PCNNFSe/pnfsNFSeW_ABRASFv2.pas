@@ -954,7 +954,7 @@ begin
   end
   else
   begin
-    if (NFSe.Competencia <> '') and (FProvedor <> proMegaSoft) then
+    if NFSe.Competencia <> '' then
     begin
       case FProvedor of
         proActcon, proISSDigital, proMitra, proPVH, proSisPMJP, proVirtual,
@@ -973,8 +973,8 @@ begin
         proDigifred,
         proCenti: Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
-        proSigep:
-          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
+        proSigep, proMegaSoft, proGoiania:
+          Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.Competencia, DSC_DEMI);
 
         profintelISS:
           begin
@@ -990,10 +990,10 @@ begin
     else
     begin
       case FProvedor of
-        proSigep, proMegaSoft:
+        proSigep, proMegaSoft, proGoiania:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
 
-        proCenti, proGoiania, proActconv2, ProTecnos, proSafeWeb, proDigifred:
+        proCenti, proActconv2, ProTecnos, proSafeWeb, proDigifred:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
 
         profintelISS:

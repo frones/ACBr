@@ -1936,7 +1936,6 @@ begin
                             '<' + FPrefixo4 + 'Rps', '</Signature>') +
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
-
            else
              FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps>' +
@@ -3805,6 +3804,7 @@ end;
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
 var
   I: Integer;
+  xAux: string;
   Gerador: TGerador;
 begin
   if FNotasFiscais.Count <= 0 then
@@ -3910,6 +3910,18 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
+    if FProvedor = proGoiania then
+    begin
+      xAux := RetornarConteudoEntre(FPDadosMsg, '<Signature', '</Signature>', True);
+
+      FPDadosMsg := StringReplace(FPDadosMsg, xAux, '', [rfReplaceAll]);
+
+      i := Pos('</InfDeclaracaoPrestacaoServico>', FPDadosMsg);
+
+      FPDadosMsg := Copy(FPDadosMsg, 1, i + 31) + xAux + '</Rps>' +
+                          '</GerarNfseEnvio>';
+    end;
+
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
        TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                            FPConfiguracoes.Arquivos.PathSchemas +
@@ -3926,17 +3938,9 @@ begin
         end;
 
       proSimplISSv2:
-        begin
-//          FPDadosMsg := StringReplace(FPDadosMsg,
-//                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
-//                                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
-//                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
-//                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
-
-          FPDadosMsg := StringReplace(FPDadosMsg,
-                                      'Rps xmlns="http://www.abrasf.org.br/nfse.xsd"',
-                                      'Rps', [rfReplaceAll]);
-        end;
+        FPDadosMsg := StringReplace(FPDadosMsg,
+                                    'Rps xmlns="http://www.abrasf.org.br/nfse.xsd"',
+                                    'Rps', [rfReplaceAll]);
 
       proNotaBlu:
         FPDadosMsg := StringReplace(FPDadosMsg, 'EnvioRps xmlns=""', 'EnvioRps', [rfReplaceAll]);

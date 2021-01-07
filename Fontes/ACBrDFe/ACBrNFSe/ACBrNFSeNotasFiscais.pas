@@ -294,7 +294,7 @@ begin
     if Configuracoes.Geral.ConfigAssinar.URI then
       IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
     else
-      IdAttr := '';
+      IdAttr := 'ID';
 
     if Assina then
       FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento,
@@ -727,7 +727,7 @@ begin
     if Configuracoes.Geral.ConfigAssinar.URI then
       IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
     else
-      IdAttr := '';
+      IdAttr := 'ID';
 
     if Assina then
     begin
@@ -759,7 +759,7 @@ begin
     if Configuracoes.Geral.ConfigAssinar.URI then
       IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
     else
-      IdAttr := '';
+      IdAttr := 'ID';
 
     if Assina then
     begin

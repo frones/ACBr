@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2021
+-- ACBrMonitor1, DoACBrSATUnit, DoACBrBoletoUnit, DoACBrNFeUnit, ACBrMonitorConsts, ACBrMonitorConfig --
+[+] Melhorias e validações nas configurações em Tela: DFe, SAT, Boleto, e-mail
+   Por: José M S Junior
+
+   08/01/2021
+-- ACBrMonitor1, DoACBrSATUnit --
+[+] Adicionado Método SAT.GerarPDFExtratoCancelamento
+   Por: José M S Junior
+
 24/11/2020
 -- DoSATUnit --
 [*] Ajuste no método ConsultarModeloSat

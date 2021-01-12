@@ -59,7 +59,7 @@ uses
   DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
   DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit, DoCNPJUnit,
-  DoCPFUnit, ACBrBoletoConversao;
+  DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -142,6 +142,7 @@ type
     ApplicationProperties1: TApplicationProperties;
     bBALAtivar: TBitBtn;
     bBALTestar: TBitBtn;
+    bbAtivar: TBitBtn;
     bBoletoRelatorioRetorno: TBitBtn;
     bBOLLerArqRelatorio: TBitBtn;
     bCEPTestar: TButton;
@@ -157,15 +158,6 @@ type
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel3: TBevel;
-    btnBoletoRelatorioRetorno: TPanel;
-    btnCancNFeSubs: TButton;
-    btnDFeRespTecnico: TPanel;
-    btnIntegrador: TPanel;
-    btnGerarAssinaturaSAT: TButton;
-    btnFonteItens: TButton;
-    btnSATEMAIL: TPanel;
-    btnVersaoSSL: TButton;
-    bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
     bGAVAtivar: TBitBtn;
@@ -173,7 +165,6 @@ type
     bIBGETestar: TButton;
     bImpressora: TButton;
     bInicializar: TButton;
-    bbAtivar: TBitBtn;
     bLCBAtivar: TBitBtn;
     bLCBSerial: TBitBtn;
     bNcmConsultar: TButton;
@@ -189,7 +180,32 @@ type
     bSedexTestar: TButton;
     btAtivarsat: TButton;
     bTCAtivar: TBitBtn;
+    btCertInfo: TBitBtn;
     btConsultarStatusOPSAT: TButton;
+    btnBoletoRelatorioRetorno: TPanel;
+    btnCancelarCTe: TButton;
+    btnCancMDFe: TButton;
+    btnCancNF: TButton;
+    btnCancNFeSubs: TButton;
+    btnConsultar: TButton;
+    btnConsultarCTe: TButton;
+    btnConsultarMDFe: TButton;
+    btnDFeRespTecnico: TPanel;
+    btnEnviar: TButton;
+    btnEnviarCTe: TButton;
+    btnEnviarEmail: TButton;
+    btnEnviarEmailCTe: TButton;
+    btnEnviarEmailMDFe: TButton;
+    btnEnviarMDFe: TButton;
+    btnFonteItens: TButton;
+    btnGerarAssinaturaSAT: TButton;
+    btnImprimir: TButton;
+    btnImprimirCTe: TButton;
+    btnImprimirMDFe: TButton;
+    btnIntegrador: TPanel;
+    btnInutilizar: TButton;
+    btnInutilizarCTe: TButton;
+    btnSATEMAIL: TPanel;
     btnBalanca: TPanel;
     btnBoleto: TPanel;
     btnBoletoCedente: TPanel;
@@ -200,12 +216,6 @@ type
     btnBoletoRR: TPanel;
     btnCadastro: TPanel;
     btnCadastroCont: TPanel;
-    btnCancNF: TButton;
-    btnCancelarCTe: TButton;
-    btnCancMDFe: TButton;
-    btnConsultar: TButton;
-    btnConsultarCTe: TButton;
-    btnConsultarMDFe: TButton;
     btnConsultas: TPanel;
     btnDFe: TPanel;
     btnDFeCertificados: TPanel;
@@ -219,20 +229,9 @@ type
     btnDisplay: TPanel;
     btnECF: TPanel;
     btnEmail: TPanel;
-    btnEnviar: TButton;
-    btnEnviarCTe: TButton;
-    btnEnviarMDFe: TButton;
-    btnEnviarEmail: TButton;
-    btnEnviarEmailCTe: TButton;
-    btnEnviarEmailMDFe: TButton;
     btnEtiqueta: TPanel;
     btnGaveta: TPanel;
     btnImpCheque: TPanel;
-    btnImprimir: TButton;
-    btnImprimirCTe: TButton;
-    btnImprimirMDFe: TButton;
-    btnInutilizar: TButton;
-    btnInutilizarCTe: TButton;
     btnInutilizarMDFe: TButton;
     btnLeitorSerial: TPanel;
     btnMonitor: TPanel;
@@ -259,75 +258,18 @@ type
     btnValidarXML: TButton;
     btnValidarXMLCTe: TButton;
     btnValidarXMLMDFe: TButton;
+    btnVersaoSSL: TBitBtn;
     btSATAssocia: TButton;
     btSATConfigRede: TButton;
-    bvCadastro1: TBevel;
+    btStatusServico: TBitBtn;
+    bvCadastro: TBevel;
     bvCadastro2: TBevel;
     bvCadastro3: TBevel;
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
     bvCadastro6: TBevel;
+    cbAbas: TCheckBox;
     cbBackFeed: TComboBox;
-    cbDPI: TComboBox;
-    cbEmailHTML: TCheckBox;
-    cbETQModelo: TComboBox;
-    cbETQPorta: TComboBox;
-    cbFormaEmissaoCTe: TComboBox;
-    cbFormaEmissaoBPe: TComboBox;
-    cbFormaEmissaoMDFe: TComboBox;
-    cbFormaEmissaoGNRe: TComboBox;
-    cbRetirarEspacos: TCheckBox;
-    cbSATMarca: TComboBox;
-    cbVersaoWSBPe: TComboBox;
-    cbVersaoWSGNRE: TComboBox;
-    cbxExibeResumo: TCheckBox;
-    cbxExpandirDadosAdicionaisAuto: TCheckBox;
-    cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox;
-    cbxSATSalvarCFe: TCheckBox;
-    cbxSATSalvarCFeCanc: TCheckBox;
-    cbxSATSalvarEnvio: TCheckBox;
-    cbxSATSepararPorCNPJ: TCheckBox;
-    cbxSATSepararPorANO: TCheckBox;
-    cbxSATSepararPorModelo: TCheckBox;
-    cbxSATSepararPorMES: TCheckBox;
-    cbxSATSepararPorDIA: TCheckBox;
-    cbxValidarNumeroSessaoResposta: TCheckBox;
-    cbxImprimirLogoLateralNFCe: TCheckBox;
-    cbxSepararPorNome: TCheckBox;
-    ckCamposFatObrigatorio: TCheckBox;
-    cbFormatoDecimais: TComboBox;
-    cbTipoResposta: TComboBox;
-    edSATPathArqs: TEdit;
-    edSATPathArqsCanc: TEdit;
-    edSATPathArqsEnvio: TEdit;
-    edSATPrefixoCFe: TEdit;
-    Label247: TLabel;
-    Label248: TLabel;
-    edSATPrefixoCFeCanc: TEdit;
-    edtMsgResumoCanhoto: TEdit;
-    edtSATCasasMaskQtd: TEdit;
-    edtSATMaskVUnit: TEdit;
-    edtBOLDigitoAgConta: TEdit;
-    edtArquivoWebServicesBPe: TEdit;
-    edtEmailAssuntoSAT: TEdit;
-    edtNumCopiaNFCe: TSpinEdit;
-    edtPathDownload: TEdit;
-    edtPathSchemasDFe: TEdit;
-    grbConfigArqs: TGroupBox;
-    Label154: TLabel;
-    Label240: TLabel;
-    Label244: TLabel;
-    grbPathSchemas: TGroupBox;
-    GroupBox12: TGroupBox;
-    GroupBox9: TGroupBox;
-    Label227: TLabel;
-    Label229: TLabel;
-    cbGavetaSinalInvertido: TCheckBox;
-    cbLog: TCheckBox;
-    cbxExibeTotalTributosItem: TCheckBox;
-    cbxLogoLateral: TCheckBox;
-    cbMonitorarPasta: TCheckBox;
-    cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
     cbCEPWebService: TComboBox;
@@ -336,71 +278,77 @@ type
     cbComandos: TCheckBox;
     cbControlePorta: TCheckBox;
     cbCortarPapel: TCheckBox;
+    cbCryptLib: TComboBox;
     cbDISModelo: TComboBox;
     cbDISPorta: TComboBox;
+    cbDPI: TComboBox;
     cbECFModelo: TComboBox;
     cbECFPorta: TComboBox;
     cbEmailCodificacao: TComboBox;
-    cbEmailThread: TCheckBox;
+    cbEmailConfirmation: TCheckBox;
+    cbEmailHTML: TCheckBox;
     cbEmailSsl: TCheckBox;
+    cbEmailThread: TCheckBox;
     cbEmailTls: TCheckBox;
+    cbEscPosImprimirLogo: TCheckBox;
+    cbETQModelo: TComboBox;
+    cbETQPorta: TComboBox;
+    cbFormaEmissaoBPe: TComboBox;
+    cbFormaEmissaoCTe: TComboBox;
+    cbFormaEmissaoGNRe: TComboBox;
+    cbFormaEmissaoMDFe: TComboBox;
+    cbFormaEmissaoNFe: TComboBox;
+    cbFormatoDecimais: TComboBox;
     cbGAVAcaoAberturaAntecipada: TComboBox;
+    cbGavetaSinalInvertido: TCheckBox;
     cbGAVModelo: TComboBox;
     cbGAVPorta: TComboBox;
     cbGAVStrAbre: TComboBox;
+    cbHRI: TCheckBox;
+    cbHttpLib: TComboBox;
     cbIgnorarTags: TCheckBox;
     cbLCBDispositivo: TComboBox;
     cbLCBPorta: TComboBox;
     cbLCBSufixo: TComboBox;
     cbLCBSufixoLeitor: TComboBox;
+    cbLog: TCheckBox;
     cbLogComp: TCheckBox;
     cbModoEmissao: TCheckBox;
+    cbMonitorarPasta: TCheckBox;
+    cbMostrarNaBarraDeTarefas: TCheckBox;
     cbOrigem: TComboBox;
-    cbxQRCodeLateral: TCheckBox;
-    cbSenha: TCheckBox;
-    cbUnidade: TComboBox;
-    cbRetirarAcentosNaResposta: TCheckBox;
     cbPreview: TCheckBox;
     cbRetirarAcentos: TCheckBox;
-    cbCryptLib: TComboBox;
-    cbHttpLib: TComboBox;
-    cbTipoEmpregador: TComboBox;
-    cbTipoContribuinte: TComboBox;
-    cbVersaoWSQRCode: TComboBox;
-    cbVersaoWSReinf: TComboBox;
-    cbVersaoWSMDFe: TComboBox;
-    cbVersaoWSeSocial: TComboBox;
-    cbxUsarSeparadorPathPDF: TCheckBox;
-    cbxExibirLogoEmCima: TCheckBox;
-    cbxImpDocsReferenciados: TCheckBox;
-    cbxImprimirNomeFantasiaNFCe: TCheckBox;
-    cbxImprimirDescAcresItemSAT: TCheckBox;
-    cbxImprimirCodEANitemSAT: TCheckBox;
-    cbxImprimirItem1LinhaSAT: TCheckBox;
-    cbxImprimirQRCodeLateralNFCe: TCheckBox;
-    cbxImpDetEspNFe: TCheckBox;
-    cbxImprimirCodigoEANNFCe: TCheckBox;
-    cbXMLSignLib: TComboBox;
-    cbSSLType: TComboBox;
-    cbxNormatizarMunicipios: TCheckBox;
-    chgDescricaoPagamento: TCheckGroup;
-    chkRemoveAcentos: TCheckBox;
-    ckIBGEUTF8: TCheckBox;
-    ckIBGEAcentos: TCheckBox;
-    chkVerificarValidadeCertificado: TCheckBox;
-    chkMostraLogNaTela: TCheckBox;
+    cbRetirarAcentosNaResposta: TCheckBox;
+    cbRetirarEspacos: TCheckBox;
     cbRFDModelo: TComboBox;
+    cbSATMarca: TComboBox;
+    cbSenha: TCheckBox;
+    cbSSLLib: TComboBox;
+    cbSSLType: TComboBox;
+    cbTagRejeicao938: TComboBox;
+    cbTipoContribuinte: TComboBox;
+    cbTipoEmpregador: TComboBox;
+    cbTipoResposta: TComboBox;
     cbTraduzirTags: TCheckBox;
     cbUF: TComboBox;
-    cbAbas: TCheckBox;
+    cbUmaInstancia: TCheckBox;
+    cbUnidade: TComboBox;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbValidarDigest: TCheckBox;
     cbVersaoWS: TComboBox;
+    cbVersaoWSBPe: TComboBox;
     cbVersaoWSCTe: TComboBox;
+    cbVersaoWSeSocial: TComboBox;
+    cbVersaoWSGNRE: TComboBox;
+    cbVersaoWSMDFe: TComboBox;
+    cbVersaoWSQRCode: TComboBox;
+    cbVersaoWSReinf: TComboBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxAjustarAut: TCheckBox;
     cbxAmbiente: TComboBox;
+    cbxAtualizarXMLCancelado: TCheckBox;
     cbxBOLBanco: TComboBox;
     cbxBOLEmissao: TComboBox;
     cbxBOLFiltro: TComboBox;
@@ -410,28 +358,46 @@ type
     cbxBOLUF: TComboBox;
     cbxCNAB: TComboBox;
     cbxEmissaoPathNFe: TCheckBox;
+    cbxEmitCidade: TComboBox;
+    cbxExibeResumo: TCheckBox;
+    cbxExibeTotalTributosItem: TCheckBox;
     cbxExibirCampoFatura: TCheckBox;
     cbxExibirEAN: TCheckBox;
+    cbxExibirLogoEmCima: TCheckBox;
+    cbxExpandirDadosAdicionaisAuto: TCheckBox;
     cbxExpandirLogo: TCheckBox;
+    cbxFormatXML: TCheckBox;
     cbxFormCont: TCheckBox;
     cbxImpDescPorc: TCheckBox;
-    cbxImpValLiq: TCheckBox;
-    cbxMostrarPreview: TCheckBox;
-    cbxMostraStatus: TCheckBox;
-    cbxQuebrarLinhasDetalhesItens: TCheckBox;
-    cbxTimeZoneMode: TComboBox;
-    cbxFormatXML: TCheckBox;
+    cbxImpDetEspNFe: TCheckBox;
+    cbxImpDocsReferenciados: TCheckBox;
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
+    cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox;
+    cbxImprimirCodEANitemSAT: TCheckBox;
+    cbxImprimirCodigoEANNFCe: TCheckBox;
     cbxImprimirDescAcresItemNFCe: TCheckBox;
+    cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirItem1LinhaNFCe: TCheckBox;
+    cbxImprimirItem1LinhaSAT: TCheckBox;
+    cbxImprimirLogoLateralNFCe: TCheckBox;
+    cbxImprimirNomeFantasiaNFCe: TCheckBox;
+    cbxImprimirQRCodeLateralNFCe: TCheckBox;
     cbxImprimirTributos: TCheckBox;
+    cbxImpValLiq: TCheckBox;
     cbxIndRatISSQN: TComboBox;
+    cbxLogoLateral: TCheckBox;
+    cbXMLSignLib: TComboBox;
     cbxModelo: TComboBox;
     cbxModeloSAT: TComboBox;
+    cbxMostrarPreview: TCheckBox;
+    cbxMostraStatus: TCheckBox;
+    cbxNormatizarMunicipios: TCheckBox;
     cbxPagCodigo: TComboBox;
     cbxPastaMensal: TCheckBox;
     cbxPorta: TComboBox;
+    cbxQRCodeLateral: TCheckBox;
+    cbxQuebrarLinhasDetalhesItens: TCheckBox;
     cbxRedeProxy: TComboBox;
     cbxRedeSeg: TComboBox;
     cbxRegTribISSQN: TComboBox;
@@ -439,288 +405,30 @@ type
     cbxSalvaPathEvento: TCheckBox;
     cbxSalvarArqs: TCheckBox;
     cbxSalvarNFesProcessadas: TCheckBox;
+    cbxSATSalvarCFe: TCheckBox;
+    cbxSATSalvarCFeCanc: TCheckBox;
+    cbxSATSalvarEnvio: TCheckBox;
+    cbxSATSepararPorANO: TCheckBox;
+    cbxSATSepararPorCNPJ: TCheckBox;
+    cbxSATSepararPorDIA: TCheckBox;
+    cbxSATSepararPorMES: TCheckBox;
+    cbxSATSepararPorModelo: TCheckBox;
     cbxSedexAvisoReceb: TComboBox;
     cbxSedexFormato: TComboBox;
     cbxSedexMaoPropria: TComboBox;
     cbxSedexServico: TComboBox;
     cbxSepararPorCNPJ: TCheckBox;
     cbxSepararporModelo: TCheckBox;
+    cbxSepararPorNome: TCheckBox;
     cbxTCModelo: TComboBox;
-    cbxUTF8: TCheckBox;
-    chbTCPANSI: TCheckBox;
-    cbEscPosImprimirLogo: TCheckBox;
-    cbEmailConfirmation: TCheckBox;
-    cbxAtualizarXMLCancelado: TCheckBox;
+    cbxTimeZoneMode: TComboBox;
     cbxUnComTributavel: TComboBox;
-    cbFormaEmissaoNFe: TComboBox;
-    chkBOLRelMostraPreview: TCheckBox;
-    chkExibeRazaoSocial: TCheckBox;
-    cbSSLLib: TComboBox;
-    CHMHelpDatabase1: TCHMHelpDatabase;
-    ckMemoria: TCheckBox;
-    ckNFCeUsarIntegrador: TCheckBox;
-    deBolDirRetornoRel: TDirectoryEdit;
-    deUSUDataCadastro: TDateEdit;
-    eAvanco: TEdit;
-    eCopias: TEdit;
-    edtIdCSRT: TEdit;
-    edNomeArquivo: TEdit;
-    edMFEInput: TEdit;
-    edMFEOutput: TEdit;
-    edtArquivoPFX: TEdit;
-    edtArquivoWebServicesReinf: TEdit;
-    edtArquivoWebServicesGNRe: TEdit;
-    edtArquivoWebServiceseSocial: TEdit;
-    edtBOLEmailAssunto: TEdit;
-    edtBOLEmailMensagem: TMemo;
-    edtBOLLocalPagamento: TEdit;
-    edtBOLLogoEmpresa: TEdit;
-    edtCSRT: TEdit;
-    edtEmailAssuntoCTe: TEdit;
-    edtEmailAssuntoMDFe: TEdit;
-    edtEmailAssuntoNFe: TEdit;
-    edtIDContribuinte: TEdit;
-    edtIDTransmissor: TEdit;
-    edtIDTransmissorReinf: TEdit;
-    edTimeZoneStr: TEdit;
-    edtLogoMarcaNFCeSAT: TEdit;
-    edtIDEmpregador: TEdit;
-    edtPathArqTXT: TEdit;
-    eMargemEsquerda: TEdit;
-    eTemperatura: TEdit;
-    eVelocidade: TEdit;
-    FontDialog1: TFontDialog;
-    fspeLarguraNFCe: TSpinEdit;
-    edtNumeroSerie: TEdit;
-    edtSenha: TEdit;
-    edtTimeoutWebServices: TSpinEdit;
-    gbExtratoSAT: TGroupBox;
-    gbGavetaConfig: TGroupBox;
-    gbxConfeSocial: TGroupBox;
-    gbxConfReinf: TGroupBox;
-    GroupBox10: TGroupBox;
-    GroupBox11: TGroupBox;
-    gbImpressao: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox5: TGroupBox;
-    gbxConfigSSL: TGroupBox;
-    GroupBox6: TGroupBox;
-    gbConfigImp: TGroupBox;
-    Image2: TImage;
-    imgLogoBanco: TImage;
-    Label109: TLabel;
-    Label110: TLabel;
-    Label121: TLabel;
-    Label133: TLabel;
-    Label138: TLabel;
-    Label155: TLabel;
-    Label156: TLabel;
-    Label163: TLabel;
-    Label165: TLabel;
-    Label179: TLabel;
-    Label180: TLabel;
-    Label181: TLabel;
-    Label189: TLabel;
-    Label190: TLabel;
-    Label191: TLabel;
-    Label192: TLabel;
-    Label193: TLabel;
-    Label194: TLabel;
-    Label195: TLabel;
-    Label196: TLabel;
-    Label197: TLabel;
-    Label198: TLabel;
-    Label199: TLabel;
-    Label200: TLabel;
-    Label201: TLabel;
-    Label202: TLabel;
-    Label203: TLabel;
-    Label204: TLabel;
-    Label205: TLabel;
-    Label207: TLabel;
-    Label208: TLabel;
-    Label209: TLabel;
-    Label210: TLabel;
-    Label211: TLabel;
-    Label212: TLabel;
-    Label213: TLabel;
-    Label214: TLabel;
-    Label215: TLabel;
-    Label216: TLabel;
-    Label217: TLabel;
-    Label218: TLabel;
-    Label219: TLabel;
-    Label220: TLabel;
-    Label221: TLabel;
-    Label222: TLabel;
-    Label223: TLabel;
-    Label224: TLabel;
-    Label225: TLabel;
-    Label226: TLabel;
-    Label228: TLabel;
-    Label230: TLabel;
-    Label231: TLabel;
-    Label232: TLabel;
-    Label233: TLabel;
-    Label234: TLabel;
-    Label235: TLabel;
-    Label236: TLabel;
-    Label237: TLabel;
-    Label238: TLabel;
-    Label239: TLabel;
-    Label241: TLabel;
-    Label242: TLabel;
-    Label243: TLabel;
-    Label245: TLabel;
-    Label246: TLabel;
-    Label249: TLabel;
-    Label250: TLabel;
-    Label251: TLabel;
-    Label252: TLabel;
-    labelModeloDll: TLabel;
-    lbTipoResp: TLabel;
-    lblMsgCanhoto: TLabel;
-    Label26: TLabel;
-    lblIDCSRT: TLabel;
-    lblCSRT: TLabel;
-    Label4: TLabel;
-    Label60: TLabel;
-    Label61: TLabel;
-    lbAvanco: TLabel;
-    lbBackFeed: TLabel;
-    lbBackFeed1: TLabel;
-    lbCopias: TLabel;
-    lbDPI: TLabel;
-    lblBOLLogoEmpresa: TLabel;
-    Label206: TLabel;
-    Label40: TLabel;
-    Label50: TLabel;
-    Label51: TLabel;
-    Label52: TLabel;
-    Label53: TLabel;
-    Label54: TLabel;
-    Label68: TLabel;
-    Label81: TLabel;
-    lblArquivoPFX: TLabel;
-    lblNumeroSerie: TLabel;
-    lblSenha: TLabel;
-    lbMargem: TLabel;
-    lbTemperatura: TLabel;
-    lbTemperatura2: TLabel;
-    LCaption: TLabel;
-    Label141: TLabel;
-    Label142: TLabel;
-    Label143: TLabel;
-    Label144: TLabel;
-    Label145: TLabel;
-    lblAlturaCampos: TLabel;
-    lblFonteEndereco: TLabel;
-    LHelpConnector1: TLHelpConnector;
-    lsvArqsRetorno: TListView;
-    mBOLRelatorio: TMemo;
-    meUSUHoraCadastro: TMaskEdit;
-    mmEmailMsgCTe: TMemo;
-    mmEmailMsgMDFe: TMemo;
-    mmEmailMsgNFe: TMemo;
-    mmEmailMsgSAT: TMemo;
-    pnLogoBanco: TPanel;
-    PanelMenu: TPanel;
-    PanelScroll: TPanel;
-    PanelTitle: TPanel;
-    rgImprimeDescAcrescItemNFe: TRadioGroup;
-    rgInfFormaPagNFe: TRadioGroup;
-    rgrMsgCanhoto: TRadioGroup;
-    rgImprimeTributos: TRadioGroup;
-    rgInfAdicProduto: TRadioGroup;
-    rdgImprimeChave1LinhaSAT: TRadioGroup;
-    rgLayoutCanhoto: TRadioGroup;
-    rgTipoFonte: TRadioGroup;
-    SbArqLog2: TSpeedButton;
-    SbArqLog3: TSpeedButton;
-    SbArqLog4: TSpeedButton;
-    sbArquivoCert: TSpeedButton;
-    sbSchemaDFe: TSpeedButton;
-    sbArquivoWebServicesReinf: TSpeedButton;
-    sbArquivoWebServicesGNRe: TSpeedButton;
-    sbArquivoWebServiceseSocial: TSpeedButton;
-    sbArquivoWebServicesBPe: TSpeedButton;
-    sbLogoMarca1: TSpeedButton;
-    sbLogoMarcaNFCeSAT: TSpeedButton;
-    sbNumeroSerieCert: TSpeedButton;
-    sbPathArqTXT: TSpeedButton;
-    sbPathDownload: TSpeedButton;
-    ScrollBox: TScrollBox;
-    seGavetaTempoOFF: TSpinEdit;
-    seGavetaTempoON: TSpinEdit;
-    seMFETimeout: TSpinEdit;
-    seUSUCROCadastro: TSpinEdit;
-    seUSUGTCadastro: TFloatSpinEdit;
-    seUSUNumeroCadastro: TSpinEdit;
-    speAlturaCampos: TSpinEdit;
-    spedtDecimaisVUnit: TSpinEdit;
-    spedtCasasDecimaisQtd: TSpinEdit;
-    spedtSATCasasDecimaisQtd: TSpinEdit;
-    spedtSATDecimaisVUnit: TSpinEdit;
-    speEspEntreProd: TSpinEdit;
-    speFonteAdic: TSpinEdit;
-    speFonteCampos: TSpinEdit;
-    speFonteEndereco: TSpinEdit;
-    speFonteRazao: TSpinEdit;
-    speLargCodProd: TSpinEdit;
-    fspeNFCeMargemDir: TFloatSpinEdit;
-    fspeNFCeMargemEsq: TFloatSpinEdit;
-    fspeNFCeMargemInf: TFloatSpinEdit;
-    fspeNFCeMargemSup: TFloatSpinEdit;
-    fspeMargemDir: TFloatSpinEdit;
-    fspeMargemEsq: TFloatSpinEdit;
-    fspeMargemInf: TFloatSpinEdit;
-    fspeMargemSup: TFloatSpinEdit;
-    gbDFeConfDiversas: TGroupBox;
-    gbDFeTimeZone: TGroupBox;
-    Label187: TLabel;
-    edtArquivoWebServicesMDFe: TEdit;
-    edtArquivoWebServicesNFe: TEdit;
-    edtArquivoWebServicesCTe: TEdit;
-    edtNumCopia: TSpinEdit;
-    edtCNPJContador: TEdit;
-    gbxMargem1: TGroupBox;
-    GroupBox4: TGroupBox;
-    Label157: TLabel;
-    Label159: TLabel;
-    Label182: TLabel;
-    Label183: TLabel;
-    Label184: TLabel;
-    Label185: TLabel;
-    Label186: TLabel;
-    Label188: TLabel;
-    pgEmailDFe: TPageControl;
-    rgTamanhoPapelDacte: TRadioGroup;
-    rgTipoAmb: TRadioGroup;
-    sbArquivoWebServicesMDFe: TSpeedButton;
-    sbArquivoWebServicesNFe: TSpeedButton;
-    sbArquivoWebServicesCTe: TSpeedButton;
-    spnTimeOutMail: TSpinEdit;
-    Splitter2: TSplitter;
-    Splitter3: TSplitter;
-    spnAttemptsMail: TSpinEdit;
-    TabSheet1: TTabSheet;
-    gbxWSeSocial: TTabSheet;
-    gbxWSReinf: TTabSheet;
-    cbTagRejeicao938: TComboBox;
-    tsSATemail: TTabSheet;
-    tsRespTecnico: TTabSheet;
-    tsIntegrador: TTabSheet;
-    tsRelatorio: TTabSheet;
-    tsImpCTe: TTabSheet;
-    tsTesteMDFe: TTabSheet;
-    tsEmailMDFe: TTabSheet;
-    tsTesteCTe: TTabSheet;
-    tsEmailNFe: TTabSheet;
-    tsEmailCTe: TTabSheet;
-    tsCertificadoDFe: TTabSheet;
+    cbxUsarSeparadorPathPDF: TCheckBox;
+    cbxUTF8: TCheckBox;
+    cbxValidarNumeroSessaoResposta: TCheckBox;
     chbArqEntANSI: TCheckBox;
     chbArqSaiANSI: TCheckBox;
+    chbTCPANSI: TCheckBox;
     chCHQVerForm: TCheckBox;
     chECFArredondaMFD: TCheckBox;
     chECFArredondaPorQtd: TCheckBox;
@@ -728,22 +436,34 @@ type
     chECFDescrGrande: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
-    cbUmaInstancia: TCheckBox;
-    cbHRI: TCheckBox;
+    chgDescricaoPagamento: TCheckGroup;
+    chkBOLRelMostraPreview: TCheckBox;
+    chkExibeRazaoSocial: TCheckBox;
     chkLerCedenteRetorno: TCheckBox;
+    cbxBOLEmailMensagemHTML: TCheckBox;
+    chkMostraLogNaTela: TCheckBox;
+    chkRemoveAcentos: TCheckBox;
+    chkVerificarValidadeCertificado: TCheckBox;
     chLCBExcluirSufixo: TCheckBox;
     chRFD: TCheckBox;
     chRFDIgnoraMFD: TCheckBox;
+    ckCamposFatObrigatorio: TCheckBox;
     ckgBOLMostrar: TCheckGroup;
+    ckIBGEAcentos: TCheckBox;
+    ckIBGEUTF8: TCheckBox;
+    ckMemoria: TCheckBox;
+    ckNFCeUsarIntegrador: TCheckBox;
     ckSalvar: TCheckBox;
-    tsImpressaoDFe: TTabSheet;
     deBOLDirArquivo: TDirectoryEdit;
     deBOLDirLogo: TDirectoryEdit;
     deBolDirRemessa: TDirectoryEdit;
     deBolDirRetorno: TDirectoryEdit;
+    deBolDirRetornoRel: TDirectoryEdit;
     deNcmSalvar: TDirectoryEdit;
     deRFDDataSwBasico: TDateEdit;
-    tsDiretoriosDFe: TTabSheet;
+    deUSUDataCadastro: TDateEdit;
+    eAvanco: TEdit;
+    eCopias: TEdit;
     edBALLog: TEdit;
     edCEPChaveBuscarCEP: TEdit;
     edCEPTestar: TEdit;
@@ -763,7 +483,14 @@ type
     edEmailUsuario: TEdit;
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
+    edLCBPreExcluir: TEdit;
+    edLogArq: TEdit;
+    edLogComp: TEdit;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
+    edNomeArquivo: TEdit;
     edNomeDLL: TEdit;
+    edPortaTCP: TEdit;
     edPosPrinterLog: TEdit;
     edRedeCodigo: TEdit;
     edRedeDNS1: TEdit;
@@ -778,15 +505,14 @@ type
     edRedeSenha: TEdit;
     edRedeSSID: TEdit;
     edRedeUsuario: TEdit;
-    edSATLog: TEdit;
-    edLogComp: TEdit;
-    edtCodigoAtivacao: TEdit;
-    edtCodUF: TEdit;
-    edLCBPreExcluir: TEdit;
-    edLogArq: TEdit;
-    edPortaTCP: TEdit;
     edRFDDir: TEdit;
     edSaiTXT: TEdit;
+    edSATLog: TEdit;
+    edSATPathArqs: TEdit;
+    edSATPathArqsCanc: TEdit;
+    edSATPathArqsEnvio: TEdit;
+    edSATPrefixoCFe: TEdit;
+    edSATPrefixoCFeCanc: TEdit;
     edSenha: TEdit;
     edSH_Aplicativo: TEdit;
     edSH_CNPJ: TEdit;
@@ -795,50 +521,86 @@ type
     edSH_IM: TEdit;
     edSH_Linha1: TEdit;
     edSH_Linha2: TEdit;
-    edSH_Site: TEdit;
     edSH_NumeroAP: TEdit;
     edSH_RazaoSocial: TEdit;
+    edSH_Site: TEdit;
     edSH_VersaoAP: TEdit;
     edtAguardar: TEdit;
+    edtArquivoPFX: TEdit;
+    edtArquivoWebServicesBPe: TEdit;
+    edtArquivoWebServicesCTe: TEdit;
+    edtArquivoWebServiceseSocial: TEdit;
+    edtArquivoWebServicesGNRe: TEdit;
+    edtArquivoWebServicesMDFe: TEdit;
+    edtArquivoWebServicesNFe: TEdit;
+    edtArquivoWebServicesReinf: TEdit;
     edtBOLAgencia: TEdit;
     edtBOLBairro: TEdit;
     edtBOLCEP: TMaskEdit;
-    edtBOLCidade: TEdit;
     edtBOLCNPJ: TMaskEdit;
     edtBOLComplemento: TEdit;
     edtBOLConta: TEdit;
+    edtBOLDigitoAgConta: TEdit;
     edtBOLDigitoAgencia: TEdit;
     edtBOLDigitoConta: TEdit;
+    edtBOLEmailAssunto: TEdit;
+    edtBOLEmailMensagem: TMemo;
+    edtBOLLocalPagamento: TEdit;
+    edtBOLLogoEmpresa: TEdit;
     edtBOLLogradouro: TEdit;
     edtBOLNumero: TEdit;
     edtBOLRazaoSocial: TEdit;
+    edTCArqPrecos: TEdit;
+    edTCNaoEncontrado: TEdit;
+    edtCNPJContador: TEdit;
+    edtCodCliente: TEdit;
+    edtCodigoAtivacao: TEdit;
+    edtCodTransmissao: TEdit;
+    edtCodUF: TEdit;
+    edtConvenio: TEdit;
+    edTCPort: TEdit;
+    edtCSRT: TEdit;
+    edtEmailAssuntoCTe: TEdit;
+    edtEmailAssuntoMDFe: TEdit;
+    edtEmailAssuntoNFe: TEdit;
+    edtEmailAssuntoSAT: TEdit;
+    edtEmailEmpresa: TEdit;
     edtEmitCNPJ: TEdit;
     edtEmitIE: TEdit;
     edtEmitIM: TEdit;
-    edTCArqPrecos: TEdit;
-    edTCNaoEncontrado: TEdit;
-    edtCodCliente: TEdit;
-    edtCodTransmissao: TEdit;
-    edtConvenio: TEdit;
-    edTCPort: TEdit;
-    edtEmailEmpresa: TEdit;
     edtFaxEmpresa: TEdit;
+    edtIDContribuinte: TEdit;
+    edtIdCSRT: TEdit;
+    edtIDEmpregador: TEdit;
     edtIdToken: TEdit;
+    edtIDTransmissor: TEdit;
+    edtIDTransmissorReinf: TEdit;
     edTimeOutTCP: TEdit;
+    edTimeZoneStr: TEdit;
     edtIntervalo: TEdit;
     edtLogoMarca: TEdit;
+    edtLogoMarcaNFCeSAT: TEdit;
     edtModalidade: TEdit;
+    edtMsgResumoCanhoto: TEdit;
     edtNcmNumero: TEdit;
+    edtNumCopia: TSpinEdit;
+    edtNumCopiaNFCe: TSpinEdit;
+    edtNumeroSerie: TEdit;
+    edtPathArqTXT: TEdit;
+    edtPathDownload: TEdit;
     edtPathDPEC: TEdit;
     edtPathEvento: TEdit;
     edtPathInu: TEdit;
     edtPathLogs: TEdit;
     edtPathNFe: TEdit;
     edtPathPDF: TEdit;
+    edtPathSchemasDFe: TEdit;
     edtProxyHost: TEdit;
     edtProxyPorta: TEdit;
     edtProxySenha: TEdit;
     edtProxyUser: TEdit;
+    edtSATCasasMaskQtd: TEdit;
+    edtSATMaskVUnit: TEdit;
     edtSedexAltura: TEdit;
     edtSedexCEPDestino: TEdit;
     edtSedexCEPOrigem: TEdit;
@@ -849,46 +611,118 @@ type
     edtSedexPeso: TEdit;
     edtSedexSenha: TEdit;
     edtSedexValorDeclarado: TEdit;
+    edtSenha: TEdit;
     edtSiteEmpresa: TEdit;
     edtSwHAssinatura: TEdit;
     edtSwHCNPJ: TEdit;
     edtTentativas: TEdit;
+    edtTimeoutWebServices: TSpinEdit;
     edtToken: TEdit;
+    edtURLPFX: TEdit;
     edUSUCNPJ: TEdit;
     edUSUEndereco: TEdit;
     edUSUIE: TEdit;
     edUSURazaoSocial: TEdit;
-    tsEmailDFe: TTabSheet;
+    eMargemEsquerda: TEdit;
+    eTemperatura: TEdit;
+    eVelocidade: TEdit;
+    fspeLarguraNFCe: TSpinEdit;
+    fspeMargemDir: TFloatSpinEdit;
+    fspeMargemEsq: TFloatSpinEdit;
+    fspeMargemInf: TFloatSpinEdit;
+    fspeMargemSup: TFloatSpinEdit;
+    fspeNFCeMargemDir: TFloatSpinEdit;
+    fspeNFCeMargemEsq: TFloatSpinEdit;
+    fspeNFCeMargemInf: TFloatSpinEdit;
+    fspeNFCeMargemSup: TFloatSpinEdit;
     gbCEP: TGroupBox;
     gbCEPProxy: TGroupBox;
     gbCEPTestar: TGroupBox;
     gbCHQDados: TGroupBox;
+    gbCodBarras: TGroupBox;
+    gbConfigImp: TGroupBox;
+    gbConfiguracao: TGroupBox;
     gbDANFeESCPOS: TGroupBox;
+    gbDFeConfDiversas: TGroupBox;
+    gbDFeTimeZone: TGroupBox;
     gbEmailDados: TGroupBox;
+    gbExtratoSAT: TGroupBox;
+    gbGavetaConfig: TGroupBox;
+    gbGeral: TGroupBox;
+    gbImpressao: TGroupBox;
     gbIPFix: TGroupBox;
     gbLog: TGroupBox;
     gbLogComp: TGroupBox;
+    gbLogotipo: TGroupBox;
     gbPPPoE: TGroupBox;
     gbProxy: TGroupBox;
+    gbQRCode: TGroupBox;
     gbRFDECF: TGroupBox;
     gbSenha: TGroupBox;
     gbTCP: TGroupBox;
     gbTXT: TGroupBox;
     gbWiFi: TGroupBox;
+    gbxConfeSocial: TGroupBox;
+    gbxConfigSSL: TGroupBox;
+    gbxConfReinf: TGroupBox;
     gbxMargem: TGroupBox;
+    gbxMargem1: TGroupBox;
     gbxProxy: TGroupBox;
+    gbxRegrasGeral: TTabSheet;
     gbxRetornoEnvio: TGroupBox;
-    GroupBox1: TGroupBox;
+    gbxWSeSocial: TTabSheet;
     gbxWSNFe: TGroupBox;
-    gbConfiguracao: TGroupBox;
-    gbCodBarras: TGroupBox;
-    gbQRCode: TGroupBox;
-    gbLogotipo: TGroupBox;
-    gbGeral: TGroupBox;
+    gbxWSReinf: TTabSheet;
+    grbConfigArqs: TGroupBox;
+    grbPathSchemas: TGroupBox;
+    GroupBox1: TGroupBox;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
+    GroupBox12: TGroupBox;
+    GroupBox13: TGroupBox;
+    GrbVersaoDFe: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
-    Image1: TImage;
-    ImageList1: TImageList;
+    GroupBox9: TGroupBox;
+    ImageList2: TImageList;
+    CHMHelpDatabase1: TCHMHelpDatabase;
+    FontDialog1: TFontDialog;
+    Image2: TImage;
+    imgErrCEP: TImage;
+    imgErrCertificado: TImage;
+    imgErrCidade: TImage;
+    imgErrCNPJ: TImage;
+    imgErrComunicacao: TImage;
+    imgErrCNPJBoleto: TImage;
+    imgErrCryptLib: TImage;
+    imgErrEmail: TImage;
+    imgErrHttpLib: TImage;
+    imgErrPathSchemas: TImage;
+    imgErrRazaoSocial: TImage;
+    imgErrSAT: TImage;
+    imgErrSATAssign: TImage;
+    imgErrSATCodAtivacao: TImage;
+    imgErrSATEmitente: TImage;
+    imgErrSATCNPJSH: TImage;
+    imgErrSATLib: TImage;
+    imgErrSATPathVendas: TImage;
+    imgErrSATInicializar: TImage;
+    imgErrSATAtivar: TImage;
+    imgErrSATPathCancelamento: TImage;
+    imgErrSATPathEnvio: TImage;
+    imgErrTokenCSC: TImage;
+    imgErrTokenID: TImage;
+    imgErrUF: TImage;
+    imgErrWebServer: TImage;
+    imgErrSSLLib: TImage;
+    imgErrWebService: TImage;
+    imgErrXmlSignLib: TImage;
+    imgLogoBanco: TImage;
     Impressao: TTabSheet;
     Label1: TLabel;
     Label10: TLabel;
@@ -901,18 +735,22 @@ type
     Label106: TLabel;
     Label107: TLabel;
     Label108: TLabel;
+    Label109: TLabel;
+    lBolUF: TLabel;
+    lBOLLogradouro: TLabel;
+    lblBOLCEP: TLabel;
     Label11: TLabel;
+    Label110: TLabel;
     Label111: TLabel;
     Label112: TLabel;
     Label113: TLabel;
-    LabelNomedll: TLabel;
     Label115: TLabel;
     Label116: TLabel;
     Label117: TLabel;
-    LabelpagCod: TLabel;
     Label119: TLabel;
     Label12: TLabel;
     Label120: TLabel;
+    Label121: TLabel;
     Label122: TLabel;
     Label123: TLabel;
     Label124: TLabel;
@@ -925,29 +763,20 @@ type
     Label130: TLabel;
     Label131: TLabel;
     Label132: TLabel;
+    Label133: TLabel;
     Label134: TLabel;
     Label135: TLabel;
     Label136: TLabel;
     Label137: TLabel;
-    lbBuffer: TLabel;
-    lbColunas: TLabel;
-    lbEspacosLinhas: TLabel;
-    lbLinhasPular: TLabel;
-    lbModelo: TLabel;
-    lbPorPrinterLog: TLabel;
-    lbPorta: TLabel;
-    lbQRCodeTipo: TLabel;
-    lbQRCodeLargMod: TLabel;
-    lbQRCodeErrorLevel: TLabel;
-    lbLogoKC1: TLabel;
-    lbLogoKC2: TLabel;
-    lbLogoFatorX: TLabel;
-    lbLogoFatorY: TLabel;
-    lbLargura: TLabel;
-    lbAltura: TLabel;
+    Label138: TLabel;
     Label139: TLabel;
     Label14: TLabel;
     Label140: TLabel;
+    Label141: TLabel;
+    Label142: TLabel;
+    Label143: TLabel;
+    Label144: TLabel;
+    Label145: TLabel;
     Label146: TLabel;
     Label147: TLabel;
     Label148: TLabel;
@@ -957,12 +786,19 @@ type
     Label151: TLabel;
     Label152: TLabel;
     Label153: TLabel;
+    Label154: TLabel;
+    Label155: TLabel;
+    Label156: TLabel;
+    Label157: TLabel;
     Label158: TLabel;
+    Label159: TLabel;
     Label16: TLabel;
     Label160: TLabel;
     Label161: TLabel;
     Label162: TLabel;
+    Label163: TLabel;
     Label164: TLabel;
+    Label165: TLabel;
     Label166: TLabel;
     Label167: TLabel;
     Label168: TLabel;
@@ -977,16 +813,91 @@ type
     Label176: TLabel;
     Label177: TLabel;
     Label178: TLabel;
+    Label179: TLabel;
     Label18: TLabel;
+    Label180: TLabel;
+    Label181: TLabel;
+    Label182: TLabel;
+    Label183: TLabel;
+    Label184: TLabel;
+    Label185: TLabel;
+    Label186: TLabel;
+    Label187: TLabel;
+    Label188: TLabel;
+    Label189: TLabel;
     Label19: TLabel;
+    Label190: TLabel;
+    Label191: TLabel;
+    Label192: TLabel;
+    Label193: TLabel;
+    Label194: TLabel;
+    Label195: TLabel;
+    Label196: TLabel;
+    Label197: TLabel;
+    Label198: TLabel;
+    Label199: TLabel;
     Label2: TLabel;
     Label20: TLabel;
+    Label200: TLabel;
+    Label201: TLabel;
+    Label202: TLabel;
+    Label203: TLabel;
+    Label204: TLabel;
+    Label205: TLabel;
+    Label206: TLabel;
+    Label207: TLabel;
+    Label208: TLabel;
+    Label209: TLabel;
     Label21: TLabel;
+    Label210: TLabel;
+    Label211: TLabel;
+    Label212: TLabel;
+    Label213: TLabel;
+    Label214: TLabel;
+    Label215: TLabel;
+    Label216: TLabel;
+    Label217: TLabel;
+    Label218: TLabel;
+    Label219: TLabel;
     Label22: TLabel;
+    Label220: TLabel;
+    Label221: TLabel;
+    Label222: TLabel;
+    Label223: TLabel;
+    Label224: TLabel;
+    Label225: TLabel;
+    Label226: TLabel;
+    Label227: TLabel;
+    Label228: TLabel;
+    Label229: TLabel;
     Label23: TLabel;
+    Label230: TLabel;
+    Label231: TLabel;
+    Label232: TLabel;
+    Label233: TLabel;
+    Label234: TLabel;
+    Label235: TLabel;
+    Label236: TLabel;
+    Label237: TLabel;
+    Label238: TLabel;
+    Label239: TLabel;
     Label24: TLabel;
+    Label240: TLabel;
+    Label241: TLabel;
+    Label242: TLabel;
+    Label243: TLabel;
+    Label244: TLabel;
+    Label245: TLabel;
+    Label246: TLabel;
+    Label247: TLabel;
+    Label248: TLabel;
+    Label249: TLabel;
     Label25: TLabel;
-    lbLogMaxLinhas: TLabel;
+    Label250: TLabel;
+    Label251: TLabel;
+    Label252: TLabel;
+    Label253: TLabel;
+    Label26: TLabel;
     Label27: TLabel;
     Label28: TLabel;
     Label29: TLabel;
@@ -1001,7 +912,8 @@ type
     Label37: TLabel;
     Label38: TLabel;
     Label39: TLabel;
-    lblogArquivo: TLabel;
+    Label4: TLabel;
+    Label40: TLabel;
     Label41: TLabel;
     Label42: TLabel;
     Label43: TLabel;
@@ -1012,18 +924,26 @@ type
     Label48: TLabel;
     Label49: TLabel;
     Label5: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
     Label55: TLabel;
     Label56: TLabel;
     Label57: TLabel;
     Label58: TLabel;
     Label59: TLabel;
     Label6: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
     Label62: TLabel;
     Label63: TLabel;
     Label64: TLabel;
     Label65: TLabel;
     Label66: TLabel;
     Label67: TLabel;
+    Label68: TLabel;
     Label69: TLabel;
     Label7: TLabel;
     Label70: TLabel;
@@ -1038,6 +958,7 @@ type
     Label79: TLabel;
     Label8: TLabel;
     Label80: TLabel;
+    Label81: TLabel;
     Label82: TLabel;
     Label83: TLabel;
     Label84: TLabel;
@@ -1057,11 +978,25 @@ type
     Label97: TLabel;
     Label98: TLabel;
     Label99: TLabel;
+    labelModeloDll: TLabel;
+    LabelNomedll: TLabel;
+    LabelpagCod: TLabel;
     lAdSufixo: TLabel;
+    lbAltura: TLabel;
+    lbAvanco: TLabel;
+    lbBackFeed: TLabel;
+    lbBackFeed1: TLabel;
+    lbBuffer: TLabel;
+    lbColunas: TLabel;
+    lbCopias: TLabel;
+    lbDPI: TLabel;
+    lbEspacosLinhas: TLabel;
+    lblAlturaCampos: TLabel;
+    lbLargura: TLabel;
+    lblArquivoPFX: TLabel;
     lblBOLAgencia: TLabel;
     lblBOLBairro: TLabel;
     lblBOLBanco: TLabel;
-    lblBOLCep: TLabel;
     lblBOLCidade: TLabel;
     lblBOLComplemento: TLabel;
     lblBOLConta: TLabel;
@@ -1070,10 +1005,36 @@ type
     lblBOLDigConta: TLabel;
     lblBOLDirLogo: TLabel;
     lblBOLEmissao: TLabel;
+    lblBOLLogoEmpresa: TLabel;
     lblBOLLogradouro: TLabel;
     lblBOLNomeRazao: TLabel;
     lblBOLNumero: TLabel;
     lblBOLPessoa: TLabel;
+    lblCSRT: TLabel;
+    lblFonteEndereco: TLabel;
+    lblIDCSRT: TLabel;
+    lbLinhasPular: TLabel;
+    lblMsgCanhoto: TLabel;
+    lblNumeroSerie1: TLabel;
+    lblogArquivo: TLabel;
+    lbLogMaxLinhas: TLabel;
+    lbLogoFatorX: TLabel;
+    lbLogoFatorY: TLabel;
+    lbLogoKC1: TLabel;
+    lbLogoKC2: TLabel;
+    lblSenha: TLabel;
+    lbl_URL_Certificado: TLabel;
+    lbMargem: TLabel;
+    lbModelo: TLabel;
+    lbPorPrinterLog: TLabel;
+    lbPorta: TLabel;
+    lbQRCodeErrorLevel: TLabel;
+    lbQRCodeLargMod: TLabel;
+    lbQRCodeTipo: TLabel;
+    lbTemperatura: TLabel;
+    lbTemperatura2: TLabel;
+    lbTipoResp: TLabel;
+    LCaption: TLabel;
     lCEPCEP: TLabel;
     lCEPChave: TLabel;
     lCEPProxyPorta: TLabel;
@@ -1082,6 +1043,7 @@ type
     lCEPProxyUsuario: TLabel;
     lCEPWebService: TLabel;
     lGAVEstado: TLabel;
+    LHelpConnector1: TLHelpConnector;
     lIBGECodNome: TLabel;
     lImpressora: TLabel;
     lLCBCodigoLido: TPanel;
@@ -1101,59 +1063,98 @@ type
     lSSID7: TLabel;
     lSSID8: TLabel;
     lSSID9: TLabel;
+    lsvArqsRetorno: TListView;
     lTimeOutTCP: TLabel;
+    mBOLRelatorio: TMemo;
     mCmd: TMemo;
     meRFDHoraSwBasico: TMaskEdit;
+    meUSUHoraCadastro: TMaskEdit;
+    mmEmailMsgCTe: TMemo;
+    mmEmailMsgMDFe: TMemo;
+    mmEmailMsgNFe: TMemo;
+    mmEmailMsgSAT: TMemo;
     mResp: TMemo;
+    mResposta: TSynMemo;
     mRFDINI: TMemo;
     mRSAKey: TMemo;
     mTCConexoes: TMemo;
-    mResposta: TSynMemo;
-    pgDFe: TPageControl;
-    pgSAT: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
-    pgConfig: TPageControl;
-    pCentral: TPanel;
     Panel4: TPanel;
+    PanelMenu: TPanel;
+    PanelScroll: TPanel;
+    PanelTitle: TPanel;
     pbEmailTeste: TProgressBar;
     pCmd: TPanel;
     pConfig: TPanel;
+    edtBOLCodCidade: TPanel;
     pgBoleto: TPageControl;
     pgCadastro: TPageControl;
+    pgConfig: TPageControl;
     pgConRFD: TPageControl;
-    pgImpressaoDFe: TPageControl;
+    pgDFe: TPageControl;
     pgECFParams: TPageControl;
+    pgEmailDFe: TPageControl;
+    pgImpressaoDFe: TPageControl;
+    pgSAT: TPageControl;
     pgSwHouse: TPageControl;
-    pComandos: TPanel;
     pgTestes: TPageControl;
     pgTipoWebService: TPageControl;
+    pnLogoBanco: TPanel;
     pRespostas: TPanel;
-    PrintDialog1: TPrintDialog;
     pTopCmd: TPanel;
     pTopRespostas: TPanel;
-    rgRedeTipoInter: TRadioGroup;
-    rgRedeTipoLan: TRadioGroup;
     rbLCBFila: TRadioButton;
     rbLCBTeclado: TRadioButton;
     rbTCP: TRadioButton;
     rbTXT: TRadioButton;
+    rdgImprimeChave1LinhaSAT: TRadioGroup;
+    rgImprimeDescAcrescItemNFe: TRadioGroup;
+    rgImprimeTributos: TRadioGroup;
+    rgInfAdicProduto: TRadioGroup;
+    rgInfFormaPagNFe: TRadioGroup;
+    rgLayoutCanhoto: TRadioGroup;
     rgLocalCanhoto: TRadioGroup;
     rgModeloDanfe: TRadioGroup;
     rgModeloDANFeNFCE: TRadioGroup;
     rgModoImpressaoEvento: TRadioGroup;
+    rgRedeTipoInter: TRadioGroup;
+    rgRedeTipoLan: TRadioGroup;
+    rgrMsgCanhoto: TRadioGroup;
+    rgTamanhoPapelDacte: TRadioGroup;
+    rgTipoAmb: TRadioGroup;
     rgTipoDanfe: TRadioGroup;
+    rgTipoFonte: TRadioGroup;
     SbArqLog: TSpeedButton;
-    sbBALSerial: TSpeedButton;
+    SbArqLog2: TSpeedButton;
+    SbArqLog3: TSpeedButton;
+    SbArqLog4: TSpeedButton;
+    sbArquivoCert: TSpeedButton;
+    sbArquivoWebServicesBPe: TSpeedButton;
+    sbArquivoWebServicesCTe: TSpeedButton;
+    sbArquivoWebServiceseSocial: TSpeedButton;
+    sbArquivoWebServicesGNRe: TSpeedButton;
+    sbArquivoWebServicesMDFe: TSpeedButton;
+    sbArquivoWebServicesNFe: TSpeedButton;
+    sbArquivoWebServicesReinf: TSpeedButton;
     sbBALLog: TSpeedButton;
+    sbBALSerial: TSpeedButton;
     sbCHQBemafiINI: TSpeedButton;
     sbCHQSerial: TSpeedButton;
+    sbConsultaCEP: TSpeedButton;
+    sbConsultaCNPJBoleto: TSpeedButton;
     sbDirRFD: TSpeedButton;
     sbECFLog: TSpeedButton;
     sbECFSerial: TSpeedButton;
     sbLog: TSpeedButton;
     sbLogoMarca: TSpeedButton;
+    sbLogoMarca1: TSpeedButton;
+    sbLogoMarcaNFCeSAT: TSpeedButton;
+    sbNomeDLL: TSpeedButton;
+    sbNumeroSerieCert: TSpeedButton;
+    sbPathArqTXT: TSpeedButton;
+    sbPathDownload: TSpeedButton;
     sbPathDPEC: TSpeedButton;
     sbPathEvento: TSpeedButton;
     sbPathInu: TSpeedButton;
@@ -1161,10 +1162,24 @@ type
     sbPathPDF: TSpeedButton;
     sbPathSalvar: TSpeedButton;
     sbPosPrinterLog: TSpeedButton;
+    sbSchemaDFe: TSpeedButton;
     sbSerial: TSpeedButton;
     sbTCArqPrecosEdit: TSpeedButton;
     sbTCArqPrecosFind: TSpeedButton;
+    sbtnNumSerie: TSpeedButton;
+    sbVerSenhaCertificado: TSpeedButton;
+    sbVerSenhaEmail: TSpeedButton;
+    sbVerSenhaProxySAT: TSpeedButton;
+    sbVerSenhaProxy: TSpeedButton;
+    ScrollBox: TScrollBox;
+    Image1: TImage;
+    ImageList1: TImageList;
+    pCentral: TPanel;
+    pComandos: TPanel;
+    PrintDialog1: TPrintDialog;
     seBuffer: TSpinEdit;
+    seCodBarrasAltura: TSpinEdit;
+    seCodBarrasLargura: TSpinEdit;
     seColunas: TSpinEdit;
     sedBALIntervalo: TSpinEdit;
     sedECFIntervalo: TSpinEdit;
@@ -1181,33 +1196,52 @@ type
     sedLogLinhas: TSpinEdit;
     sedLogLinhasComp: TSpinEdit;
     seEspacosLinhas: TSpinEdit;
+    seGavetaTempoOFF: TSpinEdit;
+    seGavetaTempoON: TSpinEdit;
     seLargura: TSpinEdit;
     SelectDirectoryDialog1: TSelectDirectoryDialog;
     lblCep: TLabel;
     sbSobre: TSpeedButton;
+    seFundoImp: TSpinEdit;
     seLinhasPular: TSpinEdit;
+    seLogoFatorX: TSpinEdit;
+    seLogoFatorY: TSpinEdit;
+    seLogoKC1: TSpinEdit;
+    seLogoKC2: TSpinEdit;
     seMargemDireita: TSpinEdit;
     seMargemEsquerda: TSpinEdit;
     seMargemFundo: TSpinEdit;
     seMargemTopo: TSpinEdit;
+    seMFETimeout: TSpinEdit;
     seNumeroCaixa: TSpinEdit;
     sePagCod: TSpinEdit;
+    seQRCodeErrorLevel: TSpinEdit;
+    seQRCodeLargMod: TSpinEdit;
+    seQRCodeTipo: TSpinEdit;
+    seUSUCROCadastro: TSpinEdit;
+    seUSUGTCadastro: TFloatSpinEdit;
+    seUSUNumeroCadastro: TSpinEdit;
     sfeVersaoEnt: TFloatSpinEdit;
     shpLCB: TShape;
     shpTC: TShape;
     spBOLCopias: TSpinEdit;
+    speAlturaCampos: TSpinEdit;
+    spedtCasasDecimaisQtd: TSpinEdit;
+    spedtDecimaisVUnit: TSpinEdit;
+    spedtSATCasasDecimaisQtd: TSpinEdit;
+    spedtSATDecimaisVUnit: TSpinEdit;
     SpeedButton1: TSpeedButton;
-    seFundoImp: TSpinEdit;
-    seCodBarrasLargura: TSpinEdit;
-    seCodBarrasAltura: TSpinEdit;
-    seQRCodeTipo: TSpinEdit;
-    seQRCodeLargMod: TSpinEdit;
-    seQRCodeErrorLevel: TSpinEdit;
-    seLogoKC1: TSpinEdit;
-    seLogoKC2: TSpinEdit;
-    seLogoFatorY: TSpinEdit;
-    seLogoFatorX: TSpinEdit;
+    speEspEntreProd: TSpinEdit;
+    speFonteAdic: TSpinEdit;
+    speFonteCampos: TSpinEdit;
+    speFonteEndereco: TSpinEdit;
+    speFonteRazao: TSpinEdit;
+    speLargCodProd: TSpinEdit;
     Splitter1: TSplitter;
+    Splitter2: TSplitter;
+    Splitter3: TSplitter;
+    spnAttemptsMail: TSpinEdit;
+    spnTimeOutMail: TSpinEdit;
     StatusBar1: TStatusBar;
     ACBrCHQ1: TACBrCHQ;
     ACBrGAV1: TACBrGAV;
@@ -1223,21 +1257,7 @@ type
     ACBrLCB1: TACBrLCB;
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
-    tsImpNFCe: TTabSheet;
-    tsConfiguracaoDFe: TTabSheet;
-    tsEscPos: TTabSheet;
-    tsDadosEmit: TTabSheet;
-    tsDadosSAT: TTabSheet;
-    tsDadosSwHouse: TTabSheet;
-    tsRede: TTabSheet;
-    tsSat: TTabSheet;
-    tsTestesDFe: TTabSheet;
-    tsDadosEmpresa: TTabSheet;
-    tsImpGeralDFe: TTabSheet;
-    tsDFe: TTabSheet;
-    tsTesteNFe: TTabSheet;
-    tsWSNFCe: TTabSheet;
-    tsWSNFe: TTabSheet;
+    TabSheet1: TTabSheet;
     TrayIcon1: TTrayIcon;
     bCancelar: TBitBtn;
     Timer1: TTimer;
@@ -1250,7 +1270,6 @@ type
     TimerTC: TTimer;
     tsACBrBoleto: TTabSheet;
     tsBAL: TTabSheet;
-    tsLayoutBoleto: TTabSheet;
     tsBoletoEmail: TTabSheet;
     tsCadastro: TTabSheet;
     tsCadSwChaveRSA: TTabSheet;
@@ -1258,26 +1277,56 @@ type
     tsCadSwH: TTabSheet;
     tsCadUsuario: TTabSheet;
     tsCedente: TTabSheet;
+    tsCertificadoDFe: TTabSheet;
     tsCHQ: TTabSheet;
+    tsConfiguracaoDFe: TTabSheet;
     tsConsultas: TTabSheet;
     tsContaBancaria: TTabSheet;
+    tsDadosEmit: TTabSheet;
+    tsDadosEmpresa: TTabSheet;
+    tsDadosSAT: TTabSheet;
+    tsDadosSwHouse: TTabSheet;
+    tsDFe: TTabSheet;
+    tsDiretoriosDFe: TTabSheet;
     tsDIS: TTabSheet;
     tsECF: TTabSheet;
     tsECFParamI: TTabSheet;
     tsECFParamII: TTabSheet;
     tsEmail: TTabSheet;
+    tsEmailCTe: TTabSheet;
+    tsEmailDFe: TTabSheet;
+    tsEmailMDFe: TTabSheet;
+    tsEmailNFe: TTabSheet;
+    tsEscPos: TTabSheet;
     tsETQ: TTabSheet;
     tsGAV: TTabSheet;
+    tsImpCTe: TTabSheet;
+    tsImpGeralDFe: TTabSheet;
+    tsImpNFCe: TTabSheet;
+    tsImpressaoDFe: TTabSheet;
+    tsIntegrador: TTabSheet;
+    tsLayoutBoleto: TTabSheet;
     tsLCB: TTabSheet;
     tsMonitor: TTabSheet;
     tsNcm: TTabSheet;
+    tsRede: TTabSheet;
+    tsRelatorio: TTabSheet;
     tsRemessaRetorno: TTabSheet;
+    tsRespTecnico: TTabSheet;
     tsRFD: TTabSheet;
     tsRFDConfig: TTabSheet;
     tsRFDINI: TTabSheet;
+    tsSat: TTabSheet;
+    tsSATemail: TTabSheet;
     tsSEDEX: TTabSheet;
     tsTC: TTabSheet;
+    tsTesteCTe: TTabSheet;
+    tsTesteMDFe: TTabSheet;
+    tsTesteNFe: TTabSheet;
+    tsTestesDFe: TTabSheet;
     tsWebServiceDFe: TTabSheet;
+    tsWSNFCe: TTabSheet;
+    tsWSNFe: TTabSheet;
     procedure ACBrEAD1GetChavePrivada(var Chave: ansistring);
     procedure ACBrEAD1GetChavePublica(var Chave: ansistring);
     procedure ACBrGIF1Click(Sender: TObject);
@@ -1308,6 +1357,7 @@ type
     procedure bSedexRastrearClick(Sender: TObject);
     procedure bSedexTestarClick(Sender: TObject);
     procedure btAtivarsatClick(Sender: TObject);
+    procedure btCertInfoClick(Sender: TObject);
     procedure btConsultarStatusOPSATClick(Sender: TObject);
     procedure btnBalancaClick(Sender: TObject);
     procedure btnBoletoCedenteClick(Sender: TObject);
@@ -1382,6 +1432,7 @@ type
     procedure btnVersaoSSLClick(Sender: TObject);
     procedure btSATAssociaClick(Sender: TObject);
     procedure btSATConfigRedeClick(Sender: TObject);
+    procedure btStatusServicoClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
     procedure cbCortarPapelChange(Sender: TObject);
     procedure cbCryptLibChange(Sender: TObject);
@@ -1395,11 +1446,14 @@ type
     procedure cbSSLLibChange(Sender: TObject);
     procedure cbSSLTypeChange(Sender: TObject);
     procedure cbTraduzirTagsChange(Sender: TObject);
+    procedure cbUFChange(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxBOLBancoChange(Sender: TObject);
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
+    procedure cbxBOLUFChange(Sender: TObject);
+    procedure cbxEmitCidadeChange(Sender: TObject);
     procedure cbxExibeResumoChange(Sender: TObject);
     procedure cbxImpDescPorcChange(Sender: TObject);
     procedure cbXMLSignLibChange(Sender: TObject);
@@ -1437,9 +1491,34 @@ type
     procedure deUSUDataCadastroExit(Sender: TObject);
     procedure deRFDDataSwBasicoExit(Sender: TObject);
     procedure edBALLogChange(Sender: TObject);
+    procedure edEmailEnderecoChange(Sender: TObject);
     procedure edEmailEnderecoExit(Sender: TObject);
+    procedure edNomeDLLChange(Sender: TObject);
     procedure edSATLogChange(Sender: TObject);
+    procedure edSATPathArqsCancChange(Sender: TObject);
+    procedure edSATPathArqsChange(Sender: TObject);
+    procedure edSATPathArqsEnvioChange(Sender: TObject);
+    procedure edtArquivoPFXChange(Sender: TObject);
+    procedure edtBOLCEPChange(Sender: TObject);
+    procedure edtBOLCEPExit(Sender: TObject);
+    procedure edtBOLCEPKeyPress(Sender: TObject; var Key: char);
+    procedure edtBOLCNPJChange(Sender: TObject);
+    procedure edtBOLCNPJKeyPress(Sender: TObject; var Key: char);
+    procedure edtBOLRazaoSocialChange(Sender: TObject);
+    procedure edtCNPJContadorChange(Sender: TObject);
+    procedure edtCNPJContadorKeyPress(Sender: TObject; var Key: char);
+    procedure edtCodigoAtivacaoChange(Sender: TObject);
+    procedure edtEmitCNPJChange(Sender: TObject);
+    procedure edtEmitCNPJKeyPress(Sender: TObject; var Key: char);
+    procedure edtIdTokenChange(Sender: TObject);
     procedure edTimeZoneStrEditingDone(Sender: TObject);
+    procedure edtNumeroSerieChange(Sender: TObject);
+    procedure edtPathSchemasDFeChange(Sender: TObject);
+    procedure edtSwHAssinaturaChange(Sender: TObject);
+    procedure edtSwHCNPJChange(Sender: TObject);
+    procedure edtSwHCNPJKeyPress(Sender: TObject; var Key: char);
+    procedure edtTokenChange(Sender: TObject);
+    procedure edtURLPFXChange(Sender: TObject);
     procedure OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
@@ -1469,11 +1548,14 @@ type
     procedure sbArquivoWebServicesBPeClick(Sender: TObject);
     procedure sbArquivoWebServicesReinfClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
+    procedure sbConsultaCEPClick(Sender: TObject);
+    procedure sbConsultaCNPJBoletoClick(Sender: TObject);
     procedure sbLogoMarca1Click(Sender: TObject);
     procedure sbLogoMarcaNFCeSATClick(Sender: TObject);
-    procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
+    procedure sbNomeDLLClick(Sender: TObject);
+    procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbPathArqTXTClick(Sender: TObject);
     procedure sbPathDownloadClick(Sender: TObject);
     procedure sbPathDPECClick(Sender: TObject);
@@ -1481,11 +1563,15 @@ type
     procedure sbPathInuClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
     procedure sbPathPDFClick(Sender: TObject);
-    procedure sbPathSalvarClick(Sender: TObject);
     procedure sbPosPrinterLogClick(Sender: TObject);
     procedure sbSchemaDFeClick(Sender: TObject);
     procedure sbSerialClick(Sender: TObject);
     procedure sbSobreClick(Sender: TObject);
+    procedure sbtnNumSerieClick(Sender: TObject);
+    procedure sbVerSenhaCertificadoClick(Sender: TObject);
+    procedure sbVerSenhaEmailClick(Sender: TObject);
+    procedure sbVerSenhaProxyClick(Sender: TObject);
+    procedure sbVerSenhaProxySATClick(Sender: TObject);
     procedure ScrollBoxMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure ScrollBoxMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -1625,6 +1711,8 @@ type
     fsSLPrecos: TStringList;
     fsDTPrecos: integer;
     fSATLibsMarcas: String;
+    fcUF: Integer;
+    fcMunList: TStringList;
 
     FWasHidden: Boolean;
     FLastHandle: Integer;
@@ -1678,6 +1766,22 @@ type
 
     procedure SetDisWorking(const Value: boolean);
 
+    procedure ValidarComunicacao;
+    procedure ValidarConfigCertificado;
+    procedure ValidarConfigWebService;
+    procedure ValidarConfigSAT;
+    procedure ValidarConfigMail;
+    procedure LigarAlertasdeErrosDeConfiguracao;
+
+    procedure VerificarErrosConfiguracaoComponentes(AfsCmd: TACBrCmd);
+    procedure VerificarErrosComunicacao;
+    function VerificarErrosConfiguracaoDFe: String;
+    function VerificarErrosConfiguracaoSAT: String;
+    function VerificarErrosConfiguracaoEMAIL: String;
+    function VerificarErrosConfiguracaoBoleto: String;
+
+    procedure CarregarListaDeCidades(cUF: Integer);
+
     procedure LeDadosRedeSAT;
     procedure ConfiguraRedeSAT;
     procedure ConsultarModeloSAT;
@@ -1688,6 +1792,8 @@ type
     procedure SetPanel(Sender: TPanel);
     procedure SetSize25(Sender: TObject);
     procedure SetScroll(Sender: TObject);
+
+    procedure SetFontLabels(Sender: TObject);
 
   protected
     procedure MostraLogoBanco;
@@ -1907,6 +2013,7 @@ begin
 
 // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
+  SetFontLabels(pgConfig);
 
   mResp.Clear;
   mCmd.Clear;
@@ -1917,6 +2024,8 @@ begin
 
   FWasHidden := False;
   FLastHandle:= 0;
+  fcUF := 0;
+  fcMunList := TStringList.Create;
 
   Inicio := True;
   ArqSaiTXT := '';
@@ -2353,6 +2462,36 @@ begin
 
   pgConfig.ShowTabs := False;
   Timer1.Enabled := True;
+
+  ImageList2.GetBitmap(16, imgErrComunicacao.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCertificado.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSSLLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCryptLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrHttpLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrXmlSignLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrPathSchemas.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrWebService.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrTokenID.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrTokenCSC.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCNPJ.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCNPJBoleto.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCEP.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrRazaoSocial.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrUF.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrCidade.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSAT.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATAtivar.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATInicializar.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATPathEnvio.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATPathVendas.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATPathCancelamento.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATCodAtivacao.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATEmitente.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATCNPJSH.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATAssign.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail.Picture.Bitmap);
+
 end;
 
 procedure TFrmACBrMonitor.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -2837,6 +2976,29 @@ begin
     raise Exception.Create('CNPJ inválido. Configure a aba "Dados Emitente"');
 
   ACBrSAT1.AtivarSAT(1, ACNPJ, StrToInt(edtCodUF.Text) );
+end;
+
+procedure TFrmACBrMonitor.btCertInfoClick(Sender: TObject);
+var
+  SL: TStringList;
+begin
+  SetComumConfig(ACBrNFe1.Configuracoes);
+  ACBrNFe1.SSL.CarregarCertificado;
+  SL := TStringList.Create;
+  try
+    SL.Add('Número de Série: '+ACBrNFe1.SSL.CertNumeroSerie);
+    SL.Add('Válido até: '+FormatDateBr(ACBrNFe1.SSL.CertDataVenc));
+    SL.Add('Subject Name: '+ACBrNFe1.SSL.CertSubjectName);
+    SL.Add('Razão Social: ' + ACBrNFe1.SSL.CertRazaoSocial);
+    SL.Add('CNPJ/CPF: ' + ACBrNFe1.SSL.CertCNPJ);
+    SL.Add('Emissor: ' + ACBrNFe1.SSL.CertIssuerName);
+    SL.Add('Certificadora: ' + ACBrNFe1.SSL.CertCertificadora);
+
+    MessageDlg('Informações do Certificado', SL.Text, mtInformation, [mbOK], 0);
+  finally
+    SL.Free;
+  end;
+
 end;
 
 procedure TFrmACBrMonitor.btConsultarStatusOPSATClick(Sender: TObject);
@@ -3792,6 +3954,31 @@ begin
   AddLinesLog(ACBrSAT1.ConfigurarInterfaceDeRede(ACBrSAT1.Rede.AsXMLString));
 end;
 
+procedure TFrmACBrMonitor.btStatusServicoClick(Sender: TObject);
+var
+  SL: TStringList;
+begin
+  SetComumConfig(ACBrNFe1.Configuracoes);
+  ACBrNFe1.WebServices.StatusServico.Executar;
+  SL := TStringList.Create;
+  try
+    SL.Add('versao: ' + ACBrNFe1.WebServices.StatusServico.versao);
+    SL.Add('tpAmb: ' + TpAmbToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
+    SL.Add('verAplic: ' + ACBrNFe1.WebServices.StatusServico.verAplic);
+    SL.Add('cStat: ' + IntToStr(ACBrNFe1.WebServices.StatusServico.cStat));
+    SL.Add('xMotivo: ' + ACBrNFe1.WebServices.StatusServico.xMotivo);
+    SL.Add('cUF: ' + IntToStr(ACBrNFe1.WebServices.StatusServico.cUF));
+    SL.Add('dhRecbto: ' + DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRecbto));
+    //SL.Add('tMed: ' + IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
+    //SL.Add('dhRetorno: ' + DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
+    SL.Add('xObs: ' + ACBrNFe1.WebServices.StatusServico.xObs);
+
+    MessageDlg('Status Serviço', SL.Text, mtInformation, [mbOK], 0);
+  finally
+    SL.Free;
+  end;
+end;
+
 procedure TFrmACBrMonitor.cbLogCompClick(Sender: TObject);
 begin
   gbLogComp.Enabled := cbLogComp.Checked;
@@ -3831,12 +4018,42 @@ begin
     lblBOLNomeRazao.Caption := 'Razão Social';
     // edtBOLCNPJ.EditMask := '99.999.999/9999-99;1';
   end;
+
 end;
 
 procedure TFrmACBrMonitor.cbCEPWebServiceChange(Sender: TObject);
 begin
   ACBrCEP1.WebService := TACBrCEPWebService(cbCEPWebService.ItemIndex);
   edCEPChaveBuscarCEP.Enabled := (ACBrCEP1.WebService in [wsBuscarCep, wsCepLivre]);
+end;
+
+procedure TFrmACBrMonitor.cbxBOLUFChange(Sender: TObject);
+var
+  cUF: Integer;
+  Ok: Boolean;
+begin
+  Ok := (cbxBOLUF.ItemIndex >= 0);
+  imgErrUF.Visible := not Ok;
+
+  if Ok then
+  begin
+    cUF := UFtoCUF(cbxBOLUF.Text);
+    if (cUF <> FcUF) then
+    begin
+      //pEmitCodUF.Caption := IntToStrZero(cUF, 2);
+      CarregarListaDeCidades(cUF);
+    end;
+  end;
+end;
+
+procedure TFrmACBrMonitor.cbxEmitCidadeChange(Sender: TObject);
+var
+  Ok: Boolean;
+begin
+  Ok := (cbxEmitCidade.ItemIndex >= 0);
+  imgErrCidade.Visible := not Ok;
+  if Ok then
+    edtBOLCodCidade.Caption := FcMunList[cbxEmitCidade.ItemIndex];
 end;
 
 procedure TFrmACBrMonitor.cbxExibeResumoChange(Sender: TObject);
@@ -3882,6 +4099,7 @@ begin
     cbxModeloSAT.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
     raise ;
   end ;
+  ValidarConfigSAT;
 end;
 
 procedure TFrmACBrMonitor.cbxPastaMensalClick(Sender: TObject);
@@ -4119,6 +4337,11 @@ begin
   ACBrBAL1.ArqLOG := edBALLog.Text;
 end;
 
+procedure TFrmACBrMonitor.edEmailEnderecoChange(Sender: TObject);
+begin
+  ValidarConfigMail;
+end;
+
 procedure TFrmACBrMonitor.edEmailEnderecoExit(Sender: TObject);
 begin
   if (Trim(edEmailEndereco.Text) <> '') and not FDoEmail.ValidarEmail(
@@ -4129,9 +4352,147 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.edNomeDLLChange(Sender: TObject);
+
+begin
+  ValidarConfigSAT;
+end;
+
 procedure TFrmACBrMonitor.edSATLogChange(Sender: TObject);
 begin
   ACBrSAT1.ArqLOG:= edSATLog.Text;
+end;
+
+procedure TFrmACBrMonitor.edSATPathArqsCancChange(Sender: TObject);
+begin
+  imgErrSATPathCancelamento.Visible := not( (edSATPathArqsCanc.Text <> '') and
+        DirectoryExists(edSATPathArqsCanc.Text));
+end;
+
+procedure TFrmACBrMonitor.edSATPathArqsChange(Sender: TObject);
+begin
+  imgErrSATPathVendas.Visible := not( (edSATPathArqs.Text <> '') and
+        DirectoryExists(edSATPathArqs.Text));
+end;
+
+procedure TFrmACBrMonitor.edSATPathArqsEnvioChange(Sender: TObject);
+begin
+  imgErrSATPathEnvio.Visible := not( (edSATPathArqsEnvio.Text <> '') and
+        DirectoryExists(edSATPathArqsEnvio.Text));
+end;
+
+procedure TFrmACBrMonitor.edtArquivoPFXChange(Sender: TObject);
+begin
+  if (edtArquivoPFX.Text <> '') then
+  begin
+    if (edtNumeroSerie.Text <> '') then
+      edtNumeroSerie.Text := '';
+  end;
+
+  ValidarConfigCertificado;
+end;
+
+procedure TFrmACBrMonitor.edtBOLCEPChange(Sender: TObject);
+begin
+  if (Length(edtBOLCEP.Text) > 5) then
+  begin
+    edtBOLCEP.Text := FormatarMascaraDinamica(OnlyNumber(edtBOLCEP.Text), '*****-***');
+    edtBOLCEP.SelStart := Length(edtBOLCEP.Text);
+  end;
+
+  imgErrCEP.Visible := (Length(edtBOLCEP.Text) < 9);
+  sbConsultaCEP.Visible := not imgErrCEP.Visible;
+
+end;
+
+procedure TFrmACBrMonitor.edtBOLCEPExit(Sender: TObject);
+begin
+  if (not imgErrCEP.Visible) and (edtBOLLogradouro.Text = '') then
+    sbConsultaCEP.Click;
+end;
+
+procedure TFrmACBrMonitor.edtBOLCEPKeyPress(Sender: TObject; var Key: char);
+begin
+    if not CharInSet( Key, [#8,'0'..'9'] ) then
+    Key := #0;
+end;
+
+procedure TFrmACBrMonitor.edtBOLCNPJChange(Sender: TObject);
+begin
+   if (Length(edtBOLCNPJ.Text) > 2) and (cbxBOLF_J.ItemIndex <> 2) then
+  begin
+    if cbxBOLF_J.ItemIndex = 0 then
+      edtBOLCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtBOLCNPJ.Text), '***.***.***-**')
+    else
+      edtBOLCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtBOLCNPJ.Text), '**.***.***/****-**');
+    edtBOLCNPJ.SelStart := Length(edtBOLCNPJ.Text);
+
+    imgErrCNPJBoleto.Visible := (Length(edtBOLCNPJ.Text) < 14) or
+                        (ACBrValidador.ValidarCNPJouCPF(edtBOLCNPJ.Text) <> '');
+    sbConsultaCNPJBoleto.Visible := (not imgErrCNPJBoleto.Visible) and (cbxBOLF_J.ItemIndex = 1);
+  end;
+
+end;
+
+procedure TFrmACBrMonitor.edtBOLCNPJKeyPress(Sender: TObject; var Key: char);
+begin
+  if not CharInSet( Key, [#8,'0'..'9'] ) then
+    Key := #0;
+end;
+
+procedure TFrmACBrMonitor.edtBOLRazaoSocialChange(Sender: TObject);
+begin
+  imgErrRazaoSocial.Visible := (Length(edtBOLRazaoSocial.Text) < 4);
+end;
+
+procedure TFrmACBrMonitor.edtCNPJContadorChange(Sender: TObject);
+begin
+  if (Length(edtCNPJContador.Text) > 2) then
+  begin
+    edtCNPJContador.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtCNPJContador.Text), '**.***.***/****-**');
+    edtCNPJContador.SelStart := Length(edtCNPJContador.Text);
+  end;
+
+  imgErrCNPJ.Visible :=  (Length(edtCNPJContador.Text) > 1) and
+                        (ACBrValidador.ValidarCNPJ(edtCNPJContador.Text) <> '');
+
+end;
+
+procedure TFrmACBrMonitor.edtCNPJContadorKeyPress(Sender: TObject; var Key: char
+  );
+begin
+  if not CharInSet( Key, [#8,'0'..'9'] ) then
+    Key := #0;
+end;
+
+procedure TFrmACBrMonitor.edtCodigoAtivacaoChange(Sender: TObject);
+begin
+  imgErrSATCodAtivacao.Visible := not( Length( edtCodigoAtivacao.Text) > 5);
+  edNomeDLLChange(Sender);
+end;
+
+procedure TFrmACBrMonitor.edtEmitCNPJChange(Sender: TObject);
+begin
+  if (Length(edtEmitCNPJ.Text) > 2) then
+  begin
+    edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
+    edtEmitCNPJ.SelStart := Length(edtEmitCNPJ.Text);
+  end;
+
+  imgErrSATEmitente.Visible := not( Length( edtEmitCNPJ.Text) > 5);
+  edNomeDLLChange(Sender);
+
+end;
+
+procedure TFrmACBrMonitor.edtEmitCNPJKeyPress(Sender: TObject; var Key: char);
+begin
+  if not CharInSet( Key, [#8,'0'..'9'] ) then
+    Key := #0;
+end;
+
+procedure TFrmACBrMonitor.edtIdTokenChange(Sender: TObject);
+begin
+  imgErrTokenID.Visible := (edtIdToken.Text = '');
 end;
 
 procedure TFrmACBrMonitor.edTimeZoneStrEditingDone(Sender: TObject);
@@ -4141,6 +4502,68 @@ begin
   finally
     edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
   end;
+end;
+
+procedure TFrmACBrMonitor.edtNumeroSerieChange(Sender: TObject);
+begin
+  if (edtNumeroSerie.Text <> '') then
+  begin
+    if (edtURLPFX.Text <> '') then
+      edtURLPFX.Text := '';
+
+    if (edtArquivoPFX.Text <> '') then
+      edtArquivoPFX.Text := '';
+  end;
+
+  ValidarConfigCertificado;
+end;
+
+procedure TFrmACBrMonitor.edtPathSchemasDFeChange(Sender: TObject);
+begin
+  ValidarConfigWebService;
+end;
+
+procedure TFrmACBrMonitor.edtSwHAssinaturaChange(Sender: TObject);
+begin
+  imgErrSATAssign.Visible := not( Length( edtSwHAssinatura.Text) > 20);
+  edNomeDLLChange(Sender);
+end;
+
+procedure TFrmACBrMonitor.edtSwHCNPJChange(Sender: TObject);
+begin
+  if (Length(edtSwHCNPJ.Text) > 2) then
+  begin
+    edtSwHCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtSwHCNPJ.Text), '**.***.***/****-**');
+    edtSwHCNPJ.SelStart := Length(edtSwHCNPJ.Text);
+  end;
+
+  imgErrSATCNPJSH.Visible := not( Length( edtSwHCNPJ.Text) > 5);
+  edNomeDLLChange(Sender);
+end;
+
+procedure TFrmACBrMonitor.edtSwHCNPJKeyPress(Sender: TObject; var Key: char);
+begin
+  if not CharInSet( Key, [#8,'0'..'9'] ) then
+    Key := #0;
+end;
+
+procedure TFrmACBrMonitor.edtTokenChange(Sender: TObject);
+begin
+  imgErrTokenCSC.Visible := (edtToken.Text = '');
+end;
+
+procedure TFrmACBrMonitor.edtURLPFXChange(Sender: TObject);
+begin
+if (edtURLPFX.Text <> '') then
+  begin
+    if (edtNumeroSerie.Text <> '') then
+      edtNumeroSerie.Text := '';
+
+    if (edtArquivoPFX.Text = '') then
+      edtArquivoPFX.Text := 'CertA1.pfx';
+  end;
+
+  ValidarConfigCertificado;
 end;
 
 procedure TFrmACBrMonitor.OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
@@ -4158,6 +4581,7 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.FormDestroy(Sender: TObject);
 begin
+  fcMunList.Free;
   fsCmd.Free;
   fsProcessar.Free;
 
@@ -4727,10 +5151,28 @@ begin
     edtBOLLogradouro.Text             := Logradouro;
     edtBOLNumero.Text                 := Numero;
     edtBOLBairro.Text                 := Bairro;
-    edtBOLCidade.Text                 := Cidade;
     edtBOLCEP.Text                    := CEP;
+
+    CarregarListaDeCidades(UFtoCUF(UF));
+    cbxBOLUF.ItemIndex                := cbxBOLUF.Items.IndexOf(UF);
+    edtBOLCodCidade.Caption           := IntToStr(CodCidade);
+    if ( CodCidade = 0 ) then
+    begin
+      if ( cbxEmitCidade.Items.IndexOf(Cidade) > 0 ) and (fcMunList.IndexOf(IntToStr(CodCidade)) > 0 ) then
+        cbxEmitCidade.ItemIndex           := FcMunList.IndexOf(IntToStr(CodCidade))
+      else
+      begin
+        cbxEmitCidade.Items.Add(Cidade);
+        cbxEmitCidade.ItemIndex:= cbxEmitCidade.Items.IndexOf(Cidade);
+        fcMunList.Add(IntToStrZero(CodCidade,1));
+
+      end;
+    end
+    else
+      cbxEmitCidade.ItemIndex           := FcMunList.IndexOf(IntToStr(CodCidade));
+
     edtBOLComplemento.Text            := Complemento;
-    cbxBOLUF.Text                     := UF;
+
 
     with Conta do
     begin
@@ -4784,6 +5226,7 @@ begin
     begin
       edtBOLEmailAssunto.Text          := EmailAssuntoBoleto;
       edtBOLEmailMensagem.Text         := StringToBinaryString(EmailMensagemBoleto);
+      cbxBOLEmailMensagemHTML.Checked  := EmailFormatoHTML;
     end;
 
   end;
@@ -4851,6 +5294,7 @@ begin
       cbXmlSignLib.ItemIndex           := XmlSignLib;
       cbSSLType.ItemIndex              := SSLType;
       edtArquivoPFX.Text               := ArquivoPFX;
+      edtURLPFX.Text                   := URLPFX;
       edtNumeroSerie.Text              := NumeroSerie;
       edtSenha.Text                    := Senha;
       chkExibeRazaoSocial.Checked      := ExibeRazaoSocialCertificado;
@@ -5582,7 +6026,7 @@ begin
     Cedente.Logradouro := edtBOLLogradouro.Text;
     Cedente.NumeroRes := edtBOLNumero.Text;
     Cedente.Bairro := edtBOLBairro.Text;
-    Cedente.Cidade := edtBOLCidade.Text;
+    Cedente.Cidade := cbxEmitCidade.Text;
     Cedente.CEP := edtBOLCEP.Text;
     Cedente.Complemento := edtBOLComplemento.Text;
     Cedente.UF := cbxBOLUF.Text;
@@ -5653,6 +6097,7 @@ begin
     
   end;
 
+  LigarAlertasdeErrosDeConfiguracao;
 
   if cbxTCModelo.ItemIndex > 0 then
     bTCAtivar.Click;
@@ -6044,6 +6489,7 @@ begin
         XmlSignLib              := cbXmlSignLib.ItemIndex;
         SSLType                 := cbSSLType.ItemIndex;
         ArquivoPFX              := edtArquivoPFX.Text;
+        URLPFX                  := edtURLPFX.Text;
         NumeroSerie             := edtNumeroSerie.Text;
         Senha                   := edtSenha.Text;
         ExibeRazaoSocialCertificado := chkExibeRazaoSocial.Checked;
@@ -6480,7 +6926,8 @@ begin
      Logradouro         := edtBOLLogradouro.Text;
      Numero             := edtBOLNumero.Text;
      Bairro             := edtBOLBairro.Text;
-     Cidade             := edtBOLCidade.Text;
+     CodCidade          := IfThen( StrToIntDef(edtBOLCodCidade.Caption,0) > 0, StrToIntDef(edtBOLCodCidade.Caption, 0) );
+     Cidade             := cbxEmitCidade.Text ;
      CEP                := ifthen(TrimedCEP = '', '', edtBOLCEP.Text);
      Complemento        := edtBOLComplemento.Text;
      UF                 := cbxBOLUF.Text;
@@ -6529,6 +6976,7 @@ begin
      begin
        EmailAssuntoBoleto       := edtBOLEmailAssunto.Text;
        EmailMensagemBoleto      := BinaryStringToString(edtBOLEmailMensagem.Lines.Text);
+       EmailFormatoHTML         := cbxBOLEmailMensagemHTML.Checked;
      end;
 
      with Relatorio do
@@ -6728,6 +7176,8 @@ begin
 
         { Interpretanto o Comando }
         fsCmd.Comando := Linha;
+
+        VerificarErrosConfiguracaoComponentes(fsCmd);
 
         //Log Comando
         AddLinesLog(Linha);
@@ -7324,15 +7774,22 @@ begin
 end;
 
 procedure TFrmACBrMonitor.sbArquivoCertClick(Sender: TObject);
+var
+  AFile: String;
 begin
-  OpenDialog1.Title := 'Selecione o certificado';
+  OpenDialog1.Title := 'Selecione o Certificado';
   OpenDialog1.DefaultExt := '*.pfx';
-  OpenDialog1.Filter :=
-    'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+
+  OpenDialog1.InitialDir := ApplicationPath;
+
   if OpenDialog1.Execute then
   begin
-    edtArquivoPFX.Text := OpenDialog1.FileName;
+    AFile := OpenDialog1.FileName;
+    if (pos(ApplicationPath, AFile) > 0) then
+      AFile := ExtractFileName(AFile);
+
+    edtArquivoPFX.Text := AFile;
   end;
 end;
 
@@ -7450,6 +7907,75 @@ begin
 
 end;
 
+procedure TFrmACBrMonitor.sbConsultaCEPClick(Sender: TObject);
+var
+  EndAchado: TACBrCEPEndereco;
+  cUF: Integer;
+begin
+  try
+    ACBrCEP1.BuscarPorCEP(OnlyNumber(edtBOLCEP.Text));
+    if (ACBrCEP1.Enderecos.Count > 0) then
+    begin
+      EndAchado := ACBrCEP1.Enderecos[0];
+      edtBOLLogradouro.Text := Trim(EndAchado.Tipo_Logradouro + ' ' + EndAchado.Logradouro);
+      edtBOLBairro.Text := EndAchado.Bairro;
+      edtBOLCEP.Text := ACBrValidador.FormatarCEP(EndAchado.CEP);
+      edtBOLComplemento.Text := EndAchado.Complemento;
+      cUF := UFtoCUF(EndAchado.UF);
+      CarregarListaDeCidades(cUF);
+      cbxBOLUF.ItemIndex := cbxBOLUF.Items.IndexOf(EndAchado.UF);
+      edtBOLCodCidade.Caption:= trim(EndAchado.IBGE_Municipio);
+      cbxEmitCidade.ItemIndex := cbxEmitCidade.Items.IndexOf(EndAchado.Municipio);
+      cbxEmitCidadeChange(nil);
+      edtBOLNumero.SetFocus;
+    end;
+  except
+    MessageDlg('Erro ao executar Consulta do CEP', mtError, [mbOK], 0);
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbConsultaCNPJBoletoClick(Sender: TObject);
+var
+  frConsultaCNPJ: TfrConsultaCNPJ;
+  MR: TModalResult;
+  cUF: Integer;
+begin
+  frConsultaCNPJ := TfrConsultaCNPJ.Create(Self);
+  try
+    MR := frConsultaCNPJ.ShowModal;
+
+    if (MR = mrOK) then
+    begin
+      try
+        if ACBrConsultaCNPJ1.Consulta(edtBOLCNPJ.Text, frConsultaCNPJ.edtCaptcha.Text) then
+        begin
+          //EditTipo.Text := ACBrConsultaCNPJ1.EmpresaTipo;
+          edtBOLRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;
+          //edtEmitFantasia.Text := ACBrConsultaCNPJ1.Fantasia;
+          edtBOLLogradouro.Text := ACBrConsultaCNPJ1.Endereco;
+          edtBOLNumero.Text := ACBrConsultaCNPJ1.Numero;
+          edtBOLComplemento.Text := ACBrConsultaCNPJ1.Complemento;
+          edtBOLCEP.Text := ACBrConsultaCNPJ1.CEP;
+          edtBOLBairro.Text := ACBrConsultaCNPJ1.Bairro;
+          cbxBOLUF.Text := ACBrConsultaCNPJ1.UF;
+
+          cUF := UFtoCUF(ACBrConsultaCNPJ1.UF);
+          CarregarListaDeCidades(cUF);
+          cbxBOLUF.ItemIndex := cbxBOLUF.Items.IndexOf(ACBrConsultaCNPJ1.UF);
+          edtBOLCodCidade.Caption := Trim(ACBrConsultaCNPJ1.IBGE_Municipio);
+          cbxEmitCidade.ItemIndex := fcMunList.IndexOf(edtBOLCodCidade.Caption);
+          cbxEmitCidadeChange(nil);
+        end;
+      except
+        MessageDlg('Erro ao Consultar CNPJ'+sLineBreak+'Verifique o Captcha', mtError, [mbOK], 0);
+      end;
+    end;
+  finally
+     frConsultaCNPJ.Free;
+  end;
+
+end;
+
 procedure TFrmACBrMonitor.sbLogoMarca1Click(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o Logo';
@@ -7476,7 +8002,102 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.sbBALLogClick(Sender: TObject);
+begin
+  OpenURL(ExtractFilePath(Application.ExeName) + edBALLog.Text);
+end;
+
+procedure TFrmACBrMonitor.sbLogoMarcaClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.png';
+  OpenDialog1.Filter :=
+    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtLogoMarca.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbNomeDLLClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo DLL|*.dll';
+  OpenDialog1.InitialDir := ExtractFilePath(edNomeDLL.Text);
+  OpenDialog1.FileName := edNomeDLL.Text;
+  if OpenDialog1.Execute then
+    edNomeDLL.Text := OpenDialog1.FileName ;
+end;
+
 procedure TFrmACBrMonitor.sbNumeroSerieCertClick(Sender: TObject);
+begin
+  edtNumeroSerie.Text := ACBrNFe1.SSL.SelecionarCertificado;
+end;
+
+procedure TFrmACBrMonitor.sbPathArqTXTClick(Sender: TObject);
+begin
+  PathClick(edtPathArqTXT);
+end;
+
+procedure TFrmACBrMonitor.sbPathDownloadClick(Sender: TObject);
+begin
+  PathClick(edtPathDownload);
+end;
+
+procedure TFrmACBrMonitor.sbPathDPECClick(Sender: TObject);
+begin
+  PathClick(edtPathDPEC);
+end;
+
+procedure TFrmACBrMonitor.sbPathEventoClick(Sender: TObject);
+begin
+  PathClick(edtPathEvento);
+end;
+
+procedure TFrmACBrMonitor.sbPathInuClick(Sender: TObject);
+begin
+  PathClick(edtPathInu);
+end;
+
+procedure TFrmACBrMonitor.sbPathNFeClick(Sender: TObject);
+begin
+  PathClick(edtPathNFe);
+end;
+
+procedure TFrmACBrMonitor.sbPathPDFClick(Sender: TObject);
+begin
+  PathClick(edtPathPDF);
+end;
+
+procedure TFrmACBrMonitor.sbPosPrinterLogClick(Sender: TObject);
+var
+  AFileLog: String;
+begin
+  if pos(PathDelim, edPosPrinterLog.Text) = 0 then
+     AFileLog := ExtractFilePath(Application.ExeName) + edPosPrinterLog.Text
+  else
+     AFileLog := edPosPrinterLog.Text;
+
+  OpenURL(AFileLog);
+end;
+
+procedure TFrmACBrMonitor.sbSchemaDFeClick(Sender: TObject);
+begin
+  PathClick(edtPathSchemasDFe);
+end;
+
+procedure TFrmACBrMonitor.sbSobreClick(Sender: TObject);
+begin
+  frmSobre := TfrmSobre.Create(self);
+  try
+    frmSobre.lVersao.Caption := 'Ver: ' + sVersaoACBr;
+    frmSobre.ShowModal;
+  finally
+    FreeAndNil(frmSobre);
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -7519,93 +8140,38 @@ begin
   finally
      frSelecionarCertificado.Free;
   end;
-
 end;
 
-procedure TFrmACBrMonitor.sbBALLogClick(Sender: TObject);
+procedure TFrmACBrMonitor.sbVerSenhaCertificadoClick(Sender: TObject);
 begin
-  OpenURL(ExtractFilePath(Application.ExeName) + edBALLog.Text);
-end;
-
-procedure TFrmACBrMonitor.sbLogoMarcaClick(Sender: TObject);
-begin
-  OpenDialog1.Title := 'Selecione o Logo';
-  OpenDialog1.DefaultExt := '*.png';
-  OpenDialog1.Filter :=
-    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
-  if OpenDialog1.Execute then
-  begin
-    edtLogoMarca.Text := OpenDialog1.FileName;
-  end;
-end;
-
-procedure TFrmACBrMonitor.sbPathArqTXTClick(Sender: TObject);
-begin
-  PathClick(edtPathArqTXT);
-end;
-
-procedure TFrmACBrMonitor.sbPathDownloadClick(Sender: TObject);
-begin
-  PathClick(edtPathDownload);
-end;
-
-procedure TFrmACBrMonitor.sbPathDPECClick(Sender: TObject);
-begin
-  PathClick(edtPathDPEC);
-end;
-
-procedure TFrmACBrMonitor.sbPathEventoClick(Sender: TObject);
-begin
-  PathClick(edtPathEvento);
-end;
-
-procedure TFrmACBrMonitor.sbPathInuClick(Sender: TObject);
-begin
-  PathClick(edtPathInu);
-end;
-
-procedure TFrmACBrMonitor.sbPathNFeClick(Sender: TObject);
-begin
-  PathClick(edtPathNFe);
-end;
-
-procedure TFrmACBrMonitor.sbPathPDFClick(Sender: TObject);
-begin
-  PathClick(edtPathPDF);
-end;
-
-procedure TFrmACBrMonitor.sbPathSalvarClick(Sender: TObject);
-begin
-  PathClick(edtPathLogs);
-end;
-
-procedure TFrmACBrMonitor.sbPosPrinterLogClick(Sender: TObject);
-var
-  AFileLog: String;
-begin
-  if pos(PathDelim, edPosPrinterLog.Text) = 0 then
-     AFileLog := ExtractFilePath(Application.ExeName) + edPosPrinterLog.Text
+  if sbVerSenhaCertificado.Down then
+    edtSenha.EchoMode := emNormal
   else
-     AFileLog := edPosPrinterLog.Text;
-
-  OpenURL(AFileLog);
+    edtSenha.EchoMode := emPassword;
 end;
 
-procedure TFrmACBrMonitor.sbSchemaDFeClick(Sender: TObject);
+procedure TFrmACBrMonitor.sbVerSenhaEmailClick(Sender: TObject);
 begin
-  PathClick(edtPathSchemasDFe);
+  if sbVerSenhaEmail.Down then
+    edEmailSenha.EchoMode := emNormal
+  else
+    edEmailSenha.EchoMode := emPassword;
 end;
 
-procedure TFrmACBrMonitor.sbSobreClick(Sender: TObject);
+procedure TFrmACBrMonitor.sbVerSenhaProxyClick(Sender: TObject);
 begin
-  frmSobre := TfrmSobre.Create(self);
-  try
-    frmSobre.lVersao.Caption := 'Ver: ' + sVersaoACBr;
-    frmSobre.ShowModal;
-  finally
-    FreeAndNil(frmSobre);
-  end;
+  if sbVerSenhaProxy.Down then
+    edtProxySenha.EchoMode := emNormal
+  else
+    edtProxySenha.EchoMode := emPassword;
+end;
+
+procedure TFrmACBrMonitor.sbVerSenhaProxySATClick(Sender: TObject);
+begin
+  if sbVerSenhaProxySAT.Down then
+    edRedeProxySenha.EchoMode := emNormal
+  else
+    edRedeProxySenha.EchoMode := emPassword;
 end;
 
 procedure TFrmACBrMonitor.ScrollBoxMouseWheelDown(Sender: TObject;
@@ -8613,6 +9179,264 @@ begin
 
   fsDisWorking := Value;
 end;
+
+procedure TFrmACBrMonitor.ValidarComunicacao;
+begin
+  imgErrComunicacao.Visible :=  ( not(rbTCP.Checked)) and ( not(rbTXT.Checked)) ;
+  VerificarErrosComunicacao;
+end;
+
+procedure TFrmACBrMonitor.ValidarConfigCertificado;
+var
+ PathPfx, UrlPfx, ArqPfx, NumSerie, Senha: String;
+ Ok: Boolean;
+begin
+  UrlPfx := edtURLPFX.Text;
+  ArqPfx := edtArquivoPFX.Text;
+  NumSerie := edtNumeroSerie.Text;
+  Senha := edtSenha.Text;
+  Ok := (cbSSLLib.ItemIndex > 0);
+
+  if (NumSerie = '') then
+  begin
+    Ok := Ok and (Senha <> '');
+    if Ok then
+    begin
+      if (UrlPfx <> '') then
+        Ok := (ArqPfx <> '')   // Precisa do PFX, para Cache Local
+      else
+      begin
+        if (ExtractFilePath(ArqPfx) = '') then
+          PathPfx := ApplicationPath + ArqPfx
+        else
+          PathPfx := ArqPfx;
+
+        Ok := (ArqPfx <> '') and FileExists(PathPfx);
+      end;
+    end;
+  end;
+
+  imgErrCertificado.Visible := not Ok;
+  btCertInfo.Enabled := not imgErrCertificado.Visible;
+  ValidarConfigWebService;
+end;
+
+procedure TFrmACBrMonitor.ValidarConfigWebService;
+var
+  Ok: Boolean;
+  PathSchemas: String;
+begin
+  imgErrWebService.Visible := (cbUF.ItemIndex < 0);
+
+  PathSchemas := edtPathSchemasDFe.Text;
+  Ok := (PathSchemas <> '');
+  if Ok then
+    Ok := FileExists(PathWithDelim(PathSchemas) + PathWithDelim( 'NFe' ) + 'nfe_v4.00.xsd');
+
+  imgErrPathSchemas.Visible := not Ok;
+  btStatusServico.Enabled := not ( imgErrCertificado.Visible or
+                                   imgErrPathSchemas.Visible or
+                                   imgErrWebService.Visible);
+  imgErrWebServer.Visible := not ( btStatusServico.Enabled );
+end;
+
+procedure TFrmACBrMonitor.LigarAlertasdeErrosDeConfiguracao;
+begin
+
+  AtualizaSSLLibsCombo;
+  edtArquivoPFXChange(Nil);
+  edtNumeroSerieChange(Nil);
+  edtIdTokenChange(Nil);
+  edtTokenChange(Nil);
+  edtCNPJContadorChange(Nil);
+  edtBOLCNPJChange(Nil);
+  edtBOLCEPChange(Nil);
+  edtBOLRazaoSocialChange(Nil);
+  cbxEmitCidadeChange(Nil);
+
+  ValidarComunicacao;
+  ValidarConfigWebService;
+  ValidarConfigSAT;
+  ValidarConfigMail;
+
+end;
+
+procedure TFrmACBrMonitor.ValidarConfigSAT;
+var
+  Ok: Boolean;
+begin
+  //Botão Inicializar
+  //Botão Consultar Status
+  Ok := (edNomeDLL.Text <> '') and
+        FileExists(edNomeDLL.Text) and
+        (cbxModeloSAT.ItemIndex > 0);
+
+  imgErrSATInicializar.Visible := not(Ok);
+  bInicializar.Enabled := Ok;
+
+  imgErrSAT.Visible := not(Ok);
+  imgErrSATLib.Visible := not(Ok);
+  btConsultarStatusOPSAT.Enabled := Ok;
+
+  //Botão Ativar Sat
+  Ok := Ok and
+        (edtCodigoAtivacao.Text <> '') and
+        (edtEmitCNPJ.Text <> '') and
+        (edtSwHCNPJ.Text <> '') and
+        (edtSwHAssinatura.Text <> '');
+
+  imgErrSATAtivar.Visible := not(Ok);
+  btAtivarsat.Enabled := Ok;
+
+  edSATPathArqsChange(Nil);
+  edSATPathArqsCancChange(Nil);
+  edSATPathArqsEnvioChange(Nil);
+
+end;
+
+procedure TFrmACBrMonitor.ValidarConfigMail;
+var
+  Ok: Boolean;
+begin
+  Ok := (edEmailEndereco.Text <> '') and
+        (edEmailNome.Text <> '') and
+        (edEmailHost.Text <> '') and
+        (edEmailPorta.Value > 0) and
+        (edEmailUsuario.Text <> '') and
+        (edEmailSenha.Text <> '');
+
+  imgErrEmail.Visible := not Ok;
+  bEmailTestarConf.Enabled := Ok;
+end;
+
+procedure TFrmACBrMonitor.VerificarErrosConfiguracaoComponentes(AfsCmd: TACBrCmd);
+var
+  MsgErro: String;
+begin
+  MsgErro:= '';
+  if (AfsCmd.Objeto = 'NFE')
+     or (AfsCmd.Objeto = 'CTE')
+     or (AfsCmd.Objeto = 'MDFE')
+     or (AfsCmd.Objeto = 'ESOCIAL')
+     or (AfsCmd.Objeto = 'REINF')
+     or (AfsCmd.Objeto = 'GNRE')
+     or (AfsCmd.Objeto = 'BPE') then
+       MsgErro :=  VerificarErrosConfiguracaoDFe;
+
+  if (AfsCmd.Objeto = 'SAT') then
+    MsgErro :=  VerificarErrosConfiguracaoSAT;
+
+  if (AfsCmd.Objeto = 'EMAIL') then
+    MsgErro :=  VerificarErrosConfiguracaoEMAIL;
+
+  if (AfsCmd.Objeto = 'BOLETO') then
+    MsgErro :=  VerificarErrosConfiguracaoBoleto;
+
+  if MsgErro <> '' then
+    AddLinesLog( 'ALERTA: ' + MsgErro );
+
+end;
+
+procedure TFrmACBrMonitor.VerificarErrosComunicacao;
+begin
+  if imgErrComunicacao.Visible then
+    AddLinesLog( 'ALERTA- Configure a forma de Integração TCP/IP ou TXT (Menu: MONITOR)' );
+
+end;
+
+function TFrmACBrMonitor.VerificarErrosConfiguracaoDFe: String;
+var
+  MsgErro: String;
+begin
+  Result := '';
+  MsgErro := '';
+
+  if imgErrCertificado.Visible then
+    MsgErro := MsgErro + sLineBreak + '- Certificado não configurado (Menu: DFE / CERTIFICADOS)';
+
+  if imgErrWebServer.Visible then
+    MsgErro := MsgErro + sLineBreak + '- WebService não configurado (Menu: DFE / WEBSERVICES) ';
+
+  MsgErro := Trim(MsgErro);
+
+  if (MsgErro <> '') then
+    Result:=  MsgErro;
+
+end;
+
+function TFrmACBrMonitor.VerificarErrosConfiguracaoSAT: String;
+var
+  MsgErro: String;
+begin
+  Result := '';
+  MsgErro := '';
+  if imgErrSAT.Visible then
+    MsgErro := '- Falha nas configurações SAT (Menu: SAT)';
+
+  if (MsgErro <> '') then
+    Result := MsgErro;
+
+end;
+
+function TFrmACBrMonitor.VerificarErrosConfiguracaoEMAIL: String;
+var
+  MsgErro: String;
+begin
+  Result := '';
+  MsgErro := '';
+  if imgErrEmail.Visible then
+    MsgErro := '- Falha nas configurações de e-mail (Menu: E-MAIL)';
+
+  if (MsgErro <> '') then
+    Result := MsgErro;
+
+end;
+
+function TFrmACBrMonitor.VerificarErrosConfiguracaoBoleto: String;
+var
+  MsgErro: String;
+begin
+  Result := '';
+  MsgErro := '';
+  if imgErrCNPJBoleto.Visible then
+    MsgErro := '- Falha nas configurações de Boleto (Menu: BOLETO / CEDENTE)';
+
+  if (MsgErro <> '') then
+    Result := MsgErro;
+
+end;
+
+procedure TFrmACBrMonitor.CarregarListaDeCidades(cUF: Integer);
+var
+  i: Integer;
+  Cidade: TACBrIBGECidade;
+begin
+  if (cUF <= 0) or (fcUF = cUF) then
+    Exit;
+
+  fcUF := cUF;
+  try
+    ACBrIBGE1.BuscarPorcUF(FcUF);
+    cbxEmitCidade.Items.Clear;
+    cbxEmitCidade.ItemIndex := -1;
+    fcMunList.Clear;
+    for i := 0 to ACBrIBGE1.Cidades.Count-1 do
+    begin
+      Cidade := ACBrIBGE1.Cidades[i];
+      cbxEmitCidade.Items.Add(Cidade.Municipio);
+      fcMunList.Add(IntToStr(Cidade.CodMunicipio));
+    end;
+
+    if (cbxEmitCidade.Items.Count > 0) then
+    begin
+      cbxEmitCidade.ItemIndex := 0;
+      cbxEmitCidadeChange(Nil);
+    end;
+  except
+    MessageDlg('Erro ao carregar cidades', mtError, [mbOK], 0);
+  end;
+end;
+
 
 procedure TFrmACBrMonitor.LeDadosRedeSAT;
 begin
@@ -9857,6 +10681,7 @@ begin
     with Certificados do
     begin
       ArquivoPFX  := edtArquivoPFX.Text;
+      URLPFX := edtURLPFX.Text;
       NumeroSerie := edtNumeroSerie.Text;
       Senha       := edtSenha.Text;
       VerificarValidade := chkVerificarValidadeCertificado.Checked;
@@ -10053,11 +10878,20 @@ end;
 procedure TFrmACBrMonitor.AtualizaSSLLibsCombo;
 begin
   cbSSLLib.ItemIndex     := Integer( ACBrNFe1.Configuracoes.Geral.SSLLib );
+  imgErrSSLLib.Visible := (cbSSLLib.ItemIndex < 1);
+
   cbCryptLib.ItemIndex   := Integer( ACBrNFe1.Configuracoes.Geral.SSLCryptLib );
+  imgErrCryptLib.Visible := (cbCryptLib.ItemIndex < 1);
+
   cbHttpLib.ItemIndex    := Integer( ACBrNFe1.Configuracoes.Geral.SSLHttpLib );
+  imgErrHttpLib.Visible := (cbHttpLib.ItemIndex < 1);
+
   cbXmlSignLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib );
+  imgErrXmlSignLib.Visible := (cbXmlSignLib.ItemIndex < 1);
 
   cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+
+  ValidarConfigCertificado;
 end;
 
 procedure TFrmACBrMonitor.AntesDeImprimir(ShowPreview: Boolean);
@@ -10212,6 +11046,7 @@ begin
   AVisible := (cbSATMarca.ItemIndex <= 0);
   edNomeDLL.Visible := AVisible;
   LabelNomedll.Visible := AVisible;
+  sbNomeDLL.Visible := AVisible;
   sePagCod.Visible := AVisible;
   LabelpagCod.Visible := AVisible;
   cbxModeloSAT.Visible := AVisible;
@@ -10293,6 +11128,11 @@ begin
   ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
 end;
 
+procedure TFrmACBrMonitor.cbUFChange(Sender: TObject);
+begin
+  ValidarConfigWebService;
+end;
+
 procedure TFrmACBrMonitor.cbIgnorarTagsChange(Sender: TObject);
 begin
   ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
@@ -10341,6 +11181,7 @@ end;
 procedure TFrmACBrMonitor.cbSATMarcaChange(Sender: TObject);
 begin
   OnSATManual;
+  ValidarConfigSAT;
 end;
 
 procedure TFrmACBrMonitor.cbSSLLibChange(Sender: TObject);
@@ -10471,6 +11312,80 @@ end;
 procedure TFrmACBrMonitor.SetScroll(Sender: TObject);
 begin
   ScrollBox.VertScrollBar.Position := ScrollBox.VertScrollBar.Position+TPanel(Sender).Height;
+end;
+
+procedure TFrmACBrMonitor.SetFontLabels(Sender: TObject);
+var
+  I: Integer;
+begin
+  for I := 0 to ComponentCount - 1 do
+  begin
+    {$IFDEF MSWINDOWS}
+    if Components[I] is TLabel  then
+    begin
+      TLabel( Components[I] ).Font.Name:= 'Segoe UI Light';
+      TLabel( Components[I] ).Font.Size:= 9;
+      TLabel( Components[I] ).Font.Quality:= fqDraft;
+    end;
+
+    if Components[I] is TCheckBox  then
+    begin
+      TCheckBox( Components[I] ).Font.Name:= 'Segoe UI Light';
+      TCheckBox( Components[I] ).Font.Size:= 9;
+      TCheckBox( Components[I] ).Font.Quality:= fqDraft;
+    end;
+
+    if Components[I] is TGroupBox  then
+    begin
+      TGroupBox( Components[I] ).Font.Name:= 'Segoe UI Light';
+      TGroupBox( Components[I] ).Font.Size:= 10;
+      TGroupBox( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    if Components[I] is TBitBtn  then
+    begin
+      TGroupBox( Components[I] ).Font.Name:= 'Segoe UI Light';
+      TGroupBox( Components[I] ).Font.Size:= 9;
+      TGroupBox( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    {$ELSE}
+    if Components[I] is TLabel  then
+    begin
+      TLabel( Components[I] ).Font.Name:= 'Open Sans Light';
+      TLabel( Components[I] ).Font.Size:= 9;
+      TLabel( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    if Components[I] is TCheckBox  then
+    begin
+      TCheckBox( Components[I] ).Font.Name:= 'Open Sans Light';
+      TCheckBox( Components[I] ).Font.Size:= 9;
+      TCheckBox( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    if Components[I] is TGroupBox  then
+    begin
+      TGroupBox( Components[I] ).Font.Name:= 'Open Sans Light';
+      TGroupBox( Components[I] ).Font.Size:= 10;
+      TGroupBox( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    if Components[I] is TBitBtn  then
+    begin
+      TGroupBox( Components[I] ).Font.Name:= 'Open Sans Light';
+      TGroupBox( Components[I] ).Font.Size:= 9;
+      TGroupBox( Components[I] ).Font.Style:=  [] + [fsItalic];
+    end;
+
+    {$IFEND}
+
+  end;
+
+  bConfig.Font.Style:= [] + [fsBold];
+  btMinimizar.Font.Style:= [] + [fsBold];
+  LCaption.Font.Size:= 16;
+
 end;
 
 procedure TFrmACBrMonitor.MostraLogoBanco;

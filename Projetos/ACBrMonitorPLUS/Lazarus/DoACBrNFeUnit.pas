@@ -705,7 +705,7 @@ begin
     if (NotasFiscais.Count > 0) and
        ( NaoEstaVazio(MonitorConfig.DFE.WebService.NFe.CNPJContador) ) then
       with NotasFiscais.Items[0].NFe.autXML.New do
-        CNPJCPF := MonitorConfig.DFE.WebService.NFe.CNPJContador;
+        CNPJCPF := OnlyNumber( MonitorConfig.DFE.WebService.NFe.CNPJContador );
 
     //Deve recarregar os dados do XML validado pelo componente
     AXML := NotasFiscais.Items[0].XMLOriginal;

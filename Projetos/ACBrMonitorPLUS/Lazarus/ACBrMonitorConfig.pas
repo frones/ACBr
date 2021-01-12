@@ -203,6 +203,7 @@ type
     XmlSignLib        : Integer;
     SSLType           : Integer;
     ArquivoPFX        : String;
+    URLPFX            : String;
     NumeroSerie       : String;
     Senha             : String;
     ExibeRazaoSocialCertificado: Boolean;
@@ -643,6 +644,7 @@ type
   TBoletoEmail = record
     EmailAssuntoBoleto         : String ;
     EmailMensagemBoleto        : String ;
+    EmailFormatoHTML           : Boolean;
   end;
 
   TBOLETO = record
@@ -651,6 +653,7 @@ type
     Logradouro                 : String ;
     Numero                     : String ;
     Bairro                     : String ;
+    CodCidade                  : Integer;
     Cidade                     : String ;
     CEP                        : String ;
     Complemento                : String ;
@@ -960,6 +963,7 @@ begin
       Ini.WriteInteger( CSecCertificado, CKeyXmlSignLib, XmlSignLib );
       Ini.WriteInteger( CSecCertificado, CKeySSLType, SSLType );
       Ini.WriteString( CSecCertificado, CKeyArquivoPFX, ArquivoPFX );
+      Ini.WriteString( CSecCertificado, CKeyURLPFX, URLPFX );
       Ini.WriteString( CSecCertificado, CKeyNumeroSerie, NumeroSerie );
       GravaINICrypt(Ini, CSecCertificado, CKeySenha, Senha, _C);
       Ini.WriteBool( CSecCertificado, CKeyExibeRazaoSocialCertificado, ExibeRazaoSocialCertificado );
@@ -1342,6 +1346,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOLogradouro,    Logradouro    );
       ini.WriteString( CSecBOLETO, CKeyBOLETONumero,        Numero        );
       ini.WriteString( CSecBOLETO, CKeyBOLETOBairro,        Bairro        );
+      ini.WriteInteger( CSecBOLETO, CKeyBOLETOCodCidade,    CodCidade     );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCidade,        Cidade        );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCEP,           CEP           );
       ini.WriteString( CSecBOLETO, CKeyBOLETOComplemento,   Complemento   );
@@ -1398,6 +1403,7 @@ begin
     begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOEmailAssuntoBoleto,        EmailAssuntoBoleto     );
       ini.WriteString( CSecBOLETO, CKeyBOLETOEmailMensagemBoleto,       EmailMensagemBoleto    );
+      ini.WriteBool(   CSecBOLETO, CKeyBOLETOEmailFormatoHTML,          EmailFormatoHTML       );
     end;
 
     SL := TStringList.Create;
@@ -1649,6 +1655,7 @@ begin
       XmlSignLib                := Ini.ReadInteger( CSecCertificado, CKeyXmlSignLib, XmlSignLib );
       SSLType                   := Ini.ReadInteger( CSecCertificado, CKeySSLType, SSLType );
       ArquivoPFX                := Ini.ReadString( CSecCertificado, CKeyArquivoPFX, ArquivoPFX );
+      URLPFX                    := Ini.ReadString( CSecCertificado, CKeyURLPFX, URLPFX);
       NumeroSerie               := Ini.Readstring( CSecCertificado, CKeyNumeroSerie, NumeroSerie );
       Senha                     := LeINICrypt(Ini, CSecCertificado, CKeySenha, _C);
       ExibeRazaoSocialCertificado:= Ini.ReadBool( CSecCertificado, CKeyExibeRazaoSocialCertificado, ExibeRazaoSocialCertificado );
@@ -2039,6 +2046,7 @@ begin
       Logradouro             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOLogradouro,  ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteLogradouro, '') );
       Numero                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETONumero,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteNumero, '') );
       Bairro                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOBairro,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteBairro, '') );
+      CodCidade              :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOCodCidade,   ini.ReadInteger( CSecBOLETO, CKeyBOLETOCodCidade, 0)  );
       Cidade                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCidade,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCidade, '') );
       CEP                    :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCEP,         ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCEP, '') );
       Complemento            :=  ini.ReadString( CSecBOLETO, CKeyBOLETOComplemento, ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteComplemento, '') );
@@ -2096,6 +2104,7 @@ begin
     begin
       EmailAssuntoBoleto     :=  ini.ReadString( CSecBOLETO, CKeyBOLETOEmailAssuntoBoleto,        EmailAssuntoBoleto     );
       EmailMensagemBoleto    :=  ini.ReadString( CSecBOLETO, CKeyBOLETOEmailMensagemBoleto,       EmailMensagemBoleto    );
+      EmailFormatoHTML       :=  ini.ReadBool(   CSecBOLETO, CKeyBOLETOEmailFormatoHTML,          EmailFormatoHTML    );
     end;
 
   finally
@@ -2136,7 +2145,7 @@ begin
     Converte_TXT_Entrada_Ansi := False;
     Converte_TXT_Saida_Ansi   := False;
     Intervalo                 := 50;
-    Gravar_Log                := False;
+    Gravar_Log                := True;
     Arquivo_Log               := 'LOG.TXT';
     Linhas_Log                := 0;
     Comandos_Remotos          := False;
@@ -2148,7 +2157,7 @@ begin
     MostrarNaBarraDeTarefas   := False;
     {$ENDIF}
     RetirarAcentosNaResposta  := False;
-    MostraLogEmRespostasEnviadas:= True;
+    MostraLogEmRespostasEnviadas:= False;
     HashSenha                 := '';
     Senha                     := '';
     VersaoSSL                 := 0;
@@ -2325,6 +2334,7 @@ begin
     XmlSignLib                := 0;
     SSLType                   := 0;
     ArquivoPFX                := '';
+    URLPFX                    := '';
     NumeroSerie               := '';
     Senha                     := '';
     ExibeRazaoSocialCertificado:= False;
@@ -2703,6 +2713,7 @@ begin
     Logradouro             :=  '';
     Numero                 :=  '';
     Bairro                 :=  '';
+    CodCidade              :=  0;
     Cidade                 :=  '';
     CEP                    :=  '';
     Complemento            :=  '';
@@ -2759,6 +2770,7 @@ begin
   begin
     EmailAssuntoBoleto     :=  '';
     EmailMensagemBoleto    :=  '';
+    EmailFormatoHTML       := False;
   end;
 end;
 

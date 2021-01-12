@@ -298,7 +298,7 @@
         <PackageName Value="LCL"/>
       </Item35>
     </RequiredPackages>
-    <Units Count="68">
+    <Units Count="69">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -588,6 +588,13 @@
         <Filename Value="DoCPFUnit.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit67>
+      <Unit68>
+        <Filename Value="FormConsultaCNPJ.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConsultaCNPJ"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit68>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

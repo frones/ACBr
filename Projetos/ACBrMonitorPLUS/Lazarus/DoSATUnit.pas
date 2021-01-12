@@ -59,6 +59,7 @@ public
   procedure RespostaCancelarVenda( Resultado: String);
   procedure RespostaTesteFimaFim( Resultado: String );
   procedure RespostaPadrao;
+  procedure RespostaPadraoCancelamento;
   procedure RespostaIntegrador;
 
   procedure CarregarDadosVenda(aStr: String; aNomePDF : String = '');
@@ -230,6 +231,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoGerarPDFExtratoCancelamento }
+
+TMetodoGerarPDFExtratoCancelamento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoExtrairLog }
 
 TMetodoExtrairLog = class(TACBrMetodo)
@@ -285,6 +293,35 @@ implementation
 uses
   ACBrUtil,DoACBrUnit,IniFiles, forms, pcnAuxiliar, typinfo,
   ACBrSATExtratoClass, UtilUnit;
+
+{ TMetodoGerarPDFExtratoCancelamento }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cXMLCancelamento: String com XML de Cancelamento o path do arquivo
+          2 - cNomeArq: String com nome do o Arquivo
+}
+procedure TMetodoGerarPDFExtratoCancelamento.Executar;
+var
+  cXMLVenda : String;
+  cXMLCancelamento: String;
+  cNomeArq : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cXMLCancelamento := fpCmd.Params(1);
+  cNomeArq := fpCmd.Params(2);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT('', True);
+    CarregarDadosVenda(cXMLVenda, cNomeArq);
+    CarregarDadosCancelamento(cXMLCancelamento);
+    ACBrSAT.ImprimirExtratoCancelamento;
+
+    RespostaPadraoCancelamento;
+
+  end;
+
+end;
 
 { TMetodoConsultarModeloSAT }
 
@@ -1192,6 +1229,7 @@ begin
   ListaDeMetodos.Add(CMetodoGerarAssinaturaSAT);
   ListaDeMetodos.Add(CMetodoEnviarEmailCFe);
   ListaDeMetodos.Add(CMetodoConsultarModeloSAT);
+  ListaDeMetodos.Add(CMetodoGerarPDFExtratoCancelamento);
 
 
   // DoACBr
@@ -1259,6 +1297,7 @@ begin
     30 : AMetodoClass := TMetodoGerarAssinaturaSAT;
     31 : AMetodoClass := TMetodoEnviarEmailCFe;
     32 : AMetodoClass := TMetodoConsultarModeloSAT;
+    33 : AMetodoClass := TMetodoGerarPDFExtratoCancelamento;
 
     else
       begin
@@ -1476,6 +1515,27 @@ begin
     begin
       Resp.Arquivo:= Extrato.NomeDocumento;
       Resp.XML:= Extrato.CFe.XMLOriginal;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaPadraoCancelamento;
+var
+  Resp: TPadraoSATResposta;
+begin
+  Resp := TPadraoSATResposta.Create('CFe',TpResp, codUTF8);
+  try
+    with fACBrSAT do
+    begin
+      Resp.Arquivo:= Extrato.NomeDocumento;
+      Resp.XML:= Extrato.CFeCanc.XMLOriginal;
 
       fpCmd.Resposta := sLineBreak + Resp.Gerar;
 

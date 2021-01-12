@@ -504,6 +504,7 @@ begin
       try
         Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
         try
+          ACBrBoleto.MAIL.IsHTML := EmailFormatoHTML;
           ACBrBoleto.EnviarEmail( ADest,
                  EmailAssuntoBoleto,
                  Mensagem,
@@ -563,6 +564,7 @@ begin
         Mensagem := TStringList.Create;
         try
           Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
+          ACBrBoleto.MAIL.IsHTML := EmailFormatoHTML;
           ACBrBoleto.EnviarEmail( ACBrBoleto.ListadeBoletos[0].Sacado.Email,
                            EmailAssuntoBoleto,
                            Mensagem,
@@ -851,6 +853,7 @@ begin
       try
         Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
         try
+          ACBrBoleto.MAIL.IsHTML := EmailFormatoHTML;
           ACBrBoleto.ListadeBoletos[AIndice].EnviarEmail( ADest,
                  EmailAssuntoBoleto,
                  Mensagem,

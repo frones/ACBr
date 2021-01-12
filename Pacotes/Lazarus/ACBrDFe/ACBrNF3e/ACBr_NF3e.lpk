@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3E;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNF3e\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -43,7 +43,7 @@
         <UnitName Value="ACBrNF3eWebServices"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3E\ACBrNF3eDANF3eClass.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\ACBrNF3eDANF3eClass.pas"/>
         <UnitName Value="ACBrNF3eDANF3eClass"/>
       </Item6>
       <Item7>

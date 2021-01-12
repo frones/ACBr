@@ -36,7 +36,7 @@ uses SysUtils, Classes, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
-    pediConversao, ACBrTxtClass, Contnrs, ACBrEDIClass ;
+    pediConversao, ACBrTXTClass, Contnrs, ACBrEDIClass ;
 
 type
 

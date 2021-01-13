@@ -508,7 +508,7 @@ var
   i: Integer;
   ok: Boolean;
   DtStr: string;
-  Dt: TDate;
+  Dt: TDateTime;
 begin
   // Para o provedor ISSDigital
   if (Leitor.rExtrai(2, 'ValoresServico') <> '') then
@@ -2030,7 +2030,7 @@ var
   NivelTemp, i: Integer;
   ok: Boolean;
   SimNao, DataHorBR: string;
-  Dt: TDate;
+  Dt: TDateTime;
   DtStr: string;
 begin
   if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
@@ -2233,16 +2233,16 @@ begin
     SimNao := Leitor.rCampo(tcStr, 'OptanteSimplesNacional');
 
     if (SimNao = '0') or (AnsiUpperCase(SimNao) = 'SIM') then
-      NFSe.OptanteSimplesNacional := TnfseSimNao.snSim
+      NFSe.OptanteSimplesNacional := snSim
     else
-      NFSe.OptanteSimplesNacional := TnfseSimNao.snNao;
+      NFSe.OptanteSimplesNacional := snNao;
 
     SimNao := Leitor.rCampo(tcStr, 'IncentivoFiscal');
 
     if (SimNao = '0') or (AnsiUpperCase(SimNao) = 'SIM') then // retorno quando vem pela consulta de nfse por rps, vem 'Sim'
-      NFSe.IncentivadorCultural := TnfseSimNao.snSim
+      NFSe.IncentivadorCultural := snSim
     else
-      NFSe.IncentivadorCultural := TnfseSimNao.snNao;
+      NFSe.IncentivadorCultural := snNao;
   end
   else
   begin

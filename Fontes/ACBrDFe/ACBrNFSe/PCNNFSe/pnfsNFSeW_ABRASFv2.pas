@@ -1074,9 +1074,9 @@ begin
     if FProvedor = proAdm then
     begin
       //Optante Simples: 0 Sim / 1 Não
-      Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, IfThen(NFSe.OptanteSimplesNacional = TnfseSimNao.snSim, '0', '1'), DSC_INDOPSN);
+      Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, IfThen(NFSe.OptanteSimplesNacional = snSim, '0', '1'), DSC_INDOPSN);
       // Incentivador Fiscal: 0 Sim / 1 Não
-      Gerador.wCampo(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, IfThen(NFSe.IncentivadorCultural = TnfseSimNao.snSim, '0', '1'), DSC_INDINCENTIVO);
+      Gerador.wCampo(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, IfThen(NFSe.IncentivadorCultural = snSim, '0', '1'), DSC_INDINCENTIVO);
     end
     else
     begin

@@ -18031,7 +18031,7 @@ begin
   if provedor = proAdm then
   begin
     // Iss Retido: 0 Sim / 1 Não
-    if t = TnfseSituacaoTributaria.stRetencao then
+    if t = stRetencao then
       Result := '0'
     else
       Result := '1';

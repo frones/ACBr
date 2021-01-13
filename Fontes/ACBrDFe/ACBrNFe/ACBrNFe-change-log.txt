@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/01/2021
+pcnNFeRTXT.pas
+[*] Ajuste leitura dos campos pDif, vICMSDif, vICMSOp
+   Por: José M S Junior
+
 07/01/2021
 -- ACBrNFeXmlWriter, pcnNFeW --
 [*] Ajuste de conversão de retorno na função ValidarGTIN ao preencher mensagens de Alerta 

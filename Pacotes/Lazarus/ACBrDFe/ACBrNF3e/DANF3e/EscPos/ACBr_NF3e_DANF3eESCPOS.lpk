@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3E\EscPos"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\EscPos"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNF3e\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>

@@ -9839,11 +9839,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ParentFont = False
               object gbxConfigSSL: TGroupBox
                 Left = 8
-                Height = 256
+                Height = 304
                 Top = 32
                 Width = 257
                 Caption = 'Configuração SSL'
-                ClientHeight = 234
+                ClientHeight = 282
                 ClientWidth = 253
                 Font.CharSet = ANSI_CHARSET
                 Font.Color = clBlack
@@ -10030,11 +10030,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object btnVersaoSSL: TBitBtn
                   AnchorSideTop.Control = cbSSLType
+                  AnchorSideTop.Side = asrBottom
                   Left = 104
                   Height = 28
-                  Top = 196
+                  Top = 191
                   Width = 112
-                  BorderSpacing.Top = 40
+                  BorderSpacing.Top = 10
                   Caption = 'Versão SSL'
                   Font.CharSet = ANSI_CHARSET
                   Font.Color = clBlack
@@ -10105,12 +10106,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object GroupBox13: TGroupBox
                 Left = 272
-                Height = 256
+                Height = 304
                 Top = 32
                 Width = 725
                 Anchors = [akTop, akLeft, akRight]
                 Caption = 'Certificado'
-                ClientHeight = 234
+                ClientHeight = 282
                 ClientWidth = 721
                 Font.CharSet = ANSI_CHARSET
                 Font.Color = clBlack
@@ -10123,7 +10124,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 1
                 object lblArquivoPFX: TLabel
                   AnchorSideTop.Control = edtArquivoPFX
-                  Left = 28
+                  Left = 29
                   Height = 15
                   Top = 53
                   Width = 143
@@ -10144,10 +10145,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtURLPFX
                   AnchorSideTop.Side = asrBottom
                   AnchorSideRight.Control = sbArquivoCert
-                  Left = 181
+                  Left = 182
                   Height = 25
                   Top = 43
-                  Width = 490
+                  Width = 489
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   BorderSpacing.Top = 10
@@ -10181,7 +10182,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 182
                   Height = 25
                   Top = 8
-                  Width = 522
+                  Width = 489
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   BorderSpacing.Bottom = 10
@@ -10229,7 +10230,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object lblSenha: TLabel
                   AnchorSideTop.Control = edtSenha
-                  Left = 138
+                  Left = 139
                   Height = 15
                   Top = 123
                   Width = 33
@@ -10250,10 +10251,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtNumeroSerie
                   AnchorSideTop.Side = asrBottom
                   AnchorSideRight.Control = sbVerSenhaCertificado
-                  Left = 181
+                  Left = 182
                   Height = 25
                   Top = 113
-                  Width = 226
+                  Width = 169
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   BorderSpacing.Top = 10
@@ -10269,7 +10270,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtNumeroSerie
                   AnchorSideTop.Side = asrBottom
                   AnchorSideRight.Control = imgErrCertificado
-                  Left = 470
+                  Left = 495
                   Height = 28
                   Top = 113
                   Width = 176
@@ -10293,7 +10294,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object imgErrCertificado: TImage
                   AnchorSideTop.Control = btCertInfo
                   AnchorSideTop.Side = asrCenter
-                  Left = 656
+                  Left = 681
                   Height = 16
                   Hint = 'Falha na Configuração:'#13#10'Configuração do Certificado incompleta'
                   Top = 119
@@ -10418,7 +10419,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Side = asrBottom
                   AnchorSideTop.Control = edtSenha
                   AnchorSideTop.Side = asrCenter
-                  Left = 408
+                  Left = 352
                   Height = 23
                   Top = 114
                   Width = 31
@@ -10809,7 +10810,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object Label124: TLabel
                       Left = 6
                       Height = 15
-                      Top = -1
+                      Top = -4
                       Width = 24
                       Caption = 'Host'
                       Font.CharSet = ANSI_CHARSET
@@ -10824,7 +10825,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object Label125: TLabel
                       Left = 318
                       Height = 15
-                      Top = -3
+                      Top = -6
                       Width = 28
                       Caption = 'Porta'
                       Font.CharSet = ANSI_CHARSET
@@ -10869,7 +10870,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object edtProxyHost: TEdit
                       Left = 6
                       Height = 25
-                      Top = 15
+                      Top = 12
                       Width = 306
                       Font.Height = -13
                       ParentFont = False
@@ -10878,7 +10879,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object edtProxyPorta: TEdit
                       Left = 320
                       Height = 25
-                      Top = 15
+                      Top = 12
                       Width = 50
                       Font.Height = -13
                       ParentFont = False
@@ -11242,7 +11243,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label132: TLabel
                     Left = 16
                     Height = 13
-                    Top = 64
+                    Top = 72
                     Width = 68
                     Caption = 'IdCSC/IdToken'
                     Font.CharSet = ANSI_CHARSET
@@ -11272,7 +11273,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideTop.Side = asrBottom
                     Left = 16
                     Height = 25
-                    Top = 82
+                    Top = 90
                     Width = 89
                     BorderSpacing.Top = 5
                     Font.Height = -13
@@ -11286,7 +11287,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideTop.Side = asrBottom
                     Left = 24
                     Height = 22
-                    Top = 167
+                    Top = 192
                     Width = 184
                     AutoSize = False
                     BorderSpacing.Top = 6
@@ -11305,7 +11306,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideTop.Side = asrBottom
                     Left = 16
                     Height = 25
-                    Top = 130
+                    Top = 146
                     Width = 68
                     BorderSpacing.Top = 5
                     Font.Height = -13
@@ -11323,7 +11324,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label226: TLabel
                     Left = 16
                     Height = 13
-                    Top = 112
+                    Top = 128
                     Width = 73
                     Caption = 'Versão QRCode'
                     Font.CharSet = ANSI_CHARSET
@@ -11342,7 +11343,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 110
                     Height = 16
                     Hint = 'Falha na Configuração:'#13#10'ID CSC para emissão de NFCe'
-                    Top = 87
+                    Top = 95
                     Width = 16
                     BorderSpacing.Left = 5
                     BorderSpacing.Top = 5
@@ -12190,11 +12191,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 1007
-                ActivePage = tsDadosEmpresa
+                ActivePage = tsImpGeralDFe
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -12551,7 +12552,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label152: TLabel
                     Left = 6
                     Height = 17
-                    Top = 44
+                    Top = 52
                     Width = 19
                     Caption = 'Fax'
                     Font.Height = -13
@@ -12561,7 +12562,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label153: TLabel
                     Left = 175
                     Height = 17
-                    Top = 44
+                    Top = 52
                     Width = 195
                     Caption = 'Logo Marca NF-e / CT-e / MDF-e'
                     Font.Height = -13
@@ -12571,7 +12572,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object sbLogoMarca: TSpeedButton
                     Left = 434
                     Height = 25
-                    Top = 60
+                    Top = 68
                     Width = 23
                     Font.Height = -13
                     Glyph.Data = {
@@ -12614,7 +12615,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object edtFaxEmpresa: TEdit
                     Left = 6
                     Height = 25
-                    Top = 60
+                    Top = 68
                     Width = 164
                     Font.Height = -13
                     ParentFont = False
@@ -12623,7 +12624,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object edtLogoMarca: TEdit
                     Left = 175
                     Height = 25
-                    Top = 60
+                    Top = 68
                     Width = 258
                     Font.Height = -13
                     ParentFont = False
@@ -12632,8 +12633,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object edtLogoMarcaNFCeSAT: TEdit
                     Left = 6
                     Height = 25
-                    Top = 104
-                    Width = 258
+                    Top = 120
+                    Width = 427
                     Font.Height = -13
                     ParentFont = False
                     TabOrder = 4
@@ -12641,7 +12642,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label163: TLabel
                     Left = 6
                     Height = 17
-                    Top = 87
+                    Top = 103
                     Width = 145
                     Caption = 'Logo Marca NFC-e / SAT'
                     Font.Height = -13
@@ -12649,9 +12650,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ParentFont = False
                   end
                   object sbLogoMarcaNFCeSAT: TSpeedButton
-                    Left = 265
+                    Left = 434
                     Height = 25
-                    Top = 104
+                    Top = 120
                     Width = 23
                     Font.Height = -13
                     Glyph.Data = {
@@ -12753,7 +12754,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speAlturaCampos: TSpinEdit
                     Left = 252
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MinValue = 10
@@ -12781,7 +12782,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speFonteCampos: TSpinEdit
                     Left = 191
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MaxValue = 36
@@ -12810,7 +12811,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speFonteEndereco: TSpinEdit
                     Left = 130
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MaxValue = 36
@@ -12839,7 +12840,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speFonteRazao: TSpinEdit
                     Left = 69
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MaxValue = 36
@@ -12868,7 +12869,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speEspEntreProd: TSpinEdit
                     Left = 313
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MinValue = 11
@@ -12896,7 +12897,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speLargCodProd: TSpinEdit
                     Left = 8
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MaxValue = 120
@@ -12908,7 +12909,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirEAN: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 179
+                    Top = 191
                     Width = 239
                     Caption = 'Exibir Código GTIN (modo Paisagem)'
                     Font.Height = -13
@@ -12918,7 +12919,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirCampoFatura: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 201
+                    Top = 213
                     Width = 138
                     Caption = 'Exibir Campo Fatura'
                     Font.Height = -13
@@ -12928,8 +12929,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxQuebrarLinhasDetalhesItens: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 223
-                    Width = 241
+                    Top = 235
+                    Width = 248
+                    AutoSize = False
                     Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
                     Font.Height = -13
                     ParentFont = False
@@ -12938,7 +12940,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxFormCont: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 245
+                    Top = 257
                     Width = 165
                     Caption = 'Formulario Pré-Impresso'
                     Font.Height = -13
@@ -12948,7 +12950,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpValLiq: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 201
+                    Top = 213
                     Width = 179
                     Caption = 'Imprimir Valor Líq. Produto'
                     Font.Height = -13
@@ -13011,7 +13013,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpDetEspNFe: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 223
+                    Top = 235
                     Width = 273
                     Caption = 'Imprimir Detalhamento Específico dos Itens'
                     Font.Height = -13
@@ -13021,7 +13023,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpDocsReferenciados: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 245
+                    Top = 257
                     Width = 275
                     Caption = 'Imprimir Dados Documentos Referenciados'
                     Font.Height = -13
@@ -13031,7 +13033,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirLogoEmCima: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 179
+                    Top = 191
                     Width = 141
                     Caption = 'Exibir Logo em Cima'
                     Font.Height = -13
@@ -13068,7 +13070,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExpandirDadosAdicionaisAuto: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 266
+                    Top = 278
                     Width = 246
                     Caption = 'Expandir Dados Adicionais Automático'
                     Font.Height = -13
@@ -13078,7 +13080,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 266
+                    Top = 278
                     Width = 344
                     Caption = 'Imprime Continuação Dados Adicionais Primeira Pagina'
                     Font.Height = -13
@@ -13188,7 +13190,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object speFonteAdic: TSpinEdit
                     Left = 375
                     Height = 25
-                    Top = 145
+                    Top = 149
                     Width = 56
                     Font.Height = -13
                     MaxValue = 36
@@ -13727,7 +13729,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label161: TLabel
                 Left = 338
                 Height = 17
-                Top = 188
+                Top = 191
                 Width = 119
                 Caption = 'Pasta Arquivos EPEC'
                 Font.Height = -13
@@ -13737,7 +13739,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathDPEC: TSpeedButton
                 Left = 582
                 Height = 25
-                Top = 204
+                Top = 207
                 Width = 23
                 Enabled = False
                 Font.Height = -13
@@ -13763,7 +13765,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label162: TLabel
                 Left = 6
                 Height = 17
-                Top = 233
+                Top = 239
                 Width = 140
                 Caption = 'Salvar arquivos PDF em:'
                 Font.Height = -13
@@ -13773,7 +13775,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathPDF: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 249
+                Top = 255
                 Width = 23
                 Font.Height = -13
                 Glyph.Data = {
@@ -13798,7 +13800,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label164: TLabel
                 Left = 6
                 Height = 17
-                Top = 188
+                Top = 191
                 Width = 129
                 Caption = 'Pasta Arquivos Evento'
                 Font.Height = -13
@@ -13808,7 +13810,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathEvento: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 204
+                Top = 207
                 Width = 23
                 Enabled = False
                 Font.Height = -13
@@ -13854,7 +13856,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathDPEC: TEdit
                 Left = 338
                 Height = 25
-                Top = 204
+                Top = 207
                 Width = 244
                 Enabled = False
                 Font.Height = -13
@@ -13864,7 +13866,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathPDF: TEdit
                 Left = 6
                 Height = 25
-                Top = 249
+                Top = 255
                 Width = 252
                 Font.Height = -13
                 ParentFont = False
@@ -13873,7 +13875,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathEvento: TEdit
                 Left = 6
                 Height = 25
-                Top = 204
+                Top = 207
                 Width = 252
                 Enabled = False
                 Font.Height = -13
@@ -14003,7 +14005,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathArqTXT: TEdit
                 Left = 338
                 Height = 25
-                Top = 249
+                Top = 255
                 Width = 244
                 Font.Height = -13
                 ParentFont = False
@@ -14012,7 +14014,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label225: TLabel
                 Left = 338
                 Height = 17
-                Top = 232
+                Top = 238
                 Width = 140
                 Caption = 'Salvar arquivos TXT em:'
                 Font.Height = -13
@@ -14022,7 +14024,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathArqTXT: TSpeedButton
                 Left = 583
                 Height = 25
-                Top = 249
+                Top = 255
                 Width = 23
                 Font.Height = -13
                 Glyph.Data = {
@@ -14047,7 +14049,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathDownload: TEdit
                 Left = 6
                 Height = 25
-                Top = 297
+                Top = 306
                 Width = 252
                 Font.Height = -13
                 ParentFont = False
@@ -14056,7 +14058,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label236: TLabel
                 Left = 6
                 Height = 17
-                Top = 281
+                Top = 290
                 Width = 256
                 Caption = 'Salvar XML de Downloads (DistribuicaoDFe)'
                 Font.Height = -13
@@ -14066,7 +14068,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathDownload: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 297
+                Top = 306
                 Width = 23
                 Enabled = False
                 Font.Height = -13
@@ -14128,7 +14130,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object lblIDCSRT: TLabel
                 Left = 9
                 Height = 17
-                Top = 48
+                Top = 61
                 Width = 40
                 Caption = 'idCSRT'
                 Font.Height = -13
@@ -14138,7 +14140,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtIdCSRT: TEdit
                 Left = 5
                 Height = 25
-                Top = 65
+                Top = 80
                 Width = 80
                 Font.Height = -13
                 ParentFont = False
@@ -15305,8 +15307,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object grbConfigArqs: TGroupBox
                 Left = 384
                 Height = 243
-                Top = 101
+                Top = 106
                 Width = 584
+                Anchors = [akTop, akLeft, akRight]
                 Caption = 'Configuração Arquivos'
                 ClientHeight = 221
                 ClientWidth = 580
@@ -15392,9 +15395,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 5
                 end
                 object Label154: TLabel
+                  AnchorSideTop.Control = edSATPathArqs
+                  AnchorSideTop.Side = asrCenter
                   Left = 5
                   Height = 17
-                  Top = 14
+                  Top = 12
                   Width = 74
                   Caption = 'Path Vendas:'
                   Font.Height = -13
@@ -15403,10 +15408,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object SbArqLog2: TSpeedButton
                   AnchorSideTop.Control = edSATPathArqs
+                  AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Side = asrBottom
                   Left = 524
                   Height = 22
-                  Top = 8
+                  Top = 9
                   Width = 24
                   Anchors = [akTop, akRight]
                   Font.Height = -13
@@ -15452,9 +15458,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 7
                 end
                 object Label245: TLabel
+                  AnchorSideTop.Control = edSATPathArqsCanc
+                  AnchorSideTop.Side = asrCenter
                   Left = 16
                   Height = 17
-                  Top = 48
+                  Top = 42
                   Width = 63
                   Caption = 'Path Canc.:'
                   Font.Height = -13
@@ -15462,9 +15470,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object Label246: TLabel
+                  AnchorSideTop.Control = edSATPathArqsEnvio
+                  AnchorSideTop.Side = asrCenter
                   Left = 16
                   Height = 17
-                  Top = 80
+                  Top = 72
                   Width = 63
                   Caption = 'Path Envio:'
                   Font.Height = -13
@@ -15473,9 +15483,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object SbArqLog3: TSpeedButton
                   AnchorSideTop.Control = edSATPathArqsCanc
+                  AnchorSideTop.Side = asrCenter
                   Left = 524
                   Height = 22
-                  Top = 38
+                  Top = 39
                   Width = 24
                   Anchors = [akTop, akRight]
                   Font.Height = -13
@@ -15486,9 +15497,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object SbArqLog4: TSpeedButton
                   AnchorSideTop.Control = edSATPathArqsEnvio
+                  AnchorSideTop.Side = asrCenter
                   Left = 524
                   Height = 22
-                  Top = 68
+                  Top = 69
                   Width = 24
                   Anchors = [akTop, akRight]
                   Font.Height = -13
@@ -15501,7 +15513,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 380
                   Height = 25
-                  Top = 104
+                  Top = 120
                   Width = 140
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -15512,7 +15524,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 380
                   Height = 25
-                  Top = 132
+                  Top = 160
                   Width = 140
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -15520,9 +15532,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 9
                 end
                 object Label247: TLabel
+                  AnchorSideTop.Control = edSATPrefixoCFe
+                  AnchorSideTop.Side = asrCenter
                   Left = 304
                   Height = 17
-                  Top = 112
+                  Top = 124
                   Width = 68
                   Caption = 'Prefixo CFe:'
                   Font.Height = -13
@@ -15530,9 +15544,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object Label248: TLabel
+                  AnchorSideTop.Control = edSATPrefixoCFeCanc
+                  AnchorSideTop.Side = asrCenter
                   Left = 296
                   Height = 17
-                  Top = 136
+                  Top = 164
                   Width = 78
                   Caption = 'Prefixo Canc.:'
                   Font.Height = -13
@@ -15575,10 +15591,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object imgErrSATPathVendas: TImage
                   AnchorSideLeft.Control = SbArqLog2
                   AnchorSideLeft.Side = asrBottom
+                  AnchorSideTop.Control = edSATPathArqs
+                  AnchorSideTop.Side = asrCenter
                   Left = 553
                   Height = 16
                   Hint = 'Path SAT Vendas Inválido'
-                  Top = 8
+                  Top = 12
                   Width = 16
                   BorderSpacing.Left = 5
                   Visible = False
@@ -15586,10 +15604,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object imgErrSATPathCancelamento: TImage
                   AnchorSideLeft.Control = SbArqLog3
                   AnchorSideLeft.Side = asrBottom
+                  AnchorSideTop.Control = edSATPathArqsCanc
+                  AnchorSideTop.Side = asrCenter
                   Left = 553
                   Height = 16
                   Hint = 'Path SAT Cancelamento Inválido'
-                  Top = 40
+                  Top = 42
                   Width = 16
                   BorderSpacing.Left = 5
                   Visible = False
@@ -15597,6 +15617,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object imgErrSATPathEnvio: TImage
                   AnchorSideLeft.Control = SbArqLog4
                   AnchorSideLeft.Side = asrBottom
+                  AnchorSideTop.Control = edSATPathArqsEnvio
+                  AnchorSideTop.Side = asrCenter
                   Left = 553
                   Height = 16
                   Hint = 'Path SAT Envio Inválido'

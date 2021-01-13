@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/01/2021
+-- ACBrMonitor1 --
+[*] Ajustes de posicionamento de campos em tela
+   Por: José M S Junior
+
 08/01/2021
 -- ACBrMonitor1, DoACBrSATUnit, DoACBrBoletoUnit, DoACBrNFeUnit, ACBrMonitorConsts, ACBrMonitorConfig --
 [+] Melhorias e validações nas configurações em Tela: DFe, SAT, Boleto, e-mail

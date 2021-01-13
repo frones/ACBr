@@ -736,9 +736,9 @@ type
     Label107: TLabel;
     Label108: TLabel;
     Label109: TLabel;
+    labelbolcep: TLabel;
     lBolUF: TLabel;
     lBOLLogradouro: TLabel;
-    lblBOLCEP: TLabel;
     Label11: TLabel;
     Label110: TLabel;
     Label111: TLabel;

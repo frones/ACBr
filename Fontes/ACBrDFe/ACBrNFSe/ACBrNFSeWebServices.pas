@@ -2686,6 +2686,14 @@ begin
                      proGiap, proiiBrasilv2, proAEG]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
+
+    // Provedor Adm
+    {
+    Key := FPConfiguracoesNFSe.Geral.Emitente.Key;
+    Auth := FPConfiguracoesNFSe.Geral.Auth;
+    RequestId := FPConfiguracoesNFSe.Geral.RequestId;
+    Resposta := FPConfiguracoesNFSe.Geral.Resposta;
+    }
   end;
 end;
 
@@ -3068,6 +3076,9 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar.Envelope;
 
   case FProvedor of
+    proAdm:
+      FDadosEnvelope := FPDadosMsg;
+
     proThema:
       begin
         if (FNotasFiscais.Count < 4) then
@@ -4581,6 +4592,15 @@ begin
       begin
         CodVerificacaoRPS := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
       end
+      else if FProvedor = proAdm then
+      begin
+        {
+        Key      := FPConfiguracoesNFSe.Geral.Key;
+        Auth     := FPConfiguracoesNFSe.Geral.Auth;
+        RequestId:= FPConfiguracoesNFSe.Geral.RequestId;
+        Resposta := FPConfiguracoesNFSe.Geral.Resposta;
+        }
+      end;
     end;
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
@@ -4637,6 +4657,9 @@ begin
     // Italo 10/09/2019
     proDSFSJC:
       FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
+
+    proAdm:
+      FDadosEnvelope := FPDadosMsg;
   end;
 
   if (FPDadosMsg = '') or ((FDadosEnvelope = '') and (Provedor <> proIPM)) then
@@ -4951,6 +4974,8 @@ begin
       proFriburgo: FURI := 'Cancelamento_NF' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
       proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+
+      proAdm: FURI := NumeroLote;
     else
       FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                                    FPConfiguracoesNFSe.Geral.Emitente.InscMun +
@@ -5225,6 +5250,9 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.Envelope;
 
   case FProvedor of
+    proAdm:
+      FDadosEnvelope := FPDadosMsg;
+
     proTinus:
       begin
         if (FPConfiguracoesNFSe.Geral.CodigoMunicipio <> 2403251) and
@@ -5240,7 +5268,7 @@ begin
       FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
   end;
 
-  if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM])) then
+  if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM, proAdm])) then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
 end;

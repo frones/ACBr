@@ -360,6 +360,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
 
+    // Adm notas
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'Nfse') <> '');
+
     // Assessor Publico
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'NFSE') <> '');

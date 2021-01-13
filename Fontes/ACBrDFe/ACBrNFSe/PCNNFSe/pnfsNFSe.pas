@@ -452,6 +452,10 @@ type
     FEmail: String;
     Fcrc_estado: string;
     Fcrc: string;
+    FKey: String;
+    FAuth: String;
+    FRequestId: String;
+    FResposta: Integer;
     procedure Setcrc(const Value: string);
     procedure Setcrc_estado(const Value: string);
   public
@@ -481,6 +485,11 @@ type
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Telefone: String read FTelefone write FTelefone;
     property Email: String read FEmail write FEmail;
+    // adm Notas
+    property Key: String read FKey write FKey;
+    property Auth: String read FAuth write FAuth;
+    property RequestId: String read FRequestId write FRequestId;
+    property Resposta: Integer read FResposta write FResposta;
   end;
 
  TEndereco = class(TObject)
@@ -843,6 +852,7 @@ type
     FPercentualCargaTributariaEstadual: Double;
     FValorCargaTributariaEstadual: Double;
     Fid_sis_legado: integer;
+    FHoraEmissaoRps: TDateTime;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: String);
@@ -861,6 +871,8 @@ type
     property IdentificacaoRps: TIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
     property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
     property DataEmissaoRps: TDateTime read FDataEmissaoRps write FDataEmissaoRps;
+    // provedor adm notas
+    property HoraEmissaoRps: TDateTime read FHoraEmissaoRps write FHoraEmissaoRps;
     property NaturezaOperacao: TnfseNaturezaOperacao read FNaturezaOperacao write FNaturezaOperacao;
     property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;

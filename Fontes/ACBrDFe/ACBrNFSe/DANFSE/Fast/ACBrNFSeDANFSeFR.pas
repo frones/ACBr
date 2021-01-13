@@ -358,7 +358,7 @@ begin
       Add('Numero', ftString, 16);
       Add('Serie', ftString, 5);
       Add('Tipo', ftString, 1);
-      Add('Competencia', ftString, 7);
+      Add('Competencia', ftString, 20);
       Add('NumeroNFSe', ftString, 16);
       Add('NFSeSubstituida', ftString, 16);
       Add('DataEmissao', ftString, 19);
@@ -471,7 +471,7 @@ begin
       Add('Site', ftString, 50);
       Add('NaturezaOperacao', ftString, 50);
       Add('RegimeEspecialTributacao', ftString, 80);
-      Add('OptanteSimplesNacional', ftString, 11);
+      Add('OptanteSimplesNacional', ftString, 30);
       Add('IncentivadorCultural', ftString, 10);
       Add('TipoRecolhimento', ftString, 15);
       //
@@ -907,15 +907,34 @@ begin
       else
       begin
         FieldByName('RegimeEspecialTributacao').AsString := nfseRegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
-        FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
+
+        if Provedor = proAdm then
+        begin
+          if OptanteSimplesNacional = snSim then
+            FieldByName('OptanteSimplesNacional').AsString := 'Simples Nacinal / MEI'
+          else
+            FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
+        end
+        else
+          FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
+
         FieldByName('IncentivadorCultural').AsString     := SimNao(Integer(IncentivadorCultural));
 
         with Servico do
         begin
-          FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
           FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
-          FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
           FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento;
+
+          if Provedor = proAdm then
+          begin
+            FieldByName('CodigoMunicipio').AsString     := CodigoMunicipio;
+            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(MunicipioIncidencia);
+          end
+          else
+          begin
+            FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
+            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0)); // Antes:
+          end;
         end;
       end;
 

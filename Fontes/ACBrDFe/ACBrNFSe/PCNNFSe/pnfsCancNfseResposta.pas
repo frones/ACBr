@@ -328,6 +328,44 @@ begin
 
   try
     case Provedor of
+      proAdm:
+        begin
+          {'<CancelarNfseEnvioResposta xmlns="https://www.admnotafiscal.com.br/schema/nfse_v201.xsd">
+          <ListaMensagemRetorno>
+          <MensagemRetorno><Codigo>05</Codigo>
+          <Mensagem>Nota cancelada com sucesso</Mensagem>
+          </MensagemRetorno>
+          </ListaMensagemRetorno>
+          </CancelarNfseEnvioResposta>'}
+
+           if (leitor.rExtrai(1, 'CancelarNfseEnvioResposta') <> '') then
+           begin
+             infCanc.DataHora := 0;
+             InfCanc.FPedido.InfID.ID           := '';
+             InfCanc.FPedido.CodigoCancelamento := '';
+             if (Leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
+             begin
+               i := 0;
+               while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+               begin
+                 // Primeira versao: retorno era 5, depois mudaram para 05...
+                 if (Leitor.rCampo(tcStr, 'Codigo') = '5') or (Leitor.rCampo(tcStr, 'Codigo') = '05') then
+                   InfCanc.Sucesso  := 'S';
+
+                 if Pos('nota cancelada com sucesso', AnsiLowerCase(Leitor.rCampo(tcStr, 'Mensagem'))) = 0 then
+                 begin
+                   InfCanc.FMsgRetorno.New;
+                   InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+                   InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+                   InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+                 end;
+
+                 Inc(i);
+               end;
+             end;
+           end;
+        end;
+
       proGinfes: begin
                    if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
                    begin

@@ -64,12 +64,16 @@ const
   DSC_INDSTATUS = 'Indicador de Status';
   DSC_OUTRASINF = 'Outras Informações';
   DSC_SENHA = 'Senha';
+  DSC_KEY = 'Key';
+  DSC_AUTH = 'Auth';
+  DSC_REQUESTID = 'RequestId';
   DSC_FRASESECRETA = 'Frase Secreta';
   DSC_USUARIO = 'Usuario';
   DSC_ASSINATURA = 'Assinatura';
   DSC_DDD = 'DDD';
   DSC_TPTELEFONE = 'Tipo Telefone';
   DSC_VTOTREC = 'Valor Total Recebido';
+  DSC_CONDPAGTO = 'Condição de pagamento';
 
 implementation
 

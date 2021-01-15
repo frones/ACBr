@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2021
+-- ACBrNFSeConfiguracoes --
+[*] Correção no nome da propriedade que contem a URL de produção do serviço:
+    ConsultaURL.
+  Por: Lucio Bittes
+
 13/01/2021
 -- Diversos --
 [+] Implementação do novo provedor: Adm

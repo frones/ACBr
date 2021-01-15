@@ -863,7 +863,7 @@ begin
     FConfigURL.ProSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_P', 'SubstituiNFSe_' + CodIBGE     , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_P', 'AbrirSessao_' + CodIBGE       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProFecharSessao       := StringReplace(FPIniParams.ReadString('URL_P', 'FecharSessao_' + CodIBGE      , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
-    FConfigURL.ProConsultaURL        := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaURL_' + CodIBGE       , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.ProConsultaURL        := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaURL_' + CodIBGE       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_H, [rfReplaceAll]);
   end
   else
   begin
@@ -878,7 +878,7 @@ begin
     FConfigURL.ProSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_P', 'SubstituiNFSe'     , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_P', 'AbrirSessao'       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProFecharSessao       := StringReplace(FPIniParams.ReadString('URL_P', 'FecharSessao'      , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
-    FConfigURL.ProConsultaURL        := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaURL'       , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.ProConsultaURL        := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaURL'       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_H, [rfReplaceAll]);
   end;
 
   Texto := '';

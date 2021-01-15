@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnGerador, ACBrUtil, pcnConsts,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
@@ -62,6 +62,7 @@ type
     FevtCPRB: TtpSimNao;
     FevtPgtos: TtpSimNao;
     FcompSemMovto: string;
+    FevtAquis: TtpSimNao;
   public
     property evtServTm: TtpSimNao read FevtServTm write FevtServTm;
     property evtServPr: TtpSimNao read FevtServPr write FevtServPr;
@@ -69,6 +70,7 @@ type
     property evtAssDespRep: TtpSimNao read FevtAssDespRep write FevtAssDespRep;
     property evtComProd: TtpSimNao read FevtComProd write FevtComProd;
     property evtCPRB: TtpSimNao read FevtCPRB write FevtCPRB;
+    property evtAquis: TtpSimNao read FevtAquis write FevtAquis;
     property evtPgtos: TtpSimNao read FevtPgtos write FevtPgtos;
     property compSemMovto: string read FcompSemMovto write FcompSemMovto;
   end;
@@ -227,6 +229,8 @@ begin
   Gerador.wCampo(tcStr, '', 'evtAssDespRep', 1, 1, 1, SimNaoToStr(FinfoFech.evtAssDespRep));
   Gerador.wCampo(tcStr, '', 'evtComProd',    1, 1, 1, SimNaoToStr(FinfoFech.evtComProd));
   Gerador.wCampo(tcStr, '', 'evtCPRB',       1, 1, 1, SimNaoToStr(FinfoFech.evtCPRB));
+  if VersaoDF >= v1_05_00 then
+     Gerador.wCampo(tcStr, '', 'evtAquis',      1, 1, 1, SimNaoToStr(FinfoFech.evtAquis));
 
   if (FIdeEvento.perApur <= '2018-10') then
   begin
@@ -312,6 +316,8 @@ begin
       infoFech.evtAssDespRep := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAssDespRep', 'N'));
       infoFech.evtComProd    := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtComProd', 'N'));
       infoFech.evtCPRB       := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtCPRB', 'N'));
+      if VersaoDF >= v1_05_00 then
+         infoFech.evtAquis      := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAquis', 'N'));
       infoFech.evtPgtos      := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtPgtos', 'N'));
       infoFech.compSemMovto  := INIRec.ReadString(sSecao, 'compSemMovto', EmptyStr);
     end;

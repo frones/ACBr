@@ -49,7 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-04/01/2020
+18/01/2021
+--ACBrBoleto--
+[+] Adicionado campo para leitura do Código Tipo Pessoa Avalista
+Sacado.SacadoAvalista.Pessoa
+
+04/01/2021
 --ACBrBancoSicred--
 [*] Correção na conversão de código de ocorrências devido Banco trabalhar com códigos Alfanuméricos.
 

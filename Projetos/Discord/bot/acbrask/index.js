@@ -258,12 +258,12 @@ client.on('message', function(message) {
   // Whats is our Best question Score ?
   var bestScore = -1;
   var bestHits = -1;
-  var newBestScore = -1;
+  var ni = -1;
   qi = -1;
   for (var i = 0; i < questionScore.length; i++) {
-    newBestScore = -1;
+    ni = -1;
     
-    if (questionScore[i] < 0){
+    if (questionScore[i] <= 0){
       continue
     };
           
@@ -272,18 +272,18 @@ client.on('message', function(message) {
         const w1 = questions[qi].keywords.split(' ');
         const w2 = questions[i].keywords.split(' ');
         if (w2 >= w1) {
-          newBestScore = i;
+          ni = i;
         }        
       } else if (botConf.draw = 1) {           // Draw, use the Higher Question in List
-        newBestScore = i;
+        ni = i;
       } 
     } else if (questionScore[i] > bestScore) {
-      newBestScore = i;
+      ni = i;
     }
     
-    if (newBestScore > -1) {
-      bestScore = questionScore[newBestScore];
-      qi = newBestScore;
+    if (ni > -1) {
+      bestScore = questionScore[ni];
+      qi = ni;
       doLog('  new bestScore', bestScore, qi);
     }
   }

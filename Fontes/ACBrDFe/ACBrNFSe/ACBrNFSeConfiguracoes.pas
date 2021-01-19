@@ -377,6 +377,10 @@ type
     FConfigRemover: TConfigRemover;
     FBanco_P: String;
     FBanco_H: String;
+    FKey: String;
+    FAuth: String;
+    FRequestId: String;
+    FResposta: Integer;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -418,6 +422,12 @@ type
     property Emitente: TEmitenteConfNFSe read FEmitente write FEmitente;
     property Banco_P: String read FBanco_P;
     property Banco_H: String read FBanco_H;
+
+    // provedor AdmNotas
+    property Key: String read FKey write FKey;
+    property Auth: String read FAuth write FAuth;
+    property RequestId: String read FRequestId write FRequestId;
+    property Resposta: Integer read FResposta write FResposta; // Resposta para envio de lote se for = 0 = Sem | 1 = Devolve NumeroDanota, CodigoDeVerificacao
   end;
 
   { TArquivosConfNFSe }

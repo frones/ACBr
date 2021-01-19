@@ -574,13 +574,11 @@ begin
           DtStr := Leitor.rCampo(tcStr, 'Competencia');
 
           if Pos('-', DtStr) > 0 then // '2020-11-23'
-          begin
-            DtStr := Copy(DtStr, 9, 2) + '/' + Copy(DtStr, 6, 2) + '/' + Copy(DtStr, 1, 4);
-
-            Dt := StrToDateDef( DtStr, 0 );
-          end
+            DtStr := Copy(DtStr, 9, 2) + '/' + Copy(DtStr, 6, 2) + '/' + Copy(DtStr, 1, 4)
           else
-            Dt := StrToDateDef(Leitor.rCampo(tcStr, 'Competencia'), 0);
+            DtStr := Leitor.rCampo(tcStr, 'Competencia');
+
+          Dt := StrToDateDef( DtStr, 0 );
 
           if Dt = 0 then
             DtStr := Leitor.rCampo(tcStr, 'Competencia')
@@ -2203,13 +2201,11 @@ begin
         DtStr := Leitor.rCampo(tcStr, 'Competencia');
 
         if Pos('-', DtStr) > 0 then // '2020-11-23'
-        begin
-          DtStr := Copy(DtStr, 9, 2) + '/' + Copy(DtStr, 6, 2) + '/' + Copy(DtStr, 1, 4);
-
-          Dt := StrToDateDef( DtStr, 0 );
-        end
+          DtStr := Copy(DtStr, 9, 2) + '/' + Copy(DtStr, 6, 2) + '/' + Copy(DtStr, 1, 4)
         else
-          Dt := StrToDateDef(Leitor.rCampo(tcStr, 'Competencia'), 0);
+          DtStr := Leitor.rCampo(tcStr, 'Competencia');
+
+        Dt := StrToDateDef( DtStr, 0 );
 
         if Dt = 0 then
           DtStr := Leitor.rCampo(tcStr, 'Competencia')

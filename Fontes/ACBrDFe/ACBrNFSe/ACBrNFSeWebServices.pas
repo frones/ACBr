@@ -2688,12 +2688,10 @@ begin
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
 
     // Provedor Adm
-    {
-    Key := FPConfiguracoesNFSe.Geral.Emitente.Key;
+    Key := FPConfiguracoesNFSe.Geral.Key;
     Auth := FPConfiguracoesNFSe.Geral.Auth;
     RequestId := FPConfiguracoesNFSe.Geral.RequestId;
     Resposta := FPConfiguracoesNFSe.Geral.Resposta;
-    }
   end;
 end;
 
@@ -4594,12 +4592,10 @@ begin
       end
       else if FProvedor = proAdm then
       begin
-        {
         Key      := FPConfiguracoesNFSe.Geral.Key;
         Auth     := FPConfiguracoesNFSe.Geral.Auth;
         RequestId:= FPConfiguracoesNFSe.Geral.RequestId;
         Resposta := FPConfiguracoesNFSe.Geral.Resposta;
-        }
       end;
     end;
 
@@ -6517,8 +6513,6 @@ begin
 end;
 
 procedure TNFSeConsultarURL.DefinirDadosMsg;
-var
-  i: Integer;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsURL.CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsURL.DadosStr;

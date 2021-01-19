@@ -1,0 +1,8 @@
+{
+ "token": "BOT_TOKEN",
+ "prefix": "?",
+ "daysGreeting": 10,
+ "log": false,
+ "draw": 0
+}
+

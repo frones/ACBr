@@ -1,0 +1,34 @@
+[
+ {
+  "keywords": "idade",
+  "mention": true,
+  "sequence": false,
+  "score": 0,
+  "channel": "%",
+  "msg": ["tenho apenas 1 ano", "1 ano", "sou um bebe.. não completei 1 ano", "1", "um ano"]
+ },
+ {
+  "keywords": "+baixar|encontrar|download +dll|dlls|bibliotecas|sdk +tef",
+  "mention": false,
+  "sequence": false,
+  "score": 60,
+  "channel": "%tef%",
+  "msg": ["Você pode baixar o SDK atualizado do TEF em https://projetoacbr.com.br/tef/#integracao", "https://projetoacbr.com.br/tef/#integracao", "Segue o link https://projetoacbr.com.br/tef/#integracao"] 
+ },
+ {
+  "keywords": "+baixar|encontrar|download +acbrmonitor|acbrmonitorplus",
+  "mention": false, 
+  "sequence": false,
+  "score": 0,
+  "channel": "%",
+  "msg": [" segue o link da Página para baixar o ACBrMonitor mais atual: https://www.projetoacbr.com.br/forum/files/category/16-acbrmonitorplus-sac/)"]
+ },  
+ {
+  "keywords": "+baixar|encontrar|download +acbrmonitor|acbrmonitorplus +linux",
+  "mention": false, 
+  "sequence": false,
+  "score": 0,
+  "channel": "%",
+  "msg": [" segue o link da versão Linux 64: https://www.projetoacbr.com.br/forum/files/file/381-acbrmonitorplus-linux-64-bits/)"] 
+ } 
+]

@@ -1,0 +1,14 @@
+{
+  "name": "acbrask",
+  "version": "1.0.0",
+  "description": "Robo para indicar Links aos usuários, baseado em regras de palavras chaves nas perguntas dos usuários. usa o Prefixo '?'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Simões de Almeida",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}

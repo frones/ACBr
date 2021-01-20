@@ -67,7 +67,7 @@ function DoStart()
         cd $AppPath
       fi
 
-      $AppName $AppParams &> /dev/null &
+      $AppName $AppParams &
       DoStatus
    else
       GetPID

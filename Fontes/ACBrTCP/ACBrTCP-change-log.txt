@@ -36,6 +36,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+20/01/2021
+-- ACBrConsultaCNPJ --
+[-] Ajuste para não tentar achar o Cod.IBGE de Cidades com Nome e UF com asterísticos
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=60734
+    (por: DSA)
+
 09/11/2020
 -- ACBrConsultaCNPJ --
 [-] Correção para leitura de várias páginas de CNAE2

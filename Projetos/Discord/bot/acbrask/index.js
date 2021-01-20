@@ -88,7 +88,12 @@ client.on('message', function(message) {
       commandBody = message.content;
     }
   }
-    
+  
+  // Remove punctuation Chars at the end
+  while ('?!.'.indexOf(commandBody.slice(-1)) > -1) {
+    commandBody = commandBody.slice(0, commandBody.length-1);
+  }
+	
   commandBody = commandBody.trim().toLowerCase();
   doLog('commandBody: '+commandBody);
 

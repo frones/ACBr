@@ -1,0 +1,12 @@
+[Unit]
+Description=ACBr ASK Discord Node.js bot
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=tux
+ExecStart=/usr/bin/node-default /home/tux/pascal/comp/ACBr/Projetos/Discord/bot/acbrask/index.js
+
+[Install]
+WantedBy=multi-user.target

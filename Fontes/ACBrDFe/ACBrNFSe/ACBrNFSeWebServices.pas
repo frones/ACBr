@@ -837,109 +837,111 @@ begin
 
   Texto := Texto + FDadosEnvelope;
 
-  if FProvedor = proIPM then
-  begin
-    Bound := IntToHex( Random( MaxInt ), 8 ) + '_Synapse_boundary';
+  case FProvedor of
+    proIPM:
+      begin
+        Bound := IntToHex( Random( MaxInt ), 8 ) + '_Synapse_boundary';
 
-    UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
-    if UsuarioWeb = '' then
-      UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
+        UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
+        if UsuarioWeb = '' then
+          UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
 
-    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
-    if SenhaWeb = '' then
-      SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
+        SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
+        if SenhaWeb = '' then
+          SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
 
-    if UsuarioWeb = '' then
-      GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
+        if UsuarioWeb = '' then
+          GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
 
-    if SenhaWeb = '' then
-      GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
+        if SenhaWeb = '' then
+          GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
 
-    Texto := Texto +
-      '--' + Bound + sLineBreak +
-      'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'login', '"') + sLineBreak +
-      sLineBreak +
+        Texto := Texto +
+          '--' + Bound + sLineBreak +
+          'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'login', '"') + sLineBreak +
+          sLineBreak +
 
-      UsuarioWeb +
+          UsuarioWeb +
 
-      sLineBreak + '--' + Bound + sLineBreak +
-      'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'senha', '"') + sLineBreak +
-      sLineBreak +
+          sLineBreak + '--' + Bound + sLineBreak +
+          'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'senha', '"') + sLineBreak +
+          sLineBreak +
 
-      SenhaWeb +
+          SenhaWeb +
 
-      sLineBreak + '--' + Bound + sLineBreak +
-      'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'f1', '"' ) + '; ' +
-      'filename=' + AnsiQuotedStr( GerarPrefixoArquivo + '-' + FPArqEnv + '.xml', '"') + sLineBreak +
-      'Content-Type: text/xml' + sLineBreak +
-      sLineBreak +
+          sLineBreak + '--' + Bound + sLineBreak +
+          'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'f1', '"' ) + '; ' +
+          'filename=' + AnsiQuotedStr( GerarPrefixoArquivo + '-' + FPArqEnv + '.xml', '"') + sLineBreak +
+          'Content-Type: text/xml' + sLineBreak +
+          sLineBreak +
 
-      FPDadosMsg +
+          FPDadosMsg +
 
-      sLineBreak +
-      '--' + Bound + '--' + sLineBreak;
+          sLineBreak +
+          '--' + Bound + '--' + sLineBreak;
 
-    FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr( Bound, '"' );
-  end
+        FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr( Bound, '"' );
+      end
   else
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-      NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
-    else
-      NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
-
-    if FProvedor in [proSafeWeb, proTcheInfov2] then
-      FPCabMsg := StringReplace(FPCabMsg, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
-
-    CabMsg := FPCabMsg;
-    if FCabecalhoStr then
     begin
-      CabMsg := StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]);
-      CabMsg := StringReplace(CabMsg, '>', '&gt;', [rfReplaceAll]);
-    end;
+      if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+        NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
+      else
+        NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
 
-    CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpaceTemp, [rfReplaceAll]);
-    CabMsg := StringReplace(CabMsg, '%NameSpaceXML%', NameSpace, [rfReplaceAll]);
-    CabMsg := StringReplace(CabMsg, '%VersaoAtrib%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoAtrib, [rfReplaceAll]);
-    CabMsg := StringReplace(CabMsg, '%VersaoDados%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados, [rfReplaceAll]);
+      if FProvedor in [proSafeWeb, proTcheInfov2] then
+        FPCabMsg := StringReplace(FPCabMsg, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
 
-    DadosMsg := FPDadosMsg;
-    if FDadosStr then
-    begin
-      DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
-      DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
-    end;
+      CabMsg := FPCabMsg;
+      if FCabecalhoStr then
+      begin
+        CabMsg := StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]);
+        CabMsg := StringReplace(CabMsg, '>', '&gt;', [rfReplaceAll]);
+      end;
 
-    // Alterações no conteudo de DadosMsg especificas para alguns provedores
-    case FProvedor of
-      proGinfes:
-        begin
-          if (FPLayout = LayNfseCancelaNfse) then
+      CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpaceTemp, [rfReplaceAll]);
+      CabMsg := StringReplace(CabMsg, '%NameSpaceXML%', NameSpace, [rfReplaceAll]);
+      CabMsg := StringReplace(CabMsg, '%VersaoAtrib%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoAtrib, [rfReplaceAll]);
+      CabMsg := StringReplace(CabMsg, '%VersaoDados%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados, [rfReplaceAll]);
+
+      DadosMsg := FPDadosMsg;
+      if FDadosStr then
+      begin
+        DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
+        DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
+      end;
+
+      // Alterações no conteudo de DadosMsg especificas para alguns provedores
+      case FProvedor of
+        proGinfes:
           begin
-            DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
-            DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
+            if (FPLayout = LayNfseCancelaNfse) then
+            begin
+              DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
+              DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
+            end;
           end;
-        end;
 
-      proPronim:
-        DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+        proPronim:
+          DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
-      proPronimV2:
-        DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+        proPronimV2:
+          DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 
-//      proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
+  //      proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
+      end;
+
+      // %SenhaMsg%  : Representa a Mensagem que contem o usuário e senha
+      // %NameSpace% : Representa o NameSpace de Homologação/Produção
+      // %CabMsg%    : Representa a Mensagem de Cabeçalho
+      // %DadosMsg%  : Representa a Mensagem de Dados
+
+      Texto := StringReplace(Texto, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
+      Texto := StringReplace(Texto, '%NameSpace%', NameSpaceTemp  , [rfReplaceAll]);
+      Texto := StringReplace(Texto, '%CabMsg%'   , CabMsg     , [rfReplaceAll]);
+      Texto := StringReplace(Texto, '%DadosMsg%' , DadosMsg   , [rfReplaceAll]);
+      Texto := StringReplace(Texto, '%inscricaoMunicipal%', FPConfiguracoesNFSe.Geral.Emitente.InscMun, [rfReplaceAll]);
     end;
-
-    // %SenhaMsg%  : Representa a Mensagem que contem o usuário e senha
-    // %NameSpace% : Representa o NameSpace de Homologação/Produção
-    // %CabMsg%    : Representa a Mensagem de Cabeçalho
-    // %DadosMsg%  : Representa a Mensagem de Dados
-
-    Texto := StringReplace(Texto, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
-    Texto := StringReplace(Texto, '%NameSpace%', NameSpaceTemp  , [rfReplaceAll]);
-    Texto := StringReplace(Texto, '%CabMsg%'   , CabMsg     , [rfReplaceAll]);
-    Texto := StringReplace(Texto, '%DadosMsg%' , DadosMsg   , [rfReplaceAll]);
-    Texto := StringReplace(Texto, '%inscricaoMunicipal%', FPConfiguracoesNFSe.Geral.Emitente.InscMun, [rfReplaceAll]);
   end;
 
   {Configura Authorization para GIAP}
@@ -951,11 +953,15 @@ begin
 
   FPEnvelopeSoap := Texto;
 
-  if (FPConfiguracoesNFSe.Geral.Provedor = proCenti) and
-     (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 5218805 {Rio Verde-GO}) then
+  if (FPConfiguracoesNFSe.Geral.Provedor = proCenti)
+//    and
+//     (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 5218805 {Rio Verde-GO})
+     then
   begin
     FPMimeType := 'application/json';
     DadosMsg := StringReplace(FPDadosMsg, '"', '''', [rfReplaceAll]);
+    DadosMsg := StringReplace(DadosMsg, #10, '', [rfReplaceAll]);
+    DadosMsg := StringReplace(DadosMsg, #13, '', [rfReplaceAll]);
     FPEnvelopeSoap := Format('{"xml": "%s", "usuario": "%s", "senha": "%s"}',
      [DadosMsg, FPConfiguracoesNFSe.Geral.UserWeb, FPConfiguracoesNFSe.Geral.SenhaWeb]);
   end;

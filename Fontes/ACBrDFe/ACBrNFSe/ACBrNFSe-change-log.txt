@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2021
+-- ACBrNFSeWebServices --
+[*] Ajuste para atender todas as cidades que se utilizam do provedor Centi
+  Por: Italo Giurizzato Junior
+
 15/01/2021
 -- ACBrNFSeConfiguracoes --
 [*] Correção no nome da propriedade que contem a URL de produção do serviço:

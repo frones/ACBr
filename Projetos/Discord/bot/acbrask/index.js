@@ -40,6 +40,7 @@ function doLog(...values) {
 }
 
 client.on('ready', () => {
+  client.user.setStatus('online');
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
@@ -98,7 +99,7 @@ client.on('message', function(message) {
   doLog('commandBody: '+commandBody);
 
   // Splitting arguments, and removing empty ones...
-  const argsTemp = commandBody.split(" ");
+  const argsTemp = commandBody.split(/ +/);
   var args = [];
   for(var a of argsTemp) {
     a = a.trim();
@@ -132,7 +133,7 @@ client.on('message', function(message) {
   if (command === 'ping') {
     doLog('ping');
     const timeTaken = Date.now() - message.createdTimestamp;
-    message.reply(' Pong! a lantência foi '+timeTaken+' ms.');
+    message.reply(' \n :ping_pong: \n Pong! A lantência foi '+timeTaken+' ms.');
     return
   }
 
@@ -217,7 +218,7 @@ client.on('message', function(message) {
       continue;
     }
     
-    var words = q.keywords.split(' ');
+    var words = q.keywords.split(/ +/);
     var hits = 0;
     var af = -1;
     var alf = -1;
@@ -274,8 +275,8 @@ client.on('message', function(message) {
           
     if (questionScore[i] = bestScore) {        // A Draw
       if (botConf.draw = 0) {                  // Draw, use the Question with more Words..
-        const w1 = questions[qi].keywords.split(' ');
-        const w2 = questions[i].keywords.split(' ');
+        const w1 = questions[qi].keywords.split(/ +/);
+        const w2 = questions[i].keywords.split(/ +/);
         if (w2 >= w1) {
           ni = i;
         }        

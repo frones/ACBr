@@ -1474,6 +1474,21 @@ begin
         end;
       end;
     end;
+
+    if FProvedor = proAssessorPublico then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'INCONSISTENCIA') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'ERRO', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.New;
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ERRO');
+
+          inc(i);
+        end;
+      end;
+    end;
   except
     Result := False;
   end;

@@ -246,6 +246,7 @@ var
   CM: String;
 begin
   Result := False;
+  Leitor.Grupo := Leitor.Arquivo;
 
   if FProvedor = proNenhum then
   begin
@@ -292,26 +293,22 @@ begin
   VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
   LayoutXML := ProvedorToLayoutXML(FProvedor);
 
-  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') or (Leitor.rExtrai(1, 'rps') <> '') or
-     (Leitor.rExtrai(1, 'LoteRps') <> '') then
-  begin
-    case LayoutXML of
-      loABRASFv1:    Result := LerRPS_ABRASF_V1;
-      loABRASFv2:    Result := LerRPS_ABRASF_V2;
-      loEGoverneISS: Result := False; // Falta implementar
-      loEL:          Result := LerRps_EL;
-      loEquiplano:   Result := LerRPS_Equiplano;
-      loGoverna:     Result := LerRps_Governa;
-      loInfisc:      Result := False; // Falta implementar
-      loISSDSF:      Result := LerRPS_ISSDSF;
-      loAgili:       Result := LerRPS_Agili;
-      loSP:          Result := LerRPS_SP;
-      loSMARAPD:     Result := LerNFSe_Smarapd;
-      loAssessorPublico: Result := LerRPS_AssessorPublico;
-      loSiat:        Result := LerRPS_Siat;     
-    else
-      Result := False;
-    end;
+  case LayoutXML of
+    loABRASFv1:    Result := LerRPS_ABRASF_V1;
+    loABRASFv2:    Result := LerRPS_ABRASF_V2;
+    loEGoverneISS: Result := False; // Falta implementar
+    loEL:          Result := LerRps_EL;
+    loEquiplano:   Result := LerRPS_Equiplano;
+    loGoverna:     Result := LerRps_Governa;
+    loInfisc:      Result := False; // Falta implementar
+    loISSDSF:      Result := LerRPS_ISSDSF;
+    loAgili:       Result := LerRPS_Agili;
+    loSP:          Result := LerRPS_SP;
+    loSMARAPD:     Result := LerNFSe_Smarapd;
+    loAssessorPublico: Result := LerRPS_AssessorPublico;
+    loSiat:        Result := LerRPS_Siat;
+  else
+    Result := False;
   end;
 end;
 
@@ -1407,7 +1404,7 @@ begin
     if TabServicosExt then
       NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
     else
-     NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+      NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
     NFSe.Servico.Valores.ValorServicos        := Leitor.rCampo(tcDe2, 'vlServico');
     NFSe.Servico.Valores.Aliquota             := Leitor.rCampo(tcDe2, 'vlAliquota');
@@ -1438,13 +1435,22 @@ end;
 
 function TNFSeR.LerRps_Governa: Boolean;
 begin
-  Leitor.rExtrai(1, 'LoteRps');
-  NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
-  NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
-  NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');
-  NFSe.CodigoVerificacao            := Leitor.rCampo(tcStr, 'CodVer');
-  NFSe.IdentificacaoRps.Numero      := Leitor.rCampo(tcStr, 'NumRps');
-  Result := True;
+  if (Leitor.rExtrai(1, 'LoteRps') <> '') then
+  begin
+    NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
+    NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');
+
+    if (Leitor.rExtrai(2, 'Rps') <> '') then
+    begin
+      NFSe.dhRecebimento           := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
+      NFSe.CodigoVerificacao       := Leitor.rCampo(tcStr, 'CodVer');
+      NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
+
+      Result := True;
+    end;
+  end
+  else
+    Result := False;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////

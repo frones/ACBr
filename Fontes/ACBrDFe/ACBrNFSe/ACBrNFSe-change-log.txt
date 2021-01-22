@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2021
+-- ACBrNFSeNotasFiscais/pnfsNFSeR --
+[*] Ajustes para ler o XML do RPS de forma correta - Provedor Governa.
+  Por: Italo Giurizzato Junior
+
 21/01/2021
 -- pnfsLerListaNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/60925-tratamento-de-retorno-da-nfs-e-provedor-assessorpublico/?_rid=63

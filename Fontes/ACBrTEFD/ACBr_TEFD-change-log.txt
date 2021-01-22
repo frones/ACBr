@@ -46,6 +46,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/20
+-- ACBrTEFD --
+[-] Ajuste em "TACBrTEFD.CancelarTransacoesPendentes" para não chamar o evento
+    "OnDepoisCancelarTransacoes", pois o mesmo já é chamado internamente, em
+    "TACBrTEFDClass.CancelarTransacoesPendentesClass".
+
+-- ACBrTEFDClass --
+[-] Ajuste em "TACBrTEFDClass.CancelarTransacoesPendentesClass", para evitar
+    situação de Loop infinito.
+    - Caso uma transação que já esteja confirmada, não obtenha sucesso na chamada
+      ao método de Cancelamento (CNC), o componente irá perguntar ao Operador, se
+      deseja tentar a operação de Cancelamento novamente.
+      - Caso o Operador opte por Sim, uma nova operação CNC será invocada e verificada
+      - Caso o Operador opte por Não, a transação será removida da Lista de Transações
+        pententes e permanecerá Confirmada.
+      - Apenas as transações que foram Estornadas (NCN) ou Canceladas (CNC) com
+        sucesso, são anexadas a lista de transações Canceladas e passadas como
+        parâmetro a "OnDepoisCancelarTransacoes".
+    (por: DSA)
+
 12/12/20
 -- ACBrTEFD, ACBrTEFDClass, ACBrTEFDPayGoWeb, ACBrTEFDBanese, ACBrTEFDCliDTEF,
    ACBrTEFDCliSiTef, ACBrTEFDTicketCar, ACBrTEFDVeSPague --

@@ -82,6 +82,8 @@ const
    CACBrTEFD_Erro_SemRequisicao = 'Nenhuma Requisição Iniciada' ;
    CACBrTEFD_Erro_OutraFormaPagamento = 'Gostaria de continuar a transação com '+
                                    'outra(s) forma(s) de pagamento ?';
+   CACBrTEFD_Erro_CNCNaoEfetuado = 'Não foi possível Cancelar a Transação TEF.'+sLineBreak+
+                                   'Deseja tentar novamente ?';
 
 type
 
@@ -1594,7 +1596,7 @@ Var
   RespostaCancela     : TACBrTEFDResp ;
   RespostasCanceladas : TACBrTEFDRespostasPendentes ;
   I, Topo             : Integer;
-  JaCancelado         : Boolean ;
+  JaCancelado, Ok     : Boolean ;
   ArqMask             : String;
 begin
   GravaLog( Name +' CancelarTransacoesPendentesClass ');
@@ -1695,10 +1697,13 @@ begin
                  end;
               end;
 
+              Ok := True;
               if Resp.CNFEnviado and (Resp.Header <> 'CHQ') then
                begin
-                 if not CNC then
-                    raise EACBrTEFDErro.Create('CNC nao efetuado') ;
+                 Ok := CNC;
+                 if not Ok then
+                   if (TACBrTEFD(Owner).DoExibeMsg( opmYesNo, CACBrTEFD_Erro_CNCNaoEfetuado ) = mrYes) then
+                      raise EACBrTEFDErro.Create('CNC nao efetuado');
                end
               else
                  NCN;
@@ -1707,7 +1712,8 @@ begin
               ArquivosVerficar.Delete( 0 );
 
               { Adicionando na lista de Respostas Canceladas }
-              RespostasCanceladas.Add( RespostaCancela );
+              if Ok then
+                RespostasCanceladas.Add( RespostaCancela );
            except
            end;
          end

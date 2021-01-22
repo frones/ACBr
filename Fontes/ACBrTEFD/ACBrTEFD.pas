@@ -824,18 +824,13 @@ Var
 begin
   { Ajustando o mesmo valor nas Classes de TEF, caso elas usem o valor default }
   try
-     For I := 0 to fTEFList.Count-1 do
-     begin
-       if fTEFList[I].Habilitado then
-          fTEFList[I].CancelarTransacoesPendentesClass;
-     end;
+    For I := 0 to fTEFList.Count-1 do
+    begin
+      if fTEFList[I].Habilitado then
+        fTEFList[I].CancelarTransacoesPendentesClass;
+    end;
   finally
-     try
-        if Assigned( fOnDepoisCancelarTransacoes ) then
-           fOnDepoisCancelarTransacoes( RespostasPendentes );
-     finally
-        RespostasPendentes.Clear;
-     end;
+    RespostasPendentes.Clear;
   end;
 end;
 

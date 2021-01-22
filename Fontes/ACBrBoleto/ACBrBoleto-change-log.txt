@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2021
+--ACBrBoleto--
+[*] Ajuste na geração mensagens na Remessa CNAB400 removendo acentos
+
+--ACBrBancoSantander--
+[*] Remoção do campo ValorDocumento na leitura Retorno CNAB240 Segmento U
+
 18/01/2021
 --ACBrBoleto--
 [+] Adicionado campo para leitura do Código Tipo Pessoa Avalista

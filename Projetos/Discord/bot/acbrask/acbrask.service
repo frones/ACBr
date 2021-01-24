@@ -1,12 +1,15 @@
 [Unit]
 Description=ACBr ASK Discord Node.js bot
+Documentation=http://svn.code.sf.net/p/acbr/code/trunk2/Projetos/Discord/bot/acbrask/
 After=network.target
-StartLimitIntervalSec=0
 
 [Service]
+Environment=NODE_PORT=3000
 Type=simple
 User=tux
-ExecStart=/usr/bin/node-default /home/tux/pascal/comp/ACBr/Projetos/Discord/bot/acbrask/index.js
+ExecStart=/usr/bin/node /home/tux/pascal/comp/ACBr/Projetos/Discord/bot/acbrask/index
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+

@@ -50,6 +50,11 @@ client.on('message', function(message) {
     return;
   }
 
+  const status = client.user.presence.status;  
+  if(status != "online"){
+    client.user.setStatus('online');
+  }
+  
   doLog('\n--------------------',);
   doLog('message.content:',message.content);
   

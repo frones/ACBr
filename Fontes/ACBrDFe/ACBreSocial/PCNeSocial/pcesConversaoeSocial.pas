@@ -2267,7 +2267,7 @@ end;
 function eStpCaepfToStr(const t: tpCaepf): string;
 begin
   if t <> tcVazio then
-    result := EnumeradoToStr2(t, TGenericosString1_3)
+    result := EnumeradoToStr2(t, TGenericosString0_3)
   else
     result := '';
 end;
@@ -2275,7 +2275,7 @@ end;
 function eSStrTotpCaepf(var ok: boolean; const s: string): tpCaepf;
 begin
   if Trim(s) <> '' then
-    result := tpCaepf(StrToEnumerado2(ok, s, TGenericosString1_3))
+    result := tpCaepf(StrToEnumerado2(ok, s, TGenericosString0_3))
   else
     result := tcVazio;
 end;

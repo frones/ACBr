@@ -232,7 +232,7 @@ type
     btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
     btnManifDestConfirmacao: TButton;
-    btnDistribuicaoDFe: TButton;
+    btnDistrDFePorUltNSU: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -279,6 +279,9 @@ type
     edtURLPFX: TEdit;
     Label52: TLabel;
     cbTipoEmpresa: TComboBox;
+    btnAtorInterNFeTransp: TButton;
+    btnDistrDFePorNSU: TButton;
+    btnDistrDFePorChave: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -335,13 +338,16 @@ type
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarImprimirClick(Sender: TObject);
-    procedure btnDistribuicaoDFeClick(Sender: TObject);
+    procedure btnDistrDFePorUltNSUClick(Sender: TObject);
     procedure btnManifDestConfirmacaoClick(Sender: TObject);
     procedure ACBrNFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
     procedure btVersaoClick(Sender: TObject);
+    procedure btnAtorInterNFeTranspClick(Sender: TObject);
+    procedure btnDistrDFePorNSUClick(Sender: TObject);
+    procedure btnDistrDFePorChaveClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -543,6 +549,10 @@ begin
     Ide.tpImp     := tiNFCe;
     Ide.indFinal  := cfConsumidorFinal;
     Ide.indPres   := pcPresencial;
+
+    // Valores aceitos:
+    // iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+//    Ide.indIntermed := iiSemOperacao;
 
 //     Ide.dhCont := date;
 //     Ide.xJust  := 'Justificativa Contingencia';
@@ -806,6 +816,11 @@ begin
       vPag := 100;
     end;
 
+    // O grupo infIntermed só deve ser gerado nos casos de operação não presencial
+    // pela internet em site de terceiros (Intermediadores).
+//    infIntermed.CNPJ := '';
+//    infIntermed.idCadIntTran := '';
+
     InfAdic.infCpl     :=  '';
     InfAdic.infAdFisco :=  '';
 
@@ -865,6 +880,10 @@ begin
   NotaF.NFe.Ide.finNFe    := fnNormal;
   if  Assigned( ACBrNFe1.DANFE ) then
     NotaF.NFe.Ide.tpImp     := ACBrNFe1.DANFE.TipoDANFE;
+
+  // Valores aceitos:
+  // iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+//  NotaF.NFe.Ide.indIntermed := iiSemOperacao;
 
 //  NotaF.NFe.Ide.dhCont := date;
 //  NotaF.NFe.Ide.xJust  := 'Justificativa Contingencia';
@@ -1042,7 +1061,6 @@ begin
   Produto.Prod.veicProd.VIN     := '';
   Produto.Prod.veicProd.condVeic := cvAcabado;
   Produto.Prod.veicProd.cMod    := '';
-
 
 // Campos de Rastreabilidade do produto
   {
@@ -1371,6 +1389,11 @@ begin
   Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
+    // O grupo infIntermed só deve ser gerado nos casos de operação não presencial
+    // pela internet em site de terceiros (Intermediadores).
+//  NotaF.NFe.infIntermed.CNPJ := '';
+//  NotaF.NFe.infIntermed.idCadIntTran := '';
+
   NotaF.NFe.InfAdic.infCpl     :=  '';
   NotaF.NFe.InfAdic.infAdFisco :=  '';
 
@@ -1462,6 +1485,89 @@ begin
     ShowMessage('Arquivo gravado em: ' + NomeArq);
     memoLog.Lines.Add('Arquivo gravado em: ' + NomeArq);
   end;
+end;
+
+procedure TfrmACBrNFe.btnAtorInterNFeTranspClick(Sender: TObject);
+var
+  xTitulo, Chave, idLote, CNPJ, nSeqEvento, xUF, TipoAtor, VerAplic,
+  AutXML, TipoAutoriz: string;
+  Ok: Boolean;
+begin
+  xTitulo := 'Evento Ator Interessado na NF-e - Transportador';
+
+  idLote := '1';
+  if not(InputQuery(xTitulo, 'Numero do Lote de envio do Evento', idLote)) then
+     exit;
+
+  Chave := '';
+  if not(InputQuery(xTitulo, 'Chave da NF-e', Chave)) then
+     exit;
+
+  Chave := Trim(OnlyNumber(Chave));
+
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery(xTitulo, 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+
+  nSeqEvento := '1';
+  if not(InputQuery(xTitulo, 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
+     exit;
+
+  xUF := 'SP';
+  if not(InputQuery(xTitulo, 'UF do emitente do Evento', xUF)) then
+     exit;
+
+  {
+    1 = Empresa Emitente,
+    2 = Empresa Destinatária,
+    3 = Empresa Transportadora.
+  }
+  TipoAtor := '1';
+  if not(InputQuery(xTitulo, 'Tipo de Ator do Evento (1, 2 ou 3)', TipoAtor)) then
+     exit;
+
+  VerAplic := '1.00';
+  if not(InputQuery(xTitulo, 'Versão do Aplicativo do emitente', VerAplic)) then
+     exit;
+
+  AutXML := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do Autorizado', AutXML)) then
+     exit;
+
+  {
+    0 = Não permite;
+    1 = Permite o transportador autorizado pelo emitente ou destinatário
+        autorizar outros transportadores para ter acesso ao download da NF-e
+  }
+  TipoAutoriz := '0';
+  if not(InputQuery(xTitulo, 'Tipo de Autorização (0 ou 1)', TipoAutoriz)) then
+     exit;
+
+  ACBrNFe1.EventoNFe.Evento.Clear;
+
+  with ACBrNFe1.EventoNFe.Evento.New do
+  begin
+    infEvento.chNFe      := Chave;
+    infEvento.CNPJ       := CNPJ;
+    infEvento.dhEvento   := now;
+    infEvento.tpEvento   := teAtorInteressadoNFe;
+    infEvento.nSeqEvento := StrToIntDef(nSeqEvento, 1);
+
+    infEvento.detEvento.cOrgaoAutor := UFtoCUF(xUF);
+    infEvento.detEvento.tpAutor     := StrToTipoAutor(Ok, TipoAtor);
+    infEvento.detEvento.verAplic    := VerAplic;
+
+    // No momento a SEFAZ só aceita apenas 1 CNPJ/CPF
+    with InfEvento.detEvento.autXML.New do
+      CNPJCPF := AutXML;
+
+    infEvento.detEvento.tpAutorizacao := StrToAutorizacao(Ok, TipoAutoriz);
+  end;
+
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetWS, WBResposta);
 end;
 
 procedure TfrmACBrNFe.btnCancelarChaveClick(Sender: TObject);
@@ -1884,27 +1990,76 @@ begin
   ShowMessage(FormatDateBr(ACBrNFe1.SSL.CertDataVenc));
 end;
 
-procedure TfrmACBrNFe.btnDistribuicaoDFeClick(Sender: TObject);
+procedure TfrmACBrNFe.btnDistrDFePorChaveClick(Sender: TObject);
 var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
+  xTitulo, cUFAutor, CNPJ, Chave: string;
 begin
+  xTitulo := 'Distribuição DFe Por Chave';
   cUFAutor := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
      exit;
 
   CNPJ := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
 
-  ultNSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Último NSU recebido pelo ator', ultNSU)) then
+  Chave := '';
+  if not(InputQuery(xTitulo, 'Chave da NF-e', Chave)) then
+     exit;
+
+  ACBrNFe1.DistribuicaoDFePorChaveNFe(StrToInt(cUFAutor), CNPJ, Chave);
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(ACBrNFe1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
+end;
+
+procedure TfrmACBrNFe.btnDistrDFePorNSUClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, ANSU: string;
+begin
+  xTitulo := 'Distribuição DF-e por NSU';
+
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
 
   ANSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU específico', ANSU)) then
+  if not(InputQuery(xTitulo, 'NSU específico', ANSU)) then
      exit;
 
-  ACBrNFe1.DistribuicaoDFe(StrToInt(cUFAutor), CNPJ, ultNSU, ANSU);
+  ACBrNFe1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(ACBrNFe1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
+end;
+
+procedure TfrmACBrNFe.btnDistrDFePorUltNSUClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, ultNSU: string;
+begin
+  xTitulo := 'Distribuição DF-e por último NSU';
+
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+     exit;
+
+  ultNSU := '';
+  if not(InputQuery(xTitulo, 'Último NSU recebido pelo ator', ultNSU)) then
+     exit;
+
+  ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU);
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;

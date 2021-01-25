@@ -1689,7 +1689,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Criar e Enviar'
-          TabOrder = 0
+          TabOrder = 2
           OnClick = btnCriarEnviarClick
         end
         object btnValidarRegrasNegocio: TButton
@@ -1698,7 +1698,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Validar Regras de Neg'#243'cio'
-          TabOrder = 1
+          TabOrder = 5
           OnClick = btnValidarRegrasNegocioClick
         end
         object btnGerarTXT: TButton
@@ -1707,7 +1707,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Gerar TXT'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = btnGerarTXTClick
         end
         object btnGerarXML: TButton
@@ -1716,7 +1716,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Gerar NFe'
-          TabOrder = 3
+          TabOrder = 0
           OnClick = btnGerarXMLClick
         end
         object btnImportarXML: TButton
@@ -1734,7 +1734,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Gerar PDF'
-          TabOrder = 5
+          TabOrder = 10
           OnClick = btnGerarPDFClick
         end
         object btnValidarXML: TButton
@@ -1752,7 +1752,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Imprimir DANFE'
-          TabOrder = 7
+          TabOrder = 9
           OnClick = btnImprimirClick
         end
         object btnEnviarEmail: TButton
@@ -1761,7 +1761,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Enviar NFe Email'
-          TabOrder = 8
+          TabOrder = 11
           OnClick = btnEnviarEmailClick
         end
         object btnAdicionarProtocolo: TButton
@@ -1770,7 +1770,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Adicionar Protocolo ao XML'
-          TabOrder = 9
+          TabOrder = 8
           OnClick = btnAdicionarProtocoloClick
         end
         object btnCarregarXMLEnviar: TButton
@@ -1779,7 +1779,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Carregar XML e Enviar'
-          TabOrder = 10
+          TabOrder = 3
           OnClick = btnCarregarXMLEnviarClick
         end
         object btnValidarAssinatura: TButton
@@ -1788,7 +1788,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Validar Assinatura'
-          TabOrder = 11
+          TabOrder = 7
           OnClick = btnValidarAssinaturaClick
         end
         object btnImprimirDANFCE: TButton
@@ -1819,7 +1819,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Consultar carregando XML'
-          TabOrder = 0
+          TabOrder = 1
           OnClick = btnConsultarClick
         end
         object btnConsultarChave: TButton
@@ -1828,7 +1828,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Consultar pela Chave'
-          TabOrder = 1
+          TabOrder = 3
           OnClick = btnConsultarChaveClick
         end
         object btnConsCad: TButton
@@ -1837,7 +1837,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Consulta Cadastro'
-          TabOrder = 2
+          TabOrder = 4
           OnClick = btnConsCadClick
         end
         object btnConsultarRecibo: TButton
@@ -1846,7 +1846,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = 'Consultar Recibo Lote'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnConsultarReciboClick
         end
         object btnStatusServ: TButton
@@ -1855,7 +1855,7 @@ object frmACBrNFe: TfrmACBrNFe
           Width = 177
           Height = 25
           Caption = ' Status de Servi'#231'o'
-          TabOrder = 4
+          TabOrder = 0
           OnClick = btnStatusServClick
         end
       end
@@ -1891,21 +1891,30 @@ object frmACBrNFe: TfrmACBrNFe
         end
         object btnImprimirEvento: TButton
           Left = 8
-          Top = 40
+          Top = 100
           Width = 177
           Height = 25
           Caption = 'Imprimir Evento'
-          TabOrder = 3
+          TabOrder = 4
           OnClick = btnImprimirEventoClick
         end
         object btnEnviarEventoEmail: TButton
           Left = 191
-          Top = 40
+          Top = 100
           Width = 177
           Height = 25
           Caption = 'Enviar Evento Email'
-          TabOrder = 4
+          TabOrder = 5
           OnClick = btnEnviarEventoEmailClick
+        end
+        object btnAtorInterNFeTransp: TButton
+          Left = 8
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Ator Interessado na NF-e Transp.'
+          TabOrder = 3
+          OnClick = btnAtorInterNFeTranspClick
         end
       end
       object tsInutilizacao: TTabSheet
@@ -1934,22 +1943,40 @@ object frmACBrNFe: TfrmACBrNFe
         Caption = 'Distribui'#231#227'o DFe'
         ImageIndex = 5
         object btnManifDestConfirmacao: TButton
-          Left = 192
-          Top = 9
+          Left = 8
+          Top = 40
           Width = 178
           Height = 25
           Caption = 'Manif. Dest. - Conf. Opera'#231#227'o'
-          TabOrder = 0
+          TabOrder = 3
           OnClick = btnManifDestConfirmacaoClick
         end
-        object btnDistribuicaoDFe: TButton
+        object btnDistrDFePorUltNSU: TButton
           Left = 8
           Top = 9
           Width = 178
           Height = 25
-          Caption = 'Distribui'#231#227'o Documentos Fiscais'
+          Caption = 'Distribui'#231#227'o DF-e por '#250'ltimo NSU'
+          TabOrder = 0
+          OnClick = btnDistrDFePorUltNSUClick
+        end
+        object btnDistrDFePorNSU: TButton
+          Left = 192
+          Top = 9
+          Width = 178
+          Height = 25
+          Caption = 'Distribui'#231#227'o DF-e por NSU'
           TabOrder = 1
-          OnClick = btnDistribuicaoDFeClick
+          OnClick = btnDistrDFePorNSUClick
+        end
+        object btnDistrDFePorChave: TButton
+          Left = 376
+          Top = 9
+          Width = 178
+          Height = 25
+          Caption = 'Distribui'#231#227'o DF-e por Chave'
+          TabOrder = 2
+          OnClick = btnDistrDFePorChaveClick
         end
       end
     end

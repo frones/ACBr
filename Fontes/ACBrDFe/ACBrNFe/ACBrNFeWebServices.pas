@@ -2035,7 +2035,6 @@ procedure TNFeConsulta.DefinirURL;
 var
   VerServ: Double;
   Modelo, xUF: String;
-  ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL  := '';
@@ -3026,7 +3025,6 @@ procedure TNFeEnvEvento.DefinirURL;
 var
   UF, Modelo : String;
   VerServ: Double;
-  ok: Boolean;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
@@ -3054,7 +3052,8 @@ begin
   end
   else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
          teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
-         teCanPedProrrog1, teCanPedProrrog2]) then
+         teCanPedProrrog1, teCanPedProrrog2, teComprEntregaNFe,
+         teCancComprEntregaNFe, teAtorInteressadoNFe]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';
@@ -3234,6 +3233,44 @@ begin
             infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
           end;
 
+          teComprEntregaNFe:
+          begin
+            SchemaEventoNFe := schCompEntrega;
+            infEvento.detEvento.nProt     := FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.dhEntrega := FEvento.Evento[i].InfEvento.detEvento.dhEntrega;
+            infEvento.detEvento.nDoc      := FEvento.Evento[i].InfEvento.detEvento.nDoc;
+            infEvento.detEvento.xNome     := FEvento.Evento[i].InfEvento.detEvento.xNome;
+            infEvento.detEvento.latGPS    := FEvento.Evento[i].InfEvento.detEvento.latGPS;
+            infEvento.detEvento.longGPS   := FEvento.Evento[i].InfEvento.detEvento.longGPS;
+
+            infEvento.detEvento.hashComprovante   := FEvento.Evento[i].InfEvento.detEvento.hashComprovante;
+            infEvento.detEvento.dhHashComprovante := FEvento.Evento[i].InfEvento.detEvento.dhHashComprovante;
+          end;
+
+          teCancComprEntregaNFe:
+          begin
+            SchemaEventoNFe := schCancCompEntrega;
+            infEvento.detEvento.nProtEvento := FEvento.Evento[i].InfEvento.detEvento.nProtEvento;
+          end;
+
+          teAtorInteressadoNFe:
+          begin
+            SchemaEventoNFe := schAtorInteressadoNFe;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[I].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor := FEvento.Evento[I].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[I].InfEvento.detEvento.verAplic;
+
+            for j := 0 to FEvento.Evento.Items[I].InfEvento.detEvento.autXML.count - 1 do
+            begin
+              with infEvento.detEvento.autXML.New do
+              begin
+                CNPJCPF := FEvento.Evento[I].InfEvento.detEvento.autXML[J].CNPJCPF;
+              end;
+            end;
+
+            infEvento.detEvento.tpAutorizacao := FEvento.Evento[I].InfEvento.detEvento.tpAutorizacao;
+            infEvento.detEvento.xCondUso := FEvento.Evento[I].InfEvento.detEvento.xCondUso;
+          end;
         end;
       end;
     end;
@@ -3241,6 +3278,10 @@ begin
 
     EventoNFe.Versao := FPVersaoServico;
     AjustarOpcoes( EventoNFe.Gerador.Opcoes );
+
+    if SchemaEventoNFe = schAtorInteressadoNFe then
+      EventoNFe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
+
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
@@ -3333,7 +3374,6 @@ begin
       else
         Break;
     end;
-
 
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoNFe.Evento[I].InfEvento.id;

@@ -73,7 +73,8 @@ type
                 schPedProrrog1, schPedProrrog2, schCanPedProrrog1,
                 schCanPedProrrog2, schManifDestConfirmacao,
                 schManifDestCiencia, schManifDestDesconhecimento,
-                schManifDestOperNaoRealizada);
+                schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
+                schAtorInteressadoNFe);
 
   TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
@@ -91,6 +92,10 @@ type
   TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
   TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete);
   TpcnInformacoesDePagamento = (eipNunca, eipAdicionais, eipQuadro);
+
+  TAutorizacao = (taNaoPermite, taPermite);
+
+  TindIntermed = (iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -146,6 +151,12 @@ function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
+
+function AutorizacaoToStr(const t: TAutorizacao): string;
+function StrToAutorizacao(out ok: boolean; const s: string): TAutorizacao;
+
+function IndIntermedToStr(const t: TindIntermed): string;
+function StrToIndIntermed(out ok: boolean; const s: string): TindIntermed;
 
 function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
 
@@ -589,11 +600,35 @@ function SchemaEventoToStr(const t: TSchemaNFe): String;
 begin
   result := EnumeradoToStr(t, ['e110110', 'e110111', 'e110112', 'e110140',
                                'e111500', 'e111501', 'e111502', 'e111503',
-                               'e210200', 'e210210', 'e210220', 'e210240'],
+                               'e210200', 'e210210', 'e210220', 'e210240',
+                               'e110130', 'e110131', 'e110150'],
     [schEnvCCe, schcancNFe, schCancSubst, schEnvEPEC,
      schPedProrrog1, schPedProrrog2, schCanPedProrrog1, schCanPedProrrog2,
      schManifDestConfirmacao, schManifDestCiencia, schManifDestDesconhecimento,
-     schManifDestOperNaoRealizada]);
+     schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
+     schAtorInteressadoNFe]);
+end;
+
+function AutorizacaoToStr(const t: TAutorizacao): string;
+begin
+  result := EnumeradoToStr(t, ['0', '1'], [taNaoPermite, taPermite]);
+end;
+
+function StrToAutorizacao(out ok: boolean; const s: string): TAutorizacao;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1'], [taNaoPermite, taPermite]);
+end;
+
+function IndIntermedToStr(const t: TindIntermed): string;
+begin
+  Result := EnumeradoToStr(t, ['', '0', '1'],
+       [iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador]);
+end;
+
+function StrToIndIntermed(out ok: boolean; const s: string): TindIntermed;
+begin
+  Result := StrToEnumerado(ok, s, ['', '0', '1'],
+       [iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador]);
 end;
 
 function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
@@ -602,7 +637,8 @@ begin
             ['-99999', '110110', '110111', '110112', '110140', '111500',
              '111501', '111502', '111503', '210200', '210210', '210220',
              '210240', '610600', '610614', '790700', '990900', '990910',
-             '110180', '610554', '610510', '610615', '610610'],
+             '110180', '610554', '610510', '610615', '610610', '110130',
+             '110131', '110150'],
             [teNaoMapeado, teCCe, teCancelamento, teCancSubst, teEPECNFe,
              tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
              teManifDestConfirmacao, teManifDestCiencia,
@@ -610,7 +646,8 @@ begin
              teRegistroCTe, teMDFeAutorizadoComCTe, teAverbacaoExportacao,
              teVistoriaSuframa, teConfInternalizacao, teComprEntrega,
              teRegPasAutMDFeComCte, teRegPasNfeProMDFe,
-             teCancelamentoMDFeAutComCTe, teMDFeAutorizado]);
+             teCancelamentoMDFeAutComCTe, teMDFeAutorizado,
+             teComprEntregaNFe, teCancComprEntregaNFe, teAtorInteressadoNFe]);
 end;
 
 initialization

@@ -138,6 +138,7 @@ type
     procedure GerarTranspReboque;
     procedure GerarTranspVol;
     procedure GerarTranspVolLacres(i: Integer);
+    procedure GerarInfIntermed;
     procedure GerarInfAdic;
     procedure GerarInfAdicObsCont;
     procedure GerarInfAdicObsFisco;
@@ -357,6 +358,9 @@ begin
       (nfe.infNFe.Versao >= 4) then
     Gerarpag;
 
+  if NFe.infNFe.Versao >= 4 then
+    GerarInfIntermed;
+
   GerarInfAdic;
   GerarExporta;
   GerarCompra;
@@ -421,9 +425,12 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
-    Gerador.wCampo(tcStr, 'B25a', 'indFinal', 01, 01, 1, ConsumidorFinalToStr(nfe.Ide.indFinal), DSC_INDFINAL);
-    Gerador.wCampo(tcStr, 'B25b', 'indPres ', 01, 01, 1, PresencaCompradorToStr(nfe.Ide.indPres), DSC_INDPRES);
+    Gerador.wCampo(tcStr, 'B25a', 'indFinal   ', 01, 01, 1, ConsumidorFinalToStr(nfe.Ide.indFinal), DSC_INDFINAL);
+    Gerador.wCampo(tcStr, 'B25b', 'indPres    ', 01, 01, 1, PresencaCompradorToStr(nfe.Ide.indPres), DSC_INDPRES);
    end;
+
+  if nfe.infNFe.Versao >= 4 then
+    Gerador.wCampo(tcStr, 'B25b', 'indIntermed', 01, 01, 0, IndIntermedToStr(nfe.Ide.indIntermed), DSC_INDINTERMED);
 
   Gerador.wCampo(tcStr, 'B26', 'procEmi', 01, 01, 1, procEmiToStr(nfe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, 'B27', 'verProc', 01, 20, 1, nfe.Ide.verProc, DSC_VERPROC);
@@ -2602,6 +2609,17 @@ begin
       Gerador.wCampo(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(nfe.InfAdic.procRef[i].indProc), DSC_INDPROC);
       Gerador.wGrupo('/procRef');
     end;
+  end;
+end;
+
+procedure TNFeW.GerarInfIntermed;
+begin
+  if trim(nfe.infIntermed.CNPJ) + trim(nfe.infIntermed.idCadIntTran) <> '' then
+  begin
+    Gerador.wGrupo('infIntermed', 'YB01');
+    Gerador.wCampo(tcStr, 'YB02', 'CNPJ        ', 14, 14, 1, nfe.infIntermed.CNPJ, DSC_CNPJINTERM);
+    Gerador.wCampo(tcStr, 'YB03', 'idCadIntTran', 02, 60, 1, nfe.infIntermed.idCadIntTran, DSC_IDCADINTERM);
+    Gerador.wGrupo('/infIntermed');
   end;
 end;
 

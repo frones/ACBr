@@ -169,6 +169,7 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
+
   for i := 0 to Evento.Count - 1 do
   begin
     sModelo := Copy(OnlyNumber(Evento.Items[i].InfEvento.chNFe), 21, 2);
@@ -224,75 +225,131 @@ begin
     Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Versao); // Evento.Items[i].InfEvento.versaoEvento);
     Gerador.wGrupo('detEvento versao="' +  Versao + '"');
     Gerador.wCampo(tcStr,    'HP19', 'descEvento', 004, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
-    case Evento.Items[i].InfEvento.tpEvento of
-        teCCe:
-          begin
-            Gerador.wCampo(tcStr, 'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
-            Gerador.wCampo(tcStr, 'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
-          end;
-        teCancelamento:
-          begin
-            Gerador.wCampo(tcStr, 'HP20', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
-            Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
-          end;
-        teCancSubst:
-          begin
-            Gerador.wCampo(tcInt, 'HP20', 'cOrgaoAutor', 001, 002, 1, Evento.Items[i].InfEvento.detEvento.cOrgaoAutor);
-            Gerador.wCampo(tcInt, 'HP21', 'tpAutor    ', 001, 001, 1, '1');
-            Gerador.wCampo(tcStr, 'HP22', 'verAplic   ', 001, 020, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
-            Gerador.wCampo(tcStr, 'HP23', 'nProt      ', 015, 015, 1, Evento.Items[i].InfEvento.detEvento.nProt);
-            Gerador.wCampo(tcStr, 'HP30', 'xJust      ', 015, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
-            Gerador.wCampo(tcStr, 'HP31', 'chNFeRef   ', 044, 044, 1, Evento.Items[i].InfEvento.detEvento.chNFeRef, DSC_CHAVE);
 
-            if not ValidarChave(Evento.Items[i].InfEvento.detEvento.chNFeRef) then
-              Gerador.wAlerta('HP31', 'chNFeRef', '', 'Chave de NFe Refenciada inválida');
-          end;
-        teManifDestOperNaoRealizada:
-          begin
-            Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
-          end;
-        teEPECNFe:
-          begin
-            Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
-            Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
-            Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
-            Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
-                                                                   GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor), Evento.Items[i].InfEvento.detEvento.dhEmi));
+    case Evento.Items[i].InfEvento.tpEvento of
+      teCCe:
+        begin
+          Gerador.wCampo(tcStr, 'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
+          Gerador.wCampo(tcStr, 'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
+        end;
+
+      teCancelamento:
+        begin
+          Gerador.wCampo(tcStr, 'HP20', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
+          Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+        end;
+
+      teCancSubst:
+        begin
+          Gerador.wCampo(tcInt, 'HP20', 'cOrgaoAutor', 001, 002, 1, Evento.Items[i].InfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcInt, 'HP21', 'tpAutor    ', 001, 001, 1, '1');
+          Gerador.wCampo(tcStr, 'HP22', 'verAplic   ', 001, 020, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+          Gerador.wCampo(tcStr, 'HP23', 'nProt      ', 015, 015, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+          Gerador.wCampo(tcStr, 'HP30', 'xJust      ', 015, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
+          Gerador.wCampo(tcStr, 'HP31', 'chNFeRef   ', 044, 044, 1, Evento.Items[i].InfEvento.detEvento.chNFeRef, DSC_CHAVE);
+
+          if not ValidarChave(Evento.Items[i].InfEvento.detEvento.chNFeRef) then
+            Gerador.wAlerta('HP31', 'chNFeRef', '', 'Chave de NFe Refenciada inválida');
+        end;
+
+      teManifDestOperNaoRealizada:
+        begin
+          Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+        end;
+
+      teEPECNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
+          Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+          Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
+                                                                 GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor), Evento.Items[i].InfEvento.detEvento.dhEmi));
 //            Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
 //                                                                   GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.detEvento.dhEmi));
-            Gerador.wCampo(tcStr, 'P24', 'tpNF',        01, 01, 1, tpNFToStr(Evento.Items[i].InfEvento.detEvento.tpNF));
-            Gerador.wCampo(tcStr, 'P25', 'IE',          02, 14, 1, Evento.Items[i].InfEvento.detEvento.IE);
+          Gerador.wCampo(tcStr, 'P24', 'tpNF',        01, 01, 1, tpNFToStr(Evento.Items[i].InfEvento.detEvento.tpNF));
+          Gerador.wCampo(tcStr, 'P25', 'IE',          02, 14, 1, Evento.Items[i].InfEvento.detEvento.IE);
 
-            if sModelo = '55' then
-              GerarDestNFe(Evento.Items[i])
-            else begin
-              GerarDestNFCe(Evento.Items[i]);
-              // No EPEC da NFC-e segundo o schema as TAGs vNF e vICMS estão fora do grupo dest e não
-              // tem a TAG vST.
-              Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
-              Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
-            end;
+          if sModelo = '55' then
+            GerarDestNFe(Evento.Items[i])
+          else begin
+            GerarDestNFCe(Evento.Items[i]);
+            // No EPEC da NFC-e segundo o schema as TAGs vNF e vICMS estão fora do grupo dest e não
+            // tem a TAG vST.
+            Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+            Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
           end;
-        tePedProrrog1,
-        tePedProrrog2:
+        end;
+
+      tePedProrrog1,
+      tePedProrrog2:
+        begin
+          Gerador.wCampo(tcStr, 'P19', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
+
+          for j := 0 to Evento.Items[i].FInfEvento.detEvento.itemPedido.count  - 1 do
           begin
-            Gerador.wCampo(tcStr, 'P19', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
-
-            for j := 0 to Evento.Items[i].FInfEvento.detEvento.itemPedido.count  - 1 do
-            begin
-              Gerador.wGrupo('itemPedido numItem="' + intToStr(Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].numItem) + '"');
-              Gerador.wCampo(tcDe2, 'P22', 'qtdeItem', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].qtdeItem, '***');
-              Gerador.wGrupo('/itemPedido');
-            end;
-
+            Gerador.wGrupo('itemPedido numItem="' + intToStr(Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].numItem) + '"');
+            Gerador.wCampo(tcDe2, 'P22', 'qtdeItem', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].qtdeItem, '***');
+            Gerador.wGrupo('/itemPedido');
           end;
-        teCanPedProrrog1,
-        teCanPedProrrog2:
+
+        end;
+
+      teCanPedProrrog1,
+      teCanPedProrrog2:
+        begin
+          Gerador.wCampo(tcStr, 'P19', 'idPedidoCancelado', 54, 54, 1, Evento.Items[i].InfEvento.detEvento.idPedidoCancelado);
+          Gerador.wCampo(tcStr, 'P20', 'nProt', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+        end;
+
+      teComprEntregaNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
+          Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+          Gerador.wCampo(tcStr, 'EP05', 'dhEntrega',  25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhEntrega) +
+                                    GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
+                                    Evento.Items[i].InfEvento.detEvento.dhEntrega), DSC_DEMI);
+
+          Gerador.wCampo(tcStr, 'EP04', 'nDoc   ', 02, 20, 1, Evento.Items[i].InfEvento.detEvento.nDoc);
+          Gerador.wCampo(tcStr, 'EP06', 'xNome  ', 02, 60, 1, Evento.Items[i].InfEvento.detEvento.xNome);
+          Gerador.wCampo(tcDe6, 'EP07', 'latGPS ', 01, 10, 0, Evento.Items[i].InfEvento.detEvento.latGPS);
+          Gerador.wCampo(tcDe6, 'EP08', 'longGPS', 01, 11, 0, Evento.Items[i].InfEvento.detEvento.longGPS);
+
+          Gerador.wCampo(tcStr, 'EP09', 'hashComprovante  ', 28, 28, 1, Evento.Items[i].InfEvento.detEvento.hashComprovante);
+          Gerador.wCampo(tcStr, 'EP10', 'dhHashComprovante', 25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhHashComprovante) +
+                                    GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
+                                    Evento.Items[i].InfEvento.detEvento.dhHashComprovante), DSC_DEMI);
+        end;
+
+      teCancComprEntregaNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
+          Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+          Gerador.wCampo(tcStr, 'P23', 'nProtEvento', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProtEvento);
+        end;
+
+      teAtorInteressadoNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
+          Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+
+          for j := 0 to Evento.Items[i].FInfEvento.detEvento.autXML.count  - 1 do
           begin
-            Gerador.wCampo(tcStr, 'P19', 'idPedidoCancelado', 54, 54, 1, Evento.Items[i].InfEvento.detEvento.idPedidoCancelado);
-            Gerador.wCampo(tcStr, 'P20', 'nProt', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wGrupo('autXML');
+            Gerador.wCampoCNPJCPF('P24', 'P25', Evento.Items[i].FInfEvento.detEvento.autXML[i].CNPJCPF);
+            Gerador.wGrupo('/autXML');
           end;
 
+          Gerador.wCampo(tcStr, 'P26', 'tpAutorizacao', 01, 01, 1, AutorizacaoToStr(Evento.Items[i].InfEvento.detEvento.tpAutorizacao));
+
+          if Evento.Items[i].InfEvento.detEvento.tpAutorizacao = taPermite then
+            Gerador.wCampo(tcStr, 'P27', 'xCondUso', 1, 255, 1,
+              'O emitente ou destinatário da NF-e, declara que permite o transportador ' +
+              'declarado no campo CNPJ/CPF deste evento a autorizar os transportadores ' +
+              'subcontratados ou redespachados a terem acesso ao download da NF-e');
+        end;
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');
@@ -445,6 +502,24 @@ begin
         infEvento.detEvento.vICMS := RetEventoNFe.InfEvento.detEvento.vICMS;
         infEvento.detEvento.vST   := RetEventoNFe.InfEvento.detEvento.vST;
 
+        infEvento.detEvento.dhEntrega := RetEventoNFe.InfEvento.detEvento.dhEntrega;
+        infEvento.detEvento.nDoc      := RetEventoNFe.InfEvento.detEvento.nDoc;
+        infEvento.detEvento.xNome     := RetEventoNFe.InfEvento.detEvento.xNome;
+        infEvento.detEvento.latGPS    := RetEventoNFe.InfEvento.detEvento.latGPS;
+        infEvento.detEvento.longGPS   := RetEventoNFe.InfEvento.detEvento.longGPS;
+
+        infEvento.detEvento.hashComprovante   := RetEventoNFe.InfEvento.detEvento.hashComprovante;
+        infEvento.detEvento.dhHashComprovante := RetEventoNFe.InfEvento.detEvento.dhHashComprovante;
+
+        infEvento.detEvento.nProtEvento := RetEventoNFe.InfEvento.detEvento.nProtEvento;
+
+        infEvento.detEvento.tpAutorizacao := RetEventoNFe.InfEvento.detEvento.tpAutorizacao;
+
+        if RetEventoNFe.InfEvento.detEvento.autXML.Count > 0 then
+        begin
+          InfEvento.detEvento.autXML[0].CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
+        end;
+
         signature.URI             := RetEventoNFe.signature.URI;
         signature.DigestValue     := RetEventoNFe.signature.DigestValue;
         signature.SignatureValue  := RetEventoNFe.signature.SignatureValue;
@@ -477,7 +552,7 @@ end;
 
 function TEventoNFe.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
 var
-  I      : Integer;
+  I, J: Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile ;
   ok     : Boolean;
@@ -540,6 +615,45 @@ begin
           infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
           infEvento.detEvento.verAplic    := INIRec.ReadString( sSecao, 'verAplic', '1.0');
           infEvento.detEvento.chNFeRef    := INIRec.ReadString( sSecao, 'chNFeRef', '');
+          infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
+        end;
+
+        if (infEvento.tpEvento = teComprEntregaNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+          infEvento.detEvento.tpAutor     := StrToTipoAutor(ok,INIRec.ReadString(sSecao, 'tpAutor', '1'));
+          infEvento.detEvento.verAplic    := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.dhEntrega   := StringToDateTime(INIRec.ReadString(sSecao, 'dhEntrega', ''));
+          infEvento.detEvento.nDoc        := INIRec.ReadString(sSecao, 'nDoc', '');
+          infEvento.detEvento.xNome       := INIRec.ReadString(sSecao, 'xNome', '');
+          infEvento.detEvento.latGPS      := StringToFloatDef(INIRec.ReadString(sSecao, 'latGPS', ''), 0);
+          infEvento.detEvento.longGPS     := StringToFloatDef(INIRec.ReadString(sSecao, 'longGPS', ''), 0);
+
+          infEvento.detEvento.hashComprovante   := INIRec.ReadString(sSecao, 'hashComprovante', '');
+          infEvento.detEvento.dhHashComprovante := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashComprovante', ''));
+        end;
+
+        if (infEvento.tpEvento = teAtorInteressadoNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor   := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+          infEvento.detEvento.tpAutor       := StrToTipoAutor(ok, INIRec.ReadString(sSecao, 'tpAutor', '1'));
+          infEvento.detEvento.verAplic      := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, INIRec.ReadString(sSecao, 'tpAutorizacao', '0'));
+
+          J := 1;
+          while true do
+          begin
+            sSecao := 'autXML' + IntToStrZero(J, 2);
+            sFim   := OnlyNumber(INIRec.ReadString(sSecao,'CNPJCPF','FIM'));
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with infEvento.detEvento.autXML.New do
+              CNPJCPF := sFim;
+
+            Inc(J);
+          end;
         end;
       end;
 
@@ -548,7 +662,7 @@ begin
 
     Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

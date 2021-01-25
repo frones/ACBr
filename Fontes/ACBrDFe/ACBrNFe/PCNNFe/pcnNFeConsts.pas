@@ -196,6 +196,7 @@ const
   DSC_IDDEST = 'Destino da Operação';
   DSC_INDFINAL = 'Indicador de Operação com Consumidor Final';
   DSC_INDPRES = 'Indicador de Presença do Consumidor Final';
+  DSC_INDINTERMED = 'Indicador de Intermediador/marketplace';
   DSC_IDESTR = 'Documento de Identificação do Estrangeiro';
   DSC_INDIEDEST = 'Indicador da IE do Destinatário';
   DSC_NVE = 'Nomenclatura de Valor Aduaneiro e Estatística';
@@ -256,6 +257,8 @@ const
   DSC_CBENEF = 'Código de Benefício Fiscal na UF aplicado ao item';
   DSC_CAGREG = 'Código de Agregação';
   DSC_URLCHAVE = 'URL de consulta por chave de acesso a ser impressa no DANFE NFC-e';
+  DSC_CNPJINTERM = 'CNPJ do Intermediador da Transação';
+  DSC_IDCADINTERM = 'Nome do usuário ou identificação do perfil do vendedor no site do intermediador';
 
 implementation
 

@@ -1553,6 +1553,7 @@ begin
       Ide.finNFe   := StrToFinNFe( OK,INIRec.ReadString( sSecao,'finNFe',INIRec.ReadString( sSecao,'Finalidade','0')));
       Ide.indFinal := StrToConsumidorFinal(OK,INIRec.ReadString( sSecao,'indFinal','0'));
       Ide.indPres  := StrToPresencaComprador(OK,INIRec.ReadString( sSecao,'indPres','0'));
+      Ide.indIntermed := StrToIndIntermed(OK, INIRec.ReadString( sSecao,'indIntermed', ''));
       Ide.procEmi  := StrToProcEmi(OK,INIRec.ReadString( sSecao,'procEmi','0'));
       Ide.verProc  := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNFe');
       Ide.dhCont   := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));
@@ -2457,6 +2458,10 @@ begin
         Inc(I);
       end;
 
+      sSecao := 'infIntermed';
+      infIntermed.CNPJ         := INIRec.ReadString( sSecao,'CNPJ', '');
+      infIntermed.idCadIntTran := INIRec.ReadString( sSecao,'idCadIntTran', '');
+
       sSecao := IfThen(INIRec.SectionExists('DadosAdicionais'), 'DadosAdicionais', 'infAdic');
       InfAdic.infAdFisco := INIRec.ReadString( sSecao,'infAdFisco',INIRec.ReadString( sSecao,'Fisco',''));
       InfAdic.infCpl     := INIRec.ReadString( sSecao,'infCpl'    ,INIRec.ReadString( sSecao,'Complemento',''));
@@ -2635,6 +2640,8 @@ begin
         TpcnConsumidorFinal(Ide.indFinal)));
       INIRec.WriteString('Identificacao', 'indPres',
         PresencaCompradorToStr(TpcnPresencaComprador(Ide.indPres)));
+      INIRec.WriteString('Identificacao', 'indIntermed',
+        indIntermedToStr(TindIntermed(Ide.indIntermed)));
       INIRec.WriteString('Identificacao', 'procEmi', procEmiToStr(Ide.procEmi));
       INIRec.WriteString('Identificacao', 'verProc', Ide.verProc);
       INIRec.WriteString('Identificacao', 'dhCont', DateToStr(Ide.dhCont));
@@ -3334,6 +3341,9 @@ begin
         end;
       end;
       INIRec.WriteFloat(sSecao, 'vTroco', pag.vTroco);
+
+      INIRec.WriteString('infIntermed', 'CNPJ', infIntermed.CNPJ);
+      INIRec.WriteString('infIntermed', 'idCadIntTran', infIntermed.idCadIntTran);
 
       INIRec.WriteString('DadosAdicionais', 'infAdFisco', InfAdic.infAdFisco);
       INIRec.WriteString('DadosAdicionais', 'infCpl', InfAdic.infCpl);

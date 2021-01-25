@@ -134,6 +134,7 @@ type
   TFat = class;
   TDupCollection = class;
   TDupCollectionItem = class;
+  TinfIntermed = class;
   TInfAdic = class;
   TobsContCollection = class;
   TobsContCollectionItem = class;
@@ -174,6 +175,7 @@ type
     FTransp: TTransp;
     FCobr: TCobr;
     Fpag: TpagCollection;
+    FinfIntermed: TinfIntermed;
     FInfAdic: TInfAdic;
     Fexporta: Texporta;
     Fcompra: Tcompra;
@@ -206,6 +208,7 @@ type
     property Transp: TTransp read FTransp write FTransp;
     property Cobr: TCobr read FCobr write FCobr;
     property pag: TpagCollection read Fpag write Setpag;
+    property infIntermed: TinfIntermed read FinfIntermed write FinfIntermed;
     property InfAdic: TInfAdic read FInfAdic write FInfAdic;
     property exporta: Texporta read Fexporta write Fexporta;
     property compra: Tcompra read Fcompra write Fcompra;
@@ -262,6 +265,7 @@ type
     FfinNFe : TpcnFinalidadeNFe;
     FindFinal: TpcnConsumidorFinal;
     FindPres: TpcnPresencaComprador;
+    FindIntermed: TindIntermed;
     FprocEmi: TpcnProcessoEmissao;
     FverProc: String;
     FdhCont : TDateTime;
@@ -294,6 +298,7 @@ type
     property finNFe: TpcnFinalidadeNFe read FfinNFe write FfinNFe default fnNormal;
     property indFinal: TpcnConsumidorFinal read FindFinal write FindFinal;
     property indPres: TpcnPresencaComprador read FindPres write FindPres;
+    property indIntermed: TindIntermed read FindIntermed write FindIntermed;
     property procEmi: TpcnProcessoEmissao read FprocEmi write FprocEmi default peAplicativoContribuinte;
     property verProc: String read FverProc write FverProc;
     property dhCont: TDateTime read FdhCont write FdhCont;
@@ -1743,6 +1748,16 @@ type
     property cAut: String read FcAut write FcAut;
   end;
 
+  TinfIntermed = class(TObject)
+  private
+    FCNPJ: String;
+    FidCadIntTran: String;
+  public
+    procedure Assign(Source: TinfIntermed);
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property idCadIntTran: String read FidCadIntTran write FidCadIntTran;
+  end;
+
   TInfAdic = class(TObject)
   private
     FinfAdFisco: String;
@@ -1991,6 +2006,7 @@ begin
   Transp.Assign(Source.Transp);
   Cobr.Assign(Source.Cobr);
   pag.Assign(Source.pag);
+  infIntermed.Assign(Source.infIntermed);
   InfAdic.Assign(Source.InfAdic);
   exporta.Assign(Source.exporta);
   compra.Assign(Source.compra);
@@ -2030,6 +2046,7 @@ begin
   FCobr    := TCobr.Create;
   Fpag     := TpagCollection.Create;
   FTransp  := TTransp.Create;
+  FinfIntermed := TinfIntermed.Create;
   FinfAdic := TinfAdic.Create(self);
   FExporta := TExporta.Create;
   FCompra  := TCompra.Create;
@@ -2063,6 +2080,7 @@ begin
   FCobr.Free;
   Fpag.Free;
   FTransp.Free;
+  FinfIntermed.Free;
   FinfAdic.Free;
   FExporta.Free;
   FCompra.Free;
@@ -2163,6 +2181,7 @@ begin
   finNFe   := Source.finNFe;
   indFinal := Source.indFinal;
   indPres  := Source.indPres;
+  indIntermed := Source.indIntermed;
   procEmi  := Source.procEmi;
   verProc  := Source.verProc;
   dhCont   := Source.dhCont;
@@ -3885,6 +3904,14 @@ begin
   fone     := Source.fone;
   idCSRT   := Source.idCSRT;
   hashCSRT := Source.hashCSRT;
+end;
+
+{ TinfIntermed }
+
+procedure TinfIntermed.Assign(Source: TinfIntermed);
+begin
+  CNPJ     := Source.CNPJ;
+  idCadIntTran := Source.idCadIntTran;
 end;
 
 end.

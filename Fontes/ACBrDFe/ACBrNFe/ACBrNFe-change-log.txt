@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2021
+-- Diversos --
+[*] Alterações visando atender as NT 2020/006 e 2020/007.
+   Por: Italo Giurizzato Junior
+
 13/01/2021
 pcnNFeRTXT.pas
 [*] Ajuste leitura dos campos pDif, vICMSDif, vICMSOp

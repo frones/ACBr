@@ -217,6 +217,20 @@ begin
           infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
           infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
 
+          // Comprovante de Entrega da NF-e e o Cancelamento do Comprovante
+          infEvento.detEvento.dhEntrega := Leitor.rCampo(tcDatHor, 'dhEntrega');
+          infEvento.detEvento.nDoc      := Leitor.rCampo(tcStr, 'nDoc');
+          infEvento.detEvento.xNome     := Leitor.rCampo(tcStr, 'xNome');
+          infEvento.detEvento.latGPS    := Leitor.rCampo(tcDe6, 'latGPS');
+          infEvento.detEvento.longGPS   := Leitor.rCampo(tcDe6, 'longGPS');
+
+          infEvento.detEvento.hashComprovante   := Leitor.rCampo(tcStr, 'hashComprovante');
+          infEvento.detEvento.dhHashComprovante := Leitor.rCampo(tcDatHor, 'dhHashComprovante');
+
+          infEvento.detEvento.nProtEvento := Leitor.rCampo(tcStr, 'nProtEvento');
+
+          infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, Leitor.rCampo(tcStr, 'tpAutorizacao'));
+
 //           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
 //           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
 //           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
@@ -228,11 +242,20 @@ begin
             infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
             infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
 
-            // Alterado em 22/07/2014 por Italo
             // para ficar em conformidade com o Schema
             infEvento.detEvento.vNF   := Leitor.rCampo(tcDe2, 'vNF');
             infEvento.detEvento.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
             infEvento.detEvento.vST   := Leitor.rCampo(tcDe2, 'vST');
+          end;
+
+          i := 0;
+          while Leitor.rExtrai(4, 'autXML', '', i + 1) <> '' do
+          begin
+            InfEvento.detEvento.autXML.New;
+
+            InfEvento.detEvento.autXML.Items[i].CNPJCPF := Leitor.rCampoCNPJCPF;
+
+            inc(i);
           end;
         end;
       end;
@@ -260,44 +283,46 @@ begin
       (*HR08 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       i := 0;
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
-       begin
-         FretEvento.New;
+      begin
+        FretEvento.New;
 
-         // Incluido por Italo em 07/05/2014
-         FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
+        // Incluido por Italo em 07/05/2014
+        FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
-//         (*HR10 *)FretEvento.versao               := Leitor.rCampo(tcStr, 'versao');
-         (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');
-         (*HR13 *)FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         (*HR14 *)FretEvento.Items[i].FRetInfEvento.verAplic   := Leitor.rCampo(tcStr, 'verAplic');
-         (*HR15 *)FretEvento.Items[i].FRetInfEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
-         (*HR16 *)FretEvento.Items[i].FRetInfEvento.cStat      := Leitor.rCampo(tcInt, 'cStat');
-         (*HR17 *)FretEvento.Items[i].FRetInfEvento.xMotivo    := Leitor.rCampo(tcStr, 'xMotivo');
-         (*HR18 *)FretEvento.Items[i].FRetInfEvento.chNFe      := Leitor.rCampo(tcStr, 'chNFe');
-         (*HR19 *)FretEvento.Items[i].FRetInfEvento.tpEvento   := StrToTpEventoNFe(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-         (*HR20 *)FretEvento.Items[i].FRetInfEvento.xEvento    := Leitor.rCampo(tcStr, 'xEvento');
-         (*HR21 *)FretEvento.Items[i].FRetInfEvento.nSeqEvento := Leitor.rCampo(tcInt, 'nSeqEvento');
-         (*HR22 *)FretEvento.Items[i].FRetInfEvento.CNPJDest   := Leitor.rCampo(tcStr, 'CNPJDest');
-         if FretEvento.Items[i].FRetInfEvento.CNPJDest = '' then
-           (*HR23 *)FretEvento.Items[i].FRetInfEvento.CNPJDest  := Leitor.rCampo(tcStr, 'CPFDest');
-         (*HR24 *)FretEvento.Items[i].FRetInfEvento.emailDest   := Leitor.rCampo(tcStr, 'emailDest');
-                  FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
-         (*HR25 *)FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
-         (*HR26 *)FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
-//                  FretEvento.Items[i].FRetInfEvento.chNFePend   := Leitor.rCampo(tcStr, 'chNFePend');
+//        (*HR10 *)FretEvento.versao               := Leitor.rCampo(tcStr, 'versao');
+        (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');
+        (*HR13 *)FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        (*HR14 *)FretEvento.Items[i].FRetInfEvento.verAplic   := Leitor.rCampo(tcStr, 'verAplic');
+        (*HR15 *)FretEvento.Items[i].FRetInfEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
+        (*HR16 *)FretEvento.Items[i].FRetInfEvento.cStat      := Leitor.rCampo(tcInt, 'cStat');
+        (*HR17 *)FretEvento.Items[i].FRetInfEvento.xMotivo    := Leitor.rCampo(tcStr, 'xMotivo');
+        (*HR18 *)FretEvento.Items[i].FRetInfEvento.chNFe      := Leitor.rCampo(tcStr, 'chNFe');
+        (*HR19 *)FretEvento.Items[i].FRetInfEvento.tpEvento   := StrToTpEventoNFe(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+        (*HR20 *)FretEvento.Items[i].FRetInfEvento.xEvento    := Leitor.rCampo(tcStr, 'xEvento');
+        (*HR21 *)FretEvento.Items[i].FRetInfEvento.nSeqEvento := Leitor.rCampo(tcInt, 'nSeqEvento');
+        (*HR22 *)FretEvento.Items[i].FRetInfEvento.CNPJDest   := Leitor.rCampo(tcStr, 'CNPJDest');
 
-         j := 0;
-         while  Leitor.rExtrai(3, 'chNFePend', '', j + 1) <> '' do
-          begin
-            FretEvento.Items[i].FRetInfEvento.chNFePend.New;
+        if FretEvento.Items[i].FRetInfEvento.CNPJDest = '' then
+          (*HR23 *)FretEvento.Items[i].FRetInfEvento.CNPJDest  := Leitor.rCampo(tcStr, 'CPFDest');
 
-            FretEvento.Items[i].FRetInfEvento.chNFePend[j].ChavePend := Leitor.rCampo(tcStr, 'chNFePend');
+        (*HR24 *)FretEvento.Items[i].FRetInfEvento.emailDest   := Leitor.rCampo(tcStr, 'emailDest');
+                 FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
+        (*HR25 *)FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
+        (*HR26 *)FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
+//                FretEvento.Items[i].FRetInfEvento.chNFePend   := Leitor.rCampo(tcStr, 'chNFePend');
 
-            inc(j);
-          end;
+        j := 0;
+        while  Leitor.rExtrai(3, 'chNFePend', '', j + 1) <> '' do
+        begin
+          FretEvento.Items[i].FRetInfEvento.chNFePend.New;
 
-         inc(i);
-       end;
+          FretEvento.Items[i].FRetInfEvento.chNFePend[j].ChavePend := Leitor.rCampo(tcStr, 'chNFePend');
+
+          inc(j);
+        end;
+
+        inc(i);
+      end;
 
       Result := True;
     end;

@@ -134,6 +134,24 @@ type
     property Items[Index: Integer]: TitemPedidoCollectionItem read GetItem write SetItem; default;
   end;
 
+  TautXMLCollectionItem = class(TObject)
+  private
+    FCNPJCPF: String;
+  public
+    procedure Assign(Source: TautXMLCollectionItem);
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
+  TautXMLCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TautXMLCollectionItem;
+    procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
+  public
+    function Add: TautXMLCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TautXMLCollectionItem;
+    property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
+  end;
+
   TDetEvento = class
   private
     FVersao: String;
@@ -156,8 +174,20 @@ type
     FidPedidoCancelado: String;
     FchNFeRef: String;
 
+    FdhEntrega: TDateTime;
+    FnDoc: String;
+    FxNome: String;
+    FlatGPS: Double;
+    FlongGPS: Double;
+    FhashComprovante: String;
+    FdhHashComprovante: TDateTime;
+    FnProtEvento: String;
+    FautXML: TautXMLCollection;
+    FtpAutorizacao: TAutorizacao;
+
     procedure setxCondUso(const Value: String);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
+    procedure SetautXML(const Value: TautXMLCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -181,6 +211,18 @@ type
     property vST: Currency          read FvST         write FvST;
     property itemPedido: TitemPedidoCollection read FitemPedido write SetitemPedido;
     property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
+
+    property dhEntrega: TDateTime         read FdhEntrega         write FdhEntrega;
+    property nDoc: String                 read FnDoc              write FnDoc;
+    property xNome: String                read FxNome             write FxNome;
+    property latGPS: Double               read FlatGPS            write FlatGPS;
+    property longGPS: Double              read FlongGPS           write FlongGPS;
+    property hashComprovante: String      read FhashComprovante   write FhashComprovante;
+    property dhHashComprovante: TDateTime read FdhHashComprovante write FdhHashComprovante;
+    property nProtEvento: String          read FnProtEvento       write FnProtEvento;
+
+    property autXML: TautXMLCollection    read FautXML            write SetautXML;
+    property tpAutorizacao: TAutorizacao  read FtpAutorizacao     write FtpAutorizacao;
   end;
 
   TRetchNFePendCollection = class(TACBrObjectList)
@@ -310,6 +352,9 @@ begin
     teEventoFiscoCPP2          : Result := 'Evento Fisco';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
+    teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
+    teCancComprEntregaNFe      : Result := 'Cancelamento do Comprovante de Entrega da NF-e';
+    teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
   else
     Result := '';
   end;
@@ -367,6 +412,9 @@ begin
     teEventoFiscoCPP2          : Result := 'Evento Fisco';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
+    teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
+    teCancComprEntregaNFe      : Result := 'Cancelamento do Comprovante de Entrega da NF-e';
+    teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
   else
     Result := 'Não Definido';
   end;
@@ -377,14 +425,18 @@ end;
 constructor TDetEvento.Create();
 begin
   inherited Create;
+
   Fdest := TDestinatario.Create;
   FitemPedido := TitemPedidoCollection.Create;
+  FautXML  := TautXMLCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
 begin
   Fdest.Free;
   FitemPedido.Free;
+  FautXML.Free;
+
   inherited;
 end;
 
@@ -403,6 +455,11 @@ begin
                 ' II - a correcao de dados cadastrais que implique mudanca' +
                 ' do remetente ou do destinatario; III - a data de emissao ou' +
                 ' de saida.'
+end;
+
+procedure TDetEvento.SetautXML(const Value: TautXMLCollection);
+begin
+  FautXML := Value;
 end;
 
 procedure TDetEvento.SetitemPedido(const Value: TitemPedidoCollection);
@@ -472,6 +529,37 @@ function TitemPedidoCollection.New: TitemPedidoCollectionItem;
 begin
   Result := TitemPedidoCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TautXMLCollectionItem }
+
+procedure TautXMLCollectionItem.Assign(Source: TautXMLCollectionItem);
+begin
+  CNPJCPF := Source.CNPJCPF;
+end;
+
+{ TautXMLCollection }
+
+function TautXMLCollection.Add: TautXMLCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited Items[Index]);
+end;
+
+function TautXMLCollection.New: TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TautXMLCollection.SetItem(Index: Integer;
+  Value: TautXMLCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

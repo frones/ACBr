@@ -134,6 +134,7 @@ type
     function GerarTranspReboque: TACBrXmlNodeArray;
     function GerarTranspVol: TACBrXmlNodeArray;
     function GerarTranspVolLacres(i: integer): TACBrXmlNodeArray;
+    function GerarInfIntermed: TACBrXmlNode;
     function GerarInfAdic: TACBrXmlNode;
     function GerarInfAdicObsCont: TACBrXmlNodeArray;
     function GerarInfAdicObsFisco: TACBrXmlNodeArray;
@@ -369,6 +370,7 @@ begin
     end;
   end;
 
+  Result.AppendChild(GerarInfIntermed);
   Result.AppendChild(GerarInfAdic);
   Result.AppendChild(GerarExporta);
   Result.AppendChild(GerarCompra);
@@ -467,6 +469,10 @@ begin
     Result.AppendChild(AddNode(tcStr, 'B25b', 'indPres ', 01, 01, 1,
       PresencaCompradorToStr(NFe.Ide.indPres), DSC_INDPRES));
   end;
+
+  if nfe.infNFe.Versao >= 4 then
+    Result.AppendChild(AddNode(tcStr, 'B25b', 'indIntermed', 01, 01, 0,
+      IndIntermedToStr(NFe.Ide.indIntermed), DSC_INDINTERMED));
 
   Result.AppendChild(AddNode(tcStr, 'B26', 'procEmi', 01, 01, 1,
     procEmiToStr(NFe.Ide.procEmi), DSC_PROCEMI));
@@ -3311,6 +3317,22 @@ begin
       Result[i] := FDocument.CreateElement('procRef');
       Result[i].AppendChild(AddNode(tcStr, 'Z11', 'nProc  ', 01, 60, 1, NFe.InfAdic.procRef[i].nProc, DSC_NPROC));
       Result[i].AppendChild(AddNode(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(NFe.InfAdic.procRef[i].indProc), DSC_INDPROC));
+    end;
+  end;
+end;
+
+function TNFeXmlWriter.GerarInfIntermed: TACBrXmlNode;
+begin
+  Result := nil;
+
+  if NFe.infNFe.Versao >= 4 then
+  begin
+    if trim(NFe.infIntermed.CNPJ) + trim(NFe.infIntermed.idCadIntTran) <> '' then
+    begin
+      Result := FDocument.CreateElement('infIntermed');
+
+      Result.AppendChild(AddNode(tcStr, 'YB02', 'CNPJ        ', 14, 14, 1, NFe.infIntermed.CNPJ, DSC_CNPJINTERM));
+      Result.AppendChild(AddNode(tcStr, 'YB03', 'idCadIntTran', 02, 60, 1, NFe.infIntermed.idCadIntTran, DSC_IDCADINTERM));
     end;
   end;
 end;

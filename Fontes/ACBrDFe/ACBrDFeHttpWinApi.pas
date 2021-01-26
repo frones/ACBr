@@ -112,6 +112,8 @@ procedure TDFeHttpWinHttp.ConfigConnection;
 begin
   inherited;
 
+  FWinHTTPReqResp.Clear;
+
   // Proxy //
   FWinHTTPReqResp.ProxyHost := FpDFeSSL.ProxyHost;
   FWinHTTPReqResp.ProxyPort := FpDFeSSL.ProxyPort;

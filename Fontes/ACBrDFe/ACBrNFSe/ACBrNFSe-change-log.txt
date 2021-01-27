@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2021
+-- ACBrNFSeNotasFiscais --
+[-] Possivel correção para não ocorrer mais erro de falta de memória ao ler o
+    XML de um RPS.
+  Por: Paulo C. L. Vicente / Italo Giurizzato Junior
+
 22/01/2021
 -- ACBrNFSeNotasFiscais/pnfsNFSeR --
 [*] Ajustes para ler o XML do RPS de forma correta - Provedor Governa.

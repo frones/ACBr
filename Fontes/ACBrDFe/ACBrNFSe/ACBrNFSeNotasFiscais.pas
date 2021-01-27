@@ -979,7 +979,8 @@ var
     TamTAG := 5;
     if (VersaoNFSe < ve200) and (AProvedor <> proAgili) then
     begin
-      // Provedor Governa
+      Result := 0;
+
       if AProvedor = proGoverna then
       begin
         Result := Pos('</LoteRps>', AXMLString);

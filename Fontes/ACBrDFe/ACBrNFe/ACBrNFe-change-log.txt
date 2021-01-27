@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2021
+-- pcnEnvEventoNFe --
+[*] Incluido a leitura de arquivo INI do evento de cancelamento de comprovante 
+    de entrega.
+   Por: Italo Giurizzato Junior
+
 25/01/2021
 -- Diversos --
 [*] Alterações visando atender as NT 2020/006 e 2020/007.

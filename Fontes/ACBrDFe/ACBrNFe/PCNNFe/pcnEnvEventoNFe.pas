@@ -633,6 +633,14 @@ begin
           infEvento.detEvento.dhHashComprovante := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashComprovante', ''));
         end;
 
+        if (infEvento.tpEvento = teCancComprEntregaNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+          infEvento.detEvento.tpAutor     := StrToTipoAutor(ok,INIRec.ReadString(sSecao, 'tpAutor', '1'));
+          infEvento.detEvento.verAplic    := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
+        end;
+
         if (infEvento.tpEvento = teAtorInteressadoNFe) then
         begin
           infEvento.detEvento.cOrgaoAutor   := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);

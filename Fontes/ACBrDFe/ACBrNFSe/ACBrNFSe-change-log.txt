@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/01/2021
+-- ACBrNFSeWebServices --
+[*] Removido o provedor NFSeBrasil da lista dos que existem senha do usuário.
+  Por: Thiagfb / Italo Giurizzato Junior
 -- ACBrNFSeNotasFiscais --
 [-] Possivel correção para não ocorrer mais erro de falta de memória ao ler o
     XML de um RPS.
@@ -4414,5 +4417,3 @@ Versão 0.01a
 
 [+] Doação do componente ao projeto ACBr
    Por: Juaumkiko
-
-

@@ -2748,7 +2748,7 @@ begin
 
   if (SenhaWeb = '') and
      (FProvedor in [proCONAM, proFiorilli, proEL, proIPM,
-                    proNFSeBrasil, proSaatri, proSMARAPD, proSimplISS]) then
+                    proSaatri, proSMARAPD, proSimplISS]) then
     GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
       ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
 
@@ -2776,6 +2776,11 @@ begin
   end;
 
   ATexto := StringReplace(ATexto, '%WebChaveAcesso%', FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso, [rfReplaceAll]);
+
+  if (FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso = '') and
+     (FProvedor in [proNFSeBrasil]) then
+    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
 
   // Parâmetros personalizados
   for i := 0 to FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams.Count - 1 do

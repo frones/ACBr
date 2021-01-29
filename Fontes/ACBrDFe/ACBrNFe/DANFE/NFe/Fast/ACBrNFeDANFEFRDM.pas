@@ -397,8 +397,9 @@ begin
         FieldDefs.Add('Unidade'   , ftString, 14);
         FieldDefs.Add('Quantidade', ftString, 50);
         FieldDefs.Add('ValorUnitario'   , ftString, 50);
-        FieldDefs.Add('Valorliquido'    , ftString, 18);
+        FieldDefs.Add('ValorLiquido'    , ftString, 18);
         FieldDefs.Add('ValorAcrescimos' , ftString, 18);
+        FieldDefs.Add('ValorDescontos'  , ftString, 18);
 
         CreateDataSet;
      end;
@@ -1069,9 +1070,9 @@ begin
         FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,',0.00');
         FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
         FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');
-        FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,',0.00');
-        FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,',0.00');
-
+        FieldByName('ValorDescontos').AsString    := FormatFloatBr( Prod.vDesc + Imposto.ICMS.vICMSDeson, ',0.00');
+        FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
+        FieldByName('ValorLiquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc - Imposto.ICMS.vICMSDeson + Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
         Post;
       end;
     end;

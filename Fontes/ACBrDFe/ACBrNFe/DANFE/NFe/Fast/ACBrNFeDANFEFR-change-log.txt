@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2021
+-- ACBrNFeDANFERDM --
+[-] Correção na exibição dos acréscimos e descontos por item quando há desconto
+    e acréscimo no mesmo documento, e incluindo no cálculo as tags de frete, 
+    seguro e ICMS desonerado.
+    https://www.projetoacbr.com.br/forum/topic/60407-erro-tacbrnfefrclass-fastreport-carregadadosprodutos-fnfedetitems-field-valor-liquido-errado/
+  Por: BigWings
+
 04/03/2020
 -- ACBrNFeDANFERDM --
 [*] Ajuste nos métodos "ImprimirDANFEPDF", "ImprimirEventoPDF" e "ImprimirInutilizacaoPDF"

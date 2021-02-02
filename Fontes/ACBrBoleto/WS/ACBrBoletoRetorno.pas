@@ -389,12 +389,18 @@ constructor TTituloRet.Create;
 begin
   FSacadoAvalista := TSacadoAvalistaRet.Create;
   FSacado := TSacadoRet.Create;
+  FMensagem       := TStringList.Create;
+  FInformativo    := TStringList.Create;
+  FInstrucoes     := TStringList.Create;
 end;
 
 destructor TTituloRet.Destroy;
 begin
   FSacadoAvalista.Free;
   FSacado.Free;
+  FMensagem.Free;
+  FInformativo.Free;
+  FInstrucoes.Free;
   inherited Destroy;
 end;
 

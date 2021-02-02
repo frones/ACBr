@@ -923,7 +923,7 @@ begin
   finally
     Result := (FDFeSSL.HTTPResultCode in [200, 201, 202]);
 
-    if Result then //Grava xml retorno
+    if StringIsXML( FRetornoWS ) then //Grava xml retorno
       WriteToTXT( ifthen( EstaVazio(Boleto.Configuracoes.Arquivos.PathGravarRegistro),
                   PathWithDelim( ApplicationPath ), PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro ))
                   + Titulos.NumeroDocumento +'-'+ C_RETORNO_REGISTRO + '.xml', FRetornoWS ,False, False);

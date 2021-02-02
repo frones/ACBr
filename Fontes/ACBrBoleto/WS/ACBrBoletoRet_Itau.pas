@@ -95,7 +95,7 @@ begin
         AJSon := TJson.Create;
         try
           AJSon.Parse(RetWS);
-          if not(SucessResponse) then
+          if (AJson.Values['codigo'].AsString <> '')  then
           begin
             CodRetorno := AJson.Values['codigo'].AsString;
             OriRetorno := AJson.Values['mensagem'].AsString;

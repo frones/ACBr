@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao,
-  Jsons;
+  Jsons, ACBrUtil;
 
 type
 
@@ -87,7 +87,7 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, strutils;
+  synacode, strutils;
 
 { TBoletoW_Itau }
 
@@ -195,10 +195,9 @@ begin
         Json.Add('tipo_carteira_titulo').Value.AsString := Carteira;
         GerarMoeda(Json);
 
-        Json.Add('nosso_numero').Value.AsString :=
-          Copy(NossoNumero, 1, Length(NossoNumero) - 1);
+        Json.Add('nosso_numero').Value.AsString := NossoNumero;
         Json.Add('digito_verificador_nosso_numero').Value.AsString :=
-          Copy(NossoNumero, Length(NossoNumero) - 1, 1);
+          ACBrBoleto.Banco.CalcularDigitoVerificador(Titulos);
         Json.Add('codigo_barras').Value.AsString := '';
         Json.Add('data_vencimento').Value.AsString :=
           FormatDateTime('yyyy-mm-dd', Vencimento);
@@ -259,7 +258,7 @@ begin
             OnlyNumber(ACBrBoleto.Cedente.CNPJCPF);
           JsonConta.Add('agencia_beneficiario').Value.AsString :=
             ACBrBoleto.Cedente.Agencia;
-          JsonConta.Add('conta_beneficiario').Value.AsString := ACBrBoleto.Cedente.Conta;
+          JsonConta.Add('conta_beneficiario').Value.AsString := ACBrUtil.PadLeft(ACBrBoleto.Cedente.Conta, 7, '0');
           JsonConta.Add('digito_verificador_conta_beneficiario').Value.AsString :=
             ACBrBoleto.Cedente.ContaDigito;
 
@@ -288,6 +287,9 @@ begin
   if Assigned(Titulos) then
     with Titulos do
     begin
+      if Liquidacao.Agencia = EmptyStr then
+        Exit;
+
       if Assigned(AJson) then
       begin
         JsonConta := TJSONObject.Create;
@@ -401,6 +403,9 @@ begin
   if Assigned(Titulos) then
     with Titulos do
     begin
+      if Sacado.SacadoAvalista.CNPJCPF = EmptyStr then
+        Exit;
+
       if Assigned(AJson) then
       begin
         JsonSacadorAvalista := TJSONObject.Create;
@@ -538,14 +543,11 @@ begin
           JsonMulta.Add('tipo_multa').Value.AsInteger := ACodMulta;
           if DataMulta > 0 then
           begin
-            JsonMulta.Add('data_multa').Value.AsString :=
-              FormatDateTime('yyyy-mm-dd', DataMulta);
+            JsonMulta.Add('data_multa').Value.AsString := FormatDateTime('yyyy-mm-dd', DataMulta);
             if MultaValorFixo then
-              JsonMulta.Add('percentual_multa').Value.AsString :=
-                IntToStrZero(round(ValorMoraJuros * 100), 17)
+              JsonMulta.Add('valor_multa').Value.AsString := IntToStrZero(round(PercentualMulta), 17)
             else
-              JsonMulta.Add('percentual_multa').Value.AsString :=
-                IntToStrZero(round(ValorMoraJuros * 100000), 12);
+              JsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 100000), 12);
 
           end;
 
@@ -646,21 +648,23 @@ begin
 
         try
           JsonRecDivergente.Add('tipo_autorizacao_recebimento').Value.AsString :=
-            IntToStr(integer(TipoPagamento));
-          if (ValorMinPagamento > 0) and (ValorMaxPagamento > 0) then
-            JsonRecDivergente.Add('tipo_valor_percentual_recebimento').Value.AsString
-            := 'V'
-          else
-            JsonRecDivergente.Add('tipo_valor_percentual_recebimento').Value.AsString
-            := 'P';
-          JsonRecDivergente.Add('valor_minimo_recebimento').Value.AsString :=
-            IntToStrZero(round(ValorMinPagamento * 100), 17);
-          JsonRecDivergente.Add('percentual_minimo_recebimento').Value.AsString :=
-            IntToStrZero(round(PercentualMinPagamento * 100000), 12);
-          JsonRecDivergente.Add('valor_maximo_recebimento').Value.AsString :=
-            IntToStrZero(round(ValorMaxPagamento * 100), 17);
-          JsonRecDivergente.Add('percentual_maximo_recebimento').Value.AsString :=
-            IntToStrZero(round(PercentualMaxPagamento * 100000), 12);
+            IntToStr(integer(TipoPagamento) + 1);
+
+          if TipoPagamento in [tpAceita_Valores_entre_Minimo_Maximo, tpSomente_Valor_Minimo] then
+          begin
+            if (ValorMinPagamento > 0) and (ValorMaxPagamento > 0) then
+              JsonRecDivergente.Add('tipo_valor_percentual_recebimento').Value.AsString := 'V'
+            else
+              JsonRecDivergente.Add('tipo_valor_percentual_recebimento').Value.AsString := 'P';
+            JsonRecDivergente.Add('valor_minimo_recebimento').Value.AsString :=
+              IntToStrZero(round(ValorMinPagamento * 100), 17);
+            JsonRecDivergente.Add('percentual_minimo_recebimento').Value.AsString :=
+              IntToStrZero(round(PercentualMinPagamento * 100000), 12);
+            JsonRecDivergente.Add('valor_maximo_recebimento').Value.AsString :=
+              IntToStrZero(round(ValorMaxPagamento * 100), 17);
+            JsonRecDivergente.Add('percentual_maximo_recebimento').Value.AsString :=
+              IntToStrZero(round(PercentualMaxPagamento * 100000), 12);
+          end;
 
           JsonPairRecDivergente := TJsonPair.Create(AJson, 'recebimento_divergente');
           try

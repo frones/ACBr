@@ -522,7 +522,7 @@ begin
     Conteudo.Clear;
     NomeArquivo := Arquivo;
 
-    WriteRegistroZ1;
+    WriteRegistroZ1(Layout);
     WriteBuffer;
 
     // Assinatura EAD

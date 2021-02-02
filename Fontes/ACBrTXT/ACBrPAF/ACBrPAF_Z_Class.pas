@@ -36,7 +36,7 @@ unit ACBrPAF_Z_Class;
 
 interface
 
-uses SysUtils, Classes, ACBrTXTClass,
+uses SysUtils, Classes, ACBrTXTClass, ACBrPAFRegistros,
      ACBrPAF_Z;
 
 type
@@ -55,7 +55,7 @@ type
     procedure LiberaRegistros;
     function limpaCampo(pValor: String):String;
     procedure WriteRegistroZ2;
-    procedure WriteRegistroZ3;
+    procedure WriteRegistroZ3(Layout: TLayoutPAF);
     procedure WriteRegistroZ4;
     procedure WriteRegistroZ9;
   public
@@ -63,7 +63,7 @@ type
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    procedure WriteRegistroZ1;
+    procedure WriteRegistroZ1(Layout: TLayoutPAF);
 
     property RegistroZ1: TRegistroZ1 read FRegistroZ1 write FRegistroZ1;
     property RegistroZ2: TRegistroZ2 read FRegistroZ2 write FRegistroZ2;
@@ -128,7 +128,7 @@ begin
   CriaRegistros;
 end;
 
-procedure TPAF_Z.WriteRegistroZ1;
+procedure TPAF_Z.WriteRegistroZ1(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroZ1) then
   begin
@@ -144,7 +144,7 @@ begin
           RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
     WriteRegistroZ2;
-    WriteRegistroZ3;
+    WriteRegistroZ3(Layout);
     WriteRegistroZ4;
     WriteRegistroZ9;
   end;
@@ -168,16 +168,24 @@ begin
   end;
 end;
 
-procedure TPAF_Z.WriteRegistroZ3;
+procedure TPAF_Z.WriteRegistroZ3(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroZ3) then
   begin
     with FRegistroZ3 do
     begin
-      Add(LFill('Z3') +
-          RFill(UpperCase(LAUDO) , 10) +
-          RFill(UpperCase(NOME)  , 50) +
-          RFill(UpperCase(VERSAO), 10));
+      case Layout of
+        lpPAFECF:
+          Add(LFill('Z3') +
+              RFill(UpperCase(LAUDO) , 10) +
+              RFill(UpperCase(NOME)  , 50) +
+              RFill(UpperCase(VERSAO), 10));
+        lpPAFNFCe:
+          Add(LFill('Z3') +
+              RFill(UpperCase(NOME)  , 50) +
+              RFill(UpperCase(VERSAO), 10));
+      end;
+
     end;
   end;
 end;

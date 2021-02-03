@@ -1392,9 +1392,13 @@ var
   Erro: String;
 begin
   Ret := DefineMensagemPermanentePinPad(MsgPinPad);
-  Erro := fSiTefAPI.TraduzirErro(Ret);
-  if (Erro <> '') then
-    raise EACBrTEFDErro.Create( ACBrStr(Erro) ) ;
+
+  if (Ret <> 0) then
+  begin
+    Erro := fSiTefAPI.TraduzirErro(Ret);
+    if (Erro <> '') then
+      raise EACBrTEFDErro.Create( ACBrStr(Erro) ) ;
+  end;
 end;
 
 end.

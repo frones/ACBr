@@ -84,6 +84,9 @@ ResourceString
 const
   CMonitorIni = 'ACBrMonitor.ini';
   _C = 'tYk*5W@';
+  C_LEVEL0 = 0;
+  C_LEVEL1 = 1;
+  C_LEVEL2 = 2;
 
   CModeloNFe55 = 55;
   CModeloNFe65 = 65;

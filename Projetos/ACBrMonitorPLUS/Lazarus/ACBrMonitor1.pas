@@ -40,13 +40,14 @@ interface
 uses
   {$IFDEF MSWINDOWS} windows, {$ENDIF}
   SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice,
-  ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls, FileUtil,
-  ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
-  ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
-  ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrConsultaCNPJ,
-  ACBrConsultaCPF, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
-  ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml,
+  ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
+  FileUtil, ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL,
+  ACBrETQ, ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock,
+  ACBrValidador, ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs,
+  ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrNFe, ACBrNFeDANFeESCPOS,
+  ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
+  ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids,
+  SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml, TreeFilterEdit,
   pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe, ACBrSAT,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   pgnreConversao, ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX,
@@ -59,7 +60,7 @@ uses
   DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
   DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit, DoCNPJUnit,
-  DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ;
+  DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ, ACBrMonitorMenu;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -150,7 +151,6 @@ type
     bDISAnimar: TBitBtn;
     bDISLimpar: TBitBtn;
     bDISTestar: TBitBtn;
-    bDownloadLista: TButton;
     bECFAtivar: TBitBtn;
     bECFLeituraX: TBitBtn;
     bECFTestar: TBitBtn;
@@ -167,7 +167,6 @@ type
     bInicializar: TButton;
     bLCBAtivar: TBitBtn;
     bLCBSerial: TBitBtn;
-    bNcmConsultar: TButton;
     bRFDID: TButton;
     bRFDINI: TButton;
     bRFDINISalvar: TButton;
@@ -459,7 +458,6 @@ type
     deBolDirRemessa: TDirectoryEdit;
     deBolDirRetorno: TDirectoryEdit;
     deBolDirRetornoRel: TDirectoryEdit;
-    deNcmSalvar: TDirectoryEdit;
     deRFDDataSwBasico: TDateEdit;
     deUSUDataCadastro: TDateEdit;
     eAvanco: TEdit;
@@ -582,7 +580,6 @@ type
     edtLogoMarcaNFCeSAT: TEdit;
     edtModalidade: TEdit;
     edtMsgResumoCanhoto: TEdit;
-    edtNcmNumero: TEdit;
     edtNumCopia: TSpinEdit;
     edtNumCopiaNFCe: TSpinEdit;
     edtNumeroSerie: TEdit;
@@ -689,10 +686,25 @@ type
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
     GroupBox9: TGroupBox;
+    Image2: TImage;
+    imgErrEmail_Mail: TImage;
+    imgErrEmail_User: TImage;
+    imgErrEmail_Smtp: TImage;
+    imgErrEmail_Porta: TImage;
+    imgErrEmail_Senha: TImage;
+    imgErrEmail_Name: TImage;
+    imgErrSATLibModelo: TImage;
+    imgNetChat: TImage;
+    imgNetDoc: TImage;
+    imgExp: TImage;
+    ImgCanal: TImage;
+    ImgChat: TImage;
+    ImgDocumentacao: TImage;
+    Image7: TImage;
     ImageList2: TImageList;
     CHMHelpDatabase1: TCHMHelpDatabase;
     FontDialog1: TFontDialog;
-    Image2: TImage;
+    ImageACBr: TImage;
     imgErrCEP: TImage;
     imgErrCertificado: TImage;
     imgErrCidade: TImage;
@@ -723,6 +735,7 @@ type
     imgErrWebService: TImage;
     imgErrXmlSignLib: TImage;
     imgLogoBanco: TImage;
+    imgNetCanal: TImage;
     Impressao: TTabSheet;
     Label1: TLabel;
     Label10: TLabel;
@@ -732,8 +745,6 @@ type
     Label103: TLabel;
     Label104: TLabel;
     Label105: TLabel;
-    Label106: TLabel;
-    Label107: TLabel;
     Label108: TLabel;
     Label109: TLabel;
     labelbolcep: TLabel;
@@ -1082,6 +1093,8 @@ type
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
+    pnlPesquisa: TPanel;
+    PanelStart: TPanel;
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
@@ -1231,15 +1244,20 @@ type
     spedtSATCasasDecimaisQtd: TSpinEdit;
     spedtSATDecimaisVUnit: TSpinEdit;
     SpeedButton1: TSpeedButton;
+    spbExpand: TSpeedButton;
+    spbCollapse: TSpeedButton;
     speEspEntreProd: TSpinEdit;
     speFonteAdic: TSpinEdit;
     speFonteCampos: TSpinEdit;
     speFonteEndereco: TSpinEdit;
     speFonteRazao: TSpinEdit;
     speLargCodProd: TSpinEdit;
+    SpinEdit1: TSpinEdit;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
+    Splitter4: TSplitter;
+    Splitter5: TSplitter;
     spnAttemptsMail: TSpinEdit;
     spnTimeOutMail: TSpinEdit;
     StatusBar1: TStatusBar;
@@ -1268,6 +1286,8 @@ type
     ACBrETQ1: TACBrETQ;
     TCPServerTC: TACBrTCPServer;
     TimerTC: TTimer;
+    TreeFilterEdit1: TTreeFilterEdit;
+    TreeViewMenu: TTreeView;
     tsACBrBoleto: TTabSheet;
     tsBAL: TTabSheet;
     tsBoletoEmail: TTabSheet;
@@ -1308,7 +1328,6 @@ type
     tsLayoutBoleto: TTabSheet;
     tsLCB: TTabSheet;
     tsMonitor: TTabSheet;
-    tsNcm: TTabSheet;
     tsRede: TTabSheet;
     tsRelatorio: TTabSheet;
     tsRemessaRetorno: TTabSheet;
@@ -1347,12 +1366,10 @@ type
     procedure bBoletoRelatorioRetornoClick(Sender: TObject);
     procedure bBOLLerArqRelatorioClick(Sender: TObject);
     procedure bCEPTestarClick(Sender: TObject);
-    procedure bDownloadListaClick(Sender: TObject);
     procedure bEmailTestarConfClick(Sender: TObject);
     procedure bIBGETestarClick(Sender: TObject);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender: TObject);
-    procedure bNcmConsultarClick(Sender: TObject);
     procedure bRSAeECFcClick(Sender: TObject);
     procedure bSedexRastrearClick(Sender: TObject);
     procedure bSedexTestarClick(Sender: TObject);
@@ -1493,6 +1510,11 @@ type
     procedure edBALLogChange(Sender: TObject);
     procedure edEmailEnderecoChange(Sender: TObject);
     procedure edEmailEnderecoExit(Sender: TObject);
+    procedure edEmailHostChange(Sender: TObject);
+    procedure edEmailNomeChange(Sender: TObject);
+    procedure edEmailPortaChange(Sender: TObject);
+    procedure edEmailSenhaChange(Sender: TObject);
+    procedure edEmailUsuarioChange(Sender: TObject);
     procedure edNomeDLLChange(Sender: TObject);
     procedure edSATLogChange(Sender: TObject);
     procedure edSATPathArqsCancChange(Sender: TObject);
@@ -1519,6 +1541,19 @@ type
     procedure edtSwHCNPJKeyPress(Sender: TObject; var Key: char);
     procedure edtTokenChange(Sender: TObject);
     procedure edtURLPFXChange(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure Image7MouseEnter(Sender: TObject);
+    procedure Image7MouseLeave(Sender: TObject);
+    procedure ImgCanalClick(Sender: TObject);
+    procedure ImgCanalMouseEnter(Sender: TObject);
+    procedure ImgCanalMouseLeave(Sender: TObject);
+    procedure ImgChatClick(Sender: TObject);
+    procedure ImgChatMouseEnter(Sender: TObject);
+    procedure ImgChatMouseLeave(Sender: TObject);
+    procedure ImgDocumentacaoClick(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
+    procedure ImgDocumentacaoMouseEnter(Sender: TObject);
+    procedure ImgDocumentacaoMouseLeave(Sender: TObject);
     procedure OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
@@ -1532,7 +1567,12 @@ type
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
+    procedure pgCadastroChange(Sender: TObject);
     procedure pgConfigChange(Sender: TObject);
+    procedure pgConRFDChange(Sender: TObject);
+    procedure pgDFeChange(Sender: TObject);
+    procedure pgECFParamsChange(Sender: TObject);
+    procedure pgSATChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -1582,6 +1622,8 @@ type
     procedure sePagCodChange(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure spbExpandClick(Sender: TObject);
+    procedure spbCollapseClick(Sender: TObject);
     procedure TcpServerConecta(const TCPBlockSocket: TTCPBlockSocket;
       var Enviar: ansistring);{%h-}
     procedure TcpServerDesConecta(const TCPBlockSocket: TTCPBlockSocket;
@@ -1595,7 +1637,10 @@ type
     procedure TCPServerTCRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
       const Recebido: ansistring; var Enviar: ansistring);
     procedure TrayIcon1Click(Sender: TObject);
+    procedure TreeViewMenuClick(Sender: TObject);
     procedure tsACBrBoletoShow(Sender: TObject);
+    procedure tsCadastroShow(Sender: TObject);
+    procedure tsDFeShow(Sender: TObject);
     procedure tsECFShow(Sender: TObject);
     procedure Ocultar1Click(Sender: TObject);
     procedure Restaurar1Click(Sender: TObject);
@@ -1682,6 +1727,7 @@ type
     procedure cbETQModeloChange(Sender: TObject);
     procedure cbETQPortaChange(Sender: TObject);
     procedure bTCAtivarClick(Sender: TObject);
+    procedure tsSatShow(Sender: TObject);
     procedure tsTCShow(Sender: TObject);
     procedure cbxTCModeloChange(Sender: TObject);
     procedure sbTCArqPrecosEditClick(Sender: TObject);
@@ -1744,6 +1790,8 @@ type
     FDoCNPJ: TACBrObjetoConsultaCNPJ;
     FDoCPF: TACBrObjetoConsultaCPF;
 
+    FMenuTreeView: TMenu;
+
     function IsVisible : Boolean; virtual;
 
     procedure DesInicializar;
@@ -1795,9 +1843,14 @@ type
 
     procedure SetFontLabels(Sender: TObject);
 
+    procedure ConfigPainelMenu(Edicao: Boolean);
+
   protected
     procedure MostraLogoBanco;
     procedure AtualizarTela(AMonitorConfig: TMonitorConfig);
+
+    procedure EfeitoBotaoEnter(ASender, AIco: TImage);
+    procedure EfeitoBotaoLeave(ASender, AIco: TImage);
 
   public
     Conexao: TTCPBlockSocket;
@@ -1844,6 +1897,8 @@ type
     procedure OnFormataDecimalSAT;
     procedure OnMensagemCanhotoNFe;
     procedure OnSATManual;
+
+
 
     property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
@@ -2478,9 +2533,11 @@ begin
   ImageList2.GetBitmap(16, imgErrCEP.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrRazaoSocial.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrUF.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrWebServer.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrCidade.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSAT.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSATLib.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrSATLibModelo.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSATAtivar.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSATInicializar.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSATPathEnvio.Picture.Bitmap);
@@ -2491,6 +2548,17 @@ begin
   ImageList2.GetBitmap(16, imgErrSATCNPJSH.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrSATAssign.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrEmail.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_Name.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_Mail.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_User.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_Smtp.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_Senha.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrEmail_Porta.Picture.Bitmap);
+
+
+
+
+  FMenuTreeView := TMenu.Create(pgConfig, TreeViewMenu);
 
 end;
 
@@ -2540,7 +2608,7 @@ end;
 
 procedure TFrmACBrMonitor.ACBrGIF1Click(Sender: TObject);
 begin
-  OpenURL('http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html');
+  OpenURL('https://www.projetoacbr.com.br/forum/sac/sobre/');
 end;
 
 procedure TFrmACBrMonitor.ACBrMail1MailException(const AMail: TACBrMail;
@@ -2683,7 +2751,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.bDownloadListaClick(Sender: TObject);
+{procedure TFrmACBrMonitor.bDownloadListaClick(Sender: TObject);
 var
   DirNcmSalvar: string;
 begin
@@ -2701,7 +2769,8 @@ begin
   end;
 
   AddLinesLog('Arquivo salvo em: ' + DirNcmSalvar);
-end;
+end; }
+
 procedure TFrmACBrMonitor.bEmailTestarConfClick(Sender: TObject);
 var
   Teste: string;
@@ -2840,7 +2909,7 @@ begin
 
 end;
 
-procedure TFrmACBrMonitor.bNcmConsultarClick(Sender: TObject);
+{procedure TFrmACBrMonitor.bNcmConsultarClick(Sender: TObject);
 var
   AMsg: string;
 begin
@@ -2857,7 +2926,7 @@ begin
   end;
 
   AddLinesLog(AMsg);
-end;
+end;}
 
 procedure TFrmACBrMonitor.bRSAeECFcClick(Sender: TObject);
 var
@@ -3764,8 +3833,8 @@ end;
 
 procedure TFrmACBrMonitor.btnNCMClick(Sender: TObject);
 begin
-  SetColorButtons(Sender);
-  pgConfig.ActivePage := tsNcm;
+  //SetColorButtons(Sender);
+  //pgConfig.ActivePage := tsNcm;
 end;
 
 procedure TFrmACBrMonitor.btnPosPrinterClick(Sender: TObject);
@@ -4339,6 +4408,7 @@ end;
 
 procedure TFrmACBrMonitor.edEmailEnderecoChange(Sender: TObject);
 begin
+  //imgErrEmail_Mail.Visible := not(edEmailEndereco.Text <> '');
   ValidarConfigMail;
 end;
 
@@ -4352,8 +4422,37 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.edNomeDLLChange(Sender: TObject);
+procedure TFrmACBrMonitor.edEmailHostChange(Sender: TObject);
+begin
+  //imgErrEmail_Smtp.Visible := not(edEmailHost.Text <> '');
+  ValidarConfigMail;
+end;
 
+procedure TFrmACBrMonitor.edEmailNomeChange(Sender: TObject);
+begin
+  //imgErrEmail_Name.Visible := not(edEmailNome.Text <> '');
+  ValidarConfigMail;
+end;
+
+procedure TFrmACBrMonitor.edEmailPortaChange(Sender: TObject);
+begin
+  //imgErrEmail_Porta.Visible := not(edEmailPorta.Text <> '');
+  ValidarConfigMail;
+end;
+
+procedure TFrmACBrMonitor.edEmailSenhaChange(Sender: TObject);
+begin
+  //imgErrEmail_Senha.Visible := not(edEmailSenha.Text <> '');
+  ValidarConfigMail;
+end;
+
+procedure TFrmACBrMonitor.edEmailUsuarioChange(Sender: TObject);
+begin
+  //imgErrEmail_User.Visible := not(edEmailUsuario.Text <> '');
+  ValidarConfigMail;
+end;
+
+procedure TFrmACBrMonitor.edNomeDLLChange(Sender: TObject);
 begin
   ValidarConfigSAT;
 end;
@@ -4365,20 +4464,23 @@ end;
 
 procedure TFrmACBrMonitor.edSATPathArqsCancChange(Sender: TObject);
 begin
-  imgErrSATPathCancelamento.Visible := not( (edSATPathArqsCanc.Text <> '') and
-        DirectoryExists(edSATPathArqsCanc.Text));
+  ValidarConfigSAT;
+  //imgErrSATPathCancelamento.Visible := not( (edSATPathArqsCanc.Text <> '') and
+  //      DirectoryExists(edSATPathArqsCanc.Text));
 end;
 
 procedure TFrmACBrMonitor.edSATPathArqsChange(Sender: TObject);
 begin
-  imgErrSATPathVendas.Visible := not( (edSATPathArqs.Text <> '') and
-        DirectoryExists(edSATPathArqs.Text));
+  ValidarConfigSAT;
+  //imgErrSATPathVendas.Visible := not( (edSATPathArqs.Text <> '') and
+    //    DirectoryExists(edSATPathArqs.Text));
 end;
 
 procedure TFrmACBrMonitor.edSATPathArqsEnvioChange(Sender: TObject);
 begin
-  imgErrSATPathEnvio.Visible := not( (edSATPathArqsEnvio.Text <> '') and
-        DirectoryExists(edSATPathArqsEnvio.Text));
+  ValidarConfigSAT;
+  //imgErrSATPathEnvio.Visible := not( (edSATPathArqsEnvio.Text <> '') and
+  //      DirectoryExists(edSATPathArqsEnvio.Text));
 end;
 
 procedure TFrmACBrMonitor.edtArquivoPFXChange(Sender: TObject);
@@ -4467,8 +4569,9 @@ end;
 
 procedure TFrmACBrMonitor.edtCodigoAtivacaoChange(Sender: TObject);
 begin
-  imgErrSATCodAtivacao.Visible := not( Length( edtCodigoAtivacao.Text) > 5);
-  edNomeDLLChange(Sender);
+  ValidarConfigSAT
+  //imgErrSATCodAtivacao.Visible := not( Length( edtCodigoAtivacao.Text) > 5);
+  //edNomeDLLChange(Sender);
 end;
 
 procedure TFrmACBrMonitor.edtEmitCNPJChange(Sender: TObject);
@@ -4478,9 +4581,10 @@ begin
     edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
     edtEmitCNPJ.SelStart := Length(edtEmitCNPJ.Text);
   end;
+  ValidarConfigSAT;
 
-  imgErrSATEmitente.Visible := not( Length( edtEmitCNPJ.Text) > 5);
-  edNomeDLLChange(Sender);
+  //imgErrSATEmitente.Visible := not( Length( edtEmitCNPJ.Text) > 5);
+  //edNomeDLLChange(Sender);
 
 end;
 
@@ -4525,8 +4629,9 @@ end;
 
 procedure TFrmACBrMonitor.edtSwHAssinaturaChange(Sender: TObject);
 begin
-  imgErrSATAssign.Visible := not( Length( edtSwHAssinatura.Text) > 20);
-  edNomeDLLChange(Sender);
+  ValidarConfigSAT;
+  //imgErrSATAssign.Visible := not( Length( edtSwHAssinatura.Text) > 20);
+  //edNomeDLLChange(Sender);
 end;
 
 procedure TFrmACBrMonitor.edtSwHCNPJChange(Sender: TObject);
@@ -4536,9 +4641,10 @@ begin
     edtSwHCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtSwHCNPJ.Text), '**.***.***/****-**');
     edtSwHCNPJ.SelStart := Length(edtSwHCNPJ.Text);
   end;
+  ValidarConfigSAT;
 
-  imgErrSATCNPJSH.Visible := not( Length( edtSwHCNPJ.Text) > 5);
-  edNomeDLLChange(Sender);
+  //imgErrSATCNPJSH.Visible := not( Length( edtSwHCNPJ.Text) > 5);
+  //edNomeDLLChange(Sender);
 end;
 
 procedure TFrmACBrMonitor.edtSwHCNPJKeyPress(Sender: TObject; var Key: char);
@@ -4564,6 +4670,75 @@ if (edtURLPFX.Text <> '') then
   end;
 
   ValidarConfigCertificado;
+end;
+
+procedure TFrmACBrMonitor.Image2Click(Sender: TObject);
+begin
+  bConfigClick(Self);
+end;
+
+procedure TFrmACBrMonitor.Image7MouseEnter(Sender: TObject);
+begin
+  EfeitoBotaoEnter( (Sender as TImage), imgExp);
+
+end;
+
+procedure TFrmACBrMonitor.Image7MouseLeave(Sender: TObject);
+begin
+  EfeitoBotaoLeave( (Sender as TImage), imgExp);
+
+end;
+
+procedure TFrmACBrMonitor.ImgCanalClick(Sender: TObject);
+begin
+  OpenURL('https://www.projetoacbr.com.br/forum/video/browse/13-curso-dominando-o-acbrmonitor/');
+end;
+
+procedure TFrmACBrMonitor.ImgCanalMouseEnter(Sender: TObject);
+begin
+  EfeitoBotaoEnter( (Sender as TImage), imgNetCanal);
+end;
+
+procedure TFrmACBrMonitor.ImgCanalMouseLeave(Sender: TObject);
+begin
+  EfeitoBotaoLeave( (Sender as TImage), imgNetCanal);
+end;
+
+procedure TFrmACBrMonitor.ImgChatClick(Sender: TObject);
+begin
+  OpenURL('https://discord.gg/VM7pqruV68');
+end;
+
+procedure TFrmACBrMonitor.ImgChatMouseEnter(Sender: TObject);
+begin
+  EfeitoBotaoEnter( (Sender as TImage), imgNetChat);
+end;
+
+procedure TFrmACBrMonitor.ImgChatMouseLeave(Sender: TObject);
+begin
+  EfeitoBotaoLeave( (Sender as TImage), imgNetChat);
+end;
+
+procedure TFrmACBrMonitor.ImgDocumentacaoClick(Sender: TObject);
+begin
+  OpenURL('https://acbr.sourceforge.io/ACBrMonitor/Apresentacao.html');
+end;
+
+procedure TFrmACBrMonitor.Image7Click(Sender: TObject);
+begin
+  bConfigClick(Self);
+end;
+
+procedure TFrmACBrMonitor.ImgDocumentacaoMouseEnter(Sender: TObject);
+begin
+  EfeitoBotaoEnter( (Sender as TImage), imgNetDoc);
+
+end;
+
+procedure TFrmACBrMonitor.ImgDocumentacaoMouseLeave(Sender: TObject);
+begin
+  EfeitoBotaoLeave( (Sender as TImage), imgNetDoc);
+
 end;
 
 procedure TFrmACBrMonitor.OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
@@ -4612,6 +4787,8 @@ begin
   FDoGNRe.Free;
   FDoPosPrinter.Free;
   FDoBPe.Free;
+
+  FMenuTreeView.Free;
 
   FMonitorConfig.Free;
 end;
@@ -5143,6 +5320,16 @@ begin
     ckIBGEUTF8.Checked                := IBGEUTF8;
   end;
 
+    with ACBrIBGE1 do
+    begin
+      ProxyHost := edCONProxyHost.Text;
+      ProxyPort := edCONProxyPort.Text;
+      ProxyUser := edCONProxyUser.Text;
+      ProxyPass := edCONProxyPass.Text;
+      IgnorarCaixaEAcentos:= ckIBGEAcentos.Checked;
+      IsUTF8    :=  ckIBGEUTF8.Checked;
+    end;
+
   {Parametros do Boleto}
   with FMonitorConfig.BOLETO do
   begin
@@ -5258,10 +5445,9 @@ begin
   end;
 
   {Parametro NCM}
-  with FMonitorConfig.NCM do
-  begin
-    deNcmSalvar.Text                   := DirNCMSalvar;
-  end;
+  //with FMonitorConfig.NCM do
+    //deNcmSalvar.Text                   := DirNCMSalvar;
+
 
   {Parametro DFe}
   with FMonitorConfig.DFE do
@@ -5984,16 +6170,6 @@ begin
     TimeOut := spnTimeOutMail.Value;
   end;
 
-  with ACBrIBGE1 do
-  begin
-    ProxyHost := edCONProxyHost.Text;
-    ProxyPort := edCONProxyPort.Text;
-    ProxyUser := edCONProxyUser.Text;
-    ProxyPass := edCONProxyPass.Text;
-    IgnorarCaixaEAcentos:= ckIBGEAcentos.Checked;
-    IsUTF8    :=  ckIBGEUTF8.Checked;
-  end;
-
   with ACBrSedex1 do
   begin
     CodContrato := edtSedexContrato.Text;
@@ -6209,7 +6385,7 @@ begin
       'para proteger sua Chave Privada');
   end;
 
-  if Trim(deNcmSalvar.Text) <> '' then
+  {if Trim(deNcmSalvar.Text) <> '' then
   begin
     if not DirectoryExists(deNcmSalvar.Text) then
     begin
@@ -6217,7 +6393,7 @@ begin
       deNcmSalvar.SetFocus;
       raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado.');
     end;
-  end;
+  end; }
 
   SalvarSW;
 
@@ -6457,10 +6633,8 @@ begin
     end;
 
     { Parametros NCM }
-    with FMonitorConfig.NCM do
-    begin
-      DirNCMSalvar            := PathWithoutDelim(deNcmSalvar.Text);
-    end;
+    //with FMonitorConfig.NCM do
+      //DirNCMSalvar            := PathWithoutDelim(deNcmSalvar.Text);
 
     { Parametros DFe }
     with FMonitorConfig.DFE do
@@ -7058,6 +7232,8 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.EscondeConfig;
 begin
+
+  ConfigPainelMenu(False);
   PanelScroll.Visible := False;
   pConfig.Visible := False;
   bConfig.Caption := '&Configurar';
@@ -7094,7 +7270,9 @@ begin
   end;
 
   fsCNPJSWOK := False;
-  PanelScroll.Visible := True;
+
+  ConfigPainelMenu(True);
+  PanelScroll.Visible := false;
   pConfig.Visible := True;
   bConfig.Caption := '&Salvar';
   bConfig.Glyph := nil;
@@ -7403,8 +7581,19 @@ end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.sbLogClick(Sender: TObject);
+var
+  level: integer;
 begin
-  PathClick(edLogArq);
+  //PathClick(edLogArq);
+
+  //TreeViewMenu.Items.Item[2].Expanded:= true;
+  //level:= TreeViewMenu.Items.Item[3].Level;
+  //TreeViewMenu.Items.Item[3].Selected:= true;
+
+  //
+  TreeViewMenu.Items.Item[2].Selected:= True;
+  TreeViewMenu.Items.Item[2].Expanded:= true;
+
 end;
 
 {------------------------------------------------------------------------------}
@@ -7542,6 +7731,7 @@ end;
 procedure TFrmACBrMonitor.tsECFShow(Sender: TObject);
 begin
   AvaliaEstadoTsECF;
+  pgECFParams.ActivePageIndex := 0;
 end;
 
 {------------------------------------------------------------------------------}
@@ -7735,11 +7925,39 @@ begin
   if pgBoleto.ActivePage = tsRelatorio then
      if lsvArqsRetorno.Items.Count = 0 then
         CarregaArquivosRetorno;
+
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
+end;
+
+procedure TFrmACBrMonitor.pgCadastroChange(Sender: TObject);
+begin
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
 end;
 
 procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
 begin
   HelptabSheet;
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
+end;
+
+procedure TFrmACBrMonitor.pgConRFDChange(Sender: TObject);
+begin
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
+end;
+
+procedure TFrmACBrMonitor.pgDFeChange(Sender: TObject);
+begin
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
+end;
+
+procedure TFrmACBrMonitor.pgECFParamsChange(Sender: TObject);
+begin
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
+end;
+
+procedure TFrmACBrMonitor.pgSATChange(Sender: TObject);
+begin
+  FMenuTreeView.SincronizaTreeView( (Sender as TPageControl).ActivePage.Tag );
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
@@ -8219,6 +8437,16 @@ begin
   PathClick(edLogComp);
 end;
 
+procedure TFrmACBrMonitor.spbExpandClick(Sender: TObject);
+begin
+  TreeViewMenu.FullExpand;
+end;
+
+procedure TFrmACBrMonitor.spbCollapseClick(Sender: TObject);
+begin
+  TreeViewMenu.FullCollapse;
+end;
+
 procedure TFrmACBrMonitor.TcpServerConecta(const TCPBlockSocket: TTCPBlockSocket;
   var Enviar: ansistring);
 var
@@ -8354,9 +8582,28 @@ begin
   TrayIcon1.PopUpMenu.PopUp;
 end;
 
+procedure TFrmACBrMonitor.TreeViewMenuClick(Sender: TObject);
+begin
+  if Assigned(TreeViewMenu.Selected) then
+    FMenuTreeView.AbrirTelaTreeView( TreeViewMenu.Selected.Level                          //Indice do Nível TreeView
+                                    , TreeViewMenu.Selected.Index                         //Indice do Menu Selecionado
+                                    , TreeViewMenu.Selected.Parent.Index);                //Indice do Nó Pai
+
+end;
+
 procedure TFrmACBrMonitor.tsACBrBoletoShow(Sender: TObject);
 begin
   pgBoleto.ActivePageIndex := 0;
+end;
+
+procedure TFrmACBrMonitor.tsCadastroShow(Sender: TObject);
+begin
+  pgCadastro.ActivePageIndex := 0;
+end;
+
+procedure TFrmACBrMonitor.tsDFeShow(Sender: TObject);
+begin
+  pgDFe.ActivePageIndex := 0;
 end;
 
 {------------------------------------------------------------------------------}
@@ -9189,8 +9436,10 @@ end;
 procedure TFrmACBrMonitor.ValidarConfigCertificado;
 var
  PathPfx, UrlPfx, ArqPfx, NumSerie, Senha: String;
- Ok: Boolean;
+ Ok, Res: Boolean;
 begin
+  Res:= imgErrCertificado.Visible;
+
   UrlPfx := edtURLPFX.Text;
   ArqPfx := edtArquivoPFX.Text;
   NumSerie := edtNumeroSerie.Text;
@@ -9218,14 +9467,25 @@ begin
 
   imgErrCertificado.Visible := not Ok;
   btCertInfo.Enabled := not imgErrCertificado.Visible;
+
+  if (Res <> imgErrCertificado.Visible) or (imgErrCertificado.Visible) then
+    FMenuTreeView.AtualizaItemTela(tsCertificadoDFe.Tag,
+                                    IfThen(imgErrCertificado.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , C_INDEX_IMG_FOLDER));
+
+
   ValidarConfigWebService;
+
 end;
+
 
 procedure TFrmACBrMonitor.ValidarConfigWebService;
 var
-  Ok: Boolean;
+  Ok, Res: Boolean;
   PathSchemas: String;
 begin
+  Res:= imgErrWebServer.Visible;
   imgErrWebService.Visible := (cbUF.ItemIndex < 0);
 
   PathSchemas := edtPathSchemasDFe.Text;
@@ -9238,6 +9498,14 @@ begin
                                    imgErrPathSchemas.Visible or
                                    imgErrWebService.Visible);
   imgErrWebServer.Visible := not ( btStatusServico.Enabled );
+
+  if (Res <> imgErrWebServer.Visible) or (imgErrWebServer.Visible) then
+    FMenuTreeView.AtualizaItemTela(tsWebServiceDFe.Tag,
+                                    IfThen(imgErrWebServer.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , C_INDEX_IMG_FOLDER));
+
+
 end;
 
 procedure TFrmACBrMonitor.LigarAlertasdeErrosDeConfiguracao;
@@ -9256,20 +9524,41 @@ begin
 
   ValidarComunicacao;
   ValidarConfigWebService;
+  ValidarConfigCertificado;
   ValidarConfigSAT;
   ValidarConfigMail;
+
+  FMenuTreeView.CarregarMenuTreeView;
 
 end;
 
 procedure TFrmACBrMonitor.ValidarConfigSAT;
+  procedure LigarAlertaErros;
+    begin
+      imgErrSATCodAtivacao.Visible := not( Length( edtCodigoAtivacao.Text) > 5);
+      imgErrSATEmitente.Visible := not( Length( edtEmitCNPJ.Text) > 5);
+      imgErrSATCNPJSH.Visible := not( Length( edtSwHCNPJ.Text) > 5);
+      imgErrSATAssign.Visible := not( Length( edtSwHAssinatura.Text) > 20);
+      imgErrSATPathVendas.Visible := not( (edSATPathArqs.Text <> '') and DirectoryExists(edSATPathArqs.Text));
+      imgErrSATPathCancelamento.Visible := not( (edSATPathArqsCanc.Text <> '') and DirectoryExists(edSATPathArqsCanc.Text));
+      imgErrSATPathEnvio.Visible := not( (edSATPathArqsEnvio.Text <> '') and DirectoryExists(edSATPathArqsEnvio.Text));
+      imgErrSATLibModelo.Visible:= not(cbxModeloSAT.ItemIndex > 0);
+    end;
 var
-  Ok: Boolean;
+  Ok, Res: Boolean;
 begin
+
+  Res:= imgErrSATAtivar.Visible;
+
   //Botão Inicializar
   //Botão Consultar Status
-  Ok := (edNomeDLL.Text <> '') and
-        FileExists(edNomeDLL.Text) and
-        (cbxModeloSAT.ItemIndex > 0);
+  Ok := (cbxModeloSAT.ItemIndex > 0);
+  imgErrSATLibModelo.Visible:= Ok;
+  bInicializar.Enabled := Ok;
+
+  Ok := Ok and
+        (edNomeDLL.Text <> '') and
+        FileExists(edNomeDLL.Text);
 
   imgErrSATInicializar.Visible := not(Ok);
   bInicializar.Enabled := Ok;
@@ -9279,34 +9568,69 @@ begin
   btConsultarStatusOPSAT.Enabled := Ok;
 
   //Botão Ativar Sat
+  LigarAlertaErros;
+
   Ok := Ok and
-        (edtCodigoAtivacao.Text <> '') and
-        (edtEmitCNPJ.Text <> '') and
-        (edtSwHCNPJ.Text <> '') and
-        (edtSwHAssinatura.Text <> '');
+        not(imgErrSATCodAtivacao.Visible) and
+        not(imgErrSATEmitente.Visible) and
+        not(imgErrSATCNPJSH.Visible) and
+        not(imgErrSATAssign.Visible);
 
   imgErrSATAtivar.Visible := not(Ok);
   btAtivarsat.Enabled := Ok;
 
-  edSATPathArqsChange(Nil);
-  edSATPathArqsCancChange(Nil);
-  edSATPathArqsEnvioChange(Nil);
+  if (Res <> imgErrSATAtivar.Visible) or (imgErrSATAtivar.Visible) then
+  begin
+    FMenuTreeView.AtualizaItemTela(tsDadosSAT.Tag,
+                                    IfThen(imgErrSATAtivar.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , C_INDEX_IMG_FOLDER));
+    FMenuTreeView.AtualizaItemTela(tsDadosEmit.Tag,
+                                    IfThen(imgErrSATEmitente.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , C_INDEX_IMG_FOLDER));
+    FMenuTreeView.AtualizaItemTela(tsDadosSwHouse.Tag,
+                                    IfThen(imgErrSATAssign.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , C_INDEX_IMG_FOLDER));
+
+  end;
 
 end;
 
 procedure TFrmACBrMonitor.ValidarConfigMail;
+  procedure LigarAlertaErros;
+      begin
+        imgErrEmail_Name.Visible := not(edEmailNome.Text <> '');
+        imgErrEmail_Mail.Visible := not(edEmailEndereco.Text <> '');
+        imgErrEmail_User.Visible := not(edEmailUsuario.Text <> '');
+        imgErrEmail_Smtp.Visible := not(edEmailHost.Text <> '');
+        imgErrEmail_Senha.Visible := not(edEmailSenha.Text <> '');
+        imgErrEmail_Porta.Visible := not(edEmailPorta.Text <> '');
+      end;
 var
-  Ok: Boolean;
+  Ok, Res: Boolean;
 begin
-  Ok := (edEmailEndereco.Text <> '') and
-        (edEmailNome.Text <> '') and
-        (edEmailHost.Text <> '') and
-        (edEmailPorta.Value > 0) and
-        (edEmailUsuario.Text <> '') and
-        (edEmailSenha.Text <> '');
+  Res:= imgErrEmail.Visible;
+
+  LigarAlertaErros;
+  Ok :=  not(imgErrEmail_Name.Visible) and
+         not(imgErrEmail_Mail.Visible) and
+         not(imgErrEmail_User.Visible) and
+         not(imgErrEmail_Smtp.Visible) and
+         not(imgErrEmail_Senha.Visible) and
+         not(imgErrEmail_Porta.Visible );
 
   imgErrEmail.Visible := not Ok;
   bEmailTestarConf.Enabled := Ok;
+
+  if ((Res <> imgErrEmail.Visible) or (imgErrEmail.Visible)) then
+    FMenuTreeView.AtualizaItemTela(tsEmail.Tag,
+                                    IfThen(imgErrEmail.Visible
+                                          , C_INDEX_IMG_ERRO
+                                          , tsEmail.ImageIndex));
+
+
 end;
 
 procedure TFrmACBrMonitor.VerificarErrosConfiguracaoComponentes(AfsCmd: TACBrCmd);
@@ -9433,7 +9757,7 @@ begin
       cbxEmitCidadeChange(Nil);
     end;
   except
-    MessageDlg('Erro ao carregar cidades', mtError, [mbOK], 0);
+    AddLinesLog( 'ERRO: Erro ao carregar cidades! Verifique a configuração de CONSULTA IBGE.'  );
   end;
 end;
 
@@ -9926,6 +10250,11 @@ begin
 
   AddLinesLog('Servidor de Terminal de Consulta: ' + IfThen(
     TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO'));
+end;
+
+procedure TFrmACBrMonitor.tsSatShow(Sender: TObject);
+begin
+  pgSAT.ActivePageIndex := 0;
 end;
 
 {------------------------------------------------------------------------------}
@@ -11388,6 +11717,61 @@ begin
 
 end;
 
+procedure TFrmACBrMonitor.ConfigPainelMenu(Edicao: Boolean);
+var
+  i, posMin, posMax: integer;
+begin
+  i:= 0;
+  posMin:= 65;
+  posMax:= 212;
+
+  if Edicao then
+  begin
+    PanelStart.Visible:= False;
+    ImageACBr.Visible:= True;
+    pnlPesquisa.Visible:= True;
+    TreeViewMenu.Visible:= True;
+    TreeFilterEdit1.SetFocus;
+
+    //Gerar Efeito Deslizar para o Painel
+    repeat
+      i:= i + Trunc(posMin / 3);
+      if i >= posMax then
+        PanelMenu.Width:= posMax
+      else
+        PanelMenu.Width:= i;
+      PanelMenu.Repaint;
+      Sleep(5);
+
+    until (i > posMax);
+
+  end
+  else
+  begin
+
+    //Gerar Efeito Recolher para o Painel
+    i:= posMax;
+    repeat
+      i:= i - Trunc(posMin);
+      if i <= posMin then
+        PanelMenu.Width:= posMin
+      else
+        PanelMenu.Width:= i;
+      PanelMenu.Repaint;
+      pgConfig.Repaint;
+      Sleep(5);
+
+    until (i < posMin);
+
+    ImageACBr.Visible:= False;
+    pnlPesquisa.Visible:= False;
+    TreeViewMenu.Visible:= False;
+    PanelStart.Visible:= True;
+    pgConfig.ActivePageIndex := 0;
+  end;
+
+end;
+
 procedure TFrmACBrMonitor.MostraLogoBanco;
 var
   Banco: TACBrBanco;
@@ -11413,6 +11797,20 @@ procedure TFrmACBrMonitor.AtualizarTela(AMonitorConfig: TMonitorConfig);
 begin
   if AMonitorConfig = FMonitorConfig then
     LerIni(False);
+end;
+
+procedure TFrmACBrMonitor.EfeitoBotaoEnter(ASender, AIco: TImage);
+begin
+  ASender.Left := ASender.Left -3 ;
+  ASender.Top:= ASender.Top -3 ;
+  AIco.Visible:= True;
+end;
+
+procedure TFrmACBrMonitor.EfeitoBotaoLeave(ASender, AIco: TImage);
+begin
+  AIco.Visible:= False;
+  ASender.Left := ASender.Left +3 ;
+  ASender.Top:= ASender.Top +3 ;
 end;
 
 procedure TFrmACBrMonitor.CarregaArquivosRetorno;

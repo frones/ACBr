@@ -116,7 +116,7 @@ end;
 
 procedure TfrmSobre.bSACClick(Sender : TObject) ;
 begin
- OpenURL('http://www.djsystem.com.br/acbr/sac/');
+ OpenURL('https://projetoacbr.com.br/#sac');
 end;
 
 procedure TfrmSobre.imgLazarusClick(Sender : TObject) ;
@@ -148,7 +148,7 @@ end;
 
 procedure TfrmSobre.lDesenvolvedoresClick(Sender: TObject);
 begin
-  OpenURL('www.djsystem.com.br');
+  OpenURL('https://projetoacbr.com.br/');
 end;
 
 procedure TfrmSobre.bAjudaClick(Sender: TObject);

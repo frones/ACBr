@@ -2767,9 +2767,16 @@ begin
 {$ENDIF}
     begin
       FieldByName('RNTRC').AsString := RNTRC;
-      if DateToStr(dPrev) <> '30/12/1899' then
-         FieldByName('DATAPREVISTA').AsString := DateToStr(dPrev);
-      FieldByName('CIOT').AsString           := CIOT;
+
+      if dPrev > 0 then
+         FieldByName('DATAPREVISTA').AsString := DateToStr(dPrev)
+	  else
+      begin
+        if (CTE.compl.Entrega.comData.dProg > 0) then
+          FieldByName('DATAPREVISTA').AsString := DateToStr(CTE.compl.Entrega.comData.dProg);
+      end;
+	  
+      FieldByName('CIOT').AsString := CIOT;
     end;
 
 {$IFDEF PL_200}

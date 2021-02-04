@@ -1863,7 +1863,12 @@ begin
         end;
 
         if (dPrev > 0) then
-          rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
+          rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev)
+        else
+        begin
+          if (fpCTe.compl.Entrega.comData.dProg > 0) then
+            rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', fpCTe.compl.Entrega.comData.dProg);
+        end;
       end;
     end;
   end;

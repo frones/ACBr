@@ -677,8 +677,10 @@ begin
               if FNFSe.Protocolo = '0' then
                 FNFSe.Protocolo := Protocolo;
 
-              // Retorno do ConsultarLoteRps
-              FNFSe.Situacao := SituacaoTemp;
+              if Provedor = proCONAM then
+                FNFSe.Situacao := NFSeLida.NFSe.Situacao
+              else
+                FNFSe.Situacao := SituacaoTemp;
 
               {Márcio - Se tiver link na NFSeLida, então deve ser tratado lá, e aqui simplesmente pega o valor }
               FNFSe.Link              := NFSeLida.NFSe.Link;
@@ -800,6 +802,16 @@ begin
               FNFSe.NFSeCancelamento.Pedido.CodigoCancelamento := NFSeLida.NFSe.NFSeCancelamento.Pedido.CodigoCancelamento;
               FNFSe.Cancelada := NFSeLida.NFSe.Cancelada;
               FNFSe.Status := NFSeLida.NFSe.Status;
+
+              if Provedor = proCONAM then
+              begin
+                if NFSe.Situacao = '2' then
+                  NFSe.Cancelada := snSim
+                else
+                  NFSe.Cancelada := snNao;
+
+                NFSe.MotivoCancelamento := NFSeLida.NFSe.MotivoCancelamento;
+              end;
 
               FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
             end;

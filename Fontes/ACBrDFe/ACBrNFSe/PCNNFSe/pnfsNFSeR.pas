@@ -4629,18 +4629,19 @@ begin
 
       if ValorIssRet>0 then
       begin
-          Servico.Valores.IssRetido      := stRetencao;   //Edson
-          Servico.Valores.ValorIssRetido := ValorIssRet;  //Edson
-          Servico.Valores.ValorIss       := 0;            //Edson
-          Servico.Valores.ValorLiquidoNfse:= Servico.Valores.ValorServicos - ValorIssRet;   //Edson
-          ValoresNfse.ValorLiquidoNfse    := Servico.Valores.ValorServicos - ValorIssRet;   //Edson
-      end else
+        Servico.Valores.IssRetido      := stRetencao;
+        Servico.Valores.ValorIssRetido := ValorIssRet;
+        Servico.Valores.ValorIss       := 0;
+        Servico.Valores.ValorLiquidoNfse:= Servico.Valores.ValorServicos - ValorIssRet;
+        ValoresNfse.ValorLiquidoNfse    := Servico.Valores.ValorServicos - ValorIssRet;
+      end
+      else
       begin
-          Servico.Valores.IssRetido      := stNormal;    //Edson
-          Servico.Valores.ValorIssRetido := 0;           //Edson
-          Servico.Valores.ValorIss       := Leitor.rCampo(tcDe2, 'VlIss');    //Edson
-          Servico.Valores.ValorLiquidoNfse:= Leitor.rCampo(tcDe2, 'VlNFS');   //Edson
-          ValoresNfse.ValorLiquidoNfse    := Leitor.rCampo(tcDe2, 'VlNFS');   //Edson
+        Servico.Valores.IssRetido      := stNormal;
+        Servico.Valores.ValorIssRetido := 0;
+        Servico.Valores.ValorIss       := Leitor.rCampo(tcDe2, 'VlIss');
+        Servico.Valores.ValorLiquidoNfse:= Leitor.rCampo(tcDe2, 'VlNFS');
+        ValoresNfse.ValorLiquidoNfse    := Leitor.rCampo(tcDe2, 'VlNFS');
       end;
 
       Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');

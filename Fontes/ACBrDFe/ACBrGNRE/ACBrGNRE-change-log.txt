@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2021
+-- ACBrGNREGuiasRetorno --
+[*] https://www.projetoacbr.com.br/forum/topic/60756-erro-de-impress%C3%A3o-das-informa%C3%A7%C3%B5es-complementares-gnre/
+  Por: TI Automação
+[*] https://www.projetoacbr.com.br/forum/topic/59279-erro-na-leitura-do-retornoimpress%C3%A3o-v200/
+  Por: BSoft e Marco Moreira
+
 11/11/2020
 -- ACBrGNREWebServices --
 [*] Ajustes na definição do path do XML Retorno seguindo a estrutura de diretórios do componente, para gravação das Guias.xml

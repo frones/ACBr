@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2021
+--ACBrBoletoW_BancoBrasil--
+[*] Ajuste na validação campo fone
+
 29/01/2021
 --ACBrBoletoWS, ACBrBoletoW_Itau, ACBrBoletoRet_ITau, ACBrBoletoRetorno--
 [*] Ajuste na geração e retorno para transmissão Boletos on-line

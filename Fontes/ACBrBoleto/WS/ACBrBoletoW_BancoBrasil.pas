@@ -248,7 +248,7 @@ begin
           Gerador.wCampo(tcInt, '#17', PrefixTag('codigoTipoMulta'      ), 01, 01, 1, '2', DSC_CODIGO_MORA_JUROS);
           if (DataMulta > 0) then
             Gerador.wCampo(tcStr, '#18', PrefixTag('dataMultaTitulo'      ), 10, 10, 1, FormatDateTime('dd.mm.yyyy',DataMulta), DSC_DATA_MULTA);
-          Gerador.wCampo(tcDe4, '#19', PrefixTag('percentualMultaTitulo'), 01, 07, 1, PercentualMulta, DSC_PERCENTUAL_MULTA);
+          Gerador.wCampo(tcDe2, '#19', PrefixTag('percentualMultaTitulo'), 01, 07, 1, PercentualMulta, DSC_PERCENTUAL_MULTA);
         end;
 
     end
@@ -289,7 +289,9 @@ begin
     Gerador.wCampo(tcStr, '#35', PrefixTag('nomeMunicipioPagador'               ), 00, 20, 1, Sacado.Cidade, DSC_CIDADE);
     Gerador.wCampo(tcStr, '#36', PrefixTag('nomeBairroPagador'                  ), 00, 20, 1, Sacado.Bairro, DSC_BAIRRO);
     Gerador.wCampo(tcStr, '#37', PrefixTag('siglaUfPagador'                     ), 00, 02, 1, Sacado.UF, DSC_UF);
-    Gerador.wCampo(tcStr, '#38', PrefixTag('textoNumeroTelefonePagador'         ), 00, 12, 1, Sacado.Fone, DSC_FONE);
+
+    if NaoEstaVazio(trim(Sacado.Fone)) then
+      Gerador.wCampo(tcStr, '#38', PrefixTag('textoNumeroTelefonePagador'         ), 00, 12, 1, Sacado.Fone, DSC_FONE);
 
     if NaoEstaVazio(trim(Sacado.SacadoAvalista.CNPJCPF)) then
     begin

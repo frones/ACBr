@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/02/2021
+
+--ACBrBancoCecred--
+[*] Ajuste na geração Instrucao01 CNAB400
+
 --ACBrBoletoW_BancoBrasil--
 [*] Ajuste na validação campo fone
 

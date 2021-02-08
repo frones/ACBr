@@ -141,6 +141,9 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\Java_socket.txt; DestDir: {app}\Exemplos;
 Source: {#ACBrMonitorPLUSDir}\Exemplos\Oracle.txt; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 
+;Arquivo com Códigos e Cidades IBGE
+Source: {#ACBrMonitorPLUSDir}\ACBrIBGE.txt; DestDir: {app}; Flags: ignoreversion; Components: programa
+
 ;DLL para acesso direto a portas
 #ifNDef App64bits
   Source: {#ACBrDIR}\DLLs\Diversos\x86\inpout32.dll; DestDir: {app}; Flags: ignoreversion ; Components: programa

@@ -405,7 +405,7 @@ begin
             nrSiafi := '12345';
 
             infoEnte.nmEnte := 'Ente federativo teste';
-            infoEnte.uf := tpuf(ufSP);
+            infoEnte.uf := 'SP';
             infoEnte.vrSubteto := 100.00;
           end;
 
@@ -2358,7 +2358,7 @@ begin
 
           CNH.nrRegCnh := '999';
           CNH.DtExped := date;
-          CNH.ufCnh := tpuf(ufPR);
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := tpCnh(cnA);
@@ -2375,7 +2375,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 1234567;
-            uf := tpuf(ufPR);
+            uf := 'SP';
           end;
 
           with Exterior do
@@ -2534,7 +2534,7 @@ begin
               Bairro      := 'Bairro';
               Cep         := '85202630';
               CodMunic    := 1234567;
-              Uf          := tpuf(ufPR);
+              Uf          := 'SP';
             end;
           end;
 
@@ -2664,7 +2664,7 @@ begin
 
           CNH.nrRegCnh := '999';
           CNH.DtExped := date;
-          CNH.ufCnh := tpuf(ufPR);
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := tpCnh(cnA);
@@ -2681,7 +2681,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 11111;
-            uf := tpuf(ufPR);
+            uf := 'SP';
           end;
 
           with Exterior do
@@ -2918,7 +2918,7 @@ begin
           bairro := 'centro';
           cep := '14800000';
           codMunic := 3512345;
-          uf := tpuf(ufPR);
+          uf := 'SP';
           pais := '008';
           CodPostal := '6546';
 
@@ -3041,13 +3041,13 @@ begin
           Medico.nisMed := '12345612345';
           Medico.NmMed  := 'TESTE DE MEDICO EXAMINADOR';
           Medico.nrCRM  := '6655666';
-          Medico.ufCRM := tpuf(ufSP);
+          Medico.ufCRM := 'SP';
         end;
 
         RespMonit.cpfResp := '12345678901';
         RespMonit.nmResp := 'NOME DO RESPONSAVEL';
         RespMonit.nrCRM := '666566';
-        RespMonit.ufCRM := tpuf(ufPR);
+        RespMonit.ufCRM := 'SP';
       end;
     end;
   end;
@@ -3166,7 +3166,7 @@ begin
             nmEmit := 'Nome do emitente na alteração';
             ideOC := idCRM;
             NrOc := '12313';
-            ufOC := ufSP;
+            ufOC := 'SP';
           end;
         end;
 
@@ -3272,7 +3272,7 @@ begin
           ideOC   := idOutros;
           dscOC   := 'ORGAO';
           NrOc    := '51561561';
-          ufOC    := ufSP;
+          ufOC    := 'SP';
         end;
 
         obs.metErg   := 'METODOLOGIA';
@@ -3423,7 +3423,7 @@ begin
             Bairro      := 'Bairro';
             Cep         := '35570000';
             CodMunic    := 3126109;
-            UF          := ufMG;
+            UF          := 'SP';
           end;
         end;
       end;
@@ -3713,7 +3713,7 @@ begin
 
           CNH.nrRegCnh := '123654789632';
           CNH.DtExped := date;
-          CNH.ufCnh := ufPR;
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := cnAB;
@@ -3728,7 +3728,7 @@ begin
           Brasil.Bairro := 'Jd Filosofia';
           Brasil.Cep := '88888888';
           Brasil.codMunic := 4141414;
-          Brasil.uf := ufPR;
+          Brasil.uf := 'SP';
 
           // Dados de trabalhador estrangeiro
           Exterior.PaisResid := '063';
@@ -3860,7 +3860,7 @@ begin
               Bairro := 'Bairro Empresarial';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'SP';
             end;
 
             supervisorEstagio.cpfSupervisor := '88888888801';
@@ -3934,7 +3934,7 @@ begin
               Bairro := 'Bairro Empresarial';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'SP';
             end;
 
             supervisorEstagio.cpfSupervisor := '12345678901';
@@ -4106,7 +4106,7 @@ begin
               Bairro := 'Jd Filosofia';
               Cep := '88888888';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'SP';
             end;
 
             // Dados de trabalhador estrangeiro

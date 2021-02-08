@@ -210,14 +210,14 @@ type
     FNmEmit: string;
     FIdeOC: tpIdeOC;
     FNrOc: string;
-    FUfOc: tpuf;
+    FUfOc: string;
   public
     property codCID: String read FCodCID write FCodCID;
     property qtdDiasAfast: integer read FQtdDiasAfast write FQtdDiasAfast;
     property nmEmit: string read FNmEmit write FNmEmit;
     property ideOC: tpIdeOC read FIdeOC write FIdeOC;
     property nrOc: String read FNrOc write FNrOc;
-    property ufOC: tpuf read FUfOc write FUfOc;
+    property ufOC: string read FUfOc write FUfOc;
   end;
 
   TaltAfastamento = class(TObject) //alteração do motivo do afastamento
@@ -598,7 +598,7 @@ begin
     Gerador.wCampo(tcStr, '', 'nmEmit', 0,0,0, pAltEmpr.nmEmit);
     Gerador.wCampo(tcInt, '', 'ideOC', 0,0,0, eSIdeOCToStr(pAltEmpr.ideOC));
     Gerador.wCampo(tcStr, '', 'nrOc', 0,0,0, pAltEmpr.nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, eSufToStr(pAltEmpr.ufOC));
+    Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, pAltEmpr.ufOC);
   Gerador.wGrupo('/altEmpr');
 end;
 *)
@@ -725,7 +725,7 @@ begin
           emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
           emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
           emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-          emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP'); //eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+          emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP');
         end;
 
         Inc(I);

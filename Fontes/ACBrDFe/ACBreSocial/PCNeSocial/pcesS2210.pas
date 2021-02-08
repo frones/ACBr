@@ -256,7 +256,7 @@ type
     Fbairro: String;
     Fcep: String;
     FcodMunic: Integer;
-    Fuf: tpuf;
+    Fuf: string;
     FPais: String;
     FCodPostal: String;
     FideLocalAcid: TideLocalAcid;
@@ -274,7 +274,7 @@ type
     property bairro: string read Fbairro write Fbairro;
     property cep: string read Fcep write Fcep;
     property codMunic: Integer read FcodMunic write FcodMunic;
-    property uf: tpuf read Fuf write Fuf;
+    property uf: string read Fuf write Fuf;
     property pais: string read FPais write FPais;
     property codPostal: string read FCodPostal write FCodPostal;
     property ideLocalAcid: TideLocalAcid read FideLocalAcid write FideLocalAcid;
@@ -538,7 +538,7 @@ begin
   Gerador.wCampo(tcStr, '', 'bairro',      1,  90, 0, Self.Cat.LocalAcidente.bairro);
   Gerador.wCampo(tcStr, '', 'cep',         1,   8, 0, Self.Cat.LocalAcidente.cep);
   Gerador.wCampo(tcInt, '', 'codMunic',    7,   7, 0, Self.Cat.LocalAcidente.codMunic);
-  Gerador.wCampo(tcStr, '', 'uf',          2,   2, 0, eSufToStr(Self.Cat.LocalAcidente.uf));
+  Gerador.wCampo(tcStr, '', 'uf',          2,   2, 0, Self.Cat.LocalAcidente.uf);
   Gerador.wCampo(tcStr, '', 'pais',        1,   3, 0, Self.Cat.LocalAcidente.pais);
   Gerador.wCampo(tcStr, '', 'codPostal',   1,  12, 0, Self.Cat.LocalAcidente.codPostal);
 
@@ -655,7 +655,7 @@ begin
       cat.localAcidente.bairro      := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
       cat.localAcidente.cep         := INIRec.ReadString(sSecao, 'cep', EmptyStr);
       cat.localAcidente.codMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-      cat.localAcidente.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      cat.localAcidente.uf          := INIRec.ReadString(sSecao, 'uf', 'SP');
       cat.localAcidente.pais        := INIRec.ReadString(sSecao, 'pais', EmptyStr);
       cat.localAcidente.codPostal   := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
 
@@ -721,7 +721,7 @@ begin
         cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
         cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
         cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-        cat.atestado.Emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP');//eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+        cat.atestado.Emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP');
       end;
 
       sSecao := 'catOrigem';

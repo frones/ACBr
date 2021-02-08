@@ -330,7 +330,7 @@ begin
 	Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
 	Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
 	Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-	Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, eSufToStr(obj.uf));
+	Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
 
 	Gerador.wGrupo('/ageIntegracao');
   end;
@@ -650,7 +650,7 @@ begin
       begin
         trabalhador.documentos.CNH.nrRegCnh     := INIRec.ReadString(sSecao, 'nrRegCnh', '');
         trabalhador.documentos.CNH.DtExped      := StringToDateTime(INIRec.ReadString(sSecao, 'dtExped', '0'));
-        trabalhador.documentos.CNH.ufCnh        := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCnh', 'SP'));
+        trabalhador.documentos.CNH.ufCnh        := INIRec.ReadString(sSecao, 'ufCnh', 'SP');
         trabalhador.documentos.CNH.DtValid      := StringToDateTime(INIRec.ReadString(sSecao, 'dtValid', '0'));
         trabalhador.documentos.CNH.dtPriHab     := StringToDateTime(INIRec.ReadString(sSecao, 'dtPriHab', '0'));
         trabalhador.documentos.CNH.categoriaCnh := eSStrToCnh(Ok, INIRec.ReadString(sSecao, 'categoriaCnh', 'A'));
@@ -666,7 +666,7 @@ begin
         trabalhador.Endereco.Brasil.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
         trabalhador.Endereco.Brasil.Cep         := INIRec.ReadString(sSecao, 'cep', '');
         trabalhador.Endereco.Brasil.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        trabalhador.Endereco.Brasil.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        trabalhador.Endereco.Brasil.UF          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
 
       sSecao := 'enderecoExterior';
@@ -814,7 +814,7 @@ begin
           infoTSVInicio.infoComplementares.infoEstagiario.ageIntegracao.bairro        := INIRec.ReadString(sSecao, 'bairro', '');
           infoTSVInicio.infoComplementares.infoEstagiario.ageIntegracao.Cep           := INIRec.ReadString(sSecao, 'cep', '');
           infoTSVInicio.infoComplementares.infoEstagiario.ageIntegracao.codMunic      := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-          infoTSVInicio.infoComplementares.infoEstagiario.ageIntegracao.uf            := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+          infoTSVInicio.infoComplementares.infoEstagiario.ageIntegracao.uf            := INIRec.ReadString(sSecao, 'uf', 'SP');
         end;
 
         sSecao := 'supervisorEstagio';

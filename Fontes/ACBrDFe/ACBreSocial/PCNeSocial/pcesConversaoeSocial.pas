@@ -136,9 +136,9 @@ type
 
   TptpInscContratante     = (icCNPJ, icCPF);
 
-  tpuf                    = (ufNenhum, ufAC, ufAL, ufAP, ufAM, ufBA, ufCE, ufDF, ufES, ufGO, ufMA,
-                             ufMT, ufMS, ufMG, ufPA, ufPB, ufPR, ufPE, ufPI, ufRJ, ufRN,
-                             ufRS, ufRO, ufRR, ufSC, ufSP, ufSE, ufTO, ufEX);
+//  tpuf                    = (ufNenhum, ufAC, ufAL, ufAP, ufAM, ufBA, ufCE, ufDF, ufES, ufGO, ufMA,
+//                             ufMT, ufMS, ufMG, ufPA, ufPB, ufPR, ufPE, ufPI, ufRJ, ufRN,
+//                             ufRS, ufRO, ufRR, ufSC, ufSP, ufSE, ufTO, ufEX);
 
   tpIndSituacaoEspecial   = (iseSituacaoNormal, iseExtincao, iseFusao, iseCisao, iseIncorporacao);
 
@@ -538,8 +538,8 @@ function eSStrToSiglaMin(var ok: boolean; const s: string): TpSiglaMin;
 function eSIndAcordoIsencaoMultaToStr(const t: TpIndAcordoIsencaoMulta ): string;
 function eSStrToIndAcordoIsencaoMulta(var ok: boolean; const s: string): TpIndAcordoIsencaoMulta;
 
-function eSufToStr(const t: Tpuf ): string;
-function eSStrTouf(var ok: boolean; const s: string): Tpuf;
+//function eSufToStr(const t: Tpuf ): string;
+//function eSStrTouf(var ok: boolean; const s: string): Tpuf;
 
 function eSIndSituacaoEspecialToStr(const t: TpIndSituacaoEspecial ): string;
 function eSStrToIndSituacaoEspecial(var ok: boolean; const s: string): TpIndSituacaoEspecial;
@@ -1635,7 +1635,7 @@ function eSStrToIndAcordoIsencaoMulta(var ok: boolean; const s: string): TpIndAc
 begin
   result := TpIndAcordoIsencaoMulta( StrToEnumerado2(ok , s,TGenericosString0_1 ) );
 end;
-
+{
 function eSufToStr(const t:tpuf ): string;
 begin
   result := EnumeradoToStr2(t,TUFString );
@@ -1645,7 +1645,7 @@ function eSStrTouf(var ok: boolean; const s: string): Tpuf;
 begin
   result := Tpuf( StrToEnumerado2(ok , s,TUFString ) );
 end;
-
+}
 function eSIndSituacaoEspecialToStr(const t:tpIndSituacaoEspecial ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_4 );

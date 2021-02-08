@@ -509,7 +509,7 @@ begin
         altContratual.infoContrato.LocalTrabalho.localTrabDom.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
         altContratual.infoContrato.LocalTrabalho.localTrabDom.Cep         := INIRec.ReadString(sSecao, 'cep', '');
         altContratual.infoContrato.LocalTrabalho.localTrabDom.CodMunic    := INIRec.ReadInteger(sSecao, 'CodMunic', 0);
-        altContratual.infoContrato.LocalTrabalho.localTrabDom.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        altContratual.infoContrato.LocalTrabalho.localTrabDom.uf          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
 
       sSecao := 'horContratual';

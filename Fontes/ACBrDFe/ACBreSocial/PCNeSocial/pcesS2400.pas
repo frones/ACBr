@@ -544,7 +544,7 @@ begin
         ideBenef.dadosBenef.Endereco.Brasil.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
         ideBenef.dadosBenef.Endereco.Brasil.Cep         := INIRec.ReadString(sSecao, 'cep', '');
         ideBenef.dadosBenef.Endereco.Brasil.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        ideBenef.dadosBenef.Endereco.Brasil.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        ideBenef.dadosBenef.Endereco.Brasil.UF          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
 
       sSecao := 'enderecoExterior';

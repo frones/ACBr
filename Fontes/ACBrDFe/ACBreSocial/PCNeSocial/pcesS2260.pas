@@ -375,7 +375,7 @@ begin
         infoConvInterm.localTrab.localTrabInterm.bairro      := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
         infoConvInterm.localTrab.localTrabInterm.Cep         := INIRec.ReadString(sSecao, 'cep', EmptyStr);
         infoConvInterm.localTrab.localTrabInterm.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        infoConvInterm.localTrab.localTrabInterm.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        infoConvInterm.localTrab.localTrabInterm.UF          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
     end;
 

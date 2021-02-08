@@ -296,7 +296,7 @@ begin
       begin
         trabalhador.documentos.CNH.nrRegCnh     := INIRec.ReadString(sSecao, 'nrRegCnh', '');
         trabalhador.documentos.CNH.DtExped      := StringToDateTime(INIRec.ReadString(sSecao, 'dtExped', '0'));
-        trabalhador.documentos.CNH.ufCnh        := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCnh', 'SP'));
+        trabalhador.documentos.CNH.ufCnh        := INIRec.ReadString(sSecao, 'ufCnh', 'SP');
         trabalhador.documentos.CNH.DtValid      := StringToDateTime(INIRec.ReadString(sSecao, 'dtValid', '0'));
         trabalhador.documentos.CNH.dtPriHab     := StringToDateTime(INIRec.ReadString(sSecao, 'dtPriHab', '0'));
         trabalhador.documentos.CNH.categoriaCnh := eSStrToCnh(Ok, INIRec.ReadString(sSecao, 'dtPriHab', 'A'));
@@ -312,7 +312,7 @@ begin
         trabalhador.Endereco.Brasil.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
         trabalhador.Endereco.Brasil.Cep         := INIRec.ReadString(sSecao, 'cep', '');
         trabalhador.Endereco.Brasil.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        trabalhador.Endereco.Brasil.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        trabalhador.Endereco.Brasil.UF          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
 
       sSecao := 'enderecoExterior';
@@ -501,7 +501,7 @@ begin
         vinculo.infoContrato.LocalTrabalho.localTrabDom.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
         vinculo.infoContrato.LocalTrabalho.localTrabDom.Cep         := INIRec.ReadString(sSecao, 'cep', '');
         vinculo.infoContrato.LocalTrabalho.localTrabDom.CodMunic    := INIRec.ReadInteger(sSecao, 'CodMunic', 0);
-        vinculo.infoContrato.LocalTrabalho.localTrabDom.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.uf          := INIRec.ReadString(sSecao, 'uf', 'SP');
       end;
 
       sSecao := 'horContratual';

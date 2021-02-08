@@ -240,7 +240,7 @@ type
     FBairro: string;
     FCep: string;
     FCodMunic: integer;
-    FUF: tpuf;
+    FUF: string;
   public
     property TpLograd: string read FTpLograd write FTpLograd;
     property DscLograd: string read FDscLograd write FDscLograd;
@@ -249,21 +249,21 @@ type
     property Bairro: string read FBairro write FBairro;
     property Cep: string read FCep write FCep;
     property CodMunic: integer read FCodMunic write FCodMunic;
-    property UF: tpuf read FUF write FUF;
+    property UF: string read FUF write FUF;
   end;
 
   TCNH = class
   private
     FnrRegCnh: string;
     FDtExped: TDateTime;
-    FufCnh: tpuf;
+    FufCnh: string;
     FDtValid: TDateTime;
     FdtPriHab: TDateTime;
     FcategoriaCnh: tpCnh;
   public
     property nrRegCnh: string read FnrRegCnh write FnrRegCnh;
     property DtExped: TDateTime read FDtExped write FDtExped;
-    property ufCnh: tpuf read FufCnh write FufCnh;
+    property ufCnh: string read FufCnh write FufCnh;
     property DtValid: TDateTime read FDtValid write FDtValid;
     property dtPriHab: TDateTime read FdtPriHab write FdtPriHab;
     property categoriaCnh: tpCnh read FcategoriaCnh write FcategoriaCnh;
@@ -716,7 +716,7 @@ type
     FBairro: string;
     FCep: string;
     FCodMunic: integer;
-    FUf: tpuf;
+    FUf: string;
   public
     property TpLograd: String read FTpLograd write FTpLograd;
     property DscLograd: string read FDscLograd write FDscLograd;
@@ -725,7 +725,7 @@ type
     property Bairro: string read FBairro write FBairro;
     property Cep: string read FCep write FCep;
     property CodMunic: integer read FCodMunic write FCodMunic;
-    property Uf: tpuf read FUf write FUf;
+    property Uf: string read FUf write FUf;
   end;
 
   TLocalTrabalho = class
@@ -1020,11 +1020,11 @@ type
   private
     FDtAso: TDate;
     FNrCRM: string;
-    FUfCRM: tpuf;
+    FUfCRM: string;
   public
     property DtAso: TDate read FDtAso write FDtAso;
     property NrCRM: string read FNrCRM write FNrCRM;
-    property UfCRM: tpuf read FUfCRM write FUfCRM;
+    property UfCRM: string read FUfCRM write FUfCRM;
   end;
 
   TAfastamento = class
@@ -1388,7 +1388,7 @@ type
     Fbairro : String;
     FCep : String;
     FcodMunic : Integer;
-    FUf : tpUf;
+    FUf : string;
   public
     property cnpjAgntInteg : String read FcnpjAgntInteg write FcnpjAgntInteg;
     property nmRazao : String read FnmRazao write FnmRazao;
@@ -1397,7 +1397,7 @@ type
     property bairro : String read Fbairro write Fbairro;
     property Cep : String read FCep write FCep;
     property codMunic : Integer read FcodMunic write FcodMunic;
-    property Uf : tpUf read FUf write FUf;
+    property Uf : string read FUf write FUf;
   end;
 
   TsupervisorEstagio = class(TObject)

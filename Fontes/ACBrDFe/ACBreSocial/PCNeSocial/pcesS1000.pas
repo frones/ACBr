@@ -298,14 +298,14 @@ type
   TInfoEnte = class(TObject)
   private
     FNmEnte: String;
-    FUf: tpuf;
+    FUf: string;
     FCodMunic: Integer;
     FIndRPPS: tpSimNao;
     FSubteto: tpIdeSubteto;
     FVrSubTeto: Double;
   public
     property nmEnte: String read FNmEnte write FNmEnte;
-    property uf: tpuf read FUf write FUf;
+    property uf: string read FUf write FUf;
     property codMunic: Integer read FCodMunic write FCodMunic;
     property indRPPS: tpSimNao read FIndRPPS write FIndRPPS;
     property subteto: tpIdeSubteto read FSubteto write FSubteto;
@@ -428,7 +428,7 @@ begin
     Gerador.wGrupo('infoEnte');
 
     Gerador.wCampo(tcStr, '', 'nmEnte',    1, 100, 1, infoEmpregador.infoCadastro.InfoOp.infoEnte.nmEnte);
-    Gerador.wCampo(tcStr, '', 'uf',        2,   2, 1, eSufToStr(infoEmpregador.infoCadastro.InfoOp.infoEnte.uf));
+    Gerador.wCampo(tcStr, '', 'uf',        2,   2, 1, infoEmpregador.infoCadastro.InfoOp.infoEnte.uf);
     Gerador.wCampo(tcInt, '', 'codMunic',  7,   7, 0, infoEmpregador.infoCadastro.InfoOp.infoEnte.codMunic);
     Gerador.wCampo(tcStr, '', 'indRPPS',   1,   1, 1, eSSimNaoToStr(infoEmpregador.infoCadastro.InfoOp.infoEnte.indRPPS));
     Gerador.wCampo(tcInt, '', 'subteto',   1,   1, 1, eSIdeSubtetoToStr(infoEmpregador.infoCadastro.InfoOp.infoEnte.subteto));
@@ -716,7 +716,7 @@ begin
           if INIRec.ReadString(sSecao, 'nmEnte', '') <> '' then
           begin
             infoEmpregador.infoCadastro.InfoOp.infoEnte.nmEnte    := INIRec.ReadString(sSecao, 'nmEnte', EmptyStr);
-            infoEmpregador.infoCadastro.InfoOp.infoEnte.uf        := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.uf        := INIRec.ReadString(sSecao, 'uf', 'SP');
             infoEmpregador.infoCadastro.InfoOp.infoEnte.codMunic  := INIRec.ReadInteger(sSecao, 'codMunic', 0);
             infoEmpregador.infoCadastro.InfoOp.infoEnte.indRPPS   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indRPPS', 'S'));
             infoEmpregador.infoCadastro.InfoOp.infoEnte.subteto   := eSStrToIdeSubteto(Ok, INIRec.ReadString(sSecao, 'subteto', '1'));

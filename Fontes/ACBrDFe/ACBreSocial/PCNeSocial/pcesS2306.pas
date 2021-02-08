@@ -257,7 +257,7 @@ begin
     Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
     Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
     Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-    Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, eSufToStr(obj.uf));
+    Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
 
     Gerador.wGrupo('/ageIntegracao');
   end;
@@ -505,7 +505,7 @@ begin
           infoTSVAlteracao.infoComplementares.infoEstagiario.ageIntegracao.bairro        := INIRec.ReadString(sSecao, 'bairro', '');
           infoTSVAlteracao.infoComplementares.infoEstagiario.ageIntegracao.Cep           := INIRec.ReadString(sSecao, 'cep', '');
           infoTSVAlteracao.infoComplementares.infoEstagiario.ageIntegracao.codMunic      := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-          infoTSVAlteracao.infoComplementares.infoEstagiario.ageIntegracao.uf            := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+          infoTSVAlteracao.infoComplementares.infoEstagiario.ageIntegracao.uf            := INIRec.ReadString(sSecao, 'uf', 'SP');
         end;
 
         sSecao := 'supervisorEstagio';

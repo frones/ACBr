@@ -146,7 +146,7 @@ type
     FIdeOC: tpIdeOC;
     FdscOC: String;
     FNrOc: String;
-    FUfOC: tpUf;
+    FUfOC: string;
   public
     property cpfResp: string read FcpfResp write FcpfResp;
     property nisResp: string read FNisResp write FNisResp;
@@ -154,7 +154,7 @@ type
     property ideOC: tpIdeOC read FIdeOC write FIdeOC;
     property dscOC: string read FdscOC write FdscOC;
     property nrOC: string read FNrOc write FNrOc;
-    property ufOC: tpuf read FUfOC write FUfOC;
+    property ufOC: string read FUfOC write FUfOC;
   end;
 
   TinfoExpRisco = class(TObject)
@@ -512,7 +512,7 @@ begin
     if pRespReg[i].ideOC = idOutros then
       Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
     Gerador.wCampo(tcStr, '', 'nrOC',    1, 14, 1, pRespReg[i].nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, eSufToStr(pRespReg[i].ufOC));
+    Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, pRespReg[i].ufOC);
 
     Gerador.wGrupo('/respReg');
   end;
@@ -807,7 +807,7 @@ begin
           ideOC   := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', EmptyStr));
           dscOC   := INIRec.ReadString(sSecao, 'dscOC', EmptyStr);
           nrOC    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-          ufOC    := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+          ufOC    := INIRec.ReadString(sSecao, 'ufOC', 'SP');
         end;
 
         Inc(I);

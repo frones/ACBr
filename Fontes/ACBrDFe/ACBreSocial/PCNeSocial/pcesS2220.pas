@@ -176,12 +176,12 @@ type
     FCPFResp: String;
     FNMResp: String;
     FNRCRM: String;
-    FUFCRM: tpuf;
+    FUFCRM: string;
   public
     property cpfResp: String read FCPFResp write FCPFResp;
     property nmResp: String read FNMResp write FNMResp;
     property nrCRM: String read FNRCRM write FNRCRM;
-    property ufCRM: tpuf read FUFCRM write FUFCRM;
+    property ufCRM: string read FUFCRM write FUFCRM;
   end;
 
   TMedico = class
@@ -190,13 +190,13 @@ type
     FCPFMed : String;
     FNISMed : String;
     FnrCRM: String;
-    FufCRM: tpuf;
+    FufCRM: string;
   public
     property cpfMed: String read FCPFMed write FCPFMed;
     property nisMed: String read FNISMed write FNISMed;
     property NmMed: String read FNmMed write FNmMed;
     property nrCRM: String read FnrCRM write FnrCRM;
-    property ufCRM: tpuf read FufCRM write FufCRM;
+    property ufCRM: string read FufCRM write FufCRM;
   end;
 
 implementation
@@ -337,7 +337,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.exMedOcup.Aso.Medico.NmMed);
 
   Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.Aso.Medico.nrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, eSufToStr(self.exMedOcup.Aso.Medico.ufCRM));
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.Aso.Medico.ufCRM);
 
   Gerador.wGrupo('/medico');
 end;
@@ -386,7 +386,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
 
   Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, eSufToStr(self.exMedOcup.RespMonit.ufCRM));
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
 
   Gerador.wGrupo('/respMonit');
 end;
@@ -489,7 +489,7 @@ begin
       exMedOcup.RespMonit.cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
       exMedOcup.RespMonit.nmResp := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
       exMedOcup.RespMonit.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
-      exMedOcup.RespMonit.ufCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));
+      exMedOcup.RespMonit.ufCRM := INIRec.ReadString(sSecao, 'ufCRM', 'SP');
 
 
       sSecao := 'medico';
@@ -497,7 +497,7 @@ begin
       exMedOcup.Aso.medico.nisMed := INIRec.ReadString(sSecao, 'nisMed', EmptyStr);
       exMedOcup.Aso.medico.NmMed := INIRec.ReadString(sSecao, 'nmMed', EmptyStr);
       exMedOcup.Aso.medico.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
-      exMedOcup.Aso.medico.ufCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));
+      exMedOcup.Aso.medico.ufCRM := INIRec.ReadString(sSecao, 'ufCRM', 'SP');
     end;
 
     GerarXML;

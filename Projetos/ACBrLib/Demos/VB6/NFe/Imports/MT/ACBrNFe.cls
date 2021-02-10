@@ -469,7 +469,7 @@ End Sub
 
 Public Sub CarregarEventoXML(ByVal eArquivoOuXml As String)
     Dim retorno   As Long
-    retorno = NFE_CarregarEventoXML(eArquivoOuXml)
+    retorno = NFE_CarregarEventoXML(libHandler, eArquivoOuXml)
     CheckResult retorno
 End Sub
 
@@ -570,7 +570,7 @@ Public Function GetPath(ByVal tipo As Long) As String
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = NFE_GetPath(tipo, buffer, bufferLen)
+    retorno = NFE_GetPath(libHandler, tipo, buffer, bufferLen)
     CheckResult retorno
     
     GetPath = processResult(buffer, bufferLen)

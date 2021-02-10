@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form FrmMain 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "ACBrLibGNRe Demo"
@@ -25,15 +25,6 @@ Begin VB.Form FrmMain
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton btnCarregarConfiguracoes 
       Caption         =   "Carregar Configurações"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   480
       Left            =   120
       TabIndex        =   101
@@ -195,15 +186,6 @@ Begin VB.Form FrmMain
    End
    Begin VB.CommandButton cmdSalvar 
       Caption         =   "Salvar Configurações"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   480
       Left            =   2760
       TabIndex        =   1
@@ -242,11 +224,11 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Email"
       TabPicture(1)   =   "FrmMain.frx":0054
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "lblMensagem"
-      Tab(1).Control(1)=   "lblAssunto"
+      Tab(1).Control(0)=   "FraConfigurações"
+      Tab(1).Control(1)=   "txtEmailAssunto"
       Tab(1).Control(2)=   "txtEmailMensagem"
-      Tab(1).Control(3)=   "txtEmailAssunto"
-      Tab(1).Control(4)=   "FraConfigurações"
+      Tab(1).Control(3)=   "lblAssunto"
+      Tab(1).Control(4)=   "lblMensagem"
       Tab(1).ControlCount=   5
       Begin VB.Frame FraConfigurações 
          Caption         =   "Configurações"
@@ -555,43 +537,43 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "Webservice"
          TabPicture(1)   =   "FrmMain.frx":008C
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "lblTimeOut"
-         Tab(1).Control(1)=   "lblSSLType"
-         Tab(1).Control(2)=   "lblUfDestino"
-         Tab(1).Control(3)=   "nudTimeout"
-         Tab(1).Control(4)=   "FraProxy"
-         Tab(1).Control(5)=   "FraAmbiente"
-         Tab(1).Control(6)=   "txtTimeOut"
-         Tab(1).Control(7)=   "cmbSSlType"
-         Tab(1).Control(8)=   "cmbUfDestino"
-         Tab(1).Control(9)=   "frmRetEnvio"
-         Tab(1).Control(10)=   "ckbVisualizar"
-         Tab(1).Control(11)=   "ckbSalvarSOAP"
+         Tab(1).Control(0)=   "ckbSalvarSOAP"
+         Tab(1).Control(1)=   "ckbVisualizar"
+         Tab(1).Control(2)=   "frmRetEnvio"
+         Tab(1).Control(3)=   "cmbUfDestino"
+         Tab(1).Control(4)=   "cmbSSlType"
+         Tab(1).Control(5)=   "txtTimeOut"
+         Tab(1).Control(6)=   "FraAmbiente"
+         Tab(1).Control(7)=   "FraProxy"
+         Tab(1).Control(8)=   "nudTimeout"
+         Tab(1).Control(9)=   "lblUfDestino"
+         Tab(1).Control(10)=   "lblSSLType"
+         Tab(1).Control(11)=   "lblTimeOut"
          Tab(1).ControlCount=   12
          TabCaption(2)   =   "Certificado"
          TabPicture(2)   =   "FrmMain.frx":00A8
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "lblHttpLib"
-         Tab(2).Control(1)=   "lblXmlSignLib"
-         Tab(2).Control(2)=   "lblCrytLib"
-         Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(6)=   "FraCertificados"
-         Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).Control(0)=   "btnObterCertificados"
+         Tab(2).Control(1)=   "FraCertificados"
+         Tab(2).Control(2)=   "cmbXmlSign"
+         Tab(2).Control(3)=   "cmbHttp"
+         Tab(2).Control(4)=   "cmbCrypt"
+         Tab(2).Control(5)=   "lblCrytLib"
+         Tab(2).Control(6)=   "lblXmlSignLib"
+         Tab(2).Control(7)=   "lblHttpLib"
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Arquivo"
          TabPicture(3)   =   "FrmMain.frx":00C4
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "lblPastaArquivos"
-         Tab(3).Control(1)=   "chkSalvarPasta"
-         Tab(3).Control(2)=   "chkSalvarMensal"
-         Tab(3).Control(3)=   "chkAdicionarLiteral"
+         Tab(3).Control(0)=   "txtArquivos"
+         Tab(3).Control(1)=   "cmdArquivos"
+         Tab(3).Control(2)=   "chkSepararDoc"
+         Tab(3).Control(3)=   "chkSepararCNPJ"
          Tab(3).Control(4)=   "chkEmissaoPath"
-         Tab(3).Control(5)=   "chkSepararCNPJ"
-         Tab(3).Control(6)=   "chkSepararDoc"
-         Tab(3).Control(7)=   "cmdArquivos"
-         Tab(3).Control(8)=   "txtArquivos"
+         Tab(3).Control(5)=   "chkAdicionarLiteral"
+         Tab(3).Control(6)=   "chkSalvarMensal"
+         Tab(3).Control(7)=   "chkSalvarPasta"
+         Tab(3).Control(8)=   "lblPastaArquivos"
          Tab(3).ControlCount=   9
          Begin VB.CommandButton btnObterCertificados 
             Caption         =   "Obter Certificados"
@@ -1774,7 +1756,7 @@ Private Sub btnImprimirPDF_Click()
     
     CommonDialog1.DialogTitle = "Selecione o arquivo xml"
     CommonDialog1.InitDir = App.Path
-    CommonDialog1.Filter = "Arquivo Xml DANFE (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.Filter = "Arquivo Xml GNRe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*"
     CommonDialog1.FileName = vbNullString
     CommonDialog1.ShowOpen
             
@@ -1842,9 +1824,19 @@ End Sub
 Private Sub cmdGerarGNRe_Click()
     On Error GoTo Erro:
     
+     On Error GoTo Erro:
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo INI"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo INI GNRe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+    
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    
     Dim ret As String
     gnre.LimparLista
-    gnre.CarregarINI
+    gnre.CarregarINI CommonDialog1.FileName
     gnre.Assinar
     ret = gnre.ObterXml
     rtbRespostas.Text = ret
@@ -1853,8 +1845,16 @@ Erro:
     Exit Sub
 End Sub
 
+Private Sub cmdLogs_Click()
+    txtLogs.Text = BrowseFolder("Selecione a pasta dos Logs")
+End Sub
+
 Private Sub cmdSalvar_Click()
     SaveConfig
+End Sub
+
+Private Sub cmdSchemas_Click()
+    txtSchemaPath.Text = BrowseFolder("Selecione a pasta dos Schemas")
 End Sub
 
 Private Sub Form_Load()

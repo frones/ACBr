@@ -564,3 +564,15 @@ Public Function FromUTF8(ByRef utf8STR As String) As String
     
     MultiByteToWideChar CP_UTF8, 0, VarPtr(UTF8(0)), length, StrPtr(FromUTF8), lDataLength
 End Function
+
+Public Function ReadFile(sFile As String) As Byte()
+    Dim nFile       As Integer
+
+    nFile = FreeFile
+    Open sFile For Binary Access Read As #nFile
+    If LOF(nFile) > 0 Then
+        ReDim ReadFile(0 To LOF(nFile) - 1)
+        Get nFile, , ReadFile
+    End If
+    Close #nFile
+End Function

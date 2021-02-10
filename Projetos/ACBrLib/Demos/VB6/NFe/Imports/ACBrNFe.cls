@@ -217,6 +217,7 @@ Private Declare Function NFE_EnviarEmail _
                                      
 Private Declare Function NFE_EnviarEmailEvento _
                 Lib "ACBrNFE32.dll" (ByVal ePara As String, _
+                                     ByVal eChaveEvento As String, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -714,12 +715,12 @@ Public Sub EnviarEmail(ByVal ePara As String, ByVal eArquivoOuXml As String, ByV
     CheckResult retorno
 End Sub
 
-Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveEvento As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
                        ByVal eAssunto As String, ByVal eMensagem As String, _
                        Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
     Dim retorno   As Long
     
-    retorno = NFE_EnviarEmailEvento(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    retorno = NFE_EnviarEmailEvento(ePara, eChaveEvento, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
     CheckResult retorno
 End Sub
 

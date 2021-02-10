@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+--ACBrBancoBradesco--
+[*] Ajuste na função ValidaNossoNumeroResponsavel realizando sobreescrita do mesmo;
+
+--ACBrBancoBrasil--
+[*] Ajuste no Header CNAB240 posição 12 e 13 com campos em brancos conforme especificação do manual
+
 05/02/2021
 
 --ACBrBancoCecred--

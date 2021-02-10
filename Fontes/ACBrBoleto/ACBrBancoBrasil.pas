@@ -369,7 +369,7 @@ begin
                '1'                                             + // 8 - Tipo de registro - Registro header de arquivo
                'R'                                             + // 9 - Tipo de operação: R (Remessa) ou T (Retorno)
                '01'                                            + // 10 a 11 - Tipo de serviço: 01 (Cobrança)
-               '00'                                            + // 12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
+               '  '                                            + // 12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
                PadLeft(IntToStr(VersaoLote), 3, '0')           + // 14 a 16 - Número da versão do layout do lote
                ' '                                             + // 17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                                  + // 18 - Tipo de inscrição do cedente

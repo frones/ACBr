@@ -1051,6 +1051,8 @@ begin
         RLLayout.ShowProgress := MostrarProgresso;
         RLLayout.Title        := TituloRelatorio;
 
+        RLLayout.JobTitle := 'boleto ' + ACBrBoleto.Banco.nome;
+
         if TituloPreview <> '' then
         begin
           RLLayout.PreviewOptions.Defaults := pdIgnoreDefaults;

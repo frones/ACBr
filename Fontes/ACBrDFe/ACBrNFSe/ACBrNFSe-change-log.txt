@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2021
+-- ACBrNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/61117-cancelamento-de-nfse-sem-xml-provedor-ipm/
+  Por: Douglas Joel Dapper
+
 04/02/2021
 -- pnfsLerListaNFSe --
 [*] Possível correção na leitura do XML de uma NFS-e cancelada - Provedor Conam.

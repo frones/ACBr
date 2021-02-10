@@ -1934,7 +1934,7 @@ begin
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
 
-             proTcheInfov2,
+//             proTcheInfov2,
              proSimplISSv2,
              proFintelISS: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps' +

@@ -696,7 +696,7 @@ begin
             LFill(DESCR_ITEM) +
             LFill(UNID_ITEM) +
             LFill(ALIQ_ICMS_ITEM,2,2) +
-            LFill(ALIQ_FECOP,1,2) +
+            LFill(ALIQ_FECOP,1,2,True) +
             LFill(QTD_TOT_ENTRADA,9,3) +
             LFill(QTD_TOT_SAIDA,9,3),
             False

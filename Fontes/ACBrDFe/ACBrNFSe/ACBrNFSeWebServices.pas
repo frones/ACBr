@@ -5416,10 +5416,16 @@ var
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.DadosStr;
+  {
   FTagGrupo     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.TagGrupo;
   FTagElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.TagElemento;
   FDocElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.DocElemento;
   FInfElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.InfElemento;
+  }
+  FTagGrupo     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.TagGrupo;
+  FTagElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.TagElemento;
+  FDocElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.DocElemento;
+  FInfElemento  := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.InfElemento;
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
 
@@ -5445,7 +5451,8 @@ begin
     if FdocElemento <> '' then
       FdocElemento := FPrefixo3 + FdocElemento;
 
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
+    if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) or
+       (FPConfiguracoesNFSe.Geral.ConfigAssinar.SubstituirRps) then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
         GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
@@ -5534,8 +5541,8 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Substituir NFS-e: ');
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar: ');
 
   if Provedor = proDSFv2 then
     FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio>' +
@@ -5548,7 +5555,8 @@ begin
                    SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
                    FvNotas  + FTagF;
 
-  if Provedor in [proWebISSv2, proDeISS] then
+  if (Provedor in [proWebISSv2, proDeISS]) or
+     (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) then
     AssinarXML(FPDadosMsg, 'SubstituirNfseEnvio', 'SubstituicaoNfse', 'Falha ao Assinar - SubstituirNfseEnvio: ');
 
   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then

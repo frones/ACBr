@@ -42,7 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2021
+-- Diversos --
+[*] Criado a propriedade: SubstituirRps (Boolean) que determina se o Rps a ser enviado
+    através do método SubstituirNFSe deve ser assinado ou não.
+[*] Realizado alterações em diversas units para usar essa nova propriedade.
+  Por: Italo Giurizzato Junior
+
 10/02/2021
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/61206-unit-pnfsconversao-sugest%C3%A3o/
+  Por: Graça
 -- ACBrNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/61117-cancelamento-de-nfse-sem-xml-provedor-ipm/
   Por: Douglas Joel Dapper

@@ -589,6 +589,8 @@ end;
 
 function TACBrNFSe.SubstituirNFSe(const ACodigoCancelamento,
   ANumeroNFSe: String; const AMotivoCancelamento: String): Boolean;
+var
+  Assina: Boolean;
 begin
   if ACodigoCancelamento = '' then
     GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
@@ -599,7 +601,10 @@ begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
-  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
+  Assina := Configuracoes.Geral.ConfigAssinar.RPS or
+            Configuracoes.Geral.ConfigAssinar.SubstituirRps;
+
+  NotasFiscais.Assinar(Assina);
 
   Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe,
                                       AMotivoCancelamento);

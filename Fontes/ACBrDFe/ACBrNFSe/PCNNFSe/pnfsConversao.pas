@@ -217,9 +217,11 @@ function SituacaoTributariaDescricao( const t: TnfseSituacaoTributaria ): String
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): String;
 function StrToResponsavelRetencao(out ok: boolean; const s: String): TnfseResponsavelRetencao;
+function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
 
 function TipoEmissaoToStr(const t: TnfseTEmissao): String;
 function StrToTipoEmissao(out ok: boolean; const s: String): TnfseTEmissao;
+function TipoEmissaoDescricao(const t: TnfseTEmissao): String;
 
 function EmpreitadaGlobalToStr(const t: TnfseTEmpreitadaGlobal): String;
 function StrToEmpreitadaGlobal(out ok: boolean; const s: String): TnfseTEmpreitadaGlobal;
@@ -276,9 +278,11 @@ function StrToTFrmRec(out ok: boolean; const s: String): TNFSEFrmRec; //Governa
 
 function OperacaoToStr(const t: TOperacao): String;
 function StrToOperacao(out ok: boolean; const s: String): TOperacao;
+function OperacaoDescricao(const t: TOperacao): String;
 
 function TributacaoToStr(const t: TTributacao): String;
 function StrToTributacao(out ok: boolean; const s: String): TTributacao;
+function TributacaoDescricao(const t: TTributacao): String;
 
 function RemoverAtributos(const AXML: String; AProvedor: TnfseProvedor): String;
 
@@ -18449,6 +18453,38 @@ begin
   end;
 end;
 
+function OperacaoDescricao(const t: TOperacao): String;
+begin
+  case t of
+    toSemDeducao             : Result := 'A - Sem Dedução';
+    toComDeducaoMateriais    : Result := 'B - Com Dedução/Materiais';
+    toImuneIsenta            : Result := 'C - Imune/Isenta de ISSQN';
+    toDevolucaoSimplesRemessa: Result := 'D - Devolução/Simples Remessa';
+    toIntermediacao          : Result := 'J - Intermediario';
+  else
+    Result := '';
+  end;
+end;
+
+function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
+begin
+  case t of
+    ptTomador      : Result := '1 - Tomador';
+    rtPrestador    : Result := '2 - Prestador';
+    rtIntermediario: Result := '3 - Intermediário';
+  else
+    Result := '';
+  end;
+end;
+
+function TipoEmissaoDescricao(const t: TnfseTEmissao): String;
+begin
+  case t of
+    teNormalNFSe     : Result := 'N - Normal';
+    teContigenciaNFSe: Result := 'C - Contingência';
+  end;
+end;
+
 function nfseRegimeEspecialTributacaoDescricao( const t: TnfseRegimeEspecialTributacao ): String;
 begin
   case t of
@@ -18467,6 +18503,23 @@ begin
     retEmpresaPP                 : Result := '12 - Empresa de Pequeno Porte (EPP)';
     retMicroEmpresario           : Result := '13 - Microempresário';
     retOutros                    : Result := '14 - Outros/Sem Vinculo';
+  else
+    Result := '';
+  end;
+end;
+
+function TributacaoDescricao(const t: TTributacao): String;
+begin
+  case t of
+    ttIsentaISS           : Result := 'C - Isenta de ISS';
+    ttNaoIncidencianoMunic: Result := 'E - Não Incidência no Município';
+    ttImune               : Result := 'F - Imune';
+    ttExigibilidadeSusp   : Result := 'K - Exigibilidade Susp.Dec.J/Proc.A';
+    ttNaoTributavel       : Result := 'N - Não Tributável';
+    ttTributavel          : Result := 'T - Tributável';
+    ttTributavelFixo      : Result := 'G - Tributável Fixo';
+    ttTributavelSN        : Result := 'H - Tributável S.N.';
+    ttMEI                 : Result := 'M - Micro Empreendedor Individual(MEI)';
   else
     Result := '';
   end;

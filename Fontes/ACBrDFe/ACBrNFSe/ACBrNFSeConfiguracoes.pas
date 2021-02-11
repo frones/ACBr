@@ -84,6 +84,7 @@ type
     Cancelar: Boolean;
     RpsGerar: Boolean;
     LoteGerar: Boolean;
+    SubstituirRps: Boolean;
     Substituir: Boolean;
     AbrirSessao: Boolean;
     FecharSessao: Boolean;
@@ -726,6 +727,7 @@ begin
   FConfigAssinar.Cancelar := FPIniParams.ReadBool('Assinar', 'Cancelar', False);
   FConfigAssinar.RpsGerar := FPIniParams.ReadBool('Assinar', 'RpsGerar', False);
   FConfigAssinar.LoteGerar := FPIniParams.ReadBool('Assinar', 'LoteGerar', False);
+  FConfigAssinar.SubstituirRps := FPIniParams.ReadBool('Assinar', 'SubstituirRps', False);
   FConfigAssinar.Substituir := FPIniParams.ReadBool('Assinar', 'Substituir', False);
   FConfigAssinar.AbrirSessao := FPIniParams.ReadBool('Assinar', 'AbrirSessao', False);
   FConfigAssinar.FecharSessao := FPIniParams.ReadBool('Assinar', 'FecharSessao', False);

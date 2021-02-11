@@ -486,6 +486,10 @@ type
     // Retorno
     FDataHora: TDateTime;
     FRetCancNFSe: TRetCancNFSe;
+    FSerieNFSe: String;
+    FSerieRps: String;
+    FNumeroRps: String;
+    FValorNFSe: Double;
 
   protected
     procedure DefinirURL; override;
@@ -508,6 +512,12 @@ type
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
     //usado pelo provedor IssDsf
     property NumeroLote: String         read FNumeroLote         write FNumeroLote;
+
+    // Provedor Conam
+    property SerieNFSe: String read FSerieNFSe write FSerieNFSe;
+    property NumeroRps: String read FNumeroRps write FNumeroRps;
+    property SerieRps: String  read FSerieRps  write FSerieRps;
+    property ValorNFSe: Double read FValorNFSe write FValorNFSe;
 
     property DataHora: TDateTime        read FDataHora           write FDataHora;
 
@@ -709,7 +719,11 @@ type
                          const ANumeroNFSe: String = '';
                          const AMotivoCancelamento: String = '';
                          const ANumLote: String = '';
-                         const ACodigoVerificacao: String = ''): Boolean;
+                         const ACodigoVerificacao: String = '';
+                         const ASerieNFSe: string = '';
+                         const ANumeroRps: string = '';
+                         const ASerieRps: string = '';
+                         const AValorNFSe: Double = 0): Boolean;
 
     function SubstituiNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
                            const AMotivoCancelamento: String = ''): Boolean;
@@ -5137,6 +5151,12 @@ begin
       CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
 
+      // Provedor Conam
+      SerieNFSe := TNFSeCancelarNfse(Self).FSerieNFSe;
+      NumeroRPS := TNFSeCancelarNfse(Self).FNumeroRps;
+      SerieRps  := TNFSeCancelarNfse(Self).FSerieRps;
+      ValorNota := TNFSeCancelarNfse(Self).FValorNFSe;
+
       if FNotasFiscais.Count > 0 then
       begin
         SerieNFSe  := FNotasFiscais.Items[0].NFSe.SeriePrestacao;
@@ -6380,13 +6400,19 @@ end;
 
 function TWebServices.CancelaNFSe(const ACodigoCancelamento: String;
   const ANumeroNFSe: String = ''; const AMotivoCancelamento: String = '';
-  const ANumLote: String = ''; const ACodigoVerificacao: String = ''): Boolean;
+  const ANumLote: String = ''; const ACodigoVerificacao: String = '';
+  const ASerieNFSe: string = ''; const ANumeroRps: string = '';
+  const ASerieRps: string = ''; const AValorNFSe: Double = 0): Boolean;
 begin
   FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
   FCancNfse.FNumeroNFSe         := ANumeroNFSe;
   FCancNfse.FMotivoCancelamento := AMotivoCancelamento;
   FCancNfse.FNumeroLote         := ANumLote;
   FCancNFSe.FCodigoVerificacao  := ACodigoVerificacao;
+  FCancNFSe.FSerieNFSe          := ASerieNFSe;
+  FCancNFSe.FNumeroRps          := ANumeroRps;
+  FCancNFSe.FSerieRps           := ASerieRps;
+  FCancNFSe.FValorNFSe          := AValorNFSe;
 
   Result := FCancNfse.Executar;
 

@@ -115,7 +115,11 @@ type
                           const ANumeroNFSe: String = '';
                           const AMotivoCancelamento: String = '';
                           const ANumLote: String = '';
-                          const ACodigoVerificacao: string = ''): Boolean;
+                          const ACodigoVerificacao: string = '';
+                          const ASerieNFSe: string = '';
+                          const ANumeroRps: string = '';
+                          const ASerieRps: string = '';
+                          const AValorNFSe: Double = 0): Boolean;
 
     function SubstituirNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
                             const AMotivoCancelamento: String = ''): Boolean;
@@ -581,10 +585,13 @@ end;
 
 function TACBrNFSe.CancelarNFSe(const ACodigoCancelamento: String;
   const ANumeroNFSe: String = ''; const AMotivoCancelamento: String = '';
-  const ANumLote: String = ''; const ACodigoVerificacao: String = ''): Boolean;
+  const ANumLote: String = ''; const ACodigoVerificacao: String = '';
+  const ASerieNFSe: string = ''; const ANumeroRps: string = '';
+  const ASerieRps: string = ''; const AValorNFSe: Double = 0): Boolean;
 begin
   Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
-                             AMotivoCancelamento, ANumLote, ACodigoVerificacao);
+                             AMotivoCancelamento, ANumLote, ACodigoVerificacao,
+                             ASerieNFSe, ANumeroRps, ASerieRps, AValorNFSe);
 end;
 
 function TACBrNFSe.SubstituirNFSe(const ACodigoCancelamento,

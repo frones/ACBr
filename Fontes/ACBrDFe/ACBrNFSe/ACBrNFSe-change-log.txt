@@ -44,6 +44,11 @@ Símbolo : Significado
 
 11/02/2021
 -- Diversos --
+[+] Alterado a assinatura do método CancelarNFSe, agora ele tem os seguintes parâmetros: 
+    SerieNFSe (string), NumeroRps (string), SerieRps (string), ValorNFSe (Double).
+    Esses parâmetros são necessários para o provedor Conam.
+  Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Criado a propriedade: SubstituirRps (Boolean) que determina se o Rps a ser enviado
     através do método SubstituirNFSe deve ser assinado ou não.
 [*] Realizado alterações em diversas units para usar essa nova propriedade.

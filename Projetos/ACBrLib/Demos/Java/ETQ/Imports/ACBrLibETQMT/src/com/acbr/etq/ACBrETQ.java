@@ -101,12 +101,14 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrETQLib.INSTANCE.ETQ_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
 
     public ACBrETQ(String eArqConfig, String eChaveCrypt) throws Exception {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrETQLib.INSTANCE.ETQ_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
     
     @Override

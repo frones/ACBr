@@ -174,12 +174,14 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     PointerByReference handle = new PointerByReference();
     int ret = ACBrNFeLib.INSTANCE.NFE_Inicializar( handle,toUTF8( iniFile.getAbsolutePath() ), toUTF8( "" ) );
     checkResult( ret );
+    setHandle(handle.getValue());
   }
 
   public ACBrNFe( String eArqConfig, String eChaveCrypt ) throws Exception {
     PointerByReference handle = new PointerByReference();
     int ret = ACBrNFeLib.INSTANCE.NFE_Inicializar( handle,toUTF8( eArqConfig ), toUTF8( eChaveCrypt ) );
     checkResult( ret );
+    setHandle(handle.getValue());
   }
 
   @Override
@@ -248,7 +250,7 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
   }
 
   public void configGravarValor( ACBrSessao eSessao, String eChave, Object value ) throws Exception {
-    int ret = ACBrNFeLib.INSTANCE.NFE_ConfigGravarValor( getHandle(), toUTF8( eSessao.name() ), toUTF8( eChave ), toUTF8( value.toString() ) );
+    int ret = ACBrNFeLib.INSTANCE.NFE_ConfigGravarValor(getHandle(), toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()) );
     checkResult( ret );
   }
 

@@ -116,12 +116,14 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
 
     public ACBrSat(String eArqConfig, String eChaveCrypt) throws Exception {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
     
     @Override

@@ -116,12 +116,14 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
 
     public ACBrBoleto(String eArqConfig, String eChaveCrypt) throws Exception {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
+		setHandle(handle.getValue());
     }   
     
     @Override

@@ -96,12 +96,14 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrMailLib.INSTANCE.MAIL_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
 
     public ACBrMail(String eArqConfig, String eChaveCrypt) throws Exception {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrMailLib.INSTANCE.MAIL_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
+		setHandle(handle.getValue());
     }
     
     @Override

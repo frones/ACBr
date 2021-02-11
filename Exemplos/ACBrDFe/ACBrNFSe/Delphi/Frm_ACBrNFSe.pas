@@ -231,7 +231,6 @@ type
     btnConsultarLote: TButton;
     btnConsultarNFSeRPS: TButton;
     btnConsultarNFSePeriodo: TButton;
-    btnCancNFSe: TButton;
     btnCancelarNFSeSemXML: TButton;
 
     procedure FormCreate(Sender: TObject);
@@ -277,7 +276,6 @@ type
     procedure btnConsultarLoteClick(Sender: TObject);
     procedure btnConsultarNFSeRPSClick(Sender: TObject);
     procedure btnConsultarNFSePeriodoClick(Sender: TObject);
-    procedure btnCancNFSeClick(Sender: TObject);
     procedure cbCidadesChange(Sender: TObject);
     procedure btnCancelarNFSeSemXMLClick(Sender: TObject);
 
@@ -446,7 +444,10 @@ begin
       // TnfseSimNao = ( snSim, snNao );
       // snSim = Ambiente de Produção
       // snNao = Ambiente de Homologação
-      Producao := snNao;
+      if Configuracoes.WebServices.Ambiente = taProducao then
+        Producao := snSim
+      else
+        Producao := snNao;
 
       // TnfseStatusRPS = ( srNormal, srCancelado );
       Status := srNormal;
@@ -679,7 +680,9 @@ end;
 
 procedure TfrmACBrNFSe.btnCancelarNFSeSemXMLClick(Sender: TObject);
 var
-  Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao: String;
+  Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao,
+  ASerieNFSe, ANumeroRps, ASerieRps, AValorNFSe: String;
+  Valor: Double;
 begin
   // Codigo de Cancelamento
   // 1 - Erro de emissão
@@ -701,63 +704,43 @@ begin
   if not (InputQuery('Cancelar NFSe', 'Codigo de Verificação', CodVerificacao)) then
     exit;
 
-  ACBrNFSe1.CancelarNFSe(Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao);
+  ASerieNFSe := '';
+  ANumeroRps := '';
+  ASerieRps  := '';
+  AValorNFSe := '';
+
+  if ACBrNFSe1.Configuracoes.Geral.Provedor = proCONAM then
+  begin
+    if not (InputQuery('Cancelar NFSe', 'Serie da NFS-e', ASerieNFSe)) then
+      exit;
+
+    if not (InputQuery('Cancelar NFSe', 'Numero do Rps', ANumeroRps)) then
+      exit;
+
+    if not (InputQuery('Cancelar NFSe', 'Serie do Rps', ASerieRps)) then
+      exit;
+
+    if not (InputQuery('Cancelar NFSe', 'Valor da NFS-e', AValorNFSe)) then
+      exit;
+  end;
+
+  Valor := StrToFloatDef(AValorNFSe, 0);
+
+  ACBrNFSe1.CancelarNFSe(Codigo, NumeroNFSe, Motivo, NumeroLote, CodVerificacao,
+                         ASerieNFSe, ANumeroRps, ASerieRps, Valor);
 
   MemoDados.Lines.Add('Retorno do Cancelamento:');
 
   MemoDados.Lines.Add('Cód. Cancelamento: ' +
     ACBrNFSe1.WebServices.CancNfse.CodigoCancelamento);
+
   if ACBrNFSe1.WebServices.CancNfse.DataHora <> 0 then
     MemoDados.Lines.Add('Data / Hora      : ' +
       DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora));
+
   LoadXML(MemoResp.Text, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
-end;
-
-procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
-var
-  Codigo, Motivo: String;
-begin
-  OpenDialog1.Title := 'Selecione a NFSe';
-  OpenDialog1.DefaultExt := '*-NFSe.xml';
-  OpenDialog1.Filter :=
-    'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-  begin
-    ACBrNFSe1.NotasFiscais.Clear;
-    ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
-
-    // Codigo de Cancelamento
-    // 1 - Erro de emissão
-    // 2 - Serviço não concluido
-    // 3 - RPS Cancelado na Emissão
-
-    if not (InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo)) then
-      exit;
-
-    // Provedor Equiplano é obrigatório o motivo de cancelamento
-    if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
-      exit;
-
-    ACBrNFSe1.CancelarNFSe(Codigo, '', Motivo);
-
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items
-      [0].NomeArq);
-    MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
-    MemoDados.Lines.Add('Retorno do Cancelamento:');
-
-    MemoDados.Lines.Add('Cód. Cancelamento: ' +
-      ACBrNFSe1.WebServices.CancNfse.CodigoCancelamento);
-    if ACBrNFSe1.WebServices.CancNfse.DataHora <> 0 then
-      MemoDados.Lines.Add('Data / Hora      : ' +
-        DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora));
-    LoadXML(MemoResp.Text, WBResposta);
-
-    pgRespostas.ActivePageIndex := 1;
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnCNPJClick(Sender: TObject);

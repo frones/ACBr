@@ -64,6 +64,7 @@ contains
   ACBrBALToledoBCS21 in '..\..\..\Fontes\ACBrSerial\ACBrBALToledoBCS21.pas',
   ACBrBALPrecision in '..\..\..\Fontes\ACBrSerial\ACBrBALPrecision.pas',
   ACBrBALDigitron_UL in '..\..\..\Fontes\ACBrSerial\ACBrBALDigitron_UL.pas',
+  ACBrBALCapital in '..\..\..\Fontes\ACBrSerial\ACBrBALCapital.pas',
   ACBrCHQ in '..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas',
   ACBrCHQBematech in '..\..\..\Fontes\ACBrSerial\ACBrCHQBematech.pas',
   ACBrCHQChronos in '..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas',

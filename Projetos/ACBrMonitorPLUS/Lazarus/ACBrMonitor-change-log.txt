@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+12/02/2021
+-- ACBrMonitor --
+[+] Adicionado Validação para gerar log em tela
+
 04/02/2021
 -- ACBrMonitor --
 [+] Melhorias no Menu de Acesso e validaçoes de erros em tela

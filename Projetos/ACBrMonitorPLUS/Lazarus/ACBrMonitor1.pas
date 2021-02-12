@@ -10635,7 +10635,7 @@ begin
   begin
     if cbLog.Checked then
     begin
-      if chkMostraLogNaTela.Checked then
+      if (chkMostraLogNaTela.Checked) and (Self.WindowState <> wsMinimized) then
       begin
         if ( mResp.Lines.Count > 500 ) then
            RemoveLinesLog;
@@ -10652,7 +10652,7 @@ end;
 
 procedure TFrmACBrMonitor.AddLinesLog(aLinesLog: TStrings);
 begin
-  if chkMostraLogNaTela.Checked and ( aLinesLog.Count > 0 ) then
+  if (chkMostraLogNaTela.Checked) and (Self.WindowState <> wsMinimized) and ( aLinesLog.Count > 0 ) then
      mResp.Lines.AddStrings(aLinesLog);
 end;
 

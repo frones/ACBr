@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2021
+-- ACBrNFSeWebServices --
+[-] Possível correção na montagem do lote de envio do RPS (provedor GeisWeb).
+  Por: Italo Giurizzato Junior
+
 11/02/2021
 -- Diversos --
 [+] Alterado a assinatura do método CancelarNFSe, agora ele tem os seguintes parâmetros: 

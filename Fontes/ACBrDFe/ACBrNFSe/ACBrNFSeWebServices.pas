@@ -1980,6 +1980,13 @@ begin
         proSMARAPD,
         proGiap,
         proIPM: FvNotas := RPS;
+
+        proGeisWeb: FvNotas := FvNotas +
+                       '<' + FPrefixo4 + 'Rps' +
+                          RetornarConteudoEntre(RPS,
+                            '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                          '</Signature>'+
+                       '</' + FPrefixo4 + 'Rps>';
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +

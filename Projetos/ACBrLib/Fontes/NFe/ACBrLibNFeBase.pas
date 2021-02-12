@@ -548,11 +548,11 @@ begin
     try
       try
         NFeDM.ACBrNFe1.NotasFiscais.Validar;
+        Result := SetRetornoNFeCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
       except
         on E: EACBrNFeException do
           Result := SetRetorno(ErrValidacaoNFe, E.Message);
       end;
-      Result := SetRetornoNFeCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
     finally
       NFeDM.Destravar;
     end;

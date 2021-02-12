@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2021
+--- ACBrLiNFeBase ---
+[-] Correção no metodo Validar o mesmo estava fazendo o retorno errado.
+	Por: Rafael Dias
+
 30/10/2020
 --- ACBrLibNFeDataModule ---
 [-] Correção do metodo ConfigurarImpressao para quando for impressão de inutilização.

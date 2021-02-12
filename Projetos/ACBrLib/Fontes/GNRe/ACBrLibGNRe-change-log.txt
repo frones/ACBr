@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2021
+--- ACBrLiGRNeBase ---
+[-] Correção no metodo Validar o mesmo estava fazendo o retorno errado.
+	Por: Rafael Dias
+
 30/12/2020
 --- ACBrLibGNReConfig ---
 [-] Corrigido possível problema ao ler senha do certificado.

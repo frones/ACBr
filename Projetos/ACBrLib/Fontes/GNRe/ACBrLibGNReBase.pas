@@ -81,9 +81,6 @@ type
 
   end;
 
-
-
-
 implementation
 
 uses
@@ -368,11 +365,11 @@ begin
     try
       try
         GNReDM.ACBrGNRe1.Guias.Validar;
+        Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
       except
         on E: EACBrGNReException do
           Result := SetRetorno(ErrValidacaoGNRe, E.Message);
       end;
-      Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
     finally
       GNReDM.Destravar;
     end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2021
+--- ACBrLiMDFeBase ---
+[-] Correção no metodo Validar o mesmo estava fazendo o retorno errado.
+	Por: Rafael Dias
+
 29/10/2020
 --- ACBrLiMDFeBase ---
 [-] Correção nos métodos de impressão de evento para carregar o conteudo do xml quando passado o mesmo.

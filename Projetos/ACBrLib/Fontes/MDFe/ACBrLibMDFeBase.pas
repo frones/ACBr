@@ -507,12 +507,11 @@ begin
     try
       try
         MDFeDM.ACBrMDFe1.Manifestos.Validar;
+        Result := SetRetornoMDFeCarregados(MDFeDM.ACBrMDFe1.Manifestos.Count);
       except
         on E: EACBrMDFeException do
           Result := SetRetorno(ErrValidacaoMDFe, E.Message);
       end;
-
-      Result := SetRetornoMDFeCarregados(MDFeDM.ACBrMDFe1.Manifestos.Count);
     finally
       MDFeDM.Destravar;
     end;

@@ -906,7 +906,16 @@ begin
                                                    ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count));
 
         Conhecimentos.Assinar;
-        Conhecimentos.Validar;
+
+        try
+          Conhecimentos.Validar;
+        except
+          on E: EACBrCTeException do
+          begin
+            Result := SetRetorno(ErrValidacaoCTe, E.Message);
+            Exit;
+          end;
+        end;
 
         if (ALote = 0) then
           WebServices.Enviar.Lote := '1'

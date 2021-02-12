@@ -949,7 +949,16 @@ begin
         WebServices.Retorno.Clear;
 
         NotasFiscais.Assinar;
-        NotasFiscais.Validar;
+
+        try
+          NotasFiscais.Validar;
+        except
+          on E: EACBrNFeException do
+          begin
+            Result := SetRetorno(ErrValidacaoNFe, E.Message);
+            Exit;
+          end;
+        end;
 
         if (ALote = 0) then
           WebServices.Enviar.Lote := '1'

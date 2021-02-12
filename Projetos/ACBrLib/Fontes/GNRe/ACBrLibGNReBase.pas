@@ -454,7 +454,16 @@ begin
           raise EACBrLibException.Create(ErrEnvio, Format(SInfGNReCarregados, [Guias.Count]));
 
         Guias.Assinar;
-        Guias.Validar;
+
+        try
+          Guias.Validar;
+        except
+          on E: EACBrGNReException do
+          begin
+            Result := SetRetorno(ErrValidacaoGNRe, E.Message);
+            Exit;
+          end;
+        end;
 
         Resp := TLibGNReEnvio.Create(Config.TipoResposta, Config.CodResposta);
 

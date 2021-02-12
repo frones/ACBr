@@ -844,7 +844,15 @@ begin
         WebServices.Retorno.Clear;
 
         Manifestos.Assinar;
-        Manifestos.Validar;
+        try
+          Manifestos.Validar;
+        except
+          on E: EACBrMDFeException do
+          begin
+            Result := SetRetorno(ErrValidacaoMDFe, E.Message);
+            Exit;
+          end;
+        end;
 
         if (ALote = 0) then
           WebServices.Enviar.Lote := '1'

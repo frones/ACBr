@@ -37,7 +37,7 @@ unit ACBrLibCEPDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrCEP;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCEP;
 
 type
 
@@ -62,7 +62,7 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrLibCEPConfig, ACBrLibComum, ACBrLibCEPClass;
+  ACBrLibCEPConfig, ACBrLibCEPClass;
 
 {$R *.lfm}
 
@@ -98,7 +98,7 @@ procedure TLibCEPDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
   if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+    TACBrLibCEP(pLib).GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibCEPDM.Travar;

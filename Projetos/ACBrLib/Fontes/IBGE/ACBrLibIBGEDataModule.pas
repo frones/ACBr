@@ -96,7 +96,7 @@ procedure TLibIBGEDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
   if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+    TACBrLibIBGE(pLib^.Lib).GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibIBGEDM.Travar;

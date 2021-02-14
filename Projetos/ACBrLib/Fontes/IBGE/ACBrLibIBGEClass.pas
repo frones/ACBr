@@ -142,56 +142,56 @@ end;
 function IBGE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibIBGE, eArqConfig, eChaveCrypt);
 end;
 
 function IBGE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar;
+  Result := LIB_Finalizar(pLib);
 end;
 
 function IBGE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esTamanho);
+  Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
 function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esTamanho);
+  Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
 function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
 function IBGE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(eArqConfig);
+  Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
 function IBGE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(eArqConfig);
+  Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
 function IBGE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
 function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 {%endregion}
 
@@ -201,9 +201,11 @@ var
   Resp: TLibIBGEResposta;
 begin
   Resp := TLibIBGEResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
+          CSessaoRespConsulta + IntToStr(ItemID +1),
+          TACBrLibIBGE(pLib^.Lib).Config.TipoResposta,
+          TACBrLibIBGE(pLib^.Lib).Config.CodResposta);
   try
-    with TACBrLibIBGE(pLib).IBGEDM.ACBrIBGE1.Cidades[ItemID] do
+    with TACBrLibIBGE(pLib^.Lib).IBGEDM.ACBrIBGE1.Cidades[ItemID] do
     begin
       Resp.UF := UF;
       Resp.CodUF := IntToStr(CodUF);
@@ -226,14 +228,14 @@ var
   I: Integer;
 begin
   try
-    VerificarLibInicializada;
+    VerificarLibInicializada(pLib);
 
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('IBGE_BuscarPorCodigo( ' + IntToStr(ACodMun) + ' )', logCompleto, True)
+    if TACBrLibIBGE(pLib^.Lib).Config.Log.Nivel > logNormal then
+      TACBrLibIBGE(pLib^.Lib).GravarLog('IBGE_BuscarPorCodigo( ' + IntToStr(ACodMun) + ' )', logCompleto, True)
     else
-      pLib.GravarLog('IBGE_BuscarPorCodigo', logNormal);
+      TACBrLibIBGE(pLib^.Lib).GravarLog('IBGE_BuscarPorCodigo', logNormal);
 
-    with TACBrLibIBGE(pLib) do
+    with TACBrLibIBGE(pLib^.Lib) do
     begin
       IBGEDM.Travar;
       try
@@ -255,10 +257,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := TACBrLibIBGE(pLib^.Lib).SetRetorno(E.Erro, E.Message);
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := TACBrLibIBGE(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 
@@ -272,17 +274,17 @@ var
   I: Integer;
 begin
   try
-    VerificarLibInicializada;
+    VerificarLibInicializada(pLib);
     ACidade := AnsiString(eCidade);
     AUF := AnsiString(eUF);
 
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('IBGE_BuscarPorNome( ' + ACidade + ',' + AUF +
+    if TACBrLibIBGE(pLib^.Lib).Config.Log.Nivel > logNormal then
+      TACBrLibIBGE(pLib^.Lib).GravarLog('IBGE_BuscarPorNome( ' + ACidade + ',' + AUF +
                               BoolToStr(Exata, False) + ' )', logCompleto, True)
     else
-      pLib.GravarLog('IBGE_BuscarPorNome', logNormal);
+      TACBrLibIBGE(pLib^.Lib).GravarLog('IBGE_BuscarPorNome', logNormal);
 
-    with TACBrLibIBGE(pLib) do
+    with TACBrLibIBGE(pLib^.Lib) do
     begin
       IBGEDM.Travar;
       try
@@ -304,10 +306,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := TACBrLibIBGE(pLib^.Lib).SetRetorno(E.Erro, E.Message);
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := TACBrLibIBGE(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 {%endregion}

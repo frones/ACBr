@@ -143,56 +143,56 @@ end;
 function CEP_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibCEP, eArqConfig, eChaveCrypt);
 end;
 
 function CEP_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Finalizar;
+  Result := LIB_Finalizar(pLib);
 end;
 
 function CEP_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esTamanho);
+  Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
 function CEP_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esTamanho);
+  Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
 function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
 function CEP_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLer(eArqConfig);
+  Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
 function CEP_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravar(eArqConfig);
+  Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
 function CEP_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
+  Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
 function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+  Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 {%endregion}
 
@@ -203,9 +203,11 @@ var
   Resp: TLibCEPResposta;
 begin
   Resp := TLibCEPResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
+          CSessaoRespConsulta + IntToStr(ItemID +1),
+          TACBrLibCEP(pLib^.Lib).Config.TipoResposta,
+          TACBrLibCEP(pLib^.Lib).Config.CodResposta);
   try
-    with TACBrLibCEP(pLib).CEPDM.ACBrCEP1.Enderecos[ItemID] do
+    with TACBrLibCEP(pLib^.Lib).CEPDM.ACBrCEP1.Enderecos[ItemID] do
     begin
       Resp.CEP := CEP;
       Resp.Tipo_Logradouro := Tipo_Logradouro;
@@ -233,15 +235,15 @@ var
   AResposta: String;
 begin
   try
-    VerificarLibInicializada;
+    VerificarLibInicializada(pLib);
     ACEP := AnsiString(eCEP);
 
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CEP_BuscarPorCEP( ' + ACEP + ' )', logCompleto, True)
+    if TACBrLibCEP(pLib^.Lib).Config.Log.Nivel > logNormal then
+      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorCEP( ' + ACEP + ' )', logCompleto, True)
     else
-      pLib.GravarLog('CEP_BuscarPorCEP', logNormal);
+      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorCEP', logNormal);
 
-    with TACBrLibCEP(pLib) do
+    with TACBrLibCEP(pLib^.Lib) do
     begin
       CEPDM.Travar;
       try
@@ -256,10 +258,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(E.Erro, E.Message);
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 
@@ -273,20 +275,20 @@ var
   I: Integer;
 begin
   try
-    VerificarLibInicializada;
+    VerificarLibInicializada(pLib);
     ACidade := AnsiString(eCidade);
     ATipo_Logradouro := AnsiString(eTipo_Logradouro);
     ALogradouro := AnsiString(eLogradouro);
     AUF := AnsiString(eUF);
     ABairro := AnsiString(eBairro);
 
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CEP_BuscarPorLogradouro( ' + ACidade + ',' + ATipo_Logradouro + ',' +
+    if TACBrLibCEP(pLib^.Lib).Config.Log.Nivel > logNormal then
+      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorLogradouro( ' + ACidade + ',' + ATipo_Logradouro + ',' +
         ALogradouro + ',' + AUF + ',' +ABairro + ' )', logCompleto, True)
     else
-      pLib.GravarLog('CEP_BuscarPorLogradouro', logNormal);
+      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorLogradouro', logNormal);
 
-    with TACBrLibCEP(pLib) do
+    with TACBrLibCEP(pLib^.Lib) do
     begin
       CEPDM.Travar;
       try
@@ -305,10 +307,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(E.Erro, E.Message);
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 {%endregion}

@@ -20,7 +20,7 @@
       <RevisionNr Value="1"/>
       <BuildNr Value="32"/>
       <Language Value="0416"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta de CEP" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
     </VersionInfo>
     <BuildModes Count="7">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>

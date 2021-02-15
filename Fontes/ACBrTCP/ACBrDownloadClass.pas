@@ -326,14 +326,22 @@ begin
             // o arquivo com o nome.ext.part para tentar continuar de onde parou
             if (fResultCode = 200) or (fResultCode = 206) or (fResultCode = 226) then
             begin
-              sFileName := Copy(fFilePart, 1, Length(fFilePart) -5);
-              if FileExists(sFileName) and FileExists(fFilePart) then
-                if not DeleteFile(sFileName) then
-                  raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [sFileName]));
+              if pos('.part',fFilePart) > 0 then
+              begin
+                sFileName := Copy(fFilePart, 1, Length(fFilePart) -5);
 
-              if FileExists(fFilePart) then              
-                if not RenameFile(fFilePart, sFileName) then
-                  raise Exception.Create(Format('Não foi possível renomear o arquivo: %s para %s', [fFilePart, sFileName]));
+                if FileExists(sFileName) and FileExists(fFilePart) then
+                  if not DeleteFile(sFileName) then
+                    raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [sFileName]));
+
+                if FileExists(fFilePart) then
+                  if not RenameFile(fFilePart, sFileName) then
+                    raise Exception.Create(Format('Não foi possível renomear o arquivo: %s para %s', [fFilePart, sFileName]));
+              end
+              else
+                if FileExists(fFilePart + '.part') then
+                  if not DeleteFile(fFilePart + '.part') then
+                    raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [fFilePart + '.part']));
             end;
          end
        end;

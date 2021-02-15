@@ -231,13 +231,13 @@ begin
         ListaPlataformasStrings.StrictDelimiter := True;
         ListaPlataformasStrings.DelimitedText := PlataformasMarcadas;
 
-        for i := 0 to ListaPlataformasStrings.Count - 1 do
+        for I := 0 to ListaPlataformasStrings.Count - 1 do
         begin
           for J := 0 to scrlbxDelphiVersion.ControlCount - 1 do
           begin
-            if (scrlbxDelphiVersion.Controls[i] as TCheckBox).Caption = ListaPlataformasStrings[I] then
+            if (scrlbxDelphiVersion.Controls[J] as TCheckBox).Caption = ListaPlataformasStrings[I] then
             begin
-              (scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked := True;
+              (scrlbxDelphiVersion.Controls[J] as TCheckBox).Checked := True;
             end;
           end;
         end;

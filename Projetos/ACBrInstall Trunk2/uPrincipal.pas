@@ -137,7 +137,7 @@ type
     FUltimoArquivoLog: string;
 
     procedure GravarConfiguracoesEmArquivoIni;
-    procedure LerConfiguracoes;
+    procedure LerConfiguracoesEmArquivoIni;
     function PathArquivoIni: String;
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string; ListaPacotes:
         TPacotes);
@@ -201,10 +201,12 @@ begin
 end;
 
 // ler o arquivo .ini de configurações e setar os campos com os valores lidos
-procedure TfrmPrincipal.LerConfiguracoes;
+procedure TfrmPrincipal.LerConfiguracoesEmArquivoIni;
 var
   ArqIni: TIniFile;
-  I: Integer;
+  I, J: Integer;
+  PlataformasMarcadas: string;
+  ListaPlataformasStrings: TStringList;
 begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
@@ -220,6 +222,32 @@ begin
     ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', False);
     ckbUsarArquivoConfig.Checked   := True;
 
+    PlataformasMarcadas := ArqIni.ReadString('PLATAFORMAS', 'Marcadas', '');
+    if PlataformasMarcadas <> '' then
+    begin
+      ListaPlataformasStrings := TStringList.Create;
+      try
+        ListaPlataformasStrings.Delimiter := ';';
+        ListaPlataformasStrings.StrictDelimiter := True;
+        ListaPlataformasStrings.DelimitedText := PlataformasMarcadas;
+
+        for i := 0 to ListaPlataformasStrings.Count - 1 do
+        begin
+          for J := 0 to scrlbxDelphiVersion.ControlCount - 1 do
+          begin
+            if (scrlbxDelphiVersion.Controls[i] as TCheckBox).Caption = ListaPlataformasStrings[I] then
+            begin
+              (scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked := True;
+            end;
+          end;
+        end;
+
+      finally
+        ListaPlataformasStrings.Free;
+      end;
+    end;
+
+
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Caption, False);
   finally
@@ -232,6 +260,7 @@ procedure TfrmPrincipal.GravarConfiguracoesEmArquivoIni;
 var
   ArqIni: TIniFile;
   I: Integer;
+  PlataformasMarcadas: string;
 begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
@@ -244,6 +273,18 @@ begin
     ArqIni.WriteBool('CONFIG','RemoveXmlSec', ckbRemoveXMLSec.Checked);
     ArqIni.WriteBool('CONFIG','CargaDllTardia', ckbCargaDllTardia.Checked);
     ArqIni.WriteBool('CONFIG','RemoverCastWarnings', ckbRemoverCastWarnings.Checked);
+
+    PlataformasMarcadas := '';
+    for i := 0 to scrlbxDelphiVersion.ControlCount - 1 do
+    begin
+      // só instala as versão marcadas para instalar.
+      if ((scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked) then
+      begin
+        PlataformasMarcadas := PlataformasMarcadas + (scrlbxDelphiVersion.Controls[i] as TCheckBox).Caption +';';
+      end;
+    end;
+
+    ArqIni.WriteString('PLATAFORMAS', 'Marcadas', PlataformasMarcadas);
 
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Caption, framePacotes1.Pacotes[I].Checked);
@@ -270,19 +311,16 @@ end;
 procedure TfrmPrincipal.MontaListaIDEsSuportadas;
 var
   iFor: Integer;
-  NomeAlvo: string;
   achk: TCheckBox;
   ValorTop: Integer;
 begin
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to FUmaListaPlataformasAlvos.Count - 1 do
   begin
-    NomeAlvo := FUmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name + ' ' + FUmaListaPlataformasAlvos[iFor].sPlatform;
-
     achk := TCheckBox.Create(scrlbxDelphiVersion);
     achk.Parent  := scrlbxDelphiVersion;
     achk.Name    := 'chk'+IntToStr(iFor);
-    achk.Caption := NomeAlvo;
+    achk.Caption := FUmaListaPlataformasAlvos[iFor].GetNomeAlvo;
     achk.Tag     := iFor;
     achk.Left    := 4;
     ValorTop     := 4;
@@ -318,7 +356,7 @@ begin
 
   MontaListaIDEsSuportadas;
 
-  LerConfiguracoes;
+  LerConfiguracoesEmArquivoIni;
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

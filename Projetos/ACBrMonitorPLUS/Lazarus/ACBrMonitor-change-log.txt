@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/02/2021
+-- ACBrMonitor --
+[*] Ajuste Descrição em Tela
+
 12/02/2021
 -- ACBrMonitor --
 [+] Adicionado Validação para gerar log em tela

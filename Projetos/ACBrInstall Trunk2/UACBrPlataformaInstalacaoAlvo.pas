@@ -53,6 +53,7 @@ type
     tPlatformAtual: TJclBDSPlatform;
     sPlatform: string;
     sDirLibrary: string;
+    function GetNomeAlvo: string;
     function GetDirLibrary: string;
     function EhSuportadaPeloACBr: Boolean;
     function EhSuportadaPeloACBrBeta: Boolean;
@@ -169,6 +170,11 @@ function TACBrPlataformaInstalacaoAlvo.GetDirLibrary: string;
 begin
   Result := {OpcoesInstall.DiretorioRaizACBr + }
             'Lib\Delphi\Lib' + AnsiUpperCase(InstalacaoAtual.VersionNumberStr)+ '\' + sPlatform;
+end;
+
+function TACBrPlataformaInstalacaoAlvo.GetNomeAlvo: string;
+begin
+  Result := InstalacaoAtual.Name + ' ' + sPlatform;
 end;
 
 constructor TACBrPlataformaInstalacaoAlvo.CreateNew(AInstalacao: TJclBorRADToolInstallation;

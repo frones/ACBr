@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgFinalizar
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgFinalizar
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1322,28 +1322,20 @@ object frmPrincipal: TfrmPrincipal
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         inherited pnlBotoesMarcar: TPanel
           Top = 458
           Width = 554
-          ExplicitTop = 458
-          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 504
-            ExplicitLeft = 504
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 454
-            ExplicitLeft = 454
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
           VertScrollBar.Position = 28
-          ExplicitWidth = 548
-          ExplicitHeight = 452
           inherited Label1: TLabel
             Top = -27
           end
@@ -1430,247 +1422,186 @@ object frmPrincipal: TfrmPrincipal
           end
           inherited ACBr_synapse_dpk: TCheckBox
             Top = -28
-            ExplicitTop = -28
           end
           inherited ACBr_Comum_dpk: TCheckBox
             Top = -11
-            ExplicitTop = -11
           end
           inherited ACBr_Diversos_dpk: TCheckBox
             Top = 24
-            ExplicitTop = 24
           end
           inherited ACBr_Serial_dpk: TCheckBox
             Top = 58
-            ExplicitTop = 58
           end
           inherited ACBr_TCP_dpk: TCheckBox
             Top = 297
-            ExplicitTop = 297
           end
           inherited ACBr_BPe_dpk: TCheckBox
             Top = 620
-            ExplicitTop = 620
           end
           inherited ACBr_TEFD_dpk: TCheckBox
             Top = 737
-            ExplicitTop = 737
           end
           inherited ACBr_Boleto_dpk: TCheckBox
             Top = 365
-            ExplicitTop = 365
           end
           inherited ACBr_Sintegra_dpk: TCheckBox
             Top = 177
-            ExplicitTop = 177
           end
           inherited ACBr_SPED_dpk: TCheckBox
             Top = 194
-            ExplicitTop = 194
           end
           inherited ACBr_PAF_dpk: TCheckBox
             Top = 143
-            ExplicitTop = 143
           end
           inherited ACBr_OpenSSL_dpk: TCheckBox
             Top = 7
-            ExplicitTop = 7
           end
           inherited ACBr_PCNComum_dpk: TCheckBox
             Top = 41
-            ExplicitTop = 41
           end
           inherited ACBr_NFe_dpk: TCheckBox
             Top = 382
-            ExplicitTop = 382
           end
           inherited ACBr_CTe_dpk: TCheckBox
             Top = 433
-            ExplicitTop = 433
           end
           inherited ACBr_NFSe_dpk: TCheckBox
             Top = 450
-            ExplicitTop = 450
           end
           inherited ACBr_MDFe_dpk: TCheckBox
             Top = 467
-            ExplicitTop = 467
           end
           inherited ACBr_GNRE_dpk: TCheckBox
             Top = 484
-            ExplicitTop = 484
           end
           inherited ACBr_Convenio115_dpk: TCheckBox
             Top = 92
-            ExplicitTop = 92
           end
           inherited ACBr_SEF2_dpk: TCheckBox
             Top = 160
-            ExplicitTop = 160
           end
           inherited ACBr_SAT_dpk: TCheckBox
             Top = 535
-            ExplicitTop = 535
           end
           inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
             Top = 416
-            ExplicitTop = 416
           end
           inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
             Top = 569
-            ExplicitTop = 569
           end
           inherited ACBr_LFD_dpk: TCheckBox
             Top = 109
-            ExplicitTop = 109
           end
           inherited ACBr_SPEDImportar_dpk: TCheckBox
             Top = 211
-            ExplicitTop = 211
           end
           inherited ACBr_DFeComum_dpk: TCheckBox
             Top = 348
-            ExplicitTop = 348
           end
           inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
             Top = 399
-            ExplicitTop = 399
           end
           inherited ACBr_SATECFVirtual_dpk: TCheckBox
             Top = 552
-            ExplicitTop = 552
           end
           inherited ACBr_TXTComum_dpk: TCheckBox
             Top = 75
-            ExplicitTop = 75
           end
           inherited ACBr_NFeDanfeFR_dpk: TCheckBox
             Top = 771
-            ExplicitTop = 771
           end
           inherited ACBr_CTeDacteFR_dpk: TCheckBox
             Top = 788
-            ExplicitTop = 788
           end
           inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
             Top = 805
-            ExplicitTop = 805
           end
           inherited ACBr_BoletoFR_dpk: TCheckBox
             Top = 822
-            ExplicitTop = 822
           end
           inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
             Top = 839
-            ExplicitTop = 839
           end
           inherited ACBr_GNREGuiaFR_dpk: TCheckBox
             Top = 874
-            ExplicitTop = 874
           end
           inherited ACBr_NFeDanfeRL_dpk: TCheckBox
             Top = 920
-            ExplicitTop = 920
           end
           inherited ACBr_CTeDacteRL_dpk: TCheckBox
             Top = 954
-            ExplicitTop = 954
           end
           inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
             Top = 937
-            ExplicitTop = 937
           end
           inherited ACBr_BoletoRL_dpk: TCheckBox
             Top = 971
-            ExplicitTop = 971
           end
           inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
             Top = 988
-            ExplicitTop = 988
           end
           inherited ACBr_SATExtratoRL_dpk: TCheckBox
             Top = 1005
-            ExplicitTop = 1005
           end
           inherited ACBr_GNREGuiaRL_dpk: TCheckBox
             Top = 1022
-            ExplicitTop = 1022
           end
           inherited ACBr_BlocoX_dpk: TCheckBox
             Top = 603
-            ExplicitTop = 603
           end
           inherited ACBr_DeSTDA_dpk: TCheckBox
             Top = 228
-            ExplicitTop = 228
           end
           inherited ACBr_Ponto_dpk: TCheckBox
             Top = 245
-            ExplicitTop = 245
           end
           inherited ACBr_MTER_dpk: TCheckBox
             Top = 314
-            ExplicitTop = 314
           end
           inherited ACBr_SATWS_dpk: TCheckBox
             Top = 586
-            ExplicitTop = 586
           end
           inherited ACBr_ANe_dpk: TCheckBox
             Top = 653
-            ExplicitTop = 653
           end
           inherited ACBr_Integrador_dpk: TCheckBox
             Top = 331
-            ExplicitTop = 331
           end
           inherited ACBre_Social_dpk: TCheckBox
             Top = 501
-            ExplicitTop = 501
           end
           inherited ACBr_Reinf_dpk: TCheckBox
             Top = 518
-            ExplicitTop = 518
           end
           inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
             Top = 636
-            ExplicitTop = 636
           end
           inherited ACBr_DFeReportRL_dpk: TCheckBox
             Top = 903
-            ExplicitTop = 903
           end
           inherited ACBr_CIOT_dpk: TCheckBox
             Top = 670
-            ExplicitTop = 670
           end
           inherited ACBr_LCDPR_dpk: TCheckBox
             Top = 264
-            ExplicitTop = 264
           end
           inherited ACBr_ONE_dpk: TCheckBox
             Top = 687
-            ExplicitTop = 687
           end
           inherited ACBr_EDI_dpk: TCheckBox
             Top = 126
-            ExplicitTop = 126
           end
           inherited ACBr_NF3e_dpk: TCheckBox
             Top = 704
-            ExplicitTop = 704
           end
           inherited ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
             Top = 720
-            ExplicitTop = 720
           end
           inherited ACBr_ADRCST_dpk: TCheckBox
             Top = 281
-            ExplicitTop = 281
           end
           inherited ACBr_SATExtratoFR_dpk: TCheckBox
             Top = 856
-            ExplicitTop = 856
           end
         end
       end
@@ -1700,10 +1631,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463

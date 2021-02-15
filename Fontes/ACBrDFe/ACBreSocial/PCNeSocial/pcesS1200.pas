@@ -974,7 +974,8 @@ begin
     if (dmDev[i].infoPerApurInst()) then
       GerarInfoPerApur(dmDev[i].infoPerApur);
 
-    if (dmDev[i].infoPerAntInst()) then
+    if (dmDev[i].infoPerAntInst()) and
+       (dmDev[i].infoPerAnt.ideADC.Count > 0) then
       GerarInfoPerAnt(dmDev[i].infoPerAnt);
 
     if (VersaoDF < ve02_04_02) and (dmDev[i].infoTrabIntermInst()) then

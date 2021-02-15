@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2021
+-- pcesS1200 --
+[*] https://www.projetoacbr.com.br/forum/topic/61285-e-social-s-1200-grupo-infoperant-erro-de-valida%C3%A7%C3%A3o-gerando-tag-vazia/
+   Por: rayhildebrant
+
 08/02/2021
 -- Diversos --
 [*] Alterado para string o tipo dos campos referente a UF em diversos eventos,

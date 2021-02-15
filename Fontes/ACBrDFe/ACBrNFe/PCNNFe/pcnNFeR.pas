@@ -400,7 +400,7 @@ begin
 
     Leitor.rExtrai(1, 'det nItem=' + Aspas + IntToStr(nItem) + Aspas, 'det');
     NFe.Det.New;
-    (*   *)NFe.Det[i].prod.nItem := i + 1;
+    (*   *)NFe.Det[i].prod.nItem := nItem;
     (*V01*)NFe.Det[i].infAdProd  := Leitor.rCampo(tcStr, 'infAdProd');
 
     (* Grupo da TAG <det><prod> *)

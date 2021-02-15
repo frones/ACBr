@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2021
+-- pcnNFeR --
+[*] https://www.projetoacbr.com.br/forum/topic/61232-nitem-incorreto-nfe/
+   Por: João Paulo Müller
+
 27/01/2021
 -- pcnEnvEventoNFe --
 [*] Incluido a leitura de arquivo INI do evento de cancelamento de comprovante 

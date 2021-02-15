@@ -1,6 +1,6 @@
 Os arquivos aqui colocados são ajustes JCL para compilar o ACBrInstall atual que suporta outras plataformas. 
 
 Até que a JCL seja atualizada com essas alterações, se é que eles vão aceitar nossa contribuição, é necessário fazer os ajustes manualmente.
-A versão base para as modificações da JCL é a versão 9816 (baixando do GitHub usando SVN).
+A versão base para as modificações da JCL é a versão 9820(baixando do GitHub usando SVN).
 
 Adicionamos tanto o arquivo patch como os arquivos alterados para que você escolha conforme sua preferência como atualizar.

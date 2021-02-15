@@ -130,7 +130,10 @@ end;
 procedure TNFSeW_ISSDSF.GerarPrestador;
 begin
   Gerador.wCampo(tcStr, '', 'InscricaoMunicipalPrestador', 01, 011, 1, NFSe.Prestador.InscricaoMunicipal, '');
-  Gerador.wCampo(tcStr, '', 'RazaoSocialPrestador',        01, 120, 1, NFSe.PrestadorServico.RazaoSocial, '');
+  if NFSe.PrestadorServico.RazaoSocial = '' then // ocorre de vir vazio, se der um loadfromfile no RPS, falha do pdfsNFSR em: if (Leitor.rExtrai(1, 'Cabecalho') <> '') then
+    Gerador.wCampo(tcStr, '', 'RazaoSocialPrestador',        01, 120, 1, NFSe.Prestador.RazaoSocial, '')
+  else
+    Gerador.wCampo(tcStr, '', 'RazaoSocialPrestador',        01, 120, 1, NFSe.PrestadorServico.RazaoSocial, '');
 end;
 
 procedure TNFSeW_ISSDSF.GerarTomador;

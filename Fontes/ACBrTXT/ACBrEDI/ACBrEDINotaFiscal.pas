@@ -1708,7 +1708,7 @@ begin
                   iif( Versao = ve50, FTxt.RFill(OnlyNumber(IEST), 15) +
                                       FTxt.RFill(IM              , 15), '') +
 
-                  FTxt.RFill(Endereco           , 50) +
+                  iif( Versao = ve50, FTxt.RFill(Endereco, 50), FTxt.RFill(Endereco, 40) ) +
 
                   iif( Versao = ve50, FTxt.RFill(Bairro, 35), '') +
 
@@ -1896,9 +1896,9 @@ begin
                   FTxt.LFill(dtEmissao                               , 'ddmmyyyy', false) +
                   FTxt.RFill(tpMercadoria                            , 15) +
                   FTxt.RFill(xEspecie                                , 15) +
-                  FTxt.VLFill(ValoresNF.qVolumes                     ,  5, 2, '0') +
+                  FTxt.VLFill(ValoresNF.qVolumes                     ,  7, 2, '0') +
                   FTxt.VLFill(ValoresNF.vTotalNF                     , 15, 2, '0') +
-                  FTxt.VLFill(ValoresNF.qPesoBruto                   ,  5, 2, '0') +
+                  FTxt.VLFill(ValoresNF.qPesoBruto                   ,  7, 2, '0') +
                   FTxt.VLFill(ValoresNF.qPesoDensidade               ,  5, 2, '0') +
                   FTxt.RFill(IncideICMSToStr(ValoresNF.IncideICMS)   ,  1) +
                   FTxt.RFill(SimNaoEdiToStr(ValoresNF.SeguroEfetuado),  1) +
@@ -2138,7 +2138,7 @@ begin
                       FTxt.RFill(nroVolume , 50) +
                       FTxt.RFill(nroLacre  , 50) +
                       FTxt.VLFill(nroPedido, 20) +
-                      FTxt.VLFill(Filler   , 22) ) ;
+                      FTxt.RFill(Filler    , 22) ) ;
       end
       else
       begin
@@ -2146,7 +2146,7 @@ begin
                   FTxt.VLFill(qVolumes ,  5, 2, '0') +
                   FTxt.RFill(xEspecie  , 15) +
                   FTxt.RFill(xDescricao, 30) +
-                  FTxt.VLFill(Filler   , 29) ) ;
+                  FTxt.RFill(Filler    , 29) ) ;
       end;
     end;
   end;

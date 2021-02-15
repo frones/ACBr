@@ -49,6 +49,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2021
 --ACBrBancoBradesco--
 [*] Ajuste na função ValidaNossoNumeroResponsavel realizando sobreescrita do mesmo;
 

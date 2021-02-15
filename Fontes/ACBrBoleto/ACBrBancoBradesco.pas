@@ -106,8 +106,16 @@ begin
 
   if (ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) then
   begin
-    ANossoNumero := StringOfChar('0', CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira, ACBrTitulo.NossoNumero) );
-    ADigVerificador := '0';
+    if (ACBrTitulo.NossoNumero = '') then
+    begin
+      ANossoNumero := StringOfChar('0', CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira, ACBrTitulo.NossoNumero) );
+      ADigVerificador := '0';
+    end
+    else
+    begin
+      ANossoNumero := ACBrTitulo.NossoNumero;
+      ADigVerificador := CalcularDigitoVerificador(ACBrTitulo);
+    end;
   end
   else
   begin

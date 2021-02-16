@@ -1117,6 +1117,7 @@ begin
       Cedente.AgenciaDigito:= '0';
       Cedente.Conta   := rConta;
       Cedente.ContaDigito:= rDigitoConta;
+      Cedente.CodigoCedente := Copy(ARetorno[0], 109, 9);
 
       DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                            Copy(ARetorno[0],97,2)+'/'+

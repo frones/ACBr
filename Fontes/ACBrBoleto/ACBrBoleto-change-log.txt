@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2021
+--ACBrBancoSantander--
+[*] Adicionado Leitura do Código Cedente para Retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/61293-santander-h7800-%E2%80%93-cnab-353400-codigo-do-benefici%C3%A1rio-na-leitura-do-retorno/
+
 15/02/2021
 --ACBrBancoBradesco--
 [*] Ajuste na função ValidaNossoNumeroResponsavel realizando sobreescrita do mesmo;

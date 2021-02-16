@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2020
+-- pcnConversao --
+[*] Alterado a descrição do enumerador fpPagamentoInstantaneo 
+    de: Pagamento Instantâneo 
+    para: Pagamento Instantâneo (PIX).
+   Por: Italo Giurizzato Junior
+
 21/12/2020
 -- pcnConversao --
 [+] Acrescentado novos tipos de meio de pagamento para atender a NT 2020/002.

@@ -1256,7 +1256,7 @@ begin
                                 'Vale Alimentação', 'Vale Refeição', 'Vale Presente',
                                 'Vale Combustível', 'Duplicata Mercantil',
                                 'Boleto Bancário', 'Deposito Bancário',
-                                'Pagamento Instantâneo', 'Transferência Bancária',
+                                'Pagamento Instantâneo (PIX)', 'Transferência Bancária',
                                 'Programa Fidelidade', 'Sem Pagamento',
                                 'Regime Especial NFF', 'Outro'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,

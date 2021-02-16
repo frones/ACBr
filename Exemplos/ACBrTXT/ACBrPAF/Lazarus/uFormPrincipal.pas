@@ -1,66 +1,57 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {																			   }
 { Colaboradores nesse arquivo: Isaque Pinheiro                                 }
 {																			   }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
 |* 10/04/2009: Isaque Pinheiro
-|*  - Cria√ß√£o e distribui√ß√£o da Primeira Versao
+|*  - CriaÁ„o e distribuiÁ„o da Primeira Versao
 |* 21/02/2010: EMSoft Sistemas Ltda - RJ
-|*  - Cria√ß√£o deste Demo
+|*  - CriaÁ„o deste Demo
 *******************************************************************************}
 
 unit uFormPrincipal;
 
-{$MODE Delphi}
-
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_Z, ACBrPAF_V,
-  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPAFRegistros, Math, ACBrEAD, ExtCtrls,
-  ComCtrls, FileUtil;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, jpeg, ExtCtrls, ACBrPAFRegistros,
+  ComCtrls, ACBrBase;
 
 type
-
-  { TForm6 }
-
   TForm6 = class(TForm)
-    ACBrPAF: TACBrPAF;
-    btnZ: TButton;
-    btnV: TButton;
-    cbEAD: TCheckBox;
     GroupBox1: TGroupBox;
+    ACBrPAF: TACBrPAF;
     Label1: TLabel;
     edtUF: TEdit;
     Label2: TLabel;
@@ -81,16 +72,22 @@ type
     logErros: TMemo;
     ts2: TTabSheet;
     mmArquivoGerado: TMemo;
-    procedure btnVClick(Sender: TObject);
-    procedure btnZClick(Sender: TObject);
-    procedure cbEADChange(Sender: TObject);
+    btnZ: TButton;
+    cbEAD: TCheckBox;
+    Button1: TButton;
+    btnRegistrosPAFNFCe: TButton;
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
     procedure ACBrPAFMsnError(const MsnError: String);
+    procedure ACBrPAFPAFCalcEAD(Arquivo: String);
     procedure btnNClick(Sender: TObject);
     procedure btnTITPClick(Sender: TObject);
     procedure btnRegistrosPAFClick(Sender: TObject);
+    procedure btnRegistrosPAFNFCeClick(Sender: TObject);
+    procedure btnZClick(Sender: TObject);
+    procedure cbEADClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     function QualquerNumero: Integer;
@@ -104,6 +101,10 @@ var
 
 implementation
 
+uses
+  ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_V, ACBrPAF_A,
+  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPaf_Z, ACBrPAF_S, ACBrPAF_J;
+
 const
      NUM_FAB      = 'NUMFAB78901234567890';
      MF_ADICIONAL = '';
@@ -115,7 +116,7 @@ const
 
 procedure TForm6.FormShow(Sender: TObject);
 begin
-// os relatorios PAF estes par√¢metros n√£o s√£o necess√°rios
+     // os relatorios PAF estes par‚metros n„o s„o necess·rios
 //     ACBrPAF.CurMascara :='';
 //     ACBrPAF.Delimitador:='';
 
@@ -157,81 +158,12 @@ end;
 
 procedure TForm6.PreencherHeader(Header: TRegistroX1);
 begin
-     // o header dos relat√≥rios PAF a maioria s√£o todos iguais
+     // o header dos relatÛrios PAF a maioria s„o todos iguais
      Header.UF         :=edtUF.Text;
      Header.CNPJ       :=edtCNPJ.Text;
      Header.IE         :=edtIE.Text;
      Header.IM         :=edtIM.Text;
      Header.RAZAOSOCIAL:=edtRAZAO.Text;
-end;
-
-procedure TForm6.btnZClick(Sender: TObject);
-var
-  Z4: TRegistroZ4;
-  i: integer;
-begin
-  // registro Z1
-  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ1); // preencher header do arquivo
-  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ2); // preencher header do arquivo
-  with ACBrPAF.PAF_Z do
-  begin
-    with RegistroZ3 do
-      begin
-        LAUDO  := '11111';
-        NOME   := 'NOME';
-        VERSAO := '1.00';
-      end;
-    // registro Z4
-    RegistroZ4.Clear;
-    for I := 1 to 15 do
-    begin
-      with RegistroZ4.New do
-        begin
-          CPF_CNPJ := '99.999.999/9999-11';
-          VL_TOTAL := 10 * I;
-          DATA_INI := Now;
-          DATA_FIM := Now;
-        end;
-    end;
-  end;
-  ACBrPAF.SaveToFile_Z('PAF_Z.TXT');
-end;
-
-procedure TForm6.btnVClick(Sender: TObject);
-var
-  V4: TRegistroV4;
-  i: integer;
-begin
-  // registro V1
-  PreencherHeader(ACBrPAF.PAF_V.RegistroV1); // preencher header do arquivo
-  PreencherHeader(ACBrPAF.PAF_V.RegistroV2); // preencher header do arquivo
-  with ACBrPAF.PAF_V do
-  begin
-    with RegistroV3 do
-      begin
-        LAUDO  := '11111';
-        NOME   := 'NOME';
-        VERSAO := '1.00';
-      end;
-    // registro Z4
-    RegistroV4.Clear;
-    for I := 1 to 5 do
-    begin
-      with RegistroV4.New do
-        begin
-          NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
-          MARCAECF := 'MARCA'+IntToStr(I);
-          MFADICIONAL := 'B';
-          MODELOECF := 'MODELO'+IntToStr(I);
-        end;
-    end;
-  end;
-  ACBrPAF.SaveToFile_V('PAF_V.TXT');
-end;
-
-procedure TForm6.cbEADChange(Sender: TObject);
-begin
-  ACBrPAF.AssinarArquivo := cbEAD.Checked;
 end;
 
 procedure TForm6.btnNClick(Sender: TObject);
@@ -250,7 +182,6 @@ begin
     MD5          := ACBrEAD.MD5FromFile(ParamStr(0));
   end;
   ACBrPAF.SaveToFile_N('PAF_N.TXT');
-
 end;
 
 procedure TForm6.btnTITPClick(Sender: TObject);
@@ -258,9 +189,9 @@ var
   iProduto: Integer;
   iInsumo: Integer;
 begin
-  // Tabela de indice tecnico de produ√ß√£o
+  // Tabela de indice tecnico de produÁ„o
 
-  ACBrPAF.PAF_TITP.Titulo   := 'Tabela de indice tecnico de produ√ß√£o';
+  ACBrPAF.PAF_TITP.Titulo   := 'Tabela de indice tecnico de produÁ„o';
   ACBrPAF.PAF_TITP.DataHora := NOW;
 
   for iProduto := 0 to 10 - 1 do
@@ -296,15 +227,91 @@ begin
   ACBrPAF.SaveToFile_TITP('PAF_TITP.TXT');
 end;
 
+procedure TForm6.btnZClick(Sender: TObject);
+var
+//  Z4: TRegistroZ4;
+  i: integer;
+begin
+  // registro Z1
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ2); // preencher header do arquivo
+  with ACBrPAF.PAF_Z do
+  begin
+    with RegistroZ3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroZ4.Clear;
+    for I := 1 to 15 do
+    begin
+      with RegistroZ4.New do
+        begin
+          CPF_CNPJ := '99.999.999/9999-11';
+          VL_TOTAL := 10 * I;
+          DATA_INI := Now;
+          DATA_FIM := Now;
+        end;
+    end;
+  end;
+  ACBrPAF.SaveToFile_Z('PAF_Z.TXT');
+end;
+
+procedure TForm6.Button1Click(Sender: TObject);
+var
+//  V4: TRegistroV4;
+  i: integer;
+begin
+  // registro V1
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV2); // preencher header do arquivo
+  with ACBrPAF.PAF_V do
+  begin
+    with RegistroV3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroV4.Clear;
+    for I := 1 to 5 do
+    begin
+      with RegistroV4.New do
+        begin
+          NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
+          MARCAECF := 'MARCA'+IntToStr(I);
+          MFADICIONAL := 'B';
+          MODELOECF := 'MODELO'+IntToStr(I);
+        end;
+    end;
+  end;
+  ACBrPAF.SaveToFile_V('PAF_V.TXT');
+end;
+
+procedure TForm6.cbEADClick(Sender: TObject);
+begin
+ACBrPAF.AssinarArquivo := cbEAD.Checked;
+end;
+
 procedure TForm6.ACBrPAFMsnError(const MsnError: String);
 begin
      logErros.Lines.Add(MsnError); // captura os erros encontrados pelo ACBrPAF
+end;
+
+procedure TForm6.ACBrPAFPAFCalcEAD(Arquivo: String);
+begin
+//
 end;
 
 procedure TForm6.btnRegistrosPAFClick(Sender: TObject);
 var
   i, j: Integer;
 begin
+  ACBrPAF.Layout := lpPAFNFCe;
+
   //U1
   with ACBrPAF.PAF_U.RegistroU1 do
     begin
@@ -431,7 +438,7 @@ begin
         end;
       end;
 
-      //D4 - Log altera√ß√µes DAV
+      //D4 - Log alteraÁıes DAV
       for j := 1 to 2 do
       begin
         with RegistroD4.New do
@@ -472,7 +479,7 @@ begin
         CNPJ_ORG  := '';
         COD_LOCAL := '01';
         ID_LINHA  := 'idlinha';
-        DESC_LINHA:= 'descri√ß√£o da linha';
+        DESC_LINHA:= 'descriÁ„o da linha';
         DT_PART   := Now;
         COD_VIAGEM:= '00';
 
@@ -512,57 +519,6 @@ begin
         COD_TSER  := '0' + IntToStr(i + 1);
         QTDE_TOTAL:= 3 + i;
 
-        RegistroValido:= True;
-      end;
-    end;
-  //J1 J2
-  ACBrPAF.PAF_J.RegistroJ1.Clear;
-  for I := 0 to 2 do
-    begin
-      with ACBrPAF.PAF_J.RegistroJ1.New do
-      begin
-        CNPJ:= '12345678901234';
-        DATA_EMISSAO:= now;
-        SUBTOTAL:= 1;
-        DESC_SUBTOTAL:= 0;
-        INDICADOR_DESC:= 'D';
-        ACRES_SUBTOTAL:= 0;
-        INDICADOR_ACRES:= '';
-        VALOR_LIQUIDO:= 1;
-        INDICADOR_CANC:= 'N';
-        VAL_CANC_ACRES:= 0;
-        ORDEM_APLIC_DES_ACRES:= 'A';
-        NOME_CLIENTE:= 'consumidor';
-        CPFCNPJ_CLIENTE:= '13245678912';
-        NUMERO_NOTA:= '1231';
-        SERIE_NOTA:= '21';
-        CHAVE_NF:= '12345678901234567890123456789012345678901234';
-        TIPO_DOC:= '55';
-
-        for j := 1 to 2 do
-        begin
-          with RegistroJ2.New do
-            begin
-              CNPJ:= '12345678901234';
-              DATA_EMISSAO:= now;
-              NUMERO_ITEM:= inttostr(j);
-              CODIGO_PRODUTO:= '1';
-              DESCRICAO:= 'produto';
-              QUANTIDADE:= 1;
-              UNIDADE:= 'UN';
-              VALOR_UNITARIO:= 1;
-              DESCONTO_ITEM:= 0;
-              ACRESCIMO_ITEM:= 0;
-              VALOR_LIQUIDO:= 1;
-              TOTALIZADOR_PARCIAL:= 'T01';
-              CASAS_DECIMAIS_QTDE:= '2';
-              CASAS_DECIMAIS_VAL_UNIT:= '2';
-              NUMERO_NOTA:= '1231';
-              SERIE_NOTA:= '21';
-              CHAVE_NF:= '12345678901234567890123456789012345678901234';
-              TIPO_DOC:= '55';
-            end;
-        end;
         RegistroValido:= True;
       end;
     end;
@@ -606,7 +562,7 @@ begin
         NOME_PAS    := 'fulano de tal';
         NDOC_PAS    := '123.456.789-09';
         SAC         := '0800123456';
-        AGENCIA     := 'Raz√£o Social';
+        AGENCIA     := 'Raz„o Social';
       end;
     end;
 
@@ -649,7 +605,7 @@ begin
         NOME_PAS    := 'fulano de tal';
         NDOC_PAS    := '123.456.789-09';
         SAC         := '0800123456';
-        AGENCIA     := 'Raz√£o Social';
+        AGENCIA     := 'Raz„o Social';
       end;
     end;
 
@@ -685,7 +641,7 @@ begin
                                VL_3EIX_SIMPLES + VL_3EIX_DUPLA + VL_4EIX_SIMPLES +
                                VL_4EIX_DUPLA +  VL_5EIX_DUPLA + VL_6EIX_DUPLA + VL_OUTROS;
         QTDE_VEIC_ISENTO:= 3;
-        LOCALIZACAO:= 'RODOVIA SC-370 KM 195 MUNICIPIO BRA√áO DO NORTE';
+        LOCALIZACAO:= 'RODOVIA SC-370 KM 195 MUNICIPIO BRA«O DO NORTE';
       end;
     end;
 
@@ -742,7 +698,7 @@ begin
       end;
   end;
 
-  // Registro R1 - Identifica√ß√£o do ECF, do Usu√°rio, do PAF-ECF e da Empresa Desenvolvedora e Dados do Arquivo
+  // Registro R1 - IdentificaÁ„o do ECF, do Usu·rio, do PAF-ECF e da Empresa Desenvolvedora e Dados do Arquivo
   with ACBrPAF.PAF_R.RegistroR01.New do
   begin
     NUM_FAB     := uFormPrincipal.NUM_FAB;
@@ -770,8 +726,8 @@ begin
     InclusaoExclusao := False;
     RegistroValido   := True;
 
-    // Registro R02 - Rela√ß√£o de Redu√ß√µes Z
-    //        e R03 - Detalhe da Redu√ß√£o Z
+    // Registro R02 - RelaÁ„o de ReduÁıes Z
+    //        e R03 - Detalhe da ReduÁ„o Z
     for I := 1 to 15 do
     begin
       with RegistroR02.New do
@@ -799,13 +755,13 @@ begin
 
     // Registro R04 - Cupom Fiscal, Nota Fiscal de Venda a Consumidor ou Bilhete de Passagem
     //        e R05 - Detalhe do Cupom Fiscal, Nota Fiscal de Venda a Consumidor ou Bilhete de Passagem
-    //        e R07 - Detalhe do Cupom Fiscal e do Documento N√£o Fiscal - Meio de Pagamento
+    //        e R07 - Detalhe do Cupom Fiscal e do Documento N„o Fiscal - Meio de Pagamento
     for I := 1 to 22 do
     begin
       with RegistroR04.New do
       begin
         NUM_USU     := 1;
-        NUM_CONT    := 900 + I; //Esse daqui √© o CCF!!
+        NUM_CONT    := 900 + I; //Esse daqui È o CCF!!
         COO         := 1000 + I;
         DT_INI      := date;
         SUB_DOCTO   := GerarDados('I', 2);
@@ -826,7 +782,7 @@ begin
           with RegistroR05.New do
           begin
             NUM_ITEM     := J;
-            COD_ITEM     := GerarDados('I', 14); //C√≥digo do produto ou Servi√ßo
+            COD_ITEM     := GerarDados('I', 14); //CÛdigo do produto ou ServiÁo
             DESC_ITEM    := 'DESCRICAO '+ GerarDados('S', 86) + ' FIM';
             QTDE_ITEM    := RandomRange(1, 5);
             UN_MED       := GerarDados('S', 2);
@@ -862,7 +818,7 @@ begin
     end;
 
     // Registro R06 - Demais documentos emitidos pelo ECF
-    //        e R07 - Detalhe do Cupom Fiscal e do Documento N√£o Fiscal - Meio de Pagamento
+    //        e R07 - Detalhe do Cupom Fiscal e do Documento N„o Fiscal - Meio de Pagamento
     for I := 1 to 10 do
     begin
       with RegistroR06.New do
@@ -895,6 +851,230 @@ begin
   if FileExists('RegistrosPAF.txt') then
   begin
     mmArquivoGerado.Lines.LoadFromFile('RegistrosPAF.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
+end;
+
+procedure TForm6.btnRegistrosPAFNFCeClick(Sender: TObject);
+var
+  i, j: Integer;
+  NovoRegistroA2: TRegistroA2;
+  NovoRegistroD2: TRegistroD2;
+  NovoRegistroD3: TRegistroD3;
+  NovoRegistroD4: TRegistroD4;
+  NovoRegistroE2: TRegistroE2;
+  NovoRegistroP2: TRegistroP2;
+  NovoRegistroS2: TRegistroS2;
+  NovoRegistroS3: TRegistroS3;
+  NovoRegistroJ1: TRegistroJ1;
+//  NovoRegistroJ2: TRegistroJ2;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros j· lanÁados s„o apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //U1
+  ACBrPAF.PAF_U.RegistroU1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_U.RegistroU1.IE               := edtIE.Text;
+  ACBrPAF.PAF_U.RegistroU1.IM               := edtIM.Text;
+  ACBrPAF.PAF_U.RegistroU1.RAZAOSOCIAL      := edtRAZAO.Text;
+  ACBrPAF.PAF_U.RegistroU1.InclusaoExclusao := True;
+
+  //A2
+  for I := 1 to 9 do
+  begin
+    NovoRegistroA2 := ACBrPAF.PAF_A.RegistroA2.New;
+
+    NovoRegistroA2.DT             := Date + (i div 4);
+    case ( i mod 4) of
+      1: NovoRegistroA2.MEIO_PGTO := 'Dinheiro';
+      2: NovoRegistroA2.MEIO_PGTO := 'Cartao';
+      3: NovoRegistroA2.MEIO_PGTO := 'Cheque';
+    else
+      NovoRegistroA2.MEIO_PGTO    := 'Pix';
+    end;
+    NovoRegistroA2.TIPO_DOC       := '1'; // 1-NFC-e 2-NF-e 3-OperaÁ„o n„o tribut·vel, identificando o CPF ou CNPJ do cliente.
+    NovoRegistroA2.VL             := (1.5 * i);
+    NovoRegistroA2.CNPJ           := ''; // SÛ È preciso informar para o tipo de documento "3"
+    NovoRegistroA2.NUMDOCUMENTO   := ''; // SÛ È preciso informar para o tipo de documento "3"
+
+    NovoRegistroA2.RegistroValido := True;
+  end;
+
+  //P2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroP2 := ACBrPAF.PAF_P.RegistroP2.New;
+
+    NovoRegistroP2.COD_MERC_SERV  := GerarDados('I',14);
+    NovoRegistroP2.DESC_MERC_SERV := GerarDados('S',50);
+    NovoRegistroP2.UN_MED         := GerarDados('S',2);
+    NovoRegistroP2.IAT            := 'A';
+    NovoRegistroP2.IPPT           := 'T';
+    NovoRegistroP2.ST             := 'FF';
+    NovoRegistroP2.ALIQ           := 0;
+    NovoRegistroP2.VL_UNIT        := GerarDados('I',2);
+
+    NovoRegistroP2.RegistroValido := True;
+  end;
+
+  //E2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroE2 := ACBrPAF.PAF_E.RegistroE2.New;
+
+    NovoRegistroE2.COD_MERC       := GerarDados('I', 14);
+    NovoRegistroE2.CEST           := GerarDados('I', 7);
+    NovoRegistroE2.NCM            := GerarDados('I', 8);
+    NovoRegistroE2.DESC_MERC      := GerarDados('S', 50);
+    NovoRegistroE2.UN_MED         := GerarDados('S', 2);
+    NovoRegistroE2.QTDE_EST       := GerarDados('I', 3);
+    NovoRegistroE2.DATAEMISSAO    := Date;
+    NovoRegistroE2.DATAESTOQUE    := Date;
+
+    NovoRegistroE2.RegistroValido := True;
+  end;
+
+  //D2 - DAV
+  for I := 1 to 5 do
+  begin
+    NovoRegistroD2 := ACBrPAF.PAF_D.RegistroD2.New;
+
+    NovoRegistroD2.NUM_DAV      := IntToStr(I * QualquerNumero);
+    NovoRegistroD2.DT_DAV       := Date - QualquerNumero;
+    NovoRegistroD2.TIT_DAV      := 'Pedido';
+    NovoRegistroD2.VLT_DAV      := GerarDados('I', 2);
+    NovoRegistroD2.NOME_CLIENTE := 'NOME CLIENTE';
+    NovoRegistroD2.CPF_CNPJ     := '12345678921';
+
+    NovoRegistroD2.RegistroValido := True; // diz quando o registro foi modificado no banco
+
+    //D3
+    for j := 1 to 2 do
+    begin
+      NovoRegistroD3 := NovoRegistroD2.RegistroD3.New;
+
+      NovoRegistroD3.DT_INCLUSAO   := DATE;
+      NovoRegistroD3.NUM_ITEM      := i;
+      NovoRegistroD3.COD_ITEM      := '10';
+      NovoRegistroD3.DESC_ITEM     := 'descricao do item';
+      NovoRegistroD3.QTDE_ITEM     := 10.00;
+      NovoRegistroD3.UNI_ITEM      := 'UN';
+      NovoRegistroD3.VL_UNIT       := 1.00;
+      NovoRegistroD3.VL_DESCTO     := 0.00;
+      NovoRegistroD3.VL_ACRES      := 0.00;
+      NovoRegistroD3.VL_TOTAL      := 10.00;
+      NovoRegistroD3.SIT_TRIB      := 'T'; // T, S, I, N, F
+      NovoRegistroD3.ALIQ          := 7.00; // SOMENTE QUANDO T E S
+      NovoRegistroD3.IND_CANC      := 'N';
+      NovoRegistroD3.DEC_QTDE_ITEM := 2;
+      NovoRegistroD3.DEC_VL_UNIT   := 2;
+
+      NovoRegistroD3.RegistroValido := True;
+    end;
+
+    //D4 - Log alteraÁıes DAV
+    for j := 1 to 2 do
+    begin
+      NovoRegistroD4 := NovoRegistroD2.RegistroD4.New;
+
+      NovoRegistroD4.NUM_DAV       := IntToStr(I * QualquerNumero);
+      NovoRegistroD4.DT_ALT        := Now;
+      NovoRegistroD4.COD_ITEM      := '10';
+      NovoRegistroD4.DESC_ITEM     := 'descricao do item';
+      NovoRegistroD4.QTDE_ITEM     := 10.00;
+      NovoRegistroD4.UNI_ITEM      := 'UN';
+      NovoRegistroD4.VL_UNIT       := 1.00;
+      NovoRegistroD4.VL_DESCTO     := 0.00;
+      NovoRegistroD4.VL_ACRES      := 0.00;
+      NovoRegistroD4.VL_TOTAL      := 10.00;
+      NovoRegistroD4.SIT_TRIB      := 'T'; // T, S, I, N, F
+      NovoRegistroD4.ALIQ          := 7.00; // SOMENTE QUANDO T E S
+      NovoRegistroD4.IND_CANC      := 'N';
+      NovoRegistroD4.DEC_QTDE_ITEM := 2;
+      NovoRegistroD4.DEC_VL_UNIT   := 2;
+      NovoRegistroD4.TIP_ALT       := 'I';
+
+      NovoRegistroD4.RegistroValido := True;
+    end;
+
+  end;
+
+  //S2
+  for I := 1 to 5 do
+  begin
+    NovoRegistroS2 := ACBrPAF.PAF_S.RegistroS2.New;
+
+    NovoRegistroS2.CNPJ       := ACBrPAF.PAF_U.RegistroU1.CNPJ;
+    NovoRegistroS2.DT_ABER    := Now;
+    NovoRegistroS2.NUM_MESA   := IntToStr(i);
+    NovoRegistroS2.VL_TOT     := 12.5 * i;
+    //"N∫ do Conferencia de Mesa" abaixo "COO_CM" - Deve ser informado apenas quando houver registro destes dados.
+//    NovoRegistroS2.COO_CM     := IntToStr(i);
+
+    //S3
+    for j := 1 to 2 do
+    begin
+      NovoRegistroS3 := NovoRegistroS2.RegistroS3.New;
+
+      NovoRegistroS3.COD_ITEM  := IntToStr(j);
+      NovoRegistroS3.DESC_ITEM := 'descricao do item';
+      NovoRegistroS3.QTDE_ITEM := 1;
+      NovoRegistroS3.UNI_ITEM  := 'UN';
+      NovoRegistroS3.VL_UNIT   := 2;
+    end;
+  end;
+
+  //J1
+  for I := 1 to 3 do
+  begin
+    NovoRegistroJ1 := ACBrPAF.PAF_J.RegistroJ1.New;
+
+    NovoRegistroJ1.CNPJ                  := ACBrPAF.PAF_U.RegistroU1.CNPJ;
+    NovoRegistroJ1.DATA_EMISSAO          := Now;
+    NovoRegistroJ1.SUBTOTAL              := 30;
+    NovoRegistroJ1.DESC_SUBTOTAL         := 0;
+    NovoRegistroJ1.INDICADOR_DESC        := 'V';
+    NovoRegistroJ1.ACRES_SUBTOTAL        := 0;
+    NovoRegistroJ1.INDICADOR_ACRES       := 'V';
+    NovoRegistroJ1.VALOR_LIQUIDO         := 30;
+    NovoRegistroJ1.TIPOEMISSAO           := '1';
+    NovoRegistroJ1.CHAVE_NF              := GerarDados('S', 44);
+    NovoRegistroJ1.NUMERO_NOTA           := GerarDados('S', 10);
+    NovoRegistroJ1.SERIE_NOTA            := '001';
+    NovoRegistroJ1.CPFCNPJ_CLIENTE       := GerarDados('S', 14);
+
+    //J2
+    //Registros J2 s„o gerados apenas para NFC-e que forem emitidas em ContingÍncia. N„o È o caso desse exemplo.
+//    for j := 1 to 2 do
+//    begin
+//      NovoRegistroJ2 := NovoRegistroJ1.RegistroJ2.New;
+//
+//      NovoRegistroJ2.DATA_EMISSAO            := Date;
+//      NovoRegistroJ2.NUMERO_ITEM             := IntToStr(j);
+//      NovoRegistroJ2.COD_ITEM                := IntToStr(j);
+//      NovoRegistroJ2.DESC_ITEM               := 'descricao do item';
+//      NovoRegistroJ2.QTDE_ITEM               := 1;
+//      NovoRegistroJ2.UNI_ITEM                := 'UN';
+//      NovoRegistroJ2.VL_UNIT                 := 2;
+//      NovoRegistroJ2.DESCONTO_ITEM           := 2;
+//      NovoRegistroJ2.ACRESCIMO_ITEM          := 2;
+//      NovoRegistroJ2.VALOR_LIQUIDO           := 2;
+//      NovoRegistroJ2.TOTALIZADOR_PARCIAL     := 2;
+//      NovoRegistroJ2.CASAS_DECIMAIS_QTDE     := 2;
+//      NovoRegistroJ2.CASAS_DECIMAIS_VAL_UNIT := 2;
+//      NovoRegistroJ2.NUMERO_NOTA             := 2;
+//      NovoRegistroJ2.SERIE_NOTA              := 2;
+//      NovoRegistroJ2.CHAVE_NF                := GerarDados('I', 44);;
+//    end;
+  end;
+
+
+  ACBrPAF.SaveToFile_RegistrosPAF('RegistrosPAFNFCe.txt');
+
+  if FileExists('RegistrosPAFNFCe.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCe.txt');
     pc1.ActivePageIndex:= 1;
   end;
 end;

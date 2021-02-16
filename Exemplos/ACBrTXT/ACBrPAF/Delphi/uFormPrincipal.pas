@@ -1039,10 +1039,10 @@ begin
     NovoRegistroJ1.INDICADOR_ACRES       := 'V';
     NovoRegistroJ1.VALOR_LIQUIDO         := 30;
     NovoRegistroJ1.TIPOEMISSAO           := '1';
-    NovoRegistroJ1.CHAVE_NF              := GerarDados('I', 44);
-    NovoRegistroJ1.NUMERO_NOTA           := GerarDados('I', 10);
+    NovoRegistroJ1.CHAVE_NF              := GerarDados('S', 44);
+    NovoRegistroJ1.NUMERO_NOTA           := GerarDados('S', 10);
     NovoRegistroJ1.SERIE_NOTA            := '001';
-    NovoRegistroJ1.CPFCNPJ_CLIENTE       := GerarDados('I', 14);
+    NovoRegistroJ1.CPFCNPJ_CLIENTE       := GerarDados('S', 14);
 
     //J2
     //Registros J2 são gerados apenas para NFC-e que forem emitidas em Contingência. Não é o caso desse exemplo.

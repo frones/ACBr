@@ -3053,7 +3053,7 @@ begin
   else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
          teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
          teCanPedProrrog1, teCanPedProrrog2, teComprEntregaNFe,
-         teCancComprEntregaNFe, teAtorInteressadoNFe]) then
+         teCancComprEntregaNFe]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';

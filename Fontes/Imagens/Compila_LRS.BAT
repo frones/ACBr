@@ -186,6 +186,16 @@ echo "* Arquivo    ACBrNFSe.lrs     gerado    *"
 echo "****************************************"
 echo.
 
+:PagFor
+%1\tools\lazres.exe ACBrPagFor.lrs TACBrPagFor.png 
+move ACBrPagFor.lrs ..\ACBrPagFor\
+
+echo.
+echo "****************************************"
+echo "* Arquivo    ACBrPagFor.lrs     gerado    *"
+echo "****************************************"
+echo.
+
 :CTe
 %1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.png 
 move ACBrCTe.lrs ..\ACBrDFe\ACBrCTe

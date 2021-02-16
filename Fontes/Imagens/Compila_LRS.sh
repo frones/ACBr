@@ -192,6 +192,17 @@ echo "* Arquivo    ACBrNFSe.lrs     gerado    *"
 echo "****************************************"
 echo
 
+:PagFor
+$LAZRES ACBrPagFor.lrs TACBrPagFor.png 
+mv ACBrPagFor.lrs ../ACBrPagFor/
+
+echo
+echo "****************************************"
+echo "* Arquivo    ACBrPagFor.lrs     gerado    *"
+echo "****************************************"
+echo
+
+
 :CTe
 $LAZRES ACBrCTe.lrs TACBrCTe.png 
 mv ACBrCTe.lrs ../ACBrDFe/ACBrCTe

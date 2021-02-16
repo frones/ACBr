@@ -1,41 +1,43 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 unit Frm_ACBrPagFor_Exemplo;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ComCtrls, IniFiles, ExtCtrls, ACBrPagFor;
 
 type
@@ -126,7 +128,7 @@ uses
 const
   SELDIRHELP = 1000;
 
-{$R *.dfm}
+{$R *.lfm}
 
 procedure TfrmACBrPagFor_Exemplo.GravarConfiguracao;
 var
@@ -274,7 +276,7 @@ procedure TfrmACBrPagFor_Exemplo.btnSalvarConfigClick(Sender: TObject);
 begin
   GravarConfiguracao;
   ConfiguraComponente;
-  LogMsg.Lines.Add('Novos de dados de ConfiguraÁ„o Salvos.');
+  LogMsg.Lines.Add('Novos de dados de Configura√ß√£o Salvos.');
   LogMsg.Lines.Add('Componente Configurado com os novos dados.');
   LogMsg.Lines.Add(' ');
 end;
@@ -394,7 +396,7 @@ begin
         // Antes de Executar o Comando GerarLote deve-se informar os dados dos
         // Registro 1,
         // Segmentos (SegmentoA, SegmentoB, ... dependendo do que vai ser pago)
-        //           (consultar o manual da FEBRABAN 240 PosiÁıes             )
+        //           (consultar o manual da FEBRABAN 240 Posi√ß√µes             )
         // e Registro 5
         ////////////////////////////////////////////////////////////////////////
 
@@ -430,8 +432,8 @@ begin
           TipoMovimento:= tmInclusao;
           with Favorecido do
           begin
-            Camara := 700; // ì018î para ìTEDî (Valor igual ou superior a R$ 0,01);  ì700î para ìDOC EletrÙnicoî (Valor inferior a R$ 5.000,00); ou
-            Banco := pagItau;                  //  ì888î para ìTEDî (Qualquer valor) quando for necess·rio o envio de TED utilizando o cÛdigo ISPB.
+            Camara := 700; // ‚Äú018‚Äù para ‚ÄúTED‚Äù (Valor igual ou superior a R$ 0,01);  ‚Äú700‚Äù para ‚ÄúDOC Eletr√¥nico‚Äù (Valor inferior a R$ 5.000,00); ou
+            Banco := pagItau;                  //  ‚Äú888‚Äù para ‚ÄúTED‚Äù (Qualquer valor) quando for necess√°rio o envio de TED utilizando o c√≥digo ISPB.
             ContaCorrente.Agencia.Codigo  := 0643;
             ContaCorrente.Agencia.DV      := '';
             ContaCorrente.Conta.TipoConta := 1;
@@ -470,11 +472,11 @@ begin
 
             with Endereco do
             begin
-              Logradouro  := 'ROD. JO√O ALFREDO ROSA';
+              Logradouro  := 'ROD. JO√ÉO ALFREDO ROSA';
               Numero      := 1;
               Complemento := '';
               Bairro      := 'GUARDA MARGEM ESQUERDA';
-              Cidade      := 'TUBAR√O';
+              Cidade      := 'TUBAR√ÉO';
               CEP         := 88702704;
               Estado      := 'SC';
             end;
@@ -534,7 +536,7 @@ begin
         begin
           CodMovimento := imInclusaoRegistroDetalheLiberado;
           CodigoBarras := '23794686500000030007508091140600004204891150';
-          NomeCedente := 'CASAS DAS BETERIAS PE«AS E SERVI«OS PARA AUTOMOVEIS LTDA EPP';
+          NomeCedente := 'CASAS DAS BETERIAS PE√áAS E SERVI√áOS PARA AUTOMOVEIS LTDA EPP';
           DataVencimento := StrToDate('24/07/2016');
           ValorTitulo := 30.00;
           Desconto := 0.0;
@@ -647,8 +649,8 @@ begin
           TipoMovimento:= tmInclusao;
           with Favorecido do
           begin
-            Camara := 018; // ì018î para ìTEDî (Valor igual ou superior a R$ 0,01);  ì700î para ìDOC EletrÙnicoî (Valor inferior a R$ 5.000,00); ou
-            Banco := pagBancoDoBrasil;                  //  ì888î para ìTEDî (Qualquer valor) quando for necess·rio o envio de TED utilizando o cÛdigo ISPB.
+            Camara := 018; // ‚Äú018‚Äù para ‚ÄúTED‚Äù (Valor igual ou superior a R$ 0,01);  ‚Äú700‚Äù para ‚ÄúDOC Eletr√¥nico‚Äù (Valor inferior a R$ 5.000,00); ou
+            Banco := pagBancoDoBrasil;                  //  ‚Äú888‚Äù para ‚ÄúTED‚Äù (Qualquer valor) quando for necess√°rio o envio de TED utilizando o c√≥digo ISPB.
             ContaCorrente.Agencia.Codigo  := 0201;
             ContaCorrente.Agencia.DV      := '1';
             ContaCorrente.Conta.TipoConta := 1;
@@ -672,7 +674,7 @@ begin
           Informacao2 := '';
           CodigoDOC   := '';
           CodigoTED   := '';
-          CodigoComp  := ''; //ìCCî quando for Conta Corrente ou ìPPî quando for Conta PoupanÁa
+          CodigoComp  := ''; //‚ÄúCC‚Äù quando for Conta Corrente ou ‚ÄúPP‚Äù quando for Conta Poupan√ßa
           Aviso       := 0;
 
           TotalLote := TotalLote + Credito.ValorPagamento;
@@ -687,11 +689,11 @@ begin
 
             with Endereco do
             begin
-              Logradouro  := 'ROD. JO√O ALFREDO ROSA';
+              Logradouro  := 'ROD. JO√ÉO ALFREDO ROSA';
               Numero      := 1;
               Complemento := '';
               Bairro      := 'GUARDA MARGEM ESQUERDA';
-              Cidade      := 'TUBAR√O';
+              Cidade      := 'TUBAR√ÉO';
               CEP         := 88702704;
               Estado      := 'SC';
             end;

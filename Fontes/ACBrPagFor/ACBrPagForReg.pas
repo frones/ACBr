@@ -79,7 +79,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBr', [TACBrPagFor]);
+  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
 
 //  RegisterPropertyEditor(TypeInfo(TACBrPagForAboutInfo), nil, 'AboutACBrPagFor',
 //     TACBrAboutDialogProperty);
@@ -142,7 +142,7 @@ end;
 
 initialization
 {$IFDEF FPC}
-   {$i ACBrPagFor.lrs}
+   {$I ACBrPagFor.lrs}
 {$ENDIF}
 
 end.

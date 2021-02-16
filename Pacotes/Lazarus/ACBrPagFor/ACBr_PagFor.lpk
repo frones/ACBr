@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_PagFor"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Italo Giurizzato Junior"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrPagFor"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrPagFor\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Description Value="ACBr - PagFor - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Version Major="1"/>
+    <Files Count="9">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPagForReg"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagFor.pas"/>
+        <UnitName Value="ACBrPagFor"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivo.pas"/>
+        <UnitName Value="ACBrPagForArquivo"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivoClass.pas"/>
+        <UnitName Value="ACBrPagForArquivoClass"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForClass.pas"/>
+        <UnitName Value="ACBrPagForClass"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForConfiguracoes.pas"/>
+        <UnitName Value="ACBrPagForConfiguracoes"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForConversao.pas"/>
+        <UnitName Value="ACBrPagForConversao"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForGravarTxt.pas"/>
+        <UnitName Value="ACBrPagForGravarTxt"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForLerTxt.pas"/>
+        <UnitName Value="ACBrPagForLerTxt"/>
+      </Item9>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

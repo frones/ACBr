@@ -481,10 +481,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     TabOrder = 7
     OnClick = ConvenioClick
   end
-  object XPManifest1: TXPManifest
-    Left = 352
-    Top = 200
-  end
   object ACBrPagFor1: TACBrPagFor
     Configuracoes.Arquivos.PathSalvar = 'C:\Program Files (x86)\Embarcadero\Studio\20.0\bin\'
     Left = 352

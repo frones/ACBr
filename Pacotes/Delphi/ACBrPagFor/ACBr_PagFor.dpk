@@ -1,0 +1,48 @@
+package ACBr_PagFor;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$DEFINITIONINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Pagamento a Fornecedor - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  rtl,
+  ACBr_Comum,
+  ACBr_synapse;
+
+contains
+  ACBrPagFor in '..\..\..\Fontes\ACBrPagFor\ACBrPagFor.pas',
+  ACBrPagForArquivo in '..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivo.pas',
+  ACBrPagForArquivoClass in '..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivoClass.pas',
+  ACBrPagForConfiguracoes in '..\..\..\Fontes\ACBrPagFor\ACBrPagForConfiguracoes.pas',
+  ACBrPagForConversao in '..\..\..\Fontes\ACBrPagFor\ACBrPagForConversao.pas',
+  ACBrPagForClass in '..\..\..\Fontes\ACBrPagFor\ACBrPagForClass.pas',
+  ACBrPagForLerTxt in '..\..\..\Fontes\ACBrPagFor\ACBrPagForLerTxt.pas',
+  ACBrPagForGravarTxt in '..\..\..\Fontes\ACBrPagFor\ACBrPagForGravarTxt.pas';
+
+end.

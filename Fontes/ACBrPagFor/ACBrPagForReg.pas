@@ -37,41 +37,24 @@ unit ACBrPagForReg;
 interface
 
 uses
-  SysUtils, Classes,
-  {$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
+  SysUtils, Classes, 
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors
   {$ELSE}
-    {$IFNDEF COMPILER6_UP}
-       DsgnIntf
-    {$ELSE}
-       DesignIntf,
-       DesignEditors
-    {$ENDIF}
+     {$IFNDEF COMPILER6_UP}
+        DsgnIntf
+     {$ELSE}
+        DesignIntf,
+        DesignEditors
+     {$ENDIF}
   {$ENDIF} ;
-
-type
-  { Editor de Proriedades de Componente para mostrar o AboutACBr }
-  TACBrAboutDialogProperty = class(TPropertyEditor)
-  public
-    procedure Edit; override;
-    function GetAttributes: TPropertyAttributes; override;
-    function GetValue: String; override;
-  end;
-
-  { Editor de Proriedades de Componente para chamar OpenDialog }
-  TACBrPagForDirProperty = class(TStringProperty)
-  public
-    procedure Edit; override;
-    function GetAttributes: TPropertyAttributes; override;
-  end;
 
 procedure Register;
 
 implementation
 
 uses
- ACBrPagFor, ACBrPagForConfiguracoes;
+  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
 
 {$IFNDEF FPC}
    {$R ACBrPagFor.dcr}
@@ -81,9 +64,6 @@ procedure Register;
 begin
   RegisterComponents('ACBrPagFor', [TACBrPagFor]);
 
-//  RegisterPropertyEditor(TypeInfo(TACBrPagForAboutInfo), nil, 'AboutACBrPagFor',
-//     TACBrAboutDialogProperty);
-
   RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
     TClassProperty);
 
@@ -91,58 +71,18 @@ begin
     TClassProperty);
 
   RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrPagForDirProperty);
+     TACBrDirProperty);
 
   RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
     TClassProperty);
 
   RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrPagForDirProperty);
-
+     TACBrDirProperty);
 end;
 
-{ TACBrAboutDialogProperty }
-
-procedure TACBrAboutDialogProperty.Edit;
-begin
-//  ACBrAboutDialog ;
-end;
-
-function TACBrAboutDialogProperty.GetAttributes: TPropertyAttributes;
-begin
-  Result := [paDialog, paReadOnly];
-end;
-
-function TACBrAboutDialogProperty.GetValue: String;
-begin
-//  Result := 'Versão: ' + ACBRPagFor_VERSAO;
-end;
-
-{ TACBrPagForeDirProperty }
-
-procedure TACBrPagForDirProperty.Edit;
-Var
-{$IFNDEF VisualCLX} Dir: String; {$ELSE} Dir: WideString; {$ENDIF}
-begin
-  {$IFNDEF VisualCLX}
-  Dir := GetValue;
-  if SelectDirectory(Dir, [], 0) then
-     SetValue(Dir);
-  {$ELSE}
-  Dir := '';
-  if SelectDirectory('Selecione o Diretório', '', Dir) then
-     SetValue(Dir);
-  {$ENDIF}
-end;
-
-function TACBrPagForDirProperty.GetAttributes: TPropertyAttributes;
-begin
-  Result := [paDialog];
-end;
-
+{$ifdef FPC}
 initialization
-{$IFDEF FPC}
    {$I ACBrPagFor.lrs}
-{$ENDIF}
+{$endif}
 
 end.

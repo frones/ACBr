@@ -1015,9 +1015,14 @@ begin
           PedeStatus
         else
         begin
-          GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
-          Device.EnviaString( ComandoEnviado ) ;
-          fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+          if (EscECFComando.fsCMD <> 21) then  //Não reenviar comando de redução Z, para evitar bloqueio indevido
+          begin
+            GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
+            Device.EnviaString( ComandoEnviado ) ;
+            fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+          end
+          else
+            PedeStatus;
         end;
       end;
     end;

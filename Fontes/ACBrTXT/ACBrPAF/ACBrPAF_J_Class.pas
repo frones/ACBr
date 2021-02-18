@@ -159,7 +159,7 @@ begin
               RFill(TIPOEMISSAO, 1) +
               LFill(CHAVE_NF, 44) +
               LFill(NUMERO_NOTA, 10) +
-              RFill(SERIE_NOTA, 3) +
+              RFill(SERIE_NOTA, 3, IfThen(RegistroValido, ' ', '?')) +
               LFill(CPFCNPJ_CLIENTE, 14)
               );
         end;
@@ -239,7 +239,7 @@ begin
               RFill(CASAS_DECIMAIS_QTDE,1) +
               RFill(CASAS_DECIMAIS_VAL_UNIT,1) +
               LFill(NUMERO_NOTA,10) +
-              RFill(SERIE_NOTA,3) +
+              RFill(SERIE_NOTA,3, IfThen(RegistroValido, ' ', '?')) +
               LFill(CHAVE_NF,44)
               );
         end;

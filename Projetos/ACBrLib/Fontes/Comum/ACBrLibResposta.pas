@@ -512,7 +512,7 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          JSONRoot.Add(Propertie.Name, Trim(AValue.AsString));
+          JSONRoot.Add(Propertie.Name, StringToJSONString(Trim(AValue.AsString), False));
         tkFloat:
           begin
             FValue := AValue.AsExtended;

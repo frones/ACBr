@@ -175,27 +175,26 @@ implementation
 uses
   variants, dateutils,
   pcnConversaoNFe, ACBrValidador, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts, ACBrUtil;
+  ACBrDFeUtil, pcnConsts, ACBrUtil,
+  ACBrNFe;
 
 constructor TNFeXmlWriter.Create(AOwner: TNFe);
 begin
   inherited Create;
-
-  TNFeXmlWriterOptions(Opcoes).AjustarTagNro := True;
-  TNFeXmlWriterOptions(Opcoes).GerarTagIPIparaNaoTributado := True;
-  TNFeXmlWriterOptions(Opcoes).NormatizarMunicipios := False;
-  TNFeXmlWriterOptions(Opcoes).PathArquivoMunicipios := '';
-  TNFeXmlWriterOptions(Opcoes).GerarTagAssinatura := taSomenteSeAssinada;
-  TNFeXmlWriterOptions(Opcoes).ValidarInscricoes := False;
-  TNFeXmlWriterOptions(Opcoes).ValidarListaServicos := False;
-  TNFeXmlWriterOptions(Opcoes).CamposFatObrigatorios := True;
-  TNFeXmlWriterOptions(Opcoes).FForcarGerarTagRejeicao938 := fgtNunca;
+  Opcoes.AjustarTagNro := True;
+  Opcoes.GerarTagIPIparaNaoTributado := True;
+  Opcoes.NormatizarMunicipios := False;
+  Opcoes.PathArquivoMunicipios := '';
+  Opcoes.GerarTagAssinatura := taSomenteSeAssinada;
+  Opcoes.ValidarInscricoes := False;
+  Opcoes.ValidarListaServicos := False;
+  Opcoes.CamposFatObrigatorios := True;
+  Opcoes.FForcarGerarTagRejeicao938 := fgtNunca;
   FNFe := AOwner;
 end;
 
 destructor TNFeXmlWriter.Destroy;
 begin
-  Opcoes.Free;
   inherited Destroy;
 end;
 
@@ -264,11 +263,11 @@ begin
   NFe.Ide.cNF := ExtrairCodigoChaveAcesso(NFe.infNFe.ID);
 
   FDocument.Clear();
-  nfeNode := FDocument.CreateElement('NFe', 'http://www.portalfiscal.inf.br/NFe');
+  nfeNode := FDocument.CreateElement('NFe', ACBRNFE_NAMESPACE);
 
   if NFe.procNFe.nProt <> '' then
   begin
-    xmlNode := FDocument.CreateElement('nfeProc', 'http://www.portalfiscal.inf.br/NFe');
+    xmlNode := FDocument.CreateElement('nfeProc', ACBRNFE_NAMESPACE);
     xmlNode.SetAttribute('versao', FloatToString(NFe.infNFe.Versao, '.', '#0.00'));
     xmlNode.AppendChild(nfeNode);
     FDocument.Root := xmlNode;
@@ -292,24 +291,25 @@ begin
                                   85, 1, NFe.infNFeSupl.urlChave, DSC_URLCHAVE, False));
   end;
 
-  if Opcoes.GerarTagAssinatura <> taNunca then
-  begin
-    Gerar := True;
-    if Opcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((NFe.signature.DigestValue <> '') and
-                (NFe.signature.SignatureValue <> '') and
-                (NFe.signature.X509Certificate <> ''));
+  Gerar := (Opcoes.GerarTagAssinatura = taSempre) or
+    (
+      (Opcoes.GerarTagAssinatura = taSomenteSeAssinada) and
+        (NFe.signature.DigestValue <> '') and
+        (NFe.signature.SignatureValue <> '') and
+        (NFe.signature.X509Certificate <> '')
+    ) or
+    (
+      (Opcoes.GerarTagAssinatura = taSomenteParaNaoAssinada) and
+        (NFe.signature.DigestValue = '') and
+        (NFe.signature.SignatureValue = '') and
+        (NFe.signature.X509Certificate = '')
+    );
 
-    if Opcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-       Gerar := ((NFe.signature.DigestValue = '') and
-                 (NFe.signature.SignatureValue = '') and
-                 (NFe.signature.X509Certificate = ''));
-    if Gerar then
-    begin
-      FNFe.signature.URI := '#NFe' + OnlyNumber(NFe.infNFe.ID);
-      xmlNode := GerarSignature(FNFe.signature);
-      nfeNode.AppendChild(xmlNode);
-    end;
+  if Gerar then
+  begin
+    FNFe.signature.URI := '#NFe' + OnlyNumber(NFe.infNFe.ID);
+    xmlNode := GerarSignature(FNFe.signature);
+    nfeNode.AppendChild(xmlNode);
   end;
 
   if NFe.procNFe.nProt <> '' then
@@ -1315,7 +1315,7 @@ begin
       tpOPToStr(NFe.Det[i].Prod.veicProd.tpOP), DSC_TPOP));
     Result.AppendChild(AddNode(tcStr, 'J03', 'chassi  ', 17, 17, 1,
       NFe.Det[i].Prod.veicProd.chassi, DSC_CHASSI));
-    Result.AppendChild(AddNode(tcStr, 'J04', 'cCor    ', 04, 04, 1,
+    Result.AppendChild(AddNode(tcStr, 'J04', 'cCor    ', 01, 04, 1,
       NFe.Det[i].Prod.veicProd.cCor, DSC_CCOR));
     Result.AppendChild(AddNode(tcStr, 'J05', 'xCor    ', 01, 40, 1,
       NFe.Det[i].Prod.veicProd.xCor, DSC_XCOR));

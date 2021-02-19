@@ -1052,7 +1052,7 @@ begin
     Gerador.wGrupo('veicProd', 'J01');
     Gerador.wCampo(tcStr, 'J02', 'tpOp    ', 01, 01, 1, tpOPToStr(nfe.Det[i].Prod.veicProd.tpOP), DSC_TPOP);
     Gerador.wCampo(tcStr, 'J03', 'chassi  ', 17, 17, 1, nfe.Det[i].Prod.veicProd.chassi, DSC_CHASSI);
-    Gerador.wCampo(tcStr, 'J04', 'cCor    ', 04, 04, 1, nfe.Det[i].Prod.veicProd.cCor, DSC_CCOR);
+    Gerador.wCampo(tcStr, 'J04', 'cCor    ', 01, 04, 1, nfe.Det[i].Prod.veicProd.cCor, DSC_CCOR);
     Gerador.wCampo(tcStr, 'J05', 'xCor    ', 01, 40, 1, nfe.Det[i].Prod.veicProd.xCor, DSC_XCOR);
     Gerador.wCampo(tcStr, 'J06', 'pot     ', 01, 04, 1, nfe.Det[i].Prod.veicProd.pot, DSC_POT);
     if NFe.infNFe.Versao >= 2 then

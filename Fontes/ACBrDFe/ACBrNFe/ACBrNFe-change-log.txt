@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2021
+-- pcnNFeW/ACBrNFeXMLWriter --
+[*] Ajuste para o tamanho mínimo da tag "veicProd.cCor".
+  Por: BigWings
+
+-- ACBrNFeXMLWriter --
+[*] Ajuste do namespace e melhorias de código.
+  Por: BigWings
+
 16/02/2021
 -- ACBrNFeWebServices --
 [*] Em TNFeEnvEvento.DefinirURL foi removido o enumerador teAtoInteressadoNFe da lista,

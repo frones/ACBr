@@ -522,14 +522,15 @@ begin
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'Reg20Item', '', i + 1) <> '') or
-            (leitor.rExtrai(Nivel, 'NfseSubstituida', '', i + 1) <> '') or
+            (leitor.rExtrai(Nivel, 'NfseSubstituidora', '', i + 1) <> '') or
+//            (leitor.rExtrai(Nivel, 'NfseSubstituida', '', i + 1) <> '') or
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proAgili, proAgiliv2, proDataSmart]) and (Leitor.rExtrai(Nivel, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano, proIPM]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proNFSeBrasil, proISSJoinville]) and (Leitor.rExtrai(Nivel, 'nota', '', i + 1) <> '')) or
             ((Provedor in [proISSJoinville]) and (Leitor.rExtrai(Nivel, 'nota_recebida', '', i + 1) <> '')) or
-            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote  
-            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS 
+            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote
+            ((Provedor in [proISSDSF, proSiat]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS
             ((Provedor in [proInfisc, proInfiscv11]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) or
             ((Provedor in [proGoverna]) and (Leitor.rExtrai(Nivel, 'InfRetConsultaNotCan', '', i + 1) <> '')) or
             ((Provedor in [proCTA, proISSDSF]) and (Leitor.rExtrai(Nivel, 'Nota', '', i + 1) <> '')) or
@@ -547,6 +548,9 @@ begin
           NFSeLida.Provedor       := Provedor;
           NFSeLida.TabServicosExt := TabServicosExt;
           NFSeLida.PathIniCidades := PathIniCidades;
+
+          if Pos('CompNfse', Leitor.Grupo) > 0 then
+            Leitor.rExtrai(Nivel+1, 'CompNfse', '', 1);
 
           NFSeLida.Leitor.Arquivo := Leitor.Grupo;
 

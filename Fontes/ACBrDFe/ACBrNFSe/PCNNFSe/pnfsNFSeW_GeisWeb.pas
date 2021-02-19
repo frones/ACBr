@@ -89,7 +89,7 @@ begin
   Gerador.Prefixo := Prefixo3;
   Gerador.wCampo(tcStr, '', 'CnpjCpf', 01, 14, 1, NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj, '');
   Gerador.wCampo(tcStr, '', 'InscricaoMunicipal', 01, 16, 1, NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal, '');
-  Gerador.wCampo(tcInt, '', 'Regime', 01, 01, 1, 1, '');  {revisar - ta chumbado simples nacional}
+  Gerador.wCampo(tcInt, '', 'Regime', 01, 01, 1, 6, '');  {revisar - ta chumbado a opção auto-alocado que consta no manual (6)}
   Gerador.wGrupo('/IdentificacaoPrestador');
   Gerador.wGrupo('/PrestadorServico');
 end;
@@ -145,11 +145,11 @@ procedure TNFSeW_GeisWeb.GerarXML_GeisWeb;
 begin
   Gerador.Prefixo := Prefixo4;
 
-  Gerador.wGrupo('Rps');
+  Gerador.wGrupo('Rps ' + 'xmlns="http://www.geisweb.net.br/xsd/envio_lote_rps.xsd"');
   Gerador.wGrupo('IdentificacaoRps');
   Gerador.wCampo(tcInt, '', 'NumeroRps', 01, 08, 1, NFSe.IdentificacaoRps.Numero, '');
   Gerador.wGrupo('/IdentificacaoRps');
-  Gerador.wCampo(tcDat, '', 'DataEmissao', 01, 10, 1, NFSe.DataEmissao, '');
+  Gerador.wCampo(tcStr, '', 'DataEmissao', 01, 10, 1, formatdatetime('dd/mm/yyyy', NFSe.DataEmissao), '');
 
   GerarListaServicos;
   GerarPrestador;

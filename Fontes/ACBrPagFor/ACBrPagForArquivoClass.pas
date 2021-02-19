@@ -43,8 +43,8 @@ uses
 type
   TACBrPagForArquivoClass = class( TComponent )
    private
-     procedure SetPagFor(const Value: TComponent);
-     procedure ErroAbstract( NomeProcedure : String );
+     procedure SetACBrPagFor(const Value: TComponent);
+     procedure ErroAbstract(const NomeProcedure : String );
      function GetPathArquivos: String;
    protected
      FACBrPagFor : TComponent;
@@ -54,7 +54,7 @@ type
      constructor Create(AOwner: TComponent); override;
      destructor Destroy; override;
    published
-     property ACBrPagFor: TComponent read FACBrPagFor write SetPagFor;
+     property ACBrPagFor: TComponent read FACBrPagFor write SetACBrPagFor;
   end;
 
 implementation
@@ -77,7 +77,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrPagForArquivoClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrPagForArquivoClass.ErroAbstract(const NomeProcedure: String);
 begin
   raise EACBrPagForException.Create( NomeProcedure );
 end;
@@ -106,7 +106,7 @@ begin
     FACBrPagFor := nil;
 end;
 
-procedure TACBrPagForArquivoClass.SetPagFor(const Value: TComponent);
+procedure TACBrPagForArquivoClass.SetACBrPagFor(const Value: TComponent);
 var
   OldValue: TACBrPagFor;
 begin

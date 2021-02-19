@@ -62,8 +62,8 @@ type
     destructor Destroy; override;
 
     procedure Limpar;
-    function GravarTXT(ANomeArquivo: String = ''): Boolean;
-    function LerTXT(AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
+    function GravarTXT(const ANomeArquivo: String = ''): Boolean;
+    function LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
 
     property Arquivo: TACBrPagForArquivoClass read FArquivo write SetArquivo;
     property Arquivos: TArquivos read FArquivos write FArquivos;
@@ -97,7 +97,7 @@ begin
   inherited;
 end;
 
-function TACBrPagFor.GravarTXT(ANomeArquivo: String = ''): Boolean;
+function TACBrPagFor.GravarTXT(const ANomeArquivo: String = ''): Boolean;
 begin
   if Self.Arquivos.Count <=0 then
     raise EACBrPagForException.Create('ERRO: Nenhum arquivo adicionado.');
@@ -105,7 +105,7 @@ begin
   Result := Self.Arquivos.GerarPagFor(ANomeArquivo);
 end;
 
-function TACBrPagFor.LerTXT(AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
+function TACBrPagFor.LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
 begin
   FArquivos.Ler(AArquivoTXT, ACarregarArquivo);
   

@@ -98,7 +98,7 @@ type
     procedure GeraRegistro5(I: Integer); // Registro Trailer de Lote
     procedure GeraRegistro9;             // Registro Trailer de Arquivo
 
-    procedure WriteRecord(Rec: String);
+    procedure WriteRecord(const Rec: String);
   public
     constructor Create(AOwner: TPagFor);
     destructor Destroy; override;
@@ -2357,7 +2357,7 @@ begin
 //
 end;
 
-procedure TPagForW.WriteRecord(Rec: String);
+procedure TPagForW.WriteRecord(const Rec: String);
 begin
   if Length(Rec) <> 240 then
     raise Exception.Create('Registro inválido!' + #13 + 'Deve conter 240 posições.' + #13 + 'Registro: [' + Rec + ']' + #13 + 'possui ' + IntToStr

@@ -49,13 +49,13 @@ type
     FNomeArq: String;
 
     function GetPagForTXT: String;
-    function CarregarArquivo(ACaminhoArquivo: String): String;
+    function CarregarArquivo(const ACaminhoArquivo: String): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
 
-    function Gravar(CaminhoArquivo: String = ''): boolean;
-    function Ler(AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
+    function Gravar(const CaminhoArquivo: String = ''): boolean;
+    function Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
 
     property PagFor: TPagFor read FPagFor write FPagFor;
     property PagForTXT: String read GetPagForTXT write FPagForTXT;
@@ -76,10 +76,10 @@ type
 
     function Add: TRegistro;
 
-    function GerarPagFor(ANomeArquivo: String = ''): Boolean;
+    function GerarPagFor(const ANomeArquivo: String = ''): Boolean;
     function GetNamePath: string; override;
-    function Gravar(PathArquivo: string = ''): boolean;
-    procedure Ler(AArquivoTXT: String; ACarregarArquivo: Boolean);
+    function Gravar(const PathArquivo: string = ''): boolean;
+    procedure Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
 
     property Items[Index: Integer]: TRegistro read GetItem  write SetItem;
     property Last: TRegistro read GetLastItem  write SetLastItem;
@@ -94,7 +94,7 @@ uses
 
 { TRegistro }
 
-function TRegistro.CarregarArquivo(ACaminhoArquivo: String): String;
+function TRegistro.CarregarArquivo(const ACaminhoArquivo: String): String;
 var
   mArquivoTXT : TStringList;
 begin
@@ -139,57 +139,42 @@ begin
   end;
 end;
 
-function TRegistro.Gravar(CaminhoArquivo: String): boolean;
+function TRegistro.Gravar(const CaminhoArquivo: String): boolean;
 var
   ArquivoGerado: TStringList;
   APagForW: TPagForW;
   LocPagForTxt: String;
 begin
+  Result := False;
+  APagForW := TPagForW.Create(PagFor);
+
   try
-    APagForW := TPagForW.Create(PagFor);
-
+    LocPagForTxt := APagForW.GerarTXT;
+    ArquivoGerado := TStringList.Create;
     try
-      LocPagForTxt := APagForW.GerarTXT;
-      ArquivoGerado := TStringList.Create;
-
-      try
-        try
-          ArquivoGerado.Add(LocPagForTxt);
-          ArquivoGerado.SaveToFile(CaminhoArquivo);
-          Result := True;
-        except
-          Result := False;
-          raise;
-        end;
-      finally
-        ArquivoGerado.Free;
-      end;
+      ArquivoGerado.Add(LocPagForTxt);
+      ArquivoGerado.SaveToFile(CaminhoArquivo);
+      Result := True;
     finally
-      APagForW.Free;
+      ArquivoGerado.Free;
     end;
-  except
-    raise;
-    Result := False;
+  finally
+    APagForW.Free;
   end;
 end;
 
-function TRegistro.Ler(AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
+function TRegistro.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
 var
   APagForR : TPagForR;
 begin
+  Result := False;
   APagForR := TPagForR.Create( FPagFor );
 
   try
-
-    try
-      if ACarregarArquivo then
-        Result := APagForR.LerTXT( CarregarArquivo(AArquivoTXT) )
-      else
-        Result := APagForR.LerTXT( AArquivoTXT );
-    except
-      Result := False;
-      Raise;
-    end;
+    if ACarregarArquivo then
+      Result := APagForR.LerTXT( CarregarArquivo(AArquivoTXT) )
+    else
+      Result := APagForR.LerTXT( AArquivoTXT );
   finally
     APagForR.Free;
   end;
@@ -213,7 +198,7 @@ begin
   FACBrPagFor := TACBrPagFor( AOwner );
 end;
 
-function TArquivos.GerarPagFor(ANomeArquivo: String): Boolean;
+function TArquivos.GerarPagFor(const ANomeArquivo: String): Boolean;
 var
   i: Integer;
 begin
@@ -238,7 +223,7 @@ begin
   Result := 'TRegistro';
 end;
 
-function TArquivos.Gravar(PathArquivo: string): boolean;
+function TArquivos.Gravar(const PathArquivo: string): boolean;
 var
   i: Integer;
   CaminhoArquivo: String;
@@ -256,7 +241,7 @@ begin
   end;
 end;
 
-procedure TArquivos.Ler(AArquivoTXT: String; ACarregarArquivo: Boolean);
+procedure TArquivos.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
 begin
   TACBrPagFor(FACBrPagFor).Arquivos.Add;
   TACBrPagFor(FACBrPagFor).Arquivos.Last.Ler(AArquivoTXT, ACarregarArquivo);

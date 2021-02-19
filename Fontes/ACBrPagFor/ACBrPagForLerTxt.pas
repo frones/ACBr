@@ -80,7 +80,7 @@ type
   public
     constructor Create(AOwner: TPagFor);
     destructor Destroy; override;
-    function LerTXT(ArquivoTXT: string): Boolean;
+    function LerTXT(const ArquivoTXT: string): Boolean;
 
   published
     property PagFor: TPagFor read FPagFor write FPagFor;
@@ -1237,7 +1237,7 @@ begin
   mSegmentoZList.Last.NossoNumero  := Copy(FArquivoTXT.Strings[i], 104, 15);
 end;
 
-function TPagForR.LerTXT(ArquivoTXT: string): Boolean;
+function TPagForR.LerTXT(const ArquivoTXT: string): Boolean;
 begin
   try
     FArquivoTXT.Text := ArquivoTXT;

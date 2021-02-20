@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/21
+-- ACBrTEFPayGoAndroid --
+[+] Primeiro commit de ACBrTEFPayGoAndroid. Para integração Direta, por Intents,
+    com aplicativo PayGo Integrado para a plataforma Android.
+
+-- ACBrTEFPayGoWebComum, ACBrTEFPayGoComum --
+[*] Constantes "PWCNF_" e método "PWCNFToString" migrados de ACBrTEFPayGoWebComum
+    para ACBrTEFPayGoComum
+
+-- ACBrTEFPayGoComum --
+[*] Revisão da descrição de PWINFO_CARDTYPE e PWINFO_FINTYPE.
+    Adicionado tipo: PWINFO_SELFATT
+    (por: DSA)
+
 22/01/20
 -- ACBrTEFD --
 [-] Ajuste em "TACBrTEFD.CancelarTransacoesPendentes" para não chamar o evento

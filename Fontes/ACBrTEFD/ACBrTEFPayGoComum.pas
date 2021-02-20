@@ -101,6 +101,21 @@ const
   PWOPER_CONFIG      = 253; // (Configuração) Visualiza e altera os parâmetros de operação locais da biblioteca
   PWOPER_MAINTENANCE = 254; // (Manutenção) Apaga todas as configurações do Ponto de Captura, devendo ser novamente realizada uma transação de Instalação.
 
+
+//==========================================================================================
+//    Códigos de Confirmação de Transação
+//==========================================================================================
+  PWCNF_CNF_AUTO     = 289;     // A transação foi confirmada pelo Ponto de Captura, sem intervenção do usuário.
+  PWCNF_CNF_MANU_AUT = 12833;   // A transação foi confirmada manualmente na Automação.*/
+  PWCNF_REV_MANU_AUT = 12849;   // A transação foi desfeita manualmente na Automação.*/
+  PWCNF_REV_PRN_AUT  = 78129;   // A transação foi desfeita pela Automação, devido a uma falha na impressão do comprovante (não fiscal). A priori, não usar. Falhas na impressão não devem gerar desfazimento, deve ser solicitada a reimpressão da transação.*/
+  PWCNF_REV_DISP_AUT = 143665;  // A transação foi desfeita pela Automação, devido a uma falha no mecanismo de liberação da mercadoria.*/
+  PWCNF_REV_COMM_AUT = 209201;  // A transação foi desfeita pela Automação, devido a uma falha de comunicação/integração com o ponto de captura (Cliente Muxx).*/
+  PWCNF_REV_ABORT    = 274737;  // A transação não foi finalizada, foi interrompida durante a captura de dados.*/
+  PWCNF_REV_OTHER_AUT= 471345;  // A transação foi desfeita a pedido da Automação, por um outro motivo não previsto.*/
+  PWCNF_REV_PWR_AUT  = 536881;  // A transação foi desfeita automaticamente pela Automação, devido a uma queda de energia (reinício abrupto do sistema).*/
+  PWCNF_REV_FISC_AUT = 602417;  // A transação foi desfeita automaticamente pela Automação, devido a uma falha de registro no sistema fiscal (impressora S@T, on-line, etc.).*/
+
   //==========================================================================================
   //   Tipos de dados que podem ser informados pela Automação
   //==========================================================================================
@@ -122,7 +137,7 @@ const
   PWINFO_CURRENCY       = 38;     // Moeda (padrão ISO4217, 986 para o Real)
   PWINFO_CURREXP        = 39;     // Expoente da moeda (2 para centavos)
   PWINFO_FISCALREF      = 40;     // Identificador do documento fiscal
-  PWINFO_CARDTYPE       = 41;     // Tipo de cartão utilizado (PW_iGetResult), ou tipos de cartão aceitos (soma dos valores abaixo, PW_iAddParam): 1: crédito 2: débito 4: voucher/PAT 8: outros
+  PWINFO_CARDTYPE       = 41;     // Tipo de cartão utilizado (PW_iGetResult), ou tipos de cartão aceitos (soma dos valores abaixo, PW_iAddParam): 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
   PWINFO_PRODUCTNAME    = 42;     // Nome/tipo do produto utilizado, na nomenclatura do Provedor.
   PWINFO_DATETIME       = 49;     // Data e hora local da transação, no formato “AAAAMMDDhhmmss”
   PWINFO_REQNUM         = 50;     // Referência local da transação
@@ -130,7 +145,7 @@ const
   PWINFO_VIRTMERCH      = 54;     // Identificador do Estabelecimento
   PWINFO_AUTMERCHID     = 56;     // Identificador do estabelecimento para o Provedor (código de afiliação).
   PWINFO_PHONEFULLNO    = 58;     // Número do telefone, com o DDD (10 ou 11 dígitos).
-  PWINFO_FINTYPE        = 59;     // Modalidade de financiamento da transação: 1: à vista 2: parcelado pelo emissor 4: parcelado pelo estabelecimento 8: pré-datado
+  PWINFO_FINTYPE        = 59;     // Modalidade de financiamento da transação: 1: à vista 2: parcelado pelo emissor 4: parcelado pelo estabelecimento 8: pré-datado 16: crédito emissor
   PWINFO_INSTALLMENTS   = 60;     // Quantidade de parcelas
   PWINFO_INSTALLMDATE   = 61;     // Data de vencimento do pré-datado, ou da primeira parcela. Formato “DDMMAA
   PWINFO_PRODUCTID      = 62;     // Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
@@ -254,13 +269,17 @@ const
   PWINFO_OSVERSION        = 32590;  // Versão do sistema operacional.
   PWINFO_APPDOWNLOADVER   = 32591;  // Versão da biblioteca de telecarga.
   PWINFO_DSPQRPREF        = 32592;  // Caso a exibição de QR Code seja suportada pela Automação Comercial e pelo PIN-Pad, indica a preferência do local de exibição: 1: exibe no PIN-Pad; 2: exibe no checkout; OBS: Caso esse dado não seja informado e o ponto de captura esteja configurado no Muxx como autoatendimento, exibe no checkout, caso contrário, exibe no PIN-pad.
+  PWINFO_SELFATT          = 32593;  // Indica se o ponto de captura está configurado para operar na modalidade de autoatendimento: 0: operação assistida; 1: autoatendimento.
   PWINFO_DUEAMNT          = 48902;  // Valor devido pelo usuário, considerando PWINFO_CURREXP, já deduzido em PWINFO_TOTAMNT
   PWINFO_READJUSTEDAMNT   = 48905;  // Valor total da transação reajustado, este campo será utilizado caso o autorizador, por alguma regra de negócio específica dele, resolva alterar o valor total que foi solicitado para a transação
   PWINFO_TRNORIGDATETIME  = 48909;  // Data e hora da transação original, no formato “AAAAMMDDhhmmss”, no caso de um cancelamento.
   PWINFO_DATETIMERCPT     = 48910;  // Data/hora da transação para exibição no comprovante, no formato “AAAAMMDDhhmmss”.
   PWINFO_UNIQUEID         = 49040;  // ID único da transação armazenada no banco de dados
-  PWINFO_GRAPHICRCP     = 40722;  // Indica, se possível, a necessidade de impressão de um comprovante gráfico: 0: Não necessário. 1: Necessário.
-  PWINFO_OPERATIONORIG  = 40727;  // Tipo de transação (PWOPER_xxx) da transação original, no caso de reimpressões. Consultar os valores possíveis na descrição da função PW_iNewTransac (página 14)
+  PWINFO_GRAPHICRCP       = 40722;  // Indica, se possível, a necessidade de impressão de um comprovante gráfico: 0: Não necessário. 1: Necessário.
+  PWINFO_OPERATIONORIG    = 40727;  // Tipo de transação (PWOPER_xxx) da transação original, no caso de reimpressões. Consultar os valores possíveis na descrição da função PW_iNewTransac (página 14)
+
+  // Indices de uso interno do ACBr (não mapeados pela PayGoWeb)
+  PWINFO_CONFTRANSIDENT   = 65500; // confirmTransactionIdentifier (Android)
 
   MIN_PWINFO = PWINFO_OPERATION;
   MAX_PWINFO = PWINFO_UNIQUEID;
@@ -281,6 +300,7 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 function ParseKeyValue(AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
 function PWINFOToString(iINFO: Word): String;
 function PWOPERToString(iOPER: Byte): String;
+function PWCNFToString(iCNF: LongWord): String;
 
 function MoedaToISO4217(AMoeda: Byte): Word;
 function ISO4217ToMoeda(AIso4217: Word): Byte;
@@ -802,6 +822,7 @@ begin
     PWINFO_OSVERSION:       Result := 'PWINFO_OSVERSION';
     PWINFO_APPDOWNLOADVER:  Result := 'PWINFO_APPDOWNLOADVER';
     PWINFO_DSPQRPREF:       Result := 'PWINFO_DSPQRPREF';
+    PWINFO_SELFATT:         Result := 'PWINFO_SELFATT';
     PWINFO_GRAPHICRCP:      Result := 'PWINFO_GRAPHICRCP';
     PWINFO_OPERATIONORIG:   Result := 'PWINFO_OPERATIONORIG';
     PWINFO_DUEAMNT:         Result := 'PWINFO_DUEAMNT';
@@ -809,6 +830,7 @@ begin
     PWINFO_TRNORIGDATETIME: Result := 'PWINFO_TRNORIGDATETIME';
     PWINFO_DATETIMERCPT:    Result := 'PWINFO_DATETIMERCPT';
     PWINFO_UNIQUEID:        Result := 'PWINFO_UNIQUEID';
+    PWINFO_CONFTRANSIDENT:  Result := 'PWINFO_CONFTRANSIDENT';
   else
     Result := 'PWINFO_'+IntToStr(iINFO);
   end;
@@ -873,6 +895,24 @@ begin
     PWOPER_MAINTENANCE:  Result := 'PWOPER_MAINTENANCE';
   else
     Result := 'PWOPER_'+IntToStr(iOPER);
+  end;
+end;
+
+function PWCNFToString(iCNF: LongWord): String;
+begin
+  case iCNF of
+    PWCNF_CNF_AUTO:      Result := 'PWCNF_CNF_AUTO';
+    PWCNF_CNF_MANU_AUT:  Result := 'PWCNF_CNF_MANU_AUT';
+    PWCNF_REV_MANU_AUT:  Result := 'PWCNF_REV_MANU_AUT';
+    PWCNF_REV_PRN_AUT:   Result := 'PWCNF_REV_PRN_AUT';
+    PWCNF_REV_DISP_AUT:  Result := 'PWCNF_REV_DISP_AUT';
+    PWCNF_REV_COMM_AUT:  Result := 'PWCNF_REV_COMM_AUT';
+    PWCNF_REV_ABORT:     Result := 'PWCNF_REV_ABORT';
+    PWCNF_REV_OTHER_AUT: Result := 'PWCNF_REV_OTHER_AUT';
+    PWCNF_REV_PWR_AUT:   Result := 'PWCNF_REV_PWR_AUT';
+    PWCNF_REV_FISC_AUT:  Result := 'PWCNF_REV_FISC_AUT';
+  else
+    Result := 'PWCNF_'+IntToStr(iCNF);
   end;
 end;
 

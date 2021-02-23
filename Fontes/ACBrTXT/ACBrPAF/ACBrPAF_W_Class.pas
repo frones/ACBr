@@ -36,7 +36,7 @@ unit ACBrPAF_W_Class;
 
 interface
 
-uses SysUtils, Classes, ACBrTXTClass,
+uses SysUtils, Classes, ACBrTXTClass, ACBrPAFRegistros,
      ACBrPAF_W;
 
 type
@@ -55,15 +55,15 @@ type
     procedure LiberaRegistros;
     function limpaCampo(pValor: String):String;
     procedure WriteRegistroW2;
-    procedure WriteRegistroW3;
-    procedure WriteRegistroW4;
+    procedure WriteRegistroW3(Layout: TLayoutPAF);
+    procedure WriteRegistroW4(Layout: TLayoutPAF);
     procedure WriteRegistroW9;
   public
     constructor Create;/// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    procedure WriteRegistroW1;
+    procedure WriteRegistroW1(Layout: TLayoutPAF);
 
     property RegistroW1: TRegistroW1 read FRegistroW1 write FRegistroW1;
     property RegistroW2: TRegistroW2 read FRegistroW2 write FRegistroW2;
@@ -128,7 +128,7 @@ begin
   CriaRegistros;
 end;
 
-procedure TPAF_W.WriteRegistroW1;
+procedure TPAF_W.WriteRegistroW1(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroW1) then
   begin
@@ -144,8 +144,8 @@ begin
           RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
     WriteRegistroW2;
-    WriteRegistroW3;
-    WriteRegistroW4;
+    WriteRegistroW3(Layout);
+    WriteRegistroW4(Layout);
     WriteRegistroW9;
   end;
 end;
@@ -168,21 +168,28 @@ begin
   end;
 end;
 
-procedure TPAF_W.WriteRegistroW3;
+procedure TPAF_W.WriteRegistroW3(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroW3) then
   begin
     with FRegistroW3 do
     begin
-      Add(LFill('W3') +
-          RFill(LAUDO , 10) +
-          RFill(NOME  , 50) +
-          RFill(VERSAO, 10));
+      case Layout of
+        lpPAFECF:
+          Add(LFill('W3') +
+              RFill(UpperCase(LAUDO) , 10) +
+              RFill(UpperCase(NOME)  , 50) +
+              RFill(UpperCase(VERSAO), 10));
+        lpPAFNFCe:
+          Add(LFill('W3') +
+              RFill(UpperCase(NOME)  , 50) +
+              RFill(UpperCase(VERSAO), 10));
+      end;
     end;
   end;
 end;
 
-procedure TPAF_W.WriteRegistroW4;
+procedure TPAF_W.WriteRegistroW4(Layout: TLayoutPAF);
 var
   intFor: integer;
 begin
@@ -192,15 +199,26 @@ begin
     begin
       with FRegistroW4.Items[intFor] do
       begin
-        Add( LFill('W4') +
-             RFill(UpperCase(TiraAcentos(ORIGEMDARE)), 20) +
-             RFill(UpperCase(STATUSDARE), 1) +
-             LFill(CRE, 9) +
-             LFill(DAV, 13) +
-             LFill(PREVENDA, 10) +
-             LFill(CCF, 9) +
-             LFill(VALORTOTALDARE, 14, 2) +
-             RFill(limpaCampo(NUMEROFABRICACAO), 20));
+        case Layout of
+          lpPAFECF :
+            Add(LFill('W4') +
+                RFill(UpperCase(TiraAcentos(ORIGEMDARE)), 20) +
+                RFill(UpperCase(STATUSDARE), 1) +
+                LFill(CRE, 9) +
+                LFill(DAV, 13) +
+                LFill(PREVENDA, 10) +
+                LFill(CCF, 9) +
+                LFill(VALORTOTALDARE, 14, 2) +
+                RFill(limpaCampo(NUMEROFABRICACAO), 20));
+          lpPAFNFCe:
+            Add(LFill('W4') +
+                RFill(UpperCase(TiraAcentos(ORIGEMDARE)), 20) +
+                RFill(UpperCase(STATUSDARE), 1) +
+                LFill(CRE, 9) +
+                LFill(DAV, 13) +
+                LFill(PREVENDA, 10) +
+                LFill(VALORTOTALDARE, 14, 2));
+        end;
       end;
       FRegistroW9.TOT_REG := FRegistroW9.TOT_REG + 1;
     end;

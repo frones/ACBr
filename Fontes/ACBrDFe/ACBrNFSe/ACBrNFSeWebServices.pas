@@ -3222,6 +3222,7 @@ begin
 
   FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
   FProtocolo       := RetEnvLote.InfRec.Protocolo;
+
   if RetEnvLote.InfRec.NumeroLote <> '' then
     FNumeroLote := RetEnvLote.InfRec.NumeroLote;
 
@@ -3229,7 +3230,7 @@ begin
   FPMsg := '';
   FaMsg := '';
 
-  if FProtocolo <> '' then
+  if (FProtocolo <> '') or (FDataRecebimento > 0) then
   begin
     for i := 0 to FNotasFiscais.Count -1 do
     begin
@@ -3279,7 +3280,8 @@ begin
   else if FProvedor in [proGiap] then
     Result := RetEnvLote.InfRec.ListaChaveNFeRPS.Count > 0
   else
-    Result := (RetEnvLote.InfRec.Protocolo <> '');
+    Result := (RetEnvLote.InfRec.Protocolo <> '') or
+              (RetEnvLote.InfRec.DataRecebimento > 0);
 
   if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
   begin

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/02/2021
+-- ACBrNFSeNotasFiscais --
+[-] Correção para o Provedor ISSJoinville, não estava considerando de forma correta
+    o Namespace ao gerar o XML do Rps.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeWebServices --
 [-] Possível correção no tratamento do retorno do envio de lote - provedor Elotech.
   Por: Italo Giurizzato Junior

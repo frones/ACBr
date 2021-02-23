@@ -479,6 +479,15 @@ begin
     FNFSeW.NFSeWClass.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
     FNFSeW.NFSeWClass.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
     FNFSeW.NFSeWClass.URL           := Configuracoes.Geral.ConfigXML.NameSpace;
+
+    if Pos('%NomeURL_HP%', FNFSeW.NFSeWClass.URL) > 0 then
+    begin
+      if Configuracoes.WebServices.Ambiente = taHomologacao then
+        FNFSeW.NFSeWClass.URL := StringReplace(FNFSeW.NFSeWClass.URL, '%NomeURL_HP%', Configuracoes.Geral.xNomeURL_H, [rfReplaceAll])
+      else
+        FNFSeW.NFSeWClass.URL := StringReplace(FNFSeW.NFSeWClass.URL, '%NomeURL_HP%', Configuracoes.Geral.xNomeURL_P, [rfReplaceAll]);
+    end;
+
     FNFSeW.NFSeWClass.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
     FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;

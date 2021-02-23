@@ -100,7 +100,9 @@ type
     FPrintOnSheet: Integer;
     FExibeCaptionButton: Boolean;
     FZoomModePadrao: TfrxZoomMode;
+    {$IFNDEF FMX}
     FBorderIcon : TBorderIcons;
+    {$ENDIF}
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
     FOtimizaImpressaoPdf: Boolean;
@@ -153,7 +155,9 @@ type
     property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
     property ExibeCaptionButton: Boolean read FExibeCaptionButton write FExibeCaptionButton default False;
     property ZoomModePadrao: TfrxZoomMode read FZoomModePadrao write FZoomModePadrao default ZMDEFAULT;
+    {$IFNDEF FMX}
     property BorderIcon: TBorderIcons read FBorderIcon write FBorderIcon;
+    {$ENDIF}
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
     property OtimizaImpressaoPdf: Boolean read FOtimizaImpressaoPdf write FOtimizaImpressaoPdf;
@@ -194,7 +198,9 @@ begin
   FFastFile := '';
   FExibeCaptionButton := False;
   FZoomModePadrao := ZMDEFAULT;
+  {$IFNDEF FMX}
   FBorderIcon := [biSystemMenu,biMaximize,biMinimize];
+  {$ENDIF}
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
   FOtimizaImpressaoPdf := True;
@@ -205,7 +211,7 @@ begin
   //Antes de alterar a linha abaixo, queira verificar o seguinte tópico:
   //https://www.projetoacbr.com.br/forum/topic/51505-travamento-preview-de-v%C3%A1rias-danfes/
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
-  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, {$IFNDEF FMX} pbFind,{$ENDIF}
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
 
   with FfrxReport do
@@ -2247,7 +2253,7 @@ begin
                 qrcode := NFe.infNFeSupl.qrCode;
 
               if Assigned(Sender) and (LeftStr(Sender.Name, 9) = 'ImgQrCode') then
-                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
+                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture{$IFNDEF FMX}.Bitmap{$ENDIF}, qrUTF8NoBOM);
 
               CpDescrProtocolo := frxReport.FindObject('Memo25');
               if Assigned(CpDescrProtocolo) then
@@ -2272,7 +2278,9 @@ end;
 
 procedure TACBrNFeFRClass.frxReportPreview(Sender: TObject);
 begin
+ {$IFNDEF FMX}
  frxReport.PreviewForm.BorderIcons := FBorderIcon;
+ {$ENDIF}
 end;
 
 function TACBrNFeFRClass.GetPreparedReport: TfrxReport;

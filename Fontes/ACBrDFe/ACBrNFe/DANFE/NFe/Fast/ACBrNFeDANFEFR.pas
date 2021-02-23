@@ -66,7 +66,9 @@ type
     function GetPrintOnSheet: Integer;
     function GetExibeCaptionButton: Boolean;
     function GetZoomModePadrao: TfrxZoomMode;
+    {$IFNDEF FMX}
     function GetBorderIcon: TBorderIcons;
+    {$ENDIF}
     function GetIncorporarBackgroundPdf: Boolean;
     function GetIncorporarFontesPdf: Boolean;
     function GetOtimizaImpressaoPdf :Boolean;
@@ -79,7 +81,9 @@ type
     procedure SetPrintOnSheet(const Value: Integer);
     procedure SetExibeCaptionButton(const Value: Boolean);
     procedure SetZoomModePadrao(const Value: TfrxZoomMode);
+    {$IFNDEF FMX}
     procedure SetBorderIcon(const Value: TBorderIcons);
+    {$ENDIF}
     procedure SetIncorporarBackgroundPdf(const Value: Boolean);
     procedure SetIncorporarFontesPdf(const Value: Boolean);
     procedure SetOtimizaImpressaoPdf(const Value: Boolean);
@@ -112,7 +116,9 @@ type
     property OtimizaImpressaoPdf: Boolean read GetOtimizaImpressaoPdf write SetOtimizaImpressaoPdf default True;
     property PrintMode: TfrxPrintMode read GetPrintMode write SetPrintMode default pmDefault;
     property PrintOnSheet: Integer read GetPrintOnSheet write SetPrintOnSheet default 0;
+    {$IFNDEF FMX}
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
+    {$ENDIF}
     property ExibeCaptionButton: Boolean read GetExibeCaptionButton write SetExibeCaptionButton default False;
     property ZoomModePadrao: TfrxZoomMode read GetZoomModePadrao write SetZoomModePadrao default ZMDEFAULT;
     property ThreadSafe: Boolean read GetThreadSafe write SetThreadSafe;
@@ -136,7 +142,9 @@ type
     function GetPrintOnSheet: Integer;
     function GetExibeCaptionButton: Boolean;
     function GetZoomModePadrao: TfrxZoomMode;
+    {$IFNDEF FMX}
     function GetBorderIcon: TBorderIcons;
+    {$ENDIF}
     procedure SetFastFile(const Value: String);
     procedure SetFastFileEvento(const Value: String);
     procedure SetFastFileInutilizacao(const Value: String);
@@ -144,7 +152,9 @@ type
     procedure SetPrintOnSheet(const Value: Integer);
     procedure SetExibeCaptionButton(const Value: Boolean);
     procedure SetZoomModePadrao(const Value: TfrxZoomMode);
+    {$IFNDEF FMX}
     procedure SetBorderIcon(const Value: TBorderIcons);
+    {$ENDIF}
     function GetIncorporarBackgroundPdf: Boolean;
     function GetIncorporarFontesPdf: Boolean;
     procedure SetIncorporarBackgroundPdf(const Value: Boolean);
@@ -175,7 +185,9 @@ type
     property FastFileInutilizacao: String read GetFastFileInutilizacao write SetFastFileInutilizacao;
     property PrintMode: TfrxPrintMode read GetPrintMode write SetPrintMode default pmDefault;
     property PrintOnSheet: Integer read GetPrintOnSheet write SetPrintOnSheet default 0;
+    {$IFNDEF FMX}
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
+    {$ENDIF}
     property ExibeCaptionButton: Boolean read GetExibeCaptionButton write SetExibeCaptionButton default False;
     property ZoomModePadrao: TfrxZoomMode read GetZoomModePadrao write SetZoomModePadrao default ZMDEFAULT;
     property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf default True;
@@ -203,11 +215,12 @@ begin
   FdmDanfe.Free;
   inherited Destroy;
 end;
-
+{$IFNDEF FMX}
 function TACBrNFeDANFEFR.GetBorderIcon: TBorderIcons;
 begin
   Result := FdmDanfe.BorderIcon;
 end;
+{$ENDIF}
 
 function TACBrNFeDANFEFR.GetExibeCaptionButton: Boolean;
 begin
@@ -278,12 +291,12 @@ function TACBrNFeDANFEFR.GetThreadSafe: Boolean;
 begin
   Result := FdmDanfe.ThreadSafe;
 end;
-
+{$IFNDEF FMX}
 procedure TACBrNFeDANFEFR.SetBorderIcon(const Value: TBorderIcons);
 begin
   FdmDanfe.BorderIcon := Value;
 end;
-
+{$ENDIF}
 procedure TACBrNFeDANFEFR.SetExibeCaptionButton(const Value: Boolean);
 begin
   FdmDanfe.ExibeCaptionButton := Value;
@@ -391,12 +404,12 @@ begin
   FdmDanfe.Free;
   inherited;
 end;
-
+{$IFNDEF FMX}
 function TACBrNFeDANFCEFR.GetBorderIcon: TBorderIcons;
 begin
   Result := FdmDanfe.BorderIcon;
 end;
-
+{$ENDIF}
 function TACBrNFeDANFCEFR.GetExibeCaptionButton: Boolean;
 begin
   Result := FdmDanfe.ExibeCaptionButton;
@@ -504,12 +517,12 @@ begin
   FdmDanfe.ImprimirINUTILIZACAOPDF(NFE);
   FPArquivoPDF := FdmDanfe.frxPDFExport.FileName;
 end;
-
+{$IFNDEF FMX}
 procedure TACBrNFeDANFCEFR.SetBorderIcon(const Value: TBorderIcons);
 begin
   FdmDanfe.BorderIcon := Value;
 end;
-
+{$ENDIF}
 procedure TACBrNFeDANFCEFR.SetExibeCaptionButton(const Value: Boolean);
 begin
   FdmDanfe.ExibeCaptionButton := Value;

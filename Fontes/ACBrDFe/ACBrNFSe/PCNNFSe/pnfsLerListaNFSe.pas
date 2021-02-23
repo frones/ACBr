@@ -549,7 +549,7 @@ begin
           NFSeLida.TabServicosExt := TabServicosExt;
           NFSeLida.PathIniCidades := PathIniCidades;
 
-          if Pos('CompNfse', Leitor.Grupo) > 0 then
+          if Pos('<CompNfse>', Leitor.Grupo) > 0 then
             Leitor.rExtrai(Nivel+1, 'CompNfse', '', 1);
 
           NFSeLida.Leitor.Arquivo := Leitor.Grupo;

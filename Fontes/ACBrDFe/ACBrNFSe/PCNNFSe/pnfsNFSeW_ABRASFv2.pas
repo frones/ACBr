@@ -234,7 +234,8 @@ begin
         if not (FProvedor in [proELv2, proActconv204, proNFSeBrasil, proPronimv2,
                               proISSJoinville, proSmarAPDABRASF, proGiss,
                               proTcheInfov2, proSigep, proiiBrasilv2, proMegaSoft,
-                              proModernizacaoPublica, proDigifred, proSiapSistemas]) or
+                              proModernizacaoPublica, proDigifred, proSiapSistemas,
+                              proSmarAPDv23]) or
            ((FProvedor in [proPronimv2, proModernizacaoPublica]) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
           Gerador.wCampo(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
@@ -307,7 +308,8 @@ begin
     if not (FProvedor in [proGiss]) then
     begin
       // Gera a TAG vazia quando nenhum dado do tomador for informado.
-      if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF, proAdm] then
+      if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF, proAdm,
+                       proSmarAPDv23] then
         Gerador.wCampo(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '')
       else
         Gerador.wCampo(tcStr, '#', 'Tomador', 0, 1, 1, '', '');
@@ -502,7 +504,8 @@ begin
     proTecnos,
     proSigCorp,
     proSiapSistemas,
-    proISSJoinville: Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proISSJoinville,
+    proSmarAPDv23: Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proABase,
     proDesenvolve,
@@ -884,7 +887,8 @@ begin
     proVirtual:
         Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '=""');
 
-    proSmarAPDABRASF:
+    proSmarAPDABRASF,
+    proSmarAPDv23:
         Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="declaracao_' + NFSe.InfID.ID + '"');
 
     proTiplanv2:
@@ -940,7 +944,7 @@ begin
       proElv2, proActconv204, proAsten, proGiss, proDeISS, proTcheInfov2, proDataSmart,
       proDesenvolve, proRLZ, proTiplanv2, proSigCorp, proiiBrasilv2, proSimplISSv2,
       proModernizacaoPublica, proFuturize, proSiapSistemas, proElotech, proAdm,
-      proAEG: Gerador.wCampo(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+      proAEG, proSmarAPDv23: Gerador.wCampo(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
       profintelISS:
         begin
@@ -990,7 +994,7 @@ begin
         proTiplanv2, proDeISS, proTcheInfov2, proDataSmart, proDesenvolve,
         proRLZ, proGiss, proSigCorp, proiiBrasilv2, proSimplISSv2, proActconv204,
         proSiapSistemas, proModernizacaoPublica, proElotech, proAdm,
-        proFuturize: Gerador.wCampo(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proFuturize, proSmarAPDv23: Gerador.wCampo(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos,
         proDigifred,
@@ -1090,7 +1094,7 @@ begin
   if FProvedor = proTecnos then
     Gerador.wCampo(tcStr, '#9', 'OutrasInformacoes', 00, 255, 0, NFSe.OutrasInformacoes, DSC_OUTRASINF);
 
-  if FProvedor in [proELv2, proActconv204, proISSJoinville, proPublica, proSmarAPDABRASF] then
+  if FProvedor in [proELv2, proActconv204, proISSJoinville, proPublica, proSmarAPDABRASF, proSmarAPDv23] then
     Gerador.wCampo(tcStr, '#9', 'InformacoesComplementares', 00, 2000, 0, NFSe.InformacoesComplementares, DSC_OUTRASINF);
 
   if (FProvedor = profintelISS) and (NFSe.Servico.CodigoMunicipio <> '3136702') then

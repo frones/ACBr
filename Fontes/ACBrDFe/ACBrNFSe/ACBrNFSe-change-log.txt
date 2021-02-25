@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2021
+-- Diversos --
+[+] Implementado o provedor SmarAPDv23 para atender a cidade de Vila Velha/ES.
+  Por: Italo Giurizzato Junior
+
 23/02/2021
 -- pnfsLerListaNFSe --
 [-] Correção na sub string do Pos ao checar se ainda tem o grupo CompNfse.

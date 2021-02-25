@@ -346,6 +346,7 @@ var
   i: Integer;
   iNivel: Integer;
   Ok: Boolean;
+  xData: string;
 begin
   try
     Result := True;
@@ -354,9 +355,20 @@ begin
     infRec.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
 
     // Alguns provedores retornam apenas a data, sem o horário
-    if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10
-     then infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento')
-     else infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
+    if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10 then
+    begin
+      if FProvedor = proSmarAPDv23 then
+      begin
+        xData := Leitor.rCampo(tcstr, 'DataRecebimento');
+
+        infRec.FDataRecebimento := StrToDate(Copy(xData, 1, 10)) +
+                                   StrToTime(Copy(xData, 12, 8));
+      end
+      else
+        infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+    end
+    else
+      infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
 
     iNivel := 1;
     if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or

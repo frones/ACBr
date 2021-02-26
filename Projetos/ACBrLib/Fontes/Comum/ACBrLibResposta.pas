@@ -197,7 +197,13 @@ begin
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-                GravarXml(xDoc, RootNode, CollectionItem);
+
+                if (CollectionObject.ItemClass.InheritsFrom(TACBrLibRespostaBase)) then
+                  ParentNode := xDoc.CreateElement(TACBrLibRespostaBase(CollectionItem).Sessao.Replace(' ', '_'))
+                else
+                  ParentNode := xDoc.CreateElement(Propertie.Name);
+
+                GravarXml(xDoc, ParentNode, CollectionItem);
               end;
             end
             else if (ClassObject.InheritsFrom(TList)) then
@@ -206,7 +212,13 @@ begin
               for i := 0 to ListObject.Count - 1 do
               begin
                 ListItem := ListObject.Items[i];
-                GravarXml(xDoc, RootNode, ListItem);
+
+                if (ListItem.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
+                  ParentNode := xDoc.CreateElement(TACBrLibRespostaBase(ListItem).Sessao.Replace(' ', '_'))
+                else
+                  ParentNode := xDoc.CreateElement(Propertie.Name);
+
+                GravarXml(xDoc, ParentNode, ListItem);
               end;
             end
             else
@@ -263,11 +275,11 @@ begin
             ParentNode := xDoc.CreateElement(Propertie.Name);
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) then
+            if (AValue.IsType<TDate>()) and (FValue > 0) then
               ParentNode.AppendChild(xDoc.CreateTextNode(DateToStr(FValue)))
-            else if (AValue.IsType<TTime>()) then
+            else if (AValue.IsType<TTime>()) and (FValue > 0) then
               ParentNode.AppendChild(xDoc.CreateTextNode(TimeToStr(FValue)))
-            else if(AValue.IsType<TDateTime>())then
+            else if(AValue.IsType<TDateTime>()) and (FValue > 0) then
               ParentNode.AppendChild(xDoc.CreateTextNode(DateTimeToStr(FValue)))
             else
               ParentNode.AppendChild(xDoc.CreateTextNode(FloatToStr(FValue)));
@@ -401,11 +413,11 @@ begin
           begin
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) then
+            if (AValue.IsType<TDate>()) and (FValue > 0) then
               AIni.WriteDate(ASessao, Propertie.Name, FValue)
-            else if (AValue.IsType<TTime>()) then
+            else if (AValue.IsType<TTime>()) and (FValue > 0) then
               AIni.WriteTime(ASessao, Propertie.Name, FValue)
-            else if (AValue.IsType<TDateTime>()) then
+            else if (AValue.IsType<TDateTime>()) and (FValue > 0) then
               AIni.WriteDateTime(ASessao, Propertie.Name, FValue)
             else
               AIni.WriteFloat(ASessao, Propertie.Name, FValue);
@@ -517,11 +529,11 @@ begin
           begin
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) then
+            if (AValue.IsType<TDate>()) and (FValue > 0) then
               JSONRoot.Add(Propertie.Name, DateToStr(FValue))
-            else if (AValue.IsType<TTime>()) then
+            else if (AValue.IsType<TTime>()) and (FValue > 0) then
               JSONRoot.Add(Propertie.Name, TimeToStr(FValue))
-            else if (AValue.IsType<TDateTime>()) then
+            else if (AValue.IsType<TDateTime>()) and (FValue > 0) then
               JSONRoot.Add(Propertie.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', FValue))
             else
               JSONRoot.Add(Propertie.Name, FValue);

@@ -42,10 +42,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-13/10/2020
---- ACBrLibConsReciDFe ---
-[*] Compatibilização da seção [NFe...] no resposta de Envio da NFe retornando apenas numero da NFe no retorno.
-    Por: José M S Junior
+26/02/2020
+--- ACBrLibRespostas--
+[-] Correção na geração XML Retorno com subitens de objetos 
 
 22/06/2020
 --- ACBrLibCertUtils ---

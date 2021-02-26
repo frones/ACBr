@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2021
+--ACBrNFeNotasFiscais--
+[*] Adicionado sessão InfRespTec na função GerarNFeIn
+
 19/02/2021
 -- pcnNFeW/ACBrNFeXMLWriter --
 [*] Ajuste para o tamanho mínimo da tag "veicProd.cCor".

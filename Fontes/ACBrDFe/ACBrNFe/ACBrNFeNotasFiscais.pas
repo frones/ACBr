@@ -3424,6 +3424,11 @@ begin
         end;
       end;
 
+      INIRec.WriteString('infRespTec', 'CNPJ', infRespTec.CNPJ);
+      INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);
+      INIRec.WriteString('infRespTec', 'email', infRespTec.email);
+      INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
+
       INIRec.WriteString('procNFe', 'tpAmb', TpAmbToStr(procNFe.tpAmb));
       INIRec.WriteString('procNFe', 'verAplic', procNFe.verAplic);
       INIRec.WriteString('procNFe', 'chNFe', procNFe.chNFe);

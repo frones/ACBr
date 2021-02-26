@@ -107,6 +107,13 @@ const
   CChaveemailAssuntoBoleto= 'emailAssuntoBoleto';
   CChaveemailMensagemBoleto= 'emailMensagemBoleto';
 
+  CSessaoRetorno = 'Retorno';
+  CSessaoCedente = 'CEDENTE';
+  CSessaoBanco = 'BANCO';
+  CSessaoConta = 'CONTA';
+  CSessaoTitulo = 'TITULO';
+  CSessaoMotivoRejeicao = 'MotivoRejeicao';
+
 Resourcestring
   SInfBoletosCarregados = '%d Boletos(s) Carregado(s)';
   SErroLerArquivoEntrada ='Erro ao ler arquivo de entrada: %d';

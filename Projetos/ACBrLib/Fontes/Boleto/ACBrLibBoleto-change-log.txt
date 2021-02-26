@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos) Boleto_SetDiretorioArquivo
 
+26/02/2020
+--- ACBrLibBoletoBase, ACBrLibBoletoRespostas --
+[+] Criado Classe Resposta com a estrutura dos Títulos para obter Retornos. E adicionado o método ObterRetorno
+    (Por: José M S Junior)
+
+--- ACBrLibBoletoBase--
+[+] Adicionado o Método GerarPDFBoleto que permite gerar Boletos individuais passando indice da lista.
+    (Por: José M S Junior)
+
 28/12/2020
 --- ACBrLibBoletoBase --
 [+] Adicionado o metodo Boleto_EnviarEmailBoleto

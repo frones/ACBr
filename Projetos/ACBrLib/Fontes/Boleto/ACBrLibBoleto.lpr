@@ -40,7 +40,7 @@ uses
   ACBrLibConfig, ACBrLibResposta,
   ACBrLibComum, ACBrLibConsts,
   {$IFDEF MT}ACBrLibBoletoMT{$ELSE}ACBrLibBoletoST{$ENDIF},
-  ACBrLibBoletoConsts, ACBrLibBoletoConfig;
+  ACBrLibBoletoConsts, ACBrLibBoletoConfig, ACBrLibBoletoRespostas;
 
 {$R *.res}
 
@@ -69,9 +69,11 @@ exports
   Boleto_Imprimir,
   Boleto_ImprimirBoleto,
   Boleto_GerarPDF,
+  Boleto_GerarPDFBoleto,
   Boleto_GerarHTML,
   Boleto_GerarRemessa,
   Boleto_LerRetorno,
+  Boleto_ObterRetorno,
   Boleto_EnviarEmail,
   Boleto_EnviarEmailBoleto,
   Boleto_SetDiretorioArquivo,

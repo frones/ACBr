@@ -595,8 +595,9 @@ begin
   if not (FProvedor in [proGoiania, proSigep]) then
     Gerador.wCampo(tcStr, '#20', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido, FProvedor), DSC_INDISSRET);
 
-  if ((NFSe.Servico.Valores.IssRetido <> stNormal) and not (FProvedor in [proGoiania, proSigep, proMegaSoft])) or
-     (FProvedor in [proProdata, proVirtual, proVersaTecnologia, proTecnos, proElotech, proAdm]) then
+  if ((NFSe.Servico.Valores.IssRetido <> stNormal) and not
+      (FProvedor in [proGoiania, proSigep, proMegaSoft, proElotech])) or
+     (FProvedor in [proProdata, proVirtual, proVersaTecnologia, proTecnos, proAdm]) then
     Gerador.wCampo(tcStr, '#21', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET);
 
   if not (FProvedor in [proGoiania, proMegaSoft, proElotech]) then

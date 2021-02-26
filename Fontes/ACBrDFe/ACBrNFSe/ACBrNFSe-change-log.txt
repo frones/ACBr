@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2021
+-- pnfsLerListaNFSe/ pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/61449-sugest%C3%A3o-alteracao-para-provedor-elotech/
+  Por: arrobba
+-- pnfsNFSeW_IPM --
+[*] Correção na geração da tag estado quando o tomador é estrangeiro.
+    Essa tag sempre é gerada vazia, agora vai utilizar o conteúdo do 
+    campo Tomador.Endereco.UF
+  Por: Italo Giurizzato Junior
+
 25/02/2021
 -- Diversos --
 [+] Implementado o provedor SmarAPDv23 para atender a cidade de Vila Velha/ES.

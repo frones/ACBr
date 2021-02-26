@@ -137,7 +137,7 @@ begin
   begin
     Gerador.wCampo(tcStr, '', 'identificador', 1, 20, 1, Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro), '');
     Gerador.wCampo(tcStr, '', 'tipo', 1, 1, 1, 'E', '');
-    Gerador.wCampo(tcStr, '', 'estado', 1, 100, 1, '', '');
+    Gerador.wCampo(tcStr, '', 'estado', 1, 100, 1, NFSe.Tomador.Endereco.UF, '');
     Gerador.wCampo(tcStr, '', 'pais', 1, 100, 1, NFSe.Tomador.Endereco.xPais, '');
   end
   else

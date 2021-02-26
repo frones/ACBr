@@ -464,7 +464,11 @@ begin
       if trim(NumeroLoteTemp) = '' then
         NumeroLoteTemp := '0';
 
-      DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      if (Provedor in [proElotech]) then
+        DataRecebimentoTemp:= Leitor.rCampo(tcDat, 'DataRecebimento')
+      else
+        DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+
       if (DataRecebimentoTemp = 0) then
         DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 

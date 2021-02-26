@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="33"/>
+      <BuildNr Value="34"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrSedex - Biblioteca para consulta de Sedex" InternalName="ACBrLibSedex" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="Sedex" ProductVersion="0.0.1.30"/>
@@ -269,6 +269,9 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\Sedex\bin\ACBrLibSedexTest.exe"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">

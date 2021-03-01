@@ -1044,6 +1044,8 @@ begin
 end;
 
 procedure TfrmACBrGNRe.btnCriarEnviarClick(Sender: TObject);
+var
+  i: Integer;
 begin
   ACBrGNRE1.Guias.Clear;
   AlimentarComponente;
@@ -1061,6 +1063,20 @@ begin
   MemoDados.Lines.Add('descricao: ' + ACBrGNRE1.WebServices.Retorno.descricao);
   MemoDados.Lines.Add('Recibo: '    + ACBrGNRE1.WebServices.Retorno.numeroRecibo);
   MemoDados.Lines.Add('Protocolo: ' + ACBrGNRE1.WebServices.Retorno.protocolo);
+  MemoDados.Lines.Add('');
+
+  for i := 0 to ACBrGNRE1.WebServices.Retorno.GNRERetorno.resGuia.Count -1 do
+    MemoDados.Lines.Add('Guia salva em: ' + ACBrGNRE1.WebServices.Retorno.GNRERetorno.resGuia[i].NomeArq);
+
+  // Para versão 1 temos o retorno no formato txt se deseja salvar no banco de dados
+  // deve ler a propriedade
+  //     guiatxt := ACBrGNRE1.WebServices.Retorno.GNRERetorno.resGuia[i].TXT;
+
+  // Para versão 2 temos o retorno no formato xml se deseja salvar no banco de dados
+  // deve ler a propriedade
+  //     guiaxml := ACBrGNRE1.WebServices.Retorno.GNRERetorno.resGuia[i].XML;
+
+  // onde i varia de zero até a quantidade -1 de guias retornadas.
 
   ACBrGNRE1.Guias.Clear;
 end;

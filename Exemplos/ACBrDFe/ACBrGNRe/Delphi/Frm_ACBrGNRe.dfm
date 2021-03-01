@@ -1324,7 +1324,7 @@ object frmACBrGNRe: TfrmACBrGNRe
       Top = 137
       Width = 567
       Height = 474
-      ActivePage = TabSheet5
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet

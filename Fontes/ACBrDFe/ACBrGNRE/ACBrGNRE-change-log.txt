@@ -45,6 +45,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2021
+-- Diversos --
+[+] Foi incluido na classe TGuiaCollectionItem as propriedades: NomeArq e TXT
+    A propriedade XML (já existente) da lista de guias vai contem o XML da guia caso a versão for 2;
+    A propriedade TXT da lista de guias vai conter o TXT da guia se a verão for 1;
+    e NomeArq vai conter o Path+Nome da guia seja ela no formato TXT ou XML.
+  Por: Italo Giurizzato Junior
+
 04/02/2021
 -- ACBrGNREGuiasRetorno --
 [*] https://www.projetoacbr.com.br/forum/topic/60756-erro-de-impress%C3%A3o-das-informa%C3%A7%C3%B5es-complementares-gnre/

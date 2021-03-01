@@ -145,7 +145,7 @@ type
     function Executar: Boolean; override;
     function SalvarTXT(AResultado: String): Boolean;
     function SalvarXML(AGuia, ANumero: String; aData: TDateTime;
-      aCNPJ, aIE: string): Boolean;
+      aCNPJ, aIE: string; Item: Integer): Boolean;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
@@ -732,7 +732,7 @@ begin
           else
             xData := Now;
 
-          Self.SalvarXML(XML, NumeroControle, xData, DocEmitente, '');
+          Self.SalvarXML(XML, NumeroControle, xData, DocEmitente, '', I);
         end;
       end;
     end;
@@ -761,7 +761,7 @@ function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
 var
   SL, SLAux: TStringList;
   i, GuiasOk: Integer;
-  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
+  Cabec, RepresentacaoNumerica, SituacaoGuia, PathNome: String;
 begin
   SL := TStringList.Create;
   SLAux := TStringList.Create;
@@ -781,12 +781,20 @@ begin
           SLAux.Add(SL.Strings[i]);
           Inc(GuiasOk);
           RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
+
+          FGNRERetorno.resGuia.Items[i].TXT := SLAux.Text;
+
           if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
           begin
             if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
               ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
 
-            SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT)+RepresentacaoNumerica+'-gnre.txt');
+            PathNome := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT) +
+                       RepresentacaoNumerica+'-guia.txt';
+
+            FGNRERetorno.resGuia.Items[i].NomeArq := PathNome;
+
+            SLAux.SaveToFile(PathNome);
           end;
         end;
       end;
@@ -803,19 +811,21 @@ begin
 end;
 
 function TGNRERetRecepcao.SalvarXML(AGuia, ANumero: String; aData: TDateTime;
-  aCNPJ, aIE: string): Boolean;
+  aCNPJ, aIE: string; Item: Integer): Boolean;
 var
-  NomeArq, Path: string;
+  PathNome: string;
 begin
   Result := True;
 
   if FPConfiguracoesGNRE.Arquivos.Salvar then
   begin
-    Path := FPConfiguracoesGNRE.Arquivos.GetPathGNRE(aData, aCNPJ, aIE);
+    PathNome := FPConfiguracoesGNRE.Arquivos.GetPathGNRE(aData, aCNPJ, aIE);
 
-    NomeArq := PathWithDelim(Path) + ANumero + '-guia.xml';
+    PathNome := PathWithDelim(PathNome) + ANumero + '-guia.xml';
 
-    Result := FPDFeOwner.Gravar(NomeArq, AGuia);
+    FGNRERetorno.resGuia.Items[Item].NomeArq := PathNome;
+
+    Result := FPDFeOwner.Gravar(PathNome, AGuia);
   end;
 end;
 

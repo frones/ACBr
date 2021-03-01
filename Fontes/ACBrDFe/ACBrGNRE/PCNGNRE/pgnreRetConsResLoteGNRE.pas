@@ -119,6 +119,8 @@ type
     FValorICMS: Currency;
     FVersao: TVersaoGNRE;
     FXML: string;
+    FNomeArq: string;
+    FTXT: string;
   public
     property Identificador: Integer read FIdentificador write FIdentificador;
     property SequencialGuia: Integer read FSequencialGuia write FSequencialGuia;
@@ -161,6 +163,8 @@ type
     property ValorICMS: Currency read FValorICMS write FValorICMS;
     property Versao: TVersaoGNRE read FVersao write FVersao;
     property XML: string read FXML write FXML;
+    property NomeArq: string read FNomeArq write FNomeArq;
+    property TXT: string read FTXT write FTXT;
   end;
 
   TGuiaCollection = class(TACBrObjectList)

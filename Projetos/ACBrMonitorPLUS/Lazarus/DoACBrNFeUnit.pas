@@ -650,7 +650,8 @@ begin
              and ( NotasFiscais.Items[J].NFe.Det[0].Prod.nItem = 1) then
                  NotasFiscais.Items[J].NFe.Det[0].Prod.xProd:= cHOM_MSG;
 
-          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[NFe_Arq' + Trim(IntToStr(
+          if not( TpResp in [resJSON, resXML]) then
+            fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[NFe_Arq' + Trim(IntToStr(
                          fACBrNFe.NotasFiscais.Items[J].NFe.Ide.nNF)) +']' + sLineBreak +
                          'Arquivo=' + fACBrNFe.NotasFiscais.Items[J].NomeArq;
 
@@ -660,7 +661,8 @@ begin
             NotasFiscais.Items[J].ImprimirPDF;
             ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.ID)+'-nfe.pdf';
 
-            fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+            if not( TpResp in [resJSON, resXML]) then
+              fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
               'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
@@ -751,7 +753,8 @@ begin
         NotasFiscais.Items[0].ImprimirPDF;
         ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
 
-        fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+        if not(TpResp in [resJSON, resXML]) then
+          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
                 'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak ;
       end;
 
@@ -1706,7 +1709,10 @@ begin
     RespEnvio := TEnvioResposta.Create( TpResp, codUTF8);
     try
        RespEnvio.Processar(ACBrNFe);
-       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
+       if TpResp in [resJSON, resXML] then
+         fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
+       else
+         fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
     finally
        RespEnvio.Free;
     end;
@@ -1723,7 +1729,10 @@ begin
                                ACBrNFe.WebServices.Retorno.Msg,
                                ACBrNFe.WebServices.Retorno.Protocolo,
                                ACBrNFe.WebServices.Retorno.ChaveNFe);
-         fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+         if TpResp in [resJSON, resXML] then
+           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
+         else
+           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
                         + sLineBreak + RespRetorno.Gerar;
        finally
          RespRetorno.Free;
@@ -1947,7 +1956,10 @@ begin
       RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
       try
         RespEnvio.Processar(ACBrNFe);
-        fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
+        if TpResp in [resJSON, resXML] then
+          fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
+        else
+          fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
       finally
         RespEnvio.Free;
       end;
@@ -1962,7 +1974,10 @@ begin
                                  ACBrNFe.WebServices.Retorno.Msg,
                                  ACBrNFe.WebServices.Retorno.Protocolo,
                                  ACBrNFe.WebServices.Retorno.ChaveNFe);
-           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+           if TpResp in [resJSON, resXML] then
+             fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
+           else
+             fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
                           + sLineBreak + RespRetorno.Gerar;
         finally
            RespRetorno.Free;

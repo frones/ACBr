@@ -2202,6 +2202,24 @@ begin
         TagF :=    '</InfPedidoCancelamento>' +
               '</Pedido>';
       end;
+
+    proElotech:
+      begin
+        TagI := '<' + Prefixo4 + 'IdentificacaoRequerente>' +
+                 '<' + Prefixo4 + 'CpfCnpj>' +
+                  '<' + Prefixo4 + 'Cnpj>' + Cnpj + '</' + Prefixo4 + 'Cnpj>' +
+                 '</' + Prefixo4 + 'CpfCnpj>' +
+                 '<' + Prefixo4 + 'InscricaoMunicipal>' + IM + '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                 '<' + Prefixo4 + 'Senha>' + SenhaWeb + '</' + Prefixo4 + 'Senha>' +
+                 '<' + Prefixo4 + 'Homologa>' + LowerCase(booltostr(Transacao, True)) + '</' + Prefixo4 + 'Homologa>' +
+                '</' + Prefixo4 + 'IdentificacaoRequerente>' +
+
+                '<' + Prefixo3 + 'Pedido>' +
+                   '<' + Prefixo4 + 'InfPedidoCancelamento' + FaIdentificadorCanc + '>';
+
+        TagF :=    '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                '</' + Prefixo3 + 'Pedido>';
+      end;
   else
     begin
       TagI := '<' + Prefixo3 + 'Pedido>' +

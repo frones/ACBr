@@ -488,6 +488,14 @@ begin
         FNFSeW.NFSeWClass.URL := StringReplace(FNFSeW.NFSeWClass.URL, '%NomeURL_HP%', Configuracoes.Geral.xNomeURL_P, [rfReplaceAll]);
     end;
 
+    if Configuracoes.Geral.Provedor = proActconv202 then
+    begin
+      if Configuracoes.WebServices.Ambiente = taProducao then
+        FNFSeW.NFSeWClass.URL := StringReplace(FNFSeW.NFSeWClass.URL, '%Ambiente%', 'nfseserv', [rfReplaceAll])
+      else
+        FNFSeW.NFSeWClass.URL := StringReplace(FNFSeW.NFSeWClass.URL, '%Ambiente%', 'homologacao', [rfReplaceAll]);
+    end;
+
     FNFSeW.NFSeWClass.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
     FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;

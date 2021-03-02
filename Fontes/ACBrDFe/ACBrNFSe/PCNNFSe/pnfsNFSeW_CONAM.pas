@@ -168,14 +168,21 @@ begin
   Exemplo pratico é um estacionamento, quando é solicitado uma nfse de serviço. Serviço prestado no prestador.
   }
 
-  Gerador.wCampo(tcStr, '', 'TipoLogLocPre' , 01, 10, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.TipoLogradouro, NFSe.PrestadorServico.Endereco.TipoLogradouro), '');
-  Gerador.wCampo(tcStr, '', 'LogLocPre'     , 01, 60, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.Endereco, NFSe.PrestadorServico.Endereco.Endereco), '');
-  Gerador.wCampo(tcStr, '', 'NumEndLocPre'  , 01, 10, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.Numero, NFSe.PrestadorServico.Endereco.Numero), '');
-  Gerador.wCampo(tcStr, '', 'ComplEndLocPre', 01, 60, 0, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.Complemento, NFSe.PrestadorServico.Endereco.Complemento), '');
-  Gerador.wCampo(tcStr, '', 'BairroLocPre'  , 01, 60, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.Bairro, NFSe.PrestadorServico.Endereco.Bairro), '');
-  Gerador.wCampo(tcStr, '', 'MunLocPre'     , 01, 60, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, MunTomador, MunPrestador), '');
-  Gerador.wCampo(tcStr, '', 'SiglaUFLocpre' , 01, 02, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, NFSe.Tomador.Endereco.UF, NFSe.PrestadorServico.Endereco.UF), '');
-  Gerador.wCampo(tcStr, '', 'CepLocPre'     , 01, 08, 1, IfThen(NFSe.LogradouLocalPrestacaoServico = llpTomador, OnlyNumber(NFSe.Tomador.Endereco.CEP), OnlyNumber(NFSe.PrestadorServico.Endereco.CEP)), '');
+  {
+    segundo o manual: Informar somente se Local de Prestação de Serviços
+    diferente do Endereço do Tomador
+  }
+  if NFSe.LogradouLocalPrestacaoServico <> llpTomador then
+  begin
+    Gerador.wCampo(tcStr, '', 'TipoLogLocPre' , 01, 10, 1, NFSe.PrestadorServico.Endereco.TipoLogradouro, '');
+    Gerador.wCampo(tcStr, '', 'LogLocPre'     , 01, 60, 1, NFSe.PrestadorServico.Endereco.Endereco, '');
+    Gerador.wCampo(tcStr, '', 'NumEndLocPre'  , 01, 10, 1, NFSe.PrestadorServico.Endereco.Numero, '');
+    Gerador.wCampo(tcStr, '', 'ComplEndLocPre', 01, 60, 0, NFSe.PrestadorServico.Endereco.Complemento, '');
+    Gerador.wCampo(tcStr, '', 'BairroLocPre'  , 01, 60, 1, NFSe.PrestadorServico.Endereco.Bairro, '');
+    Gerador.wCampo(tcStr, '', 'MunLocPre'     , 01, 60, 1, MunPrestador, '');
+    Gerador.wCampo(tcStr, '', 'SiglaUFLocpre' , 01, 02, 1, NFSe.PrestadorServico.Endereco.UF, '');
+    Gerador.wCampo(tcStr, '', 'CepLocPre'     , 01, 08, 1, OnlyNumber(NFSe.PrestadorServico.Endereco.CEP), '');
+  end;
 
   Gerador.wCampo(tcStr, '', 'Email1', 01, 120, 1, NFSe.Tomador.Contato.Email, '');
 

@@ -1094,7 +1094,7 @@ begin
 
   FNameSpace  := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
 
-  if FProvedor = proActcon then
+  if FProvedor in [proActcon, proActconv202] then
   begin
     if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
       FNameSpace := StringReplace(FNameSpace, '%Ambiente%', 'homologacao', [rfReplaceAll])
@@ -1115,7 +1115,6 @@ begin
         else
           FNameSpace := StringReplace(FNameSpace, '/nfseserv/', '/homologacao/', [rfReplaceAll]);
       end;
-
     end
     else
       FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);

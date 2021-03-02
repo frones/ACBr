@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2021
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/59632-t%C3%B3pico-exclusivo-para-troca-de-provedor-e-novas-cidades/?do=findComment&comment=403324&_rid=63
+  Por: Matheus Rodrigo Koch
+-- pnfsNFSeG --
+[*] Correções para gerar e enviar corretamente o pedido de cancelamento - Provedor Elotech.
+  Por: Italo Giurizzato Junior
+[*] https://www.projetoacbr.com.br/forum/topic/61482-tags-de-local-de-presta%C3%A7%C3%A3o-no-provedor-conam/
+  Por: Thiagond
+-- ACBrNFSeNotasFiscais/ACBrNFSeWebServices --
+[*] Possível correção para o provedor Actconv202.
+  Por: Italo Giurizzato Junior
+
 26/02/2021
 -- pnfsLerListaNFSe/ pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/61449-sugest%C3%A3o-alteracao-para-provedor-elotech/

@@ -2262,22 +2262,30 @@ begin
     begin
       DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
       // ConsultarNFSePorRps volta com formato m/d/yyyy
-      If (Pos('M', DataHorBR) > 0) then
+      if (Pos('M', DataHorBR) > 0) then
         NFSe.DataEmissaoRps := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
       else
-        If (Pos('T', DataHorBR) > 0) then
+        if (Pos('T', DataHorBR) > 0) then
           NFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissao')
-      else
-      If (Pos('-', DataHorBR) > 0) then
-          NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao')
-      else
-        NFSe.DataEmissaoRps := StrToDate(DataHorBR);
+        else
+          if (Pos('-', DataHorBR) > 0) then
+            NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao')
+          else
+            NFSe.DataEmissaoRps := StrToDate(DataHorBR);
     end
     else
-      NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+    begin
+      {
+        tcDatVcto data no formado DD/MM/YYYY
+        tcDat     data no formato YYYY/MM/DD
+      }
+      if FProvedor = proSmarAPDv23 then
+        NFSe.DataEmissaoRps := Leitor.rCampo(tcDatVcto, 'DataEmissao')
+      else
+        NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+    end;
 
-
-    NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+    NFSe.Status := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
     if (Leitor.rExtrai(NivelTemp+1, 'IdentificacaoRps') <> '') then
     begin

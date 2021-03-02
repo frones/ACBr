@@ -23,7 +23,7 @@ uses
   ACBrLibReinfConsts, ACBrLibReinfRespostas, ACBrLibNFeRespostas,
   ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas,
   ACBrLibCertUtils, ACBrLibDeviceUtils, ACBrLibConsultaCNPJConsts,
-  ACBrLibConsultaCPFRespostas, DoCNPJUnit, DoCPFUnit;
+  ACBrLibConsultaCPFRespostas, DoCNPJUnit, DoCPFUnit, ACBrLibBoletoRespostas;
 
 {$R *.res}
 var

@@ -34410,15 +34410,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
-    MostrarPreview = True
-    MostrarStatus = True
+    MostrarPreview = False
+    MostrarStatus = False
     TamanhoPapel = tpA4
     NumCopias = 1
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
-    PrintDialog = True
+    PrintDialog = False
     Left = 400
     Top = 453
   end

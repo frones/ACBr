@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2021
+-- DoACBrNFeUnit --
+[*] Melhorias na geração respostas para componente NFe
+
+01/03/2021
 -- DoACBrBoleto --
 [*] Adicionado parâmetro no método LerRetorno para obter Retorno como Resposta
 

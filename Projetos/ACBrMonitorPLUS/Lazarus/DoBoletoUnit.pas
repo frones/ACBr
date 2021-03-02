@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, SysUtils, CmdUnit, ACBrBoleto,
-  ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao;
+  ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao, ACBrLibResposta, ACBrLibBoletoRespostas;
 
 type
 
@@ -458,24 +458,42 @@ end;
 { Params: 0 - Dir = Diretório do arquivo de Retorno
           1 - NomeArq = Nome do arquivo de Retorno
           2 - ListaRelat = Boolean: Listar Relatório caso seja true
+          3 - RetResposta = Boolean: Obter o Retorna na Resposta
 }
 procedure TMetodoLerRetorno.Executar;
 var
   ADir     : String;
   ANomeArq : String;
   AListaRelat : Boolean;
+  ARetResposta : Boolean;
+  RespRetorno : TRetornoBoleto;
 begin
   ADir     := fpCmd.Params(0);
   ANomeArq := fpCmd.Params(1);
   AListaRelat := StrToBoolDef( fpCmd.Params(2), False );
+  ARetResposta := StrToBoolDef( fpCmd.Params(3), False );
 
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     ACBrBoleto.DirArqRetorno  := ADir;
     ACBrBoleto.NomeArqRetorno := ANomeArq;
     ACBrBoleto.LerRetorno();
+
+    if ARetResposta then
+    begin
+      RespRetorno := TRetornoBoleto.Create(TpResp, codUTF8);
+      try
+        RespRetorno.Processar(ACBrBoleto);
+        fpCmd.Resposta := sLineBreak + RespRetorno.Gerar;
+      Finally
+        RespRetorno.Free;
+      end;
+
+    end;
+
     ACBrBoleto.GravarArqIni(ADir,'');
-      if ( AListaRelat ) then
+
+    if ( AListaRelat ) then
         ImprimeRelatorioRetorno(ADir);
 
   end;

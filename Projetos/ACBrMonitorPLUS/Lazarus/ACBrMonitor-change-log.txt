@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2021
+-- DoACBrBoleto --
+[*] Adicionado parâmetro no método LerRetorno para obter Retorno como Resposta
+
+01/03/2021
 -- DoACBrGNReUnit --
 [*] Ajuste na geração Respostas do componente GNRe adicionando campos com path do arquivo gerado e o XML
 

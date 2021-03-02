@@ -37,9 +37,27 @@ unit ACBrLibGNReRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta, ACBrGNRE2;
+  SysUtils, Classes, contnrs, ACBrLibResposta, ACBrGNRE2, pgnreRetConsResLoteGNRE;
 
 type
+
+   { TGNReRetorno }
+  TGNReRetorno = class(TACBrLibRespostaBase)
+  private
+    FXML: string;
+    FTXT: String;
+    FArquivo: string;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ARetRecepcao: TGuiaCollectionItem);
+
+  published
+    property XML: string read FXML write FXML;
+    property TXT: string read FTXT write FTXT;
+    property Arquivo: string read FArquivo write FArquivo;
+  end;
 
   { TLibGNReEnvio }
   TLibGNReEnvio = class(TACBrLibResposta<TACBrGNRE>)
@@ -49,8 +67,10 @@ type
     FDescricao: string;
     FProtocolo: string;
     FRecibo: string;
+    FItems: TObjectList;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
 
     procedure Processar(const Control: TACBrGNRE); override;
 
@@ -60,6 +80,7 @@ type
     property Descricao: string read FDescricao write FDescricao;
     property Recibo: string read FRecibo write FRecibo;
     property Protocolo: string read FProtocolo write FProtocolo;
+    property Items: TObjectList read FItems;
   end;
 
   { TLibGNReConsulta }
@@ -90,7 +111,22 @@ implementation
 
 uses
   strutils,
-  ACBrLibGNReConsts, pcnConversao;
+  ACBrLibGNReConsts, pcnConversao, pcnAuxiliar;
+
+{ TGNReRetorno }
+
+constructor TGNReRetorno.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
+end;
+
+procedure TGNReRetorno.Processar(const ARetRecepcao: TGuiaCollectionItem);
+begin
+  XML := ARetRecepcao.XML;
+  TXT := ARetRecepcao.TXT;
+  Arquivo := ARetRecepcao.NomeArq;
+end;
 
 { TLibGNReConsulta }
 
@@ -117,9 +153,21 @@ end;
 constructor TLibGNReEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+  FItems := TObjectList.Create;
+end;
+
+destructor TLibGNReEnvio.Destroy;
+begin
+  FItems.Clear;
+  FItems.Free;
+
+  inherited Destroy;
 end;
 
 procedure TLibGNReEnvio.Processar(const Control: TACBrGNRE);
+Var
+  I: Integer;
+  Item: TGNReRetorno;
 begin
   with Control.WebServices.Retorno do
   begin
@@ -128,6 +176,15 @@ begin
     Self.Descricao := Descricao;
     Self.Recibo := numeroRecibo;
     Self.Protocolo := Protocolo;
+
+    for I := 0 to Control.WebServices.Retorno.GNRERetorno.resGuia.Count - 1 do
+    begin
+      Item := TGNReRetorno.Create('Retorno' + Trim(IntToStrZero(I +1, 3)), Tipo, Formato);
+      Item.Processar(Control.WebServices.Retorno.GNRERetorno.resGuia[I]);
+      FItems.Add(Item);
+    end;
+
+
   end;
 end;
 

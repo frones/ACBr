@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2021
+--- ACBrLiGRNeResposta ---
+[+] Adicionado classe para obter retorno e path do arquivo gerado sendo TXT ou XML
+	Por: José M S Junior
+
 12/02/2021
 --- ACBrLiGRNeBase ---
 [-] Correção no metodo Validar o mesmo estava fazendo o retorno errado.

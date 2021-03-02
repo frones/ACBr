@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2021
+--ACBrBancoBrasil--
+[*] Ajuste Header CNAB240 posicao 226-228 referente layoyt 030 
+https://www.projetoacbr.com.br/forum/topic/61336-remessa-bb-cnab240-posi%C3%A7%C3%A3o-header-212-240-e-header-lote-12-13/
+
 16/02/2021
 --ACBrBancoSantander--
 [*] Adicionado Leitura do Código Cedente para Retorno CNAB400

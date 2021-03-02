@@ -1597,7 +1597,7 @@ type
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
-    procedure GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
+    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String): String;
     procedure GravarIniRetornoWeb(DirRetorno: String; const NomeArquivo: String);
 
   published
@@ -4977,13 +4977,15 @@ begin
 
 end;
 
-procedure TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
+function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String): String;
 var
   IniRetorno: TMemIniFile;
+  SL: TStringList;
   wSessao: String;
   I: Integer;
   J: Integer;
 begin
+  Result:= '';
   if Pos(PathDelim,DirIniRetorno) <> Length(DirIniRetorno) then
      DirIniRetorno:= DirIniRetorno + PathDelim;
 
@@ -5045,6 +5047,14 @@ begin
                                    ListadeBoletos[I].DescricaoMotivoRejeicaoComando[J]);
        end;
 
+    end;
+
+    SL:= TStringList.Create;
+    try
+      IniRetorno.GetStrings(SL);
+      Result:= SL.Text;
+    finally
+      SL.Free;
     end;
 
   finally

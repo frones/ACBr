@@ -51,6 +51,10 @@ Símbolo : Significado
 
 27/02/2021
 --ACBrBancoBrasil--
+[*] Alteração na função GravarRetorno para obter arquivo Retorno como resposta
+
+27/02/2021
+--ACBrBancoBrasil--
 [*] Ajuste Header CNAB240 posicao 226-228 referente layoyt 030 
 https://www.projetoacbr.com.br/forum/topic/61336-remessa-bb-cnab240-posi%C3%A7%C3%A3o-header-212-240-e-header-lote-12-13/
 

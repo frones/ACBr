@@ -80,8 +80,10 @@ var
   wPosIni, wPosFim, wDecimais: Integer;
   wResposta: AnsiString;
 begin
+
   Result    := 0;
-  wResposta := Copy(aResposta, 1, Pos(#10, aResposta) - 1);
+  wResposta := Copy(aResposta, PosLast(TAB, aResposta), PosLast(CR, aResposta) - 1);
+
   wPosIni   := Pos(' ', wResposta);
   wPosFim   := Pos('k', wResposta);
   wDecimais := 1000;

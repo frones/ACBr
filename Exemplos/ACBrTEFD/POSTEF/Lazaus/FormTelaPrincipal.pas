@@ -2144,7 +2144,7 @@ begin
     APag.tBand := bcVisa
   else if (pos('mastercard',Bandeira) = 1) then
     APag.tBand := bcMasterCard
-  else if (pos('american',Bandeira) = 1) then
+  else if (pos('american',Bandeira) = 1) or (pos('amex',Bandeira) = 1) then
     APag.tBand := bcAmericanExpress
   else if (pos('sorocred',Bandeira) = 1) then
     APag.tBand := bcSorocred

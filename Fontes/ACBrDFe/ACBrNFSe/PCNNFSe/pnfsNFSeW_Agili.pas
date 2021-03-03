@@ -417,7 +417,9 @@ begin
     end
     else
     begin
-      Gerador.wCampo(tcStr, '#29', 'ItemLei116', 01, 015, 0, codLCServ, '');
+      if (StrToInt(NFSe.PrestadorServico.Endereco.CodigoMunicipio) <> 5105150) then
+        Gerador.wCampo(tcStr, '#29', 'ItemLei116', 01, 015, 0, codLCServ, '');
+
       Gerador.wCampo(tcDe2, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
     end;
 
@@ -554,7 +556,8 @@ begin
       Gerador.wCampo(tcStr, '', LTagAtividadeEconomica, 01, 140, 1, NFSe.Servico.CodigoCnae, '');
   end;
 
-  if VersaoNFSe = ve200 then
+  if (VersaoNFSe = ve200) and
+     (StrToInt(NFSe.PrestadorServico.Endereco.CodigoMunicipio) <> 5105150) then
     Gerador.wCampo(tcStr, '#30', 'CodigoCnae', 01, 15, 0, OnlyNumber(NFSe.Servico.CodigoCnae), '');
 
   GerarExigibilidadeISSQN;

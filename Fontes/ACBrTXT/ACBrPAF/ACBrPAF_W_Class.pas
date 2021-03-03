@@ -57,7 +57,7 @@ type
     procedure WriteRegistroW2;
     procedure WriteRegistroW3(Layout: TLayoutPAF);
     procedure WriteRegistroW4(Layout: TLayoutPAF);
-    procedure WriteRegistroW9;
+    procedure WriteRegistroW9(Layout: TLayoutPAF);
   public
     constructor Create;/// Create
     destructor Destroy; override; /// Destroy
@@ -225,16 +225,16 @@ begin
   end;
 end;
 
-procedure TPAF_W.WriteRegistroW9;
+procedure TPAF_W.WriteRegistroW9(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroW9) then
   begin
     with FRegistroW9 do
     begin
-      Check(funChecaCNPJ(FRegistroW2.CNPJ),             '(W9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroW2.CNPJ]);
-      Check(funChecaIE(FRegistroW2.IE, FRegistroW2.UF), '(W9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroW2.IE]);
+      Check(funChecaCNPJ(FRegistroW2.CNPJ),             '('+IfThen((Layout = lpPAFECF),'W9','W5')+') TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroW2.CNPJ]);
+      Check(funChecaIE(FRegistroW2.IE, FRegistroW2.UF), '('+IfThen((Layout = lpPAFECF),'W9','W5')+') TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroW2.IE]);
       ///
-      Add(LFill('W9') +
+      Add(LFill(IfThen((Layout = lpPAFECF),'W9','W5')) +
           LFill(limpaCampo(FRegistroW2.CNPJ), 14  ) +
           RFill(limpaCampo(FRegistroW2.IE)  , 14  ) +
           LFill(TOT_REG         , 6, 0));

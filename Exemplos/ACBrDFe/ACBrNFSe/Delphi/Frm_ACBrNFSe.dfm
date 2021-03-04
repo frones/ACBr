@@ -1842,6 +1842,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = False
     Configuracoes.Geral.Emitente.DadosSenhaParams = <>
+    Configuracoes.Geral.Resposta = 0
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

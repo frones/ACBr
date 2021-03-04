@@ -74,7 +74,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils, ACBrUtil, ACBrValidador;
+uses ACBrTXTUtils, ACBrUtil, ACBrValidador, StrUtils;
 
 { TPAF_W }
 
@@ -146,7 +146,7 @@ begin
     WriteRegistroW2;
     WriteRegistroW3(Layout);
     WriteRegistroW4(Layout);
-    WriteRegistroW9;
+    WriteRegistroW9(Layout);
   end;
 end;
 

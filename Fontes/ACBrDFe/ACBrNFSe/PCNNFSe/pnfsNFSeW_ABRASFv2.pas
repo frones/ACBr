@@ -1150,7 +1150,7 @@ begin
      proFiorilli, proGoiania, proGovDigital,
      proISSDigital, proLink3, proProdata, proPVH, proSaatri,
      proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-     proNFSEBrasil, proNEAInformatica, proNotaInteligente, proVersaTecnologia,
+     proNFSEBrasil, proNEAInformatica, proNotaInteligente, //proVersaTecnologia,
      proSH3, proSIAPNet, proAdm]) then
     FDefTipos := FServicoEnviar;
 

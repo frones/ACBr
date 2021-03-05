@@ -1830,7 +1830,7 @@ begin
 
         tpInscProd := tiCNPJ;
         nrInscProd := '12345678000123';
-        indOpcCP   := '1234';
+        indOpcCP   := 'S';
 
         detAquis.Clear;
         with detAquis.New do

@@ -168,6 +168,10 @@ begin
   for i := 0 to FEventos.ReinfEventos.R2050.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R2050[i].evtComProd.XML);
 
+  {R2055}
+  for i := 0 to FEventos.ReinfEventos.R2055.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R2055[i].evtAqProd.XML);
+
   {R2060}
   for i := 0 to FEventos.ReinfEventos.R2060.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R2060[i].evtCPRB.XML);
@@ -193,7 +197,7 @@ begin
     LoadFromString(FEventos.ReinfEventos.R9000[i].evtExclusao.XML);
 end;
 
-procedure TLoteEventos.GerarXML; //(const AGrupo: TReinfGrupo);
+procedure TLoteEventos.GerarXML;
 var
   i: Integer;
   Eventosxml: AnsiString;
@@ -201,7 +205,6 @@ begin
   CarregarXmlEventos;
 
   Eventosxml := EmptyStr;
-//  FXML := EmptyStr;
 
   FXML :=
   '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v'+
@@ -220,7 +223,7 @@ begin
           '</Reinf>';
 
   FXML := AnsiToUtf8(FXML);
-  Validar;
+//  Validar;
 end;
 
 function TLoteEventos.GetItem(Index: integer): TItemLoteEventos;
@@ -327,8 +330,8 @@ begin
   inherited Create;
 
   FACBrReinf := AOwner;
-  FLeitor      := TLeitor.Create;
-  FXML         := '';
+  FLeitor := TLeitor.Create;
+  FXML := '';
 end;
 
 function TItemLoteEventos.GetIDEvento: string;

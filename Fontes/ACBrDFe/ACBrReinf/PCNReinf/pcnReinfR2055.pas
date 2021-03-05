@@ -320,11 +320,11 @@ end;
 procedure TevtAqProd.GerarideEstab;
 begin
   Gerador.wGrupo('ideEstabAdquir');
-  Gerador.wCampo(tcStr, '', 'tpInscEstab',       1,  1, 1, TpInscricaoToStr(Self.FinfoAquisProd.ideEstabAdquir.tpInscAdq));
-  Gerador.wCampo(tcStr, '', 'nrInscAdq',       1, 14, 1, Self.FinfoAquisProd.ideEstabAdquir.nrInscAdq);
+
+  Gerador.wCampo(tcStr, '', 'tpInscAdq', 1,  1, 1, TpInscricaoToStr(Self.FinfoAquisProd.ideEstabAdquir.tpInscAdq));
+  Gerador.wCampo(tcStr, '', 'nrInscAdq', 1, 14, 1, Self.FinfoAquisProd.ideEstabAdquir.nrInscAdq);
 
   GerarideProdutor;
-  GerarAquis(Self.FinfoAquisProd.ideEstabAdquir.detAquis);
 
   Gerador.wGrupo('/ideEstabAdquir');
 end;
@@ -332,9 +332,13 @@ end;
 procedure TevtAqProd.GerarideProdutor;
 begin
   Gerador.wGrupo('ideProdutor');
-  Gerador.wCampo(tcStr, '', 'tpInscProd',       1,  1, 1, TpInscricaoToStr(Self.FinfoAquisProd.ideEstabAdquir.tpInscProd));
-  Gerador.wCampo(tcStr, '', 'nrInscProd',       1, 14, 1, Self.FinfoAquisProd.ideEstabAdquir.nrInscProd);
-  Gerador.wCampo(tcStr, '', 'indOpcCP',         1, 1, 1, Self.FinfoAquisProd.ideEstabAdquir.indOpcCP);
+
+  Gerador.wCampo(tcStr, '', 'tpInscProd', 1,  1, 1, TpInscricaoToStr(Self.FinfoAquisProd.ideEstabAdquir.tpInscProd));
+  Gerador.wCampo(tcStr, '', 'nrInscProd', 1, 14, 1, Self.FinfoAquisProd.ideEstabAdquir.nrInscProd);
+  Gerador.wCampo(tcStr, '', 'indOpcCP',   1,  1, 1, Self.FinfoAquisProd.ideEstabAdquir.indOpcCP);
+
+  GerarAquis(Self.FinfoAquisProd.ideEstabAdquir.detAquis);
+
   Gerador.wGrupo('/ideProdutor');
 end;
 
@@ -374,7 +378,7 @@ begin
     Item := Lista.Items[i];
 
     Gerador.wGrupo('infoProcJud');
-    Gerador.wCampo(tcStr, '', 'nrProcJud',       1, 21, 1, item.nrProc);
+    Gerador.wCampo(tcStr, '', 'nrProcJud',    1, 21, 1, item.nrProc);
     Gerador.wCampo(tcStr, '', 'codSusp',      1, 14, 0, item.codSusp);
     Gerador.wCampo(tcDe2, '', 'vlrCPNRet',    1, 14, 0, item.vlrCPNRet);
     Gerador.wCampo(tcDe2, '', 'vlrRatNRet',   1, 14, 0, item.vlrRatNRet);
@@ -445,7 +449,16 @@ begin
       ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
       ideEvento.perApur  := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
       ideEvento.ProcEmi  := StrToProcEmiReinf(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
-      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      {
+      Indicativo de retificação de informação enviada ao ambiente nacional do eSocial.
+      Validação: Informação permitida apenas se perApur for anterior ao início
+      de vigência do evento R-2055 na EFD-Reinf.
+      Só pode ser informado se indRetif = [1].
+      Valores válidos: S.
+      }
+      ideEvento.retifS1250  := INIRec.ReadString(sSecao, 'retifS1250', EmptyStr);
 
       sSecao := 'ideContri';
 

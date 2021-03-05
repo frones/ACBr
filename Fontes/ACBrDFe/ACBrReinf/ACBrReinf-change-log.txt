@@ -44,6 +44,9 @@ Símbolo : Significado
 
 05/03/2021
 -- Diversos --
+[*] Ajustes na implementação do evento R2055.
+   Por: Magistech / Italo Giurizzato Junior
+-- Diversos --
 [+] Implementação do evento R2055.
    Por: Magistech / Italo Giurizzato Junior
 

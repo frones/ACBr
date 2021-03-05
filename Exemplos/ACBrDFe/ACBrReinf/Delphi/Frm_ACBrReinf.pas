@@ -209,6 +209,7 @@ type
     mmoXMLEnv: TMemo;
     mmoXMLRet: TMemo;
     memoLog: TMemo;
+    chk2055: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathReinfClick(Sender: TObject);
@@ -263,6 +264,7 @@ type
     procedure GerarReinf2030;
     procedure GerarReinf2040;
     procedure GerarReinf2050;
+    procedure GerarReinf2055;
     procedure GerarReinf2060;
     procedure GerarReinf2070;
     procedure GerarReinf2098;
@@ -1344,6 +1346,9 @@ begin
   if chk2050.Checked then
     GerarReinf2050;
 
+  if chk2055.Checked then
+    GerarReinf2055;
+
   if chk2060.Checked then
     GerarReinf2060;
 
@@ -1793,6 +1798,57 @@ begin
             vlrCPSusp    := 0.00;
             vlrRatSusp   := 0.00;
             vlrSenarSusp := 0.00;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf2055;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R2055.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2055.New do
+  begin
+    with evtAqProd do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoAquisProd.ideEstabAdquir do
+      begin
+        tpInscAdq := tiCNPJ;
+        nrInscAdq := '12345678000123';
+
+        tpInscProd := tiCNPJ;
+        nrInscProd := '12345678000123';
+        indOpcCP   := '1234';
+
+        detAquis.Clear;
+        with detAquis.New do
+        begin
+          indAquis     := iaProdRuralPF;
+          vlrBruto     := 100.00;
+          vlrCPDescPR  := 0.00;
+          vlrRatDescPR := 0.00;
+          vlrRatDescPR := 0.00;
+
+          infoProc.Clear;
+          with infoProc.New do
+          begin
+            nrProc       := '123';
+            codSusp      := '456';
+            vlrCPNRet    := 0.00;
+            vlrRatNRet   := 0.00;
+            vlrSenarNRet := 0.00;
           end;
         end;
       end;
@@ -2258,12 +2314,14 @@ begin
 
   ChkRetificadora.Visible := ( chk2010.Checked or chk2020.Checked or
                                chk2030.Checked or chk2040.Checked or
-                               chk2050.Checked or chk2060.Checked or
-                               chk2070.Checked or chk3010.Checked );
+                               chk2050.Checked or chk2055.Checked or
+                               chk2060.Checked or chk2070.Checked or
+                               chk3010.Checked );
 
   edRecibo.Visible := ( chk2010.Checked or chk2020.Checked or chk2030.Checked or
-                        chk2040.Checked or chk2050.Checked or chk2060.Checked or
-                        chk2070.Checked or chk3010.Checked or chk9000.Checked );
+                        chk2040.Checked or chk2050.Checked or chk2050.Checked or
+                        chk2060.Checked or chk2070.Checked or chk3010.Checked or
+                        chk9000.Checked );
 
   lblRecibo.Visible := edRecibo.Visible;
 

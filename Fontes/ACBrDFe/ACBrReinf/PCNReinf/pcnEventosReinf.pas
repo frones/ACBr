@@ -40,8 +40,8 @@ uses
   SysUtils, Classes, synautil,
   ACBrUtil, pcnConversaoReinf,
   pcnReinfR1000, pcnReinfR1070, pcnReinfR2010, pcnReinfR2020, pcnReinfR2030,
-  pcnReinfR2040, pcnReinfR2050, pcnReinfR2060, pcnReinfR2070, pcnReinfR2098,
-  pcnReinfR2099, pcnReinfR3010, pcnReinfR9000;
+  pcnReinfR2040, pcnReinfR2050, pcnReinfR2055, pcnReinfR2060, pcnReinfR2070,
+  pcnReinfR2098, pcnReinfR2099, pcnReinfR3010, pcnReinfR9000;
 
 type
 
@@ -54,6 +54,7 @@ type
     FR2030: TR2030Collection;
     FR2040: TR2040Collection;
     FR2050: TR2050Collection;
+    FR2055: TR2055Collection;
     FR2060: TR2060Collection;
     FR2070: TR2070Collection;
     FR2098: TR2098Collection;
@@ -69,6 +70,7 @@ type
     procedure setR2030(const Value: TR2030Collection);
     procedure setR2040(const Value: TR2040Collection);
     procedure setR2050(const Value: TR2050Collection);
+    procedure setR2055(const Value: TR2055Collection);
     procedure setR2060(const Value: TR2060Collection);
     procedure setR2070(const Value: TR2070Collection);
     procedure setR2098(const Value: TR2098Collection);
@@ -96,6 +98,7 @@ type
     property R2030: TR2030Collection read FR2030 write setR2030;
     property R2040: TR2040Collection read FR2040 write setR2040;
     property R2050: TR2050Collection read FR2050 write setR2050;
+    property R2055: TR2055Collection read FR2055 write setR2055;
     property R2060: TR2060Collection read FR2060 write setR2060;
     property R2070: TR2070Collection read FR2070 write setR2070;
     property R2098: TR2098Collection read FR2098 write setR2098;
@@ -120,6 +123,7 @@ begin
   FR2030.Clear;
   FR2040.Clear;
   FR2050.Clear;
+  FR2055.Clear;
   FR2060.Clear;
   FR2070.Clear;
   FR2098.Clear;
@@ -139,6 +143,7 @@ begin
   FR2030 := TR2030Collection.Create(AOwner);
   FR2040 := TR2040Collection.Create(AOwner);
   FR2050 := TR2050Collection.Create(AOwner);
+  FR2055 := TR2055Collection.Create(AOwner);
   FR2060 := TR2060Collection.Create(AOwner);
   FR2070 := TR2070Collection.Create(AOwner);
   FR2098 := TR2098Collection.Create(AOwner);
@@ -156,6 +161,7 @@ begin
   FR2030.Free;
   FR2040.Free;
   FR2050.Free;
+  FR2055.Free;
   FR2060.Free;
   FR2070.Free;
   FR2098.Free;
@@ -170,9 +176,9 @@ function TReinfEventos.GetCount: Integer;
 begin
   Result := self.R1000.Count + self.R1070.Count + Self.R2010.Count +
             Self.R2020.Count + Self.R2030.Count + Self.R2040.Count +
-            Self.R2050.Count + Self.R2060.Count + Self.R2070.Count +
-            Self.R2098.Count + Self.R2099.Count + Self.R3010.Count +
-            Self.R9000.Count;
+            Self.R2050.Count + Self.R2055.Count + Self.R2060.Count +
+            Self.R2070.Count + Self.R2098.Count + Self.R2099.Count +
+            Self.R3010.Count + Self.R9000.Count;
 end;
 
 procedure TReinfEventos.Gerar;
@@ -199,6 +205,9 @@ begin
 
   for i := 0 to Self.R2050.Count - 1 do
     Self.R2050.Items[i].evtComProd.GerarXML;
+
+  for i := 0 to Self.R2055.Count - 1 do
+    Self.R2055.Items[i].evtAqProd.GerarXML;
 
   for i := 0 to Self.R2060.Count - 1 do
     Self.R2060.Items[i].evtCPRB.GerarXML;
@@ -251,6 +260,10 @@ begin
     Self.R2050.Items[i].evtComProd.XML :=
     Self.R2050.Items[i].evtComProd.Assinar(Self.R2050.Items[i].evtComProd.XML, 'evtComProd');
 
+  for i := 0 to Self.R2055.Count - 1 do
+    Self.R2055.Items[i].evtAqProd.XML :=
+    Self.R2055.Items[i].evtAqProd.Assinar(Self.R2055.Items[i].evtAqProd.XML, 'evtAqProd');
+
   for i := 0 to Self.R2060.Count - 1 do
     Self.R2060.Items[i].evtCPRB.XML :=
     Self.R2060.Items[i].evtCPRB.Assinar(Self.R2060.Items[i].evtCPRB.XML, 'evtCPRB');
@@ -300,6 +313,9 @@ begin
 
   for i := 0 to Self.R2050.Count - 1 do
     Self.R2050.Items[i].evtComProd.Validar(schevtInfoProdRural);
+
+  for i := 0 to Self.R2055.Count - 1 do
+    Self.R2055.Items[i].evtAqProd.Validar(schevtAquisicaoProdRural);
 
   for i := 0 to Self.R2060.Count - 1 do
     Self.R2060.Items[i].evtCPRB.Validar(schevtInfoCPRB);
@@ -446,6 +462,23 @@ begin
     end;
   end;
 
+  for i := 0 to Self.R2055.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R2055.Items[i].evtAqProd.Id) + '-' +
+     TipoEventoToStr(Self.R2055.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2055.Items[i].evtAqProd.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR2055;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R2055.Items[i].evtAqProd.Id);
+      XML := Self.R2055.Items[i].evtAqProd.XML;
+    end;
+  end;
+
+
   for i := 0 to Self.R2060.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.R2060.Items[i].evtCPRB.Id) + '-' +
@@ -576,6 +609,11 @@ end;
 procedure TReinfEventos.setR2050(const Value: TR2050Collection);
 begin
   FR2050.Assign(Value);
+end;
+
+procedure TReinfEventos.setR2055(const Value: TR2055Collection);
+begin
+  FR2055.Assign(Value);
 end;
 
 procedure TReinfEventos.setR2060(const Value: TR2060Collection);

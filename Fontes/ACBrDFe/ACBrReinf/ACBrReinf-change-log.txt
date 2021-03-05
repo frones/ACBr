@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2021
+-- Diversos --
+[+] Implementação do evento R2055.
+   Por: Magistech / Italo Giurizzato Junior
+
 22/07/2020
 -- Diversos --
 [+] Acrescentado a unit pcnConsts em algumas units do componente.

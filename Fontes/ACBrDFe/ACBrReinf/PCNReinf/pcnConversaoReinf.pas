@@ -106,7 +106,7 @@ type
                             schevtRecursoRecebidoAssociacao,  // R-2030 - Recursos Recebidos por Associação Desportiva
                             schevtRecursoRepassadoAssociacao, // R-2040 - Recursos Repassados para Associação Desportiva
                             schevtInfoProdRural,              // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
-                            schevtAquiProdRural,              // R-2055 - Aquisição de produção rural
+                            schevtAquisicaoProdRural,         // R-2055 - Aquisição de produção rural
                             schevtInfoCPRB,                   // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
                             schevtPgtosDivs,                  // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
                             schevtReabreEvPer,                // R-2098 - Reabertura dos Eventos Periódicos
@@ -198,6 +198,16 @@ type
                               icMercExterno // 9 - Comercialização direta da Produção no Mercado Externo
                             );
 
+  TdetAquis                 = (iaProdRuralPF,  // 1 - Aquisição de produção de produtor rural pessoa física ou segurado especial em geral;
+                              iaProdRuraPFPAA, // 2 - Aquisição de produção de produtor rural pessoa física ou segurado especial em geral por entidade do PAA;
+                              iaPF,            // 3 - Aquisição de produção de produtor rural pessoa jurídica por entidade do PAA;
+                              iaIsentaPFPAA,   // 4 - Aquisição de produção de produtor rural pessoa física ou segurado especial em geral - Produção isenta (Lei 13.606/2018);
+                              iaProdRuraPJPAA, // 5 - Aquisição de produção de produtor rural pessoa física ou segurado especial em geral por entidade do PAA - Produção isenta (Lei 13.606/2018);
+                              iaIsentaPJPAA,   // 6 - Aquisição de produção de produtor rural pessoa jurídica por entidade do PAA - Produção isenta (Lei 13.606/2018);
+                              iaExternoPF      // 7 - Aquisição de produção de produtor rural pessoa física ou segurado especial para fins de exportação.
+                            );
+
+
   TtpCompeticao           = ( ttcOficial,   // 1 - Oficial
                               ttcnaoOficial // 2 - Não Oficial
                             );
@@ -221,7 +231,7 @@ type
                               ttrOutros       // 5 - Outros
                             );
 
-  TVersaoReinf            = ( v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00 );
+  TVersaoReinf            = ( v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00, v1_05_01);
 
   // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
   TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
@@ -347,6 +357,9 @@ function StrTotpRepasse(var ok: boolean; const s: string): TtpRepasse;
 function indComToStr(const t: TindCom ): string;
 function StrToindCom(var ok: boolean; const s: string): TindCom;
 
+function detAquisToStr(const t: TdetAquis): string;
+function StrToDetAquis(var ok: boolean; const s: string): TdetAquis;
+
 function tpAjusteToStr(const t: TtpAjuste ): string;
 function StrTotpAjuste(var ok: boolean; const s: string): TtpAjuste;
 
@@ -417,7 +430,7 @@ begin
      teR2030: Result := schevtRecursoRecebidoAssociacao;
      teR2040: Result := schevtRecursoRepassadoAssociacao;
      teR2050: Result := schevtInfoProdRural;
-     teR2055: Result := schevtAquiProdRural;
+     teR2055: Result := schevtAquisicaoProdRural;
      teR2060: Result := schevtInfoCPRB;
      teR2070: Result := schevtPgtosDivs;
      teR2098: Result := schevtReabreEvPer;
@@ -458,6 +471,7 @@ begin
     v1_03_02: result := 1.32;
     v1_04_00: Result := 1.40;
     v1_05_00: Result := 1.50;
+    v1_05_01: Result := 1.51;
   else
     result := 0;
   end;
@@ -465,14 +479,14 @@ end;
 
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 begin
-  result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02', '1_04_00', '1_05_00'],
-                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00]);
+  result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02', '1_04_00', '1_05_00', '1_05_01'],
+                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00, v1_05_01]);
 end;
 
 function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
 begin
-  result := StrToEnumerado(ok, s, ['1_02_00', '1_03_00', '1_03_02', '1_04_00', '1_05_00'],
-                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00]);
+  result := StrToEnumerado(ok, s, ['1_02_00', '1_03_00', '1_03_02', '1_04_00', '1_05_00', '1_05_01'],
+                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00, v1_05_00, v1_05_01]);
 end;
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
@@ -696,6 +710,16 @@ end;
 function StrToindCom(var ok: boolean; const s: string): TindCom;
 begin
   result := TindCom( StrToEnumerado2(ok , s, ['1', '7', '8', '9']) );
+end;
+
+function detAquisToStr(const t: TdetAquis): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6', '7']);
+end;
+
+function StrToDetAquis(var ok: boolean; const s: string): TdetAquis;
+begin
+  result := TdetAquis( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6', '7']));
 end;
 
 function tpAjusteToStr(const t: TtpAjuste ): string;

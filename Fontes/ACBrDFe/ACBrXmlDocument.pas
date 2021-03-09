@@ -108,6 +108,11 @@ type
     function GetNextChild(var ANode: TACBrXmlNode): boolean;
     function GetNextAttribute(var AAttribute: TACBrXmlAttribute): boolean;
 
+    function AsString: String;
+    function AsInteger: Integer;
+    function AsDouble: Double;
+    function AsDateTime(const Format: string = ''): TDateTime;
+
   end;
 
   TACBrXmlNamespace = class
@@ -503,6 +508,26 @@ function TACBrXmlNode.GetNextAttribute(var AAttribute: TACBrXmlAttribute): boole
 begin
   Result := FAttributeEnumerator.MoveNext;
   AAttribute := FAttributeEnumerator.Current;
+end;
+
+function TACBrXmlNode.AsString: String;
+begin
+  Return := Content;
+end;
+
+function TACBrXmlNode.AsInteger: Integer;
+begin
+  Return := StrToInt(Content);
+end;
+
+function TACBrXmlNode.AsDouble: Double;
+begin
+  Return := StrToFloat(Content);
+end;
+
+function TACBrXmlNode.AsDateTime(const Format: string): TDateTime;
+begin
+  Result := StringToDateTime(Content, Format);
 end;
 
 { TACBrXmlNamespace }

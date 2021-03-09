@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  pcnConversao, pcnSignature,
+  pcnSignature, ACBrXmlBase,
   ACBrXmlDocument;
 
 resourcestring
@@ -125,7 +125,7 @@ implementation
 uses
   variants, dateutils,
   ACBrDFeUtil, ACBrUtil,
-  pcnAuxiliar;
+  ACBrValidador;
 
 { TACBrXmlWriterOptions }
 constructor TACBrXmlWriterOptions.Create;
@@ -177,7 +177,7 @@ begin
     end;
 
     Result := AddNode(tcStr, ID2, 'CPF  ', 0, 11, Ocorrencia, CNPJCPF);
-    if not ValidarCPF(CNPJCPF) then
+    if ValidarCPF(CNPJCPF) <> '' then
       wAlerta(ID2, 'CPF', 'CPF', ERR_MSG_INVALIDO);
   end
   else
@@ -189,7 +189,7 @@ begin
     end;
 
     Result := AddNode(tcStr, ID1, 'CNPJ', 0, 14, Ocorrencia, CNPJCPF);
-    if (Tamanho > 0) and (not ValidarCNPJ(CNPJCPF)) then
+    if (Tamanho > 0) and (ValidarCNPJ(CNPJCPF) <> '') then
       wAlerta(ID1, 'CNPJ', 'CNPJ', ERR_MSG_INVALIDO);
   end;
 
@@ -213,7 +213,7 @@ begin
   else
     Result := AddNode(tcEsp, ID, 'CNPJ', 14, 14, 0, CNPJ, DSC_CNPJ);
 
-  if not ValidarCNPJ(CNPJ) then
+  if ValidarCNPJ(CNPJ) <> '' then
     wAlerta(ID, 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 end;
 
@@ -233,7 +233,7 @@ begin
   else
     Result := AddNode(tcEsp, ID, 'CPF', 11, 11, 0, CPF, DSC_CPF);
 
-  if not ValidarCPF(CPF) then
+  if ValidarCPF(CPF) <> '' then
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;
 
@@ -243,7 +243,7 @@ begin
   Result := FDocument.CreateElement(AName, ANamespace,  APrefixNamespace);
 end;
 
-function TACBrXmlWriter.AddNode(const Tipo: TpcnTipoCampo; ID, TAG: string;
+function TACBrXmlWriter.AddNode(const Tipo: TACBrTipoCampo; ID, TAG: string;
   const min, max, ocorrencias: smallint; const valor: variant;
   const Descricao: string = ''; ParseTextoXML: boolean = True;
   Atributo: string = ''): TACBrXmlNode;
@@ -386,7 +386,7 @@ begin
       // Tipo String - somente numeros
       ConteudoProcessado := Trim(string(valor));
       EstaVazio := (valor = '');
-      if not ValidarNumeros(ConteudoProcessado) then
+      if not StrIsNumber(ConteudoProcessado) then
         walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
     end;
 

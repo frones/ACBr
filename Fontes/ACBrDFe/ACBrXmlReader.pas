@@ -38,10 +38,10 @@ interface
 
 uses
   Classes, SysUtils,
-  pcnConversao,
-  ACBrXmlDocument;
+  ACBrXmlBase, ACBrXmlDocument;
 
 type
+  { TACBrXmlReader }
   TACBrXmlReader = class
   private
     FArquivo: String;
@@ -110,7 +110,7 @@ begin
     Result := ProcessarConteudo(ANode.Childrens.Find('CPF'), tcStr);
 end;
 
-function TACBrXmlReader.ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TpcnTipoCampo): variant;
+function TACBrXmlReader.ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 var
   ConteudoTag: string;
 begin

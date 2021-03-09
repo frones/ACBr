@@ -38,7 +38,6 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrTEFComum, ACBrTEFPayGoComum, ACBrBase,
   System.Messaging,
   System.Character,
   System.UITypes,
@@ -50,7 +49,8 @@ uses
   Androidapi.JNI.Net,
   Androidapi.JNI.Os,
   Androidapi.JNI.Embarcadero,
-  Androidapi.JNI.GraphicsContentViewText;
+  Androidapi.JNI.GraphicsContentViewText,
+  ACBrTEFComum, ACBrTEFPayGoComum, ACBrBase;
 
 resourcestring
   sErrNOTINIT = 'TACBrTEFPGWebAndroid não foi inicializada';
@@ -68,6 +68,10 @@ const
   URI_AuthorityConfirmation = 'confirmation';
   URI_AuthorityResolve = 'resolve';
 
+  URI_PathConfirmation = 'confirmation';
+  URI_PathPendingTransaction = 'pendingTransaction';
+
+  Key_URI = 'uri';
   Key_DadosAutomacao = 'DadosAutomacao';
   Key_Personalizacao = 'Personalizacao';
   Key_Package = 'package';
@@ -222,7 +226,7 @@ type
     function PWCNF_ToTransactionStatus(Status: LongWord): String;
     function TransactionStatusToPWCNF_(const AStatus: String): LongWord;
 
-    function PWINFO_AUTHSYSTToAcquirer(const AUTHSYST: String): String;
+    function PWINFO_AUTHSYSTToProvider(const AUTHSYST: String): String;
     function ProviderToPWINFO_AUTHSYST(const Provider: String): String;
 
     function PWINFO_CARDTYPEToCardType(const CARDTYPE: String): String;
@@ -302,7 +306,7 @@ implementation
 uses
   StrUtils,
   synacode, synautil,
-  ACBrUtil,ACBrValidador;
+  ACBrUtil, ACBrValidador;
 
 { TACBrURI }
 
@@ -509,7 +513,7 @@ function TACBrTEFPGWebAndroidPersonalizacao.GetURI_Personalizacao: String;
 var
   AURI: TACBrURI;
 begin
-  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityPayment, 'posPersonalizacao');
+  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityPayment, 'posCustomization');
   try
     if (corFundoTela <> 0) then
       AURI.Params.AddField('screenBackgroundColor').AsString := AlphaColorToRGBHex(corFundoTela);
@@ -530,7 +534,7 @@ begin
     if (corFonteTeclado <> 0) then
       AURI.Params.AddField('keyboardFontColor').AsString := AlphaColorToRGBHex(corFonteTeclado);
     if (corSeparadorMenu <> 0) then
-      AURI.Params.AddField('corSeparadorMenu').AsString := AlphaColorToRGBHex(corSeparadorMenu);
+      AURI.Params.AddField('menuSeparatorColor').AsString := AlphaColorToRGBHex(corSeparadorMenu);
     if (not iconeToolbarBase64.IsEmpty) then
       AURI.Params.AddField('toolbarIcon').AsString := iconeToolbarBase64;
     if (not fonteBase64.IsEmpty) then
@@ -941,7 +945,7 @@ begin
     Result := 0;
 end;
 
-function TACBrTEFPGWebAndroid.PWINFO_AUTHSYSTToAcquirer(const AUTHSYST: String): String;
+function TACBrTEFPGWebAndroid.PWINFO_AUTHSYSTToProvider(const AUTHSYST: String): String;
 var
   uAuthSyst: String;
 begin
@@ -1153,12 +1157,11 @@ var
 begin
   AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityPayment, 'input');
   try
-    //TODO: AddURIParam(AURI, 'posTransId', PWINFO_FISCALREF);     // ???
-    AddURIParam(AURI, 'posTransId', PWINFO_FISCALREF);     // ???
+    AddURIParam(AURI, 'transactionId', PWINFO_FISCALREF);     // ???
 
     AURI.Params.AddField('operation').AsString := PWOPER_ToOperation(iOPER);
     if (ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST] <> '') then
-      AURI.Params.AddField('acquirer').AsString := PWINFO_AUTHSYSTToAcquirer(ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]);
+      AURI.Params.AddField('provider').AsString := PWINFO_AUTHSYSTToProvider(ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]);
 
     if (ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE] <> '') then
       AURI.Params.AddField('cardType').AsString := PWINFO_CARDTYPEToCardType(ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]);
@@ -1174,17 +1177,20 @@ begin
     AddURIParam(AURI, 'serviceTax', PWINFO_TIPAMOUNT);
     AddURIParam(AURI, 'amount', PWINFO_TOTAMNT);
     AddURIParam(AURI, 'installments', PWINFO_INSTALLMENTS, '0');
-    AddURIParam(AURI, 'postdatedDate', PWINFO_INSTALLMDATE);
+    AddURIParam(AURI, 'predatedDate', PWINFO_INSTALLMDATE);
     AddURIParam(AURI, 'fiscalDocument', PWINFO_FISCALREF);
+    AddURIParam(AURI, 'taxId', PWINFO_MERCHCNPJCPF);
+    AddURIParam(AURI, 'billNumber', PWINFO_BARCODE);
     //AddURIParam(AURI, 'invoiceNumber', PWINFO_FISCALREF);
-    AddURIParam(AURI, 'telephoneNumber', PWINFO_PHONEFULLNO);
+    AddURIParam(AURI, 'phoneNumber', PWINFO_PHONEFULLNO);
+    AddURIParam(AURI, 'posId', PWINFO_POSID);
+    AddURIParam(AURI, 'originalAuthorizationCode', PWINFO_TRNORIGAUTH);
+    AddURIParam(AURI, 'originalTransactionNsu', PWINFO_TRNORIGNSU);
+    AddURIParam(AURI, 'originalTransactionDateTime', PWINFO_TRNORIGDATE);
     AddURIParam(AURI, 'aditionalPosData1', PWINFO_MERCHADDDATA1);
     AddURIParam(AURI, 'aditionalPosData2', PWINFO_MERCHADDDATA2);
     AddURIParam(AURI, 'aditionalPosData3', PWINFO_MERCHADDDATA3);
     AddURIParam(AURI, 'aditionalPosData4', PWINFO_MERCHADDDATA4);
-    AddURIParam(AURI, 'originalAuthCode', PWINFO_TRNORIGAUTH);
-    AddURIParam(AURI, 'originalNsu', PWINFO_TRNORIGNSU);
-    AddURIParam(AURI, 'originalDateTime', PWINFO_TRNORIGDATE);
 
     Result := AURI.URI;
   finally
@@ -1294,9 +1300,9 @@ begin
       ParamKey := fOutputURI.Params.Items[i].Nome;
       ParamValue := String(DecodeURL( AnsiString(fOutputURI.Params.Items[i].AsString) ));
 
-      if (ParamKey = 'change') then
+      if (ParamKey = 'cashbackAmount') then
         fDadosTransacao.ValueInfo[PWINFO_CASHBACKAMT] := ParamValue
-      else if (ParamKey = 'discount') then
+      else if (ParamKey = 'discountAmount') then
         fDadosTransacao.ValueInfo[PWINFO_DISCOUNTAMT] := ParamValue
       else if (ParamKey = 'amount') then
         fDadosTransacao.ValueInfo[PWINFO_TOTAMNT] := ParamValue
@@ -1314,25 +1320,25 @@ begin
         fDadosTransacao.ValueInfo[PWINFO_REQNUM] := ParamValue
       else if (ParamKey = 'authorizationCode') then
         fDadosTransacao.ValueInfo[PWINFO_AUTHCODE] := ParamValue
-      else if (ParamKey = 'transactionIdentifier') and (ParamValue <> '') then
+      else if (ParamKey = 'transactionId') and (ParamValue <> '') then
         fDadosTransacao.ValueInfo[PWINFO_FISCALREF] := ParamValue
-      else if (ParamKey = 'confirmTransactionIdentifier') then
-        fDadosTransacao.ValueInfo[PWINFO_CONFTRANSIDENT] := ParamValue
-      else if (ParamKey = 'establishmentIdentifier') then
+      else if (ParamKey = 'merchantId') and (ParamValue <> '') then
         fDadosTransacao.ValueInfo[PWINFO_VIRTMERCH] := ParamValue
-      else if (ParamKey = 'pointOfSaleIdentifier') then
+      else if (ParamKey = 'confirmationTransactionId') then
+        fDadosTransacao.ValueInfo[PWINFO_CONFTRANSIDENT] := ParamValue
+      else if (ParamKey = 'posId') then
         fDadosTransacao.ValueInfo[PWINFO_POSID] := ParamValue
-      else if (ParamKey = 'establishmentName') then
+      else if (ParamKey = 'merchantName') then
         fDadosTransacao.ValueInfo[PWINFO_MERCHNAMEPDC] := ParamValue
+      else if (ParamKey = 'transactionDateTime') then
+        fDadosTransacao.ValueInfo[PWINFO_DATETIME] := ParamValue
       else if (ParamKey = 'operation') then
         fDadosTransacao.ValueInfo[PWINFO_OPERATION] := IntToStr(OperationToPWOPER_(ParamValue))
-      else if (ParamKey = 'dateTimeTransaction') then
-        fDadosTransacao.ValueInfo[PWINFO_DATETIME] := ParamValue
-      else if (ParamKey = 'numberOfInstallments') then
+      else if (ParamKey = 'installments') then
         fDadosTransacao.ValueInfo[PWINFO_INSTALLMENTS] := ParamValue
       else if (ParamKey = 'predatedDate') then
         fDadosTransacao.ValueInfo[PWINFO_INSTALLMDATE] := ParamValue
-      else if (ParamKey = 'financingType') then
+      else if (ParamKey = 'finType') then
         fDadosTransacao.ValueInfo[PWINFO_FINTYPE] := IntToStr(FinancingTypeToPWINFO_FINTYPE(ParamValue))
       else if (ParamKey = 'provider') then
         fDadosTransacao.ValueInfo[PWINFO_AUTHSYST] := ProviderToPWINFO_AUTHSYST(ParamValue)
@@ -1342,21 +1348,21 @@ begin
         fDadosTransacao.ValueInfo[PWINFO_UNIQUEID] := ParamValue
       else if (ParamKey = 'cardType') then
         fDadosTransacao.ValueInfo[PWINFO_CARDTYPE] := IntToStr(CardTypeToPWINFO_CARDTYPE(ParamValue))
-      else if (ParamKey = 'cardEntranceMode') then
+      else if (ParamKey = 'cardEntryMode') then
         fDadosTransacao.ValueInfo[PWINFO_CARDENTMODE] := ParamValue
       else if (ParamKey = 'maskedPan') then
         fDadosTransacao.ValueInfo[PWINFO_CARDPARCPAN] := ParamValue
-      else if (ParamKey = 'standardMaskedPan') then
+      else if (ParamKey = 'defaultMaskedPan') then
         fDadosTransacao.ValueInfo[PWINFO_DEFAULTCARDPARCPAN] := ParamValue
-      else if (ParamKey = 'password_verification_mode') then
+      else if (ParamKey = 'cardholderVerificationMode') then
         fDadosTransacao.ValueInfo[PWINFO_CHOLDVERIF] := ParamValue
       else if (ParamKey = 'cardName') then
         fDadosTransacao.ValueInfo[PWINFO_CARDNAME] := ParamValue
-      else if (ParamKey = 'standardCardName') then
+      else if (ParamKey = 'defaultCardName') then
         fDadosTransacao.ValueInfo[PWINFO_CARDNAMESTD] := ParamValue
-      else if (ParamKey = 'cardHolderName') then
+      else if (ParamKey = 'cardholderName') then
         fDadosTransacao.ValueInfo[PWINFO_CHOLDERNAME] := ParamValue
-      else if (ParamKey = 'cardAid') then
+      else if (ParamKey = 'aid') then
         fDadosTransacao.ValueInfo[PWINFO_AID] := ParamValue
       else if (ParamKey = 'onoff') then
         fDadosTransacao.ValueInfo[PWINFO_ONOFF] := IfThen(LowerCase(ParamValue)='on','1','2')
@@ -1370,35 +1376,38 @@ begin
         fDadosTransacao.ValueInfo[PWINFO_RET] := ParamValue
       else if (ParamKey = 'resultMessage') then
         fDadosTransacao.ValueInfo[PWINFO_RESULTMSG] := ParamValue
-      else if (ParamKey = 'networkResponse') then
+      else if (ParamKey = 'authorizerResponse') then
         fDadosTransacao.ValueInfo[PWINFO_AUTRESPCODE] := ParamValue
       else if (ParamKey = 'printReceipts') then
         fDadosTransacao.ValueInfo[PWINFO_RCPTPRN] := IntToStr(PrintReceiptsToPWINFO_RCPTPRN(ParamValue))
-      else if (ParamKey = 'fullVoucher') then
+      else if (ParamKey = 'fullReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_RCPTFULL] := ParamValue
-      else if (ParamKey = 'differentiatedShopVoucher') then
+      else if (ParamKey = 'merchantReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_RCPTMERCH] := ParamValue
-      else if (ParamKey = 'differentiatedHolderVoucher') then
+      else if (ParamKey = 'cardholderReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_RCPTCHOLDER] := ParamValue
-      else if (ParamKey = 'reducedHolderVoucher') then
+      else if (ParamKey = 'shortReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_RCPTCHSHORT] := ParamValue
-      else if (ParamKey = 'graphicReceptExists') then
+      else if (ParamKey = 'graphicReceiptExists') then
         fDadosTransacao.ValueInfo[PWINFO_GRAPHICRCP] := IntToStr(BooleanStrToByte(ParamValue))
-      else if (ParamKey = 'storeKeeperGraphicReceipt') then
+      else if (ParamKey = 'merchantGraphicReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_MERCHGRARCP] := ParamValue
-      else if (ParamKey = 'holderGraphicReceipt') then
+      else if (ParamKey = 'cardholderGraphicReceipt') then
         fDadosTransacao.ValueInfo[PWINFO_CHOLDERGRARCP] := ParamValue
-      else if (ParamKey = 'originalValue') then
+      else if (ParamKey = 'originalTransactionAmount') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGAMNT] := ParamValue
-      else if (ParamKey = 'dateTimeOriginalTransaction') then
+      else if (ParamKey = 'originalTransactionDateTime') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGDATETIME] := ParamValue
-      else if (ParamKey = 'nsuOriginalTransaction') then
+      else if (ParamKey = 'originalTransactionNsu') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGNSU] := ParamValue
       else if (ParamKey = 'originalAuthorizationCode') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGAUTH] := ParamValue
       else if (ParamKey = 'originalTerminalNsu') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGREQNUM] := ParamValue;
     end;
+
+    // pendingTransactionExists
+    // authorizationMode
 
     for i := 0 to fDadosPendentesURI.Params.Count-1 do
     begin
@@ -1407,7 +1416,7 @@ begin
 
       if (ParamKey = 'providerName') then
         fDadosTransacao.ValueInfo[PWINFO_PNDAUTHSYST] := ProviderToPWINFO_AUTHSYST(ParamValue)
-      else if (ParamKey = 'establishmentIdentifier') then
+      else if (ParamKey = 'merchantId') then
         fDadosTransacao.ValueInfo[PWINFO_PNDVIRTMERCH] := ParamValue
       else if (ParamKey = 'localNsu') then
         fDadosTransacao.ValueInfo[PWINFO_PNDAUTLOCREF] := ParamValue
@@ -1489,10 +1498,10 @@ begin
     Exit;
 
   // Adicionando os Bundles
-  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityConfirmation, 'confirmacao');
+  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityConfirmation, URI_PathConfirmation);
   try
+    AURI.Params.AddField('confirmationTransactionId').AsString := confirmTransactionIdentifier;
     AURI.Params.AddField('transactionStatus').AsString := PWCNF_ToTransactionStatus(AStatus);
-    AURI.Params.AddField('confirmTransactionIdentifier').AsString := confirmTransactionIdentifier;
     uriConfirmation := AURI.URI;
   finally
     AURI.Free;
@@ -1502,7 +1511,7 @@ begin
   // Criando a Intent
   intent := TJIntent.Create;
   intent.setAction( StringToJString(Intent_Confirmation) );
-  intent.putExtra( StringToJString('uri'),  StringToJString(uriConfirmation) );
+  intent.putExtra( StringToJString(Key_URI),  StringToJString(uriConfirmation) );
   intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
 
   // Disparando o Intent
@@ -1563,24 +1572,24 @@ begin
   if Trim(pszAuthSyst+pszVirtMerch+pszReqNum+pszLocRef+pszExtRef).IsEmpty then
     Exit;
 
-  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityResolve, 'transacaoPendente');
+  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityResolve, URI_PathPendingTransaction);
   try
-    //D AddURIParam(AURI, 'posTransId', PWINFO_FISCALREF);     // ???
-
-    if (pszAuthSyst <> '') then
-      AURI.Params.AddField('providerName').AsString := PWINFO_AUTHSYSTToAcquirer(pszAuthSyst);
+    //D AddURIParam(AURI, 'transactionId', PWINFO_FISCALREF);     // ???
 
     if (pszVirtMerch <> '') then
-      AURI.Params.AddField('establishmentIdentifier').AsString := pszVirtMerch;
+      AURI.Params.AddField('merchantId').AsString := pszVirtMerch;
+
+    if (pszAuthSyst <> '') then
+      AURI.Params.AddField('providerName').AsString := PWINFO_AUTHSYSTToProvider(pszAuthSyst);
+
+    if (pszExtRef <> '') then
+      AURI.Params.AddField('hostNsu').AsString := pszExtRef;
 
     if (pszLocRef <> '') then
       AURI.Params.AddField('localNsu').AsString := pszLocRef;
 
     if (pszReqNum <> '') then
       AURI.Params.AddField('transactionNsu').AsString := pszReqNum;
-
-    if (pszExtRef <> '') then
-      AURI.Params.AddField('hostNsu').AsString := pszExtRef;
 
     uriResolve := AURI.URI;
   finally
@@ -1592,11 +1601,11 @@ begin
   // Criando a Intent
   intent := TJIntent.Create;
   intent.setAction( StringToJString(Intent_Confirmation) );
-  intent.putExtra( StringToJString('uri'),  StringToJString(uriResolve) );
+  intent.putExtra( StringToJString(Key_URI),  StringToJString(uriResolve) );
   intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
 
   // Adicionando os Bundles
-  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityResolve, 'confirmacao');
+  AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityResolve, URI_PathConfirmation);
   try
     AURI.Params.AddField('transactionStatus').AsString := PWCNF_ToTransactionStatus(AStatus);
     uriConfirmation := AURI.URI;

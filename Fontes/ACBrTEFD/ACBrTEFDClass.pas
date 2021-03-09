@@ -318,7 +318,7 @@ type
 
    { TACBrTEFDClass }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  [ComponentPlatformsAttribute(piacbrAllDesktopPlatforms)]
   {$ENDIF RTL230_UP}
    TACBrTEFDClass = class( TComponent )
    private

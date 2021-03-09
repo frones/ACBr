@@ -72,6 +72,8 @@ const
   CACBrPOSPGWebAPIName = 'ACBrPOSPGWebAPI';
   CACBrPOSPGWebAPIVersao = '1.1.0';
   CACBrPOSPGWebSubDir = 'POSPGWeb';
+  CACBrPOSPGWebBkpFile = 'ACBr_POSTEF_';
+  CACBrPOSPGWebBkpExt = '.tef';
   CACBrPOSPGWebColunasDisplay = 20;
   CACBrPOSPGWebColunasImpressora = 40;
   CACBrPOSPGWebPortaTCP = 3433;
@@ -206,6 +208,8 @@ type
     fMAC: String;
     fSerNo: String;
     fUltimaLeituraEstado: TDateTime;
+    fPndAuthSyst, fPndVirtMerch, fPndAutLocRef, fPndAutExtRef: String;
+    fStatus: TACBrPOSPGWebStatusTransacao;
   private
     function GetEstado: TACBrPOSPGWebEstadoTerminal;
     procedure SetEstado(AValue: TACBrPOSPGWebEstadoTerminal);
@@ -214,12 +218,18 @@ type
 
     procedure Execute; override;
     procedure Terminate;
-    procedure AvisarMudancaDeEstado;
+    procedure ChamarEventoMudancaDeEstado;
+    procedure ChamarEventoTransacaoPendente;
+    procedure ChamarEventoFinalizarTransacao;
 
   public
     constructor Create(POSPGWeb: TACBrPOSPGWebAPI; const TerminalId: String;
       const Model: String; const MAC: String; const SerNo: String);
     destructor Destroy; override;
+
+    procedure AvaliarTransacaoPendente( var AStatus: TACBrPOSPGWebStatusTransacao;
+      const PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef: String);
+    procedure AvisarFinalizarTransacao( AStatus: TACBrPOSPGWebStatusTransacao );
 
     property TerminalId: String read fTerminalId;
     property Model: String read fModel;
@@ -411,7 +421,14 @@ type
     procedure ObterDadosDaTransacao(const TerminalId: String);
     function ObterDadoTransacao(const TerminalId: String; iINFO: Word): String;
     procedure FinalizarTrancao(const TerminalId: String; Status: TACBrPOSPGWebStatusTransacao);
-    procedure TratarTransacaoPendente(const TerminalId: String);
+    procedure TratarTransacaoPendente(const TerminalId: String); overload;
+    procedure TratarTransacaoPendente(const TerminalId, PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef: String); overload;
+
+    function BackupFileName(const TerminalId: String): String;
+    procedure GravarBackupDaTransacao(const TerminalId: String);
+    procedure ApagarBackupDaTransacao(const TerminalId: String);
+    procedure VerificarTransacoesBackup;
+    procedure TratarTransacaoBackup(const TerminalId: String);
 
     function Desconectar(const TerminalId: String; Segundos: Word = 0): Boolean;
     procedure TerminarConexao(const TerminalId: String);
@@ -499,7 +516,7 @@ constructor TACBrPOSPGWebConexao.Create(POSPGWeb: TACBrPOSPGWebAPI;
   const SerNo: String);
 begin
   FreeOnTerminate := True;
-  inherited Create(False); // CreateSuspended;
+  inherited Create(False);
 
   fPOSPGWeb := POSPGWeb;
   fTerminalId := TerminalId;
@@ -513,6 +530,9 @@ begin
 
   fPOSPGWeb.ListaConexoes.Add(Self);
   SetEstado(statConectado);
+
+  // Verificando se há transações pendentes para esse Terminal
+  fPOSPGWeb.TratarTransacaoBackup(fTerminalId);
 end;
 
 destructor TACBrPOSPGWebConexao.Destroy;
@@ -587,14 +607,56 @@ begin
     fpEstado := AValue;
     fUltimaLeituraEstado := Now;
     if Assigned(fPOSPGWeb.OnMudaEstadoTerminal) then
-      Synchronize(AvisarMudancaDeEstado);
+      Synchronize(ChamarEventoMudancaDeEstado);
   end;
 end;
 
-procedure TACBrPOSPGWebConexao.AvisarMudancaDeEstado;
+procedure TACBrPOSPGWebConexao.AvaliarTransacaoPendente(
+  var AStatus: TACBrPOSPGWebStatusTransacao; const PndAuthSyst, PndVirtMerch,
+  PndAutLocRef, PndAutExtRef: String);
+begin
+  fStatus := AStatus;
+  fPndAuthSyst := PndAuthSyst;
+  fPndVirtMerch := PndVirtMerch;
+  fPndAutLocRef := PndAutLocRef;
+  fPndAutExtRef := PndAutExtRef;
+
+  if Assigned(fPOSPGWeb.OnAvaliarTransacaoPendente) then
+    Synchronize(ChamarEventoTransacaoPendente);
+
+  AStatus := fStatus;
+end;
+
+procedure TACBrPOSPGWebConexao.ChamarEventoMudancaDeEstado;
 begin
   if Assigned(fPOSPGWeb.OnMudaEstadoTerminal) then
     fPOSPGWeb.OnMudaEstadoTerminal(fTerminalId, fpEstado, fpEstadoAnterior);
+end;
+
+procedure TACBrPOSPGWebConexao.ChamarEventoTransacaoPendente;
+begin
+  if Assigned(fPOSPGWeb.OnAvaliarTransacaoPendente) then
+    fPOSPGWeb.OnAvaliarTransacaoPendente( fTerminalId,
+                                          fStatus,
+                                          fPndAuthSyst,
+                                          fPndVirtMerch,
+                                          fPndAutLocRef,
+                                          fPndAutExtRef);
+
+end;
+
+procedure TACBrPOSPGWebConexao.AvisarFinalizarTransacao(
+  AStatus: TACBrPOSPGWebStatusTransacao);
+begin
+  fStatus := AStatus;
+  if Assigned(fPOSPGWeb.OnAposFinalizarTransacao) then
+    Synchronize(ChamarEventoFinalizarTransacao);
+end;
+
+procedure TACBrPOSPGWebConexao.ChamarEventoFinalizarTransacao;
+begin
+  if Assigned(fPOSPGWeb.OnAposFinalizarTransacao) then
+    fPOSPGWeb.OnAposFinalizarTransacao(fTerminalId, fStatus);
 end;
 
 { TACBrPOSPGWebAPIParametros }
@@ -830,6 +892,7 @@ begin
     DoException(ACBrStr(MsgError));
 
   fInicializada := True;
+
   fTimerConexao.OnTimer := OnAguardaConexao;
   fTimerConexao.Enabled := True;
 end;
@@ -1177,8 +1240,12 @@ begin
     AjustarEstadoConexao(TerminalId, statOcupado);
     IniciarTransacao( TerminalId, Operacao, ParametrosAdicionaisTransacao );
     iRet := ExecutarTransacao( TerminalId );
+    ObterDadosDaTransacao(TerminalId);
+
     if (iRet = PTIRET_OK) then
     begin
+      GravarBackupDaTransacao(TerminalId);
+
       if (Comprovantes <> prnNaoImprimir) then
       begin
         try
@@ -1193,8 +1260,6 @@ begin
     end
     else
     begin
-      ObterDadosDaTransacao(TerminalId);
-
       PndAutLocRef := ObterDadoTransacao(TerminalId, PWINFO_PNDAUTLOCREF);
       PndAutExtRef := ObterDadoTransacao(TerminalId, PWINFO_PNDAUTEXTREF);
       if (PndAutLocRef <> '') or (PndAutExtRef <> '') then
@@ -1327,7 +1392,7 @@ var
   AData, InfoStr: String;
   ADadosDaTransacao: TACBrPOSPGWebAPIParametros;
 begin
-  GravarLog('TACBrPOSPGWebAPI.ObterDadosDaTransacao');
+  GravarLog('TACBrPOSPGWebAPI.ObterDadosDaTransacao( '+TerminalId+' )');
   ADadosDaTransacao := DadosDaTransacao[TerminalId];
   ADadosDaTransacao.Clear;
   uiBuffLen := 10240;   // 10K
@@ -1368,28 +1433,44 @@ procedure TACBrPOSPGWebAPI.FinalizarTrancao(const TerminalId: String;
   Status: TACBrPOSPGWebStatusTransacao);
 var
   iRet: SmallInt;
+  Alist: TList;
+  i: Integer;
+  AConexao: TACBrPOSPGWebConexao;
 begin
-  VerificarTransacaoFoiIniciada(TerminalId);
+  //VerificarTransacaoFoiIniciada(TerminalId);
   GravarLog('PTI_EFT_Confirm( '+TerminalId+', '+IntToStr(SmallInt(Status))+' )');
-  VerificarConexao(TerminalId);
+  //VerificarConexao(TerminalId);
   xPTI_EFT_Confirm( AnsiString(TerminalId),
                     SmallInt(Status),
                     iRet );
   GravarLog('  '+PTIRETToString(iRet));
 
-  ObterDadosDaTransacao( TerminalId );
-
-  if Assigned(fOnAposFinalizarTransacao) then
-    fOnAposFinalizarTransacao(TerminalId, Status);
-
   AjustarEstadoConexao(TerminalId, statConectado);
   AvaliarErro(iRet, TerminalId);
+  ApagarBackupDaTransacao(TerminalId);
+
+  if Assigned(fOnAposFinalizarTransacao) then
+  begin
+    Alist := fListaConexoes.LockList;
+    try
+      for i := 0 to Alist.Count-1 do
+      begin
+        AConexao := TACBrPOSPGWebConexao(Alist[i]);
+        if (AConexao.TerminalId = TerminalId) then
+        begin
+          AConexao.AvisarFinalizarTransacao(Status);
+          Break;
+        end;
+      end;
+    finally
+      fListaConexoes.UnlockList;
+    end;
+  end;
 end;
 
 procedure TACBrPOSPGWebAPI.TratarTransacaoPendente(const TerminalId: String);
 var
   PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef: String;
-  AStatus: TACBrPOSPGWebStatusTransacao;
 begin
   GravarLog('TACBrPOSPGWebAPI.TratarTransacaoPendente( '+TerminalId+' )');
 
@@ -1401,6 +1482,26 @@ begin
   PndAuthSyst := ObterDadoTransacao(TerminalId, PWINFO_PNDAUTHSYST);
   PndVirtMerch := ObterDadoTransacao(TerminalId, PWINFO_PNDVIRTMERCH);
 
+  TratarTransacaoPendente(TerminalId, PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef);
+end;
+
+procedure TACBrPOSPGWebAPI.TratarTransacaoPendente(const TerminalId,
+  PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef: String);
+var
+  AStatus: TACBrPOSPGWebStatusTransacao;
+  Alist: TList;
+  i: Integer;
+  AConexao: TACBrPOSPGWebConexao;
+begin
+  if (TerminalId = '') or ((PndAutLocRef = '') and (PndAutExtRef = '')) then
+    Exit;
+
+  GravarLog('TACBrPOSPGWebAPI.TratarTransacaoPendente( '+TerminalId+', '+
+                                                         PndAuthSyst+', '+
+                                                         PndVirtMerch+', '+
+                                                         PndAutLocRef+', '+
+                                                         PndAutExtRef+' )');
+
   if fConfirmarTransacoesPendentes then
     AStatus := cnfSucesso
   else
@@ -1408,23 +1509,121 @@ begin
 
   if Assigned(fOnAvaliarTransacaoPendente) then
   begin
-    GravarLog('  OnAvaliarTransacaoPendente( '+TerminalId+', '+
-                                               IntToStr(SmallInt(AStatus))+', '+
-                                               PndAuthSyst+', '+
-                                               PndVirtMerch+', '+
-                                               PndAutLocRef+', '+
-                                               PndAutExtRef+' )');
-    fOnAvaliarTransacaoPendente( TerminalId,
-                                 AStatus,
-                                 PndAuthSyst,
-                                 PndVirtMerch,
-                                 PndAutLocRef,
-                                 PndAutExtRef);
+    Alist := fListaConexoes.LockList;
+    try
+      for i := 0 to Alist.Count-1 do
+      begin
+        AConexao := TACBrPOSPGWebConexao(Alist[i]);
+        if (AConexao.TerminalId = TerminalId) then
+        begin
+          AConexao.AvaliarTransacaoPendente( AStatus,
+                                             PndAuthSyst,
+                                             PndVirtMerch,
+                                             PndAutLocRef,
+                                             PndAutExtRef);
+          Break;
+        end;
+      end;
+    finally
+      fListaConexoes.UnlockList;
+    end;
   end;
 
   FinalizarTrancao(TerminalId, AStatus);
 end;
 
+
+procedure TACBrPOSPGWebAPI.VerificarTransacoesBackup;
+var
+  BkpFileName, ATerminalId: String;
+  slFiles: TStringList;
+  i, p1, p2: Integer;
+begin
+  BkpFileName := BackupFileName('*');
+  slFiles := TStringList.Create;
+  try
+    FindFiles(BkpFileName, slFiles);
+    for i := 0 to slFiles.Count-1 do
+    begin
+      ATerminalId := '';
+      p1 := pos(CACBrPOSPGWebBkpFile, slFiles[i]);
+      if (p1 > 0) then
+      begin
+        p1 := p1 + Length(CACBrPOSPGWebBkpFile);
+        p2 := PosEx('.', slFiles[i], p1);
+        if (p2 < 0) then
+          p2 := Length(slFiles[i]);
+
+        ATerminalId := copy(slFiles[i], p1, p2-p1)
+      end;
+
+      if (ATerminalId <> '') then
+        TratarTransacaoBackup(ATerminalId);
+    end;
+  finally
+    slFiles.Free;
+  end;
+end;
+
+function TACBrPOSPGWebAPI.BackupFileName(const TerminalId: String): String;
+begin
+  Result := fDiretorioTrabalho + PathDelim +
+            CACBrPOSPGWebBkpFile + Trim(TerminalId) + CACBrPOSPGWebBkpExt;
+end;
+
+procedure TACBrPOSPGWebAPI.GravarBackupDaTransacao(const TerminalId: String);
+var
+  ADadosDaTransacao: TACBrPOSPGWebAPIParametros;
+  BkpFileName: String;
+begin
+  BkpFileName := BackupFileName(TerminalId);
+  GravarLog('TACBrPOSPGWebAPI.GravarBackupDaTransacao( '+BkpFileName+' )');
+  ADadosDaTransacao := DadosDaTransacao[TerminalId];
+  if ADadosDaTransacao.Count < 1 then
+  begin
+    GravarLog('  Vazio');
+    exit;
+  end;
+
+  if FileExists(BkpFileName) then
+    DeleteFile(BkpFileName);
+
+  ADadosDaTransacao.SaveToFile(BkpFileName);
+end;
+
+procedure TACBrPOSPGWebAPI.ApagarBackupDaTransacao(const TerminalId: String);
+var
+  BkpFileName: String;
+begin
+  BkpFileName := BackupFileName(TerminalId);
+  if FileExists(BkpFileName) then
+  begin
+    GravarLog('TACBrPOSPGWebAPI.ApagarBackupDaTransacao( '+BkpFileName+' )');
+    DeleteFile(BkpFileName);
+  end;
+end;
+
+procedure TACBrPOSPGWebAPI.TratarTransacaoBackup(const TerminalId: String);
+var
+  PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef, BkpFileName: String;
+begin
+  BkpFileName := BackupFileName(TerminalId);
+  if not FileExists(BkpFileName) then
+    Exit;
+
+  GravarLog('TACBrPOSPGWebAPI.TratarTransacaoBackup( '+BkpFileName+' )');
+  DadosDaTransacao[TerminalId].LoadFromFile(BkpFileName);
+
+  PndAutLocRef := ObterDadoTransacao(TerminalId, PWINFO_AUTLOCREF);
+  PndAutExtRef := ObterDadoTransacao(TerminalId, PWINFO_AUTEXTREF);
+  if (PndAutLocRef = '') and (PndAutExtRef = '') then
+    Exit;
+
+  PndAuthSyst := ObterDadoTransacao(TerminalId, PWINFO_AUTHSYST);
+  PndVirtMerch := ObterDadoTransacao(TerminalId, PWINFO_VIRTMERCH);
+
+  TratarTransacaoPendente(TerminalId, PndAuthSyst, PndVirtMerch, PndAutLocRef, PndAutExtRef);
+end;
 
 function TACBrPOSPGWebAPI.Desconectar(const TerminalId: String; Segundos: Word
   ): Boolean;

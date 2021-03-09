@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/21
+-- ACBrPOS, ACBrTEFD, TACBrTEFDClass,  --
+[*] Ajuste nas plataformas compatíveis com Delphi
+
+-- ACBrPOSPGWebAPI --
+[+] Adicionado mecanismo de Arquivo de Backup, para tratar transações pendentes
+    de Confirmação, durante a Impressão
+[-] Melhorias nas chamadas de Eventos: "OnMudaEstadoTerminal",
+    "OnAvaliarTransacaoPendente", "OnAposFinalizarTransacao", para correto
+    funcionamento em ambiente Multithread
+[+] Adicionada verificação de Transação de Pendente, usando o arquivo de Backup,
+    quando um Terminal é recém conectado.
+    (por: DSA)
+
 20/02/21
 -- ACBrTEFPayGoAndroid --
 [+] Primeiro commit de ACBrTEFPayGoAndroid. Para integração Direta, por Intents,

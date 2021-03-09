@@ -49,10 +49,6 @@ uses
 
 type
 
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
-  {$ENDIF RTL230_UP}
-
   TACBrPOSAposFinalizarTransacao = procedure(const TerminalId: String;
     Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao) of object ;
 
@@ -84,6 +80,9 @@ type
 
   { TACBrPOS }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllDesktopPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPOS = class( TACBrComponent )
   private
     fPOSPGWeb: TACBrPOSPGWebAPI;

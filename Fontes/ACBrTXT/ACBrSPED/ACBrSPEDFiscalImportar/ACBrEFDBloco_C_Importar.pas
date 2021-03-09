@@ -364,7 +364,7 @@ begin
     NUM_ITEM := Valor;
     COD_ITEM := Valor;
     DESCR_COMPL := Valor;
-    QTD := ValorFV;
+    QTD := ValorF;
     UNID := Valor;
     VL_ITEM := ValorF;
     VL_DESC := ValorF;

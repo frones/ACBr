@@ -4694,7 +4694,7 @@ begin
     748: Result := cobSicred;
     756: Result := cobBancoob;
     399: Result := cobHSBC;
-    422: Result := cobSafraBradesco;
+    422: Result := cobBancoSafra;
     085: Result := cobBancoCECRED;
     047: Result := cobBanese;
     745: Result := cobCitiBank;

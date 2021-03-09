@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2021
+--ACBrBancoSafra--
+[-] Correção na chamada BancoSafra na função GetTipoCobranca
+
 27/02/2021
 --ACBrBancoBrasil--
 [*] Alteração na função GravarRetorno para obter arquivo Retorno como resposta

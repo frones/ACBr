@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -57,7 +57,7 @@ type
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStream): boolean; overload;
     function ProcessarCNPJCPF(const ANode: TACBrXmlNode): string;
-    function ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TpcnTipoCampo): variant;
+    function ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
     property Document: TACBrXmlDocument read FDocument;
     property Arquivo: String read FArquivo write FArquivo;

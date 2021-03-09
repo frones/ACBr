@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2021
+-- ACBrXmlBase/ACBrXmlDocument/ACBrXmlWriter/ACBrXmlReader --
+[+] Inclusão da Unit ACBrXmlBase para tormar as outras 3 units idenpendentes das
+    Units PCN.
+  Por: Rafael Dias/Italo Giurizzato Junior
+
 24/12/2020
 -- ACBrDFeSSL --
 [*] Ajuste em "TDFeSSLHttpClass.Enviar", para exibir as informações do Retorno

@@ -512,17 +512,17 @@ end;
 
 function TACBrXmlNode.AsString: String;
 begin
-  Return := Content;
+  Result := Content;
 end;
 
 function TACBrXmlNode.AsInteger: Integer;
 begin
-  Return := StrToInt(Content);
+  Result := StrToInt(Content);
 end;
 
 function TACBrXmlNode.AsDouble: Double;
 begin
-  Return := StrToFloat(Content);
+  Result := StrToFloat(Content);
 end;
 
 function TACBrXmlNode.AsDateTime(const Format: string): TDateTime;

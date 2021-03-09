@@ -100,7 +100,7 @@ type
       obrigatorio: boolean): TACBrXmlNode;
     function CreateElement(AName: string; ANamespace: string = '';
       APrefixNamespace: string = ''): TACBrXmlNode; virtual;
-    function AddNode(const Tipo: TpcnTipoCampo; ID, TAG: string;
+    function AddNode(const Tipo: TACBrTipoCampo; ID, TAG: string;
       const min, max, ocorrencias: smallint; const valor: variant;
       const Descricao: string = ''; ParseTextoXML: boolean = True;
       Atributo: string = ''): TACBrXmlNode; virtual;

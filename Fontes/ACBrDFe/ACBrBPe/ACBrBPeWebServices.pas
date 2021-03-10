@@ -481,6 +481,8 @@ var
 begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeStatusServicoBPResult'], FPRetornoWS );
 
+  FPRetWS := TiraAcentos(FPRetWS);
+
   BPeRetorno := TRetConsStatServ.Create('BPe');
   try
     BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
@@ -752,6 +754,8 @@ begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoResult',
                                'bpeResultTMMsg', 'bpeRecepcaoTMResult'],
                                FPRetornoWS );
+
+  FPRetWS := TiraAcentos(FPRetWS);
 
   FBPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FBPeRetorno.LerXml;
@@ -1054,6 +1058,8 @@ begin
   BPeRetorno := TRetConsSitBPe.Create;
   try
     FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeConsultaBPResult'], FPRetornoWS );
+
+    FPRetWS := TiraAcentos(FPRetWS);
 
     BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     BPeRetorno.LerXML;
@@ -1589,6 +1595,8 @@ begin
 
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoEventoResult'], FPRetornoWS );
 
+  FPRetWS := TiraAcentos(FPRetWS);
+
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
@@ -1817,6 +1825,8 @@ var
   AXML, aPath: String;
 begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeDistDFeInteresseResult'], FPRetornoWS );
+
+  FPRetWS := TiraAcentos(FPRetWS);
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;

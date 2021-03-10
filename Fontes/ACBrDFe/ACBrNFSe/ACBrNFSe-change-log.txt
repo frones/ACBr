@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2021
+-- pnfsNFSeW_SigISS --
+[*] https://www.projetoacbr.com.br/forum/topic/59632-t%C3%B3pico-exclusivo-para-troca-de-provedor-e-novas-cidades/?do=findComment&comment=404035&_rid=63
+  Por: CrasH
+
 09/03/2021
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/61574-prefeitura-porto-alegre-problema-ao-enviar-nota/

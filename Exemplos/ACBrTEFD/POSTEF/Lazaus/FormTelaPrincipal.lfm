@@ -1,7 +1,7 @@
 object frPOSTEFServer: TfrPOSTEFServer
-  Left = 707
+  Left = 292
   Height = 440
-  Top = 267
+  Top = 100
   Width = 790
   Caption = 'ACBr POS TEF Server'
   ClientHeight = 440
@@ -11,7 +11,7 @@ object frPOSTEFServer: TfrPOSTEFServer
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object pgPrincipal: TPageControl
     Left = 0
     Height = 409
@@ -8353,6 +8353,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     OnGravarLog = ACBrPOS1GravarLog
     OnNovaConexao = ACBrPOS1NovaConexao
     OnMudaEstadoTerminal = ACBrPOS1MudaEstadoTerminal
+    OnAposFinalizarTransacao = ACBrPOS1AposFinalizarTransacao
     OnAvaliarTransacaoPendente = ACBrPOS1AvaliarTransacaoPendente
     Left = 352
   end

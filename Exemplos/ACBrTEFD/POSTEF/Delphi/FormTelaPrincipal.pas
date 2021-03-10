@@ -356,6 +356,8 @@ type
       const aStatus: TMailStatus);
     procedure ACBrNFe1GerarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrNFe1StatusChange(Sender: TObject);
+    procedure ACBrPOS1AposFinalizarTransacao(const TerminalId: String;
+      Transacao: TACBrTEFResp; Status: TACBrPOSPGWebStatusTransacao);
     procedure ACBrPOS1AvaliarTransacaoPendente(const TerminalId: String;
       var Status: TACBrPOSPGWebStatusTransacao; const AuthSyst, VirtMerch,
       AutLocRef, AutExtRef: String);
@@ -1045,6 +1047,21 @@ procedure TfrPOSTEFServer.ACBrNFe1StatusChange(Sender: TObject);
 begin
   AdicionarLinhaLog( 'ACBrNFe - Status: ' +
                      GetEnumName(TypeInfo(TStatusACBrNFe), integer(ACBrNFe1.Status)) );
+end;
+
+procedure TfrPOSTEFServer.ACBrPOS1AposFinalizarTransacao(
+  const TerminalId: String; Transacao: TACBrTEFResp;
+  Status: TACBrPOSPGWebStatusTransacao);
+begin
+  AdicionarLinhaLog( sLineBreak +
+                     '-- Fim da Transação --'+ sLineBreak +
+                     'Terminal: '+TerminalId + sLineBreak +
+                     'Rede: '+Transacao.Rede + sLineBreak +
+                     'NSU: '+Transacao.NSU + sLineBreak +
+                     'Crédito: '+IfThen(Transacao.Credito, 'Sim', 'Nao') + sLineBreak +
+                     'Débito: '+IfThen(Transacao.Debito, 'Sim', 'Nao') + sLineBreak +
+                     'Bandeira: '+Transacao.CodigoBandeiraPadrao + sLineBreak +
+                     'Status: '+IntToStr(SmallInt(Status)) + sLineBreak );
 end;
 
 procedure TfrPOSTEFServer.ACBrPOS1AvaliarTransacaoPendente(
@@ -2507,8 +2524,11 @@ begin
   try
     ValorTotal := Trunc(fAbastecimentos[IndiceAbastec].Qtd * fBicos[fAbastecimentos[IndiceAbastec].Bico].PrecoUnit * 100) / 100;
     ACBrPOS1.ParametrosAdicionais[TerminalId].Clear;
-    ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_FINTYPE] := '01'; //01: à vista
-    ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_AUTHSYST] := 'REDE';
+    ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_FINTYPE] := '1'; //01: à vista
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_AUTHSYST] := 'REDE';
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_INSTALLMENTS] := '3';
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_CARDTYPE] := '1';
+
     ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, ValorTotal);
     if ACBrPOS1.TEFResp[TerminalId].Debito then
       FormaPagto := CPAG_DEBITO

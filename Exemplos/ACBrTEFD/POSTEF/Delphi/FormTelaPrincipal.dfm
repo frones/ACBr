@@ -1667,7 +1667,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btOperacao: TBitBtn
         Left = 66
-        Top = 191
+        Top = 190
         Width = 168
         Height = 112
         Anchors = []
@@ -1677,7 +1677,7 @@ object frPOSTEFServer: TfrPOSTEFServer
       end
       object btConfiguracao: TBitBtn
         Left = 316
-        Top = 191
+        Top = 190
         Width = 168
         Height = 112
         Anchors = []
@@ -1995,7 +1995,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfEmissor: TGroupBox
               Left = 96
-              Top = 2
+              Top = 1
               Width = 568
               Height = 288
               Anchors = []
@@ -2645,7 +2645,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbCertificado: TGroupBox
               Left = 269
-              Top = -10
+              Top = -11
               Width = 240
               Height = 233
               Anchors = []
@@ -2782,7 +2782,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbWebService: TGroupBox
               Left = 520
-              Top = -10
+              Top = -11
               Width = 240
               Height = 233
               Anchors = []
@@ -2949,7 +2949,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbProxy: TGroupBox
               Left = 16
-              Top = 167
+              Top = 166
               Width = 240
               Height = 108
               Anchors = []
@@ -3046,7 +3046,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbToken: TGroupBox
               Left = 269
-              Top = 213
+              Top = 212
               Width = 291
               Height = 50
               Anchors = []
@@ -3110,7 +3110,7 @@ object frPOSTEFServer: TfrPOSTEFServer
             end
             object gbNFCeNumeros: TGroupBox
               Left = 568
-              Top = 213
+              Top = 212
               Width = 192
               Height = 50
               Anchors = []
@@ -3188,7 +3188,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gConfSAT: TGroupBox
               Left = 88
-              Top = 15
+              Top = 14
               Width = 568
               Height = 260
               Anchors = []
@@ -3541,7 +3541,7 @@ object frPOSTEFServer: TfrPOSTEFServer
               325)
             object gEmailConta: TGroupBox
               Left = 8
-              Top = -5
+              Top = -6
               Width = 496
               Height = 291
               Anchors = [akLeft]
@@ -3769,13 +3769,13 @@ object frPOSTEFServer: TfrPOSTEFServer
               Left = 514
               Top = 13
               Width = 240
-              Height = 256
+              Height = 254
               Anchors = [akLeft, akTop, akRight, akBottom]
               Caption = 'Mensagem'
               TabOrder = 1
               DesignSize = (
                 240
-                256)
+                254)
               object lblFrom2: TLabel
                 Left = 8
                 Top = 21
@@ -3808,7 +3808,7 @@ object frPOSTEFServer: TfrPOSTEFServer
                 Left = 8
                 Top = 84
                 Width = 221
-                Height = 161
+                Height = 159
                 Anchors = [akLeft, akTop, akRight, akBottom]
                 Lines.Strings = (
                   'Voc'#234' est'#225' recebendo uma NFC-e.'
@@ -3993,6 +3993,7 @@ object frPOSTEFServer: TfrPOSTEFServer
     OnGravarLog = ACBrPOS1GravarLog
     OnNovaConexao = ACBrPOS1NovaConexao
     OnMudaEstadoTerminal = ACBrPOS1MudaEstadoTerminal
+    OnAposFinalizarTransacao = ACBrPOS1AposFinalizarTransacao
     OnAvaliarTransacaoPendente = ACBrPOS1AvaliarTransacaoPendente
     Left = 352
   end

@@ -128,19 +128,12 @@ begin
     dmGuia.frxPDFExport.Keywords   := TITULO_PDF;
     OldShowDialog := dmGuia.frxPDFExport.ShowDialog;
     try
-      dmGuia.frxPDFExport.ShowDialog := False;
-	  {
-      for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count - 1 do
-      begin
-        dmGuia.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + 'GNRE_' + dmGuia.GNRE.RepresentacaoNumerica + '.pdf';
-        dmGuia.frxReport.Export(dmGuia.frxPDFExport);
-      end;
-	  }
-      // Não é necessário for... Ele agrupa os pdf em um único arquivo...
+      dmGuia.frxPDFExport.ShowDialog := False;	  
       if TACBrGNRE(ACBrGNRE).GuiasRetorno.Count > 0 then
       begin
-        dmGuia.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + 'GNRE_' + dmGuia.GNRE.RepresentacaoNumerica + '.pdf';
-        ArquivoPDF := dmGuia.frxPDFExport.FileName;
+		ArquivoPDF:= OnlyNumber(dmGuia.GNRE.IdentificadorGuia);
+		ArquivoPDF:= PathWithDelim(Self.PathPDF) + ArquivoPDF + '-guia.pdf';	  		
+        dmGuia.frxPDFExport.FileName := ArquivoPDF;        
         dmGuia.frxReport.Export(dmGuia.frxPDFExport);
       end;
     finally

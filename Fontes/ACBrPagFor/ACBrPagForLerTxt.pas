@@ -92,6 +92,7 @@ implementation
 
 constructor TPagForR.Create(AOwner: TPagFor);
 begin
+  inherited Create;
   FPagFor       := AOwner;
   FArquivoTXT := TStringList.Create;
   FAtivo      := True;
@@ -189,7 +190,7 @@ var
 begin
   ajusteBloqueto := 0;
 
-  FPagFor.Lote.Add;
+  FPagFor.Lote.New;
   FPagFor.Lote.Last.Registro1.Servico.Operacao         := StrToTpOperacao(mOk, Copy(FArquivoTXT.Strings[i], 9, 1));
   FPagFor.Lote.Last.Registro1.Servico.TipoServico      := StrToTpServico(mOk, Copy(FArquivoTXT.Strings[i], 10, 2));
 
@@ -270,7 +271,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3A') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoA.Add;
+  FPagFor.Lote.Last.SegmentoA.New;
   FPagFor.Lote.Last.SegmentoA.Last.TipoMovimento     := StrToTpMovimento(mOk, Copy(FArquivoTXT.Strings[i], 15, 1));
   FPagFor.Lote.Last.SegmentoA.Last.CodMovimento      := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 16, 2));
   FPagFor.Lote.Last.SegmentoA.Last.Favorecido.Camara := StrToInt(Copy(FArquivoTXT.Strings[i], 18, 3));
@@ -309,7 +310,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -334,7 +335,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoA.Last.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.SegmentoB.Last.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -346,7 +347,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.SegmentoC.Last.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -358,7 +359,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoA.Last.SegmentoD.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.SegmentoD.Last.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.SegmentoD.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -370,7 +371,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoA.Last.SegmentoE.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.SegmentoE.Last.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.SegmentoE.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -382,7 +383,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoA.Last.SegmentoF.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.SegmentoF.Last.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoA.Last.SegmentoF.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'A';
@@ -401,7 +402,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3B') then
     Exit;
 
-  mSegmentoBList.Add;
+  mSegmentoBList.New;
   mSegmentoBList.Last.Inscricao.Tipo       := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 18, 1));
   mSegmentoBList.Last.Inscricao.Numero     := Copy(FArquivoTXT.Strings[i], 19, 14);
   mSegmentoBList.Last.Endereco.Logradouro  := Copy(FArquivoTXT.Strings[i], 33, 30);
@@ -425,7 +426,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3C') then
     Exit;
 
-  mSegmentoCList.Add;
+  mSegmentoCList.New;
   case FPagFor.Geral.Banco of
     pagItau:
       begin
@@ -452,7 +453,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3D') then
     Exit;
 
-  mSegmentoDList.Add;
+  mSegmentoDList.New;
   case FPagFor.Geral.Banco of
     pagItau:
       begin
@@ -487,7 +488,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3E') then
     Exit;
 
-  mSegmentoEList.Add;
+  mSegmentoEList.New;
   mSegmentoEList.Last.Movimento              := StrToTpMovimentoPagto(mOk, Copy(FArquivoTXT.Strings[i], 18, 1));
   mSegmentoEList.Last.InformacaoComplementar := Copy(FArquivoTXT.Strings[i], 19, 200);
   mSegmentoEList.Last.CodOcorrencia          := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
@@ -499,7 +500,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3F') then
     Exit;
 
-  mSegmentoFList.Add;
+  mSegmentoFList.New;
   mSegmentoFList.Last.InformacaoComplementar := Copy(FArquivoTXT.Strings[i], 18, 144);
   mSegmentoFList.Last.CodOcorrencia          := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
   mSegmentoFList.Last.DescOcorrencia         := DescricaoRetornoItau(mSegmentoFList.Last.CodOcorrencia);
@@ -512,7 +513,7 @@ begin
   if (Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1) <> '3G') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoG.Add;
+  FPagFor.Lote.Last.SegmentoG.New;
   FPagFor.Lote.Last.SegmentoG.Last.CodigoBarras           := Copy(FArquivoTXT.Strings[i], 18, 44);
   FPagFor.Lote.Last.SegmentoG.Last.Cedente.Inscricao.Tipo := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 62, 1));
 
@@ -557,7 +558,7 @@ begin
   if (Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1) <> '3H') then
     Exit;
 
-  mSegmentoHList.Add;
+  mSegmentoHList.New;
   mSegmentoHList.Last.Avalista.Inscricao.Tipo := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 18, 1));
 
   if mSegmentoHList.Last.Avalista.Inscricao.Tipo = tiCNPJ then
@@ -595,7 +596,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3J') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoJ.Add;
+  FPagFor.Lote.Last.SegmentoJ.New;
   FPagFor.Lote.Last.SegmentoJ.Last.CodMovimento   := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 15, 3));
   FPagFor.Lote.Last.SegmentoJ.Last.CodigoBarras   := Copy(FArquivoTXT.Strings[i], 18, 44);
   FPagFor.Lote.Last.SegmentoJ.Last.NomeCedente    := Copy(FArquivoTXT.Strings[i], 62, 30);
@@ -617,7 +618,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
@@ -640,7 +641,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
@@ -652,7 +653,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoC.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.SegmentoC.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.SegmentoC.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
@@ -671,7 +672,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1) + Copy(FArquivoTXT.Strings[i], 18, 2)) <> '3J52') then
     Exit;
 
-  mSegmentoJ52List.Add;
+  mSegmentoJ52List.New;
   mSegmentoJ52List.Last.TipoMovimento                    := StrToTpMovimento(mOk, Copy(FArquivoTXT.Strings[i], 15, 1));
   mSegmentoJ52List.Last.CodMovimento                     := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 16, 2));
 
@@ -696,7 +697,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN1.Add;
+  FPagFor.Lote.Last.SegmentoN1.New;
   FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodMovimento := TInstrucaoMovimento(StrToInt(Copy(FArquivoTXT.Strings[i], 15, 3)));
   case FPagFor.Geral.Banco of
     pagItau:
@@ -716,7 +717,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -738,7 +739,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -758,7 +759,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN2.Add;
+  FPagFor.Lote.Last.SegmentoN2.New;
   FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
 
   case FPagFor.Geral.Banco of
@@ -783,7 +784,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -805,7 +806,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -825,7 +826,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN3.Add;
+  FPagFor.Lote.Last.SegmentoN3.New;
   FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
 
   case FPagFor.Geral.Banco of
@@ -851,7 +852,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -873,7 +874,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -893,7 +894,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN4.Add;
+  FPagFor.Lote.Last.SegmentoN4.New;
   FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
   case FPagFor.Geral.Banco of
     pagItau:
@@ -919,7 +920,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -941,7 +942,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -961,7 +962,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN567.Add;
+  FPagFor.Lote.Last.SegmentoN567.New;
   FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
   case FPagFor.Geral.Banco of
     pagItau:
@@ -988,7 +989,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1010,7 +1011,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1030,7 +1031,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN8.Add;
+  FPagFor.Lote.Last.SegmentoN8.New;
   FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
 
   case FPagFor.Geral.Banco of
@@ -1057,7 +1058,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1079,7 +1080,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1099,7 +1100,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3N') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN9.Add;
+  FPagFor.Lote.Last.SegmentoN9.New;
   FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
   case FPagFor.Geral.Banco of
     pagItau:
@@ -1121,7 +1122,7 @@ begin
 
         if POS(FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
           begin
-            FPagFor.Registro0.Aviso.Add;
+            FPagFor.Registro0.Aviso.New;
             FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.CodOcorrencia;
             FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.DescOcorrencia;
             FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1143,7 +1144,7 @@ begin
           begin
             if POS(FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
               begin
-                FPagFor.Registro0.Aviso.Add;
+                FPagFor.Registro0.Aviso.New;
                 FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.SegmentoB.Items[x].CodOcorrencia;
                 FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.SegmentoB.Items[x].DescOcorrencia;
                 FPagFor.Registro0.Aviso.Last.Segmento        := 'N';
@@ -1160,7 +1161,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3O') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoO.Add;
+  FPagFor.Lote.Last.SegmentoO.New;
   FPagFor.Lote.Last.SegmentoO.Last.CodMovimento := TInstrucaoMovimento(StrToInt(Copy(FArquivoTXT.Strings[i], 15, 3)));
   case FPagFor.Geral.Banco of
     pagItau:
@@ -1209,7 +1210,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3W') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoW.Add;
+  FPagFor.Lote.Last.SegmentoW.New;
   case FPagFor.Geral.Banco of
     pagItau:
       begin
@@ -1231,7 +1232,7 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3Z') then
     Exit;
 
-  mSegmentoZList.Add;
+  mSegmentoZList.New;
   mSegmentoZList.Last.Autenticacao := Copy(FArquivoTXT.Strings[i], 15, 64);
   mSegmentoZList.Last.SeuNumero    := Copy(FArquivoTXT.Strings[i], 79, 20);
   mSegmentoZList.Last.NossoNumero  := Copy(FArquivoTXT.Strings[i], 104, 15);

@@ -340,7 +340,7 @@ begin
 
   with ACBrPagFor1 do
   begin
-    with Arquivos.Add.PagFor do
+    with Arquivos.New.PagFor do
     begin
       //////////////////////////////////////////////////////////////////////////
       // Geral
@@ -388,7 +388,7 @@ begin
       Registro0.ReservadoBanco := '';
       Registro0.ReservadoEmpresa := '';
 
-      with Lote.Add do
+      with Lote.New do
       begin
         ////////////////////////////////////////////////////////////////////////
         // Antes de Executar o Comando GerarLote deve-se informar os dados dos
@@ -424,7 +424,7 @@ begin
         Registro1.Endereco.CEP := StrToIntDef(edtEmitCEP.Text, 0);
         Registro1.Endereco.Estado := edtEmitUF.Text;
 
-        with SegmentoA.Add do
+        with SegmentoA.New do
         begin
           CodMovimento := imInclusaoRegistroDetalheLiberado;
           TipoMovimento:= tmInclusao;
@@ -460,7 +460,7 @@ begin
 
           TotalLote := TotalLote + Credito.ValorPagamento;
 
-          with SegmentoB.Add do
+          with SegmentoB.New do
           begin
             with Inscricao do
             begin
@@ -499,7 +499,7 @@ begin
         Registro5.NumAvisoDebito := 0;
       end;
 
-      with Lote.Add do
+      with Lote.New do
       begin
         ////////////////////////////////////////////////////////////////////////
         // Registro 1
@@ -530,7 +530,7 @@ begin
         // Segmento J
         ////////////////////////////////////////////////////////////////////////
         
-        with SegmentoJ.Add do
+        with SegmentoJ.New do
         begin
           CodMovimento := imInclusaoRegistroDetalheLiberado;
           CodigoBarras := '23794686500000030007508091140600004204891150';
@@ -556,7 +556,7 @@ begin
         Registro5.NumAvisoDebito := 0;
       end;
 
-      with Lote.Add do
+      with Lote.New do
       begin
         ////////////////////////////////////////////////////////////////////////
         // Registro 1
@@ -587,7 +587,7 @@ begin
         // Segmento O
         ////////////////////////////////////////////////////////////////////////
         
-        with SegmentoO.Add do
+        with SegmentoO.New do
         begin
           CodMovimento       := imInclusaoRegistroDetalheLiberado;
           CodigoBarras       := '83650000001353501620000010102016216594218917';
@@ -609,7 +609,7 @@ begin
         Registro5.NumAvisoDebito := 0;
       end;
 
-      with Lote.Add do
+      with Lote.New do
       begin
         ////////////////////////////////////////////////////////////////////////
         // criado para dar volume
@@ -641,7 +641,7 @@ begin
         // Registro 5
         ////////////////////////////////////////////////////////////////////////
 
-        with SegmentoA.Add do
+        with SegmentoA.New do
         begin
           CodMovimento := imInclusaoRegistroDetalheLiberado;
           TipoMovimento:= tmInclusao;
@@ -677,7 +677,7 @@ begin
 
           TotalLote := TotalLote + Credito.ValorPagamento;
 
-          with SegmentoB.Add do
+          with SegmentoB.New do
           begin
             with Inscricao do
             begin

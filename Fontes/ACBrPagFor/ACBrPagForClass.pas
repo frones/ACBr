@@ -40,36 +40,33 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  Controls, SysUtils, Classes, ACBrPagForConversao;
+  Controls, SysUtils, Classes, Contnrs, ACBrPagForConversao;
 
 type
   TLote = class;
   TPagFor = class;
 
-  TArquivoTXT = class(TCollectionItem)
+  TArquivoTXT = class(TObject)
   private
     FArquivoTXT: TStringList;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property ArquivoTXT: TStringList read FArquivoTXT write FArquivoTXT;
   end;
 
-  TArquivoTXTList = class(TCollection)
+  TArquivoTXTList = class(TObjectList)
   private
     function GetItem(Index: Integer): TArquivoTXT;
     procedure SetItem(Index: Integer; Value: TArquivoTXT);
-    function GetLastItem: TArquivoTXT;
-    procedure SetLastItem(const Value: TArquivoTXT);
   public
-    constructor Create;
-    function Add: TArquivoTXT;
+    function New: TArquivoTXT;
+    function Last: TArquivoTXT;
     property Items[Index: Integer]: TArquivoTXT read GetItem write SetItem; default;
-    property Last: TArquivoTXT read GetLastItem write SetLastItem;
   end;
 
-  TGeral = class(TPersistent)
+  TGeral = class(TObject)
   private
     FBanco: TBanco;
     FSubstitutaBanco: TBanco;
@@ -80,7 +77,7 @@ type
     property idTributo: TIndTributo read FidTributo write FidTributo;
   end;
 
-  TInscricao = class(TPersistent)
+  TInscricao = class(TObject)
   private
     FTipo: TTipoInscricao; // Tamanho 1
     FNumero: String; // Tamanho 14 ou 15
@@ -89,7 +86,7 @@ type
     property Numero: String read FNumero write FNumero;
   end;
 
-  TAgencia = class(TPersistent)
+  TAgencia = class(TObject)
   private
     FCodigo: Integer;
     FDV: String; // Tamanho 1
@@ -98,7 +95,7 @@ type
     property DV: String read FDV write FDV;
   end;
 
-  TConta = class(TPersistent)
+  TConta = class(TObject)
   private
     FTipoConta: Integer;
     FNumero: Integer;
@@ -109,7 +106,7 @@ type
     property DV: String read FDV write FDV;
   end;
 
-  TContaCorrente = class(TPersistent)
+  TContaCorrente = class(TObject)
   private
     FAgencia: TAgencia;
     FConta: TConta;
@@ -117,13 +114,13 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Agencia: TAgencia read FAgencia write FAgencia;
     property Conta: TConta read FConta write FConta;
     property DV: String read FDV write FDV;
   end;
 
-  TEmpresa = class(TPersistent)
+  TEmpresa = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 14 ou 15
     FConvenio: String; // Tamanho 20
@@ -132,14 +129,14 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Inscricao: TInscricao read FInscricao write FInscricao;
     property Convenio: String read FConvenio write FConvenio;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
     property Nome: String read FNome write FNome;
   end;
 
-  TArquivo = class(TPersistent)
+  TArquivo = class(TObject)
   private
     FCodigo: TTipoArquivo; // Tamanho 1
     FDataGeracao: TDateTime; // DDMMAAAA
@@ -154,7 +151,7 @@ type
     property Densidade: Integer read FDensidade write FDensidade;
   end;
 
-  TTotais = class(TPersistent)
+  TTotais = class(TObject)
   private
     FQtdeLotes: Integer;
     FQtdeRegistros: Integer;
@@ -165,7 +162,7 @@ type
     property QtdeContasConciliadas: Integer read FQtdeContasConciliadas write FQtdeContasConciliadas;
   end;
 
-  TServico = class(TPersistent)
+  TServico = class(TObject)
   private
     FOperacao: TTipoOperacao; // Tamanho 1
     FFormaLancamento: TFormaLancamento; // Tamanho 2
@@ -176,7 +173,7 @@ type
     property TipoServico: TTipoServico read FTipoServico write FTipoServico;
   end;
 
-  TEndereco = class(TPersistent)
+  TEndereco = class(TObject)
   private
     FLogradouro: String; // Tamanho 30
     FNumero: Integer;
@@ -195,7 +192,7 @@ type
     property Estado: String read FEstado write FEstado;
   end;
 
-  TControleCobranca = class(TPersistent)
+  TControleCobranca = class(TObject)
   private
     FNumRemRet: Integer;
     FDataGravacao: TDateTime;  // DDMMAAAA
@@ -204,7 +201,7 @@ type
     property DataGravacao: TDateTime read FDataGravacao write FDataGravacao;
   end;
 
-  TTitulos = class(TPersistent)
+  TTitulos = class(TObject)
   private
     FQtdeTitulosCobranca: Integer;
     FValorTitulosCarteira: Double;
@@ -213,7 +210,7 @@ type
     property ValorTitulosCarteira: Double read FValorTitulosCarteira write FValorTitulosCarteira;
   end;
 
-  TCobranca = class(TPersistent)
+  TCobranca = class(TObject)
   private
     FCarteira: Integer; // Tamanho 1
     FCadastramento: Integer; // Tamanho 1
@@ -228,7 +225,7 @@ type
     property DistribuicaoBoleto: String read FDistribuicaoBoleto write FDistribuicaoBoleto;
   end;
 
-  TAcrescimosDescontos = class(TPersistent)
+  TAcrescimosDescontos = class(TObject)
   private
     FCodigo: Integer; // Tamanho 1
     FData: TDateTime; // DDMMAAAA
@@ -239,7 +236,7 @@ type
     property Valor: Double read FValor write FValor;
   end;
 
-  TSacado = class(TPersistent)
+  TSacado = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 15
     FNome: String; // Tamanho 40
@@ -251,7 +248,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Inscricao: TInscricao read FInscricao write FInscricao;
     property Nome: String read FNome write FNome;
     property Endereco: String read FEndereco write FEndereco;
@@ -261,43 +258,43 @@ type
     property UF: String read FUF write FUF;
   end;
 
-  TAvalista = class(TPersistent)
+  TAvalista = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 15
     FNome: String; // Tamanho 40
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Inscricao: TInscricao read FInscricao write FInscricao;
     property Nome: String read FNome write FNome;
   end;
 
-  TCedente = class(TPersistent)
+  TCedente = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 15
     FNome: string;
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Inscricao: TInscricao read FInscricao write FInscricao;
     property Nome: String read FNome write FNome;
   end;
 
-  TDebitoAutomatico = class(TPersistent)
+  TDebitoAutomatico = class(TObject)
   private
     FBanco: TBanco;
     FContaCorrente : TContaCorrente;
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Banco: TBanco read FBanco write FBanco;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
   end;
 
-  TFavorecido = class(TPersistent)
+  TFavorecido = class(TObject)
   private
     FCamara: Integer;
     FBanco: TBanco;
@@ -307,7 +304,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Camara: Integer read FCamara write FCamara;
     property Banco: TBanco read FBanco write FBanco;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
@@ -315,7 +312,7 @@ type
     property Inscricao: TInscricao read FInscricao write FInscricao;
   end;
 
-  TMoeda = class(TPersistent)
+  TMoeda = class(TObject)
   private
     FTipo : TTipoMoeda; // Tamanho 3
     FQtde : Double;
@@ -324,7 +321,7 @@ type
     property Qtde: Double read FQtde write FQtde;
   end;
 
-  TCredito = class(TPersistent)
+  TCredito = class(TObject)
   private
     FSeuNumero: String; // Tamanho 20
     FDataPagamento: TDateTime; // DDMMAAAA
@@ -336,7 +333,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property SeuNumero: String read FSeuNumero write FSeuNumero;
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property Moeda: TMoeda read FMoeda write FMoeda;
@@ -349,7 +346,7 @@ type
   // Estrutura do Registro 0 utilizado em todos os Arquivos
   // Primeiro e unico no Arquivo
 
-  TAviso = class(TCollectionItem)
+  TAviso = class(TObject)
   private
     FCodigoRetorno: String;
     FMensagemRetorno: String;
@@ -357,9 +354,6 @@ type
     FSegmentoFilho: String;
     FSeuNumero: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property CodigoRetorno: String read FCodigoRetorno write FCodigoRetorno;
     property MensagemRetorno: String read FMensagemRetorno write FMensagemRetorno;
     property Segmento: String read FSegmento write FSegmento;
@@ -367,20 +361,17 @@ type
     property SeuNumero: String read FSeuNumero write FSeuNumero;
   end;
 
-  TAvisoList = class(TCollection)
+  TAvisoList = class(TObjectList)
   private
     function GetItem(Index: Integer): TAviso;
     procedure SetItem(Index: Integer; Value: TAviso);
-    function GetLastItem: TAviso;
-    procedure SetLastItem(const Value: TAviso);
   public
-    constructor Create;
-    function Add: TAviso;
+    function New: TAviso;
+    function Last: TAviso;
     property Items[Index: Integer]: TAviso read GetItem write SetItem; default;
-    property Last: TAviso read GetLastItem write SetLastItem;
   end;
 
-  TRegistro0 = class(TPersistent)
+  TRegistro0 = class(TObject)
   private
     FEmpresa: TEmpresa; // Tamanho 14
     FNomeBanco: String; // Tamanho 30
@@ -389,9 +380,9 @@ type
     FReservadoEmpresa: String; // Tamanho 20
     FAviso: TAvisoList;
   public
-    constructor Create(AOwner: TPagFor);
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Empresa: TEmpresa read FEmpresa write FEmpresa;
     property NomeBanco: String read FNomeBanco write FNomeBanco;
     property Arquivo: TArquivo read FArquivo write FArquivo;
@@ -403,20 +394,20 @@ type
   // Estrutura do Registro 9 utilizado em todos os Arquivos
   // Ultimo e unico no Arquivo
 
-  TRegistro9 = class(TPersistent)
+  TRegistro9 = class(TObject)
   private
     FTotais: TTotais;
   public
-    constructor Create(AOwner: TPagFor);
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Totais: TTotais read FTotais write FTotais;
   end;
 
   // Estrutura do Registro 1 utilizado para os Serviços
   // uma para cada lote de serviços - Identifica o Inicio do Lote
 
-  TRegistro1 = class(TPersistent)
+  TRegistro1 = class(TObject)
   private
     FServico: TServico;
     FEmpresa: TEmpresa; // Tamanho 15
@@ -426,9 +417,9 @@ type
     FControleCobranca: TControleCobranca;
     FDataCredito: TDateTime; // DDMMAAAA
   public
-    constructor Create(AOwner: TLote);
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Servico: TServico read FServico write FServico;
     property Empresa: TEmpresa read FEmpresa write FEmpresa;
     property Informacao1: String read FInformacao1 write FInformacao1;
@@ -441,7 +432,7 @@ type
   // Estrutura do Registro 5 utilizado para os Serviços
   // uma para cada lote de serviços - Identifica o Fim do Lote
 
-  TRegistro5 = class(TPersistent)
+  TRegistro5 = class(TObject)
   private
     FTotalCobrancaSimples: TTitulos;
     FTotalCobrancaVinculada: TTitulos;
@@ -455,9 +446,9 @@ type
     FTotalValorAcrescimo: Double;
     FTotalValorArrecadado: Double;
   public
-    constructor Create(AOwner: TLote);
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property TotalCobrancaSimples: TTitulos read FTotalCobrancaSimples write FTotalCobrancaSimples;
     property TotalCobrancaVinculada: TTitulos read FTotalCobrancaVinculada write FTotalCobrancaVinculada;
     property TotalCobrancaCaucionada: TTitulos read FTotalCobrancaCaucionada write FTotalCobrancaCaucionada;
@@ -474,7 +465,7 @@ type
 
    // Estrutura do Segmento B (Opcional)
 
-  TSegmentoB = class(TCollectionItem)
+  TSegmentoB = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 14
     FEndereco: TEndereco;
@@ -494,9 +485,9 @@ type
     FCodOcorrencia: string;
     FDescOcorrencia: String;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Inscricao: TInscricao read FInscricao write FInscricao;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
@@ -516,22 +507,20 @@ type
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
   end;
 
-  TSegmentoBList = class(TCollection)
+  TSegmentoBList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoB;
     procedure SetItem(Index: Integer; Value: TSegmentoB);
-    function GetLastItem: TSegmentoB;
-    procedure SetLastItem(const Value: TSegmentoB);
   public
-    constructor Create{(AOwner: TLote)};
-    function Add: TSegmentoB;
+    function New: TSegmentoB;
+    function First: TSegmentoB;
+    function Last: TSegmentoB;
     property Items[Index: Integer]: TSegmentoB read GetItem write SetItem; default;
-    property Last: TSegmentoB read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento C (Opcional)
 
-  TSegmentoC = class(TCollectionItem)
+  TSegmentoC = class(TObject)
   private
     FValorCSLL: Double;
     FValorIR: Double;
@@ -553,9 +542,9 @@ type
     FCodOcorrencia: string;
     FDescOcorrencia: String;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property ValorCSLL: Double read FValorCSLL write FValorCSLL;
     property ValorIR: Double read FValorIR write FValorIR;
     property ValorISS: Double read FValorISS write FValorISS;
@@ -577,22 +566,20 @@ type
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
   end;
 
-  TSegmentoCList = class(TCollection)
+  TSegmentoCList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoC;
     procedure SetItem(Index: Integer; Value: TSegmentoC);
-    function GetLastItem: TSegmentoC;
-    procedure SetLastItem(const Value: TSegmentoC);
   public
-    constructor Create{(AOwner: TLote)};
-    function Add: TSegmentoC;
+    function New: TSegmentoC;
+    function First: TSegmentoC;
+    function Last: TSegmentoC;
     property Items[Index: Integer]: TSegmentoC read GetItem write SetItem; default;
-    property Last: TSegmentoC read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento D (Opcional)
 
-  TSegmentoD = class(TCollectionItem)
+  TSegmentoD = class(TObject)
   private
     FPeriodoCompetencia: Integer;
     FCentroCusto: String;
@@ -615,9 +602,7 @@ type
     FCodOcorrencia: string;
     FDescOcorrencia: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
+
     property PeriodoCompetencia: Integer read FPeriodoCompetencia write FPeriodoCompetencia;
     property CentroCusto: String read FCentroCusto write FCentroCusto;
     property CodigoFuncionario: String read FCodigoFuncionario write FCodigoFuncionario;
@@ -640,106 +625,85 @@ type
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
   end;
 
-  TSegmentoDList = class(TCollection)
+  TSegmentoDList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoD;
     procedure SetItem(Index: Integer; Value: TSegmentoD);
-    function GetLastItem: TSegmentoD;
-    procedure SetLastItem(const Value: TSegmentoD);
   public
-    constructor Create{(AOwner: TLote)};
-    function Add: TSegmentoD;
+    function New: TSegmentoD;
+    function Last: TSegmentoD;
     property Items[Index: Integer]: TSegmentoD read GetItem write SetItem; default;
-    property Last: TSegmentoD read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento E (Opcional)
 
-  TSegmentoE = class(TCollectionItem)
+  TSegmentoE = class(TObject)
   private
     FInformacaoComplementar: String;
     FMovimento: TTipoMovimentoPagto;
     FCodOcorrencia: string;
     FDescOcorrencia: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Movimento: TTipoMovimentoPagto read FMovimento write FMovimento;
     property InformacaoComplementar: String read FInformacaoComplementar write FInformacaoComplementar;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
   end;
 
-  TSegmentoEList = class(TCollection)
+  TSegmentoEList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoE;
     procedure SetItem(Index: Integer; Value: TSegmentoE);
-    function GetLastItem: TSegmentoE;
-    procedure SetLastItem(const Value: TSegmentoE);
   public
-    constructor Create;
-    function Add: TSegmentoE;
+    function New: TSegmentoE;
+    function Last: TSegmentoE;
     property Items[Index: Integer]: TSegmentoE read GetItem write SetItem; default;
-    property Last: TSegmentoE read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento F (Opcional)
 
-  TSegmentoF = class(TCollectionItem)
+  TSegmentoF = class(TObject)
   private
     FInformacaoComplementar: String;
     FCodOcorrencia: string;
     FDescOcorrencia: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property InformacaoComplementar: String read FInformacaoComplementar write FInformacaoComplementar;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
   end;
 
-  TSegmentoFList = class(TCollection)
+  TSegmentoFList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoF;
     procedure SetItem(Index: Integer; Value: TSegmentoF);
-    function GetLastItem: TSegmentoF;
-    procedure SetLastItem(const Value: TSegmentoF);
   public
-    constructor Create{(AOwner: TLote)};
-    function Add: TSegmentoF;
+    function New: TSegmentoF;
+    function Last: TSegmentoF;
     property Items[Index: Integer]: TSegmentoF read GetItem write SetItem; default;
-    property Last: TSegmentoF read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento Z (Opcional)
 
-  TSegmentoZ = class(TCollectionItem)
+  TSegmentoZ = class(TObject)
   private
     FAutenticacao : String; // Tamanho 64
     FSeuNumero: String;
     FNossoNumero: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Autenticacao: String read FAutenticacao write FAutenticacao;
     property SeuNumero: String read FSeuNumero write FSeuNumero;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
   end;
 
-  TSegmentoZList = class(TCollection)
+  TSegmentoZList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoZ;
     procedure SetItem(Index: Integer; Value: TSegmentoZ);
-    function GetLastItem: TSegmentoZ;
-    procedure SetLastItem(const Value: TSegmentoZ);
   public
-    constructor Create{(AOwner: TLote)};
-    function Add: TSegmentoZ;
+    function New: TSegmentoZ;
+    function Last: TSegmentoZ;
     property Items[Index: Integer]: TSegmentoZ read GetItem write SetItem; default;
-    property Last: TSegmentoZ read GetLastItem write SetLastItem;
   end;
 
 
@@ -755,7 +719,7 @@ type
 
   // Estrutura do Segmento A (Obrigatorio)
 
-  TSegmentoA = class(TCollectionItem)
+  TSegmentoA = class(TObject)
   private
     FTipoMovimento: TTipoMovimento; // Tamanho 1
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
@@ -785,9 +749,9 @@ type
     function GetPagamentoLiberado: Boolean;
 
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Favorecido: TFavorecido read FFavorecido write FFavorecido;
@@ -808,20 +772,18 @@ type
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
-  TSegmentoAList = class(TCollection)
+  TSegmentoAList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoA;
     procedure SetItem(Index: Integer; Value: TSegmentoA);
-    function GetLastItem: TSegmentoA;
-    procedure SetLastItem(const Value: TSegmentoA);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoA;
+    function New: TSegmentoA;
+    function First: TSegmentoA;
+    function Last: TSegmentoA;
     property Items[Index: Integer]: TSegmentoA read GetItem write SetItem; default;
-    property Last: TSegmentoA read GetLastItem write SetLastItem;
   end;
 
-  TSegmentoH = class(TCollectionItem)
+  TSegmentoH = class(TObject)
   private
     FAvalista: TAvalista;
     FDesconto2: TAcrescimosDescontos;
@@ -833,7 +795,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property Avalista: TAvalista read FAvalista write FAvalista;
     property Desconto2: TAcrescimosDescontos read FDesconto2 write FDesconto2;
     property Desconto3: TAcrescimosDescontos read FDesconto3 write FDesconto3;
@@ -843,20 +805,17 @@ type
     property Informacao2: string read FInformacao2 write FInformacao2;
   end;
 
-  TSegmentoHList = class(TCollection)
+  TSegmentoHList = class(TObjectList)
     private
     function GetItem(Index: Integer): TSegmentoH;
     procedure SetItem(Index: Integer; Value: TSegmentoH);
-    function GetLastItem: TSegmentoH;
-    procedure SetLastItem(const Value: TSegmentoH);
   public
-    constructor Create;
-    function Add: TSegmentoH;
+    function New: TSegmentoH;
+    function Last: TSegmentoH;
     property Items[Index: Integer]: TSegmentoH read GetItem write SetItem; default;
-    property Last: TSegmentoH read GetLastItem write SetLastItem;
   end;
 
-  TSegmentoG = class(TCollectionItem)
+  TSegmentoG = class(TObject)
   private
     FCodigoBarras: string;
     FCedente: TCedente;
@@ -883,7 +842,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
     property Cedente: TCedente read FCedente write FCedente;
     property Vencimento: TDate read FVencimento write FVencimento;
@@ -905,20 +864,17 @@ type
     property SegmentoH: TSegmentoHList read FSegmentoH write SetSegmentoH;
   end;
 
-  TSegmentoGList = class(TCollection)
+  TSegmentoGList = class(TObjectList)
     private
     function GetItem(Index: Integer): TSegmentoG;
     procedure SetItem(Index: Integer; Value: TSegmentoG);
-    function GetLastItem: TSegmentoG;
-    procedure SetLastItem(const Value: TSegmentoG);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoG;
+    function New: TSegmentoG;
+    function Last: TSegmentoG;
     property Items[Index: Integer]: TSegmentoG read GetItem write SetItem; default;
-    property Last: TSegmentoG read GetLastItem write SetLastItem;
   end;
 
-  TPagador = class
+  TPagador = class(TObject)
   private
     FInscricao: TInscricao;
     FNome: String;
@@ -930,7 +886,7 @@ type
     property Nome: String read FNome write FNome;
   end;
 
-  TBeneficiario = class
+  TBeneficiario = class(TObject)
   private
     FInscricao: TInscricao;
     FNome: String;
@@ -942,7 +898,7 @@ type
     property Nome: String read FNome write FNome;
   end;
 
-  TSacadorAvalista = class
+  TSacadorAvalista = class(TObject)
   private
     FInscricao: TInscricao;
     FNome: String;
@@ -954,7 +910,7 @@ type
     property Nome: String read FNome write FNome;
   end;
 
-  TSegmentoJ52 = class(TCollectionItem)
+  TSegmentoJ52 = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento;
     FTipoMovimento: TTipoMovimento;
@@ -964,7 +920,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Pagador: TPagador read FPagador write FPagador;
@@ -972,17 +928,14 @@ type
     property SacadorAvalista: TSacadorAvalista read FSacadorAvalista write FSacadorAvalista;
   end;
 
-  TSegmentoJ52List = class(TCollection)
+  TSegmentoJ52List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoJ52;
     procedure SetItem(Index: Integer; Value: TSegmentoJ52);
-    function GetLastItem: TSegmentoJ52;
-    procedure SetLastItem(const Value: TSegmentoJ52);
   public
-    constructor Create;
-    function Add: TSegmentoJ52;
+    function New: TSegmentoJ52;
+    function Last: TSegmentoJ52;
     property Items[Index: Integer]: TSegmentoJ52 read GetItem write SetItem; default;
-    property Last: TSegmentoJ52 read GetLastItem write SetLastItem;
   end;
 
   // Lote: Pagamento de Titulos de Cobrança
@@ -993,7 +946,7 @@ type
 
   // Estrutura do Segmento J (Obrigatorio)
 
-  TSegmentoJ = class(TCollectionItem)
+  TSegmentoJ = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento;
     FCodigoBarras    : String;
@@ -1020,9 +973,9 @@ type
     procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property CodigoBarras: String read FCodigoBarras write FCodigoBarras;
     property NomeCedente: String read FNomeCedente write FNomeCedente;
@@ -1045,23 +998,21 @@ type
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
-  TSegmentoJList = class(TCollection)
+  TSegmentoJList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoJ;
     procedure SetItem(Index: Integer; Value: TSegmentoJ);
-    function GetLastItem: TSegmentoJ;
-    procedure SetLastItem(const Value: TSegmentoJ);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoJ;
+    function New: TSegmentoJ;
+    function First: TSegmentoJ;
+    function Last: TSegmentoJ;
     property Items[Index: Integer]: TSegmentoJ read GetItem write SetItem; default;
-    property Last: TSegmentoJ read GetLastItem write SetLastItem;
   end;
 
   // Estrutura do Segmento W* (Opcional)
   // * = obrigatório para FGTS convenio 0181 e 0182
 
-  TSegmentoW = class(TCollectionItem)
+  TSegmentoW = class(TObject)
   private
     FComplementoRegistro: Integer;
     FInformacoes1ou2    : String; // Tamanho 1
@@ -1077,9 +1028,6 @@ type
     FLacreConecSocial   : String; // Tamanho 9
     FLacreDV            : String; // Tamanho 2
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property ComplementoRegistro: Integer read FComplementoRegistro write FComplementoRegistro;
     property Informacoes1ou2: String read FInformacoes1ou2 write FInformacoes1ou2;
     property Informacoes1: String read FInformacoes1 write FInformacoes1;
@@ -1095,17 +1043,15 @@ type
     property LacreDV: String read FLacreDV write FLacreDV;
   end;
 
-  TSegmentoWList = class(TCollection)
+  TSegmentoWList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoW;
     procedure SetItem(Index: Integer; Value: TSegmentoW);
-    function GetLastItem: TSegmentoW;
-    procedure SetLastItem(const Value: TSegmentoW);
   public
-    constructor Create;
-    function Add: TSegmentoW;
+    function New: TSegmentoW;
+    function First: TSegmentoW;
+    function Last: TSegmentoW;
     property Items[Index: Integer]: TSegmentoW read GetItem write SetItem; default;
-    property Last: TSegmentoW read GetLastItem write SetLastItem;
   end;
 
   // Lote: Pagamento de Tributos sem código de barras
@@ -1116,7 +1062,7 @@ type
 
   // Estrutura do Segmento N (Obrigatorio)
 
-  TSegmentoN = class(TPersistent)
+  TSegmentoN = class(TObject)
   private
     FCodMovimento    : TInstrucaoMovimento; // Tamanho 2
     FSeuNumero       : String; // Tamanho 20
@@ -1153,7 +1099,7 @@ type
 
   // Segmento N1 - GPS
 
-  TSegmentoN1 = class(TCollectionItem)
+  TSegmentoN1 = class(TObject)
   private
     FSegmentoN           : TSegmentoN;
     FReceita             : Integer;
@@ -1168,7 +1114,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: Integer read FTipoContribuinte write FTipoContribuinte;
@@ -1181,22 +1127,20 @@ type
     property MesAnoCompetencia: Integer read FMesAnoCompetencia write FMesAnoCompetencia;
   end;
 
-  TSegmentoN1List = class(TCollection)
+  TSegmentoN1List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN1;
     procedure SetItem(Index: Integer; Value: TSegmentoN1);
-    function GetLastItem: TSegmentoN1;
-    procedure SetLastItem(const Value: TSegmentoN1);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN1;
+    function New: TSegmentoN1;
+    function First: TSegmentoN1;
+    function Last: TSegmentoN1;
     property Items[Index: Integer]: TSegmentoN1 read GetItem write SetItem; default;
-    property Last: TSegmentoN1 read GetLastItem write SetLastItem;
   end;
 
   // Segmento N2 - DARF Normal
 
-  TSegmentoN2 = class(TCollectionItem)
+  TSegmentoN2 = class(TObject)
   private
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
@@ -1211,7 +1155,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
@@ -1224,22 +1168,19 @@ type
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
   end;
 
-  TSegmentoN2List = class(TCollection)
+  TSegmentoN2List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN2;
     procedure SetItem(Index: Integer; Value: TSegmentoN2);
-    function GetLastItem: TSegmentoN2;
-    procedure SetLastItem(const Value: TSegmentoN2);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN2;
+    function New: TSegmentoN2;
+    function Last: TSegmentoN2;
     property Items[Index: Integer]: TSegmentoN2 read GetItem write SetItem; default;
-    property Last: TSegmentoN2 read GetLastItem write SetLastItem;
   end;
 
   // Segmento N3 - DARF Simples
 
-  TSegmentoN3 = class(TCollectionItem)
+  TSegmentoN3 = class(TObject)
   private
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
@@ -1255,7 +1196,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
@@ -1269,17 +1210,15 @@ type
     property DataVencimento: TDate read FDataVencimento write FDataVencimento;
   end;
 
-  TSegmentoN3List = class(TCollection)
+  TSegmentoN3List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN3;
     procedure SetItem(Index: Integer; Value: TSegmentoN3);
-    function GetLastItem: TSegmentoN3;
-    procedure SetLastItem(const Value: TSegmentoN3);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN3;
+    function New: TSegmentoN3;
+    function First: TSegmentoN3;
+    function Last: TSegmentoN3;
     property Items[Index: Integer]: TSegmentoN3 read GetItem write SetItem; default;
-    property Last: TSegmentoN3 read GetLastItem write SetLastItem;
   end;
 
   // Segmento N4 - GARE-SP
@@ -1287,7 +1226,7 @@ type
   //            23 = Tributo GARE-SP DR
   //            24 =Tributo GARE-SP ITCMD
 
-  TSegmentoN4 = class(TCollectionItem)
+  TSegmentoN4 = class(TObject)
   private
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
@@ -1304,7 +1243,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
@@ -1319,24 +1258,22 @@ type
     property Multa: Double read FMulta write FMulta;
   end;
 
-  TSegmentoN4List = class(TCollection)
+  TSegmentoN4List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN4;
     procedure SetItem(Index: Integer; Value: TSegmentoN4);
-    function GetLastItem: TSegmentoN4;
-    procedure SetLastItem(const Value: TSegmentoN4);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN4;
+    function New: TSegmentoN4;
+    function First: TSegmentoN4;
+    function Last: TSegmentoN4;
     property Items[Index: Integer]: TSegmentoN4 read GetItem write SetItem; default;
-    property Last: TSegmentoN4 read GetLastItem write SetLastItem;
   end;
 
   // Segmento N5 - IPVA
   // Segmento N6 - DPVAT
   // Segmento N7 - Licenciamento
 
-  TSegmentoN567 = class(TCollectionItem)
+  TSegmentoN567 = class(TObject)
   private
     FSegmentoN       : TSegmentoN;
     FTributo         : TIndTributo;
@@ -1356,7 +1293,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Tributo: TIndTributo read FTributo write FTributo;
     property Receita: Integer read FReceita write FReceita;
@@ -1374,22 +1311,20 @@ type
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
   end;
 
-  TSegmentoN567List = class(TCollection)
+  TSegmentoN567List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN567;
     procedure SetItem(Index: Integer; Value: TSegmentoN567);
-    function GetLastItem: TSegmentoN567;
-    procedure SetLastItem(const Value: TSegmentoN567);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN567;
+    function New: TSegmentoN567;
+    function First: TSegmentoN567;
+    function Last: TSegmentoN567;
     property Items[Index: Integer]: TSegmentoN567 read GetItem write SetItem; default;
-    property Last: TSegmentoN567 read GetLastItem write SetLastItem;
   end;
 
   // Segmento N8 - DARJ
 
-  TSegmentoN8 = class(TCollectionItem)
+  TSegmentoN8 = class(TObject)
   private
     FSegmentoN           : TSegmentoN;
     FReceita             : Integer;
@@ -1406,7 +1341,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
@@ -1421,22 +1356,20 @@ type
     property PeriodoParcela: Integer read FPeriodoParcela write FPeriodoParcela;
   end;
 
-  TSegmentoN8List = class(TCollection)
+  TSegmentoN8List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN8;
     procedure SetItem(Index: Integer; Value: TSegmentoN8);
-    function GetLastItem: TSegmentoN8;
-    procedure SetLastItem(const Value: TSegmentoN8);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN8;
+    function New: TSegmentoN8;
+    function First: TSegmentoN8;
+    function Last: TSegmentoN8;
     property Items[Index: Integer]: TSegmentoN8 read GetItem write SetItem; default;
-    property Last: TSegmentoN8 read GetLastItem write SetLastItem;
   end;
 
 // Segmento N9 - FGTS- GRF/GRRF/GRDE
 
-  TSegmentoN9 = class(TCollectionItem)
+  TSegmentoN9 = class(TObject)
   private
     FSegmentoN        : TSegmentoN;
     FReceita          : Integer;
@@ -1449,7 +1382,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
@@ -1460,17 +1393,14 @@ type
     property LacreDigito: Integer read FLacreDigito write FLacreDigito;
   end;
 
-  TSegmentoN9List = class(TCollection)
+  TSegmentoN9List = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoN9;
     procedure SetItem(Index: Integer; Value: TSegmentoN9);
-    function GetLastItem: TSegmentoN9;
-    procedure SetLastItem(const Value: TSegmentoN9);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoN9;
+    function New: TSegmentoN9;
+    function Last: TSegmentoN9;
     property Items[Index: Integer]: TSegmentoN9 read GetItem write SetItem; default;
-    property Last: TSegmentoN9 read GetLastItem write SetLastItem;
   end;
 
   // Lote: Pagamento de Tributos com código de barras
@@ -1482,7 +1412,7 @@ type
 
   // Estrutura do Segmento O (Obrigatorio)
 
-  TSegmentoO = class(TCollectionItem)
+  TSegmentoO = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
     FCodigoBarras      : String; // Tamanho 44
@@ -1503,7 +1433,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property CodigoBarras: String read FCodigoBarras write FCodigoBarras;
     property NomeConcessionaria: String read FNomeConcessionaria write FNomeConcessionaria;
@@ -1521,17 +1451,15 @@ type
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
   end;
 
-  TSegmentoOList = class(TCollection)
+  TSegmentoOList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoO;
     procedure SetItem(Index: Integer; Value: TSegmentoO);
-    function GetLastItem: TSegmentoO;
-    procedure SetLastItem(const Value: TSegmentoO);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoO;
+    function New: TSegmentoO;
+    function First: TSegmentoO;
+    function Last: TSegmentoO;
     property Items[Index: Integer]: TSegmentoO read GetItem write SetItem; default;
-    property Last: TSegmentoO read GetLastItem write SetLastItem;
   end;
 
   // Lote: Titulos em Cobrança
@@ -1542,7 +1470,7 @@ type
 
   // Estrutura do Segmento P (Obrigatorio)
 
-  TSegmentoP = class(TCollectionItem)
+  TSegmentoP = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
     FContaCorrente       : TContaCorrente;
@@ -1570,7 +1498,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
@@ -1596,19 +1524,20 @@ type
     property NumeroContrato: Integer read FNumeroContrato write FNumeroContrato;
   end;
 
-  TSegmentoPList = class(TCollection)
+  TSegmentoPList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoP;
     procedure SetItem(Index: Integer; Value: TSegmentoP);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoP;
+    function New: TSegmentoP;
+    function First: TSegmentoP;
+    function Last: TSegmentoP;
     property Items[Index: Integer]: TSegmentoP read GetItem write SetItem; default;
   end;
 
   // Estrutura do Segmento Q (Obrigatorio)
 
-  TSegmentoQ = class(TCollectionItem)
+  TSegmentoQ = class(TObject)
   private
     FCodMovimento             : TInstrucaoMovimento; // Tamanho 2
     FSacado                   : TSacado;
@@ -1618,7 +1547,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Sacado: TSacado read FSacado write FSacado;
     property Avalista: TAvalista read FAvalista write FAvalista;
@@ -1626,19 +1555,18 @@ type
     property NossoNumeroCorrespondente: String read FNossoNumeroCorrespondente write FNossoNumeroCorrespondente;
   end;
 
-  TSegmentoQList = class(TCollection)
+  TSegmentoQList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoQ;
     procedure SetItem(Index: Integer; Value: TSegmentoQ);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoQ;
+    function New: TSegmentoQ;
     property Items[Index: Integer]: TSegmentoQ read GetItem write SetItem; default;
   end;
 
   // Estrutura do Segmento R (Opcional)
 
-  TSegmentoR = class(TCollectionItem)
+  TSegmentoR = class(TObject)
   private
     FCodMovimento         : TInstrucaoMovimento; // Tamanho 2
     FDesconto2            : TAcrescimosDescontos;
@@ -1654,7 +1582,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Desconto2: TAcrescimosDescontos read FDesconto2 write FDesconto2;
     property Desconto3: TAcrescimosDescontos read FDesconto3 write FDesconto3;
@@ -1668,19 +1596,18 @@ type
     property AvisoDebitoAutomatico: Integer read FAvisoDebitoAutomatico write FAvisoDebitoAutomatico;
   end;
 
-  TSegmentoRList = class(TCollection)
+  TSegmentoRList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoR;
     procedure SetItem(Index: Integer; Value: TSegmentoR);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoR;
+    function New: TSegmentoR;
     property Items[Index: Integer]: TSegmentoR read GetItem write SetItem; default;
   end;
 
   // Estrutura do Segmento S (Opcional)
 
-  TSegmentoS = class(TCollectionItem)
+  TSegmentoS = class(TObject)
   private
     FCodMovimento : TInstrucaoMovimento; // Tamanho 2
     FTipoImpressao: Integer;
@@ -1693,9 +1620,6 @@ type
     FInformacao8  : String; // Tamanho 40
     FInformacao9  : String; // Tamanho 40
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property TipoImpressao: Integer read FTipoImpressao write FTipoImpressao;
     property NumerodaLinha: Integer read FNumerodaLinha write FNumerodaLinha;
@@ -1708,46 +1632,41 @@ type
     property Informacao9: String read FInformacao9 write FInformacao9;
   end;
 
-  TSegmentoSList = class(TCollection)
+  TSegmentoSList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoS;
     procedure SetItem(Index: Integer; Value: TSegmentoS);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoS;
+    function New: TSegmentoS;
     property Items[Index: Integer]: TSegmentoS read GetItem write SetItem; default;
   end;
 
 
   // Estrutura do Segmento Y (Opcional)
 
-  TSegmentoY = class(TCollectionItem)
+  TSegmentoY = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
     FCodRegistro : Integer; // Tamanho 2
 
     {Incompleto}
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property CodRegistro: Integer read FCodRegistro write FCodRegistro;
   end;
 
-  TSegmentoYList = class(TCollection)
+  TSegmentoYList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSegmentoY;
     procedure SetItem(Index: Integer; Value: TSegmentoY);
   public
-    constructor Create(AOwner: TLote);
-    function Add: TSegmentoY;
+    function New: TSegmentoY;
     property Items[Index: Integer]: TSegmentoY read GetItem write SetItem; default;
   end;
 
   // Lote
 
-  TLote = class(TCollectionItem)
+  TLote = class(TObject)
   private
     FRegistro1: TRegistro1;
     FRegistro5: TRegistro5;
@@ -1789,7 +1708,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
+
     property Registro1: TRegistro1 read FRegistro1 write FRegistro1;
 
     property SegmentoA: TSegmentoAList read FSegmentoA write SetSegmentoA;
@@ -1813,20 +1732,17 @@ type
     property Registro5: TRegistro5 read FRegistro5 write FRegistro5;
   end;
 
-  TLoteList = class(TCollection)
+  TLoteList = class(TObjectList)
   private
     function GetItem(Index: Integer): TLote;
     procedure SetItem(Index: Integer; Value: TLote);
-    function GetLastItem: TLote;
-    procedure SetLastItem(const Value: TLote);
   public
-    constructor Create(AOwner: TPagFor);
-    function Add: TLote;
+    function New: TLote;
+    function Last: TLote;
     property Items[Index: Integer]: TLote read GetItem write SetItem; default;
-    property Last: TLote read GetLastItem write SetLastItem;
   end;
 
-  TPagFor = class(TPersistent)
+  TPagFor = class(TObject)
   private
     FAtivo: Boolean;
     FGeral: TGeral;
@@ -1838,7 +1754,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Ativo: Boolean read FAtivo write FAtivo;
     property Geral: TGeral read FGeral write FGeral;
 
@@ -1978,7 +1894,7 @@ end;
 
 { TRegistro0 }
 
-constructor TRegistro0.Create(AOwner: TPagFor);
+constructor TRegistro0.Create;
 begin
   inherited Create;
 
@@ -1998,7 +1914,7 @@ end;
 
 { TRegistro9 }
 
-constructor TRegistro9.Create(AOwner: TPagFor);
+constructor TRegistro9.Create;
 begin
   inherited Create;
 
@@ -2014,7 +1930,7 @@ end;
 
 { TRegistro1 }
 
-constructor TRegistro1.Create(AOwner: TLote);
+constructor TRegistro1.Create;
 begin
   inherited Create;
 
@@ -2036,7 +1952,7 @@ end;
 
 { TRegistro5 }
 
-constructor TRegistro5.Create(AOwner: TLote);
+constructor TRegistro5.Create;
 begin
   inherited Create;
 
@@ -2060,6 +1976,7 @@ end;
 
 constructor TSegmentoA.Create;
 begin
+  inherited Create;
   FFavorecido := TFavorecido.Create;
   FCredito    := TCredito.Create;
 
@@ -2160,15 +2077,10 @@ end;
 
 { TSegmentoAList }
 
-function TSegmentoAList.Add: TSegmentoA;
+function TSegmentoAList.New: TSegmentoA;
 begin
-  Result := TSegmentoA(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoAList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoA);
+  Result := TSegmentoA.Create;
+  Add(Result);
 end;
 
 function TSegmentoAList.GetItem(Index: Integer): TSegmentoA;
@@ -2176,9 +2088,14 @@ begin
   Result := TSegmentoA(inherited GetItem(Index));
 end;
 
-function TSegmentoAList.GetLastItem: TSegmentoA;
+function TSegmentoAList.First: TSegmentoA;
 begin
-  Result := TSegmentoA(inherited GetItem(Count-1));
+  Result := TSegmentoA(inherited First);
+end;
+
+function TSegmentoAList.Last: TSegmentoA;
+begin
+  Result := TSegmentoA(inherited Last);
 end;
 
 procedure TSegmentoAList.SetItem(Index: Integer; Value: TSegmentoA);
@@ -2186,15 +2103,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoAList.SetLastItem(const Value: TSegmentoA);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoB }
 
 constructor TSegmentoB.Create;
 begin
+  inherited Create;
   FInscricao := TInscricao.Create;
   FEndereco  := TEndereco.Create;
 end;
@@ -2209,15 +2122,15 @@ end;
 
 { TSegmentoBList }
 
-function TSegmentoBList.Add: TSegmentoB;
+function TSegmentoBList.New: TSegmentoB;
 begin
-  Result := TSegmentoB(inherited Add);
-  Result.create;
+  Result := TSegmentoB.Create;
+  Add(Result);
 end;
 
-constructor TSegmentoBList.Create{(AOwner: TLote)};
+function TSegmentoBList.First: TSegmentoB;
 begin
-  inherited Create(TSegmentoB);
+  Result := TSegmentoB(inherited First);
 end;
 
 function TSegmentoBList.GetItem(Index: Integer): TSegmentoB;
@@ -2225,9 +2138,9 @@ begin
   Result := TSegmentoB(inherited GetItem(Index));
 end;
 
-function TSegmentoBList.GetLastItem: TSegmentoB;
+function TSegmentoBList.Last: TSegmentoB;
 begin
-  Result := TSegmentoB(inherited GetItem(Count-1));
+  Result := TSegmentoB(inherited Last);
 end;
 
 procedure TSegmentoBList.SetItem(Index: Integer; Value: TSegmentoB);
@@ -2235,15 +2148,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoBList.SetLastItem(const Value: TSegmentoB);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoC }
 
 constructor TSegmentoC.Create;
 begin
+  inherited Create;
   FContaCorrente := TContaCorrente.Create;
 end;
 
@@ -2256,15 +2165,10 @@ end;
 
 { TSegmentoCList }
 
-function TSegmentoCList.Add: TSegmentoC;
+function TSegmentoCList.New: TSegmentoC;
 begin
-  Result := TSegmentoC(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoCList.Create{(AOwner: TLote)};
-begin
-  inherited Create(TSegmentoC);
+  Result := TSegmentoC.Create;
+  Add(Result);
 end;
 
 function TSegmentoCList.GetItem(Index: Integer): TSegmentoC;
@@ -2272,9 +2176,14 @@ begin
   Result := TSegmentoC(inherited GetItem(Index));
 end;
 
-function TSegmentoCList.GetLastItem: TSegmentoC;
+function TSegmentoCList.First: TSegmentoC;
 begin
-  Result := TSegmentoC(inherited GetItem(Count-1));
+  Result := TSegmentoC(inherited First);
+end;
+
+function TSegmentoCList.Last: TSegmentoC;
+begin
+  Result := TSegmentoC(inherited Last);
 end;
 
 procedure TSegmentoCList.SetItem(Index: Integer; Value: TSegmentoC);
@@ -2282,15 +2191,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoCList.SetLastItem(const Value: TSegmentoC);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoJ }
 
 constructor TSegmentoJ.Create;
 begin
+  inherited Create;
   FSegmentoJ52 := TSegmentoJ52List.Create;
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoC := TSegmentoCList.Create;
@@ -2350,15 +2255,10 @@ end;
 
 { TSegmentoJList }
 
-function TSegmentoJList.Add: TSegmentoJ;
+function TSegmentoJList.New: TSegmentoJ;
 begin
-  Result := TSegmentoJ(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoJList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoJ);
+  Result := TSegmentoJ.Create;
+  Add(Result);
 end;
 
 function TSegmentoJList.GetItem(Index: Integer): TSegmentoJ;
@@ -2366,9 +2266,14 @@ begin
   Result := TSegmentoJ(inherited GetItem(Index));
 end;
 
-function TSegmentoJList.GetLastItem: TSegmentoJ;
+function TSegmentoJList.First: TSegmentoJ;
 begin
-  Result := TSegmentoJ(inherited GetItem(Count-1));
+  Result := TSegmentoJ(inherited First);
+end;
+
+function TSegmentoJList.Last: TSegmentoJ;
+begin
+  Result := TSegmentoJ(inherited Last);
 end;
 
 procedure TSegmentoJList.SetItem(Index: Integer; Value: TSegmentoJ);
@@ -2376,15 +2281,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoJList.SetLastItem(const Value: TSegmentoJ);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN1 }
 
 constructor TSegmentoN1.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2397,15 +2298,10 @@ end;
 
 { TSegmentoN1List }
 
-function TSegmentoN1List.Add: TSegmentoN1;
+function TSegmentoN1List.New: TSegmentoN1;
 begin
-  Result := TSegmentoN1(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN1List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN1);
+  Result := TSegmentoN1.Create;
+  Add(Result);
 end;
 
 function TSegmentoN1List.GetItem(Index: Integer): TSegmentoN1;
@@ -2413,9 +2309,14 @@ begin
   Result := TSegmentoN1(inherited GetItem(Index));
 end;
 
-function TSegmentoN1List.GetLastItem: TSegmentoN1;
+function TSegmentoN1List.First: TSegmentoN1;
 begin
-  Result := TSegmentoN1(inherited GetItem(Count-1));
+  Result := TSegmentoN1(inherited First);
+end;
+
+function TSegmentoN1List.Last: TSegmentoN1;
+begin
+  Result := TSegmentoN1(inherited Last);
 end;
 
 procedure TSegmentoN1List.SetItem(Index: Integer; Value: TSegmentoN1);
@@ -2423,15 +2324,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN1List.SetLastItem(const Value: TSegmentoN1);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN2 }
 
 constructor TSegmentoN2.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2443,15 +2340,10 @@ end;
 
 { TSegmentoN2List }
 
-function TSegmentoN2List.Add: TSegmentoN2;
+function TSegmentoN2List.New: TSegmentoN2;
 begin
-  Result := TSegmentoN2(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN2List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN2);
+  Result := TSegmentoN2.Create;
+  Add(Result);
 end;
 
 function TSegmentoN2List.GetItem(Index: Integer): TSegmentoN2;
@@ -2459,7 +2351,7 @@ begin
   Result := TSegmentoN2(inherited GetItem(Index));
 end;
 
-function TSegmentoN2List.GetLastItem: TSegmentoN2;
+function TSegmentoN2List.Last: TSegmentoN2;
 begin
   Result := TSegmentoN2(inherited GetItem(Count-1));
 end;
@@ -2469,15 +2361,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN2List.SetLastItem(const Value: TSegmentoN2);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN3 }
 
 constructor TSegmentoN3.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2490,15 +2378,10 @@ end;
 
 { TSegmentoN3List }
 
-function TSegmentoN3List.Add: TSegmentoN3;
+function TSegmentoN3List.New: TSegmentoN3;
 begin
-  Result := TSegmentoN3(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN3List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN3);
+  Result := TSegmentoN3.Create;
+  Add(Result);
 end;
 
 function TSegmentoN3List.GetItem(Index: Integer): TSegmentoN3;
@@ -2506,9 +2389,14 @@ begin
   Result := TSegmentoN3(inherited GetItem(Index));
 end;
 
-function TSegmentoN3List.GetLastItem: TSegmentoN3;
+function TSegmentoN3List.First: TSegmentoN3;
 begin
-  Result := TSegmentoN3(inherited GetItem(Count-1));
+  Result := TSegmentoN3(inherited First);
+end;
+
+function TSegmentoN3List.Last: TSegmentoN3;
+begin
+  Result := TSegmentoN3(inherited Last);
 end;
 
 procedure TSegmentoN3List.SetItem(Index: Integer; Value: TSegmentoN3);
@@ -2516,15 +2404,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN3List.SetLastItem(const Value: TSegmentoN3);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN4 }
 
 constructor TSegmentoN4.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2536,15 +2420,10 @@ end;
 
 { TSegmentoN4List }
 
-function TSegmentoN4List.Add: TSegmentoN4;
+function TSegmentoN4List.New: TSegmentoN4;
 begin
-  Result := TSegmentoN4(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN4List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN4);
+  Result := TSegmentoN4.Create;
+  Add(Result);
 end;
 
 function TSegmentoN4List.GetItem(Index: Integer): TSegmentoN4;
@@ -2552,9 +2431,14 @@ begin
   Result := TSegmentoN4(inherited GetItem(Index));
 end;
 
-function TSegmentoN4List.GetLastItem: TSegmentoN4;
+function TSegmentoN4List.First: TSegmentoN4;
 begin
-  Result := TSegmentoN4(inherited GetItem(Count-1));
+  Result := TSegmentoN4(inherited First);
+end;
+
+function TSegmentoN4List.Last: TSegmentoN4;
+begin
+  Result := TSegmentoN4(inherited Last);
 end;
 
 procedure TSegmentoN4List.SetItem(Index: Integer; Value: TSegmentoN4);
@@ -2562,15 +2446,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN4List.SetLastItem(const Value: TSegmentoN4);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN567 }
 
 constructor TSegmentoN567.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2583,15 +2463,10 @@ end;
 
 { TSegmentoN567List }
 
-function TSegmentoN567List.Add: TSegmentoN567;
+function TSegmentoN567List.New: TSegmentoN567;
 begin
-  Result := TSegmentoN567(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN567List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN567);
+  Result := TSegmentoN567.Create;
+  Add(Result);
 end;
 
 function TSegmentoN567List.GetItem(Index: Integer): TSegmentoN567;
@@ -2599,9 +2474,14 @@ begin
   Result := TSegmentoN567(inherited GetItem(Index));
 end;
 
-function TSegmentoN567List.GetLastItem: TSegmentoN567;
+function TSegmentoN567List.First: TSegmentoN567;
 begin
-  Result := TSegmentoN567(inherited GetItem(Count-1));
+  Result := TSegmentoN567(inherited First);
+end;
+
+function TSegmentoN567List.Last: TSegmentoN567;
+begin
+  Result := TSegmentoN567(inherited Last);
 end;
 
 procedure TSegmentoN567List.SetItem(Index: Integer; Value: TSegmentoN567);
@@ -2609,15 +2489,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN567List.SetLastItem(const Value: TSegmentoN567);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN8 }
 
 constructor TSegmentoN8.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2629,15 +2505,10 @@ end;
 
 { TSegmentoN8List }
 
-function TSegmentoN8List.Add: TSegmentoN8;
+function TSegmentoN8List.New: TSegmentoN8;
 begin
-  Result := TSegmentoN8(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoN8List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN8);
+  Result := TSegmentoN8.Create;
+  Add(Result);
 end;
 
 function TSegmentoN8List.GetItem(Index: Integer): TSegmentoN8;
@@ -2645,9 +2516,14 @@ begin
   Result := TSegmentoN8(inherited GetItem(Index));
 end;
 
-function TSegmentoN8List.GetLastItem: TSegmentoN8;
+function TSegmentoN8List.First: TSegmentoN8;
 begin
-  Result := TSegmentoN8(inherited GetItem(Count-1));
+  Result := TSegmentoN8(inherited First);
+end;
+
+function TSegmentoN8List.Last: TSegmentoN8;
+begin
+  Result := TSegmentoN8(inherited Last);
 end;
 
 procedure TSegmentoN8List.SetItem(Index: Integer; Value: TSegmentoN8);
@@ -2655,15 +2531,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN8List.SetLastItem(const Value: TSegmentoN8);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoO }
 
 constructor TSegmentoO.Create;
 begin
+  inherited Create;
   FSegmentoZ := TSegmentoZList.Create;
 end;
 
@@ -2685,15 +2557,10 @@ end;
 
 { TSegmentoOList }
 
-function TSegmentoOList.Add: TSegmentoO;
+function TSegmentoOList.New: TSegmentoO;
 begin
-  Result := TSegmentoO(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoOList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoO);
+  Result := TSegmentoO.Create;
+  Add(Result);
 end;
 
 function TSegmentoOList.GetItem(Index: Integer): TSegmentoO;
@@ -2701,9 +2568,14 @@ begin
   Result := TSegmentoO(inherited GetItem(Index));
 end;
 
-function TSegmentoOList.GetLastItem: TSegmentoO;
+function TSegmentoOList.First: TSegmentoO;
 begin
-  Result := TSegmentoO(inherited GetItem(Count-1));
+  Result := TSegmentoO(inherited First);
+end;
+
+function TSegmentoOList.Last: TSegmentoO;
+begin
+  Result := TSegmentoO(inherited Last);
 end;
 
 procedure TSegmentoOList.SetItem(Index: Integer; Value: TSegmentoO);
@@ -2711,15 +2583,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoOList.SetLastItem(const Value: TSegmentoO);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoP }
 
 constructor TSegmentoP.Create;
 begin
+  inherited;
   FContaCorrente := TContaCorrente.Create;
   FCobranca      := TCobranca.Create;
   FJuros         := TAcrescimosDescontos.Create;
@@ -2738,15 +2606,20 @@ end;
 
 { TSegmentoPList }
 
-function TSegmentoPList.Add: TSegmentoP;
+function TSegmentoPList.New: TSegmentoP;
 begin
-  Result := TSegmentoP(inherited Add);
-  Result.create;
+  Result := TSegmentoP.Create;
+  Add(Result);
 end;
 
-constructor TSegmentoPList.Create(AOwner: TLote);
+function TSegmentoPList.First: TSegmentoP;
 begin
-  inherited Create(TSegmentoP);
+  Result := TSegmentoP(inherited First);
+end;
+
+function TSegmentoPList.Last: TSegmentoP;
+begin
+  Result := TSegmentoP(inherited Last);
 end;
 
 function TSegmentoPList.GetItem(Index: Integer): TSegmentoP;
@@ -2763,6 +2636,7 @@ end;
 
 constructor TSegmentoQ.Create;
 begin
+  inherited Create;
   FSacado   := TSacado.Create;
   FAvalista := TAvalista.Create;
 end;
@@ -2777,15 +2651,10 @@ end;
 
 { TSegmentoQList }
 
-function TSegmentoQList.Add: TSegmentoQ;
+function TSegmentoQList.New: TSegmentoQ;
 begin
-  Result := TSegmentoQ(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoQList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoQ);
+  Result := TSegmentoQ.Create;
+  Add(Result);
 end;
 
 function TSegmentoQList.GetItem(Index: Integer): TSegmentoQ;
@@ -2802,6 +2671,7 @@ end;
 
 constructor TSegmentoR.Create;
 begin
+  inherited Create;
   FDesconto2        := TAcrescimosDescontos.Create;
   FDesconto3        := TAcrescimosDescontos.Create;
   FMulta            := TAcrescimosDescontos.Create;
@@ -2820,15 +2690,10 @@ end;
 
 { TSegmentoRList }
 
-function TSegmentoRList.Add: TSegmentoR;
+function TSegmentoRList.New: TSegmentoR;
 begin
-  Result := TSegmentoR(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoRList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoR);
+  Result := TSegmentoR.Create;
+  Add(Result);
 end;
 
 function TSegmentoRList.GetItem(Index: Integer): TSegmentoR;
@@ -2841,30 +2706,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TSegmentoS }
-
-constructor TSegmentoS.Create;
-begin
-
-end;
-
-destructor TSegmentoS.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoSList }
 
-function TSegmentoSList.Add: TSegmentoS;
+function TSegmentoSList.New: TSegmentoS;
 begin
-  Result := TSegmentoS(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoSList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoS);
+  Result := TSegmentoS.Create;
+  Add(Result);
 end;
 
 function TSegmentoSList.GetItem(Index: Integer): TSegmentoS;
@@ -2877,30 +2724,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TSegmentoW }
-
-constructor TSegmentoW.Create;
-begin
-
-end;
-
-destructor TSegmentoW.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoWList }
 
-function TSegmentoWList.Add: TSegmentoW;
+function TSegmentoWList.New: TSegmentoW;
 begin
-  Result := TSegmentoW(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoWList.Create;
-begin
-  inherited Create(TSegmentoW);
+  Result := TSegmentoW.Create;
+  Add(Result);
 end;
 
 function TSegmentoWList.GetItem(Index: Integer): TSegmentoW;
@@ -2908,9 +2737,14 @@ begin
   Result := TSegmentoW(inherited GetItem(Index));
 end;
 
-function TSegmentoWList.GetLastItem: TSegmentoW;
+function TSegmentoWList.First: TSegmentoW;
 begin
-  Result := TSegmentoW(inherited GetItem(Count-1));
+  Result := TSegmentoW(inherited First);
+end;
+
+function TSegmentoWList.Last: TSegmentoW;
+begin
+  Result := TSegmentoW(inherited Last);
 end;
 
 procedure TSegmentoWList.SetItem(Index: Integer; Value: TSegmentoW);
@@ -2918,35 +2752,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoWList.SetLastItem(const Value: TSegmentoW);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
-{ TSegmentoY }
-
-constructor TSegmentoY.Create;
-begin
-
-end;
-
-destructor TSegmentoY.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoYList }
 
-function TSegmentoYList.Add: TSegmentoY;
+function TSegmentoYList.New: TSegmentoY;
 begin
-  Result := TSegmentoY(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoYList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoY);
+  Result := TSegmentoY.Create;
+  Add(Result);
 end;
 
 function TSegmentoYList.GetItem(Index: Integer): TSegmentoY;
@@ -2959,30 +2770,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TSegmentoZ }
-
-constructor TSegmentoZ.Create;
-begin
-
-end;
-
-destructor TSegmentoZ.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoZList }
 
-function TSegmentoZList.Add: TSegmentoZ;
+function TSegmentoZList.New: TSegmentoZ;
 begin
-  Result := TSegmentoZ(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoZList.Create{(AOwner: TLote)};
-begin
-  inherited Create(TSegmentoZ);
+  Result := TSegmentoZ.Create;
+  Add(Result);
 end;
 
 function TSegmentoZList.GetItem(Index: Integer): TSegmentoZ;
@@ -2990,9 +2783,9 @@ begin
   Result := TSegmentoZ(inherited GetItem(Index));
 end;
 
-function TSegmentoZList.GetLastItem: TSegmentoZ;
+function TSegmentoZList.Last: TSegmentoZ;
 begin
-  Result := TSegmentoZ(inherited GetItem(Count-1));
+  Result := TSegmentoZ(inherited Last);
 end;
 
 procedure TSegmentoZList.SetItem(Index: Integer; Value: TSegmentoZ);
@@ -3000,20 +2793,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoZList.SetLastItem(const Value: TSegmentoZ);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TPagFor }
 
 constructor TPagFor.Create;
 begin
+  inherited Create;
   FGeral := TGeral.Create;
 
-  FRegistro0 := TRegistro0.Create(Self);
-  FLote      := TLoteList.Create(Self);
-  FRegistro9 := TRegistro9.Create(Self);
+  FRegistro0 := TRegistro0.Create;
+  FLote      := TLoteList.Create;
+  FRegistro9 := TRegistro9.Create;
 end;
 
 destructor TPagFor.Destroy;
@@ -3036,26 +2825,26 @@ end;
 
 constructor TLote.Create;
 begin
-  FRegistro1 := TRegistro1.Create(Self);
+  inherited Create;
+  FRegistro1 := TRegistro1.Create;
 
-  FSegmentoA := TSegmentoAList.Create(Self);
-  FSegmentoG := TSegmentoGList.Create(Self);
-  FSegmentoJ := TSegmentoJList.Create(Self);
-  FSegmentoN1 := TSegmentoN1List.Create(Self);
-  FSegmentoN2 := TSegmentoN2List.Create(Self);
-  FSegmentoN3 := TSegmentoN3List.Create(Self);
-  FSegmentoN4 := TSegmentoN4List.Create(Self);
-  FSegmentoN567 := TSegmentoN567List.Create(Self);
-  FSegmentoN8 := TSegmentoN8List.Create(Self);
-  FSegmentoN9 := TSegmentoN9List.Create(Self);
-  FSegmentoO := TSegmentoOList.Create(Self);
-  FSegmentoP := TSegmentoPList.Create(Self);
-  FSegmentoQ := TSegmentoQList.Create(Self);
-  FSegmentoR := TSegmentoRList.Create(Self);
-  FSegmentoS := TSegmentoSList.Create(Self);
-  FSegmentoY := TSegmentoYList.Create(Self);
-
-  FRegistro5 := TRegistro5.Create(Self);
+  FSegmentoA    := TSegmentoAList.Create;
+  FSegmentoG    := TSegmentoGList.Create;
+  FSegmentoJ    := TSegmentoJList.Create;
+  FSegmentoN1   := TSegmentoN1List.Create;
+  FSegmentoN2   := TSegmentoN2List.Create;
+  FSegmentoN3   := TSegmentoN3List.Create;
+  FSegmentoN4   := TSegmentoN4List.Create;
+  FSegmentoN567 := TSegmentoN567List.Create;
+  FSegmentoN8   := TSegmentoN8List.Create;
+  FSegmentoN9   := TSegmentoN9List.Create;
+  FSegmentoO    := TSegmentoOList.Create;
+  FSegmentoP    := TSegmentoPList.Create;
+  FSegmentoQ    := TSegmentoQList.Create;
+  FSegmentoR    := TSegmentoRList.Create;
+  FSegmentoS    := TSegmentoSList.Create;
+  FSegmentoY    := TSegmentoYList.Create;
+  FRegistro5    := TRegistro5.Create;
 end;
 
 destructor TLote.Destroy;
@@ -3172,15 +2961,10 @@ end;
 
 { TLoteList }
 
-function TLoteList.Add: TLote;
+function TLoteList.New: TLote;
 begin
-  Result := TLote(inherited Add);
-  Result.create;
-end;
-
-constructor TLoteList.Create(AOwner: TPagFor);
-begin
-  inherited Create(TLote);
+  Result := TLote.Create;
+  Add(Result);
 end;
 
 function TLoteList.GetItem(Index: Integer): TLote;
@@ -3188,9 +2972,9 @@ begin
   Result := TLote(inherited GetItem(Index));
 end;
 
-function TLoteList.GetLastItem: TLote;
+function TLoteList.Last: TLote;
 begin
-  Result := TLote(inherited GetItem(Count-1));
+  Result := TLote(inherited Last);
 end;
 
 procedure TLoteList.SetItem(Index: Integer; Value: TLote);
@@ -3198,22 +2982,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TLoteList.SetLastItem(const Value: TLote);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoDList }
 
-function TSegmentoDList.Add: TSegmentoD;
+function TSegmentoDList.New: TSegmentoD;
 begin
-  Result := TSegmentoD(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoDList.Create{(AOwner: TLote)};
-begin
-  inherited Create(TSegmentoD);
+  Result := TSegmentoD.Create;
+  Add(Result);
 end;
 
 function TSegmentoDList.GetItem(Index: Integer): TSegmentoD;
@@ -3221,9 +2995,9 @@ begin
   Result := TSegmentoD(inherited GetItem(Index));
 end;
 
-function TSegmentoDList.GetLastItem: TSegmentoD;
+function TSegmentoDList.Last: TSegmentoD;
 begin
-  Result := TSegmentoD(inherited GetItem(Count-1));
+  Result := TSegmentoD(inherited Last);
 end;
 
 procedure TSegmentoDList.SetItem(Index: Integer; Value: TSegmentoD);
@@ -3231,35 +3005,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoDList.SetLastItem(const Value: TSegmentoD);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
-{ TSegmentoD }
-
-constructor TSegmentoD.Create;
-begin
-
-end;
-
-destructor TSegmentoD.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoEList }
 
-function TSegmentoEList.Add: TSegmentoE;
+function TSegmentoEList.New: TSegmentoE;
 begin
-  Result := TSegmentoE(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoEList.Create{(AOwner: TLote)};
-begin
-  inherited Create(TSegmentoE);
+  Result := TSegmentoE.Create;
+  Add(Result);
 end;
 
 function TSegmentoEList.GetItem(Index: Integer): TSegmentoE;
@@ -3267,9 +3018,9 @@ begin
   Result := TSegmentoE(inherited GetItem(Index));
 end;
 
-function TSegmentoEList.GetLastItem: TSegmentoE;
+function TSegmentoEList.Last: TSegmentoE;
 begin
-  Result := TSegmentoE(inherited GetItem(Count-1));
+  Result := TSegmentoE(inherited Last);
 end;
 
 procedure TSegmentoEList.SetItem(Index: Integer; Value: TSegmentoE);
@@ -3277,35 +3028,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoEList.SetLastItem(const Value: TSegmentoE);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
-{ TSegmentoE }
-
-constructor TSegmentoE.Create;
-begin
-
-end;
-
-destructor TSegmentoE.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoFList }
 
-function TSegmentoFList.Add: TSegmentoF;
+function TSegmentoFList.New: TSegmentoF;
 begin
-  Result := TSegmentoF(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoFList.Create{(AOwner: TLote)};
-begin
-  inherited Create(TSegmentoF);
+  Result := TSegmentoF.Create;
+  Add(Result);
 end;
 
 function TSegmentoFList.GetItem(Index: Integer): TSegmentoF;
@@ -3313,9 +3041,9 @@ begin
   Result := TSegmentoF(inherited GetItem(Index));
 end;
 
-function TSegmentoFList.GetLastItem: TSegmentoF;
+function TSegmentoFList.Last: TSegmentoF;
 begin
-  Result := TSegmentoF(inherited GetItem(Count-1));
+  Result := TSegmentoF(inherited Last);
 end;
 
 procedure TSegmentoFList.SetItem(Index: Integer; Value: TSegmentoF);
@@ -3323,35 +3051,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoFList.SetLastItem(const Value: TSegmentoF);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
-{ TSegmentoF }
-
-constructor TSegmentoF.Create;
-begin
-
-end;
-
-destructor TSegmentoF.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoJ52List }
 
-function TSegmentoJ52List.Add: TSegmentoJ52;
+function TSegmentoJ52List.New: TSegmentoJ52;
 begin
-  Result := TSegmentoJ52(inherited Add);
-  Result.Create;
-end;
-
-constructor TSegmentoJ52List.Create;
-begin
-  inherited Create(TSegmentoJ52);
+  Result := TSegmentoJ52.Create;
+  Add(Result);
 end;
 
 function TSegmentoJ52List.GetItem(Index: Integer): TSegmentoJ52;
@@ -3359,9 +3064,9 @@ begin
   Result := TSegmentoJ52(inherited GetItem(Index));
 end;
 
-function TSegmentoJ52List.GetLastItem: TSegmentoJ52;
+function TSegmentoJ52List.Last: TSegmentoJ52;
 begin
-  Result := TSegmentoJ52(inherited GetItem(Count-1));
+  Result := TSegmentoJ52(inherited Last);
 end;
 
 procedure TSegmentoJ52List.SetItem(Index: Integer; Value: TSegmentoJ52);
@@ -3369,15 +3074,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoJ52List.SetLastItem(const Value: TSegmentoJ52);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoJ52 }
 
 constructor TSegmentoJ52.Create;
 begin
+  inherited Create;
   FPagador := TPagador.Create;
   FBeneficiario := TBeneficiario.Create;
   FSacadorAvalista := TSacadorAvalista.Create;
@@ -3396,6 +3097,7 @@ end;
 
 constructor TPagador.Create;
 begin
+  inherited Create;
   FInscricao := TInscricao.Create;
 end;
 
@@ -3410,6 +3112,7 @@ end;
 
 constructor TBeneficiario.Create;
 begin
+  inherited Create;
   FInscricao := TInscricao.Create;
 end;
 
@@ -3424,6 +3127,7 @@ end;
 
 constructor TSacadorAvalista.Create;
 begin
+  inherited Create;
   FInscricao := TInscricao.Create;
 end;
 
@@ -3438,6 +3142,7 @@ end;
 
 constructor TSegmentoN9.Create;
 begin
+  inherited Create;
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -3450,15 +3155,10 @@ end;
 
 { TSegmentoN9List }
 
-function TSegmentoN9List.Add: TSegmentoN9;
+function TSegmentoN9List.New: TSegmentoN9;
 begin
-  Result := TSegmentoN9(inherited Add);
-  Result.Create;
-end;
-
-constructor TSegmentoN9List.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoN9);
+  Result := TSegmentoN9.Create;
+  Add(Result);
 end;
 
 function TSegmentoN9List.GetItem(Index: Integer): TSegmentoN9;
@@ -3466,9 +3166,9 @@ begin
   Result := TSegmentoN9(inherited GetItem(Index));
 end;
 
-function TSegmentoN9List.GetLastItem: TSegmentoN9;
+function TSegmentoN9List.Last: TSegmentoN9;
 begin
-  Result := TSegmentoN9(inherited GetItem(Count-1));
+  Result := TSegmentoN9(inherited Last);
 end;
 
 procedure TSegmentoN9List.SetItem(Index: Integer; Value: TSegmentoN9);
@@ -3476,15 +3176,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoN9List.SetLastItem(const Value: TSegmentoN9);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TArquivoTXT }
 
 constructor TArquivoTXT.Create;
 begin
+  inherited Create;
   FArquivoTXT := TStringList.Create;
 end;
 
@@ -3497,15 +3193,10 @@ end;
 
 { TArquivoTXTList }
 
-function TArquivoTXTList.Add: TArquivoTXT;
+function TArquivoTXTList.New: TArquivoTXT;
 begin
-  Result := TArquivoTXT(inherited Add);
-  Result.create;
-end;
-
-constructor TArquivoTXTList.Create;
-begin
-  inherited Create(TArquivoTXT);
+  Result := TArquivoTXT.Create;
+  Add(Result);
 end;
 
 function TArquivoTXTList.GetItem(Index: Integer): TArquivoTXT;
@@ -3513,9 +3204,9 @@ begin
   Result := TArquivoTXT(inherited GetItem(Index));
 end;
 
-function TArquivoTXTList.GetLastItem: TArquivoTXT;
+function TArquivoTXTList.Last: TArquivoTXT;
 begin
-  Result := TArquivoTXT(inherited GetItem(Count-1));
+  Result := TArquivoTXT(inherited Last);
 end;
 
 procedure TArquivoTXTList.SetItem(Index: Integer; Value: TArquivoTXT);
@@ -3523,15 +3214,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TArquivoTXTList.SetLastItem(const Value: TArquivoTXT);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoN }
 
 constructor TSegmentoN.Create;
 begin
+  inherited Create;
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoW := TSegmentoWList.Create;
   FSegmentoZ := TSegmentoZList.Create;
@@ -3577,15 +3264,10 @@ end;
 
 { TAvisoList }
 
-function TAvisoList.Add: TAviso;
+function TAvisoList.New: TAviso;
 begin
-  Result := TAviso(inherited Add);
-  Result.create;
-end;
-
-constructor TAvisoList.Create;
-begin
-  inherited Create(TAviso);
+  Result := TAviso.Create;
+  Add(Result);
 end;
 
 function TAvisoList.GetItem(Index: Integer): TAviso;
@@ -3593,9 +3275,9 @@ begin
   Result := TAviso(inherited GetItem(Index));
 end;
 
-function TAvisoList.GetLastItem: TAviso;
+function TAvisoList.Last: TAviso;
 begin
-  Result := TAviso(inherited GetItem(Count-1));
+  Result := TAviso(inherited Last);
 end;
 
 procedure TAvisoList.SetItem(Index: Integer; Value: TAviso);
@@ -3603,35 +3285,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TAvisoList.SetLastItem(const Value: TAviso);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
-{ TAviso }
-
-constructor TAviso.Create;
-begin
-
-end;
-
-destructor TAviso.Destroy;
-begin
-
-  inherited;
-end;
-
 { TSegmentoGList }
 
-function TSegmentoGList.Add: TSegmentoG;
+function TSegmentoGList.New: TSegmentoG;
 begin
-  Result := TSegmentoG(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoGList.Create(AOwner: TLote);
-begin
-  inherited Create(TSegmentoG);
+  Result := TSegmentoG.Create;
+  Add(Result);
 end;
 
 function TSegmentoGList.GetItem(Index: Integer): TSegmentoG;
@@ -3639,9 +3298,9 @@ begin
   Result := TSegmentoG(inherited GetItem(Index));
 end;
 
-function TSegmentoGList.GetLastItem: TSegmentoG;
+function TSegmentoGList.Last: TSegmentoG;
 begin
-  Result := TSegmentoG(inherited GetItem(Count-1));
+  Result := TSegmentoG(inherited Last);
 end;
 
 procedure TSegmentoGList.SetItem(Index: Integer; Value: TSegmentoG);
@@ -3649,15 +3308,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoGList.SetLastItem(const Value: TSegmentoG);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoG }
 
 constructor TSegmentoG.Create;
 begin
+  inherited Create;
   FCedente := TCedente.Create;
   FDesconto1 := TAcrescimosDescontos.Create;
   FSegmentoH := TSegmentoHList.Create();
@@ -3695,15 +3350,10 @@ end;
 
 { TSegmentoHList }
 
-function TSegmentoHList.Add: TSegmentoH;
+function TSegmentoHList.New: TSegmentoH;
 begin
-  Result := TSegmentoH(inherited Add);
-  Result.create;
-end;
-
-constructor TSegmentoHList.Create;
-begin
-  inherited Create(TSegmentoH);
+  Result := TSegmentoH.Create;
+  Add(Result);
 end;
 
 function TSegmentoHList.GetItem(Index: Integer): TSegmentoH;
@@ -3711,9 +3361,9 @@ begin
   Result := TSegmentoH(inherited GetItem(Index));
 end;
 
-function TSegmentoHList.GetLastItem: TSegmentoH;
+function TSegmentoHList.Last: TSegmentoH;
 begin
-  Result := TSegmentoH(inherited GetItem(Count-1));
+  Result := TSegmentoH(inherited Last);
 end;
 
 procedure TSegmentoHList.SetItem(Index: Integer; Value: TSegmentoH);
@@ -3721,15 +3371,11 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-procedure TSegmentoHList.SetLastItem(const Value: TSegmentoH);
-begin
-  inherited SetItem(Count-1, Value);
-end;
-
 { TSegmentoH }
 
 constructor TSegmentoH.Create;
 begin
+  inherited Create;
   FAvalista := TAvalista.Create;
   FDesconto2 := TAcrescimosDescontos.Create;
   FDesconto3 := TAcrescimosDescontos.Create;

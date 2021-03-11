@@ -49,14 +49,14 @@ type
     FArquivoTXT: String;
 
     FAtivo: Boolean;
-    QtdeLotes: Integer;
-    QtdeRegistros: Integer;
-    QtdeRegistrosLote: Integer;
-    SequencialDeLote: Integer;
+    FQtdeLotes: Integer;
+    FQtdeRegistros: Integer;
+    FQtdeRegistrosLote: Integer;
+    FSequencialDeLote: Integer;
 
     FVersaoLayout: TVersaoLayout;
-    veRegistro0: String;
-    veRegistro1: String;
+    FveRegistro0: String;
+    FveRegistro1: String;
 
     procedure GeraRegistro0;             // Registro Header de Arquivo
     procedure GeraRegistro1(I: Integer); // Registro Header de Lote
@@ -120,6 +120,7 @@ implementation
 
 constructor TPagForW.Create(AOwner: TPagFor);
 begin
+  inherited Create;
   FPagFor := AOwner;
   FArquivoTXT := '';
   FAtivo := True;
@@ -138,8 +139,8 @@ var
   wregistro: string;
 begin
   FPagFor.Registro0.Aviso.Clear;
-  QtdeRegistros := 1;
-  QtdeLotes := 0;
+  FQtdeRegistros := 1;
+  FQtdeLotes := 0;
 
   wregistro := BancoToStr(FPagFor.Geral.Banco);
   wregistro := wregistro + '0000';
@@ -228,34 +229,34 @@ begin
     pagSicred:
       begin
         wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
-        veRegistro0 := '084';
+        FveRegistro0 := '084';
       end;
 
     pagSantander:
       begin
         wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
-        veRegistro0 := '060';
+        FveRegistro0 := '060';
       end;
 
     pagHSBC:
       begin
         wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
-        veRegistro0 := '020'; // HSBC ’020” ou  “030”
+        FveRegistro0 := '020'; // HSBC ’020” ou  “030”
       end;
 
     pagItau:
       begin
         wregistro := wregistro + '000000'; // Manual do itau cita (9) zeros não tendo a versão aqui
-        veRegistro0 := '000';
+        FveRegistro0 := '000';
       end;
   else
     begin
       wregistro := wregistro + '000000';
-      veRegistro0 := '000';
+      FveRegistro0 := '000';
     end;
   end;
 
-  wregistro := wregistro + veRegistro0;
+  wregistro := wregistro + FveRegistro0;
   wregistro := wregistro + FormatFloat('00000', FPagFor.Registro0.Arquivo.Densidade);
 
   case FPagFor.Geral.Banco of
@@ -305,32 +306,32 @@ procedure TPagForW.GeraRegistro1(I: Integer);
 var
   wregistro: string;
 begin
-  Inc(QtdeRegistros);
-  Inc(QtdeLotes);
+  Inc(FQtdeRegistros);
+  Inc(FQtdeLotes);
 
-  QtdeRegistrosLote := 1;
-  SequencialDeLote  := 0;
+  FQtdeRegistrosLote := 1;
+  FSequencialDeLote  := 0;
 
   case FPagFor.Lote.Items[I].Registro1.Servico.TipoServico of
     tsGestaoCaixa, tsCustodiaCheques, tsAlegacaoSacado, tsPagamentoContas, tsCompror, tsComprorRotativo:
-      veRegistro1 := '010';
+      FveRegistro1 := '010';
 
     tsVendor:
-      veRegistro1 := '012';
+      FveRegistro1 := '012';
 
     tsConsignacaoParcelas:
-      veRegistro1 := '020';
+      FveRegistro1 := '020';
 
     tsBloquetoEletronico:
-      veRegistro1 := '022';
+      FveRegistro1 := '022';
 
     tsDebitos, tsPagamentoFornecedor:
-      veRegistro1 := '030';
+      FveRegistro1 := '030';
 
     tsConciliacaoBancaria:
-      veRegistro1 := '033';
+      FveRegistro1 := '033';
   else
-    veRegistro1 := '043';
+    FveRegistro1 := '043';
   end;
 
   case FPagFor.Geral.Banco of    //Não ultilizei o codigo acima a principio não é pelo tipo de serviço
@@ -343,17 +344,17 @@ begin
         flTributoDARJ, flTributoGARESPICMS, flTributoGARESPDR,
         flTributoGARESPITCMD, flTributoIPVA,
         flTributoLicenciamento, flTributoDPVAT, flTributoGNRe :
-          veRegistro1 := '010';   //Pagamento com codigo de barras  e Convenios  SEGMENTO 'J' e 'O'.
+          FveRegistro1 := '010';   //Pagamento com codigo de barras  e Convenios  SEGMENTO 'J' e 'O'.
       else
-        veRegistro1 := '031';  //Pagamento DOC / TED
+        FveRegistro1 := '031';  //Pagamento DOC / TED
       end;
     end;
 
     pagSicred:
-      veRegistro1 := '042';
+      FveRegistro1 := '042';
 
     pagHSBC:
-      veRegistro1 := '020';
+      FveRegistro1 := '020';
 
     pagItau:
       begin
@@ -361,21 +362,21 @@ begin
           // Se for parte do Header (Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente)
           // Segmento A - Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente
           // Segmento A - Pagamentos através de Nota Fiscal – Liquidação Eletrônica
-          veRegistro1 := '040'
+          FveRegistro1 := '040'
         else
-          veRegistro1 := '030'
+          FveRegistro1 := '030'
       end;
   else
-    veRegistro1 := '000'
+    FveRegistro1 := '000'
   end;
 
   wregistro := BancoToStr(FPagFor.Geral.Banco);
-  wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+  wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
   wregistro := wregistro + '1';
   wregistro := wregistro + TpOperacaoToStr(FPagFor.Lote.Items[I].Registro1.Servico.Operacao);
   wregistro := wregistro + TpServicoToStr(FPagFor.Lote.Items[I].Registro1.Servico.TipoServico);
   wregistro := wregistro + FmLancamentoToStr(FPagFor.Lote.Items[I].Registro1.Servico.FormaLancamento);
-  wregistro := wregistro + veRegistro1;
+  wregistro := wregistro + FveRegistro1;
   wregistro := wregistro + ' ';
   wregistro := wregistro + TpInscricaoToStr(FPagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Tipo);
   wregistro := wregistro + Copy(TBStrZero(FPagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Numero, 15), 2, 14);
@@ -466,18 +467,18 @@ procedure TPagForW.GeraRegistro5(I: Integer);
 var
   wregistro: string;
 begin
-  Inc(QtdeRegistros);
-  Inc(QtdeRegistrosLote);
+  Inc(FQtdeRegistros);
+  Inc(FQtdeRegistrosLote);
 
   wregistro := BancoToStr(FPagFor.Geral.Banco);
-  wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+  wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
   wregistro := wregistro + '5';
   wregistro := wregistro + Space(9);
 
   case FPagFor.Geral.Banco of
     pagSantander, pagSicred:
       begin
-        wregistro := wregistro + FormatFloat('000000', QtdeRegistrosLote);
+        wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
         wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.Valor * 100);
         wregistro := wregistro + '000000000000000000';
         wregistro := wregistro + '000000';
@@ -487,7 +488,7 @@ begin
 
     pagHSBC:
       begin
-        wregistro := wregistro + FormatFloat('000000', QtdeRegistrosLote);
+        wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
         wregistro := wregistro + Space(3);
         wregistro := wregistro + FormatFloat('000000000000000', FPagFor.Lote.Items[I].Registro5.Valor * 100);
         wregistro := wregistro + Space(199);
@@ -495,7 +496,7 @@ begin
 
     pagItau:
       begin
-        wregistro := wregistro + FormatFloat('000000', QtdeRegistrosLote);
+        wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
 
         if (FPagFor.Lote.Items[I].Registro1.Servico.FormaLancamento = flPagamentoConcessionarias) then
         begin // Contas de Concessionárias e Tributos com código de barras
@@ -530,7 +531,7 @@ begin
       end;
   else
     begin
-      wregistro := wregistro + FormatFloat('000000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
       wregistro := wregistro + FormatFloat('000000', FPagFor.Lote.Items[I].Registro5.TotalCobrancaSimples.QtdeTitulosCobranca);
       wregistro := wregistro + FormatFloat('00000000000000000', FPagFor.Lote.Items[I].Registro5.TotalCobrancaSimples.ValorTitulosCarteira * 100);
       wregistro := wregistro + FormatFloat('000000', FPagFor.Lote.Items[I].Registro5.TotalCobrancaVinculada.QtdeTitulosCobranca);
@@ -553,14 +554,14 @@ procedure TPagForW.GeraRegistro9;
 var
   wregistro: string;
 begin
-  Inc(QtdeRegistros);
+  Inc(FQtdeRegistros);
 
   wregistro := BancoToStr(FPagFor.Geral.Banco);
   wregistro := wregistro + '9999';
   wregistro := wregistro + '9';
   wregistro := wregistro + Space(9);
-  wregistro := wregistro + FormatFloat('000000', QtdeLotes);
-  wregistro := wregistro + FormatFloat('000000', QtdeRegistros);
+  wregistro := wregistro + FormatFloat('000000', FQtdeLotes);
+  wregistro := wregistro + FormatFloat('000000', FQtdeRegistros);
 
   case FPagFor.Geral.Banco of
     pagSicred:
@@ -612,9 +613,9 @@ var
 begin
   case VersaoLayout of
     ve084:
-      veRegistro0 := '084';
+      FveRegistro0 := '084';
   else
-    veRegistro0 := '000';
+    FveRegistro0 := '000';
   end;
 
   GeraRegistro0;
@@ -635,14 +636,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoA.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'A';
       wregistro := wregistro + TpMovimentoToStr(TipoMovimento);
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -806,13 +807,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoB}mSegmentoBList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote);
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote);
       wregistro := wregistro + 'B';
       wregistro := wregistro + Space(3);
       wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
@@ -888,13 +889,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoC}mSegmentoCList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'C';
 
       case FPagFor.Geral.Banco of
@@ -956,13 +957,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoD}mSegmentoDList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'D';
       wregistro := wregistro + Space(3);
 
@@ -1020,13 +1021,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoE}mSegmentoEList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'E';
       wregistro := wregistro + Space(3);
       wregistro := wregistro + TpMovimentoPagtoToStr(Movimento);
@@ -1049,13 +1050,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoF}mSegmentoFList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'F';
       wregistro := wregistro + Space(3);
       wregistro := wregistro + PadRight(InformacaoComplementar, 144);
@@ -1077,14 +1078,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoJ.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'J';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -1192,13 +1193,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoJ52}mSegmentoJ52List.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'J';
       wregistro := wregistro + TpMovimentoToStr(TipoMovimento);
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -1229,14 +1230,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1307,14 +1308,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1399,14 +1400,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1493,14 +1494,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1583,14 +1584,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1720,14 +1721,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1809,14 +1810,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoN9.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'N';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(SegmentoN.CodMovimento);
@@ -1871,14 +1872,14 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoO.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
-      Inc(SequencialDeLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'O';
       wregistro := wregistro + '0';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -1970,13 +1971,13 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoP.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('00000', FQtdeRegistrosLote);
       wregistro := wregistro + 'P';
       wregistro := wregistro + Space(1);
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -2072,13 +2073,13 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoQ.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('00000', FQtdeRegistrosLote);
       wregistro := wregistro + 'Q';
       wregistro := wregistro + ' ';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -2112,13 +2113,13 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoR.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('00000', FQtdeRegistrosLote);
       wregistro := wregistro + 'R';
       wregistro := wregistro + ' ';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -2196,13 +2197,13 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoS.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('00000', FQtdeRegistrosLote);
       wregistro := wregistro + 'S';
       wregistro := wregistro + ' ';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -2240,13 +2241,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoW}mSegmentoWList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'W';
 
       case FPagFor.Geral.Banco of
@@ -2300,13 +2301,13 @@ begin
   begin
     with FPagFor.Lote.Items[I].SegmentoY.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', QtdeRegistrosLote);
+      wregistro := wregistro + FormatFloat('00000', FQtdeRegistrosLote);
       wregistro := wregistro + 'Y';
       wregistro := wregistro + ' ';
       wregistro := wregistro + InMovimentoToStr(CodMovimento);
@@ -2329,13 +2330,13 @@ begin
   begin
     with {FPagFor.Lote.Items[I].SegmentoZ}mSegmentoZList.Items[J] do
     begin
-      Inc(QtdeRegistros);
-      Inc(QtdeRegistrosLote);
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);
-      wregistro := wregistro + FormatFloat('0000', QtdeLotes);
+      wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
-      wregistro := wregistro + FormatFloat('00000', SequencialDeLote{QtdeRegistrosLote});
+      wregistro := wregistro + FormatFloat('00000', FSequencialDeLote{QtdeRegistrosLote});
       wregistro := wregistro + 'Z';
       wregistro := wregistro + PadRight(TiraAcentos(Autenticacao), 64);
       wregistro := wregistro + PadRight(TiraAcentos(SeuNumero), 25);

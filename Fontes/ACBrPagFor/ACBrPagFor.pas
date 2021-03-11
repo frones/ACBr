@@ -86,7 +86,7 @@ begin
    FConfiguracoes.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
-  FArquivos := TArquivos.Create(Self, TRegistro);
+  FArquivos := TArquivos.Create(Self);
   FArquivos.Configuracoes := FConfiguracoes;
 end;
 
@@ -222,3 +222,4 @@ Const
  flExtratoContaInvestimento       = 73;
 *)
 end.
+

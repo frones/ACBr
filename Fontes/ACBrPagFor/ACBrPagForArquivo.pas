@@ -37,12 +37,12 @@ unit ACBrPagForArquivo;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, Sysutils, Dialogs, Forms, Contnrs,
   ACBrPagForClass, ACBrPagForGravarTxt, ACBrPagForLerTxt,
   ACBrPagForConversao, ACBrPagForConfiguracoes;
 
 type
-  TRegistro = class(TCollectionItem)
+  TRegistro = class(TObject)
   private
     FPagFor: TPagFor;
     FPagForTXT: String;
@@ -51,7 +51,7 @@ type
     function GetPagForTXT: String;
     function CarregarArquivo(const ACaminhoArquivo: String): String;
   public
-    constructor Create(Collection2: TCollection); override;
+    constructor Create;
     destructor Destroy; override;
 
     function Gravar(const CaminhoArquivo: String = ''): boolean;
@@ -62,27 +62,25 @@ type
     property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
-  TArquivos = class(TOwnedCollection)
+  TArquivos = class(TObjectList)
   private
     FConfiguracoes: TConfiguracoes;
     FACBrPagFor: TComponent;
 
     function GetItem(Index: Integer): TRegistro;
     procedure SetItem(Index: Integer; const Value: TRegistro);
-    function GetLastItem: TRegistro;
-    procedure SetLastItem(const Value: TRegistro);
   public
-    constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
+    constructor Create(AACBrPagFor: TPersistent);
 
-    function Add: TRegistro;
+    function New: TRegistro;
+    function Last: TRegistro;
 
     function GerarPagFor(const ANomeArquivo: String = ''): Boolean;
-    function GetNamePath: string; override;
+    function GetNamePath: string;
     function Gravar(const PathArquivo: string = ''): boolean;
     procedure Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
 
     property Items[Index: Integer]: TRegistro read GetItem  write SetItem;
-    property Last: TRegistro read GetLastItem  write SetLastItem;
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
     property ACBrPagFor: TComponent read FACBrPagFor;
   end;
@@ -112,9 +110,9 @@ begin
   end;
 end;
 
-constructor TRegistro.Create(Collection2: TCollection);
+constructor TRegistro.Create;
 begin
-  inherited Create(Collection2);
+  inherited Create;
 
   FPagFor := TPagFor.Create;
 end;
@@ -182,20 +180,20 @@ end;
 
 { TArquivos }
 
-function TArquivos.Add: TRegistro;
+function TArquivos.New: TRegistro;
 begin
-  Result := TRegistro(inherited Add);
+  Result := TRegistro.Create;
+  Add(Result);
 end;
 
-constructor TArquivos.Create(AOwner: TPersistent;
-  ItemClass: TCollectionItemClass);
+constructor TArquivos.Create(AACBrPagFor: TPersistent);
 begin
-  if not (AOwner is TACBrPagFor ) then
-    raise EACBrPagForException.Create( 'AOwner deve ser do tipo TACBrPagFor');
+  if not (AACBrPagFor is TACBrPagFor ) then
+    raise EACBrPagForException.Create( 'AACBrPagFor deve ser do tipo TACBrPagFor');
 
-  inherited;
+  inherited Create;
 
-  FACBrPagFor := TACBrPagFor( AOwner );
+  FACBrPagFor := TACBrPagFor( AACBrPagFor );
 end;
 
 function TArquivos.GerarPagFor(const ANomeArquivo: String): Boolean;
@@ -210,12 +208,12 @@ end;
 
 function TArquivos.GetItem(Index: Integer): TRegistro;
 begin
-  Result := TRegistro(inherited Items[Index]);
+  Result := TRegistro(inherited GetItem(Index));
 end;
 
-function TArquivos.GetLastItem: TRegistro;
+function TArquivos.Last: TRegistro;
 begin
-  Result := TRegistro(inherited Items[Count-1]);
+  Result := TRegistro(inherited Last);
 end;
 
 function TArquivos.GetNamePath: string;
@@ -243,18 +241,13 @@ end;
 
 procedure TArquivos.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
 begin
-  TACBrPagFor(FACBrPagFor).Arquivos.Add;
+  TACBrPagFor(FACBrPagFor).Arquivos.New;
   TACBrPagFor(FACBrPagFor).Arquivos.Last.Ler(AArquivoTXT, ACarregarArquivo);
 end;
 
 procedure TArquivos.SetItem(Index: Integer; const Value: TRegistro);
 begin
-  Items[Index].Assign(Value);
-end;
-
-procedure TArquivos.SetLastItem(const Value: TRegistro);
-begin
-  Items[Count-1].Assign(Value);
+  inherited SetItem(Index, Value);
 end;
 
 end.

@@ -73,8 +73,7 @@ type
     function GetPathSalvar: String;
   public
     constructor Create(AOwner: TComponent); override;
-    function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
-      Data: TDateTime = 0): String; virtual;
+    function GetPath(const APath, ALiteral, CNPJ: String; Data: TDateTime): String; virtual;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property Salvar: Boolean read FSalvar write FSalvar default False;
@@ -183,11 +182,11 @@ begin
   Result := FPathSalvar;
 end;
 
-function TArquivosConf.GetPath(APath, ALiteral, CNPJ: String;
+function TArquivosConf.GetPath(const APath, ALiteral, CNPJ: String;
   Data: TDateTime): String;
 var
   wDia, wMes, wAno: word;
-  Dir, AnoMes: String;
+  Dir, AnoMes, UmCNPJ: String;
   LenLiteral: integer;
 begin
   if APath = '' then
@@ -197,11 +196,12 @@ begin
 
   if SepararPorCNPJ then
   begin
-    if CNPJ = '' then
-      CNPJ := TConfiguracoes(Self.Owner).Geral.CNPJ;
+    UmCNPJ := CNPJ;
+    if UmCNPJ = '' then
+      UmCNPJ := TConfiguracoes(Self.Owner).Geral.CNPJ;
 
-    if CNPJ <> '' then
-      Dir := PathWithDelim(Dir) + CNPJ;
+    if UmCNPJ <> '' then
+      Dir := PathWithDelim(Dir) + UmCNPJ;
   end;
 
   if SepararPorMes then

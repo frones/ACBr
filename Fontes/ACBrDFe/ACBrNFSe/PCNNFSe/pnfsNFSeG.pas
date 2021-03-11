@@ -733,7 +733,8 @@ begin
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas
           end;
 
-     proISSJoinville:
+     proISSJoinville,
+     proAbacov2:
           begin
             Gerador.wGrupo('LoteRps' + FaVersao + FaIdentificador);
             Gerador.Prefixo := Prefixo4;

@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/21
+-- ACBrPOS, ACBrPOSPGWebAPI --
+[+] Adicionada a propriedade: "ConfirmarAntesImpressao: Boolean default True"
+    - Se verdadeiro, faz o ACBrPOS confirmar a transação assim que receber o
+      retorno de sucesso da mesma... Seguindo recomendação da PayGo...
+    (por: DSA)
+
 09/03/21
 -- ACBrPOS, ACBrTEFD, TACBrTEFDClass,  --
 [*] Ajuste nas plataformas compatíveis com Delphi

@@ -279,6 +279,7 @@ type
     fACBrTEFPGWebAPIListaParametros: TACBrTEFPGWebAPIListaParametros;
     fLogCriticalSection: TCriticalSection;
     fConfirmarTransacoesPendentes: Boolean;
+    fConfirmarAntesImpressao: Boolean;
     fpszTerminalId, fpszModel, fpszMAC, fpszSerNo: PAnsiChar;
     fInicializada: Boolean;
     fEmConnectionLoop: Boolean;
@@ -462,6 +463,8 @@ type
       write fUtilizaSaldoTotalVoucher;
     property ConfirmarTransacoesPendentes: Boolean read fConfirmarTransacoesPendentes
       write fConfirmarTransacoesPendentes;
+    property ConfirmarAntesImpressao: Boolean read fConfirmarAntesImpressao
+      write fConfirmarAntesImpressao;
 
     property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
     property OnNovaConexao: TACBrPOSPGWebNovaConexao read fOnNovaConexao write fOnNovaConexao;
@@ -747,6 +750,7 @@ begin
   fEmConnectionLoop := False;
   fInicializada := False;
   fConfirmarTransacoesPendentes := True;
+  fConfirmarAntesImpressao := True;
 
   fDadosTransacaoList := TACBrTEFPGWebAPIListaParametros.Create(True);  // FreeObjects;
   fACBrTEFPGWebAPIListaParametros := TACBrTEFPGWebAPIListaParametros.Create(True);  // FreeObjects;
@@ -1244,6 +1248,9 @@ begin
 
     if (iRet = PTIRET_OK) then
     begin
+      if ConfirmarAntesImpressao then
+        FinalizarTrancao( TerminalId, cnfSucesso );
+
       GravarBackupDaTransacao(TerminalId);
 
       if (Comprovantes <> prnNaoImprimir) then
@@ -1251,12 +1258,14 @@ begin
         try
           ImprimirComprovantesTEF( TerminalId, Comprovantes );
         except
-          FinalizarTrancao( TerminalId, cnfErroImpressao );
+          if not ConfirmarAntesImpressao then
+            FinalizarTrancao( TerminalId, cnfErroImpressao );
           raise;
         end;
       end;
 
-      FinalizarTrancao( TerminalId, cnfSucesso );
+      if not ConfirmarAntesImpressao then
+        FinalizarTrancao( TerminalId, cnfSucesso );
     end
     else
     begin

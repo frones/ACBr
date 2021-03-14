@@ -43,7 +43,7 @@
 #define MyAppVersion GetFileVersion(MyAppExeName)
 
 #define MyAppVerName MyAppName + "-" + MyAppVersion + "-" + MyAppTarget
-#define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.1.1.4\" + MyAppTarget
+#define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.1.1.10\" + MyAppTarget
 #define LibXML2Dir ACBrDIR + "\DLLs\LibXml2\" + MyAppTarget
 #define VCRedistInstaller "VC_redist." + MyAppTarget + ".exe"
 

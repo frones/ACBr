@@ -778,16 +778,14 @@ begin
   end;
 
   if FPAF_E.RegistroE2.Count > 0 then
-  begin
     FPAF_E.WriteRegistroE2(Layout);
-    FPAF_E.WriteBuffer;
-  end;
 
   if FPAF_E.RegistroE3.DT_EST > 0 then
-  begin
     FPAF_E.WriteRegistroE3;
-  	FPAF_E.WriteBuffer;
-  end;
+
+  if (FPAF_E.RegistroE2.Count > 0) or
+     (FPAF_E.RegistroE3.DT_EST > 0) then
+    FPAF_E.WriteBuffer;
 
   if FPAF_D.RegistroD2.Count > 0 then
   begin

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2021
+-- ACBrReinfWebServices --
+[*] Ajustes para realizar a consulta na versão 1.5.1
+   Por: Italo Giurizzato Junior
+
 10/03/2021
 -- pcnConversaoReinf --
 [*] https://www.projetoacbr.com.br/forum/topic/61604-vers%C3%A3o-10501/?do=findComment&comment=403793&_rid=63

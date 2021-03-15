@@ -473,7 +473,15 @@ begin
   else
     tpInsc := '2';
 
-  FPDadosMsg :=
+  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+    FPDadosMsg :=
+            '<consultar' + FPSoapEnvelopeAtributtes + '>' +
+            '<v1:tpInsc>' + tpInsc + '</v1:tpInsc>' +
+            '<v1:nrInsc>' + nrInsc + '</v1:nrInsc>' +
+            '<v1:numeroProtocoloFechamento>' + FProtocolo + '</v1:numeroProtocoloFechamento>' +
+            '</consultar>'
+  else
+    FPDadosMsg :=
             '<consultar' + FPSoapEnvelopeAtributtes + '>' +
             '<v1:tipoInscricaoContribuinte>' + tpInsc + '</v1:tipoInscricaoContribuinte>' +
             '<v1:numeroInscricaoContribuinte>' + nrInsc + '</v1:numeroInscricaoContribuinte>' +
@@ -487,6 +495,7 @@ end;
 procedure TConsultar.DefinirEnvelopeSoap;
 var
   Texto: String;
+  xTag: string;
 begin
   {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
@@ -494,11 +503,16 @@ begin
    Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
   {$ENDIF}
 
+  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+    xTag := 'ConsultaResultadoFechamento2099'
+  else
+    xTag := 'ConsultaInformacoesConsolidadas';
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
-  Texto := Texto + '<' + 'v1:ConsultaInformacoesConsolidadas>';
+  Texto := Texto + '<' + 'v1:' + xTag + '>';
   Texto := Texto + SeparaDados(DadosMsg, 'consultar');
-  Texto := Texto + '<' +  '/v1:ConsultaInformacoesConsolidadas>';
+  Texto := Texto + '<' + '/v1:' + xTag + '>';
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
@@ -507,8 +521,13 @@ end;
 
 procedure TConsultar.DefinirServicoEAction;
 begin
-  FPServico := ACBRREINF_NAMESPACE_CON +
-               '/ConsultaInformacoesConsolidadas';
+  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+    FPServico := ACBRREINF_NAMESPACE_CON +
+                 '/ConsultaResultadoFechamento2099'
+  else
+    FPServico := ACBRREINF_NAMESPACE_CON +
+                 '/ConsultaInformacoesConsolidadas';
+
   FPSoapAction := Trim(FPServico);
 end;
 
@@ -555,7 +574,9 @@ function TConsultar.TratarResposta: Boolean;
 var
   AXML, NomeArq: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaInformacoesConsolidadasResult');
+  FPRetWS := SeparaDadosArray(['ConsultaInformacoesConsolidadasResult',
+                               'ConsultaResultadoFechamento2099Response'],
+                               FPRetornoWS);
 
   FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsulta.LerXml;
@@ -716,7 +737,9 @@ var
   AXML: String;
 begin
   //aqui nao esta pronto
-  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaReciboEvento' + tpEventoStr + 'Result');
+  FPRetWS := SeparaDadosArray(['ConsultaReciboEvento' + tpEventoStr + 'Result',
+                               'ConsultaReciboEvento' + tpEventoStr + 'Response'],
+                               FPRetornoWS);
 
   FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsulta.LerXml;

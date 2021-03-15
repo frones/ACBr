@@ -486,44 +486,21 @@ begin
     Gerador.wCampo(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, DSC_VINSS);
 
   case FProvedor of
-    proCoplan,
-    proDigifred,
-    proELv2,
-    proFriburgo,
-    proNEAInformatica,
-    proNotaInteligente,
-    proSisPMJP,
-    proVitoria,
-    proSmarAPDABRASF,
-    proGiss,
-    proDeISS,
-    proTcheInfov2,
-    proCenti,
-    proRLZ,
-    proiiBrasilv2,
-    proTecnos,
-    proSigCorp,
-    proSiapSistemas,
-    proISSJoinville,
-    proSmarAPDv23: Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proCoplan, proDigifred, proELv2, proFriburgo, proNEAInformatica,
+    proNotaInteligente, proSisPMJP, proVitoria, proSmarAPDABRASF, proGiss,
+    proDeISS, proTcheInfov2, proCenti, proRLZ, proiiBrasilv2, proTecnos,
+    proSigCorp, proSiapSistemas, proISSJoinville, proSmarAPDv23,
+    proAbacov2:
+      Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
-    proABase,
-    proDesenvolve,
-    proEReceita,
-    proProdata,
-    proSafeWeb,
-    proSimplISSv2: Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proABase, proDesenvolve, proEReceita, proProdata, proSafeWeb,
+    proSimplISSv2:
+      Gerador.wCampo(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
-    pro4R,
-    proISSDigital,
-    proISSe,
-    proLink3,
-    proSaatri,
-    proSystemPro,
-    proVirtual,
-    proVersaTecnologia,
-    proAdm,
-    proSH3: Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    pro4R, proISSDigital, proISSe, proLink3, proSaatri, proSystemPro, proVirtual,
+    proVersaTecnologia, proAdm,
+    proSH3:
+      Gerador.wCampo(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proPronimv2:
       if NFSe.OptanteSimplesNacional = snSim then
@@ -543,36 +520,17 @@ begin
   end;
 
   case FProvedor of
-    proABase,
-    proActcon,
-    proDeISS,
-    proPronimv2,
-    proTecnos,
-    proVirtual,
-    proCoplan,
-    proVersaTecnologia,
-    proSigCorp,
-    proSimplISSv2,
+    proABase, proActcon, proDeISS, proPronimv2, proTecnos, proVirtual, proCoplan,
+    proVersaTecnologia, proSigCorp, proSimplISSv2,
     proAdm:
       begin
         Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
         Gerador.wCampo(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 1, NFSe.Servico.Valores.DescontoCondicionado, DSC_VDESCCOND);
       end;
 
-    pro4R,
-    proCenti,
-    proFiorilli,
-    proGoiania,
-    proISSDigital,
-    proISSe,
-    proSystemPro,
-    proPVH,
-    proSaatri,
-    proLink3,
-    proNEAInformatica,
-    proNotaInteligente,
-    proVitoria,
-    proSH3,
+    pro4R, proCenti, proFiorilli, proGoiania, proISSDigital, proISSe,
+    proSystemPro, proPVH, proSaatri, proLink3, proNEAInformatica,
+    proNotaInteligente, proVitoria, proSH3,
     proSIAPNet:
       begin
         Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
@@ -581,7 +539,8 @@ begin
       end;
 
     proProdata, 
-	proMegaSoft: Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
+    proMegaSoft:
+      Gerador.wCampo(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
 
   else
     begin

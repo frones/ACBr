@@ -27,7 +27,7 @@ package ACBr_BoletoFR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Boleto Impressão em  FastReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

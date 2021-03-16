@@ -946,7 +946,7 @@ end;
 
 function TACBrXMLNodeListEnumerator.GetCurrent: TACBrXmlNode;
 begin
-  Result := FList.Items[FIndex];
+  Result := FList.FItems[FIndex];
 end;
 
 function TACBrXMLNodeListEnumerator.MoveNext: boolean;
@@ -1058,7 +1058,7 @@ end;
 
 function TACBrXMLAttributeListEnumerator.GetCurrent: TACBrXmlAttribute;
 begin
-//  Result := FList.Items[FIndex];
+  Result := FList.FItems[FIndex];
 end;
 
 function TACBrXMLAttributeListEnumerator.MoveNext: boolean;

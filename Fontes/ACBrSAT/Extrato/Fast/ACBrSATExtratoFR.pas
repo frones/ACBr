@@ -36,21 +36,9 @@ unit ACBrSATExtratoFR;
 
 interface
 
-uses 
-  Classes, 
-	SysUtils, 
-	ACBrBase, 
-	ACBrSATExtratoClass, 
-	ACBrSATExtratoReportClass,
-  pcnCFe, 
-	pcnCFeCanc, 
-	pcnConversao,
-	DB, 
-	DBClient,
-	frxClass, 
-	frxExportPDF, 
-	frxDBSet, 
-	frxBarcode;
+uses
+  Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass, pcnCFe,
+  pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode;
 
 type
   EACBrSATExtratoFR = class(Exception);
@@ -61,9 +49,8 @@ type
   {$ENDIF RTL230_UP}
   TACBrSATExtratoFR = class( TACBrSATExtratoReportClass )
   private
-	FCFe: TCFe;
+    FCFe: TCFe;
     FCFeCanc: TCFeCanc;
-	
     cdsIdentificacao: TClientDataSet;
     cdsEmitente: TClientDataSet;
     cdsParametros: TClientDataSet;
@@ -80,19 +67,21 @@ type
     frxCalculoImposto: TfrxDBDataset;
     frxFormaPagamento: TfrxDBDataset;
     frxEntrega: TfrxDBDataset;
-	frxReport : TfrxReport;
-	frxPDFExport : TfrxPDFExport;
-	frxBarCodeObject : TfrxBarCodeObject;
-
-    FFastExtrato             : string;
-    FFastExtratoResumido     : string;
-    FFastExtratoCancelamento : string;
+    frxReport: TfrxReport;
+    frxPDFExport: TfrxPDFExport;
+    frxBarCodeObject: TfrxBarCodeObject;
+    FFastExtrato: string;
+    FFastExtratoResumido: string;
+    FFastExtratoCancelamento: string;
+    function PrepareReport(ACFe: TCFe): Boolean;
+    function GetPreparedReport: TfrxReport;
     procedure CriarDataSetsFrx;
-	procedure SetDataSetsToFrxReport;
-	procedure frxReportBeforePrint(Sender: TfrxReportComponent);
-	function PrepareReport(ACFe: TCFe): Boolean;
-	
-	procedure CarregaIdentificacao;
+    procedure SetDataSetsToFrxReport;
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+
+    procedure LimpaDados;
+    procedure CarregaDados;
+    procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaParametros;
     procedure CarregaInformacoesAdicionais;
@@ -101,24 +90,20 @@ type
     procedure CarregaCalculoImposto;
     procedure CarregaFormaPagamento;
     procedure AjustaMargensReports;
-
-	procedure CarregaDados;
-    procedure LimpaDados;	
-	
   protected
     procedure Imprimir;
   public
-
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    
+
     procedure ImprimirExtrato(ACFe: TCFe = nil); override;
-    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
-    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+    procedure ImprimirExtratoResumido(ACFe: TCFe = nil); override;
+    procedure ImprimirExtratoCancelamento(ACFe: TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
-    property FastExtrato             : string read FFastExtrato             write FFastExtrato;
-    property FastExtratoResumido     : string read FFastExtratoResumido     write FFastExtratoResumido;
-    property FastExtratoCancelamento : string read FFastExtratoCancelamento write FFastExtratoCancelamento;
+    property PreparedReport: TfrxReport read GetPreparedReport;
+    property FastExtrato: string read FFastExtrato write FFastExtrato;
+    property FastExtratoResumido: string read FFastExtratoResumido write FFastExtratoResumido;
+    property FastExtratoCancelamento: string read FFastExtratoCancelamento write FFastExtratoCancelamento;
   end ;
 
 implementation
@@ -132,17 +117,17 @@ procedure TACBrSATExtratoFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrCode: string;
 begin
-  if Assigned(Self.CFe) then
+  if Assigned(FCFe) then
   begin
-    with Self.CFe do
-      qrCode := Self.CalcularConteudoQRCode(infCFe.ID,
-                                                             ide.dEmi+ide.hEmi,
-                                                             Total.vCFe,
-                                                             Trim(Dest.CNPJCPF),
-                                                             ide.assinaturaQRCODE);
+    with FCFe do
+      qrCode := CalcularConteudoQRCode(infCFe.ID,
+                                       ide.dEmi+ide.hEmi,
+                                       Total.vCFe,
+                                       Trim(Dest.CNPJCPF),
+                                       ide.assinaturaQRCODE);
 
     if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
-       PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
+      PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
   end;
 end;
 
@@ -172,6 +157,19 @@ begin
   CarregaCalculoImposto;
   CarregaFormaPagamento;
   CarregaDadosEntrega
+end;
+
+function TACBrSATExtratoFR.GetPreparedReport: TfrxReport;
+begin
+  if Trim(FastExtrato) = '' then
+    Result := nil
+  else
+  begin
+    if PrepareReport(nil) then
+      Result := frxReport
+    else
+      Result := nil;
+  end;
 end;
 
 procedure TACBrSATExtratoFR.CarregaParametros;
@@ -213,12 +211,12 @@ begin
     if not (UpperCase(Copy(FastExtrato, Length(FastExtrato)-3, 4)) = '.FR3') then
     begin
       Stream := TStringStream.Create(FastExtrato);
-	  try
-		frxReport.FileName := '';
-		frxReport.LoadFromStream(Stream);
-	  finally
-		Stream.Free;
-	  end;
+      try
+        frxReport.FileName := '';
+        frxReport.LoadFromStream(Stream);
+      finally
+        Stream.Free;
+      end;
     end
     else
     begin
@@ -250,7 +248,7 @@ begin
   begin
     if Assigned(ACBrSAT) then
     begin
-      FCFe := TACBrSAT (ACBrSAT).CFe;
+      FCFe := TACBrSAT(ACBrSAT).CFe;
       CarregaDados;
 
       Result := frxReport.PrepareReport(False);
@@ -331,16 +329,9 @@ begin
     Add('Chave', ftString, 60);
     Add('Protocolo', ftString, 120);
     Add('tpAmb', ftInteger);
-    Add('tpEmit', ftInteger);
-    Add('Modelo', ftString, 5);
-    Add('serie', ftString, 3);
     Add('nserieSAT', ftString, 15);
     Add('nCFe', ftString, 15);
-    Add('modal', ftInteger);
     Add('dhEmi', ftDateTime);
-    Add('tpEmis', ftInteger);
-    Add('UFIni', ftString, 2);
-    Add('UFFim', ftString, 2);
     Add('CPFConsumidor', ftString, 45);
 
     CreateDataSet;
@@ -371,7 +362,6 @@ begin
   begin
     Close;
     Clear;
-    Add('Versao', ftString, 5);
     Add('Imagem', ftString, 256);
     Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
@@ -388,20 +378,18 @@ begin
     Clear;
     Add('nItem', ftInteger);
     Add('ChaveCFe', ftString, 50);
-    Add('CProd', ftString, 60);
+    Add('cProd', ftString, 60);
     Add('xProd', ftString, 120);
     Add('CFOP', ftString, 4);
-    Add('UCom', ftString, 6);
-    Add('QCom', ftFloat);
-    Add('VUnCom', ftFloat);
-    Add('VProd' , ftString, 18);
+    Add('uCom', ftString, 6);
+    Add('qCom', ftFloat);
+    Add('vUnCom', ftFloat);
+    Add('vProd' , ftFloat);
     Add('indRegra', ftString, 1);
-    Add('vItem',ftFloat);
+    Add('vItem', ftFloat);
     Add('vTR', ftString, 25);
     Add('vOutro', ftString, 18);
     Add('vDesc', ftString, 18);
-    Add('vRatDesc', ftString, 18);
-    Add('vRatAcr', ftString, 18);
     Add('vBC', ftFloat);
     Add('vDeducISSQN', ftFloat);
     Add('Valorliquido', ftString, 18);
@@ -412,12 +400,10 @@ begin
   cdsCalculoImposto := TClientDataSet.Create(Self);
   with cdsCalculoImposto, FieldDefs do
   begin
-    Add('VICMS', ftFloat);
-    Add('VProd', ftFloat);
-    Add('VDesc', ftFloat);
-    Add('VPIS', ftFloat);
-    Add('VCOFINS', ftFloat);
-    Add('VOutro', ftFloat);
+    Add('vICMS', ftFloat);
+    Add('vProd', ftFloat);
+    Add('vPIS', ftFloat);
+    Add('vCOFINS', ftFloat);
     Add('vCFe', ftFloat);
     Add('vTotPago', ftFloat);
     Add('vTroco', ftFloat);
@@ -545,7 +531,7 @@ begin
     end;
 
     if FCFe.Dest.CNPJCPF <> '' then
-      FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CPF %s', [FormatarCPF(OnlyNumber(CFe.Dest.CNPJCPF))])
+      FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CPF %s', [FormatarCPF(OnlyNumber(FCFe.Dest.CNPJCPF))])
     else
       FieldByName('CPFConsumidor').AsString := 'CONSUMIDOR NÃO IDENTIFICADO';
 
@@ -598,24 +584,24 @@ begin
         FieldByName('nItem').AsInteger   := inItem + 1;
         FieldByName('ChaveCFe').AsString := FCFe.infCFe.ID;
         FieldByName('cProd').AsString    := Trim(Prod.cProd);
-        FieldByName('xProd').AsString    := StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
+        FieldByName('xProd').AsString    := StringReplace(Prod.xProd, ';', #13, [rfReplaceAll]);
         FieldByName('CFOP').AsString     := Prod.CFOP;
-        FieldByName('Ucom').AsString     := Prod.UCom;
-        FieldByName('QCom').AsFloat      := Prod.QCom;
-        FieldByName('vUnCom').AsFloat    := Prod.VUnCom;
-        FieldByName('vProd').AsFloat     := Prod.VProd;
+        FieldByName('uCom').AsString     := Prod.uCom;
+        FieldByName('qCom').AsFloat      := Prod.qCom;
+        FieldByName('vUnCom').AsFloat    := Prod.vUnCom;
+        FieldByName('vProd').AsFloat     := Prod.vProd;
         FieldByName('indRegra').AsString := indRegraToStr(Prod.indRegra);
         FieldByName('vItem').AsFloat     := Prod.vItem;
-        FieldByName('vDesc').AsString    := FormatFloatBr( Prod.vDesc,',0.00');
-        FieldByName('vOutro').AsString   := FormatFloatBr( Prod.vOutro ,',0.00');
+        FieldByName('vDesc').AsString    := FormatFloatBr(Prod.vDesc,',0.00');
+        FieldByName('vOutro').AsString   := FormatFloatBr(Prod.vOutro,',0.00');
 
         if Imposto.vItem12741 > 0 then
           FieldByName('vTR').AsString := ' ('+FormatFloatBr(Imposto.vItem12741)+') '
         else
           FieldByName('vTR').AsString := '';
 
-        FieldByName('Valorliquido').AsString    := FormatFloatBr( Prod.vProd - Prod.vDesc ,',0.00');
-        FieldByName('ValorAcrescimos').AsString := FormatFloatBr( Prod.vProd + Prod.vOutro,',0.00');
+        FieldByName('Valorliquido').AsString    := FormatFloatBr(Prod.vProd - Prod.vDesc ,',0.00');
+        FieldByName('ValorAcrescimos').AsString := FormatFloatBr(Prod.vProd + Prod.vOutro,',0.00');
 
         FieldByName('vDeducISSQN').AsFloat := Imposto.ISSQN.vDeducISSQN;
         FieldByName('vBC').AsFloat         := Imposto.ISSQN.vBC;
@@ -654,10 +640,10 @@ begin
 
     with FCFe.Total do
     begin
-      FieldByName('VICMS').AsFloat     := ICMSTot.VICMS;
-      FieldByName('VProd').AsFloat     := ICMSTot.VProd;
-      FieldByName('VPIS').AsFloat      := ICMSTot.VPIS;
-      FieldByName('VCOFINS').AsFloat   := ICMSTot.VCOFINS;
+      FieldByName('vICMS').AsFloat     := ICMSTot.vICMS;
+      FieldByName('vProd').AsFloat     := ICMSTot.vProd;
+      FieldByName('vPIS').AsFloat      := ICMSTot.vPIS;
+      FieldByName('vCOFINS').AsFloat   := ICMSTot.vCOFINS;
       FieldByName('vPISST').AsFloat    := ICMSTot.vPISST;
       FieldByName('vCOFINSST').AsFloat := ICMSTot.vCOFINSST;
 
@@ -686,7 +672,7 @@ end;
 
 procedure TACBrSATExtratoFR.CarregaFormaPagamento;
 var 
-	i: Integer;
+   i: Integer;
 begin
   with cdsFormaPagamento do
   begin
@@ -736,6 +722,5 @@ begin
       Page.RightMargin := MargemDireita;
   end;
 end;
-
 
 end.

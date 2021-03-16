@@ -165,7 +165,7 @@ type
   TACBrXMLNamespaceList = class
   private
     FParent: TACBrXmlNode;
-    FItens: array of TACBrXmlNamespace;
+    FItems: array of TACBrXmlNamespace;
 
     procedure Insert(Item: TACBrXmlNamespace);
 
@@ -1058,7 +1058,7 @@ end;
 
 function TACBrXMLAttributeListEnumerator.GetCurrent: TACBrXmlAttribute;
 begin
-  Result := FList.Items[FIndex];
+//  Result := FList.Items[FIndex];
 end;
 
 function TACBrXMLAttributeListEnumerator.MoveNext: boolean;

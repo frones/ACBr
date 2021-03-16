@@ -462,6 +462,33 @@ const
   CMetodoDistribuicaoDFe =             'distribuicaodfe';
   CMetodoDataVencimentoCertificado =   'datavencimentocertificado';
 
+  CMetodoCriarEnviarRPS =              'criarenviarrps';
+  CMetodoAdicionarRPS =                'adicionarrps';
+  CMetodoEnviarLoteRPS =               'enviarloterps';
+  CMetodoGerarLoteRPS =                'gerarloterps';
+  CMetodoConsultarSituacaoLote =       'ConsultarSituacaoLote';
+  CMetodoConsultarLote =               'ConsultarLote';
+  CMetodoConsultarNFSeporRPS =         'ConsultarNFSeporRPS';
+  CMetodoConsultarNFSeporNumero =      'ConsultarNFSeporNumero';
+  CMetodoConsultarNFSeporPeriodo =     'ConsultarNFSeporPeriodo';
+  CMetodoConsultarNFSeporFaixa =       'ConsultarNFSeporFaixa';
+  CMetodoConsultarNFSeGenerico =       'ConsultarNFSeGenerico';
+  CMetodoConsultarNFSeServicoPrestadoPorNumero = 'ConsultarNFSeServicoPrestadoPorNumero';
+  CMetodoConsultarNFSeServicoPrestadoPorTomador = 'ConsultarNFSeServicoPrestadoPorTomador';
+  CMetodoConsultarNFSeServicoPrestadoPorIntermediario = 'ConsultarNFSeServicoPrestadoPorIntermediario';
+  CMetodoConsultarNFSeServicoPrestadoPorPeriodo = 'ConsultarNFSeServicoPrestadoPorPeriodo';
+  CMetodoConsultarNFSeServicoTomadoPorNumero = 'ConsultarNFSeServicoTomadoPorNumero';
+  CMetodoConsultarNFSeServicoTomadoPorPrestador = 'ConsultarNFSeServicoTomadoPorPrestador';
+  CMetodoConsultarNFSeServicoTomadoPorTomador = 'ConsultarNFSeServicoTomadoPorTomador';
+  CMetodoConsultarNFSeServicoTomadoPorIntermediario = 'ConsultarNFSeServicoTomadoPorIntermediario';
+  CMetodoConsultarNFSeServicoTomadoPorPeriodo = 'ConsultarNFSeServicoTomadoPorPeriodo';
+  CMetodoCancelarNFSe =                'CancelarNFSe';
+  CMetodoLinkNFSe =                    'LinkNFSe';
+  CMetodoSubstituirNFSe =              'SubstituirNFSe';
+  CMetodoEnviarEmailNFSe =             'EnviarEmailNFSe';
+  CMetodoImprimirNFSe =                'ImprimirNFSe';
+  CMetodoImprimirPDFNFSe =             'ImprimirPDFNFSe';
+
   CMetodoValidarCTe =                  'validarcte';
   CMetodoAssinarCTe =                  'assinarcte';
   CMetodoConsultarCTe =                'consultarcte';
@@ -728,6 +755,8 @@ const
 
   CExtensaoXmlBPe =                 '-bpe.xml';
   CExtensaoXmlBPeEve =              '-eve.xml';
+
+  CExtensaoXmlNFSe =                 '-nfse.xml';
 
   CPathLogs =                        'Logs';
 

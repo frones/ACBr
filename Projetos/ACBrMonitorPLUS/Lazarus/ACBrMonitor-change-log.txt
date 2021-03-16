@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2021
+-- DoACBrNFSeUnit --
+[+] Adicionado classe para implementar componente ACBrNFSe
+
 01/03/2021
 -- DoACBrNFeUnit --
 [*] Melhorias na geração respostas para componente NFe

@@ -39,6 +39,10 @@
             this.btnImprimiCFeRed = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtCodEstFederacao = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtCNPJContribuinte = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSignAc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -116,10 +120,6 @@
             this.btnEmail = new System.Windows.Forms.Button();
             this.btnImprimirCFeCanc = new System.Windows.Forms.Button();
             this.btnImpMFe = new System.Windows.Forms.Button();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtCNPJContribuinte = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.txtCodEstFederacao = new System.Windows.Forms.TextBox();
             this.btnAtivarSAT = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -256,6 +256,42 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuração CFe";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtCodEstFederacao
+            // 
+            this.txtCodEstFederacao.Location = new System.Drawing.Point(313, 116);
+            this.txtCodEstFederacao.Name = "txtCodEstFederacao";
+            this.txtCodEstFederacao.Size = new System.Drawing.Size(181, 20);
+            this.txtCodEstFederacao.TabIndex = 64;
+            this.txtCodEstFederacao.Text = "35";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(310, 100);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(189, 13);
+            this.label26.TabIndex = 63;
+            this.label26.Text = "Codigo do Estado da Federação";
+            // 
+            // txtCNPJContribuinte
+            // 
+            this.txtCNPJContribuinte.Location = new System.Drawing.Point(6, 116);
+            this.txtCNPJContribuinte.Name = "txtCNPJContribuinte";
+            this.txtCNPJContribuinte.Size = new System.Drawing.Size(301, 20);
+            this.txtCNPJContribuinte.TabIndex = 62;
+            this.txtCNPJContribuinte.Text = "11111111111111";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(3, 100);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(110, 13);
+            this.label25.TabIndex = 61;
+            this.label25.Text = "CNPJ Contribuinte";
             // 
             // label5
             // 
@@ -495,7 +531,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(710, 150);
+            this.tabPage2.Size = new System.Drawing.Size(710, 193);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Impressão";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -893,7 +929,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(710, 150);
+            this.tabPage3.Size = new System.Drawing.Size(710, 193);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Email";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1002,6 +1038,11 @@
             // nudPorta
             // 
             this.nudPorta.Location = new System.Drawing.Point(299, 105);
+            this.nudPorta.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
             this.nudPorta.Name = "nudPorta";
             this.nudPorta.Size = new System.Drawing.Size(61, 20);
             this.nudPorta.TabIndex = 20;
@@ -1092,42 +1133,6 @@
             this.btnImpMFe.Text = "Gerar Imp. MFe";
             this.btnImpMFe.UseVisualStyleBackColor = true;
             this.btnImpMFe.Click += new System.EventHandler(this.btnImpMFe_Click);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(3, 100);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(110, 13);
-            this.label25.TabIndex = 61;
-            this.label25.Text = "CNPJ Contribuinte";
-            // 
-            // txtCNPJContribuinte
-            // 
-            this.txtCNPJContribuinte.Location = new System.Drawing.Point(6, 116);
-            this.txtCNPJContribuinte.Name = "txtCNPJContribuinte";
-            this.txtCNPJContribuinte.Size = new System.Drawing.Size(301, 20);
-            this.txtCNPJContribuinte.TabIndex = 62;
-            this.txtCNPJContribuinte.Text = "11111111111111";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(310, 100);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(189, 13);
-            this.label26.TabIndex = 63;
-            this.label26.Text = "Codigo do Estado da Federação";
-            // 
-            // txtCodEstFederacao
-            // 
-            this.txtCodEstFederacao.Location = new System.Drawing.Point(313, 116);
-            this.txtCodEstFederacao.Name = "txtCodEstFederacao";
-            this.txtCodEstFederacao.Size = new System.Drawing.Size(181, 20);
-            this.txtCodEstFederacao.TabIndex = 64;
-            this.txtCodEstFederacao.Text = "35";
             // 
             // btnAtivarSAT
             // 

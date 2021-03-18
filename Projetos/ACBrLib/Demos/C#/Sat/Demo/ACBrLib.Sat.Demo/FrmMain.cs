@@ -96,7 +96,7 @@ namespace ACBrLib.Sat.Demo
 
         private void BtnAtivarSAT_Click(object sender, EventArgs e)
         {
-            var ret = acbrSat.SAT_AtivarSAT(txtCNPJContribuinte.Text, Convert.ToInt32(txtCodEstFederacao.Text));
+            var ret = acbrSat.AtivarSAT(txtCNPJContribuinte.Text, Convert.ToInt32(txtCodEstFederacao.Text));
             rtbRespostas.AppendText(ret);
         }
 
@@ -320,7 +320,6 @@ namespace ACBrLib.Sat.Demo
 
             acbrSat.ConfigGravar("");
         }
-
 
         #endregion Methods
     }

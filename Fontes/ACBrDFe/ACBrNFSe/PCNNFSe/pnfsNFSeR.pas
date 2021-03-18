@@ -456,7 +456,7 @@ begin
       begin
         NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
-        if Leitor.rExtrai(5, 'CpfCnpj') <> '' then
+        if (Leitor.rExtrai(4, 'CpfCnpj') <> '') or (Leitor.rExtrai(5, 'CpfCnpj') <> '') then
         begin
           if Leitor.rCampo(tcStr, 'Cpf') <> '' then
             NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cpf')

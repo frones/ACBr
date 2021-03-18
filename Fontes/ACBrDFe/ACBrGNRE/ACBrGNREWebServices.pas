@@ -763,12 +763,13 @@ var
   i, GuiasOk: Integer;
   Cabec, RepresentacaoNumerica, SituacaoGuia, PathNome: String;
 begin
+  GuiasOk := 0;
+  FGNRERetorno.resGuia.Clear;
+
   SL := TStringList.Create;
   SLAux := TStringList.Create;
-  SL.Text := AResultado;
-  GuiasOk := 0;
-
   try
+    SL.Text := AResultado;
     Cabec := SL.Strings[0];
     for i := 0 to SL.Count - 1 do
     begin
@@ -782,7 +783,8 @@ begin
           Inc(GuiasOk);
           RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
 
-          FGNRERetorno.resGuia.Items[i].TXT := SLAux.Text;
+          FGNRERetorno.resGuia.New;
+          FGNRERetorno.resGuia.Items[GuiasOk-1].TXT := SLAux.Text;
 
           if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
           begin
@@ -792,7 +794,7 @@ begin
             PathNome := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT) +
                        RepresentacaoNumerica+'-guia.txt';
 
-            FGNRERetorno.resGuia.Items[i].NomeArq := PathNome;
+            FGNRERetorno.resGuia.Items[GuiasOk-1].NomeArq := PathNome;
 
             SLAux.SaveToFile(PathNome);
           end;

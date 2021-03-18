@@ -725,7 +725,7 @@ type
     function VersaoLib: String;
     procedure ObterOperacoes(TipoOperacao: Byte; Operacoes: TArrPW_OperationsEx);
 
-    function ValidarRespostaCampo(AResposta: String;
+    function ValidarRespostaCampo(var AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 
     property PathLib: String read fPathLib write SetPathLib;
@@ -1763,38 +1763,56 @@ begin
     DoException(ACBrStr(MsgError));
 end;
 
-function TACBrTEFPGWebAPI.ValidarRespostaCampo(AResposta: String;
+function TACBrTEFPGWebAPI.ValidarRespostaCampo(var AResposta: String;
   ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 var
   Valido: Boolean;
   ARespInt: Int64;
+  Erro: String;
 begin
   Valido := True;
-  Result := '';
-  if (ADefinicaoCampo.TiposEntradaPermitidos = pgtNumerico) then
-  begin
-    ARespInt := StrToInt64Def(AResposta, -1);
-    if ARespInt > ADefinicaoCampo.ValorMaximo then
-      Result := Trim(ADefinicaoCampo.MsgDadoMaior)
-    else if ARespInt < ADefinicaoCampo.ValorMinimo then
-      Result := Trim(ADefinicaoCampo.MsgDadoMenor);
-  end
-  else
+  Erro := Trim(ADefinicaoCampo.MsgValidacao);
+
   case ADefinicaoCampo.ValidacaoDado of
-    pgvNaoVazio:
+    pgvDigMod10, pgvCPF_CNPJ, pgvMMAA, pgvDDMMAA:
+      begin
+        AResposta := OnlyNumber(AResposta);
+
+        case ADefinicaoCampo.ValidacaoDado of
+          pgvDigMod10:
+            Valido := ValidarModulo10(AResposta);
+          pgvCPF_CNPJ:
+            Valido := (ACBrValidador.ValidarCNPJouCPF(AResposta) = '');
+          pgvMMAA:
+            Valido := ValidarDDMM(AResposta);
+          pgvDDMMAA:
+            Valido := ValidarDDMMAA(AResposta);
+        end;
+      end;
+  else
+    if (ADefinicaoCampo.ValidacaoDado = pgvNaoVazio) then
       Valido := (AResposta <> '');
-    pgvDigMod10:
-      Valido := ValidarModulo10(AResposta);
-    pgvCPF_CNPJ:
-      Valido := (ACBrValidador.ValidarCNPJouCPF(AResposta) = '');
-    pgvMMAA:
-      Valido := ValidarDDMM(AResposta);
-    pgvDDMMAA:
-      Valido := ValidarDDMMAA(AResposta);
+
+    if Valido and (ADefinicaoCampo.TiposEntradaPermitidos = pgtNumerico) then
+    begin
+      ARespInt := StrToInt64Def(AResposta, -1);
+      if (ARespInt > ADefinicaoCampo.ValorMaximo) then
+      begin
+        Valido := False;
+        Erro := Trim(ADefinicaoCampo.MsgDadoMaior)
+      end
+      else if ARespInt < ADefinicaoCampo.ValorMinimo then
+      begin
+        Valido := False;
+        Erro := Trim(ADefinicaoCampo.MsgDadoMenor);
+      end
+    end
   end;
 
-  if not Valido then
-    Result := ADefinicaoCampo.MsgValidacao;
+  if Valido then
+    Result := ''
+  else
+    Result := Erro;
 end;
 
 function TACBrTEFPGWebAPI.ObterDados(ArrGetData: TArrPW_GetData;

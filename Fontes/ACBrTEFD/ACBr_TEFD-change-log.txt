@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/21
+-- ACBrTEFPayGoWebComum --
+[-] Ajuste no método "ValidarRespostaCampo", para que não ocorra validação de
+    Valor mínimo/máximo, quando "bTipoDeDado = PWDAT_TYPED" e
+    "bValidacaoDado seja (PWVAL_Modulo10= 2, PWVAL_CPF_CNPJ=3, PWVAL_MMAA=4, PWVAL_DDMMAA=5)
+    (por: DSA)
+
 12/03/21
 -- ACBrPOS, ACBrPOSPGWebAPI --
 [+] Adicionada a propriedade: "ConfirmarAntesImpressao: Boolean default True"

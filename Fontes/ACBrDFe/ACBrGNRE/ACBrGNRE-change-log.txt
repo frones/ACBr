@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2021
+-- ACBrGNREGuiasRetorno/pgnreRetConsResLoteGNRE --
+[*] https://www.projetoacbr.com.br/forum/topic/61723-retorno-rejei%C3%A7%C3%B5es-gnre-vers%C3%A3o-20/
+  Por: Danilo Caneschi
+
 01/03/2021
 -- Diversos --
 [+] Foi incluido na classe TGuiaCollectionItem as propriedades: NomeArq e TXT

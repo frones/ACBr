@@ -379,6 +379,8 @@ begin
         resGuia.New;
         Inc(j);
 
+        resGuia.Items[j].XML                    := SLResultGuia.Strings[i];
+
         resGuia.Items[j].Versao := ve100;
         resGuia.Items[j].Identificador          := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
         resGuia.Items[j].SequencialGuia         := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
@@ -439,14 +441,16 @@ end;
 
 function TTResultLote_GNRE.Ler_Versao_2: boolean;
 var
-  i, j, k, l: Integer;
+  i, j, k, l, m: Integer;
   aXML: string;
 begin
   Result := False;
 
   if Leitor.rExtrai(2, 'resultado') <> '' then
   begin
-    i := 0;
+    i := 0; // Utilizado para a leitura Guias
+    m := 0; // Utilizado para a leitura das Rejeições
+
     while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
     begin
       resGuia.New;
@@ -458,6 +462,7 @@ begin
       resGuia.Items[i].XML := InserirDeclaracaoXMLSeNecessario(aXML);
 
       resGuia.Items[i].Versao := ve200;
+      resGuia.Items[i].SequencialGuia        := i + 1;
       resGuia.Items[i].SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
       resGuia.Items[i].UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
       resGuia.Items[i].tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
@@ -560,14 +565,20 @@ begin
 
       if Leitor.rExtrai(4, 'motivosRejeicao') <> '' then
       begin
-        j:=0;
+        j := 0;
         while Leitor.rExtrai(5, 'motivo', '', j + 1) <> '' do
         begin
+          // A classe resRejeicaoGuia vai conter todas as rejeições de todas as Guias
+          // o campo SequencialGuia contem o indice das guias, todas as rejeições
+          // de sequencial 1 se refere a primeira guia e assim por diante.
           resRejeicaoGuia.New;
-          resRejeicaoGuia.Items[j].CodMotivoRejeicao  := Leitor.rCampo(tcInt, 'codigo');
-          resRejeicaoGuia.Items[j].DescMotivoRejeicao := Leitor.rCampo(tcStr, 'descricao');
-          resRejeicaoGuia.Items[j].NomeCampo          := Leitor.rCampo(tcStr, 'campo');
+          resRejeicaoGuia.Items[m].SequencialGuia     := i + 1;
+          resRejeicaoGuia.Items[m].CodMotivoRejeicao  := Leitor.rCampo(tcInt, 'codigo');
+          resRejeicaoGuia.Items[m].DescMotivoRejeicao := Leitor.rCampo(tcStr, 'descricao');
+          resRejeicaoGuia.Items[m].NomeCampo          := Leitor.rCampo(tcStr, 'campo');
+
           Inc(j);
+          Inc(m);
         end;
       end;
 

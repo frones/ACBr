@@ -303,7 +303,7 @@ begin
       if Leitor.rExtrai(Nivel, 'informacoesComplementares') <> '' then
       begin
         j := 0;
-        while Leitor.rExtrai(Nivel, 'item', '', j + 1) <> '' do
+        while Leitor.rExtrai(Nivel, 'informacao', '', j + 1) <> '' do
         begin
           GNRERetorno.InfoComplementares := GNRERetorno.InfoComplementares + Leitor.rCampo(tcStr, 'informacao')+ sLineBreak;
           Inc(j);

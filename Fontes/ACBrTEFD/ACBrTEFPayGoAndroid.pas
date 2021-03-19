@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -217,35 +217,25 @@ type
 
     procedure HandleActivityMessage(const Sender: TObject; const M: TMessage);
     function OnActivityResult(RequestCode, ResultCode: Integer; AIntent: JIntent): Boolean;
-
     function BooleanStrToByte(const AValue: String): Byte;
-
     function PWOPER_ToOperation(iOPER: Byte): String;
     function OperationToPWOPER_(const AOperation: String): Byte;
-
     function PWCNF_ToTransactionStatus(Status: LongWord): String;
     function TransactionStatusToPWCNF_(const AStatus: String): LongWord;
-
     function PWINFO_AUTHSYSTToProvider(const AUTHSYST: String): String;
     function ProviderToPWINFO_AUTHSYST(const Provider: String): String;
-
     function PWINFO_CARDTYPEToCardType(const CARDTYPE: String): String;
     function CardTypeToPWINFO_CARDTYPE(const CardType: String): Byte;
-
     function PWINFO_FINTYPEToFinType(const FINTYPE: String): String;
     function FinancingTypeToPWINFO_FINTYPE(const financingType: String): Byte;
-
     function PWINFO_PAYMNTTYPEToPaymentType(const PAYMNTTYPE: String): String;
     function PaymentModeToPWINFO_PAYMNTTYPE(const paymentMode: String): Byte;
-
     function PrintReceiptsToPWINFO_RCPTPRN(const printReceipts: String): Byte;
     function WalletUserIdToPWINFO_WALLETUSERIDTYPE(const WalletUserId: String): Byte;
 
     function GetURI_Input(iOPER: Byte): String;
-
     procedure AddURIParam(AURI: TACBrURI; ParamName: string; FromInfo: Word;
       ValorPadrao: string = ''; IncluirSeVazio: Boolean = False);
-
     procedure IniciarIntent(AIntent: JIntent);
   protected
     procedure DoException( AErrorMsg: String );
@@ -1512,9 +1502,11 @@ begin
   intent := TJIntent.Create;
   intent.setAction( StringToJString(Intent_Confirmation) );
   intent.putExtra( StringToJString(Key_URI),  StringToJString(uriConfirmation) );
-  intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
 
-  // Disparando o Intent
+  intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
+
+
+  // Disparando o Intent
   TAndroidHelper.Activity.sendBroadcast(intent);
 end;
 
@@ -1602,7 +1594,8 @@ begin
   intent := TJIntent.Create;
   intent.setAction( StringToJString(Intent_Confirmation) );
   intent.putExtra( StringToJString(Key_URI),  StringToJString(uriResolve) );
-  intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
+
+  intent.addFlags( TJIntent.JavaClass.FLAG_INCLUDE_STOPPED_PACKAGES );
 
   // Adicionando os Bundles
   AURI := TACBrURI.Create(URI_Scheme, URI_AuthorityResolve, URI_PathConfirmation);
@@ -1615,7 +1608,8 @@ begin
 
   GravarLog('  uriConfirmation: '+uriConfirmation);
   intent.putExtra( StringToJString(Key_Confirmacao), StringToJString(uriConfirmation) );
-
+
+
   // Disparando o Intent
   TAndroidHelper.Activity.sendBroadcast(intent);
 end;

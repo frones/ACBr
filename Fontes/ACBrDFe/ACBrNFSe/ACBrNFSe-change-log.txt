@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2021
+-- ACBrNFSeWebServices --
+[*] Ajustes para o provedor InfIsc
+  Por: Anderson GR
+
 18/03/2021
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/61681-cpfcnpjtomador-informado-incorretamente/?do=findComment&comment=404453&_rid=63

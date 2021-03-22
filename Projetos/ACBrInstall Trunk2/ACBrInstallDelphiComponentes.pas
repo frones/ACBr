@@ -149,8 +149,15 @@ uses
 
 
 function sVersaoInstalador: string;
+var
+  jvVerInfo: TJvVersionInfo;
 begin
-  Result := AppVerInfo.FileVersion;
+  jvVerInfo := AppVerInfo;
+  try
+  Result := jvVerInfo.FileVersion;
+  finally
+    jvVerInfo.Free;
+  end;
 end;
 
 { TACBrInstallComponentes }
@@ -213,6 +220,13 @@ begin
   if (pos('Warning: W1057', Text) <= 0) and ((pos('Warning: W1058', Text) <= 0)) then
   begin
     FazLog(Text);
+  end;
+
+  if (Pos('This version of the product does not support command line compiling', Text) > 0) then
+  begin
+    //Encontramos um Delphi trial. Precisamos abortar a instalação.
+    Inc(FCountErros);
+    FazLog('O ACBrInstall não funciona com a versão Trial do Delphi. Você precisa instalar os pacotes manualmente.');
   end;
 end;
 
@@ -713,16 +727,16 @@ begin
   PathOrigem  := OpcoesInstall.DiretorioRaizACBr + 'DLLs\' + ANomeArquivo;
   PathDestino := DirSystem + ExtractFileName(ANomeArquivo);
 
-  if not FileExists(PathOrigem) then
-  begin
-    InformaSituacao(Format('AVISO: Arquivo não encontrado na origem: "%s"', [PathOrigem]));
-    Exit;
-  end;
-
   if (FileExists(PathDestino)) then
   begin
     InformaSituacao(Format('AVISO: Arquivo já se encontra no destino. Não sobrescrito: "%s"', [PathDestino]));
     Exit;
+  end;
+
+  if not FileExists(PathOrigem) then
+  begin
+    InformaSituacao(Format('ERRO: Arquivo não encontrado na origem: "%s"', [PathOrigem]));
+    raise EFileNotFoundException.Create(Format('ERRO: Arquivo não encontrado na origem: "%s"', [PathOrigem]));
   end;
 
   if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
@@ -830,8 +844,8 @@ begin
 // arquivos e outras coisas mais
   if ADestino <> tdNone then
   begin
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.4\x86\libcrypto-1_1.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.4\x86\libssl-1_1.dll', APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libcrypto-1_1.dll', APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libssl-1_1.dll', APathBin);
   end;
 end;
 

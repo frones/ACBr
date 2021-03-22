@@ -284,8 +284,10 @@ begin
       end;
     end;
 
+    ArqIni.EraseSection('PLATAFORMAS');
     ArqIni.WriteString('PLATAFORMAS', 'Marcadas', PlataformasMarcadas);
 
+    ArqIni.EraseSection('PACOTES');
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Caption, framePacotes1.Pacotes[I].Checked);
   finally

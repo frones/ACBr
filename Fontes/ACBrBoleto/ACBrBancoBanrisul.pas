@@ -597,7 +597,7 @@ begin
       else // Se a instrução estiver preenchida
         begin
           // Validar se a instrução passada é válida
-          if not MatchText(Instrucao2, ['0', '1', '2']) then
+          if not MatchText(Trim(Instrucao2), ['0', '1', '2']) then
             raise Exception.Create('Código de Baixa/Devolução informado incorretamente!');
         end;
       // Número de dias para baixa/devolução

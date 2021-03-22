@@ -416,8 +416,8 @@ var
   Inicio, Agora, UltVencto: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
-  fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup : Currency;
-  FaturamentoDireto, NFImportacao, UFCons : Boolean;
+  fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup, fsvPISServico, fsvCOFINSServico : Currency;
+  FaturamentoDireto, NFImportacao, UFCons, bServico : Boolean;
 
   procedure GravaLog(AString: String);
   begin
@@ -997,6 +997,8 @@ begin
     fsvFCPST   := 0;
     fsvFCPSTRet:= 0;
     fsvIPIDevol:= 0;
+    fsvPISServico := 0;
+    fsvCOFINSServico := 0;
     FaturamentoDireto := False;
     NFImportacao := False;
     UFCons := False;
@@ -1005,7 +1007,8 @@ begin
     begin
       with NFe.Det[I] do
       begin
-        if Trim(Prod.NCM) <> '00' then
+        bServico := (Trim(Prod.NCM) = '00') or (Trim(Imposto.ISSQN.cListServ) <> '');
+        if (not bServico) then
         begin
           // validar NCM completo somente quando não for serviço
           GravaLog('Validar: 777-NCM info [nItem: '+IntToStr(Prod.nItem)+']');
@@ -1266,8 +1269,16 @@ begin
           fsvDesc    := fsvDesc + Prod.vDesc;
           fsvII      := fsvII + Imposto.II.vII;
           fsvIPI     := fsvIPI + Imposto.IPI.vIPI;
-          fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
-          fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
+          if bServico then
+            begin
+              fsvPISServico    := fsvPISServico + Imposto.PIS.vPIS;
+              fsvCOFINSServico := fsvCOFINSServico + Imposto.COFINS.vCOFINS;
+            end
+          else
+            begin
+              fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
+              fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
+            end;
           fsvOutro   := fsvOutro + Prod.vOutro;
           fsvServ    := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
           fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;;
@@ -1276,7 +1287,7 @@ begin
           fsvIPIDevol:= fsvIPIDevol + vIPIDevol;
 
           // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
-          if (Prod.NCM <> '00') or ((Prod.NCM = '00') and (NFe.Ide.finNFe = fnAjuste)) then
+          if (not bServico) or (NFe.Ide.finNFe = fnAjuste) then
             fsvProd := fsvProd + Prod.vProd;
         end;
 
@@ -1357,6 +1368,14 @@ begin
     GravaLog('Validar: 604-Total vOutro');
     if (NFe.Total.ICMSTot.vOutro <> fsvOutro) then
       AdicionaErro('604-Rejeição: Total do vOutro difere do somatório dos itens');
+
+    GravaLog('Validar: 608-Total PIS ISSQN');
+    if (NFe.Total.ISSQNtot.vPIS <> fsvPISServico) then
+      AdicionaErro('608-Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ISSQN');
+
+    GravaLog('Validar: 609-Total COFINS ISSQN');
+    if (NFe.Total.ISSQNtot.vCOFINS <> fsvCOFINSServico) then
+      AdicionaErro('609-Rejeição: Total da COFINS difere do somatório dos itens sujeitos ao ISSQN');
 
     GravaLog('Validar: 861-Total do FCP');
     if (NFe.Total.ICMSTot.vFCP <> fsvFCP) then

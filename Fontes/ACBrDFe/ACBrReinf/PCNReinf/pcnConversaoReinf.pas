@@ -539,7 +539,7 @@ begin
   result := TTipoEvento(0);
 
   try
-    for i := 0 to 14 do
+    for i := 0 to High(TEventoString) do
       if Pos('[' + TEventoString[i] + ']', s) > 0 then
       begin
         ok := True;
@@ -559,7 +559,7 @@ begin
   result := TTipoEvento(0);
 
   try
-    for i := 0 to 14 do
+    for i := 0 to High(TEventoString) do
       if Pos('<' + TEventoString[i], s) > 0 then
       begin
         ok := True;

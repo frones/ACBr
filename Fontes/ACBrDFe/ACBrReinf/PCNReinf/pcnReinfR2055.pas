@@ -357,7 +357,7 @@ begin
     Gerador.wCampo(tcDe2, '', 'vlrBruto',     1, 14, 1, item.vlrBruto);
     Gerador.wCampo(tcDe2, '', 'vlrCPDescPR',  1, 14, 1, item.vlrCPDescPR);
     Gerador.wCampo(tcDe2, '', 'vlrRatDescPR', 1, 14, 1, item.vlrRatDescPR);
-    Gerador.wCampo(tcDe2, '', 'vlrSenarDesc', 1, 14, 1, item.vlrRatDescPR);
+    Gerador.wCampo(tcDe2, '', 'vlrSenarDesc', 1, 14, 1, item.vlrSenarDesc);
 
     GerarinfoProc(item.infoProc);
 

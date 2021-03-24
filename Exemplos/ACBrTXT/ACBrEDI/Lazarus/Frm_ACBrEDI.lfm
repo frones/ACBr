@@ -1,0 +1,998 @@
+object frmACBrEDI: TfrmACBrEDI
+  Left = 595
+  Height = 566
+  Top = 254
+  Width = 1082
+  Caption = 'ACBrEDI - Programa Exemplo'
+  ClientHeight = 566
+  ClientWidth = 1082
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -14
+  Font.Name = 'Tahoma'
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.0.12.0'
+  object pnlMenus: TPanel
+    Left = 0
+    Height = 566
+    Top = 0
+    Width = 371
+    Align = alLeft
+    ClientHeight = 566
+    ClientWidth = 371
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 0
+    object lblColaborador: TLabel
+      Cursor = crHandPoint
+      Left = 15
+      Height = 16
+      Top = 478
+      Width = 324
+      Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
+      Font.Color = clNavy
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblColaboradorClick
+    end
+    object lblPatrocinador: TLabel
+      Cursor = crHandPoint
+      Left = 12
+      Height = 16
+      Top = 496
+      Width = 326
+      Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
+      Font.Color = clGreen
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblPatrocinadorClick
+    end
+    object lblDoar1: TLabel
+      Cursor = crHandPoint
+      Left = 19
+      Height = 16
+      Top = 515
+      Width = 311
+      Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
+      Font.Color = clRed
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblDoar1Click
+    end
+    object lblDoar2: TLabel
+      Cursor = crHandPoint
+      Left = 139
+      Height = 16
+      Top = 531
+      Width = 77
+      Caption = 'clique aqui'
+      Font.Color = clRed
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblDoar2Click
+    end
+    object PageControl1: TPageControl
+      Left = 0
+      Height = 440
+      Top = 0
+      Width = 369
+      ActivePage = TabSheet1
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabIndex = 0
+      TabOrder = 0
+      object TabSheet1: TTabSheet
+        Caption = 'Configurações'
+        ClientHeight = 410
+        ClientWidth = 361
+        Font.Color = clWindowText
+        Font.Height = -14
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        object PageControl4: TPageControl
+          Left = 0
+          Height = 410
+          Top = 0
+          Width = 361
+          ActivePage = TabSheet12
+          Align = alClient
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          MultiLine = True
+          ParentFont = False
+          TabIndex = 0
+          TabOrder = 0
+          Options = [nboMultiLine]
+          object TabSheet12: TTabSheet
+            Caption = 'Transportadora'
+            ClientHeight = 380
+            ClientWidth = 353
+            Font.Color = clWindowText
+            Font.Height = -14
+            Font.Name = 'Tahoma'
+            ImageIndex = 3
+            ParentFont = False
+            object Label12: TLabel
+              Left = 10
+              Height = 17
+              Top = 5
+              Width = 32
+              Caption = 'CNPJ'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label13: TLabel
+              Left = 170
+              Height = 17
+              Top = 5
+              Width = 52
+              Caption = 'Insc.Est.'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label14: TLabel
+              Left = 10
+              Height = 17
+              Top = 55
+              Width = 75
+              Caption = 'Razão Social'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label15: TLabel
+              Left = 10
+              Height = 17
+              Top = 105
+              Width = 49
+              Caption = 'Fantasia'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label16: TLabel
+              Left = 10
+              Height = 17
+              Top = 205
+              Width = 72
+              Caption = 'Logradouro'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label17: TLabel
+              Left = 260
+              Height = 17
+              Top = 205
+              Width = 49
+              Caption = 'Número'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label18: TLabel
+              Left = 10
+              Height = 17
+              Top = 255
+              Width = 86
+              Caption = 'Complemento'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label19: TLabel
+              Left = 170
+              Height = 17
+              Top = 255
+              Width = 35
+              Caption = 'Bairro'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label20: TLabel
+              Left = 10
+              Height = 17
+              Top = 305
+              Width = 78
+              Caption = 'Cód. Cidade '
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label21: TLabel
+              Left = 95
+              Height = 17
+              Top = 305
+              Width = 41
+              Caption = 'Cidade'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label22: TLabel
+              Left = 281
+              Height = 17
+              Top = 305
+              Width = 16
+              Caption = 'UF'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label23: TLabel
+              Left = 170
+              Height = 17
+              Top = 155
+              Width = 25
+              Caption = 'CEP'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label24: TLabel
+              Left = 10
+              Height = 17
+              Top = 155
+              Width = 30
+              Caption = 'Fone'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object edtEmitCNPJ: TEdit
+              Left = 10
+              Height = 25
+              Top = 25
+              Width = 154
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 0
+            end
+            object edtEmitIE: TEdit
+              Left = 171
+              Height = 25
+              Top = 25
+              Width = 154
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 1
+            end
+            object edtEmitRazao: TEdit
+              Left = 10
+              Height = 25
+              Top = 75
+              Width = 315
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 2
+            end
+            object edtEmitFantasia: TEdit
+              Left = 10
+              Height = 25
+              Top = 125
+              Width = 315
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 3
+            end
+            object edtEmitFone: TEdit
+              Left = 10
+              Height = 25
+              Top = 175
+              Width = 156
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 4
+            end
+            object edtEmitCEP: TEdit
+              Left = 171
+              Height = 25
+              Top = 175
+              Width = 154
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 5
+            end
+            object edtEmitLogradouro: TEdit
+              Left = 10
+              Height = 25
+              Top = 225
+              Width = 245
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 6
+            end
+            object edtEmitNumero: TEdit
+              Left = 262
+              Height = 25
+              Top = 225
+              Width = 62
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 7
+            end
+            object edtEmitComp: TEdit
+              Left = 10
+              Height = 25
+              Top = 275
+              Width = 154
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 8
+            end
+            object edtEmitBairro: TEdit
+              Left = 171
+              Height = 25
+              Top = 275
+              Width = 154
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 9
+            end
+            object edtEmitCodCidade: TEdit
+              Left = 10
+              Height = 25
+              Top = 325
+              Width = 76
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 10
+            end
+            object edtEmitCidade: TEdit
+              Left = 95
+              Height = 25
+              Top = 325
+              Width = 178
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 11
+            end
+            object edtEmitUF: TEdit
+              Left = 281
+              Height = 25
+              Top = 325
+              Width = 44
+              CharCase = ecUppercase
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 12
+            end
+          end
+          object TabSheet13: TTabSheet
+            Caption = 'Arquivos E.D.I.'
+            ClientHeight = 0
+            ClientWidth = 0
+            Font.Color = clWindowText
+            Font.Height = -14
+            Font.Name = 'Tahoma'
+            ImageIndex = 4
+            ParentFont = False
+            object sbPathOCOR: TSpeedButton
+              Left = 305
+              Height = 30
+              Top = 34
+              Width = 29
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              NumGlyphs = 2
+              OnClick = sbPathOCORClick
+              ParentFont = False
+            end
+            object Label35: TLabel
+              Left = 4
+              Height = 13
+              Top = 15
+              Width = 219
+              Caption = 'Pasta com os Arquivos de Ocorrência (OCOR)'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label1: TLabel
+              Left = 4
+              Height = 13
+              Top = 75
+              Width = 232
+              Caption = 'Pasta com os Arquivos Conhecimento (CONEMB)'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object sbPathCONEMB: TSpeedButton
+              Left = 305
+              Height = 30
+              Top = 94
+              Width = 29
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              NumGlyphs = 2
+              OnClick = sbPathCONEMBClick
+              ParentFont = False
+            end
+            object Label2: TLabel
+              Left = 4
+              Height = 13
+              Top = 135
+              Width = 226
+              Caption = 'Pasta com os Arquivos de Cobrança (DOCCOB)'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object SpeedButton2: TSpeedButton
+              Left = 305
+              Height = 30
+              Top = 154
+              Width = 29
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              NumGlyphs = 2
+              OnClick = SpeedButton2Click
+              ParentFont = False
+            end
+            object Label3: TLabel
+              Left = 4
+              Height = 13
+              Top = 194
+              Width = 228
+              Caption = 'Pasta com os Arquivos Notas Fiscais (NOTAFIS)'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object SpeedButton3: TSpeedButton
+              Left = 305
+              Height = 30
+              Top = 212
+              Width = 29
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              NumGlyphs = 2
+              OnClick = SpeedButton3Click
+              ParentFont = False
+            end
+            object Label4: TLabel
+              Left = 4
+              Height = 13
+              Top = 251
+              Width = 223
+              Caption = 'Pasta com os Arquivos PRE-FATURA (PREFAT)'
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentColor = False
+              ParentFont = False
+            end
+            object SpeedButton4: TSpeedButton
+              Left = 305
+              Height = 30
+              Top = 270
+              Width = 29
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              NumGlyphs = 2
+              OnClick = SpeedButton4Click
+              ParentFont = False
+            end
+            object edtPathOCOR: TEdit
+              Left = 4
+              Height = 21
+              Top = 35
+              Width = 294
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 0
+              Text = 'C:\ACBrEDI\EDI\OCORRE\'
+            end
+            object edtPathCONEMB: TEdit
+              Left = 4
+              Height = 21
+              Top = 95
+              Width = 294
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 1
+              Text = 'C:\ACBrEDI\EDI\CONEMB\'
+            end
+            object edtPathDOCCOB: TEdit
+              Left = 4
+              Height = 21
+              Top = 155
+              Width = 294
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 2
+              Text = 'C:\ACBrEDI\EDI\DOCCOB\'
+            end
+            object edtPathNOTAFIS: TEdit
+              Left = 4
+              Height = 21
+              Top = 214
+              Width = 294
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 3
+              Text = 'C:\ACBrEDI\EDI\NOTAFIS\'
+            end
+            object edtPathPREFAT: TEdit
+              Left = 4
+              Height = 21
+              Top = 271
+              Width = 294
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ParentFont = False
+              TabOrder = 4
+              Text = 'C:\ACBrEDI\EDI\PREFAT\'
+            end
+            object rgVersao: TRadioGroup
+              Left = 4
+              Height = 61
+              Top = 305
+              Width = 294
+              AutoFill = True
+              Caption = '< Versão do E.D.I. >'
+              ChildSizing.LeftRightSpacing = 6
+              ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+              ChildSizing.EnlargeVertical = crsHomogenousChildResize
+              ChildSizing.ShrinkHorizontal = crsScaleChilds
+              ChildSizing.ShrinkVertical = crsScaleChilds
+              ChildSizing.Layout = cclLeftToRightThenTopToBottom
+              ChildSizing.ControlsPerLine = 4
+              ClientHeight = 39
+              ClientWidth = 290
+              Columns = 4
+              Font.Color = clWindowText
+              Font.Height = -14
+              Font.Name = 'Tahoma'
+              ItemIndex = 3
+              Items.Strings = (
+                '3.0'
+                '3.0a'
+                '3.10'
+                '5.0'
+              )
+              ParentFont = False
+              TabOrder = 5
+            end
+          end
+        end
+      end
+    end
+    object btnSalvarConfig: TBitBtn
+      Left = 104
+      Height = 31
+      Top = 446
+      Width = 178
+      Caption = 'Salvar Configurações'
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+        7700333333337777777733333333008088003333333377F73377333333330088
+        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+        93337FFFF7737777733300000033333333337777773333333333
+      }
+      NumGlyphs = 2
+      OnClick = btnSalvarConfigClick
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object pnlCentral: TPanel
+    Left = 371
+    Height = 566
+    Top = 0
+    Width = 711
+    Align = alClient
+    ClientHeight = 566
+    ClientWidth = 711
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 1
+    object pgcBotoes: TPageControl
+      Left = 1
+      Height = 234
+      Top = 1
+      Width = 709
+      ActivePage = tsOperacao
+      Align = alTop
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabIndex = 0
+      TabOrder = 0
+      object tsOperacao: TTabSheet
+        Caption = 'Operação'
+        ClientHeight = 204
+        ClientWidth = 701
+        Font.Color = clWindowText
+        Font.Height = -14
+        Font.Name = 'Tahoma'
+        ImageIndex = 1
+        ParentFont = False
+        object Button1: TButton
+          Left = 31
+          Height = 31
+          Top = 18
+          Width = 211
+          Caption = 'Gerar Arquivo (OCOR)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button1Click
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Button2: TButton
+          Left = 31
+          Height = 31
+          Top = 56
+          Width = 211
+          Caption = 'Ler Arquivo (OCOR)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button2Click
+          ParentFont = False
+          TabOrder = 1
+        end
+        object Button3: TButton
+          Left = 250
+          Height = 31
+          Top = 56
+          Width = 211
+          Caption = 'Ler Arquivo (CONEMB)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button3Click
+          ParentFont = False
+          TabOrder = 2
+        end
+        object Button4: TButton
+          Left = 250
+          Height = 31
+          Top = 18
+          Width = 211
+          Caption = 'Gerar Arquivo (CONEMB)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button4Click
+          ParentFont = False
+          TabOrder = 3
+        end
+        object Button5: TButton
+          Left = 469
+          Height = 31
+          Top = 56
+          Width = 211
+          Caption = 'Ler Arquivo (DOCCOB)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button5Click
+          ParentFont = False
+          TabOrder = 4
+        end
+        object Button6: TButton
+          Left = 469
+          Height = 31
+          Top = 18
+          Width = 211
+          Caption = 'Gerar Arquivo (DOCCOB)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button6Click
+          ParentFont = False
+          TabOrder = 5
+        end
+        object Button7: TButton
+          Left = 31
+          Height = 31
+          Top = 141
+          Width = 211
+          Caption = 'Ler Arquivo (NOTAFIS)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button7Click
+          ParentFont = False
+          TabOrder = 6
+        end
+        object Button8: TButton
+          Left = 31
+          Height = 31
+          Top = 99
+          Width = 211
+          Caption = 'Gerar Arquivo (NOTAFIS)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button8Click
+          ParentFont = False
+          TabOrder = 7
+        end
+        object Button9: TButton
+          Left = 250
+          Height = 31
+          Top = 141
+          Width = 211
+          Caption = 'Ler Arquivo (PREFAT)'
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button9Click
+          ParentFont = False
+          TabOrder = 8
+        end
+        object Button10: TButton
+          Left = 250
+          Height = 31
+          Top = 99
+          Width = 211
+          Caption = 'Gerar Arquivo (PREFAT) '
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          OnClick = Button10Click
+          ParentFont = False
+          TabOrder = 9
+        end
+      end
+    end
+    object pgRespostas: TPageControl
+      Left = 1
+      Height = 330
+      Top = 235
+      Width = 709
+      ActivePage = Dados
+      Align = alClient
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabIndex = 0
+      TabOrder = 1
+      object Dados: TTabSheet
+        Caption = 'Dados'
+        ClientHeight = 300
+        ClientWidth = 701
+        Font.Color = clWindowText
+        Font.Height = -14
+        Font.Name = 'Tahoma'
+        ImageIndex = 5
+        ParentFont = False
+        object MemoDados: TMemo
+          Left = 0
+          Height = 300
+          Top = 0
+          Width = 701
+          Align = alClient
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          Lines.Strings = (
+            ''
+          )
+          ParentFont = False
+          ScrollBars = ssBoth
+          TabOrder = 0
+          WordWrap = False
+        end
+      end
+    end
+  end
+  object CONEMB: TACBrEDIConhectos
+    Left = 440
+    Top = 280
+  end
+  object DOCCOB: TACBrEDICobranca
+    Left = 510
+    Top = 280
+  end
+  object NOTAFIS: TACBrEDINotaFiscais
+    Left = 580
+    Top = 280
+  end
+  object OCOR: TACBrEDIOcorrencia
+    Left = 650
+    Top = 280
+  end
+  object PREFAT: TACBrEDIPreFatura
+    Left = 720
+    Top = 280
+  end
+end

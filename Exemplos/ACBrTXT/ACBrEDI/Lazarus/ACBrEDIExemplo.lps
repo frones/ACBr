@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="ACBrEDIExemplo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="21" Y="11"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmACBrEDI"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="784"/>
+        <CursorPos X="18" Y="796"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIPreFatura.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="311"/>
+        <CursorPos X="15" Y="323"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="35"/>
+        <CursorPos X="3" Y="48"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="673"/>
+        <CursorPos X="15" Y="683"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="112"/>
+        <CursorPos X="37" Y="121"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="13" HistoryIndex="12">
+      <Position1>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="85" Column="13" TopLine="73"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="12" Column="21"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="146" Column="25" TopLine="133"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIPreFatura.pas"/>
+        <Caret Line="323" Column="15" TopLine="311"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="146" Column="25" TopLine="133"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="126" Column="57" TopLine="118"/>
+      </Position6>
+      <Position7>
+        <Filename Value="ACBrEDIExemplo.lpr"/>
+        <Caret Line="16"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="126" Column="57" TopLine="118"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Frm_ACBrEDI.pas"/>
+        <Caret Line="796" Column="18" TopLine="784"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <Caret Line="657" Column="16" TopLine="645"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <Caret Line="1450" Column="3" TopLine="1447"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <Caret Line="630" Column="17" TopLine="619"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <Caret Line="683" Column="15" TopLine="673"/>
+      </Position13>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

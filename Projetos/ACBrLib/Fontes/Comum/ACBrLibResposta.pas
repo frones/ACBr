@@ -301,6 +301,7 @@ begin
 
   try
     GravarIni(AIni, Sessao, Self);
+    AIni.ClearEmptySections;
     Result := AIni.AsString;
   finally
     if AIni <> nil then
@@ -484,7 +485,10 @@ begin
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-                GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem)
+                if (CollectionObject.ItemClass.InheritsFrom(TACBrLibRespostaBase)) then
+                  GravarJson(JSONRoot, TACBrLibRespostaBase(CollectionItem).Sessao, CollectionItem)
+                else
+                  GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem);
               end;
             end
             else if (ClassObject.InheritsFrom(TList)) then
@@ -493,7 +497,10 @@ begin
               for i := 0 to ListObject.Count - 1 do
               begin
                 ListItem := ListObject.Items[i];
-                GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), ListItem)
+                if (ListItem.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
+                  GravarJson(JSONRoot, TACBrLibRespostaBase(ListItem).Sessao, ListItem)
+                else
+                  GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), ListItem);
               end;
             end
             else

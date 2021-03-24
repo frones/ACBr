@@ -53,6 +53,7 @@ type
 
   TACBrCustomIniFileHelper = class helper for TCustomIniFile
     procedure WriteStringLine(const Section, Ident, Value: String);
+    procedure ClearEmptySections;
   end;
 
   TACBrPropInfoListHelper = class helper for TPropInfoList
@@ -64,6 +65,7 @@ implementation
 uses
   ACBrLibComum, ACBrUtil;
 
+{ TACBrMemIniFileHelper }
 procedure TACBrMemIniFileHelper.LoadFromString(const IniString: string);
 Var
   FIniFile: TStringList;
@@ -122,11 +124,36 @@ begin
   end;
 end;
 
+ { TACBrCustomIniFileHelper }
 procedure TACBrCustomIniFileHelper.WriteStringLine(const Section, Ident, Value: String);
 begin
   Self.WriteString(Section, Ident, ChangeLineBreak(Value, ''));
 end;
 
+procedure TACBrCustomIniFileHelper.ClearEmptySections;
+Var
+  FSections, FValues: TStringList;
+  I: Integer;
+begin
+  FSections := TStringList.Create;
+  FValues := TStringList.Create;
+
+  try
+    Self.ReadSections(FSections);
+    for I := 0 to FSections.Count - 1 do
+    begin
+      FValues.Clear;
+      Self.ReadSectionValues(FSections.Strings[I], FValues);
+      if FValues.Count = 0 then
+        Self.EraseSection(FSections.Strings[I]);
+    end;
+  finally
+    FSections.Free;
+    FValues.Free;
+  end;
+end;
+
+{ TACBrPropInfoListHelper }
 function TACBrPropInfoListHelper.GetProperties: TArray<TRttiProperty>;
 Var
   i: Integer;

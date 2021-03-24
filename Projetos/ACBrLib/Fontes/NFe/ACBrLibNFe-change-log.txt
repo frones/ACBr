@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2021
+--- ACBrLiNFeResposta, ACBrLibNFeConst ---
+[+] Adicionado classe Resposta realizando agrupamento dos retornos Assíncro da NFe, 
+isso deve resolver problema da geração de Retornos no Formato Json e XML para esse tipo de retorno 
+	Por: José M S Junior
+
 12/02/2021
 --- ACBrLiNFeBase ---
 [-] Correção no metodo Validar o mesmo estava fazendo o retorno errado.

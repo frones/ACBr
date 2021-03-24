@@ -468,11 +468,136 @@ type
 
   end;
 
+  { TPathNFeResposta }
+  TPathNFeResposta  = class(TACBrLibRespostaBase)
+  private
+    FArquivo: String;
+
+  public
+    constructor Create(const AnNF: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const APathNFe: String); reintroduce;
+
+  published
+    property Arquivo: string read FArquivo write FArquivo;
+
+  end;
+
+  { TEnvioRetornoResposta }
+
+  TEnvioRetornoResposta = class(TACBrLibRespostaBase)
+  private
+    FEnvioResposta: TEnvioResposta;
+    FRetornoResposta: TRetornoResposta;
+    FNFe_Arq: TObjectList;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const ACBrNFe: TACBrNFe); reintroduce;
+
+  published
+
+    property EnvioResposta: TEnvioResposta read FEnvioResposta write FEnvioResposta;
+    property RetornoResposta: TRetornoResposta read FRetornoResposta write FRetornoResposta;
+    property NFe_Arq: TObjectList read FNFe_Arq;
+
+  end;
+
 implementation
 
 uses
   pcnAuxiliar, pcnConversao,
   ACBrUtil, ACBrLibNFeConsts;
+
+{ TPathNFeResposta }
+
+constructor TPathNFeResposta.Create(const AnNF: Integer;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create('NFe_Arq' + Trim(IntToStr(AnNF)), ATipo, AFormato);
+
+end;
+
+destructor TPathNFeResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TPathNFeResposta.Processar(const APathNFe: String);
+begin
+  FArquivo:= APathNFe;
+end;
+
+{ TEnvioAssincronoResposta }
+
+constructor TEnvioRetornoResposta.Create(const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoResposta, ATipo, AFormato);
+  FEnvioResposta := TEnvioResposta.Create( Tipo, Formato);
+  FNFe_Arq := TObjectList.Create;
+
+end;
+
+destructor TEnvioRetornoResposta.Destroy;
+begin
+  if Assigned(FEnvioResposta) then FEnvioResposta.Free;
+  if Assigned(FRetornoResposta) then FRetornoResposta.Free;
+
+  FNFe_Arq.Clear;
+  FNFe_Arq.Free;
+
+  inherited Destroy;
+
+end;
+
+procedure TEnvioRetornoResposta.Processar(const ACBrNFe: TACBrNFe);
+var
+  lPathNFe: TPathNFeResposta;
+  I, J: Integer;
+begin
+    EnvioResposta.Processar(ACBrNFe);
+
+    if Assigned(ACBrNFe.WebServices.Retorno) and (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      RetornoResposta := TRetornoResposta.Create('NFe', Tipo, Formato);
+      try
+        RetornoResposta.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
+                                 ACBrNFe.WebServices.Retorno.Recibo,
+                                 ACBrNFe.WebServices.Retorno.Msg,
+                                 ACBrNFe.WebServices.Retorno.Protocolo,
+                                 ACBrNFe.WebServices.Retorno.ChaveNFe);
+
+        for I := 0 to ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Count - 1 do
+        begin
+          for J := 0 to ACBrNFe.NotasFiscais.Count - 1 do
+          begin
+            if ('NFe' + ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe =
+              ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.Id) then
+            begin
+              lPathNFe := TPathNFeResposta.Create(
+                       ExtrairNumeroChaveAcesso(ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe)
+                       , Tipo
+                       , Formato);
+              lPathNFe.Processar( ACBrNFe.NotasFiscais.Items[J].NomeArq );
+              if Assigned(FNFe_Arq) then
+                FNFe_Arq.Add(lPathNFe);
+            end;
+
+          end;
+
+        end;
+      finally
+        //Deve Realizar Free  no Destructor da classe
+      end;
+
+    end;
+
+end;
 
 { TLibNFeResposta }
 constructor TLibNFeResposta.Create(const ASessao: String;

@@ -441,6 +441,7 @@
       <xsd:element name="ISSQNRetido" type="tsISSQNRetido" minOccurs="1" maxOccurs="1" />
       <xsd:element name="ResponsavelISSQN" type="tcResponsavelISSQN" minOccurs="0" maxOccurs="1" />
       <xsd:element name="CodigoAtividadeEconomica" type="tsAtividadeEconomica" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="CodigoCnaeAtividadeEconomica" type="tsCodigoCnae" minOccurs="0" maxOccurs="1" />
       <xsd:element name="ItemLei116AtividadeEconomica" type="tsItemLei116AtividadeEconomica" minOccurs="0" maxOccurs="1" />
       <xsd:element name="ExigibilidadeISSQN" type="tcExigibilidadeISSQN" minOccurs="1" maxOccurs="1" />
       <xsd:element name="BeneficioProcesso" type="tsBeneficioProcesso" minOccurs="0" maxOccurs="1" />

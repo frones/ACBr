@@ -253,13 +253,13 @@ begin
         Gerador.wCampo(tcStr, '#42', 'Bairro     ', 001, 120, 0, NFSe.Tomador.Endereco.Bairro, '');
 
         Gerador.wGrupo('Municipio');
-        Gerador.wCampo(tcStr, '#43', 'CodigoMunicipioIBGE', 7, 7, 1, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+        Gerador.wCampo(tcStr, '#43', 'CodigoMunicipioIBGE', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), '');
         Gerador.wCampo(tcStr, '', 'Descricao', 1, 300, 0, NFSe.Tomador.Endereco.xMunicipio, '');
         Gerador.wCampo(tcStr, '#44', 'Uf', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
         Gerador.wGrupo('/Municipio');
 
         Gerador.wGrupo('Pais');
-        Gerador.wCampo(tcStr, '', 'CodigoPaisBacen', 04, 04, 1, NFSe.Tomador.Endereco.CodigoPais, '');
+        Gerador.wCampo(tcStr, '', 'CodigoPaisBacen', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, '');
         Gerador.wCampo(tcStr, '', 'Descricao', 0, 300, 0, NFSe.Tomador.Endereco.xPais, '');
         Gerador.wGrupo('/Pais');
       end
@@ -276,7 +276,7 @@ begin
         Gerador.wCampo(tcStr, '', 'CodigoPais', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, '');
       end;
 
-      Gerador.wCampo(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
+      Gerador.wCampo(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
       Gerador.wGrupo('/Endereco');
     end;
 
@@ -398,14 +398,14 @@ begin
     if VersaoNFSe = ve100 then
     begin
       case StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0) of
-        // Ipiranga do Norte - MT
-        5104526:
+        5104526: // Ipiranga do Norte/MT
           begin
             Gerador.wCampo(tcStr, '#29', 'ItemLei116', 01, 140, 1, codLCServ, '');
             Gerador.wCampo(tcDe4, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
           end;
-        // Juina - MT
-        5105150:
+
+        5105150, // Juina/MT
+        1505031: // Novo Progresso/PA
           Gerador.wCampo(tcDe4, '#13', 'Quantidade', 01, 17, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
       else
         begin
@@ -518,10 +518,10 @@ begin
   GerarRegimeEspecialTributacao;
 
   Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-  Gerador.wCampo(tcStr, '', 'OptanteMEISimei', 01, 01, 1, SimNaoToStr(NFSe.OptanteMEISimei), '');
 
   if VersaoNFSe = ve100 then
   begin
+    Gerador.wCampo(tcStr, '', 'OptanteMEISimei', 01, 01, 1, SimNaoToStr(NFSe.OptanteMEISimei), '');
 
     if NFSe.Servico.Valores.IssRetido = stRetencao then
       Gerador.wCampo(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snSim), '')
@@ -539,7 +539,9 @@ begin
   GerarResponsavelISSQN;
 
   case StrToInt(NFSe.PrestadorServico.Endereco.CodigoMunicipio) of
+    1505031,
     5104526: LTagAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
+
     5105150,
     5107305: LTagAtividadeEconomica := 'ItemLei116AtividadeEconomica';
   else

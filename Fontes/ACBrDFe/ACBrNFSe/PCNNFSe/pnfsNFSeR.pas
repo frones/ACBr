@@ -2276,7 +2276,7 @@ begin
         tcDatVcto data no formado DD/MM/YYYY
         tcDat     data no formato YYYY/MM/DD
       }
-      if FProvedor = proSmarAPDv23 then
+      if FProvedor in [proSmarAPDv23, proAEG] then
         NFSe.DataEmissaoRps := Leitor.rCampo(tcDatVcto, 'DataEmissao')
       else
         NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');

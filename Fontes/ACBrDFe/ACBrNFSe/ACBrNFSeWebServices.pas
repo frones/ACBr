@@ -3664,7 +3664,16 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono + FTagF;
+    case Provedor of
+      proAEG:
+        begin
+          FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono +
+                                FDadosSenha +
+                        FTagF;
+        end
+    else
+      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono + FTagF;
+    end;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
@@ -4400,7 +4409,16 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
+    case Provedor of
+      proAEG:
+        begin
+          FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote +
+                                FDadosSenha +
+                        FTagF;
+        end
+    else
+      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
+    end;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
@@ -5276,6 +5294,10 @@ begin
             Gerador.Free;
           end;
         end;
+
+      proAEG:
+        FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe +
+                              FDadosSenha + FTagF;
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
     end;
@@ -6498,13 +6520,9 @@ begin
       else
       begin
         case Configuracoes.Geral.Provedor of
-          proGiap,
-          proInfisc,
-          proInfiscv11,
-          proSafeWeb,
-          proTiplanv2,
-          proWebISSv2,
-          proTcheInfov2: Result := True
+          proGiap, proInfisc, proInfiscv11, proSafeWeb, proTiplanv2, proWebISSv2,
+          proTcheInfov2,
+          proAEG: Result := True
         else
           begin
             if NotasFiscais.Count > 0 then

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2021
+-- ACBrNFSeWebServices/pnfsNFSeR --
+[*] Ajustes para o provedor AEG.
+  Por: KelVin Alexandre Ferreira
+-- pnfsNFSeW_Agili --
+[*] Ajustes para o provedor Agili.
+  Por: Eder Lacerda
+
 19/03/2021
 -- ACBrNFSeWebServices --
 [*] Ajustes para o provedor InfIsc

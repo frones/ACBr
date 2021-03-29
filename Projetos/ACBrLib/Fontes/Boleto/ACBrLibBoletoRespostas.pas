@@ -241,7 +241,7 @@ constructor TRetornoRejeicoesTitulo.Create(const AIDRej: Integer; const AID: Int
 var
   AChave: String;
 begin
-  AChave := CSessaoMotivoRejeicao + Trim(IntToStrZero(AID + 1, 1)) + Trim(IntToStrZero(AIDRej + 1, 1));
+  AChave := CSessaoMotivoRejeicao + IntToStr(AID + 1) + IntToStr(AIDRej + 1);
 
   inherited Create( AChave, ATipo, AFormato);
   FID:= AID;
@@ -307,7 +307,7 @@ end;
 constructor TRetornoDadosTitulo.Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(CSessaoTitulo + Trim(IntToStrZero(AID + 1, 1)), ATipo, AFormato);
+  inherited Create(CSessaoTitulo + IntToStr(AID + 1), ATipo, AFormato);
   FID := AID;
   FMotivoRejeicao := Nil;
 

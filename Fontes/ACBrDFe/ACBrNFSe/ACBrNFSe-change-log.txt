@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2021
+-- ACBrNFSeWebServices --
+[*] Possível correção para o provedor SmarAPDv23.
+  Por: Italo Giurizzato Junior
+-- pnfsNFSeG --
+[*] Correção para o provedor Infiscv11.
+  Por: Italo Giurizzato Junior
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/61615-troca-webservice-nova-lima-issdigital-para-abaco/?do=findComment&comment=405874&_rid=63
+  Por: Deivid de Sá Rodrigues
+
 25/03/2021
 -- ACBrNFSeWebServices/pnfsNFSeR --
 [*] Ajustes para o provedor AEG.

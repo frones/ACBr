@@ -625,7 +625,15 @@ begin
     if FProvedor in [proVirtual, proVersaTecnologia, proSimplISSv2, proAdm] then
       Gerador.wCampo(tcInt, '#34', 'CodigoPais', 04, 04, 1, NFSe.Servico.CodigoPais, DSC_CPAIS)
     else
-      Gerador.wCampo(tcInt, '#34', 'CodigoPais', 04, 04, 0, NFSe.Servico.CodigoPais, DSC_CPAIS);
+    begin
+      if FProvedor = proAbacov2 then
+      begin
+        if (NFSe.Servico.ExigibilidadeISS = exiExportacao) then
+          Gerador.wCampo(tcInt, '#34', 'CodigoPais', 04, 04, 0, NFSe.Servico.CodigoPais, DSC_CPAIS);
+      end
+      else
+        Gerador.wCampo(tcInt, '#34', 'CodigoPais', 04, 04, 0, NFSe.Servico.CodigoPais, DSC_CPAIS);
+    end;
   end;
 
   if not (FProvedor in [proGoiania, proMegaSoft]) then

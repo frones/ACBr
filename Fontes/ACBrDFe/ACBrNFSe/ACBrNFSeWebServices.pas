@@ -1948,6 +1948,7 @@ begin
                        '</' + FPrefixo4 + 'Rps>';
 
 //             proTcheInfov2,
+             proSmarAPDv23,
              proSimplISSv2,
              proFintelISS: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps' +

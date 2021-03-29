@@ -51,7 +51,7 @@ Símbolo : Significado
 
 16/03/2021
 --ACBrBoleto, ACBrBancoSicred--
-[+] Adicionado ocorrencia para Intensão de Pagamento
+[+] Adicionado ocorrencia para Intenção de Pagamento
 
 16/03/2021
 --ACBrBancoBanrisul--

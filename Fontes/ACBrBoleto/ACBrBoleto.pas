@@ -368,7 +368,7 @@ const
     'Retorno Sustação Solicitada',
     'Retorno Título Utilizado Como Garantia em Operação de Desconto',
     'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
-    'Retorno Intensão de Pagamento'
+    'Retorno Intenção de Pagamento'
 );
 
 type

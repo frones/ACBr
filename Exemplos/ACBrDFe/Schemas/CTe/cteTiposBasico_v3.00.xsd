@@ -813,7 +813,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 														<xs:documentation>Placa do veículo </xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="UF" type="TUf">
+												<xs:element name="UF" type="TUf" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>UF em que veículo está licenciado</xs:documentation>
 														<xs:documentation>Sigla da UF de licenciamento do veículo.</xs:documentation>

@@ -649,11 +649,11 @@ begin
                 //Agência mantenedora da conta 18 - 22
                 PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Agencia), 5, '0') +
                 // Dígito verificador da agência 23 - 23
-                ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito +
+               PadLeft( ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito, 1, ' ') +
                 // Número da conta corrente 24 - 35
                 PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Conta), 12, '0') +
                 // Dígito verificador da conta 36 - 36
-                ACBrBanco.ACBrBoleto.Cedente.ContaDigito +
+                PadLeft( ACBrBanco.ACBrBoleto.Cedente.ContaDigito, 1, ' ') +
                 // Dígito verificador da ag/conta 37 - 37
                 Space(1) +
 
@@ -677,7 +677,7 @@ begin
                 PadRight(NumeroDocumento, 15) +
                 DupeString(' ', 10) +
                 DiasProt +
-                Instrucao2 +
+                PadRight(Trim(Instrucao2), 1, ' ') +
                 sDiasBaixaDevol +
                 '09' +
                 DupeString('0', 10) +' ';

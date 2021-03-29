@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2021
+-- DoACBrNFeUnit --
+[*] Adicionado Melhorias para Agrupar respostas dos métodos de Envio de NFe, dessa forma evita problemas na geração de respostas 
+no formato Json e XML e permite melhor compatibilidade de respostas entre ACBrMonitor e ACBrLib
+
 16/03/2021
 -- DoACBrNFSeUnit --
 [+] Adicionado classe para implementar componente ACBrNFSe

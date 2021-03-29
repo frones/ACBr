@@ -55,7 +55,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..308] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..309] of String = (
     {Ocorrências para arquivo remessa}
     'Remessa Registrar',
     'Remessa Baixar',
@@ -367,7 +367,8 @@ const
     'Retorno Protesto Em Cartório',
     'Retorno Sustação Solicitada',
     'Retorno Título Utilizado Como Garantia em Operação de Desconto',
-    'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto'
+    'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
+    'Retorno Intensão de Pagamento'
 );
 
 type
@@ -745,7 +746,8 @@ type
     toRetornoProtestadoEmCartorio,
     toRetornoSustacaoSolicitada,
     toRetornoTituloDescontado,
-    toRetornoTituloDescontavel
+    toRetornoTituloDescontavel,
+    toRetornoIntensaoPagamento
   );
 
   //Complemento de instrução para alterar outros dados
@@ -851,6 +853,7 @@ type
     function DefineCampoDigitoAgenciaConta: String; virtual;                  //Utilizado para definir Digito da Agencia / Conta na Remessa
     function DefinePosicaoUsoExclusivo: String; virtual;                      //Utilizado para definir Posições de uso exclusivo FEBRABAN na Remessa
     function DefineCodBeneficiarioHeader: String; virtual;                    //Utilizado para definir CodBeneficiario no Header da Remessa
+    function DefineTipoDocumento: String; virtual;                            //Define o Tipo de Documento na remessa
 
   public
     Constructor create(AOwner: TACBrBanco);
@@ -4278,6 +4281,20 @@ begin
   end;
 end;
 
+function TACBrBancoClass.DefineTipoDocumento: String;
+begin
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    case TipoDocumento of
+      Tradicional: Result := '1';
+      Escritural: Result := '2';
+    else
+      Result := '1';
+    end;
+  end;
+
+end;
+
 function TACBrBancoClass.DefineCampoDigitoConta: String;
 begin
   with ACBrBanco.ACBrBoleto.Cedente do
@@ -4759,7 +4776,7 @@ begin
         Convenio      := IniBoletos.ReadString(CCedente,'CONVENIO',Convenio);
         CaracTitulo  := TACBrCaracTitulo(IniBoletos.ReadInteger(CCedente,'CaracTitulo',Integer(CaracTitulo) ));
         TipoCarteira := TACBrTipoCarteira(IniBoletos.ReadInteger(CCedente,'TipoCarteira', Integer(TipoCarteira) ));
-        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento', Integer(TipoDocumento) ));
+        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento', Integer(TipoDocumento) ) + 1 );
         if Assigned(Self.ACBrBoletoFC) then
         begin
           wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL', Integer(Self.ACBrBoletoFC.LayOut) );

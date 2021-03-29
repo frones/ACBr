@@ -50,6 +50,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/03/2021
+--ACBrBoleto, ACBrBancoSicred--
+[+] Adicionado ocorrencia para Intensão de Pagamento
+
+16/03/2021
+--ACBrBancoBanrisul--
+[*] Correção na geração da Instrucao2 em CNAB240, Banco utiliza apenas 1 dígito
+
+16/03/2021
+--ACBrBoleto, ACBrBancoBrasil, ACBrBancoSicred--
+[*] Ajuste na validação do campo TipoDocumento, adicionado função DefineTipoDocumento
+
+16/03/2021
 --ACBrBancoBanrisul--
 [*] Ajuste na validação do código Instrucao2 em CNAB240
 

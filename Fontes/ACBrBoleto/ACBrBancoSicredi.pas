@@ -1438,11 +1438,13 @@ begin
       36: Result := '36-Baixa Rejeitada';
       51: Result := '51-Título Dda Reconhecido Pelo Pagador';
       52: Result := '52-Título Dda não Reconhecido Pelo Pagador';
+      91: Result := '07-Intenção de pagamento';
     end;
   end
   else
   begin
     case CodOcorrencia of
+      07: Result := '07-Intenção de pagamento';
       10: Result := '10-Baixado Conforme Instruções da Cooperativa de Crédito';
       15: Result := '15-Liquidação em Cartório';
       24: Result := '24-Entrada Rejeitada Por Cep Irregular';
@@ -1500,11 +1502,13 @@ begin
       36: Result := toRetornoBaixaRejeitada;
       51: Result := toRetornoTituloDDAReconhecidoPagador;
       52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      91: Result := toRetornoIntensaoPagamento;
     end;
   end
   else
   begin
     case CodOcorrencia of
+      07: Result := toRetornoIntensaoPagamento;
       10: Result := toRetornoBaixadoInstAgencia;
       15: Result := toRetornoLiquidadoEmCartorio;
       24: Result := toRetornoEntradaRejeitaCEPIrregular;
@@ -1581,11 +1585,13 @@ begin
       toRetornoBaixaRejeitada                                  : Result := '36';
       toRetornoTituloDDAReconhecidoPagador                     : Result := '51';
       toRetornoTituloDDANaoReconhecidoPagador                  : Result := '52';
+      toRetornoIntensaoPagamento                               : Result := '91';
     end;
   end
   else
   begin
     case TipoOcorrencia of
+      toRetornoIntensaoPagamento                               : Result := '07';
       toRetornoBaixadoInstAgencia                              : Result := '10';
       toRetornoLiquidadoEmCartorio                             : Result := '15';
       toRetornoEntradaRejeitaCEPIrregular                      : Result := '24';
@@ -1735,7 +1741,7 @@ end;
 function TACBrBancoSicredi.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
-    AceiteStr, CodProtestoNegativacao, DiasProtestoNegativacao, TipoSacado, ATipoBoleto: String;
+    AceiteStr, CodProtestoNegativacao, DiasProtestoNegativacao, TipoSacado, ATipoBoleto, ATipoDoc: String;
     Especie, EndSacado, Ocorrencia: String;
     TipoAvalista: Char;
 begin
@@ -1835,6 +1841,9 @@ begin
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
 
+    {Tipo Documento}
+    ATipoDoc:= DefineTipoDocumento;
+
     {SEGMENTO P}
     Result:= '748'                                                            + // 001 a 003 - Código do banco na compensação
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
@@ -1852,7 +1861,7 @@ begin
              PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
              '1'                                                              + // 058 a 058 - Código da carteira
              '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
-             InttoStr(Integer(ACBrBoleto.Cedente.TipoDocumento))              + // 060 a 060 - Tipo de documento
+             ATipoDoc                                                         + // 060 a 060 - Tipo de documento
              ATipoBoleto                                                      + // 061 a 062 - Identificação de emissão do bloqueto + 062 a 062 - Identificação da distribuição
              PadRight(NumeroDocumento, 15)                                    + // 063 a 077 - Nº do documento de cobrança
              FormatDateTime('ddmmyyyy', Vencimento)                           + // 078 a 085 - Data de vencimento do título

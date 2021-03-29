@@ -1220,7 +1220,7 @@ para tpEmis diferente de 1</xs:documentation>
 									<xs:element name="tpServ">
 										<xs:annotation>
 											<xs:documentation>Tipo de Serviço</xs:documentation>
-											<xs:documentation>Informar o código do tipo de serviço (1-Convencional com sanitário, 2-Convencional sem sanitário, 3-Semileito, 4-Leito com ar condicionado, 5-Leito sem ar condicionado, 6-Executivo, 7-Semiurbano, 8-Longitudinal, 9-Travessia, 10 - Cama)</xs:documentation>
+											<xs:documentation>Informar o código do tipo de serviço (1-Convencional com sanitário, 2-Convencional sem sanitário, 3-Semileito, 4-Leito com ar condicionado, 5-Leito sem ar condicionado, 6-Executivo, 7-Semiurbano, 8-Longitudinal, 9-Travessia, 10-Cama, 11-Micro-onibus)</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -1235,6 +1235,7 @@ para tpEmis diferente de 1</xs:documentation>
 												<xs:enumeration value="8"/>
 												<xs:enumeration value="9"/>
 												<xs:enumeration value="10"/>
+												<xs:enumeration value="11"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -1623,7 +1624,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 								<xs:sequence>
 									<xs:element name="tPag">
 										<xs:annotation>
-											<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Vale Transportel;99 - Outros</xs:documentation>
+											<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Vale Transportel;06 - PIX; 99 - Outros</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -1633,6 +1634,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 												<xs:enumeration value="03"/>
 												<xs:enumeration value="04"/>
 												<xs:enumeration value="05"/>
+												<xs:enumeration value="06"/>
 												<xs:enumeration value="99"/>
 											</xs:restriction>
 										</xs:simpleType>

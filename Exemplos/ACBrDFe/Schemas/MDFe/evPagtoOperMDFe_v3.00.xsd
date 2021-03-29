@@ -229,6 +229,19 @@
 												<xs:documentation>Informar os zeros não significativos.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
+										<xs:element name="PIX">
+											<xs:annotation>
+												<xs:documentation>Chave PIX </xs:documentation>
+												<xs:documentation>Informar a chave PIX para recebimento do frete. 
+Pode ser email, CPF/ CNPJ (somente numeros), Telefone com a seguinte formatação (+5599999999999) ou a chave aleatória gerada pela instituição.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TString">
+													<xs:maxLength value="60"/>
+													<xs:minLength value="2"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
 									</xs:choice>
 								</xs:complexType>
 							</xs:element>

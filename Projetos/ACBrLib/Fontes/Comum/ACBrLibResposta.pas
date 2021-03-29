@@ -275,12 +275,21 @@ begin
             ParentNode := xDoc.CreateElement(Propertie.Name);
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) and (FValue > 0) then
-              ParentNode.AppendChild(xDoc.CreateTextNode(DateToStr(FValue)))
-            else if (AValue.IsType<TTime>()) and (FValue > 0) then
-              ParentNode.AppendChild(xDoc.CreateTextNode(TimeToStr(FValue)))
-            else if(AValue.IsType<TDateTime>()) and (FValue > 0) then
-              ParentNode.AppendChild(xDoc.CreateTextNode(DateTimeToStr(FValue)))
+            if AValue.IsType<TDate>() then
+            begin
+              if (FValue > 0) then
+                ParentNode.AppendChild(xDoc.CreateTextNode(DateToStr(FValue)));
+            end
+            else if AValue.IsType<TTime>() then
+            begin
+              if (FValue > 0) then
+                ParentNode.AppendChild(xDoc.CreateTextNode(TimeToStr(FValue)));
+            end
+            else if AValue.IsType<TDateTime>() then
+            begin
+              if (FValue > 0) then
+                ParentNode.AppendChild(xDoc.CreateTextNode(DateTimeToStr(FValue)));
+            end
             else
               ParentNode.AppendChild(xDoc.CreateTextNode(FloatToStr(FValue)));
           end;
@@ -414,12 +423,27 @@ begin
           begin
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) and (FValue > 0) then
-              AIni.WriteDate(ASessao, Propertie.Name, FValue)
-            else if (AValue.IsType<TTime>()) and (FValue > 0) then
-              AIni.WriteTime(ASessao, Propertie.Name, FValue)
-            else if (AValue.IsType<TDateTime>()) and (FValue > 0) then
-              AIni.WriteDateTime(ASessao, Propertie.Name, FValue)
+            if AValue.IsType<TDate>() then
+            begin
+              if (FValue > 0) then
+                AIni.WriteDate(ASessao, Propertie.Name, FValue)
+              else
+                AIni.WriteString(ASessao, Propertie.Name, '');
+            end
+            else if AValue.IsType<TTime>() then
+            begin
+              if (FValue > 0) then
+                AIni.WriteTime(ASessao, Propertie.Name, FValue)
+              else
+                AIni.WriteString(ASessao, Propertie.Name, '');
+            end
+            else if AValue.IsType<TDateTime>() then
+            begin
+              if (FValue > 0) then
+                AIni.WriteDateTime(ASessao, Propertie.Name, FValue)
+              else
+                AIni.WriteString(ASessao, Propertie.Name, '');
+            end
             else
               AIni.WriteFloat(ASessao, Propertie.Name, FValue);
           end;
@@ -531,17 +555,32 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          JSONRoot.Add(Propertie.Name, StringToJSONString(Trim(AValue.AsString), False));
+          JSONRoot.Add(Propertie.Name, Trim(AValue.AsString));
         tkFloat:
           begin
             FValue := AValue.AsExtended;
 
-            if (AValue.IsType<TDate>()) and (FValue > 0) then
-              JSONRoot.Add(Propertie.Name, DateToStr(FValue))
-            else if (AValue.IsType<TTime>()) and (FValue > 0) then
-              JSONRoot.Add(Propertie.Name, TimeToStr(FValue))
-            else if (AValue.IsType<TDateTime>()) and (FValue > 0) then
-              JSONRoot.Add(Propertie.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', FValue))
+            if AValue.IsType<TDate>() then
+            begin
+              if (FValue > 0) then
+                JSONRoot.Add(Propertie.Name, DateToStr(FValue))
+              else
+                JSONRoot.Add(Propertie.Name, '');
+            end
+            else if AValue.IsType<TTime>() then
+            begin
+              if (FValue > 0) then
+                JSONRoot.Add(Propertie.Name, TimeToStr(FValue))
+              else
+                JSONRoot.Add(Propertie.Name, '');
+            end
+            else if AValue.IsType<TDateTime>() then
+            begin
+              if (FValue > 0) then
+                JSONRoot.Add(Propertie.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', FValue))
+              else
+                JSONRoot.Add(Propertie.Name, '');
+            end
             else
               JSONRoot.Add(Propertie.Name, FValue);
           end;

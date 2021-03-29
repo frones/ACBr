@@ -1461,13 +1461,18 @@ begin
       end;
       uUNIDADE, uLITROS, uMMBTU:
       begin
-        rlmQtdUnidMedida5.Lines.Add(fpCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
         rlmQtdUnidMedida5.Lines.Add(
+          fpCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed + ': ' +
           FormatFloatBr(msk6x4, fpCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + ' ' +
           UnidMedToDescricaoStr(fpCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid));
       end;
     end;
   end;
+
+  RLDraw58.Height  := rlb_04_DadosNotaFiscal.Height;
+  RLDraw59.Height  := rlb_04_DadosNotaFiscal.Height;
+  RLDraw100.Height := rlb_04_DadosNotaFiscal.Height;
+  RLDraw60.Height  := rlb_04_DadosNotaFiscal.Height;
 
   if fpCTe.infCTeNorm.seg.Count > 0 then
   begin
@@ -2024,35 +2029,35 @@ begin
   //Valida a Versão para reposicionar campos na tela
   if (fpCTe.infCTe.versao >= 3.00) then
   begin
-    RLDraw58.Left := 148;
-    RLDraw59.Left := 296;
-    RLDraw100.Left := 444;
-    RLDraw60.Left := 592;
+    RLDraw58.Left := 112;
+    RLDraw59.Left := 224;
+    RLDraw100.Left := 336;
+    RLDraw60.Left := 448;
 
-    RLLabel35.Width := 136;
+    RLLabel35.Width := 100;
     RLLabel35.Left := 5;
-    rlmQtdUnidMedida1.Width := 136;
+    rlmQtdUnidMedida1.Width := 100;
     rlmQtdUnidMedida1.Left := 5;
 
-    RLLabel36.Width := 136;
-    RLLabel36.Left := 154;
-    rlmQtdUnidMedida2.Width := 136;
-    rlmQtdUnidMedida2.Left := 154;
+    RLLabel36.Width := 100;
+    RLLabel36.Left := 118;
+    rlmQtdUnidMedida2.Width := 100;
+    rlmQtdUnidMedida2.Left := 118;
 
-    RLLabel41.Width := 136;
-    RLLabel41.Left := 304;
-    rlmQtdUnidMedida3.Width := 136;
-    rlmQtdUnidMedida3.Left := 304;
+    RLLabel41.Width := 100;
+    RLLabel41.Left := 232;
+    rlmQtdUnidMedida3.Width := 100;
+    rlmQtdUnidMedida3.Left := 232;
 
-    RLLabel73.Width := 136;
-    RLLabel73.Left := 449;
-    rlmQtdUnidMedida4.Width := 136;
-    rlmQtdUnidMedida4.Left := 449;
+    RLLabel73.Width := 100;
+    RLLabel73.Left := 341;
+    rlmQtdUnidMedida4.Width := 100;
+    rlmQtdUnidMedida4.Left := 341;
 
-    RLLabel43.Width := 136;
-    RLLabel43.Left := 600;
-    rlmQtdUnidMedida5.Width := 136;
-    rlmQtdUnidMedida5.Left := 600;
+    RLLabel43.Width := 280;
+    RLLabel43.Left := 456;
+    rlmQtdUnidMedida5.Width := 280;
+    rlmQtdUnidMedida5.Left := 456;
   end;
 end;
 

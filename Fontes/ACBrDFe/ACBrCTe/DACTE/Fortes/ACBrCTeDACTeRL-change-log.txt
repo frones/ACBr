@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2021
+-- ACBrCTeDACTeRLRetrato --
+[*] Ajustes na impressão: Peso Bruto/Peso Base Calc/Peso Aferido/Cubagem e Qtde Volumes.
+   Por: Douglas GV
+
 07/07/2020
 -- ACBrCTeDACTeRLRetrato --
 [*] Mensagens mais objetivas quando o CT-e esta sem o protocolo de autorização.

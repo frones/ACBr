@@ -303,7 +303,7 @@ begin
       if VersaoArquivo = 030 then 
       begin
         aCSP := 'CSP';
-        str0 := '0';
+        str0 := '000';
       end 
       else 
       begin

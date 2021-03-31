@@ -69,7 +69,8 @@ type
 
   TTipoServico = (tsConvencionalComSanitario, tsConvencionalSemSanitario,
                   tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
-                  tsSemiurbano, tsLongitudinal, tsTravessia, tsCama);
+                  tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                  tsMicroOnibus);
 
   TTipoAcomodacao = (taAssento, taRede, taRedeComAr, taCabine, taOutros);
 
@@ -97,8 +98,8 @@ type
   TBandeiraCard = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcElo,
                    bcDinersClub, bcHipercard, bcAura, bcCabal, bcOutros);
 
-  TFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
-                        fpOutro);
+  TFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
+                     fpValeTransporte, fpPIX, fpOutro);
 
   TTipoEmissao = (teNormal, teOffLine);
 
@@ -350,19 +351,23 @@ end;
 function tpServicoToStr(const t: TTipoServico): String;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                            '11'],
                            [tsConvencionalComSanitario, tsConvencionalSemSanitario,
                             tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
-                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama]);
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
 function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                            '11'],
                            [tsConvencionalComSanitario, tsConvencionalSemSanitario,
                             tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
-                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama]);
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
 function tpServicoToDesc(const t: TTipoServico): String;
@@ -370,10 +375,12 @@ begin
   result := EnumeradoToStr(t,
                            ['Convencional com Sanitario', 'Convencional sem Sanitario',
                             'Semileito', 'Leito com Ar', 'Leito sem Ar', 'Executivo',
-                            'Semiurbano', 'Longitudinal', 'Travessia', 'Cama'],
+                            'Semiurbano', 'Longitudinal', 'Travessia', 'Cama',
+                            'Micro-Onibus'],
                            [tsConvencionalComSanitario, tsConvencionalSemSanitario,
                             tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
-                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama]);
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
 function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
@@ -514,7 +521,8 @@ end;
 
 function BandeiraCardToStr(const t: TBandeiraCard): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
+                               '09', '99'],
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                               bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
                               bcOutros]);
@@ -538,7 +546,8 @@ end;
 
 function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
+                                   '09', '99'],
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                    bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
                                    bcOutros]);
@@ -554,23 +563,27 @@ end;
 
 function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '99'],
-                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '99'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito,
+                               fpCartaoDebito, fpValeTransporte, fpPIX,
                                fpOutro]);
 end;
 
 function FormaPagamentoBPeToDescricao(const t: TFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Vale Transporte',
+  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
+                                'Cartão de Débito', 'Vale Transporte', 'PIX',
                                'Outro'],
-                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+                               [fpDinheiro, fpCheque, fpCartaoCredito,
+                                fpCartaoDebito, fpValeTransporte, fpPIX,
                                 fpOutro]);
 end;
 
 function StrToFormaPagamentoBPe(out ok: boolean; const s: string): TFormaPagamento;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '99'],
-                                  [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '99'],
+                                  [fpDinheiro, fpCheque, fpCartaoCredito,
+                                   fpCartaoDebito, fpValeTransporte, fpPIX,
                                    fpOutro]);
 end;
 

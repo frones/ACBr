@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2021
+-- pcnConversaoBPe --
+[+] Inclusão do tipo de serviço (micro-ônibus) e da forma de pagamento (PIX).
+   Por: Italo Giurizzato Junior
+
 13/11/2020
 -- ACBrBPeBilhetes --
 [*] Uso da função ObterDFeXML nos métodos Validar e VerificarAssinatura

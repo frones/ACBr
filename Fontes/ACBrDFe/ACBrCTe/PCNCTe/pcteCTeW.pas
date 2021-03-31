@@ -2193,10 +2193,11 @@ begin
             Gerador.wAlerta('#13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
       end;
 
-      Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
+      Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 0, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
 
-      if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
-        Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+      if CTe.infCTeNorm.rodoOS.veic.prop.UF <> '' then
+        if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
+          Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
       Gerador.wCampo(tcStr, '#15', 'tpProp', 01, 01, 1, TpPropToStr(CTe.infCTeNorm.rodoOS.veic.prop.tpProp), DSC_TPPROP);
       Gerador.wGrupo('/prop');
@@ -2973,7 +2974,7 @@ begin
   begin
     Gerador.wGrupo('infVeiculo', '#144');
     Gerador.wCampo(tcStr, '#145', 'placa', 1, 7, 1, CTe.detGTV.infVeiculo[i].placa, DSC_PLACA);
-    Gerador.wCampo(tcStr, '#146', 'UF   ', 2, 2, 1, CTe.detGTV.infVeiculo[i].UF, DSC_UF);
+    Gerador.wCampo(tcStr, '#146', 'UF   ', 2, 2, 0, CTe.detGTV.infVeiculo[i].UF, DSC_UF);
     Gerador.wCampo(tcStr, '#147', 'RNTRC', 8, 8, 0, CTe.detGTV.infVeiculo[i].RNTRC, DSC_RNTRC);
     Gerador.wGrupo('/infVeiculo');
   end;

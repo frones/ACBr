@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2021
+-- pcteCTeW --
+[*] Alterado os campos UF para opcional por conta da placa Mercosul.
+   Por: Italo Giurizzato Junior
+
 13/11/2020
 -- ACBrCTeConhecimentos --
 [*] Uso da função ObterDFeXML nos métodos Validar e VerificarAssinatura

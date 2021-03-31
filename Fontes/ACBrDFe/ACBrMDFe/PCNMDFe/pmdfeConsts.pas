@@ -119,11 +119,14 @@ const
   DSC_CNPJIPEF    = 'CNPJ da Instituição de pagamento Eletrônico do Frete';
   DSC_CODBANCO    = 'Código do Banco';
   DSC_CODAGENCIA  = 'Código da Agência';
+  DSC_PIX         = 'Chave PIX';
+  DSC_TPVALEPED   = 'Tipo de Vale Pedágio';
 
   DSC_INDCANALVERDE = 'Indicador de Canal Verde';
   DSC_INDCARREGAPOSTERIOR = 'Indicador de Carregamento Posterior';
   DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
   DSC_IDESTRANGEIRO = 'Identificação do Estrangeiro';
+  DSC_CATEGCOMBVEIC = 'Categoria de Combinação Veicular';
 
 implementation
 

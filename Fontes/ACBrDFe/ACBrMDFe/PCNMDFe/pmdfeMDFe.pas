@@ -368,10 +368,12 @@ type
     FcodBanco: String;
     FcodAgencia: String;
     FCNPJIPEF: String;
+    FPIX: String;
   public
     property codBanco: String   read FcodBanco   write FcodBanco;
     property codAgencia: String read FcodAgencia write FcodAgencia;
     property CNPJIPEF: String   read FCNPJIPEF   write FCNPJIPEF;
+    property PIX: String        read FPIX        write FPIX;
   end;
 
   TinfPagCollectionItem = class(TObject)
@@ -381,6 +383,7 @@ type
     FidEstrangeiro: String;
     FComp: TCompCollection;
     FvContrato: Double;
+    FindAltoDesemp: TIndicador;
     FindPag: TIndPag;
     FinfPrazo: TInfPrazoCollection;
     FinfBanc: TinfBanc;
@@ -388,15 +391,15 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property xNome: String         read FxNome         write FxNome;
-    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
-    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
-    property Comp: TCompCollection read FComp          write FComp;
-    property vContrato: Double     read FvContrato     write FvContrato;
-    property indPag: TIndPag       read FindPag        write FindPag;
-
-    property infPrazo: TInfPrazoCollection read FinfPrazo write FinfPrazo;
-    property infBanc: TinfBanc             read FinfBanc  write FinfBanc;
+    property xNome: String                 read FxNome         write FxNome;
+    property CNPJCPF: String               read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: String         read FidEstrangeiro write FidEstrangeiro;
+    property Comp: TCompCollection         read FComp          write FComp;
+    property vContrato: Double             read FvContrato     write FvContrato;
+    property indAltoDesemp: TIndicador     read FindAltoDesemp write FindAltoDesemp;
+    property indPag: TIndPag               read FindPag        write FindPag;
+    property infPrazo: TInfPrazoCollection read FinfPrazo      write FinfPrazo;
+    property infBanc: TinfBanc             read FinfBanc       write FinfBanc;
   end;
 
   TinfPagCollection = class(TACBrObjectList)
@@ -585,12 +588,15 @@ type
   TvalePed = class(TObject)
   private
     Fdisp: TdispCollection;
+    FcategCombVeic: TcategCombVeic;
 
     procedure Setdisp(const Value: TdispCollection);
   public
     constructor Create;
     destructor Destroy; override;
+
     property disp: TdispCollection read Fdisp write Setdisp;
+    property categCombVeic: TcategCombVeic read FcategCombVeic write FcategCombVeic;
   end;
 
   TdispCollection = class(TACBrObjectList)
@@ -609,11 +615,13 @@ type
     FCNPJPg: String;
     FnCompra: String;
     FvValePed: Double;
+    FtpValePed: TtpValePed;
   public
     property CNPJForn: String read FCNPJForn write FCNPJForn;
     property CNPJPg: String   read FCNPJPg   write FCNPJPg;
     property nCompra: String  read FnCompra  write FnCompra;
     property vValePed: Double read FvValePed write FvValePed;
+    property tpValePed: TtpValePed read FtpValePed write FtpValePed;
   end;
 
   Taereo = class(TObject)

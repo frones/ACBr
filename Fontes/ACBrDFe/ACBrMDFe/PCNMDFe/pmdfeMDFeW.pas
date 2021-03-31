@@ -475,18 +475,20 @@ begin
         Gerador.wCampo(tcStr, '#15', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
       else
         Gerador.wCampo(tcStr, '#15', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicTracao.Prop.IE), DSC_IE);
+
       if (FOpcoes.ValidarInscricoes) then
         if not ValidarIE(MDFe.Rodo.veicTracao.Prop.IE, MDFe.Rodo.veicTracao.Prop.UF) then
           Gerador.wAlerta('#15', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end
     else
-     Gerador.wCampo(tcStr, '#15', 'IE ', 00, 14, 1, '', DSC_IE);
+     Gerador.wCampo(tcStr, '#15', 'IE', 00, 14, 1, '', DSC_IE);
 
-    Gerador.wCampo(tcStr, '#16', 'UF     ', 02, 02, 1, MDFe.Rodo.veicTracao.Prop.UF, DSC_CUF);
+    Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 1, MDFe.Rodo.veicTracao.Prop.UF, DSC_CUF);
+
     if not ValidarUF(MDFe.Rodo.veicTracao.Prop.UF) then
       Gerador.wAlerta('#16', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcStr, '#17', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicTracao.Prop.tpProp), DSC_TPPROP);
+    Gerador.wCampo(tcStr, '#17', 'tpProp', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicTracao.Prop.tpProp), DSC_TPPROP);
 
     Gerador.wGrupo('/prop');
   end;
@@ -498,12 +500,17 @@ begin
     Gerador.wCampo(tcStr, '#20', 'CPF  ', 11, 11, 1, MDFe.rodo.veicTracao.condutor[i].CPF, DSC_CPF);
     Gerador.wGrupo('/condutor');
   end;
+
   if MDFe.rodo.veicTracao.condutor.Count > 10 then
-   Gerador.wAlerta('#18', 'condutor', '', ERR_MSG_MAIOR_MAXIMO + '10');
+    Gerador.wAlerta('#18', 'condutor', '', ERR_MSG_MAIOR_MAXIMO + '10');
 
   Gerador.wCampo(tcStr, '#21', 'tpRod', 02, 02, 1, TpRodadoToStr(MDFe.Rodo.veicTracao.tpRod), DSC_TPROD);
   Gerador.wCampo(tcStr, '#22', 'tpCar', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicTracao.tpCar), DSC_TPCAR);
-  Gerador.wCampo(tcStr, '#23', 'UF   ', 02, 02, 1, MDFe.Rodo.veicTracao.UF, DSC_CUF);
+  Gerador.wCampo(tcStr, '#23', 'UF   ', 02, 02, 0, MDFe.Rodo.veicTracao.UF, DSC_CUF);
+
+  if MDFe.Rodo.veicTracao.UF <> '' then
+    if not ValidarUF(MDFe.Rodo.veicTracao.UF) then
+      Gerador.wAlerta('#23', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Gerador.wGrupo('/veicTracao');
 end;
@@ -533,33 +540,39 @@ begin
       Gerador.wCampo(tcStr, '#34', 'xNome ', 02, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
 
       if MDFe.Rodo.veicReboque[i].Prop.IE <> '' then 
-	  begin
-        if MDFe.Rodo.veicReboque[i].Prop.IE = 'ISENTO' then 
-		  Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, MDFe.Rodo.veicReboque[i].Prop.IE, DSC_IE)
-        else 
-		  Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
-		  
-        if (FOpcoes.ValidarInscricoes)
-         then if not ValidarIE(MDFe.Rodo.veicReboque[i].Prop.IE, MDFe.Rodo.veicReboque[i].Prop.UF) then
-          Gerador.wAlerta('#35', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+      begin
+        if MDFe.Rodo.veicReboque[i].Prop.IE = 'ISENTO' then
+          Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, MDFe.Rodo.veicReboque[i].Prop.IE, DSC_IE)
+        else
+          Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
+
+        if (FOpcoes.ValidarInscricoes)then
+          if not ValidarIE(MDFe.Rodo.veicReboque[i].Prop.IE, MDFe.Rodo.veicReboque[i].Prop.UF) then
+            Gerador.wAlerta('#35', 'IE', DSC_IE, ERR_MSG_INVALIDO);
       end
       else
-        Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, '', DSC_IE);
+        Gerador.wCampo(tcStr, '#35', 'IE', 00, 14, 1, '', DSC_IE);
 
-      Gerador.wCampo(tcStr, '#36', 'UF     ', 02, 02, 1, MDFe.Rodo.veicReboque[i].Prop.UF, DSC_CUF);
+      Gerador.wCampo(tcStr, '#36', 'UF', 02, 02, 1, MDFe.Rodo.veicReboque[i].Prop.UF, DSC_CUF);
+
       if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then
-       Gerador.wAlerta('#36', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+        Gerador.wAlerta('#36', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-      Gerador.wCampo(tcStr, '#37', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicReboque[i].Prop.tpProp), DSC_TPPROP);
+      Gerador.wCampo(tcStr, '#37', 'tpProp', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicReboque[i].Prop.tpProp), DSC_TPPROP);
 
       Gerador.wGrupo('/prop');
     end;
 
     Gerador.wCampo(tcStr, '#38', 'tpCar', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicReboque[i].tpCar), DSC_TPCAR);
-    Gerador.wCampo(tcStr, '#39', 'UF   ', 02, 02, 1, MDFe.Rodo.veicReboque[i].UF, DSC_CUF);
+    Gerador.wCampo(tcStr, '#39', 'UF   ', 02, 02, 0, MDFe.Rodo.veicReboque[i].UF, DSC_CUF);
+
+    if MDFe.Rodo.veicReboque[i].UF <> '' then
+      if not ValidarUF(MDFe.Rodo.veicReboque[i].UF) then
+        Gerador.wAlerta('#39', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
     Gerador.wGrupo('/veicReboque');
   end;
+
   if MDFe.rodo.veicReboque.Count > 3 then
    Gerador.wAlerta('#15', 'veicReboque', '', ERR_MSG_MAIOR_MAXIMO + '3');
 end;
@@ -579,7 +592,7 @@ begin
         Gerador.wGrupo('disp', '#24');
         Gerador.wCampo(tcStr, '#25', 'CNPJForn', 14, 14, 1, MDFe.Rodo.valePed.disp[i].CNPJForn, DSC_CNPJFORN);
         Gerador.wCampo(tcStr, '#26', 'CNPJPg'  , 14, 14, 0, MDFe.Rodo.valePed.disp[i].CNPJPg, DSC_CNPJPG);
-        Gerador.wCampo(tcStr, '#27', 'nCompra' , 01, 20, 1, MDFe.Rodo.valePed.disp[i].nCompra, DSC_NCOMPRA);
+        Gerador.wCampo(tcStr, '#27', 'nCompra' , 01, 20, 0, MDFe.Rodo.valePed.disp[i].nCompra, DSC_NCOMPRA);
         Gerador.wGrupo('/disp');
       end;
 
@@ -605,13 +618,17 @@ begin
         else
           Gerador.wCampo(tcStr, '#26', 'CPFPg' , 11, 11, 0, MDFe.Rodo.infANTT.valePed.disp[i].CNPJPg, DSC_CNPJPG);
 
-        Gerador.wCampo(tcStr, '#27', 'nCompra' , 01, 20, 1, MDFe.Rodo.infANTT.valePed.disp[i].nCompra, DSC_NCOMPRA);
-        Gerador.wCampo(tcDe2, '#20', 'vValePed', 01, 15, 1, MDFe.Rodo.infANTT.valePed.disp[i].vValePed, DSC_VVALEPED);
+        Gerador.wCampo(tcStr, '#27', 'nCompra  ', 01, 20, 0, MDFe.Rodo.infANTT.valePed.disp[i].nCompra, DSC_NCOMPRA);
+        Gerador.wCampo(tcDe2, '#20', 'vValePed ', 01, 15, 1, MDFe.Rodo.infANTT.valePed.disp[i].vValePed, DSC_VVALEPED);
+        Gerador.wCampo(tcStr, '#',   'tpValePed', 01, 02, 0, tpValePedToStr(MDFe.Rodo.infANTT.valePed.disp[i].tpValePed), DSC_TPVALEPED);
+
         Gerador.wGrupo('/disp');
       end;
 
       if MDFe.Rodo.infANTT.valePed.disp.Count > 990 then
         Gerador.wAlerta('#24', 'disp', '', ERR_MSG_MAIOR_MAXIMO + '990');
+
+      Gerador.wCampo(tcStr, '#', 'categCombVeic', 01, 02, 0, categCombVeicToStr(MDFe.Rodo.infANTT.valePed.categCombVeic), DSC_CATEGCOMBVEIC);
 
       Gerador.wGrupo('/valePed');
     end;
@@ -1365,8 +1382,9 @@ begin
     if MDFe.rodo.infANTT.infPag[i].Comp.Count > 990 then
       Gerador.wAlerta('#', 'Comp', '', ERR_MSG_MAIOR_MAXIMO + '990');
 
-    Gerador.wCampo(tcDe2, '#', 'vContrato', 01, 15, 1, MDFe.rodo.infANTT.infPag[i].vContrato, DSC_VCONTRATO);
-    Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 1, TIndPagToStr(MDFe.rodo.infANTT.infPag[i].indPag), DSC_INDPAG);
+    Gerador.wCampo(tcDe2, '#', 'vContrato    ', 01, 15, 1, MDFe.rodo.infANTT.infPag[i].vContrato, DSC_VCONTRATO);
+    Gerador.wCampo(tcStr, '#', 'indAutoDesemp', 01, 01, 0, indAltoDesempToStr(MDFe.rodo.infANTT.infPag[i].indAltoDesemp), '');
+    Gerador.wCampo(tcStr, '#', 'indPag       ', 01, 01, 1, TIndPagToStr(MDFe.rodo.infANTT.infPag[i].indPag), DSC_INDPAG);
 
     // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
     if MDFe.rodo.infANTT.infPag[i].indPag = ipPrazo then
@@ -1386,12 +1404,17 @@ begin
 
     Gerador.wGrupo('infBanc', '#');
 
-    if MDFe.rodo.infANTT.infPag[i].infBanc.CNPJIPEF <> '' then
-      Gerador.wCampo(tcStr, '#', 'CNPJIPEF', 14, 14, 1, MDFe.rodo.infANTT.infPag[i].infBanc.CNPJIPEF, DSC_CNPJIPEF)
+    if MDFe.rodo.infANTT.infPag[i].infBanc.PIX <> '' then
+      Gerador.wCampo(tcStr, '#', 'PIX', 2, 60, 1, MDFe.rodo.infANTT.infPag[i].infBanc.PIX, DSC_PIX)
     else
     begin
-      Gerador.wCampo(tcStr, '#', 'codBanco  ', 3, 05, 1, MDFe.rodo.infANTT.infPag[i].infBanc.codBanco, DSC_CODBANCO);
-      Gerador.wCampo(tcStr, '#', 'codAgencia', 1, 10, 1, MDFe.rodo.infANTT.infPag[i].infBanc.codAgencia, DSC_CODAGENCIA);
+      if MDFe.rodo.infANTT.infPag[i].infBanc.CNPJIPEF <> '' then
+        Gerador.wCampo(tcStr, '#', 'CNPJIPEF', 14, 14, 1, MDFe.rodo.infANTT.infPag[i].infBanc.CNPJIPEF, DSC_CNPJIPEF)
+      else
+      begin
+        Gerador.wCampo(tcStr, '#', 'codBanco  ', 3, 05, 1, MDFe.rodo.infANTT.infPag[i].infBanc.codBanco, DSC_CODBANCO);
+        Gerador.wCampo(tcStr, '#', 'codAgencia', 1, 10, 1, MDFe.rodo.infANTT.infPag[i].infBanc.codAgencia, DSC_CODAGENCIA);
+      end;
     end;
 
     Gerador.wGrupo('/infBanc');

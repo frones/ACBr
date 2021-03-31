@@ -202,6 +202,8 @@ begin
 
           if Leitor.rExtrai(4, 'valePed') <> '' then
           begin
+            MDFe.Rodo.infANTT.valePed.categCombVeic := StrTocategCombVeic(ok, Leitor.rCampo(tcStr, 'categCombVeic'));
+
             i01 := 0;
             while Leitor.rExtrai(5, 'disp', '', i01 + 1) <> '' do
             begin
@@ -212,8 +214,9 @@ begin
               if MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg = '' then
                 MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg := Leitor.rCampo(tcStr, 'CPFPg');
 
-              MDFe.Rodo.infANTT.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
-              MDFe.Rodo.infANTT.valePed.disp[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
+              MDFe.Rodo.infANTT.valePed.disp[i01].nCompra   := Leitor.rCampo(tcStr, 'nCompra');
+              MDFe.Rodo.infANTT.valePed.disp[i01].vValePed  := Leitor.rCampo(tcDe2, 'vValePed');
+              MDFe.Rodo.infANTT.valePed.disp[i01].tpValePed := StrTotpValePed(ok, Leitor.rCampo(tcStr, 'tpValePed'));
 
               inc(i01);
             end;
@@ -242,8 +245,9 @@ begin
             if MDFe.rodo.infANTT.infPag[i01].idEstrangeiro = '' then
               MDFe.Rodo.infANTT.infPag[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
 
-            MDFe.rodo.infANTT.infPag[i01].vContrato := Leitor.rCampo(tcDe2, 'vContrato');
-            MDFe.rodo.infANTT.infPag[i01].indPag    := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
+            MDFe.rodo.infANTT.infPag[i01].vContrato     := Leitor.rCampo(tcDe2, 'vContrato');
+            MDFe.rodo.infANTT.infPag[i01].indAltoDesemp := StrToindAltoDesemp(ok, Leitor.rCampo(tcStr, 'indAltoDesemp'));
+            MDFe.rodo.infANTT.infPag[i01].indPag        := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
 
             i02 := 0;
             while Leitor.rExtrai(5, 'Comp', '', i02 + 1) <> '' do
@@ -272,12 +276,17 @@ begin
 
             if Leitor.rExtrai(5, 'infBanc') <> '' then
             begin
-              MDFe.rodo.infANTT.infPag[i01].infBanc.CNPJIPEF := Leitor.rCampo(tcStr, 'CNPJIPEF');
+              MDFe.rodo.infANTT.infPag[i01].infBanc.PIX := Leitor.rCampo(tcStr, 'PIX');
 
-              if MDFe.rodo.infANTT.infPag[i01].infBanc.CNPJIPEF = '' then
+              if MDFe.rodo.infANTT.infPag[i01].infBanc.PIX = '' then
               begin
-                MDFe.rodo.infANTT.infPag[i01].infBanc.codBanco   := Leitor.rCampo(tcStr, 'codBanco');
-                MDFe.rodo.infANTT.infPag[i01].infBanc.codAgencia := Leitor.rCampo(tcStr, 'codAgencia');
+                MDFe.rodo.infANTT.infPag[i01].infBanc.CNPJIPEF := Leitor.rCampo(tcStr, 'CNPJIPEF');
+
+                if MDFe.rodo.infANTT.infPag[i01].infBanc.CNPJIPEF = '' then
+                begin
+                  MDFe.rodo.infANTT.infPag[i01].infBanc.codBanco   := Leitor.rCampo(tcStr, 'codBanco');
+                  MDFe.rodo.infANTT.infPag[i01].infBanc.codAgencia := Leitor.rCampo(tcStr, 'codAgencia');
+                end;
               end;
             end;
 

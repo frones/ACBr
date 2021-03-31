@@ -274,12 +274,17 @@ begin
 
               if Leitor.rExtrai(5, 'infBanc') <> '' then
               begin
-                infBanc.CNPJIPEF := Leitor.rCampo(tcStr, 'CNPJIPEF');
+                infBanc.PIX := Leitor.rCampo(tcStr, 'PIX');
 
-                if infBanc.CNPJIPEF = '' then
+                if infBanc.PIX = '' then
                 begin
-                  infBanc.codBanco   := Leitor.rCampo(tcStr, 'codBanco');
-                  infBanc.codAgencia := Leitor.rCampo(tcStr, 'codAgencia');
+                  infBanc.CNPJIPEF := Leitor.rCampo(tcStr, 'CNPJIPEF');
+
+                  if infBanc.CNPJIPEF = '' then
+                  begin
+                    infBanc.codBanco   := Leitor.rCampo(tcStr, 'codBanco');
+                    infBanc.codAgencia := Leitor.rCampo(tcStr, 'codAgencia');
+                  end;
                 end;
               end;
             end;

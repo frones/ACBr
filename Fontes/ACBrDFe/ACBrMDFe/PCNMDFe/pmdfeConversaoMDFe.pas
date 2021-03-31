@@ -78,6 +78,13 @@ type
 
   TComp = (tcValePedagio, tcImpostos, tcDespesas, tcOutros);
 
+  TtpValePed = (tvpNenhum, tvpTAG, tvpCupom, tvpCartao);
+
+  TcategCombVeic = (tcNenhum, tcVeicCom2Eixos, tcVeicCom3Eixos, tcVeicCom4Eixos,
+                    tcVeicCom5Eixos, tcVeicCom6Eixos, tcVeicCom7Eixos,
+                    tcVeicCom8Eixos, tcVeicCom9Eixos, tcVeicCom10Eixos,
+                    tcVeicComAcima10Eixos);
+
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
@@ -122,6 +129,15 @@ function StrToTIndPag(out ok: Boolean; const s: String): TIndPag;
 
 function TCompToStr(const t: TComp): String;
 function StrToTComp(out ok: Boolean; const s: String): TComp;
+
+function indAltoDesempToStr(const t: TIndicador): String;
+function StrToindAltoDesemp(out ok: Boolean; const s: String): TIndicador;
+
+function tpValePedToStr(const t: TtpValePed): String;
+function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
+
+function categCombVeicToStr(const t: TcategCombVeic): String;
+function StrTocategCombVeic(out ok: Boolean; const s: String): TcategCombVeic;
 
 implementation
 
@@ -386,6 +402,48 @@ function StrToTComp(out ok: Boolean; const s: String): TComp;
 begin
   Result := StrToEnumerado(ok, s, ['01', '02', '03', '99'],
                              [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+end;
+
+function indAltoDesempToStr(const t: TIndicador): String;
+begin
+  Result := EnumeradoToStr(t, ['1', ''], [tiSim, tiNao]);
+end;
+
+function StrToindAltoDesemp(out ok: Boolean; const s: String): TIndicador;
+begin
+  Result := StrToEnumerado(ok, s, ['1', ''], [tiSim, tiNao]);
+end;
+
+function tpValePedToStr(const t: TtpValePed): String;
+begin
+  Result := EnumeradoToStr(t, ['', '01', '02', '03'],
+                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+end;
+
+function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
+begin
+  Result := StrToEnumerado(ok, s, ['', '01', '02', '03'],
+                                  [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+end;
+
+function categCombVeicToStr(const t: TcategCombVeic): String;
+begin
+  Result := EnumeradoToStr(t, ['', '02', '04', '06', '07', '08', '10', '11',
+                               '12', '13', '14'],
+                   [tcNenhum, tcVeicCom2Eixos, tcVeicCom3Eixos, tcVeicCom4Eixos,
+                    tcVeicCom5Eixos, tcVeicCom6Eixos, tcVeicCom7Eixos,
+                    tcVeicCom8Eixos, tcVeicCom9Eixos, tcVeicCom10Eixos,
+                    tcVeicComAcima10Eixos]);
+end;
+
+function StrTocategCombVeic(out ok: Boolean; const s: String): TcategCombVeic;
+begin
+  Result := StrToEnumerado(ok, s, ['', '02', '04', '06', '07', '08', '10', '11',
+                                   '12', '13', '14'],
+                   [tcNenhum, tcVeicCom2Eixos, tcVeicCom3Eixos, tcVeicCom4Eixos,
+                    tcVeicCom5Eixos, tcVeicCom6Eixos, tcVeicCom7Eixos,
+                    tcVeicCom8Eixos, tcVeicCom9Eixos, tcVeicCom10Eixos,
+                    tcVeicComAcima10Eixos]);
 end;
 
 function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;

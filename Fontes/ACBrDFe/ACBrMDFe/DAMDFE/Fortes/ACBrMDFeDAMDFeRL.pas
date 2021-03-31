@@ -106,6 +106,9 @@ begin
       ReportArray[i] := DAMDFeReport;
     end;
 
+    if Length(ReportArray) = 0 then
+      raise Exception.Create('Nenhum relatorio foi inicializado.');
+
     Report := ReportArray[0].RLMDFe;
     for i := 1 to High(ReportArray) do
     begin
@@ -124,9 +127,10 @@ begin
       end;
     end;
 
-    TDFeReportFortes.AjustarReport(Report, DAMDFeReport.fpDAMDFe);
+    TDFeReportFortes.AjustarReport(Report, ADAMDFe);
+    TDFeReportFortes.AjustarMargem(Report, ADAMDFe);
 
-    if DAMDFeReport.fpDAMDFe.MostraPreview then
+    if ADAMDFe.MostraPreview then
       Report.PreviewModal
     else
       Report.Print;

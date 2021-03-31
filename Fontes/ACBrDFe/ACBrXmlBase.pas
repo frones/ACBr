@@ -61,6 +61,8 @@ function StrToEnumerado(out ok: boolean; const s: string; const AString: array o
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
+function IncluirCDATA(const aXML: string): string;
+
 implementation
 
 uses
@@ -109,6 +111,11 @@ begin
   for i := Low(AEnumerados) to High(AEnumerados) do
     if t = AEnumerados[i] then
       result := AString[i];
+end;
+
+function IncluirCDATA(const aXML: string): string;
+begin
+  Result := '<![CDATA[' + aXML + ']]>';
 end;
 
 end.

@@ -306,7 +306,7 @@ const
                                           'evtTabProcesso', 'evtServTom',
                                           'evtServPrest', 'evtAssocDespRec',
                                           'evtAssocDespRep', 'evtComProd',
-                                          'evtAquisicaoProdRural', 'evtCPRB',
+                                          'evtAqProd', 'evtCPRB',
                                           'evtPgtosDivs', 'evtReabreEvPer',
                                           'evtEspDesportivo', 'evtTotal',
                                           'evtTotalContrib', 'evtExclusao');

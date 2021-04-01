@@ -335,7 +335,8 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpInscProd', 1,  1, 1, TpInscricaoToStr(Self.FinfoAquisProd.ideEstabAdquir.tpInscProd));
   Gerador.wCampo(tcStr, '', 'nrInscProd', 1, 14, 1, Self.FinfoAquisProd.ideEstabAdquir.nrInscProd);
-  Gerador.wCampo(tcStr, '', 'indOpcCP',   1,  1, 1, Self.FinfoAquisProd.ideEstabAdquir.indOpcCP);
+  if Self.FinfoAquisProd.ideEstabAdquir.indOpcCP<>'' then
+    Gerador.wCampo(tcStr, '', 'indOpcCP',   1,  1, 1, Self.FinfoAquisProd.ideEstabAdquir.indOpcCP);
 
   GerarAquis(Self.FinfoAquisProd.ideEstabAdquir.detAquis);
 
@@ -440,7 +441,7 @@ begin
 
     with Self do
     begin
-      sSecao := 'evtAquisicaoProdRural';
+      sSecao := 'evtAqProd';
       Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 

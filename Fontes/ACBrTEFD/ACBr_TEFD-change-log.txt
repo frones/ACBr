@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/21
+-- ACBrPOSPGWebAPI --
+[-] Correção em "TACBrPOSPGWebAPI.ExecutarTransacaoTEF", para não criar arquivo
+    de Backup se "ConfirmarAntesImpressao" estiver ligado
+    (por: DSA)
+
 18/03/21
 -- ACBrTEFPayGoWebComum --
 [-] Ajuste no método "ValidarRespostaCampo", para que não ocorra validação de

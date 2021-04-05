@@ -109,6 +109,23 @@ begin
     wResposta := StringReplace(wResposta, '·', '7', [rfReplaceAll]);
     wResposta := StringReplace(wResposta, '¸', '8', [rfReplaceAll]);
     wResposta := StringReplace(wResposta, '¹', '9', [rfReplaceAll]);
+  end
+  else
+  begin
+    wResposta := Copy(aResposta, 1, 9);
+    { Removendo caracteres especiais, caso encontre algum }
+    wResposta := StringReplace(wResposta, '°', '0', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '±', '1', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '²', '2', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '³', '3', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '´', '4', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, 'µ', '5', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¶', '6', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '·', '7', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¸', '8', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¹', '9', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, #13, '', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, #10, '', [rfReplaceAll]);
   end;
 
   if (Length(wResposta) > 0) then

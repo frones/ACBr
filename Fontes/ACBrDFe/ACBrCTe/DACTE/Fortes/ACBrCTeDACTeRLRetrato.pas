@@ -710,6 +710,7 @@ type
     Linhas: integer;
 
     procedure Itens;
+    procedure DefinirAltura;
   public
     constructor Create(TheOwner: TComponent); override;
 
@@ -1469,10 +1470,7 @@ begin
     end;
   end;
 
-  RLDraw58.Height  := rlb_04_DadosNotaFiscal.Height;
-  RLDraw59.Height  := rlb_04_DadosNotaFiscal.Height;
-  RLDraw100.Height := rlb_04_DadosNotaFiscal.Height;
-  RLDraw60.Height  := rlb_04_DadosNotaFiscal.Height;
+//  DefinirAltura;
 
   if fpCTe.infCTeNorm.seg.Count > 0 then
   begin
@@ -1999,7 +1997,6 @@ begin
       rllPaisToma1.Caption := EnderToma.xPais;
       rllInscEstToma1.Caption := IE;
       rllFoneToma1.Caption := FormatarFone(fone);
-
     end;
 
   end
@@ -2059,6 +2056,8 @@ begin
     rlmQtdUnidMedida5.Width := 280;
     rlmQtdUnidMedida5.Left := 456;
   end;
+
+  DefinirAltura;
 end;
 
 procedure TfrmDACTeRLRetrato.modalRodoviarioVersao30;
@@ -2222,6 +2221,14 @@ begin
   end
   else
     rlb_Dados_Seguradora.Height := 0;
+end;
+
+procedure TfrmDACTeRLRetrato.DefinirAltura;
+begin
+  RLDraw58.Height  := rlb_04_DadosNotaFiscal.Height;
+  RLDraw59.Height  := rlb_04_DadosNotaFiscal.Height;
+  RLDraw100.Height := rlb_04_DadosNotaFiscal.Height;
+  RLDraw60.Height  := rlb_04_DadosNotaFiscal.Height;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TObject;

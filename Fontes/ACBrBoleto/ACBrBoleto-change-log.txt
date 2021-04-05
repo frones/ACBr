@@ -49,6 +49,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2021
+--ACBrBancoBrasil--
+[*] Validação na qtd de dias para Baixa em Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/61783-boleto-banco-do-brasil-cnab240/
+
+05/04/2021
+--ACBrBancoBrasil--
+[*] Adicionado códigos de Ocorrencia para Remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/61921-ajuste-da-instru%C3%A7%C3%B5es-de-remessa-banco-do-brasil/
+
+
 30/03/2021
 --ACBrBancoBrasil--
 [*] Correçao no Header CNAB240 posicao 226-228 referente validação do layout 030 

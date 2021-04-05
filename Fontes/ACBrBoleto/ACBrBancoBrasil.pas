@@ -413,6 +413,7 @@ var
    DataProtestoNegativacao      : string;
    DiasProtestoNegativacao      : string;
    ATipoDocumento               : String;
+   nDiasBaixa                   : integer;
 
   function MontarInstrucoes2: string;
   begin
@@ -668,9 +669,14 @@ begin
      AMensagem   := '';
      if Mensagem.Text <> '' then
        AMensagem   := Mensagem.Strings[0];
-
+       
      {Tipo Documento}
      ATipoDocumento:= DefineTipoDocumento;
+
+     // Nº Dias para Baixa/Devolucao
+     nDiasBaixa  := 0;
+     if (ATipoOcorrencia = '01') and ( DataLimitePagto > Vencimento ) then
+       nDiasBaixa  := DaysBetween(Vencimento, DataLimitePagto);
 
      {SEGMENTO P}
      Result:= IntToStrZero(ACBrBanco.Numero, 3)                                         + // 1 a 3 - Código do banco
@@ -721,7 +727,7 @@ begin
                      (StrToInt(DiasProtestoNegativacao) > 0),
                       PadLeft(DiasProtestoNegativacao, 2, '0'), '00')                   + // 222 a 223 - Prazo para protesto (em dias)
               '0'                                                                       + // 224 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
-              '000'                                                                     + // 225 a 227 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
+              IntToStrZero(nDiasBaixa,3)                                                + // 225 a 227 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
               '09'                                                                      + // 228 a 229 - Código da moeda: Real
               StringOfChar('0', 10)                                                     + // 230 a 239 - Uso exclusivo FEBRABAN/CNAB
               ' ';
@@ -939,6 +945,9 @@ begin
        toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
        toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
        toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
+       toRemessaDispensarMulta                 : ATipoOcorrencia := '36';
+       toRemessaDispensarPrazoLimiteRecebimento: ATipoOcorrencia := '38';
+       toRemessaAlterarPrazoLimiteRecebimento  : ATipoOcorrencia := '39';
        toRemessaAlterarModalidade              : ATipoOcorrencia := '40'; {Alterar modalidade (Vide Observações)}
      else
        ATipoOcorrencia := '01'; {Remessa}

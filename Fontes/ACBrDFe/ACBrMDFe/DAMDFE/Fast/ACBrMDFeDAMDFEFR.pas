@@ -74,6 +74,7 @@ type
     cdsTermDescarrega: TClientDataSet;
     cdsEmbarcaComboio: TClientDataSet;
     cdsInfUnidCargaVazia: TClientDataSet;
+    cdsUnidTranspVazia: TClientDataSet;
     cdsSeg: TClientDataSet;
     cdsContratantes: TClientDataSet;
     cdsPeri: TClientDataSet;
@@ -94,6 +95,7 @@ type
     frxTermDescarrega: TfrxDBDataset;
     frxEmbarcaComboio: TfrxDBDataset;
     frxInfUnidCargaVazia: TfrxDBDataset;
+    frxUnidTranspVazia: TfrxDBDataset;
     frxSeg: TfrxDBDataset;
     frxPeri: TfrxDBDataset;
     frxContratantes: TfrxDBDataset;
@@ -111,6 +113,7 @@ type
     procedure CarregaTermDescarreg;
     procedure CarregaEmbarcacaoComboio;
     procedure CarregaInfUnidCargaVazia;
+    procedure CarregaInfUnidTranspVazia;
 
     procedure CarregaModalFerroviario;
     procedure CarregaMunCarrega;
@@ -503,6 +506,16 @@ begin
     CreateDataSet;
   end;
 
+  cdsUnidTranspVazia := TClientDataSet.Create(Self);
+  with cdsUnidTranspVazia, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('idUnidTranspVazia', ftString, 20);
+    Add('tpUnidTranspVazia', ftString, 20);
+    CreateDataSet;
+  end;
+
   cdsSeg := TClientDataSet.Create(Self);
   with cdsSeg, FieldDefs do
   begin
@@ -668,6 +681,14 @@ begin
     UserName := 'InfUnidCargaVazia';
     OpenDataSource := False;
     DataSet := cdsInfUnidCargaVazia;
+  end;
+
+  frxUnidTranspVazia := TfrxDBDataset.Create(Self);
+  with frxUnidTranspVazia do
+  begin
+    UserName := 'InfUnidTranspVazia';
+    OpenDataSource := False;
+    DataSet := cdsUnidTranspVazia;
   end;
 
   frxSeg := TfrxDBDataset.Create(Self);
@@ -1006,6 +1027,7 @@ begin
   frxReport.EnabledDataSets.Add(frxTermDescarrega);
   frxReport.EnabledDataSets.Add(frxEmbarcaComboio);
   frxReport.EnabledDataSets.Add(frxInfUnidCargaVazia);
+  frxReport.EnabledDataSets.Add(frxUnidTranspVazia);
   frxReport.EnabledDataSets.Add(frxSeg);
   frxReport.EnabledDataSets.Add(frxContratantes);
   frxReport.EnabledDataSets.Add(frxPeri);
@@ -1028,6 +1050,7 @@ begin
   cdsTermDescarrega.EmptyDataSet;
   cdsEmbarcaComboio.EmptyDataSet;
   cdsInfUnidCargaVazia.EmptyDataSet;
+  cdsUnidTranspVazia.EmptyDataSet;
   cdsSeg.EmptyDataSet;
   cdsContratantes.EmptyDataSet;
   cdsPeri.EmptyDataSet;
@@ -1112,6 +1135,7 @@ begin
   CarregaTermDescarreg;
   CarregaEmbarcacaoComboio;
   CarregaInfUnidCargaVazia;
+  CarregaInfUnidTranspVazia;
 
   if (FMDFe.infMDFe.versao = 3) then
   begin
@@ -1547,8 +1571,29 @@ begin
       Append;
       FieldByName('idUnidCargaVazia').AsString := Items[i].idUnidCargaVazia;
       case Items[i].tpUnidCargaVazia of
-         ucContainer : FieldByName('tpUnidCargaVazia').AsString := '1 - Container';
-         ucULD : FieldByName('tpUnidCargaVazia').AsString := '2 - Carreta';
+        ucContainer : FieldByName('tpUnidCargaVazia').AsString := '1 - Container';
+        ucULD : FieldByName('tpUnidCargaVazia').AsString := '2 - Carreta';
+        ucPallet: FieldByName('tpUnidCargaVazia').AsString := '3 - Pallet';
+        ucOutros: FieldByName('tpUnidCargaVazia').AsString := '4 - Outros';
+      end;
+      Post;
+    end;
+  end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.CarregaInfUnidTranspVazia;
+var
+  i: integer;
+begin
+  with cdsUnidTranspVazia, FMDFe.aquav.infUnidTranspVazia do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('idUnidTranspVazia').AsString := Items[i].idUnidTranspVazia;
+      case Items[i].tpUnidTranspVazia of
+        utRodoTracao: FieldByName('tpUnidTranspVazia').AsString := '1 - Caminhão';
+        utRodoReboque: FieldByName('tpUnidTranspVazia').AsString := '2 - Carreta';
       end;
       Post;
     end;

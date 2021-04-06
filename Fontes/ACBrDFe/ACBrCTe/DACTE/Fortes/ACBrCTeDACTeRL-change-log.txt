@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2021
+-- ACBrCTeDACTeRLRetrato --
+[*] Ajuste de conversão do arquivo .lfm 
+   Por: José M S Junior
+
 09/03/2021
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajustes na impressão: Peso Bruto/Peso Base Calc/Peso Aferido/Cubagem e Qtde Volumes.

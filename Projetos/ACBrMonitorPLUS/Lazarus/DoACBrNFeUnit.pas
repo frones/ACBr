@@ -1486,8 +1486,9 @@ begin
       try
         DoConfiguraDANFe(False, '');
         ACBrNFe.ImprimirEventoPDF;
-        ArqPDF := OnlyNumber(ACBrNFe.EventoNFe.Evento[0].InfEvento.Id);
-        ArqPDF := PathWithDelim(ACBrNFe.DANFe.PathPDF) + ArqPDF + '-procEventoNFe.pdf';
+        ArqPDF := ACBrNFe.DANFE.ArquivoPDF;
+        if not FileExists(ArqPDF) then
+           raise Exception.Create('Arquivo ' + ArqPDF + ' não encontrado.');
 
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
@@ -1610,8 +1611,10 @@ begin
 
       try
         ACBrNFe.NotasFiscais.ImprimirPDF;
-        ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-NFe.pdf';
-        ArqPDF := PathWithDelim(ACBrNFe.DANFe.PathPDF) + ArqPDF;
+        ArqPDF := ACBrNFe.DANFE.ArquivoPDF;
+        if not FileExists(ArqPDF) then
+           raise Exception.Create('Arquivo ' + ArqPDF + ' não encontrado.');
+
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
         on E: Exception do
@@ -2872,13 +2875,14 @@ begin
         CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, APathXML);
       try
         DoConfiguraDANFe(True, '');
+
         if AEnviaPDF then
         begin
           try
             ACBrNFe.ImprimirEventoPDF;
-
-            ArqPDF := OnlyNumber(ACBrNFe.EventoNFe.Evento[0].InfEvento.id);
-            ArqPDF := PathWithDelim(ACBrNFe.DANFE.PathPDF)+ArqPDF+'-procEventoNFe.pdf';
+            ArqPDF := ACBrNFe.DANFE.ArquivoPDF;
+            if not FileExists(ArqPDF) then
+               raise Exception.Create('Arquivo ' + ArqPDF + ' não encontrado.');
           except
             on E: Exception do
               raise Exception.Create('Erro ao criar o arquivo PDF. ' + sLineBreak + E.Message);

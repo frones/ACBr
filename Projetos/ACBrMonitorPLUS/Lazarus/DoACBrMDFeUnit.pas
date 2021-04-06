@@ -1974,6 +1974,7 @@ begin
     end;
 
     ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
+    ACBrMDFe.WebServices.Enviar.Sincrono := False;
 
     ACBrMDFe.WebServices.Enviar.Executar;
     RespostaEnvio;

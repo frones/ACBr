@@ -1669,6 +1669,7 @@ begin
     end;
 
     ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
+    ACBrCTe.WebServices.Enviar.Sincrono := False;
 
     ACBrCTe.WebServices.Enviar.Executar;
     RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2021
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/61863-equiplano-acbrnfse-n%C3%A3o-carrega-o-pr%C3%B3prio-xml-gerado/?do=findComment&comment=405852&_rid=63
+  Por: Marcos
+
 29/03/2021
 -- ACBrNFSeWebServices --
 [*] Possível correção para o provedor SmarAPDv23.

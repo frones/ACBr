@@ -1338,6 +1338,7 @@ function TNFSeR.LerRPS_Equiplano: Boolean;
 var
   ok: Boolean;
   Item: Integer;
+  LNivelServicos: Integer;
 begin
   NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'nrRps');
   NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'nrEmissorRps');
@@ -1384,7 +1385,12 @@ begin
     NFSe.Tomador.Contato.Email    := Leitor.rCampo(tcStr, 'dsEmail');
   end;
 
-  if (Leitor.rExtrai(2, 'listaServicos') <> '') then
+  LNivelServicos := 2;
+
+  if (Leitor.rExtrai(LNivelServicos, 'listaServicos') = '') then
+    LNivelServicos := 1;
+
+  if (Leitor.rExtrai(LNivelServicos, 'listaServicos') <> '') then
   begin
     NFSe.Servico.ItemListaServico := Poem_Zeros( VarToStr( Leitor.rCampo(tcStr, 'nrServicoItem') ), 2) +
                                      Poem_Zeros( VarToStr( Leitor.rCampo(tcStr, 'nrServicoSubItem') ), 2);

@@ -1383,7 +1383,7 @@ begin
       Gerador.wAlerta('#', 'Comp', '', ERR_MSG_MAIOR_MAXIMO + '990');
 
     Gerador.wCampo(tcDe2, '#', 'vContrato    ', 01, 15, 1, MDFe.rodo.infANTT.infPag[i].vContrato, DSC_VCONTRATO);
-    Gerador.wCampo(tcStr, '#', 'indAutoDesemp', 01, 01, 0, indAltoDesempToStr(MDFe.rodo.infANTT.infPag[i].indAltoDesemp), '');
+    Gerador.wCampo(tcStr, '#', 'indAltoDesemp', 01, 01, 0, indAltoDesempToStr(MDFe.rodo.infANTT.infPag[i].indAltoDesemp), '');
     Gerador.wCampo(tcStr, '#', 'indPag       ', 01, 01, 1, TIndPagToStr(MDFe.rodo.infANTT.infPag[i].indPag), DSC_INDPAG);
 
     // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo

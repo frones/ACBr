@@ -143,7 +143,6 @@ var
   APagForW: TPagForW;
   LocPagForTxt: String;
 begin
-  Result := False;
   APagForW := TPagForW.Create(PagFor);
 
   try
@@ -165,7 +164,6 @@ function TRegistro.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean): bo
 var
   APagForR : TPagForR;
 begin
-  Result := False;
   APagForR := TPagForR.Create( FPagFor );
 
   try

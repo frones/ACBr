@@ -45,7 +45,6 @@ type
    private
      procedure SetACBrPagFor(const Value: TComponent);
      procedure ErroAbstract(const NomeProcedure : String );
-     function GetPathArquivos: String;
    protected
      FACBrPagFor : TComponent;
 
@@ -80,21 +79,6 @@ end;
 procedure TACBrPagForArquivoClass.ErroAbstract(const NomeProcedure: String);
 begin
   raise EACBrPagForException.Create( NomeProcedure );
-end;
-
-function TACBrPagForArquivoClass.GetPathArquivos: String;
-begin
-(*
-  if PagForUtil.EstaVazio(FPathArquivos) then
-    if Assigned(FACBrPagFor) then
-      FPathArquivos := TACBrPagFor(FACBrPagFor).Configuracoes.Geral.PathSalvar;
-
-  if PagForUtil.NaoEstaVazio(FPathArquivos) then
-    if not DirectoryExists(FPathArquivos) then
-      ForceDirectories(FPathArquivos);
-
-  Result := PathWithDelim(FPathArquivos);
-*)
 end;
 
 procedure TACBrPagForArquivoClass.Notification(AComponent: TComponent;

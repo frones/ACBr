@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2021
+-- Diversos --
+[*] Alterações para gerar o arquivo de remessa e a leitura do arquivo de retorno
+    do Banco Sicredi
+   Por: Maurício Sareto
+
 16/02/2021
 [*] Envio do componente para o Trunk2
    Por: Italo Giurizzato Junior

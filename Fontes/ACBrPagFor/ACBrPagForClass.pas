@@ -484,6 +484,7 @@ type
     FAcrescimo: Double;
     FCodOcorrencia: string;
     FDescOcorrencia: String;
+    FCodigoISPB: Integer;
   public
     constructor Create;
     destructor Destroy; override;
@@ -505,6 +506,7 @@ type
     property Acrescimo: Double read FAcrescimo write FAcrescimo;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
   end;
 
   TSegmentoBList = class(TObjectList)

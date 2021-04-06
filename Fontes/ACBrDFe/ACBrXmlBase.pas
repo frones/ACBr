@@ -37,7 +37,8 @@ unit ACBrXmlBase;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrXmlDocument;
 
 type
   TACBrTipoAmbiente = (taProducao, taHomologacao);

@@ -41,7 +41,7 @@ uses
   ACBrDFeSSL, ACBrUtil;
 
 const
-  CCertFormat = '%s|%s|%s|%s|%s';
+  CCertFormat = '%s|%s|%s|%s|%s|%s|%s';
  
 function ObterCerticados(const SSL: TDFeSSL): ansistring;
 
@@ -59,9 +59,8 @@ begin
     with SSL do
     begin
       CarregarCertificado;
-      Result := Result +
-                  Format(CCertFormat, [CertNumeroSerie, CertRazaoSocial, CertCNPJ, FormatDateBr(CertDataVenc), CertCertificadora]) +
-                  sLineBreak;
+      Result := Format(CCertFormat, [CertNumeroSerie, CertRazaoSocial, CertCNPJ, FormatDateBr(CertDataVenc),
+                                     CertCertificadora, CertSubjectName, CertIssuerName]) + sLineBreak;
     end;
   end;
 
@@ -71,9 +70,8 @@ begin
     begin
       if (CNPJ <> '') then
       begin
-        Result := Result +
-                  Format(CCertFormat, [NumeroSerie, RazaoSocial, CNPJ, FormatDateBr(DataVenc), Certificadora]) +
-                  sLineBreak;
+        Result := Result + Format(CCertFormat, [NumeroSerie, RazaoSocial, CNPJ, FormatDateBr(DataVenc),
+                                                Certificadora, SubjectName, IssuerName]) + sLineBreak;
       end;
     end;
   end;

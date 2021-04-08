@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/04/2021
+--ACBrBoletoRet_Itau--
+[*] Ajuste na validação de retorno com rejeição na API Itaú
+
 05/04/2021
 --ACBrBancoBrasil--
 [*] Validação na qtd de dias para Baixa em Remessa CNAB240

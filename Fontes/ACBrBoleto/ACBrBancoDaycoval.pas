@@ -63,6 +63,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
+    function CalcularNomeArquivoRemessa : String; override;
    end;
 
 implementation
@@ -488,47 +489,48 @@ begin
     with ACBrBoleto do
     begin
       wLinha :=
-        '1' +                                                        // Código do registro: 1 - Transação
-        TipoSacado +                                                 // Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
-        PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // Número de inscrição
-        PadRight(Cedente.CodigoCedente, 20) +                        // Código da empresa no banco
-        PadRight(SeuNumero, 25) +                                    // Identificação do título na empresa
-        PadRight(NossoNumero,8) +                                    // Nosso número
-        Space(13) +                                                  // Brancos
-        Space(24) +                                                  // Brancos
-        ACodigoRemessa +                                             // Código da Remessa
-        ATipoOcorrencia +                                            // Código da ocorrência
-        PadLeft(RightStr(SeuNumero,10), 10, ' ') +                               // Identificação do título na empresa
-        FormatDateTime('ddmmyy', Vencimento) +                       // Data de vencimento do título
-        IntToStrZero(Round(ValorDocumento * 100), 13) +              // Valor nominal do título
-        '707' +                                                      // Banco encarregado da cobrança: 707 = Banco Daycoval
-        '00000' +                                                    // Agência encarregada da cobrança + digito
-        AEspecieDoc +                                                // Espécie do título
-        ATipoAceite +                                                // Identificação de aceite do título: A = Aceito; N = Não aceito
-        FormatDateTime('ddmmyy', DataDocumento) +                    // Data de emissão do título
-        PadLeft('', 2, '0') +                                        // zeros
-        PadLeft('', 2, '0') +                                        // zeros
-        PadLeft('', 13, '0') +                                        // zeros
+        '1' +                                                        // 1 - Código do registro: 1 - Transação
+        TipoSacado +                                                 // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
+        PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // 4 a 17 - Número de inscrição
+        PadRight(Cedente.CodigoCedente, 20) +                        // 18 a 37 - Código da empresa no banco
+        PadRight(SeuNumero, 25) +                                    // 38 a 62 - Identificação do título na empresa
+        Copy(PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0'), 3, 8) + // 63 a 70 - Nosso número
+        Space(13) +                                                  // 71 a 83 - Brancos
+        Space(24) +                                                  // 84 a 107 - Brancos
+        ACodigoRemessa +                                             // 108 - Código da Remessa
+        ATipoOcorrencia +                                            // 109 a 110 - Código da ocorrência
+        PadLeft(RightStr(SeuNumero,10), 10, ' ') +                   // 111 a 120 - Identificação do título na empresa
+        FormatDateTime('ddmmyy', Vencimento) +                       // 121 a 126 - Data de vencimento do título
+        IntToStrZero(Round(ValorDocumento * 100), 13) +              // 127 a 139 - Valor nominal do título
+        '707' +                                                      // 140 a 142 - Banco encarregado da cobrança: 707 = Banco Daycoval
+        '00000' +                                                    // 143 a 147 - Agência encarregada da cobrança + digito
+        AEspecieDoc +                                                // 148 a 149 - Espécie do título
+        ATipoAceite +                                                // 150 - Identificação de aceite do título: A = Aceito; N = Não aceito
+        FormatDateTime('ddmmyy', DataDocumento) +                    // 151 a 156 - Data de emissão do título
+        PadLeft('', 2, '0') +                                        // 157 a 158 - zeros
+        PadLeft('', 2, '0') +                                        // 159 a 160 - zeros
+        PadLeft('', 13, '0') +                                       // 161 a 173 - zeros
         IfThen(DataDesconto > 0,
-          FormatDateTime('ddmmyy', DataDesconto), '000000') +        // Data limite para desconto
-        IntToStrZero(Round(ValorDesconto * 100), 13) +               // Valor do desconto
-        PadLeft('', 26, '0') +                                       // Valor do IOF (zeros segundo o manual)
-        TipoSacado +                                                 // Tipo de inscrição do sacado
-        PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0') +                  // Número de inscrição do sacado
-        PadRight(Sacado.NomeSacado, 30, ' ') +                           // Nome do sacado
-        Space(10) +                                                  // Brancos
-        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' ' + Sacado.Complemento, 40, ' ') +     // Endereço do sacado
-        PadRight(Sacado.Bairro, 12, ' ') +                               // Bairro do sacado
-        PadRight(OnlyNumber(Sacado.CEP), 8, '0') +                       // CEP do sacado
-        PadRight(Sacado.Cidade, 15, ' ') +                               // Cidade do sacado
-        PadRight(Sacado.UF, 2, ' ') +                                    // UF do sacado
-        PadRight(Sacado.SacadoAvalista.NomeAvalista,30) +                  // Nome do sacador avalista
-        Space(4) +                                                   // Brancos
-        Space(6) +                                                   // Brancos
-        PadLeft('', 2, '0') +                                        // zeros
-        '0' ;                                                        // Moeda 0=Moeda nacional atual 3=Dolar
+          FormatDateTime('ddmmyy', DataDesconto), '000000') +        // 174 a 179 - Data limite para desconto
+        IntToStrZero(Round(ValorDesconto * 100), 13) +               // 180 a 192 - Valor do desconto
+        PadLeft('', 13, '0') +                                       // 193 a 205 - ZEROS
+        PadLeft('', 13, '0') +                                       // 206 a 218 - Para ocorrência 01: Manter zeros -Para ocorrência 04: Informar valor a ser concedido para abatimento.
+        TipoSacado +                                                 // 219 a 220 - Tipo de inscrição do sacado: 01 – CPF; 02 – CGC
+        PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0') +               // 221 a 234 - Número de inscrição do sacado
+        PadRight(Sacado.NomeSacado, 30, ' ') +                       // 235 a 264 - Nome do sacado
+        Space(10) +                                                  // 265 a 274 - Brancos
+        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' ' + Sacado.Complemento, 40, ' ') +     // 275 a 314 - Endereço do sacado
+        PadRight(Sacado.Bairro, 12, ' ') +                           // 315 a 326 - Bairro do sacado
+        PadRight(OnlyNumber(Sacado.CEP), 8, '0') +                   // 327 a 334 - CEP do sacado
+        PadRight(Sacado.Cidade, 15, ' ') +                           // 335 a 349 - Cidade do sacado
+        PadRight(Sacado.UF, 2, ' ') +                                // 350 a 351 - UF do sacado
+        PadRight(Sacado.SacadoAvalista.NomeAvalista,30) +            // 352 a 381 - Nome do sacador avalista
+        Space(4) +                                                   // 382 a 385 - Brancos
+        Space(6) +                                                   // 386 a 391 - Brancos
+        PadLeft('', 2, '0') +                                        // 392 a 393 - zeros
+        '0' ;                                                        // 394 - Moeda 0=Moeda nacional atual 3=Dolar
 
-      wLinha := wLinha + IntToStrZero(ARemessa.Count + 1, 6); // Número sequencial do registro
+      wLinha := wLinha + IntToStrZero(ARemessa.Count + 1, 6);        // 395 a 400 - Número sequencial do registro
 
       ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
     end;
@@ -649,7 +651,7 @@ begin
       ValorDesconto        := StrToFloatDef(Copy(Linha, 241, 13), 0) / 100;
       ValorMoraJuros       := StrToFloatDef(Copy(Linha, 267, 13), 0) / 100;
       ValorRecebido        := StrToFloatDef(Copy(Linha, 254, 13), 0) / 100;
-      NossoNumero          := Copy(Linha, 95, TamanhoMaximoNossoNum);
+      NossoNumero          := Copy(Linha, 63, TamanhoMaximoNossoNum);
       Carteira             := Copy(Linha, 108, 1);
       ValorDespesaCobranca := StrToFloatDef(Copy(Linha, 176, 13), 0) / 100;
 
@@ -691,6 +693,31 @@ begin
   else
     Result := IntToStr(CodOcorrencia)+' Ocorrência desconhecida';
   end;
+end;
+
+function TACBrBancoDaycoval.CalcularNomeArquivoRemessa: String;
+var
+  Sequencia :Integer;
+  NomeFixo, NomeArq: String;
+begin
+   Sequencia := 0;
+
+   with ACBrBanco.ACBrBoleto do
+   begin
+      if NomeArqRemessa = '' then
+       begin
+         NomeFixo := DirArqRemessa + PathDelim + '2HQ' + FormatDateTime( 'ddmm', Now );
+
+         repeat
+            Inc( Sequencia );
+            NomeArq := NomeFixo + IntToStr( Sequencia ) + '.txt'
+         until not FileExists( NomeArq ) ;
+
+         Result := NomeArq;
+       end
+      else
+         Result := DirArqRemessa + PathDelim + NomeArqRemessa ;
+   end;
 end;
 
 function TACBrBancoDaycoval.CodOcorrenciaToTipo(

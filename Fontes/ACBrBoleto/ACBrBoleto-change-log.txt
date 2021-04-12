@@ -50,6 +50,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/04/2021
+--ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa--
+[*] Ajuste na geração do XML para transmissão de Remessa WebService
+https://www.projetoacbr.com.br/forum/topic/61882-sugest%C3%A3o-e-ajustes-boleto-via-webservice-caixa/
+
+--ACBrBancoCecred--
+[*] Ajuste na informação de dias de protesto na remessa
+
+--ACBrBancoDaycoval--
+[*] Ajuste na geração do NossoNumero na remessa e Retorno
+https://www.projetoacbr.com.br/forum/topic/61228-layout-banco-daycoval/
+
+08/04/2021
 --ACBrBoletoRet_Itau--
 [*] Ajuste na validação de retorno com rejeição na API Itaú
 

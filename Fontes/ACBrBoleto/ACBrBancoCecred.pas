@@ -753,7 +753,9 @@ begin
                   PadRight( trim(Sacado.Cidade), 15) +                          // 335 a 349 - Cidade do sacado
                   PadRight( Sacado.UF, 2 ) +                                    // 350 a 351 - UF da cidade do sacado
                   PadRight( AMensagem, 40) +                                    // 352 a 391 - Observações
-                  PadLeft(DiasProtesto,2,' ') +                                 // 392 a 393 - Número de dias para protesto (deixar em branco se não houver instrução de protesto)
+                  IfThen( DiasProtesto <> EmptyStr,
+                          PadLeft(DiasProtesto ,2,'0'),
+                          Space(2)) +                                           // 392 a 393 - Número de dias para protesto (deixar em branco se não houver instrução de protesto)
                   ' ' +                                                         // 394 a 394 - Branco
                   IntToStrZero( aRemessa.Count + 1, 6 );                        // 395 a 400 - Sequencial de Registro 
 

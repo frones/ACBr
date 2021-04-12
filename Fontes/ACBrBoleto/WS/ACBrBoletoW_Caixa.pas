@@ -183,12 +183,16 @@ function TBoletoW_Caixa.GerarAutenticacao(Operacao: TOperacao; NossoNumero,
   CNPJCPFBenef: String; CodBenef: String; Valor: Double; DataVenc: TDateTime
   ): String;
 var
-  sAutenticacao: string;
+  sAutenticacao, sNossoNumero: string;
 begin
+  if length(NossoNumero) = 17 then
+    sNossoNumero := NossoNumero
+  else //adicionar o prefixo 14 no nosso número
+    sNossoNumero := '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0');
   case Operacao of
     tpInclui, tpAltera:
       begin
-        sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0')
+        sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + sNossoNumero
             + FormatDateTime('ddmmyyyy', DataVenc )
             + Format('%15.15d', [StrToInt(OnlyNumber((FormatFloat('#0.00', Valor))))])
             + FormatFloat(Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
@@ -196,7 +200,7 @@ begin
 
     tpBaixa, tpConsulta:
       begin
-        sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0')
+        sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + sNossoNumero
             + Poem_Zeros('',8)
             + Poem_Zeros('',15)
             + FormatFloat(Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
@@ -300,16 +304,75 @@ begin
 end;
 
 procedure TBoletoW_Caixa.GerarTitulo;
+var
+  AEspecieDoc: string;
 begin
   if Assigned(Titulos) then
     with Titulos do
     begin
+      //mantendo padronização de preenchimento do campo EspecieDoc entre
+      //as funcionalides de REMESSA e REGISTRO ON-LINE.
+      //o campo EspecieDoc é preenchido com letras e nas respectivas funções de
+      //REMESSA ou de REGISTRO ele é convertido para código
+      if AnsiSameText(EspecieDoc, 'CH') then
+        AEspecieDoc := '01'
+      else if AnsiSameText(EspecieDoc, 'DM') then
+        AEspecieDoc := '02'
+      else if AnsiSameText(EspecieDoc, 'DMI') then
+        AEspecieDoc := '03'
+      else if AnsiSameText(EspecieDoc, 'DS') then
+        AEspecieDoc := '04'
+      else if AnsiSameText(EspecieDoc, 'DSI') then
+        AEspecieDoc := '05'
+      else if AnsiSameText(EspecieDoc, 'DR') then
+        AEspecieDoc := '06'
+      else if AnsiSameText(EspecieDoc, 'LC') then
+        AEspecieDoc := '07'
+      else if AnsiSameText(EspecieDoc, 'NCC') then
+        AEspecieDoc := '08'
+      else if AnsiSameText(EspecieDoc, 'NCE') then
+        AEspecieDoc := '09'
+      else if AnsiSameText(EspecieDoc, 'NCI') then
+        AEspecieDoc := '10'
+      else if AnsiSameText(EspecieDoc, 'NCR') then
+        AEspecieDoc := '11'
+      else if AnsiSameText(EspecieDoc, 'NP') then
+        AEspecieDoc := '12'
+      else if AnsiSameText(EspecieDoc, 'NPR') then
+        AEspecieDoc := '13'
+      else if AnsiSameText(EspecieDoc, 'TM') then
+        AEspecieDoc := '14'
+      else if AnsiSameText(EspecieDoc, 'TS') then
+        AEspecieDoc := '15'
+      else if AnsiSameText(EspecieDoc, 'NS') then
+        AEspecieDoc := '16'
+      else if AnsiSameText(EspecieDoc, 'RC') then
+        AEspecieDoc := '17'
+      else if AnsiSameText(EspecieDoc, 'FAT') then
+        AEspecieDoc := '18'
+      else if AnsiSameText(EspecieDoc, 'ND') then
+        AEspecieDoc := '19'
+      else if AnsiSameText(EspecieDoc, 'AP') then
+        AEspecieDoc := '20'
+      else if AnsiSameText(EspecieDoc, 'ME') then
+        AEspecieDoc := '21'
+      else if AnsiSameText(EspecieDoc, 'PC') then
+        AEspecieDoc := '22'
+      else if AnsiSameText(EspecieDoc, 'NF') then
+        AEspecieDoc := '23'
+      else if AnsiSameText(EspecieDoc, 'DD') then
+        AEspecieDoc := '24'
+      else if AnsiSameText(EspecieDoc, 'CPR') then
+        AEspecieDoc := '25'
+      else
+        AEspecieDoc := '99';
+
       Gerador.wGrupo('TITULO');
       Gerador.wCampo(tcStr, '#02', 'NOSSO_NUMERO    ', 17, 17, 1, '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0'), DSC_NOSSO_NUMERO);
       Gerador.wCampo(tcStr, '#03', 'NUMERO_DOCUMENTO', 11, 11, 1, NumeroDocumento, DSC_NUMERO_DOCUMENTO);
       Gerador.wCampo(tcDat, '#04', 'DATA_VENCIMENTO ', 10, 10, 1, Vencimento, DSC_DATA_VENCIMENTO);
       Gerador.wCampo(tcDe2, '#05', 'VALOR           ', 01, 15, 1, ValorDocumento, DSC_VALOR_DOCUMENTO);
-      Gerador.wCampo(tcStr, '#06', 'TIPO_ESPECIE    ', 02, 02, 1, EspecieDoc, DSC_TIPO_ESPECIE);
+      Gerador.wCampo(tcStr, '#06', 'TIPO_ESPECIE    ', 02, 02, 1, AEspecieDoc, DSC_TIPO_ESPECIE);
       Gerador.wCampo(tcStr, '#07', 'FLAG_ACEITE     ', 01, 01, 1, AceiteToStr(Aceite), DSC_ACEITE);
 
       if (Boleto.Configuracoes.WebService.Operacao = tpInclui) then
@@ -330,7 +393,7 @@ begin
       GerarDescontos;
 
       Gerador.wCampo(tcDe2, '#36', 'VALOR_IOF            ', 01, 15, 0, ValorIOF, DSC_VALOR_IOF);
-      Gerador.wCampo(tcStr, '#37', 'IDENTIFICACAO_EMPRESA', 01, 25, 0, NumeroDocumento, DSC_NUMERO_DOCUMENTO);
+      Gerador.wCampo(tcStr, '#37', 'IDENTIFICACAO_EMPRESA', 01, 25, 0, SeuNumero, DSC_NUMERO_DOCUMENTO);
 
       GerarFicha_Compensacao;
       GerarRecibo_Pagador;
@@ -363,20 +426,29 @@ begin
 end;
 
 procedure TBoletoW_Caixa.GerarPos_Vencimento;
+var
+  ADiasBaixaDevolucao: integer;
 begin
   if Assigned(Titulos) then
     with Titulos do
     begin
       Gerador.wGrupo('POS_VENCIMENTO');
       if (integer(CodigoNegativacao) in [1,2]) then
-        Gerador.wCampo(tcStr, '#14', 'ACAO       ', 01, 20, 1, 'PROTESTAR', DSC_CODIGO_NEGATIVACAO)
+      begin
+        Gerador.wCampo(tcStr, '#14', 'ACAO       ', 01, 20, 1, 'PROTESTAR', DSC_CODIGO_NEGATIVACAO);
+        Gerador.wCampo(tcInt, '#15', 'NUMERO_DIAS', 03, 03, 1, DiasDeProtesto, DSC_DIAS_PROTESTO);
+      end
       else
+      begin
+        if DataBaixa > Vencimento then
+          ADiasBaixaDevolucao := trunc(DataBaixa) - trunc(Vencimento)
+        else
+          aDiasBaixaDevolucao := 0;
         Gerador.wCampo(tcStr, '#14', 'ACAO       ', 01, 20, 1, 'DEVOLVER', DSC_CODIGO_NEGATIVACAO);
-
-      Gerador.wCampo(tcInt, '#15', 'NUMERO_DIAS', 03, 03, 1, DiasDeProtesto, DSC_DIAS_PROTESTO);
+        Gerador.wCampo(tcInt, '#15', 'NUMERO_DIAS', 03, 03, 1, ADiasBaixaDevolucao, DSC_DIAS_PROTESTO);
+      end;
       Gerador.wGrupo('/POS_VENCIMENTO');
     end;
-
 end;
 
 procedure TBoletoW_Caixa.GerarPagador;

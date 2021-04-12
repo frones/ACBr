@@ -164,7 +164,7 @@ begin
               TituloRet.EspecieMod              := Leitor.rCampo(tcInt, 'CODIGO_MOEDA');
 
               TituloRet.ValorIOF                := Leitor.rCampo(tcDe2, 'VALOR_IOF');
-              TituloRet.NumeroDocumento         := Leitor.rCampo(tcStr, 'IDENTIFICACAO_EMPRESA');
+              TituloRet.SeuNumero               := Leitor.rCampo(tcStr, 'IDENTIFICACAO_EMPRESA');
 
               TituloRet.CodBarras               := Leitor.rCampo(tcStr, 'CODIGO_BARRAS');
               TituloRet.LinhaDig                := Leitor.rCampo(tcStr, 'LINHA_DIGITAVEL');

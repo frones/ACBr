@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/04/2021
+-- pnfsLerListaNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/62188-problema-nfsebrasil/
+  Por: Jéter Rabelo Ferreira
 -- pnfsNFSeW_ABRASFv2 --
 [*] Removido do CASA o provedor Pronimv2, para que a tag Aliquota não seja
     gerada quando o seu valor for zero.

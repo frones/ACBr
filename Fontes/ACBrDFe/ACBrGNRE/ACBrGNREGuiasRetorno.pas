@@ -265,12 +265,11 @@ begin
   Leitor.Grupo   := Leitor.Arquivo;
 
   try
-    GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
-
     Nivel := 1;
     i := 0;
     while Leitor.rExtrai(Nivel, 'guia', '', i + 1) <> '' do
     begin
+      GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
       GNRERetorno.SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
       GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
       GNRERetorno.tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
@@ -410,6 +409,7 @@ begin
       end;
 
       Inc(i);
+      Nivel := 1;
     end;
   finally
     Leitor.Free;

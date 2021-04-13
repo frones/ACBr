@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2021
+-- pnfsNFSeW_ABRASFv2 --
+[*] Removido do CASA o provedor Pronimv2, para que a tag Aliquota não seja
+    gerada quando o seu valor for zero.
+  Por: Italo Giurizzato Junior
+
 06/04/2021
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/61863-equiplano-acbrnfse-n%C3%A3o-carrega-o-pr%C3%B3prio-xml-gerado/?do=findComment&comment=405852&_rid=63

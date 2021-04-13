@@ -728,7 +728,7 @@ begin
     if fIsHTML and BodyHasImage then
       MimePartAttach.ContentID := '<' + AAttachment.Description + '>';
 
-    MimePartAttach.FileName    := AAttachment.FileName;
+    MimePartAttach.FileName    := ExtractFileName(AAttachment.FileName);
     MimePartAttach.EncodingCode:= ME_BASE64;
     MimePartAttach.PrimaryCode := MP_BINARY;  // To avoid MP_TEXT internal conversion ;
     MimePartAttach.CharsetCode := fIDECharsetCode;
@@ -917,15 +917,14 @@ begin
   if not FileExists(aFileName) then
     DoException( Exception.Create('Add Attachment: File not Exists.') );
 
-  if (aDescription = '') then
-    aDescription := ExtractFileName(aFileName);
-
   AAttachment := fAttachments.New;
-  AAttachment.FileName := ExtractFileName(aFileName);
+  AAttachment.FileName     := aFileName;
+
   if (aDescription = '') then
-    AAttachment.Description := AAttachment.FileName
+    AAttachment.Description := ExtractFileName(AAttachment.FileName)
   else
     AAttachment.Description := aDescription;
+
   AAttachment.Disposition := aDisposition;
 
   AAttachment.Stream.LoadFromFile(aFileName)

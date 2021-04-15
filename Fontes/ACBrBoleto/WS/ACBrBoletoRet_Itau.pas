@@ -134,7 +134,11 @@ begin
                  DadosRet.TituloRet.SacadoAvalista.NomeAvalista  := Values['nome_razao_social_sacador_avalista'].AsString;
             end;
 
-            DadosRet.TituloRet.Vencimento:= StrToDateDef( AJson.Values['vencimento_titulo'].AsString, 0);
+            DadosRet.IDBoleto.CodBarras := AJson.Values['codigo_barras'].AsString;
+            DadosRet.IDBoleto.LinhaDig  := AJson.Values['numero_linha_digitavel'].AsString;
+            DadosRet.IDBoleto.NossoNum  := AJson.Values['nosso_numero'].AsString;
+
+            DadosRet.TituloRet.Vencimento:= StringToDateTimeDef(AJson.Values['vencimento_titulo'].AsString, 0, 'yyyy-mm-dd');
             DadosRet.TituloRet.Carteira:= AJson.Values['tipo_carteira_titulo'].AsString;
             DadosRet.TituloRet.NossoNumero:= AJson.Values['nosso_numero'].AsString;
             DadosRet.TituloRet.SeuNumero:= AJson.Values['seu_numero'].AsString;
@@ -142,8 +146,8 @@ begin
             DadosRet.TituloRet.CodBarras:= AJson.Values['codigo_barras'].AsString;
             DadosRet.TituloRet.LinhaDig:= AJson.Values['numero_linha_digitavel'].AsString;
             DadosRet.TituloRet.Mensagem.Add(AJson.Values['local_pagamento'].AsString);
-            DadosRet.TituloRet.DataProcessamento:= StrToDateDef( AJson.Values['data_processamento'].AsString, 0);
-            DadosRet.TituloRet.DataDocumento:= StrToDateDef( AJson.Values['data_emissao'].AsString, 0);
+            DadosRet.TituloRet.DataProcessamento:= StringToDateTimeDef(AJson.Values['data_processamento'].AsString, 0, 'yyyy-mm-dd');
+            DadosRet.TituloRet.DataDocumento:=  StringToDateTimeDef(AJson.Values['data_emissao'].AsString, 0, 'yyyy-mm-dd');
             DadosRet.TituloRet.UsoBanco:= AJson.Values['uso_banco'].AsString;
             DadosRet.TituloRet.ValorDocumento:= StrToFloatDef( AJson.Values['valor_titulo'].AsString, 0);
             DadosRet.TituloRet.ValorDesconto:= StrToFloatDef( AJson.Values['valor_desconto'].AsString, 0);

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+15/04/2021
+--ACBrBoletoRet_Itau, ACBrBoleto--
+[*] Ajuste na leitura do Json de Resposta e geração do Log de Retorno
+
 08/04/2021
 --ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa--
 [*] Ajuste na geração do XML para transmissão de Remessa WebService

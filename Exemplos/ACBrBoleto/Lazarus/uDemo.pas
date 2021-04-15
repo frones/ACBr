@@ -296,6 +296,29 @@ begin
                        'Data_Vencimento=' + FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
                        'Valor=' + CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
                         );
+          if NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
+          begin
+            SLRemessa.Add('TITULO_RETORNO' + sLineBreak  +
+             'vencimento_titulo='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+             'tipo_carteira_titulo='+ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+             'nosso_numero='+ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+             'seu_numero='+ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+             'especie='+ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+             'codigo_barras='+ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+             'numero_linha_digitavel='+ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+             'local_pagamento='+ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+             'data_processamento='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+             'data_emissao='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+             'uso_banco='+ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+             'valor_titulo='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+             'valor_desconto='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+             'valor_outra_deducao='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+             'valor_juro_multa='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+             'valor_outro_acrescimo='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+             'valor_total_cobrado='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+             'texto_informacao_cliente_beneficiario=' +ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
+
+          end;
         end;
 
         SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );

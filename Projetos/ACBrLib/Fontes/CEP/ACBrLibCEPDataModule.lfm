@@ -6,11 +6,10 @@ object LibCEPDM: TLibCEPDM
   HorizontalOffset = 257
   VerticalOffset = 127
   Width = 150
-  PPI = 96
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
     PesquisarIBGE = True
-    left = 61
-    top = 32
+    Left = 61
+    Top = 32
   end
 end

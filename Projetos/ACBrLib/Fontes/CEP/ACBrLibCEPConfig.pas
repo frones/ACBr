@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrLibCEPClass, ACBrLibCEPConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibCEPBase, ACBrLibCEPConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TCEPConfig }
 

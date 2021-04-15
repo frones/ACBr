@@ -48,21 +48,25 @@ type
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil,
-  ACBrLibCEPConfig, ACBrLibCEPClass;
+  ACBrLibCEPConfig, ACBrLibCEPBase;
 
 {$R *.lfm}
 
@@ -82,7 +86,7 @@ procedure TLibCEPDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibCEPConfig;
 begin
-  pLibConfig := TLibCEPConfig(TACBrLibCEP(pLib).Config);
+  pLibConfig := TLibCEPConfig(TACBrLibCEP(Lib).Config);
 
   with ACBrCEP1 do
   begin
@@ -97,8 +101,8 @@ end;
 procedure TLibCEPDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    TACBrLibCEP(pLib).GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    TACBrLibCEP(Lib).GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibCEPDM.Travar;

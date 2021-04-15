@@ -32,37 +32,14 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibCEPClass;
+unit ACBrLibCEPST;
 
 interface
 
 uses
-  Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibCEPDataModule, ACBrCEP;
+  Classes, SysUtils, Forms,
+  ACBrLibComum;
 
-type
-
-  { TACBrLibCEP }
-
-  TACBrLibCEP = class(TACBrLib)
-  private
-    FCEPDM: TLibCEPDM;
-
-  protected
-    procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
-    procedure Executar; override;
-  public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-    destructor Destroy; override;
-
-    property CEPDM: TLibCEPDM read FCEPDM;
-  end;
-
-{%region Declaração da funções}
-
-{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 function CEP_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_Finalizar: longint;
@@ -82,64 +59,19 @@ function CEP_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-{%endregion}
-
-{%region CEP}
-function RespostaItensConsulta(ItemID: integer = 0): String;
 
 function CEP_BuscarPorCEP(eCEP: PChar; var Qtde: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
   eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-{%endregion}
-
-{%endregion}
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
 
-uses
-  ACBrLibConsts, ACBrLibCEPConsts, ACBrLibConfig, ACBrLibCEPConfig,
-  ACBrLibResposta, ACBrLibCEPRespostas;
+Uses
+  ACBrLibConsts, ACBrLibCEPBase;
 
-{ TACBrLibCEP }
-
-constructor TACBrLibCEP.Create(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  inherited Create(ArqConfig, ChaveCrypt);
-
-  FCEPDM := TLibCEPDM.Create(nil);
-end;
-
-destructor TACBrLibCEP.Destroy;
-begin
-  FCEPDM.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrLibCEP.Inicializar;
-begin
-  inherited Inicializar;
-
-  GravarLog('TACBrLibCEP.Inicializar - Feito', logParanoico);
-end;
-
-procedure TACBrLibCEP.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
-begin
-  fpConfig := TLibCEPConfig.Create(Self, ArqConfig, ChaveCrypt);
-end;
-
-procedure TACBrLibCEP.Executar;
-begin
-  inherited Executar;
-  FCEPDM.AplicarConfiguracoes;
-end;
-
-{%region Comum}
-
-{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 function CEP_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -150,6 +82,7 @@ function CEP_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
+  pLib := nil;
 end;
 
 function CEP_Nome(const sNome: PChar; var esTamanho: longint): longint;
@@ -194,128 +127,39 @@ function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
-{%endregion}
-
-{%region CEP}
-
-function RespostaItensConsulta(ItemID: integer): String;
-var
-  Resp: TLibCEPResposta;
-begin
-  Resp := TLibCEPResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1),
-          TACBrLibCEP(pLib^.Lib).Config.TipoResposta,
-          TACBrLibCEP(pLib^.Lib).Config.CodResposta);
-  try
-    with TACBrLibCEP(pLib^.Lib).CEPDM.ACBrCEP1.Enderecos[ItemID] do
-    begin
-      Resp.CEP := CEP;
-      Resp.Tipo_Logradouro := Tipo_Logradouro;
-      Resp.Logradouro := Logradouro;
-      Resp.Logradouro := Logradouro;
-      Resp.Complemento := Complemento;
-      Resp.Bairro := Bairro;
-      Resp.Municipio := Municipio;
-      Resp.UF := UF;
-      Resp.IBGE_Municipio := IBGE_Municipio;
-      Resp.IBGE_UF := IBGE_UF;
-
-      result := Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
 
 function CEP_BuscarPorCEP(eCEP: PChar; var Qtde: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ACEP: AnsiString;
-  AResposta: String;
 begin
   try
     VerificarLibInicializada(pLib);
-    ACEP := AnsiString(eCEP);
-
-    if TACBrLibCEP(pLib^.Lib).Config.Log.Nivel > logNormal then
-      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorCEP( ' + ACEP + ' )', logCompleto, True)
-    else
-      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorCEP', logNormal);
-
-    with TACBrLibCEP(pLib^.Lib) do
-    begin
-      CEPDM.Travar;
-      try
-        Qtde := CEPDM.ACBrCEP1.BuscarPorCEP(ACEP);
-        AResposta := RespostaItensConsulta(0);
-        MoverStringParaPChar(AResposta, sResposta, esTamanho);
-
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
-      finally
-        CEPDM.Destravar;
-      end;
-    end;
+    Result := TACBrLibCEP(pLib^.Lib).BuscarPorCEP(eCEP, Qtde, sResposta, esTamanho);
   except
     on E: EACBrLibException do
-      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
 
 function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
   eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro: AnsiString;
-  AResposta: String;
-  I: Integer;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    ACidade := AnsiString(eCidade);
-    ATipo_Logradouro := AnsiString(eTipo_Logradouro);
-    ALogradouro := AnsiString(eLogradouro);
-    AUF := AnsiString(eUF);
-    ABairro := AnsiString(eBairro);
-
-    if TACBrLibCEP(pLib^.Lib).Config.Log.Nivel > logNormal then
-      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorLogradouro( ' + ACidade + ',' + ATipo_Logradouro + ',' +
-        ALogradouro + ',' + AUF + ',' +ABairro + ' )', logCompleto, True)
-    else
-      TACBrLibCEP(pLib^.Lib).GravarLog('CEP_BuscarPorLogradouro', logNormal);
-
-    with TACBrLibCEP(pLib^.Lib) do
-    begin
-      CEPDM.Travar;
-      try
-        Qtde := CEPDM.ACBrCEP1.BuscarPorLogradouro(ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro);
-        AResposta := '';
-
-        for I := 0 to CEPDM.ACBrCEP1.Enderecos.Count - 1 do
-          AResposta := AResposta + RespostaItensConsulta(I);
-
-        MoverStringParaPChar(AResposta, sResposta, esTamanho);
-
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
-      finally
-        CEPDM.Destravar;
-      end;
-    end;
+    Result := TACBrLibCEP(pLib^.Lib).BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
+                                                         eBairro, Qtde, sResposta, esTamanho);
   except
     on E: EACBrLibException do
-      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(E.Erro, E.Message);
+      Result := E.Erro;
 
     on E: Exception do
-      Result := TACBrLibCEP(pLib^.Lib).SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := ErrExecutandoMetodo;
   end;
 end;
-{%endregion}
-
-{%endregion}
 
 end.
 

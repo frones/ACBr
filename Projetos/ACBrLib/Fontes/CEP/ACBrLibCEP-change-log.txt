@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/2021
+--- ACBrLibCEP ---
+[+] Ajustes para funcionar em MT e ST.
+   Por: Rafael Dias.
+
 29/08/2018
 --- ACBrLibCEP ---
 [+] Inicio do projeto.

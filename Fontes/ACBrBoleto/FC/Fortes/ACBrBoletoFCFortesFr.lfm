@@ -1121,7 +1121,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruçðes (Texto de responsabilidade do beneficiário.)'
+          'Instruções (Texto de responsabilidade do beneficiário.)'
         )
         ParentFont = False
       end
@@ -2142,7 +2142,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruçðes (Texto de responsabilidade do beneficiário.)'
+          'Instruções (Texto de responsabilidade do beneficiário.)'
         )
         ParentFont = False
       end
@@ -2375,7 +2375,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 525
         Width = 76
-        Caption = '( - ) Outras Deduçðes'
+        Caption = '( - ) Outras Deduções'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3615,7 +3615,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruçðes (Texto de responsabilidade do beneficiário.)'
+          'Instruções (Texto de responsabilidade do beneficiário.)'
         )
         ParentFont = False
       end
@@ -8736,7 +8736,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         Lines.Strings = (
-          'Instruçðes (Texto de responsabilidade do beneficiário.)'
+          'Instruções (Texto de responsabilidade do beneficiário.)'
         )
         ParentFont = False
       end
@@ -8961,7 +8961,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 525
         Width = 76
-        Caption = '( - ) Outras Deduçðes'
+        Caption = '( - ) Outras Deduções'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

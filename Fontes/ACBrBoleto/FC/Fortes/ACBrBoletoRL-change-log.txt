@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/20221
+ACBrBoletoFCFortes
+[*] Ajustes de caracteres de acentuação desconfigurados no .lfm
+
 01/10/2020
 ACBrBoletoFCFortesFr
 [*] Ajustes na configuração de impressão do código de barras, mantendo as barras em tamanho fixo. 

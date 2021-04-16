@@ -57,6 +57,7 @@ type
     FNFeCancelada: Boolean;
     FImprimeCodigoEan: Boolean;
     FImprimeInfContr: Boolean;
+    FExibeICMSDesoneradoComoDesconto: Boolean;
     FvTribFed: currency;
     FvTribEst: currency;
     FvTribMun: currency;
@@ -124,6 +125,7 @@ type
     property QuebraLinhaEmDetalhamentos: Boolean read FQuebraLinhaEmDetalhamentos write FQuebraLinhaEmDetalhamentos default True;
     property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido default True;
     property ImprimeTributos: TpcnTributos read FImprimeTributos write FImprimeTributos default trbNormal;
+    property ExibeICMSDesoneradoComoDesconto: Boolean Read FExibeICMSDesoneradoComoDesconto write FExibeICMSDesoneradoComoDesconto default False;
     property ExibeTotalTributosItem: Boolean read FExibeTotalTributosItem write FExibeTotalTributosItem default False;
     property ExibeInforAdicProduto: TinfAdcProd read FExibeInforAdicProduto write FExibeInforAdicProduto default infDescricao;
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
@@ -160,6 +162,7 @@ begin
   FImprimeNomeFantasia        := False;
   FExibeInforAdicProduto      := infDescricao;
   FQuebraLinhaEmDetalhamentos := True;
+  FExibeICMSDesoneradoComoDesconto := False;
 end;
 
 procedure TACBrDFeDANFeReport.Notification(AComponent: TComponent; Operation: TOperation);

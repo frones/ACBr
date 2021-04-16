@@ -132,7 +132,7 @@ type
     procedure AjustaMargensReports;
 
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create(AOwner: TACBrDFeDANFeReport);
     destructor Destroy; override;
 
     property NFe: TNFe read FNFe write FNFe;
@@ -189,7 +189,7 @@ uses
 
 { TACBrNFeFRClass }
 
-constructor TACBrNFeFRClass.Create(AOwner: TComponent);
+constructor TACBrNFeFRClass.Create(AOwner: TACBrDFeDANFeReport);
 begin
   if not (AOwner is TACBrDFeDANFeReport) then
     raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrDFeDANFeReport');
@@ -205,7 +205,7 @@ begin
   FIncorporarBackgroundPdf := True;
   FOtimizaImpressaoPdf := True;
 
-  FDANFEClassOwner := TACBrDFeDANFeReport(AOwner);
+  FDANFEClassOwner := AOwner;
 
   FfrxReport := TfrxReport.Create(AOwner);
   //Antes de alterar a linha abaixo, queira verificar o seguinte tópico:
@@ -463,6 +463,7 @@ begin
         FieldDefs.Add('nProt', ftString, 30);
         FieldDefs.Add('dhRecbto', ftDateTime);
         FieldDefs.Add('poscanhotolayout', ftString, 1);
+        FieldDefs.Add('ExibeICMSDesoneradoComoDesconto', ftBoolean);
         CreateDataSet;
      end;
    end;
@@ -1062,23 +1063,32 @@ begin
           FieldByName('vDesc').AsString         := FormatFloatBr( Prod.vDesc,',0.00');
         end;
 
-        FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
-        FieldByName('CST').AsString               := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
-        FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,',0.00');
-        FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,',0.00');
-        FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,',0.00');
-        FieldByName('VBCST').AsString             := FormatFloatBr( Imposto.ICMS.vBcST      ,',0.00');
-        FieldByName('pMVAST').AsString            := FormatFloatBr( Imposto.ICMS.pMVAST     ,',0.00');
-        FieldByName('pICMSST').AsString           := FormatFloatBr( Imposto.ICMS.pICMSST    ,',0.00');
-        FieldByName('VICMSST').AsString           := FormatFloatBr( Imposto.ICMS.vICMSST    ,',0.00');
-        FieldByName('VIPI').AsString              := FormatFloatBr( Imposto.IPI.VIPI        ,',0.00');
-        FieldByName('vIPIDevol').AsString         := FormatFloatBr( vIPIDevol               ,',0.00');
-        FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,',0.00');
-        FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
-        FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');
-        FieldByName('ValorDescontos').AsString    := FormatFloatBr( Prod.vDesc + Imposto.ICMS.vICMSDeson, ',0.00');
+        FieldByName('ORIGEM').AsString          := OrigToStr( Imposto.ICMS.orig);
+        FieldByName('CST').AsString             := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
+        FieldByName('VBC').AsString             := FormatFloatBr( Imposto.ICMS.vBC        ,',0.00');
+        FieldByName('PICMS').AsString           := FormatFloatBr( Imposto.ICMS.pICMS      ,',0.00');
+        FieldByName('VICMS').AsString           := FormatFloatBr( Imposto.ICMS.vICMS      ,',0.00');
+        FieldByName('VBCST').AsString           := FormatFloatBr( Imposto.ICMS.vBcST      ,',0.00');
+        FieldByName('pMVAST').AsString          := FormatFloatBr( Imposto.ICMS.pMVAST     ,',0.00');
+        FieldByName('pICMSST').AsString         := FormatFloatBr( Imposto.ICMS.pICMSST    ,',0.00');
+        FieldByName('VICMSST').AsString         := FormatFloatBr( Imposto.ICMS.vICMSST    ,',0.00');
+        FieldByName('VIPI').AsString            := FormatFloatBr( Imposto.IPI.VIPI        ,',0.00');
+        FieldByName('vIPIDevol').AsString       := FormatFloatBr( vIPIDevol               ,',0.00');
+        FieldByName('PIPI').AsString            := FormatFloatBr( Imposto.IPI.PIPI        ,',0.00');
+        FieldByName('vISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
+        FieldByName('vBcISSQN').AsString        := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');
+
+        if FDANFEClassOwner.ExibeICMSDesoneradoComoDesconto then
+        begin
+          FieldByName('ValorDescontos').AsString  := FormatFloatBr( Prod.vDesc + Imposto.ICMS.vICMSDeson, ',0.00');
+          FieldByName('ValorLiquido').AsString    := FormatFloatBr( Prod.vProd - Prod.vDesc - Imposto.ICMS.vICMSDeson + Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
+        end
+        else
+        begin
+          FieldByName('ValorDescontos').AsString  := FormatFloatBr( Prod.vDesc, ',0.00');
+          FieldByName('ValorLiquido').AsString    := FormatFloatBr( Prod.vProd - Prod.vDesc + Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
+        end;
         FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
-        FieldByName('ValorLiquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc - Imposto.ICMS.vICMSDeson + Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
         Post;
       end;
     end;
@@ -1558,12 +1568,14 @@ begin
     Append;
 
     FieldByName('poscanhoto').AsString            := '';
-    FieldByName('poscanhotolayout').AsString         := '';
+    FieldByName('poscanhotolayout').AsString      := '';
     FieldByName('ResumoCanhoto').AsString         := '';
     FieldByName('Mensagem0').AsString             := '';
     FieldByName('Contingencia_ID').AsString       := '';
     FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
+
+    FieldByName('ExibeICMSDesoneradoComoDesconto').AsBoolean := DANFEClassOwner.ExibeICMSDesoneradoComoDesconto;
 
     if DANFEClassOwner is TACBrNFeDANFEClass then
     begin

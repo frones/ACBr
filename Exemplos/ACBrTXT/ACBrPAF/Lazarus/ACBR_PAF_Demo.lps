@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="2">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ACBR_PAF_Demo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -19,19 +19,156 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="996"/>
-        <CursorPos X="3" Y="872"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="189"/>
+        <CursorPos X="37" Y="202"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="70"/>
+        <CursorPos X="14" Y="72"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="155"/>
+        <CursorPos X="31" Y="168"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_W_Class.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="203"/>
+        <CursorPos Y="215"/>
+        <UsageCount Value="11"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_W.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos X="3" Y="50"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="193"/>
+        <CursorPos X="22" Y="212"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="39"/>
+        <CursorPos X="3" Y="52"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit7>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="182" Column="3" TopLine="226"/>
       </Position1>
+      <Position2>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="147" Column="3" TopLine="161"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="163" Column="35" TopLine="146"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="164" Column="17" TopLine="146"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas"/>
+        <Caret Line="168" Column="31" TopLine="155"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="140" Column="16" TopLine="127"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="49" Column="32" TopLine="43"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="1154" TopLine="1129"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="186" Column="3" TopLine="175"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="164" Column="17" TopLine="147"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="169" Column="40" TopLine="156"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="168" Column="43" TopLine="194"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="58" Column="28" TopLine="55"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="173" Column="3" TopLine="162"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="59" Column="15" TopLine="45"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="198" Column="3" TopLine="193"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="57" Column="15" TopLine="46"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="207" Column="5" TopLine="190"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="184" Column="3" TopLine="170"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="210" Column="17" TopLine="198"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="184" Column="3" TopLine="170"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="155" Column="3" TopLine="153"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <Caret Line="59" Column="15" TopLine="44"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uFormPrincipal.pas"/>
+        <Caret Line="211" Column="32" TopLine="201"/>
+      </Position24>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

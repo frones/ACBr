@@ -14,7 +14,7 @@ object Form6: TForm6
   Font.Name = 'Tahoma'
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object Image1: TImage
     Left = 0
     Height = 40
@@ -413,8 +413,8 @@ object Form6: TForm6
   end
   object pc1: TPageControl
     Left = 0
-    Height = 214
-    Top = 235
+    Height = 153
+    Top = 296
     Width = 731
     ActivePage = ts1
     Align = alBottom
@@ -426,7 +426,7 @@ object Form6: TForm6
     TabOrder = 4
     object ts1: TTabSheet
       Caption = 'Log de erros'
-      ClientHeight = 184
+      ClientHeight = 123
       ClientWidth = 723
       Font.Color = clWindowText
       Font.Height = -14
@@ -434,7 +434,7 @@ object Form6: TForm6
       ParentFont = False
       object logErros: TMemo
         Left = 0
-        Height = 184
+        Height = 123
         Top = 0
         Width = 723
         Align = alClient
@@ -508,6 +508,24 @@ object Form6: TForm6
     OnClick = btnRegistrosPAFNFCeClick
     ParentFont = False
     TabOrder = 7
+  end
+  object Button2: TButton
+    Left = 423
+    Height = 31
+    Top = 264
+    Width = 254
+    Caption = 'Paf-NFCe Registro W'
+    OnClick = Button2Click
+    TabOrder = 8
+  end
+  object Button3: TButton
+    Left = 423
+    Height = 31
+    Top = 232
+    Width = 254
+    Caption = 'Paf-NFCe Registro Z'
+    OnClick = Button3Click
+    TabOrder = 9
   end
   object ACBrPAF: TACBrPAF
     LinesBuffer = 1000

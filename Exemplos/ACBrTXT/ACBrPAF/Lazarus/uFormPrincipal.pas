@@ -45,11 +45,16 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, jpeg, ExtCtrls, ACBrPAFRegistros,
-  ComCtrls, ACBrBase;
+  Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, ExtCtrls, ACBrPAFRegistros,
+  ComCtrls, ACBrBase, ACBrPAF_W;
 
 type
+
+  { TForm6 }
+
   TForm6 = class(TForm)
+    Button2: TButton;
+    Button3: TButton;
     GroupBox1: TGroupBox;
     ACBrPAF: TACBrPAF;
     Label1: TLabel;
@@ -76,6 +81,8 @@ type
     cbEAD: TCheckBox;
     Button1: TButton;
     btnRegistrosPAFNFCe: TButton;
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
@@ -125,6 +132,93 @@ begin
   edtCNPJ.Text:=GerarDados('I',14);
   edtIE.Text:=GerarDados('I',14);
   edtIM.Text:=GerarDados('I',14);
+end;
+
+procedure TForm6.Button2Click(Sender: TObject);
+var
+  i: Integer;
+  LRegistroW4: TRegistroW4;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros já lançados são apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //W1
+  ACBrPAF.PAF_W.RegistroW1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_W.RegistroW1.IE               := edtIE.Text;
+  ACBrPAF.PAF_W.RegistroW1.IM               := edtIM.Text;
+  ACBrPAF.PAF_W.RegistroW1.RAZAOSOCIAL      := edtRAZAO.Text;
+
+  ACBrPAF.PAF_W.RegistroW2.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_W.RegistroW2.IE               := edtIE.Text;
+  ACBrPAF.PAF_W.RegistroW2.IM               := edtIM.Text;
+  ACBrPAF.PAF_W.RegistroW2.RAZAOSOCIAL      := edtRAZAO.Text;
+
+
+  ACBrPAF.PAF_W.RegistroW3.NOME:='seu software';
+  ACBrPAF.PAF_W.RegistroW3.VERSAO:='0.0.0';
+
+  for i:=  0 to 5 do
+  begin
+    LRegistroW4:= ACBrPAF.PAF_W.RegistroW4.New;
+    LRegistroW4.ORIGEMDARE := 'A';
+    LRegistroW4.STATUSDARE := 'F';
+    LRegistroW4.CRE := '123';
+    LRegistroW4.DAV := '123';
+    LRegistroW4.PREVENDA := '123';
+    LRegistroW4.VALORTOTALDARE := 4.50;
+  end;
+
+  ACBrPAF.SaveToFile_RegistrosPAF('RegistrosPAFNFCeW.txt');
+
+  if FileExists('RegistrosPAFNFCeW.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCeW.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
+end;
+
+procedure TForm6.Button3Click(Sender: TObject);
+var
+  i: Integer;
+  LRegistroZ4: TRegistroZ4;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros já lançados são apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //W1
+  ACBrPAF.PAF_Z.RegistroZ1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_Z.RegistroZ1.IE               := edtIE.Text;
+  ACBrPAF.PAF_Z.RegistroZ1.IM               := edtIM.Text;
+  ACBrPAF.PAF_Z.RegistroZ1.RAZAOSOCIAL      := edtRAZAO.Text;
+
+  ACBrPAF.PAF_Z.RegistroZ2.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_Z.RegistroZ2.IE               := edtIE.Text;
+  ACBrPAF.PAF_Z.RegistroZ2.IM               := edtIM.Text;
+  ACBrPAF.PAF_Z.RegistroZ2.RAZAOSOCIAL      := edtRAZAO.Text;
+
+  ACBrPAF.PAF_Z.RegistroZ3.NOME:= 'seu softwar';
+  ACBrPAF.PAF_Z.RegistroZ3.VERSAO:=  '0.0.0';
+
+  for i := 0 to 5 do
+  begin
+    LRegistroZ4 := ACBrPAF.PAF_Z.RegistroZ4.New;
+
+    LRegistroZ4.CPF_CNPJ:= '000000000';
+    LRegistroZ4.VL_TOTAL:= i;
+    LRegistroZ4.DATA_INI:= now;
+    LRegistroZ4.DATA_FIM:= now;
+  end;
+
+
+  ACBrPAF.SaveToFile_Z('RegistrosPAFNFCeZ.txt');
+
+  if FileExists('RegistrosPAFNFCeZ.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCeZ.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
 end;
 
 function TForm6.GerarDados(Tipo: Char; Tam: integer): Variant;

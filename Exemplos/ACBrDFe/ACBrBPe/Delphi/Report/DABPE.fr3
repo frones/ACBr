@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TfrxReport Tag="1" Version="5.3.16" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="40401,475989294" ReportOptions.Description.Text="" ReportOptions.LastChange="43273,3983474537" ScriptLanguage="PascalScript" ScriptText.Text="&#13;&#10;procedure Page1OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    MasterContin.Visible   := &#60;Ide.&#34;tpAmb&#34;&#62; = '2';&#13;&#10;    MasterContinge.Visible := &#60;Ide.&#34;tpAmb&#34;&#62; = '2';                                       &#13;&#10;    MasterAgencia.Visible  := Trim(&#60;Agencia.&#34;xNome&#34;&#62;) &#60;&#62; '';&#13;&#10;end;&#13;&#10;  &#13;&#10;procedure MemPassageiroOnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    if &#60;InfPassagem.&#34;nDoc&#34;&#62; &#60;&#62; '' then&#13;&#10;    begin                &#13;&#10;        MemPassageiro.Text := 'DOC [InfPassagem.&#34;nDoc&#34;] - [InfPassagem.&#34;xNome&#34;]';  &#13;&#10;        MemDPassageiro.Visible := True;&#13;&#10;    end                &#13;&#10;    else&#13;&#10;    begin                &#13;&#10;        MemPassageiro.Text := 'PASSAGEIRO NÃO IDENTIFICADO';&#13;&#10;        MemDPassageiro.Visible := False;                                                  &#13;&#10;    end;                        &#13;&#10;end;&#13;&#10;&#13;&#10;procedure MemTipoDescOnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    MemTipoDesc.Visible  := &#60;InfValorBPe.&#34;xDesconto&#34;&#62; &#60;&#62; '';&#13;&#10;    MemDTipoDesc.Visible := &#60;InfValorBPe.&#34;xDesconto&#34;&#62; &#60;&#62; '';        &#13;&#10;end;&#13;&#10;&#13;&#10;procedure MemPlataformaOnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    if (&#60;InfViagem.&#34;Poltrona&#34;&#62; = 0) and (&#60;InfViagem.&#34;Plataforma&#34;&#62; = '') then&#13;&#10;    begin&#13;&#10;        MemPlataforma.Visible := False;&#13;&#10;        Exit;                    &#13;&#10;    end;&#13;&#10;    &#13;&#10;    if &#60;InfViagem.&#34;Poltrona&#34;&#62; = 0 then  // Se não tem Poltrona informada     &#13;&#10;        MemPlataforma.Text := '(Plataforma: [InfViagem.&#34;Plataforma&#34;])'&#13;&#10;    else&#13;&#10;    if &#60;InfViagem.&#34;Plataforma&#34;&#62; = '' then // Se não tem Plataforma informada     &#13;&#10;        MemPlataforma.Text := '(Poltrona: [InfViagem.&#34;Poltrona&#34;])'&#13;&#10;    else&#13;&#10;        MemPlataforma.Text := '(Poltrona: [InfViagem.&#34;Poltrona&#34;] Plataforma: [InfViagem.&#34;Plataforma&#34;])';                                                  &#13;&#10;end;&#13;&#10;&#13;&#10;begin&#13;&#10;&#13;&#10;end.  " OnReportPrint="frxReportOnReportPrint">
+  <Datasets>
+    <item DataSetName="Emitente"/>
+    <item DataSetName="Parametros"/>
+    <item DataSetName="InfPassagem"/>
+    <item DataSetName="InfViagem"/>
+    <item DataSetName="Agencia"/>
+    <item DataSetName="InfValorBPe"/>
+    <item DataSetName="InfBPe"/>
+    <item DataSetName="Ide"/>
+    <item DataSetName="Pag"/>
+    <item DataSetName="ProcBPe"/>
+    <item DataSetName="InfAdic"/>
+    <item DataSetName="Imp"/>
+  </Datasets>
+  <Variables>
+    <item Name=" Acbr"/>
+    <item Name="varTotalPaginas"/>
+  </Variables>
+  <Styles>
+    <item Name="Style1" Font.Charset="1" Font.Color="-16777208" Font.Height="-13" Font.Name="Arial" Font.Style="0" Frame.ShadowWidth="2" Frame.LeftLine.Width="0,1"/>
+  </Styles>
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="76" PaperHeight="297" PaperSize="256" LeftMargin="2" RightMargin="2" TopMargin="2" BottomMargin="0" ColumnWidth="0" ColumnPositions.Text="" BackPictureVisible="False" EndlessHeight="True" LargeDesignHeight="True" HGuides.Text="" VGuides.Text="18,89765" OnBeforePrint="Page1OnBeforePrint">
+    <TfrxPageFooter Name="PageFooter1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Font.Charset="1" Font.Color="0" Font.Height="-7" Font.Name="Times New Roman" Font.Style="0" Height="11,33858268" Left="0" ParentFont="False" Top="994,01639" Width="272,12616"/>
+    <TfrxReportTitle Name="ReportTitle1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Times New Roman" Font.Style="0" Height="0" Left="0" ParentFont="False" Top="18,89765" Width="272,12616"/>
+    <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="86,14966" Left="0" Top="241,88992" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo6" Left="0" Top="7" Width="34,01568701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Origem:"/>
+      <TfrxMemoView Name="Memo7" Left="30,01585299" Top="7" Width="241,133858267717" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfPassagem.&#34;xLocOrig&#34;] ([Ide.&#34;UFIni&#34;])"/>
+      <TfrxMemoView Name="Memo8" Left="0" Top="18,33859" Width="34,01568701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Destino:"/>
+      <TfrxMemoView Name="Memo9" Left="31,01577" Top="18,33859" Width="240" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfPassagem.&#34;xLocDest&#34;] ([Ide.&#34;UFFim&#34;])"/>
+      <TfrxMemoView Name="Memo11" Left="72,25201" Top="33,45671" Width="26,45662701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Data:"/>
+      <TfrxMemoView Name="Memo12" Left="93,70872" Top="33,45671" Width="51,02358299" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfPassagem.&#34;DataEmb&#34;]"/>
+      <TfrxMemoView Name="Memo13" Left="147,62214" Top="33,45671" Width="34,01568701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Horário:"/>
+      <TfrxMemoView Name="Memo14" Left="177,63791" Top="33,45671" Width="32,12593299" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfPassagem.&#34;HoraEmb&#34;]"/>
+      <TfrxMemoView Name="MemPlataforma" Align="baCenter" Left="19,842568505" Top="44,7953" Width="232,44102299" Height="11,33858268" OnBeforePrint="MemPlataformaOnBeforePrint" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxMemoView Name="Memo16" Left="0" Top="59,91342" Width="34,01568701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Prefixo:"/>
+      <TfrxMemoView Name="Memo17" Left="30,45671" Top="59,91342" Width="73,70076299" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfViagem.&#34;Prefixo&#34;]"/>
+      <TfrxMemoView Name="Memo18" Left="108,37013" Top="59,91342" Width="26,45662701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Linha:"/>
+      <TfrxMemoView Name="Memo19" Left="131,60637" Top="59,91342" Width="147,4015748" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfViagem.&#34;xPercurso&#34;]"/>
+      <TfrxMemoView Name="Memo20" Left="0" Top="71,25201" Width="22,67709701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Tipo:"/>
+      <TfrxMemoView Name="Memo21" Left="18,89765" Top="71,25201" Width="190,86619299" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfViagem.&#34;tpServico&#34;]"/>
+      <TfrxLineView Name="Line3" Left="0" Top="86,14966" Width="287,24409449" Height="0" Color="0" Frame.Typ="4" Frame.Width="0,1"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterEmitente" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="50,13389" Left="0" Top="124,72449" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo10" Align="baWidth" Left="0" Top="4,5906" Width="272,12616" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="[Emitente.&#34;XNome&#34;]"/>
+      <TfrxMemoView Name="Memo1" Align="baWidth" Left="0" Top="15,92919" Width="272,12616" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="CNPJ [Emitente.&#34;CNPJ&#34;] IE: [Emitente.&#34;IE&#34;]"/>
+      <TfrxMemoView Name="Memo2" Align="baWidth" Left="0" Top="27,26778" Width="272,12616" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="[Emitente.&#34;Xlgr&#34;], [Emitente.&#34;Nro&#34;], [Emitente.&#34;XBairro&#34;], [Emitente.&#34;XMun&#34;], [Emitente.&#34;UF&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxMemoView Name="Memo3" Align="baCenter" Left="26,45679299" Top="38,60637" Width="219,21257402" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="Documento Auxiliar do Bilhete de Passagem Eletrônico">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxLineView Name="Line2" Left="0" Top="50,13389" Width="287,24409449" Height="0" Color="0" Frame.Typ="4" Frame.Width="0,1"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterAgencia" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="79,37013" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo4" Align="baWidth" Left="0" Top="0" Width="272,12616" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="CNPJ [Agencia.&#34;CNPJ&#34;] [Agencia.&#34;xNome&#34;]"/>
+      <TfrxMemoView Name="Memo5" Align="baWidth" Left="0" Top="11,33859" Width="272,12616" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="[Agencia.&#34;xLgr&#34;], [Agencia.&#34;Nro&#34;], [Agencia.&#34;xBairro&#34;], [Agencia.&#34;xMun&#34;], [Agencia.&#34;UF&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+          <item/>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxLineView Name="Line1" Left="0" Top="22,67718" Width="287,24409449" Height="0" Color="0" Frame.Typ="4" Frame.Width="0,1"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterValores" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="52,91341268" Left="0" Top="385,51206" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1" Stretched="True">
+      <TfrxMemoView Name="Memo25" Left="0" Top="0" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Valor Total R$"/>
+      <TfrxMemoView Name="Memo26" Left="0" Top="11,33859" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Desconto R$"/>
+      <TfrxMemoView Name="Memo27" Left="0" Top="22,67718" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Valor a Pagar R$"/>
+      <TfrxMemoView Name="Memo31" Left="138,84261" Top="0" Width="132,28346701" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;vBP&#34;]"/>
+      <TfrxMemoView Name="Memo32" Left="138,84261" Top="11,33858268" Width="132,283464566929" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;vDesconto&#34;]"/>
+      <TfrxMemoView Name="Memo33" Left="138,84261" Top="22,67716535" Width="132,283464566929" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;vPgto&#34;]"/>
+      <TfrxMemoView Name="Memo34" Left="0" Top="41,57483" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="FORMA PAGAMENTO"/>
+      <TfrxMemoView Name="Memo35" Left="138,84261" Top="41,57483" Width="132,283464566929" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="VALOR PAGO R$"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterConsulta" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="41,01576268" Left="0" Top="529,1342" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo40" Align="baCenter" Left="7,55914299" Top="7" Width="257,00787402" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="Consulte pela Chave de Acesso em">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxMemoView Name="Memo41" Align="baCenter" Left="7,55914299" Top="18,33859" Width="257,00787402" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="[Parametros.&#34;URL&#34;]"/>
+      <TfrxMemoView Name="Memo42" Align="baCenter" Left="7,55914299" Top="29,67718" Width="257,00787402" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="[InfBpe.&#34;ChaveBPe&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterPassageiro" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="30,23623268" Left="0" Top="593,38621" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="MemDPassageiro" Left="18,89765" Top="7" Width="60,47239701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="PASSAGEIRO:"/>
+      <TfrxMemoView Name="MemPassageiro" Left="79,37013" Top="7" Width="198,42519685" Height="11,33858268" OnBeforePrint="MemPassageiroOnBeforePrint" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" WordBreak="True" WordWrap="False" VAlign="vaBottom" Text="">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxMemoView Name="MemDTipoDesc" Left="49,13389" Top="18,89765" Width="86,92910701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="TIPO DE DESCONTO:"/>
+      <TfrxMemoView Name="MemTipoDesc" Left="134,28355" Top="18,89765" Width="109,60628701" Height="11,33858268" OnBeforePrint="MemTipoDescOnBeforePrint" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" WordBreak="True" WordWrap="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;xDesconto&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterQrCode" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="113,38582677" Left="0" Top="786,14224" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxPictureView Name="ImgQrCode" Align="baWidth" Left="0" Top="0" Width="272,12616" Height="113,38582677" Center="True" Frame.Color="16711935" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterComponentes" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="11,33858268" Left="0" Top="351,49629" Width="272,12616" ColumnWidth="0" ColumnGap="0" DataSetName="InfValorBPe" RowCount="0">
+      <TfrxMemoView Name="Memo22" Left="0" Top="0" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;tpComp&#34;]"/>
+      <TfrxMemoView Name="Memo23" Left="139,06308" Top="0" Width="132,28346457" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;vComp&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterFPagto" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="11,33858268" Left="0" Top="461,10266" Width="272,12616" ColumnWidth="0" ColumnGap="0" DataSetName="Pag" RowCount="0">
+      <TfrxMemoView Name="Memo36" Left="0" Top="0" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="[Pag.&#34;tPag&#34;]"/>
+      <TfrxMemoView Name="Memo38" Left="139,06308" Top="0" Width="132,283464566929" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[Pag.&#34;vPag&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterTroco" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="11,33858268" Left="0" Top="495,11843" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo37" Left="0" Top="0" Width="136,06299701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" VAlign="vaBottom" Text="Troco"/>
+      <TfrxMemoView Name="Memo39" Left="138,84261" Top="0" Width="132,283464566929" Height="11,33858268" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" VAlign="vaBottom" Text="[InfValorBPe.&#34;vTroco&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterTributos" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="11,33858268" Left="0" Top="922,20532" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1" Stretched="True">
+      <TfrxMemoView Name="Memo45" Align="baWidth" Left="0" Top="0" Width="272,12616" Height="11,33858268" StretchMode="smMaxHeight" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="[InfAdic.&#34;infCpl&#34;] &#13;&#10;[InfAdic.&#34;infAdFisco&#34;] &#13;&#10;[Imp.&#34;infAdFisco&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterContin" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="20,89765" Left="0" Top="196,53556" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo43" Align="baCenter" Left="3,7855547" Top="5" Width="264,5550506" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="EMITIDO EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL"/>
+      <TfrxLineView Name="Line4" Left="0" Top="20,89765" Width="287,24409449" Height="0" Color="0" Frame.Typ="4" Frame.Width="0,1"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterBPe" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="18,33858268" Left="0" Top="646,29963" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo47" Align="baCenter" Left="11,338631495" Top="7" Width="249,44889701" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="BP-e nº [Ide.&#34;nBp&#34; #n%0.9d]  Série [Ide.&#34;serie&#34; #n%0.3d]  [Ide.&#34;DataEmi&#34;]  [Ide.&#34;HoraEmi&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterProtocolo" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="28,89764268" Left="0" Top="733,22882" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo24" Align="baCenter" Left="3,77960567" Top="5" Width="264,56694866" Height="11,33858268" AllowHTMLTags="True" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="&#60;b&#62;Protocolo de autorização:&#60;/b&#62; [ProcBPe.&#34;nProt&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxMemoView Name="Memo28" Align="baCenter" Left="3,77960567" Top="16,11812" Width="264,56694866" Height="11,33858268" AllowHTMLTags="True" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="&#60;b&#62;Data de autorização:&#60;/b&#62; [ProcBPe.&#34;DataAut&#34;] [ProcBPe.&#34;HoraAut&#34;]">
+        <Formats>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MasterContinge" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="20,89765" Left="0" Top="687,87446" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo44" Align="baCenter" Left="1,8957897" Top="5" Width="268,3345806" Height="11,33858268" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="EMITIDO EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL"/>
+    </TfrxMasterData>
+  </TfrxReportPage>
+</TfrxReport>

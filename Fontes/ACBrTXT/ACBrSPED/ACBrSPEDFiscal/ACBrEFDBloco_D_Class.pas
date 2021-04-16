@@ -1615,7 +1615,7 @@ begin
                LFill( VL_PIS,0,2, True ) +
                LFill( VL_COFINS,0,2, True ) +
                LFill( COD_CTA,0, booConsiderarComoValorNulo ) +
-               LFill( intTP_ASSINANTE, 0, booConsiderarComoValorNulo ) ) ;
+               LFill( intTP_ASSINANTE, 0, True ) ) ;
         end;
         /// Registros FILHOS
         WriteRegistroD510( RegD001.RegistroD500.Items[intFor] ) ;

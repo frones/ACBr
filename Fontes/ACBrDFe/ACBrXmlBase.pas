@@ -63,6 +63,7 @@ function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
 function IncluirCDATA(const aXML: string): string;
+function RemoverCDATA(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
@@ -119,6 +120,12 @@ end;
 function IncluirCDATA(const aXML: string): string;
 begin
   Result := '<![CDATA[' + aXML + ']]>';
+end;
+
+function RemoverCDATA(const aXML: string): string;
+begin
+  Result := StringReplace(aXML, '<![CDATA[', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;

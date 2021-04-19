@@ -6253,6 +6253,9 @@ begin
     MostrarSetup := ckgBOLMostrar.Checked[2];
     PrinterName := cbxBOLImpressora.Text;
 
+    AlterarEscalaPadrao:= FMonitorConfig.BOLETO.Layout.AlteraEscala;
+    NovaEscala := FMonitorConfig.BOLETO.Layout.Escala;
+
     wDirArquivo := Trim(deBOLDirArquivo.Text);
     if wDirArquivo = '' then
       wDirArquivo := ExtractFilePath(Application.ExeName)
@@ -9760,7 +9763,6 @@ begin
     AddLinesLog( 'ERRO: Erro ao carregar cidades! Verifique a configuração de CONSULTA IBGE.'  );
   end;
 end;
-
 
 procedure TFrmACBrMonitor.LeDadosRedeSAT;
 begin

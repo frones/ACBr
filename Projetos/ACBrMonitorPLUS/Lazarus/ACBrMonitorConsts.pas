@@ -1283,6 +1283,8 @@ const
   CKeyBOLETOPreview =                       'Preview';
   CKeyBOLETOProgresso =                     'Progresso';
   CKeyBOLETOSetup =                         'Setup';
+  CKeyBOLETOAlteraEscala =                  'AlteraEscala';
+  CKeyBOLETOEscala =                        'Escala';
   CKeyBOLETOLayout =                        'Layout';
   CKeyBOLETOFiltro =                        'Filtro';
   CKeyBOLETODirArquivoBoleto =              'DirArquivoBoleto';

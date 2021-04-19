@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+15/04/2021
+-- ACBrMonitor1 --
+[+] Adicionado configuração de ajustes de Escala no Boleto.
+
+06/04/2021
+-- DoACBrNFeUnit --
+[*] Correção nos métodos onde exige recuperação do nome PDF gerado.
+
+01/04/2021
+-- DoACBrCTeUnit, DoACBrMDFeUnit --
+[*] Alteração no método de Envio em lote para ser sempre Assíncrono
+
 25/03/2021
 -- DoACBrNFeUnit --
 [*] Adicionado Melhorias para Agrupar respostas dos métodos de Envio de NFe, dessa forma evita problemas na geração de respostas 

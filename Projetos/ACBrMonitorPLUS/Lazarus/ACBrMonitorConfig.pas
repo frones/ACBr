@@ -620,6 +620,8 @@ type
     Preview                    : Boolean;
     Progresso                  : Boolean;
     Setup                      : Boolean;
+    AlteraEscala               : Boolean;
+    Escala                     : Integer;
     Layout                     : Integer;
     Filtro                     : Integer;
     DirArquivoBoleto           : String ;
@@ -1376,6 +1378,8 @@ begin
       Ini.WriteBool(   CSecBOLETO, CKeyBOLETOPreview,       Preview       );
       ini.WriteBool(   CSecBOLETO, CKeyBOLETOProgresso,     Progresso     );
       ini.WriteBool(   CSecBOLETO, CKeyBOLETOSetup,         Setup         );
+      ini.WriteBool(   CSecBOLETO, CKeyBOLETOAlteraEscala,  AlteraEscala  );
+      ini.WriteInteger(CSecBOLETO, CKeyBOLETOEscala,        Escala        );
       ini.WriteInteger(CSecBOLETO, CKeyBOLETOLayout,        Layout        );
       ini.WriteInteger(CSecBOLETO, CKeyBOLETOFiltro,        Filtro        );
       ini.WriteString( CSecBOLETO, CKeyBOLETODirArquivoBoleto,  DirArquivoBoleto       );
@@ -2076,9 +2080,11 @@ begin
       Preview                :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETOPreview,          Preview                );
       Progresso              :=  ini.ReadBool(   CSecBOLETO, CKeyBOLETOProgresso,        Progresso              );
       Setup                  :=  ini.ReadBool(   CSecBOLETO, CKeyBOLETOSetup,            Setup                  );
+      AlteraEscala           :=  ini.ReadBool(   CSecBOLETO, CKeyBOLETOAlteraEscala,     AlteraEscala           );
+      Escala                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOEscala,           Escala                 );
       Layout                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOLayout,           Layout                 );
       Filtro                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOFiltro,           Filtro                 );
-      DirArquivoBoleto       :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoBoleto,   DirArquivoBoleto     );
+      DirArquivoBoleto       :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoBoleto, DirArquivoBoleto       );
       Impressora             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOImpressora,       Impressora             );
       NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
       
@@ -2743,6 +2749,8 @@ begin
     Preview                :=  True;
     Progresso              :=  True;
     Setup                  :=  True;
+    AlteraEscala           :=  True;
+    Escala                 := 96;
     Layout                 :=  0;
     Filtro                 :=  0;
     DirArquivoBoleto       :=  '';

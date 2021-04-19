@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2021
+-- pnfsNFSeG --
+[*] https://www.projetoacbr.com.br/forum/topic/61615-troca-webservice-nova-lima-issdigital-para-abaco/?do=findComment&comment=407414&_rid=63
+  Por: esdmjr
+
 13/04/2021
 -- pnfsLerListaNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/62188-problema-nfsebrasil/

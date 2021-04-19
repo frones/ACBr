@@ -744,6 +744,8 @@ begin
 
             GerarGrupoCNPJCPF(Cnpj, True);
 
+            Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 0, IM, '');
+
             Gerador.wGrupo('/Prestador');
             Gerador.wCampo(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +

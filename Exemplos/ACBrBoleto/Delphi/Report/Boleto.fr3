@@ -193,6 +193,7 @@
       <TfrxMemoView Name="Memo144" AllowVectorExport="True" Left="548,03185" Top="450,98454" Width="195,71103771" Height="11,33859" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Typ="1" ParentFont="False" Text=" ( = ) Valor Cobrado"/>
       <TfrxMemoView Name="Memo147" AllowVectorExport="True" Left="548,03185" Top="462,34817636" Width="167,92300576" Height="15,11811024" DataSetName="Titulo" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Arial" Font.Style="0" Frame.Typ="1" HAlign="haRight" ParentFont="False" WordWrap="False" Text=""/>
       <TfrxMemoView Name="Memo148" AllowVectorExport="True" Left="0" Top="430,86642" Width="533,96351333" Height="45,61224484" DataSetName="Titulo" Font.Charset="1" Font.Color="-16777208" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="0" ParentFont="False" Text="[Banco.&#34;OrientacoesBanco&#34;]"/>
+      <TfrxMemoView Name="Memo149" AllowVectorExport="True" Left="0" Top="712,44094488" Width="132,28346457" Height="18,89765" DataSetName="Titulo" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Arial" Font.Style="0" Frame.Typ="10" HAlign="haCenter" LineSpacing="0" ParagraphGap="0,05" ParentFont="False" WordWrap="False" Text="[Titulo.&#34;UsoBanco&#34;]"/>
     </TfrxMasterData>
   </TfrxReportPage>
 </TfrxReport>

@@ -118,6 +118,7 @@
         </Formats>
       </TfrxMemoView>
       <TfrxMemoView Name="Memo28" AllowVectorExport="True" Left="3,77953" Top="36,01577" Width="121,70080205" Height="11,33859" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Typ="0" ParentFont="False" Text="Recibo do Pagador"/>
+      <TfrxMemoView Name="Memo77" AllowVectorExport="True" Left="136,06308" Top="131,37686103" Width="124,72440457" Height="18,89765" DataSetName="Titulo" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Arial" Font.Style="0" Frame.Typ="2" HAlign="haCenter" ParentFont="False" WordWrap="False" Text="[Titulo.&#34;UsoBanco&#34;]"/>
     </TfrxMasterData>
   </TfrxReportPage>
 </TfrxReport>

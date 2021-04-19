@@ -145,6 +145,7 @@
       <TfrxMemoView Name="Memo142" AllowVectorExport="True" Left="464" Top="476,81508971" Width="54,48825" Height="18,89765" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" Frame.Typ="0" ParentFont="False" Text="CPF / CNPJ:"/>
       <TfrxMemoView Name="Memo143" AllowVectorExport="True" Left="520" Top="476,75448364" Width="154,41620303" Height="18,89765" DataField="Sacado_CNPJCPF" DataSetName="Titulo" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Arial" Font.Style="0" Frame.Typ="0" ParentFont="False" WordWrap="False" Text="[Titulo.&#34;Sacado_CNPJCPF&#34;]"/>
       <TfrxMemoView Name="Memo3" Align="baRight" AllowVectorExport="True" Left="483,77984" Top="0" Width="234,33086" Height="15,8740157480315" AutoWidth="True" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" Frame.Typ="0" HAlign="haRight" ParentFont="False" Text="Recibo do Pagador"/>
+      <TfrxMemoView Name="Memo144" AllowVectorExport="True" Left="-0,40909" Top="713,86202073" Width="132,28346457" Height="18,89765" DataSetName="Titulo" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Arial" Font.Style="0" Frame.Typ="10" HAlign="haCenter" ParentFont="False" WordWrap="False" Text="[Titulo.&#34;UsoBanco&#34;]"/>
     </TfrxMasterData>
   </TfrxReportPage>
 </TfrxReport>

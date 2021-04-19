@@ -318,7 +318,7 @@ begin
         begin
           FConteudo.Add (
             AddCampo('0040') +
-            AddCampo(IntToStr(COD_IMOVEL)) +
+            AddCampo(Format('%.3d',[(COD_IMOVEL)])) +
             AddCampo(PAIS) +
             AddCampo(MOEDA) +
             AddCampo(IntToStr(CAD_ITR)) +
@@ -343,7 +343,7 @@ begin
             begin
               FConteudo.Add (
                 AddCampo('0045') +
-                AddCampo(IntToStr(Bloco0040.Blocos[i].Bloco0040.COD_IMOVEL)) +
+                AddCampo(Format('%.3d',[(Bloco0040.Blocos[i].Bloco0040.COD_IMOVEL)])) +
                 AddCampo(TipoContraparteToStr(TIPO_CONTRAPARTE)) +
                 AddCampo(ID_CONTRAPARTE) +
                 AddCampo(NOME_CONTRAPARTE) +
@@ -364,9 +364,9 @@ begin
         begin
           FConteudo.Add (
             AddCampo('0050') +
-            AddCampo(IntToStr(COD_CONTA)) +
+            AddCampo(Format('%.3d', [(COD_CONTA)])) +   // "Código da conta bancária (do Registro 0050)  Caso tenha sido pago em espécie ""000""  caso utilize numerário em trânsito ""999"""
             AddCampo(PAIS_CTA) +
-            AddCampo(IntToStr(BANCO)) +
+            AddCampo(Format('%.3d', [(BANCO)])) +
             AddCampo(NOME_BANCO) +
             AddCampo(AGENCIA) +
             AddCampo(NUM_CONTA, False)
@@ -402,8 +402,8 @@ begin
           FConteudo.Add(
             AddCampo('Q100') +
             AddCampo(formatDate(DATA)) +
-            AddCampo(IntToStr(COD_IMOVEL)) +
-            AddCampo(IntToStr(COD_CONTA)) +
+            AddCampo(Format('%.3d',[(COD_IMOVEL)])) +
+            AddCampo(Format('%.3d',[(COD_CONTA)])) +
             AddCampo(NUM_DOC) +
             AddCampo(TipoDocToStr(TIPO_DOC)) +
             AddCampo(HISTORICO) +

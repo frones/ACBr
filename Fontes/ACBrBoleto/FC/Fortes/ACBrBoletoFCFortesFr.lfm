@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 436
+  Left = 402
   Height = 600
-  Top = 137
+  Top = 188
   Width = 1200
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 600
@@ -14,9 +14,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   OnDestroy = FormDestroy
   LCLVersion = '2.0.10.0'
   object LayoutBoleto: TRLReport
-    Left = 8
+    Left = 16
     Height = 1123
-    Top = 8
+    Top = 32
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -1004,7 +1004,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -12
         Font.Name = 'Arial'
         ParentFont = False
-        Visible = False
       end
       object RLLabel75: TRLLabel
         Left = 4
@@ -2011,7 +2010,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -12
         Font.Name = 'Arial'
         ParentFont = False
-        Visible = False
       end
       object RLLabel156: TRLLabel
         Left = 131
@@ -3239,9 +3237,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 178
+    Left = 24
     Height = 1123
-    Top = 77
+    Top = 152
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -4382,12 +4380,24 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         ParentFont = False
       end
+      object txtUsoBanco: TRLLabel
+        Left = 155
+        Height = 13
+        Top = 131
+        Width = 50
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 151
+    Left = 120
     Height = 1123
-    Top = 52
+    Top = 96
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -5041,7 +5051,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        Visible = False
       end
       object RLLabel248: TRLLabel
         Left = 131
@@ -5055,9 +5064,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtCarteiraDet: TRLLabel
-        Left = 131
+        Left = 940
         Height = 14
-        Top = 139
+        Top = 112
         Width = 58
         Alignment = taCenter
         AutoSize = False
@@ -6706,9 +6715,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 74
+    Left = 32
     Height = 1123
-    Top = 97
+    Top = 88
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -7611,17 +7620,16 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtUsoBancoRecTop1: TRLLabel
-        Left = 4
+        Left = 5
         Height = 13
-        Top = 301
-        Width = 124
+        Top = 313
+        Width = 116
         AutoSize = False
         Caption = 'Uso do Banco'
         Font.Color = clBlack
-        Font.Height = -8
+        Font.Height = -12
         Font.Name = 'Arial'
         ParentFont = False
-        Visible = False
       end
       object RLLabel140: TRLLabel
         Left = 131
@@ -8075,6 +8083,18 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Angle = 90
         DrawKind = dkLine
       end
+      object RLLabel249: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 302
+        Width = 49
+        Caption = 'Uso do Banco'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
     end
     object RLDraw113: TRLDraw
       Left = 21
@@ -8098,9 +8118,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutTermica: TRLReport
-    Left = 216
+    Left = 56
     Height = 302
-    Top = 158
+    Top = 272
     Width = 907
     Margins.LeftMargin = 2
     Margins.TopMargin = 2
@@ -8293,11 +8313,11 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         DrawKind = dkLine
       end
       object lTertxtLinhaDigitavel: TRLLabel
-        Left = 414
-        Height = 20
-        Top = 30
-        Width = 462
-        AutoSize = False
+        Left = 418
+        Height = 19
+        Top = 27
+        Width = 458
+        Anchors = [fkLeft, fkRight]
         Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
         Font.Color = clBlack
         Font.Height = -16
@@ -8599,7 +8619,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -12
         Font.Name = 'Arial'
         ParentFont = False
-        Visible = False
       end
       object RLLabel299: TRLLabel
         Left = 299

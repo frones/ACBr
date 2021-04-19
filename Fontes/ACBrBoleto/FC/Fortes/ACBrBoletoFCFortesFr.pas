@@ -133,8 +133,10 @@ type
     RLLabel11: TRLLabel;
     RLLabel123: TRLMemo;
     RLLabel161: TRLMemo;
+    RLLabel249: TRLLabel;
     RLLabel80: TRLMemo;
     RLLabel88: TRLLabel;
+    txtUsoBanco: TRLLabel;
     txtEndCedente: TRLMemo;
     txtEndCedente1: TRLMemo;
     txtEndSacadorAval3: TRLLabel;
@@ -1470,7 +1472,7 @@ begin
                                                 FormatDateTime('dd/mm/yyyy',Now),
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
 
-      txtUsoBanco2.Caption            := Titulo.UsoBanco;
+      txtUsoBanco.Caption             := Titulo.UsoBanco;
       txtCarteira.Caption             := Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtParcela.Caption              := IntToStrZero(Titulo.Parcela,3)+' /';

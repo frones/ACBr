@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2021
+-- ACBrDANFCeFortesFrA4 --
+[*] Ajuste para conversão de valores Currency utilizando função FormatFloatBr, motivo: Problemas na emissão em Linux
+
 11/11/2020
 -- ACBrNFeDANFeRLRetrado --
 [*] Ajuste no posicionamento e tamanho do campo Codigo de Barras (referente correção codigo imprimindo colorido em linux) no DFM e LFM. 

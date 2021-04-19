@@ -27,7 +27,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     OnDataRecord = rlReportA4DataRecord
     object RLBand1: TRLBand
       Left = 38
-      Top = 38
+      Top = 112
       Width = 718
       Height = 80
       BandType = btTitle
@@ -140,7 +140,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand2: TRLBand
       Left = 38
-      Top = 118
+      Top = 192
       Width = 718
       Height = 36
       BandType = btTitle
@@ -182,7 +182,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand3: TRLBand
       Left = 38
-      Top = 154
+      Top = 228
       Width = 718
       Height = 18
       BandType = btColumnHeader
@@ -295,7 +295,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object subItens: TRLSubDetail
       Left = 38
-      Top = 172
+      Top = 246
       Width = 718
       Height = 58
       Borders.Sides = sdCustom
@@ -308,7 +308,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 1
         Top = 0
         Width = 716
-        Height = 18
+        Height = 17
         GreenBarPrint = True
         object RLLabel13: TRLLabel
           Left = 0
@@ -319,7 +319,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = '1234567890123'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -330,8 +330,14 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Left = 112
           Top = 0
           Width = 202
-          Height = 16
+          Height = 15
           Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
           BeforePrint = RLMemo1BeforePrint
         end
         object RLLabel16: TRLLabel
@@ -344,7 +350,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = 'Quantidade'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -361,7 +367,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = 'Vlr.Unit'#225'rio'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -378,7 +384,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = 'Desconto'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -395,7 +401,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = 'Acr'#233'scimo'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -412,7 +418,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Caption = 'Valor Total:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlCenter
@@ -423,7 +429,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand5: TRLBand
       Left = 38
-      Top = 230
+      Top = 304
       Width = 718
       Height = 18
       BandType = btSummary
@@ -497,7 +503,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail1: TRLSubDetail
       Left = 38
-      Top = 320
+      Top = 394
       Width = 718
       Height = 59
       Borders.Sides = sdCustom
@@ -652,7 +658,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail2: TRLSubDetail
       Left = 38
-      Top = 379
+      Top = 453
       Width = 718
       Height = 446
       Borders.Sides = sdCustom
@@ -1186,7 +1192,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand12: TRLBand
       Left = 38
-      Top = 248
+      Top = 322
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1232,7 +1238,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand13: TRLBand
       Left = 38
-      Top = 266
+      Top = 340
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1278,7 +1284,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand14: TRLBand
       Left = 38
-      Top = 302
+      Top = 376
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1323,7 +1329,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand17: TRLBand
       Left = 38
-      Top = 284
+      Top = 358
       Width = 718
       Height = 18
       BandType = btSummary

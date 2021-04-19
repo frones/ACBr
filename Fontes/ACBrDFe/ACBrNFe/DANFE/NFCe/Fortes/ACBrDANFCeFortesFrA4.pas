@@ -535,27 +535,27 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel16BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat(',0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.qCom) + ' ' +
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.qCom, ',0.00##') + ' ' +
           self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.uCom;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel17BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vUnCom);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vUnCom, 'R$ ,0.00##');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel18BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vDesc);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vDesc, ',0.00##');
   PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vOutro);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vOutro, ',0.00##');
   PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
@@ -568,19 +568,19 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel20BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vProd);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vProd, 'R$ ,0.00##');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel22BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat(',0', self.FACBrNFeDANFCeFortesA4.FpNFe.Det.Count);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det.Count, ',0');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel23BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vProd);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vProd, 'R$ ,0.00;R$ -,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel27BeforePrint(Sender: TObject;
@@ -592,7 +592,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel28BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.pag[self.FNumPag].vPag);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.pag[self.FNumPag].vPag, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel2BeforePrint(Sender: TObject;
@@ -611,7 +611,7 @@ begin
   begin
     Troco := FACBrNFeDANFCeFortesA4.vTroco;
   end;
-  Text := FormatFloat('R$ ,0.00', Troco);
+  Text := FormatFloatBr(Troco, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel32BeforePrint(Sender: TObject;
@@ -672,19 +672,19 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel39BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vDesc);
+  Text := FormatFloatBr(self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vDesc, 'R$ ,0.00;R$ -,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel3BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro, 'R$ ,0.00;R$ -,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel41BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vNF);
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vNF, 'R$ ,0.00;R$ -,0.00');
 end;
 
 
@@ -694,22 +694,20 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel45BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
- Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribFed);
+ Text:= FormatFloatBr( self.FACBrNFeDANFCeFortesA4.vTribFed, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel47BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
- Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribEst);
+ Text:=FormatFloatBr( self.FACBrNFeDANFCeFortesA4.vTribEst, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel49BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
- Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribMun);
+ Text:=FormatFloatBr( self.FACBrNFeDANFCeFortesA4.vTribMun, 'R$ ,0.00');
 end;
-
-
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel4BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
@@ -717,8 +715,6 @@ begin
   PrintIt := Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.IM) <> '';
   Text    := ACBrStr('Inscrição Municipal: ') + self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.IM;
 end;
-
-
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel5BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
@@ -1033,7 +1029,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel52BeforePrint(Sender: TObject;
   var AText: string; var PrintIt: Boolean);
 begin
-  AText := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete);
+  AText := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete, 'R$ ,0.00;R$ -,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RlPelosProdutosBeforePrint(Sender: TObject;
@@ -1048,7 +1044,7 @@ begin
 
     dPelosProdutos := dPelosProdutos - ( vTribFed + vTribEst + vTribMun) ;
   end;
-  Text  := FormatFloat('R$ ,0.00', dPelosProdutos );
+  Text  := FormatFloatBr( dPelosProdutos, 'R$ ,0.00' );
 end;
 
 
@@ -1062,7 +1058,7 @@ begin
   begin
     if ( FpNFe.Total.ICMSTot.vTotTrib > 0 ) then
       sTemp := ACBrStr('Informação dos Tributos Totais (Lei Federal 12.741/2012 ) ')+
-                FormatFloat('R$ ,0.00', FpNFe.Total.ICMSTot.vTotTrib);
+                FormatFloatBr( FpNFe.Total.ICMSTot.vTotTrib, 'R$ ,0.00');
     if Trim(FonteTributos) <> '' then
       sTemp := sTemp + 'Fonte : ' + FonteTributos+'  '+ ChaveTributos+' ';
   end;

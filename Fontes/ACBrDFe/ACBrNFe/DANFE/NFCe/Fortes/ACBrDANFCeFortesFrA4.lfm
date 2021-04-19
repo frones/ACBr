@@ -11,7 +11,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '2.0.8.0'
+  LCLVersion = '2.0.10.0'
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
@@ -20,10 +20,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     OnDataRecord = rlReportA4DataRecord
     object RLBand1: TRLBand
       Left = 38
@@ -36,20 +32,12 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object imgLogo: TRLImage
         Left = 4
         Height = 70
         Top = 5
         Width = 75
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
         BeforePrint = imgLogoBeforePrint
       end
@@ -67,10 +55,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = lNomeFantasiaBeforePrint
       end
       object RLLabel1: TRLLabel
@@ -86,10 +70,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel1BeforePrint
       end
       object RLLabel2: TRLLabel
@@ -103,10 +83,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel2BeforePrint
       end
       object RLLabel4: TRLLabel
@@ -121,10 +97,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel4BeforePrint
       end
       object RLLabel5: TRLLabel
@@ -139,10 +111,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel5BeforePrint
       end
       object RLMemo3: TRLMemo
@@ -155,10 +123,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Lines.Strings = (
           'Linha 1'
         )
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLMemo3BeforePrint
       end
     end
@@ -173,10 +137,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel6: TRLLabel
         Left = 112
         Height = 16
@@ -189,10 +149,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel7: TRLLabel
         Left = 200
@@ -206,10 +162,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLBand3: TRLBand
@@ -223,10 +175,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel8: TRLLabel
         Left = 0
         Height = 16
@@ -238,10 +186,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel9: TRLLabel
         Left = 112
@@ -254,10 +198,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel10: TRLLabel
         Left = 320
@@ -271,10 +211,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel11: TRLLabel
         Left = 418
@@ -287,10 +223,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel12: TRLLabel
         Left = 648
@@ -303,10 +235,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel14: TRLLabel
         Left = 498
@@ -319,10 +247,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
@@ -336,10 +260,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel15BeforePrint
       end
     end
@@ -353,21 +273,13 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = subItensDataRecord
       object RLBand4: TRLBand
         Left = 1
-        Height = 18
+        Height = 17
         Top = 0
         Width = 716
         GreenBarPrint = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLLabel13: TRLLabel
           Left = 0
           Height = 16
@@ -376,26 +288,22 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = '1234567890123'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel13BeforePrint
         end
         object RLMemo1: TRLMemo
           Left = 112
-          Height = 16
+          Height = 15
           Top = 0
           Width = 202
           Behavior = [beSiteExpander]
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          ParentFont = False
           BeforePrint = RLMemo1BeforePrint
         end
         object RLLabel16: TRLLabel
@@ -407,14 +315,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Quantidade'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel16BeforePrint
         end
         object RLLabel17: TRLLabel
@@ -426,14 +330,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Vlr.Unitário'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel17BeforePrint
         end
         object RLLabel18: TRLLabel
@@ -445,14 +345,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Desconto'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel18BeforePrint
         end
         object RLLabel19: TRLLabel
@@ -464,18 +360,14 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Acréscimo'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel19BeforePrint
         end
         object RLLabel20: TRLLabel
-          Left = 648
+          Left = 645
           Height = 16
           Top = 0
           Width = 70
@@ -483,14 +375,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Valor Total:'
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel20BeforePrint
         end
       end
@@ -506,10 +394,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel21: TRLLabel
         Left = 0
         Height = 16
@@ -521,10 +405,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel22: TRLLabel
         Left = 159
@@ -537,10 +417,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel22BeforePrint
       end
       object RLLabel23: TRLLabel
@@ -557,10 +433,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel23BeforePrint
       end
       object RLLabel24: TRLLabel
@@ -577,10 +449,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLSubDetail1: TRLSubDetail
@@ -594,10 +462,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawRight = False
       Borders.DrawBottom = True
       Positioning = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = RLSubDetail1DataRecord
       object RLBand6: TRLBand
         Left = 0
@@ -610,10 +474,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLLabel25: TRLLabel
           Left = 419
           Height = 18
@@ -631,10 +491,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel26: TRLLabel
           Left = 559
@@ -654,10 +510,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
       object RLBand7: TRLBand
@@ -670,10 +522,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLLabel27: TRLLabel
           Left = 418
           Height = 16
@@ -686,10 +534,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel27BeforePrint
         end
         object RLLabel28: TRLLabel
@@ -705,10 +549,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel28BeforePrint
         end
       end
@@ -723,10 +563,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand8BeforePrint
         object RLLabel29: TRLLabel
           Left = 508
@@ -741,10 +577,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel30: TRLLabel
           Left = 559
@@ -760,10 +592,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel30BeforePrint
         end
       end
@@ -779,10 +607,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawRight = False
       Borders.DrawBottom = False
       Positioning = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = RLSubDetail2DataRecord
       object RLBand9: TRLBand
         Left = 0
@@ -794,10 +618,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand9BeforePrint
         object RLLabel31: TRLLabel
           Left = 312
@@ -811,10 +631,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel31BeforePrint
         end
       end
@@ -828,10 +644,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand10BeforePrint
         object RLMemo2: TRLMemo
           Left = 1
@@ -839,10 +651,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Top = 16
           Width = 714
           Behavior = [beSiteExpander]
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLMemo2BeforePrint
         end
         object RLLabel34: TRLLabel
@@ -859,10 +667,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
       object RLBand11: TRLBand
@@ -876,10 +680,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand11BeforePrint
         object RLLabel32: TRLLabel
           Left = 1
@@ -895,10 +695,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel32BeforePrint
         end
         object RLLabel33: TRLLabel
@@ -914,10 +710,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel33BeforePrint
         end
         object RLLabel35: TRLLabel
@@ -933,10 +725,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel35BeforePrint
         end
         object RLLabel36: TRLLabel
@@ -953,10 +741,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel37: TRLLabel
           Left = 1
@@ -971,10 +755,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel37BeforePrint
         end
         object lCancelada: TRLLabel
@@ -989,10 +769,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rllFisco: TRLLabel
           Left = 1
@@ -1007,10 +783,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
       object rlbConsumidor: TRLBand
@@ -1024,10 +796,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rlbConsumidorBeforePrint
         object lTitConsumidor: TRLLabel
           Left = 1
@@ -1042,10 +810,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object lEnderecoConsumidor: TRLMemo
           Left = 1
@@ -1062,10 +826,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
             'Endereço Consumidor (Logradouro, nº, bairro, Municí­pio)'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object lCPF_CNPJ_ID: TRLMemo
           Left = 1
@@ -1082,10 +842,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
             'CNPJ/CPF/ID Estrangeiro - CCCCCCCCCCCCCCCCCCCC NOME DO CONSUMIDOR'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
       object rlbRodape: TRLBand
@@ -1104,10 +860,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rlbRodapeBeforePrint
         object lConsultaQRCode: TRLLabel
           Left = 1
@@ -1122,10 +874,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlBottom
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object imgQRCode: TRLImage
           Left = 1
@@ -1134,10 +882,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Width = 716
           Align = faTop
           Center = True
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Scaled = True
         end
         object pGap05: TRLPanel
@@ -1150,10 +894,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           object lSistema: TRLLabel
             Left = 0
             Height = 10
@@ -1168,10 +908,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
             Font.Style = [fsBold, fsItalic]
             Layout = tlBottom
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
             BeforePrint = lSistemaBeforePrint
           end
         end
@@ -1189,10 +925,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = [fsBold]
           Layout = tlBottom
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
       object RLBand15: TRLBand
@@ -1205,10 +937,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand15BeforePrint
         object RLLabel44: TRLLabel
           Left = 393
@@ -1223,10 +951,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel45: TRLLabel
           Left = 559
@@ -1241,10 +965,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel45BeforePrint
         end
         object RLLabel46: TRLLabel
@@ -1260,10 +980,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel47: TRLLabel
           Left = 559
@@ -1278,10 +994,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel47BeforePrint
         end
         object RLLabel48: TRLLabel
@@ -1297,10 +1009,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel49: TRLLabel
           Left = 559
@@ -1315,10 +1023,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel49BeforePrint
         end
         object RlPelosProdutos: TRLLabel
@@ -1334,10 +1038,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RlPelosProdutosBeforePrint
         end
         object RLLabel51: TRLLabel
@@ -1353,10 +1053,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel51BeforePrint
         end
       end
@@ -1370,10 +1066,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLLabel50: TRLLabel
           Left = 602
           Height = 16
@@ -1386,10 +1078,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = RLLabel50BeforePrint
         end
       end
@@ -1405,10 +1093,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = RLBand12BeforePrint
       object RLLabel39: TRLLabel
         Left = 560
@@ -1423,10 +1107,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel39BeforePrint
       end
       object RLLabel40: TRLLabel
@@ -1442,10 +1122,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLBand13: TRLBand
@@ -1459,10 +1135,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = RLBand13BeforePrint
       object RLLabel3: TRLLabel
         Left = 560
@@ -1477,10 +1149,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel3BeforePrint
       end
       object RLLabel38: TRLLabel
@@ -1496,10 +1164,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLBand14: TRLBand
@@ -1513,10 +1177,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel41: TRLLabel
         Left = 560
         Height = 16
@@ -1531,10 +1191,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel41BeforePrint
       end
       object RLLabel42: TRLLabel
@@ -1551,10 +1207,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLBand17: TRLBand
@@ -1563,10 +1215,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Top = 358
       Width = 718
       BandType = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       Transparent = False
       BeforePrint = RLBand17BeforePrint
       object RLLabel43: TRLLabel
@@ -1582,10 +1230,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel52: TRLLabel
         Left = 560
@@ -1600,10 +1244,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Layout = tlCenter
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel52BeforePrint
       end
     end
@@ -1613,24 +1253,15 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Top = 96
       Width = 718
       BandType = btHeader
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbDivisaoReciboBeforePrint
       object rliDivisao: TRLDraw
         Left = 0
         Height = 8
         Top = 6
         Width = 741
-        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsHorizontally
         Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlbReciboHeader: TRLBand
@@ -1645,23 +1276,14 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbReciboHeaderBeforePrint
       object rliCanhoto1: TRLDraw
         Left = 0
         Height = 1
         Top = 25
         Width = 603
-        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsHorizontally
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliCanhoto2: TRLDraw
         Left = 102
@@ -1671,10 +1293,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Angle = 90
         DrawKind = dkLine
         HoldStyle = hsVertically
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRecebemosDe: TRLLabel
         Tag = 1
@@ -1687,10 +1305,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -7
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rllRecebemosDeBeforePrint
       end
       object rllDataRecebimento: TRLLabel
@@ -1704,10 +1318,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -7
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllIdentificacao: TRLLabel
         Tag = 10
@@ -1720,10 +1330,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -7
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliCanhoto3: TRLDraw
         Left = 602
@@ -1733,10 +1339,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Angle = 90
         DrawKind = dkLine
         HoldStyle = hsVertically
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNFe: TRLLabel
         Left = 608
@@ -1750,10 +1352,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -15
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNumNF0: TRLLabel
         Left = 617
@@ -1767,10 +1365,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rllNumNF0BeforePrint
       end
       object rllSERIE0: TRLLabel
@@ -1784,10 +1378,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -13
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rllSERIE0BeforePrint
       end
       object rllResumo: TRLLabel
@@ -1801,10 +1391,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Height = -8
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rllResumoBeforePrint
       end
     end
@@ -1812,13 +1398,13 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'Projeto ACBr'
     DisplayName = 'Documento PDF'
-    left = 818
-    top = 72
+    Left = 818
+    Top = 72
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'HTML'
-    left = 821
-    top = 124
+    Left = 821
+    Top = 124
   end
 end

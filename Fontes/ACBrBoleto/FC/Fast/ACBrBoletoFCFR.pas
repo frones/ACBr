@@ -214,6 +214,7 @@ begin
     FieldDefs.Add('Parcela', ftInteger);
     FieldDefs.Add('EspecieDoc', ftString, 10);
     FieldDefs.Add('EspecieMod', ftString, 10);
+    FieldDefs.Add('UsoBanco', ftString, 4);
     FieldDefs.Add('Aceite', ftInteger);
     FieldDefs.Add('DataProcessamento', ftDateTime);
     FieldDefs.Add('NossoNumero', ftString, 20);
@@ -480,6 +481,7 @@ var
   Field_Parcela: TField;
   Field_EspecieMod: TField;
   Field_EspecieDoc: TField;
+  Field_UsoBanco: TField;
   Field_Aceite: TField;
   Field_DataProcessamento: TField;
   Field_NossoNumero: TField;
@@ -547,6 +549,7 @@ var
         Field_Parcela.AsInteger := ListadeBoletos[Indice].Parcela;
         Field_EspecieMod.AsString := ListadeBoletos[Indice].EspecieMod;
         Field_EspecieDoc.AsString := ListadeBoletos[Indice].EspecieDoc;
+        Field_UsoBanco.AsString := ListadeBoletos[Indice].UsoBanco;
         Field_Aceite.AsInteger := Integer(ListadeBoletos[Indice].Aceite);
         Field_DataProcessamento.AsDateTime := ListadeBoletos[Indice].DataProcessamento;
         Field_NossoNumero.AsString := ListadeBoletos[Indice].NossoNumero;
@@ -643,6 +646,7 @@ begin
       Field_Parcela := FieldByName('Parcela');
       Field_EspecieMod := FieldByName('EspecieMod');
       Field_EspecieDoc := FieldByName('EspecieDoc');
+      Field_UsoBanco := FieldByName('UsoBanco');
       Field_Aceite := FieldByName('Aceite');
       Field_DataProcessamento := FieldByName('DataProcessamento');
       Field_NossoNumero := FieldByName('NossoNumero');

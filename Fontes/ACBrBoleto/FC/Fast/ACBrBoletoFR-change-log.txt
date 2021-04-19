@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2021 -- ACBrBoletoFCFR --
+Ajustes para validar uso campo "UsoBanco"
+https://www.projetoacbr.com.br/forum/topic/61981-preenchimento-da-informa%C3%A7%C3%A3o-uso-banco-no-boleto/
+
 11/12/2020
 -- ACBrBoletoFCFR --
 [+] Adicionado funcionalidade para impressão e geração de pdf individual utilizando a lista de títulos

@@ -12,6 +12,7 @@
         ppCustomPos,
         ppEscPosStar,
         ppEscZJiang,
-		ppEscGPrinter
+        ppEscGPrinter,
+        ppEscDatecs
     }
 }

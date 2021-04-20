@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ACBrLibHandle.cs" />
+    <Compile Include="ACBrLibHandle.Loader.cs" />
     <Compile Include="ACBrSessao.cs" />
     <Compile Include="BAL\ACBrBALModelo.cs" />
     <Compile Include="Boleto\ACBrBolLayOut.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="CTe\TipoPathCTe.cs" />
     <Compile Include="CTe\VersaoCTe.cs" />
     <Compile Include="DFe\InfoCertificado.cs" />
+    <Compile Include="DFe\TimezoneMode.cs" />
     <Compile Include="DFe\TipoEmissao.cs" />
     <Compile Include="DFe\SSLCryptLib.cs" />
     <Compile Include="DFe\SSLHttpLib.cs" />
@@ -110,5 +112,5 @@
     <Compile Include="Serial\SerialStopBytes.cs" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /> 
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

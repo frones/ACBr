@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
@@ -60,6 +61,7 @@
             this.cmbUfDestino = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
             this.txtDadosPFX = new System.Windows.Forms.TextBox();
@@ -159,7 +161,9 @@
             this.btnDFePorUltNSU = new System.Windows.Forms.Button();
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
-            this.btnObterCertificados = new System.Windows.Forms.Button();
+            this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnGerarChaveCTe = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -184,6 +188,7 @@
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -194,7 +199,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(295, 439);
+            this.tabControl1.Size = new System.Drawing.Size(301, 484);
             this.tabControl1.TabIndex = 5;
             // 
             // tbpConfiguracoes
@@ -203,7 +208,7 @@
             this.tbpConfiguracoes.Location = new System.Drawing.Point(4, 22);
             this.tbpConfiguracoes.Name = "tbpConfiguracoes";
             this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpConfiguracoes.Size = new System.Drawing.Size(287, 413);
+            this.tbpConfiguracoes.Size = new System.Drawing.Size(293, 458);
             this.tbpConfiguracoes.TabIndex = 2;
             this.tbpConfiguracoes.Text = "Configurações";
             this.tbpConfiguracoes.UseVisualStyleBackColor = true;
@@ -218,7 +223,7 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(281, 407);
+            this.tabControl2.Size = new System.Drawing.Size(287, 452);
             this.tabControl2.TabIndex = 26;
             // 
             // tabPage1
@@ -574,10 +579,20 @@
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(273, 381);
+            this.tabPage3.Size = new System.Drawing.Size(279, 426);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Certificados";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnObterCertificados
+            // 
+            this.btnObterCertificados.Location = new System.Drawing.Point(6, 317);
+            this.btnObterCertificados.Name = "btnObterCertificados";
+            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
+            this.btnObterCertificados.TabIndex = 21;
+            this.btnObterCertificados.Text = "Obter Certificados";
+            this.btnObterCertificados.UseVisualStyleBackColor = true;
+            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
             // 
             // groupBox4
             // 
@@ -1211,9 +1226,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.rtbRespostas);
-            this.groupBox2.Location = new System.Drawing.Point(313, 197);
+            this.groupBox2.Location = new System.Drawing.Point(319, 231);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(386, 283);
+            this.groupBox2.Size = new System.Drawing.Size(386, 290);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Respostas";
@@ -1223,7 +1238,7 @@
             this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
-            this.rtbRespostas.Size = new System.Drawing.Size(380, 264);
+            this.rtbRespostas.Size = new System.Drawing.Size(380, 271);
             this.rtbRespostas.TabIndex = 3;
             this.rtbRespostas.Text = "";
             // 
@@ -1350,7 +1365,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(80, 453);
+            this.btnSalvar.Location = new System.Drawing.Point(168, 495);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(139, 23);
             this.btnSalvar.TabIndex = 20;
@@ -1365,14 +1380,15 @@
             this.tabControl3.Controls.Add(this.tabPage7);
             this.tabControl3.Controls.Add(this.tabPage8);
             this.tabControl3.Controls.Add(this.tabPage9);
-            this.tabControl3.Location = new System.Drawing.Point(313, 12);
+            this.tabControl3.Location = new System.Drawing.Point(319, 12);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(386, 179);
+            this.tabControl3.Size = new System.Drawing.Size(386, 213);
             this.tabControl3.TabIndex = 23;
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnGerarChaveCTe);
             this.tabPage5.Controls.Add(this.btnLimparLista);
             this.tabPage5.Controls.Add(this.btnImprimirPDF);
             this.tabPage5.Controls.Add(this.btnEnviarAssincrono);
@@ -1387,7 +1403,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(378, 153);
+            this.tabPage5.Size = new System.Drawing.Size(378, 187);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Envio";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1452,7 +1468,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(378, 153);
+            this.tabPage6.Size = new System.Drawing.Size(378, 181);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Consultas";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1478,7 +1494,7 @@
             this.tabPage7.Controls.Add(this.btnCancelar);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(378, 153);
+            this.tabPage7.Size = new System.Drawing.Size(378, 181);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Eventos";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1550,7 +1566,7 @@
             this.tabPage8.Controls.Add(this.btnInutilizar);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(378, 153);
+            this.tabPage8.Size = new System.Drawing.Size(378, 181);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "Inutilização";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1582,7 +1598,7 @@
             this.tabPage9.Controls.Add(this.btnDFePorChave);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(378, 153);
+            this.tabPage9.Size = new System.Drawing.Size(378, 181);
             this.tabPage9.TabIndex = 4;
             this.tabPage9.Text = "Distribuição DFe";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1617,21 +1633,36 @@
             this.btnDFePorChave.UseVisualStyleBackColor = true;
             this.btnDFePorChave.Click += new System.EventHandler(this.btnDFePorChave_Click);
             // 
-            // btnObterCertificados
+            // btnCarregarConfiguracoes
             // 
-            this.btnObterCertificados.Location = new System.Drawing.Point(6, 317);
-            this.btnObterCertificados.Name = "btnObterCertificados";
-            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
-            this.btnObterCertificados.TabIndex = 21;
-            this.btnObterCertificados.Text = "Obter Certificados";
-            this.btnObterCertificados.UseVisualStyleBackColor = true;
-            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
+            this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(12, 495);
+            this.btnCarregarConfiguracoes.Name = "btnCarregarConfiguracoes";
+            this.btnCarregarConfiguracoes.Size = new System.Drawing.Size(139, 23);
+            this.btnCarregarConfiguracoes.TabIndex = 24;
+            this.btnCarregarConfiguracoes.Text = "Carregar Configurações";
+            this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.BtnCarregarConfiguracoes_Click);
+            // 
+            // btnGerarChaveCTe
+            // 
+            this.btnGerarChaveCTe.Location = new System.Drawing.Point(6, 151);
+            this.btnGerarChaveCTe.Name = "btnGerarChaveCTe";
+            this.btnGerarChaveCTe.Size = new System.Drawing.Size(118, 23);
+            this.btnGerarChaveCTe.TabIndex = 26;
+            this.btnGerarChaveCTe.Text = "Gerar Chave CTe";
+            this.btnGerarChaveCTe.UseVisualStyleBackColor = true;
+            this.btnGerarChaveCTe.Click += new System.EventHandler(this.BtnGerarChaveCTe_Click);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 492);
+            this.ClientSize = new System.Drawing.Size(716, 533);
+            this.Controls.Add(this.btnCarregarConfiguracoes);
             this.Controls.Add(this.tabControl3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSalvar);
@@ -1679,6 +1710,7 @@
             this.tabPage7.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1816,6 +1848,9 @@
         private System.Windows.Forms.Button btnDFePorNSU;
         private System.Windows.Forms.Button btnDFePorChave;
         private System.Windows.Forms.Button btnObterCertificados;
+        private System.Windows.Forms.Button btnCarregarConfiguracoes;
+        private System.Windows.Forms.Button btnGerarChaveCTe;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
 

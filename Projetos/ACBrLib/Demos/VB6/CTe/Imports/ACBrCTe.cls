@@ -136,7 +136,7 @@ Private Declare Function CTE_StatusServico _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_Consultar _
-                Lib "ACBrCTE32.dll" (ByVal eChaveOuNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eChaveOuCTe As String, _
                                      ByVal AExtrairEventos As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
@@ -201,13 +201,13 @@ Private Declare Function CTE_DistribuicaoDFePorNSU _
 Private Declare Function CTE_DistribuicaoDFePorChave _
                 Lib "ACBrCTE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
-                                     ByVal echNFe As String, _
+                                     ByVal echCTe As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_EnviarEmail _
                 Lib "ACBrCTE32.dll" (ByVal ePara As Long, _
-                                     ByVal eChaveNFe As String, _
+                                     ByVal eChaveCTe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
                                      ByVal eCc As String, _
@@ -215,8 +215,9 @@ Private Declare Function CTE_EnviarEmail _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function CTE_EnviarEmailEvento _
-                Lib "ACBrCTE32.dll" (ByVal ePara As Long, _
-                                     ByVal eChaveNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal ePara As String, _
+                                     ByVal eChaveEvento As String, _
+                                     ByVal eChaveCTe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
                                      ByVal eCc As String, _
@@ -232,11 +233,11 @@ Private Declare Function CTE_Imprimir _
 Private Declare Function CTE_ImprimirPDF Lib "ACBrCTE32.dll" () As Long
 
 Private Declare Function CTE_ImprimirEvento _
-                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlCTe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
                                      
 Private Declare Function CTE_ImprimirEventoPDF _
-                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlCTe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
                                      
 Private Declare Function CTE_ImprimirInutilizacao _
@@ -557,7 +558,7 @@ Public Function StatusServico() As String
     StatusServico = processResult(buffer, bufferLen)
 End Function
 
-Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEventos As Boolean = False) As String
+Public Function Consultar(ByVal eChaveOuCTe As String, Optional ByVal AExtrairEventos As Boolean = False) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -565,7 +566,7 @@ Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEv
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = CTE_Consultar(eChaveOuNFe, AExtrairEventos, buffer, bufferLen)
+    retorno = CTE_Consultar(eChaveOuCTe, AExtrairEventos, buffer, bufferLen)
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)
@@ -687,7 +688,7 @@ Public Function DistribuicaoDFePorNSU(ByVal acUFAutor As String, ByVal eCnpjcpf 
     DistribuicaoDFePorNSU = processResult(buffer, bufferLen)
 End Function
 
-Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcpf As String, ByVal echNFe As String) As String
+Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcpf As String, ByVal echCTe As String) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -695,27 +696,27 @@ Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcp
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = CTE_DistribuicaoDFePorChave(acUFAutor, eCnpjcpf, echNFe, buffer, bufferLen)
+    retorno = CTE_DistribuicaoDFePorChave(acUFAutor, eCnpjcpf, echCTe, buffer, bufferLen)
     CheckResult retorno
     
     DistribuicaoDFePorChave = processResult(buffer, bufferLen)
 End Function
 
-Public Sub EnviarEmail(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+Public Sub EnviarEmail(ByVal ePara As String, ByVal eChaveCTe As String, ByVal aEnviaPDF As Boolean, _
                        ByVal eAssunto As String, ByVal eMensagem As String, _
                        Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
     Dim retorno   As Long
     
-    retorno = CTE_EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    retorno = CTE_EnviarEmail(ePara, eChaveCTe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
     CheckResult retorno
 End Sub
 
-Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveEvento As String, ByVal eChaveCTe As String, ByVal aEnviaPDF As Boolean, _
                        ByVal eAssunto As String, ByVal eMensagem As String, _
                        Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
-    Dim retorno   As Long
+    Dim retorno As Long
     
-    retorno = CTE_EnviarEmailEvento(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    retorno = CTE_EnviarEmailEvento(ePara, eChaveEvento, eChaveCTe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
     CheckResult retorno
 End Sub
 
@@ -734,17 +735,17 @@ Public Sub ImprimirPDF()
     CheckResult retorno
 End Sub
 
-Public Sub ImprimirEvento(ByVal eArquivoXmlNFe As String, ByVal eArquivoXmlEvento As String)
+Public Sub ImprimirEvento(ByVal eArquivoXmlCTe As String, ByVal eArquivoXmlEvento As String)
     Dim retorno   As Long
     
-    retorno = CTE_ImprimirEvento(eArquivoXmlNFe, eArquivoXmlEvento)
+    retorno = CTE_ImprimirEvento(eArquivoXmlCTe, eArquivoXmlEvento)
     CheckResult retorno
 End Sub
 
-Public Sub ImprimirEventoPDF(ByVal eArquivoXmlNFe As String, ByVal eArquivoXmlEvento As String)
+Public Sub ImprimirEventoPDF(ByVal eArquivoXmlCTe As String, ByVal eArquivoXmlEvento As String)
     Dim retorno   As Long
    
-    retorno = CTE_ImprimirEventoPDF(eArquivoXmlNFe, eArquivoXmlEvento)
+    retorno = CTE_ImprimirEventoPDF(eArquivoXmlCTe, eArquivoXmlEvento)
     CheckResult retorno
 End Sub
 
@@ -758,10 +759,6 @@ End Sub
 Public Sub ImprimirInutilizacaoPDF(ByVal eArquivoXml As String)
     Dim retorno   As Long
 
-    bufferLen = BUFFER_LENGTH
-    
-    buffer = String$(bufferLen, " ")
-    
     retorno = CTE_ImprimirInutilizacaoPDF(eArquivoXml)
     CheckResult retorno
 End Sub

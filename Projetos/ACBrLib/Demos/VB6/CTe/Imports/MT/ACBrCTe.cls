@@ -414,7 +414,7 @@ End Sub
 
 Public Sub CarregarINI(ByVal eArquivoOuIni As String)
     Dim retorno   As Long
-    retorno = CTE_CarregarINI(eArquivoOuIni)
+    retorno = CTE_CarregarINI(libHandler, eArquivoOuIni)
     CheckResult retorno
 End Sub
 
@@ -801,10 +801,6 @@ End Sub
 
 Public Sub ImprimirInutilizacaoPDF(ByVal eArquivoXml As String)
     Dim retorno   As Long
-
-    bufferLen = BUFFER_LENGTH
-    
-    buffer = String$(bufferLen, " ")
     
     retorno = CTE_ImprimirInutilizacaoPDF(libHandler, eArquivoXml)
     CheckResult retorno

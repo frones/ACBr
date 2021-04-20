@@ -12,6 +12,7 @@ Module=ACBrCTeUtils; ..\Imports\ACBrCTeUtils.bas
 Class=ACBrCTe; ..\Imports\ACBrCTe.cls
 IconForm="FrmMain"
 Startup="FrmMain"
+ExeName32="ACBrLibCTeDemo.exe"
 Command32=""
 Name="ACBrLibCTeDemo"
 HelpContextID="0"

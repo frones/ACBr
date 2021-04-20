@@ -223,7 +223,7 @@ para tpEmis diferente de 1</xs:documentation>
 										<xs:element name="idOutros">
 											<xs:annotation>
 												<xs:documentation>Identificação do destinatário outros</xs:documentation>
-												<xs:documentation>Identificação do destinatário não obrigado a inscrição do CPF tais como estrangeiro, indígena e quilombola; ou destinatário que a distribuidora não possui a informação (nestes casos orienta-se informar "00000").</xs:documentation>
+												<xs:documentation>Identificação do destinatário não obrigado a inscrição do CPF tais como estrangeiro, indígena (informar código do RANI) e quilombola; ou destinatário que a distribuidora não possui a informação (nestes casos orienta-se informar "00000").</xs:documentation>
 											</xs:annotation>
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
@@ -264,19 +264,34 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="cNIS" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Número da Identificação Social - NIS</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:minLength value="1"/>
-												<xs:maxLength value="15"/>
-												<xs:whiteSpace value="preserve"/>
-												<xs:pattern value="[0-9]{15}"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
+									<xs:choice minOccurs="0">
+										<xs:element name="cNIS">
+											<xs:annotation>
+												<xs:documentation>Número da Identificação Social - NIS</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="15"/>
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{15}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="NB">
+											<xs:annotation>
+												<xs:documentation>Número do Benefício</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="10"/>
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{10}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:choice>
 									<xs:element name="xNomeAdicional" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Nome de destinatário adicional</xs:documentation>
@@ -468,13 +483,10 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 											<xs:documentation>Sequencia XML</xs:documentation>
 											<xs:documentation>Localização </xs:documentation>
 										</xs:annotation>
-										<xs:element name="latGPS">
+										<xs:element name="latGPS" type="TLatitude">
 											<xs:annotation>
 												<xs:documentation>Latitude do ponto geográfico da localização da captura</xs:documentation>
 											</xs:annotation>
-											<xs:simpleType>
-												<xs:restriction base="TLatitude"/>
-											</xs:simpleType>
 										</xs:element>
 										<xs:element name="longGPS" type="TLongitude">
 											<xs:annotation>
@@ -623,7 +635,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 									<xs:simpleType>
 										<xs:restriction base="xs:string">
 											<xs:whiteSpace value="preserve"/>
-											<xs:minLength value="1"/>
+											<xs:minLength value="2"/>
 											<xs:maxLength value="2"/>
 											<xs:pattern value="(0[1-9]|1[0-9]|20)"/>
 										</xs:restriction>
@@ -670,7 +682,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 									<xs:simpleType>
 										<xs:restriction base="xs:string">
 											<xs:whiteSpace value="preserve"/>
-											<xs:minLength value="1"/>
+											<xs:minLength value="2"/>
 											<xs:maxLength value="2"/>
 											<xs:pattern value="(0[1-9]|1[0-9]|20)"/>
 										</xs:restriction>
@@ -868,10 +880,10 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																	</xs:annotation>
 																	<xs:simpleType>
 																		<xs:restriction base="xs:string">
-																			<xs:minLength value="6"/>
-																			<xs:maxLength value="6"/>
+																			<xs:minLength value="7"/>
+																			<xs:maxLength value="7"/>
 																			<xs:whiteSpace value="preserve"/>
-																			<xs:pattern value="[0-9]{6}"/>
+																			<xs:pattern value="[0-9]{7}"/>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
@@ -1144,7 +1156,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																							</xs:annotation>
 																							<xs:simpleType>
 																								<xs:restriction base="xs:string">
-																									<xs:minLength value="1"/>
+																									<xs:minLength value="2"/>
 																									<xs:maxLength value="2"/>
 																									<xs:whiteSpace value="preserve"/>
 																									<xs:pattern value="(0[1-9]|1[0-9]|20)"/>
@@ -1158,7 +1170,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																							</xs:annotation>
 																							<xs:simpleType>
 																								<xs:restriction base="xs:string">
-																									<xs:minLength value="1"/>
+																									<xs:minLength value="2"/>
 																									<xs:maxLength value="2"/>
 																									<xs:whiteSpace value="preserve"/>
 																									<xs:pattern value="(0[1-9]|1[0-9]|20)"/>
@@ -1667,6 +1679,30 @@ item.
 																							</xs:sequence>
 																						</xs:complexType>
 																					</xs:element>
+																					<xs:element name="PISEfet" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Dados do PIS Efetivo</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="vBCPISEfet" type="TDec_1302">
+																									<xs:annotation>
+																										<xs:documentation>Valor da BC do PIS efetivo</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="pPISEfet" type="TDec_0302a04">
+																									<xs:annotation>
+																										<xs:documentation>Alíquota efetiva do PIS (em percentual)</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vPISEfet" type="TDec_1302">
+																									<xs:annotation>
+																										<xs:documentation>Valor efetivo do PIS</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
 																					<xs:element name="COFINS" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Dados do COFINS</xs:documentation>
@@ -1711,6 +1747,64 @@ item.
 																								<xs:element name="vCOFINS" type="TDec_1302">
 																									<xs:annotation>
 																										<xs:documentation>Valor do COFINS</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="COFINSEfet" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Dados do COFINS Efetivo</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="vBCCOFINSEfet" type="TDec_1302">
+																									<xs:annotation>
+																										<xs:documentation>Valor da BC do COFINS efetivo</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="pCOFINSEfet" type="TDec_0302a04">
+																									<xs:annotation>
+																										<xs:documentation>Alíquota Efetiva do COFINS (em percentual)</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vCOFINSEfet" type="TDec_1302">
+																									<xs:annotation>
+																										<xs:documentation>Valor Efetivo do COFINS</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="retTrib" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Grupo de informações de retenção de tributos federais</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="vRetPIS" type="TDec_1302_1308">
+																									<xs:annotation>
+																										<xs:documentation>Valor do PIS retido</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vRetCofins" type="TDec_1302_1308">
+																									<xs:annotation>
+																										<xs:documentation>Valor do COFNS retido</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vRetCSLL" type="TDec_1302_1308">
+																									<xs:annotation>
+																										<xs:documentation>Valor da CSLL retida</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vBCIRRF" type="TDec_1302_1308">
+																									<xs:annotation>
+																										<xs:documentation>Base de cálculo do IRRF</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="vIRRF" type="TDec_1302_1308">
+																									<xs:annotation>
+																										<xs:documentation>Valor do IRRF retido</xs:documentation>
 																									</xs:annotation>
 																								</xs:element>
 																							</xs:sequence>
@@ -1922,6 +2016,12 @@ Deve sempre existir um detItemAnt que corresponda</xs:documentation>
 										<xs:documentation>Informar apenas para finalidade de Ajuste</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
+								<xs:attribute name="mod6HashAnt" type="xs:base64Binary" use="optional">
+									<xs:annotation>
+										<xs:documentation>HashCode da Modelo 6 Anterior</xs:documentation>
+										<xs:documentation>Informar apenas para finalidade de Ajuste</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="total">
@@ -1979,14 +2079,53 @@ Deve sempre existir um detItemAnt que corresponda</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
+									<xs:element name="vRetTribTot">
+										<xs:annotation>
+											<xs:documentation>Total da retenção de tributos federais</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="vRetPIS" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do PIS retido</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vRetCofins" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do COFNS retido</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vRetCSLL" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor da CSLL retida</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vIRRF" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do IRRF retido</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
 									<xs:element name="vCOFINS" type="TDec_1302">
 										<xs:annotation>
 											<xs:documentation>Valor do COFINS</xs:documentation>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="vCOFINSEfet" type="TDec_1302">
+										<xs:annotation>
+											<xs:documentation>Total do Valor Efetivo do COFINS</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 									<xs:element name="vPIS" type="TDec_1302">
 										<xs:annotation>
 											<xs:documentation>Valor do PIS</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="vPISEfet" type="TDec_1302">
+										<xs:annotation>
+											<xs:documentation>Total do Valor Efetivo do PIS</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="vNF" type="TDec_1302">
@@ -2097,6 +2236,26 @@ Não obrigatória, conforme item 2.3.2 da Seção 11.1 do Módulo 11 do PRODIST.
 											<xs:documentation>Endereço de entrega da fatura.</xs:documentation>
 											<xs:documentation>Informar se diferente do endereço do destinatário</xs:documentation>
 										</xs:annotation>
+									</xs:element>
+									<xs:element name="gPIX" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Grupo de informações do PIX</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="urlQRCodePIX">
+													<xs:annotation>
+														<xs:documentation>URL do QRCode do PIX que será apresentado na fatura</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:maxLength value="2000"/>
+															<xs:minLength value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>

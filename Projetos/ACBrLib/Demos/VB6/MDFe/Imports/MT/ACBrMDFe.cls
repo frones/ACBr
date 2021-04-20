@@ -261,6 +261,22 @@ Private Declare Function MDFE_ImprimirEventoPDF _
                                       ByVal eArquivoXmlNFe As String, _
                                       ByVal eArquivoXmlEvento As String) As Long
 
+Private Declare Function MDFE_ConsultaMDFENaoEnc _
+                Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
+                                      ByVal nCNPJ As String, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferSize As Long) As Long
+
+Private Declare Function MDFE_EncerrarMDFE _
+                Lib "ABCrMDFE32.dll" (ByVal libHandler As Long, _
+                                      ByVal eChaveouMDFe As String, _
+                                      ByVal eDtEnc As String, _
+                                      ByVal cMunicipioDescarga As String, _
+                                      ByVal nCNPJ As String, _
+                                      ByVal nProtocolo As String, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferSize As Long) As Long
+
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
                           
@@ -278,6 +294,40 @@ Public Sub FinalizarLib()
 
     retorno = MDFE_Finalizar(libHandler)
     CheckResult retorno
+End Sub
+
+Public Function ConsultaMDFeNaoEnc(ByVal nCNPJ As String) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_ConsultaMDFENaoEnc(libHandler, nCNPJ, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultaMDFeNaoEnc = processResult(buffer, bufferLen)
+
+End Function
+
+Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
+                        ByVal cMunicipioDescarga As String, _
+                        Optional ByVal nCNPJ As String = "", _
+                        Optional ByVal nProtocolo As String = "")
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    
+    retorno = MDFE_EncerrarMDFE(libHandler, eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
+    CheckResult retorno
+
 End Sub
 
 Public Sub ConfigImportar(ByVal eArqConfig As String)
@@ -525,7 +575,7 @@ Public Function ObterCertificados() As String()
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDE_ObterCertificados(libHandler, buffer, bufferLen)
+    retorno = MDFE_ObterCertificados(libHandler, buffer, bufferLen)
     CheckResult retorno
     
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
@@ -585,20 +635,6 @@ Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEv
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)
-End Function
-
-Public Function ConsultaCadastro(ByVal cUF As String, ByVal nDocumento As String, ByVal nIE As Boolean) As String
-    Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
-    
-    retorno = MDFE_ConsultaCadastro(libHandler, cUF, nDocumento, nIE, buffer, bufferLen)
-    CheckResult retorno
-    
-    ConsultaCadastro = processResult(buffer, bufferLen)
 End Function
 
 Public Function Enviar(ByVal aLote As Long, Optional ByVal Imprimir As Boolean = False, _
@@ -730,7 +766,7 @@ End Sub
 Public Sub ImprimirPDF()
     Dim retorno   As Long
     
-    retorno = MDFE_ImprimirPDF()
+    retorno = MDFE_ImprimirPDF(libHandler)
     CheckResult retorno
 End Sub
 

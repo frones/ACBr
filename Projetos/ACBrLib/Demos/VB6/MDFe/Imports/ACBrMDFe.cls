@@ -221,17 +221,19 @@ Private Declare Function MDFE_ImprimirEventoPDF _
                 Lib "ACBrMDFE32.dll" (ByVal eArquivoXmlNFe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
 
-Private Declare Function MDFE_ConsultaMDFENaoEnc Lib "ACBrMDFE32.dll" (ByVal nCNPJ As String, _
-                                                                       ByVal buffer As String, _
-                                                                       ByRef bufferSize As Long) As Long
+Private Declare Function MDFE_ConsultaMDFENaoEnc _
+                Lib "ACBrMDFE32.dll" (ByVal nCNPJ As String, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferSize As Long) As Long
 
-Private Declare Function MDFE_EncerrarMDFE Lib "ABCrMDFE32.dll" (ByVal eChaveouMDFe As String, _
-                                                                 ByVal eDtEnc As String, _
-                                                                 ByVal cMunicipioDescarga As String, _
-                                                                 ByVal nCNPJ As String, _
-                                                                 ByVal nProtocolo As String, _
-                                                                 ByVal buffer As String, _
-                                                                 ByRef bufferSize As Long) As Long
+Private Declare Function MDFE_EncerrarMDFE _
+                Lib "ABCrMDFE32.dll" (ByVal eChaveouMDFe As String, _
+                                      ByVal eDtEnc As String, _
+                                      ByVal cMunicipioDescarga As String, _
+                                      ByVal nCNPJ As String, _
+                                      ByVal nProtocolo As String, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferSize As Long) As Long
 
 
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
@@ -253,7 +255,10 @@ Public Sub FinalizarLib()
     CheckResult retorno
 End Sub
 
-Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, ByVal cMunicipioDescarga As String, ByVal nCNPJ As String, ByVal nProtocolo As String)
+Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
+                        ByVal cMunicipioDescarga As String, _
+                        Optional ByVal nCNPJ As String = "", _
+                        Optional ByVal nProtocolo As String = "")
 
     Dim retorno As Long
     Dim buffer As String
@@ -262,14 +267,31 @@ Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, By
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
+    
     retorno = MDFE_EncerrarMDFE(eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
     CheckResult retorno
-    
-    EncerrarMDFE = processResult(buffer, bufferLen)
 
 End Sub
 
-Public Sub ConsultaMDFeNaoEnc(ByVal nCNPJ As String)
+Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+                       ByVal eAssunto As String, ByVal eMensagem As String, _
+                       Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
+    Dim retorno   As Long
+    
+    retorno = MDFE_EnviarEmailEvento(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    CheckResult retorno
+End Sub
+
+Public Sub EnviarEmail(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
+                       ByVal eAssunto As String, ByVal eMensagem As String, _
+                       Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
+    Dim retorno   As Long
+    
+    retorno = MDFE_EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
+    CheckResult retorno
+End Sub
+
+Public Function ConsultaMDFeNaoEnc(ByVal nCNPJ As String) As String
 
     Dim retorno As Long
     Dim buffer As String
@@ -283,7 +305,7 @@ Public Sub ConsultaMDFeNaoEnc(ByVal nCNPJ As String)
     
     ConsultaMDFeNaoEnc = processResult(buffer, bufferLen)
 
-End Sub
+End Function
 
 Public Sub ConfigImportar(ByVal eArqConfig As String)
 
@@ -530,10 +552,11 @@ Public Function ObterCertificados() As String()
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDE_ObterCertificados(buffer, bufferLen)
+    retorno = MDFE_ObterCertificados(buffer, bufferLen)
     CheckResult retorno
     
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
+    
 End Function
 
 Public Function GetPath(ByVal tipo As Long) As String
@@ -590,20 +613,6 @@ Public Function Consultar(ByVal eChaveOuNFe As String, Optional ByVal AExtrairEv
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)
-End Function
-
-Public Function ConsultaCadastro(ByVal cUF As String, ByVal nDocumento As String, ByVal nIE As Boolean) As String
-    Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
-    
-    retorno = MDFE_ConsultaCadastro(cUF, nDocumento, nIE, buffer, bufferLen)
-    CheckResult retorno
-    
-    ConsultaCadastro = processResult(buffer, bufferLen)
 End Function
 
 Public Function Enviar(ByVal aLote As Long, Optional ByVal Imprimir As Boolean = False, _
@@ -705,24 +714,6 @@ Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcp
     
     DistribuicaoDFePorChave = processResult(buffer, bufferLen)
 End Function
-
-Public Sub EnviarEmail(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
-                       ByVal eAssunto As String, ByVal eMensagem As String, _
-                       Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
-    Dim retorno   As Long
-    
-    retorno = MDFE_EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
-    CheckResult retorno
-End Sub
-
-Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
-                       ByVal eAssunto As String, ByVal eMensagem As String, _
-                       Optional ByVal eCc As String = "", Optional ByVal eAnexos As String = "")
-    Dim retorno   As Long
-    
-    retorno = MDFE_EnviarEmailEvento(ePara, eChaveNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem)
-    CheckResult retorno
-End Sub
 
 Public Sub Imprimir(Optional ByVal cImpressora As String = "", Optional ByVal nNumCopias As Long = 1, _
                     Optional ByVal cProtocolo As String = "", Optional ByVal bMostrarPreview As String = "")

@@ -51,7 +51,7 @@ Begin VB.Form FrmMain
       _Version        =   393216
       Style           =   1
       Tabs            =   4
-      Tab             =   3
+      Tab             =   1
       TabsPerRow      =   4
       TabHeight       =   520
       TabCaption(0)   =   "Envio"
@@ -79,10 +79,12 @@ Begin VB.Form FrmMain
       Tab(0).Control(9).Enabled=   0   'False
       Tab(0).Control(10)=   "btnLimparLista"
       Tab(0).Control(10).Enabled=   0   'False
-      Tab(0).ControlCount=   11
+      Tab(0).Control(11)=   "btnGerarChaveMDFe"
+      Tab(0).Control(11).Enabled=   0   'False
+      Tab(0).ControlCount=   12
       TabCaption(1)   =   "Consultas"
       TabPicture(1)   =   "FrmMain.frx":001C
-      Tab(1).ControlEnabled=   0   'False
+      Tab(1).ControlEnabled=   -1  'True
       Tab(1).Control(0)=   "btnStatusServ"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "btnConsultaXml"
@@ -98,36 +100,33 @@ Begin VB.Form FrmMain
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "btnCancelar"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "btnEncerrar"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "btnEnviarEvento"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "btnCarregarEvento"
-      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "btnImprimirEvento"
-      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "btnEnviarEmailEvento"
-      Tab(2).Control(5).Enabled=   0   'False
       Tab(2).Control(6)=   "btnLimparListaEvento"
-      Tab(2).Control(6).Enabled=   0   'False
       Tab(2).Control(7)=   "btnImprimirEventoPDF"
-      Tab(2).Control(7).Enabled=   0   'False
       Tab(2).ControlCount=   8
       TabCaption(3)   =   "Distribuição DFe"
       TabPicture(3)   =   "FrmMain.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "btnDFePorChave"
-      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "btnDFePorNSU"
-      Tab(3).Control(1).Enabled=   0   'False
       Tab(3).Control(2)=   "btnDFePorUltNSU"
-      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).ControlCount=   3
+      Begin VB.CommandButton btnGerarChaveMDFe 
+         Caption         =   "Gerar Chave MDFe"
+         Height          =   360
+         Left            =   -74880
+         TabIndex        =   139
+         Top             =   2880
+         Width           =   1935
+      End
       Begin VB.CommandButton btnDFePorUltNSU 
          Caption         =   "Por Ult. NSU"
          Height          =   360
-         Left            =   4200
+         Left            =   -70800
          TabIndex        =   137
          Top             =   480
          Width           =   1935
@@ -135,7 +134,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnDFePorNSU 
          Caption         =   "Por NSU"
          Height          =   360
-         Left            =   2160
+         Left            =   -72840
          TabIndex        =   136
          Top             =   480
          Width           =   1935
@@ -143,7 +142,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnDFePorChave 
          Caption         =   "Por Chave"
          Height          =   360
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   135
          Top             =   480
          Width           =   1935
@@ -215,15 +214,15 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsNaoEncerrados 
          Caption         =   "Consultar Não Enc."
          Height          =   360
-         Left            =   -74880
+         Left            =   2160
          TabIndex        =   126
-         Top             =   1440
+         Top             =   960
          Width           =   1935
       End
       Begin VB.CommandButton btnConsultarRecibo 
          Caption         =   "Consultar Recibo"
          Height          =   360
-         Left            =   -70800
+         Left            =   120
          TabIndex        =   125
          Top             =   960
          Width           =   1935
@@ -231,23 +230,23 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsultaChave 
          Caption         =   "Consultar com Chave"
          Height          =   360
-         Left            =   -72840
+         Left            =   4200
          TabIndex        =   124
-         Top             =   960
+         Top             =   480
          Width           =   1935
       End
       Begin VB.CommandButton btnConsultaXml 
          Caption         =   "Consultar com Xml"
          Height          =   360
-         Left            =   -74880
+         Left            =   2160
          TabIndex        =   123
-         Top             =   960
+         Top             =   480
          Width           =   1935
       End
       Begin VB.CommandButton btnStatusServ 
          Caption         =   "Status de Serviço"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   122
          Top             =   480
          Width           =   1935
@@ -361,19 +360,19 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Documento Auxiliar"
       TabPicture(1)   =   "FrmMain.frx":008C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Frame4"
-      Tab(1).Control(1)=   "btnLogomarca"
-      Tab(1).Control(2)=   "txtLogomarca"
-      Tab(1).Control(3)=   "Label13"
+      Tab(1).Control(0)=   "Label13"
+      Tab(1).Control(1)=   "txtLogomarca"
+      Tab(1).Control(2)=   "btnLogomarca"
+      Tab(1).Control(3)=   "Frame4"
       Tab(1).ControlCount=   4
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":00A8
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label40"
-      Tab(2).Control(1)=   "Label41"
+      Tab(2).Control(0)=   "txtMensagem"
+      Tab(2).Control(1)=   "txtAssunto"
       Tab(2).Control(2)=   "Frame5"
-      Tab(2).Control(3)=   "txtAssunto"
-      Tab(2).Control(4)=   "txtMensagem"
+      Tab(2).Control(3)=   "Label41"
+      Tab(2).Control(4)=   "Label40"
       Tab(2).ControlCount=   5
       Begin VB.TextBox txtMensagem 
          Height          =   1365
@@ -452,7 +451,7 @@ Begin VB.Form FrmMain
             Top             =   3480
             Width           =   3915
          End
-         Begin VB.TextBox txtPorta 
+         Begin VB.TextBox txtnudPorta 
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   120
@@ -505,15 +504,11 @@ Begin VB.Form FrmMain
             _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            BuddyControl    =   "txtPorta"
-            BuddyDispid     =   196645
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
             OrigBottom      =   975
             Max             =   99999
-            SyncBuddy       =   -1  'True
-            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin VB.Label Label39 
@@ -748,18 +743,18 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "Webservices"
          TabPicture(1)   =   "FrmMain.frx":00E0
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "Label2"
-         Tab(1).Control(1)=   "Label26"
-         Tab(1).Control(2)=   "Label27"
-         Tab(1).Control(3)=   "timeout"
-         Tab(1).Control(4)=   "cmbUfDestino"
-         Tab(1).Control(5)=   "cmbSSlType"
-         Tab(1).Control(6)=   "txtTimeOut"
-         Tab(1).Control(7)=   "FraAmbiente"
-         Tab(1).Control(8)=   "Frame1"
-         Tab(1).Control(9)=   "ckbVisualizar"
-         Tab(1).Control(10)=   "ckbSalvarSOAP"
-         Tab(1).Control(11)=   "Frame2"
+         Tab(1).Control(0)=   "Frame2"
+         Tab(1).Control(1)=   "ckbSalvarSOAP"
+         Tab(1).Control(2)=   "ckbVisualizar"
+         Tab(1).Control(3)=   "Frame1"
+         Tab(1).Control(4)=   "FraAmbiente"
+         Tab(1).Control(5)=   "txtTimeOut"
+         Tab(1).Control(6)=   "cmbSSlType"
+         Tab(1).Control(7)=   "cmbUfDestino"
+         Tab(1).Control(8)=   "timeout"
+         Tab(1).Control(9)=   "Label27"
+         Tab(1).Control(10)=   "Label26"
+         Tab(1).Control(11)=   "Label2"
          Tab(1).ControlCount=   12
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":00FC
@@ -776,19 +771,19 @@ Begin VB.Form FrmMain
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":0118
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "btnArqEvento"
-         Tab(3).Control(1)=   "txtArqEvento"
-         Tab(3).Control(2)=   "btnArqMDFe"
-         Tab(3).Control(3)=   "txtArqMDFe"
-         Tab(3).Control(4)=   "ckbSepararPorModelo"
-         Tab(3).Control(5)=   "ckbSepararPorCNPJ"
+         Tab(3).Control(0)=   "Label11"
+         Tab(3).Control(1)=   "Label12"
+         Tab(3).Control(2)=   "ckbSalvarArqs"
+         Tab(3).Control(3)=   "ckbPastaMensal"
+         Tab(3).Control(4)=   "ckbAdicionaLiteral"
+         Tab(3).Control(5)=   "ckbEmissaoPathNFe"
          Tab(3).Control(6)=   "ckbSalvaPathEvento"
-         Tab(3).Control(7)=   "ckbEmissaoPathNFe"
-         Tab(3).Control(8)=   "ckbAdicionaLiteral"
-         Tab(3).Control(9)=   "ckbPastaMensal"
-         Tab(3).Control(10)=   "ckbSalvarArqs"
-         Tab(3).Control(11)=   "Label12"
-         Tab(3).Control(12)=   "Label11"
+         Tab(3).Control(7)=   "ckbSepararPorCNPJ"
+         Tab(3).Control(8)=   "ckbSepararPorModelo"
+         Tab(3).Control(9)=   "txtArqMDFe"
+         Tab(3).Control(10)=   "btnArqMDFe"
+         Tab(3).Control(11)=   "txtArqEvento"
+         Tab(3).Control(12)=   "btnArqEvento"
          Tab(3).ControlCount=   13
          Begin VB.CommandButton btnArqEvento 
             Caption         =   "..."
@@ -1906,37 +1901,100 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim mdfe As ACBrMDFe
 
+Public Function validacao() As Boolean
+
+    If txtSchemaPath.Text = "" Then
+    MsgBox ("Informe Path com Schema")
+    validacao = False
+    
+    ElseIf txtCertPath.Text = "" Then
+    MsgBox ("Informe o certificado")
+    validacao = False
+    
+    ElseIf txtCertPassword.Text = "" Then
+    MsgBox ("Informe a senha")
+    validacao = False
+    
+    ElseIf txtCertNumero.Text = "" Then
+    MsgBox ("Informe o número de série")
+    validacao = False
+    
+    ElseIf cmbCrypt.Text = "cryNone" Then
+    MsgBox ("Informe Criptografia")
+    validacao = False
+    
+    ElseIf cmbHttp.Text = "httpNone" Then
+    MsgBox ("Informe o tipo SSL")
+    validacao = False
+    
+    ElseIf cmbXmlSign.Text = "xsNone" Then
+    MsgBox ("Informe assinatura do XML")
+    validacao = False
+    
+    ElseIf cmbSSlType.Text = "LT_all" Then
+    MsgBox ("Informe o tipo SSL")
+    validacao = False
+    
+    End If
+    
+    validacao = True
+    
+End Function
+
+Public Function validacaoEmail() As Boolean
+
+    If txtHost.Text = "" Then
+    MsgBox ("Informe Host SMTP")
+    validacaoEmail = False
+    
+    ElseIf txtUsuario.Text = "" Then
+    MsgBox ("Informe Usuário")
+    validacaoEmail = False
+    
+    ElseIf txtSenha.Text = "" Then
+    MsgBox ("Informe Senha")
+    validacaoEmail = False
+    
+    ElseIf txtNome.Text = "" Then
+    MsgBox ("Informe Nome do Proprietario do e-mail")
+    validacaoEmail = False
+    
+    ElseIf txtEmail.Text = "" Then
+    MsgBox ("Informe e-mail do Proprietario")
+    validacaoEmail = False
+    
+    ElseIf txtnudPorta.Text = "" Then
+    MsgBox ("Informe porta de conexão")
+    validacaoEmail = False
+    
+    ElseIf ckbSSL.Value = False And ckbTLS.Value = False Then
+    MsgBox ("Informe o certificado SSL")
+    MsgBox ("Informe o certificado TLS")
+    validacaoEmail = False
+    
+    End If
+    
+    validacaoEmail = True
+
+End Function
+
+
 Private Sub btnConsNaoEncerrados_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+    
     On Error GoTo Erro:
-    Dim aCNPJ As String
+    Dim aCNPj As String
     
-    eChave = InputBox("CNPJ", "WebServices Consultar: Não Encerrados", "")
-    
-    ret = mdfe.ConsultaMDFeNaoEnc(aCNPJ)
-    rtbRespostas.Text = ret
+    aCNPj = InputBox("Número do CNPJ do emitente.", "WebServices Consultar: CNPJ", "")
+    SetResposta mdfe.ConsultaMDFeNaoEnc(aCNPj)
     
 Erro:
-    MsgBox Err.Description
+    MsgBox Err.Descriptio
 
-End Sub
-
-Private Sub btnEncerrar_Click()
-
-    On Error GoTo Erro:
-    Dim eChave As String
-    Dim cMunicipio As String
-    
-    
-    eChave = InputBox("Chave da MDF-e", "WebServices Eventos: Encerrar", "")
-    cMunicipio = InputBox("Código do Municipio", "WebServices Eventos: Encerrar", "")
-    
-    ret = mdfe.EncerrarMDFE(eChave, DateTime.Now, cMunicipio)
-    rtbRespostas.Text = ret
-    
-Erro:
-    MsgBox Err.Description
-    
 End Sub
 
 Private Sub CheckMDFeLista()
@@ -1949,9 +2007,29 @@ Private Sub CheckMDFeLista()
     End If
     
     If xml Then
-    mdfe.CarregarXML
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo xml MDFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+            
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    
+    mdfe.CarregarXML CommonDialog1.FileName
+    
     Else
-    mdfe.CarregarINI
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo ini MDFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+            
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    
+    mdfe.CarregarINI CommonDialog1.FileName
+    End If
 
 End Sub
 
@@ -1969,15 +2047,26 @@ End Sub
 
 Private Sub btnAssinar_Click()
 
-    On Error GoTo Erro:
-    If CheckMDFeLista = True Then
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
+     On Error GoTo Erro:
+    CheckMDFeLista
     mdfe.Assinar
-Error:
+    
+Erro:
     MsgBox Err.Description
     
 End Sub
 
 Private Sub btnCancelar_Click()
+
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     Dim idLote As String
@@ -2034,7 +2123,9 @@ End Sub
 Private Sub btnCarregarXml_Click()
 
     On Error GoTo Erro:
-    CheckMDFeLista = True
+    
+    CheckMDFeLista
+
 Erro:
     MsgBox Err.Description
 
@@ -2043,6 +2134,11 @@ End Sub
 
 
 Private Sub btnConsultaChave_Click()
+
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     Dim chaveOuMDFe As String
@@ -2057,6 +2153,11 @@ End Sub
 
 Private Sub btnConsultarRecibo_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim aRecibo As String
     
@@ -2069,6 +2170,11 @@ Erro:
 End Sub
 
 Private Sub btnConsultaXml_Click()
+
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     
@@ -2104,17 +2210,22 @@ End Sub
 
 Private Sub btnDFePorChave_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim ret As String
     Dim codUF As Long
-    Dim cnpj As String
-    Dim chave As String
+    Dim CNPJ As String
+    Dim Chave As String
     
     codUF = InputBox("Codigo da UF", "WebServices: Distribuição DFe", 35)
-    cnpj = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
-    chave = InputBox("Chave do MDFe", "WebServices: Distribuição DFe", "")
+    CNPJ = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
+    Chave = InputBox("Chave do MDFe", "WebServices: Distribuição DFe", "")
     
-    ret = mdfe.DistribuicaoDFePorChave(codUF, cnpj, chave)
+    ret = mdfe.DistribuicaoDFePorChave(codUF, CNPJ, Chave)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2124,17 +2235,22 @@ End Sub
 
 Private Sub btnDFePorNSU_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim ret As String
     Dim codUF As Long
-    Dim cnpj As String
+    Dim CNPJ As String
     Dim eNsu As String
     
     codUF = InputBox("Codigo da UF", "WebServices: Distribuição DFe", 35)
-    cnpj = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
+    CNPJ = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
     eNsu = InputBox("Numero do NSU", "WebServices: Distribuição DFe", "")
     
-    ret = mdfe.DistribuicaoDFePorNSU(codUF, cnpj, eNsu)
+    ret = mdfe.DistribuicaoDFePorNSU(codUF, CNPJ, eNsu)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2144,18 +2260,44 @@ End Sub
 
 Private Sub btnDFePorUltNSU_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim ret As String
     Dim codUF As Long
-    Dim cnpj As String
+    Dim CNPJ As String
     Dim eNsu As String
     
     codUF = InputBox("Codigo da UF", "WebServices: Distribuição DFe", 35)
-    cnpj = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
+    CNPJ = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
     eNsu = InputBox("Número do último NSU", "WebServices: Distribuição DFe", "")
     
-    ret = mdfe.DistribuicaoDFePorNSU(codUF, cnpj, eNsu)
+    ret = mdfe.DistribuicaoDFePorNSU(codUF, CNPJ, eNsu)
     rtbRespostas.Text = ret
+    
+Erro:
+    MsgBox Err.Description
+
+End Sub
+
+Private Sub btnEncerrar_Click()
+
+    If Not validacao Then
+    MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+    
+    On Error GoTo Erro:
+    Dim Chave As String
+    Dim Municipio As String
+    
+    Chave = InputBox("Informe Chave MDFe", "WebServices Encerrar", "")
+    Municipio = InputBox("Informe Chave MDFe", "WebServices Encerrar", "")
+    
+    mdfe.EncerrarMDFE Chave, DateTime.Now, Municipio
     
 Erro:
     MsgBox Err.Description
@@ -2164,13 +2306,18 @@ End Sub
 
 Private Sub btnEnviarAssincrono_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim ret As String
     Dim aLote As Long
     
-    CheckNFeLista
+    CheckMDFeLista
     aLote = InputBox("Número do Lote", "WebServices Enviar", 1)
-    ret = mdfe.Enviars(aLote)
+    ret = mdfe.Enviar(aLote)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2179,6 +2326,11 @@ Erro:
 End Sub
 
 Private Sub btnEnviarEmail_Click()
+
+    If Not validacaoEmail Then
+        MsgBox ("Verifique as configurações de E-mail")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     
@@ -2195,12 +2347,18 @@ Private Sub btnEnviarEmail_Click()
     
     If destinatario = vbNullString Then Exit Sub
     mdfe.EnviarEmail destinatario, CommonDialog1.FileName, True, txtAssunto.Text, txtMensagem.Text
+    
 Erro:
     MsgBox Err.Description
 
 End Sub
 
 Private Sub btnEnviarEmailEvento_Click()
+
+    If Not validacaoEmail Then
+        MsgBox ("Verifique as configurações de E-mail")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     Dim arquivoXmlEvento As String
@@ -2228,7 +2386,7 @@ Private Sub btnEnviarEmailEvento_Click()
     destinatario = ""
     destinatario = InputBox("Digite o email do destinatario", "Envio email", "")
     
-    mdfe.EnviarEmailEvento destinatario, arquivoXml, arquivoXmlEvento
+    mdfe.EnviarEmailEvento destinatario, arquivoXmlEvento, arquivoXml, True, txtAssuntoEmail.Text, txtMensagemEmail.Text
     
 Erro:
     MsgBox Err.Description
@@ -2236,6 +2394,11 @@ Erro:
 End Sub
 
 Private Sub btnEnviarEvento_Click()
+
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     Dim ret As String
@@ -2252,11 +2415,16 @@ End Sub
 
 Private Sub btnEnviarSincrono_Click()
 
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
+
     On Error GoTo Erro:
     Dim ret As String
     Dim aLote As Long
     
-    CheckNFeLista
+    CheckMDFeLista
     aLote = InputBox("Número do Lote", "WebServices Enviar", 1)
     ret = mdfe.Enviar(aLote, sincrono = True)
     rtbRespostas.Text = ret
@@ -2266,14 +2434,55 @@ Erro:
 
 End Sub
 
+Private Sub btnGerarChaveMDFe_Click()
+
+    On Error GoTo Erro:
+    
+    Dim uf As Long
+    Dim cod As Long
+    Dim doc As Long
+    Dim serie As Long
+    Dim numero As Long
+    Dim emissao As Long
+    Dim cnpjCPF As Long
+    
+    uf = InputBox("Digite o codigo da UF:", "Gerar Chave", 35)
+    cod = InputBox("Digite o codigo da Númerico:", "Gerar Chave", 45812)
+    doc = InputBox("Digite o modelo do documento:", "Gerar Chave", 55)
+    serie = InputBox("Digite a serie do documento:", "Gerar Chave", 1)
+    numero = InputBox("Digite o numero do documento:", "Gerar Chave", 1)
+    emissao = InputBox("Digite o tipo de emissão do documento:", "Gerar Chave", 1)
+    cnpjCPF = InputBox("Digite o CPF/CNPJ para Gerar a Chave", "Gerar Chave", "")
+    
+    rtbRespostas = nfe.GerarChave(uf, cod, doc, serie, numero, emissao, DateTime.Now, cnpjCPF)
+    
+Erro:
+    MsgBox Err.Description
+
+End Sub
+
 Private Sub btnGerarXml_Click()
+    
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
+    End If
 
     On Error GoTo Erro:
     Dim ret As String
+    
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+            
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+    
     mdfe.LimparLista
-    mdfe.CarregarINI
+    mdfe.CarregarINI CommonDialog1.FileName
     mdfe.Assinar
-    ret = mdfe.ObterXml
+    ret = mdfe.ObterXml(0)
     rtbRespostas.Text = ret
 Erro:
     MsgBox Err.Description
@@ -2364,7 +2573,7 @@ End Sub
 
 Private Sub btnImprimirPDF_Click()
 
-     On Error GoTo Erro:
+    On Error GoTo Erro:
     
     CommonDialog1.DialogTitle = "Selecione o arquivo xml"
     CommonDialog1.InitDir = App.Path
@@ -2422,6 +2631,12 @@ Private Sub btnLogomarca_Click()
 
 End Sub
 
+Private Sub btnObterCertificados_Click()
+
+    mdfe.ObterCertificados
+    
+End Sub
+
 Private Sub btnSelecionarCertificado_Click()
     On Error Resume Next
     CommonDialog1.DialogTitle = "Selecione o certificado"
@@ -2440,17 +2655,13 @@ End Sub
 
 Private Sub btnStatusServ_Click()
     
-    On Error Resume Next
-    
-    Dim retorno As Long
-    
-    SetResposta mdfe.StatusServico
-    If Err.Number <> 0 Then
-       MsgBox Err.Description
-       Exit Sub
+    If Not validacao Then
+        MsgBox ("Erro Verifique as configurações do certificado")
+        Exit Sub
     End If
-    On Error GoTo 0
-
+        
+    SetResposta mdfe.StatusServico
+   
 End Sub
 
 Private Sub btnValidarRegra_Click()
@@ -2563,7 +2774,7 @@ Private Sub SalvarConfig()
     mdfe.ConfigGravarValor SESSAO_DFE, "UF", cmbUfDestino.Text
     mdfe.ConfigGravarValor SESSAO_MDFe, "Ambiente", CStr(rdbHomologacao.Value)
     mdfe.ConfigGravarValor SESSAO_MDFe, "SSLType", CStr(cmbSSlType.ListIndex)
-    mdfe.ConfigGravarValor SESSAO_MDFe, "Timeout", CStr(nudTimeOut.Value)
+    mdfe.ConfigGravarValor SESSAO_MDFe, "Timeout", CStr(txtTimeOut.Text)
     mdfe.ConfigGravarValor SESSAO_PROXY, "Servidor", txtProxyServidor.Text
     mdfe.ConfigGravarValor SESSAO_PROXY, "Porta", CStr(nudProxyPorta.Value)
     mdfe.ConfigGravarValor SESSAO_PROXY, "Usuario", txtProxyUsuario.Text
@@ -2577,4 +2788,5 @@ Private Sub SalvarConfig()
     mdfe.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(ckbSSL.Value)
     mdfe.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(ckbTLS.Value)
     mdfe.ConfigGravar
+    
 End Sub

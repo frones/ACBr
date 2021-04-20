@@ -297,20 +297,30 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
 
     return processResult( buffer, bufferLen );
   }
-
-  public String enviar( int aLote ) throws Exception {
-    return enviar( aLote, false, false );
-  }
   
-  public String enviar( int aLote , boolean imprimir) throws Exception {
-    return enviar( aLote, imprimir, false );
-  }
-
-  public String enviar( int aLote, boolean imprimir, boolean sincrono ) throws Exception {
+  public String ConsultarMDFeNaoEnc(String aCNPJ) throws Exception{
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
     IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
 
-    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar( aLote, imprimir, sincrono, buffer, bufferLen );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_ConsultarMDFeNaoEnc( toUTF8( aCNPJ ), buffer, bufferLen );
+    checkResult( ret );
+
+    return processResult( buffer, bufferLen );
+  }
+
+  public String enviar( int aLote ) throws Exception {
+    return enviar( aLote, false, false, false );
+  }
+  
+  public String enviar( int aLote , boolean imprimir) throws Exception {
+    return enviar( aLote, imprimir, false, false );
+  }
+
+  public String enviar( int aLote, boolean imprimir, boolean sincrono, boolean zipado ) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar(aLote, imprimir,  sincrono,  zipado,  buffer,  bufferLen);
     checkResult( ret );
 
     return processResult( buffer, bufferLen );
@@ -436,11 +446,29 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
         return fromUTF8(buffer, bufferLen.getValue());
 		
     }
+    
+    public String EncerrarMDFe(String eChaveOuMDFe, Date eDtEnc, String cMunicipioDescarga, String nCNPJ, String nProtocolo) throws Exception {
+        
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    
+    String pattern = "dd/MM/yyyy";
+    DateFormat df = new SimpleDateFormat(pattern);
+
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_EncerrarMDFe(eChaveOuMDFe, df.format(eDtEnc),cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen );
+    checkResult( ret );
+
+    return processResult( buffer, bufferLen );
+    }
   
   @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrMDFeLib.INSTANCE.MDFE_UltimoRetorno( buffer, bufferLen );
   }
+
+    public void EncerrarMDFe(String eChave, Date date, String cMunicipio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
   private interface ACBrMDFeLib extends Library {
     static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
@@ -509,13 +537,17 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
 
     int MDFE_Consultar( String eChaveOuNFe, boolean AExtrairEventos, ByteBuffer buffer, IntByReference bufferSize );
 
-    int MDFE_Enviar( int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_ConsultarMDFeNaoEnc( String aCNPJ, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int MDFE_Enviar( int ALote, boolean Imprimir, boolean sincrono, boolean zipado, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_Cancelar( String eChave, String eJustificativa, String eCNPJ, int ALote,
                       ByteBuffer buffer, IntByReference bufferSize );
 
+    int MDFE_EncerrarMDFe(String eChaveOuMDFe, String eDtEnc, String cMunicipioDescarga, String nCNPJ, String nProtocolo, ByteBuffer buffer, IntByReference bufferSize);
+    
     int MDFE_EnviarEvento( int idLote, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_DistribuicaoDFePorUltNSU( int AcUFAutor, String eCNPJCPF, String eultNsu, ByteBuffer buffer,
@@ -540,7 +572,7 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
     int MDFE_ImprimirEvento( String eArquivoXmlCTe, String eArquivoXmlEvento );
 
     int MDFE_ImprimirEventoPDF( String eArquivoXmlCTe, String eArquivoXmlEvento );
-
+    
     class LibraryLoader {
       private static String library = "";
       private static ACBrMDFeLib instance = null;

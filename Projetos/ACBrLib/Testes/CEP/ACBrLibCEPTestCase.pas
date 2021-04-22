@@ -39,6 +39,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibCEPNome = 'ACBrLibCEP';
+
 type
 
   { TTestACBrCEPLib }
@@ -65,128 +68,171 @@ type
 implementation
 
 uses
-  ACBrLibCEPStaticImport, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibCEPStaticImportMT, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil, Dialogs;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrDiretorioNaoExiste, CEP_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+    AssertEquals(ErrDiretorioNaoExiste, CEP_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CEP_Inicializar('',''));
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CEP_Inicializar('',''));
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CEP_Finalizar());
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar_Ja_Finalizado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, CEP_Finalizar());
+  try
+    AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+    AssertEquals(ErrOk, CEP_Finalizar(Handle));
+    //AssertEquals(ErrOk, CEP_Finalizar(Handle));
+  except
+  on E: Exception do
+     ShowMessage('Error: '+ E.ClassName + #13#10 + E.Message);
+  end;
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Obtendo_LenBuffer;
 var
+  Handle: longint;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, CEP_Nome(Nil, Bufflen));
+  AssertEquals(ErrOk, CEP_Nome(Handle, Nil, Bufflen));
   AssertEquals(Length(CLibCEPNome), Bufflen);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Identico;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   Bufflen := Length(CLibCEPNome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_Nome(Handle, PChar(AStr), Bufflen));
   AssertEquals(Length(CLibCEPNome), Bufflen);
   AssertEquals(CLibCEPNome, AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Maior;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   Bufflen := Length(CLibCEPNome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_Nome(Handle, PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibCEPNome), Bufflen);
   AssertEquals(CLibCEPNome, AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Menor;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   Bufflen := 4;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_Nome(Handle, PChar(AStr), Bufflen));
   AssertEquals(4, Bufflen);
   AssertEquals(copy(CLibCEPNome,1,4), AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Versao;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   // Obtendo o Tamanho //
   Bufflen := 0;
-  AssertEquals(ErrOk, CEP_Versao(Nil, Bufflen));
+  AssertEquals(ErrOk, CEP_Versao(Handle, Nil, Bufflen));
   AssertEquals(Length(CLibCEPVersao), Bufflen);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_Versao(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_Versao(Handle, PChar(AStr), Bufflen));
   AssertEquals(Length(CLibCEPVersao), Bufflen);
   AssertEquals(CLibCEPVersao, AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_ConfigLerValor(CSessaoVersao, CLibCEPNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_ConfigLerValor(Handle, CSessaoVersao, CLibCEPNome, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CLibCEPVersao, AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigGravarValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Gravando o valor
-  AssertEquals('Erro ao Mudar configuração', ErrOk, CEP_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CEP_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEP;
 var
+  Handle: longint;
   Qtde: Integer;
   Resposta: PChar;
   Tamanho: Longint;
@@ -196,8 +242,9 @@ begin
   Resposta := '';
   Tamanho := 0;
 
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals('Erro ao buscar o endereço por CEP', ErrOk,
-    CEP_BuscarPorCEP('14802-406', Qtde, Resposta, Tamanho));
+    CEP_BuscarPorCEP(Handle, '14802-406', Qtde, Resposta, Tamanho));
 
   if Qtde > 0 then
   begin
@@ -205,10 +252,12 @@ begin
     AssertEquals('Tamanho= ', '', IntToStr(Tamanho));
     AssertEquals('Resposta= ', '', AnsiString(Resposta));
   end;
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorLogradouro;
 var
+  Handle: longint;
   Qtde: Integer;
   Resposta: PChar;
   Tamanho: Longint;
@@ -218,8 +267,9 @@ begin
   Resposta := '';
   Tamanho := 0;
 
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals('Erro ao buscar o CEP por Logradouro', ErrOk,
-    CEP_BuscarPorLogradouro('araraquara', 'rua', 'italia', 'sp',
+    CEP_BuscarPorLogradouro(Handle, 'araraquara', 'rua', 'italia', 'sp',
          '', Qtde, Resposta, Tamanho));
 
   if Qtde > 0 then
@@ -228,6 +278,7 @@ begin
     AssertEquals('Tamanho= ', '', IntToStr(Tamanho));
     AssertEquals('Resposta= ', '', AnsiString(Resposta));
   end;
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 initialization

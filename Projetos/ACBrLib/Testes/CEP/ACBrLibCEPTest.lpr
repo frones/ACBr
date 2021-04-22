@@ -3,7 +3,8 @@ program ACBrLibCEPTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibCEPTestCase, ACBrLibCEPStaticImport;
+  Interfaces, Forms, ACBrLibCEPStaticImportMT, ACBrLibConsts, GuiTestRunner,
+  ACBrLibCEPTestCase;
 
 {$R *.res}
 

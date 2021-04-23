@@ -114,6 +114,7 @@ type
     FevtContratAvNP: TpSimNao;
     FevtInfoComplPer: TpSimNao;
     FcompSemMovto : string;
+    FindExcApur1250: TpSimNao;
   public
     constructor create;
     destructor Destroy; override;
@@ -125,6 +126,7 @@ type
     property evtContratAvNP: TpSimNao read FevtContratAvNP write FevtContratAvNP;
     property evtInfoComplPer: TpSimNao read FevtInfoComplPer write FevtInfoComplPer;
     property compSemMovto : string read FcompSemMovto write FcompSemMovto;
+    property indExcApur1250: TpSimNao read FindExcApur1250 write FindExcApur1250;
   end;
 
 implementation
@@ -211,6 +213,11 @@ begin
       (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
     Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
 
+  if (Self.ideEvento.IndApuracao = iapuMensal) and 
+     (Copy(Self.ideEvento.perApur,1,4) + Copy(Self.ideEvento.perApur,6,2) < '202105') then
+     if (Self.InfoFech.indExcApur1250 = tpSim) then
+        Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoToStr(self.InfoFech.indExcApur1250));
+
   Gerador.wGrupo('/infoFech');
 end;
 
@@ -238,7 +245,7 @@ begin
 
 //    Validar(schevtFechaEvPer);
   except on e:exception do
-    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
+    raise Exception.Create('Nome Resp.: ' + Self.FIdeRespInf.nmResp + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
@@ -302,6 +309,7 @@ begin
       infoFech.evtContratAvNP  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtContratAvNP', 'S'));
       infoFech.evtInfoComplPer := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtInfoComplPer', 'S'));
       infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', '');
+      infoFech.indExcApur1250  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indExcApur1250', 'S'));
     end;
 
     GerarXML;

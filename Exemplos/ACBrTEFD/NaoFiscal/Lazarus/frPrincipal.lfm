@@ -1,11 +1,11 @@
 object FormPrincipal: TFormPrincipal
-  Left = 450
+  Left = 304
   Height = 500
-  Top = 117
-  Width = 1081
+  Top = 164
+  Width = 1140
   Caption = 'ACBrTEFD - Demo não fiscal'
   ClientHeight = 500
-  ClientWidth = 1081
+  ClientWidth = 1140
   Constraints.MinHeight = 500
   Constraints.MinWidth = 1024
   KeyPreview = True
@@ -14,9 +14,9 @@ object FormPrincipal: TFormPrincipal
   OnKeyDown = FormKeyDown
   ParentFont = True
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object Splitter2: TSplitter
-    Left = 747
+    Left = 806
     Height = 500
     Top = 0
     Width = 5
@@ -27,17 +27,17 @@ object FormPrincipal: TFormPrincipal
     Left = 0
     Height = 500
     Top = 0
-    Width = 747
+    Width = 806
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 500
-    ClientWidth = 747
+    ClientWidth = 806
     TabOrder = 1
     object pgPrincipal: TPageControl
       Left = 0
       Height = 376
       Top = 0
-      Width = 747
+      Width = 806
       ActivePage = tsOperacao
       Align = alTop
       Images = ImageList1
@@ -46,28 +46,28 @@ object FormPrincipal: TFormPrincipal
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
         ClientHeight = 348
-        ClientWidth = 739
+        ClientWidth = 798
         ImageIndex = 0
         object pConfiguracao: TPanel
           Left = 0
           Height = 348
           Top = 0
-          Width = 739
+          Width = 798
           Align = alClient
           BevelOuter = bvNone
           ClientHeight = 348
-          ClientWidth = 739
+          ClientWidth = 798
           TabOrder = 0
           object gbConfigImpressora: TGroupBox
             Left = 10
             Height = 115
             Top = 186
-            Width = 719
+            Width = 778
             Align = alTop
             BorderSpacing.Around = 10
             Caption = 'Impressora'
             ClientHeight = 95
-            ClientWidth = 715
+            ClientWidth = 774
             TabOrder = 1
             object Label25: TLabel
               AnchorSideBottom.Side = asrCenter
@@ -222,12 +222,12 @@ object FormPrincipal: TFormPrincipal
             Left = 10
             Height = 166
             Top = 10
-            Width = 719
+            Width = 778
             Align = alTop
             BorderSpacing.Around = 10
             Caption = 'TEF'
             ClientHeight = 146
-            ClientWidth = 715
+            ClientWidth = 774
             TabOrder = 0
             object cbxGP: TComboBox
               Left = 9
@@ -247,12 +247,12 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
             end
             object cbMultiplosCartoes: TCheckBox
-              Left = 280
+              Left = 321
               Height = 19
               Top = 26
               Width = 113
               Caption = 'Multiplos Cartões'
-              TabOrder = 7
+              TabOrder = 8
             end
             object cbSuportaDesconto: TCheckBox
               Left = 160
@@ -271,7 +271,7 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 5
             end
             object Label10: TLabel
-              Left = 314
+              Left = 368
               Height = 15
               Top = 52
               Width = 66
@@ -279,13 +279,13 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
             end
             object seMaxCartoes: TSpinEdit
-              Left = 314
+              Left = 368
               Height = 23
               Top = 69
               Width = 72
               Alignment = taCenter
               MaxValue = 20
-              TabOrder = 8
+              TabOrder = 9
             end
             object cbIMprimirViaReduzida: TCheckBox
               Left = 160
@@ -322,7 +322,7 @@ object FormPrincipal: TFormPrincipal
               ParentFont = False
             end
             object Label12: TLabel
-              Left = 314
+              Left = 368
               Height = 15
               Top = 94
               Width = 76
@@ -330,13 +330,13 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
             end
             object seTrocoMaximo: TFloatSpinEdit
-              Left = 314
+              Left = 368
               Height = 23
               Top = 110
               Width = 72
               Alignment = taCenter
               MaxValue = 100000
-              TabOrder = 9
+              TabOrder = 10
             end
             object cbSuportaReajusteValor: TCheckBox
               Left = 160
@@ -358,14 +358,14 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 2
             end
             object GroupBox1: TGroupBox
-              Left = 400
+              Left = 464
               Height = 120
-              Top = 13
+              Top = 20
               Width = 302
               Caption = 'Software House e Aplicação'
               ClientHeight = 100
               ClientWidth = 298
-              TabOrder = 10
+              TabOrder = 11
               object Label14: TLabel
                 Left = 8
                 Height = 15
@@ -446,7 +446,7 @@ object FormPrincipal: TFormPrincipal
                 'Imprimir'
               )
               Style = csDropDownList
-              TabOrder = 11
+              TabOrder = 12
               Text = 'Auto'
             end
             object Label9: TLabel
@@ -457,17 +457,25 @@ object FormPrincipal: TFormPrincipal
               Caption = 'QRCode'
               ParentColor = False
             end
+            object cbConfirmarAntesComprovantes: TCheckBox
+              Left = 321
+              Height = 19
+              Top = 4
+              Width = 188
+              Caption = 'Confirmar Antes Comprovantes'
+              TabOrder = 7
+            end
           end
           object pBotoesConfiguracao: TPanel
             Left = 10
             Height = 39
             Top = 311
-            Width = 719
+            Width = 778
             Align = alTop
             BorderSpacing.Left = 10
             BorderSpacing.Right = 10
             ClientHeight = 39
-            ClientWidth = 719
+            ClientWidth = 778
             TabOrder = 2
             object btLerParametros: TBitBtn
               Left = 178
@@ -497,29 +505,29 @@ object FormPrincipal: TFormPrincipal
       object tsOperacao: TTabSheet
         Caption = 'Operação'
         ClientHeight = 348
-        ClientWidth = 739
+        ClientWidth = 798
         ImageIndex = 1
         object pOperacao: TPanel
           Left = 0
           Height = 348
           Top = 0
-          Width = 734
+          Width = 793
           Align = alClient
           BevelOuter = bvNone
           ClientHeight = 348
-          ClientWidth = 734
+          ClientWidth = 793
           Constraints.MinWidth = 460
           TabOrder = 0
           object gbTotaisVenda: TGroupBox
             Left = 3
             Height = 136
             Top = 56
-            Width = 728
+            Width = 787
             Align = alTop
             BorderSpacing.Around = 3
             Caption = 'Valores da Operação'
             ClientHeight = 116
-            ClientWidth = 724
+            ClientWidth = 783
             TabOrder = 0
             object Label2: TLabel
               Left = 25
@@ -648,7 +656,7 @@ object FormPrincipal: TFormPrincipal
               Text = '0.00'
             end
             object btEfetuarPagamentos: TBitBtn
-              Left = 602
+              Left = 661
               Height = 28
               Top = 78
               Width = 113
@@ -663,7 +671,7 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 11
             end
             object btAdministrativo: TBitBtn
-              Left = 602
+              Left = 661
               Height = 28
               Top = 0
               Width = 113
@@ -711,7 +719,7 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
             end
             object btObterCPF: TButton
-              Left = 602
+              Left = 661
               Height = 25
               Top = 28
               Width = 113
@@ -721,7 +729,7 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 9
             end
             object btMsgPinPad: TButton
-              Left = 602
+              Left = 661
               Height = 25
               Top = 53
               Width = 113
@@ -735,18 +743,18 @@ object FormPrincipal: TFormPrincipal
             Left = 3
             Height = 150
             Top = 195
-            Width = 728
+            Width = 787
             Align = alClient
             BorderSpacing.Around = 3
             Caption = 'Pagamentos'
             ClientHeight = 130
-            ClientWidth = 724
+            ClientWidth = 783
             TabOrder = 1
             object sgPagamentos: TStringGrid
               Left = 0
               Height = 130
               Top = 0
-              Width = 618
+              Width = 677
               Align = alClient
               AutoEdit = False
               ColCount = 7
@@ -788,7 +796,7 @@ object FormPrincipal: TFormPrincipal
               UseXORFeatures = True
             end
             object pBotoesPagamentos: TPanel
-              Left = 618
+              Left = 677
               Height = 130
               Top = 0
               Width = 106
@@ -829,14 +837,14 @@ object FormPrincipal: TFormPrincipal
             Left = 3
             Height = 50
             Top = 3
-            Width = 728
+            Width = 787
             Align = alTop
             BorderSpacing.Around = 3
             BevelInner = bvLowered
             BevelWidth = 2
             Caption = 'CAIXA LIVRE'
             ClientHeight = 50
-            ClientWidth = 728
+            ClientWidth = 787
             Font.Height = -24
             Font.Style = [fsBold]
             ParentFont = False
@@ -855,7 +863,7 @@ object FormPrincipal: TFormPrincipal
               Visible = False
             end
             object lNumOperacao: TLabel
-              Left = 630
+              Left = 689
               Height = 42
               Top = 4
               Width = 84
@@ -869,7 +877,7 @@ object FormPrincipal: TFormPrincipal
           end
         end
         object Splitter1: TSplitter
-          Left = 734
+          Left = 793
           Height = 348
           Top = 0
           Width = 5
@@ -882,16 +890,16 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Height = 119
       Top = 376
-      Width = 747
+      Width = 806
       Align = alClient
       ClientHeight = 119
-      ClientWidth = 747
+      ClientWidth = 806
       TabOrder = 1
       object mLog: TMemo
         Left = 4
         Height = 111
         Top = 4
-        Width = 716
+        Width = 775
         Align = alClient
         BorderSpacing.Around = 3
         ReadOnly = True
@@ -900,7 +908,7 @@ object FormPrincipal: TFormPrincipal
         WordWrap = False
       end
       object sbLimparLog: TSpeedButton
-        Left = 723
+        Left = 782
         Height = 117
         Top = 1
         Width = 23
@@ -915,13 +923,13 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Height = 5
       Top = 495
-      Width = 747
+      Width = 806
       Align = alBottom
       ResizeAnchor = akBottom
     end
   end
   object pImpressao: TPanel
-    Left = 752
+    Left = 811
     Height = 500
     Top = 0
     Width = 329
@@ -1171,6 +1179,7 @@ object FormPrincipal: TFormPrincipal
     TEFPayGoWeb.SuportaViasDiferenciadas = True
     TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
     TEFPayGoWeb.ConfirmarTransacoesPendentes = True
+    TEFPayGoWeb.PerguntarCartaoDigitadoAposCancelarLeitura = False
     TEFPayGoWeb.OnExibeMenu = PayGoWebExibeMenu
     TEFPayGoWeb.OnObtemCampo = PayGoWebObtemCampo
     TEFPayGoWeb.OnExibeMensagem = PayGoWebExibeMensagem

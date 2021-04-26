@@ -1729,6 +1729,7 @@ type
   TpagCollectionItem = class(TObject)
   private
     FtPag: TpcnFormaPagamento;
+    FxPag: string;
     FvPag: Currency;
     FtpIntegra: TtpIntegra;
     FCNPJ: String;
@@ -1741,6 +1742,7 @@ type
 
     property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property xPag: string read FxPag write FxPag;
     property vPag: Currency read FvPag write FvPag;
     property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
     property CNPJ: String read FCNPJ write FCNPJ;
@@ -3786,6 +3788,7 @@ procedure TpagCollectionItem.Assign(Source: TpagCollectionItem);
 begin
   indPag    := Source.indPag;
   tPag      := Source.tPag;
+  xPag      := Source.xPag;
   vPag      := Source.vPag;
   tpIntegra := Source.tpIntegra;
   CNPJ      := Source.CNPJ;

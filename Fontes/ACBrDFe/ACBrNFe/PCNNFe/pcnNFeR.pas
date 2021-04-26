@@ -983,6 +983,7 @@ begin
        NFe.pag.New;
       (*YA01b*)NFe.pag[i].indPag := StrToIndpag(Ok, Leitor.rCampo(tcStr, 'indPag'));
       (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
+              NFe.pag[i].xPag := Leitor.rCampo(tcStr, 'xPag');
       (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
       if Leitor.rExtrai(2, 'card') <> '' then
        begin

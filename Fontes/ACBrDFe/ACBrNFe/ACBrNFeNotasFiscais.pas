@@ -2460,6 +2460,7 @@ begin
         with pag.New do
         begin
           tPag  := StrToFormaPagamento(OK,sFim);
+          xPag  := INIRec.ReadString(sSecao,'xPag','');
           vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0);
           // Se não for informado 0=Pagamento à Vista ou 1=Pagamento à Prazo
           // a tag <indPag> não deve ser gerada.
@@ -3351,6 +3352,7 @@ begin
         with pag.Items[I] do
         begin
           INIRec.WriteString(sSecao, 'tPag', FormaPagamentoToStr(tPag));
+          INIRec.WriteString(sSecao, 'xPag', xPag);
           INIRec.WriteFloat(sSecao, 'vPag', vPag);
           INIRec.WriteString(sSecao, 'indPag', IndpagToStr(indPag));
           INIRec.WriteString(sSecao, 'tpIntegra', tpIntegraToStr(tpIntegra));

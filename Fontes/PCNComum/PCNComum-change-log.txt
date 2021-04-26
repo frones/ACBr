@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2021
+-- pcnConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/62162-adi%C3%A7%C3%A3o-dos-eventos-610131-e-610130/
+   Por: Galegobr
+[*] Alterações visando a NT 2020/006 versão 1.20
+   Por: Italo Giurizzato Junior
+
 16/02/2020
 -- pcnConversao --
 [*] Alterado a descrição do enumerador fpPagamentoInstantaneo 

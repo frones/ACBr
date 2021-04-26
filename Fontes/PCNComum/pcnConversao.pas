@@ -137,7 +137,7 @@ type
                   teInclusaoDFe, teAutorizadoSubstituicao, teAutorizadoAjuste,
                   teLiberacaoPrazoCancelado, tePagamentoOperacao, teExcessoBagagem,
                   teEncerramentoFisco, teComprEntregaNFe, teCancComprEntregaNFe,
-                  teAtorInteressadoNFe);
+                  teAtorInteressadoNFe, teComprEntregaCTe, teCancComprEntregaCTe);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -152,8 +152,13 @@ type
                         fpDuplicataMercantil, fpBoletoBancario, fpDepositoBancario,
                         fpPagamentoInstantaneo, fpTransfBancario, fpProgramaFidelidade,
                         fpSemPagamento, fpRegimeEspecial, fpOutro);
+
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
-                        bcElo, bcHipercard, bcAura, bcCabal, bcOutros);
+                        bcElo, bcHipercard, bcAura, bcCabal, bcAlelo, bcBanesCard,
+                        bcCalCard, bcCredz, bcDiscover, bcGoodCard, bcGrenCard,
+                        bcHiper, bcJcB, bcMais, bcMaxVan, bcPolicard, bcRedeCompras,
+                        bcSodexo, bcValeCard, bcVerocheque, bcVR, bcTicket,
+                        bcOutros);
 
   TpcnRegTrib = (RTSimplesNacional, RTRegimeNormal);
   TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI, RTISSMEEPP, RTISSNenhum);
@@ -203,7 +208,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..66] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..68] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -225,7 +230,7 @@ const
                                                 '110115', '240140', '240150',
                                                 '240170', '110116', '110117',
                                                 '310112', '110130', '110131',
-                                                '110150');
+                                                '110150', '610130', '610131');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1110,7 +1115,7 @@ begin
               'AutorizadoServMultimodal', 'CancelamentoPorSubstituicao',
               'AlteracaoPoltrona', 'ExcessoBagagem', 'EncerramentoFisco',
               'teComprEntregaNFe', 'CancComprEntregaNFe',
-              'AtorInteressadoNFe'],
+              'AtorInteressadoNFe', 'teComprEntregaCTe', 'CancComprEntregaCTe'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1130,7 +1135,8 @@ begin
               teAutorizadoRedespacho, teautorizadoRedespIntermed, teAutorizadoSubcontratacao,
               teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
               teExcessoBagagem, teEncerramentoFisco, teComprEntregaNFe,
-              teCancComprEntregaNFe, teAtorInteressadoNFe]);
+              teCancComprEntregaNFe, teAtorInteressadoNFe, teComprEntregaCTe,
+              teCancComprEntregaCTe]);
 end;
 
 
@@ -1295,6 +1301,24 @@ begin
     bcHipercard:       Result := 'Hipercard';
     bcAura:            Result := 'Aura';
     bcCabal:           Result := 'Cabal';
+    bcAlelo:           Result := 'Alelo';
+    bcBanesCard:       Result := 'BanesCard';
+    bcCalCard:         Result := 'CalCard';
+    bcCredz:           Result := 'Credz';
+    bcDiscover:        Result := 'Discover';
+    bcGoodCard:        Result := 'GoodCard';
+    bcGrenCard:        Result := 'GrenCard';
+    bcHiper:           Result := 'Hiper';
+    bcJcB:             Result := 'JcB';
+    bcMais:            Result := 'Mais';
+    bcMaxVan:          Result := 'MaxVan';
+    bcPolicard:        Result := 'Policard';
+    bcRedeCompras:     Result := 'RedeCompras';
+    bcSodexo:          Result := 'Sodexo';
+    bcValeCard:        Result := 'ValeCard';
+    bcVerocheque:      Result := 'Verocheque';
+    bcVR:              Result := 'VR';
+    bcTicket:          Result := 'Ticket';
     bcOutros:          Result := 'Outros'
   end;
 end;
@@ -1302,18 +1326,30 @@ end;
 
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
+                               '09', '10', '11', '12', '13', '14', '15', '16',
+                               '17', '18', '19', '20', '21', '22', '23', '24',
+                               '25', '26', '27', '99'],
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
-                              bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
-                              bcOutros]);
+                               bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
+                               bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
+                               bcGoodCard, bcGrenCard, bcHiper, bcJcB, bcMais,
+                               bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
+                               bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
 end;
 
 function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
+                                   '09', '10', '11', '12', '13', '14', '15', '16',
+                                   '17', '18', '19', '20', '21', '22', '23', '24',
+                                   '25', '26', '27', '99'],
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
-                                  bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
-                                  bcOutros]);
+                                   bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
+                                   bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
+                                   bcGoodCard, bcGrenCard, bcHiper, bcJcB, bcMais,
+                                   bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
+                                   bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
 end;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;

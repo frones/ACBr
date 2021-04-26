@@ -238,6 +238,7 @@ const
   DSC_SignatureValue = 'Signature Value';
   DSC_X509Certificate = 'X509 Certificate';
 
+  DSC_XPAG = 'Descrição da forma de Pagamento';
   DSC_VPAG = 'Valor do Pagamento';
   DSC_TPINTEGRA = 'Tipo de Integração para pagamento';
   DSC_TBAND = 'Bandeira da Operadora de Cartão';

@@ -150,6 +150,7 @@ begin
     NF3e.Dest.IE             := Leitor.rCampo(tcStr, 'IE');
     NF3e.Dest.IM             := Leitor.rCampo(tcStr, 'IM');
     NF3e.Dest.cNIS           := Leitor.rCampo(tcStr, 'cNIS');
+    NF3e.Dest.NB             := Leitor.rCampo(tcStr, 'NB');
     NF3e.Dest.xNomeAdicional := Leitor.rCampo(tcStr, 'xNomeAdicional');
 
     if Leitor.rExtrai(2, 'enderDest') <> '' then
@@ -260,10 +261,10 @@ begin
     begin
       NF3e.gSCEE.gSaldoCred.New;
       NF3e.gSCEE.gSaldoCred[i].tpPosTar      := StrTotpPosTar(ok, Leitor.rCampo(tcStr, 'tpPosTar'));
-      NF3e.gSCEE.gSaldoCred[i].vSaldAnt      := Leitor.rCampo(tcInt, 'vSaldAnt');
-      NF3e.gSCEE.gSaldoCred[i].vCredExpirado := Leitor.rCampo(tcInt, 'vCredExpirado');
-      NF3e.gSCEE.gSaldoCred[i].vSaldAtual    := Leitor.rCampo(tcInt, 'vSaldAtual');
-      NF3e.gSCEE.gSaldoCred[i].vCredExpirar  := Leitor.rCampo(tcInt, 'vCredExpirar');
+      NF3e.gSCEE.gSaldoCred[i].vSaldAnt      := Leitor.rCampo(tcDe4, 'vSaldAnt');
+      NF3e.gSCEE.gSaldoCred[i].vCredExpirado := Leitor.rCampo(tcDe4, 'vCredExpirado');
+      NF3e.gSCEE.gSaldoCred[i].vSaldAtual    := Leitor.rCampo(tcDe4, 'vSaldAtual');
+      NF3e.gSCEE.gSaldoCred[i].vCredExpirar  := Leitor.rCampo(tcDe4, 'vCredExpirar');
 
       xData := Leitor.rCampo(tcStr, 'CompetExpirar');
       xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
@@ -278,7 +279,8 @@ begin
   while Leitor.rExtrai(1, 'NFdet', '', i + 1) <> '' do
   begin
     NF3e.NFDet.New;
-    NF3e.NFDet[i].chNF3eAnt := Leitor.rAtributo('chNF3eAnt=', 'NFdet');
+    NF3e.NFDet[i].chNF3eAnt   := Leitor.rAtributo('chNF3eAnt=', 'NFdet');
+    NF3e.NFDet[i].mod6HashAnt := Leitor.rAtributo('mod6HashAnt=', 'NFdet');
 
     j := 0;
     NF3e.NFDet[i].Det.Clear;
@@ -415,12 +417,35 @@ begin
             NF3e.NFDet[i].Det[j].detItem.Imposto.PIS.vPIS := Leitor.rCampo(tcDe2, 'vPIS');
           end;
 
+          if Leitor.rExtrai(5, 'PISEfet') <> '' then
+          begin
+            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vBCPISEfet := Leitor.rCampo(tcDe2, 'vBCPISEfet');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.pPISEfet   := Leitor.rCampo(tcDe2, 'pPISEfet');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet   := Leitor.rCampo(tcDe2, 'vPISEfet');
+          end;
+
           if Leitor.rExtrai(5, 'COFINS') <> '' then
           begin
             NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.CST     := StrToCSTCOFINS(ok, Leitor.rCampo(tcStr, 'CST'));
             NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vBC     := Leitor.rCampo(tcDe2, 'vBC');
             NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.pCOFINS := Leitor.rCampo(tcDe2, 'pCOFINS');
             NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
+          end;
+
+          if Leitor.rExtrai(5, 'COFINSEfet') <> '' then
+          begin
+            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vBCCOFINSEfet := Leitor.rCampo(tcDe2, 'vBCCOFINSEfet');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.pCOFINSEfet   := Leitor.rCampo(tcDe2, 'pCOFINSEfet');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet   := Leitor.rCampo(tcDe2, 'vCOFINSEfet');
+          end;
+
+          if Leitor.rExtrai(5, 'retTrib') <> '' then
+          begin
+            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetPIS    := Leitor.rCampo(tcDe2, 'vRetPIS');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCOFINS := Leitor.rCampo(tcDe2, 'vRetCOFINS');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCSLL   := Leitor.rCampo(tcDe2, 'vRetCSLL');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vBCIRRF    := Leitor.rCampo(tcDe2, 'vBCIRRF');
+            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vIRRF      := Leitor.rCampo(tcDe2, 'vIRRF');
           end;
         end;
 
@@ -470,17 +495,23 @@ begin
 
   if Leitor.rExtrai(1, 'total') <> '' then
   begin
-    NF3e.Total.vProd      := Leitor.rCampo(tcDe2, 'vProd');
-    NF3e.Total.vBC        := Leitor.rCampo(tcDe2, 'vBC');
-    NF3e.Total.vICMS      := Leitor.rCampo(tcDe2, 'vICMS');
-    NF3e.Total.vICMSDeson := Leitor.rCampo(tcDe2, 'vICMSDeson');
-    NF3e.Total.vFCP       := Leitor.rCampo(tcDe2, 'vFCP');
-    NF3e.Total.vBCST      := Leitor.rCampo(tcDe2, 'vBCST');
-    NF3e.Total.vST        := Leitor.rCampo(tcDe2, 'vST');
-    NF3e.Total.vFCPST     := Leitor.rCampo(tcDe2, 'vFCPST');
-    NF3e.Total.vCOFINS    := Leitor.rCampo(tcDe2, 'vCOFINS');
-    NF3e.Total.vPIS       := Leitor.rCampo(tcDe2, 'vPIS');
-    NF3e.Total.vNF        := Leitor.rCampo(tcDe2, 'vNF');
+    NF3e.Total.vProd       := Leitor.rCampo(tcDe2, 'vProd');
+    NF3e.Total.vBC         := Leitor.rCampo(tcDe2, 'vBC');
+    NF3e.Total.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
+    NF3e.Total.vICMSDeson  := Leitor.rCampo(tcDe2, 'vICMSDeson');
+    NF3e.Total.vFCP        := Leitor.rCampo(tcDe2, 'vFCP');
+    NF3e.Total.vBCST       := Leitor.rCampo(tcDe2, 'vBCST');
+    NF3e.Total.vST         := Leitor.rCampo(tcDe2, 'vST');
+    NF3e.Total.vFCPST      := Leitor.rCampo(tcDe2, 'vFCPST');
+    NF3e.Total.vCOFINS     := Leitor.rCampo(tcDe2, 'vCOFINS');
+    NF3e.Total.vPIS        := Leitor.rCampo(tcDe2, 'vPIS');
+    NF3e.Total.vNF         := Leitor.rCampo(tcDe2, 'vNF');
+    NF3e.Total.vRetPIS     := Leitor.rCampo(tcDe2, 'vRetPIS');
+    NF3e.Total.vRetCOFINS  := Leitor.rCampo(tcDe2, 'vRetCofins');
+    NF3e.Total.vRetCSLL    := Leitor.rCampo(tcDe2, 'vRetCSLL');
+    NF3e.Total.vIRRF       := Leitor.rCampo(tcDe2, 'vIRRF');
+    NF3e.Total.vCOFINSEfet := Leitor.rCampo(tcDe2, 'vCOFINSEfet');
+    NF3e.Total.vPISEfet    := Leitor.rCampo(tcDe2, 'vPISEfet');
   end;
 
   if Leitor.rExtrai(1, 'gFat') <> '' then
@@ -511,6 +542,11 @@ begin
       NF3e.gFat.enderCorresp.fone    := Leitor.rCampo(tcStr, 'fone');
       NF3e.gFat.enderCorresp.email   := Leitor.rCampo(tcStr, 'email');
     end;
+  end;
+
+  if Leitor.rExtrai(1, 'gPIX') <> '' then
+  begin
+    NF3e.gPIX.urlQRCodePIX := Leitor.rCampo(tcStr, 'urlQRCodePIX');
   end;
 
   if Leitor.rExtrai(1, 'gANEEL') <> '' then

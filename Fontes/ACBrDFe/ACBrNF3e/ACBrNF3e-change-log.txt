@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2021
+-- Diversos --
+[*] Alterações para deixar o componente em conformidade com a NT 2021/001.
+   Por: Italo Giurizzato Junior
+
 07/01/2021
 -- ACBrNF3eXmlWriter --
 [*] Ajuste de conversão de retorno na função ValidarGTIN ao preencher mensagens de Alerta 

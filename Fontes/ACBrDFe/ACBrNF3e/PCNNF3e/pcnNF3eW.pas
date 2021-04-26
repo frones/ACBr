@@ -99,13 +99,17 @@ type
     procedure GerarImposto(const i, j: Integer);
     procedure GerarICMS(const i, j: Integer);
     procedure GerarPIS(const i, j: Integer);
+    procedure GerarPISEfet(const i, j: Integer);
     procedure GerarCOFINS(const i, j: Integer);
+    procedure GerarCOFINSEfet(const i, j: Integer);
+    procedure GerarRetTrib(const i, j: Integer);
     procedure GerargProcRef(const i, j: Integer);
     procedure GerargProc(const i, j: Integer);
     procedure GerargContab(const i, j: Integer);
     procedure GerarTotal;
     procedure GerargFat;
     procedure GerarEnderCorresp;
+    procedure GerargPIX;
     procedure GerargANEEL;
     procedure GerarautXML;
     procedure GerarInfAdic;
@@ -279,6 +283,10 @@ begin
   GerarNFDet;
   GerarTotal;
   GerargFat;
+
+  if NF3e.gPIX.urlQRCodePIX <> '' then
+    GerargPIX;
+
   GerargANEEL;
   GerarautXML;
   GerarInfAdic;
@@ -420,8 +428,13 @@ begin
      end;
   end;
 
-  Gerador.wCampo(tcStr, '#042', 'IM            ', 1, 15, 0, NF3e.Dest.IM, DSC_IM);
-  Gerador.wCampo(tcStr, '#043', 'cNIS          ', 1, 15, 0, NF3e.Dest.cNIS, DSC_ISUF);
+  Gerador.wCampo(tcStr, '#042', 'IM', 1, 15, 0, NF3e.Dest.IM, DSC_IM);
+
+  if NF3e.Dest.cNIS <> '' then
+    Gerador.wCampo(tcStr, '#043', 'cNIS', 1, 15, 0, NF3e.Dest.cNIS, DSC_CNIS)
+  else
+    Gerador.wCampo(tcStr, '#043', 'NB', 1, 10, 0, NF3e.Dest.NB, DSC_NB);
+
   Gerador.wCampo(tcStr, '#044', 'xNomeAdicional', 2, 60, 0, NF3e.Dest.xNomeAdicional, DSC_XNOME);
 
   GerarEnderDest(UF);
@@ -473,8 +486,8 @@ begin
   Gerador.wCampo(tcStr, '#064', 'tpGrpTensao ', 02, 02, 1, tpGrpTensaoToStr(NF3e.acessante.tpGrpTensao), DSC_TPGRPTENSAO);
   Gerador.wCampo(tcStr, '#065', 'tpModTar    ', 02, 02, 1, tpModTarToStr(NF3e.acessante.tpModTar), DSC_TPMODTAR);
 
-  Gerador.wCampo(tcStr, '#066', 'latGPS ', 01, 10, 1, NF3e.acessante.latGPS, DSC_LATGPS);
-  Gerador.wCampo(tcStr, '#067', 'longGPS', 01, 11, 1, NF3e.acessante.longGPS, DSC_LONGGPS);
+  Gerador.wCampo(tcStr, '#066', 'latGPS ', 2, 6, 1, NF3e.acessante.latGPS, DSC_LATGPS);
+  Gerador.wCampo(tcStr, '#067', 'longGPS', 2, 6, 1, NF3e.acessante.longGPS, DSC_LONGGPS);
 
   Gerador.wCampo(tcStr, '#068', 'codRoteiroLeitura', 1, 100, 0, NF3e.acessante.codRoteiroLeitura, DSC_CODROTEIROLEITURA);
 
@@ -534,7 +547,8 @@ var
 begin
   for i := 0 to NF3e.gGrContrat.Count - 1 do
   begin
-    Gerador.wGrupo('gGrContrat nContrat="' + IntToStr(NF3e.gGrContrat[i].nContrat) + '"', '#081');
+    Gerador.wGrupo('gGrContrat nContrat="' +
+                  FormatFloat('00', NF3e.gGrContrat[i].nContrat) + '"', '#081');
 
     if (NF3e.gGrContrat[i].nContrat > 20) then
       Gerador.wAlerta('#082', 'nContrat', DSC_NCONTRAT, ERR_MSG_MAIOR);
@@ -559,7 +573,8 @@ var
 begin
   for i := 0 to NF3e.gMed.Count - 1 do
   begin
-    Gerador.wGrupo('gMed nMed="' + IntToStr(NF3e.gMed[i].nMed) + '"', '#086');
+    Gerador.wGrupo('gMed nMed="' +
+                            FormatFloat('00', NF3e.gMed[i].nMed) + '"', '#086');
 
     if (NF3e.gMed[i].nMed > 20) then
       Gerador.wAlerta('#087', 'nMed', DSC_NMED, ERR_MSG_MAIOR);
@@ -604,15 +619,31 @@ begin
     for i := 0 to NF3e.gSCEE.gSaldoCred.Count - 1 do
     begin
       Gerador.wGrupo('gSaldoCred', '#098');
-      Gerador.wCampo(tcStr, '#099', 'tpPosTar     ', 1, 01, 1, tpPosTarToStr(NF3e.gSCEE.gSaldoCred[i].tpPosTar), DSC_TPPOSTAR);
-      Gerador.wCampo(tcInt, '#100', 'vSaldAnt     ', 1, 11, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAnt, DSC_VSALDANT);
-      Gerador.wCampo(tcInt, '#101', 'vCredExpirado', 1, 11, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirado, DSC_VCREDEXPIRADO);
-      Gerador.wCampo(tcInt, '#102', 'vSaldAtual   ', 1, 11, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAtual, DSC_VSALDATUAL);
+      Gerador.wCampo(tcStr, '#099', 'tpPosTar', 1, 01, 1, tpPosTarToStr(NF3e.gSCEE.gSaldoCred[i].tpPosTar), DSC_TPPOSTAR);
+
+      if Frac(NF3e.gSCEE.gSaldoCred[i].vSaldAnt) > 0 then
+        Gerador.wCampo(tcDe4, '#100', 'vSaldAnt', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAnt, DSC_VSALDANT)
+      else
+        Gerador.wCampo(tcInt, '#100', 'vSaldAnt', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAnt, DSC_VSALDANT);
+
+      if Frac(NF3e.gSCEE.gSaldoCred[i].vCredExpirado) > 0 then
+        Gerador.wCampo(tcDe4, '#101', 'vCredExpirado', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirado, DSC_VCREDEXPIRADO)
+      else
+        Gerador.wCampo(tcInt, '#101', 'vCredExpirado', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirado, DSC_VCREDEXPIRADO);
+
+      if Frac(NF3e.gSCEE.gSaldoCred[i].vSaldAtual) > 0 then
+        Gerador.wCampo(tcDe4, '#102', 'vSaldAtual', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAtual, DSC_VSALDATUAL)
+      else
+        Gerador.wCampo(tcInt, '#102', 'vSaldAtual', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vSaldAtual, DSC_VSALDATUAL);
 
       if (NF3e.gSCEE.gSaldoCred[i].vCredExpirar > 0) or
          (NF3e.gSCEE.gSaldoCred[i].CompetExpirar > 0) then
       begin
-        Gerador.wCampo(tcInt, '#103', 'vCredExpirar ', 1, 11, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirar, DSC_VCREDEXPIRAR);
+        if Frac(NF3e.gSCEE.gSaldoCred[i].vCredExpirar) > 0 then
+          Gerador.wCampo(tcDe4, '#103', 'vCredExpirar', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirar, DSC_VCREDEXPIRAR)
+        else
+          Gerador.wCampo(tcInt, '#103', 'vCredExpirar', 1, 15, 1, NF3e.gSCEE.gSaldoCred[i].vCredExpirar, DSC_VCREDEXPIRAR);
+
         Gerador.wCampo(tcStr, '#104', 'CompetExpirar', 6, 06, 1, FormatDateTime('yyyymm', NF3e.gSCEE.gSaldoCred[i].CompetExpirar), DSC_COMPETEXPIRAR);
       end;
 
@@ -634,13 +665,22 @@ begin
   begin
     if NF3e.NFDet[i].chNF3eAnt <> '' then
     begin
-      Gerador.wGrupo('NFdet chNF3eAnt="' + NF3e.NFDet[i].chNF3eAnt + '"', '#105');
+      if NF3e.NFDet[i].mod6HashAnt <> '' then
+        Gerador.wGrupo('NFdet chNF3eAnt="' + NF3e.NFDet[i].chNF3eAnt + '"' +
+          ' mod6HashAnt="' + NF3e.NFDet[i].mod6HashAnt + '"', '#105')
+      else
+        Gerador.wGrupo('NFdet chNF3eAnt="' + NF3e.NFDet[i].chNF3eAnt + '"', '#105');
 
       if not ValidarChave(NF3e.NFDet[i].chNF3eAnt) then
         Gerador.wAlerta('#106', 'chNF3eAnt', DSC_CHNF3E, ERR_MSG_INVALIDO);
     end
     else
-     Gerador.wGrupo('NFdet', '#105');
+    begin
+      if NF3e.NFDet[i].mod6HashAnt <> '' then
+        Gerador.wGrupo('NFdet mod6HashAnt="' + NF3e.NFDet[i].mod6HashAnt + '"', '#105')
+      else
+        Gerador.wGrupo('NFdet', '#105');
+    end;
 
      GerarDet(i);
 
@@ -794,21 +834,21 @@ begin
   if NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nMed > 0 then
     GerargMedicao(i, j);
 
-  Gerador.wCampo(tcStr, '#161', 'cProd       ', 01, 060, 1, NF3e.NFDet[i].Det[j].detItem.Prod.cProd, DSC_CPROD);
-  Gerador.wCampo(tcStr, '#162', 'xProd       ', 01, 120, 1, NF3e.NFDet[i].Det[j].detItem.Prod.xProd, DSC_XPROD);
-  Gerador.wCampo(tcStr, '#163', 'cClass      ', 07, 007, 1, NF3e.NFDet[i].Det[j].detItem.Prod.cClass, DSC_CCLASS);
-  Gerador.wCampo(tcInt, '#164', 'CFOP        ', 04, 004, 0, NF3e.NFDet[i].Det[j].detItem.Prod.CFOP, DSC_CFOP);
-  Gerador.wCampo(tcStr, '#165', 'uMed        ', 01, 001, 1, uMedFatToStr(NF3e.NFDet[i].Det[j].detItem.Prod.uMed), DSC_UMED);
+  Gerador.wCampo(tcStr, '#161', 'cProd ', 01, 060, 1, NF3e.NFDet[i].Det[j].detItem.Prod.cProd, DSC_CPROD);
+  Gerador.wCampo(tcStr, '#162', 'xProd ', 01, 120, 1, NF3e.NFDet[i].Det[j].detItem.Prod.xProd, DSC_XPROD);
+  Gerador.wCampo(tcStr, '#163', 'cClass', 07, 007, 1, NF3e.NFDet[i].Det[j].detItem.Prod.cClass, DSC_CCLASS);
+  Gerador.wCampo(tcInt, '#164', 'CFOP  ', 04, 004, 0, NF3e.NFDet[i].Det[j].detItem.Prod.CFOP, DSC_CFOP);
+  Gerador.wCampo(tcStr, '#165', 'uMed  ', 01, 001, 1, uMedFatToStr(NF3e.NFDet[i].Det[j].detItem.Prod.uMed), DSC_UMED);
 
   if Frac(NF3e.NFDet[i].Det[j].detItem.Prod.qFaturada) > 0 then
     Gerador.wCampo(tcDe4, '#166', 'qFaturada', 1, 15, 1, NF3e.NFDet[i].Det[j].detItem.Prod.qFaturada, DSC_QFATURADA)
   else
     Gerador.wCampo(tcInt, '#166', 'qFaturada', 1, 15, 1, NF3e.NFDet[i].Det[j].detItem.Prod.qFaturada, DSC_QFATURADA);
 
-  // pode ter 2 ou 6 casas decimais
-  Gerador.wCampo(tcDe2, '#167', 'vItem       ', 01, 015, 1, NF3e.NFDet[i].Det[j].detItem.Prod.vItem, DSC_VITEM);
-  // pode ter 2 ou 6 casas decimais
-  Gerador.wCampo(tcDe2, '#168', 'vProd       ', 01, 015, 1, NF3e.NFDet[i].Det[j].detItem.Prod.vProd, DSC_VPROD);
+  // pode ter 2 ou 8 casas decimais
+  Gerador.wCampo(tcDe2, '#167', 'vItem', 01, 015, 1, NF3e.NFDet[i].Det[j].detItem.Prod.vItem, DSC_VITEM);
+  // pode ter 2 ou 8 casas decimais
+  Gerador.wCampo(tcDe2, '#168', 'vProd', 01, 015, 1, NF3e.NFDet[i].Det[j].detItem.Prod.vProd, DSC_VPROD);
 
   if NF3e.NFDet[i].Det[j].detItem.Prod.indDevolucao = tiSim then
     Gerador.wCampo(tcStr, '#169', 'indDevolucao', 1, 1, 1, '1', '');
@@ -822,8 +862,8 @@ end;
 procedure TNF3eW.GerargMedicao(const i, j: Integer);
 begin
   Gerador.wGrupo('gMedicao', '#146');
-  Gerador.wCampo(tcInt, '#147', 'nMed    ', 1, 2, 1, NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nMed, DSC_NMED);
-  Gerador.wCampo(tcInt, '#148', 'nContrat', 1, 2, 0, NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nContrat, DSC_NCONTRAT);
+  Gerador.wCampo(tcInt, '#147', 'nMed    ', 2, 2, 1, NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nMed, DSC_NMED);
+  Gerador.wCampo(tcInt, '#148', 'nContrat', 2, 2, 0, NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nContrat, DSC_NCONTRAT);
 
   if NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.tpMotNaoLeitura = tmNenhum then
   begin
@@ -858,7 +898,10 @@ begin
 
   GerarICMS(i, j);
   GerarPIS(i, j);
+  GerarPISEfet(i, j);
   GerarCOFINS(i, j);
+  GerarCOFINSEfet(i, j);
+  GerarRetTrib(i, j);
 
   Gerador.wGrupo('/imposto');
 end;
@@ -996,6 +1039,20 @@ begin
   end;
 end;
 
+procedure TNF3eW.GerarPISEfet(const i, j: Integer);
+begin
+  if (NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vBCPISEfet > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.pPISEfet > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet > 0) then
+  begin
+    Gerador.wGrupo('PISEfet', '#209');
+    Gerador.wCampo(tcDe2, '#211', 'vBCPISEfet', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vBCPISEfet, DSC_VBC);
+    Gerador.wCampo(tcDe2, '#212', 'pPISEfet  ', 01, 05, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.pPISEfet, DSC_PPIS);
+    Gerador.wCampo(tcDe2, '#213', 'vPISEfet  ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet, DSC_VPIS);
+    Gerador.wGrupo('/PISEfet');
+  end;
+end;
+
 procedure TNF3eW.GerarCOFINS(const i, j: Integer);
 begin
   if (NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vBC > 0) or
@@ -1008,6 +1065,38 @@ begin
     Gerador.wCampo(tcDe2, '#217', 'pCOFINS', 01, 05, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.pCOFINS, DSC_PCOFINS);
     Gerador.wCampo(tcDe2, '#218', 'vCOFINS', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vCOFINS, DSC_VCOFINS);
     Gerador.wGrupo('/COFINS');
+  end;
+end;
+
+procedure TNF3eW.GerarCOFINSEfet(const i, j: Integer);
+begin
+  if (NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vBCCOFINSEfet > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.pCOFINSEfet > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet > 0) then
+  begin
+    Gerador.wGrupo('COFINSEfet', '#214');
+    Gerador.wCampo(tcDe2, '#216', 'vBCCOFINSEfet', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vBCCOFINSEfet, DSC_VBC);
+    Gerador.wCampo(tcDe2, '#217', 'pCOFINSEfet  ', 01, 05, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.pCOFINSEfet, DSC_PCOFINS);
+    Gerador.wCampo(tcDe2, '#218', 'vCOFINSEfet  ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet, DSC_VCOFINS);
+    Gerador.wGrupo('/COFINS');
+  end;
+end;
+
+procedure TNF3eW.GerarRetTrib(const i, j: Integer);
+begin
+  if (NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetPIS > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCOFINS > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCSLL > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vBCIRRF > 0) or
+     (NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vIRRF > 0) then
+  begin
+    Gerador.wGrupo('retTrib', '#214');
+    Gerador.wCampo(tcDe2, '#216', 'vRetPIS   ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetPIS, DSC_VRETPIS);
+    Gerador.wCampo(tcDe2, '#217', 'vRetCOFINS', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCOFINS, DSC_VRETCOFINS);
+    Gerador.wCampo(tcDe2, '#218', 'vRetCSLL  ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCSLL, DSC_VRETCSLL);
+    Gerador.wCampo(tcDe2, '#218', 'vBCIRRF   ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vBCIRRF, DSC_VBCIRRF);
+    Gerador.wCampo(tcDe2, '#218', 'vIRRF     ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vIRRF, DSC_VIRRF);
+    Gerador.wGrupo('/retTrib');
   end;
 end;
 
@@ -1041,6 +1130,13 @@ begin
 
     Gerador.wGrupo('/gProcRef');
   end;
+end;
+
+procedure TNF3eW.GerargPIX;
+begin
+  Gerador.wGrupo('gPIX', '#251');
+  Gerador.wCampo(tcStr, '#252', 'urlQRCodePIX', 2, 2000, 1, NF3e.gPIX.urlQRCodePIX, DSC_URLQRCODEPIX);
+  Gerador.wGrupo('/gPIX');
 end;
 
 procedure TNF3eW.GerargProc(const i, j: Integer);
@@ -1092,9 +1188,18 @@ begin
   Gerador.wCampo(tcDe2, '#247', 'vFCPST    ', 1, 15, 1, NF3e.Total.vFCPST, DSC_VFCPST);
   Gerador.wGrupo('/ICMSTot');
 
-  Gerador.wCampo(tcDe2, '#248', 'vCOFINS', 1, 15, 1, NF3e.Total.vCOFINS, DSC_VCOFINS);
-  Gerador.wCampo(tcDe2, '#249', 'vPIS   ', 1, 15, 1, NF3e.Total.vPIS, DSC_VPIS);
-  Gerador.wCampo(tcDe2, '#250', 'vNF    ', 1, 15, 1, NF3e.Total.vNF, DSC_VNF);
+  Gerador.wGrupo('vRetTribTot', '#240');
+  Gerador.wCampo(tcDe2, '#241', 'vRetPIS   ', 1, 15, 1, NF3e.Total.vRetPIS, DSC_VRETPIS);
+  Gerador.wCampo(tcDe2, '#242', 'vRetCofins', 1, 15, 1, NF3e.Total.vRetCofins, DSC_VRETCOFINS);
+  Gerador.wCampo(tcDe2, '#243', 'vRetCSLL  ', 1, 15, 1, NF3e.Total.vRetCSLL, DSC_VRETCSLL);
+  Gerador.wCampo(tcDe2, '#244', 'vIRRF     ', 1, 15, 1, NF3e.Total.vIRRF, DSC_VIRRF);
+  Gerador.wGrupo('/vRetTribTot');
+
+  Gerador.wCampo(tcDe2, '#248', 'vCOFINS    ', 1, 15, 1, NF3e.Total.vCOFINS, DSC_VCOFINS);
+  Gerador.wCampo(tcDe2, '#248', 'vCOFINSEfet', 1, 15, 1, NF3e.Total.vCOFINSEfet, DSC_VCOFINSEfet);
+  Gerador.wCampo(tcDe2, '#249', 'vPIS       ', 1, 15, 1, NF3e.Total.vPIS, DSC_VPIS);
+  Gerador.wCampo(tcDe2, '#249', 'vPISEfet   ', 1, 15, 1, NF3e.Total.vPISEfet, DSC_VPISEfet);
+  Gerador.wCampo(tcDe2, '#250', 'vNF        ', 1, 15, 1, NF3e.Total.vNF, DSC_VNF);
   Gerador.wGrupo('/total');
 end;
 

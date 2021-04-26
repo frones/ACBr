@@ -132,6 +132,16 @@ const
   DSC_VCONTAB = 'Valor do Lançamento na Conta Contábil';
   DSC_TPLANC = 'Tipo de Lançamento Contábil';
   DSC_CODROTEIROLEITURA = 'Código de Roteiro de Leitura';
+  DSC_CNIS = 'Numero da Identificação Social - NIS';
+  DSC_NB = 'Numero do Beneficio';
+  DSC_VRETPIS = 'Valor do PIS Retido';
+  DSC_VRETCOFINS = 'Valor do COFINS Retido';
+  DSC_VRETCSLL = 'Valor do CSLL Retido';
+  DSC_VBCIRRF = 'Base de Cálculo do IRRF';
+  DSC_VIRRF = 'Valor do IRRF Retido';
+  DSC_VCOFINSEfet = 'Total do Valor Efetivo do COFINS';
+  DSC_VPISEfet = 'Total do Valor Efetivo do PIS';
+  DSC_URLQRCODEPIX = 'URL do QRCode do PIX';
 
 implementation
 

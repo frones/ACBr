@@ -2200,6 +2200,7 @@ begin
 
                 vContrato := FEvento.Evento[i].InfEvento.detEvento.infPag[j].vContrato;
                 indPag    := FEvento.Evento[i].InfEvento.detEvento.infPag[j].indPag;
+                vAdiant   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].vAdiant;
 
                 if indPag = ipPrazo then
                 begin

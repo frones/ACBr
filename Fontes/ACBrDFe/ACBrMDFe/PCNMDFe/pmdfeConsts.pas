@@ -121,6 +121,7 @@ const
   DSC_CODAGENCIA  = 'Código da Agência';
   DSC_PIX         = 'Chave PIX';
   DSC_TPVALEPED   = 'Tipo de Vale Pedágio';
+  DSC_VADIANT     = 'Valor do Adiantamento';
 
   DSC_INDCANALVERDE = 'Indicador de Canal Verde';
   DSC_INDCARREGAPOSTERIOR = 'Indicador de Carregamento Posterior';

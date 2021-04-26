@@ -248,6 +248,7 @@ begin
             MDFe.rodo.infANTT.infPag[i01].vContrato     := Leitor.rCampo(tcDe2, 'vContrato');
             MDFe.rodo.infANTT.infPag[i01].indAltoDesemp := StrToindAltoDesemp(ok, Leitor.rCampo(tcStr, 'indAltoDesemp'));
             MDFe.rodo.infANTT.infPag[i01].indPag        := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
+            MDFe.rodo.infANTT.infPag[i01].vAdiant       := Leitor.rCampo(tcDe2, 'vAdiant');
 
             i02 := 0;
             while Leitor.rExtrai(5, 'Comp', '', i02 + 1) <> '' do

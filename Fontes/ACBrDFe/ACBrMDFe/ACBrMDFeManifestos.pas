@@ -654,6 +654,7 @@ begin
               INIRec.WriteFloat(sSecao, 'vContrato', vContrato);
               INIRec.WriteString(sSecao, 'indAltoDesemp', indAltoDesempToStr(indAltoDesemp));
               INIRec.WriteString(sSecao, 'indPag', TindPagToStr(indPag));
+              INIRec.WriteFloat(sSecao, 'vAdiant', vAdiant);
 
               for j := 0 to rodo.infANTT.infPag[I].Comp.Count - 1 do
               begin
@@ -1548,6 +1549,7 @@ begin
               vContrato     := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
               indAltoDesemp := StrToindAltoDesemp(ok, INIRec.ReadString(sSecao, 'indAltoDesemp', ''));
               indPag        := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
+              vAdiant       := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
 
               J := 1;
               while true do

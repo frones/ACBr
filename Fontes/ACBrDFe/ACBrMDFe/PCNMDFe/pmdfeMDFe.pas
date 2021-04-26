@@ -385,6 +385,7 @@ type
     FvContrato: Double;
     FindAltoDesemp: TIndicador;
     FindPag: TIndPag;
+    FvAdiant: Double;
     FinfPrazo: TInfPrazoCollection;
     FinfBanc: TinfBanc;
   public
@@ -398,6 +399,7 @@ type
     property vContrato: Double             read FvContrato     write FvContrato;
     property indAltoDesemp: TIndicador     read FindAltoDesemp write FindAltoDesemp;
     property indPag: TIndPag               read FindPag        write FindPag;
+    property vAdiant: Double               read FvAdiant       write FvAdiant;
     property infPrazo: TInfPrazoCollection read FinfPrazo      write FinfPrazo;
     property infBanc: TinfBanc             read FinfBanc       write FinfBanc;
   end;

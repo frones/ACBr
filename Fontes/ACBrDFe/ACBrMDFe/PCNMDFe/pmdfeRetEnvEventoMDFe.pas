@@ -240,6 +240,7 @@ begin
 
               vContrato := Leitor.rCampo(tcDe2, 'vContrato');
               indPag    := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
+              vAdiant   := Leitor.rCampo(tcDe2, 'vAdiant');
 
               j := 0;
               while Leitor.rExtrai(5, 'Comp', '', j + 1) <> '' do

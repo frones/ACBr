@@ -1385,6 +1385,7 @@ begin
     Gerador.wCampo(tcDe2, '#', 'vContrato    ', 01, 15, 1, MDFe.rodo.infANTT.infPag[i].vContrato, DSC_VCONTRATO);
     Gerador.wCampo(tcStr, '#', 'indAltoDesemp', 01, 01, 0, indAltoDesempToStr(MDFe.rodo.infANTT.infPag[i].indAltoDesemp), '');
     Gerador.wCampo(tcStr, '#', 'indPag       ', 01, 01, 1, TIndPagToStr(MDFe.rodo.infANTT.infPag[i].indPag), DSC_INDPAG);
+    Gerador.wCampo(tcDe2, '#', 'vAdiant      ', 01, 15, 0, MDFe.rodo.infANTT.infPag[i].vAdiant, DSC_VADIANT);
 
     // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
     if MDFe.rodo.infANTT.infPag[i].indPag = ipPrazo then
@@ -1392,8 +1393,8 @@ begin
       for j := 0 to MDFe.rodo.infANTT.infPag[i].infPrazo.Count - 1 do
       begin
         Gerador.wGrupo('infPrazo', '#');
-        Gerador.wCampo(tcInt, '#', 'nParcela', 03, 03, 0, MDFe.rodo.infANTT.infPag[i].infPrazo[j].nParcela, DSC_NPARCELA);
-        Gerador.wCampo(tcDat, '#', 'dVenc   ', 10, 10, 0, MDFe.rodo.infANTT.infPag[i].infPrazo[j].dVenc, DSC_DVENC);
+        Gerador.wCampo(tcStr, '#', 'nParcela', 03, 03, 1, FormatFloat('000', MDFe.rodo.infANTT.infPag[i].infPrazo[j].nParcela), DSC_NPARCELA);
+        Gerador.wCampo(tcDat, '#', 'dVenc   ', 10, 10, 1, MDFe.rodo.infANTT.infPag[i].infPrazo[j].dVenc, DSC_DVENC);
         Gerador.wCampo(tcDe2, '#', 'vParcela', 01, 15, 1, MDFe.rodo.infANTT.infPag[i].infPrazo[j].vParcela, DSC_VPARCELA);
         Gerador.wGrupo('/infPrazo');
       end;

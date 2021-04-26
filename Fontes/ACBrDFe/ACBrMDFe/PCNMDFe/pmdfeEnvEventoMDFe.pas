@@ -270,6 +270,7 @@ begin
 
            Gerador.wCampo(tcDe2, '#', 'vContrato', 01, 15, 1, vContrato, DSC_VCONTRATO);
            Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 1, TIndPagToStr(indPag), DSC_INDPAG);
+           Gerador.wCampo(tcDe2, '#', 'vAdiant  ', 01, 15, 0, vAdiant, DSC_VADIANT);
 
            // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
            if indPag = ipPrazo then
@@ -277,8 +278,8 @@ begin
              for j := 0 to infPrazo.Count - 1 do
              begin
                Gerador.wGrupo('infPrazo', '#');
-               Gerador.wCampo(tcInt, '#', 'nParcela', 03, 03, 0, infPrazo[j].nParcela, DSC_NPARCELA);
-               Gerador.wCampo(tcDat, '#', 'dVenc   ', 10, 10, 0, infPrazo[j].dVenc, DSC_DVENC);
+               Gerador.wCampo(tcStr, '#', 'nParcela', 03, 03, 1, FormatFloat('000', infPrazo[j].nParcela), DSC_NPARCELA);
+               Gerador.wCampo(tcDat, '#', 'dVenc   ', 10, 10, 1, infPrazo[j].dVenc, DSC_DVENC);
                Gerador.wCampo(tcDe2, '#', 'vParcela', 01, 15, 1, infPrazo[j].vParcela, DSC_VPARCELA);
                Gerador.wGrupo('/infPrazo');
              end;
@@ -433,6 +434,7 @@ begin
 
           vContrato := RetEventoMDFe.InfEvento.detEvento.infPag[i].vContrato;
           indPag    := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
+          vAdiant   := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
 
           if indPag = ipPrazo then
           begin

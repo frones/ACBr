@@ -67,6 +67,8 @@ function RemoverCDATA(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
+procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix: string; excludeElements: array of string);
+
 implementation
 
 uses
@@ -221,6 +223,29 @@ begin
   else
     raise Exception.Create('Node <' + ANode.Name + '> com conteúdo inválido. '+ ConteudoTag);
   end;
+end;
+
+procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix : string; excludeElements: array of string);
+Var
+  Item: TACBrXmlNode;
+
+  function StringInArray(const Value: string; Strings: array of string): Boolean;
+  var
+    I: Integer;
+  begin
+    Result := True;
+    for I := Low(Strings) to High(Strings) do
+      if Strings[i] = Value then Exit;
+    Result := False;
+  end;
+begin
+  if (ANode = nil) then Exit;
+
+  if not StringInArray(ANode.LocalName, excludeElements) then
+      ANode.Name :=  nsPrefix + ':' + ANode.Name;
+
+  for Item in ANode.Childrens do
+    ApplyNamespacePrefix(Item, nsPrefix, excludeElements);
 end;
 
 end.

@@ -351,6 +351,7 @@ type
   TxmlFreeNs = procedure(cur: xmlNsPtr); cdecl;
   TxmlSetProp = function(node: xmlNodePtr; const name: xmlCharPtr; const value: xmlCharPtr): xmlAttrPtr; cdecl;
   TxmlRemoveProp = function(cur: xmlAttrPtr): Longint; cdecl;
+  TxmlUnsetNsProp = function(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint; cdecl;
   TxmlUnlinkNode = procedure(cur: xmlNodePtr); cdecl;
   TxmlReadMemory = function(const buffer: PAnsiChar; size: Longint; const URL: PAnsiChar;
     const encoding: PAnsiChar; options: Longint) : xmlDocPtr; cdecl;
@@ -417,6 +418,7 @@ function xmlGetNoNsProp(node: xmlNodePtr; const name: xmlCharPtr): xmlCharPtr;
 procedure xmlFreeNs(cur: xmlNsPtr);
 function xmlSetProp(node: xmlNodePtr; const name: xmlCharPtr; const value: xmlCharPtr): xmlAttrPtr;
 function xmlRemoveProp(cur: xmlAttrPtr): Longint;
+function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint;
 procedure xmlUnlinkNode(cur: xmlNodePtr);
 function xmlReadMemory(const buffer: PAnsiChar; size: Longint; const URL: PAnsiChar;
   const encoding: PAnsiChar; options: Longint): xmlDocPtr;
@@ -492,6 +494,7 @@ var
   _xmlFreeNs: TxmlFreeNs = nil;
   _xmlSetProp: TxmlSetProp = nil;
   _xmlRemoveProp: TxmlRemoveProp = nil;
+  _xmlUnsetNsProp: TxmlUnsetNsProp = nil;
   _xmlUnlinkNode: TxmlUnlinkNode = nil;
   _xmlReadMemory: TxmlReadMemory = nil;
   _xmlFreeNode: TxmlFreeNode = nil;
@@ -613,6 +616,7 @@ begin
   _xmlFreeNs := GetProcAddr(LibXml2Handle, 'xmlFreeNs');
   _xmlSetProp := GetProcAddr(LibXml2Handle, 'xmlSetProp');
   _xmlRemoveProp := GetProcAddr(LibXml2Handle, 'xmlRemoveProp');
+  _xmlUnsetNsProp := GetProcAddr(LibXml2Handle, 'xmlUnsetNsProp');
   _xmlUnlinkNode := GetProcAddr(LibXml2Handle, 'xmlUnlinkNode');
   _xmlReadMemory := GetProcAddr(LibXml2Handle, 'xmlReadMemory');
   _xmlFreeNode := GetProcAddr(LibXml2Handle, 'xmlFreeNode');
@@ -721,6 +725,7 @@ begin
   _xmlFreeNs := nil;
   _xmlSetProp := nil;
   _xmlRemoveProp := nil;
+  _xmlUnsetNsProp := nil;
   _xmlUnlinkNode := nil;
   _xmlReadMemory := nil;
   _xmlFreeNode := nil;
@@ -998,6 +1003,14 @@ function xmlRemoveProp(cur: xmlAttrPtr): Longint;
 begin
   if InitLibXml2Interface and Assigned(_xmlRemoveProp) then
     Result := _xmlRemoveProp(cur)
+  else
+    Result := -1;
+end;
+
+function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint;
+begin
+  if InitLibXml2Interface and Assigned(_xmlUnsetNsProp) then
+    Result := _xmlUnsetNsProp(node, ns, name)
   else
     Result := -1;
 end;

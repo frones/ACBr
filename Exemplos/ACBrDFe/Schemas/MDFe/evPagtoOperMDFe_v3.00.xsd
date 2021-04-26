@@ -162,6 +162,11 @@
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
+							<xs:element name="vAdiant" type="TDec_1302" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Valor do Adiantamento (usar apenas em pagamento à Prazo</xs:documentation>
+								</xs:annotation>
+							</xs:element>
 							<xs:element name="infPrazo" minOccurs="0" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation>Informações do pagamento a prazo. </xs:documentation>
@@ -169,7 +174,7 @@
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="nParcela" minOccurs="0">
+										<xs:element name="nParcela">
 											<xs:annotation>
 												<xs:documentation>Número da Parcela</xs:documentation>
 											</xs:annotation>
@@ -180,7 +185,7 @@
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element name="dVenc" type="TData" minOccurs="0">
+										<xs:element name="dVenc" type="TData">
 											<xs:annotation>
 												<xs:documentation>Data de vencimento da Parcela (AAAA-MM-DD)</xs:documentation>
 											</xs:annotation>

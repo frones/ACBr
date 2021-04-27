@@ -217,7 +217,7 @@ namespace ACBrLib.CTe
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "")
+        public override void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.CTE_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(libHandle, ToUTF8(eArqConfig)));
@@ -225,7 +225,7 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "")
+        public override void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.CTE_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(libHandle, ToUTF8(eArqConfig)));
@@ -233,7 +233,7 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.CTE_ConfigLerValor>();
 
@@ -246,7 +246,7 @@ namespace ACBrLib.CTe
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -257,9 +257,7 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        #endregion Ini
-
-        public void ImportarConfig(string eArqConfig = "")
+        public override void ImportarConfig(string eArqConfig = "")
         {
             var importarConfig = GetMethod<Delegates.CTE_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
@@ -267,7 +265,7 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public string ExportarConfig()
+        public override string ExportarConfig()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -279,6 +277,8 @@ namespace ACBrLib.CTe
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        #endregion Ini
 
         public void CarregarXML(string eArquivoOuXml)
         {

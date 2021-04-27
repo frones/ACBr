@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
@@ -188,7 +187,7 @@ namespace ACBrLibPosPrinter
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "")
+        public override void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.POS_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -196,7 +195,7 @@ namespace ACBrLibPosPrinter
             CheckResult(ret);
         }
 
-        public void ImportarConfig(string eArqConfig)
+        public override void ImportarConfig(string eArqConfig)
         {
             var lerIni = GetMethod<Delegates.POS_ConfigImportar>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
@@ -204,7 +203,7 @@ namespace ACBrLibPosPrinter
             CheckResult(ret);
         }
 
-        public string ExportarConfig()
+        public override string ExportarConfig()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -217,8 +216,7 @@ namespace ACBrLibPosPrinter
             return ProcessResult(buffer, bufferLen);
         }
 
-
-        public void ConfigLer(string eArqConfig = "")
+        public override void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.POS_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
@@ -226,7 +224,7 @@ namespace ACBrLibPosPrinter
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.POS_ConfigLerValor>();
 
@@ -239,7 +237,7 @@ namespace ACBrLibPosPrinter
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -368,8 +366,11 @@ namespace ACBrLibPosPrinter
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
+            var portas = ProcessResult(buffer, bufferLen);
 
-            return ProcessResult(buffer, bufferLen).Split('|');
+            return portas.Split('|')
+                         .Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x))
+                         .ToArray();
         }
 
         public void GravarLogoArquivo(string aPath, int nAKC1, int nAKC2)

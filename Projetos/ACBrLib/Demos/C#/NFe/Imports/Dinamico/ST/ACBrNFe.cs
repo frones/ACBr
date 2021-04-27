@@ -216,7 +216,7 @@ namespace ACBrLib.NFe
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "")
+        public override void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.NFE_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -224,7 +224,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "")
+        public override void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.NFE_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
@@ -232,7 +232,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.NFE_ConfigLerValor>();
 
@@ -245,7 +245,7 @@ namespace ACBrLib.NFe
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -256,9 +256,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        #endregion Ini
-
-        public void ImportarConfig(string eArqConfig = "")
+        public override void ImportarConfig(string eArqConfig = "")
         {
             var importarConfig = GetMethod<Delegates.NFE_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
@@ -266,7 +264,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        public string ExportarConfig()
+        public override string ExportarConfig()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -278,6 +276,8 @@ namespace ACBrLib.NFe
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        #endregion Ini
 
         public void CarregarXML(string eArquivoOuXml)
         {

@@ -177,7 +177,7 @@ namespace ACBrLib.Sat
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "")
+        public override void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.SAT_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -185,7 +185,7 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "")
+        public override void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.SAT_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
@@ -193,7 +193,7 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.SAT_ConfigLerValor>();
 
@@ -206,7 +206,7 @@ namespace ACBrLib.Sat
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -215,6 +215,27 @@ namespace ACBrLib.Sat
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
             CheckResult(ret);
+        }
+
+        public override void ImportarConfig(string eArqConfig = "")
+        {
+            var importarConfig = GetMethod<Delegates.SAT_ConfigImportar>();
+            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public override string ExportarConfig()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.SAT_ConfigExportar>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
         }
 
         #endregion Ini
@@ -233,27 +254,6 @@ namespace ACBrLib.Sat
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
-        }
-
-        public void ImportarConfig(string eArqConfig = "")
-        {
-            var importarConfig = GetMethod<Delegates.SAT_ConfigImportar>();
-            var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
-
-            CheckResult(ret);
-        }
-
-        public string ExportarConfig()
-        {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
-
-            var method = GetMethod<Delegates.SAT_ConfigExportar>();
-            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
-
-            CheckResult(ret);
-
-            return ProcessResult(buffer, bufferLen);
         }
 
         public string SAT_AtivarSAT(string CNPJValue, int cUF)

@@ -1,4 +1,6 @@
-﻿namespace ACBrLib.Core.DFe
+﻿using System;
+
+namespace ACBrLib.Core.DFe
 {
     public enum TipoEmissao
     {

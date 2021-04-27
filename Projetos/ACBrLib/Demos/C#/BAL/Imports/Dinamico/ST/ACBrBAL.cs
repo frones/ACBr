@@ -117,7 +117,7 @@ namespace ACBrLib.BAL
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "")
+        public override void ConfigGravar(string eArqConfig = "")
         {
             var gravarIni = GetMethod<Delegates.BAL_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
@@ -125,7 +125,7 @@ namespace ACBrLib.BAL
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "")
+        public override void ConfigLer(string eArqConfig = "")
         {
             var lerIni = GetMethod<Delegates.BAL_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
@@ -133,7 +133,7 @@ namespace ACBrLib.BAL
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.BAL_ConfigLerValor>();
 
@@ -146,7 +146,7 @@ namespace ACBrLib.BAL
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -157,9 +157,7 @@ namespace ACBrLib.BAL
             CheckResult(ret);
         }
 
-        #endregion Ini
-
-        public void ImportarConfig(string eArqConfig = "")
+        public override void ImportarConfig(string eArqConfig = "")
         {
             var importarConfig = GetMethod<Delegates.BAL_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
@@ -167,7 +165,7 @@ namespace ACBrLib.BAL
             CheckResult(ret);
         }
 
-        public string ExportarConfig()
+        public override string ExportarConfig()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -179,6 +177,8 @@ namespace ACBrLib.BAL
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        #endregion Ini
 
         public void Ativar()
         {

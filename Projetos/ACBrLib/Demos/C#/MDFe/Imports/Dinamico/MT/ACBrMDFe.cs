@@ -210,7 +210,7 @@ namespace ACBrLib.MDFe
 
         #region Ini
 
-        public void ConfigGravar(string eArqConfig = "ACBrLib.ini")
+        public override void ConfigGravar(string eArqConfig = "ACBrLib.ini")
         {
             var gravarIni = GetMethod<Delegates.MDFE_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(libHandle, ToUTF8(eArqConfig)));
@@ -218,7 +218,7 @@ namespace ACBrLib.MDFe
             CheckResult(ret);
         }
 
-        public void ConfigLer(string eArqConfig = "ACBrLib.ini")
+        public override void ConfigLer(string eArqConfig = "ACBrLib.ini")
         {
             var lerIni = GetMethod<Delegates.MDFE_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(libHandle, ToUTF8(eArqConfig)));
@@ -226,7 +226,7 @@ namespace ACBrLib.MDFe
             CheckResult(ret);
         }
 
-        public T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
+        public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<Delegates.MDFE_ConfigLerValor>();
 
@@ -239,7 +239,7 @@ namespace ACBrLib.MDFe
             return ConvertValue<T>(value);
         }
 
-        public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
+        public override void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
         {
             if (value == null) return;
 
@@ -250,9 +250,7 @@ namespace ACBrLib.MDFe
             CheckResult(ret);
         }
 
-        #endregion Ini
-
-        public void ImportarConfig(string eArqConfig = "")
+        public override void ImportarConfig(string eArqConfig = "")
         {
             var importarConfig = GetMethod<Delegates.MDFE_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(libHandle, ToUTF8(eArqConfig)));
@@ -260,7 +258,7 @@ namespace ACBrLib.MDFe
             CheckResult(ret);
         }
 
-        public string ExportarConfig()
+        public override string ExportarConfig()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -272,6 +270,8 @@ namespace ACBrLib.MDFe
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        #endregion Ini
 
         public void CarregarXML(string eArquivoOuXml)
         {

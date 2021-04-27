@@ -120,7 +120,8 @@ namespace ACBrLib.Core
 
         protected virtual T ConvertValue<T>(string value)
         {
-            if (typeof(T).IsEnum) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
+            if (typeof(T).IsEnum && !Attribute.IsDefined(typeof(T), typeof(FlagsAttribute))) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
+            if (typeof(T).IsEnum && Attribute.IsDefined(typeof(T), typeof(FlagsAttribute))) return (T)Enum.Parse(typeof(T), value.Trim('[', ']'));
             if (typeof(T) == typeof(bool)) return (T)(object)Convert.ToBoolean(Convert.ToInt32(value));
             if (typeof(T) == typeof(byte[])) return (T)(object)Convert.FromBase64String(value);
             if (typeof(T) != typeof(Stream)) return (T)Convert.ChangeType(value, typeof(T));
@@ -135,7 +136,8 @@ namespace ACBrLib.Core
         {
             var type = value.GetType();
             var propValue = value.ToString();
-            if (type.IsEnum) propValue = ((int)value).ToString();
+            if (type.IsEnum && !Attribute.IsDefined(type, typeof(FlagsAttribute))) propValue = ((int)value).ToString();
+            if (type.IsEnum && !Attribute.IsDefined(type, typeof(FlagsAttribute))) propValue = $"[{Enum.Format(type, value, "F")}]";
             if (type == typeof(bool)) propValue = Convert.ToInt32(value).ToString();
             if (type == typeof(byte[])) propValue = Convert.ToBase64String((byte[])value);
             if (type != typeof(Stream)) return propValue;

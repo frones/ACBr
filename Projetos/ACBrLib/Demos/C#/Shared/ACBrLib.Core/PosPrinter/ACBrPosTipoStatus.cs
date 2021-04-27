@@ -16,4 +16,12 @@ namespace ACBrLib.Core.PosPrinter
         TampaAberta = 1 << 7,
         ErroLeitura = 1 << 8
     }
+
+    public enum PosDirecao
+    {
+        dirEsquerdaParaDireita,
+        dirTopoParaBaixo,
+        dirDireitaParaEsquerda,
+        dirBaixoParaTopo
+    }
 }

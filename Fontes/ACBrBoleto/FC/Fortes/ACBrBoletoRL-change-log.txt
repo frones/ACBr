@@ -46,11 +46,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2021
+ACBrBoletoFCFortes
+[*] Alteração na formatação de campos Currecy utilizando a função FormatFloatBr
+
 19/04/2021
 Ajustes para validar uso campo "UsoBanco"
 https://www.projetoacbr.com.br/forum/topic/61981-preenchimento-da-informa%C3%A7%C3%A3o-uso-banco-no-boleto/
 
-15/04/20221
+15/04/2021
 ACBrBoletoFCFortes
 [*] Ajustes de caracteres de acentuação desconfigurados no .lfm
 

@@ -31,7 +31,7 @@
                                 </xs:element>
                                 <xs:element name="DataEmissao" type="xs:dateTime" />
                                 <xs:element name="Status" type="xs:unsignedByte" />
-                                <xs:element name="RpsSubstituido">
+                                <xs:element name="RpsSubstituido" minOccurs="0" maxOccurs="1">
                                   <xs:complexType>
                                     <xs:sequence>
                                       <xs:element name="Numero" />
@@ -119,7 +119,6 @@
                                         </xs:complexType>
                                       </xs:element>
                                       <xs:element name="InscricaoMunicipal" type="xs:unsignedLong" />
-									  <xsd:element name="InscricaoEstadual" />
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
@@ -149,18 +148,18 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="Intermediario">
+                          <xs:element name="Intermediario" minOccurs="0" maxOccurs="1">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="IdentificacaoIntermediario">
+                                <xs:element name="IdentificacaoIntermediario" minOccurs="0">
                                   <xs:complexType>
                                     <xs:sequence>
                                       <xs:element name="CpfCnpj">
                                         <xs:complexType>
                                           <xs:choice>
-                                            <xs:element name="Cpf" type="xs:unsignedLong" minOccurs="1"
+                                            <xs:element name="Cpf" type="xs:unsignedLong" minOccurs="0"
                                               maxOccurs="1" />
-                                            <xs:element name="Cnpj" type="xs:unsignedLong" minOccurs="1"
+                                            <xs:element name="Cnpj" type="xs:unsignedLong" minOccurs="0"
                                               maxOccurs="1" />
                                           </xs:choice>
                                         </xs:complexType>
@@ -173,7 +172,7 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="ConstrucaoCivil">
+                          <xs:element name="ConstrucaoCivil" minOccurs="0" maxOccurs="1">
                             <xs:complexType>
                               <xs:sequence>
                                 <xs:element name="CodigoObra" />

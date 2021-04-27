@@ -49,6 +49,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2021
+--ACBrBoleto--
+[*] Alteração na formatação de campos FormatFloat utilizando a função FormatFloatBr devido compatibilização com Linux
 
 15/04/2021
 --ACBrBoletoRet_Itau, ACBrBoleto--

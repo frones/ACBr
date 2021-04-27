@@ -2630,23 +2630,23 @@ begin
       begin
          if DataAbatimento <> 0 then
             AStringList.Add(ACBrStr('Conceder abatimento de ' +
-                             FormatCurr('R$ #,##0.00',ValorAbatimento) +
+                             FormatFloatBr(ValorAbatimento, 'R$ #,##0.00') +
                              ' para pagamento ate ' + FormatDateTime('dd/mm/yyyy',DataAbatimento)))
          else
             AStringList.Add(ACBrStr('Conceder abatimento de ' +
-                             FormatCurr('R$ #,##0.00',ValorAbatimento)));
+                             FormatFloatBr(ValorAbatimento, 'R$ #,##0.00')));
       end;
 
       if ValorDesconto <> 0 then
       begin
          if DataDesconto <> 0 then
             AStringList.Add(ACBrStr('Conceder desconto de '                       +
-                             FormatCurr('R$ #,##0.00',ValorDesconto)       +
+                             FormatFloatBr(ValorDesconto, 'R$ #,##0.00')       +
                              ' para pagamento até ' +
                              FormatDateTime('dd/mm/yyyy',DataDesconto)))
          else
             AStringList.Add(ACBrStr('Conceder desconto de '                 +
-                             FormatCurr('R$ #,##0.00',ValorDesconto) +
+                             FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
                              ' por dia de antecipaçao'));
       end;
 
@@ -2654,12 +2654,12 @@ begin
       begin
         if DataDesconto2 <> 0 then
           AStringList.Add(ACBrStr('Conceder desconto de '                       +
-                           FormatCurr('R$ #,##0.00',ValorDesconto2)       +
+                           FormatFloatBr(ValorDesconto2, 'R$ #,##0.00')       +
                            ' para pagamento até ' +
                            FormatDateTime('dd/mm/yyyy', DataDesconto2)))
         else
           AStringList.Add(ACBrStr('Conceder desconto de '                 +
-                           FormatCurr('R$ #,##0.00',ValorDesconto2) +
+                           FormatFloatBr(ValorDesconto2, 'R$ #,##0.00') +
                            ' por dia de antecipaçao'));
       end;
 
@@ -2668,27 +2668,27 @@ begin
          if DataMoraJuros <> 0 then
             AStringList.Add(ACBrStr('Cobrar juros de '                        +
                             ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
-                                   FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
+                                   FormatFloatBr(ValorMoraJuros, 'R$ #,##0.00 por dia'))         +
                              ' de atraso para pagamento '+
                              ifthen(Vencimento = DataMoraJuros, 'após o vencimento.',
                                     'a partir de '+FormatDateTime('dd/mm/yyyy',DataMoraJuros))))
          else
             AStringList.Add(ACBrStr('Cobrar juros de '                +
                                     ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
-                                           FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
+                                           FormatFloatBr(ValorMoraJuros, 'R$ #,##0.00 por dia'))         +
                              ' de atraso'));
       end;
 
       if PercentualMulta <> 0 then
       begin
         if DataMulta <> 0 then
-          AStringList.Add(ACBrStr('Cobrar multa de ' + FormatCurr('R$ #,##0.00',
-            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  )) +
+          AStringList.Add(ACBrStr('Cobrar multa de ' + FormatFloatBr(
+            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  ), 'R$ #,##0.00') +
                          ' para pagamento'+ IfThen(DataMulta = Vencimento, ' após o vencimento.',
                                                    ' a partir de '+ FormatDateTime('dd/mm/yyyy',DataMulta))))
         else
-          AStringList.Add(ACBrStr('Multa de ' + FormatCurr('R$ #,##0.00',
-            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  )) +
+          AStringList.Add(ACBrStr('Multa de ' + FormatFloatBr(
+            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  ), 'R$ #,##0.00') +
                          ' após o vencimento.'));
       end;
       if DataLimitePagto <> 0 then

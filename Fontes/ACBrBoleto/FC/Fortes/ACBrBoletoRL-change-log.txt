@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2021
+ACBrBoletoFCFortes.dfm
+[*] Compatibilização das alterações de campos no layout com .dfm ref campo "usoBanco"
+
 23/04/2021
 ACBrBoletoFCFortes
 [*] Alteração na formatação de campos Currecy utilizando a função FormatFloatBr

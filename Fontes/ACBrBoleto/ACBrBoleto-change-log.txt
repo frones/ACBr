@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2021
+--ACBrBancoSicred--
+[*] Ajuste na leitura do CNPJ ou CPF na leitura do Retorno CNAB400
+
 23/04/2021
 --ACBrBoleto--
 [*] Alteração na formatação de campos FormatFloat utilizando a função FormatFloatBr devido compatibilização com Linux

@@ -608,14 +608,20 @@ begin
     if (not LeCedenteRetorno) and (rCodCedente <> OnlyNumber(Cedente.CodigoCedente)) then
        raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-    Cedente.Nome := rCedente;
+    Cedente.Nome         := rCedente;
+    Cedente.TipoInscricao:= pJuridica;
 
     if Copy(rCNPJCPF,1,10) <> '0000000000' then
     begin
-      if Copy(rCNPJCPF,1,3)= '000' then
-        rCNPJCPF := Copy(rCNPJCPF,4,11);
 
-      Cedente.CNPJCPF := rCNPJCPF; 
+      if Copy(rCNPJCPF,1,3)= '000' then 
+      begin
+        rCNPJCPF := Copy(rCNPJCPF,4,11);
+        Cedente.TipoInscricao := pFisica;
+      end;
+
+      Cedente.CNPJCPF := rCNPJCPF;
+
     end;
 
     Cedente.CodigoCedente:= rCodCedente;

@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2021
+-- ACBrGNREGuiasRetorno/pgnreGNRERetorno --
+[+] Acrescentado o campo ValorPrincICMS na classe GNRERetorno para receber o valor do tipo 11
+    (Valor Principal ICMS)
+  Por: Italo Giurizzato Junior
+
 18/03/2021
 -- ACBrGNREGuiasRetorno/pgnreRetConsResLoteGNRE --
 [*] https://www.projetoacbr.com.br/forum/topic/61723-retorno-rejei%C3%A7%C3%B5es-gnre-vers%C3%A3o-20/

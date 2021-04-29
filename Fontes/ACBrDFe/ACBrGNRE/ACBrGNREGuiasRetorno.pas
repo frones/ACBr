@@ -360,7 +360,7 @@ begin
             52 - Valor Atualização Monetaria FP
             }
             if Leitor.rAtributo('tipo=', 'valor') = '11' then
-              GNRERetorno.ValorPrincipal := Leitor.rCampo(tcDe2, 'valor');
+              GNRERetorno.ValorPrincICMS := Leitor.rCampo(tcDe2, 'valor');
 
             if Leitor.rAtributo('tipo=', 'valor') = '12' then
               GNRERetorno.ValorFECP := Leitor.rCampo(tcDe2, 'valor');

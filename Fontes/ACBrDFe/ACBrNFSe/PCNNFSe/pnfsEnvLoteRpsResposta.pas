@@ -357,6 +357,7 @@ begin
     // Alguns provedores retornam apenas a data, sem o horário
     if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10 then
     begin
+      {
       if FProvedor = proSmarAPDv23 then
       begin
         xData := Leitor.rCampo(tcstr, 'DataRecebimento');
@@ -365,6 +366,7 @@ begin
                                    StrToTime(Copy(xData, 12, 8));
       end
       else
+      }
         infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
     end
     else

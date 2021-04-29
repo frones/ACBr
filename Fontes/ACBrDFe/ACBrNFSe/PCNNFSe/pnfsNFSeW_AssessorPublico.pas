@@ -92,8 +92,8 @@ begin
   end
   else begin
     Gerador.wCampo(tcStr, '', 'LOCAL', 1, 1, 1, 'F', '');
-//    Gerador.wCampo(tcStr, '', 'UFFORA', 1, 1, 1, '1', '');
-//    Gerador.wCampo(tcStr, '', 'MUNICIPIOFORA', 1, 1, 1, '1', '');
+    Gerador.wCampo(tcStr, '', 'UFFORA', 1, 1, 1, NFSe.Servico.UFPrestacao, '');
+    Gerador.wCampo(tcStr, '', 'MUNICIPIOFORA', 1, 1, 1, IntToStr(NFSe.Servico.MunicipioIncidencia), '');
 //    Gerador.wCampo(tcStr, '', 'PAISFORA', 1, 1, 1, '1', '');
   end;
 

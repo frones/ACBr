@@ -432,6 +432,7 @@ type
     property FonteCargaTributaria: String read FFonteCargaTributaria write FFonteCargaTributaria;
   end;
 
+
  TIdentificacaoPrestador = class(TObject)
   private
     FCnpj: String;
@@ -774,6 +775,34 @@ type
     property Items[Index: Integer]: TAssinaComChaveParamsCollectionItem read GetItem write SetItem; default;
   end;
 
+ TQuartoCollectionItem = class(TObject)
+  private
+    FCodigoInternoQuarto: Integer;
+    FQtdHospedes: Integer;
+    FCheckIn: TDateTime;
+    FQtdDiarias: Integer;
+    FValorDiaria: Currency;
+  public
+
+    constructor create;
+  
+    property CodigoInternoQuarto: Integer read FCodigoInternoQuarto write FCodigoInternoQuarto;
+    property QtdHospedes: Integer read FQtdHospedes write FQtdHospedes;
+    property CheckIn: TDateTime read FCheckIn write FCheckIn;
+    property QtdDiarias: Integer read FQtdDiarias write FQtdDiarias;
+    property ValorDiaria: Currency read FValorDiaria write FValorDiaria;
+  end;
+
+  TQuartoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TQuartoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TQuartoCollectionItem);
+  public
+    function New: TQuartoCollectionItem;
+    property Items[Index: Integer]: TQuartoCollectionItem read GetItem write SetItem; default;
+  end;
+
+ 
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -795,6 +824,7 @@ type
     FRpsSubstituido: TIdentificacaoRps;
     FSeriePrestacao: String;
     FServico: TDadosServico;
+    FQuartos: TQuartoCollection;
     FPrestador: TIdentificacaoPrestador;
     FTomador: TDadosTomador;
     FIntermediarioServico: TIdentificacaoIntermediarioServico;
@@ -887,6 +917,7 @@ type
     //SeriePrestacao usada no provedor IssDsf
     property SeriePrestacao: String read FSeriePrestacao write FSeriePrestacao;
     property Servico: TDadosServico read FServico write FServico;
+    property Quartos: TQuartoCollection read FQuartos write FQuartos;
     property Prestador: TIdentificacaoPrestador read FPrestador write FPrestador;
     property Tomador: TDadosTomador read FTomador write FTomador;
     property IntermediarioServico: TIdentificacaoIntermediarioServico read FIntermediarioServico write FIntermediarioServico;
@@ -1141,6 +1172,7 @@ begin
   FIntermediarioServico         := TIdentificacaoIntermediarioServico.Create;
   FConstrucaoCivil              := TDadosConstrucaoCivil.Create;
   FCondicaoPagamento            := TCondicaoPagamento.Create;
+  FQuartos                      := TQuartoCollection.Create;
   // NFSe
   FNumero                       := '';
   FCodigoVerificacao            := '';
@@ -1185,6 +1217,7 @@ begin
   FIntermediarioServico.Free;
   FConstrucaoCivil.Free;
   FCondicaoPagamento.Free;
+  FQuartos.Free;
   // NFSe
   FPrestadorServico.Free;
   FOrgaoGerador.Free;
@@ -1497,6 +1530,31 @@ end;
 procedure TIdentificacaoPrestador.Setcrc_estado(const Value: string);
 begin
   Fcrc_estado := Value;
+end;
+
+{ TQuartoCollection }
+
+function TQuartoCollection.GetItem(Index: Integer): TQuartoCollectionItem;
+begin
+  Result := TQuartoCollectionItem(inherited Items[Index]);
+end;
+
+function TQuartoCollection.New: TQuartoCollectionItem;
+begin
+  Result := TQuartoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TQuartoCollection.SetItem(Index: Integer; Value: TQuartoCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TQuartoCollectionItem }
+
+constructor TQuartoCollectionItem.create;
+begin
+  inherited create;
 end;
 
 end.

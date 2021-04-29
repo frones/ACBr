@@ -42,6 +42,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2021
+-- pnfsNFSeW_AssessorPublico --
+[*] https://www.projetoacbr.com.br/forum/topic/62299-contribui%C3%A7%C3%A3oaltera%C3%A7%C3%A3o-feita-na-nfs-e-provedor-assessor-p%C3%BAblico-issonline/
+  Por: Alex Pereira
+-- Diversos -- 
+[*] https://www.projetoacbr.com.br/forum/topic/60344-nfs-e-vila-velha-es-rps-is-unexpected-expecting-loterps/?tab=comments#comment-406305
+  Por: Sérgio Caldeira Silva / Italo Giurizzato Junior
+-- pnfsNFSeW_EL --
+[*] https://www.projetoacbr.com.br/forum/topic/62297-contribui%C3%A7%C3%A3o-projeto-provedor-el/
+  Por: Edulamy
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/62307-troca-de-provedor-s%C3%A3o-sebasti%C3%A3o-sp-e-altera%C3%A7%C3%A3o-no-schema-provedor-iibrasil-adicionado-nova-tag-no-xml/
+  Por: igsrc
+
 16/04/2021
 -- pnfsNFSeG --
 [*] https://www.projetoacbr.com.br/forum/topic/61615-troca-webservice-nova-lima-issdigital-para-abaco/?do=findComment&comment=407414&_rid=63

@@ -74,6 +74,11 @@ const
   DSC_TPTELEFONE = 'Tipo Telefone';
   DSC_VTOTREC = 'Valor Total Recebido';
   DSC_CONDPAGTO = 'Condição de pagamento';
+  DSC_CODQRT = 'Codigo Interno do Quarto';
+  DSC_QTDHOSPDS = 'Quantidade de Hospedes';
+  DSC_CHECKIN = 'Chechin';
+  DSC_QTDDIAR = 'Quantidade de Diarias';
+  DSC_VDIAR = 'Valor da Diaria';
 
 implementation
 

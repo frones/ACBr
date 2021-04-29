@@ -274,21 +274,23 @@ var
   LocPrest: String;
 begin
   FIdentificador := 'Id';
-  Gerador.wCampo(tcStr, '#01', FIdentificador, 001, 015, 1, NFSe.InfID.ID, '');
+  Gerador.wCampo(tcStr, '#01', FIdentificador, 1, 15, 1, NFSe.InfID.ID, '');
 
   LocPrest := '2';
   if NFSe.NaturezaOperacao = no2 then
     LocPrest := '1';
 
   // Código para identificação do local de prestação do serviço 1-Fora do município 2-No município
-  Gerador.wCampo(tcStr   , '#02', 'LocalPrestacao', 001, 001, 1, LocPrest, '');
+  Gerador.wCampo(tcStr, '#02', 'LocalPrestacao', 1, 1, 1, LocPrest, '');
   //IssRetido no provedor EL é ao contrario (1 = normal, 2 retido) por isso não da de usar SituacaoTributariaToStr
   //Gerador.wCampo(tcStr   , '#03', 'IssRetido'     , 001, 001, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+
   if NFSe.Servico.Valores.IssRetido = stRetencao then
-    Gerador.wCampo(tcStr   , '#03', 'IssRetido'   , 001, 001, 1, '2', '')
+    Gerador.wCampo(tcStr, '#03', 'IssRetido', 1, 1, 1, '2', '')
   else
-    Gerador.wCampo(tcStr   , '#03', 'IssRetido'   , 001, 001, 1, '1', '');
-  Gerador.wCampo(tcDatHor, '#04', 'DataEmissao'   , 019, 019, 1, NFSe.DataEmissao, DSC_DEMI);
+    Gerador.wCampo(tcStr, '#03', 'IssRetido', 1, 1, 1, '1', '');
+
+  Gerador.wCampo(tcDatHor, '#04', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
   GerarIdentificacaoRPS;
 
@@ -299,8 +301,11 @@ begin
   GerarValoresServico;
   GerarRPSSubstituido;
 
-  Gerador.wCampo(tcStr, '#90', 'Observacao', 001, 255, 0, NFSe.OutrasInformacoes, '');
-  Gerador.wCampo(tcStr, '#91', 'Status'    , 001, 001, 1, StatusRPSToStr(NFSe.Status), '');
+  Gerador.wCampo(tcStr, '#90', 'Observacao', 1, 255, 0, NFSe.OutrasInformacoes, '');
+  Gerador.wCampo(tcStr, '#91', 'Status'    , 1, 001, 1, StatusRPSToStr(NFSe.Status), '');
+
+  Gerador.wCampo(tcStr, '#91', 'CodigoMunicipioPrestacao', 7, 7, 0,
+                OnlyNumber(NFSe.PrestadorServico.Endereco.CodigoMunicipio), '');
 end;
 
 constructor TNFSeW_EL.Create(ANFSeW: TNFSeW);

@@ -457,7 +457,7 @@ begin
         end;
       end;
 
-      if not (FProvedor in [proCenti, proProdata, proGoiania, proSigep, proSimplISSv2, proMegaSoft, proDeISS]) then
+      if not (FProvedor in [proCenti, proProdata, proGoiania, proSigep, proSimplISSv2, proMegaSoft, proDeISS, proiiBrasilv2]) then
       begin
         if FProvedor in [pro4R, proISSDigital, proISSe, proSystemPro, proFiorilli,
             proSaatri, proCoplan, proLink3, proTecnos, proNEAInformatica, proSH3] then
@@ -816,14 +816,20 @@ begin
 end;
 
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
+var
+ i : Integer;
 begin
   case FProvedor of
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-    proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, 
-    proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft, proModernizacaoPublica,
+    proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve,
+    proBelford, proWebISSv2, proMegaSoft, proModernizacaoPublica,
     proVitoria, proActconv204, proSiapSistemas, proAbacov2:
       Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+
+    //São Sebastião - SP
+    proiiBrasilv2:
+        Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + OnlyNumber(NFSe.InfID.ID) + '"');
 
     proDeISS,
     proRLZ,
@@ -870,7 +876,7 @@ begin
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
       proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proTiplanv2,
       proSigep, proDesenvolve, proCenti, proMegaSoft, proVitoria, proSiapSistemas,
-      proElotech, proAbacov2:
+      proElotech, proAbacov2, proiiBrasilv2:
         Gerador.wGrupo('Rps');
 
       proISSDigital:
@@ -1037,6 +1043,14 @@ begin
     Gerador.wCampo(tcDe2, '#9', 'ValorCargaTributariaEstadual     ', 01, 15, 1, NFSe.ValorCargaTributariaEstadual, '');
   end;
 
+
+  if FProvedor = proiiBrasilv2 then
+  begin
+    Gerador.wCampo(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, 1, DSC_REGISSQN);
+    Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, snNao, DSC_INDOPSN);
+  end;
+
+
   if not (FProvedor in [proGoiania, proTecnos, proSigep, proiiBrasilv2, proMegaSoft]) then
   begin
     if FProvedor = proAdm then
@@ -1076,6 +1090,24 @@ begin
    Gerador.wCampo(tcStr, '#1' , 'SerieTalonario  ' ,01,01,1 , '0' , DSC_TPAMB );
    Gerador.wCampo(tcStr, '#1' , 'FormaPagamento  ' ,01,01,1 , '0' , DSC_TPAMB );
    Gerador.wCampo(tcStr, '#1' , 'NumeroParcelas  ' ,01,01,1 , '0' , DSC_TPAMB );
+  end;
+
+  if FProvedor = proiiBrasilV2 then
+  begin
+    Gerador.wGrupo('Quartos');
+
+    for i := 0 to NFSe.Quartos.Count -1 do
+    begin
+      Gerador.wGrupo('Quarto');
+       Gerador.wCampo(tcInt, '#1', 'CodigoInternoQuarto' ,01, 09, 1, NFSe.Quartos.Items[i].CodigoInternoQuarto, DSC_CODQRT);
+       Gerador.wCampo(tcInt, '#1', 'QtdHospedes        ' ,01, 09, 1, NFSe.Quartos.Items[i].QtdHospedes, DSC_TPAMB);
+       Gerador.wCampo(tcDat, '#1', 'CheckIn            ' ,10, 10, 1, NFSe.Quartos.Items[i].CheckIn,     DSC_QTDHOSPDS);
+       Gerador.wCampo(tcInt, '#1', 'QtdDiaria          ' ,01, 09, 1, NFSe.Quartos.Items[i].QtdDiarias,  DSC_QTDDIAR);
+       Gerador.wCampo(tcDe2, '#1', 'ValorDiaria        ' ,01, 15, 1, NFSe.Quartos.Items[i].ValorDiaria, DSC_VDIAR);
+      Gerador.wGrupo('/Quarto');
+    end;
+
+    Gerador.wGrupo('/Quartos');
   end;
 
   Gerador.wGrupo('/InfDeclaracaoPrestacaoServico');

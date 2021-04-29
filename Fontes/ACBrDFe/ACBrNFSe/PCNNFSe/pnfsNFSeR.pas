@@ -2261,31 +2261,40 @@ begin
 
   if (FProvedor <> proABase) and (Leitor.rExtrai(NivelTemp, 'Rps') <> '') then
   begin
-    if FProvedor = proSigCorp then
-    begin
-      DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
-      // ConsultarNFSePorRps volta com formato m/d/yyyy
-      if (Pos('M', DataHorBR) > 0) then
-        NFSe.DataEmissaoRps := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
-      else
-        if (Pos('T', DataHorBR) > 0) then
+    case FProvedor of
+      proSigCorp:
+        begin
+          DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+          // ConsultarNFSePorRps volta com formato m/d/yyyy
+          if (Pos('M', DataHorBR) > 0) then
+            NFSe.DataEmissaoRps := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
+          else
+          begin
+            if (Pos('T', DataHorBR) > 0) then
+              NFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissao')
+            else
+            begin
+              if (Pos('-', DataHorBR) > 0) then
+                NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao')
+              else
+                NFSe.DataEmissaoRps := StrToDate(DataHorBR);
+            end;
+          end;
+        end;
+
+      proAEG:
+        begin
+          //tcDatVcto data no formado DD/MM/YYYY
+          NFSe.DataEmissaoRps := Leitor.rCampo(tcDatVcto, 'DataEmissao')
+        end;
+    else
+      begin
+        // Alguns provedores retornam apenas a data, sem o horário
+        if Length(Leitor.rCampo(tcStr, 'DataEmissao')) > 10 then
           NFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissao')
         else
-          if (Pos('-', DataHorBR) > 0) then
-            NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao')
-          else
-            NFSe.DataEmissaoRps := StrToDate(DataHorBR);
-    end
-    else
-    begin
-      {
-        tcDatVcto data no formado DD/MM/YYYY
-        tcDat     data no formato YYYY/MM/DD
-      }
-      if FProvedor in [proSmarAPDv23, proAEG] then
-        NFSe.DataEmissaoRps := Leitor.rCampo(tcDatVcto, 'DataEmissao')
-      else
-        NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+          NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+      end;
     end;
 
     NFSe.Status := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));

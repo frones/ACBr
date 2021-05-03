@@ -1749,6 +1749,11 @@ begin
       FieldByName('ImprimeDescAcrescItem').AsInteger := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeDescAcrescItem, 1 , 0 );
     end;
 
+    if (FDANFEClassOwner is TACBrNFeDANFEClass) then
+    begin
+      FieldByName('ImprimeDescAcrescItem').AsInteger := Integer(TACBrNFeDANFEClass(FDANFEClassOwner).ImprimeDescAcrescItem);
+    end;
+
     // Carregamento da imagem
     if NaoEstaVazio(DANFEClassOwner.Logo) then
     begin

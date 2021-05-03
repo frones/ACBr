@@ -1316,6 +1316,26 @@ const
   CKeyBOLETOCedenteModalidade =             'Cedente.Modalidade';
   CKeyBOLETOCedenteConvenio =               'Cedente.Convenio';
 
+  CKeyBOLETOClientID =                      'ClientID';
+  CKeyBOLETOClientSecret =                  'ClientSecret';
+  CKeyBOLETOKeyUser =                       'KeyUser';
+  CKeyBOLETOScope =                         'Scope';
+  CKeyBOLETOLogRegistro =                   'LogRegistro';
+  CKeyBOLETOPathGravarRegistro =            'PathGravarRegistro';
+  CKeyBOLETOAmbiente =                      'Ambiente';
+  CKeyBOLETOOperacao =                      'Operacao';
+  CKeyBOLETOProxyHost =                     'ProxyHost';
+  CKeyBOLETOProxyPass =                     'ProxyPass';
+  CKeyBOLETOProxyPort =                     'ProxyPort';
+  CKeyBOLETOProxyUser =                     'ProxyUser';
+  CKeyBOLETOCryptLib =                      'CryptLib';
+  CKeyBOLETOHttpLib =                       'HttpLib';
+  CKeyBOLETOXmlSignLib =                    'XmlSignLib';
+  CKeyBOLETOSSLType =                       'SSLType';
+  CKeyBOLETOTimeOut =                       'TimeOut';
+  CKeyBOLETOCertificadoHTTP =               'CertificadoHTTP';
+  CKeyBOLETOVersaoDF =                      'VersaoDF';
+
   CValueTipoEmpregador =                    'tePessoaJuridica';
   CValueTipoContribuinte =                  'tcPessoaJuridica';
   CvalueVersaoeSocial =                     '02_04_02';

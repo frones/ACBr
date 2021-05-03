@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/04/2020
+--- ACBrMonitorConfig, ACBrMonitorConsts--
+[+] Adicionar funcionalidades de Registro BoletoWeb
+
 15/04/2021
 -- ACBrMonitor1 --
 [+] Adicionado configuração de ajustes de Escala no Boleto.

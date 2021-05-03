@@ -273,7 +273,9 @@ begin
     PrintOptimized  := True;
     Outline         := False;
     HTMLTags        := True;
-    Quality         := 95;
+	{$IfDef DELPHI2007_UP}// delphi 2007 em diante
+       Quality         := 95;
+	{$endif}
     Author          := 'FastReport';
     ProtectionFlags := [ePrint, eModify, eCopy, eAnnot];
     HideToolbar     := False;

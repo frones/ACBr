@@ -114,6 +114,10 @@ const
   CSessaoTitulo = 'TITULO';
   CSessaoMotivoRejeicao = 'MotivoRejeicao';
 
+  CSessaoRegistro = 'REGISTRO';
+  CSessaoTituloRetorno = 'TITULORETORNO';
+  CSessaoRejeicao = 'REJEICAO';
+
 Resourcestring
   SInfBoletosCarregados = '%d Boletos(s) Carregado(s)';
   SErroLerArquivoEntrada ='Erro ao ler arquivo de entrada: %d';

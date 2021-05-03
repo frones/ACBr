@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos) Boleto_SetDiretorioArquivo
 
+30/04/2020
+--- ACBrLibBoletoRespostas, ACBrLibBoletoConsts --
+[+] Adicionar funcionalidades de Resposta para BoletoWeb na lib.
+    (Por: José M S Junior)
+
 29/03/2020
 --- ACBrLibBoletoRespostas --
 [*] Ajuste na nomenclatura de chaves para classe Respostas de Processamento de Retorno.

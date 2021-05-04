@@ -1500,8 +1500,7 @@ begin
     Gerador.wCampo(tcDe2, '', 'qtdRubr',    1,  6, 0, objItensRemun.Items[i].qtdRubr);
     Gerador.wCampo(tcDe2, '', 'fatorRubr',  1,  5, 0, objItensRemun.Items[i].fatorRubr);
 
-    if ((GroupName <> 'verbasResc') and (GroupName <> 'detVerbas')) or 
-       ((VersaoDF <= ve02_05_00) and ((GroupName = 'verbasResc') or (GroupName <> 'detVerbas'))) then
+    if VersaoDF <= ve02_05_00 then
       Gerador.wCampo(tcDe2, '', 'vrUnit',     1, 14, 0, objItensRemun.Items[i].vrUnit);
 
     Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, objItensRemun.Items[i].vrRubr);

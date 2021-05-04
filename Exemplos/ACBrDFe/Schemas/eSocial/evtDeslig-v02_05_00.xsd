@@ -119,7 +119,7 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element name="indCumprParc" minOccurs="0">
+                    <xs:element name="indCumprParc">
                       <xs:simpleType>
                         <xs:annotation>
                           <xs:documentation>Cumprimento parcial de aviso prévio</xs:documentation>
@@ -445,7 +445,6 @@
                                                   <xs:documentation>Data da assinatura do acordo/convenção</xs:documentation>
                                                 </xs:annotation>
                                                 <xs:restriction base="xs:date">
-                                                  <xs:minInclusive value="1890-01-01"/>
                                                 </xs:restriction>
                                               </xs:simpleType>
                                             </xs:element>
@@ -470,7 +469,7 @@
                                                 </xs:restriction>
                                               </xs:simpleType>
                                             </xs:element>
-                                            <xs:element name="dtEfAcConv" minOccurs="0">
+                                            <xs:element name="dtEfAcConv">
                                               <xs:simpleType>
                                                 <xs:annotation>
                                                   <xs:documentation>Data dos efeitos do acordo/convenção</xs:documentation>

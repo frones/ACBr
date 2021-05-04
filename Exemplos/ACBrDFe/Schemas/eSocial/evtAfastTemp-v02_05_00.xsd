@@ -152,7 +152,7 @@
                                     </xs:restriction>
                                   </xs:simpleType>
                                 </xs:element>
-                                <xs:element name="qtdDiasAfast" minOccurs="0">
+                                <xs:element name="qtdDiasAfast">
                                   <xs:simpleType>
                                     <xs:annotation>
                                       <xs:documentation>Quantidade de dias de afastamento</xs:documentation>

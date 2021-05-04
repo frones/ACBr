@@ -1414,7 +1414,7 @@
       <xs:documentation>Informações do Endereço no Brasil</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="tpLograd" minOccurs="0">
+      <xs:element name="tpLograd">
         <xs:simpleType>
           <xs:annotation>
             <xs:documentation>Tipo de Logradouro</xs:documentation>
@@ -1879,7 +1879,6 @@
             <xs:documentation>Data de admissão na Empresa Cedente</xs:documentation>
           </xs:annotation>
           <xs:restriction base="xs:date">
-            <xs:minInclusive value="1890-01-01"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>

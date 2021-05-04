@@ -128,7 +128,7 @@ var
   i: Integer;
   FEventos: TEventos;
 begin
-  //Limpando
+  // Limpando
   Clear;
 
   FEventos := TACBreSocial(FACBreSocial).Eventos;
@@ -149,6 +149,7 @@ begin
   {S1020}
   for i := 0 to FEventos.Tabelas.S1020.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1020[i].EvtTabLotacao.XML);
+
   {S1030}
   for i := 0 to FEventos.Tabelas.S1030.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1030[i].EvtTabCargo.XML);
@@ -164,9 +165,11 @@ begin
   {S1060}
   for i := 0 to FEventos.Tabelas.S1060.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1060[i].EvtTabAmbiente.XML);
+
   {S1070}
   for i := 0 to FEventos.Tabelas.S1070.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1070[i].EvtTabProcesso.XML);
+
   {S1080}
   for i := 0 to FEventos.Tabelas.S1080.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1080[i].EvtTabOperPortuario.XML);
@@ -191,15 +194,18 @@ begin
   {S2220}
   for i := 0 to FEventos.NaoPeriodicos.S2220.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2220[i].evtMonit.XML);
+
   {S2221}
   for i := 0 to FEventos.NaoPeriodicos.S2221.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2221[i].evtToxic.XML);
+
   {S2230}
   for i := 0 to FEventos.NaoPeriodicos.S2230.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2230[i].EvtAfastTemp.XML);
   {S2240}
   for i := 0 to FEventos.NaoPeriodicos.S2240.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2240[i].EvtExpRisco.XML);
+
   {S2245}
   for i := 0 to FEventos.NaoPeriodicos.S2245.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2245[i].EvtTreiCap.XML);
@@ -209,6 +215,7 @@ begin
   {S2260}
   for i := 0 to FEventos.NaoPeriodicos.S2260.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2260[i].EvtConvInterm.XML);
+ 
   {S2298}
   for i := 0 to FEventos.NaoPeriodicos.S2298.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2298[i].EvtReintegr.XML);
@@ -233,28 +240,45 @@ begin
 {NaoPeriodicos}
 
 {Periodicos}
+  {S1200}
   for i := 0 to FEventos.Periodicos.S1200.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1200[i].evtRemun.XML);
+  {S1202}
   for i := 0 to FEventos.Periodicos.S1202.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1202[i].evtRmnRPPS.XML);
+  {S1207}
   for i := 0 to FEventos.Periodicos.S1207.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1207[i].evtBenPrRP.XML);
+  {S1210}
   for i := 0 to FEventos.Periodicos.S1210.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1210[i].evtPgtos.XML);
+
+  {S1250}
   for i := 0 to FEventos.Periodicos.S1250.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1250[i].EvtAqProd.XML);
+  
+  {S1260}
   for i := 0 to FEventos.Periodicos.S1260.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1260[i].EvtComProd.XML);
+  {S1270}
   for i := 0 to FEventos.Periodicos.S1270.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1270[i].EvtContratAvNP.XML);
+  {S1280}
   for i := 0 to FEventos.Periodicos.S1280.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1280[i].EvtInfoComplPer.XML);
+
+  {S1295}
   for i := 0 to FEventos.Periodicos.S1295.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1295[i].evtTotConting.XML);
+  
+  {S1298}
   for i := 0 to FEventos.Periodicos.S1298.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1298[i].EvtReabreEvPer.XML);
+  {S1299}
   for i := 0 to FEventos.Periodicos.S1299.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1299[i].EvtFechaEvPer.XML);
+    
+  {S1300}
   for i := 0 to FEventos.Periodicos.S1300.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1300[i].EvtContrSindPatr.XML);
 {Periodicos}

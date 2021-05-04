@@ -191,7 +191,6 @@ begin
 
     FXML := Gerador.ArquivoFormatoXML;
 //    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmissao');
-
 //    Validar(schevtAdmissao);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);

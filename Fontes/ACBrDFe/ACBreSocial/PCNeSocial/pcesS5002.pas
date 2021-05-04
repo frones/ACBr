@@ -65,6 +65,11 @@ type
   TbasesIrrfCollectionItem = class;
   TirrfCollection = class;
   TirrfCollectionItem = class;
+  TideTrabalhador4 = class;
+  TdmDevCollection = class;
+  TdmDevCollectionItem = class;
+  TinfoirCollection = class;
+  TinfoirCollectionItem = class;
   TidePgtoExt = class;
   TEvtIrrfBenef = class;
 
@@ -124,6 +129,75 @@ type
     property idePgtoExt: TidePgtoExt read FidePgtoExt write FidePgtoExt;
   end;
 
+  TinfoIRCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoIRCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoIRCollectionItem);
+  public
+    function Add: TinfoIRCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoIRCollectionItem;
+    property Items[Index: Integer]: TinfoIRCollectionItem read GetItem write SetItem;
+  end;
+
+  TinfoIRCollectionItem = class(TObject)
+  private
+    FtpInfoIR: Integer;
+    Fvalor: Double;
+  public
+    property tpInfoIR: Integer read FtpInfoIR;
+    property valor: Double read Fvalor;
+  end;
+
+  TdmDevCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdmDevCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdmDevCollectionItem);
+  public
+    function Add: TdmDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdmDevCollectionItem;
+    property Items[Index: Integer]: TdmDevCollectionItem read GetItem write SetItem;
+  end;
+
+  TdmDevCollectionItem = class(TObject)
+  private
+    FperRef   : String;
+    FideDmDev : String;
+    FtpPgto   : Integer;
+    FdtPgto   : TDateTime;
+    FcodCateg : Integer;
+    FinfoIR   : TinfoIRCollection;
+    
+    function getInfoIR(): TInfoIRCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoIRInst(): Boolean;
+    
+    property perRef   : String read FperRef write FperRef;
+    property ideDmDev : String read FideDmDev write FideDmDev;
+    property tpPgto   : Integer read FtpPgto write FtpPgto;
+    property dtPgto   : TDateTime read FdtPgto write FdtPgto;
+    property codCateg : Integer read FcodCateg write FcodCateg;
+    property infoIR   : TInfoIRCollection read getInfoIR write FinfoIR;
+  end;
+
+  TideTrabalhador4 = class(TIdeTrabalhador3)
+  private
+    FcpfBenef: string;
+    FdmDev: TdmDevCollection;
+    
+    function getDmDev: TDmDevCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function dmDevInst(): boolean;
+    
+    property cpfBenef: string read FcpfBenef write FcpfBenef;
+    property dmDev: TdmDevCollection read getDmDev write FdmDev;
+  end;
+
   TbasesIrrfCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TbasesIrrfCollectionItem;
@@ -169,6 +243,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     property idePais: TidePais read FidePais write FidePais;
     property endExt: TendExt read FendExt write FendExt;
   end;
@@ -179,11 +254,12 @@ type
     FId: String;
     FXML: String;
 
-    FIdeEvento: TIdeEvento5;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeTrabalhador: TIdeTrabalhador3;
-    FInfoDep: TInfoDep;
-    FInfoIrrf: TInfoIrrfCollection;
+    FIdeEvento      : TIdeEvento5;
+    FIdeEmpregador  : TIdeEmpregador;
+    FIdeTrabalhador : TIdeTrabalhador4;
+    FInfoDep        : TInfoDep;
+    FInfoIrrf       : TInfoIrrfCollection;
+    FVersaoDF       : TVersaoeSocial;
 
     procedure SetInfoIrrf(const Value: TInfoIrrfCollection);
   public
@@ -193,14 +269,15 @@ type
     function LerXML: boolean;
     function SalvarINI: boolean;
 
-    property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeTrabalhador: TIdeTrabalhador3 read FIdeTrabalhador write FIdeTrabalhador;
-    property InfoDep: TInfoDep read FInfoDep write FInfoDep;
-    property InfoIrrf: TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: String      read FId;
-    property XML: String     read FXML;
+    property IdeEvento      : TIdeEvento5 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador  : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabalhador : TIdeTrabalhador4 read FIdeTrabalhador write FIdeTrabalhador;
+    property InfoDep        : TInfoDep read FInfoDep write FInfoDep;
+    property InfoIrrf       : TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
+    property Leitor         : TLeitor read FLeitor write FLeitor;
+    property Id             : String read FId;
+    property XML            : String read FXML;
+    property VersaoDF       : TVersaoeSocial read FVersaoDF write FVersaoDF;
   end;
 
 implementation
@@ -322,6 +399,83 @@ begin
   inherited Items[Index] := Value;
 end;
 
+{ TDmDevCollection }
+
+function TDmDevCollection.Add: TDmDevCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TDmDevCollection.GetItem(Index: Integer): TDmDevCollectionItem;
+begin
+  Result := TDmDevCollectionItem(inherited Items[Index]);
+end;
+
+procedure TDmDevCollection.SetItem(Index: Integer;
+  Value: TDmDevCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TDmDevCollection.New: TDmDevCollectionItem;
+begin
+  Result := TDmDevCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TDmDevColletionItem }
+
+constructor TDmDevCollectionItem.Create;
+begin
+  inherited;
+  
+  FinfoIR := nil;
+end;
+
+destructor TDmDevCollectionItem.Destroy;
+begin
+  if Assigned(FinfoIR) then
+    FreeAndNil(FinfoIR);
+    
+  inherited;
+end;
+
+function TDmDevCollectionItem.infoIRInst(): Boolean;
+begin
+  Result := Assigned(FinfoIR);
+end;
+
+function TDmDevCollectionItem.getInfoIR: TInfoIRCollection;
+begin
+  if not(Assigned(FinfoIR)) then
+    FinfoIR := TinfoIRCollection.Create;
+  Result := FinfoIR;
+end;
+
+{ TinfoIRCollection }
+
+function TinfoIRCollection.Add: TinfoIRCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfoIRCollection.GetItem(Index: Integer): TinfoIRCollectionItem;
+begin
+  Result := TinfoIRCollectionItem(inherited Items[Index]);
+end;
+
+procedure TinfoIRCollection.SetItem(Index: Integer;
+  Value: TinfoIRCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TinfoIRCollection.New: TinfoIRCollectionItem;
+begin
+  Result := TinfoIRCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TirrfCollection }
 
 function TirrfCollection.Add: TirrfCollectionItem;
@@ -363,17 +517,46 @@ begin
   inherited;
 end;
 
+{ TIdeTrabalhador4 }
+
+constructor TIdeTrabalhador4.Create;
+begin
+ inherited Create;
+ 
+ FdmDev := nil;
+end;
+
+destructor TIdeTrabalhador4.Destroy;
+begin
+ if dmDevInst() = True then
+   FreeAndNil(FdmDev);
+ 
+ inherited;
+end;
+
+function TIdeTrabalhador4.getDmDev: TDmDevCollection;
+begin
+  if not(Assigned(FDmDev)) then
+    FDmDev := TDmDevCollection.Create;
+  Result := FDmDev;
+end;
+
+function TIdeTrabalhador4.dmDevInst(): boolean;
+begin
+  Result := Assigned(FDmDev);
+end;
+
 { TEvtIrrfBenef }
 
 constructor TEvtIrrfBenef.Create;
 begin
   inherited Create;
-  FLeitor         := TLeitor.Create;
-  FIdeEvento      := TIdeEvento5.Create;
-  FIdeEmpregador  := TIdeEmpregador.Create;
-  FIdeTrabalhador := TIdeTrabalhador3.Create;
-  FInfoDep        := TInfoDep.Create;
-  FInfoIrrf       := TInfoIrrfCollection.Create;
+  FLeitor          := TLeitor.Create;
+  FIdeEvento       := TIdeEvento5.Create;
+  FIdeEmpregador   := TIdeEmpregador.Create;
+  FIdeTrabalhador  := TIdeTrabalhador4.Create;
+  FInfoDep         := TInfoDep.Create;
+  FInfoIrrf        := TInfoIrrfCollection.Create;
 end;
 
 destructor TEvtIrrfBenef.Destroy;
@@ -397,10 +580,16 @@ function TEvtIrrfBenef.LerXML: boolean;
 var
   ok: Boolean;
   i, j: Integer;
+  s: String;
 begin
   Result := False;
   try
     FXML := Leitor.Arquivo;
+
+    // Capturar a versão do evento
+    s := Copy(FXML, Pos('/evt/evtIrrfBenef/', FXML)+18, 16);
+    s := Copy(s, 1, Pos('"', s)-1);
+    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
 
     if leitor.rExtrai(1, 'evtIrrfBenef') <> '' then
     begin
@@ -409,7 +598,10 @@ begin
       if leitor.rExtrai(2, 'ideEvento') <> '' then
       begin
         IdeEvento.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-        IdeEvento.IndApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
+
+        if VersaoDF <= ve02_05_00 then
+          IdeEvento.IndApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
+
         IdeEvento.perApur      := leitor.rCampo(tcStr, 'perApur');
       end;
 
@@ -420,57 +612,90 @@ begin
       end;
 
       if leitor.rExtrai(2, 'ideTrabalhador') <> '' then
-        IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab');
-
-      if leitor.rExtrai(2, 'infoDep') <> '' then
-        infoDep.FvrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
-
-      i := 0;
-      while Leitor.rExtrai(2, 'infoIrrf', '', i + 1) <> '' do
       begin
-        InfoIrrf.New;
-        InfoIrrf.Items[i].FCodCateg := leitor.rCampo(tcInt, 'codCateg');
-        InfoIrrf.Items[i].FindResBr := leitor.rCampo(tcStr, 'indResBr');
+        if VersaoDF <= ve02_05_00 then
+          IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab')
+        else
+          IdeTrabalhador.cpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
+      end;
 
-        j := 0;
-        while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
-        begin
-          InfoIrrf.Items[i].basesIrrf.New;
-          InfoIrrf.Items[i].basesIrrf.Items[j].FtpValor := leitor.rCampo(tcInt, 'tpValor');
-          InfoIrrf.Items[i].basesIrrf.Items[j].Fvalor   := leitor.rCampo(tcDe2, 'valor');
-          inc(j);
-        end;
+      if VersaoDF <= ve02_05_00 then
+      begin      
+        if leitor.rExtrai(2, 'infoDep') <> '' then
+          infoDep.FvrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
 
-        j := 0;
-        while Leitor.rExtrai(3, 'irrf', '', j + 1) <> '' do
+        i := 0;
+        while Leitor.rExtrai(2, 'infoIrrf', '', i + 1) <> '' do
         begin
-          InfoIrrf.Items[i].irrf.New;
-          InfoIrrf.Items[i].irrf.Items[j].FtpCR       := leitor.rCampo(tcStr, 'tpCR');
-          InfoIrrf.Items[i].irrf.Items[j].FvrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
-          inc(j);
-        end;
-        
-        if leitor.rExtrai(3, 'idePgtoExt') <> '' then
-        begin
-          if leitor.rExtrai(4, 'idePais') <> '' then
+          InfoIrrf.New;
+          InfoIrrf.Items[i].FCodCateg := leitor.rCampo(tcInt, 'codCateg');
+          InfoIrrf.Items[i].FindResBr := leitor.rCampo(tcStr, 'indResBr');
+
+          j := 0;
+          while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
           begin
-            InfoIrrf.Items[i].idePgtoExt.idePais.codPais  := leitor.rCampo(tcStr, 'codPais');
-            InfoIrrf.Items[i].idePgtoExt.idePais.indNIF   := eSStrToIndNIF(ok, leitor.rCampo(tcStr, 'indNIF'));
-            InfoIrrf.Items[i].idePgtoExt.idePais.nifBenef := leitor.rCampo(tcStr, 'nifBenef');
+            InfoIrrf.Items[i].basesIrrf.New;
+            InfoIrrf.Items[i].basesIrrf.Items[j].FtpValor := leitor.rCampo(tcInt, 'tpValor');
+            InfoIrrf.Items[i].basesIrrf.Items[j].Fvalor   := leitor.rCampo(tcDe2, 'valor');
+            inc(j);
           end;
 
-          if leitor.rExtrai(4, 'endExt') <> '' then
+          j := 0;
+          while Leitor.rExtrai(3, 'irrf', '', j + 1) <> '' do
           begin
-            InfoIrrf.Items[i].idePgtoExt.endExt.dscLograd := leitor.rCampo(tcStr, 'dscLograd');
-            InfoIrrf.Items[i].idePgtoExt.endExt.nrLograd  := leitor.rCampo(tcStr, 'nrLograd');
-            InfoIrrf.Items[i].idePgtoExt.endExt.complem   := leitor.rCampo(tcStr, 'complem');
-            InfoIrrf.Items[i].idePgtoExt.endExt.bairro    := leitor.rCampo(tcStr, 'bairro');
-            InfoIrrf.Items[i].idePgtoExt.endExt.nmCid     := leitor.rCampo(tcStr, 'nmCid');
-            InfoIrrf.Items[i].idePgtoExt.endExt.codPostal := leitor.rCampo(tcStr, 'codPostal');
+            InfoIrrf.Items[i].irrf.New;
+            InfoIrrf.Items[i].irrf.Items[j].FtpCR       := leitor.rCampo(tcStr, 'tpCR');
+            InfoIrrf.Items[i].irrf.Items[j].FvrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
+            inc(j);
           end;
-        end;
 
-        inc(i);
+          if leitor.rExtrai(3, 'idePgtoExt') <> '' then
+          begin
+            if leitor.rExtrai(4, 'idePais') <> '' then
+            begin
+              InfoIrrf.Items[i].idePgtoExt.idePais.codPais  := leitor.rCampo(tcStr, 'codPais');
+              InfoIrrf.Items[i].idePgtoExt.idePais.indNIF   := eSStrToIndNIF(ok, leitor.rCampo(tcStr, 'indNIF'));
+              InfoIrrf.Items[i].idePgtoExt.idePais.nifBenef := leitor.rCampo(tcStr, 'nifBenef');
+            end;
+
+            if leitor.rExtrai(4, 'endExt') <> '' then
+            begin
+              InfoIrrf.Items[i].idePgtoExt.endExt.dscLograd := leitor.rCampo(tcStr, 'dscLograd');
+              InfoIrrf.Items[i].idePgtoExt.endExt.nrLograd  := leitor.rCampo(tcStr, 'nrLograd');
+              InfoIrrf.Items[i].idePgtoExt.endExt.complem   := leitor.rCampo(tcStr, 'complem');
+              InfoIrrf.Items[i].idePgtoExt.endExt.bairro    := leitor.rCampo(tcStr, 'bairro');
+              InfoIrrf.Items[i].idePgtoExt.endExt.nmCid     := leitor.rCampo(tcStr, 'nmCid');
+              InfoIrrf.Items[i].idePgtoExt.endExt.codPostal := leitor.rCampo(tcStr, 'codPostal');
+            end;
+          end;
+
+          inc(i);
+        end;  
+      end
+      else
+      begin
+        i := 0;
+        while Leitor.rExtrai(2, 'dmDev', '', i + 1) <> '' do
+        begin
+          IdeTrabalhador.DmDev.New;
+          IdeTrabalhador.DmDev.Items[i].FperRef   := leitor.rCampo(tcStr, 'perRef');
+          IdeTrabalhador.DmDev.Items[i].FideDmDev := leitor.rCampo(tcStr, 'ideDmDev');
+          IdeTrabalhador.DmDev.Items[i].FtpPgto   := leitor.rCampo(tcInt, 'tpPgto');
+          IdeTrabalhador.DmDev.Items[i].FdtPgto   := leitor.rCampo(tcDat, 'dtPgto');
+          IdeTrabalhador.DmDev.Items[i].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infoIR', '', j + 1) <> '' do
+          begin
+            IdeTrabalhador.DmDev.Items[i].infoIR.New;
+            IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FtpInfoIR := leitor.rCampo(tcInt, 'tpInfoIR');
+            IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].Fvalor    := leitor.rCampo(tcDe2, 'valor');
+
+            inc(j);
+          end;
+
+          inc(i);
+        end;
       end;
 
       Result := True;

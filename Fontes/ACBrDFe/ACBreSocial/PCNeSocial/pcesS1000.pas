@@ -170,6 +170,7 @@ type
     FInfoOrgInternacional: TInfoOrgInternacional;
     FSoftwareHouse: TSoftwareHouseCollection;
     FInfoComplementares: TInfoComplementares;
+    FcnpjEFR: String;
 
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
@@ -188,6 +189,7 @@ type
     property IndConstr: TpIndConstr read FIndConstr write FIndConstr;
     property IndDesFolha: TpIndDesFolha read FIndDesFolha write FIndDesFolha;
     property IndOptRegEletron: TpIndOptRegEletron read FIndOptRegEletron write FIndOptRegEletron;
+    property cnpjEFR: String read FcnpjEFR write FcnpjEFR;
     property IndOpcCP: TpIndOpcCP read FIndOpcCP write FIndOpcCP;
     property IndPorte: tpSimNao read FIndPorte write FIndPorte;
     property IndEntEd: tpSimNaoFacultativo read FIndEntEd write FIndEntEd;
@@ -481,13 +483,17 @@ end;
 procedure TevtInfoEmpregador.GerarInfoCadastro;
 begin
   Gerador.wGrupo('infoCadastro');
-
-  Gerador.wCampo(tcStr, '', 'nmRazao',          1, 100, 1, Self.infoEmpregador.infoCadastro.NmRazao);
+  
+  if VersaoDF <= ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'nmRazao',          1, 100, 1, Self.infoEmpregador.infoCadastro.NmRazao);
+    
   Gerador.wCampo(tcStr, '', 'classTrib',        2, 002, 1, tpClassTribToStr(Self.infoEmpregador.infoCadastro.ClassTrib));
 
   if (Self.ideEmpregador.TpInsc = tiCNPJ) then
   begin
-    Gerador.wCampo(tcStr, '', 'natJurid',       4, 004, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'natJurid',       4, 004, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
+      
     Gerador.wCampo(tcStr, '', 'indCoop',        1, 001, 0, eSIndCooperativaToStr(Self.infoEmpregador.infoCadastro.IndCoop));
     Gerador.wCampo(tcStr, '', 'indConstr',      1, 001, 0, eSIndConstrutoraToStr(Self.infoEmpregador.infoCadastro.IndConstr));
   end;
@@ -503,19 +509,33 @@ begin
 
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 
-  if (Self.ideEmpregador.TpInsc = tiCNPJ) then
-    Gerador.wCampo(tcStr, '', 'indEntEd',       0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
+  if VersaoDF <= ve02_05_00 then
+  begin
+    if (Self.ideEmpregador.TpInsc = tiCNPJ) then
+      Gerador.wCampo(tcStr, '', 'indEntEd',       0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
 
-  Gerador.wCampo(tcStr, '', 'indEtt',           0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
-  Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
-
+    Gerador.wCampo(tcStr, '', 'indEtt',           0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
+    Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
+  end;
+  
   GerarDadosIsencao;
-  GerarContato;
 
-  GerarInfoOp;
+  if VersaoDF <= ve02_05_00 then
+  begin
+    GerarContato;
+    GerarInfoOp;
+  end 
+  else 
+  if Self.infoEmpregador.infoCadastro.cnpjEFR <> '' then
+    Gerador.wCampo(tcStr, '', 'cnpjEFR', 14, 14, 0, Self.infoEmpregador.infoCadastro.cnpjEFR);
+  
   GerarInfoOrgInternacional;
-  GerarSoftwareHouse;
-  GerarInfoComplementares;
+
+  if VersaoDF <= ve02_05_00 then
+  begin
+    GerarSoftwareHouse;
+    GerarInfoComplementares;
+  end;
 
   Gerador.wGrupo('/infoCadastro');
 end;

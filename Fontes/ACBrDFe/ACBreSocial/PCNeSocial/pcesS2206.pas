@@ -275,6 +275,15 @@ begin
 
     Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
+    if VersaoDF > ve02_05_00 then
+    begin
+      if pInfoEstatutario.indTetoRGPS <> snfNada then
+        Gerador.wCampo(tcStr, '', 'indTetoRGPS', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indTetoRGPS));
+        
+      if pInfoEstatutario.indAbonoPerm <> snfNada then
+        Gerador.wCampo(tcStr, '', 'indAbonoPerm', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indAbonoPerm));
+    end;
+
     Gerador.wGrupo('/infoEstatutario');
   end;
 end;
@@ -287,19 +296,29 @@ begin
   Gerador.wCampo(tcDat, '', 'dtEf',        10,  10, 0, objAltContratual.dtEf);
   Gerador.wCampo(tcStr, '', 'dscAlt',       1, 150, 0, objAltContratual.dscAlt);
 
-  GerarVinculo(objAltContratual.Vinculo, 3);
+  if VersaoDF <= ve02_05_00 then
+    GerarVinculo(objAltContratual.Vinculo, 3)
+  else
+  begin
+    Gerador.wGrupo('vinculo');
 
+    Gerador.wCampo(tcStr, '', 'tpRegPrev', 1, 1, 1, eSTpRegPrevToStr(objAltContratual.vinculo.tpRegPrev));
+  end;  
+   
   Gerador.wGrupo('infoRegimeTrab');
-
+  
   if objAltContratual.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
     GerarInfoCeletista(objAltContratual.infoRegimeTrab.InfoCeletista)
   else
     GerarInfoEstatutario(objAltContratual.infoRegimeTrab.InfoEstatutario);
-
+  
   Gerador.wGrupo('/infoRegimeTrab');
-
+ 
   GerarInfoContrato(objAltContratual.InfoContrato, 3, objAltContratual.infoRegimeTrab.InfoCeletista);
 
+  if VersaoDF > ve02_05_00 then
+    Gerador.wGrupo('/vinculo');
+  
   Gerador.wGrupo('/altContratual');
 end;
 
@@ -346,17 +365,34 @@ procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS220
 begin
   Gerador.wGrupo('infoContrato');
 
-  Gerador.wCampo(tcStr, '', 'codCargo',     1, 30, 0, objInfoContrato.CodCargo);
-  Gerador.wCampo(tcStr, '', 'codFuncao',    1, 30, 0, objInfoContrato.CodFuncao);
+  if VersaoDF <= ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'codCargo',     1, 30, 0, objInfoContrato.CodCargo);
+    Gerador.wCampo(tcStr, '', 'codFuncao',    1, 30, 0, objInfoContrato.CodFuncao);
+  end
+  else
+  begin
+    Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, objInfoContrato.nmCargo);
+    Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, objInfoContrato.CBOCargo);
+    Gerador.wCampo(tcDat, '', 'dtIngrCargo', 0,  10, 0, objInfoContrato.dtIngrCargo);
+    Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, objInfoContrato.nmFuncao);
+    Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, objInfoContrato.CBOFuncao);
+    Gerador.wCampo(tcStr, '', 'acumCargo',   0,   1, 0, eSSimNaoFacultativoToStr(objInfoContrato.acumCargo));
+  end;
+  
   Gerador.wCampo(tcInt, '', 'codCateg',     1,  3, 1, objInfoContrato.CodCateg);
-  Gerador.wCampo(tcStr, '', 'codCarreira',  1, 30, 0, objInfoContrato.codCarreira);
-  Gerador.wCampo(tcDat, '', 'dtIngrCarr',  10, 10, 0, objInfoContrato.dtIngrCarr);
+  
+  if VersaoDF <= ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'codCarreira',  1, 30, 0, objInfoContrato.codCarreira);
+    Gerador.wCampo(tcDat, '', 'dtIngrCarr',  10, 10, 0, objInfoContrato.dtIngrCarr);
+  end;
 
   GerarRemuneracao(objInfoContrato.Remuneracao);
   GerarDuracao(objInfoContrato.Duracao, pTipo);
   GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
 
-  //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
+  // Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
   if (pInfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then
     GerarHorContratual(objInfoContrato.HorContratual);
 
@@ -367,6 +403,10 @@ begin
   if objInfoContrato.servPublInst then
     GerarServPubl(objInfoContrato.servPubl);
 
+  if VersaoDF > ve02_05_00 then
+    if objInfoContrato.treiCapInst() then
+      GerarTreinamentoCapacitacao(objInfoContrato.treiCap);
+    
   Gerador.wGrupo('/infoContrato');
 end;
 
@@ -383,7 +423,7 @@ begin
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
-    GerarIdeVinculo(Self.IdeVinculo);
+    GerarIdeVinculo(Self.IdeVinculo, False);
     GerarAltContratual(FAltContratual);
 
     Gerador.wGrupo('/evtAltContratual');

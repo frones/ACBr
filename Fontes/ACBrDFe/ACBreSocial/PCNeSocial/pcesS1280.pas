@@ -122,10 +122,10 @@ type
 
   TInfoSubstPatr = class(TObject)
   private
-    FindSubstPatr: tpIndSubstPatrOpPort;
+    FindSubstPatr: tpIndSubstPatr;
     FpercRedContrib: double;
   public
-    property indSubstPatr: tpIndSubstPatrOpPort read FindSubstPatr write FindSubstPatr;
+    property indSubstPatr: tpIndSubstPatr read FindSubstPatr write FindSubstPatr;
     property percRedContrib: double read FpercRedContrib write FpercRedContrib;
   end;
 
@@ -234,12 +234,15 @@ end;
 
 procedure TEvtInfoComplPer.GerarInfoSubstPatr;
 begin
-  Gerador.wGrupo('infoSubstPatr');
-
-  Gerador.wCampo(tcStr, '', 'indSubstPatr',   1, 1, 1, eSIndSubstPatrOpPortStr(InfoSubstPatr.indSubstPatr));
-  Gerador.wCampo(tcDe2, '', 'percRedContrib', 1, 5, 1, InfoSubstPatr.percRedContrib);
-
-  Gerador.wGrupo('/infoSubstPatr');
+  if infoSubstPatr.indSubstPatr <> spVazio then
+  begin
+    Gerador.wGrupo('infoSubstPatr');
+  
+    Gerador.wCampo(tcStr, '', 'indSubstPatr',   1, 1, 1, eSIndSubstPatrStr(InfoSubstPatr.indSubstPatr));
+    Gerador.wCampo(tcDe2, '', 'percRedContrib', 1, 5, 1, InfoSubstPatr.percRedContrib);
+  
+    Gerador.wGrupo('/infoSubstPatr');
+  end;
 end;
 
 procedure TEvtInfoComplPer.GerarInfoSubstPatrOpPort;
@@ -384,7 +387,7 @@ begin
       sSecao := 'infoSubstPatr';
       if INIRec.ReadString(sSecao, 'indSubstPatr', '') <> ''then
       begin
-        infoSubstPatr.indSubstPatr   := eSStrToIndSubstPatrOpPort(Ok, INIRec.ReadString(sSecao, 'indSubstPatr', '1'));
+        infoSubstPatr.indSubstPatr   := eSStrToIndSubstPatr(Ok, INIRec.ReadString(sSecao, 'indSubstPatr', '1'));
         infoSubstPatr.percRedContrib := StringToFloatDef(INIRec.ReadString(sSecao, 'percRedContrib', ''), 0);
       end;
 

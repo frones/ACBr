@@ -324,6 +324,8 @@ type
 
   tpTpRegPrev             = (rpRGPS, rpRPPS, rpRPPE);
 
+  tpTpRegPrevFacultativo  = (rpfNenhum, rpfRGPS, rpfRPPS, rpfRPPE2);
+  
   tpTpAdmissao            = (taAdmissao,
                              taTransfEmpresaMesmoGrupoEconomico,
                              taTransfEmpresaConsorciadaOuDeConsorcio,
@@ -342,14 +344,31 @@ type
 
   tpIndProvim             = (ipNormal, ipDecorrenteDecisaoJudicial);
 
-  tpTpProv                = (tpNomeacaoCargoEfetivo, tpNomeacaoCargoComissao, tpIncorporacao, tpMatricula, tpReinclusao, tpDiplomacao, tpOutros);
+  tpTpProv                = (tpNomeacaoCargoEfetivo,
+                             tpNomeacaoExcluvivamenteCargoComissao,
+                             tpIncorporacaoMatriculaOuNomeacao,
+                             tpMatricula,                                              { Item válido até a versão 2.5 }
+                             tpRedistribuicao,
+                             tpDiplomacao,
+                             tpContratacaoPorTempoDeterminado,                         { Item válido a partir da versão simplificada }
+                             tpRemocao,                                                { Item válido a partir da versão simplificada }
+                             tpDesignacao,                                             { Item válido a partir da versão simplificada }
+                             tpMudancaDeCpf,                                           { Item válido a partir da versão simplificada }
+                             tpOutros);
 
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
 
   tpTpContr               = (PrazoIndeterminado, PrazoDeterminado, PrazoDeterminadoVincOcDeUmFato);
 
-  tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos, tjJornada12x36, tjJornadaComHorarioDiarioFixoFolgaVariavel, tjDemaisTiposJornada);
-
+  tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos,                      { Item válido até a versão 2.5 }
+                             tjJornada12x36,
+                             tjJornadaComHorarioDiarioFixoFolgaVariavel,
+                             tjJornadaComHorarioDiarioFixoEFolgaFixaDomingo,           { Item válido a partir da versão simplificada }
+                             tjJornadaComHorarioDiarioFixoEFolgaFixaExcetoDomingo,     { Item válido a partir da versão simplificada }
+                             tjJornadaComHorarioDiarioFixoEFolhaFixaOutroDiaDaSemana,  { Item válido a partir da versão simplificada }
+                             tjTurnoIninterruptoDeRevezamento,                         { Item válido a partir da versão simplificada }
+                             tjDemaisTiposJornada);
+                             
   tpTpDia                 = (diSegundaFeira, diTercaFeira, diQuartaFeira, diQuintaFeira, diSextaFeira, diSabado, diDomingo, diDiaVariavel);
 
   tpTpExameOcup           = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
@@ -390,7 +409,8 @@ type
 
   tpTpContribSind         = (csContribSindical, csContribAssociativa, csContribAssistencial, csContribConfederativa);
 
-  tpIndSubstPatrOpPort    = (spVazio, spIntegralmenteSubstituida, spParcialmenteSubstituida);
+  tpIndSubstPatr          = (spVazio, spIntegralmenteSubstituida, spParcialmenteSubstituida);
+  tpIndSubstPatrOpPort    = tpIndSubstPatr; //deprecated...
 
   tpIdAquis               = (iaAquiProducaoProdutorRuralPessoaFisSegEspGeral, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralEntPAA,
                              iaAquiProducaoProdutorRuralPessoaJurEntPAA, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralProdIsenta,
@@ -441,35 +461,51 @@ type
 
   tpOrigemAltAfast        = (oaaPorIniciativaDoEmpregador, oaaRevisaoAdministrativa, oaaDeterminacaoJudicial);
 
-  tpPensaoAlim            = (paNaoExistePensaoAlimenticia, paPercentualDePensaoAlimenticia, paValorDePensaoAlimenticia,
+  tpPensaoAlim            = (paNaoExistePensaoAlimenticia,
+                             paPercentualDePensaoAlimenticia,
+                             paValorDePensaoAlimenticia,
                              paPercentualeValordePensaoAlimenticia);
 
-  tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador,
-                             cpaOutrasCumprimentoParcial, cpaAvisoprevioIndenizadoNaoExigivel );
+  tpCumprParcialAviso     = (cpaCumprimentoTotal,
+                             cpaCumprimentoParcialNovoEmprego,
+                             cpaCumprimentoParcialEmpregador,
+                             cpaOutrasCumprimentoParcial,
+                             cpaAvisoprevioIndenizadoNaoExigivel);
 
-  tpTpAval               = (tpaQuantitativo, tpaQualitativo);
-
-  tpModTreiCap           = (mtcPresencial, mtcEaD, mtcSemipresencial);
-
-  tpTpTreiCap            = (ttcInicial, ttcPeriodico, ttcReciclagem, ttcEventual, ttcOutros);
-
-  tpTpProf               = (ttpProfissionalEmpregado, ttpProfissionalSemVinculo);
-
-  tpNacProf              = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
-
-  TVersaoeSocial = (ve02_04_01, ve02_04_02, ve02_05_00);
-
-  tpTmpParc = (tpNaoeTempoParcial, tpLimitado25HorasSemanais, tpLimitado30HorasSemanais, tpLimitado26HorasSemanais);
+  tpTpAval                = (tpaQuantitativo, tpaQualitativo);
+                        
+  tpModTreiCap            = (mtcPresencial, mtcEaD, mtcSemipresencial);
+                        
+  tpTpTreiCap             = (ttcInicial, ttcPeriodico, ttcReciclagem, ttcEventual, ttcOutros);
+                        
+  tpTpProf                = (ttpProfissionalEmpregado, ttpProfissionalSemVinculo);
+                        
+  tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
+                        
+  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00);
+                        
+  tpTmpParc               = (tpNaoeTempoParcial,
+                             tpLimitado25HorasSemanais,
+                             tpLimitado30HorasSemanais,
+                             tpLimitado26HorasSemanais);
 
   // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
-  TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
-                 ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
+  tpClassTrib             = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
+                             ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
-  tpConsulta = (tcEmpregador, tcTabela, tcTrabalhador);
+  tpConsulta              = (tcEmpregador, tcTabela, tcTrabalhador);
 
-  tpSimNaoFacultativo = (snfNada, snfSim, snfNao);
+  tpSimNaoFacultativo     = (snfNada, snfSim, snfNao);
 
-Const
+  tpTmpResid              = (ttrNenhum, ttrPrazoIndeterminado, ttrPrazoDeterminado);
+
+  tpCondIng               = (tciNenhum, tciRefugiado, tciSolicitanteDeRefugio, tciPermanenciaNoBrasilReuniaoFamiliar, 
+                             tciBeneficiadopeloAcordoEntrePaisesDoMercosul, tciDependenteDeAgenteDiplomatico, 
+                             tciBeneficiadoPeloTratadoDeAmizade, tciOutraCondicao);
+
+  tpIndApurIR             = (tiaiNenhum, tiaiNormal, tiaiSituacaoEspecialIRRF);
+
+const
   PrefixoVersao = '-v';
 
   TEventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
@@ -613,6 +649,9 @@ function eSStrToNatAtividade(var ok: boolean; const s: string): TpNatAtividade;
 function eSTpTributoToStr(const t: TpTpTributo ): string;
 function eSStrToTpTributo(var ok: boolean; const s: string): TpTpTributo;
 
+function eSTpIndApurIRToStr(const t: tpIndApurIR ): string;
+function eSStrToTpindApurIR(var ok: boolean; const s: string): tpIndApurIR;
+
 function eSGrauExpToStr(const t: TpGrauExp ): string;
 function eSStrToGrauExp(var ok: boolean; const s: string): TpGrauExp;
 
@@ -715,6 +754,9 @@ function eSStrToTpRegTrab(var ok: boolean; const s: string): tpTpRegTrab;
 function eSTpRegPrevToStr(const t: tpTpRegPrev ): string;
 function eSStrTotpRegPrev(var ok: boolean; const s: string): tpTpRegPrev;
 
+function eSTpRegPrevFacultativoToStr(const t: tpTpRegPrevFacultativo ): string;
+function eSStrTotpRegPrevFacultativo(var ok: boolean; const s: string): tpTpRegPrevFacultativo;
+
 function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
 function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
 
@@ -805,8 +847,8 @@ function eSStrToTpReint(var ok: boolean; const s: string): tpTpReint;
 function eSTpContribSindToStr(const t: tpTpContribSind ): string;
 function eSStrToTpContribSind(var ok: boolean; const s: string): tpTpContribSind;
 
-function eSIndSubstPatrOpPortStr(const t: tpIndSubstPatrOpPort ): string;
-function eSStrToIndSubstPatrOpPort(var ok: boolean; const s: string): tpIndSubstPatrOpPort;
+function eSIndSubstPatrStr(const t: tpIndSubstPatr ): string;
+function eSStrToIndSubstPatr(var ok: boolean; const s: string): tpIndSubstPatr;
 
 function eSIdAquisStr(const t: tpIdAquis ): string;
 function eSStrToIdAquis(var ok: boolean; const s: string): tpIdAquis;
@@ -907,6 +949,12 @@ function StrTotpTpProf(var ok: boolean; const s: string): tpTpProf;
 
 function tpNacProfToStr(const t: tpNacProf ): string;
 function StrTotpNacProf(var ok: boolean; const s: string): tpNacProf;
+
+function tpTmpResidToStr(const t: tpTmpResid ): string;
+function StrTotpTmpResid(var ok: boolean; const s: string): tpTmpResid;
+
+function tpCondIngToStr(const t: tpCondIng ): string;
+function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
 
 implementation
 
@@ -1227,6 +1275,16 @@ begin
   result := tpTpRegPrev( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
 end;
 
+function eSTpRegPrevFacultativoToStr(const t: tpTpRegPrevFacultativo ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString0_3);
+end;
+
+function eSStrTotpRegPrevFacultativo(var ok: boolean; const s: string): tpTpRegPrevFacultativo;
+begin
+  result := tpTpRegPrevFacultativo( StrToEnumerado2(ok , s, TGenericosString0_3 ) );
+end;
+
 function eSTpIndAdmissaoToStr(const t: tpTpIndAdmissao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
@@ -1279,12 +1337,12 @@ end;
 
 function eSTpProvToStr(const t: tpTpProv ): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '99' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '99' ] );
 end;
 
 function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
 begin
-  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '99' ] ) );
+  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '99' ] ) );
 end;
 
 function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
@@ -1319,12 +1377,12 @@ end;
 
 function eSTpJornadaToStr(const t: tpTpJornada ): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '3', '9' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '7', '9' ] );
 end;
 
 function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
 begin
-  result := tpTpJornada( StrToEnumerado2(ok , s, [ '1', '2', '3', '9' ] ) );
+  result := tpTpJornada( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '7', '9' ] ) );
 end;
 
 function eSTpDiaToStr(const t: tpTpDia ): string;
@@ -1477,14 +1535,14 @@ begin
   result := tpTpContribSind( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
 
-function eSIndSubstPatrOpPortStr(const t: tpIndSubstPatrOpPort ): string;
+function eSIndSubstPatrStr(const t: tpIndSubstPatr ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2 );
+  result := EnumeradoToStr2(t,TGenericosString0_2 );
 end;
 
-function eSStrToIndSubstPatrOpPort(var ok: boolean; const s: string): tpIndSubstPatrOpPort;
+function eSStrToIndSubstPatr(var ok: boolean; const s: string): tpIndSubstPatr;
 begin
-  result := tpIndSubstPatrOpPort( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
+  result := tpIndSubstPatr( StrToEnumerado2(ok , s, TGenericosString0_2 ) );
 end;
 
 function eSIdAquisStr(const t: tpIdAquis ): string;
@@ -1924,6 +1982,16 @@ begin
   result := TpTpTributo( StrToEnumerado2(ok , s,TGenericosString1_4 ));
 end;
 
+function eSTpIndApurIRToStr(const t: tpIndApurIR ): string;
+begin
+  result := EnumeradoToStr2(t, ['', '0', '1']);
+end;
+
+function eSStrToTpIndApurIR(var ok: boolean; const s: string): tpIndApurIR;
+begin
+  result := tpIndApurIR( StrToEnumerado2(ok , s, ['', '0', '1']));
+end;
+
 function eSGrauExpToStr(const t:tpGrauExp ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4  );
@@ -2352,14 +2420,14 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00'],
-                          [ve02_04_01, ve02_04_02, ve02_05_00]);
+  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00', 'S01_00_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00'],
-                          [ve02_04_01, ve02_04_02, ve02_05_00]);
+  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', '_S_01_00_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
@@ -2368,12 +2436,12 @@ begin
 
   if (d = 2.0401)  then
     result := ve02_04_01
-  else
-  if (d = 2.0402)  then
+  else if (d = 2.0402)  then
     result := ve02_04_02
-  else
-  if (d = 2.0500)  then
+  else if (d = 2.0500)  then
     result := ve02_05_00
+  else if (d = 10.0000)  then
+    result := veS01_00_00
   else
   begin
     result := ve02_04_01;
@@ -2384,9 +2452,10 @@ end;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
 begin
   case t of
-    ve02_04_01: result := 2.0401;
-    ve02_04_02: result := 2.0402;
-    ve02_05_00: result := 2.0500;
+    ve02_04_01:  result := 2.0401;
+    ve02_04_02:  result := 2.0402;
+    ve02_05_00:  result := 2.0500;
+    veS01_00_00: result := 10.0000;
   else
     result := 0;
   end;
@@ -2571,6 +2640,26 @@ end;
 function StrTotpNacProf(var ok: boolean; const s: string): tpNacProf;
 begin
   result := tpNacProf( StrToEnumerado2(ok, s, TGenericosString1_2) );
+end;
+
+function tpTmpResidToStr(const t: tpTmpResid ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString0_2 );
+end;
+
+function StrTotpTmpResid(var ok: boolean; const s: string): tpTmpResid;
+begin
+  result := tpTmpResid( StrToEnumerado2(ok, s, TGenericosString0_2) );
+end;
+
+function tpCondIngToStr(const t: tpCondIng ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_7 );
+end;
+
+function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
+begin
+  result := tpCondIng( StrToEnumerado2(ok, s, TGenericosString1_7) );
 end;
 
 end.

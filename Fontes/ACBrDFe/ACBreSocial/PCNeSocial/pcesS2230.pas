@@ -68,6 +68,8 @@ type
   TinfoCessao = class;
   TinfoMandSind = class;
   TinfoRetif = class;
+  TperAquis = class;
+  TinfoMandElet = class;
 
   TS2230Collection = class(TeSocialCollection)
   private
@@ -134,6 +136,24 @@ type
     property fimAfastamento: TfimAfastamento read FfimAfastamento write FfimAfastamento;
   end;
 
+  TperAquis = class(TObject)
+  private
+    fdtInicio: TDateTime;
+    fdtFim: TDateTime;
+  public
+    property dtInicio: TDateTime read fdtInicio write fdtInicio;
+    property dtFim: TDateTime read fdtFim write fdtFim;
+  end;
+  
+  TinfoMandElet = class(TObject)
+  private
+    fcnpjMandElet: string;
+    findRemunCargo: tpSimNao;
+  public
+    property cnpjMandElet: string read fcnpjMandElet write fcnpjMandElet;
+    property indRemunCargo: tpSimNao read findRemunCargo write findRemunCargo;
+  end;
+  
   tiniAfastamento = class(TAfastamento)
   private
     FInfoMesmoMtv: tpSimNao;
@@ -142,20 +162,24 @@ type
     FinfoAtestado: TinfoAtestado;
     FinfoCessao: TinfoCessao;
     FinfoMandSind: TinfoMandSind;
-
+    FperAquis: TperAquis;
+    FinfoMandElet: TinfoMandElet;
+    
     function getInfoAtestado: TinfoAtestado;
   public
     constructor Create;
     destructor  Destroy; override;
 
-    function infoAtestadoInst: boolean;
+    function infoAtestadoInst: Boolean;
 
     property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
     property tpAcidTransito: tpTpAcidTransito read FtpAcidTransito write FtpAcidTransito;
     property Observacao: String read FObservacao write FObservacao;
     property infoAtestado: TinfoAtestado read getInfoAtestado write FinfoAtestado;
     property infoCessao: TinfoCessao read FinfoCessao write FinfoCessao;
-    property infoMandSind : TinfoMandSind read FinfoMandSind write FinfoMandSind;
+    property infoMandSind: TinfoMandSind read FinfoMandSind write FinfoMandSind;
+    property perAquis: TperAquis read FperAquis write FperAquis;
+    property infoMandElet: TinfoMandElet read finfoMandElet write finfoMandElet;
   end;
 
   TinfoAtestado = class(TACBrObjectList)
@@ -342,6 +366,8 @@ begin
   FinfoAtestado := nil;
   FinfoCessao   := TinfoCessao.Create;
   FinfoMandSind := TinfoMandSind.Create;
+  fperAquis     := TperAquis.Create;
+  finfoMandElet := TinfoMandElet.Create;
 end;
 
 destructor tiniAfastamento.destroy;
@@ -349,7 +375,9 @@ begin
   FreeAndNil(FInfoAtestado);
   FinfoCessao.Free;
   FinfoMandSind.Free;
-
+  fperAquis.Free;
+  finfoMandElet.Free;
+  
   inherited;
 end;
 
@@ -471,11 +499,11 @@ procedure TEvtAfastTemp.GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
 begin
   Gerador.wGrupo('infoAfastamento');
 
-  if (DateToStr(objInfoAfast.iniAfastamento.DtIniAfast) <> dDataBrancoNula) then
+  if (DateToStr(objInfoAfast.iniAfastamento.dtIniAfast) <> dDataBrancoNula) then
   begin
     Gerador.wGrupo('iniAfastamento');
 
-    Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
+    Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.dtIniAfast);
     Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, eStpMotivosAfastamentoToStr(objInfoAfast.iniAfastamento.codMotAfast));
 
     if (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho]) then
@@ -485,13 +513,32 @@ begin
         Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
     end;
 
-    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.observacao);
 
+    if (VersaoDF > ve02_05_00) and (objInfoAfast.iniAfastamento.perAquis.dtInicio > 0) then
+    begin
+      Gerador.wGrupo('perAquis');
+      Gerador.wCampo(tcDat, '', 'dtInicio',  10,  10, 1, objInfoAfast.iniAfastamento.perAquis.dtInicio);
+      
+      if objInfoAfast.iniAfastamento.perAquis.dtFim > 0 then
+        Gerador.wCampo(tcDat, '', 'dtFim',   10,  10, 0, objInfoAfast.iniAfastamento.perAquis.dtFim);
+      
+      Gerador.wGrupo('/perAquis');
+    end;
+
+    if (VersaoDF > ve02_05_00) and (objInfoAfast.iniAfastamento.infoMandElet.cnpjMandElet <> '') then
+    begin
+      Gerador.wGrupo('infoMandElet');
+      Gerador.wCampo(tcStr, '', 'cnpjMandElet',  14,  14, 1, objInfoAfast.iniAfastamento.infoMandElet.cnpjMandElet);
+      Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,   1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMandElet.indRemunCargo));
+      Gerador.wGrupo('/infoMandElet');
+    end;
+        
     // Critério de geração: F (Se {codMotAfast} = [01, 03, 35]); N (Nos demais casos)
     if ((objInfoAfast.iniAfastamento.infoAtestadoInst) and
         (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho,
-                                                   mtvAcidenteDoencaNaoTrabalho,
-                             mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
+                                                     mtvAcidenteDoencaNaoTrabalho,
+                                                     mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
       GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
 
     if Assigned(objInfoAfast.iniAfastamento.infoCessao) then

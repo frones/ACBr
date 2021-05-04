@@ -177,6 +177,9 @@ type
     FDetPgtoFer  : TDetPgtoFerCollection;
     FDetPgtoAnt  : TDetPgtoAntCollection;
     FIdePgtoExt  : TPgtoExt;
+    FPerRef      : String;
+    FIdeDmDev    : string;
+    FVrLiq       : Double;
 
     function GetdetPgtoFl : TdetPgtoFlCollection;
     function GetIdePgtoExt : TPgtoExt;
@@ -201,6 +204,9 @@ type
     property detPgtoFer: TDetPgtoFerCollection read getDetPgtoFer write FDetPgtoFer;
     property detPgtoAnt: TDetPgtoAntCollection read getDetPgtoAnt write FDetPgtoAnt;
     property IdePgtoExt : TPgtoExt read GetIdePgtoExt write FIdePgtoExt;
+    property perRef: string read FPerRef write FPerRef;
+    property ideDmDev: string read FIdeDmDev write FIdeDmDev;
+    property vrLiq: Double read FVrLiq write FVrLiq;
   end;
 
   TDetPgtoBenPr = class(TObject)
@@ -934,8 +940,9 @@ begin
   Gerador.wGrupo('ideBenef');
   Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, objIdeBenef.cpfBenef);
 
-  if objIdeBenef.depsInst() then
-    GerarDeps(objIdeBenef.deps);
+  if VersaoDF <= ve02_05_00 then
+    if objIdeBenef.depsInst() then
+      GerarDeps(objIdeBenef.deps);
 
   GerarInfoPgto(objIdeBenef.InfoPgto);
 
@@ -1043,25 +1050,35 @@ begin
 
     Gerador.wCampo(tcDat, '', 'dtPgto',   10, 10, 1, objInfoPgto.Items[i].dtPgto);
     Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
-    Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
+    
+    if VersaoDF <= ve02_05_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
 
-    if (objInfoPgto.Items[i].tpPgto in [tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202]) then
-      if (objInfoPgto.Items[i].detPgtoFlInst()) then
-        GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
-
-    if objInfoPgto.Items[i].detPgtoBenPrInst() then
-      GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
-
-    if objInfoPgto.Items[i].detPgtoFerInst() then
-      GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
-
-    if objInfoPgto.Items[i].detPgtoAntInst() then
-      GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
-
-    if (objInfoPgto.Items[i].indResBr = tpNao) then
-      if (objInfoPgto.Items[i].detidePgtoExtInst) then
-        GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
-
+      if (objInfoPgto.Items[i].tpPgto in [tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202]) then
+        if (objInfoPgto.Items[i].detPgtoFlInst()) then
+          GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
+     
+      if objInfoPgto.Items[i].detPgtoBenPrInst() then
+        GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
+     
+      if objInfoPgto.Items[i].detPgtoFerInst() then
+        GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
+     
+      if objInfoPgto.Items[i].detPgtoAntInst() then
+        GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
+     
+      if (objInfoPgto.Items[i].indResBr = tpNao) then
+        if (objInfoPgto.Items[i].detidePgtoExtInst) then
+          GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
+    end
+    else
+    begin
+      Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 0, objInfoPgto.Items[i].perRef);
+      Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, objInfoPgto.Items[i].ideDmDev);
+      Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, objInfoPgto.items[i].vrLiq);
+    end;
+    
     Gerador.wGrupo('/infoPgto');
   end;
 
@@ -1079,9 +1096,22 @@ begin
     GerarCabecalho('evtPgtos');
     Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
 
-    GerarIdeEvento3(Self.IdeEvento);
+    if VersaoDF <= ve02_05_00 then
+      GerarIdeEvento3(Self.ideEvento)
+    else
+    begin
+      Gerador.wGrupo('ideEvento');
+
+      GerarIdeEvento2(Self.ideEvento, false);
+      Gerador.wCampo(tcStr, '', 'perApur',     7, 7, 1, Self.ideEvento.perApur);
+
+      GerarIdeEvento(Self.ideEvento, false);
+
+      Gerador.wGrupo('/ideEvento');
+    end;
+
     GerarIdeEmpregador(Self.ideEmpregador);
-    GerarIdeBenef(Self.IdeBenef);
+    GerarIdeBenef(Self.ideBenef);
 
     Gerador.wGrupo('/evtPgtos');
 

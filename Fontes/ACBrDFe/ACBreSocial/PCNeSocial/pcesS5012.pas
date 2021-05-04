@@ -56,7 +56,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase, pcnConversao, pcnLeitor, ACBrUtil,
-  pcesCommon, pcesConversaoeSocial;
+  pcesCommon, pcesConversaoeSocial, Dialogs;
 
 type
   TS5012 = class;
@@ -91,7 +91,7 @@ type
     procedure SetItem(Index: Integer; Value: TInfoCRContribCollectionItem);
   public
     function Add: TInfoCRContribCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-		function New: TInfoCRContribCollectionItem;
+    function New: TInfoCRContribCollectionItem;
     property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem;
   end;
 
@@ -244,9 +244,8 @@ begin
           inc(i);
         end;
       end;
-
-      Result := True;
     end;
+    Result := True;
   except
     Result := False;
   end;
@@ -334,6 +333,4 @@ begin
   inherited;
 end;
 
-
 end.
-

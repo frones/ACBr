@@ -454,8 +454,8 @@ begin
     Gerador.wGrupo('/tpComerc');
   end;
 
-  if pTpComerc.Count > 4 then
-    Gerador.wAlerta('', 'tpComerc', 'Lista de Comercialização', ERR_MSG_MAIOR_MAXIMO + '4');
+  if pTpComerc.Count > 5 then
+    Gerador.wAlerta('', 'tpComerc', 'Lista de Comercialização', ERR_MSG_MAIOR_MAXIMO + '5');
 end;
 
 function TEvtComProd.GerarXML: boolean;

@@ -85,7 +85,7 @@ type
 
   TEvtAdmPrelim = class(TeSocialEvento)
   private
-    FIdeEvento: TIdeEvento;
+    FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FInfoRegPrelim: TInfoRegPrelim;
 
@@ -97,20 +97,31 @@ type
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
 
-    property IdeEvento: TIdeEvento read FIdeEvento write FIdeEvento;
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property InfoRegPrelim: TInfoRegPrelim read FInfoRegPrelim write FInfoRegPrelim;
   end;
-
+  
   TInfoRegPrelim = class(TObject)
   private
     FcpfTrab: string;
-    FdtNascto: TDateTime; //FdtNascto: TDate;
-    FdtAdm: TDateTime; //FdtAdm: TDate
+    FdtNascto: TDateTime;
+    FdtAdm: TDateTime;
+    Fmatricula: String;
+    FcodCateg: Integer;
+    FnatAtividade: tpNatAtividade;
+    FinfoRegCTPS: TinfoRegCTPS;
   public
+    constructor Create;
+    destructor Destroy;
+
     property cpfTrab: string read FcpfTrab write FcpfTrab;
     property dtNascto: TDateTime read FdtNascto write FdtNascto;
     property dtAdm: TDateTime read FdtAdm write FdtAdm;
+    property matricula: String read Fmatricula write Fmatricula;
+    property codCateg: Integer read FcodCateg write FcodCateg;
+    property natAtividade: tpNatAtividade read FnatAtividade write FnatAtividade;
+    property infoRegCTPS: TinfoRegCTPS read FinfoRegCTPS write FinfoRegCTPS;
   end;
 
 implementation
@@ -147,6 +158,7 @@ end;
 constructor TS2190CollectionItem.Create(AOwner: TComponent);
 begin
   inherited Create;
+  
   FTipoEvento := teS2190;
   FEvtAdmPrelim := TEvtAdmPrelim.Create(AOwner);
 end;
@@ -163,7 +175,7 @@ constructor TEvtAdmPrelim.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
-  FIdeEvento     := TIdeEvento.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoRegPrelim := TInfoRegPrelim.Create;
 end;
@@ -177,13 +189,53 @@ begin
   inherited;
 end;
 
+{ TInfoRegPrelim }
+
+constructor TInfoRegPrelim.Create;
+begin
+  inherited Create;
+  
+  FinfoRegCTPS := TinfoRegCTPS.Create;
+end;
+
+destructor TInfoRegPrelim.Destroy;
+begin
+  FinfoRegCTPS.Free;
+
+  inherited;
+end;
+
 procedure TEvtAdmPrelim.GerarInfoRegPrelim;
 begin
   Gerador.wGrupo('infoRegPrelim');
 
-  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, InfoRegPrelim.cpfTrab);
-  Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, InfoRegPrelim.dtNascto);
-  Gerador.wCampo(tcDat, '', 'dtAdm',    10, 10, 1, InfoRegPrelim.dtAdm);
+  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, infoRegPrelim.cpfTrab);
+  Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, infoRegPrelim.dtNascto);
+  Gerador.wCampo(tcDat, '', 'dtAdm',    10, 10, 1, infoRegPrelim.dtAdm);
+
+  if VersaoDF > ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, infoRegPrelim.matricula);
+    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, infoRegPrelim.codCateg);
+
+    if infoRegPrelim.natAtividade <> navNaoInformar then
+     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(infoRegPrelim.natAtividade));
+
+    if infoRegPrelim.infoRegCTPS.CBOCargo <> '' then
+    begin
+      Gerador.wGrupo('infoRegCTPS');
+
+      Gerador.wCampo(tcStr, '', 'CBOCargo',   6,  6, 1, infoRegPrelim.infoRegCTPS.CBOCargo);
+      Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, infoRegPrelim.infoRegCTPS.VrSalFx);
+      Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(infoRegPrelim.infoRegCTPS.UndSalFixo));
+      Gerador.wCampo(tcStr, '', 'tpContr',    1,  1, 1, eSTpContrToStr(infoRegPrelim.infoRegCTPS.tpContr));
+
+      if infoRegPrelim.infoRegCTPS.dtTerm <> 0 then
+        Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, infoRegPrelim.infoRegCTPS.dtTerm);
+    
+      Gerador.wGrupo('/infoRegCTPS');
+    end;
+  end;
 
   Gerador.wGrupo('/infoRegPrelim');
 end;
@@ -198,7 +250,11 @@ begin
     GerarCabecalho('evtAdmPrelim');
     Gerador.wGrupo('evtAdmPrelim Id="' + Self.Id + '"');
 
-    GerarIdeEvento(self.IdeEvento);
+    if VersaoDF > ve02_05_00 then
+      GerarIdeEvento2(self.IdeEvento)
+    else
+      GerarIdeEvento(self.IdeEvento);
+      
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarInfoRegPrelim;
 

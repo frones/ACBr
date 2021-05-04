@@ -324,18 +324,16 @@ procedure TevtMonit.GerarMedico;
 begin
   Gerador.wGrupo('medico');
 
-  if Trim(self.exMedOcup.Aso.Medico.cpfMed) <> '' then
+  if VersaoDF <= ve02_05_00 then
   begin
-    Gerador.wCampo(tcStr, '', 'cpfMed', 11, 11, 0, self.exMedOcup.Aso.Medico.cpfMed);
-  end;
-
-  if Trim(self.exMedOcup.Aso.Medico.nisMed) <> '' then
-  begin
-    Gerador.wCampo(tcStr, '', 'nisMed', 1, 11, 0, self.exMedOcup.Aso.Medico.nisMed);
+    if Trim(self.exMedOcup.Aso.Medico.cpfMed) <> '' then
+      Gerador.wCampo(tcStr, '', 'cpfMed', 11, 11, 0, self.exMedOcup.Aso.Medico.cpfMed);
+   
+    if Trim(self.exMedOcup.Aso.Medico.nisMed) <> '' then
+      Gerador.wCampo(tcStr, '', 'nisMed', 1, 11, 0, self.exMedOcup.Aso.Medico.nisMed);
   end;
 
   Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.exMedOcup.Aso.Medico.NmMed);
-
   Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.Aso.Medico.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.Aso.Medico.ufCRM);
 
@@ -355,6 +353,7 @@ begin
     Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
     Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
     Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
+
     Gerador.wGrupo('/exame');
   end;
 
@@ -379,12 +378,9 @@ begin
   Gerador.wGrupo('respMonit');
 
   if Trim(self.exMedOcup.RespMonit.cpfResp) <> '' then
-  begin
     Gerador.wCampo(tcStr, '', 'cpfResp', 11, 11, 0, self.exMedOcup.RespMonit.cpfResp);
-  end;
 
   Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
-
   Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
 
@@ -453,7 +449,7 @@ begin
 
       sSecao := 'ideVinculo';
       ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
-      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+//      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'aso';

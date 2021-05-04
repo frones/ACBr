@@ -486,28 +486,57 @@ begin
 end;
 
 procedure TEvtTabEstab.GerarInfoTrab;
+var
+  L: Boolean;
 begin
-  Gerador.wGrupo('infoTrab');
+  if (infoEstab.DadosEstab.infoTrab.infoAprInst()) or 
+     (infoEstab.DadosEstab.infoTrab.infoPCDInst()) or 
+     (VersaoDF <= ve02_05_00) then
+  begin
+    L := False;
 
-  if (infoEstab.DadosEstab.infoTrab.regPt <> rpNaoInformado) then
-    Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
+    if VersaoDF <= ve02_05_00 then
+      L := True;
+      
+    if infoEstab.DadosEstab.infoTrab.infoAprInst() then
+      if infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '' then
+        L := True;
+        
+    if infoEstab.DadosEstab.infoTrab.infoPCDInst() then
+      if infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud <> '' then
+        L := True;
+        
+    if L then
+    begin
+      Gerador.wGrupo('infoTrab');
 
-  GerarInfoApr;
-  GerarInfoPCD;
+      if VersaoDF <= ve02_05_00 then
+        if (infoEstab.DadosEstab.infoTrab.regPt <> rpNaoInformado) then
+          Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
 
-  Gerador.wGrupo('/infoTrab');
+      GerarInfoApr;
+      GerarInfoPCD;
+
+      Gerador.wGrupo('/infoTrab');
+    end;  
+  end;
 end;
 
 procedure TEvtTabEstab.GerarInfoPCD;
 begin
   if infoEstab.DadosEstab.infoTrab.infoPCDInst() then
   begin
-    Gerador.wGrupo('infoPCD');
+    if (VersaoDF <= ve02_05_00) or 
+       (infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud <> '') then
+    begin
+      Gerador.wGrupo('infoPCD');
 
-    Gerador.wCampo(tcInt, '', 'contPCD',   1,  1, 1, eSTpContPCDToStr(infoEstab.DadosEstab.infoTrab.infoPCD.contPCD));
-    Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 20, 0, infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud);
+      if VersaoDF <= ve02_05_00 then
+        Gerador.wCampo(tcInt, '', 'contPCD',   1,  1, 1, eSTpContPCDToStr(infoEstab.DadosEstab.infoTrab.infoPCD.contPCD));
+      Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 20, 0, infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud);
 
-    Gerador.wGrupo('/infoPCD');
+      Gerador.wGrupo('/infoPCD');
+    end;  
   end;
 end;
 
@@ -515,17 +544,23 @@ procedure TEvtTabEstab.GerarInfoApr;
 begin
   if infoEstab.DadosEstab.infoTrab.infoAprInst() then
   begin
-    Gerador.wGrupo('infoApr');
+    if (VersaoDF <= ve02_05_00) or 
+       (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') then
+    begin
+      Gerador.wGrupo('infoApr');
 
-    Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
-    Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
+      if VersaoDF <= ve02_05_00 then
+        Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
+      Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
 
-    if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
-      Gerador.wCampo(tcStr, '', 'contEntEd', 0, 1, 0, eSSimNaoFacultativoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
+      if VersaoDF <= ve02_05_00 then
+        if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
+          Gerador.wCampo(tcStr, '', 'contEntEd', 0, 1, 0, eSSimNaoFacultativoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
 
-    GerarInfoEntEduc;
+      GerarInfoEntEduc;
 
-    Gerador.wGrupo('/infoApr');
+      Gerador.wGrupo('/infoApr');
+    end;  
   end;
 end;
 

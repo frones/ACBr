@@ -143,7 +143,7 @@ type
     destructor Destroy; override;
 
     property dtAcid: TDateTime read FdtAcid write FdtAcid;
-    property TpAcid: string read FTpAcid write FTpAcid;
+    property tpAcid: string read FTpAcid write FTpAcid;
     property hrAcid: string read FhrAcid write FhrAcid;
     property hrsTrabAntesAcid: string read FhrsTrabAntesAcid write FhrsTrabAntesAcid;
     property tpCat: tpTpCat read FtpCat write FtpCat;
@@ -153,11 +153,11 @@ type
     property codSitGeradora: integer read FcodSitGeradora write FcodSitGeradora;
     property iniciatCAT: tpIniciatCAT read FiniciatCAT write FiniciatCAT;
     property obsCAT: string read FobsCAT write FobsCAT;
-    property LocalAcidente: TLocalAcidente read FLocalAcidente write FLocalAcidente;
-    property ParteAtingida: TParteAtingidaCollection read FParteAtingida write FParteAtingida;
-    property AgenteCausador: TAgenteCausadorCollection read FAgenteCausador write FAgenteCausador;
-    property Atestado: TAtestado read FAtestado write FAtestado;
-    property CatOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
+    property localAcidente: TLocalAcidente read FLocalAcidente write FLocalAcidente;
+    property parteAtingida: TParteAtingidaCollection read FParteAtingida write FParteAtingida;
+    property agenteCausador: TAgenteCausadorCollection read FAgenteCausador write FAgenteCausador;
+    property atestado: TAtestado read FAtestado write FAtestado;
+    property catOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
   end;
 
   TAtestado = class
@@ -189,7 +189,7 @@ type
     property diagProvavel: string read FdiagProvavel write FdiagProvavel;
     property codCID: string read FcodCID write FcodCID;
     property observacao: string read Fobservacao write Fobservacao;
-    property Emitente: TEmitente read FEmitente write FEmitente;
+    property emitente: TEmitente read FEmitente write FEmitente;
   end;
 
   TCatOrigem = class
@@ -437,17 +437,28 @@ procedure TEvtCAT.GerarAgenteCausador;
 var
   i: integer;
 begin
-  for i:= 0 to Self.Cat.AgenteCausador.Count-1 do
+  if (VersaoDF > ve02_05_00) and (Self.Cat.AgenteCausador.Count > 0) then
   begin
     Gerador.wGrupo('agenteCausador');
 
-    Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
+    Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[0].codAgntCausador);
 
     Gerador.wGrupo('/agenteCausador');
-  end;
+  end
+  else
+  begin
+    for i := 0 to Self.Cat.AgenteCausador.Count - 1 do
+    begin
+      Gerador.wGrupo('agenteCausador');
 
-  if Self.Cat.AgenteCausador.Count > 99 then
-    Gerador.wAlerta('', 'agenteCausador', 'Lista de Agentes Causadores', ERR_MSG_MAIOR_MAXIMO + '99');
+      Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
+
+      Gerador.wGrupo('/agenteCausador');
+    end;
+
+    if Self.Cat.AgenteCausador.Count > 99 then
+      Gerador.wAlerta('', 'agenteCausador', 'Lista de Agentes Causadores', ERR_MSG_MAIOR_MAXIMO + '99');
+  end;
 end;
 
 procedure TEvtCAT.GerarAtestado;
@@ -456,7 +467,9 @@ begin
   begin
     Gerador.wGrupo('atestado');
 
-    Gerador.wCampo(tcStr, '', 'codCNES',        1,   7, 0, Self.Cat.Atestado.codCNES);
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'codCNES',        1,   7, 0, Self.Cat.Atestado.codCNES);
+
     Gerador.wCampo(tcDat, '', 'dtAtendimento', 10,  10, 1, Self.Cat.Atestado.dtAtendimento);
     Gerador.wCampo(tcStr, '', 'hrAtendimento',  4,   4, 1, Self.Cat.Atestado.hrAtendimento);
     Gerador.wCampo(tcStr, '', 'indInternacao',  1,   1, 1, eSSimNaoToStr(Self.Cat.Atestado.indInternacao));
@@ -530,7 +543,10 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpLocal',     1,   1, 1, eSTpLocalToStr(Self.Cat.LocalAcidente.tpLocal));
   Gerador.wCampo(tcStr, '', 'dscLocal',    1,  80, 0, Self.Cat.LocalAcidente.dscLocal);
-  Gerador.wCampo(tcStr, '', 'codAmb',      1,  30, 0, Self.Cat.LocalAcidente.codAmb);
+
+  if VersaoDF <= ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'codAmb',      1,  30, 0, Self.Cat.LocalAcidente.codAmb);
+
   Gerador.wCampo(tcStr, '', 'tpLograd',    1,   4, 0, Self.Cat.LocalAcidente.tpLograd);
   Gerador.wCampo(tcStr, '', 'dscLograd',   1, 100, 0, Self.Cat.LocalAcidente.dscLograd);
   Gerador.wCampo(tcStr, '', 'nrLograd',    1,  10, 0, Self.Cat.LocalAcidente.nrLograd);
@@ -593,6 +609,22 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+{ TLocalAcidente }
+
+constructor TLocalAcidente.Create;
+begin
+  inherited;
+
+  FideLocalAcid := TideLocalAcid.Create;
+end;
+
+destructor TLocalAcidente.Destroy;
+begin
+  FideLocalAcid.Free;
+  
+  inherited;
 end;
 
 function TEvtCAT.LerArqIni(const AIniString: String): Boolean;
@@ -736,22 +768,6 @@ begin
   finally
     INIRec.Free;
   end;
-end;
-
-{ TLocalAcidente }
-
-constructor TLocalAcidente.Create;
-begin
-  inherited;
-
-  FideLocalAcid := TideLocalAcid.Create;
-end;
-
-destructor TLocalAcidente.Destroy;
-begin
-  FideLocalAcid.Free;
-  
-  inherited;
 end;
 
 end.

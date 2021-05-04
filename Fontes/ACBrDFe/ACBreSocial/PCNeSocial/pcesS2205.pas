@@ -101,12 +101,12 @@ type
     function LerArqIni(const AIniString: String): Boolean;
 
     property dtAlteracao: TDateTime read FdtAlteracao write FdtAlteracao;
-    property CodCateg: integer read FCodCateg write FCodCateg;
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property Trabalhador: TTrabalhador read FTrabalhador write FTrabalhador;
-    property Vinculo: TVinculo read FVinculo write FVinculo;
-    property IdeTrabalhador: TideTrabalhador read FIdeTrabalhador write FIdeTrabalhador;
+    property codCateg: integer read FCodCateg write FCodCateg;
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property trabalhador: TTrabalhador read FTrabalhador write FTrabalhador;
+    property vinculo: TVinculo read FVinculo write FVinculo;
+    property ideTrabalhador: TideTrabalhador read FIdeTrabalhador write FIdeTrabalhador;
   end;
 
 implementation

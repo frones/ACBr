@@ -66,6 +66,7 @@ type
   TIdeLotacao = class;
   TFPasLotacao = class;
   TInfoEmprParcial = class;
+  TdadosOpPort = class;
   TDadosLotacao = class;
   TInfoLotacao = class;
   TProcJudTerceiroCollectionItem = class;
@@ -131,6 +132,7 @@ type
     {Geradores específicos da classe}
     procedure GerarIdeLotacao;
     procedure GerarInfoEmprParcial;
+    procedure GerarDadosOpPort;
     procedure GerarInfoProcJudTerceiros;
     procedure GerarFPasLotacao;
     procedure GerarDadosLotacao;
@@ -191,6 +193,15 @@ type
     property nrInscProp: string read FNrInscProp write FNrInscProp;
   end;
 
+  TdadosOpPort = class(TObject)
+  private
+    FaliqRat: tpAliqRat;
+    Ffap: Double;
+  public
+    property aliqRat: tpAliqRat read FaliqRat write FaliqRat;
+    property fap: Double read Ffap write Ffap;
+  end;
+
   TDadosLotacao = class(TObject)
   private
     FTpLotacao: string;
@@ -198,6 +209,7 @@ type
     FNrInsc: string;
     fFPasLotacao: TFPasLotacao;
     fInfoEmprParcial: TinfoEmprParcial;
+    fdadosOpPort: TdadosOpPort;
   public
     constructor Create;
     destructor Destroy; override;
@@ -207,6 +219,7 @@ type
     property nrInsc: string read FNrInsc write FNrInsc;
     property fPasLotacao: TFPasLotacao read ffPasLotacao write ffPasLotacao;
     property infoEmprParcial: TInfoEmprParcial read fInfoEmprParcial write fInfoEmprParcial;
+    property dadosOpPort: TdadosOpPort read fdadosOpPort write fdadosOpPort;
   end;
 
   TInfoLotacao = class(TObject)
@@ -309,6 +322,9 @@ begin
   GerarFPasLotacao;
   GerarInfoEmprParcial;
 
+  if VersaoDF > ve02_05_00 then
+    GerarDadosOpPort;
+    
   Gerador.wGrupo('/dadosLotacao');
 end;
 
@@ -344,21 +360,38 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpInscContrat', 1,  1, 1, eStpInscContratanteToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscContrat));
     Gerador.wCampo(tcStr, '', 'nrInscContrat', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat);
-    Gerador.wCampo(tcStr, '', 'tpInscProp',    1,  1, 1, eSTpInscPropToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
-    Gerador.wCampo(tcStr, '', 'nrInscProp',    1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
+
+    if VersaoDF <= ve02_05_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'tpInscProp',    1,  1, 1, eSTpInscPropToStr(self.infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
+      Gerador.wCampo(tcStr, '', 'nrInscProp',    1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
+    end;
 
     Gerador.wGrupo('/infoEmprParcial');
   end;
+end;
+
+procedure TevtTabLotacao.GerarDadosOpPort;
+begin
+  if infoLotacao.dadosLotacao.dadosOpPort.fap > 0 then
+  begin
+    Gerador.wGrupo('dadosOpPort');
+
+    Gerador.wCampo(tcStr, '', 'aliqRat', 1, 1, 1, eSAliqRatToStr(infoLotacao.dadosLotacao.dadosOpPort.aliqRat));
+    Gerador.wCampo(tcDe4, '', 'fap',     1, 5, 1, infoLotacao.dadosLotacao.dadosOpPort.fap);
+
+    Gerador.wGrupo('/dadosOpPort');  
+  end;  
 end;
 
 procedure TevtTabLotacao.GerarInfoProcJudTerceiros;
 var
   i: Integer;
 begin
-  if (infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 0) then
+  if (self.infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 0) then
   begin
     Gerador.wGrupo('infoProcJudTerceiros');
-    with infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros do
+    with self.infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros do
     begin
       for i := 0 to procJudTerceiro.Count-1 do
       begin
@@ -523,12 +556,14 @@ begin
   inherited Create;
   fFPasLotacao     := TFPasLotacao.Create;
   fInfoEmprParcial := TinfoEmprParcial.Create;
+  fdadosOpPort     := TdadosOpPort.Create;
 end;
 
 destructor TDadosLotacao.Destroy;
 begin
   fFPasLotacao.Free;
   FinfoEmprParcial.Free;
+  fdadosOpPort.Free;
 
   inherited;
 end;

@@ -65,7 +65,8 @@ type
   TinfoDirSind = class;
   TinfoTrabCedido = class;
   TTermino = class;
-
+  TinfoMandElet = class;
+  
   TS2300Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2300CollectionItem;
@@ -106,6 +107,7 @@ type
     procedure GerarageIntegracao(obj: TageIntegracao);
     procedure GerarsupervisorEstagio(obj: TsupervisorEstagio);
     procedure GerarTermino(obj: TTermino);
+    procedure GerarInfoMandElet(obj: TinfoMandElet);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
@@ -129,6 +131,7 @@ type
     Fafastamento: TAfastamento;
     Ftermino: TTermino;
     FMudancaCPF: TMudancaCPF2;
+    Fmatricula: String;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -141,39 +144,49 @@ type
     property mudancaCPF: TMudancaCPF2 read FMudancaCPF write FMudancaCPF;
     property afastamento: TAfastamento read Fafastamento write Fafastamento;
     property termino: TTermino read Ftermino write Ftermino;
+    property matricula: String read Fmatricula write FMatricula;
   end;
 
   TinfoComplementares = class(TObject)
   private
-    FcargoFuncao : TcargoFuncao;
-    FRemuneracao : TRemuneracao;
-    FFgts        : TFGTS;
-    FinfoDirSind : TinfoDirSind;
-    FinfoTrabCedido : TinfoTrabCedido;
-    FinfoEstagiario : TinfoEstagiario;
+    FcargoFuncao: TcargoFuncao;
+    FRemuneracao: TRemuneracao;
+    FFgts: TFGTS;
+    FinfoDirSind: TinfoDirSind;
+    FinfoTrabCedido: TinfoTrabCedido;
+    FinfoEstagiario: TinfoEstagiario;
+    FinfoMandElet: TinfoMandElet;
   public
     constructor Create;
     destructor  Destroy; override;
 
     property cargoFuncao: TcargoFuncao read FcargoFuncao write FcargoFuncao;
     property Remuneracao: TRemuneracao read FRemuneracao write FRemuneracao;
-    property Fgts : TFGTS read FFgts write FFgts;
+    property Fgts: TFGTS read FFgts write FFgts;
     property infoDirSind: TinfoDirSind read FinfoDirSind write FinfoDirSind;
     property infoTrabCedido: TinfoTrabCedido read FinfoTrabCedido write FinfoTrabCedido;
     property infoEstagiario: TinfoEstagiario read FinfoEstagiario write FinfoEstagiario;
+    property infoMandElet: TinfoMandElet read FinfoMandElet write FinfoMandElet;
   end;
 
   TinfoDirSind = class(TObject)
   private
     FcategOrig : Integer;
-    FcnpjOrigem : String;
-    FdtAdmOrig : TDateTime;
-    FmatricOrig : String;
+    FtpInsc: tpTpInsc;
+    FnrInsc: String;
+    FdtAdmOrig: TDateTime;
+    FmatricOrig: String;
+    FtpRegTrab: tpTpRegTrab;
+    FtpRegPrev: tpTpRegPrev;
   public
     property categOrig: Integer read FcategOrig write FcategOrig;
-    property cnpjOrigem: String read FcnpjOrigem write FcnpjOrigem;
+    property cnpjOrigem: String read FnrInsc write FnrInsc;
     property dtAdmOrig: TDateTime read FdtAdmOrig write FdtAdmOrig;
     property matricOrig: String read FmatricOrig write FmatricOrig;
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: string read FnrInsc write FnrInsc;
+    property tpRegTrab: tpTpRegTrab read FtpRegTrab write FtpRegTrab;
+    property tpRegPrev: tpTpRegPrev read FtpRegPrev write FtpRegPrev;
   end;
 
   TinfoTrabCedido = class(TObject)
@@ -195,6 +208,17 @@ type
     property infOnus: tpInfOnus read FinfOnus write FinfOnus;
   end;
 
+  TinfoMandElet = class(TObject)
+  private
+    FindRemunCargo: tpSimNaoFacultativo;
+    FtpRegTrab: tpTpRegTrab;
+    FtpRegPrev: tpTpRegPrev;
+  public
+    property indRemunCargo: tpSimNaoFacultativo read FindRemunCargo write FindRemunCargo;
+    property tpRegTrab: tpTpRegTrab read FtpRegTrab write FtpRegTrab;
+    property tpRegPrev: tpTpRegPrev read FtpRegPrev write FtpRegPrev;
+  end;
+  
   TTermino = class(TObject)
   private
     FdtTerm: TDateTime;
@@ -275,12 +299,13 @@ constructor TinfoComplementares.Create;
 begin
   inherited;
 
-  FcargoFuncao    := TcargoFuncao.Create;
-  FRemuneracao    := TRemuneracao.Create;
-  FFgts           := TFGTS.Create;
-  FinfoDirSind    := TinfoDirSind.Create;
+  FcargoFuncao := TcargoFuncao.Create;
+  FRemuneracao := TRemuneracao.Create;
+  FFgts := TFGTS.Create;
+  FinfoDirSind := TinfoDirSind.Create;
   FinfoTrabCedido := TinfoTrabCedido.Create;
   FinfoEstagiario := TinfoEstagiario.Create;
+  FinfoMandElet := TinfoMandElet.Create;
 end;
 
 destructor TinfoComplementares.Destroy;
@@ -291,7 +316,8 @@ begin
   FinfoDirSind.Free;
   FinfoTrabCedido.Free;
   FinfoEstagiario.Free;
-
+  FinfoMandElet.Free;
+  
   inherited;
 end;
 
@@ -324,27 +350,45 @@ begin
 	Gerador.wGrupo('ageIntegracao');
 
     Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
-	Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
-	Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
-	Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
-	Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
-	Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
-	Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-	Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
 
+    if VersaoDF <= ve02_05_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
+      Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
+      Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
+      Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
+      Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
+      Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
+      Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
+    end;
+    
 	Gerador.wGrupo('/ageIntegracao');
   end;
 end;
 
 procedure TEvtTSVInicio.GerarCargoFuncao(obj: TcargoFuncao);
 begin
-  if obj.codCargo <> EmptyStr then
+  if (obj.codCargo <> EmptyStr) or 
+     (obj.nmCargo <> EmptyStr) or
+     (obj.CBOCargo <> EmptyStr) or
+     (obj.nmFuncao <> EmptyStr) or
+     (obj.CBOFuncao <> EmptyStr) then
   begin
     Gerador.wGrupo('cargoFuncao');
 
-    Gerador.wCampo(tcStr, '', 'codCargo',  1, 30, 1, obj.codCargo);
-    Gerador.wCampo(tcStr, '', 'codFuncao', 1, 30, 0, obj.codFuncao);
-
+    if VersaoDF <= ve02_05_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'codCargo',  1, 30, 1, obj.codCargo);
+      Gerador.wCampo(tcStr, '', 'codFuncao', 1, 30, 0, obj.codFuncao);
+    end
+    else
+    begin
+      Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, obj.nmCargo);
+      Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, obj.CBOCargo);
+      Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, obj.nmFuncao);
+      Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, obj.CBOFuncao);
+    end;
+    
     Gerador.wGrupo('/cargoFuncao');
   end;
 end;
@@ -353,31 +397,46 @@ procedure TEvtTSVInicio.GerarFGTS(obj: TFGTS);
 begin
   if obj.dtOpcFGTS > 0 then
   begin
-    Gerador.wGrupo('fgts');
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wGrupo('fgts')
+    else
+      Gerador.wGrupo('FGTS');
 
     Gerador.wCampo(tcStr, '', 'opcFGTS',    1,  1, 1, eSOpcFGTSToStr(obj.OpcFGTS));
-    Gerador.wCampo(tcDat, '', 'dtOpcFGTS', 10, 10, 0, obj.dtOpcFGTS);
+    
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcDat, '', 'dtOpcFGTS', 10, 10, 0, obj.dtOpcFGTS);
 
-    Gerador.wGrupo('/fgts');
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wGrupo('/fgts')
+    else
+      Gerador.wGrupo('/FGTS');
   end;
 end;
 
 procedure TEvtTSVInicio.GerarInfoComplementares(obj: TinfoComplementares);
 begin
-  if (obj.cargoFuncao.codCargo <> EmptyStr) or (obj.Remuneracao.VrSalFx > 0) or
-     (obj.Remuneracao.UndSalFixo = sfNaoaplicavel ) or
-     (obj.FGTS.DtOpcFGTS> 0) or (obj.infoDirSind.categOrig > 0) or
-     (obj.infoTrabCedido.dtAdmCed>0) or (obj.infoEstagiario.dtPrevTerm > 0) then
+  if ((obj.cargoFuncao.codCargo <> EmptyStr) and (VersaoDF <= ve02_05_00)) or 
+     ((obj.cargoFuncao.nmCargo <> EmptyStr) and (VersaoDF > ve02_05_00)) or
+     ((obj.cargoFuncao.CBOCargo <> EmptyStr) and (VersaoDF > ve02_05_00)) or
+     ((obj.cargoFuncao.nmFuncao <> EmptyStr) and (VersaoDF > ve02_05_00))or
+     ((obj.cargoFuncao.CBOFuncao <> EmptyStr) and (VersaoDF > ve02_05_00)) or
+     (obj.Remuneracao.VrSalFx > 0) or (obj.Remuneracao.UndSalFixo = sfNaoaplicavel) or
+     (obj.FGTS.DtOpcFGTS > 0) or (obj.infoDirSind.categOrig > 0) or
+     (obj.infoTrabCedido.dtAdmCed > 0) or (obj.infoEstagiario.dtPrevTerm > 0) then
   begin
     Gerador.wGrupo('infoComplementares');
-
+    
     GerarCargoFuncao(obj.cargoFuncao);
     GerarRemuneracao(obj.Remuneracao);
     GerarFGTS(obj.FGTS);
     GerarinfoDirSind(obj.infoDirSind);
     GerarinfoTrabCedido(obj.infoTrabCedido);
     GerarinfoEstagiario(obj.infoEstagiario);
-
+    
+    if VersaoDF > ve02_05_00 then
+      GerarInfoMandElet(obj.infoMandElet);
+      
     Gerador.wGrupo('/infoComplementares');
   end;
 end;
@@ -388,10 +447,25 @@ begin
   begin
     Gerador.wGrupo('infoDirigenteSindical');
 
-    Gerador.wCampo(tcStr, '', 'categOrig',   1,  3, 1, obj.categOrig);
-    Gerador.wCampo(tcStr, '', 'cnpjOrigem', 14, 14, 0, obj.cnpjOrigem);
-    Gerador.wCampo(tcDat, '', 'dtAdmOrig',  10, 10, 0, obj.dtAdmOrig);
-    Gerador.wCampo(tcStr, '', 'matricOrig',  1, 30, 0, obj.matricOrig);
+    Gerador.wCampo(tcStr, '', 'categOrig',     1,  3, 1, obj.categOrig);
+    
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'cnpjOrigem', 14, 14, 0, obj.nrInsc)
+    else 
+    if obj.nrInsc <> EmptyStr then
+    begin
+      Gerador.wCampo(tcStr, '', 'tpInsc',      1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
+      Gerador.wCampo(tcStr, '', 'nrInsc',     14, 14, 1, obj.nrInsc)
+    end;
+    
+    Gerador.wCampo(tcDat, '', 'dtAdmOrig',    10, 10, 0, obj.dtAdmOrig);
+    Gerador.wCampo(tcStr, '', 'matricOrig',    1, 30, 0, obj.matricOrig);
+    
+    if VersaoDF > ve02_05_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'tpRegTrab',   1,  1, 0, eSTpRegTrabToStr(obj.tpRegTrab));
+      Gerador.wCampo(tcStr, '', 'tpRegPrev',   1,  1, 1, eSTpRegPrevToStr(obj.tpRegPrev));
+    end;
 
     Gerador.wGrupo('/infoDirigenteSindical');
   end;
@@ -407,7 +481,10 @@ begin
     Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, eStpNivelEstagioToStr(obj.nivEstagio));
     Gerador.wCampo(tcStr, '', 'areaAtuacao',  1, 50, 0, obj.areaAtuacao);
     Gerador.wCampo(tcStr, '', 'nrApol',       1, 30, 0, obj.nrApol);
-    Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
+
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcDe2, '', 'vlrBolsa',   1, 14, 0, obj.vlrBolsa);
+      
     Gerador.wCampo(tcDat, '', 'dtPrevTerm',  10, 10, 1, obj.dtPrevTerm);
 
     GerarInstEnsino(obj.instEnsino);
@@ -430,7 +507,9 @@ begin
     Gerador.wCampo(tcDat, '', 'dtAdmCed',  10, 10, 1, obj.dtAdmCed);
     Gerador.wCampo(tcInt, '', 'tpRegTrab',  1,  1, 1, eSTpRegTrabToStr(obj.tpRegTrab));
     Gerador.wCampo(tcInt, '', 'tpRegPrev',  1,  1, 1, eSTpRegPrevToStr(obj.tpRegPrev));
-    Gerador.wCampo(tcStr, '', 'infOnus',    1,  1, 1, tpInfOnusToStr(obj.infOnus));
+    
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'infOnus',    1,  1, 1, tpInfOnusToStr(obj.infOnus));
 
     Gerador.wGrupo('/infoTrabCedido');
   end;
@@ -441,6 +520,10 @@ begin
   Gerador.wGrupo('infoTSVInicio');
 
   Gerador.wCampo(tcStr, '', 'cadIni',        1,  1, 1, eSSimNaoToStr(obj.cadIni));
+
+  if VersaoDF > ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'matricula',   1, 30, 0, obj.matricula);
+
   Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
   Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
 
@@ -453,8 +536,7 @@ begin
     (obj.codCateg <> 305) and // Servidor Publico Indicado a Conselho
     (obj.codCateg <> 771) and // Membro conselho tutelar
     (obj.codCateg <> 901) and // Estagiario
-    (obj.natAtividade <> navNaoInformar)
-  then
+    (obj.natAtividade <> navNaoInformar) then
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 
   GerarInfoComplementares(obj.InfoComplementares);
@@ -473,20 +555,24 @@ begin
   Gerador.wGrupo('instEnsino');
 
   Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
-  Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
-  Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
-  Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
-  Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
-  Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
-  Gerador.wCampo(tcInt, '', 'codMunic',        7,   7, 0, obj.codMunic);
-  Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, obj.uf);
 
+  if VersaoDF <= ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
+    Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
+    Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
+    Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
+    Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
+    Gerador.wCampo(tcInt, '', 'codMunic',        7,   7, 0, obj.codMunic);
+    Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, obj.uf);
+  end;
+  
   Gerador.wGrupo('/instEnsino');
 end;
 
 procedure TEvtTSVInicio.GerarRemuneracao(obj: TRemuneracao);
 begin
-  if (obj.vrSalFx > 0) or (obj.UndSalFixo = sfNaoaplicavel ) then
+  if (obj.vrSalFx > 0) or (obj.UndSalFixo = sfNaoaplicavel) then
   begin
     Gerador.wGrupo('remuneracao');
 
@@ -505,7 +591,9 @@ begin
     Gerador.wGrupo('supervisorEstagio');
 
     Gerador.wCampo(tcStr, '', 'cpfSupervisor', 11, 11, 1, obj.cpfSupervisor);
-    Gerador.wCampo(tcStr, '', 'nmSuperv',       1, 70, 1, obj.nmSuperv);
+    
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'nmSuperv',     1, 70, 1, obj.nmSuperv);
 
     Gerador.wGrupo('/supervisorEstagio');
   end;
@@ -521,6 +609,20 @@ begin
 
     Gerador.wGrupo('/termino');
   end;
+end;
+
+procedure TEvtTSVInicio.GerarInfoMandElet(obj: TinfoMandElet);
+begin
+  if obj.indRemunCargo <> snfNada then
+  begin
+    Gerador.wGrupo('infoMandElet');
+  
+    Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,  1,  0, eSSimNaoFacultativoToStr(obj.indRemunCargo));
+    Gerador.wCampo(tcStr, '', 'tpRegTrab',      1,  1,  1, eSTpRegTrabToStr(obj.tpRegTrab));
+    Gerador.wCampo(tcStr, '', 'tpRegPrev',      1,  1,  1, eSTpRegPrevToStr(obj.tpRegPrev));
+  
+    Gerador.wGrupo('/infoMandElet');
+  end;  
 end;
 
 function TEvtTSVInicio.GerarXML: boolean;
@@ -546,7 +648,6 @@ begin
 
     FXML := Gerador.ArquivoFormatoXML;
 //    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVInicio');
-
 //    Validar(schevtTSVInicio);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);

@@ -78,7 +78,8 @@ type
   TInfoTrabIntermCollection = class;
   TInfoTrabIntermItem = class;
   TProcCS = class;
-
+  TinfoIntermCollection = class;
+  TinfoIntermCollectionItem = class;
 
   TS2299Collection = class(TeSocialCollection)
   private
@@ -120,6 +121,7 @@ type
     procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
     procedure GerarTransfTit(obj: TtransfTit);
     procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
+    procedure GerarinfoInterm(obj: TinfoIntermCollection);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
@@ -135,13 +137,13 @@ type
 
   TInfoDeslig = class(TObject)
   private
-    FmtvDeslig: String;
-    FdtDeslig: TDateTime;
+    FmtvDeslig : String;
+    FdtDeslig : TDateTime;
     FindPagtoAPI : tpSimNao;
     FdtProjFimAPI : TDateTime;
-    FPensAlim: tpPensaoAlim;
-    FpercAliment: Double;
-    FVrAlim: Double;
+    FPensAlim : tpPensaoAlim;
+    FpercAliment : Double;
+    FVrAlim : Double;
     FnrCertObito : String;
     FnrProcTrab : String;
     FIndCumprParc: tpCumprParcialAviso;
@@ -149,20 +151,24 @@ type
     Fobservacoes: TobservacoesCollection;
     FSucessaoVinc : TSucessaoVinc2;
     FVerbasResc : TVerbasRescS2299;
-    FQuarentena: TQuarentena;
-    FconsigFGTS: TConsigFGTSCollection;
-    FInfoASO: TInfoASO;
-    FtransfTit: TtransfTit;
-    FQtdDiasInterm: Integer;
-    FMudancaCPF: TMudancaCPF3;
-    FCodCateg: Integer;
+    FQuarentena : TQuarentena;
+    FconsigFGTS : TConsigFGTSCollection;
+    FInfoASO : TInfoASO;
+    FtransfTit : TtransfTit;
+    FQtdDiasInterm : Integer;
+    FMudancaCPF : TMudancaCPF3;
+    FCodCateg : Integer;
+    FinfoInterm : TinfoIntermCollection; 
+    FdtAvPrv : TDateTime;
 
     function getVerbasResc: TVerbasRescS2299;
+    function getInfoInterm: TinfoIntermCollection;
   public
     constructor Create;
     destructor  Destroy; override;
 
-    function verbasRescInst: boolean;
+    function verbasRescInst(): boolean;
+    function infoIntermInst(): boolean;
 
     property mtvDeslig: String read FmtvDeslig write FmtvDeslig;
     property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
@@ -185,6 +191,8 @@ type
     property mudancaCPF: TMudancaCPF3 read FMudancaCPF write FMudancaCPF;
     property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
     property CodCateg: Integer read FCodCateg write FCodCateg;
+    property infoInterm: TinfoIntermCollection read getInfoInterm write FinfoInterm;
+    property dtAvPrv: TDateTime read FdtAvPrv write FdtAvPrv;
   end;
 
   TIdePeriodoCollection = class(TACBrObjectList)
@@ -259,6 +267,23 @@ type
     property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
   end;
 
+  TinfoIntermCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoIntermCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
+  public
+    function Add: TinfoIntermCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoIntermCollectionItem;
+    property Items[Index: Integer]: TinfoIntermCollectionItem read GetItem write SetItem; default;
+  end;
+  
+  TinfoIntermCollectionItem = class(TObject)
+  private
+    Fdia: Byte;
+  public
+    property dia: Byte read Fdia write Fdia;
+  end;
+  
   TDmDevCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDMDevCollectionItem;
@@ -391,15 +416,16 @@ end;
 constructor TInfoDeslig.Create;
 begin
   inherited;
-  FSucessaoVinc := TSucessaoVinc2.Create;
-  FVerbasResc   := nil;
-  FQuarentena   := TQuarentena.Create;
-  FInfoASO      := TInfoASO.Create;
-  FtransfTit    := TtransfTit.Create;
-  FMudancaCPF   := TMudancaCPF3.Create;
-  Fobservacoes  := TobservacoesCollection.Create;
-  FconsigFGTS   := TConsigFGTSCollection.Create;
+  FSucessaoVinc  := TSucessaoVinc2.Create;
+  FVerbasResc    := nil;
+  FQuarentena    := TQuarentena.Create;
+  FInfoASO       := TInfoASO.Create;
+  FtransfTit     := TtransfTit.Create;
+  FMudancaCPF    := TMudancaCPF3.Create;
+  Fobservacoes   := TobservacoesCollection.Create;
+  FconsigFGTS    := TConsigFGTSCollection.Create;
   FQtdDiasInterm := -1;
+  FinfoInterm    := nil; 
 end;
 
 destructor TInfoDeslig.Destroy;
@@ -412,6 +438,7 @@ begin
   FMudancaCPF.Free;
   Fobservacoes.Free;
   FconsigFGTS.Free;
+  FreeAndNIl(FinfoInterm);
   inherited;
 end;
 
@@ -425,6 +452,18 @@ end;
 function TInfoDeslig.verbasRescInst: boolean;
 begin
   result := Assigned(FVerbasResc);
+end;
+
+function TInfoDeslig.getInfoInterm: TinfoIntermCollection;
+begin
+  if not(Assigned(FinfoInterm)) then
+    FinfoInterm := TinfoIntermCollection.Create;
+  Result := FinfoInterm;
+end;
+
+function TInfoDeslig.infoIntermInst: boolean;
+begin
+  Result := Assigned(FinfoInterm);
 end;
 
 { TS2299CollectionItem }
@@ -507,6 +546,29 @@ end;
 function TDMDevCollectionItem.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
+end;
+
+{ TinfoIntermCollection }
+
+function TinfoIntermCollection.Add: TinfoIntermCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfoIntermCollection.GetItem(Index: Integer): TinfoIntermCollectionItem;
+begin
+  Result := TinfoIntermCollectionItem(inherited Items[Index]);
+end;
+
+procedure TinfoIntermCollection.SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TinfoIntermCollection.New: TinfoIntermCollectionItem;
+begin
+  Result := TinfoIntermCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfoPerApur }
@@ -707,33 +769,45 @@ begin
 
   Gerador.wCampo(tcStr, '', 'mtvDeslig',    1,  2, 1, obj.mtvDeslig);
   Gerador.wCampo(tcDat, '', 'dtDeslig',    10, 10, 1, obj.dtDeslig);
+  
+  if VersaoDF > ve02_05_00 then
+    if obj.dtAvPrv > 0 then
+      Gerador.wCampo(tcDat, '', 'dtAvPrv', 10, 10, 0, obj.dtAvPrv);
+      
   Gerador.wCampo(tcStr, '', 'indPagtoAPI',  1,  1, 1, eSSimNaoToStr(obj.indPagtoAPI));
 
-  if (obj.indPagtoAPI=tpSim) then
+  if obj.indPagtoAPI = tpSim then
     Gerador.wCampo(tcDat, '', 'dtProjFimAPI', 10, 10, 0, obj.dtProjFimAPI);
 
   Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
   Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
   Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
 
-  if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
-    Gerador.wCampo(tcStr, '', 'nrCertObito', 1, 32, 0, obj.nrCertObito);
-
+  if VersaoDF <= ve02_05_00 then
+    if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
+      Gerador.wCampo(tcStr, '', 'nrCertObito', 1, 32, 0, obj.nrCertObito);
+  
   if (obj.mtvDeslig='17') then
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
+  
+  if VersaoDF <= ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
+    
+    //O campo é sempre obrigatório para a categoria 111 (Intermitente)
+    if (VersaoDF <> ve02_04_01) and
+       ((obj.QtdDiasInterm > 0) or (obj.CodCateg = 111))  then
+      Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
+  end;
 
-  Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-
-  //O campo é sempre obrigatório para a categoria 111 (Intermitente)
-  if (VersaoDF <> ve02_04_01) and
-     ((obj.QtdDiasInterm > 0) or (obj.CodCateg = 111))  then
-    Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
-
-  if (VersaoDF = ve02_04_01) then
+  if (VersaoDF > ve02_05_00) and (obj.infoIntermInst()) then
+    GerarinfoInterm(obj.infoInterm);
+    
+  if VersaoDF = ve02_04_01 then
     Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
   else
     GerarObservacoes(obj.observacoes);
-
+  
   if (StrToIntDef(obj.mtvDeslig,0) in [11, 12, 13, 25, 28, 29, 30]) then
      GerarSucessaoVinc(obj.SucessaoVinc);
 
@@ -760,10 +834,20 @@ begin
   if obj.cnpjSucessora <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
-    if VersaoDF >= ve02_05_00 then
-        Gerador.wCampo(tcStr, '', 'tpInscSuc', 1, 1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
-    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjSucessora);
+    
+    if VersaoDF <= ve02_05_00 then
+    begin
+      if VersaoDF >= ve02_05_00 then
+        Gerador.wCampo(tcStr, '', 'tpInscSuc',    1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
 
+      Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.nrInsc);
+    end
+    else
+    begin    
+      Gerador.wCampo(tcStr, '', 'tpInsc',         1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
+      Gerador.wCampo(tcStr, '', 'nrInsc',        14, 14, 1, obj.nrInsc);
+    end;
+    
     Gerador.wGrupo('/sucessaoVinc');
   end;
 end;
@@ -843,7 +927,8 @@ begin
     if pDmDev[i].infoPerAntInst then
       GerarInfoPerAnt(pDmDev[i].infoPerAnt);
 
-    GerarInfoTrabInterm(pDmDev[i].infoTrabInterm);
+    if VersaoDF <= ve02_05_00 then
+      GerarInfoTrabInterm(pDmDev[i].infoTrabInterm);
 
     Gerador.wGrupo('/dmDev');
   end;
@@ -880,7 +965,7 @@ begin
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
-    GerarIdeVinculo(self.IdeVinculo);
+    GerarIdeVinculo(self.IdeVinculo, False);
     GerarInfoDeslig(Self.InfoDeslig);
               
     Gerador.wGrupo('/evtDeslig');
@@ -931,8 +1016,8 @@ begin
        Gerador.wGrupo('/consigFGTS');
     end;
 
-    if obj.Count > 9 then
-      Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '9')
+    if obj.Count > 99 then
+      Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '99')
   end;
 end;
 
@@ -961,6 +1046,23 @@ begin
 
   if obj.Count > 99 then
     Gerador.wAlerta('', 'infoTrabInterm', 'Lista de Trabalhos Intermitente', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TEvtDeslig.GerarinfoInterm(obj: TinfoIntermCollection);
+var
+  i: integer;
+begin
+  for i := 0 to obj.Count - 1 do
+  begin
+    Gerador.wGrupo('infoInterm');
+
+    Gerador.wCampo(tcInt, '', 'dia', 1, 2, 1, obj[i].dia);
+
+    Gerador.wGrupo('/infoInterm');
+  end;
+
+  if obj.Count > 31 then
+    Gerador.wAlerta('', 'infoInterm', 'Informações relativas ao trabalho intermitente', ERR_MSG_MAIOR_MAXIMO + '31');
 end;
 
 procedure TEvtDeslig.GerarProcCS(obj: TProcCS);

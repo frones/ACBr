@@ -114,7 +114,7 @@ type
     FevtContratAvNP: TpSimNao;
     FevtInfoComplPer: TpSimNao;
     FcompSemMovto : string;
-    FindExcApur1250: TpSimNao;
+    FindExcApur1250: tpSimNaoFacultativo;
   public
     constructor create;
     destructor Destroy; override;
@@ -126,7 +126,7 @@ type
     property evtContratAvNP: TpSimNao read FevtContratAvNP write FevtContratAvNP;
     property evtInfoComplPer: TpSimNao read FevtInfoComplPer write FevtInfoComplPer;
     property compSemMovto : string read FcompSemMovto write FcompSemMovto;
-    property indExcApur1250: TpSimNao read FindExcApur1250 write FindExcApur1250;
+    property indExcApur1250: tpSimNaoFacultativo read FindExcApur1250 write FindExcApur1250;
   end;
 
 implementation
@@ -199,24 +199,33 @@ begin
   Gerador.wGrupo('infoFech');
 
   Gerador.wCampo(tcStr, '', 'evtRemun',        1, 1, 1, eSSimNaoToStr(self.InfoFech.evtRemun));
-  Gerador.wCampo(tcStr, '', 'evtPgtos',        1, 1, 1, eSSimNaoToStr(self.InfoFech.evtPgtos));
-  Gerador.wCampo(tcStr, '', 'evtAqProd',       1, 1, 1, eSSimNaoToStr(self.InfoFech.evtAqProd));
+
+  if VersaoDF <= ve02_05_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtPgtos));
+    Gerador.wCampo(tcStr, '', 'evtAqProd',     1, 1, 1, eSSimNaoToStr(self.InfoFech.evtAqProd));
+  end;
+  
   Gerador.wCampo(tcStr, '', 'evtComProd',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtComProd));
   Gerador.wCampo(tcStr, '', 'evtContratAvNP',  1, 1, 1, eSSimNaoToStr(self.InfoFech.evtContratAvNP));
   Gerador.wCampo(tcStr, '', 'evtInfoComplPer', 1, 1, 1, eSSimNaoToStr(self.InfoFech.evtInfoComplPer));
 
-  if ((eSSimNaoToStr(self.InfoFech.evtRemun)        = 'N') and
-      (eSSimNaoToStr(self.InfoFech.evtPgtos)        = 'N') and
-      (eSSimNaoToStr(self.InfoFech.evtAqProd)       = 'N') and
-      (eSSimNaoToStr(self.InfoFech.evtComProd)      = 'N') and
-      (eSSimNaoToStr(self.InfoFech.evtContratAvNP)  = 'N') and
-      (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
-    Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
+  if VersaoDF <= ve02_05_00 then
+  begin
+    if ((eSSimNaoToStr(self.InfoFech.evtRemun)        = 'N') and
+        (eSSimNaoToStr(self.InfoFech.evtPgtos)        = 'N') and
+        (eSSimNaoToStr(self.InfoFech.evtAqProd)       = 'N') and
+        (eSSimNaoToStr(self.InfoFech.evtComProd)      = 'N') and
+        (eSSimNaoToStr(self.InfoFech.evtContratAvNP)  = 'N') and
+        (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
+      Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
+  end;
 
-  if (Self.ideEvento.IndApuracao = iapuMensal) and 
-     (Copy(Self.ideEvento.perApur,1,4) + Copy(Self.ideEvento.perApur,6,2) < '202105') then
-     if (Self.InfoFech.indExcApur1250 = tpSim) then
-        Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoToStr(self.InfoFech.indExcApur1250));
+  if (VersaoDF > ve02_05_00) and
+     (Self.InfoFech.indExcApur1250 = snfNada) and 
+     ((Self.ideEvento.IndApuracao = iapuMensal) and 
+      (Copy(Self.ideEvento.perApur,1,4)+Copy(Self.ideEvento.perApur,6,2) < '202105')) then
+    Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoFacultativoToStr(self.InfoFech.indExcApur1250));
 
   Gerador.wGrupo('/infoFech');
 end;
@@ -225,7 +234,7 @@ function TEvtFechaEvPer.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtFechaEvPer');
@@ -233,7 +242,10 @@ begin
 
     GerarIdeEvento3(self.IdeEvento, False);
     GerarIdeEmpregador(self.IdeEmpregador);
-    GerarIdeRespInf(Self.IdeRespInf);
+
+    if VersaoDF <= ve02_05_00 then
+      GerarIdeRespInf(Self.IdeRespInf);
+
     GerarInfoFech;
 
     Gerador.wGrupo('/evtFechaEvPer');
@@ -242,10 +254,9 @@ begin
 
     FXML := Gerador.ArquivoFormatoXML;
 //    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtFechaEvPer');
-
 //    Validar(schevtFechaEvPer);
   except on e:exception do
-    raise Exception.Create('Nome Resp.: ' + Self.FIdeRespInf.nmResp + sLineBreak + ' ' + e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak +'Nome Resp.: ' + Self.FIdeRespInf.nmResp + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
@@ -309,7 +320,7 @@ begin
       infoFech.evtContratAvNP  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtContratAvNP', 'S'));
       infoFech.evtInfoComplPer := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtInfoComplPer', 'S'));
       infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', '');
-      infoFech.indExcApur1250  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indExcApur1250', 'S'));
+      infoFech.indExcApur1250  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indExcApur1250', 'S'));
     end;
 
     GerarXML;

@@ -60,12 +60,19 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
+  TInfoCRContribCollection = class;
   TInfoCRContribCollectionItem = class;
+  TInfoTercSuspCollection = class;
   TInfoTercSuspCollectionItem = class;
+  TbasesremunCollection = class;
   TbasesremunCollectionItem = class;
+  TinfoSubstPatrOpPortCollection = class;
   TinfoSubstPatrOpPortCollectionItem = class;
+  TbasesAquisCollection = class;
   TbasesAquisCollectionItem = class;
+  TbasesComercCollection = class;
   TbasesComercCollectionItem = class;
+  TinfoCREstabCollection = class;
   TinfoCREstabCollectionItem = class;
 
   TEvtCS = class;
@@ -185,11 +192,13 @@ type
     FnrInscContrat: String;
     FtpInscProp: Integer;
     FnrInscProp: String;
+    FcnoObra: String;
   public
     property tpInscContrat: Integer read FtpinscContrat;
     property nrInscContrat: String read FnrInscContrat;
     property tpInscProp: Integer read FtpInscProp;
     property nrInscProp: String read FnrInscProp;
+    property cnoObra: String read FcnoObra;
   end;
 
   TdadosOpPort = class(TObject)
@@ -207,20 +216,28 @@ type
 
   TbasesCp = class(TObject)
   private
-    FvrBcCp25: Double;
+    FvrBcCp00: Double;
     FvrBcCp15: Double;
     FvrBcCp20: Double;
-    FvrBcCp00: Double;
+    FvrBcCp25: Double;
     FvrSuspBcCp00: Double;
-    FvrSuspBcCp25: Double;
     FvrSuspBcCp15: Double;
     FvrSuspBcCp20: Double;
+    FvrSuspBcCp25: Double;
+    FvrBcCp00VA: Double;
+    FvrBcCp15VA: Double;
+    FvrBcCp20VA: Double;
+    FvrBcCp25VA: Double;
+    FvrSuspBcCp00VA: Double;
+    FvrSuspBcCp15VA: Double;
+    FvrSuspBcCp20VA: Double;
+    FvrSuspBcCp25VA: Double;
+    FvrDescSest: Double;
     FvrCalcSest: Double;
-    FvrSalFam: Double;
     FvrDescSenat: Double;
     FvrCalcSenat: Double;
+    FvrSalFam: Double;
     FvrSalMat: Double;
-    FvrDescSest: Double;
   public
     property vrBcCp00: Double read FvrBcCp00;
     property vrBcCp15: Double read FvrBcCp15;
@@ -230,6 +247,14 @@ type
     property vrSuspBcCp15: Double read FvrSuspBcCp15;
     property vrSuspBcCp20: Double read FvrSuspBcCp20;
     property vrSuspBcCp25: Double read FvrSuspBcCp25;
+    property vrBcCp00VA: Double read FvrBcCp00VA;
+    property vrBcCp15VA: Double read FvrBcCp15VA;
+    property vrBcCp20VA: Double read FvrBcCp20VA;
+    property vrBcCp25VA: Double read FvrBcCp25VA;
+    property vrSuspBcCp00VA: Double read FvrSuspBcCp00VA;
+    property vrSuspBcCp15VA: Double read FvrSuspBcCp15VA;
+    property vrSuspBcCp20VA: Double read FvrSuspBcCp20VA;
+    property vrSuspBcCp25VA: Double read FvrSuspBcCp25VA;
     property vrDescSest: Double read FvrDescSest;
     property vrCalcSest: Double read FvrCalcSest;
     property vrDescSenat: Double read FvrDescSenat;
@@ -406,7 +431,7 @@ type
     procedure SetItem(Index: Integer; Value: TinfoCREstabCollectionItem);
   public
     function Add: TinfoCREstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-		function New: TinfoCREstabCollectionItem;
+	function New: TinfoCREstabCollectionItem;
     property Items[Index: Integer]: TinfoCREstabCollectionItem read GetItem write SetItem;
   end;
 
@@ -414,9 +439,9 @@ type
   private
     FvrSuspCR: Double;
     FvrCR: Double;
-    FtpCR: Integer;
+    FtpCR: String;
   public
-    property tpCR: Integer read FtpCR;
+    property tpCR: String read FtpCR;
     property vrCR: Double read FvrCR;
     property vrSuspCR: Double read FvrSuspCR;
   end;
@@ -460,17 +485,17 @@ type
     procedure SetItem(Index: Integer; Value: TInfoCRContribCollectionItem);
   public
     function Add: TInfoCRContribCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-		function New: TInfoCRContribCollectionItem;
+	function New: TInfoCRContribCollectionItem;
     property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem;
   end;
 
   TInfoCRContribCollectionItem = class(TObject)
   private
-    FtpCR: string;
+    FtpCR: String;
     FvrCR: Double;
     FvrCRSusp: Double;
   public
-    property tpCR: string read FtpCR;
+    property tpCR: String read FtpCR;
     property vrCR: Double read FvrCR;
     property vrCRSusp: Double read FvrCRSusp;
   end;
@@ -500,6 +525,7 @@ type
     FLeitor: TLeitor;
     FId: String;
     FXML: String;
+    FVersaoDF: TVersaoeSocial;
 
     FIdeEvento: TIdeEvento5;
     FIdeEmpregador: TIdeEmpregador;
@@ -519,6 +545,7 @@ type
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Id: String      read FId;
     property XML: String     read FXML;
+    property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
   end;
 
 implementation
@@ -594,10 +621,16 @@ function TEvtCS.LerXML: boolean;
 var
   ok: Boolean;
   i, j, k: Integer;
+  s: String;
 begin
   Result := False;
   try
     FXML := Leitor.Arquivo;
+
+    // Capturar a versão do evento
+    s := Copy(FXML, Pos('/evt/evtCS/', FXML)+11, 16);
+    s := Copy(s, 1, Pos('"', s)-1);
+    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
 
     if leitor.rExtrai(1, 'evtCS') <> '' then
     begin
@@ -686,9 +719,13 @@ begin
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscContrat := leitor.rCampo(tcStr, 'nrInscContrat');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FtpInscProp    := leitor.rCampo(tcInt, 'tpInscProp');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscProp    := leitor.rCampo(tcStr, 'nrInscProp');
+
+              if VersaoDF > ve02_05_00 then
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FcnoObra     := leitor.rCampo(tcStr, 'cnoObra');
             end;
 
-            infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcnoObra := leitor.rCampo(tcStr, 'cnoObra');
+            if VersaoDF <= ve02_05_00 then
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcnoObra := leitor.rCampo(tcStr, 'cnoObra');
 
             if leitor.rExtrai(5, 'dadosOpPort') <> '' then
             begin
@@ -717,6 +754,19 @@ begin
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp20 := leitor.rCampo(tcDe2, 'vrSuspBcCp20');
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp25 := leitor.rCampo(tcDe2, 'vrSuspBcCp25');
 
+                if VersaoDF > ve02_05_00 then
+                begin
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp00VA := leitor.rCampo(tcDe2, 'vrBcCp00VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp15VA := leitor.rCampo(tcDe2, 'vrBcCp15VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp20VA := leitor.rCampo(tcDe2, 'vrBcCp20VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp25VA := leitor.rCampo(tcDe2, 'vrBcCp25VA');
+  
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp00VA := leitor.rCampo(tcDe2, 'vrSuspBcCp00VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp15VA := leitor.rCampo(tcDe2, 'vrSuspBcCp15VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp20VA := leitor.rCampo(tcDe2, 'vrSuspBcCp20VA');
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp25VA := leitor.rCampo(tcDe2, 'vrSuspBcCp25VA');
+                end;
+                
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSest  := leitor.rCampo(tcDe2, 'vrDescSest');
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrCalcSest  := leitor.rCampo(tcDe2, 'vrCalcSest');
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSenat := leitor.rCampo(tcDe2, 'vrDescSenat');
@@ -737,8 +787,11 @@ begin
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp13 := leitor.rCampo(tcDe2, 'vrBcCp13');
 
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcFgts := leitor.rCampo(tcDe2, 'vrBcFgts');
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
+              if VersaoDF <= ve02_05_00 then
+              begin
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcFgts := leitor.rCampo(tcDe2, 'vrBcFgts');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
+              end;
             end;
 
             k := 0;
@@ -786,7 +839,7 @@ begin
           while Leitor.rExtrai(4, 'infoCREstab', '', j + 1) <> '' do
           begin
             infoCS.ideEstab.Items[i].infoCREstab.New;
-            infoCS.ideEstab.Items[i].infoCREstab.Items[j].FtpCR     := leitor.rCampo(tcInt, 'tpCR');
+            infoCS.ideEstab.Items[i].infoCREstab.Items[j].FtpCR     := leitor.rCampo(tcStr, 'tpCR');
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FvrCR     := leitor.rCampo(tcDe2, 'vrCR');
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FvrSuspCR := leitor.rCampo(tcDe2, 'vrSuspCR');
             inc(j);
@@ -805,9 +858,9 @@ begin
           inc(i);
         end;
       end;
-
-      Result := True;
     end;
+
+    Result := True;
   except
     Result := False;
   end;
@@ -1013,7 +1066,7 @@ begin
             begin
               sSecao := 'infoCREstab' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
 
-              AIni.WriteInteger(sSecao, 'tpCR',   tpCR);
+              AIni.WriteString(sSecao, 'tpCR',   tpCR);
               AIni.WriteFloat(sSecao, 'vrCR',     vrCR);
               AIni.WriteFloat(sSecao, 'vrSuspCR', vrSuspCR);
             end;
@@ -1026,7 +1079,7 @@ begin
       begin
         sSecao := 'infoCRContrib' + IntToStrZero(I, 2);
 
-        AIni.WriteString(sSecao, 'tpCR',    infoCS.infoCRContrib.Items[i].tpCR);
+        AIni.WriteString(sSecao, 'tpCR',   infoCS.infoCRContrib.Items[i].tpCR);
         AIni.WriteFloat(sSecao, 'vrCR',     infoCS.infoCRContrib.Items[i].vrCR);
         AIni.WriteFloat(sSecao, 'vrCRSusp', infoCS.infoCRContrib.Items[i].vrCRSusp);
       end;
@@ -1041,6 +1094,7 @@ end;
 constructor TInfoCS.Create;
 begin
   inherited Create;
+  
   FInfoCpSeg     := TInfoCpSeg.Create;
   FInfoContrib   := TInfoContrib.Create;
   FideEstab      := TideEstabCollection.Create;
@@ -1192,6 +1246,7 @@ end;
 constructor TideEstabCollectionItem.Create;
 begin
   inherited Create;
+
   FInfoEstab   := TInfoEstab.Create;
   FideLotacao  := TideLotacaoCollection.Create;
   FbasesAquis  := TbasesAquiscollection.Create;
@@ -1330,6 +1385,7 @@ end;
 constructor TideLotacaoCollectionItem.Create;
 begin
   inherited Create;
+
   FinfoTercSusp        := TinfoTercSuspCollection.Create;
   FInfoEmprParcial     := TInfoEmprParcial.Create;
   FdadosOpPort         := TdadosOpPort.Create;

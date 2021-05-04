@@ -287,7 +287,7 @@ begin
   Result := False;
   try
     FXML := Leitor.Arquivo;
-
+    
     if leitor.rExtrai(1, 'evtFGTS') <> '' then
     begin
       FId := Leitor.rAtributo('Id=');

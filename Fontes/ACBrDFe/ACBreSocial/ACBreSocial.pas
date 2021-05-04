@@ -247,9 +247,15 @@ begin
 
   if (AVersao > 0) then
   begin
-    StrVer := FloatToString(AVersao, '.', '0.00');
+    if AVersao < 10.0 then
+      StrVer := FloatToString(AVersao, '.', '0.00')
+    else
+      StrVer := FloatToString(AVersao-9, '.', '0.00');
     StrVer := StringReplace(StrVer,'.','',[rfReplaceAll]);
-    Result := StrVer[1] + '_' + StrVer[2] + '_' + StrVer[3];
+    if AVersao < 10.0 then
+      Result := StrVer[1] + '_' + StrVer[2] + '_' + StrVer[3]
+    else   
+      Result := '_S_0' + StrVer[1] + '_' + StrVer[2] + '_' + StrVer[3];
   end;
 end;
 

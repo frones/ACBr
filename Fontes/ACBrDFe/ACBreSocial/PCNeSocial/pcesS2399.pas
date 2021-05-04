@@ -297,8 +297,15 @@ begin
   Gerador.wGrupo('ideTrabSemVinculo');
 
   Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.cpfTrab);
-  Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab);
-  Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
+
+  if VersaoDF <= ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab)
+  else
+    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
+
+  if VersaoDF > ve02_05_00 then
+    if obj.matricula = '' then
+      Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
 
   Gerador.wGrupo('/ideTrabSemVinculo');
 end;
@@ -323,6 +330,7 @@ begin
 
   if obj.mtvDesligTSV <> '07' then
      GerarVerbasResc(obj.verbasResc);
+
   if (VersaoDF >= ve02_05_00) and (obj.mtvDesligTSV = '07') then
      GerarMudancaCPF3(obj.mudancaCPF);
 	 
@@ -346,8 +354,8 @@ begin
     Gerador.wGrupo('/dmDev');
   end;
 
-  if pDmDev.Count > 50 then
-    Gerador.wAlerta('', 'dmDev', 'Lista de Demonstrativos', ERR_MSG_MAIOR_MAXIMO + '50');
+  if pDmDev.Count > 99 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demonstrativos', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtTSVTermino.GerarVerbasResc(obj: TVerbasRescS2399);

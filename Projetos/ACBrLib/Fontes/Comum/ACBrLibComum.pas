@@ -37,7 +37,9 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils, fileinfo, ACBrLibConfig;
+  Classes, SysUtils, fileinfo,
+  {$IFDEF Demo} ACBrLibDemo, {$ENDIF}
+  ACBrLibConfig;
 
 type
 
@@ -169,6 +171,10 @@ function StringEhArquivo(AString: String): Boolean;
 var
   pLib: PLibHandle;
 {$ENDIF}
+{$IFDEF Demo}
+var
+  FPDemo: TACBrDemoHelper;
+{$ENDIF}
 
 implementation
 
@@ -208,6 +214,11 @@ begin
   FormatSettings.DateSeparator := '/';
   FormatSettings.TimeSeparator := ':';
 
+{$IFDEF Demo}
+  if not Assigned(FPDemo) then
+    FPDemo := TACBrDemoHelper.Create;
+{$ENDIF}
+
   CriarConfiguracao(ArqConfig, ChaveCrypt);
 end;
 
@@ -235,7 +246,12 @@ begin
     if Assigned(fpFileVerInfo) then
       FNome := fpFileVerInfo.VersionStrings.Values['InternalName'];
 
+{$IFDEF Demo}
+  Result := FNome + ' Demo';
+{$ELSE}
   Result := FNome;
+{$ENDIF}
+
 end;
 
 function TACBrLib.GetDescricao: String;
@@ -309,14 +325,19 @@ procedure TACBrLib.MoverStringParaPChar(const AString: String; sDest: PChar; var
 var
   AStringLen: Integer;
 begin
+{$IFDEF Demo}
+  if FPDemo.EstaExpirado and not (AString = Format(SErroDemoExpirado, [Nome])) then
+    raise EACBrLibException.Create(ErrDemoExpirado, Format(SErroDemoExpirado, [Nome]));
+{$ENDIF}
+
   AStringLen := Length(AString);
 
   if (esTamanho <= 0) then
     esTamanho := AStringLen
   else
   begin
-    StrLCopy(sDest, PChar(AString), esTamanho);
-    esTamanho := AStringLen;
+   StrLCopy(sDest, PChar(AString), esTamanho);
+   esTamanho := AStringLen;
   end;
 end;
 

@@ -12,4 +12,5 @@ ErrCNPJInvalido = -11;
 ErrCPFInvalido = -12;
 ErrIndex = -13;
 ErrGerarXml = -14;
+ErrDemoExpirado = -999;
 

@@ -216,6 +216,7 @@ resourcestring
   SErrIndex = 'Indice informado % não encontrado';
 
   SErrRetornoHttpWebService = 'WebService %s, retorno http: %d';
+  SErroDemoExpirado = 'O Demo da %s expirou';
 
 const
 {$I ACBrLibErros.inc}

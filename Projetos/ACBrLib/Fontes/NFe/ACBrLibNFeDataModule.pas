@@ -82,6 +82,7 @@ implementation
 uses
   pcnConversao, pcnConversaoNFe,
   ACBrUtil, FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
+  {$IFDEF Demo}ACBrNFeNotasFiscais, pcnEnvEventoNFe,{$ENDIF}
   ACBrDeviceConfig, ACBrLibNFeConfig;
 
 {$R *.lfm}
@@ -105,6 +106,10 @@ begin
   ACBrNFe1.SSL.DescarregarCertificado;
   pLibConfig := TLibNFeConfig(Lib.Config);
   ACBrNFe1.Configuracoes.Assign(pLibConfig.NFe);
+
+{$IFDEF Demo}
+  ACBrNFe1.Configuracoes.WebServices.Ambiente := taHomologacao;
+{$ENDIF}
 
   with ACBrIntegrador1 do
   begin
@@ -209,6 +214,11 @@ procedure TLibNFeDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolea
   ViaConsumidor: String = ''; Simplificado: String = '');
 var
   LibConfig: TLibNFeConfig;
+{$IFDEF Demo}
+  I: Integer;
+  ANota: NotaFiscal;
+  AEvento: TInfEventoCollectionItem;
+{$ENDIF}
 begin
   LibConfig := TLibNFeConfig(Lib.Config);
 
@@ -265,6 +275,20 @@ begin
   end;
 
   LibConfig.DANFe.Apply(ACBrNFe1.DANFE, Lib);
+
+{$IFDEF Demo}
+  for I:= 0 to ACBrNFe1.NotasFiscais.Count -1 do
+  begin
+    ANota := ACBrNFe1.NotasFiscais.Items[I];
+    ANota.NFe.Ide.tpAmb := taHomologacao;
+  end;
+
+  for I:= 0 to ACBrNFe1.EventoNFe.Evento.Count -1 do
+  begin
+    AEvento := ACBrNFe1.EventoNFe.Evento.Items[I];
+    AEvento.InfEvento.tpAmb := taHomologacao;
+  end;
+{$ENDIF}
 
   if NaoEstaVazio(NomeImpressora) then
     ACBrNFe1.DANFE.Impressora := NomeImpressora;

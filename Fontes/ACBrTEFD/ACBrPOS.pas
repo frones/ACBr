@@ -571,6 +571,7 @@ var
 begin
   DadosDaTransacaoTerminal := DadosDaTransacao[TerminalId];
   TEFRespTerminal := TEFResp[TerminalId];
+  TEFRespTerminal.Clear;
 
   for i := 0 to DadosDaTransacaoTerminal.Count-1 do
   begin

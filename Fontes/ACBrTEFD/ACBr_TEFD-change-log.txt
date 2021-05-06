@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/21
+-- ACBrPOS --
+[-] Método "TACBrPOS.DadosDaTransacaoParaTEFResp", Limpando, o objeto TACBrPOSResp,
+    antes de gravar os valores retornados da nova transação.
+    (por: DSA)
+
 05/04/21
 -- ACBrPOSPGWebAPI --
 [-] Correção em "TACBrPOSPGWebAPI.ExecutarTransacaoTEF", para não criar arquivo

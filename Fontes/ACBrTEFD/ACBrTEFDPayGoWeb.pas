@@ -463,7 +463,7 @@ begin
   else if EntidadeCliente = 'X' then
     TipoMsg := PWDPIN_DIGITE_O_TELEFONE
   else if EntidadeCliente = 'J' then
-    raise EACBrTEFDErro.Create( ACBrStr('Captura de CNPJ não suportada por: ')+ClassName )
+    TipoMsg := PWDPIN_DIGITE_O_CNPJ
   else
     TipoMsg := StrToIntDef(EntidadeCliente, 0);
 
@@ -496,6 +496,11 @@ begin
     begin
       MinLen := 3; MaxLen := 5;
     end;
+    PWDPIN_DIGITE_O_CNPJ, PWDPIN_REDIGITE_O_CNPJ:
+    begin
+      MinLen := 14; MaxLen := 14;
+    end;
+
   else
     raise EACBrTEFDErro.CreateFmt( ACBrStr('Captura Tipo: %s não suportada por: %s'), [EntidadeCliente, ClassName] )
   end;

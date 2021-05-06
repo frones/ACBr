@@ -353,6 +353,8 @@ const
   PWDPIN_REDIGITE_O_RG               = 10;
   PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS = 11;
   PWDPIN_DIGITE_CODIGO_DE_SEGURANCA  = 12;
+  PWDPIN_DIGITE_O_CNPJ               = 13;
+  PWDPIN_REDIGITE_O_CNPJ             = 14;
 
 //==========================================================================================
 //  Tipos de Cartões
@@ -1066,6 +1068,8 @@ begin
     PWDPIN_REDIGITE_O_RG:               Result := 'PWDPIN_REDIGITE_O_RG';
     PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS: Result := 'PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS';
     PWDPIN_DIGITE_CODIGO_DE_SEGURANCA:  Result := 'PWDPIN_DIGITE_CODIGO_DE_SEGURANCA';
+    PWDPIN_DIGITE_O_CNPJ:               Result := 'PWDPIN_DIGITE_O_CNPJ';
+    PWDPIN_REDIGITE_O_CNPJ:             Result := 'PWDPIN_REDIGITE_O_CNPJ';
   else
     Result := 'PWDPIN_'+IntToStr(iMessageId);
   end;
@@ -1673,7 +1677,7 @@ var
   MsgError, AMsg: String;
 begin
   AMsg := StringReplace(MsgPinPad, '|', CR, [rfReplaceAll]);
-  GravarLog('xPW_iPPDisplay( '+AMsg+' )');
+  GravarLog('PW_iPPDisplay( '+AMsg+' )');
   iRetPP := xPW_iPPDisplay( PAnsiChar(AnsiString(AMsg)) );
   GravarLog('  '+PWRETToString(iRetPP));
 

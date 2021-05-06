@@ -47,6 +47,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/05/21
+-- ACBrTEFComum --
+[+] Adicionados novos Tipos e enumerados, que serão usado em ACBrTEFAPI e ACBrTEFAndroid
+    TACBrTEFTipoCartao, TACBrTEFTiposCartao, TACBrTEFModalidadePagamento,
+    TACBrTEFModalidadeFinanciamento, TACBrTEFStatusTransacao
+[+] Adicionado o método "Assign" nos objetos: TACBrTEFRespCB, TACBrTEFRespListaCB,
+    TACBrTEFRespParcela, TACBrTEFRespParcelas, TACBrTEFRespNFCeSAT, para permitir
+    a Cópia desses objetos
+[*] Método "TACBrTEFResp.Assign", modificado para copiar as propriedades internas
+    do Objeto de origem
+[*] Método "TACBrTEFResp.Clear", complementado com proprieddes que não estavam
+    sendo limpas
+    (por: DSA)
+
 -- ACBrPOS --
 [-] Método "TACBrPOS.DadosDaTransacaoParaTEFResp", Limpando, o objeto TACBrPOSResp,
     antes de gravar os valores retornados da nova transação.

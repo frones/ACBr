@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrTEFPayGoAndroid;
+unit ACBrTEFPayGoAndroidAPI;
 
 interface
 
@@ -218,20 +218,6 @@ type
     procedure HandleActivityMessage(const Sender: TObject; const M: TMessage);
     function OnActivityResult(RequestCode, ResultCode: Integer; AIntent: JIntent): Boolean;
     function BooleanStrToByte(const AValue: String): Byte;
-    function PWOPER_ToOperation(iOPER: Byte): String;
-    function OperationToPWOPER_(const AOperation: String): Byte;
-    function PWCNF_ToTransactionStatus(Status: LongWord): String;
-    function TransactionStatusToPWCNF_(const AStatus: String): LongWord;
-    function PWINFO_AUTHSYSTToProvider(const AUTHSYST: String): String;
-    function ProviderToPWINFO_AUTHSYST(const Provider: String): String;
-    function PWINFO_CARDTYPEToCardType(const CARDTYPE: String): String;
-    function CardTypeToPWINFO_CARDTYPE(const CardType: String): Byte;
-    function PWINFO_FINTYPEToFinType(const FINTYPE: String): String;
-    function FinancingTypeToPWINFO_FINTYPE(const financingType: String): Byte;
-    function PWINFO_PAYMNTTYPEToPaymentType(const PAYMNTTYPE: String): String;
-    function PaymentModeToPWINFO_PAYMNTTYPE(const paymentMode: String): Byte;
-    function PrintReceiptsToPWINFO_RCPTPRN(const printReceipts: String): Byte;
-    function WalletUserIdToPWINFO_WALLETUSERIDTYPE(const WalletUserId: String): Byte;
 
     function GetURI_Input(iOPER: Byte): String;
     procedure AddURIParam(AURI: TACBrURI; ParamName: string; FromInfo: Word;
@@ -289,14 +275,346 @@ type
 
     property OnAvaliarTransacaoPendente: TACBrTEFPGWebAndroidAvaliarTransacaoPendente
       read fOnAvaliarTransacaoPendente write fOnAvaliarTransacaoPendente;
-
   end;
+
+function PWOPER_ToOperation(iOPER: Byte): String;
+function OperationToPWOPER_(const AOperation: String): Byte;
+function PWCNF_ToTransactionStatus(Status: LongWord): String;
+function TransactionStatusToPWCNF_(const AStatus: String): LongWord;
+function PWINFO_AUTHSYSTToProviderName(const AUTHSYST: String): String;
+function ProviderNameToPWINFO_AUTHSYST(const Provider: String): String;
+function PWINFO_CARDTYPEToCardType(const CARDTYPE: String): String;
+function CardTypeToPWINFO_CARDTYPE(const CardType: String): Byte;
+function PWINFO_FINTYPEToFinType(const FINTYPE: String): String;
+function FinancingTypeToPWINFO_FINTYPE(const financingType: String): Byte;
+function PWINFO_PAYMNTTYPEToPaymentType(const PAYMNTTYPE: String): String;
+function PaymentModeToPWINFO_PAYMNTTYPE(const paymentMode: String): Byte;
+function PrintReceiptsToPWINFO_RCPTPRN(const printReceipts: String): Byte;
+function WalletUserIdToPWINFO_WALLETUSERIDTYPE(const WalletUserId: String): Byte;
 
 implementation
 uses
   StrUtils,
   synacode, synautil,
   ACBrUtil, ACBrValidador;
+
+
+function PWOPER_ToOperation(iOPER: Byte): String;
+begin
+  case iOPER of
+    PWOPER_SALE:
+      Result := 'VENDA';
+    PWOPER_ADMIN:
+      Result := 'ADMINISTRATIVA';
+    PWOPER_SETTLEMNT:
+      Result := 'FECHAMENTO';
+    PWOPER_SALEVOID, PWOPER_VOID:
+      Result := 'CANCELAMENTO';
+    PWOPER_PREAUTH:
+      Result := 'PREAUTORIZACAO';
+    PWOPER_RETBALINQ, PWOPER_CRDBALINQ:
+      Result := 'CONSULTA_SALDO';
+    PWOPER_CHECKINQ:
+      Result := 'CONSULTA_CHEQUE';
+//  PWOPER_???:
+//    Result := 'GARANTIA_CHEQUE';
+    PWOPER_PREAUTVOID:
+      Result := 'CANCELAMENTO_PREAUTORIZACAO';
+    PWOPER_CASHWDRWL:
+      Result := 'SAQUE';
+//  PWOPER_???:
+//    Result := 'DOACAO';
+    PWOPER_BILLPAYMENT:
+      Result := 'PAGAMENTO_CONTA';
+    PWOPER_BILLPAYMENTVOID:
+      Result := 'CANCELAMENTO_PAGAMENTOCONTA';
+    PWOPER_PREPAID:
+      Result := 'RECARGA_CELULAR';
+    PWOPER_INSTALL:
+      Result := 'INSTALACAO';
+    PWOPER_REPRNTNTRANSACTION, PWOPER_REPRINT:
+      Result := 'REIMPRESSAO';
+    PWOPER_RPTTRUNC:
+      Result := 'RELATORIO_SINTETICO';
+    PWOPER_RPTDETAIL:
+      Result := 'RELATORIO_DETALHADO';
+    PWOPER_NULL, PWOPER_COMMTEST:
+      Result := 'TESTE_COMUNICACAO';
+    PWOPER_RPTSUMMARY:
+      Result := 'RELATORIO_RESUMIDO';
+    PWOPER_SHOWPDC:
+      Result := 'EXIBE_PDC';
+    PWOPER_VERSION:
+      Result := 'VERSAO';
+    PWOPER_CONFIG:
+      Result := 'CONFIGURACAO';
+    PWOPER_MAINTENANCE:
+      Result := 'MANUTENCAO';
+  else
+    Result := 'OPERACAO_DESCONHECIDA';
+  end;
+end;
+
+function OperationToPWOPER_(const AOperation: String): Byte;
+begin
+  if (AOperation = 'VENDA') then
+    Result := PWOPER_SALE
+  else if (AOperation = 'ADMINISTRATIVA') then
+    Result := PWOPER_ADMIN
+  else if (AOperation = 'FECHAMENTO') then
+    Result := PWOPER_SETTLEMNT
+  else if (AOperation = 'CANCELAMENTO') then
+    Result := PWOPER_VOID
+  else if (AOperation = 'PREAUTORIZACAO') then
+    Result := PWOPER_PREAUTH
+  else if (AOperation = 'CONSULTA_SALDO') then
+    Result := PWOPER_CRDBALINQ
+  else if (AOperation = 'CONSULTA_CHEQUE') then
+    Result := PWOPER_CHECKINQ
+  else if (AOperation = 'GARANTIA_CHEQUE') then
+    Result := PWOPER_ADMIN  //TODO: ???
+  else if (AOperation = 'CANCELAMENTO_PREAUTORIZACAO') then
+    Result := PWOPER_PREAUTVOID
+  else if (AOperation = 'SAQUE') then
+    Result := PWOPER_CASHWDRWL
+  else if (AOperation = 'DOACAO') then
+    Result := PWOPER_ADMIN  //TODO: ???
+  else if (AOperation = 'PAGAMENTO_CONTA') then
+    Result := PWOPER_BILLPAYMENT
+  else if (AOperation = 'CANCELAMENTO_PAGAMENTOCONTA') then
+    Result := PWOPER_BILLPAYMENTVOID
+  else if (AOperation = 'RECARGA_CELULAR') then
+    Result := PWOPER_PREPAID
+  else if (AOperation = 'INSTALACAO') then
+    Result := PWOPER_INSTALL
+  else if (AOperation = 'REIMPRESSAO') then
+    Result := PWOPER_REPRINT
+  else if (AOperation = 'RELATORIO_SINTETICO') then
+    Result := PWOPER_RPTTRUNC
+  else if (AOperation = 'RELATORIO_DETALHADO') then
+    Result := PWOPER_RPTDETAIL
+  else if (AOperation = 'TESTE_COMUNICACAO') then
+    Result := PWOPER_COMMTEST
+  else if (AOperation = 'RELATORIO_RESUMIDO') then
+    Result := PWOPER_RPTSUMMARY
+  else if (AOperation = 'EXIBE_PDC') then
+    Result := PWOPER_SHOWPDC
+  else if (AOperation = 'VERSAO') then
+    Result := PWOPER_VERSION
+  else if (AOperation = 'CONFIGURACAO') then
+    Result := PWOPER_CONFIG
+  else if (AOperation = 'MANUTENCAO') then
+    Result := PWOPER_MAINTENANCE
+  else
+    Result := 0;
+end;
+
+function PWCNF_ToTransactionStatus(Status: LongWord): String;
+begin
+  case Status of
+    PWCNF_CNF_AUTO:
+      Result := 'CONFIRMADO_AUTOMATICO';
+    PWCNF_CNF_MANU_AUT:
+      Result := 'CONFIRMADO_MANUAL';
+    PWCNF_REV_PRN_AUT:
+      Result := 'DESFEITO_ERRO_IMPRESSAO_AUTOMATICO';
+    PWCNF_REV_MANU_AUT:
+      Result := 'DESFEITO_MANUAL';
+    PWCNF_REV_DISP_AUT:
+      Result := 'DESFEITO_LIBERACAO_MERCADORIA';
+  else
+    Result := 'STATUS_TRANSACAO_NAO_DEFINIDO';
+  end;
+end;
+
+function TransactionStatusToPWCNF_(const AStatus: String): LongWord;
+var
+  uStatus: String;
+begin
+  uStatus := UpperCase(AStatus);
+  if (AStatus = 'CONFIRMADO_AUTOMATICO') then
+    Result := PWCNF_CNF_AUTO
+  else if (AStatus = 'CONFIRMADO_MANUAL') then
+    Result := PWCNF_CNF_MANU_AUT
+  else if (AStatus = 'DESFEITO_ERRO_IMPRESSAO_AUTOMATICO') then
+    Result := PWCNF_REV_PRN_AUT
+  else if (AStatus = 'DESFEITO_MANUAL') then
+    Result := PWCNF_REV_DISP_AUT
+  else if (AStatus = 'DESFEITO_LIBERACAO_MERCADORIA') then
+    Result := PWCNF_REV_DISP_AUT
+  else
+    Result := 0;
+end;
+
+function PWINFO_AUTHSYSTToProviderName(const AUTHSYST: String): String;
+var
+  uAuthSyst: String;
+begin
+  uAuthSyst := UpperCase(AUTHSYST);
+  if uAuthSyst = 'REDE' then
+    Result := 'REDECARD'
+  else if uAuthSyst = 'VISANET' then
+    Result := 'CIELO'
+  else if uAuthSyst = 'BANESECARD' then
+    Result := 'BANESE'
+  else if uAuthSyst = 'TICKET' then
+    Result := 'TICKETCAR'
+  else if uAuthSyst = 'BIN' then
+    Result := 'FIRSTDATA'
+  else
+    Result := uAuthSyst;
+end;
+
+function ProviderNameToPWINFO_AUTHSYST(const Provider: String): String;
+begin
+  if Provider = 'REDECARD' then
+    Result := 'REDE'
+  else if Provider = 'CIELO' then
+    Result := 'VISANET'
+  else if Provider = 'BANESE' then
+    Result := 'BANESECARD'
+  else if Provider = 'TICKETCAR' then
+    Result := 'TICKET'
+  else if Provider = 'FIRSTDATA' then
+    Result := 'BIN'
+  else
+    Result := Provider;
+end;
+
+function PWINFO_CARDTYPEToCardType(const CARDTYPE: String): String;
+var
+  AByte: Integer;
+begin
+  // 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
+  AByte := StrToIntDef(CARDTYPE, 0);
+  if TestBit(AByte,0) then
+    Result := 'CARTAO_CREDITO'
+  else if TestBit(AByte,1) then
+    Result := 'CARTAO_DEBITO'
+  else if TestBit(AByte,2) then
+    Result := 'CARTAO_VOUCHER'
+  else if TestBit(AByte,3) then
+    Result := 'CARTAO_PRIVATELABEL'
+  else if TestBit(AByte,4) then
+    Result := 'CARTAO_FROTA'
+  else
+    Result := 'CARTAO_DESCONHECIDO';
+end;
+
+function CardTypeToPWINFO_CARDTYPE(const CardType: String): Byte;
+begin
+  // 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
+  if (CardType = 'CARTAO_CREDITO') then
+    Result := 1
+  else if (CardType = 'CARTAO_DEBITO') then
+    Result := 2
+  else if (CardType = 'CARTAO_VOUCHER') then
+    Result := 4
+  else if (CardType = 'CARTAO_PRIVATELABEL') then
+    Result := 8
+  else if (CardType = 'CARTAO_FROTA') then
+    Result := 16
+  else
+    Result := 0;
+end;
+
+function PWINFO_FINTYPEToFinType(const FINTYPE: String): String;
+var
+  AByte: Integer;
+begin
+  // 1: à vista 2: parcelado pelo emissor 4: parcelado pelo estabelecimento 8: pré-datado
+  AByte := StrToIntDef(FINTYPE, 0);
+  case AByte of
+     1: Result := 'A_VISTA';
+     2: Result := 'PARCELADO_EMISSOR';
+     4: Result := 'PARCELADO_ESTABELECIMENTO';
+     8: Result := 'PRE_DATADO';
+    16: Result := 'CREDITO_EMISSOR';
+  else
+    Result := 'FINANCIAMENTO_NAO_DEFINIDO';
+  end;
+end;
+
+function FinancingTypeToPWINFO_FINTYPE(const financingType: String): Byte;
+begin
+  if (financingType = 'A_VISTA') then
+    Result := 1
+  else if (financingType = 'PARCELADO_EMISSOR') then
+    Result := 2
+  else if (financingType = 'PARCELADO_ESTABELECIMENTO') then
+    Result := 4
+  else if (financingType = 'PRE_DATADO') then
+    Result := 8
+  else if (financingType = 'CREDITO_EMISSOR') then
+    Result := 16
+  else
+    Result := 0;
+end;
+
+
+function PWINFO_PAYMNTTYPEToPaymentType(const PAYMNTTYPE: String): String;
+var
+  AByte: Integer;
+begin
+  // Modalidade de pagamento: 1: cartão 2: dinheiro 4: cheque 8: carteira virtual
+  AByte := StrToIntDef(PAYMNTTYPE, 0);
+  case AByte of
+     1: Result := 'PAGAMENTO_CARTAO';
+     2: Result := 'PAGAMENTO_DINHEIRO';
+     4: Result := 'PAGAMENTO_CHEQUE';
+     8: Result := 'PAGAMENTO_CARTEIRA_VIRTUAL';
+  else
+    Result := 'PAGAMENTO_CARTAO';
+  end;
+end;
+
+function PaymentModeToPWINFO_PAYMNTTYPE(const paymentMode: String): Byte;
+begin
+  // Modalidade de pagamento: 1: cartão 2: dinheiro 4: cheque 8: carteira virtual
+  if (paymentMode = 'PAGAMENTO_CARTAO') then
+    Result := 1
+  else if (paymentMode = 'PAGAMENTO_DINHEIRO') then
+    Result := 2
+  else if (paymentMode = 'PAGAMENTO_CHEQUE') then
+    Result := 4
+  else if (paymentMode = 'PAGAMENTO_CARTEIRA_VIRTUAL') then
+    Result := 8
+  else
+    Result := 0;
+end;
+
+
+function PrintReceiptsToPWINFO_RCPTPRN(const printReceipts: String): Byte;
+begin
+  // 0: não há comprovante
+  // 1: imprimir somente a via do Cliente
+  // 2: imprimir somente a via do Estabelecimento
+  // 3: imprimir ambas as vias do Cliente e do Estabelecimento
+  if (printReceipts = 'VIA_NENHUMA') then
+    Result := 0
+  else if (printReceipts = 'VIA_CLIENTE') then
+    Result := 1
+  else if (printReceipts = 'VIA_ESTABELECIMENTO') then
+    Result := 2
+  else if (printReceipts = 'VIA_CLIENTE_E_ESTABELECIMENTO') then
+    Result := 3
+  else
+    Result := 0;
+end;
+
+function WalletUserIdToPWINFO_WALLETUSERIDTYPE(const WalletUserId: String): Byte;
+begin
+  // Forma de identificação do portador da carteira virtual:
+  // 1: QRCode do checkout (lido pelo celular do portador) 2: CPF 128: outros
+  if (WalletUserId = 'QRCODE') then
+    Result := 1
+  else if (WalletUserId = 'CPF') then
+    Result := 2
+  else
+    Result := 128;
+end;
+
+
 
 { TACBrURI }
 
@@ -442,6 +760,8 @@ begin
   fcorFundoTeclado := 0;
   fpathIconeToolbar := '';
   fpathFonte := '';
+  ficoneToolbarBase64 := '';
+  fFonteBase64 := '';
 end;
 
 procedure TACBrTEFPGWebAndroidPersonalizacao.SetPathFonte(const Value: String);
@@ -567,7 +887,7 @@ procedure TACBrTEFPGWebAndroidDadosAutomacao.SetSoftwareHouse(
   const AValue: String);
 begin
   if fSoftwareHouse = AValue then Exit;
-  fSoftwareHouse := LeftStr(Trim(AValue),50);
+  fSoftwareHouse := LeftStr(Trim(AValue),128);
 end;
 
 procedure TACBrTEFPGWebAndroidDadosAutomacao.SetVersaoAplicacao(
@@ -786,333 +1106,6 @@ begin
 //end;
 end;
 
-function TACBrTEFPGWebAndroid.PWOPER_ToOperation(iOPER: Byte): String;
-begin
-  case iOPER of
-    PWOPER_SALE:
-      Result := 'VENDA';
-    PWOPER_ADMIN:
-      Result := 'ADMINISTRATIVA';
-    PWOPER_SETTLEMNT:
-      Result := 'FECHAMENTO';
-    PWOPER_SALEVOID, PWOPER_VOID:
-      Result := 'CANCELAMENTO';
-    PWOPER_PREAUTH:
-      Result := 'PREAUTORIZACAO';
-    PWOPER_RETBALINQ, PWOPER_CRDBALINQ:
-      Result := 'CONSULTA_SALDO';
-    PWOPER_CHECKINQ:
-      Result := 'CONSULTA_CHEQUE';
-//  PWOPER_???:
-//    Result := 'GARANTIA_CHEQUE';
-    PWOPER_PREAUTVOID:
-      Result := 'CANCELAMENTO_PREAUTORIZACAO';
-    PWOPER_CASHWDRWL:
-      Result := 'SAQUE';
-//  PWOPER_???:
-//    Result := 'DOACAO';
-    PWOPER_BILLPAYMENT:
-      Result := 'PAGAMENTO_CONTA';
-    PWOPER_BILLPAYMENTVOID:
-      Result := 'CANCELAMENTO_PAGAMENTOCONTA';
-    PWOPER_PREPAID:
-      Result := 'RECARGA_CELULAR';
-    PWOPER_INSTALL:
-      Result := 'INSTALACAO';
-    PWOPER_REPRNTNTRANSACTION, PWOPER_REPRINT:
-      Result := 'REIMPRESSAO';
-    PWOPER_RPTTRUNC:
-      Result := 'RELATORIO_SINTETICO';
-    PWOPER_RPTDETAIL:
-      Result := 'RELATORIO_DETALHADO';
-    PWOPER_NULL, PWOPER_COMMTEST:
-      Result := 'TESTE_COMUNICACAO';
-    PWOPER_RPTSUMMARY:
-      Result := 'RELATORIO_RESUMIDO';
-    PWOPER_SHOWPDC:
-      Result := 'EXIBE_PDC';
-    PWOPER_VERSION:
-      Result := 'VERSAO';
-    PWOPER_CONFIG:
-      Result := 'CONFIGURACAO';
-    PWOPER_MAINTENANCE:
-      Result := 'MANUTENCAO';
-  else
-    Result := 'OPERACAO_DESCONHECIDA';
-  end;
-end;
-
-function TACBrTEFPGWebAndroid.OperationToPWOPER_(const AOperation: String): Byte;
-begin
-  if (AOperation = 'VENDA') then
-    Result := PWOPER_SALE
-  else if (AOperation = 'ADMINISTRATIVA') then
-    Result := PWOPER_ADMIN
-  else if (AOperation = 'FECHAMENTO') then
-    Result := PWOPER_SETTLEMNT
-  else if (AOperation = 'CANCELAMENTO') then
-    Result := PWOPER_VOID
-  else if (AOperation = 'PREAUTORIZACAO') then
-    Result := PWOPER_PREAUTH
-  else if (AOperation = 'CONSULTA_SALDO') then
-    Result := PWOPER_CRDBALINQ
-  else if (AOperation = 'CONSULTA_CHEQUE') then
-    Result := PWOPER_CHECKINQ
-  else if (AOperation = 'GARANTIA_CHEQUE') then
-    Result := PWOPER_ADMIN  //TODO: ???
-  else if (AOperation = 'CANCELAMENTO_PREAUTORIZACAO') then
-    Result := PWOPER_PREAUTVOID
-  else if (AOperation = 'SAQUE') then
-    Result := PWOPER_CASHWDRWL
-  else if (AOperation = 'DOACAO') then
-    Result := PWOPER_ADMIN  //TODO: ???
-  else if (AOperation = 'PAGAMENTO_CONTA') then
-    Result := PWOPER_BILLPAYMENT
-  else if (AOperation = 'CANCELAMENTO_PAGAMENTOCONTA') then
-    Result := PWOPER_BILLPAYMENTVOID
-  else if (AOperation = 'RECARGA_CELULAR') then
-    Result := PWOPER_PREPAID
-  else if (AOperation = 'INSTALACAO') then
-    Result := PWOPER_INSTALL
-  else if (AOperation = 'REIMPRESSAO') then
-    Result := PWOPER_REPRINT
-  else if (AOperation = 'RELATORIO_SINTETICO') then
-    Result := PWOPER_RPTTRUNC
-  else if (AOperation = 'RELATORIO_DETALHADO') then
-    Result := PWOPER_RPTDETAIL
-  else if (AOperation = 'TESTE_COMUNICACAO') then
-    Result := PWOPER_COMMTEST
-  else if (AOperation = 'RELATORIO_RESUMIDO') then
-    Result := PWOPER_RPTSUMMARY
-  else if (AOperation = 'EXIBE_PDC') then
-    Result := PWOPER_SHOWPDC
-  else if (AOperation = 'VERSAO') then
-    Result := PWOPER_VERSION
-  else if (AOperation = 'CONFIGURACAO') then
-    Result := PWOPER_CONFIG
-  else if (AOperation = 'MANUTENCAO') then
-    Result := PWOPER_MAINTENANCE
-  else
-    Result := 0;
-end;
-
-function TACBrTEFPGWebAndroid.PWCNF_ToTransactionStatus(
-  Status: LongWord): String;
-begin
-  case Status of
-    PWCNF_CNF_AUTO:
-      Result := 'CONFIRMADO_AUTOMATICO';
-    PWCNF_CNF_MANU_AUT:
-      Result := 'CONFIRMADO_MANUAL';
-    PWCNF_REV_PRN_AUT:
-      Result := 'DESFEITO_ERRO_IMPRESSAO_AUTOMATICO';
-    PWCNF_REV_MANU_AUT:
-      Result := 'DESFEITO_MANUAL';
-    PWCNF_REV_DISP_AUT:
-      Result := 'DESFEITO_LIBERACAO_MERCADORIA';
-  else
-    Result := 'STATUS_TRANSACAO_NAO_DEFINIDO';
-  end;
-end;
-
-function TACBrTEFPGWebAndroid.TransactionStatusToPWCNF_(
-  const AStatus: String): LongWord;
-var
-  uStatus: String;
-begin
-  uStatus := UpperCase(AStatus);
-  if (AStatus = 'CONFIRMADO_AUTOMATICO') then
-    Result := PWCNF_CNF_AUTO
-  else if (AStatus = 'CONFIRMADO_MANUAL') then
-    Result := PWCNF_CNF_MANU_AUT
-  else if (AStatus = 'DESFEITO_ERRO_IMPRESSAO_AUTOMATICO') then
-    Result := PWCNF_REV_PRN_AUT
-  else if (AStatus = 'DESFEITO_MANUAL') then
-    Result := PWCNF_REV_DISP_AUT
-  else if (AStatus = 'DESFEITO_LIBERACAO_MERCADORIA') then
-    Result := PWCNF_REV_DISP_AUT
-  else
-    Result := 0;
-end;
-
-function TACBrTEFPGWebAndroid.PWINFO_AUTHSYSTToProvider(const AUTHSYST: String): String;
-var
-  uAuthSyst: String;
-begin
-  uAuthSyst := UpperCase(AUTHSYST);
-  if uAuthSyst = 'REDE' then
-    Result := 'REDECARD'
-  else if uAuthSyst = 'VISANET' then
-    Result := 'CIELO'
-  else if uAuthSyst = 'BANESECARD' then
-    Result := 'BANESE'
-  else if uAuthSyst = 'TICKET' then
-    Result := 'TICKETCAR'
-  else if uAuthSyst = 'BIN' then
-    Result := 'FIRSTDATA'
-  else
-    Result := uAuthSyst;
-end;
-
-function TACBrTEFPGWebAndroid.ProviderToPWINFO_AUTHSYST(
-  const Provider: String): String;
-begin
-  if Provider = 'REDECARD' then
-    Result := 'REDE'
-  else if Provider = 'CIELO' then
-    Result := 'VISANET'
-  else if Provider = 'BANESE' then
-    Result := 'BANESECARD'
-  else if Provider = 'TICKETCAR' then
-    Result := 'TICKET'
-  else if Provider = 'FIRSTDATA' then
-    Result := 'BIN'
-  else
-    Result := Provider;
-end;
-
-function TACBrTEFPGWebAndroid.PWINFO_CARDTYPEToCardType(
-  const CARDTYPE: String): String;
-var
-  AByte: Integer;
-begin
-  // 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
-  AByte := StrToIntDef(CARDTYPE, 0);
-  if TestBit(AByte,0) then
-    Result := 'CARTAO_CREDITO'
-  else if TestBit(AByte,1) then
-    Result := 'CARTAO_DEBITO'
-  else if TestBit(AByte,2) then
-    Result := 'CARTAO_VOUCHER'
-  else if TestBit(AByte,3) then
-    Result := 'CARTAO_PRIVATELABEL'
-  else if TestBit(AByte,4) then
-    Result := 'CARTAO_FROTA'
-  else
-    Result := 'CARTAO_DESCONHECIDO';
-end;
-
-function TACBrTEFPGWebAndroid.CardTypeToPWINFO_CARDTYPE(
-  const CardType: String): Byte;
-begin
-  // 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
-  if (CardType = 'CARTAO_CREDITO') then
-    Result := 1
-  else if (CardType = 'CARTAO_DEBITO') then
-    Result := 2
-  else if (CardType = 'CARTAO_VOUCHER') then
-    Result := 4
-  else if (CardType = 'CARTAO_PRIVATELABEL') then
-    Result := 8
-  else if (CardType = 'CARTAO_FROTA') then
-    Result := 16
-  else
-    Result := 0;
-end;
-
-function TACBrTEFPGWebAndroid.PWINFO_FINTYPEToFinType(
-  const FINTYPE: String): String;
-var
-  AByte: Integer;
-begin
-  // 1: à vista 2: parcelado pelo emissor 4: parcelado pelo estabelecimento 8: pré-datado
-  AByte := StrToIntDef(FINTYPE, 0);
-  case AByte of
-     1: Result := 'A_VISTA';
-     2: Result := 'PARCELADO_EMISSOR';
-     4: Result := 'PARCELADO_ESTABELECIMENTO';
-     8: Result := 'PRE_DATADO';
-    16: Result := 'CREDITO_EMISSOR';
-  else
-    Result := 'FINANCIAMENTO_NAO_DEFINIDO';
-  end;
-end;
-
-function TACBrTEFPGWebAndroid.FinancingTypeToPWINFO_FINTYPE(
-  const financingType: String): Byte;
-begin
-  if (financingType = 'A_VISTA') then
-    Result := 1
-  else if (financingType = 'PARCELADO_EMISSOR') then
-    Result := 2
-  else if (financingType = 'PARCELADO_ESTABELECIMENTO') then
-    Result := 4
-  else if (financingType = 'PRE_DATADO') then
-    Result := 8
-  else if (financingType = 'CREDITO_EMISSOR') then
-    Result := 16
-  else
-    Result := 0;
-end;
-
-
-function TACBrTEFPGWebAndroid.PWINFO_PAYMNTTYPEToPaymentType(
-  const PAYMNTTYPE: String): String;
-var
-  AByte: Integer;
-begin
-  // Modalidade de pagamento: 1: cartão 2: dinheiro 4: cheque 8: carteira virtual
-  AByte := StrToIntDef(PAYMNTTYPE, 0);
-  case AByte of
-     1: Result := 'PAGAMENTO_CARTAO';
-     2: Result := 'PAGAMENTO_DINHEIRO';
-     4: Result := 'PAGAMENTO_CHEQUE';
-     8: Result := 'PAGAMENTO_CARTEIRA_VIRTUAL';
-  else
-    Result := 'PAGAMENTO_CARTAO';
-  end;
-end;
-
-function TACBrTEFPGWebAndroid.PaymentModeToPWINFO_PAYMNTTYPE(
-  const paymentMode: String): Byte;
-begin
-  // Modalidade de pagamento: 1: cartão 2: dinheiro 4: cheque 8: carteira virtual
-  if (paymentMode = 'PAGAMENTO_CARTAO') then
-    Result := 1
-  else if (paymentMode = 'PAGAMENTO_DINHEIRO') then
-    Result := 2
-  else if (paymentMode = 'PAGAMENTO_CHEQUE') then
-    Result := 4
-  else if (paymentMode = 'PAGAMENTO_CARTEIRA_VIRTUAL') then
-    Result := 8
-  else
-    Result := 0;
-end;
-
-
-function TACBrTEFPGWebAndroid.PrintReceiptsToPWINFO_RCPTPRN(
-  const printReceipts: String): Byte;
-begin
-  // 0: não há comprovante
-  // 1: imprimir somente a via do Cliente
-  // 2: imprimir somente a via do Estabelecimento
-  // 3: imprimir ambas as vias do Cliente e do Estabelecimento
-  if (printReceipts = 'VIA_NENHUMA') then
-    Result := 0
-  else if (printReceipts = 'VIA_CLIENTE') then
-    Result := 1
-  else if (printReceipts = 'VIA_ESTABELECIMENTO') then
-    Result := 2
-  else if (printReceipts = 'VIA_CLIENTE_E_ESTABELECIMENTO') then
-    Result := 3
-  else
-    Result := 0;
-end;
-
-function TACBrTEFPGWebAndroid.WalletUserIdToPWINFO_WALLETUSERIDTYPE(
-  const WalletUserId: String): Byte;
-begin
-  // Forma de identificação do portador da carteira virtual:
-  // 1: QRCode do checkout (lido pelo celular do portador) 2: CPF 128: outros
-  if (WalletUserId = 'QRCODE') then
-    Result := 1
-  else if (WalletUserId = 'CPF') then
-    Result := 2
-  else
-    Result := 128;
-end;
-
-
 procedure TACBrTEFPGWebAndroid.AddURIParam(AURI: TACBrURI; ParamName: string;
   FromInfo: Word; ValorPadrao: string = ''; IncluirSeVazio: Boolean = False);
 var
@@ -1151,7 +1144,7 @@ begin
 
     AURI.Params.AddField('operation').AsString := PWOPER_ToOperation(iOPER);
     if (ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST] <> '') then
-      AURI.Params.AddField('provider').AsString := PWINFO_AUTHSYSTToProvider(ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]);
+      AURI.Params.AddField('provider').AsString := ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]; // PWINFO_AUTHSYSTToProviderName(ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST]);
 
     if (ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE] <> '') then
       AURI.Params.AddField('cardType').AsString := PWINFO_CARDTYPEToCardType(ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]);
@@ -1174,9 +1167,12 @@ begin
     //AddURIParam(AURI, 'invoiceNumber', PWINFO_FISCALREF);
     AddURIParam(AURI, 'phoneNumber', PWINFO_PHONEFULLNO);
     AddURIParam(AURI, 'posId', PWINFO_POSID);
-    AddURIParam(AURI, 'originalAuthorizationCode', PWINFO_TRNORIGAUTH);
     AddURIParam(AURI, 'originalTransactionNsu', PWINFO_TRNORIGNSU);
     AddURIParam(AURI, 'originalTransactionDateTime', PWINFO_TRNORIGDATE);
+    AddURIParam(AURI, 'originalTransactionDateTime', PWINFO_TRNORIGDATETIME);
+    AddURIParam(AURI, 'originalAuthorizationCode', PWINFO_TRNORIGAUTH);
+    AddURIParam(AURI, 'originalAuthorizationCode', PWINFO_TRNORIGAUTHCODE);
+    AddURIParam(AURI, 'amount', PWINFO_TRNORIGAMNT);
     AddURIParam(AURI, 'aditionalPosData1', PWINFO_MERCHADDDATA1);
     AddURIParam(AURI, 'aditionalPosData2', PWINFO_MERCHADDDATA2);
     AddURIParam(AURI, 'aditionalPosData3', PWINFO_MERCHADDDATA3);
@@ -1278,6 +1274,30 @@ procedure TACBrTEFPGWebAndroid.ObterDadosDaTransacao;
 var
   i: Integer;
   ParamKey, ParamValue: string;
+
+  procedure AnalisarConfirmationTransactionId( AconfirmationTransactionId: String);
+  var
+    TransactionIdData: TArray<string>;
+
+    procedure AtribuirSeDadoExistir(ADado: String; AInfo: Word);
+    begin
+      if ADado.Trim.IsEmpty or (ADado.ToLower = 'null') then
+        Exit;
+
+      fDadosTransacao.ValueInfo[AInfo] := ADado;
+    end;
+  begin
+    TransactionIdData := AconfirmationTransactionId.Split(['.']);
+    if (Length(TransactionIdData) = 5) then
+    begin
+      AtribuirSeDadoExistir( TransactionIdData[0], PWINFO_REQNUM );    // TACBrTEFResp.NumeroLoteTransacao
+      AtribuirSeDadoExistir( TransactionIdData[1], PWINFO_AUTLOCREF ); // TACBrTEFResp.Finalizacao
+      AtribuirSeDadoExistir( TransactionIdData[2], PWINFO_AUTEXTREF ); // TACBrTEFResp.NSU
+      AtribuirSeDadoExistir( TransactionIdData[3], PWINFO_VIRTMERCH ); // TACBrTEFResp.Estabelecimento
+      AtribuirSeDadoExistir( TransactionIdData[4], PWINFO_AUTHSYST );  // TACBrTEFResp.Rede
+    end;
+  end;
+
 begin
   fDadosTransacao.Clear;
 
@@ -1307,7 +1327,7 @@ begin
       else if (ParamKey = 'transactionNsu') then
         fDadosTransacao.ValueInfo[PWINFO_AUTEXTREF] := ParamValue
       else if (ParamKey = 'terminalNsu') then
-        fDadosTransacao.ValueInfo[PWINFO_REQNUM] := ParamValue
+        fDadosTransacao.ValueInfo[PWINFO_AUTLOCREF] := ParamValue
       else if (ParamKey = 'authorizationCode') then
         fDadosTransacao.ValueInfo[PWINFO_AUTHCODE] := ParamValue
       else if (ParamKey = 'transactionId') and (ParamValue <> '') then
@@ -1315,7 +1335,10 @@ begin
       else if (ParamKey = 'merchantId') and (ParamValue <> '') then
         fDadosTransacao.ValueInfo[PWINFO_VIRTMERCH] := ParamValue
       else if (ParamKey = 'confirmationTransactionId') then
-        fDadosTransacao.ValueInfo[PWINFO_CONFTRANSIDENT] := ParamValue
+      begin
+        fDadosTransacao.ValueInfo[PWINFO_CONFTRANSIDENT] := ParamValue;
+        AnalisarConfirmationTransactionId(ParamValue);
+      end
       else if (ParamKey = 'posId') then
         fDadosTransacao.ValueInfo[PWINFO_POSID] := ParamValue
       else if (ParamKey = 'merchantName') then
@@ -1331,7 +1354,7 @@ begin
       else if (ParamKey = 'finType') then
         fDadosTransacao.ValueInfo[PWINFO_FINTYPE] := IntToStr(FinancingTypeToPWINFO_FINTYPE(ParamValue))
       else if (ParamKey = 'provider') then
-        fDadosTransacao.ValueInfo[PWINFO_AUTHSYST] := ProviderToPWINFO_AUTHSYST(ParamValue)
+        fDadosTransacao.ValueInfo[PWINFO_AUTHSYST] := ParamValue
       else if (ParamKey = 'providerName') then
         fDadosTransacao.ValueInfo[PWINFO_AUTHSYSTEXTENDED] := ParamValue
       else if (ParamKey = 'uniqueId') then
@@ -1393,7 +1416,7 @@ begin
       else if (ParamKey = 'originalAuthorizationCode') then
         fDadosTransacao.ValueInfo[PWINFO_TRNORIGAUTH] := ParamValue
       else if (ParamKey = 'originalTerminalNsu') then
-        fDadosTransacao.ValueInfo[PWINFO_TRNORIGREQNUM] := ParamValue;
+        fDadosTransacao.ValueInfo[PWINFO_TRNORIGLOCREF] := ParamValue;
     end;
 
     // pendingTransactionExists
@@ -1405,7 +1428,7 @@ begin
       ParamValue := fDadosPendentesURI.Params.Items[i].AsString;
 
       if (ParamKey = 'providerName') then
-        fDadosTransacao.ValueInfo[PWINFO_PNDAUTHSYST] := ProviderToPWINFO_AUTHSYST(ParamValue)
+        fDadosTransacao.ValueInfo[PWINFO_PNDAUTHSYST] := ProviderNameToPWINFO_AUTHSYST(ParamValue)
       else if (ParamKey = 'merchantId') then
         fDadosTransacao.ValueInfo[PWINFO_PNDVIRTMERCH] := ParamValue
       else if (ParamKey = 'localNsu') then
@@ -1572,7 +1595,7 @@ begin
       AURI.Params.AddField('merchantId').AsString := pszVirtMerch;
 
     if (pszAuthSyst <> '') then
-      AURI.Params.AddField('providerName').AsString := PWINFO_AUTHSYSTToProvider(pszAuthSyst);
+      AURI.Params.AddField('providerName').AsString := PWINFO_AUTHSYSTToProviderName(pszAuthSyst);
 
     if (pszExtRef <> '') then
       AURI.Params.AddField('hostNsu').AsString := pszExtRef;
@@ -1608,7 +1631,6 @@ begin
 
   GravarLog('  uriConfirmation: '+uriConfirmation);
   intent.putExtra( StringToJString(Key_Confirmacao), StringToJString(uriConfirmation) );
-
 
   // Disparando o Intent
   TAndroidHelper.Activity.sendBroadcast(intent);

@@ -39,11 +39,16 @@ interface
 
 implementation
 
-Uses Classes, ACBrTEFD, ACBrPicPay, ACBrPOS;
+Uses
+  Classes,
+  ACBrTEFD, ACBrPicPay, ACBrPOS
+  {$IfDef DELPHIX_BERLIN_UP},ACBrTEFAndroid{$EndIf}
+  ;
 
 procedure Register;
 begin
-  RegisterComponents('ACBrTEFD', [TACBrTEFD, TACBrPicPay, TACBrPOS]);
+  RegisterComponents('ACBrTEFD', [TACBrTEFD, TACBrPicPay, TACBrPOS
+                  {$IfDef DELPHIX_BERLIN_UP},TACBrTEFAndroid{$EndIf}]);
 end;
 
 

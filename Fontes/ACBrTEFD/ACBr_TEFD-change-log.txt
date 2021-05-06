@@ -47,6 +47,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/05/21
+-- ACBrTEFAndroid, ACBrTEFPayGoAndroidAPI, ACBrTEFDReg --
+[+] Adicionado novo componente de TEF para Android.
+    Incialmente compatível apenas com TEF Android da PayGo/Setis
+    https://devpaygo.readme.io/v7/docs/o-que-%C3%A9-5
+    (por: DSA)
+
 -- ACBrTEFPayGoWebComum, ACBrTEFDPayGoWeb --
 [+] Adicionado suporte de Captura de CNPJ para PinPads com ABECS 2.12 ou superior
     (por: DSA)

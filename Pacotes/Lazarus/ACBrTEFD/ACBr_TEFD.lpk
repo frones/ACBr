@@ -26,7 +26,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="21">
+    <Files Count="22">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -112,6 +112,10 @@
         <Filename Value="..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas"/>
         <UnitName Value="ACBrPicpay"/>
       </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoRedes.pas"/>
+        <UnitName Value="ACBrTEFPayGoRedes"/>
+      </Item22>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

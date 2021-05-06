@@ -38,6 +38,9 @@ requires
   ACBr_TCP;
 
 contains
+  ACBrTEFComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFComum.pas',
+  ACBrTEFPayGoComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoComum.pas',
+  ACBrTEFPayGoRedes in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoRedes.pas',
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',
   ACBrTEFDClass in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas',
   ACBrTEFDCliSiTef in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas',
@@ -59,7 +62,6 @@ contains
   ACBrTEFDCappta in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas',
   ACBrTEFDConvCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDConvCard.pas',
   ACBrTEFCliSiTefComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFCliSiTefComum.pas',
-  ACBrTEFPayGoComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoComum.pas',
   ACBrTEFPayGoWebComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoWebComum.pas',
   ACBrPOS in '..\..\..\Fontes\ACBrTEFD\ACBrPOS.pas',
   ACBrPOSPGWebAPI in '..\..\..\Fontes\ACBrTEFD\ACBrPOSPGWebAPI.pas',

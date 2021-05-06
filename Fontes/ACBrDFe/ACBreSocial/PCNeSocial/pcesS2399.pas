@@ -303,9 +303,8 @@ begin
   else
     Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
 
-  if VersaoDF > ve02_05_00 then
-    if obj.matricula = '' then
-      Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
+  if (VersaoDF <= ve02_05_00) or (obj.matricula = '') then
+    Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
 
   Gerador.wGrupo('/ideTrabSemVinculo');
 end;

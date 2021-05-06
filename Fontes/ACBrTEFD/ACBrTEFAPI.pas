@@ -120,7 +120,7 @@ type
   end;
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  [ComponentPlatformsAttribute(piacbrAllDesktopPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrTEFAPI = class(TACBrComponent)
   private

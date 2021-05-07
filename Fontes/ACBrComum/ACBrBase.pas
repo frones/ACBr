@@ -90,7 +90,6 @@ const
   piacbrWinIoT32       = $00000200; // Windows Embedded IoT (Internet of Things) - Intel Galileo
   piacbrWinARM32       = $00000800; // Windows 32-bit ARM processor (raspberry pi)
 
-
   piacbrAllDesktopPlatforms = piacbrWin32 or piacbrWin64 or piacbrOSX32
   {$IFDEF DELPHIXE3_UP}
     or piacbrLinux32 or piacbrWinNX32
@@ -102,18 +101,23 @@ const
     or piacbrOSX64 or piacbrLinux32Arm or piacbrLinux64Arm
   {$ENDIF};
 
-  piacbrAllPlatforms = piacbrAllDesktopPlatforms
+  piacbrAllAndroidPlatforms = 0
   {$IFDEF DELPHIXE3_UP}
-    or piacbriOSSimulator32 or piacbrAndroid32Arm or piacbriOSDevice32
+    or piacbrAndroid32Arm
+  {$ENDIF}
+  {$IFDEF DELPHIX_BERLIN_UP}
+    or piacbrAndroid64Arm
+  {$ENDIF};
+
+  piacbrAllPlatforms = piacbrAllDesktopPlatforms or piacbrAllAndroidPlatforms
+  {$IFDEF DELPHIXE3_UP}
+    or piacbriOSSimulator32 or piacbriOSDevice32
   {$ENDIF}
   {$IFDEF DELPHIXE8_UP}
     or piacbriOSDevice64 or piacbrWinIoT32
   {$ENDIF}
   {$IFDEF DELPHIX_SEATTLE_UP}
     or piacbrWinARM32
-  {$ENDIF}
-  {$IFDEF DELPHIX_BERLIN_UP}
-    or piacbrAndroid64Arm
   {$ENDIF}
   {$IFDEF DELPHIX_RIO_UP}
     or piacbriOSSimulator64

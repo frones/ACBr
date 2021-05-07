@@ -176,6 +176,11 @@ begin
 
     try
       Resposta := '';
+
+{$IFDEF Demo}
+    BoletoDM.ACBrBoleto1.ListadeBoletos.Clear;
+{$ENDIF}
+
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
         Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni])
       else

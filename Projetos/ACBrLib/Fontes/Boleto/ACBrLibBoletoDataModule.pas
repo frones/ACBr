@@ -175,7 +175,11 @@ begin
      NomeArquivo := LibConfig.BoletoFCFortesConfig.NomeArquivo;
      NumCopias := LibConfig.BoletoFCFortesConfig.NumeroCopias;
      PrinterName := LibConfig.BoletoFCFortesConfig.PrinterName;
+{$IFDEF Demo}
+     SoftwareHouse := Lib.Nome + ' v' + Lib.Versao;
+{$ELSE}
      SoftwareHouse := LibConfig.BoletoFCFortesConfig.SoftwareHouse;
+{$ENDIF}
   end;
 
   if NaoEstaVazio(NomeImpressora) then

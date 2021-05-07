@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 303
+  Left = 732
   Height = 447
-  Top = 194
+  Top = 177
   Width = 749
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -14,7 +14,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlTopo: TPanel
     Left = 0
     Height = 41
@@ -145,9 +145,9 @@ object Form1: TForm1
     Height = 406
     Top = 41
     Width = 749
-    ActivePage = tsMensagem
+    ActivePage = tsConfigConta
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
     object tsMensagem: TTabSheet
       Caption = 'E-Mail'
@@ -621,7 +621,7 @@ object Form1: TForm1
     OnMailProcess = ACBrMail1MailProcess
     OnAfterMailProcess = ACBrMail1AfterMailProcess
     OnMailException = ACBrMail1MailException
-    left = 40
-    top = 326
+    Left = 40
+    Top = 326
   end
 end

@@ -14,9 +14,11 @@ uses
 var
    HeapTraceFile : String ;
 begin
+  {$IFDEF DEBUG}
   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
   DeleteFile( HeapTraceFile );
   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
 
   RequireDerivedFormResource := True;
   Application.Initialize;

@@ -52,6 +52,12 @@ Símbolo : Significado
     outros tipos semelhantes em pcnConversao
     (por: DSA)
 
+-- ACBrTEFComum, ACBrTEFCliSiTefComum, ACBrTEFPayGoComum --
+[+] Adicionada propriedades em "TACBrTEFResp"
+    CodigoPSP : String; // Código do PSP (PIX)
+    NSU_TEF : String; // NSU interno, do Gerenciador TEF
+    www.projetoacbr.com.br/forum/index.php?showtopic=62480
+
 06/05/21
 -- ACBrTEFAndroid, ACBrTEFPayGoAndroidAPI, ACBrTEFDReg --
 [+] Adicionado novo componente de TEF para Android.

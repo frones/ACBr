@@ -558,11 +558,15 @@ begin
         PWINFO_AUTEXTREF:
         begin
           NSU := LinStr;
+          CodigoPSP := LinStr;
           NFCeSAT.Autorizacao := NSU;
         end;
 
         PWINFO_REQNUM:
+        begin
           NumeroLoteTransacao := Linha.Informacao.AsInt64;
+          NSU_TEF := LinStr;
+        end;
 
         PWINFO_VIRTMERCH:
           Estabelecimento := LinStr;

@@ -305,12 +305,15 @@ begin
 
         131: Instituicao := LinStr;
         132: CodigoBandeiraPadrao := LinStr;
-        135: CodigoAutorizacaoTransacao := LinStr;
+        133: NSU_TEF := LinStr;
         134: NSU := LinStr;
+        135: CodigoAutorizacaoTransacao := LinStr;
         136: Bin := LinStr;
         139: ValorEntradaCDC := Linha.Informacao.AsFloat;
         140: DataEntradaCDC := Linha.Informacao.AsDate;
         156: Rede := LinStr;
+        157: Estabelecimento := LinStr;
+        158: CodigoRedeAutorizada := LinStr;
         501: TipoPessoa := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0, 'J', 'F')[1]);
         502: DocumentoPessoa := LinStr;
         504: TaxaServico := Linha.Informacao.AsFloat;
@@ -374,6 +377,7 @@ begin
           Desconto := Linha.Informacao.AsFloat;
           ValorTotal := ValorTotal - Desconto;
         end;
+        4153: CodigoPSP := LinStr;
       else
         ProcessarTipoInterno(Linha);
       end;

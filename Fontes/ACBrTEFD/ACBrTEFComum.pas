@@ -331,6 +331,8 @@ type
     fpQRCode: String;       // String com o Conteúdo do QRCode
     fpIdCarteiraDigital : String; // Código de identificação da carteira digital
     fpNomeCarteiraDigital : String; // Nome da carteira digital
+    fpCodigoPSP : String; // Código do PSP - PIX
+    fpNSU_TEF : String; // NSU interno, do Gerenciador TEF
 
     procedure SetCNFEnviado(const AValue: Boolean);
     procedure SetArqBackup(const AValue: String);
@@ -431,6 +433,8 @@ type
     property QRCode: String read fpQRCode write fpQRCode;
     property IdCarteiraDigital: String read fpIdCarteiraDigital write fpIdCarteiraDigital;
     property NomeCarteiraDigital: String read fpNomeCarteiraDigital write fpNomeCarteiraDigital;
+    property CodigoPSP: String read fpCodigoPSP write fpCodigoPSP;
+    property NSU_TEF: String read fpNSU_TEF write fpNSU_TEF;
 
     property NFCeSAT: TACBrTEFRespNFCeSAT read fpNFCeSAT;
 
@@ -955,6 +959,8 @@ begin
   fpQRCode := Source.QRCode;
   fpIdCarteiraDigital := Source.IdCarteiraDigital;
   fpNomeCarteiraDigital := Source.NomeCarteiraDigital;
+  fpCodigoPSP := Source.CodigoPSP;
+  fpNSU_TEF := Source.NSU_TEF;
 
   fpImagemComprovante1aVia.Text := Source.ImagemComprovante1aVia.Text;
   fpImagemComprovante2aVia.Text := Source.ImagemComprovante2aVia.Text;
@@ -1054,6 +1060,8 @@ begin
 
   fpIdCarteiraDigital :=  '';
   fpNomeCarteiraDigital := '';
+  fpCodigoPSP :=  '';
+  fpNSU_TEF :=  '';
   fpDataVencimento := 0;
   fpInstituicao := '';
   fpModalidadePagto := '';

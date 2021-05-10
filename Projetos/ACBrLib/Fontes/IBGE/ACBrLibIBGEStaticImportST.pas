@@ -30,7 +30,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit ACBrLibIBGEStaticImport;
+unit ACBrLibIBGEStaticImportST;
 
 {$IfDef FPC}
 {$mode objfpc}{$H+}

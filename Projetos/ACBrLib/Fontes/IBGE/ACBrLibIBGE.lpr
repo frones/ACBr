@@ -35,9 +35,9 @@
 library ACBrLibIBGE;
 
 uses
-  Interfaces, sysutils, Classes,
-  ACBrLibConfig, ACBrLibComum,
-  ACBrLibIBGEClass, ACBrLibIBGEConfig, ACBrLibIBGEDataModule;
+  Interfaces, sysutils, Classes, ACBrLibConfig, ACBrLibComum,
+  ACBrLibIBGEConfig, ACBrLibIBGEDataModule, ACBrLibIBGEBase,
+  {$IFDEF MT}ACBrLibIBGEMT{$ELSE}ACBrLibIBGEST{$ENDIF};
 
 {$R *.res}
 

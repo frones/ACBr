@@ -37,7 +37,7 @@ unit ACBrLibIBGEDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrIBGE;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrIBGE, ACBrLibComum;
 
 type
 
@@ -50,19 +50,22 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil,
-  ACBrLibIBGEConfig, ACBrLibComum, ACBrLibIBGEClass;
+  ACBrLibIBGEConfig, ACBrLibIBGEBase;
 
 {$R *.lfm}
 
@@ -82,7 +85,7 @@ procedure TLibIBGEDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibIBGEConfig;
 begin
-  pLibConfig := TLibIBGEConfig(TACBrLibIBGE(pLib).Config);
+  pLibConfig := TLibIBGEConfig(TACBrLibIBGE(Lib).Config);
 
   with ACBrIBGE1 do
   begin
@@ -95,8 +98,8 @@ end;
 procedure TLibIBGEDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    TACBrLibIBGE(pLib^.Lib).GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    TACBrLibIBGE(Lib).GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibIBGEDM.Travar;

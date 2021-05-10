@@ -87,7 +87,8 @@ type
 implementation
 
 uses
-  ACBrLibIBGEClass, ACBrLibIBGEConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibIBGEConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil,
+  ACBrLibIBGEBase;
 
 { TIBGEConfig }
 

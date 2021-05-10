@@ -6,11 +6,10 @@ object LibIBGEDM: TLibIBGEDM
   HorizontalOffset = 257
   VerticalOffset = 127
   Width = 150
-  PPI = 96
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
     CacheArquivo = 'ACBrIBGE.txt'
-    left = 60
-    top = 44
+    Left = 60
+    Top = 44
   end
 end

@@ -1088,39 +1088,39 @@ begin
   IdentificadorTransacao := FormatDateTime('hhnnss',now);  // NOTA: Aqui você pode usar um Identificador da Venda no seu PDV
 
   case cbxModalidadePagto.ItemIndex of
-    1: ModPagto := TACBrTEFModalidadePagamento.mpCartao;
-    2: ModPagto := TACBrTEFModalidadePagamento.mpCarteiraVirtual;
+    1: ModPagto := TACBrTEFModalidadePagamento.tefmpCartao;
+    2: ModPagto := TACBrTEFModalidadePagamento.tefmpCarteiraVirtual;
   else
-    ModPagto := TACBrTEFModalidadePagamento.mpNaoDefinido;
+    ModPagto := TACBrTEFModalidadePagamento.tefmpNaoDefinido;
   end;
 
   case cbxTipoFinanciamento.ItemIndex of
-    1: ModFinanc := TACBrTEFModalidadeFinanciamento.mfAVista;
-    2: ModFinanc := TACBrTEFModalidadeFinanciamento.mfParceladoEmissor;
-    3: ModFinanc := TACBrTEFModalidadeFinanciamento.mfParceladoEstabelecimento;
-    4: ModFinanc := TACBrTEFModalidadeFinanciamento.mfPredatado;
-    5: ModFinanc := TACBrTEFModalidadeFinanciamento.mfCreditoEmissor;
+    1: ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfAVista;
+    2: ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfParceladoEmissor;
+    3: ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfParceladoEstabelecimento;
+    4: ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfPredatado;
+    5: ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfCreditoEmissor;
   else
-    ModFinanc := TACBrTEFModalidadeFinanciamento.mfNaoDefinido;
+    ModFinanc := TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
   end;
 
   case cbxTipoCartao.ItemIndex of
-    1: TipoCartao := [TACBrTEFTipoCartao.tcCredito];
-    2: TipoCartao := [TACBrTEFTipoCartao.tcDebito];
-    3: TipoCartao := [TACBrTEFTipoCartao.tcVoucher];
-    4: TipoCartao := [TACBrTEFTipoCartao.tcPrivateLabel];
-    5: TipoCartao := [TACBrTEFTipoCartao.tcFrota];
+    1: TipoCartao := [TACBrTEFTipoCartao.teftcCredito];
+    2: TipoCartao := [TACBrTEFTipoCartao.teftcDebito];
+    3: TipoCartao := [TACBrTEFTipoCartao.teftcVoucher];
+    4: TipoCartao := [TACBrTEFTipoCartao.teftcPrivateLabel];
+    5: TipoCartao := [TACBrTEFTipoCartao.teftcFrota];
   else
     TipoCartao := [];
   end;
 
   Parcelas := 0;
-  if (ModFinanc in [TACBrTEFModalidadeFinanciamento.mfParceladoEmissor,
-                    TACBrTEFModalidadeFinanciamento.mfParceladoEstabelecimento]) then
+  if (ModFinanc in [TACBrTEFModalidadeFinanciamento.tefmfParceladoEmissor,
+                    TACBrTEFModalidadeFinanciamento.tefmfParceladoEstabelecimento]) then
     Parcelas := Trunc(sbxFinancParcelas.Value);
 
   DataPre := 0;
-  if (ModFinanc in [TACBrTEFModalidadeFinanciamento.mfPredatado]) then
+  if (ModFinanc in [TACBrTEFModalidadeFinanciamento.tefmfPredatado]) then
     DataPre := deFinancPreDatado.Date;
 
   ACBrTEFAndroid1.EfetuarPagamento( IdentificadorTransacao,
@@ -1236,16 +1236,16 @@ begin
     procedure(const AResult: TModalResult)
     begin
         if (AResult = mrYes) then
-          AStatus := TACBrTEFStatusTransacao.stsSucessoManual
+          AStatus := TACBrTEFStatusTransacao.tefstsSucessoManual
         else
-          AStatus := TACBrTEFStatusTransacao.stsErroDiverso;
+          AStatus := TACBrTEFStatusTransacao.tefstsErroDiverso;
 
         ACBrTEFAndroid1.ResolverOperacaoPendente(AStatus);
       end
   );
 
   // Se confirmou, vamos re-imprimir a transação que ficou pendente
-  if (AStatus in [stsSucessoAutomatico, stsSucessoManual]) then
+  if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
   begin
     ATEFResp := RespostaTEF;
     // Achando a transação original...
@@ -1328,9 +1328,9 @@ begin
           AStatus: TACBrTEFStatusTransacao;
         begin
             if (AResult = mrYes) then
-              AStatus := TACBrTEFStatusTransacao.stsSucessoManual
+              AStatus := TACBrTEFStatusTransacao.tefstsSucessoManual
             else
-              AStatus := TACBrTEFStatusTransacao.stsErroDiverso;
+              AStatus := TACBrTEFStatusTransacao.tefstsErroDiverso;
 
             ACBrTEFAndroid1.FinalizarOperacao(AStatus);
 

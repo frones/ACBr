@@ -119,7 +119,7 @@ var
 implementation
 
 uses
-  pcnConversao, pcnConversaoNFe, ioUtils;
+  pcnConversao, pcnConversaoNFe;
 
 {$R *.dfm}
 
@@ -135,16 +135,6 @@ begin
   Configuracao;
   if lstbxFR3.ItemIndex = -1 then
     raise Exception.Create('Selecione um arquivo fr3 ');
-
-  if (messagedlg('icmsDeson como desconto?', mtConfirmation, mbYesNo, 0, mbYes) = mryes)  then
-  begin
-    ACBrNFeDANFCEFR1.ExibeICMSDesoneradoComoDesconto := True;
-  end
-  else
-  begin
-    ACBrNFeDANFCEFR1.ExibeICMSDesoneradoComoDesconto := False;
-  end;
-
 
   if Pos('danf', LowerCase(lstbxFR3.Items[lstbxFR3.ItemIndex])) > 0 then
   begin

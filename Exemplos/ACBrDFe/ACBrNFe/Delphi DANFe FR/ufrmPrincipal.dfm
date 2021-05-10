@@ -452,7 +452,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object frxReport1: TfrxReport
     Tag = 1
-    Version = '6.7'
+    Version = '6.3.8'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -490,7 +490,6 @@ object frmPrincipal: TfrmPrincipal
     ExibeTotalTributosItem = True
     EspessuraBorda = 1
     BorderIcon = [biSystemMenu, biMinimize, biMaximize]
-    ThreadSafe = False
     Left = 48
     Top = 22
   end
@@ -513,7 +512,6 @@ object frmPrincipal: TfrmPrincipal
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     BorderIcon = [biSystemMenu, biMinimize, biMaximize]
-    ThreadSafe = False
     Left = 52
     Top = 76
   end

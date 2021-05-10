@@ -34,11 +34,11 @@ unit CmdUnit;
 
 interface
 Uses
-  SysUtils, Classes, Math, ACBrMonitorConfig, ACBrLibResposta;
+  SysUtils, Classes, Math, ACBrMonitorConfig, ACBrLibResposta, ACBrMonitorConsts, DateUtils;
 
 Const
    Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL","REINF","BPE","CNPJ","CPF"' ;
-
+   TIME_EXPIRES = 60;
 type
 
 { TACBrCmd }
@@ -50,6 +50,7 @@ private
   fsObjeto : AnsiString;
   fsMetodo : AnsiString;
   fsResposta: AnsiString;
+  fsStart  : TDateTime;
   procedure SetComando(const Value: AnsiString);
 
 public
@@ -57,11 +58,13 @@ public
   destructor Destroy; override ;
 
   function Params( Index : Integer) : AnsiString ;
+  function Expired(): Boolean;
 
   property Comando : AnsiString read fsComando write SetComando ;
   property Objeto  : AnsiString read fsObjeto ;
   property Metodo  : AnsiString read fsMetodo ;
   property Resposta: AnsiString read fsResposta write fsResposta ;
+  property Start   : TDateTime  read fsStart;
 end;
 
 
@@ -254,6 +257,7 @@ end;
 constructor TACBrCmd.Create;
 begin
   fsParams := TStringList.Create ;
+  fsStart := Now;
 end;
 
 destructor TACBrCmd.Destroy;
@@ -270,6 +274,11 @@ begin
      Result := fsParams[Index] ;
 end;
 
+function TACBrCmd.Expired(): Boolean;
+begin
+  Result:= (MinutesBetween(Start, Now) > TIME_EXPIRES);
+end;
+
 procedure TACBrCmd.SetComando(const Value: AnsiString);
 Var P,PaI,PaF,Pv : Integer ;
     wComando, wParam, wProxChar : AnsiString ;
@@ -281,6 +290,12 @@ begin
 
   fsComando := Value ;
   wComando  := Value ;
+
+  { Validação p/ Versão Demonstacao }
+  {$IFDEF Demo}
+  if Expired() then
+     raise Exception.Create(SErrTempoUsoExpirou) ;
+  {$ENDIF}
 
   { Achando o Objeto }
   P := pos('.',wComando) ;

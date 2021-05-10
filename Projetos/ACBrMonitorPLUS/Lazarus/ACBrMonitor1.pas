@@ -60,7 +60,7 @@ uses
   DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
   DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit, DoCNPJUnit,
-  DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ, ACBrMonitorMenu;
+  DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ, ACBrMonitorMenu, ACBrDFeReport;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -1814,6 +1814,9 @@ type
 
     procedure SetDisWorking(const Value: boolean);
 
+    procedure AtualizarHomologacaoDFe(Config: TConfiguracoes);
+    procedure AtualizarImpressaoHomologacaoDFe(Report: TACBrDFeReport);
+    procedure AtualizaAplicacaoDemo;
     procedure ValidarComunicacao;
     procedure ValidarConfigCertificado;
     procedure ValidarConfigWebService;
@@ -2464,6 +2467,11 @@ begin
   end;
 
   DefineTextoTrayTitulo;
+
+  {$IFDEF Demo}
+  rgTipoAmb.Enabled:= False;
+  cbxAmbiente.Enabled:= False;
+  {$ENDIF}
 
   {$IFDEF LINUX}
   rbLCBTeclado.Caption := 'Dispositivo';
@@ -5511,7 +5519,11 @@ begin
       edtTentativas.Text               := Tentativas;
       edtIntervalo.Text                := Intervalo;
       cbUF.ItemIndex                   := cbUF.Items.IndexOf(UF);
+      {$IFDEF Demo}
+      rgTipoAmb.ItemIndex              := CODIGO_HOMOLOGACAO;
+      {$ELSE}
       rgTipoAmb.ItemIndex              := Ambiente;
+      {$ENDIF}
       cbVersaoWS.ItemIndex             := cbVersaoWS.Items.IndexOf(Versao);
       cbVersaoWSCTe.ItemIndex          := cbVersaoWSCTe.Items.IndexOf(VersaoCTe);
       cbVersaoWSMDFe.ItemIndex         := cbVersaoWSMDFe.Items.IndexOf(VersaoMDFe);
@@ -5826,7 +5838,11 @@ begin
     edtCodigoAtivacao.Text             := CodigoAtivacao;
     edtCodUF.Text                      := CodigoUF;
     seNumeroCaixa.Value                := NumeroCaixa;
+    {$IFDEF Demo}
+    cbxAmbiente.ItemIndex              := CODIGO_HOMOLOGACAO;
+    {$ELSE}
     cbxAmbiente.ItemIndex              := Ambiente;
+    {$ENDIF}
     sePagCod.Value                     := PaginaDeCodigo;
     sePagCodChange(self);
     sfeVersaoEnt.Value                 := versaoDadosEnt;
@@ -7358,6 +7374,12 @@ begin
         { Interpretanto o Comando }
         fsCmd.Comando := Linha;
 
+        //Verifica ajustes p/ versao demo
+        {$IFDEF Demo}
+        AtualizaAplicacaoDemo;
+        {$ENDIF}
+
+        //Validar Erros de configuração dos Componentes
         VerificarErrosConfiguracaoComponentes(fsCmd);
 
         //Log Comando
@@ -9430,6 +9452,39 @@ begin
   fsDisWorking := Value;
 end;
 
+procedure TFrmACBrMonitor.AtualizarHomologacaoDFe(Config: TConfiguracoes);
+begin
+  Config.WebServices.Ambiente:= taHomologacao;
+
+end;
+
+procedure TFrmACBrMonitor.AtualizarImpressaoHomologacaoDFe(Report: TACBrDFeReport);
+begin
+  Report.Sistema:= C_PROJETO_ACBR;
+  Report.Site:= C_PROJETOACBR_COM_BR;
+
+end;
+
+procedure TFrmACBrMonitor.AtualizaAplicacaoDemo;
+begin
+  AtualizarHomologacaoDFe(ACBrNFe1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrCTe1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrMDFe1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrGNRE1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrBPe1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrBlocoX1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBreSocial1.Configuracoes);
+  AtualizarHomologacaoDFe(ACBrReinf1.Configuracoes);
+  ACBrSAT1.Config.ide_tpAmb:= taHomologacao;
+
+  AtualizarImpressaoHomologacaoDFe(ACBrNFe1.DANFE);
+  AtualizarImpressaoHomologacaoDFe(ACBrCTe1.DACTE);
+  AtualizarImpressaoHomologacaoDFe(ACBrMDFe1.DAMDFE);
+  AtualizarImpressaoHomologacaoDFe(ACBrBPe1.DABPE);
+  AtualizarImpressaoHomologacaoDFe(ACBrSAT1.Extrato);
+
+end;
+
 procedure TFrmACBrMonitor.ValidarComunicacao;
 begin
   imgErrComunicacao.Visible :=  ( not(rbTCP.Checked)) and ( not(rbTXT.Checked)) ;
@@ -10082,11 +10137,16 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end;
 
+  {$IFDEF Demo}
+  AtualizarImpressaoHomologacaoDFe(ACBrSAT1.Extrato);
+  {$ELSE}
   if (edSH_RazaoSocial.Text <> '') then
   begin
     ACBrSAT1.Extrato.Sistema := edSH_RazaoSocial.Text;
     ACBrSAT1.Extrato.Site    := edSH_Site.Text;
   end;
+  {$ENDIF}
+
 end;
 
 procedure TFrmACBrMonitor.PathClick(Sender: TObject);
@@ -10336,8 +10396,6 @@ begin
   begin
     ACBrNFe1.DANFE.TipoDANFE            := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo                 := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.Sistema              := edSH_RazaoSocial.Text;
-    ACBrNFe1.DANFE.Site                 := edtSiteEmpresa.Text;
     ACBrNFe1.DANFE.Email                := edtEmailEmpresa.Text;
     ACBrNFe1.DANFE.Fax                  := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.NumCopias            := edtNumCopia.Value;
@@ -10352,6 +10410,13 @@ begin
     ACBrNFe1.DANFE.MostraStatus := cbxMostraStatus.Checked;
     ACBrNFe1.DANFE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
     ACBrNFe1.DANFE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    {$IFDEF Demo}
+    AtualizarImpressaoHomologacaoDFe(ACBrNFe1.DANFE);
+    {$ELSE}
+    ACBrNFe1.DANFE.Sistema              := edSH_RazaoSocial.Text;
+    ACBrNFe1.DANFE.Site                 := edtSiteEmpresa.Text;
+    {$ENDIF}
 
     if (ACBrNFe1.DANFE is TACBrNFeDANFEClass) then
     begin
@@ -10515,8 +10580,6 @@ begin
   begin
     ACBrCTe1.DACTE.TipoDACTE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrCTe1.DACTE.Logo := edtLogoMarca.Text;
-    ACBrCTe1.DACTE.Sistema := edSH_RazaoSocial.Text;
-    ACBrCTe1.DACTE.Site := edtSiteEmpresa.Text;
     ACBrCTe1.DACTE.Email := edtEmailEmpresa.Text;
     ACBrCTe1.DACTE.Fax := edtFaxEmpresa.Text;
     ACBrCTe1.DACTE.ImprimeDescPorc := cbxImpDescPorc.Checked;
@@ -10531,6 +10594,13 @@ begin
     ACBrCTe1.DACTE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
     ACBrCTe1.DACTE.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
     ACBrCTe1.DACTE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    {$IFDEF Demo}
+    AtualizarImpressaoHomologacaoDFe(ACBrCTe1.DACTE);
+    {$ELSE}
+    ACBrCTe1.DACTE.Sistema := edSH_RazaoSocial.Text;
+    ACBrCTe1.DACTE.Site := edtSiteEmpresa.Text;
+    {$ENDIF}
 
     if ACBrCTe1.DACTE = ACBrCTeDACTeRL1 then
     begin
@@ -11855,12 +11925,12 @@ procedure TFrmACBrMonitor.DefineTextoTrayTitulo;
   end;
 
 begin
-  TrayIcon1.Hint := 'ACBrMonitorPLUS ' + sVersaoACBr +
+  TrayIcon1.Hint := {$IFDEF Demo} 'DEMO - ' + {$ENDIF} 'ACBrMonitorPLUS ' + sVersaoACBr +
                     sLineBreak + LocalMonitoramento + ' ';
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
-  FrmACBrMonitor.Caption := ' ACBrMonitorPLUS ' + sVersaoACBr + ' ';
+  FrmACBrMonitor.Caption := {$IFDEF Demo} 'DEMO - ' + {$ENDIF} ' ACBrMonitorPLUS ' + sVersaoACBr + ' ';
 
   try
     if (chkExibeRazaoSocial.Checked and Assigned(ACBrNFe1.SSL)) then

@@ -44,6 +44,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2020
+--- cmdUnit, ACBrMonitorConsts, ACBrMonior1, ACBrMonitor.lpi--
+[+] Adicionado funcionalidade para compilaçao da versão Demo
 
 30/04/2020
 --- ACBrMonitorConfig, ACBrMonitorConsts--

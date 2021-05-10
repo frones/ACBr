@@ -39,6 +39,7 @@ uses
   Classes, SysUtils;
 
 ResourceString
+  SErrTempoUsoExpirou = 'Tempo de Uso Expirou!';
   SErrArqConfNaoEncontrado = 'Arquivo de configuração não encontrado';
   SErrArqConfigNaoDefinido = 'Arquivo de configuração não definido';
   SErrDiretorioInvalido = 'Diretório Invalido: %s';
@@ -83,6 +84,10 @@ ResourceString
 
 const
   CMonitorIni = 'ACBrMonitor.ini';
+  C_PROJETO_ACBR = 'Projeto ACBr';
+  C_PROJETOACBR_COM_BR = 'www.projetoacbr.com.br';
+  CODIGO_HOMOLOGACAO = 1;
+
   _C = 'tYk*5W@';
   C_LEVEL0 = 0;
   C_LEVEL1 = 1;

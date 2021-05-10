@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2021
+-- pcnAuxiliar ---
+[*] Função "ExtrairCNPJChaveAcesso" depreciada em favor de nova função "ExtrairCNPFCPFChaveAcesso"
+[-] Correção na função "ValidarChave" para validar CPF e CNPJ conforme retorno da "ExtrairCNPJCPFChaveAcesso".
+    https://www.projetoacbr.com.br/forum/topic/62484-altera%C3%A7%C3%A3o-do-validarchave-no-pcnauxiliar-para-abranger-todas-as-s%C3%A9ries-incluindo-de-cpf/
+  Por: Lucas Martendal / BigWings
+
 26/04/2021
 -- pcnConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/62162-adi%C3%A7%C3%A3o-dos-eventos-610131-e-610130/

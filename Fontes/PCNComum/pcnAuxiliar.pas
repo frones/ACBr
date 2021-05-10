@@ -123,7 +123,8 @@ function GetDataDaPascoa(const ano: Integer): TDateTime;
 
 function ExtrairModeloChaveAcesso(const AChave: String): String;
 function ExtrairUFChaveAcesso(const AChave: String): Integer;
-function ExtrairCNPJChaveAcesso(const AChave: String): String;
+function ExtrairCNPJChaveAcesso(const AChave: String): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função ExtrairCNPJCPFChaveAcesso'{$EndIf};
+function ExtrairCNPJCPFChaveAcesso(const AChave: String): String;
 function ExtrairSerieChaveAcesso(const AChave: String): Integer;
 function ExtrairNumeroChaveAcesso(const AChave: String): Integer;
 function ExtrairCodigoChaveAcesso(const AChave: String): Integer;
@@ -323,6 +324,7 @@ function ValidarChave(const chave: string): boolean;
 var
   i: integer;
   aChave: String;
+  ACNPJCPF: String;
 begin
   result := false;
 
@@ -342,16 +344,12 @@ begin
     if result then
       result := ValidarAAMM(copy(aChave, 3, 4));
 
-    if result then
-    begin
-      case StrToInt(copy(aChave, 23, 3)) of
-        // serie reservada para DFe eCPF emitida por aplicativo da Empresa Emitente
-        920..969: result := ValidarCPF(copy(aChave, 10, 11));
-      else
-        // serie (001-889) reservada para DFe eCNPJ
-        result := ValidarCNPJ(copy(aChave, 7, 14));
-      end;
-    end;
+    ACNPJCPF := ExtrairCNPJCPFChaveAcesso(aChave);
+    if Length(ACNPJCPF) = 11 then
+      result := ValidarCPF(ACNPJCPF)
+    else
+      result := ValidarCNPJ(ACNPJCPF);
+
   except
     result := false;
   end;
@@ -836,14 +834,8 @@ begin
 end;
 
 function ExtrairModeloChaveAcesso(const AChave: String): String;
-var
- VChave: string;
 begin
-  VChave:= OnlyNumber(AChave);
-  if ValidarChave(VChave) then
-    Result := Copy(VChave, 21, 2)
-  else
-    Result := '';
+  Result := Copy(AChave, 21, 2)
 end;
 
 function ExtrairUFChaveAcesso(const AChave: String): Integer;
@@ -853,7 +845,43 @@ end;
 
 function ExtrairCNPJChaveAcesso(const AChave: String): String;
 begin
-  Result := Copy(OnlyNumber(AChave),7,14);
+  Result := ExtrairCNPJChaveAcesso(AChave);
+end;
+
+function ExtrairCNPJCPFChaveAcesso(const AChave: String): String;
+var
+  AModelo: string;
+  ASerie: Integer;
+begin
+  AModelo := ExtrairModeloChaveAcesso(AChave);
+  ASerie := ExtrairSerieChaveAcesso(AChave);
+  case StrToIntDef(AModelo, 0) of
+    55, 65: begin  // NFe, NFCe
+      case ASerie of
+        000..889, // Séries (000-889) reservadas para NF-e eCNPJ emitida por aplicativo da Empresa Emitente
+        890..899, // Séries (890-899) reservadas para NFA-e eCNPJ da SEFAZ emitida no Site do Fisco
+        900..909: // Séries (900-909) reservadas para NFA-e eCNPJ emitida no Site do Fisco
+          Result := Copy(AChave, 7, 14);
+        910..919, // Séries (910-919) reservadas para NFA-e eCPF emitida no Site do Fisco
+        920..969: // Séries (920-969) reservadas para NF-e eCPF emitida por aplicativo da Empresa Emitente
+          Result := Copy(AChave, 10, 11);
+      else
+        // Outras possíveis Séries futuras, assume CNPJ
+        Result := Copy(AChave, 7, 14);
+      end;
+    end;
+    58: begin // MDFe
+      case ASerie of
+        // Séries (920-969) reservadas para MDFe-e emitido por pessoa física com inscrição
+        920..969: Result := Copy(aChave, 10, 11);
+      else
+        Result := Copy(aChave, 7, 14);
+      end;
+    end;
+  else
+    // 57-CTe, 5-SAT, 63-BPe, 66-NF3e, 67-CTeOS
+    Result := Copy(OnlyNumber(AChave), 7, 14);
+  end;
 end;
 
 function ExtrairSerieChaveAcesso(const AChave: String): Integer;

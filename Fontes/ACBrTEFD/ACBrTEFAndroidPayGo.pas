@@ -91,8 +91,8 @@ type
       IdentificadorVenda: String;
       ValorPagto: Currency;
       CartoesAceitos: TACBrTEFTiposCartao = [];
-      Modalidade: TACBrTEFModalidadePagamento = mpNaoDefinido;
-      Financiamento: TACBrTEFModalidadeFinanciamento = mfNaoDefinido;
+      Modalidade: TACBrTEFModalidadePagamento = TACBrTEFModalidadePagamento.tefmpNaoDefinido;
+      Financiamento: TACBrTEFModalidadeFinanciamento = TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
       Parcelas: Byte = 0;
       DataPreDatado: TDate = 0); override;
 
@@ -109,10 +109,10 @@ type
 
     procedure FinalizarOperacao(
       Rede, NSU, CodigoFinalizacao: String;
-      Status: TACBrTEFStatusTransacao = stsSucessoAutomatico); override;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); override;
 
     procedure ResolverOperacaoPendente(
-      Status: TACBrTEFStatusTransacao = stsSucessoManual); override;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoManual); override;
 
     property TEFPayGoAPI: TACBrTEFPGWebAndroid read fTEFPayGoAPI;
     property OperacaoVenda: Byte read fOperacaoVenda
@@ -134,10 +134,10 @@ uses
 function StatusTransacaoToPWCNF_( AStatus: TACBrTEFStatusTransacao): LongWord;
 begin
   case AStatus of
-    stsSucessoAutomatico: Result := PWCNF_CNF_AUTO;
-    stsSucessoManual: Result := PWCNF_CNF_MANU_AUT;
-    stsErroImpressao: Result := PWCNF_REV_PRN_AUT;
-    stsErroDispesador: Result := PWCNF_REV_DISP_AUT;
+    tefstsSucessoAutomatico: Result := PWCNF_CNF_AUTO;
+    tefstsSucessoManual: Result := PWCNF_CNF_MANU_AUT;
+    tefstsErroImpressao: Result := PWCNF_REV_PRN_AUT;
+    tefstsErroDispesador: Result := PWCNF_REV_DISP_AUT;
   else
     Result := PWCNF_REV_MANU_AUT;
   end;
@@ -342,22 +342,22 @@ begin
     for TipoCartao in CartoesAceitos do
     begin
       case TipoCartao of
-        tcCredito: Inc(SomaCartoes, 1);
-        tcDebito: Inc(SomaCartoes, 2);
-        tcVoucher: Inc(SomaCartoes, 4);
-        tcPrivateLabel: Inc(SomaCartoes, 8);
-        tcFrota: Inc(SomaCartoes, 16);
-        tcOutros: Inc(SomaCartoes, 128);
+        teftcCredito: Inc(SomaCartoes, 1);
+        teftcDebito: Inc(SomaCartoes, 2);
+        teftcVoucher: Inc(SomaCartoes, 4);
+        teftcPrivateLabel: Inc(SomaCartoes, 8);
+        teftcFrota: Inc(SomaCartoes, 16);
+        teftcOutros: Inc(SomaCartoes, 128);
       end;
     end;
     if (SomaCartoes > 0) then
       PA.ValueInfo[PWINFO_CARDTYPE] := IntToStr(SomaCartoes);
 
     case Modalidade of
-      mpCartao: ModalidadeInt := 1;
-      mpDinheiro: ModalidadeInt := 2;
-      mpCheque: ModalidadeInt := 4;
-      mpCarteiraVirtual: ModalidadeInt := 8;
+      tefmpCartao: ModalidadeInt := 1;
+      tefmpDinheiro: ModalidadeInt := 2;
+      tefmpCheque: ModalidadeInt := 4;
+      tefmpCarteiraVirtual: ModalidadeInt := 8;
     else
       ModalidadeInt := 0;
     end;
@@ -365,11 +365,11 @@ begin
       PA.ValueInfo[PWINFO_PAYMNTTYPE] := IntToStr(ModalidadeInt);
 
     case Financiamento of
-      mfAVista: FinanciamentoInt := 1;
-      mfParceladoEmissor: FinanciamentoInt := 2;
-      mfParceladoEstabelecimento: FinanciamentoInt := 4;
-      mfPredatado: FinanciamentoInt := 8;
-      mfCreditoEmissor: FinanciamentoInt := 16;
+      tefmfAVista: FinanciamentoInt := 1;
+      tefmfParceladoEmissor: FinanciamentoInt := 2;
+      tefmfParceladoEstabelecimento: FinanciamentoInt := 4;
+      tefmfPredatado: FinanciamentoInt := 8;
+      tefmfCreditoEmissor: FinanciamentoInt := 16;
     else
       FinanciamentoInt := 0;
     end;

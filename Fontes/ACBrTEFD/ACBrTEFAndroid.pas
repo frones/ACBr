@@ -99,8 +99,8 @@ type
       IdentificadorVenda: String;
       ValorPagto: Currency;
       CartoesAceitos: TACBrTEFTiposCartao = [];
-      Modalidade: TACBrTEFModalidadePagamento = mpNaoDefinido;
-      Financiamento: TACBrTEFModalidadeFinanciamento = mfNaoDefinido;
+      Modalidade: TACBrTEFModalidadePagamento = TACBrTEFModalidadePagamento.tefmpNaoDefinido;
+      Financiamento: TACBrTEFModalidadeFinanciamento = TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
       Parcelas: Byte = 0;
       DataPreDatado: TDate = 0 ); virtual;
 
@@ -117,10 +117,10 @@ type
 
     procedure FinalizarOperacao(
       Rede, NSU, CodigoFinalizacao: String;
-      Status: TACBrTEFStatusTransacao = stsSucessoAutomatico); virtual;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); virtual;
 
     procedure ResolverOperacaoPendente(
-      Status: TACBrTEFStatusTransacao = stsSucessoManual); virtual;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoManual); virtual;
 
     procedure AbortarTransacaoEmAndamento; virtual;
 
@@ -358,8 +358,8 @@ type
       IdentificadorTransacao: String;
       ValorPagto: Currency;
       CartoesAceitos: TACBrTEFTiposCartao = [];
-      Modalidade: TACBrTEFModalidadePagamento = mpNaoDefinido;
-      Financiamento: TACBrTEFModalidadeFinanciamento = mfNaoDefinido;
+      Modalidade: TACBrTEFModalidadePagamento = TACBrTEFModalidadePagamento.tefmpNaoDefinido;
+      Financiamento: TACBrTEFModalidadeFinanciamento = TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
       Parcelas: Byte = 0;
       DataPreDatado: TDate = 0);
 
@@ -372,12 +372,12 @@ type
 
     procedure FinalizarOperacao(
       Rede, NSU, CodigoFinalizacao: String;
-      Status: TACBrTEFStatusTransacao = stsSucessoAutomatico); overload;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); overload;
     procedure FinalizarOperacao(
-      Status: TACBrTEFStatusTransacao = stsSucessoAutomatico); overload;
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); overload;
 
     procedure ResolverOperacaoPendente(
-      Status: TACBrTEFStatusTransacao = stsSucessoManual);
+      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoManual);
 
 //  function VerificarTEF: Boolean;
 //  procedure AbortarTransacaoEmAndamento;
@@ -720,7 +720,7 @@ begin
       if fpTransacaoOK and
          ConfirmarTransacoesAutomaticamente and
          UltimaRespostaTEF.Confirmar then
-        FinalizarOperacao(stsSucessoAutomatico);
+        FinalizarOperacao(tefstsSucessoAutomatico);
 
       QuandoFinalizarTransacao( fpTransacaoOK, fpMensagemResultado,
                                 UltimaRespostaTEF);
@@ -731,7 +731,7 @@ end;
 procedure TACBrTEFAndroidClass.ProcessarTransacaoPendente(MsgErro: String);
 begin
   if fpACBrTEFAndroid.AutoConfirmarTransacoesPendente then
-    ResolverOperacaoPendente(stsSucessoAutomatico)
+    ResolverOperacaoPendente(TACBrTEFStatusTransacao.tefstsSucessoAutomatico)
   else
     fpACBrTEFAndroid.QuandoDetectarTransacaoPendente(MsgErro, fpACBrTEFAndroid.UltimaRespostaTEF);
 end;

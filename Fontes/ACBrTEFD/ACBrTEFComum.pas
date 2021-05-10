@@ -49,32 +49,32 @@ uses
 
 type
 
-  TACBrTEFTipoCartao = ( tcCredito,
-                         tcDebito,
-                         tcVoucher,
-                         tcFrota,
-                         tcPrivateLabel,
-                         tcOutros );
+  TACBrTEFTipoCartao = ( teftcCredito,
+                         teftcDebito,
+                         teftcVoucher,
+                         teftcFrota,
+                         teftcPrivateLabel,
+                         teftcOutros );
   TACBrTEFTiposCartao = set of TACBrTEFTipoCartao;
 
-  TACBrTEFModalidadePagamento = ( mpNaoDefinido,
-                                  mpCartao,
-                                  mpDinheiro,
-                                  mpCheque,
-                                  mpCarteiraVirtual );
+  TACBrTEFModalidadePagamento = ( tefmpNaoDefinido,
+                                  tefmpCartao,
+                                  tefmpDinheiro,
+                                  tefmpCheque,
+                                  tefmpCarteiraVirtual );
 
-  TACBrTEFModalidadeFinanciamento = ( mfNaoDefinido,
-                                      mfAVista,
-                                      mfParceladoEmissor,
-                                      mfParceladoEstabelecimento,
-                                      mfPredatado,
-                                      mfCreditoEmissor );
+  TACBrTEFModalidadeFinanciamento = ( tefmfNaoDefinido,
+                                      tefmfAVista,
+                                      tefmfParceladoEmissor,
+                                      tefmfParceladoEstabelecimento,
+                                      tefmfPredatado,
+                                      tefmfCreditoEmissor );
 
-  TACBrTEFStatusTransacao = ( stsSucessoAutomatico,
-                              stsSucessoManual,
-                              stsErroImpressao,
-                              stsErroDispesador,
-                              stsErroDiverso );
+  TACBrTEFStatusTransacao = ( tefstsSucessoAutomatico,
+                              tefstsSucessoManual,
+                              tefstsErroImpressao,
+                              tefstsErroDispesador,
+                              tefstsErroDiverso );
 
   EACBrTEFErro = class(Exception);
   EACBrTEFArquivo = class(EACBrTEFErro);

@@ -659,4 +659,25 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+
+    <xsd:element name="GerarNfseEnvio">
+      <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element name="Rps" type="tcRps" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GerarNfseResposta">
+      <xsd:complexType>
+        <xsd:choice>
+          <xsd:sequence>
+            <xsd:element ref="CompNfse" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="ListaMensagemRetorno"  minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+          <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" />
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+
 </xsd:schema>

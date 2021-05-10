@@ -635,8 +635,8 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
-                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -655,8 +655,8 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
-                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="Protocolo" type="tsNumeroProtocolo" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -720,7 +720,6 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1" />
-                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="Faixa" minOccurs="1" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
@@ -729,6 +728,7 @@
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
+                <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>

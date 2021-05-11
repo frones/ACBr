@@ -845,7 +845,7 @@ end;
 
 function ExtrairCNPJChaveAcesso(const AChave: String): String;
 begin
-  Result := ExtrairCNPJChaveAcesso(AChave);
+  Result := ExtrairCNPJCPFChaveAcesso(AChave);
 end;
 
 function ExtrairCNPJCPFChaveAcesso(const AChave: String): String;

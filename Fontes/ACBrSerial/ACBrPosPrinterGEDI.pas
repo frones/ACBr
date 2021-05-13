@@ -111,6 +111,8 @@ type
     procedure ImprimirCodBarras(barCodeType: JGEDI_PRNTR_e_BarCodeType;
                               Conteudo: String; Altura, Largura: Integer);
 
+    function Status: Integer;
+
     property iPRNTR:JIPRNTR read fiPRNTR;
 
     property EstiloFonte: TACBrPosFonte read fEstiloFonte write fEstiloFonte
@@ -151,6 +153,7 @@ type
       override;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString): Boolean; override;
+    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
   end;
 
 Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
@@ -191,7 +194,7 @@ end;
 procedure AndroidBeep(ADuration: Integer);
 begin
   // https://stackoverflow.com/questions/30938946/how-do-i-make-a-beep-sound-in-android-using-delphi-and-the-api
-  TJToneGenerator.JavaClass.init( TJAudioManager.JavaClass.STREAM_ALARM,
+  TJToneGenerator.JavaClass.init( TJAudioManager.JavaClass.ERROR,
                                   TJToneGenerator.JavaClass.MAX_VOLUME)
     .startTone( TJToneGenerator.JavaClass.TONE_DTMF_0,
                 ADuration );
@@ -223,7 +226,6 @@ begin
   fTamanhoTexto := 20;
   TipoFonte := TGEDIPrinterFontFamily.gffMonoSpace;
 end;
-
 
 procedure TGEDIPrinter.IniciarImpressao;
 begin
@@ -408,6 +410,10 @@ begin
   iPRNTR.DrawPictureExt(imgConfig, BitmapToJBitmap(BitMap) );
 end;
 
+function TGEDIPrinter.Status: Integer;
+begin
+  Result:= iPRNTR.Status.ordinal;
+end;
 
 { TACBrPosPrinterGEDI }
 
@@ -509,6 +515,16 @@ begin
   end;
 end;
 
+procedure TACBrPosPrinterGEDI.LerStatus(var AStatus: TACBrPosPrinterStatus);
+begin
+  AStatus := []; // OK
+
+  case fGEDIPrinter.Status of
+    1, 3: AStatus := [TACBrPosTipoStatus.stErro];
+    2: AStatus := [TACBrPosTipoStatus.stSemPapel];
+  end;
+end;
+
 procedure TACBrPosPrinterGEDI.GEDIAdicionarBlocoResposta(const ConteudoBloco: AnsiString);
 begin
   fGEDIPrinter.ImprimirTexto(ConteudoBloco);
@@ -571,7 +587,7 @@ begin
     else if (ATag = cTagPuloDeLinhas) then
       PularLinhas(fpPosPrinter.LinhasEntreCupons)
     else if (ATag = cTagBeep) then
-      AndroidBeep(600)
+      AndroidBeep(200)
     else if (ATag = cTagFonteAlinhadaEsquerda) then
       Alinhamento := TACBrPosTipoAlinhamento.alEsquerda
     else if (ATag = cTagFonteAlinhadaDireita) then
@@ -705,4 +721,5 @@ begin
 end;
 
 end.
+
 

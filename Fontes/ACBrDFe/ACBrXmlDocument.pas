@@ -746,7 +746,7 @@ end;
 procedure TACBrXMLNamespaceList.Insert(Item: TACBrXmlNamespace);
 var
   idx: integer;
-  ns: xmlNsPtr;
+//  ns: xmlNsPtr;
 begin
   idx := Count + 1;
   SetLength(FItems, idx);

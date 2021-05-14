@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2021
+-- pnfsNFSeG --
+[*] https://www.projetoacbr.com.br/forum/topic/62485-erro-schema-utilizando-bethav2/
+  Por: Haroldo
+-- pnfsNFSeW_ABRASFv2/pnfsLerListaNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/62461-ajustes-provedor-systempro/
+  Por: Rafael Sartori
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/62441-ajuste-de-envio-provedor-elotech/
+  Por: Will Mesquita
+
 29/04/2021
 -- pnfsNFSeW_AssessorPublico --
 [*] https://www.projetoacbr.com.br/forum/topic/62299-contribui%C3%A7%C3%A3oaltera%C3%A7%C3%A3o-feita-na-nfs-e-provedor-assessor-p%C3%BAblico-issonline/

@@ -519,6 +519,9 @@ begin
       if Pos('NotaFiscalRelatorioDTO', Leitor.rExtrai(1, 'NFE', '', 0)) > 0 then
         Nivel := 1;
 
+      if (Provedor = proSystemPro) and (leitor.rExtrai(1, 'NfseSubstituidora') <> '') then
+        Nivel := 1;
+
       i := 0;
       while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or

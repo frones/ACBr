@@ -1030,7 +1030,7 @@ begin
 
   GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
 
-  if (Provedor <> proBetha) or (IM <> '') then
+  if (not (Provedor in [proBetha, proBethav2])) or (IM <> '') then
     Gerador.wCampo(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
   Gerador.Prefixo := Prefixo3;
@@ -1439,7 +1439,7 @@ begin
       if Provedor = proTecnos then
         Gerador.wCampo(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');
 
-      if (Provedor <> proBetha) or (IM <> '') then
+      if (not (Provedor in [proBetha, proBethav2])) or (IM <> '') then
         Gerador.wCampo(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
       if Provedor = proISSDigital then
@@ -2102,7 +2102,7 @@ begin
 
       GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proActcon, pro4R]));
 
-      if (Provedor <> proBetha) or (IM <> '') then
+      if (not (Provedor in [proBetha, proBethav2])) or (IM <> '') then
         Gerador.wCampo(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
       if Provedor <> proSigep then

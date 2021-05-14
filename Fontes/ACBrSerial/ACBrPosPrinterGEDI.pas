@@ -43,6 +43,9 @@ uses
   ACBrConsts, ACBrDevice, ACBrBase, ACBrPosPrinter,
   G700Interface;
 
+resourcestring
+  cErroImpressoraSemPapapel = 'Impressora sem Papel';
+
 const
   cTagBR = '<br>';
 
@@ -242,8 +245,22 @@ end;
 procedure TGEDIPrinter.FinalizarImpressao;
 begin
   IniciarImpressao;
-  fiPRNTR.Output;
-  fImprimindo := False;
+
+  try
+    try
+      fiPRNTR.Output;
+    except
+      On E: Exception do
+      begin
+        if E.Message.Contains('PRNTR_OUT_OF_PAPER') then
+          raise EPosPrinterException.Create(cErroImpressoraSemPapapel)
+        else
+          raise;
+      end;
+    end;
+  finally
+    fImprimindo := False;
+  end;
 end;
 
 procedure TGEDIPrinter.SetEspacoLinha(const Value: Integer);

@@ -566,6 +566,8 @@ type
     function CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String): Integer;
     function ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura, ALargura: Integer): String;
 
+    function AjustarCodBarras(const ABarCode, ABarCodeTag: AnsiString): AnsiString;
+
     property Buffer: TStringList read FBuffer;
 
     property Colunas: Integer read GetColunas;
@@ -1869,11 +1871,13 @@ procedure TACBrPosPrinter.DoTraduzirTag(const ATag: AnsiString;
 begin
   // GravarLog(AnsiString('TraduzirTag(' + ATag + ')'));   // DEBUG - permite medir de tradução de cada Tag
   TagTraduzida := '';
+  if (TagsNaoSuportadas.IndexOf(ATag) >= 0) then
+    Exit;
+
   if FPosPrinterClass.TraduzirTag(ATag, TagTraduzida) then
     Exit;
 
   TagTraduzida := '';
-
   if ATag = cTagLigaExpandido then
   begin
     TagTraduzida := FPosPrinterClass.ComandoFonte(ftExpandido, True);
@@ -2095,9 +2099,13 @@ var
   ACodBar: AnsiString;
 begin
   BlocoTraduzido := ConteudoBloco;
+  if (TagsNaoSuportadas.IndexOf(ATag) >= 0) then
+    Exit;
+
   if FPosPrinterClass.TraduzirTagBloco(ATag, ConteudoBloco, BlocoTraduzido) then
     Exit;
 
+  BlocoTraduzido := ConteudoBloco;
   if ATag = cTagAlinhadoEsquerda then
     BlocoTraduzido := PadRightA(ConteudoBloco, Colunas)
 
@@ -2229,67 +2237,7 @@ begin
 
   else if (AnsiIndexText(ATag, cTAGS_BARRAS) >= 0) then
   begin
-    // Ajustando os Códigos de Barras, conforme regras do Tipo do Código //
-    if (ATag = cTagBarraUPCA) then
-      // Apenas números, sempre 11 digitos, e 1 digito verificador
-      ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 11, '0')
-
-    else if (ATag = cTagBarraUPCE) then
-      // EPC-A compactado, Apenas números, 6 ou 11 dígitos
-      ACodBar := OnlyNumber(ConteudoBloco)
-
-    else if ATag = cTagBarraEAN13 then
-      // Apenas números, sempre 12 digitos, e 1 digito verificador
-      ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 12, '0')
-
-    else if ATag = cTagBarraEAN8 then
-      // Apenas números, sempre 7 digitos, e 1 digito verificador
-      ACodBar := PadLeftA(OnlyNumber(ConteudoBloco), 7, '0')
-
-    else if ATag = cTagBarraCode128c then
-      // Apenas números,
-      ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
-
-    else if ATag = cTagBarraCode39 then
-      // Qualquer tamanho.. Aceita: 0~9, A~Z, ' ', '$', '%', '*', '+', '-', '.', '/'
-      ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco,
-        ['0'..'9', 'A'..'Z', ' ', '$', '%', '*', '+', '-', '.', '/']))
-
-    else if ATag = cTagBarraCode93 then
-      // Qualquer tamanho.. Aceita: #0~#127
-      ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco, [#0..#127]))
-
-    else if ATag = cTagBarraInter then
-    begin
-      // Interleaved 2of5. Somente números, Tamanho deve ser PAR
-      ACodBar := AnsiString(OnlyNumber(ConteudoBloco));
-
-      if (Length(ACodBar) mod 2) <> 0 then  // Tamanho é Par ?
-        ACodBar := '0' + ACodBar;
-    end
-
-    else if ATag = cTagBarraStd then
-      // Apenas números, Sem dígito verificador
-      ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
-
-    else if ATag = cTagBarraCodaBar then
-      // Qualquer tamanho.. Aceita: 0~9, A~D, a~d, $, +, -, ., /, :
-      ACodBar := AnsiString(OnlyCharsInSet(ConteudoBloco,
-        ['0'..'9', 'A'..'D', 'a'..'d', '$', '+', '-', '.', '/', ':']))
-
-    else if ATag = cTagBarraCode11 then
-      // Apenas números, Qualquer tamanho, dois dígitos verificador
-      ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
-
-    else if ATag = cTagBarraMSI then
-      // Apenas números, 1 dígito verificador
-      ACodBar := AnsiString(OnlyNumber(ConteudoBloco))
-
-    else
-      ACodBar := ConteudoBloco;
-
-    ACodBar:= LeftStr(ACodBar, 255);  // Tamanho máximo para Cod.Barras é 255 caracteres
-
+    ACodBar := AjustarCodBarras(ConteudoBloco, ATag);
     BlocoTraduzido := FPosPrinterClass.ComandoCodBarras(ATag, ACodBar);
   end;
 
@@ -2987,6 +2935,72 @@ begin
 
   // http://www.qrcode.com/en/howto/code.html
   Result := (QRCodeModules + 10) * CDotsMM;
+end;
+
+function TACBrPosPrinter.AjustarCodBarras(const ABarCode, ABarCodeTag: AnsiString): AnsiString;
+var
+  ACodBar: AnsiString;
+begin
+  // Ajustando os Códigos de Barras, conforme regras do Tipo do Código //
+  if (ABarCodeTag = cTagBarraUPCA) then
+    // Apenas números, sempre 11 digitos, e 1 digito verificador
+    ACodBar := PadLeftA(OnlyNumber(ABarCode), 11, '0')
+
+  else if (ABarCodeTag = cTagBarraUPCE) then
+    // EPC-A compactado, Apenas números, 6 ou 11 dígitos
+    ACodBar := AnsiString(OnlyNumber(ABarCode))
+
+  else if ABarCodeTag = cTagBarraEAN13 then
+    // Apenas números, sempre 12 digitos, e 1 digito verificador
+    ACodBar := PadLeftA(OnlyNumber(ABarCode), 12, '0')
+
+  else if ABarCodeTag = cTagBarraEAN8 then
+    // Apenas números, sempre 7 digitos, e 1 digito verificador
+    ACodBar := PadLeftA(OnlyNumber(ABarCode), 7, '0')
+
+  else if ABarCodeTag = cTagBarraCode128c then
+    // Apenas números,
+    ACodBar := AnsiString(OnlyNumber(ABarCode))
+
+  else if ABarCodeTag = cTagBarraCode39 then
+    // Qualquer tamanho.. Aceita: 0~9, A~Z, ' ', '$', '%', '*', '+', '-', '.', '/'
+    ACodBar := AnsiString(OnlyCharsInSet(ABarCode,
+      ['0'..'9', 'A'..'Z', ' ', '$', '%', '*', '+', '-', '.', '/']))
+
+  else if ABarCodeTag = cTagBarraCode93 then
+    // Qualquer tamanho.. Aceita: #0~#127
+    ACodBar := AnsiString(OnlyCharsInSet(ABarCode, [#0..#127]))
+
+  else if ABarCodeTag = cTagBarraInter then
+  begin
+    // Interleaved 2of5. Somente números, Tamanho deve ser PAR
+    ACodBar := AnsiString(OnlyNumber(ABarCode));
+
+    if (Length(ACodBar) mod 2) <> 0 then  // Tamanho é Par ?
+      ACodBar := '0' + ACodBar;
+  end
+
+  else if ABarCodeTag = cTagBarraStd then
+    // Apenas números, Sem dígito verificador
+    ACodBar := AnsiString(OnlyNumber(ABarCode))
+
+  else if ABarCodeTag = cTagBarraCodaBar then
+    // Qualquer tamanho.. Aceita: 0~9, A~D, a~d, $, +, -, ., /, :
+    ACodBar := AnsiString(OnlyCharsInSet(ABarCode,
+      ['0'..'9', 'A'..'D', 'a'..'d', '$', '+', '-', '.', '/', ':']))
+
+  else if ABarCodeTag = cTagBarraCode11 then
+    // Apenas números, Qualquer tamanho, dois dígitos verificador
+    ACodBar := AnsiString(OnlyNumber(ABarCode))
+
+  else if ABarCodeTag = cTagBarraMSI then
+    // Apenas números, 1 dígito verificador
+    ACodBar := AnsiString(OnlyNumber(ABarCode))
+
+  else
+    ACodBar := ABarCode;
+
+  Result := AnsiString(LeftStr(ACodBar, 255));  // Tamanho máximo para Cod.Barras é 255 caracteres
 end;
 
 function TACBrPosPrinter.ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura,

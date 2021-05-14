@@ -45,6 +45,8 @@ uses
 
 resourcestring
   cErroImpressoraSemPapapel = 'Impressora sem Papel';
+  cErroImpressoraNaoPronta = 'Impressora não pronta';
+  cErroImpressora = 'Erro na Impressora';
 
 const
   cTagBR = '<br>';
@@ -254,6 +256,10 @@ begin
       begin
         if E.Message.Contains('PRNTR_OUT_OF_PAPER') then
           raise EPosPrinterException.Create(cErroImpressoraSemPapapel)
+        else if E.Message.Contains('PRNTR_NOT_READY') then
+          raise EPosPrinterException.Create(cErroImpressoraNaoPronta)
+        else if E.Message.Contains('PRNTR_ERROR') then
+          raise EPosPrinterException.Create(cErroImpressora)
         else
           raise;
       end;

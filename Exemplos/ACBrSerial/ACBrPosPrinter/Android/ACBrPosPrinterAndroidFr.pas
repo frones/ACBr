@@ -36,7 +36,11 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Gestures, System.Actions, FMX.ActnList,
-  ACBrBase, ACBrPosPrinter, ACBrPosPrinterElginE1Service,
+  ACBrBase, ACBrPosPrinter,
+  ACBrPosPrinterElginE1Service,
+  {$IfDef ANDROID}
+  ACBrPosPrinterGEDI,
+  {$EndIf}
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
   FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
@@ -106,6 +110,11 @@ type
     btBeep: TButton;
     cbxPagCodigo: TComboBox;
     cbSuportaBMP: TCheckBox;
+    lbiClasse: TListBoxItem;
+    ListBoxGroupHeader5: TListBoxGroupHeader;
+    GridPanelLayout6: TGridPanelLayout;
+    rbClasseInterna: TRadioButton;
+    rbClasseExterna: TRadioButton;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -126,12 +135,18 @@ type
     procedure btBeepClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbxModeloChange(Sender: TObject);
+    procedure rbMudaClasseImpressora(Sender: TObject);
   private
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
+    {$IfDef ANDROID}
+    fGEDIPrinter: TACBrPosPrinterGEDI;
+    {$EndIf}
     FVKService: IFMXVirtualKeyboardService;
 
     function CalcularNomeArqINI: String;
+    procedure CarregarModelosInternos;
+    procedure CarregarModelosExternos;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
     procedure ConfigurarACBrPosPrinter;
@@ -159,7 +174,6 @@ uses
 
 procedure TPosPrinterAndroidTesteForm.FormCreate(Sender: TObject);
 var
-  m: TACBrPosPrinterModelo;
   p: TACBrPosPaginaCodigo;
 begin
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
@@ -172,16 +186,9 @@ begin
   if cbxImpressorasBth.Items.Count > 0 then
     cbxImpressorasBth.ItemIndex := 0;
 
-  cbxModelo.Items.Clear ;
-  For m := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
-     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) ) ;
-
   cbxPagCodigo.Items.Clear ;
   For p := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(p) ) ) ;
-
-  if cbxModelo.Items.Count > 0 then
-    cbxModelo.ItemIndex := 0;
 
   fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
   {$IfDef ANDROID}
@@ -196,12 +203,19 @@ begin
    //fE1Printer.IPePortaE1 := '192.168.56.1:89';
   {$EndIf}
 
+  {$IfDef ANDROID}
+  fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  {$EndIf}
+
   LerConfiguracao;
 end;
 
 procedure TPosPrinterAndroidTesteForm.FormDestroy(Sender: TObject);
 begin
   fE1Printer.Free;
+  {$IfDef ANDROID}
+  fGEDIPrinter.Free;
+  {$EndIf}
 end;
 
 function TPosPrinterAndroidTesteForm.PedirPermissoes: Boolean;
@@ -239,6 +253,14 @@ begin
   {$EndIf}
 
   Result := Ok;
+end;
+
+procedure TPosPrinterAndroidTesteForm.rbMudaClasseImpressora(Sender: TObject);
+begin
+  if rbClasseInterna.IsChecked then
+    CarregarModelosInternos
+  else
+    CarregarModelosExternos;
 end;
 
 procedure TPosPrinterAndroidTesteForm.btAcentosClick(Sender: TObject);
@@ -522,29 +544,31 @@ begin
   Result := ApplicationPath + 'ACBrPosPrinter.ini';
 end;
 
+procedure TPosPrinterAndroidTesteForm.CarregarModelosExternos;
+begin
+  cbxModelo.Items.Clear;
+  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Gertec GEDI');
+  lbImpressoras.Enabled := False;
+end;
+
+procedure TPosPrinterAndroidTesteForm.CarregarModelosInternos;
+var
+  m: TACBrPosPrinterModelo;
+begin
+  cbxModelo.Items.Clear;
+  For m := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) );
+
+  lbImpressoras.Enabled := True;
+end;
+
 procedure TPosPrinterAndroidTesteForm.cbxModeloChange(Sender: TObject);
 begin
-  try
-    if cbxModelo.ItemIndex = Integer(ppExterno) then
-    begin
-      ACBrPosPrinter1.ModeloExterno := fE1Printer;
-      ACBrPosPrinter1.Modelo := ppExterno;
-      cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
-      lbImpressoras.Enabled := False;
-    end
-    else
-    begin
-      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
-      if cbxImpressorasBth.ItemIndex = cbxImpressorasBth.Items.IndexOf('NULL') then
-        cbxImpressorasBth.ItemIndex := -1;
-
-      lbImpressoras.Enabled := True;
-    end;
-  except
-    cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
-    lbImpressoras.Enabled := True;
-    raise ;
-  end ;
+  if rbClasseInterna.IsChecked and (cbxModelo.ItemIndex = Integer(ppExterno)) then
+    rbClasseExterna.IsChecked := True
+  else if rbClasseExterna.IsChecked and (cbxModelo.ItemIndex = 1) then
+    cbxPagCodigo.ItemIndex := Integer(pcUTF8);
 end;
 
 procedure TPosPrinterAndroidTesteForm.ConfigurarACBrPosPrinter;
@@ -552,11 +576,27 @@ begin
   if not PedirPermissoes then
     exit;
 
-  if Assigned(cbxImpressorasBth.Selected) then
-    ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text;
+  if rbClasseExterna.IsChecked then
+  begin
+    if (cbxModelo.ItemIndex = 1) then
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    else
+      ACBrPosPrinter1.ModeloExterno := fE1Printer;
 
-  if Assigned(cbxModelo.Selected) then
-    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
+  end
+  else
+  begin
+    if Assigned(cbxModelo.Selected) then
+      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex)
+    else
+      ACBrPosPrinter1.Modelo := ppTexto;
+
+    if Assigned(cbxImpressorasBth.Selected) then
+      ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text
+    else if cbxImpressorasBth.ItemIndex = cbxImpressorasBth.Items.IndexOf('NULL') then
+      cbxImpressorasBth.ItemIndex := -1;
+  end;
 
   if Assigned(cbxPagCodigo.Selected) then
     ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
@@ -627,6 +667,7 @@ begin
 
   INI := TIniFile.Create(ArqINI);
   try
+    INI.WriteBool('PosPrinter','ClasseInterna', rbClasseInterna.IsChecked);
     INI.WriteInteger('PosPrinter','Modelo', cbxModelo.ItemIndex);
     INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     INI.WriteBool('Modelo','BMP',cbSuportaBMP.IsChecked);
@@ -654,20 +695,23 @@ begin
 
   INI := TIniFile.Create(ArqINI);
   try
-    cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
-    cbSuportaBMP.IsChecked := INI.ReadBool('Modelo','BMP',False);
-    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
+    rbClasseInterna.IsChecked := INI.ReadBool('PosPrinter','ClasseInterna', True);
+    rbClasseExterna.IsChecked := not rbClasseInterna.IsChecked;
+    rbMudaClasseImpressora(nil);
+    cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', -1);
+    cbSuportaBMP.IsChecked := INI.ReadBool('Modelo','BMP', True);
+    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo));
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta));
-    seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
-    seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
-    seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular',ACBrPosPrinter1.LinhasEntreCupons);
-    cbControlePorta.IsChecked := INI.ReadBool('PosPrinter','ControlePorta',True);
-    seBarrasLargura.Value := INI.ReadInteger('Barras','Largura',ACBrPosPrinter1.ConfigBarras.LarguraLinha);
-    seBarrasAltura.Value := INI.ReadInteger('Barras','Altura',ACBrPosPrinter1.ConfigBarras.Altura);
-    cbHRI.IsChecked  := INI.ReadBool('Barras','HRI',ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+    seColunas.Value := INI.ReadInteger('PosPrinter','Colunas', 32);
+    seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas', 0);
+    seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular', 5);
+    cbControlePorta.IsChecked := INI.ReadBool('PosPrinter','ControlePorta', True);
+    seBarrasLargura.Value := INI.ReadInteger('Barras','Largura', ACBrPosPrinter1.ConfigBarras.LarguraLinha);
+    seBarrasAltura.Value := INI.ReadInteger('Barras','Altura', ACBrPosPrinter1.ConfigBarras.Altura);
+    cbHRI.IsChecked  := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
   finally
     INI.Free ;
-  end ;
+  end;
 end;
 
 end.

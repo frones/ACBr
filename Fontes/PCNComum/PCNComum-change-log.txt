@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2021
+-- pcnLeitor ---
+[*] Alteração na função "rCampo" visando a leitura correta do horário que contem
+    somente a Hora e Minutos.
+  Por: Edson
+
 10/05/2021
 -- pcnAuxiliar ---
 [*] Função "ExtrairCNPJChaveAcesso" depreciada em favor de nova função "ExtrairCNPFCPFChaveAcesso"

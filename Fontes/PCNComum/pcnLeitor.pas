@@ -133,7 +133,7 @@ end;
 function TLeitor.rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): String;
 var
   Texto: String;
-  i,j: integer;
+  i, j: integer;
 begin
   //NOTA: Extrai um grupo de dentro do nivel informado
   FNivel.strings[0] := FArquivo;
@@ -165,10 +165,10 @@ begin
 
   // Alterado por Claudemir em 13/03/2013: j:=pos('</' + Trim(TagFim) + '>',Texto);
 //  j:=pos('</' + Trim(TagFim) + '>', Texto) + length(Trim(TagFim)) + 3;
-  j:=pos('</' + Trim(TagFim) + '>', Texto);
+  j := pos('</' + Trim(TagFim) + '>', Texto);
 
-  if j=0 then
-   j:=pos('</' + Trim(TagFim) + ':', Texto); //correção para webservice do Ceará
+  if j = 0 then
+    j := pos('</' + Trim(TagFim) + ':', Texto); //correção para webservice do Ceará
 
 //  Result := TrimRight(copy(Texto, 1, j - 1));
   Result := TrimRight(copy(Texto, 1, j - 1 + (length(Trim(TagFim)) + 3)));
@@ -205,7 +205,7 @@ begin
   else
   begin
     if (inicio = 0) then //Tag com namespace
-      inicio := PosLast('>',copy(FGrupo,0,inicioTAGparada))+1
+      inicio := PosLast('>', copy(FGrupo, 0, inicioTAGparada)) + 1
     else
       inicio := inicio + Length(Tag) + 2;
 
@@ -219,7 +219,7 @@ begin
 
     tcDat:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
         else
           result := 0;
@@ -227,7 +227,7 @@ begin
 
     tcDatVcto:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
         else
           Result := 0;
@@ -235,7 +235,7 @@ begin
 
     tcDatCFe:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))
         else
           result := 0;
@@ -243,20 +243,20 @@ begin
 
     tcDatHor:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           if pos('/', ConteudoTag) = 0 then
             result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
-                      EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
+                      EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToIntDef(copy(ConteudoTag, 18, 2), 0), 0)
           else
             result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2))) +
-                      EncodeTime(StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 14, 2)), StrToInt(copy(ConteudoTag, 17, 2)), 0)
+                      EncodeTime(StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 14, 2)), StrToIntDef(copy(ConteudoTag, 17, 2), 0), 0)
         else
           result := 0;
       end;
 
     tcHor:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
         else
           result := 0;
@@ -264,7 +264,7 @@ begin
 
     tcHorCFe:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
         else
           result := 0;
@@ -272,7 +272,7 @@ begin
 
     tcDatHorCFe:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))+
                     EncodeTime(StrToInt(copy(ConteudoTag, 09, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
         else
@@ -281,7 +281,7 @@ begin
 
     tcDe2, tcDe3, tcDe4, tcDe6, tcDe8, tcDe10:
       begin
-        if length(ConteudoTag)>0 then
+        if length(ConteudoTag) > 0 then
           result := StringToFloatDef(ConteudoTag, 0)
         else
           result := 0;
@@ -292,14 +292,14 @@ begin
 
     tcInt:
       begin
-        if length(ConteudoTag)>0 then
-          result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)),0)
+        if length(ConteudoTag) > 0 then
+          result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)), 0)
         else
           result := 0;
       end;
 
   else
-    raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
+    raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. ' + ConteudoTag);
   end;
 end;
 
@@ -310,13 +310,13 @@ var
 
   function PosAtributo(Atributo, Grupo: String; Inicio: Integer): Integer;
   begin
-    if RightStr(Atributo,1) = '=' then
+    if RightStr(Atributo, 1) = '=' then
       Result := PosEx(Atributo, Grupo, Inicio)
     else
     begin
-      Result := PosEx(Atributo+'=', Grupo, Inicio);
+      Result := PosEx(Atributo + '=', Grupo, Inicio);
       if (Result = 0) then
-        Result := PosEx(Atributo+' ', Grupo, Inicio);
+        Result := PosEx(Atributo + ' ', Grupo, Inicio);
     end;
   end;
 
@@ -333,7 +333,7 @@ begin
   // se inicioTag > 0 significa que o parâmetro Tag foi informado.
   // se inicioTag > inicioAtr significa que o atributo encontrado não é da Tag informada
   // logo devemos bustar a proxima ocorrecia a partir da posição da Tag.
-  if (inicioTag > 0) and (inicioTag > inicioAtr)  then
+  if (inicioTag > 0) and (inicioTag > inicioAtr) then
     inicioAtr := PosAtributo(Atributo, FGrupo, inicioTag);
 
   if inicioAtr > 0 then
@@ -341,7 +341,7 @@ begin
     inicioAtr := inicioAtr + Length(Atributo);
     ConteudoTag := trim(copy(FGrupo, inicioAtr, maxInt));
 
-    iPos1 := Pos('"' , ConteudoTag);
+    iPos1 := Pos('"', ConteudoTag);
     iPos2 := Pos('''', ConteudoTag);
 
     if iPos1 <> 0 then
@@ -359,22 +359,23 @@ begin
       begin
         ConteudoTag := copy(ConteudoTag, 1, fimAtr);
         result := ReverterFiltroTextoXML(ConteudoTag)
-      end
-    end ;
-  end ;
+      end;
+    end;
+  end;
 end;
 
-function TLeitor.PosLast(const SubStr, S: String ): Integer;
-Var P : Integer ;
+function TLeitor.PosLast(const SubStr, S: String): Integer;
+var
+  P: Integer;
 begin
-  Result := 0 ;
-  P := Pos( SubStr, S) ;
+  Result := 0;
+  P := Pos(SubStr, S);
   while P <> 0 do
   begin
-     Result := P ;
-     P := RetornarPosEx( SubStr, S, P+1) ;
-  end ;
-end ;
+    Result := P;
+    P := RetornarPosEx(SubStr, S, P + 1);
+  end;
+end;
 
 end.
 

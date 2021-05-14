@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2021
+-- ACBrPagFor --
+[*] A parâmetro CarregarArquivo do método LerTXT passa a ter o valor True como
+    default.
+   Por: Italo Giurizzato Junior
+
 06/04/2021
 -- Diversos --
 [*] Alterações para gerar o arquivo de remessa e a leitura do arquivo de retorno

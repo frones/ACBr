@@ -63,7 +63,7 @@ type
 
     procedure Limpar;
     function GravarTXT(const ANomeArquivo: String = ''): Boolean;
-    function LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
+    function LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean = True): Boolean;
 
     property Arquivo: TACBrPagForArquivoClass read FArquivo write SetArquivo;
     property Arquivos: TArquivos read FArquivos write FArquivos;
@@ -105,7 +105,7 @@ begin
   Result := Self.Arquivos.GerarPagFor(ANomeArquivo);
 end;
 
-function TACBrPagFor.LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean): Boolean;
+function TACBrPagFor.LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean = True): Boolean;
 begin
   FArquivos.Ler(AArquivoTXT, ACarregarArquivo);
   

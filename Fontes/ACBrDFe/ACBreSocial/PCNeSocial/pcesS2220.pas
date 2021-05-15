@@ -159,13 +159,13 @@ type
   TExameCollectionItem = class(TObject)
   private
     FDtExm: TDateTime;
-    FProcRealizado: integer;
+    FProcRealizado: string;
     FObsProc: string;
     FOrdExame: tpOrdExame;
     FIndResult: tpIndResult;
   public      
     property DtExm: TDateTime read FDtExm write FDtExm;
-    property ProcRealizado: integer read FProcRealizado write FProcRealizado;
+    property ProcRealizado: string read FProcRealizado write FProcRealizado;
     property obsProc: string read FObsProc write FObsProc;
     property ordExame: tpOrdExame read FOrdExame write FOrdExame;
     property indResult: tpIndResult read FIndResult write FIndResult;
@@ -470,7 +470,7 @@ begin
         with exMedOcup.aso.exame.New do
         begin
           dtExm         := StringToDateTime(sFim);
-          ProcRealizado := INIRec.ReadInteger(sSecao, 'procRealizado', 0);
+          ProcRealizado := INIRec.ReadString(sSecao, 'procRealizado', EmptyStr);
           obsProc       := INIRec.ReadString(sSecao, 'obsProc', EmptyStr);
           ordExame      := eSStrToOrdExame(Ok, INIRec.ReadString(sSecao, 'ordExame', '1'));
           indResult     := eSStrToIndResult(Ok, INIRec.ReadString(sSecao, 'indResult', '1'));

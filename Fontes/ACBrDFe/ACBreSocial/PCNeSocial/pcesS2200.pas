@@ -471,6 +471,13 @@ begin
       vinculo.infoContrato.codCarreira := INIRec.ReadString(sSecao, 'codCarreira', '');
       vinculo.infoContrato.dtIngrCarr  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIngrCarr', '0'));
 
+      vinculo.infoContrato.nmCargo      := INIRec.ReadString(sSecao, 'nmCargo', '');
+      vinculo.infoContrato.CBOCargo     := INIRec.ReadString(sSecao, 'CBOCargo', '');
+      vinculo.infoContrato.dtIngrCargo  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIngrCargo', '0'));
+      vinculo.infoContrato.nmFuncao     := INIRec.ReadString(sSecao, 'nmFuncao', '');
+      vinculo.infoContrato.CBOFuncao    := INIRec.ReadString(sSecao, 'CBOFuncao', '');
+      vinculo.infoContrato.acumCargo    := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'acumCargo', ''));
+
       sSecao := 'remuneracao';
       vinculo.infoContrato.remuneracao.VrSalFx    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSalFx', ''), 0);
       vinculo.infoContrato.remuneracao.UndSalFixo := eSStrToUndSalFixo(Ok, INIRec.ReadString(sSecao, 'undSalFixo', ''));
@@ -509,6 +516,7 @@ begin
         vinculo.infoContrato.horContratual.QtdHrsSem := INIRec.ReadInteger(sSecao, 'qtdHrsSem', 0);
         vinculo.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
         vinculo.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
+        vinculo.infoContrato.horContratual.dscJorn   := INIRec.ReadString(sSecao, 'dscJorn', '');
         vinculo.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
       end;
 

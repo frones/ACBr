@@ -266,6 +266,7 @@ begin
       trabalhador.GrauInstr  := INIRec.ReadString(sSecao, 'grauInstr', '01');
 //      Trabalhador.IndPriEmpr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPriEmpr', 'S'));
       trabalhador.nmSoc      := INIRec.ReadString(sSecao, 'nmSoc', EmptyStr);
+      trabalhador.PaisNac    := INIRec.ReadString(sSecao, 'paisNac', '');
 
       sSecao := 'nascimento';
       trabalhador.Nascimento.dtNascto   := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));

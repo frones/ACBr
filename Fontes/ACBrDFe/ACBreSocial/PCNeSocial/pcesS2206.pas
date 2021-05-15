@@ -522,6 +522,13 @@ begin
       altContratual.infoContrato.codCarreira := INIRec.ReadString(sSecao, 'codCarreira', '');
       altContratual.infoContrato.dtIngrCarr  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIngrCarr', '0'));
 
+      altContratual.infoContrato.nmCargo      := INIRec.ReadString(sSecao, 'nmCargo', '');
+      altContratual.infoContrato.CBOCargo     := INIRec.ReadString(sSecao, 'CBOCargo', '');
+      altContratual.infoContrato.dtIngrCargo  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIngrCargo', '0'));
+      altContratual.infoContrato.nmFuncao     := INIRec.ReadString(sSecao, 'nmFuncao', '');
+      altContratual.infoContrato.CBOFuncao    := INIRec.ReadString(sSecao, 'CBOFuncao', '');
+      altContratual.infoContrato.acumCargo    := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'acumCargo', ''));
+
       sSecao := 'remuneracao';
       altContratual.infoContrato.remuneracao.VrSalFx    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSalFx', ''), 0);
       altContratual.infoContrato.remuneracao.UndSalFixo := eSStrToUndSalFixo(Ok, INIRec.ReadString(sSecao, 'undSalFixo', ''));
@@ -558,6 +565,7 @@ begin
         altContratual.infoContrato.horContratual.QtdHrsSem := StrtoFloatDef(IniRec.ReadString(sSecao,'qtdHrsSem','0'),0);
         altContratual.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
         altContratual.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
+        altContratual.infoContrato.horContratual.dscJorn   := INIRec.ReadString(sSecao, 'dscJorn', '');
         altContratual.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
       end;
 

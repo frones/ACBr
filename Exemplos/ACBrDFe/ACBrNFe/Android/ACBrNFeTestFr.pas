@@ -47,6 +47,8 @@ uses
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView,  FMX.VirtualKeyboard,
   FileSelectFrame,
+  ACBrPosPrinterElginE1Service,
+  ACBrPosPrinterGEDI,
   ACBrIBGE, ACBrSocket, ACBrCEP,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrBase, ACBrMail, FMX.Memo.Types;
@@ -342,6 +344,11 @@ type
     lImprimirNFCe: TLabel;
     swEmailNFCe: TSwitch;
     lEmailNFCe: TLabel;
+    ListBoxGroupHeader1: TListBoxGroupHeader;
+    lbiClasse: TListBoxItem;
+    GridPanelLayout8: TGridPanelLayout;
+    rbClasseInterna: TRadioButton;
+    rbClasseExterna: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -422,8 +429,13 @@ type
     procedure swEnviarNFCeSwitch(Sender: TObject);
     procedure swImprimirNFCeSwitch(Sender: TObject);
     procedure swEmailNFCeSwitch(Sender: TObject);
+    procedure rbMudaClasseImpressora(Sender: TObject);
+    procedure cbxModeloChange(Sender: TObject);
   private
     { Private declarations }
+    fE1Printer: TACBrPosPrinterElginE1Service;
+    fGEDIPrinter: TACBrPosPrinterGEDI;
+
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
     FcUF: Integer;
@@ -436,6 +448,8 @@ type
     procedure TabBack;
 
     function CalcularNomeArqConfiguracao: String;
+    procedure CarregarModelosExternos;
+    procedure CarregarModelosInternos;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
 
@@ -453,7 +467,7 @@ type
     procedure ExibirLogs;
     procedure ExibirXMLs;
 
-    procedure PedirPermissoesInternet;
+    procedure PedirPermissoes;
     procedure IniciarTelaDeEspera(const AMsg: String = '');
     procedure TerminarTelaDeEspera;
     procedure ConsultarCEP;
@@ -470,6 +484,7 @@ type
 
     procedure AppExceptionHandle(Sender: TObject; E: Exception);
     procedure SetOperacaoNFCe(const Value: TACBrNFCeTestOperacao);
+    procedure ExibirErroImpressaoE1(const MsgErro: string);
   public
     { Public declarations }
     property OperacaoNFCe: TACBrNFCeTestOperacao read FOperacaoNFCe write SetOperacaoNFCe;
@@ -527,6 +542,12 @@ begin
   FScrollBox := nil;
   FControlToCenter := nil;
 
+  // Criando Classes de Impressoras Externas //
+  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  fE1Printer.Modelo := prnSmartPOS;
+  fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
+  fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
   imgErrorTelefone.Bitmap := imgErrorCep.Bitmap;
@@ -579,6 +600,8 @@ procedure TACBrNFCeTestForm.FormDestroy(Sender: TObject);
 begin
   FcMunList.Free;
   FTabList.Free;
+  fE1Printer.Free;
+  fGEDIPrinter.Free;
 end;
 
 procedure TACBrNFCeTestForm.AppExceptionHandle(Sender: TObject; E: Exception);
@@ -591,13 +614,16 @@ begin
   ExibirLogs;
 end;
 
-procedure TACBrNFCeTestForm.PedirPermissoesInternet;
+procedure TACBrNFCeTestForm.PedirPermissoes;
 Var
   Ok: Boolean;
 begin
   Ok := True;
   {$IfDef ANDROID}
-  PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.INTERNET)],
+  PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
+                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
+                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED),
+                                          JStringToString(TJManifest_permission.JavaClass.INTERNET)],
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
       var
         GR: TPermissionStatus;
@@ -613,6 +639,33 @@ begin
   if not OK then
     raise EPermissionException.Create( 'Sem permissões para acesso a Internet');
   {$EndIf}
+end;
+
+procedure TACBrNFCeTestForm.rbMudaClasseImpressora(Sender: TObject);
+begin
+  if rbClasseInterna.IsChecked then
+    CarregarModelosInternos
+  else
+    CarregarModelosExternos;
+end;
+
+procedure TACBrNFCeTestForm.CarregarModelosExternos;
+begin
+  cbxModelo.Items.Clear;
+  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Gertec GEDI');
+  lbiConfPrinterImpressoras.Enabled := False;
+end;
+
+procedure TACBrNFCeTestForm.CarregarModelosInternos;
+var
+  m: TACBrPosPrinterModelo;
+begin
+  cbxModelo.Items.Clear;
+  For m := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) );
+
+  lbiConfPrinterImpressoras.Enabled := True;
 end;
 
 procedure TACBrNFCeTestForm.sbAcharCEPClick(Sender: TObject);
@@ -1111,10 +1164,11 @@ end;
 procedure TACBrNFCeTestForm.CarregarImpressorasBth;
 begin
   {$IfDef HAS_BLUETOOTH}
-   PedirPermissoesInternet;
+   PedirPermissoes;
    cbxImpressorasBth.Items.Clear;
    try
      ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+     cbxImpressorasBth.Items.Add('NULL');
    except
    end;
   {$EndIf}
@@ -1213,6 +1267,14 @@ begin
       TThread.CreateAnonymousThread(CarregarListaDeCidades).Start;
     end;
   end;
+end;
+
+procedure TACBrNFCeTestForm.cbxModeloChange(Sender: TObject);
+begin
+  if rbClasseInterna.IsChecked and (cbxModelo.ItemIndex = Integer(ppExterno)) then
+    rbClasseExterna.IsChecked := True
+  else if rbClasseExterna.IsChecked and (cbxModelo.ItemIndex = 1) then
+    cbxPagCodigo.ItemIndex := Integer(pcUTF8);
 end;
 
 procedure TACBrNFCeTestForm.cbxWebServiceUFChange(Sender: TObject);
@@ -1423,13 +1485,30 @@ end;
 
 procedure TACBrNFCeTestForm.ConfigurarACBrPosPrinter;
 begin
+  PedirPermissoes;
   ACBrPosPrinter1.Desativar;
-  // Configurando o ACBrPosPrinter //
-  if Assigned(cbxImpressorasBth.Selected) then
-    ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text;
 
-  if Assigned(cbxModelo.Selected) then
-    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+  if rbClasseExterna.IsChecked then
+  begin
+    if (cbxModelo.ItemIndex = 1) then
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    else
+      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+
+    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
+  end
+  else
+  begin
+    if Assigned(cbxModelo.Selected) then
+      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex)
+    else
+      ACBrPosPrinter1.Modelo := ppTexto;
+
+    if Assigned(cbxImpressorasBth.Selected) then
+      ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text
+    else if cbxImpressorasBth.ItemIndex = cbxImpressorasBth.Items.IndexOf('NULL') then
+      cbxImpressorasBth.ItemIndex := -1;
+  end;
 
   if Assigned(cbxPagCodigo.Selected) then
     ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
@@ -1719,6 +1798,11 @@ begin
   end;
 end;
 
+procedure TACBrNFCeTestForm.ExibirErroImpressaoE1(const MsgErro: string);
+begin
+  Toast(MsgErro, False);
+end;
+
 procedure TACBrNFCeTestForm.ExibirLogs;
 begin
   TabForward(tabLog) ;
@@ -1836,6 +1920,7 @@ begin
   Ini := TIniFile.Create(IniFile {$IfDef POSIX}, TEncoding.ANSI{$EndIf});
   try
     // configurações do ACBrPosPrinter //
+    INI.WriteBool('PosPrinter','ClasseInterna', rbClasseInterna.IsChecked);
     if Assigned(cbxImpressorasBth.Selected) then
       INI.WriteString('PosPrinter','Porta', cbxImpressorasBth.Selected.Text);
 
@@ -2191,6 +2276,9 @@ begin
     if cbxImpressorasBth.Items.Count < 1 then
       CarregarImpressorasBth;
 
+    rbClasseInterna.IsChecked := INI.ReadBool('PosPrinter','ClasseInterna', True);
+    rbClasseExterna.IsChecked := not rbClasseInterna.IsChecked;
+    rbMudaClasseImpressora(nil);
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(Ini.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta));
     cbxModelo.ItemIndex := Ini.ReadInteger('PosPrinter','Modelo', 1);
     cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));

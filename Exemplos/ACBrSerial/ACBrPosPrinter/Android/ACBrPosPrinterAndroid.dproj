@@ -227,6 +227,20 @@
         <Debugger_DebugSourcePath>C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrSerial\;C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrComum\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <IncludeAndroid_NotificationAccentColor>False</IncludeAndroid_NotificationAccentColor>
         <VerInfo_Keys>package=br.com.projetoacbr.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <Android_LauncherIcon36>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_LauncherIcon36>
+        <Android_LauncherIcon48>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_LauncherIcon48>
+        <Android_LauncherIcon96>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_LauncherIcon96>
+        <Android_LauncherIcon144>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png</Android_LauncherIcon144>
+        <Android_SplashImage426>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png</Android_SplashImage426>
+        <Android_SplashImage470>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png</Android_SplashImage470>
+        <Android_SplashImage640>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png</Android_SplashImage640>
+        <Android_SplashImage960>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png</Android_SplashImage960>
+        <Android_NotificationIcon24>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png</Android_NotificationIcon24>
+        <Android_NotificationIcon36>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_NotificationIcon36>
+        <Android_NotificationIcon48>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_NotificationIcon48>
+        <Android_NotificationIcon96>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_NotificationIcon96>
+        <Android_LauncherIcon72>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_LauncherIcon72>
+        <Android_NotificationIcon72>..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_NotificationIcon72>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Android64)'!=''">
         <VerInfo_Build>3</VerInfo_Build>

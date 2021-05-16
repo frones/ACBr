@@ -69,9 +69,12 @@ uses
   FMX.Controls.Presentation,
   FMX.DialogService,
   FMX.Ani,
+  FMX.Memo.Types,
   Androidapi.JNI.GraphicsContentViewText,
   ACBrTEFAndroid, ACBrTEFComum,
-  ACBrBase, ACBrPosPrinter, FMX.Memo.Types;
+  ACBrPosPrinterElginE1Service,
+  ACBrPosPrinterGEDI,
+  ACBrBase, ACBrPosPrinter;
 
 const
   CNOME_CONFIG = 'ACBrTEFDemoAndroid.ini';
@@ -110,7 +113,7 @@ const
      'CONFIGURACAO', 'MANUTENCAO' );
 
 type
-  TForm1 = class(TForm)
+  TFrTEFDemoAndroid = class(TForm)
     StyleBook1: TStyleBook;
     tabsPrincipal: TTabControl;
     tabConfig: TTabItem;
@@ -306,6 +309,11 @@ type
     edtEstornoHoraTransacao: TEdit;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrTEFAndroid1: TACBrTEFAndroid;
+    ListBoxGroupHeader5: TListBoxGroupHeader;
+    lbiClasse: TListBoxItem;
+    GridPanelLayout6: TGridPanelLayout;
+    rbClasseInterna: TRadioButton;
+    rbClasseExterna: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure btVendaPagarClick(Sender: TObject);
     procedure ClickBotaoNumero(Sender: TObject);
@@ -355,8 +363,14 @@ type
     procedure ACBrTEFAndroid1QuandoGravarLog(const ALogLine: string;
       var Tratado: Boolean);
     procedure edtEstornoHoraTransacaoTyping(Sender: TObject);
+    procedure rbMudaClasseImpressora(Sender: TObject);
+    procedure cbxModeloChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    fE1Printer: TACBrPosPrinterElginE1Service;
+    fGEDIPrinter: TACBrPosPrinterGEDI;
+
     fValorOperacao: Double;
     fOperacao: String;
     fNovoValor: Boolean;
@@ -378,6 +392,8 @@ type
 
     function CalcularNomeArqConfiguracao: String;
     procedure CarregarImpressorasBth;
+    procedure CarregarModelosExternos;
+    procedure CarregarModelosInternos;
 
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
@@ -413,6 +429,7 @@ type
 
     procedure ImprimirComprovantes(ATEFResp: TACBrTEFResp);
     procedure ImprimirRelatorio(ATexto: String);
+    procedure ExibirErroImpressaoE1(const MsgErro: string);
   public
     { Public declarations }
     property ValorVenda: Double read GetValorVenda write SetValorVenda;
@@ -422,7 +439,7 @@ type
 procedure Toast(const AMsg: string; ShortDuration: Boolean = False);
 
 var
-  Form1: TForm1;
+  FrTEFDemoAndroid: TFrTEFDemoAndroid;
 
 implementation
 
@@ -456,7 +473,7 @@ begin
 end;
 
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TFrTEFDemoAndroid.FormCreate(Sender: TObject);
 
   procedure AddItemsToComboBox( Items: Array of string; AComboBox: TComboBox);
   var
@@ -488,6 +505,13 @@ begin
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(fVKService));
   ACBrTEFAndroid1.QuandoIniciarTransacao := ACBrTEFAndroid1QuandoIniciarTransacao;
 
+  // Criando Classes de Impressoras Externas //
+  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  fE1Printer.Modelo := prnSmartPOS;
+  fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
+  fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+
+  // Zerando a Interface
   gplParcelas.Visible := False;
   gplPreDatado.Visible := False;
 
@@ -515,11 +539,6 @@ begin
   imgErrorNomeFantasia.Bitmap := imgErrorNomeSwHouse.Bitmap;
   imgErrorCNPJEstabelecimento.Bitmap := imgErrorNomeSwHouse.Bitmap;
 
-  // Ajustando Opções de Configuração de ACBrPosPrinter //
-  cbxModelo.Items.Clear ;
-  For n := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
-    cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(n) ) ) ;
-
   cbxPagCodigo.Items.Clear ;
   For o := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(o) ) ) ;
@@ -530,7 +549,40 @@ begin
   MostrarTelaVenda;
 end;
 
-procedure TForm1.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+procedure TFrTEFDemoAndroid.FormDestroy(Sender: TObject);
+begin
+  fE1Printer.Free;
+  fGEDIPrinter.Free;
+end;
+
+procedure TFrTEFDemoAndroid.CarregarModelosExternos;
+begin
+  cbxModelo.Items.Clear;
+  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Gertec GEDI');
+  lbImpressoras.Enabled := False;
+end;
+
+procedure TFrTEFDemoAndroid.CarregarModelosInternos;
+var
+  m: TACBrPosPrinterModelo;
+begin
+  cbxModelo.Items.Clear;
+  For m := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) );
+
+  lbImpressoras.Enabled := True;
+end;
+
+procedure TFrTEFDemoAndroid.ExibirErroImpressaoE1(
+  const MsgErro: string);
+begin
+  TDialogService.MessageDialog( MsgErro,
+                                TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],
+                                TMsgDlgBtn.mbOk, 0, nil, nil);
+end;
+
+procedure TFrTEFDemoAndroid.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
   Shift: TShiftState);
 begin
   if (Key = vkHardwareBack) then
@@ -598,7 +650,7 @@ begin
   end;
 end;
 
-procedure TForm1.AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
+procedure TFrTEFDemoAndroid.AjustarScroll(AControl: TControl; AScrollBox: TCustomScrollBox);
 var
   AVirtualKeyboard: IVirtualKeyboardControl;
 begin
@@ -617,21 +669,35 @@ begin
     deixar a mágica ocorrer em OnVirtualKeyboardShow }
 end;
 
-procedure TForm1.AplicarConfiguracoes;
+procedure TFrTEFDemoAndroid.AplicarConfiguracoes;
 begin
   AplicarConfiguracaoPosPrinter;
   AplicarConfiguracaoTEF;
 end;
 
-procedure TForm1.AplicarConfiguracaoPosPrinter;
+procedure TFrTEFDemoAndroid.AplicarConfiguracaoPosPrinter;
 begin
-  ACBrPosPrinter1.Desativar;
-  // Configurando o ACBrPosPrinter //
-  if Assigned(cbxImpressorasBth.Selected) then
-    ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text;
+  if rbClasseExterna.IsChecked then
+  begin
+    if (cbxModelo.ItemIndex = 1) then
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    else
+      ACBrPosPrinter1.ModeloExterno := fE1Printer;
 
-  if Assigned(cbxModelo.Selected) then
-    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
+  end
+  else
+  begin
+    if Assigned(cbxModelo.Selected) then
+      ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex)
+    else
+      ACBrPosPrinter1.Modelo := ppTexto;
+
+    if Assigned(cbxImpressorasBth.Selected) then
+      ACBrPosPrinter1.Porta := cbxImpressorasBth.Selected.Text
+    else if cbxImpressorasBth.ItemIndex = cbxImpressorasBth.Items.IndexOf('NULL') then
+      cbxImpressorasBth.ItemIndex := -1;
+  end;
 
   if Assigned(cbxPagCodigo.Selected) then
     ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
@@ -639,10 +705,12 @@ begin
   ACBrPosPrinter1.ColunasFonteNormal := Trunc(seColunas.Value);
   ACBrPosPrinter1.EspacoEntreLinhas := Trunc(seEspLinhas.Value);
   ACBrPosPrinter1.LinhasEntreCupons := Trunc(seLinhasPular.Value);
-  ACBrPosPrinter1.CortaPapel := True;
+  ACBrPosPrinter1.ConfigLogo.KeyCode1 := 1;
+  ACBrPosPrinter1.ConfigLogo.KeyCode2 := 0;
+  ACBrPosPrinter1.ControlePorta := cbControlePorta.IsChecked;
 end;
 
-procedure TForm1.AplicarConfiguracaoTEF;
+procedure TFrTEFDemoAndroid.AplicarConfiguracaoTEF;
 begin
   ACBrTEFAndroid1.DesInicializar;
   ACBrTEFAndroid1.Modelo := tefPayGo;
@@ -669,7 +737,7 @@ begin
   AplicarConfiguracaoTransacao;
 end;
 
-procedure TForm1.AplicarConfiguracaoTransacao;
+procedure TFrTEFDemoAndroid.AplicarConfiguracaoTransacao;
 var
   MoedaISO: Integer;
 begin
@@ -697,7 +765,7 @@ begin
 //    cbxTipoCartao.ItemIndex := Ini.ReadInteger('Transacao', 'TipoCartao', 0);
 end;
 
-procedure TForm1.AplicarConfiguracaoPersonalizacao;
+procedure TFrTEFDemoAndroid.AplicarConfiguracaoPersonalizacao;
 begin
   if swInterfaceAlternativa.IsChecked then
   begin
@@ -721,7 +789,7 @@ begin
     ACBrTEFAndroid1.Personalizacao.Clear;
 end;
 
-procedure TForm1.FormVirtualKeyboardShown(Sender: TObject;
+procedure TFrTEFDemoAndroid.FormVirtualKeyboardShown(Sender: TObject;
   KeyboardVisible: Boolean; const Bounds: TRect);
 var
   KeyBoardScreenTop, ControlScreenBottom, PosicaoIdeal,
@@ -774,7 +842,7 @@ begin
   end;
 end;
 
-procedure TForm1.FormVirtualKeyboardHidden(Sender: TObject;
+procedure TFrTEFDemoAndroid.FormVirtualKeyboardHidden(Sender: TObject;
   KeyboardVisible: Boolean; const Bounds: TRect);
 begin
   if Assigned(fScrollBox) then
@@ -784,12 +852,12 @@ begin
   end;
 end;
 
-function TForm1.GetValorVenda: Double;
+function TFrTEFDemoAndroid.GetValorVenda: Double;
 begin
   Result := StrToIntDef(OnlyNumber(edtValorVenda.Text), 0)/100;
 end;
 
-procedure TForm1.SetValorVenda(const Value: Double);
+procedure TFrTEFDemoAndroid.SetValorVenda(const Value: Double);
 var
   AValor: Double;
 begin
@@ -798,26 +866,26 @@ begin
   edtValorVenda.CaretPosition := edtValorVenda.Text.Length;
 end;
 
-procedure TForm1.SpeedButton1Click(Sender: TObject);
+procedure TFrTEFDemoAndroid.SpeedButton1Click(Sender: TObject);
 begin
   VoltarParaTestes;
 end;
 
-procedure TForm1.tiStartUpTimer(Sender: TObject);
+procedure TFrTEFDemoAndroid.tiStartUpTimer(Sender: TObject);
 begin
   tiStartUp.Enabled := False;  // Dispara apenas uma vez
   LerConfiguracao;
   AplicarConfiguracoes;
 end;
 
-procedure TForm1.VoltarParaTestes;
+procedure TFrTEFDemoAndroid.VoltarParaTestes;
 begin
   tabsPrincipal.SetActiveTabWithTransition( tabTeste,
                                             TTabTransition.Slide,
                                             TTabTransitionDirection.Reversed ) ;
 end;
 
-procedure TForm1.btAdminClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btAdminClick(Sender: TObject);
 begin
   if swMenuAdministrativo.IsChecked and (ACBrTEFAndroid1.TEF is TACBrTEFAndroidPayGoClass) then
     MostrarMenuAdministrativoPayGo
@@ -825,7 +893,7 @@ begin
     ExecutarAdministrativo;
 end;
 
-procedure TForm1.btEstornoClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btEstornoClick(Sender: TObject);
 begin
   if (btEstorno.Text = CBOTAO_ESTORNAR) then
     ExecutarEstornoTEF
@@ -833,18 +901,18 @@ begin
     MostrarTelaEstorno;
 end;
 
-procedure TForm1.btLerConfigClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btLerConfigClick(Sender: TObject);
 begin
   LerConfiguracao;
 end;
 
-procedure TForm1.btnProcurarBthClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btnProcurarBthClick(Sender: TObject);
 begin
   CarregarImpressorasBth;
   cbxImpressorasBth.DropDown;
 end;
 
-procedure TForm1.btnTestarImpressoraClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btnTestarImpressoraClick(Sender: TObject);
 var
   SL: TStringList;
 begin
@@ -881,17 +949,17 @@ begin
 
 end;
 
-procedure TForm1.btSalvarConfigClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btSalvarConfigClick(Sender: TObject);
 begin
   GravarConfiguracao;
 end;
 
-procedure TForm1.btUltTransacaoClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btUltTransacaoClick(Sender: TObject);
 begin
   MostrarTelaUltimaTransacao;
 end;
 
-procedure TForm1.btVendaPagarClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.btVendaPagarClick(Sender: TObject);
 begin
   if (btVendaPagar.Text = CBOTAO_PAGAR) then
     ExecutarPagamentoTEF
@@ -899,35 +967,44 @@ begin
     MostrarTelaVenda;
 end;
 
-function TForm1.CalcularNomeArqConfiguracao: String;
+function TFrTEFDemoAndroid.CalcularNomeArqConfiguracao: String;
 begin
   Result := ApplicationPath + CNOME_CONFIG;
 end;
 
-procedure TForm1.CarregarImpressorasBth;
+procedure TFrTEFDemoAndroid.CarregarImpressorasBth;
 begin
   {$IfDef HAS_BLUETOOTH}
    cbxImpressorasBth.Items.Clear;
    try
      ACBrPosPrinter1.Device.AcharPortasBlueTooth( cbxImpressorasBth.Items, chbTodasBth.IsChecked );
+     cbxImpressorasBth.Items.Add('NULL');
    except
    end;
   {$EndIf}
 end;
 
-procedure TForm1.cbxTipoFinanciamentoChange(Sender: TObject);
+procedure TFrTEFDemoAndroid.cbxModeloChange(Sender: TObject);
+begin
+  if rbClasseInterna.IsChecked and (cbxModelo.ItemIndex = Integer(ppExterno)) then
+    rbClasseExterna.IsChecked := True
+  else if rbClasseExterna.IsChecked and (cbxModelo.ItemIndex = 1) then
+    cbxPagCodigo.ItemIndex := Integer(pcUTF8);
+end;
+
+procedure TFrTEFDemoAndroid.cbxTipoFinanciamentoChange(Sender: TObject);
 begin
   gplParcelas.Visible := (cbxTipoFinanciamento.ItemIndex = 2) or
                          (cbxTipoFinanciamento.ItemIndex = 3);
   gplPreDatado.Visible := (cbxTipoFinanciamento.ItemIndex = 4);
 end;
 
-procedure TForm1.ClickBotaoNumero(Sender: TObject);
+procedure TFrTEFDemoAndroid.ClickBotaoNumero(Sender: TObject);
 begin
   AdicionarNumeroNaVenda(TButton(Sender).Text);
 end;
 
-procedure TForm1.CornerButton1Click(Sender: TObject);
+procedure TFrTEFDemoAndroid.CornerButton1Click(Sender: TObject);
 var
   Relatorio: string;
 begin
@@ -949,12 +1026,12 @@ begin
     ImprimirRelatorio( Relatorio );
 end;
 
-procedure TForm1.edtNomeFantasiaEstabelecimentoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtNomeFantasiaEstabelecimentoTyping(Sender: TObject);
 begin
   imgErrorNomeFantasia.Visible := (edtNomeFantasiaEstabelecimento.Text.Length < 4);
 end;
 
-procedure TForm1.edtApenasNumeros(Sender: TObject; var Key: Word;
+procedure TFrTEFDemoAndroid.edtApenasNumeros(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if not CharIsNum(KeyChar) then
@@ -973,23 +1050,23 @@ begin
                      (not ACBrValidador.ValidarCNPJ(AEdit.Text).IsEmpty);
 end;
 
-procedure TForm1.edtCNPJEstabelecimentoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtCNPJEstabelecimentoTyping(Sender: TObject);
 begin
   VerificarFormatarEditCNPJ(edtCNPJEstabelecimento, imgErrorCNPJEstabelecimento);
 end;
 
-procedure TForm1.edtCNPJSwHouseTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtCNPJSwHouseTyping(Sender: TObject);
 begin
   VerificarFormatarEditCNPJ(edtCNPJSwHouse, imgErrorCNPJSwHouse);
 end;
 
-procedure TForm1.edtEnterScrollableControl(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtEnterScrollableControl(Sender: TObject);
 begin
   if (Sender is TControl) then
     AjustarScroll(TControl(Sender));
 end;
 
-procedure TForm1.edtEstornoHoraTransacaoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtEstornoHoraTransacaoTyping(Sender: TObject);
 var
   ANumeros: string;
 begin
@@ -1001,7 +1078,7 @@ begin
   end;
 end;
 
-procedure TForm1.edtEstornoValorTransacaoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtEstornoValorTransacaoTyping(Sender: TObject);
 var
   AValor: Double;
 begin
@@ -1011,33 +1088,33 @@ begin
   edtEstornoValorTransacao.CaretPosition := edtEstornoValorTransacao.Text.Length;
 end;
 
-procedure TForm1.edtNomeAplicacaoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtNomeAplicacaoTyping(Sender: TObject);
 begin
   imgErrorNomeAplicacao.Visible := (edtNomeAplicacao.Text.Length < 2);
 end;
 
-procedure TForm1.edtNomeSwHouseTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtNomeSwHouseTyping(Sender: TObject);
 begin
   imgErrorNomeSwHouse.Visible := (edtNomeSwHouse.Text.Length < 4);
 end;
 
-procedure TForm1.edtVersaoAplicacaoTyping(Sender: TObject);
+procedure TFrTEFDemoAndroid.edtVersaoAplicacaoTyping(Sender: TObject);
 begin
   imgErrorVersaoAplicacao.Visible := edtVersaoAplicacao.Text.IsEmpty;
 end;
 
-function TForm1.EstaVendendo: Boolean;
+function TFrTEFDemoAndroid.EstaVendendo: Boolean;
 begin
   Result := (tabsPrincipal.ActiveTab = tabTeste) and (layoutVenda.Parent = layoutMain);
 end;
 
-procedure TForm1.ExecutarAdministrativo(Operacao: String = '');
+procedure TFrTEFDemoAndroid.ExecutarAdministrativo(Operacao: String = '');
 begin
   IniciarTransacaoTEF;
   ACBrTEFAndroid1.EfetuarAdministrativa(Operacao);
 end;
 
-procedure TForm1.ExecutarEstornoTEF;
+procedure TFrTEFDemoAndroid.ExecutarEstornoTEF;
 var
   AValor: Double;
   ADataHora: TDateTime;
@@ -1064,7 +1141,7 @@ begin
                                      AValor );
 end;
 
-procedure TForm1.ExecutarPagamentoTEF;
+procedure TFrTEFDemoAndroid.ExecutarPagamentoTEF;
 var
   IdentificadorTransacao: string;
   ValTransacao: Double;
@@ -1132,7 +1209,7 @@ begin
                                     DataPre );
 end;
 
-procedure TForm1.bApagarClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.bApagarClick(Sender: TObject);
 var
   TextVal: string;
 begin
@@ -1141,27 +1218,35 @@ begin
   ValorVenda := StrToIntDef(TextVal, 0)/100;
 end;
 
-procedure TForm1.bIgualClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.bIgualClick(Sender: TObject);
 begin
   RealizarOperacaoMemorizada;
 end;
 
-procedure TForm1.bPorcentClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.bPorcentClick(Sender: TObject);
 begin
   RealizarOperacaoMemorizadaPorcentagem;
 end;
 
-procedure TForm1.bLimparClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.bLimparClick(Sender: TObject);
 begin
   LimparValorVenda;
 end;
 
-procedure TForm1.OperacaoClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.OperacaoClick(Sender: TObject);
 begin
   MemorizarOperacao(TButton(Sender).Text[1]);
 end;
 
-procedure TForm1.RealizarOperacaoMemorizada;
+procedure TFrTEFDemoAndroid.rbMudaClasseImpressora(Sender: TObject);
+begin
+  if rbClasseInterna.IsChecked then
+    CarregarModelosInternos
+  else
+    CarregarModelosExternos;
+end;
+
+procedure TFrTEFDemoAndroid.RealizarOperacaoMemorizada;
 begin
   if not fOperacao.IsEmpty then
   begin
@@ -1177,7 +1262,7 @@ begin
   fValorOperacao := 0;
 end;
 
-procedure TForm1.RealizarOperacaoMemorizadaPorcentagem;
+procedure TFrTEFDemoAndroid.RealizarOperacaoMemorizadaPorcentagem;
 var
   Taxa: Double;
 begin
@@ -1197,18 +1282,18 @@ begin
   fValorOperacao := 0;
 end;
 
-procedure TForm1.sbConfigVoltarClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.sbConfigVoltarClick(Sender: TObject);
 begin
   FecharConfiguracao;
 end;
 
-procedure TForm1.seColunasEnter(Sender: TObject);
+procedure TFrTEFDemoAndroid.seColunasEnter(Sender: TObject);
 begin
   if (Sender is TControl) then
     AjustarScroll(TControl(Sender));
 end;
 
-procedure TForm1.ACBrTEFAndroid1QuandoDetectarTransacaoPendente(MsgErro: string;
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoDetectarTransacaoPendente(MsgErro: string;
   RespostaTEF: TACBrTEFResp);
 var
   AStatus: TACBrTEFStatusTransacao;
@@ -1263,7 +1348,7 @@ begin
   end;
 end;
 
-procedure TForm1.ACBrTEFAndroid1QuandoFinalizarTransacao(Sucesso: Boolean;
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoFinalizarTransacao(Sucesso: Boolean;
   MsgFinal: string; RespostaTEF: TACBrTEFResp);
 var
   i, nINFO: Integer;
@@ -1312,8 +1397,9 @@ begin
   end
   else
   begin
-    // Caso você já deseje confirmar a trasação, use o comando abaixo...
-    // Nota: isso já será invocado, automaticamente, se você configurar ConfirmarTransacoesAutomaticamente := True
+    // Para Confirmar a transação Automáticamento... use:
+    //      "ConfirmarTransacoesAutomaticamente := True"
+    // Para Confirmar Manualmente a trasação, use o exemplo abaixo...
     if swConfirmacaoManual.IsChecked and RespostaTEF.Confirmar then
     begin
       MsgFinal := '';
@@ -1370,7 +1456,7 @@ begin
   end;
 end;
 
-procedure TForm1.ACBrTEFAndroid1QuandoGravarLog(const ALogLine: string;
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoGravarLog(const ALogLine: string;
   var Tratado: Boolean);
 var
   Linha: string;
@@ -1383,14 +1469,14 @@ begin
   memoLog.Lines.Add(Linha);
 end;
 
-procedure TForm1.ACBrTEFAndroid1QuandoIniciarTransacao(AIntent: JIntent);
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoIniciarTransacao(AIntent: JIntent);
 begin
   memoLog.Lines.Add('');
   memoLog.Lines.Add('Iniciando Comunicação com APK');
   memoLog.Lines.Add('');
 end;
 
-procedure TForm1.ImprimirComprovantes(ATEFResp: TACBrTEFResp);
+procedure TFrTEFDemoAndroid.ImprimirComprovantes(ATEFResp: TACBrTEFResp);
 begin
   if not Assigned(ATEFResp) then
     Exit;
@@ -1420,7 +1506,7 @@ begin
   end;
 end;
 
-procedure TForm1.AdicionarNumeroNaVenda(ANum: String);
+procedure TFrTEFDemoAndroid.AdicionarNumeroNaVenda(ANum: String);
 var
   TextVal: string;
 begin
@@ -1435,7 +1521,7 @@ begin
   ValorVenda := StrToIntDef(TextVal+ANum, 0)/100;
 end;
 
-procedure TForm1.LerConfiguracao;
+procedure TFrTEFDemoAndroid.LerConfiguracao;
 var
   IniFile, NomePorta: string;
   Ini: TIniFile;
@@ -1448,6 +1534,9 @@ begin
     if cbxImpressorasBth.Items.Count < 1 then
       CarregarImpressorasBth;
 
+    rbClasseInterna.IsChecked := INI.ReadBool('PosPrinter','ClasseInterna', True);
+    rbClasseExterna.IsChecked := not rbClasseInterna.IsChecked;
+    rbMudaClasseImpressora(nil);
     NomePorta := Ini.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(NomePorta);
     cbxModelo.ItemIndex := Ini.ReadInteger('PosPrinter','Modelo', 1);
@@ -1499,7 +1588,7 @@ begin
   edtCNPJEstabelecimentoTyping(nil);
 end;
 
-procedure TForm1.GravarConfiguracao;
+procedure TFrTEFDemoAndroid.GravarConfiguracao;
 var
   IniFile: string;
   Ini: TIniFile;
@@ -1508,6 +1597,7 @@ begin
   Ini := TIniFile.Create(IniFile, TEncoding.UTF8);
   try
     // configurações do ACBrPosPrinter //
+    INI.WriteBool('PosPrinter','ClasseInterna', rbClasseInterna.IsChecked);
     if Assigned(cbxImpressorasBth.Selected) then
       INI.WriteString('PosPrinter','Porta', cbxImpressorasBth.Selected.Text);
 
@@ -1548,7 +1638,7 @@ begin
   GravarConfiguracaoTransacao;
 end;
 
-procedure TForm1.GravarConfiguracaoTransacao;
+procedure TFrTEFDemoAndroid.GravarConfiguracaoTransacao;
 var
   IniFile: string;
   Ini: TIniFile;
@@ -1566,7 +1656,7 @@ begin
   end;
 end;
 
-procedure TForm1.LimparInterfacePrincipal;
+procedure TFrTEFDemoAndroid.LimparInterfacePrincipal;
 begin
   if (tabsPrincipal.ActiveTab <> tabTeste) then
     VoltarParaTestes;
@@ -1583,7 +1673,7 @@ begin
   btEstorno.Text := CBOTAO_ESTORNO;
 end;
 
-procedure TForm1.LimparValorVenda;
+procedure TFrTEFDemoAndroid.LimparValorVenda;
 begin
   ValorVenda := 0;
   fValorOperacao := 0;
@@ -1591,7 +1681,7 @@ begin
   fNovoValor := True;
 end;
 
-procedure TForm1.MemorizarOperacao(Operacao: String);
+procedure TFrTEFDemoAndroid.MemorizarOperacao(Operacao: String);
 begin
   RealizarOperacaoMemorizada;
 
@@ -1600,7 +1690,7 @@ begin
   fNovoValor := True;
 end;
 
-procedure TForm1.MostrarMenuAdministrativoPayGo;
+procedure TFrTEFDemoAndroid.MostrarMenuAdministrativoPayGo;
 var
   AItem: TListBoxItem;
   i: Integer;
@@ -1629,7 +1719,7 @@ begin
   btAdmin.IsPressed := True;
 end;
 
-procedure TForm1.MostrarTelaEstorno;
+procedure TFrTEFDemoAndroid.MostrarTelaEstorno;
 begin
   LimparInterfacePrincipal;
   edtEstornoNSU.Text := '';
@@ -1644,7 +1734,7 @@ begin
   edtEstornoNSU.SetFocus;
 end;
 
-procedure TForm1.MostrarTelaUltimaTransacao;
+procedure TFrTEFDemoAndroid.MostrarTelaUltimaTransacao;
 begin
   tabsPrincipal.SetActiveTabWithTransition( tabUltTransacao,
                                             TTabTransition.Slide,
@@ -1652,7 +1742,7 @@ begin
   tabsUltimaTransacao.TabIndex := 0;
 end;
 
-procedure TForm1.MostrarTelaVenda;
+procedure TFrTEFDemoAndroid.MostrarTelaVenda;
 begin
   LimparInterfacePrincipal;
   layoutVenda.Parent := layoutMain;
@@ -1660,12 +1750,12 @@ begin
   btVendaPagar.IsPressed := True;
 end;
 
-procedure TForm1.imgConfigClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.imgConfigClick(Sender: TObject);
 begin
   MostrarTelaConfiguracao;
 end;
 
-procedure TForm1.ImprimirRelatorio(ATexto: String);
+procedure TFrTEFDemoAndroid.ImprimirRelatorio(ATexto: String);
 var
   ComandoInicial, ComandoFinal: string;
 begin
@@ -1681,7 +1771,7 @@ begin
   ACBrPosPrinter1.Imprimir(ComandoInicial + ATexto + ComandoFinal);
 end;
 
-procedure TForm1.InicializarPosPrinter;
+procedure TFrTEFDemoAndroid.InicializarPosPrinter;
 begin
   if ACBrPosPrinter1.Ativo then
     Exit;
@@ -1696,13 +1786,13 @@ begin
   ACBrPosPrinter1.Ativar;
 end;
 
-procedure TForm1.IniciarTransacaoTEF;
+procedure TFrTEFDemoAndroid.IniciarTransacaoTEF;
 begin
   memoLog.Lines.Clear;
   InicializarTEF;
 end;
 
-procedure TForm1.InicializarTEF;
+procedure TFrTEFDemoAndroid.InicializarTEF;
 begin
   if ACBrTEFAndroid1.Inicializado then
     Exit;
@@ -1722,14 +1812,14 @@ begin
   ACBrTEFAndroid1.Inicializar;
 end;
 
-procedure TForm1.lbAdminItemClick(const Sender: TCustomListBox;
+procedure TFrTEFDemoAndroid.lbAdminItemClick(const Sender: TCustomListBox;
   const Item: TListBoxItem);
 begin
   if Assigned(Item) then
     ExecutarAdministrativo(Item.Text);
 end;
 
-procedure TForm1.lblTituloTestesClick(Sender: TObject);
+procedure TFrTEFDemoAndroid.lblTituloTestesClick(Sender: TObject);
 var
   AMsg: string;
 begin
@@ -1738,7 +1828,7 @@ begin
   TDialogService.ShowMessage(AMsg);
 end;
 
-procedure TForm1.MostrarTelaConfiguracao(Aba: Integer = 0);
+procedure TFrTEFDemoAndroid.MostrarTelaConfiguracao(Aba: Integer = 0);
 begin
   tabsPrincipal.SetActiveTabWithTransition( tabConfig,
                                             TTabTransition.Slide,
@@ -1747,7 +1837,7 @@ begin
   tabsConfig.TabIndex := Aba;
 end;
 
-procedure TForm1.FecharConfiguracao;
+procedure TFrTEFDemoAndroid.FecharConfiguracao;
 begin
   GravarConfiguracao;
   AplicarConfiguracoes;

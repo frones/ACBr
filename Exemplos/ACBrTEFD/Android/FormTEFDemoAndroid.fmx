@@ -1,7 +1,7 @@
-object Form1: TForm1
+object FrTEFDemoAndroid: TFrTEFDemoAndroid
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'ACBrTEFAndroid - Demo'
   ClientHeight = 612
   ClientWidth = 387
   StyleBook = StyleBook1
@@ -9,6 +9,7 @@ object Form1: TForm1
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyUp = FormKeyUp
   OnVirtualKeyboardShown = FormVirtualKeyboardShown
   OnVirtualKeyboardHidden = FormVirtualKeyboardHidden
@@ -3345,7 +3346,7 @@ object Form1: TForm1
     Size.Height = 612.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'tabcontrolstyle'
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -3365,7 +3366,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 18
       Size.Width = 63.000000000000000000
       Size.Height = 22.000000000000000000
@@ -3404,67 +3405,67 @@ object Form1: TForm1
               PNG = {
                 89504E470D0A1A0A0000000D494844520000004800000048080600000055EDB3
                 47000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                077F49444154785EED9C5B8815751CC73DEB9EDDDAD5A48BBAD1832F5DECA122
-                952E280A51584490A8D04341D06391A804415044BEAA3D2414223ED8958AC0A2
-                8842B3A894448988D2820ACA75736505652F676F7D7E3BDF73DAD939FF39FFB9
-                9CA32BF3813F333BF3FDDDFE73FBCFE5EC9C828282828282594B49D396313939
-                D9455BC9EC32A64B69B7D2164F4C4C747674745C6F9A4AA5D2DBD6D636522A95
-                FA68BFD07E65F131A6DFD2064D735941F18B689BC6C6C60EF5F7F70FD321A930
-                5BF361BECCA7DCCF5E2862F5F8F8F8FE53A74E5554636E984FF36D31146EF640
-                D26BD8D25FAB96A663B12CA6C25FBA906B0F5BF5CD20EDD6A3D83D4AE7D2822D
-                B87E6868682048F5E26139582E4A2B3399AF62E4D441423BB8EA3CAD450D1919
-                1939532E970F7045FA9E3F7FA39D64FE02EDB4ADC7670F6D1EB337D36E62FEDE
-                D1D1D1FB3A3B3B17DA7A1FC86917396DC167458B5A0F49CC67B7FE92021AC296
-                3D8B761736F7C83C31666B3ECC97DCC662B9598E326F2D045E480E478354DCB0
-                B7F4A2DD4AEB966966CC97F934DF0A13C751CB55A6AD8180F32D7010BF3E5C86
-                47D982DB4D2B3327E876CBAC06CBF669B513F36D312C96CC5C5827B5664F2258
-                87EDBA41DCFA70BEF89DC9729934246D075541BE5C319D28E70E99340F02BD16
-                84AC0FEB3F666B5D25B917593BC8B098165BE675B1DC256F0E24B15EB1EA4202
-                7B98CC95DC0BF46DD8BD3FE5601A2CFB947889CE5B98CD550E4EAC06C9F305DF
-                3D71E31C4B4C522F48F4766CDEE044DB271711FAFAFA46D07C81F661997911D7
-                49AA21FFC124419D2364D6D9AEEDB5E7A0EB42BFC3E3C41A421D7583DCC482DC
-                F624E7E166B5489A0F24B6868226E43F844E8E0B248D059D75CEC129C314542A
-                95BF992C95BB58D02D709DB8AD16AB49D2ECB86E3C6D2F20D00AC91A42E77C28
-                D3D4D0497F32B94E2E63B1DC5C7BAAD524593608B25A3E2350F076C91A82FCD1
-                C02ACAB973E706F1F5016D1BF15E60BA33EEB2CDFAF7E4B62196A3CC22586D92
-                A58700FBE52F8446C8DE832FB6D87732ADC1D61DC3FF2BCC5E2D590D9695684F
-                9E3F7FFE82696742ECBB258DC572748DB8AD36C9D281F345AE5D94755B256B08
-                DA25320BC1F2E7247182662D398CCB640A0EB37F58BE4E928658AE320DA15344
-                FA2793186F92AF1076B3C83AEF310ADAC7645A637878B89F49599258AA87097B
-                E1374C36FADA55B15C5D37B856A364C921A143F21382847749E2054944B620BE
-                0F6B7543B0B767DA77E8CF5458CE0A1DC26A942419D876D9402D70138664BD8E
-                FF2AE81F97690D0E93BFB4BA2558CE0A1D42357649E60F0E1F085C84D1C837D1
-                8336F4ABA68C67408C0D92341DC2955CA376AB55B2086D9A4628954A75EFC6DB
-                DBDB0FB26E527FFA7294E4CE6ABEC6E0E0E05E926BCEBDD10C2C67CB5D7F8670
-                D56A383B88C46FD16C089C799F3BAA60335C2E9723F76ADDDDDDF35867E39FCF
-                D890ABB4B869B87277D51A0B27AFC8B8C5C0D983922402531BFA9F0CBCD48798
-                3FE27F0BCDEB9E2B2996BB4285B05A25F18762FE907D0882DC284962B0BD8D43
-                EDB45C39617C62F77D5FA17F82E91532CF8CE53E15600656AB24FE304E3923FB
-                1004B956925460BF842D765CEE1A62E3170EC197B1CBFCC8D47297DB1056AB24
-                FEC4BC43CFFCD8121FED24BB5983452FEC0A844DA6AB1E6E3A026F61AC5649FC
-                69660755A1607B3BF12C7BD44FF2DD10F6A65799A47A9F875D7E1DD4AC43CC05
-                7E5750FC4ED758653AD649324B84E52E1721521D62CD3849FB4088323136B057
-                1D0922D607CD2332F1C672977988542769BBF4C93E0441525DE6D340AC7576E7
-                AED02128EA049344879AE51E5887B15A25891037923EA1D999783DF2CC83B6B6
-                B68F18FDDEC921F5B316D560B9BDB7B72FD5925037F7985ADD1D4472758DE8F0
-                D4EFD6D3401EFFD236F6F6F68E69D174128DBE5DB9BB6A8D85DD31B79BD52AF8
-                BC86B699F6901679C35E7420C8E07F58B65BAB1B823CD5CDAA13ECF27CDCB192
-                62F60D0C0C0C993DF39F6B9537D61953C1A7C1B277B4BA2196B3CC42A47EDC61
-                70F2CAFCC00CAD3D730E61B7127097245EE027F2468465DE2F2B2D679985B01A
-                25490E45647EE48A6EA5CC4290D831D6754A160BF22EBD110D81FD8B92C462B9
-                36E5912BC6B93CB4A733EA8E94D9AAF64EBEE1F36574AF071611EE972416CB55
-                FA10991FDA1B2497F9B50FBAB5328B40E71D61FD324943B07C893A3182DEB2B6
-                4BEAC472B45C03AB30569B64E921402E2F0ED1BE25B3BAD051C7D1EC21DE4B4C
-                F7F2F761B670E875CF74D03D25D7B1588E328960B549960D92CDFCEA19DD95F8
-                F941A699A0E8B7E53616CBCD758AB09A24CB0E81F2FA786101C545C63349C0FE
-                5DEB6CB97482B4751F2F182496D7E72FEDB4E7ED7DBCD9FA62CF8E28EA19B989
-                05796B3F7F31F09BF707548BB1D9A6AF359C7028D8706033B391F7F72E2C97C0
-                3A8A6A68CED7F8249AFB27780676F53EC1FB8478892EC1985DBC4FF0AA904033
-                3EE2DC27F31A2CF3BECF322CA6C596795D2C77C99B07719AF11970A60E427EE9
-                7C066CB0B5F2FE903C5507996F8BE1BA944FA3751F92572160F153844610F8B2
-                FF314BAA075FD3218FE2E7503E90D065F983BA5C21BFE227993EB0058B1FF5FA
-                40D2C5CFC27DA08859FB8F05325FC592429DC5BFA6282828282828680173E6FC
-                0721E75B169A4DA66A0000000049454E44AE426082}
+                078249444154785EED9C5B8815751CC73DC73DBBB5AB491775A3075FBAD84345
+                2A5D5014A2B0882051A18782A0C722510982A0887C557B4828447CB02B158145
+                1185665129891211A50515EEA29B2B2B287B397BEBF3DBF99ED3CECEF9CFF99F
+                99394757E6037F6676E6FBBBFDE7F69FCBD939393939393939B39682A62D6372
+                72B293B692D9654C97D26EA72D9E9898E8686F6FBFD134E572F974B1581C2914
+                0A7DB4DF68BFB3F818D3EF6983A6B9A2A0F845B44D63636387FAFBFB87E99044
+                98ADF9305FE653EE672F14B17A7C7C7C7F6F6F6F59356686F934DF1643E1660F
+                24BD862DFDAD6A693A16CB622AFCE50BB976B355DF0ED26E3D8ADDAD742E2FD8
+                82EB8786860682542F1D9683E5A2B45293FA2A464EED24B483ABCEB35A549791
+                9191B3A552E90057A41FF9F30FDA49E62FD2CED87A7C76D3E6317B2BED16E6EF
+                1F1D1D7DA0A3A363A1ADF7819C7691D3167C96B5A8F590C47C76EBAF29A02E6C
+                D973687761739FCC1BC66CCD87F992DB582C37CB51E6AD85C00BC9E168908A1B
+                F696D368B7D2BA649A1AF3653ECDB7C2C471D47295696B20E07C0B1CC4AFCDA9
+                53A746D982DB4D2B3327E876CBAC0ACBF669B513F36D312C96CC5C5827B5664F
+                2258BBEDBA41DCDA70BEF893C97299D42569075540BE5C319D28E77699340F02
+                BD1184AC0DEB3F656B5D23B917693BC8B098165BE635B1DC256F0E24B15EB16A
+                42027B98CC95DC0BF445EC3E9C72300D967D4EBC86CE5B98CD550E4EAC06C9B3
+                05DFDD71E31C4B4C522F48F44E6CDEE244DB271711FAFAFA46D07C85F6519979
+                11D749AA21FBC124419D2364D6D9AEEDB5E7A0EB44BFC3E3C41A421D7593DCC4
+                82DCF624E7E166B5489A0D24B6868226E43F844E8E0B248D059D75CEC129C304
+                94CBE51E264BE52E16740B5C276EABC56A92343DAE1B4FDB0B08B442B2BAD039
+                1FCB343174D2DF4C6E90CB582C37D79E6A3549960E82AC96CF0814BC5DB2BA20
+                7F3CB08A72FEFCF9417C7D44DB46BC9798EE8CBB6CB3FE03B9AD8BE528B30856
+                9B64C921C07EF90BA111B2F7E08B2DF6834CABB075C7F0FF1AB3D74A56856505
+                DAD3172E5CB868DA9910FB5E4963B11C5D236EAB4DB264E07C916B1765DD56C9
+                EA827689CC42B0FC05499CA0594B0EE3329982C3AC97E5EB24A98BE52AD3103A
+                45247F3289F126F90A61378BACF31EA3A07D42A655868787FB99942489A57298
+                B0177EC764A3AF5D05CBD575836B354AD6382474487E4290F02E49BC2089C816
+                C4F761ADAE0BF6F64CFB2EFD9908CB59A143588D923406B69D36500BDC842159
+                AFE3BF02FA27655A85C3E41FAD6E0996B34287508D9D92F983C38702176134F2
+                6DE8411BFA5553C63320C606499A0EE10AAE51BBD52A5984A2A6110A8542CDBB
+                F1B6B6B683AC9BD49FBE1C25B9739AAF323838B897E49A736F3403CBD972D79F
+                215CB51ACE0E22F1DB341B0267DEE78E0AD80C974AA5C8BD5A5757D73CD6D9F8
+                E70B36E42A2D6E1AAEDC5DB5C6C2C92B326E3170F6B0240D81A90DFD4F065E6A
+                43CC9FF1BF85E675CFD52896BB4285B05A25F18762FE927D0882DC2C49C3607B
+                0787DA19B972C2F8C4EEFBBE41FF14D3AB649E1ACB7D2AC00CAC5649FC619C72
+                56F6210872BD2489C07E095BECB8DCD5C5C62F1C82AF6297FA91A9E52EB721AC
+                5649FC8979879EFAB1253EDA4876B3068B5ED815089B54573DDCB407DEC258AD
+                92F8D3CC0EAA40C1F676E279F6A85FE4BB2EEC4DAF3349F43E0FBBEC3AA85987
+                980BFCAEA0F89DAEB1CA74AC9364D61096BB5C8448748835E324ED03214AC4D8
+                C05E752488581B348FC9C41BCB5DE621129DA4EDD227FB10044974994F02B1D6
+                D99DBB4287A0A8134C1A3AD42CF7C03A8CD52A4984B891F409CDCEC4EB916716
+                148BC54F18FDDECD21F5AB165561B9BDB7B72FD51AA166EE31B5BA3B88E46A1A
+                D1E189DFAD27813CFEA56DECE9E919D3A2E93434FA76E5EEAA351676C7CC6E56
+                2BE0F33ADA66DA235AE40D7BD1812083FF61D96EADAE0BF24437AB4EB0CBF271
+                C74A8AD93730303064F6CC7FA955DE58674C059F06CBDED3EABA58CE320B91F8
+                7187C1C92BF50333B4F6CC3984DD4AC03D9278819FC81B119679BFACB49C6516
+                C26A94A4712822F52357742B651682C48EB1AE43B2589077EA8D6808EC5F9624
+                16CBB5298F5C31CEE4A13D9D5173A4CC56B577F2759F2FA37B33B088F0A024B1
+                58AED28748FDD0DE20B9D4AF7DD0AD9559043AEF08EB97491A82E54BD48911F4
+                96B54D522796A3E51A5885B1DA244B0E0132797188F61D99D5848E3A8E660FF1
+                5E61BA97BF0FB38543AF7BA683EE19B98EC572944904AB4DB274906CEA57CFE8
+                AEC6CF4F324D0545BF2BB7B1586EAE5384D524597A0894D5C70B0B282E329E69
+                04ECDFB7CE964B27485BF7F1824162597DFED2467BD1DEC79BAD2FF6EC88A29E
+                939B5890B7F6F31703BF597F40B5189B6DFA5AC30987820D0736331B797FEFC2
+                7209ACA3A886E67C8D4FA2997F82676057EB13BCCF88D7D02518B34BF7095E05
+                1268C6479CFB645E8565DEF75986C5B4D832AF89E52E79F3204E333E034ED541
+                C82F9FCF800DB656D61F9227EA20F36D315C97F269B4EE43F20A04CC7F8A500F
+                025FF13F6649F4E06B3AE491FF1CCA0712BA227F509729E497FF24D307B660FE
+                A35E1F483AFF59B80F14316BFFB140EAAB58A35067FEAF297272727272725AC0
+                9C39FF01D1FA5A3BAE080B820000000049454E44AE426082}
               FileName = 'C:\temp\outline_paid_white_48.png'
             end>
           Align = Left
@@ -3491,7 +3492,7 @@ object Form1: TForm1
                 87000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
                 050B494441546843ED982D6C5E5518C7DBA662A2A262E21588122A2A10154D58
                 02A2C904A2A2248889898989898A8A09C4C4C404240844C50402510109720231
-                5181408C049289850CB225D0408268139AF4BBF0FB9FF3EFE97BCFFD7CFBBE0B
+                5181408C049289850CB2A590408268139AF4BBF0FB9FF3EFE97BCFFD7CFBBE0B
                 15EF2FB939E73ECF739EF39CEF73EFC498316346C7E9E9E9E7FFB670767676DF
                 E6570B029B778C5D9876B1A199723A0ADE71DA8579A74333CA06740E8A1118A4
                 B18D8CAC010455680053EA3392B7F590FF26082FB8FA23303939F923CF6B3F3F
@@ -3529,7 +3530,7 @@ object Form1: TForm1
                 A64547BEB029685A202BFD86E15DEB433F0BB6DC71F9EFCA37079516163D81A4
                 EF02F2F977C0E08BB28651FE9DFED5E939E9E827E6C235809B666EFBFF93F772
                 13FDA3332C6F72049AF8CDE9D08CAC014C8BCE415DC929C4CCD075F8DB3849EA
-                D18EE52263C68C199A8989FF002E9B7AC47EDCCA360000000049454E44AE4260
+                D18EE52263C68C199A8989FF009FFB7A58ADBC3FD90000000049454E44AE4260
                 82}
               FileName = 'C:\temp\outline_settings_white_48.png'
             end>
@@ -4175,7 +4176,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 5
       Size.Width = 63.000000000000000000
       Size.Height = 22.000000000000000000
@@ -4194,21 +4195,21 @@ object Form1: TForm1
         Size.PlatformDefault = False
         StyleLookup = 'tabcontrolstyle'
         TabHeight = 49.000000000000000000
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
-          383s
-          439s
-          383s
-          439s)
+          379s
+          435s
+          379s
+          435s)
         object tsConfTEF: TTabItem
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           ImageIndex = 11
-          Size.Width = 191.000000000000000000
+          Size.Width = 189.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -4218,8 +4219,8 @@ object Form1: TForm1
           ExplicitSize.cy = 49.000000000000000000
           object lbConfTEF: TListBox
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 439.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 435.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             ShowScrollBars = False
@@ -4227,8 +4228,8 @@ object Form1: TForm1
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 379.000000000000000000
-            Viewport.Height = 435.000000000000000000
+            Viewport.Width = 375.000000000000000000
+            Viewport.Height = 431.000000000000000000
             object lbiGeral: TListBoxItem
               Selectable = False
               HitTest = True
@@ -4251,8 +4252,8 @@ object Form1: TForm1
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 225.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 221.000000000000000000
                 object lbghGeral: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4429,8 +4430,8 @@ object Form1: TForm1
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 232.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 228.000000000000000000
                 object ListBoxGroupHeader17: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4580,8 +4581,8 @@ object Form1: TForm1
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 214.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 210.000000000000000000
                 object ListBoxGroupHeader1: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4813,8 +4814,8 @@ object Form1: TForm1
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 110.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 106.000000000000000000
                 object ListBoxGroupHeader6: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4929,9 +4930,9 @@ object Form1: TForm1
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           ImageIndex = 5
-          Size.Width = 192.000000000000000000
+          Size.Width = 190.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -4941,18 +4942,95 @@ object Form1: TForm1
           ExplicitSize.cy = 49.000000000000000000
           object lbConfImpressora: TListBox
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 439.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 435.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             DisableFocusEffect = True
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 379.000000000000000000
-            Viewport.Height = 435.000000000000000000
+            Viewport.Width = 359.000000000000000000
+            Viewport.Height = 431.000000000000000000
+            object ListBoxGroupHeader5: TListBoxGroupHeader
+              Selectable = False
+              StyledSettings = [Family, Size, Style, FontColor]
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 4.000000000000000000
+              Size.Width = 339.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              TabStop = False
+              Text = 'Modelo da Impressora'
+            end
+            object lbiClasse: TListBoxItem
+              Position.Y = 38.000000000000000000
+              Size.Width = 359.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 11
+              object GridPanelLayout6: TGridPanelLayout
+                Align = Client
+                Size.Width = 359.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = rbClasseInterna
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = rbClasseExterna
+                    Row = 0
+                  end>
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object rbClasseInterna: TRadioButton
+                  Align = Right
+                  IsChecked = True
+                  Position.X = 38.500000000000000000
+                  Size.Width = 141.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  Text = 'EscPos (interna)'
+                  OnChange = rbMudaClasseImpressora
+                end
+                object rbClasseExterna: TRadioButton
+                  Align = Right
+                  Position.X = 226.000000000000000000
+                  Size.Width = 133.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Text = 'Externa'
+                  OnChange = rbMudaClasseImpressora
+                end
+              end
+            end
             object lbModelos: TListBoxItem
               Selectable = False
+              Position.Y = 78.000000000000000000
               Size.Width = 359.000000000000000000
               Size.Height = 65.000000000000000000
               Size.PlatformDefault = False
@@ -5024,6 +5102,7 @@ object Form1: TForm1
                   Size.Height = 24.500000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 1
+                  OnChange = cbxModeloChange
                 end
                 object Label4: TLabel
                   Align = Client
@@ -5087,17 +5166,17 @@ object Form1: TForm1
               Margins.Right = 10.000000000000000000
               Margins.Bottom = 4.000000000000000000
               Position.X = 10.000000000000000000
-              Position.Y = 69.000000000000000000
+              Position.Y = 147.000000000000000000
               Size.Width = 339.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 2
+              TabOrder = 3
               TabStop = False
               Text = 'Impressoras BlueTooth'
             end
             object lbImpressoras: TListBoxItem
               Selectable = False
-              Position.Y = 103.000000000000000000
+              Position.Y = 181.000000000000000000
               Size.Width = 359.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
@@ -5152,21 +5231,21 @@ object Form1: TForm1
               Margins.Right = 10.000000000000000000
               Margins.Bottom = 4.000000000000000000
               Position.X = 10.000000000000000000
-              Position.Y = 147.000000000000000000
+              Position.Y = 225.000000000000000000
               Size.Width = 339.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 4
+              TabOrder = 5
               TabStop = False
               Text = 'Largura e Espacejamento '
             end
             object lbLarguraEspacejamento: TListBoxItem
               Selectable = False
-              Position.Y = 181.000000000000000000
+              Position.Y = 259.000000000000000000
               Size.Width = 359.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 5
+              TabOrder = 6
               object GridPanelLayout1: TGridPanelLayout
                 Align = Client
                 Size.Width = 359.000000000000000000
@@ -5305,11 +5384,11 @@ object Form1: TForm1
             object lbiFontesImpressora: TListBoxItem
               Selectable = False
               HitTest = True
-              Position.Y = 255.000000000000000000
+              Position.Y = 333.000000000000000000
               Size.Width = 359.000000000000000000
               Size.Height = 138.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 3
+              TabOrder = 4
               object ListBox1: TListBox
                 Align = Client
                 HitTest = False
@@ -5324,8 +5403,8 @@ object Form1: TForm1
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 339.000000000000000000
-                Viewport.Height = 138.000000000000000000
+                Viewport.Width = 335.000000000000000000
+                Viewport.Height = 134.000000000000000000
                 object ListBoxGroupHeader8: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -5389,11 +5468,11 @@ object Form1: TForm1
             end
             object lbiBotaoTestar: TListBoxItem
               Selectable = False
-              Position.Y = 393.000000000000000000
+              Position.Y = 471.000000000000000000
               Size.Width = 359.000000000000000000
               Size.Height = 48.000000000000000000
               Size.PlatformDefault = False
-              TabOrder = 6
+              TabOrder = 7
               object btnTestarImpressora: TCornerButton
                 Align = Contents
                 CornerType = InnerRound
@@ -6118,8 +6197,8 @@ object Form1: TForm1
           DefaultItemStyles.GroupHeaderStyle = ''
           DefaultItemStyles.GroupFooterStyle = ''
           OnItemClick = lbAdminItemClick
-          Viewport.Width = 375.000000000000000000
-          Viewport.Height = 578.000000000000000000
+          Viewport.Width = 371.000000000000000000
+          Viewport.Height = 566.000000000000000000
         end
       end
     end
@@ -6155,8 +6234,8 @@ object Form1: TForm1
           DefaultItemStyles.ItemStyle = ''
           DefaultItemStyles.GroupHeaderStyle = ''
           DefaultItemStyles.GroupFooterStyle = ''
-          Viewport.Width = 383.000000000000000000
-          Viewport.Height = 586.000000000000000000
+          Viewport.Width = 379.000000000000000000
+          Viewport.Height = 582.000000000000000000
           object ListBoxGroupHeader7: TListBoxGroupHeader
             Selectable = False
             TextSettings.WordWrap = True
@@ -6303,7 +6382,7 @@ object Form1: TForm1
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
                 Size.Width = 173.500000000000000000
-                Size.Height = 32.000000000000000000
+                Size.Height = 33.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
                 TextSettings.HorzAlign = Center
@@ -6392,19 +6471,19 @@ object Form1: TForm1
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
-          383s
-          438s
-          383s
-          438s
-          383s
-          438s)
+          379s
+          434s
+          379s
+          434s
+          379s
+          434s)
         object tabDadosUltimaTransacao: TTabItem
           CustomIcon = <
             item
             end>
           IsSelected = True
           ImageIndex = 10
-          Size.Width = 127.000000000000000000
+          Size.Width = 126.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6424,12 +6503,12 @@ object Form1: TForm1
             TextSettings.Font.Family = 'Lucida Console'
             TextSettings.Font.StyleExt = {00040000000000000003000000}
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 434.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 438.000000000000000000
+            Viewport.Width = 358.000000000000000000
+            Viewport.Height = 413.000000000000000000
           end
         end
         object tabComprovantes: TTabItem
@@ -6438,7 +6517,7 @@ object Form1: TForm1
             end>
           IsSelected = False
           ImageIndex = 12
-          Size.Width = 127.000000000000000000
+          Size.Width = 126.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6450,25 +6529,25 @@ object Form1: TForm1
             Align = Client
             FullSize = True
             Images = ImageList1
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 434.000000000000000000
             Size.PlatformDefault = False
             TabHeight = 50.000000000000000000
             TabIndex = 1
             TabOrder = 0
             TabPosition = Bottom
             Sizes = (
-              383s
-              388s
-              383s
-              388s)
+              375s
+              380s
+              375s
+              380s)
             object tabViaCliente: TTabItem
               CustomIcon = <
                 item
                 end>
               IsSelected = False
               ImageIndex = 13
-              Size.Width = 190.000000000000000000
+              Size.Width = 186.000000000000000000
               Size.Height = 50.000000000000000000
               Size.PlatformDefault = False
               StyleLookup = ''
@@ -6502,12 +6581,12 @@ object Form1: TForm1
                 Margins.Top = 8.000000000000000000
                 Margins.Right = 4.000000000000000000
                 Margins.Bottom = 8.000000000000000000
-                Size.Width = 375.000000000000000000
-                Size.Height = 372.000000000000000000
+                Size.Width = 367.000000000000000000
+                Size.Height = 364.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 375.000000000000000000
-                Viewport.Height = 372.000000000000000000
+                Viewport.Width = 346.000000000000000000
+                Viewport.Height = 343.000000000000000000
               end
             end
             object tabViaEstabelecimento: TTabItem
@@ -6516,7 +6595,7 @@ object Form1: TForm1
                 end>
               IsSelected = True
               ImageIndex = 14
-              Size.Width = 191.000000000000000000
+              Size.Width = 187.000000000000000000
               Size.Height = 50.000000000000000000
               Size.PlatformDefault = False
               StyleLookup = ''
@@ -6550,12 +6629,12 @@ object Form1: TForm1
                 Margins.Top = 8.000000000000000000
                 Margins.Right = 4.000000000000000000
                 Margins.Bottom = 8.000000000000000000
-                Size.Width = 375.000000000000000000
-                Size.Height = 372.000000000000000000
+                Size.Width = 367.000000000000000000
+                Size.Height = 364.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 375.000000000000000000
-                Viewport.Height = 372.000000000000000000
+                Viewport.Width = 346.000000000000000000
+                Viewport.Height = 343.000000000000000000
               end
             end
           end
@@ -6566,7 +6645,7 @@ object Form1: TForm1
             end>
           IsSelected = False
           ImageIndex = 12
-          Size.Width = 129.000000000000000000
+          Size.Width = 127.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6586,12 +6665,12 @@ object Form1: TForm1
             TextSettings.Font.StyleExt = {00040000000000000003000000}
             TextSettings.WordWrap = True
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 434.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 438.000000000000000000
+            Viewport.Width = 358.000000000000000000
+            Viewport.Height = 413.000000000000000000
           end
         end
       end
@@ -7374,13 +7453,13 @@ object Form1: TForm1
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
               00D749444154484BED954D0E82301085DBD2780E6EE1163C80E089BC9189AEFD
-              61EBBE07E01CA62DBE8149C4851BA035285FD24CFA4866A699472B166687E4D8
+              61EBB237E01CA62DBE8149C4851BA035285FD24CFA4866A699472B166687E4D8
               E2BD5F236CB056AD308E07D6552975EFB63D50A830C6B86642385FC9255E2773
               CE1DD0C5CE5A5B23D62C0F06CDA75AEB14F1942449C172078A9DA91B7CDCB334
               0ACA43F990F7C692501C89B7F905051D5CA893A9F974B2E0FC6EB1BEF5E907CC
               E1A24A4A59B13C188C2B43BE8CF2C1FA39CB1D548C061ACBFAC1F98F62C16F90
-              AF59FF08AB6EA3DCFA706919ED3D23D0459C977A612608F1048D3D7663FDE651
-              DE0000000049454E44AE426082}
+              AF59FF08AB6EA3DCFA706919ED3D23D0459C977A612608F104BE2E763FF14A28
+              220000000049454E44AE426082}
             FileName = 'C:\temp\outline_credit_card_white_18.png'
           end>
         Name = 'outline_credit_card_white_18'
@@ -7397,16 +7476,16 @@ object Form1: TForm1
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
               014049444154484BED563B6EC2401434EB8663981B20AA9434F4093D1294A4A1
-              A444D0E5100939025D38022517B0E102D0DA927FCC58CF45CC9ACFCA412830D2
-              D38CDFBC7DEB959F655B8F8124493A699A2AD1236847740BD1A346AE0E3D218B
-              D7A32F9E033D12ADA03BD45AC4713C477C22A6284EC330DC60C19BEFFB3BD775
-              63E821BC1F7A645E334F9F75AC176F2A7DE6D2FA1834595C158A9BD58433D054
-              4AF5C16BF042D25703A77CB56DBB09FE060F24FD1BF9C98A77742DCAFA64C3A0
-              036AEB08C720B2C1D1A17433E005B13108AED3E2D46695E3D4662B44C320B8EE
-              3CFE7A40B4A3CF91057F80C7625D8C7C5DDEE7A2D107B5A90DD0BEEF9349CA08
-              657D9E2F752578B0971A7CBBEF5955289EECE899E16EBE1033EA288AB658D30D
-              8260EF795E02FD0E6F29754B5E334F9F75AC176FC63ED4A540C1EDFEAEFE112C
-              EB000B55F8CBA90094340000000049454E44AE426082}
+              A444D0E5100939025D380225B55DC005A0B525FF98B19E8B98359F95835060A4
+              A719BF79FBD62B3FCBB61E03499274D23455A247D08EE816A2478D5C1D7A4216
+              AF475F3C077A245A4177A8B588E3788EF8444C519C8661B8C18237DFF777AEEB
+              C6D043783FF4C8BC669E3EEB582FDE54FACCA5F53168B2B82A1437AB0967A0A9
+              94EA83D7E085A4AF064EF96ADB7613FC0D1E48FA37F29315EFE85A94F5C98641
+              07D4D6118E416483A343E966C00B6263105CA7C5A9CD2AC7A9CD5688864170DD
+              79FCF58068479F230BFE008FC5BA18F9BABCCF45A30F6A531BA07DDF27939411
+              CAFA3C5FEA4AF0602F35F876DFB3AA503CD9D133C3DD7C2166D451146DB1A61B
+              04C1DEF3BC04FA1DDE52EA96BC669E3EEB582FDE8C7DA84B8182DBFD5DFD2358
+              D6013C46F8A7A55E7DAB0000000049454E44AE426082}
             FileName = 'C:\temp\outline_receipt_white_18.png'
           end>
         Name = 'outline_receipt_white_18'
@@ -7422,18 +7501,18 @@ object Form1: TForm1
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              017149444154484BED933B4BC3601486934C156356C1CBEAE25C57BBABAB83BF
-              C1FE0415F42F080E9D052737F7BA098E6E0E6690A08180414968AEFABE5F8F45
-              A9D84F134A0B7DE07072EEF96EC68CA9C314AD4559960B502DC81AE41ED2B52C
-              EB0DBA5E30682B4992A7F72FD0A65F52EA010DD78320E871401445AF799EDF52
-              D3A69F7149AD4E5114976C8C217768BC481F356DFA1957897590A6A9C7A618B0
-              272E056DFA1917D7AF58A22787B16E231A8FEF821034AC7CF527F351D7C15F57
-              3607B5649AE62A3457F480EF17C62A83636960C02E6EDB39DED263FFA4BE9365
-              998BF819F2B66136A4541F149928DEC70578561D35613EEBF0A9B7634CC49F5E
-              A86AE0795E0AFB0A4DDA900DC80AF3A8C56E33EEFB7E22257C77AC1F3D10C53B
-              FD1255D4F96C3E0AE42D23FFD475DD92B5EC23A10143D3917480433F0EC3B0E7
-              38CE8DB8B589E3B869DBF63CE61DE2599C88FB6730EC887F5615F69196038656
-              86BC166453CC7F83DDB98674C59C319518C60734390DAFD981E09D0000000049
+              017149444154484BED933B4BC3601486934C156356C1CBEAE2ACABDDD5D5C1DF
+              607F820AF62F080ECE82939B7BDD044737093A48D040C0A02434577DDFAFC7A2
+              54ECA709A5853E703839F77C3763CAC4618AD6A22CCB39A82664057207E95896
+              F5065D2F18B49924C9D3FB1768D32F29F58086AB41107439208AA2D73CCF6FA8
+              69D3CFB8A456A7288A0B36C6905B349EA78F9A36FD8CABC43A48D3D463530CD8
+              15978236FD8C8BEB572CD1E3C348B7118D477741081A56BEFAE3F9A8EBE0AF2B
+              9B815A304D73199A2BBAC7F70B6395C1B134306007B7ED0C6FE9B17752DFC9B2
+              EC01F113E46DC16C48A93E283251BC870BF0AC3A6AC27CD6E1536FC798883F3D
+              57D5C0F3BC14F6259AB420EB9025E6518BDD62DCF7FD444AF8EE583F7C208AB7
+              7B25AAE8F4B3F93090B788FC63D7754BD6B28F84FA0C4C47D23E0EFD280CC3AE
+              E338D7E2D6268EE335DBB66731EF00CFA22DEE9FC1B043FE5955D8475AF61958
+              19F29A900D31FF0D76E70AD21173CA4462181F18730DA622C62D750000000049
               454E44AE426082}
             FileName = 'C:\temp\outline_person_white_18.png'
           end>
@@ -7450,19 +7529,19 @@ object Form1: TForm1
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              017B49444154484BED953F4AC44014C6F38F106C5C3C4048E10104ABADF41C22
-              AC955A6C6F69ED0DD44605F11A6A65EB01443639416C246CFEF9BDF0EDC06CB2
-              BA491414F707C3CCBCF7E67B999749C658F1E730D92BCAB2DC45DBE1B433A669
-              3EA23D70DA4C5114A748D61BD1A1A4A2B633048D107BC06967B0AB6BCBB26E38
-              AD682AE3009DB4BEC4481873DC4C9EE757551D7A223A945458EC1588DBE6B017
-              4D3A5A1911B01645D19BEFFB0EC67B28C3135D4B837543ACBB834E069D758CDF
-              E9D2C1E11822B80CC310C36283E656C83A592F3AA247731D38C71294A6E92B4D
-              9D90F54C36A6A9422B235EEA058EEB6196652FB66DDFD2DC1AE8EC3B8EB38964
-              97D039A259E7BB4EE28CF913A9ED0C4F728280633C55902449ECBAEE335D1A88
-              0B16C54CA7D32DCFF306A8CE04BB3A47A5CEE8AA03A1EA7785A4F734D5F82C46
-              6CE293189A14B5EFEC27F987C9E4454BFD17B4DEB742C5ECE52F8324E63285D8
-              C4D774409AAE983637F564FECE429211BA00FFC4AF6FEA15BF1CC3F8007608FB
-              7D2F83FB400000000049454E44AE426082}
+              017849444154484BED953F4AC44014C6F38F106C5C3CC1141E40B0DA4ACF21C2
+              5AA9C5F696D6DE40B75141BC865AD97A000939426C24E4AFDF0BDF0ECC26AB9B
+              4441717F30CCCC7B6FBE97799964AC357F0E9BBDA6AAAA7DB43D4E7B63DBF613
+              DA23A7ED9465798E6483111D4A6A1A3B43D004B1479CF606BBBA711CE796D39A
+              B6328ED0491B4A8C8431C7ED1445715DD76120A243498DC35E83B85D0E07D1A6
+              639411011B5114BD29A53C8C0F508667BA5606EBC658770F9D1C3A9B18BFD365
+              82C331467015862186E516CD9D9075B25E74448FE626704E2528CBB290A65EC8
+              7A269BD2546394112FF50AC7F538CFF357D775EF68EE0C740E3DCFDB46B21974
+              4E6836F9AE933867F1441A3BC3939C21E0144FA59224897DDF7FA1CB00716A59
+              4C9AA63B41108C509D08BBBA44A52EE86A02A1FA7785A40F3435F82C466CE293
+              189A348DEFEC27F987C9E4454BFD97B4C1B742CDFCE5AF8224E6328DD8C4D776
+              40DAAE982E3775B4786721C9049DC23FF1EB9B7ACD2FC7B23E00FEF5FB6B1DFF
+              75FA0000000049454E44AE426082}
             FileName = 'C:\temp\outline_store_white_18.png'
           end>
         Name = 'outline_store_white_18'
@@ -7479,17 +7558,17 @@ object Form1: TForm1
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
               016349444154484BDD964D4E84301CC5818D84C4B07161A2479985CE1CC40B78
-              0E17AE3DCFC49BE8C285E8AC1412902FDF9B79CC900805260D517F49F36F4BDF
-              2B2DFDC0F9B7B88A46AAAA3A4158D675BD443C47BA447A417A755D778DB8F63C
-              2F433C1E98876559DEC571FC897C2F7CCE76C886924E03A359A669FAB6B31B07
-              DB53278B7140701345512E8F495047BDACCCA0E135045FD21E05F5F491653768
-              170E4D1D9EBFE779FEC4A8AA4EE4D3FF0DF5918D3453C4A8AA5EE8B735169EE2
-              7679E36D6E55B402FDE8ABE2A133B00A82E054792BC86FB52BB53AC3A8AF94B5
-              4ADBB73DB20B45DBEC7DDB9D9D29DA66EFDBEE6CA36804D3B2D04A5CA86A889F
-              BE58A6F730B00E7DD5C5616438BD1F95359265D9A6288A67465519E9F4E57E48
-              92E4432FD40BA750ED073735FD3AF719EF23DFF71F54B402FD7AEF39BCCC7C67
-              23C1B0E739F51BF83D782F493B09EAA897D5382098E7A66E80DEEA3FC8EFF9BB
-              FAC338CE37DADFD0E7F51438E80000000049454E44AE426082}
+              0E17AE3DCFC49BE8C210A3B3524840BE7C6FE631432214983444FD25CDBF2D7D
+              AFB4F403E7DFE22A1AA9AAEA046159D7F512F11CE912E905E9D575DD35E2DAF3
+              BC0CF178601E96657917C7F127F2BDF039DB211B4A3A0D8C6699A6E9DBCE6E1C
+              6C4F9D2CC601C14D1445B93C26411DF5B2328386D7107C497B14D4D34796DDA0
+              5D38347578FE9EE7F913A3AA3A914FFF37D44736D24C11A3AA7AA1DFD658788A
+              DBE58DB7B955D10AF4A3AF8A87CEC02A088253E5AD20BFD5AED4EA0CA3BE52D6
+              2A6DDFF6C82E146DB3F76D7776A6689BBD6FBBB38DA2114CCB422B71A1AA217E
+              FA6299DEC3C03AF455178791E1F47E54D64896659BA2289E195565A4D397FB21
+              49920FBD502F9C42B51FDCD4F4EBDC67BC8F7CDF7F50D10AF4EBBDE7F032F39D
+              8D04C39EE7D46FE0F7E0BD24ED24A8A35E56E380609E9BBA017AABFF20BFE7EF
+              EA0FE338DF3CD0D09F173BFEE70000000049454E44AE426082}
             FileName = 'C:\temp\outline_error_white_18.png'
           end>
         Name = 'outline_error_white_18'
@@ -7505,20 +7584,20 @@ object Form1: TForm1
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              01AF49444154484BED96AB4FC35014C6FB8426D4F0178002BB04430209214181
-              850487C0CCA21158149660000F02030612ECE42C0401828122A9205DDBADE53B
-              ED29A3A5B72DDD03B35F7272EFBE7B7ABFFB6C278D190432972141106CF9BEBF
-              86EA44A4F485AB28CA9D2CCB17FCBB074C76613670A85FB6E8CDACDBED5E6324
-              EB289B184D93E5CAC0A7A6AA6A0D66372837588E80C93D8FE480A5BEA07EA83F
-              EA972549E1320112A710331931C92995C834039B58CAE774405F8C9AAB21321B
-              0A22B34B2CF76C3AA037A2E66C90B3803D3A4299B85231996638959F88978C70
-              38E51764D46EB76F91B387BD3D643981E8802C618467E9803ECF29F10B609FEB
-              A1916118D3AEEBBE617F4FC32411E8ECFBE82376A89E06FA0AE5A2BA6C599647
-              1A9E3BB66DFB83EA8EE3B4E201513FDC9E7FF4C11392CFD301FD3D6A961AA669
-              5E5105CB56A719799ED7D2757D15BF1FC28C3C7ECE8CA55C90AAE1193A480196
-              EE15CFCD715308F5436D85334362E1A5C6BE74308B6D68279AA6D18C1EB94988
-              68194B5D6A681DBCF7EA658C0891D950109955BAD445649A6159FE7CA9CBF03F
-              DF3388A3FB5213681BCD7F9031D591A42FDC3939D488A2231A0000000049454E
+              01AF49444154484BED96AB4FC35014C6DBAE85268886BF0014D8251812480809
+              0A2C24380466761A8145610906F020306020C14ECE42102018A83AD2D7BAF29D
+              F694D1D2DB96EE81D92F39B977DF3DBDDF7DB693260C0399CB902008767ABDDE
+              06AA53913210AEA228F7B22C5FF2EF3E30D987D9D0A17ED9A23F33DFF76F3092
+              4D946D8CA6CD7265E053AFD56A7598DDA2DC623902260F3C9243960682FAA1FE
+              A85F962485CB04489C41CC65C434A75422D30C6C63295FD2017D396AAE86C86C
+              2488CCAEB0DCF3E980DE8A9AB341CE12F6E81865E24AC5649AE1547E225E33C2
+              E1945F90916DDB77C869626F8F584E203A202B18E1793AA02F724AFC0238E07A
+              68A4EBFAACEBBAEFD8DFB33049043AFB3EFA883DAAA781BE46B9A8AE9AA6E991
+              86E74E2CCB32A9EE384E271E10F5C3EDF9471F3C23F9221DD03FA266A96518C6
+              3555B06C0D9A91E7791D4DD3D6F1FB31CCC8E3E7CC58CA05A92A9EA1831460E9
+              DEF0DC023785503FD456383324165E6AEC4B17B3D88576AAAA2ACDE8899B8488
+              96B1D4A586D6C57BAF51C68810998D049159A54B5D44A61996E5CF97BA0CFFF3
+              3D8338BE2F3581B6F1FC0799501D49FA02D86439D40146F7EA0000000049454E
               44AE426082}
             FileName = 'C:\temp\outline_fact_check_white_18.png'
           end>

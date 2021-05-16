@@ -28,6 +28,8 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+{$I ACBr.inc}
+
 unit Frm_ACBrNFSe;
 
 interface
@@ -290,7 +292,7 @@ type
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
     procedure AtualizarCidades;
-    function RoundTo5(Valor: Double; Casas: Integer): Double;
+    function RoundTo5(const Valor: Double; const Casas: Integer): Double;
   public
     { Public declarations }
   end;
@@ -1650,11 +1652,16 @@ begin
     TEdit(Sender).Text := Dir;
 end;
 
-function TfrmACBrNFSe.RoundTo5(Valor: Double; Casas: Integer): Double;
+function TfrmACBrNFSe.RoundTo5(const Valor: Double; const Casas: Integer): Double;
 var
   xValor, xDecimais: String;
   p, nCasas: Integer;
   nValor: Double;
+  {$IFDEF DELPHIXE2_UP}
+  OldRoundMode: TRoundingMode;
+  {$ELSE}
+  OldRoundMode: TFPURoundingMode;
+  {$ENDIF}
 begin
   nValor := Valor;
   xValor := Trim(FloatToStr(Valor));
@@ -1666,14 +1673,19 @@ begin
   if p > 0 then
   begin
     xDecimais := Copy(xValor, p + 1, Length(xValor));
-    if Length(xDecimais) > nCasas then
-    begin
-      if xDecimais[nCasas + 1] >= '5' then
-        SetRoundMode(rmUP)
-      else
-        SetRoundMode(rmNearest);
+    OldRoundMode := GetRoundMode;
+    try
+      if Length(xDecimais) > nCasas then
+      begin
+        if xDecimais[nCasas + 1] >= '5' then
+          SetRoundMode(rmUP)
+        else
+          SetRoundMode(rmNearest);
+      end;
+      nValor := RoundTo(Valor, Casas);
+    finally
+      SetRoundMode(OldRoundMode);
     end;
-    nValor := RoundTo(Valor, Casas);
   end;
   Result := nValor;
 end;

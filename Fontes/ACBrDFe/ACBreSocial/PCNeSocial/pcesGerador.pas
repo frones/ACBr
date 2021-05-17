@@ -411,7 +411,7 @@ begin
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);
   Result := 'ID';
 
-  if (Length(CNPJF) = 14) then
+  if (Length(CNPJF) in [8,14]) then
     Result := Result + IntToStr(1)
   else
     Result := Result + IntToStr(2);

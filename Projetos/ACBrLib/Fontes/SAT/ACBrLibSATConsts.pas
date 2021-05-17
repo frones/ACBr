@@ -61,7 +61,6 @@ const
   CChaveEhUTF8 = 'EhUTF8';
   CChavePaginaDeCodigo = 'PaginaDeCodigo';
   CChaveArqSchema = 'ArqSchema';
-  CChaveXmlSignLib = 'XmlSignLib';
 
   CSessaoSATConfigArquivos = 'SATConfigArquivos';
   CChaveSalvarCFe = 'SalvarCFe';

@@ -83,7 +83,8 @@ type
 implementation
 
 uses
-  FileUtil, ACBrDeviceConfig, ACBrDeviceSerial,
+  FileUtil, pcnConversao,
+  ACBrDeviceConfig, ACBrDeviceSerial, ACBrDFeSSL,
   ACBrUtil, ACBrLibSATConfig, ACBrLibIntegradorResposta;
 
 {$R *.lfm}
@@ -139,7 +140,6 @@ begin
       EhUTF8 := LibConfig.Config.EhUTF8;
       PaginaDeCodigo := LibConfig.Config.PaginaDeCodigo;
       ArqSchema:= LibConfig.Config.ArqSchema;
-      XmlSignLib := LibConfig.Config.XmlSignLib;
     end;
 
     with SSL do
@@ -201,6 +201,9 @@ begin
     end
     else
       Integrador := nil;
+
+    SSL.SSLXmlSignLib := xsLibXml2;
+    SSL.SSLCryptLib := cryOpenSSL;
 
     AplicarConfigMail;
     AplicarConfigPosPrinter;
@@ -382,6 +385,10 @@ begin
     GravarLog('Carregando xml string  [' + XmlArquivoOuString + ']', logParanoico);
     ACBrSAT1.CFe.AsXMLString := XmlArquivoOuString;
   end;
+
+{$IFDEF Demo}
+  ACBrSAT1.CFe.ide.tpAmb := taHomologacao;
+{$ENDIF}
 end;
 
 procedure TLibSatDM.CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);

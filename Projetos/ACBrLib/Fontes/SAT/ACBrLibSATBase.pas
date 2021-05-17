@@ -129,7 +129,7 @@ end;
 function TACBrLibSAT.InicializarSAT: longint;
 begin
   try
-    GravarLog('POS_Ativar', logNormal);
+    GravarLog('SAT_InicializarSAT', logNormal);
 
     SatDM.Travar;
     try

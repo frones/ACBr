@@ -72,6 +72,7 @@ implementation
 
 uses
   ACBrUtil, FileUtil,
+  {$IFDEF Demo}pcnConversao, ACBrCTeConhecimentos, pcteEnvEventoCTe,{$ENDIF}
   ACBrLibCTeConfig, ACBrLibCTeBase;
 
 {$R *.lfm}
@@ -95,6 +96,10 @@ begin
   ACBrCTe1.SSL.DescarregarCertificado;
   LibConfig := TLibCTeConfig(TACBrLibCTe(Lib).Config);
   ACBrCTe1.Configuracoes.Assign(LibConfig.CTe);
+
+{$IFDEF Demo}
+  ACBrCTe1.Configuracoes.WebServices.Ambiente := taHomologacao;
+{$ENDIF}
 
   with ACBrMail1 do
   begin
@@ -128,6 +133,11 @@ procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: B
                                         Protocolo: String = ''; MostrarPreview: String = '');
 var
   LibConfig: TLibCTeConfig;
+{$IFDEF Demo}
+  I: Integer;
+  AConhecimento: Conhecimento;
+  AEvento: TInfEventoCollectionItem;
+{$ENDIF}
 begin
   LibConfig := TLibCTeConfig(Lib.Config);
 
@@ -137,6 +147,20 @@ begin
   ACBrCTe1.DACTE := DACTe;
 
   LibConfig.DACTe.Apply(DACTe, Lib);
+
+{$IFDEF Demo}
+  for I:= 0 to ACBrCTe1.Conhecimentos.Count -1 do
+  begin
+    AConhecimento := ACBrCTe1.Conhecimentos.Items[I];
+    AConhecimento.CTe.ide.tpAmb := taHomologacao;
+  end;
+
+  for I:= 0 to ACBrCTe1.EventoCTe.Evento.Count -1 do
+  begin
+    AEvento := ACBrCTe1.EventoCTe.Evento.Items[I];
+    AEvento.InfEvento.tpAmb := taHomologacao;
+  end;
+{$ENDIF}
 
   if GerarPDF and not DirectoryExists(PathWithDelim(LibConfig.DACTe.PathPDF))then
     ForceDirectories(PathWithDelim(LibConfig.DACTe.PathPDF));

@@ -197,14 +197,11 @@ begin
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-
-                if (CollectionObject.ItemClass.InheritsFrom(TACBrLibRespostaBase)) then
-                  ParentNode := xDoc.CreateElement(TACBrLibRespostaBase(CollectionItem).Sessao.Replace(' ', '_'))
-                else
-                  ParentNode := xDoc.CreateElement(Propertie.Name);
-
+                ParentNode := xDoc.CreateElement(Propertie.Name);
+                RootNode.AppendChild(ParentNode);
                 GravarXml(xDoc, ParentNode, CollectionItem);
               end;
+              Exit;
             end
             else if (ClassObject.InheritsFrom(TList)) then
             begin
@@ -213,13 +210,15 @@ begin
               begin
                 ListItem := ListObject.Items[i];
 
-                if (ListItem.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
+                if (ListItem.InheritsFrom(TACBrLibRespostaBase)) then
                   ParentNode := xDoc.CreateElement(TACBrLibRespostaBase(ListItem).Sessao.Replace(' ', '_'))
                 else
                   ParentNode := xDoc.CreateElement(Propertie.Name);
 
+                RootNode.AppendChild(ParentNode);
                 GravarXml(xDoc, ParentNode, ListItem);
               end;
+              Exit;
             end
             else
             begin
@@ -509,10 +508,7 @@ begin
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-                if (CollectionObject.ItemClass.InheritsFrom(TACBrLibRespostaBase)) then
-                  GravarJson(JSONRoot, TACBrLibRespostaBase(CollectionItem).Sessao, CollectionItem)
-                else
-                  GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem);
+                GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem);
               end;
             end
             else if (ClassObject.InheritsFrom(TList)) then

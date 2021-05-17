@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="11"/>
@@ -11,30 +11,27 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="ACBrLibNFe"/>
+      <Title Value="ACBrLibMail"/>
       <ResourceType Value="res"/>
-      <XPManifest>
-        <DpiAware Value="True/PM"/>
-      </XPManifest>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MinorVersionNr Value="4"/>
-      <RevisionNr Value="6"/>
-      <BuildNr Value="118"/>
+      <MinorVersionNr Value="1"/>
+      <RevisionNr Value="8"/>
+      <BuildNr Value="199"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="0.4.6.0"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrMail - Biblioteca para envio de email" InternalName="ACBrLibMail" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="Mail" ProductVersion="2019.1.7.1"/>
     </VersionInfo>
-    <BuildModes Count="12">
+    <BuildModes Count="13">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>
       <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Cdecl\ACBrNFe64"/>
+            <Filename Value="bin\Demo\Cdecl\ACBrMail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -67,7 +64,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dNOGUI"/>
+            <CustomOptions Value="-dDemo -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item2>
@@ -76,7 +73,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrNFe32"/>
+            <Filename Value="bin\Demo\StdCall\ACBrMail32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -108,7 +105,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item3>
@@ -117,7 +114,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrNFe64"/>
+            <Filename Value="bin\Demo\StdCall\ACBrMail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -149,7 +146,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item4>
@@ -158,7 +155,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrnfe64"/>
+            <Filename Value="bin\Demo\Linux\libacbrmail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -190,7 +187,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dNOGUI"/>
+            <CustomOptions Value="-dDemo -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item5>
@@ -199,7 +196,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrnfe32"/>
+            <Filename Value="bin\Demo\Linux\libacbrmail32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -231,16 +228,16 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dNOGUI"/>
+            <CustomOptions Value="-dDemo -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="Win32-i386-CDECL-MT">
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrNFe32"/>
+            <Filename Value="..\..\Testes\Mail\bin\ACBrMail32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -253,36 +250,64 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
-            <TargetOS Value="win32"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <GenerateDebugInfo Value="False"/>
-              <UseLineInfoUnit Value="False"/>
-              <StripSymbols Value="True"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
             </Debugging>
-            <LinkSmart Value="True"/>
             <Options>
               <ExecutableType Value="Library"/>
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dDEBUG -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item7>
-      <Item8 Name="Win64-x86_64-CDECL-MT">
+      <Item8 Name="Win32-i386-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrNFe64"/>
+            <Filename Value="bin\Demo\MT\Cdecl\ACBrMail32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item8>
+      <Item9 Name="Win64-x86_64-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Demo\MT\Cdecl\ACBrMail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -315,16 +340,16 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item8>
-      <Item9 Name="Win32-i386-STDCALL-MT">
+      </Item9>
+      <Item10 Name="Win32-i386-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrNFe32"/>
+            <Filename Value="bin\Demo\MT\StdCall\ACBrMail32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -356,16 +381,16 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item9>
-      <Item10 Name="Win64-x86_64-STDCALL-MT">
+      </Item10>
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrNFe64"/>
+            <Filename Value="bin\Demo\MT\StdCall\ACBrMail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -397,16 +422,16 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item10>
-      <Item11 Name="Linux-x86_64-MT">
+      </Item11>
+      <Item12 Name="Linux-x86_64-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrnfe64"/>
+            <Filename Value="bin\Demo\MT\Linux\libacbrmail64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -438,16 +463,16 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item11>
-      <Item12 Name="Linux-i386-MT">
+      </Item12>
+      <Item13 Name="Linux-i386-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrnfe32"/>
+            <Filename Value="bin\Demo\MT\Linux\libacbrmail32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -479,159 +504,86 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item12>
+      </Item13>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
-      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
           </local>
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="8">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="ACBr_Integrador"/>
-      </Item1>
-      <Item2>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
-      </Item2>
-      <Item3>
-        <PackageName Value="ACBrSerial"/>
-      </Item3>
-      <Item4>
         <PackageName Value="ACBrTCP"/>
-      </Item4>
-      <Item5>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
-      </Item5>
-      <Item6>
-        <PackageName Value="ACBr_NFe"/>
-      </Item6>
-      <Item7>
-        <PackageName Value="LCL"/>
-      </Item7>
-      <Item8>
-        <PackageName Value="FCL"/>
-      </Item8>
+      </Item1>
     </RequiredPackages>
-    <Units Count="21">
+    <Units Count="10">
       <Unit0>
-        <Filename Value="ACBrLibNFe.lpr"/>
+        <Filename Value="ACBrLibMail.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="ACBrLibNFeST.pas"/>
+        <Filename Value="ACBrLibMailConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="ACBrLibNFeDataModule.pas"/>
+        <Filename Value="..\Comum\ACBrLibComum.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="LibNFeDM"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
+        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
+        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\Comum\ACBrLibComum.pas"/>
+        <Filename Value="ACBrLibMailDataModule.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibMailDM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit5>
       <Unit6>
-        <Filename Value="ACBrLibNFeConfig.pas"/>
+        <Filename Value="ACBrLibMailST.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="ACBrLibNFeRespostas.pas"/>
+        <Filename Value="ACBrLibMailBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
+        <Filename Value="ACBrLibMailMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="ACBrLibNFeConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="..\Comum\DFeReportConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="..\Comum\ACBrIntegradorConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="..\Comum\ACBrLibIntegradorResposta.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="..\Comum\ACBrLibDistribuicaoDFe.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="..\Comum\ACBrLibConsReciDFe.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="..\Comum\ACBrLibConsultaCadastro.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="..\Comum\ACBrLibCertUtils.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="ACBrLibNFeBase.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="ACBrLibNFeMT.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit19>
-      <Unit20>
         <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit20>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Cdecl\ACBrNFe32"/>
+      <Filename Value="bin\Demo\Cdecl\ACBrMail32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
       <OtherUnitFiles Value="..\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
-    <Parsing>
-      <SyntaxOptions>
-        <SyntaxMode Value="Delphi"/>
-      </SyntaxOptions>
-    </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
       <TargetCPU Value="i386"/>
@@ -644,7 +596,6 @@
     <Linking>
       <Debugging>
         <GenerateDebugInfo Value="False"/>
-        <UseLineInfoUnit Value="False"/>
         <StripSymbols Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
@@ -653,7 +604,7 @@
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-dNOGUI"/>
+      <CustomOptions Value="-dDemo -dNOGUI"/>
     </Other>
   </CompilerOptions>
 </CONFIG>

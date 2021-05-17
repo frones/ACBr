@@ -341,7 +341,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
+      Item := TDistribuicaoDFeItemResposta.Create('ResDFe' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
       Item.Processar(retDistDFeInt.docZip.Items[I].resDFe,
                      retDistDFeInt.docZip.Items[I].NSU,
                      ListaArqs[I],
@@ -363,8 +363,8 @@ begin
                      ListaArqs[I],
                      retDistDFeInt.docZip.Items[I].XML,
                      retDistDFeInt.docZip.Items[I].schema);
-         FItems.Add(Item);
-         inc(J);
+      FItems.Add(Item);
+      inc(J);
     end;
   end;
 

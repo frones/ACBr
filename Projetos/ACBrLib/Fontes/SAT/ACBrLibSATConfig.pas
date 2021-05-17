@@ -140,7 +140,6 @@ type
     property EhUTF8: boolean read GetEhUTF8 write SetEhUTF8;
     property PaginaDeCodigo: word read FPaginaDeCodigo write FPaginaDeCodigo;
     property ArqSchema: string read FArqSchema write FArqSchema;
-    property XmlSignLib: TSSLXmlSignLib read FXmlSignLib write FXmlSignLib;
   end;
 
   { TSATCertificado }
@@ -407,7 +406,6 @@ begin
   EhUTF8 := AIni.ReadBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
   PaginaDeCodigo := AIni.ReadInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
   ArqSchema := AIni.ReadString(CSessaoSATConfig, CChaveArqSchema, ArqSchema);
-  XmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSessaoSATConfig, CChaveXmlSignLib, integer(XmlSignLib)));
 end;
 
 procedure TSATConfig.GravarIni(const AIni: TCustomIniFile);
@@ -425,7 +423,6 @@ begin
   AIni.WriteBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
   AIni.WriteInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
   AIni.WriteString(CSessaoSATConfig, CChaveArqSchema, ArqSchema);
-  AIni.WriteInteger(CSessaoSATConfig, CChaveXmlSignLib, integer(XmlSignLib));
 end;
 
 function TSATConfig.GetEhUTF8: boolean;

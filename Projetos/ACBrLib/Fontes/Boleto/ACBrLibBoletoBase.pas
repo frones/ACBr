@@ -178,7 +178,13 @@ begin
       Resposta := '';
 
 {$IFDEF Demo}
-    BoletoDM.ACBrBoleto1.ListadeBoletos.Clear;
+    if BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 5 then
+    begin
+      Resposta := 'So pode adicionar 5 boletos na versão Demo.';
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+      Exit;
+    end;
 {$ENDIF}
 
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then

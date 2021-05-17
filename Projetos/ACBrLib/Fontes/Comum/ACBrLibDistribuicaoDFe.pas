@@ -76,7 +76,7 @@ type
     FnProt: String;
     FnSeqEvento: Integer;
     FNSU: string;
-    FchNFe: string;
+    FchDFe: string;
     FCNPJCPF: string;
     Fschema: String;
     FtpEvento: string;
@@ -102,7 +102,7 @@ type
     property VerAplic: string read FverAplic write FverAplic;
     property CStat: integer read FcStat write FcStat;
     property NSU: string read FNSU write FNSU;
-    property chNFe: string read FchNFe write FchNFe;
+    property chDFe: string read FchDFe write FchDFe;
     property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
     property xNome: string read FxNome write FxNome;
     property IE: String read FIE write FIE;
@@ -207,7 +207,7 @@ begin
   XML := AXml;
   Arquivo := AArquivo;
   schema := SchemaDFeToStr(ASchema);
-  chNFe := AresDFe.chDFe;
+  chDFe := AresDFe.chDFe;
   CNPJCPF := AresDFe.CNPJCPF;
   xNome := AresDFe.xNome;
   IE := AresDFe.IE;
@@ -227,7 +227,7 @@ begin
   XML := AXml;
   Arquivo := AArquivo;
   schema := SchemaDFeToStr(ASchema);
-  chNFe := AresEvento.chDFe;
+  chDFe := AresEvento.chDFe;
   CNPJCPF := AresEvento.CNPJCPF;
   dhEvento := AresEvento.dhEvento;
   tpEvento := TpEventoToStr(AresEvento.tpEvento);
@@ -245,7 +245,7 @@ begin
   XML := AXml;
   Arquivo := AArquivo;
   schema := SchemaDFeToStr(ASchema);
-  chNFe := AprocEvento.chDFe;
+  chDFe := AprocEvento.chDFe;
   cOrgao := AprocEvento.cOrgao;
   CNPJ := AprocEvento.CNPJ;
   Id := AprocEvento.Id;
@@ -283,7 +283,7 @@ begin
   VerAplic := ARetInfEvento.VerAplic;
   tpAmb := TpAmbToStr(ARetInfEvento.tpAmb);
   cOrgao := ARetInfEvento.cOrgao;
-  chNFe := ARetInfEvento.chDFe;
+  chDFe := ARetInfEvento.chDFe;
   CStat := ARetInfEvento.cStat;
   CNPJDest := ARetInfEvento.CNPJDest;
   cOrgaoAutor := ARetInfEvento.cOrgaoAutor;

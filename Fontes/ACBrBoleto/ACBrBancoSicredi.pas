@@ -59,6 +59,7 @@ type
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
     procedure LerRetorno400(ARetorno: TStringList); override;
+    function DefineDataDesconto(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; override;
 
     function GerarRegistroHeader240(NumeroRemessa : Integer): String; override;
     function GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String; override;
@@ -211,7 +212,7 @@ end;
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   wNossoNumeroCompleto, CodProtesto, DiasProtesto, CodNegativacao, DiasNegativacao: String;
-  TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto, CompOcorrenciaOutrosDados  : String;
+  TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto, CompOcorrenciaOutrosDados : String;
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
 begin
@@ -755,6 +756,25 @@ begin
     end;
   end;
   fpTamanhoMaximoNossoNum := 5;
+end;
+
+function TACBrBancoSicredi.DefineDataDesconto(const ACBrTitulo: TACBrTitulo;
+  AFormat: String): String;
+begin
+  with ACBrTitulo do
+  begin
+    if (ValorDesconto > 0) then
+    begin
+      if (DataDesconto > 0) and (TipoDesconto in [ tdValorFixoAteDataInformada, tdPercentualAteDataInformada]) then
+        Result := FormatDateTime(AFormat, DataDesconto)
+      else
+        Result := PadRight('', Length(AFormat), '0');
+    end
+    else
+      Result := PadRight('', Length(AFormat), '0');
+
+  end;
+
 end;
 
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(
@@ -1403,7 +1423,8 @@ begin
    end;
 end;
 
-function TACBrBancoSicredi.TipoDescontoToString(const AValue: TACBrTipoDesconto): string;
+function TACBrBancoSicredi.TipoDescontoToString(const AValue: TACBrTipoDesconto
+  ): String;
 begin
   // Gera o tipo de desconto numero, utilizado no padrao febraban cnab240
   Result := inherited TipoDescontoToString(AValue);
@@ -1750,6 +1771,7 @@ var
     AceiteStr, CodProtestoNegativacao, DiasProtestoNegativacao, TipoSacado, ATipoBoleto, ATipoDoc: String;
     Especie, EndSacado, Ocorrencia: String;
     TipoAvalista: Char;
+    lDataDesconto: String;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
   begin
@@ -1850,6 +1872,9 @@ begin
     {Tipo Documento}
     ATipoDoc:= DefineTipoDocumento;
 
+    {Data Desconto}
+    lDataDesconto := DefineDataDesconto(ACBrTitulo);
+
     {SEGMENTO P}
     Result:= '748'                                                            + // 001 a 003 - Código do banco na compensação
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
@@ -1883,8 +1908,7 @@ begin
                                     '00000000')                               + // 119 a 126 - Data do juro de mora
              IntToStrZero(Round(ValorMoraJuros * 100), 15)                    + // 127 a 141 - Juros de mora por dia/taxa
              TipoDescontoToString(ACBrTitulo.TipoDesconto)                    + // 142 a 142 - Código do desconto 1
-             IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto)) + // 143 a 150 - Data do desconto 1
-
+             lDataDesconto                                                    + // 143 a 150 - Data do desconto 1
              IntToStrZero(Round(ValorDesconto * 100), 15)                     + // 151 a 165 - Valor percentual a ser concedido
              IntToStrZero(Round(ValorIOF * 100), 15)                          + // 166 a 180 - Valor do IOF a ser recolhido
              IntToStrZero(Round(ValorAbatimento * 100), 15)                   + // 181 a 195 - Valor do abatimento

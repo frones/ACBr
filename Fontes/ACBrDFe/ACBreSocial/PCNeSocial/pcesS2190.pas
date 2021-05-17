@@ -294,6 +294,8 @@ begin
       sSecao := 'ideEvento';
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+      ideEvento.indRetif    := eSStrToIndRetificacao(ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
 
       sSecao := 'ideEmpregador';
       ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
@@ -301,9 +303,19 @@ begin
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'infoRegPrelim';
-      infoRegPrelim.cpfTrab  := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
-      infoRegPrelim.dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
-      infoRegPrelim.dtAdm    := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
+      infoRegPrelim.cpfTrab       := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      infoRegPrelim.dtNascto      := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+      infoRegPrelim.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
+      infoRegPrelim.codCateg      := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+      infoRegPrelim.matricula     := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      infoRegPrelim.natAtividade  := eSStrToNatAtividade(ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
+
+      sSecao := 'infoRegCTPS';
+      InfoRegPrelim.infoRegCTPS.CBOCargo  := INIRec.ReadString(sSecao, 'CBOCargo', EmptyStr);
+      InfoRegPrelim.infoRegCTPS.vrSalFx   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSalFx', ''), 0);
+      InfoRegPrelim.infoRegCTPS.undSalFixo:= eSStrToUndSalFixo(Ok, INIRec.ReadString(sSecao, 'undSalFixo', '1'));
+      InfoRegPrelim.infoRegCTPS.tpContr   := eSStrToTpContr(Ok, INIRec.ReadString(sSecao, 'tpContr', '1'));
+      InfoRegPrelim.infoRegCTPS.dtTerm    := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
     end;
 
     GerarXML;

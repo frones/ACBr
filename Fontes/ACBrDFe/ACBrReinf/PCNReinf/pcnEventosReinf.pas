@@ -682,6 +682,7 @@ begin
     teR2030: Self.R2030.New.evtAssocDespRec.LerArqIni(AIniString);
     teR2040: Self.R2040.New.evtAssocDespRep.LerArqIni(AIniString);
     teR2050: Self.R2050.New.evtComProd.LerArqIni(AIniString);
+    teR2055: Self.R2055.New.evtAqProd.LerArqIni(AIniString);
     teR2060: Self.R2060.New.evtCPRB.LerArqIni(AIniString);
     teR2070: Self.R2070.New.evtPgtosDivs.LerArqIni(AIniString);
     teR2098: Self.R2098.New.evtReabreEvPer.LerArqIni(AIniString);

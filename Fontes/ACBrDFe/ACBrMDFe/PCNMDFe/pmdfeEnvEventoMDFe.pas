@@ -574,6 +574,7 @@ begin
 
               vContrato := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
               indPag    := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
+              vAdiant   := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
 
               K := 1;
               while true do

@@ -149,7 +149,6 @@ type
     lbiConfPrinterDiversos: TListBoxItem;
     GridPanelLayout12: TGridPanelLayout;
     ListBoxGroupHeader6: TListBoxGroupHeader;
-    cbQRCodeLateral: TCheckBox;
     cbLogoLateral: TCheckBox;
     GridPanelLayout13: TGridPanelLayout;
     cbxModelo: TComboBox;
@@ -158,7 +157,6 @@ type
     Label22: TLabel;
     cbxPagCodigo: TComboBox;
     cbImprimir1Linha: TCheckBox;
-    cbImprimirDescAcres: TCheckBox;
     lbConfNFCe: TListBox;
     lbiHeaderCertificado: TListBoxGroupHeader;
     lbiConfCert: TListBoxItem;
@@ -349,6 +347,11 @@ type
     GridPanelLayout8: TGridPanelLayout;
     rbClasseInterna: TRadioButton;
     rbClasseExterna: TRadioButton;
+    cbImprimirDescAcres: TCheckBox;
+    cbQRCodeLateral: TCheckBox;
+    GridPanelLayout10: TGridPanelLayout;
+    Label41: TLabel;
+    seLarguraModulo: TSpinBox;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure btnBackClick(Sender: TObject);
@@ -1516,6 +1519,7 @@ begin
   ACBrPosPrinter1.ColunasFonteNormal := Trunc(seColunas.Value);
   ACBrPosPrinter1.EspacoEntreLinhas := Trunc(seEspLinhas.Value);
   ACBrPosPrinter1.LinhasEntreCupons := Trunc(seLinhasPular.Value);
+  ACBrPosPrinter1.ConfigQRCode.LarguraModulo := Trunc(seLarguraModulo.Value);
   ACBrPosPrinter1.ConfigLogo.KeyCode1 := Trunc(seKC1.Value);
   ACBrPosPrinter1.ConfigLogo.KeyCode2 := Trunc(seKC2.Value);
   ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbImprimirLogo.IsChecked;
@@ -1929,6 +1933,7 @@ begin
     INI.WriteInteger('PosPrinter','Colunas', Trunc(seColunas.Value) );
     INI.WriteInteger('PosPrinter','EspacoEntreLinhas', Trunc(seEspLinhas.Value) );
     INI.WriteInteger('PosPrinter','LinhasPular', Trunc(seLinhasPular.Value) );
+    INI.WriteInteger('PosPrinter','LarguraModulo', Trunc(seLarguraModulo.Value) );
     Ini.WriteBool('PosPrinter', 'Logo', cbImprimirLogo.IsChecked);
     INI.WriteInteger('PosPrinter.Logo','KC1',Trunc(seKC1.Value));
     INI.WriteInteger('PosPrinter.Logo','KC2',Trunc(seKC2.Value));
@@ -2285,6 +2290,7 @@ begin
     seColunas.Value := Ini.ReadInteger('PosPrinter','Colunas', 32);
     seEspLinhas.Value := Ini.ReadInteger('PosPrinter','EspacoEntreLinhas', ACBrPosPrinter1.EspacoEntreLinhas);
     seLinhasPular.Value := Ini.ReadInteger('PosPrinter','LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
+    seLarguraModulo.Value := INI.ReadInteger('PosPrinter','LarguraModulo', 4);
     cbImprimirLogo.IsChecked := Ini.ReadBool('PosPrinter', 'Logo', False);
     seKC1.Value := Ini.ReadInteger('PosPrinter.Logo','KC1', 1);
     seKC2.Value := Ini.ReadInteger('PosPrinter.Logo','KC2', 0);

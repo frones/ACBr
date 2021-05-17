@@ -3,7 +3,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
   Top = 0
   Caption = 'ACBrNFCe  Android Teste'
   ClientHeight = 640
-  ClientWidth = 360
+  ClientWidth = 363
   StyleBook = StyleBook1
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -19,7 +19,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
     Align = Client
     FullSize = True
     Images = ImageList1
-    Size.Width = 360.000000000000000000
+    Size.Width = 363.000000000000000000
     Size.Height = 640.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 50.000000000000000000
@@ -28,22 +28,22 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
     TabPosition = Bottom
     OnChange = tabsPrincipalChange
     Sizes = (
-      356s
+      359s
       586s
-      356s
+      359s
       586s
-      356s
+      359s
       586s
-      356s
+      359s
       586s
-      356s
+      359s
       586s)
     object tabMenu: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = False
-      Size.Width = 70.000000000000000000
+      Size.Width = 71.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -52,14 +52,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       ExplicitSize.cx = 97.000000000000000000
       ExplicitSize.cy = 50.000000000000000000
       object ToolBar4: TToolBar
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         object Label26: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -3529,7 +3529,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           end>
         Align = Top
         Position.Y = 48.000000000000000000
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 169.000000000000000000
         Size.PlatformDefault = False
         object ShadowEffect2: TShadowEffect
@@ -3542,7 +3542,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       end
       object GridPanelLayout1: TGridPanelLayout
         Align = Client
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 369.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 3
@@ -3935,7 +3935,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end>
       IsSelected = True
       ImageIndex = 5
-      Size.Width = 70.000000000000000000
+      Size.Width = 71.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -3944,14 +3944,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object ToolBar1: TToolBar
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         object lblTituloConfig: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -3976,7 +3976,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         Align = Client
         FullSize = True
         Images = ImageList1
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 50.000000000000000000
@@ -3984,11 +3984,11 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         TabOrder = 2
         TabPosition = Top
         Sizes = (
-          352s
+          355s
           446s
-          352s
+          355s
           446s
-          352s
+          355s
           446s)
         object tabConfigNFCe: TTabItem
           CustomIcon = <
@@ -3996,7 +3996,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end>
           IsSelected = False
           ImageIndex = 11
-          Size.Width = 117.000000000000000000
+          Size.Width = 118.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -4006,7 +4006,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           ExplicitSize.cy = 30.000000000000000000
           object lbConfNFCe: TListBox
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 446.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -4015,11 +4015,11 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 332.000000000000000000
+            Viewport.Width = 335.000000000000000000
             Viewport.Height = 442.000000000000000000
             object lbiHeaderCertificado: TListBoxGroupHeader
               Selectable = False
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
@@ -4029,13 +4029,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiConfCert: TListBoxItem
               Selectable = False
               Position.Y = 30.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 123.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               object gpConfCert: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 123.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -4138,7 +4138,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
                   OnTyping = edtConfCertURLTyping
@@ -4153,7 +4153,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Right = 3.000000000000000000
                   Margins.Bottom = 3.000000000000000000
                   Sides = [Top, Left, Bottom, Right]
-                  Size.Width = 186.000000000000000000
+                  Size.Width = 189.000000000000000000
                   Size.Height = 24.750000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 4
@@ -4182,7 +4182,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 184.000000000000000000
+                  Size.Width = 187.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
                   OnTyping = edtConfCertURLTyping
@@ -4222,7 +4222,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 184.000000000000000000
+                  Size.Width = 187.000000000000000000
                   Size.Height = 26.750000000000000000
                   Size.PlatformDefault = False
                   OnTyping = edtConfCertURLTyping
@@ -4258,7 +4258,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiHeaderToken: TListBoxGroupHeader
               Selectable = False
               Position.Y = 153.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 7
@@ -4268,13 +4268,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiToken: TListBoxItem
               Selectable = False
               Position.Y = 183.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 34.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               object gpToken: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 34.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -4330,7 +4330,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 51.586975097656250000
+                  Size.Width = 52.518005371093750000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnTyping = edtTokenIDTyping
@@ -4346,7 +4346,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 124.413024902343800000
+                  Size.Width = 126.481994628906300000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnTyping = edtTokenCSCTyping
@@ -4420,7 +4420,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiHeaderWebServiceNFCe: TListBoxGroupHeader
               Selectable = False
               Position.Y = 217.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 5
@@ -4430,13 +4430,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiWebServiceNFCe: TListBoxItem
               Selectable = False
               Position.Y = 247.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               object gpWebServiceNFCe: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 74.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -4528,7 +4528,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 81.777770996093750000
+                  Size.Width = 83.111114501953130000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtEnterScrollableControl
@@ -4561,7 +4561,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 5.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 5.000000000000000000
-                  Size.Width = 73.777770996093750000
+                  Size.Width = 75.111114501953130000
                   Size.Height = 27.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 10
@@ -4569,7 +4569,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   object lAmbiente: TLabel
                     Align = Client
                     Margins.Right = 4.000000000000000000
-                    Size.Width = 69.777770996093750000
+                    Size.Width = 71.111114501953130000
                     Size.Height = 27.000000000000000000
                     Size.PlatformDefault = False
                     TextSettings.HorzAlign = Center
@@ -4612,7 +4612,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 104.222229003906300000
+                  Size.Width = 105.888885498046900000
                   Size.Height = 33.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
@@ -4625,7 +4625,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 104.222229003906300000
+                  Size.Width = 105.888885498046900000
                   Size.Height = 33.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 1
@@ -4666,7 +4666,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiHeaderEmitente: TListBoxGroupHeader
               Selectable = False
               Position.Y = 321.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 8
@@ -4677,14 +4677,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Selectable = False
               HitTest = True
               Position.Y = 351.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 460.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
               object lbEmitente: TListBox
                 Align = Client
                 HitTest = False
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 460.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -4693,11 +4693,11 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 328.000000000000000000
+                Viewport.Width = 331.000000000000000000
                 Viewport.Height = 456.000000000000000000
                 object ListBoxItem1: TListBoxItem
                   StyledSettings = [Family, Size, Style, FontColor]
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
@@ -4716,7 +4716,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnTyping = edtEmitCNPJTyping
@@ -4744,7 +4744,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem2: TListBoxItem
                   Position.Y = 35.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 1
@@ -4762,7 +4762,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -4771,7 +4771,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem3: TListBoxItem
                   Position.Y = 70.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
@@ -4788,7 +4788,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnTyping = edtEmitRazaoTyping
@@ -4815,7 +4815,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem4: TListBoxItem
                   Position.Y = 105.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -4832,7 +4832,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -4841,7 +4841,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem5: TListBoxItem
                   Position.Y = 140.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 4
@@ -4859,7 +4859,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnTyping = edtEmitFoneTyping
@@ -4887,7 +4887,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem6: TListBoxItem
                   Position.Y = 175.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 5
@@ -4906,7 +4906,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 116.000000000000000000
+                    Size.Width = 119.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnTyping = edtEmitCEPTyping
@@ -4924,7 +4924,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 4.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 4.000000000000000000
-                    Position.X = 260.000000000000000000
+                    Position.X = 263.000000000000000000
                     Position.Y = 4.000000000000000000
                     Size.Width = 64.000000000000000000
                     Size.Height = 27.000000000000000000
@@ -4951,7 +4951,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem7: TListBoxItem
                   Position.Y = 210.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 6
@@ -4968,7 +4968,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -4977,7 +4977,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem8: TListBoxItem
                   Position.Y = 245.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 7
@@ -4994,7 +4994,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -5003,7 +5003,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem9: TListBoxItem
                   Position.Y = 280.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 8
@@ -5020,7 +5020,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -5029,7 +5029,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem10: TListBoxItem
                   Position.Y = 315.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 9
@@ -5046,7 +5046,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 2.000000000000000000
                     Margins.Right = 4.000000000000000000
                     Margins.Bottom = 2.000000000000000000
-                    Size.Width = 188.000000000000000000
+                    Size.Width = 191.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     OnEnter = edtEnterScrollableControl
@@ -5055,7 +5055,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem11: TListBoxItem
                   Position.Y = 350.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 10
@@ -5099,7 +5099,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Bottom = 2.000000000000000000
                     Position.X = 104.000000000000000000
                     Position.Y = 2.000000000000000000
-                    Size.Width = 128.000000000000000000
+                    Size.Width = 131.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     TabOrder = 9
@@ -5109,7 +5109,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Align = Right
                     Margins.Left = 5.000000000000000000
                     Margins.Right = 5.000000000000000000
-                    Position.X = 241.000000000000000000
+                    Position.X = 244.000000000000000000
                     Size.Width = 82.000000000000000000
                     Size.Height = 35.000000000000000000
                     Size.PlatformDefault = False
@@ -5135,7 +5135,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem12: TListBoxItem
                   Position.Y = 385.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 11
@@ -5150,7 +5150,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Bottom = 2.000000000000000000
                     Position.X = 104.000000000000000000
                     Position.Y = 2.000000000000000000
-                    Size.Width = 128.000000000000000000
+                    Size.Width = 131.000000000000000000
                     Size.Height = 31.000000000000000000
                     Size.PlatformDefault = False
                     TabOrder = 10
@@ -5160,7 +5160,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Align = Right
                     Margins.Left = 5.000000000000000000
                     Margins.Right = 5.000000000000000000
-                    Position.X = 241.000000000000000000
+                    Position.X = 244.000000000000000000
                     Size.Width = 82.000000000000000000
                     Size.Height = 35.000000000000000000
                     Size.PlatformDefault = False
@@ -5186,7 +5186,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object ListBoxItem13: TListBoxItem
                   Position.Y = 420.000000000000000000
-                  Size.Width = 328.000000000000000000
+                  Size.Width = 331.000000000000000000
                   Size.Height = 35.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 12
@@ -5197,7 +5197,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                     Margins.Top = 4.000000000000000000
                     Margins.Right = 8.000000000000000000
                     Margins.Bottom = 4.000000000000000000
-                    Position.X = 152.000000000000000000
+                    Position.X = 155.000000000000000000
                     Position.Y = 4.000000000000000000
                     Size.Width = 168.000000000000000000
                     Size.Height = 27.000000000000000000
@@ -5210,7 +5210,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiHeaderConfCertProxy: TListBoxGroupHeader
               Selectable = False
               Position.Y = 811.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 9
@@ -5220,13 +5220,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object lbiProxy: TListBoxItem
               Selectable = False
               Position.Y = 841.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               object gpProxy: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 68.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5321,7 +5321,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 83.008087158203130000
+                  Size.Width = 84.508209228515630000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtEnterScrollableControl
@@ -5347,7 +5347,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 82.991912841796880000
+                  Size.Width = 84.491790771484380000
                   Size.Height = 26.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtEnterScrollableControl
@@ -5372,7 +5372,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 83.008087158203130000
+                  Size.Width = 84.508209228515630000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtEnterScrollableControl
@@ -5397,7 +5397,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 82.991912841796880000
+                  Size.Width = 84.491790771484380000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtEnterScrollableControl
@@ -5428,7 +5428,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end>
           IsSelected = True
           ImageIndex = 10
-          Size.Width = 117.000000000000000000
+          Size.Width = 118.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -5438,7 +5438,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           ExplicitSize.cy = 30.000000000000000000
           object lbConfigImpressora: TListBox
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 446.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
@@ -5446,11 +5446,11 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 332.000000000000000000
+            Viewport.Width = 335.000000000000000000
             Viewport.Height = 442.000000000000000000
             object ListBoxGroupHeader1: TListBoxGroupHeader
               StyledSettings = [Family, Size, Style, FontColor]
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -5458,13 +5458,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiClasse: TListBoxItem
               Position.Y = 30.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 11
               object GridPanelLayout8: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5496,7 +5496,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object rbClasseInterna: TRadioButton
                   Align = Right
                   IsChecked = True
-                  Position.X = 25.000000000000000000
+                  Position.X = 26.500000000000000000
                   Size.Width = 141.000000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
@@ -5506,7 +5506,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 end
                 object rbClasseExterna: TRadioButton
                   Align = Right
-                  Position.X = 199.000000000000000000
+                  Position.X = 202.000000000000000000
                   Size.Width = 133.000000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
@@ -5519,14 +5519,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object ListBoxGroupHeader10: TListBoxGroupHeader
               StyledSettings = [Family, Size, Style, FontColor]
               Position.Y = 70.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
               TabStop = False
               object GridPanelLayout14: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 30.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5559,7 +5559,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Align = Client
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 206.466979980468800000
+                  Size.Width = 208.477218627929700000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   Text = 'Modelo'
@@ -5569,7 +5569,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Align = Client
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 93.533020019531250000
+                  Size.Width = 94.522781372070310000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   Text = 'P'#225'gina C'#243'digo'
@@ -5579,13 +5579,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiConfPrinterModelos: TListBoxItem
               Position.Y = 100.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               object GridPanelLayout13: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5620,7 +5620,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 206.448898315429700000
+                  Size.Width = 208.458984375000000000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
@@ -5634,7 +5634,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 93.551101684570310000
+                  Size.Width = 94.541015625000000000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 5
@@ -5644,7 +5644,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             object ListBoxGroupHeader9: TListBoxGroupHeader
               StyledSettings = [Family, Size, Style, FontColor]
               Position.Y = 140.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 7
@@ -5653,7 +5653,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiConfPrinterImpressoras: TListBoxItem
               Position.Y = 170.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -5663,7 +5663,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 Margins.Top = 4.000000000000000000
                 Margins.Right = 2.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 120.000000000000000000
+                Size.Width = 123.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5676,7 +5676,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 Margins.Top = 4.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Position.X = 138.000000000000000000
+                Position.X = 141.000000000000000000
                 Position.Y = 4.000000000000000000
                 Sides = [Top, Left, Bottom, Right]
                 Size.Width = 109.000000000000000000
@@ -5692,7 +5692,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               object chbTodasBth: TCheckBox
                 Align = Right
                 IsChecked = True
-                Position.X = 255.000000000000000000
+                Position.X = 258.000000000000000000
                 Size.Width = 77.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
@@ -5702,7 +5702,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object ListBoxGroupHeader6: TListBoxGroupHeader
               Position.Y = 210.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 9
@@ -5711,13 +5711,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiConfPrinterDiversos: TListBoxItem
               Position.Y = 240.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               object GridPanelLayout12: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 74.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5730,11 +5730,6 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   end>
                 ControlCollection = <
                   item
-                    Column = 0
-                    Control = cbQRCodeLateral
-                    Row = 0
-                  end
-                  item
                     Column = 1
                     Control = cbImprimir1Linha
                     Row = 0
@@ -5742,6 +5737,16 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   item
                     Column = 0
                     Control = cbImprimirDescAcres
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = cbQRCodeLateral
+                    Row = 1
+                  end
+                  item
+                    Column = 1
+                    Control = GridPanelLayout10
                     Row = 1
                   end>
                 RowCollection = <
@@ -5750,32 +5755,22 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   end
                   item
                     Value = 50.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
                   end>
-                object cbQRCodeLateral: TCheckBox
+                object cbImprimir1Linha: TCheckBox
                   Align = Client
                   IsChecked = True
                   Margins.Left = 8.000000000000000000
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 150.000000000000000000
+                  Size.Width = 151.500000000000000000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
-                  TabOrder = 1
-                  Text = 'QRCode Lateral'
-                  TextSettings.WordWrap = True
-                end
-                object cbImprimir1Linha: TCheckBox
-                  Align = Client
-                  Margins.Left = 8.000000000000000000
-                  Margins.Top = 4.000000000000000000
-                  Margins.Right = 8.000000000000000000
-                  Margins.Bottom = 4.000000000000000000
-                  Size.Width = 150.000000000000000000
-                  Size.Height = 29.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 6
-                  Text = 'Imprimir Item em 1 linha'
+                  TabOrder = 4
+                  Text = 'Imprimir Item uma linha'
                   TextSettings.WordWrap = True
                 end
                 object cbImprimirDescAcres: TCheckBox
@@ -5784,17 +5779,88 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 150.000000000000000000
+                  Size.Width = 151.500000000000000000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
-                  TabOrder = 7
+                  TabOrder = 5
                   Text = 'Imprime Desc/Acres'
+                end
+                object cbQRCodeLateral: TCheckBox
+                  Align = Client
+                  Margins.Left = 8.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 8.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 151.500000000000000000
+                  Size.Height = 29.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  Text = 'QRCode Lateral'
+                  TextSettings.WordWrap = True
+                end
+                object GridPanelLayout10: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 167.500000000000000000
+                  Size.Height = 37.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 6
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = Label41
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = seLarguraModulo
+                      Row = 0
+                    end>
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object Label41: TLabel
+                    Align = Client
+                    Margins.Right = 5.000000000000000000
+                    Size.Width = 78.750000000000000000
+                    Size.Height = 37.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.HorzAlign = Trailing
+                    Text = 'Largura'
+                    TabOrder = 0
+                  end
+                  object seLarguraModulo: TSpinBox
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    Cursor = crIBeam
+                    Min = 1.000000000000000000
+                    Max = 6.000000000000000000
+                    Value = 4.000000000000000000
+                    Margins.Top = 4.000000000000000000
+                    Margins.Right = 4.000000000000000000
+                    Margins.Bottom = 4.000000000000000000
+                    Size.Width = 79.750000000000000000
+                    Size.Height = 29.000000000000000000
+                    Size.PlatformDefault = False
+                    OnEnter = seColunasEnter
+                  end
                 end
               end
             end
             object ListBoxGroupHeader11: TListBoxGroupHeader
               Position.Y = 314.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 8
@@ -5803,13 +5869,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiConfPrinterLarguraEspacejamento: TListBoxItem
               Position.Y = 344.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               object gpConfPrinterLarguraEspacejamento: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 74.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -5867,7 +5933,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object Label16: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 110.666664123535200000
+                  Size.Width = 111.666664123535200000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -5878,7 +5944,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object Label17: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 110.666664123535200000
+                  Size.Width = 111.666664123535200000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -5889,7 +5955,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object Label18: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 110.666671752929700000
+                  Size.Width = 111.666671752929700000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -5907,7 +5973,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 102.666664123535200000
+                  Size.Width = 103.666664123535200000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = seColunasEnter
@@ -5921,7 +5987,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 102.666664123535200000
+                  Size.Width = 103.666664123535200000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = seColunasEnter
@@ -5935,7 +6001,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 102.666671752929700000
+                  Size.Width = 103.666671752929700000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = seColunasEnter
@@ -5944,7 +6010,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object ListBoxGroupHeader12: TListBoxGroupHeader
               Position.Y = 418.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 10
@@ -5953,13 +6019,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiConfPrinterLogoTipo: TListBoxItem
               Position.Y = 448.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 5
               object gpConfPrinterLogoTipo: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 74.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6017,7 +6083,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object Label19: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 110.666671752929700000
+                  Size.Width = 111.666671752929700000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -6028,7 +6094,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                 object Label20: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 110.666664123535200000
+                  Size.Width = 111.666664123535200000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -6041,7 +6107,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   IsChecked = True
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 94.666664123535160000
+                  Size.Width = 95.666664123535160000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -6059,7 +6125,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 102.666664123535200000
+                  Size.Width = 103.666664123535200000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = seColunasEnter
@@ -6074,7 +6140,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 102.666671752929700000
+                  Size.Width = 103.666671752929700000
                   Size.Height = 29.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = seColunasEnter
@@ -6084,7 +6150,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   IsChecked = True
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 94.666664123535160000
+                  Size.Width = 95.666664123535160000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
@@ -6101,7 +6167,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end>
           IsSelected = False
           ImageIndex = 4
-          Size.Width = 118.000000000000000000
+          Size.Width = 119.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6111,7 +6177,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           ExplicitSize.cy = 30.000000000000000000
           object lbConfigEmail: TListBox
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 446.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
@@ -6119,12 +6185,12 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 332.000000000000000000
+            Viewport.Width = 335.000000000000000000
             Viewport.Height = 442.000000000000000000
             object lbiHeaderEmailRemetente: TListBoxGroupHeader
               TextSettings.HorzAlign = Center
               StyledSettings = [Family, Size, Style, FontColor]
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 8
@@ -6133,13 +6199,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiEmailFrom: TListBoxItem
               Position.Y = 30.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               object gpEmailFrom: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 68.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6201,7 +6267,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -6224,7 +6290,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -6234,7 +6300,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               TextSettings.HorzAlign = Center
               StyledSettings = [Family, Size, Style, FontColor]
               Position.Y = 98.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 7
@@ -6243,13 +6309,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiEmailSMTP: TListBoxItem
               Position.Y = 128.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               object gpEmailSMTP: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 68.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6339,7 +6405,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 144.000000000000000000
+                  Size.Width = 147.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -6386,7 +6452,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 144.000000000000000000
+                  Size.Width = 147.000000000000000000
                   Size.Height = 26.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -6418,7 +6484,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               TextSettings.HorzAlign = Center
               StyledSettings = [Family, Size, Style, FontColor]
               Position.Y = 196.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 9
@@ -6427,13 +6493,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiEmailUsuarioLogin: TListBoxItem
               Position.Y = 226.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               object gpEmailUsuarioLogin: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 68.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6515,7 +6581,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
@@ -6529,7 +6595,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 194.000000000000000000
+                  Size.Width = 197.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
@@ -6553,7 +6619,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object ListBoxGroupHeader7: TListBoxGroupHeader
               Position.Y = 294.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 5
@@ -6561,13 +6627,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object libDestinatarioAssunto: TListBoxItem
               Position.Y = 324.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 105.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               object GridPanelLayout6: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 105.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6642,7 +6708,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 244.000000000000000000
+                  Size.Width = 247.000000000000000000
                   Size.Height = 31.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
@@ -6666,7 +6732,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 244.000000000000000000
+                  Size.Width = 247.000000000000000000
                   Size.Height = 31.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
@@ -6690,7 +6756,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 244.000000000000000000
+                  Size.Width = 247.000000000000000000
                   Size.Height = 31.000000000000000000
                   Size.PlatformDefault = False
                   OnEnter = edtAddressEmailEnter
@@ -6699,7 +6765,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object ListBoxGroupHeader8: TListBoxGroupHeader
               Position.Y = 429.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -6707,7 +6773,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiMensagem: TListBoxItem
               Position.Y = 459.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 132.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 11
@@ -6723,12 +6789,12 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   ''
                   'XML est'#225' em anexo')
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 132.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 4
                 OnEnter = edtAddressEmailEnter
-                Viewport.Width = 327.000000000000000000
+                Viewport.Width = 330.000000000000000000
                 Viewport.Height = 127.000000000000000000
               end
             end
@@ -6736,7 +6802,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               TextSettings.HorzAlign = Center
               StyledSettings = [Family, Size, Style, FontColor]
               Position.Y = 591.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 10
@@ -6745,13 +6811,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object lbiEmailCharSet: TListBoxItem
               Position.Y = 621.000000000000000000
-              Size.Width = 332.000000000000000000
+              Size.Width = 335.000000000000000000
               Size.Height = 68.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
               object gpEmailCharset: TGridPanelLayout
                 Align = Client
-                Size.Width = 332.000000000000000000
+                Size.Width = 335.000000000000000000
                 Size.Height = 68.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -6820,7 +6886,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 8
@@ -6831,7 +6897,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
                   Margins.Top = 2.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 2.000000000000000000
-                  Size.Width = 254.000000000000000000
+                  Size.Width = 257.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 9
@@ -6844,7 +6910,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       object gpBotoesConfig: TGridPanelLayout
         Align = Bottom
         Position.Y = 548.000000000000000000
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 38.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -6882,7 +6948,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 168.000000000000000000
+          Size.Width = 169.500000000000000000
           Size.Height = 28.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -6900,7 +6966,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 168.000000000000000000
+          Size.Width = 169.500000000000000000
           Size.Height = 28.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -6917,7 +6983,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end>
       IsSelected = False
       ImageIndex = 11
-      Size.Width = 70.000000000000000000
+      Size.Width = 71.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -6926,14 +6992,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object ToolBar2: TToolBar
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lblTituloTestes: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -6956,7 +7022,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       end
       object lbTestes: TListBox
         Align = Client
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 488.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 10
@@ -6965,10 +7031,10 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         DefaultItemStyles.ItemStyle = ''
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
-        Viewport.Width = 352.000000000000000000
+        Viewport.Width = 355.000000000000000000
         Viewport.Height = 484.000000000000000000
         object lbhConsultas: TListBoxGroupHeader
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -6976,13 +7042,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end
         object lbTestesConsultas: TListBoxItem
           Position.Y = 30.000000000000000000
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 80.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
           object GridPanelLayout3: TGridPanelLayout
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 80.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -7036,7 +7102,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 2.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 113.333335876464800000
+              Size.Width = 114.333335876464800000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -7051,7 +7117,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 2.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 113.333335876464800000
+              Size.Width = 114.333335876464800000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
@@ -7066,7 +7132,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 2.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 113.333328247070300000
+              Size.Width = 114.333328247070300000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -7082,7 +7148,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 344.000000000000000000
+              Size.Width = 347.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Par'#226'metro'
@@ -7092,7 +7158,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         object lbiHeaderNFCe: TListBoxGroupHeader
           Selectable = False
           Position.Y = 110.000000000000000000
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 8
@@ -7102,13 +7168,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         object lbiConfigNFCe: TListBoxItem
           Selectable = False
           Position.Y = 140.000000000000000000
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 80.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 9
           object GridPanelLayout5: TGridPanelLayout
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 80.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -7165,7 +7231,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               end>
             object Label7: TLabel
               Align = Client
-              Size.Width = 117.333335876464800000
+              Size.Width = 118.333335876464800000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -7174,7 +7240,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object Label12: TLabel
               Align = Client
-              Size.Width = 117.333335876464800000
+              Size.Width = 118.333335876464800000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -7183,7 +7249,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             end
             object Label14: TLabel
               Align = Client
-              Size.Width = 117.333328247070300000
+              Size.Width = 118.333328247070300000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -7201,7 +7267,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 109.333335876464800000
+              Size.Width = 110.333335876464800000
               Size.Height = 32.000000000000000000
               Size.PlatformDefault = False
             end
@@ -7216,7 +7282,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 109.333335876464800000
+              Size.Width = 110.333335876464800000
               Size.Height = 32.000000000000000000
               Size.PlatformDefault = False
             end
@@ -7227,7 +7293,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 101.333328247070300000
+              Size.Width = 102.333328247070300000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 10
@@ -7235,7 +7301,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               object lOnLine: TLabel
                 Align = Client
                 Margins.Right = 4.000000000000000000
-                Size.Width = 97.333328247070310000
+                Size.Width = 98.333328247070310000
                 Size.Height = 30.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -7247,13 +7313,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end
         object lbiTestesXML: TListBoxItem
           Position.Y = 220.000000000000000000
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 80.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
           object GridPanelLayout2: TGridPanelLayout
             Align = Client
-            Size.Width = 352.000000000000000000
+            Size.Width = 355.000000000000000000
             Size.Height = 80.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -7307,7 +7373,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 342.000000000000000000
+              Size.Width = 345.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -7322,7 +7388,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 101.333335876464800000
+              Size.Width = 102.333335876464800000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 8
@@ -7330,7 +7396,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               object lEnviarNFCe: TLabel
                 Align = Client
                 Margins.Right = 4.000000000000000000
-                Size.Width = 97.333335876464840000
+                Size.Width = 98.333335876464840000
                 Size.Height = 30.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -7345,7 +7411,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 101.333335876464800000
+              Size.Width = 102.333335876464800000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 10
@@ -7353,7 +7419,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               object lImprimirNFCe: TLabel
                 Align = Client
                 Margins.Right = 4.000000000000000000
-                Size.Width = 97.333335876464840000
+                Size.Width = 98.333335876464840000
                 Size.Height = 30.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -7368,7 +7434,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               Margins.Top = 5.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 5.000000000000000000
-              Size.Width = 101.333328247070300000
+              Size.Width = 102.333328247070300000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 9
@@ -7376,7 +7442,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
               object lEmailNFCe: TLabel
                 Align = Client
                 Margins.Right = 4.000000000000000000
-                Size.Width = 97.333328247070310000
+                Size.Width = 98.333328247070310000
                 Size.Height = 30.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -7389,7 +7455,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         object lbOperacao: TListBoxGroupFooter
           AutoTranslate = False
           Position.Y = 300.000000000000000000
-          Size.Width = 352.000000000000000000
+          Size.Width = 355.000000000000000000
           Size.Height = 45.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 10
@@ -7412,7 +7478,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       object GridPanelLayout7: TGridPanelLayout
         Align = Bottom
         Position.Y = 536.000000000000000000
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 11
@@ -7449,7 +7515,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Top = 2.000000000000000000
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
-          Size.Width = 174.000000000000000000
+          Size.Width = 175.500000000000000000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -7465,7 +7531,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Top = 2.000000000000000000
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
-          Size.Width = 174.000000000000000000
+          Size.Width = 175.500000000000000000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -7481,7 +7547,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end>
       IsSelected = False
       ImageIndex = 6
-      Size.Width = 70.000000000000000000
+      Size.Width = 71.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -7494,22 +7560,22 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         DataDetectorTypes = []
         ReadOnly = True
         Align = Client
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 488.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 12
-        Viewport.Width = 351.000000000000000000
+        Viewport.Width = 354.000000000000000000
         Viewport.Height = 483.000000000000000000
       end
       object ToolBar3: TToolBar
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         object Label13: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -7533,7 +7599,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       object GridPanelLayout9: TGridPanelLayout
         Align = Bottom
         Position.Y = 536.000000000000000000
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -7579,7 +7645,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 108.666664123535200000
+          Size.Width = 109.666664123535200000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -7597,7 +7663,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 108.666664123535200000
+          Size.Width = 109.666664123535200000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
@@ -7614,7 +7680,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
           Margins.Top = 2.000000000000000000
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
-          Size.Width = 114.666671752929700000
+          Size.Width = 115.666671752929700000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -7630,7 +7696,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
         end>
       IsSelected = False
       ImageIndex = 15
-      Size.Width = 74.000000000000000000
+      Size.Width = 73.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -7639,14 +7705,14 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       ExplicitSize.cx = 80.000000000000000000
       ExplicitSize.cy = 50.000000000000000000
       object ToolBar5: TToolBar
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object Label38: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -7669,13 +7735,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       end
       inline fraXMLs: TFrameFileSelect
         Align = Client
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 468.000000000000000000
         Size.PlatformDefault = False
         inherited lvFileBrowse: TListView
           AllowSelection = True
           AlternatingColors = True
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 468.000000000000000000
           ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
             item
@@ -7762,13 +7828,13 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
       object ToolBar6: TToolBar
         Align = Bottom
         Position.Y = 516.000000000000000000
-        Size.Width = 356.000000000000000000
+        Size.Width = 359.000000000000000000
         Size.Height = 70.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         object GridPanelLayout4: TGridPanelLayout
           Align = Client
-          Size.Width = 356.000000000000000000
+          Size.Width = 359.000000000000000000
           Size.Height = 70.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -7843,7 +7909,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             Margins.Left = 3.000000000000000000
             Margins.Top = 3.000000000000000000
             Margins.Bottom = 3.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
@@ -7858,7 +7924,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             Margins.Left = 3.000000000000000000
             Margins.Top = 3.000000000000000000
             Margins.Bottom = 3.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -7872,7 +7938,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             ImageIndex = 17
             Margins.Left = 3.000000000000000000
             Margins.Bottom = 6.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 4
@@ -7887,7 +7953,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             Margins.Left = 3.000000000000000000
             Margins.Top = 3.000000000000000000
             Margins.Bottom = 3.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
@@ -7901,7 +7967,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             ImageIndex = 14
             Margins.Left = 3.000000000000000000
             Margins.Bottom = 6.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 5
@@ -7915,7 +7981,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             ImageIndex = 16
             Margins.Left = 3.000000000000000000
             Margins.Bottom = 6.000000000000000000
-            Size.Width = 86.000000000000000000
+            Size.Width = 86.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 6
@@ -7931,7 +7997,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             Margins.Top = 3.000000000000000000
             Margins.Right = 3.000000000000000000
             Margins.Bottom = 3.000000000000000000
-            Size.Width = 83.000000000000000000
+            Size.Width = 83.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 3
@@ -7946,7 +8012,7 @@ object ACBrNFCeTestForm: TACBrNFCeTestForm
             Margins.Left = 3.000000000000000000
             Margins.Right = 3.000000000000000000
             Margins.Bottom = 6.000000000000000000
-            Size.Width = 83.000000000000000000
+            Size.Width = 83.750000000000000000
             Size.Height = 29.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 7

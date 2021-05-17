@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2021
+-- pcnConversao --
+[*] Retorno da tag "xPag" quando tPag "99-Outros" no método "FormaPagamentoToDescricao".
+  Por: BigWings
+
 14/05/2021
 -- pcnLeitor ---
 [*] Alteração na função "rCampo" visando a leitura correta do horário que contem

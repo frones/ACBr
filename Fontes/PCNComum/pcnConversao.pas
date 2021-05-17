@@ -342,7 +342,7 @@ function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorF
 function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
 function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string;
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
@@ -847,7 +847,7 @@ end;
 // N13 - Modalidade de determinação da BC do ICMS ******************************
 function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
 begin
-  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - valor da operação', ''],
+  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - Valor da operação', ''],
     [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
 end;
 
@@ -870,7 +870,7 @@ end;
 // N18 - Modalidade de determinação da BC do ICMS ST ***************************
 function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 begin
-  result := EnumeradoToStr(t, ['0 – Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
+  result := EnumeradoToStr(t, ['0 - Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
    '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)',
    '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)', '6 - Valor da Operação'],
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
@@ -1255,9 +1255,12 @@ begin
                                fpOutro]);
 end;
 
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string;
 begin
-  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
+  if (t = fpOutro) and (xPag <> '') then
+    result := xPag
+  else
+    result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
                                 'Cartão de Débito', 'Crédito Loja',
                                 'Vale Alimentação', 'Vale Refeição', 'Vale Presente',
                                 'Vale Combustível', 'Duplicata Mercantil',

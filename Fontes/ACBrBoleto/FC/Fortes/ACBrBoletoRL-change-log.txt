@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2021
+ACBrBoletoFCFortes
+[*] Ajustes de posição de campos no Layout modelo impressora Bobina 
+https://www.projetoacbr.com.br/forum/topic/62431-layout-7-boleto-pequenos-ajustes/
+
 28/04/2021
 ACBrBoletoFCFortes.dfm
 [*] Compatibilização das alterações de campos no layout com .dfm ref campo "usoBanco"

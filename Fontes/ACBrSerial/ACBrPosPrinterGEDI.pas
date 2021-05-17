@@ -68,15 +68,14 @@ const
     cTagBeep,
     cTagZera, cTagReset );
 
-  CBLOCK_POST_PROCESS: array[0..13] of string = (
+  CBLOCK_POST_PROCESS: array[0..16] of string = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraInter,
     cTagBarraCode39, cTagBarraCode93,
     cTagBarraCode128,
     cTagBarraUPCA, cTagBarraUPCE, cTagBarraCodaBar,
-    cTagQRCode,
     cTagBMP,
-    cTagBarraLargura, cTagBarraAltura,
-    cTagQRCodeLargura);
+    cTagBarraMostrar, cTagBarraLargura, cTagBarraAltura,
+    cTagQRCode, cTagQRCodeTipo, cTagQRCodeLargura, cTagQRCodeError );
 
   CTAGS_AVANCO: array[0..2] of string =
     (cTagCorte, cTagCorteParcial, cTagCorteTotal);
@@ -495,43 +494,57 @@ end;
 
 function TACBrPosPrinterGEDI.TraduzirTagBloco(const ATag,
   ConteudoBloco: AnsiString; var BlocoTraduzido: AnsiString): Boolean;
-var
-  wTag: AnsiString;
-  
-  procedure RemontaBloco;
+
+  function RemontaBloco(const ATag, ConteudoBloco: AnsiString): String;
   begin
-    BlocoTraduzido := wTag + ConteudoBloco + '</'+ copy(wTag, 2, Length(wTag));
+    Result := ATag + ConteudoBloco + '</'+ copy(ATag, 2, Length(ATag));
   end;
-  
+
 begin
   BlocoTraduzido := '';
   Result := False;    // Deixa ACBrPosPrinter traduzir...
-  
-  if  (ATag = cTagBarraCode128a) or (ATag = cTagBarraCode128b) or (ATag = cTagBarraCode128c) then
+
+  if (ATag = cTagBarraCode128) or (ATag = cTagBarraCode128a) or
+     (ATag = cTagBarraCode128b) or (ATag = cTagBarraCode128c) then
   begin
-    wTag := cTagBarraCode128;
-    RemontaBloco;
+    BlocoTraduzido := RemontaBloco(cTagBarraCode128, ConteudoBloco);
     Result := True;
   end
-  
+
   else if MatchText(ATag, CBLOCK_POST_PROCESS) then
   begin
-    wTag := ATag;
-    RemontaBloco;
+    BlocoTraduzido := RemontaBloco(ATag, ConteudoBloco);
     Result := True;
   end;
 end;
 
 procedure TACBrPosPrinterGEDI.ImprimirGEDI(const LinhasImpressao: String;  var Tratado: Boolean);
 var
-  TextoAImprimir: string;
+  TextoAImprimir, Linha: string;
+  SL: TStringList;
+  i: Integer;
 begin
   if LinhasImpressao.IsEmpty then
     Exit;
 
   fGEDIPrinter.IniciarImpressao;
   try
-    TextoAImprimir := ChangeLineBreak(LinhasImpressao, cTagBR);
+    TextoAImprimir := '';
+    SL := TStringList.Create;
+    try
+      SL.Text := LinhasImpressao;
+      for i := 0 to SL.Count-1 do
+      begin
+        Linha := TrimRight(SL[i]);
+        if (Linha = '') then
+          Linha := ' ';
+
+        TextoAImprimir := TextoAImprimir + Linha + cTagBR;
+      end;
+    finally
+      SL.Free;
+    end;
+
     fGEDITagProcessor.DecodificarTagsFormatacao(TextoAImprimir);
   finally
     fGEDIPrinter.FinalizarImpressao;
@@ -640,17 +653,23 @@ begin
     fGEDIPrinter.ImprimirCodBarras( barCodeType, ConteudoBloco, A, A );
   end
 
-  else if ATag = cTagBarraLargura then
+  else if (ATag = cTagQRCodeLargura) then
+    fpPosPrinter.ConfigQRCode.LarguraModulo := StrToIntDef(
+       ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
+
+  else if (ATag = cTagQRCodeTipo) or (ATag = cTagQRCodeError) then
+    BlocoTraduzido := ''
+
+  else if (ATag = cTagBarraMostrar) then
+    BlocoTraduzido := ''
+
+  else if (ATag = cTagBarraLargura) then
     fpPosPrinter.ConfigBarras.LarguraLinha := StrToIntDef(
        ConteudoBloco, fpPosPrinter.ConfigBarras.LarguraLinha)
 
-  else if ATag = cTagBarraAltura then
+  else if (ATag = cTagBarraAltura) then
     fpPosPrinter.ConfigBarras.Altura := StrToIntDef(
        ConteudoBloco, fpPosPrinter.ConfigBarras.Altura)
-
-  else if ATag = cTagQRCodeLargura then
-    fpPosPrinter.ConfigQRCode.LarguraModulo := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
 
   else if (AnsiIndexText(ATag, CBLOCK_POST_PROCESS) >= 0) then
   begin

@@ -514,7 +514,7 @@ end;
 
 function TACBrTagProcessor.DecodificarTagsFormatacao(ABinaryString: AnsiString): AnsiString;
 var
-  Cmd, LowerString, Tag1, Tag2, Resp: AnsiString;
+  Cmd, Tag1, Tag2, TagT, Resp: AnsiString;
   PosTag1, LenTag1, PosTag2, FimTag: Integer;
   ATag: TACBrTag;
 
@@ -543,7 +543,6 @@ begin
     Tag1 := '';
     PosTag1 := 0;
     FimTag := 0;
-    LowerString := '';
 
     AcharProximaTag(ABinaryString, FimTag + 1, Tag1, PosTag1);
     while Tag1 <> '' do
@@ -558,12 +557,12 @@ begin
         if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
         begin
           Tag2 := '</' + copy(Tag1, 2, LenTag1); // Calcula Tag de Fechamento
-          if (LowerString = '') then
-            LowerString := LowerCase(ABinaryString);
+          TagT := Tag1;
+          PosTag2 := PosTag1;
+          while (TagT <> Tag2) and (PosTag2 > 0) do
+            AcharProximaTag(ABinaryString, PosTag2 + Length(TagT), TagT, PosTag2);
 
-          PosTag2 := PosEx(Tag2, LowerString, PosTag1 + LenTag1);
-
-          if PosTag2 = 0 then             // Não achou Tag de Fechamento
+          if (PosTag2 = 0) then             // Não achou Tag de Fechamento
           begin
             Tag2 := '';
             Cmd := '';

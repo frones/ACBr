@@ -38,6 +38,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/05/2021
+-- ACBrDevice --
+[-] Ajustes no método "TACBrTagProcessor.DecodificarTagsFormatacao", para
+    funcionar corretamente no compilador NEXTGEN, com Strings em UTF8
+    (por: DSA)
+
+-- ACBrPosPrinterGEDI --
+[-] Ajuste para imprimir corretamente Linhas em branco e Linhas com espaços no
+    Final
+    (por: DSA)
+
 Data: 14/05/2021
 -- ACBrPosPrinter --
 [*] Método "AjustarCodBarras" criado após refatoração, para permitir o seu uso

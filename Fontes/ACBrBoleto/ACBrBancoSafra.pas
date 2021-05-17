@@ -108,6 +108,8 @@ begin
   fpTamanhoConta          := 8;
   fpTamanhoCarteira       := 1;
   fpTamanhoMaximoNossoNum := 9;
+  fpLayoutVersaoArquivo   := 87;
+  fpLayoutVersaoLote      := 45;
 end;
 
 function TACBrBancoSafra.CalcularDigitoVerificador(
@@ -318,30 +320,30 @@ begin
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
     { Lote 0000 }
-    wLinha := IntToStrZero(ACBrBanco.Numero, 3)           + // 001-003 / Código do Banco na Compensação
-              '0000'                                      + // 004-007 / Lote de Serviço
-              '0'                                         + // 008-008 / Tipo de Registro
-              Space(9)                                    + // 009-017 / Campo sem Preenchimento
-              IfThen(TipoInscricao = pFisica, '1', '2')   + // 018-018 / Tipo de Inscrição da Empresa
-              PadLeft(Trim(OnlyNumber(CNPJCPF)), 14, '0') + // 019-032 / Número de Inscrição da Empresa
-              PadLeft(CodigoCedente, 20, '0')             + // 033-052 / Código do Convênio no Banco
-              PadRight(Agencia, 5, '0')                    + // 053-057 / Agência Mantenedora da Conta
-              PadLeft(AgenciaDigito, 1)                   + // 058-058 / Dígito Verificador da Agência
-              PadLeft(Conta, 12, '0')                     + // 059-070 / Número da Conta Corrente
-              PadLeft(ContaDigito, 1)                     + // 071-071 / Dígito Verificador da Conta
-              ' '                                         + // 072-072 / Dígito Verificador da Ag/Conta
-              PadRight(Nome, 30)                          + // 073-102 / Nome da Empresa
-              PadRight('BANCO SAFRA S/A', 30)             + // 103-132 / Nome do Banco
-              Space(10)                                   + // 133-142 / Campo sem Preenchimento
-              '1'                                         + // 143-143 / Código Remessa/Retorno
-              FormatDateTime('ddmmyyyy', Now)             + // 144-151 / Data de Geração do Arquivo
-              FormatDateTime('hhnnss', Now)               + // 152-157 / Hora e Geração do Arquivo
-              IntToStrZero(NumeroRemessa, 6)              + // 158-163 / Número Sequencial do Arquivo
-              '087'                                       + // 164-166 / Nº da Versão do Layout do Arquivo
-              '01600'                                     + // 167-171 / Densidade de Gravação do Arquivo
-              Space(20)                                   + // 172-191 / Para uso Reservado do Banco
-              Space(20)                                   + // 192-211 / Para uso Reservado da Empresa
-              Space(29)                                   ; // 212-240 / Campo sem preenchimento
+    wLinha := IntToStrZero(ACBrBanco.Numero, 3)                 + // 001-003 / Código do Banco na Compensação
+              '0000'                                            + // 004-007 / Lote de Serviço
+              '0'                                               + // 008-008 / Tipo de Registro
+              Space(9)                                          + // 009-017 / Campo sem Preenchimento
+              IfThen(TipoInscricao = pFisica, '1', '2')         + // 018-018 / Tipo de Inscrição da Empresa
+              PadLeft(Trim(OnlyNumber(CNPJCPF)), 14, '0')       + // 019-032 / Número de Inscrição da Empresa
+              PadLeft(CodigoCedente, 20, '0')                   + // 033-052 / Código do Convênio no Banco
+              PadRight(Agencia, 5, '0')                         + // 053-057 / Agência Mantenedora da Conta
+              PadLeft(AgenciaDigito, 1)                         + // 058-058 / Dígito Verificador da Agência
+              PadLeft(Conta, 12, '0')                           + // 059-070 / Número da Conta Corrente
+              PadLeft(ContaDigito, 1)                           + // 071-071 / Dígito Verificador da Conta
+              ' '                                               + // 072-072 / Dígito Verificador da Ag/Conta
+              PadRight(Nome, 30)                                + // 073-102 / Nome da Empresa
+              PadRight('BANCO SAFRA S/A', 30)                   + // 103-132 / Nome do Banco
+              Space(10)                                         + // 133-142 / Campo sem Preenchimento
+              '1'                                               + // 143-143 / Código Remessa/Retorno
+              FormatDateTime('ddmmyyyy', Now)                   + // 144-151 / Data de Geração do Arquivo
+              FormatDateTime('hhnnss', Now)                     + // 152-157 / Hora e Geração do Arquivo
+              IntToStrZero(NumeroRemessa, 6)                    + // 158-163 / Número Sequencial do Arquivo
+              PadLeft(IntToStr(fpLayoutVersaoArquivo), 3, '0')  + // 164-166 / Nº da Versão do Layout do Arquivo
+              '01600'                                           + // 167-171 / Densidade de Gravação do Arquivo
+              Space(20)                                         + // 172-191 / Para uso Reservado do Banco
+              Space(20)                                         + // 192-211 / Para uso Reservado da Empresa
+              Space(29)                                         ; // 212-240 / Campo sem preenchimento
 
     { Lote 0001 }
     wLinha2 := IntToStrZero(ACBrBanco.Numero, 3)                                + // 001-003 / Código do Banco na Compensação
@@ -350,7 +352,7 @@ begin
                'R'                                                              + // 009-009 / Tipo de Operação
                '01'                                                             + // 010-011 / Tipo de Serviço
                Space(2)                                                         + // 012-013 / Campo sem Preenchimento
-               '045'                                                            + // 014-016 / Nº da versão do layout do Lote
+               PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')                    + // 014-016 / Nº da versão do layout do Lote
                ' '                                                              + // 017-017 / Campo sem preenchimento
                IfThen(TipoInscricao = pFisica, '1', '2')                        + // 018-018 / Tipo de Inscrição da Empresa
                PadLeft(Trim(OnlyNumber(CNPJCPF)), 15, '0')                      + // 019-033 / Número de Inscrição da Empresa

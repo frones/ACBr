@@ -1321,7 +1321,7 @@ begin
       if FDANFEClassOwner is TACBrNFeDANFCEClass then
         cdsPagamento.FieldByName('tPag').AsString := TACBrNFeDANFCEClass(FDANFEClassOwner).ManterDescricaoPagamentos(FNFe.pag[i])
       else
-        cdsPagamento.FieldByName('tPag').AsString := FormaPagamentoToDescricao(tPag);
+        cdsPagamento.FieldByName('tPag').AsString := FormaPagamentoToDescricao(tPag, xPag);
       cdsPagamento.FieldByName('vPag').AsFloat   := vPag;
       // ver tpIntegra
       cdsPagamento.FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);

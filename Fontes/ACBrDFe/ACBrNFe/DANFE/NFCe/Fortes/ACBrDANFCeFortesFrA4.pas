@@ -586,7 +586,10 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel27BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := ACBrStr(FormaPagamentoToDescricao(self.FACBrNFeDANFCeFortesA4.FpNFe.pag[self.FNumPag].tPag));
+  Text := ACBrStr(FormaPagamentoToDescricao(
+    self.FACBrNFeDANFCeFortesA4.FpNFe.pag[self.FNumPag].tPag,
+    self.FACBrNFeDANFCeFortesA4.fpNFe.pag[self.FNumPag].xPag
+    ));
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel28BeforePrint(Sender: TObject;

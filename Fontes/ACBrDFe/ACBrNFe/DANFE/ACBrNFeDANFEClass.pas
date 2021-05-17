@@ -677,7 +677,7 @@ begin
     end;
 
     if (icaTipo in FDescricaoPagamentos) then
-      Result:= ACBrStr(FormaPagamentoToDescricao(tPag)) + Space(1);
+      Result:= ACBrStr(FormaPagamentoToDescricao(tPag, xPag)) + Space(1);
     if (icaBandeira in FDescricaoPagamentos) then
       Result := Result + descBandeira + Space(1);
     if (icaAutorizacao in FDescricaoPagamentos) then
@@ -790,7 +790,7 @@ begin
   for i := 0 to (ANFe.pag.Count - 1) do
   begin
     lTemp :=  ACBrStr(
-                FormaPagamentoToDescricao( ANFe.pag.Items[i].tPag)
+                FormaPagamentoToDescricao( ANFe.pag.Items[i].tPag, ANFe.pag.Items[i].xPag)
                 ) + ' R$'+
                 FormatFloatBr( ANFe.pag.Items[i].vPag);
 

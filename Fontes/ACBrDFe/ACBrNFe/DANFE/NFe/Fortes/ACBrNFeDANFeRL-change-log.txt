@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2021
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrDANFCeFortesFrA4 --
+[*] Impressão da tag "xPag" como descrição da forma de pagamento.
+  Por: BigWings
+
 19/04/2021
 -- ACBrDANFCeFortesFrA4 --
 [*] Ajuste para conversão de valores Currency utilizando função FormatFloatBr, motivo: Problemas na emissão em Linux

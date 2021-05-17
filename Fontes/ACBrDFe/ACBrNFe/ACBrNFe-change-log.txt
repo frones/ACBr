@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2021
+-- ACBrNFeDANFEClass --
+[*] Impressão da tag "xPag" como descrição da forma de pagamento.
+  Por: BigWings
+
 26/02/2021
 --ACBrNFeNotasFiscais--
 [*] Adicionado sessão InfRespTec na função GerarNFeIn

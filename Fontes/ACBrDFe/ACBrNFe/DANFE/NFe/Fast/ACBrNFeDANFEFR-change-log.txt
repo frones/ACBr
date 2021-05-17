@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2021
+-- ACBrNFeDANFERDM --
+[*] Impressão da tag "xPag" como descrição da forma de pagamento.
+  Por: BigWings
+
 29/01/2021
 -- ACBrNFeDANFERDM --
 [-] Correção na exibição dos acréscimos e descontos por item quando há desconto

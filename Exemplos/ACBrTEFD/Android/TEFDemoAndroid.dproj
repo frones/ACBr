@@ -124,28 +124,28 @@
         <VerInfo_Keys>package=br.com.projetoacbr.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <Android_LauncherIcon36>..\..\..\Fontes\Imagens\Android\ACBr_36_36.png</Android_LauncherIcon36>
-        <Android_LauncherIcon48>..\..\..\Fontes\Imagens\Android\ACBr_48_48.png</Android_LauncherIcon48>
-        <Android_LauncherIcon72>..\..\..\Fontes\Imagens\Android\ACBr_72_72.png</Android_LauncherIcon72>
-        <Android_LauncherIcon96>..\..\..\Fontes\Imagens\Android\ACBr_96_96.png</Android_LauncherIcon96>
-        <Android_LauncherIcon144>..\..\..\Fontes\Imagens\Android\ACBr_144_144.png</Android_LauncherIcon144>
-        <Android_SplashImage426>..\..\..\Fontes\Imagens\Android\ACBr_426_320.png</Android_SplashImage426>
-        <Android_SplashImage470>..\..\..\Fontes\Imagens\Android\ACBr_470_320.png</Android_SplashImage470>
-        <Android_SplashImage640>..\..\..\Fontes\Imagens\Android\ACBr_640_480.png</Android_SplashImage640>
-        <Android_SplashImage960>..\..\..\Fontes\Imagens\Android\ACBr_960_720.png</Android_SplashImage960>
+        <Android_LauncherIcon36>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_LauncherIcon36>
+        <Android_LauncherIcon48>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_LauncherIcon48>
+        <Android_LauncherIcon72>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_LauncherIcon72>
+        <Android_LauncherIcon96>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_LauncherIcon96>
+        <Android_LauncherIcon144>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png</Android_LauncherIcon144>
+        <Android_SplashImage426>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png</Android_SplashImage426>
+        <Android_SplashImage470>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png</Android_SplashImage470>
+        <Android_SplashImage640>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png</Android_SplashImage640>
+        <Android_SplashImage960>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png</Android_SplashImage960>
         <AUP_INTERNET>true</AUP_INTERNET>
         <AUP_READ_EXTERNAL_STORAGE>true</AUP_READ_EXTERNAL_STORAGE>
         <AUP_WRITE_EXTERNAL_STORAGE>true</AUP_WRITE_EXTERNAL_STORAGE>
-        <Android_NotificationIcon24>..\..\..\Fontes\Imagens\Android\ACBr_24_24.png</Android_NotificationIcon24>
-        <Android_NotificationIcon36>..\..\..\Fontes\Imagens\Android\ACBr_36_36.png</Android_NotificationIcon36>
-        <Android_NotificationIcon48>..\..\..\Fontes\Imagens\Android\ACBr_48_48.png</Android_NotificationIcon48>
+        <Android_NotificationIcon24>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png</Android_NotificationIcon24>
+        <Android_NotificationIcon36>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_NotificationIcon36>
+        <Android_NotificationIcon48>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_NotificationIcon48>
         <AUP_BLUETOOTH>true</AUP_BLUETOOTH>
         <AUP_BLUETOOTH_ADMIN>true</AUP_BLUETOOTH_ADMIN>
-        <Android_NotificationIcon72>..\..\..\Fontes\Imagens\Android\ACBr_72_72.png</Android_NotificationIcon72>
+        <Android_NotificationIcon72>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_NotificationIcon72>
         <PF_KeyStore>..\..\..\..\..\Gertec\DelphiAndroid\Chaves\Development_GertecDeveloper_CustomerAPP.keystore</PF_KeyStore>
-        <Android_NotificationIcon96>..\..\..\Fontes\Imagens\Android\ACBr_96_96.png</Android_NotificationIcon96>
+        <Android_NotificationIcon96>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_NotificationIcon96>
         <EnabledSysJars>android-support-v4.dex.jar;cloud-messaging.dex.jar;com-google-android-gms.play-services-ads-base.17.2.0.dex.jar;com-google-android-gms.play-services-ads-identifier.16.0.0.dex.jar;com-google-android-gms.play-services-ads-lite.17.2.0.dex.jar;com-google-android-gms.play-services-ads.17.2.0.dex.jar;com-google-android-gms.play-services-analytics-impl.16.0.8.dex.jar;com-google-android-gms.play-services-analytics.16.0.8.dex.jar;com-google-android-gms.play-services-base.16.0.1.dex.jar;com-google-android-gms.play-services-basement.16.2.0.dex.jar;com-google-android-gms.play-services-gass.17.2.0.dex.jar;com-google-android-gms.play-services-identity.16.0.0.dex.jar;com-google-android-gms.play-services-maps.16.1.0.dex.jar;com-google-android-gms.play-services-measurement-base.16.4.0.dex.jar;com-google-android-gms.play-services-measurement-sdk-api.16.4.0.dex.jar;com-google-android-gms.play-services-stats.16.0.1.dex.jar;com-google-android-gms.play-services-tagmanager-v4-impl.16.0.8.dex.jar;com-google-android-gms.play-services-tasks.16.0.1.dex.jar;com-google-android-gms.play-services-wallet.16.0.1.dex.jar;com-google-firebase.firebase-analytics.16.4.0.dex.jar;com-google-firebase.firebase-common.16.1.0.dex.jar;com-google-firebase.firebase-iid-interop.16.0.1.dex.jar;com-google-firebase.firebase-iid.17.1.1.dex.jar;com-google-firebase.firebase-measurement-connector.17.0.1.dex.jar;com-google-firebase.firebase-messaging.17.5.0.dex.jar;fmx.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar</EnabledSysJars>
-        <PF_KeyStorePass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F237766D816A8AAA5EF5D187F5FE27A8767C8F10A0DC33BBAE43649044B228816714592E5A622CAC958F30FD517FAC4BFB4AF1107031D01925B3E6A1DD7096BE3ED16A0447A78CD658C9AB622ED7D4E4627E8239257570438C767AD57F79CBB298827B23AE1</PF_KeyStorePass>
+        <PF_KeyStorePass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F237766D816A8AAA5EF5D187F5FE27A8767C8F10A0D67C41460B84E8D9F7E248CA5A0C7E5A422D3C913F373D51EFAC4BFB4AF1107441D0A92533E171DF10975E3EC16E2446078D565B39AAA22A37D534633E8609215F3E8962EE9AFDE11C01AB354C2AB3AE1</PF_KeyStorePass>
         <DCC_Define>FMX;$(DCC_Define)</DCC_Define>
         <PF_AliasKey>developmentgertecdeveloper_customerapp</PF_AliasKey>
         <PF_AliasKeyPass>850B0DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB930EE9FA8C4D3DE3B1872308596F7DE3310C35D7270EB296E7D1211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_AliasKeyPass>
@@ -284,23 +284,9 @@
     <PropertyGroup Condition="'$(Cfg_1_Android)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Keys>package=br.com.projetoacbr.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
-        <PF_KeyStorePass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F237766D816A8AAA5EF5D187F5FE27A8767C8F10A0D67C414603652043A22CB16574584E5AE22C0C90AF31BD516FA9EBFABAF19074E1D5892003E1D1DA30917E3C216B1443878CC65DE9AC622E07D60466CE83F9200F3F9961C67AD57F79CBB298827B23AE1</PF_KeyStorePass>
-        <PF_AliasKeyPass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA197C397B90FE18E103C82DB0CA39AE3191C25C1B0572EFACEC331BAF736500464228B162345F0E58822DEC90BF31ED507FA8EBFE9AF23071E1D4492563E441DF97270EB296E7D1211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_AliasKeyPass>
+        <PF_KeyStorePass>850B0DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB930EE9FA8C4D3DE3B1872308596F7DE3310C35D7270EB296E7D1211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_KeyStorePass>
+        <PF_AliasKeyPass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F230FFA8E613CC1DB2AA38CE3111C2FC1E2573AFACFC36BBAE83658042922D216784587E5FC22A2C924F30FD545FA8FBFBBAF5307131D6A921D3E581DAE0939E3EC6E7D1211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_AliasKeyPass>
         <BT_BuildType>AppStore</BT_BuildType>
-        <Android_LauncherIcon36>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_LauncherIcon36>
-        <Android_LauncherIcon48>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_LauncherIcon48>
-        <Android_LauncherIcon72>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_LauncherIcon72>
-        <Android_LauncherIcon96>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_LauncherIcon96>
-        <Android_LauncherIcon144>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png</Android_LauncherIcon144>
-        <Android_SplashImage426>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png</Android_SplashImage426>
-        <Android_SplashImage470>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png</Android_SplashImage470>
-        <Android_SplashImage640>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png</Android_SplashImage640>
-        <Android_SplashImage960>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png</Android_SplashImage960>
-        <Android_NotificationIcon24>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png</Android_NotificationIcon24>
-        <Android_NotificationIcon36>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png</Android_NotificationIcon36>
-        <Android_NotificationIcon48>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png</Android_NotificationIcon48>
-        <Android_NotificationIcon72>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png</Android_NotificationIcon72>
-        <Android_NotificationIcon96>..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png</Android_NotificationIcon96>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -314,8 +300,8 @@
     <PropertyGroup Condition="'$(Cfg_2_Android)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Keys>package=br.com.projetoacbr.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
-        <PF_KeyStorePass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F2377668E3C3C87DB1DA3F8E3431C6BC1AE577CFADBC36BBAE93603046D229E167945DFE5FF22D6C924F373D516FACDBFBBAF5207401D4992333E581DE5096EE3EC16E31211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_KeyStorePass>
-        <PF_AliasKeyPass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F237766D816A8AAA5EF5D187F5FE27A8767C8F10A0D67C41460B84E8D9F7E248CA545DCE5F92295C924F307D54CFA80BFF8AF5707501D0A92523E4C1DB50939E3ED16BA446378A165B39AD622F07D114633E8619246F3CB9600E9AFDE5AC04DB35427B23AE1</PF_AliasKeyPass>
+        <PF_KeyStorePass>850B47CC5F81078FCF7DE53AA4417BAEE443084F7EA1EC889F237766D816A8AAA5EF5D187F5FE27A8767C8F10A0D67C4BAB9360F047C22FC162345D6E5EA228CC94CF30FD516FA9FBFF0AF5D07021D5992583E1E1DD70917E3BE16E2447A78CC65DF9A9522C37D4E466CE8749257F3F938C767AD57F79CBB298827B23AE1</PF_KeyStorePass>
+        <PF_AliasKeyPass>850B47CC5F81078FCF7DE53AA441E36281C30502A02B979B97EE0FB48E3E3C9EDB56A384E34A1C6BC1AE577CFA9CC360BAE1367E044B22801678459DE5E522CEC91BF36FD558FAD0BFAFAF1107028596F7DE3310C35D7270EB296E7D1211ECFD1B76644ABEB7834B00F577AE62C7570438C767AD57F79CBB298827B23AE1</PF_AliasKeyPass>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Android64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
@@ -379,7 +365,7 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="libTEFDemoAndroid.so" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Android\Debug\libTEFDemoAndroid.so" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteName>libTEFDemoAndroid.so</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -390,37 +376,25 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
-                    <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="colors.xml" Configuration="Debug" Class="Android_Colors">
-                    <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Configuration="Release" Class="Android_SplashImage640">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72">
+                <DeployFile LocalName="Android\Debug\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
                     <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Release" Class="Android_LauncherIcon48">
+                <DeployFile LocalName="Android\Debug\colors.xml" Configuration="Debug" Class="Android_Colors">
                     <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -431,20 +405,26 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Release" Class="Android_LauncherIcon36">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Release" Class="Android_NotificationIcon36">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Debug" Class="Android_LauncherIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Debug" Class="Android_LauncherIcon96">
+                <DeployFile LocalName="Android\Debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
                     <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Configuration="Debug" Class="Android_LauncherIcon72">
                     <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -455,27 +435,39 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Debug" Class="Android_LauncherIcon48">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Configuration="Release" Class="Android_SplashImage640">
+                    <Platform Name="Android">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Debug" Class="Android_LauncherIcon48">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Release" Class="Android_NotificationIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Release" Class="Android_LauncherIcon96">
+                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
+                        <RemoteName>libTEFDemoAndroid.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144">
+                <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeArmeabiFile">
                     <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
+                        <RemoteName>libTEFDemoAndroid.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -490,12 +482,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Configuration="Release" Class="Android_SplashImage426">
+                    <Platform Name="Android">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="strings.xml" Configuration="Debug" Class="Android_Strings">
+                <DeployFile LocalName="Android\Debug\strings.xml" Configuration="Debug" Class="Android_Strings">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -506,7 +504,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -523,39 +521,33 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Release" Class="Android_NotificationIcon36">
-                    <Platform Name="Android">
-                        <RemoteName>ic_notification.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96">
+                    <Platform Name="Android">
+                        <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Configuration="Release" Class="Android_LauncherIcon72">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\release\mips\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeMipsFile">
-                    <Platform Name="Android">
-                        <RemoteName>libTEFDemoAndroid.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -572,19 +564,36 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\release\armeabi\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeArmeabiFile">
-                    <Platform Name="Android">
-                        <RemoteName>libTEFDemoAndroid.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_960_720.png" Configuration="Debug" Class="Android_SplashImage960">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
+                <DeployFile LocalName="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile">
+                    <Platform Name="Android">
+                        <RemoteName>classes.dex</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Debug" Class="Android_LauncherIcon36">
+                    <Platform Name="Android">
+                        <RemoteName>ic_launcher.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Configuration="Debug" Class="Android_SplashImage960">
+                    <Platform Name="Android">
+                        <RemoteName>splash_image.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
                     <Platform Name="Android">
                         <RemoteName>styles.xml</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -603,15 +612,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144">
                     <Platform Name="Android">
-                        <RemoteName>splash_image.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Configuration="Release" Class="Android_SplashImage426">
-                    <Platform Name="Android">
-                        <RemoteName>splash_image.png</RemoteName>
+                        <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -625,9 +628,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Debug" Class="Android_NotificationIcon48">
                     <Platform Name="Android">
-                        <RemoteName>splash_image.png</RemoteName>
+                        <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -636,20 +639,14 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Release" Class="Android_NotificationIcon96">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
+                <DeployFile LocalName="Android\Debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
                     <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144">
-                    <Platform Name="Android">
-                        <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -658,13 +655,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\ACBr_426_320.png" Configuration="Debug" Class="Android_SplashImage426">
+                <DeployFile LocalName="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Configuration="Debug" Class="Android_SplashImage426">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>

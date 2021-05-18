@@ -5036,6 +5036,7 @@ begin
       proSP,
       proNotaBlu,
       proSMARAPD,
+      proSmarAPDv23,
       proGiap,
       proIPM,
       proSigISS: FURI := '';

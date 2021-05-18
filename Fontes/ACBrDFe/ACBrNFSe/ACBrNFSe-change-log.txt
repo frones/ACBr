@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2021
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/62596-iibrasil-emiss%C3%A3o-de-nfse-limeira/
+  Por: Ricardo Gabriel
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/62549-3530607-mogidascruzessp-smarapdv23/?do=findComment&comment=409488&_rid=63
+  Por: Renato Rubinho
+
 14/05/2021
 -- pnfsNFSeG --
 [*] https://www.projetoacbr.com.br/forum/topic/62485-erro-schema-utilizando-bethav2/

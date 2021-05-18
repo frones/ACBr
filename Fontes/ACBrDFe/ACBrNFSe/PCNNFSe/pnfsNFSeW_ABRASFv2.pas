@@ -827,9 +827,14 @@ begin
     proVitoria, proActconv204, proSiapSistemas, proAbacov2:
       Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
-    //São Sebastião - SP
     proiiBrasilv2:
-        Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + OnlyNumber(NFSe.InfID.ID) + '"');
+      begin
+        // São Sebastião - SP
+        if NFSe.Servico.CodigoMunicipio = '3550704' then
+          Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + OnlyNumber(NFSe.InfID.ID) + '"')
+        else
+          Gerador.wGrupo('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+      end;
 
     proDeISS,
     proRLZ,
@@ -876,7 +881,7 @@ begin
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
       proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proTiplanv2,
       proSigep, proDesenvolve, proCenti, proMegaSoft, proVitoria, proSiapSistemas,
-      proElotech, proAbacov2, proiiBrasilv2:
+      proElotech, proAbacov2:
         Gerador.wGrupo('Rps');
 
       proISSDigital:
@@ -1055,7 +1060,7 @@ begin
   end;
 
 
-  if FProvedor = proiiBrasilv2 then
+  if (FProvedor = proiiBrasilv2) and (NFSe.Servico.CodigoMunicipio = '3550704') then
   begin
     Gerador.wCampo(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, 1, DSC_REGISSQN);
     Gerador.wCampo(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, snNao, DSC_INDOPSN);
@@ -1103,7 +1108,7 @@ begin
    Gerador.wCampo(tcStr, '#1' , 'NumeroParcelas  ' ,01,01,1 , '0' , DSC_TPAMB );
   end;
 
-  if FProvedor = proiiBrasilV2 then
+  if (FProvedor = proiiBrasilV2) and (NFSe.Quartos.Count > 0) then
   begin
     Gerador.wGrupo('Quartos');
 

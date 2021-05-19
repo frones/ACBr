@@ -778,6 +778,10 @@ begin
         Inc(I);
       end;
 
+      sSecao := 'perAquis';
+      infoAfastamento.iniAfastamento.perAquis.dtInicio := StringToDateTime(INIRec.ReadString(sSecao, 'dtInicio', '0'));
+      infoAfastamento.iniAfastamento.perAquis.dtFim := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
+
       sSecao := 'infoCessao';
       if INIRec.ReadString(sSecao, 'cnpjCess', '') <> '' then
       begin

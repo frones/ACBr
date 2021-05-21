@@ -342,7 +342,8 @@ function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorF
 function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
 function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string;
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String)'{$EndIf};
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string; overload;
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
@@ -1255,7 +1256,12 @@ begin
                                fpOutro]);
 end;
 
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string;
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string; overload;
+begin
+  Result := FormaPagamentoToDescricao(t, '');
+end;
+
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string; overload;
 begin
   if (t = fpOutro) and (xPag <> '') then
     result := xPag

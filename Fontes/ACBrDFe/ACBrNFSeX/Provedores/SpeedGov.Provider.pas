@@ -1,0 +1,312 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit SpeedGov.Provider;
+
+interface
+
+uses
+  SysUtils, Classes,
+  ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXWebservicesResponse,
+  ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
+
+type
+  TACBrNFSeXWebserviceSpeedGov = class(TACBrNFSeXWebserviceSoap11)
+  public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
+    function Cancelar(ACabecalho, AMSG: String): string; override;
+
+  end;
+
+  TACBrNFSeProviderSpeedGov = class (TACBrNFSeProviderABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+  end;
+
+implementation
+
+uses
+  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrNFSeXNotasFiscais, SpeedGov.GravarXml, SpeedGov.LerXml;
+
+{ TACBrNFSeXWebserviceSpeedGov }
+
+function TACBrNFSeXWebserviceSpeedGov.Recepcionar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:RecepcionarLoteRps>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:RecepcionarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['return', 'RecepcionarLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceSpeedGov.ConsultarLote(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarLoteRps>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:ConsultarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceSpeedGov.ConsultarSituacao(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarSituacaoLoteRps>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:ConsultarSituacaoLoteRps>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarSituacaoLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceSpeedGov.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfsePorRps>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:ConsultarNfsePorRps>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarNfseRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceSpeedGov.ConsultarNFSe(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfse>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:ConsultarNfse>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarNfseResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceSpeedGov.Cancelar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:CancelarNfse>';
+  Request := Request + '<header>' + XmlToStr(ACabecalho) + '</header>';
+  Request := Request + '<parameters>' + XmlToStr(AMSG) + '</parameters>';
+  Request := Request + '</nfse:CancelarNfse>';
+
+  Result := Executar('', Request,
+                     ['return', 'CancelarNfseResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"']);
+end;
+
+{ TACBrNFSeProviderSpeedGov }
+
+procedure TACBrNFSeProviderSpeedGov.Configuracao;
+begin
+  inherited Configuracao;
+
+  ConfigGeral.UseCertificateHTTP := False;
+
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'p';
+    PrefixoTS := 'p1';
+
+    XmlRps.xmlns := 'http://ws.speedgov.com.br/tipos_v1.xsd';
+
+    LoteRps.xmlns := 'http://ws.speedgov.com.br/enviar_lote_rps_envio_v1.xsd';
+
+    ConsultarSituacao.xmlns := 'http://ws.speedgov.com.br/consultar_situacao_lote_rps_envio_v1.xsd';
+
+    ConsultarLote.xmlns := 'http://ws.speedgov.com.br/consultar_lote_rps_envio_v1.xsd';
+
+    ConsultarNfseRps.xmlns := 'http://ws.speedgov.com.br/consultar_nfse_rps_envio_v1.xsd';
+
+    ConsultarNfse.xmlns := 'http://ws.speedgov.com.br/consultar_nfse_envio_v1.xsd';
+
+    CancelarNfse.xmlns := 'http://ws.speedgov.com.br/cancelar_nfse_envio_v1.xsd';
+
+    DadosCabecalho := '<p:cabecalho versao="1" xmlns:p="http://ws.speedgov.com.br/cabecalho_v1.xsd">' +
+                      '<versaoDados>1</versaoDados>' +
+                      '</p:cabecalho>';
+  end;
+
+  with ConfigSchemas do
+  begin
+    Recepcionar := 'enviar_lote_rps_envio_v1.xsd';
+    ConsultarSituacao := 'consultar_situacao_lote_rps_envio_v1.xsd';
+    ConsultarLote := 'consultar_lote_rps_envio_v1.xsd';
+    ConsultarNFSeRps := 'consultar_nfse_rps_envio_v1.xsd';
+    ConsultarNFSe := 'consultar_nfse_envio_v1.xsd';
+    CancelarNFSe := 'cancelar_nfse_envio_v1.xsd';
+  end;
+end;
+
+function TACBrNFSeProviderSpeedGov.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_SpeedGov.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderSpeedGov.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_SpeedGov.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderSpeedGov.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+begin
+  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
+  begin
+   with ConfigWebServices.Homologacao do
+    begin
+      case AMetodo of
+        tmRecepcionar:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, Recepcionar);
+        tmConsultarSituacao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarSituacao);
+        tmConsultarLote:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarLote);
+        tmConsultarNFSePorRps:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+        tmConsultarNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSeURL:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+        tmCancelarNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmAbrirSessao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, AbrirSessao);
+        tmFecharSessao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, FecharSessao);
+      else
+        // tmTeste
+        Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, TesteEnvio);
+      end;
+    end;
+  end
+  else
+  begin
+    with ConfigWebServices.Producao do
+    begin
+      case AMetodo of
+        tmRecepcionar:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, Recepcionar);
+        tmConsultarSituacao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarSituacao);
+        tmConsultarLote:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarLote);
+        tmConsultarNFSePorRps:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+        tmConsultarNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSeURL:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+        tmCancelarNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmAbrirSessao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, AbrirSessao);
+        tmFecharSessao:
+          Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, FecharSessao);
+      else
+        // tmTeste
+        Result := TACBrNFSeXWebserviceSpeedGov.Create(FAOwner, AMetodo, TesteEnvio);
+      end;
+    end;
+  end;
+end;
+
+end.

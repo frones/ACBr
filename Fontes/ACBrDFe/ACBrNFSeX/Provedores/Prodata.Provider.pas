@@ -1,0 +1,380 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit Prodata.Provider;
+
+interface
+
+uses
+  SysUtils, Classes,
+  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+
+type
+  TACBrNFSeXWebserviceProdata = class(TACBrNFSeXWebserviceSoap11)
+  public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
+    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+
+  end;
+
+  TACBrNFSeProviderProdata = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+  end;
+
+implementation
+
+uses
+  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrNFSeXNotasFiscais, Prodata.GravarXml, Prodata.LerXml;
+
+{ TACBrNFSeProviderProdata }
+
+procedure TACBrNFSeProviderProdata.Configuracao;
+begin
+  inherited Configuracao;
+
+  ConfigGeral.ModoEnvio := meLoteAssincrono;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.01';
+    VersaoAtrib := '2.01';
+  end;
+
+  with ConfigMsgDados do
+  begin
+    DadosCabecalho := '<cabecalho versao="2.01" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                      '<versaoDados>2.01</versaoDados>' +
+                      '</cabecalho>';
+  end;
+end;
+
+function TACBrNFSeProviderProdata.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Prodata.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderProdata.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Prodata.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderProdata.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+begin
+  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
+  begin
+   with ConfigWebServices.Homologacao do
+    begin
+      case AMetodo of
+        tmRecepcionar:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, Recepcionar);
+        tmConsultarSituacao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarSituacao);
+        tmConsultarLote:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarLote);
+        tmConsultarNFSePorRps:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+        tmConsultarNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSeURL:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+        tmCancelarNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmAbrirSessao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, AbrirSessao);
+        tmFecharSessao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, FecharSessao);
+      else
+        // tmTeste
+        Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, TesteEnvio);
+      end;
+    end;
+  end
+  else
+  begin
+    with ConfigWebServices.Producao do
+    begin
+      case AMetodo of
+        tmRecepcionar:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, Recepcionar);
+        tmConsultarSituacao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarSituacao);
+        tmConsultarLote:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarLote);
+        tmConsultarNFSePorRps:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+        tmConsultarNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSeURL:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+        tmCancelarNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmAbrirSessao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, AbrirSessao);
+        tmFecharSessao:
+          Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, FecharSessao);
+      else
+        // tmTeste
+        Result := TACBrNFSeXWebserviceProdata.Create(FAOwner, AMetodo, TesteEnvio);
+      end;
+    end;
+  end;
+end;
+
+{ TACBrNFSeXWebserviceProdata }
+
+function TACBrNFSeXWebserviceProdata.Recepcionar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:RecepcionarLoteRpsRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:RecepcionarLoteRpsRequest>';
+
+  Result := Executar('http://services.nfse/RecepcionarLoteRps', Request,
+                     ['outputXML', 'EnviarLoteRpsResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.RecepcionarSincrono(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:RecepcionarLoteRpsSincronoRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:RecepcionarLoteRpsSincronoRequest>';
+
+  Result := Executar('http://services.nfse/RecepcionarLoteRpsSincrono', Request,
+                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.GerarNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:GerarNfseRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:GerarNfseRequest>';
+
+  Result := Executar('http://services.nfse/GerarNfse', Request,
+                     ['outputXML', 'GerarNfseResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.ConsultarLote(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:ConsultarLoteRpsRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:ConsultarLoteRpsRequest>';
+
+  Result := Executar('http://services.nfse/ConsultarLoteRps', Request,
+                     ['outputXML', 'ConsultarLoteRpsResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.ConsultarNFSePorFaixa(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:ConsultarNfsePorFaixaRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:ConsultarNfsePorFaixaRequest>';
+
+  Result := Executar('http://services.nfse/ConsultarNfsePorFaixa', Request,
+                     ['outputXML', 'ConsultarNfsePorFaixaResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.ConsultarNFSePorRps(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:ConsultarNfsePorRpsRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:ConsultarNfsePorRpsRequest>';
+
+  Result := Executar('http://services.nfse/ConsultarNfsePorRps', Request,
+                     ['outputXML', 'ConsultarNfseRpsResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.ConsultarNFSeServicoPrestado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:ConsultarNfseServicoPrestadoRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:ConsultarNfseServicoPrestadoRequest>';
+
+  Result := Executar('http://services.nfse/ConsultarNfseServicoPrestado', Request,
+                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.ConsultarNFSeServicoTomado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:ConsultarNfseServicoTomadoRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:ConsultarNfseServicoTomadoRequest>';
+
+  Result := Executar('http://services.nfse/ConsultarNfseServicoTomado', Request,
+                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.Cancelar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:CancelarNfseRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:CancelarNfseRequest>';
+
+  Result := Executar('http://services.nfse/CancelarNfse', Request,
+                     ['outputXML', 'CancelarNfseResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+function TACBrNFSeXWebserviceProdata.SubstituirNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ser:SubstituirNfseRequest>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</ser:SubstituirNfseRequest>';
+
+  Result := Executar('http://services.nfse/SubstituirNfse', Request,
+                     ['outputXML', 'SubstituirNfseResposta'],
+                     ['xmlns:ser="http://services.nfse"']);
+end;
+
+end.

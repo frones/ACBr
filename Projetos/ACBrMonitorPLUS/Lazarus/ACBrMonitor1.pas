@@ -2224,7 +2224,7 @@ begin
   iESO := Low(TVersaoeSocial);
   while iESO <= High(TVersaoeSocial) do
   begin
-    cbVersaoWSeSocial.Items.Add( copy( GetEnumName(TypeInfo(TVersaoeSocial), integer(iESO)), 3, 8) );
+    cbVersaoWSeSocial.Items.Add( Trim(copy( GetEnumName(TypeInfo(TVersaoeSocial), integer(iESO)), 3, 9) ) );
     Inc(iESO);
   end;
 

@@ -533,6 +533,13 @@ begin
           infoLotacao.dadosLotacao.infoEmprParcial.nrInscProp    := INIRec.ReadString(sSecao, 'nrInscProp', EmptyStr);
         end;
 
+        sSecao := 'dadosOpPort';
+        if INIRec.ReadString(sSecao, 'aliqRat', '') <> '' then
+        begin
+          infoLotacao.dadosLotacao.dadosOpPort.aliqRat := eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', EmptyStr));
+          infoLotacao.dadosLotacao.dadosOpPort.fap := StringToFloatDef(INIRec.ReadString(sSecao, 'fap', EmptyStr),0);
+        end;
+
         if ModoLancamento = mlAlteracao then
         begin
           sSecao := 'novaValidade';

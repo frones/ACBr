@@ -843,11 +843,12 @@ begin
       infoTSVInicio.natAtividade   := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
 
       sSecao := 'cargoFuncao';
-      if INIRec.ReadString(sSecao, 'codCargo', '') <> '' then
-      begin
-        infoTSVInicio.infoComplementares.cargoFuncao.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');
-        infoTSVInicio.infoComplementares.cargoFuncao.CodFuncao   := INIRec.ReadString(sSecao, 'codFuncao', '');
-      end;
+      infoTSVInicio.infoComplementares.cargoFuncao.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');
+      infoTSVInicio.infoComplementares.cargoFuncao.CodFuncao   := INIRec.ReadString(sSecao, 'codFuncao', '');
+      infoTSVInicio.infoComplementares.cargoFuncao.nmCargo     := INIRec.ReadString(sSecao, 'nmCargo', '');
+      infoTSVInicio.infoComplementares.cargoFuncao.CBOCargo    := INIRec.ReadString(sSecao, 'CBOCargo', '');
+      infoTSVInicio.infoComplementares.cargoFuncao.nmFuncao    := INIRec.ReadString(sSecao, 'nmFuncao', '');
+      infoTSVInicio.infoComplementares.cargoFuncao.CBOFuncao   := INIRec.ReadString(sSecao, 'CBOFuncao', '');
 
       sSecao := 'remuneracao';
       if INIRec.ReadString(sSecao, 'vrSalFx', '') <> '' then
@@ -871,6 +872,11 @@ begin
         infoTSVInicio.infoComplementares.infoDirSind.cnpjOrigem := INIRec.ReadString(sSecao, 'cnpjOrigem', '');
         infoTSVInicio.infoComplementares.infoDirSind.dtAdmOrig  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdmOrig', '0'));
         infoTSVInicio.infoComplementares.infoDirSind.matricOrig := INIRec.ReadString(sSecao, 'matricOrig', '');
+
+        infoTSVInicio.infoComplementares.infoDirSind.tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        infoTSVInicio.infoComplementares.infoDirSind.nrInsc     := INIRec.ReadString(sSecao, 'nrInsc', '');
+        infoTSVInicio.infoComplementares.infoDirSind.tpRegTrab  := eSStrtoTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpTpRegTrab', '0'));
+        infoTSVInicio.infoComplementares.infoDirSind.tpRegPrev  := eSStrtoTpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpTpRegPrev', '0'));
       end;
 
       sSecao := 'infoTrabCedido';
@@ -883,6 +889,14 @@ begin
         infoTSVInicio.infoComplementares.infoTrabCedido.tpRegTrab := eSStrToTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpRegTrab', '1'));
         infoTSVInicio.infoComplementares.infoTrabCedido.tpRegPrev := eSStrTotpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '1'));
         infoTSVInicio.infoComplementares.infoTrabCedido.infOnus   := StrTotpInfOnus(Ok, INIRec.ReadString(sSecao, 'infOnus', '1'));
+      end;
+
+      sSecao := 'infoMandElet';
+      if INIRec.ReadString(sSecao, 'tpRegTrab', '') <> '' then
+      begin
+        infoTSVInicio.infoComplementares.infoMandElet.indRemunCargo  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRemunCargo', '0'));
+        infoTSVInicio.infoComplementares.infoMandElet.tpRegTrab      := eSStrToTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpRegTrab', '0'));
+        infoTSVInicio.infoComplementares.infoMandElet.tpRegPrev      := eSStrToTpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpTpRegPrev', '0'));
       end;
 
       sSecao := 'infoEstagiario';

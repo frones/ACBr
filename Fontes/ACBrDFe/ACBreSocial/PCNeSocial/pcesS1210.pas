@@ -1183,6 +1183,10 @@ begin
           TpPgto   := eSStrTotpTpPgto(Ok, INIRec.ReadString(sSecao, 'tpPgto', '1'));
           IndResBr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indResBr', 'S'));
 
+          PerRef   := INIRec.ReadString(sSecao, 'PerRef', EmptyStr);
+          IdeDmDev := INIRec.ReadString(sSecao, 'IdeDmDev', EmptyStr);
+          VrLiq    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+
           J := 1;
           while true do
           begin

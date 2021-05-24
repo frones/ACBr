@@ -925,7 +925,7 @@ begin
 //      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
-      sSecao := 'iniExpRisco';
+      sSecao := 'infoExpRisco';
       if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
       begin
         infoExpRisco.dtIniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
@@ -935,13 +935,19 @@ begin
         begin
           // de 01 até 99
           sSecao := 'infoAmb' + IntToStrZero(I, 2);
-          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+          sFim   := INIRec.ReadString(sSecao, 'localAmb', 'FIM');
 
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
           with infoExpRisco.infoAmb.New do
+          begin
+            localAmb:= eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '0'));
+            dscSetor:= INIRec.ReadString(sSecao, 'dscSetor', EmptyStr);
+            tpInsc:= eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+            nrInsc:= INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 //            codAmb := sFim;
+          end;
 
           with infoExpRisco do
           begin
@@ -968,16 +974,16 @@ begin
             while true do
             begin
               // de 001 até 999
-              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+              sSecao := 'agNoc' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'codAgNoc', 'FIM');
 
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
               with agNoc.New do
               begin
-                codAgNoc  := sFim;
-                dscAgNoc := INIRec.ReadString(sSecao, 'dscAgNoc', EmptyStr);
+                codAgNoc   := sFim;
+                dscAgNoc   := INIRec.ReadString(sSecao, 'dscAgNoc', EmptyStr);
                 tpAval     := StrTotpAval(Ok, INIRec.ReadString(sSecao, 'tpAval', '0'));
                 intConc    := StringToFloatDef(INIRec.ReadString(sSecao, 'intConc', EmptyStr), 0);
                 limTol     := StringToFloatDef(INIRec.ReadString(sSecao, 'limTol', EmptyStr), 0);
@@ -1023,11 +1029,15 @@ begin
                   sFim   := INIRec.ReadString(sSecao, 'caEPI', 'FIM');
 
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                    sFim   := INIRec.ReadString(sSecao, 'docAval', 'FIM');
+
+                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
                   with epcEpi.epi.New do
                   begin
-                    caEPI         := sFim;
+                    caEPI         := INIRec.ReadString(sSecao, 'caEPI', EmptyStr);
+                    docAval       := INIRec.ReadString(sSecao, 'docAval', EmptyStr);
                     dscEPI        := INIRec.ReadString(sSecao, 'dscEPI', EmptyStr);
                     eficEpi       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
                     medProtecao   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
@@ -1040,6 +1050,22 @@ begin
 
                   Inc(K);
                 end;
+
+                sSecao := 'epiCompl' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+                sFim   := INIRec.ReadString(sSecao, 'medProtecao', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+                with epcEpi.epiCompl do
+                begin
+                  medProtecao        := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
+                  condFuncto         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
+                  usoInint           := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'usoInint', 'S'));
+                  przValid           := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
+                  periodicTroca      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
+                  higienizacao       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
+                end;
+
               end;
 
               Inc(J);

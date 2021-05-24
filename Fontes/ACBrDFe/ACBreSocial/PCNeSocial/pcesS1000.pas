@@ -699,6 +699,7 @@ begin
         infoEmpregador.infoCadastro.IndEntEd         := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
         infoEmpregador.infoCadastro.IndEtt           := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
         infoEmpregador.infoCadastro.nrRegEtt         := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
+        infoEmpregador.infoCadastro.cnpjEFR          := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
 
         sSecao := 'dadosIsencao';
         if INIRec.ReadString(sSecao, 'ideMinLei', '') <> '' then

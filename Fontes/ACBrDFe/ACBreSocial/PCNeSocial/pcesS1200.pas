@@ -1338,9 +1338,31 @@ begin
 
       sSecao := 'infoInterm';
       if INIRec.SectionExists(sSecao) then
+      begin
         if INIRec.ReadString(sSecao, 'qtdDiasInterm', '') <> '' then
           with ideTrabalhador.infoInterm.New do
             qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', 0);
+
+      end;
+
+      // Bloco referente a versão Simplificada
+      I := 1;
+      while true do
+      begin
+        // de 01 até 31
+        sSecao := 'infoInterm' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'dia', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with ideTrabalhador.infoInterm.New do
+        begin
+          dia := INIRec.ReadInteger(sSecao, 'dia', 0);
+        end;
+
+        Inc(I);
+      end;
 
       I := 1;
       while true do

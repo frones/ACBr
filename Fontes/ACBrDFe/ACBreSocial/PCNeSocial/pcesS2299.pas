@@ -1114,6 +1114,7 @@ begin
 
       sSecao := 'infoDeslig';
       infoDeslig.mtvDeslig    := INIRec.ReadString(sSecao, 'mtvDeslig', EmptyStr);
+      InfoDeslig.dtAvPrv      := StringToDateTime(INIRec.ReadString(sSecao, 'dtAvPrv', '0'));
       infoDeslig.dtDeslig     := StringToDateTime(INIRec.ReadString(sSecao, 'dtDeslig', '0'));
       infoDeslig.indPagtoAPI  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoAPI', 'S'));
       infoDeslig.dtProjFimAPI := StringToDateTime(INIRec.ReadString(sSecao, 'dtProjFimAPI', '0'));
@@ -1126,12 +1127,33 @@ begin
       infoDeslig.qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', -1);
       infoDeslig.Observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
 
+      K := 1;
+      while true do
+      begin
+        // de 01 até 31
+        sSecao := 'infoInterm' + IntToStrZero(K, 2);
+        sFim   := INIRec.ReadString(sSecao, 'dia', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InfoDeslig.infoInterm.New do
+        begin
+          dia := INIRec.ReadInteger(sSecao, 'dia', 0);
+        end;
+
+        Inc(K);
+      end;
+
       sSecao := 'sucessaoVinc';
       if INIRec.ReadString(sSecao, 'tpInscSuc', '') <> '' then
         infoDeslig.sucessaoVinc.tpInscSuc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscSuc', EmptyStr));
 
       if INIRec.ReadString(sSecao, 'cnpjSucessora', '') <> '' then
         infoDeslig.sucessaoVinc.cnpjSucessora := INIRec.ReadString(sSecao, 'cnpjSucessora', EmptyStr);
+
+      infoDeslig.sucessaoVinc.tpInsc  := eSStrToTpInscricao(ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      infoDeslig.sucessaoVinc.nrInsc  :=  INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'transfTit';
       if INIRec.ReadString(sSecao, 'cpfSubstituto', '') <> '' then

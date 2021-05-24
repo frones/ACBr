@@ -76,6 +76,7 @@ implementation
 
 uses
   ACBrUtil, FileUtil,
+{$IFDEF Demo}ACBrMDFeManifestos, pmdfeEnvEventoMDFe, pcnConversao,{$ENDIF}
   ACBrLibMDFeConfig, ACBrLibMDFeBase;
 
 {$R *.lfm}
@@ -98,6 +99,10 @@ begin
   ACBrMDFe1.SSL.DescarregarCertificado;
   LibConfig := TLibMDFeConfig(TACBrLibMDFe(Lib).Config);
   ACBrMDFe1.Configuracoes.Assign(LibConfig.MDFe);
+
+{$IFDEF Demo}
+  ACBrMDFe1.Configuracoes.WebServices.Ambiente := taHomologacao;
+{$ENDIF}
 
   AplicarConfigMail;
 end;
@@ -128,6 +133,12 @@ end;
 
 procedure TLibMDFeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                          Protocolo: String = ''; MostrarPreview: String = '');
+{$IFDEF Demo}
+Var
+  I: Integer;
+  AItem: Manifesto;
+  AEvento: TInfEventoCollectionItem;
+{$ENDIF}
 begin
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
@@ -143,6 +154,20 @@ begin
   end;
 
   TLibMDFeConfig(Lib.Config).DAMDFe.Apply(DAMDFe, Lib);
+
+{$IFDEF Demo}
+    for I:= 0 to ACBrMDFe1.Manifestos.Count -1 do
+    begin
+      AItem := ACBrMDFe1.Manifestos.Items[I];
+      AItem.MDFe.Ide.tpAmb := taHomologacao;
+    end;
+
+    for I:= 0 to ACBrMDFe1.EventoMDFe.Evento.Count -1 do
+    begin
+      AEvento := ACBrMDFe1.EventoMDFe.Evento.Items[I];
+      AEvento.InfEvento.tpAmb := taHomologacao;
+    end;
+{$ENDIF}
 
   if NaoEstaVazio(NomeImpressora) then
     ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;

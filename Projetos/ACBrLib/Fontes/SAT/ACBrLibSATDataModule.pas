@@ -325,6 +325,10 @@ begin
 
     LibConfig.Extrato.Apply(ACBrSAT1.Extrato, Lib);
 
+{$IFDEF Demo}
+    ACBrSAT1.CFe.ide.tpAmb := taHomologacao;
+{$ENDIF}
+
     if(NomeImpressora <> '') then
       ACBrSAT1.Extrato.Impressora := NomeImpressora;
 

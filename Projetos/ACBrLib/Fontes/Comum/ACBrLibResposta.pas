@@ -168,7 +168,7 @@ procedure TACBrLibRespostaBase.GravarXml(const xDoc: TXMLDocument; const RootNod
 Var
   PropList: TPropInfoList;
   i: Integer;
-  ParentNode: TDomNode;
+  ParentNode, ListNode: TDomNode;
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
@@ -193,32 +193,34 @@ begin
 
             if (ClassObject.InheritsFrom(TCollection)) then
             begin
+              ParentNode := xDoc.CreateElement('Itens');
+
               CollectionObject := TCollection(ClassObject);
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-                ParentNode := xDoc.CreateElement(Propertie.Name);
-                RootNode.AppendChild(ParentNode);
-                GravarXml(xDoc, ParentNode, CollectionItem);
+                ListNode := xDoc.CreateElement(Propertie.Name);
+                GravarXml(xDoc, ListNode, CollectionItem);
+                ParentNode.AppendChild(ListNode);
               end;
-              Exit;
             end
             else if (ClassObject.InheritsFrom(TList)) then
             begin
+              ParentNode := xDoc.CreateElement('Itens');
+
               ListObject := TList(ClassObject);
               for i := 0 to ListObject.Count - 1 do
               begin
                 ListItem := ListObject.Items[i];
 
                 if (ListItem.InheritsFrom(TACBrLibRespostaBase)) then
-                  ParentNode := xDoc.CreateElement(TACBrLibRespostaBase(ListItem).Sessao.Replace(' ', '_'))
+                  ListNode := xDoc.CreateElement(TACBrLibRespostaBase(ListItem).Sessao.Replace(' ', '_'))
                 else
-                  ParentNode := xDoc.CreateElement(Propertie.Name);
+                  ListNode := xDoc.CreateElement(Propertie.Name);
 
-                RootNode.AppendChild(ParentNode);
-                GravarXml(xDoc, ParentNode, ListItem);
+                GravarXml(xDoc, ListNode, ListItem);
+                ParentNode.AppendChild(ListNode);
               end;
-              Exit;
             end
             else
             begin

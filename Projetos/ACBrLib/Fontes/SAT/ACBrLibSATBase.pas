@@ -853,8 +853,8 @@ begin
 
     try
       SatDM.ACBrSAT1.CFe.Clear;
-      SatDM.ConfigurarImpressao(NomeImpressora);
       SatDM.CarregarDadosVenda(ArquivoXml);
+      SatDM.ConfigurarImpressao(NomeImpressora);
       SatDM.ACBrSAT1.ImprimirExtrato;
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
@@ -887,8 +887,9 @@ begin
     SatDM.Travar;
 
     try
-      SatDM.ConfigurarImpressao(NomeImpressora);
+      SatDM.ACBrSAT1.CFe.Clear;
       SatDM.CarregarDadosVenda(ArquivoXml);
+      SatDM.ConfigurarImpressao(NomeImpressora);
       SatDM.ACBrSAT1.ImprimirExtratoResumido;
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);
@@ -923,9 +924,10 @@ begin
     SatDM.Travar;
 
     try
-      SatDM.ConfigurarImpressao(NomeImpressora);
+      SatDM.ACBrSAT1.CFe.Clear;
       SatDM.CarregarDadosVenda(ArqXMLVenda);
       SatDM.CarregarDadosCancelamento(ArqXMLCancelamento);
+      SatDM.ConfigurarImpressao(NomeImpressora);
       SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
       SatDM.ACBrSAT1.Extrato := nil;
       Result := SetRetorno(ErrOK);

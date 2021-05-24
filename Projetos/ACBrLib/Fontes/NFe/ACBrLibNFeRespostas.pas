@@ -486,7 +486,6 @@ type
   end;
 
   { TEnvioRetornoResposta }
-
   TEnvioRetornoResposta = class(TACBrLibRespostaBase)
   private
     FEnvioResposta: TEnvioResposta;
@@ -565,25 +564,25 @@ begin
     if Assigned(ACBrNFe.WebServices.Retorno) and (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
     begin
       RetornoResposta := TRetornoResposta.Create('NFe', Tipo, Formato);
-      try
-        RetornoResposta.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
-                                 ACBrNFe.WebServices.Retorno.Recibo,
-                                 ACBrNFe.WebServices.Retorno.Msg,
-                                 ACBrNFe.WebServices.Retorno.Protocolo,
-                                 ACBrNFe.WebServices.Retorno.ChaveNFe);
 
-        for I := 0 to ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Count - 1 do
+      RetornoResposta.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
+                                ACBrNFe.WebServices.Retorno.Recibo,
+                                ACBrNFe.WebServices.Retorno.Msg,
+                                ACBrNFe.WebServices.Retorno.Protocolo,
+                                ACBrNFe.WebServices.Retorno.ChaveNFe);
+
+      for I := 0 to ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Count - 1 do
+      begin
+        for J := 0 to ACBrNFe.NotasFiscais.Count - 1 do
         begin
-          for J := 0 to ACBrNFe.NotasFiscais.Count - 1 do
+          if ('NFe' + ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe =
+          ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.Id) then
           begin
-            if ('NFe' + ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe =
-              ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.Id) then
-            begin
-              lPathNFe := TPathNFeResposta.Create(
-                       ExtrairNumeroChaveAcesso(ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe)
-                       , Tipo
-                       , Formato);
+            lPathNFe := TPathNFeResposta.Create(
+                         ExtrairNumeroChaveAcesso(ACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe),
+                         Tipo, Formato);
               lPathNFe.Processar( ACBrNFe.NotasFiscais.Items[J].NomeArq );
+
               if Assigned(FNFe_Arq) then
                 FNFe_Arq.Add(lPathNFe);
             end;
@@ -591,9 +590,6 @@ begin
           end;
 
         end;
-      finally
-        //Deve Realizar Free  no Destructor da classe
-      end;
 
     end;
 

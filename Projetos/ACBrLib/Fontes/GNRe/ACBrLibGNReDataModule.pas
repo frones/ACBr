@@ -41,6 +41,7 @@ implementation
 
 uses
   ACBrUtil, FileUtil,
+  {$IFDEF Demo}pcnConversao,{$ENDIF}
   ACBrLibGNReConfig, ACBrLibGNReBase;
 
 {$R *.lfm}
@@ -64,6 +65,11 @@ begin
   ACBrGNRe1.SSL.DescarregarCertificado;
   LibConfig := TLibGNReConfig(TACBrLibGNRe(Lib).Config);
   ACBrGNRe1.Configuracoes.Assign(LibConfig.GNReConfig);
+
+{$IFDEF Demo}
+  ACBrGNRe1.Configuracoes.WebServices.Ambiente := taHomologacao;
+{$ENDIF}
+
 
   AplicarConfigMail;
 end;
@@ -115,11 +121,19 @@ begin
     PathPDF := LibConfig.GuiaConfig.PathPDF;
     PrintDialog := LibConfig.GuiaConfig.PrintDialog;
     TamanhoPapel := LibConfig.GuiaConfig.TamanhoPapel;
+{$IFDEF Demo}
+    Sistema := Lib.Nome + ' v' + Lib.Versao;
+    Site := 'www.projetoacbr.com.br';
+    Email := 'sac@projetoacbr.com.br';
+    Fax := '+55 15 99790-2976';
+    Usuario := 'Projeto ACbr';
+{$ELSE}
     Sistema := Lib.Config.Sistema.Nome;
     Site := Lib.Config.Emissor.WebSite;
     Email := Lib.Config.Emissor.Email;
     Fax := Lib.Config.Emissor.Telefone;
     Usuario := LibConfig.GuiaConfig.Usuario;
+{$ENDIF}
   end;
 
   if GerarPDF then

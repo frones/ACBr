@@ -19,6 +19,7 @@ namespace ACBrLib.Core
         protected readonly string className;
         protected const int BUFFER_LEN = 256;
         protected IntPtr libHandle;
+        private static string libraryPath;
 
         #endregion Fields
 
@@ -29,9 +30,9 @@ namespace ACBrLib.Core
             MinusOne = new IntPtr(-1);
 
             var uri = new Uri(Assembly.GetEntryAssembly().CodeBase);
-            LibraryPath = Path.GetDirectoryName(!uri.IsFile ? uri.ToString() : uri.LocalPath + Uri.UnescapeDataString(uri.Fragment));
-            LibraryPath += Environment.Is64BitProcess ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
-            Environment.SetEnvironmentVariable("PATH", LibraryPath);
+            var path = Path.GetDirectoryName(!uri.IsFile ? uri.ToString() : uri.LocalPath + Uri.UnescapeDataString(uri.Fragment));
+            path += Environment.Is64BitProcess ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
+            LibraryPath = path;
         }
 
         protected ACBrLibHandle(string dllName64, string dllName32) :
@@ -45,7 +46,7 @@ namespace ACBrLib.Core
             methodList = new Dictionary<Type, string>();
             className = GetType().Name;
 
-            var pNewSession = LibLoader.LoadLibrary(Path.Combine(LibraryPath, dllName));
+            var pNewSession = LibLoader.LoadLibrary(dllName);
             if (pNewSession == IntPtr.Zero || pNewSession == MinusOne)
                 throw CreateException("Não foi possivel carregar a biblioteca.");
 
@@ -57,7 +58,17 @@ namespace ACBrLib.Core
 
         #region Properties
 
-        public static string LibraryPath { get; set; }
+        public static string LibraryPath
+        {
+            get => libraryPath;
+            set
+            {
+                if (value != libraryPath)
+                    Environment.SetEnvironmentVariable("PATH", value);
+
+                libraryPath = value;
+            }
+        }
 
         /// <summary>
         /// </summary>
@@ -121,7 +132,7 @@ namespace ACBrLib.Core
         protected virtual T ConvertValue<T>(string value)
         {
             if (typeof(T).IsEnum && !Attribute.IsDefined(typeof(T), typeof(FlagsAttribute))) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
-            if (typeof(T).IsEnum && Attribute.IsDefined(typeof(T), typeof(FlagsAttribute))) return (T)Enum.Parse(typeof(T), value.Trim('[', ']'));
+            if (typeof(T).IsEnum && Attribute.IsDefined(typeof(T), typeof(FlagsAttribute))) return (T)Enum.Parse(typeof(T), value.Trim('[', ']'), true);
             if (typeof(T) == typeof(bool)) return (T)(object)Convert.ToBoolean(Convert.ToInt32(value));
             if (typeof(T) == typeof(byte[])) return (T)(object)Convert.FromBase64String(value);
             if (typeof(T) != typeof(Stream)) return (T)Convert.ChangeType(value, typeof(T));
@@ -137,7 +148,7 @@ namespace ACBrLib.Core
             var type = value.GetType();
             var propValue = value.ToString();
             if (type.IsEnum && !Attribute.IsDefined(type, typeof(FlagsAttribute))) propValue = ((int)value).ToString();
-            if (type.IsEnum && !Attribute.IsDefined(type, typeof(FlagsAttribute))) propValue = $"[{Enum.Format(type, value, "F")}]";
+            if (type.IsEnum && Attribute.IsDefined(type, typeof(FlagsAttribute))) propValue = $"[{Enum.Format(type, value, "F")}]";
             if (type == typeof(bool)) propValue = Convert.ToInt32(value).ToString();
             if (type == typeof(byte[])) propValue = Convert.ToBase64String((byte[])value);
             if (type != typeof(Stream)) return propValue;

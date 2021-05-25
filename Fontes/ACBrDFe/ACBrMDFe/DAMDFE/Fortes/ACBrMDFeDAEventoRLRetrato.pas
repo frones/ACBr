@@ -267,6 +267,15 @@ begin
       rllLinha3.Caption := ACBrStr(
         'CONSULTE A AUTENTICIDADE DO PAGAMENTO DA OPERAÇÃO NO SITE DA SEFAZ AUTORIZADORA.');
     end;
+
+    teInclusaoDFe:
+    begin
+      rllLinha1.Caption := ACBrStr('INCLUSÃO DE DOCUMENTOS FISCAIS ELETRÔNICOS');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do Pagamento da Operação de Transporte indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE DF-e NO SITE DA SEFAZ AUTORIZADORA.');
+    end;
   end;
 end;
 
@@ -302,6 +311,7 @@ begin
       teEncerramento: rllTituloEvento.Caption := 'ENCERRAMENTO';
       teInclusaoCondutor: rllTituloEvento.Caption := ACBrStr('INCLUSÃO DE CONDUTOR');
       tePagamentoOperacao: rllTituloEvento.Caption := ACBrStr('PAGAMENTO DA OPERAÇÃO DE TRANSPORTE');
+      teInclusaoDFe: rllTituloEvento.Caption := ACBrStr('INCLUSÃO DE DF-e');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -353,13 +363,15 @@ end;
 procedure TfrmMDFeDAEventoRLRetrato.rlb_06_DescricaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   Exibir: Boolean;
+  i: Integer;
 begin
   inherited;
 
   Exibir := (fpEventoMDFe.InfEvento.tpEvento = teCancelamento) or
             (fpEventoMDFe.InfEvento.tpEvento = teEncerramento) or
             (fpEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
-            (fpEventoMDFe.InfEvento.tpEvento = tePagamentoOperacao);
+            (fpEventoMDFe.InfEvento.tpEvento = tePagamentoOperacao) or
+            (fpEventoMDFe.InfEvento.tpEvento = teInclusaoDFe);
 
   printIt := Exibir or (fpEventoMDFe.InfEvento.tpAmb = taHomologacao);
 
@@ -405,6 +417,16 @@ begin
     tePagamentoOperacao:
     begin
       rlmDescricao.Lines.Add('Protocolo do MDFe Pago: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
+    end;
+
+    teInclusaoDFe:
+    begin
+      rlmDescricao.Lines.Add('Chaves das NF-e');
+
+      for i := 0 to fpEventoMDFe.InfEvento.detEvento.infDoc.Count - 1 do
+      begin
+        rlmDescricao.Lines.Add(fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].chNFe);
+      end;
     end;
   end;
 end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2021
+-- ACBrMDFeDAEventoRLRetrato --
+[+] Incluido a impressão do evento de Inclusão de DF-e.
+   Por: Italo Giurizzato Junior
+
 19/11/2020
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/59645-atualiza%C3%A7%C3%A3o-do-layout-do-damdfe/

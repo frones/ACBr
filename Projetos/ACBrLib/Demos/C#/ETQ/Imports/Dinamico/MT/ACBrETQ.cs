@@ -1,5 +1,4 @@
 ﻿using ACBrLib.Core;
-using System;
 using System.Text;
 using ACBrLib.Core.ETQ;
 
@@ -9,13 +8,15 @@ namespace ACBrLib.ETQ
     {
         #region Constructors
 
-        public ACBrETQ(string eArqConfig = "", string eChaveCrypt = "") :
-            base(Environment.Is64BitProcess ? "ACBrETQ64.dll" : "ACBrETQ32.dll")
+        public ACBrETQ(string eArqConfig = "", string eChaveCrypt = "") : base(IsWindows ? "ACBrETQ64.dll" : "libacbretq64.so",
+                                                                               IsWindows ? "ACBrETQ32.dll" : "libacbretq32.so")
         {
             var inicializar = GetMethod<ETQ_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ref libHandle, ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
             CheckResult(ret);
+
+            Config = new ACBrETQConfig(this);
         }
 
         #endregion Constructors
@@ -53,6 +54,8 @@ namespace ACBrLib.ETQ
                 return ProcessResult(buffer, bufferLen);
             }
         }
+
+        public ACBrETQConfig Config { get; }
 
         #endregion Properties
 

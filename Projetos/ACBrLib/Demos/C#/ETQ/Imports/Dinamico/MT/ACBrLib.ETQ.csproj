@@ -49,7 +49,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\ACBrETQ.Config.cs" Link="ACBrETQ.Config.cs" />
     <Compile Include="..\Shared\ACBrETQConfig.cs" Link="ACBrETQConfig.cs" />
   </ItemGroup>
   

@@ -223,28 +223,28 @@ namespace ACBrLibETQ.Demo
         {
             acbrEtq.ConfigLer();
 
-            cbbPortas.SelectedItem = acbrEtq.ConfigLerValor<string>(ACBrSessao.ETQ, "Porta");
-            comboBoxModelo.SetSelectedValue(acbrEtq.ConfigLerValor<ETQModelo>(ACBrSessao.ETQ, "Modelo"));
-            numericUpDownTemperatura.Value = acbrEtq.ConfigLerValor<decimal>(ACBrSessao.ETQ, "Temperatura");
-            comboBoxDPI.SetSelectedValue(acbrEtq.ConfigLerValor<ETQDPI>(ACBrSessao.ETQ, "DPI"));
-            numericUpDownVelocidade.Value = acbrEtq.ConfigLerValor<decimal>(ACBrSessao.ETQ, "Velocidade");
-            comboBoxBackFeed.SetSelectedValue(acbrEtq.ConfigLerValor<ETQBackFeed>(ACBrSessao.ETQ, "BackFeed"));
-            cmbPageCode.SetSelectedValue(acbrEtq.ConfigLerValor<ETQPageCode>(ACBrSessao.ETQ, "PaginaDeCodigo"));
-            numericUpDownAvancoEtq.Value = acbrEtq.ConfigLerValor<decimal>(ACBrSessao.ETQ, "Avanco");
-            checkBoxLimparMemoria.Checked = acbrEtq.ConfigLerValor<bool>(ACBrSessao.ETQ, "LimparMemoria");
+            cbbPortas.SelectedItem = acbrEtq.Config.Porta;
+            comboBoxModelo.SetSelectedValue(acbrEtq.Config.Modelo);
+            numericUpDownTemperatura.Value = acbrEtq.Config.Temperatura;
+            comboBoxDPI.SetSelectedValue(acbrEtq.Config.DPI);
+            numericUpDownVelocidade.Value = acbrEtq.Config.Velocidade;
+            comboBoxBackFeed.SetSelectedValue(acbrEtq.Config.BackFeed);
+            cmbPageCode.SetSelectedValue(acbrEtq.Config.PaginaDeCodigo);
+            numericUpDownAvancoEtq.Value = acbrEtq.Config.Avanco;
+            checkBoxLimparMemoria.Checked = acbrEtq.Config.LimparMemoria;
         }
 
         private void SaveConfig()
         {
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Porta", cbbPortas.Text);
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Modelo", comboBoxModelo.GetSelectedValue<ETQModelo>());
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Temperatura", numericUpDownTemperatura.Value);
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "DPI", comboBoxDPI.GetSelectedValue<ETQDPI>());
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Velocidade", numericUpDownVelocidade.Value);
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "BackFeed", comboBoxBackFeed.GetSelectedValue<ETQBackFeed>());
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "PaginaDeCodigo", cmbPageCode.GetSelectedValue<ETQPageCode>());
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "Avanco", numericUpDownAvancoEtq.Value);
-            acbrEtq.ConfigGravarValor(ACBrSessao.ETQ, "LimparMemoria", checkBoxLimparMemoria.Checked);
+            acbrEtq.Config.Porta = cbbPortas.Text;
+            acbrEtq.Config.Modelo = comboBoxModelo.GetSelectedValue<ETQModelo>();
+            acbrEtq.Config.Temperatura = (int)numericUpDownTemperatura.Value;
+            acbrEtq.Config.DPI = comboBoxDPI.GetSelectedValue<ETQDPI>();
+            acbrEtq.Config.Velocidade = (int)numericUpDownVelocidade.Value;
+            acbrEtq.Config.BackFeed = comboBoxBackFeed.GetSelectedValue<ETQBackFeed>();
+            acbrEtq.Config.PaginaDeCodigo = cmbPageCode.GetSelectedValue<ETQPageCode>();
+            acbrEtq.Config.Avanco = (int)numericUpDownAvancoEtq.Value;
+            acbrEtq.Config.LimparMemoria = checkBoxLimparMemoria.Checked;
             acbrEtq.ConfigGravar();
         }
 

@@ -30,7 +30,7 @@ namespace ACBrLib.Core
 
         #region Methods
 
-        public TType GetValue<TType>(string key, TType defaultValue = default(TType), IFormatProvider format = null)
+        public TType GetValue<TType>(string key, TType defaultValue = default, IFormatProvider format = null)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) return defaultValue;
 

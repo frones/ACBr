@@ -90,17 +90,17 @@ namespace ACBrLib
             }
         }
 
-        public void ShowInfo(SplashInfo tipo, params object[] args)
+        public static void ShowInfo(SplashInfo tipo, params object[] args)
         {
-            if (splashForm == null) throw new ApplicationException("SplashScreen não está sendo exibida.");
+            if (Default?.splashForm == null) throw new ApplicationException("SplashScreen não está sendo exibida.");
 
-            if (!splashForm.InvokeRequired)
+            if (!Default.splashForm.InvokeRequired)
             {
-                ((ISplash)SplashForm).ShowInfo(tipo, args);
+                ((ISplash)Default?.splashForm).ShowInfo(tipo, args);
             }
             else
             {
-                splashForm.Invoke(new Action(() => ((ISplash)splashForm).ShowInfo(tipo, args)));
+                Default.splashForm.Invoke(new Action(() => ((ISplash)Default.splashForm).ShowInfo(tipo, args)));
             }
         }
 

@@ -2,12 +2,13 @@
 {
     public enum ACBrBolLayOut
     {
-        lPadrao = 0,
-        lCarne = 1,
-        lFatura = 2,
-        lPadraoEntrega = 3,
-        lReciboTopo = 4,
-        lPadraoEntrega2 = 5,
-        lFaturaDetal = 6
+        lPadrao,
+        lCarne,
+        lFatura,
+        lPadraoEntrega,
+        lReciboTopo,
+        lPadraoEntrega2,
+        lFaturaDetal,
+        lTermica80mm
     }
 }

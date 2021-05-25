@@ -93,6 +93,7 @@ namespace ACBrLib.Core
 
         public void Add(ACBrIniSection section)
         {
+            section.Parent = this;
             sections.Add(section);
         }
 
@@ -107,7 +108,7 @@ namespace ACBrLib.Core
             sections.Remove(section);
         }
 
-        public TType Read<TType>(string section, string propertie, TType defaultValue = default(TType), IFormatProvider format = null)
+        public TType Read<TType>(string section, string propertie, TType defaultValue = default, IFormatProvider format = null)
         {
             if (string.IsNullOrEmpty(propertie) || string.IsNullOrWhiteSpace(propertie)) return defaultValue;
             if (string.IsNullOrEmpty(section) || string.IsNullOrWhiteSpace(section)) return defaultValue;
@@ -132,13 +133,13 @@ namespace ACBrLib.Core
 
             var file = Path.Combine(IniFilePath, IniFileName);
 
-            using (var writer = new StreamWriter(file, false, Encoding, 1024))
+            using (var writer = new StreamWriter(file, false, Encoding, BufferSize))
                 Save(writer);
         }
 
         public void Save(string file)
         {
-            using (var writer = new StreamWriter(file, false, Encoding, 1024))
+            using (var writer = new StreamWriter(file, false, Encoding, BufferSize))
                 Save(writer);
         }
 
@@ -155,9 +156,7 @@ namespace ACBrLib.Core
                 stream.WriteLine($"[{section.Name}]");
 
                 foreach (var iniData in section)
-                {
                     stream.WriteLine($"{iniData.Key}={iniData.Value}");
-                }
 
                 stream.WriteLine("");
             }
@@ -165,39 +164,63 @@ namespace ACBrLib.Core
             stream.Flush();
         }
 
+        public static ACBrIniFile Parse(string iniData, Encoding encoding = null)
+        {
+            if (string.IsNullOrEmpty(iniData) || string.IsNullOrWhiteSpace(iniData)) throw new ArgumentNullException(nameof(iniData));
+
+            encoding = encoding ?? Encoding.UTF8;
+            var iniFile = new ACBrIniFile { Encoding = encoding };
+
+            using (var reader = new StringReader(iniData))
+            {
+                string line;
+                var section = string.Empty;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    line = line.Trim();
+
+                    if (string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line)) continue;
+                    if (line.StartsWith(";")) continue;
+
+                    if (line.StartsWith("["))
+                    {
+                        section = line.Substring(1, line.Length - 2);
+                        iniFile.sections.Add(new ACBrIniSection(iniFile, section));
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(section) || string.IsNullOrWhiteSpace(section)) continue;
+
+                        var iniSection = iniFile[section];
+                        var idx = line.IndexOf('=', 0);
+                        if (idx < 0) continue;
+
+                        var key = line.Substring(0, idx);
+                        var value = idx >= line.Length - 1 ? "" : line.Substring(idx + 1);
+                        iniSection.Add(key, value);
+                    }
+                }
+            }
+
+            return iniFile;
+        }
+
         public static ACBrIniFile Load(string file, Encoding encoding = null)
         {
             if (!File.Exists(file)) throw new FileNotFoundException();
 
-            var path = Path.GetDirectoryName(file);
-            var iniFileName = Path.GetFileName(file);
-
-            var ret = Parse(File.ReadAllText(file, encoding), encoding);
-
-            ret.IniFileName = iniFileName;
-            ret.IniFilePath = path;
-            return ret;
+            using (var reader = new FileStream(file, FileMode.Open))
+                return Load(reader, encoding);
         }
 
         public static ACBrIniFile Load(Stream stream, Encoding encoding = null)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            encoding = encoding ?? Encoding.GetEncoding("ISO-8859-1");
+            encoding = encoding ?? Encoding.UTF8;
             var iniFile = new ACBrIniFile { Encoding = encoding };
 
-            using (var reader = new StreamReader(stream, iniFile.Encoding))
-                return Parse(reader.ReadToEnd(), encoding);
-        }
-
-        public static ACBrIniFile Parse(string iniData, Encoding encoding = null)
-        {
-            if (string.IsNullOrEmpty(iniData) || string.IsNullOrWhiteSpace(iniData)) throw new ArgumentNullException(nameof(iniData));
-
-            encoding = encoding ?? Encoding.GetEncoding("ISO-8859-1");
-            var iniFile = new ACBrIniFile { Encoding = encoding };
-
-            using (var reader = new StringReader(iniData))
+            using (var reader = new StreamReader(stream, encoding))
             {
                 string line;
                 var section = string.Empty;

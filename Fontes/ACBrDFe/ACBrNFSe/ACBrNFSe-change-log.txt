@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/05/2021
+-- ACBrNFSeWebServices --
+[*] Possível correção para o SubstituicaoNfse com relação a assinatura.
+  Por: Italo Giurizzato Junior
 -- pnfsNFSeG --
 [*] Possível correção para o cancelamento de NFS-e - provedor IPM.
   Por: Italo Giurizzato Junior

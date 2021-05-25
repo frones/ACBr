@@ -5061,9 +5061,12 @@ begin
 
       proAdm: FURI := NumeroLote;
     else
-      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                                   FPConfiguracoesNFSe.Geral.Emitente.InscMun +
-                                   TNFSeCancelarNfse(Self).FNumeroNFSe;
+      FURI := 'Canc_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                        FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+                        TNFSeCancelarNfse(Self).FNumeroNFSe;
+//      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+//                                   FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+//                                   TNFSeCancelarNfse(Self).FNumeroNFSe;
     end;
 
     InicializarTagITagF;
@@ -5573,9 +5576,12 @@ begin
       proTecnos: FURI := TNFSeSubstituirNfse(Self).FNumeroNFSe;
 
     else
-      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                      FPConfiguracoesNFSe.Geral.Emitente.InscMun +
-                      TNFSeSubstituirNfse(Self).FNumeroNFSe;
+      FURI := 'Canc_' + {FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                        FPConfiguracoesNFSe.Geral.Emitente.InscMun +}
+                        TNFSeSubstituirNfse(Self).FNumeroNFSe;
+//      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+//                      FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+//                      TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;
 
     InicializarTagITagF;
@@ -5636,7 +5642,8 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar: ');
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
+               'Falha ao Assinar - Cancelar: ');
 
   if Provedor = proDSFv2 then
     FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio>' +
@@ -5651,7 +5658,8 @@ begin
 
   if (Provedor in [proWebISSv2, proDeISS]) or
      (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) then
-    AssinarXML(FPDadosMsg, 'SubstituirNfseEnvio', 'SubstituicaoNfse', 'Falha ao Assinar - SubstituirNfseEnvio: ');
+    AssinarXML(FPDadosMsg, 'SubstituirNfseEnvio', 'SubstituicaoNfse',
+               'Falha ao Assinar - SubstituirNfseEnvio: ');
 
   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
     FNotasFiscais.ValidarLote(FPDadosMsg,

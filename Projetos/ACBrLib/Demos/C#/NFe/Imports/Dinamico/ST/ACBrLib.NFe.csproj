@@ -1,53 +1,134 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD128F90-7A85-4431-8853-0F7DF7301E7E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ACBrLib.NFe</RootNamespace>
-    <AssemblyName>ACBrLib.NFe</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Projeto ACBr</Company>
+    <Product>ACBrLib.NFe</Product>
+    <Authors>Projeto ACBr</Authors>
+    <Copyright>Copyright © Projeto ACBr 2018 - 2021</Copyright>
+    <PackageProjectUrl>http://projetoacbr.com.br/</PackageProjectUrl>
+    <RepositoryType>svn</RepositoryType>
+    <RepositoryUrl>http://svn.code.sf.net/p/acbr/code/trunk2/</RepositoryUrl>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyVersion>0.4.6.113</AssemblyVersion>
+    <FileVersion>0.4.6.113</FileVersion>
+    <Version>0.4.6.113</Version>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452'">
+    <DefineConstants>NET45;NETFULL</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.NFe.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.NFe.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.NFe.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.NFe.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Compile Include="..\Shared\ACBrNFeConfig.cs" Link="ACBrNFeConfig.cs" />
+    <Compile Include="..\Shared\DANFeConfig.cs" Link="DANFeConfig.cs" />
+    <Compile Include="..\Shared\DANFeNFCeConfig.cs" Link="DANFeNFCeConfig.cs" />
+    <Compile Include="..\Shared\DANFeNFeConfig.cs" Link="DANFeNFeConfig.cs" />
+    <Compile Include="..\Shared\FonteDANFCeConfig.cs" Link="FonteDANFCeConfig.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ArmaNFe.cs" Link="NotaFiscal\ArmaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\AutXML.cs" Link="NotaFiscal\AutXML.cs" />
+    <Compile Include="..\Shared\NotaFiscal\AvulsaNFe.cs" Link="NotaFiscal\AvulsaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CanaNFe.cs" Link="NotaFiscal\CanaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CIDENFe.cs" Link="NotaFiscal\CIDENFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\COFINSProdutoNFe.cs" Link="NotaFiscal\COFINSProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\COFINSSTProdutoNFe.cs" Link="NotaFiscal\COFINSSTProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CombustivelNFe.cs" Link="NotaFiscal\CombustivelNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CompraNFe.cs" Link="NotaFiscal\CompraNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DeducNFe.cs" Link="NotaFiscal\DeducNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DestinatarioNFe.cs" Link="NotaFiscal\DestinatarioNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DetExport.cs" Link="NotaFiscal\DetExport.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DINFe.cs" Link="NotaFiscal\DINFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DuplicataNFe.cs" Link="NotaFiscal\DuplicataNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EmitenteNFe.cs" Link="NotaFiscal\EmitenteNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EncerranteNFe.cs" Link="NotaFiscal\EncerranteNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoNFe.cs" Link="NotaFiscal\EventoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ExportaNFe.cs" Link="NotaFiscal\ExportaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\FaturaNFe.cs" Link="NotaFiscal\FaturaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ForDiaNFe.cs" Link="NotaFiscal\ForDiaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ICMSProdutoNFe.cs" Link="NotaFiscal\ICMSProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ICMSUFDESTNFe.cs" Link="NotaFiscal\ICMSUFDESTNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IdentificacaoNFe.cs" Link="NotaFiscal\IdentificacaoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IIProdutoNFe.cs" Link="NotaFiscal\IIProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ImpostoDevolNFe.cs" Link="NotaFiscal\ImpostoDevolNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
+    <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\InfNFe.cs" Link="NotaFiscal\InfNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\InfoAdicionalNfe.cs" Link="NotaFiscal\InfoAdicionalNfe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\InfRespTecNFe.cs" Link="NotaFiscal\InfRespTecNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IPIProdutoNFe.cs" Link="NotaFiscal\IPIProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ISSQNtotNFe.cs" Link="NotaFiscal\ISSQNtotNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\LacresNFe.cs" Link="NotaFiscal\LacresNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\LADINFe.cs" Link="NotaFiscal\LADINFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\MedicamentoNFe.cs" Link="NotaFiscal\MedicamentoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\NFRef.cs" Link="NotaFiscal\NFRef.cs" />
+    <Compile Include="..\Shared\NotaFiscal\NotaFiscal.cs" Link="NotaFiscal\NotaFiscal.cs" />
+    <Compile Include="..\Shared\NotaFiscal\NVENFe.cs" Link="NotaFiscal\NVENFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\PagamentoNFe.cs" Link="NotaFiscal\PagamentoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\PISProdutoNFe.cs" Link="NotaFiscal\PISProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ProcRefNFe.cs" Link="NotaFiscal\ProcRefNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ProdutoNFe.cs" Link="NotaFiscal\ProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\RastroNFe.cs" Link="NotaFiscal\RastroNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ReboqueNFe.cs" Link="NotaFiscal\ReboqueNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\RetiradaEntregaNFe.cs" Link="NotaFiscal\RetiradaEntregaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\RetTribNFe.cs" Link="NotaFiscal\RetTribNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoAutor.cs" Link="NotaFiscal\TipoAutor.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TotalNFe.cs" Link="NotaFiscal\TotalNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TransportadorNFe.cs" Link="NotaFiscal\TransportadorNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\VeiculoNFe.cs" Link="NotaFiscal\VeiculoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\VolumeNFe.cs" Link="NotaFiscal\VolumeNFe.cs" />
+    <Compile Include="..\Shared\Respostas\CancelamentoResposta.cs" Link="Respostas\CancelamentoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultaNFeDetEventoResposta.cs" Link="Respostas\ConsultaNFeDetEventoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultaNFeInfCanResposta.cs" Link="Respostas\ConsultaNFeInfCanResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultaNFeItemPedidoResposta.cs" Link="Respostas\ConsultaNFeItemPedidoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultaNFeProcEventoResposta.cs" Link="Respostas\ConsultaNFeProcEventoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultaNFeResposta.cs" Link="Respostas\ConsultaNFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\EnvioResposta.cs" Link="Respostas\EnvioResposta.cs" />
+    <Compile Include="..\Shared\Respostas\EnvioRetornoResposta.cs" Link="Respostas\EnvioRetornoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\EventoItemResposta.cs" Link="Respostas\EventoItemResposta.cs" />
+    <Compile Include="..\Shared\Respostas\EventoResposta.cs" Link="Respostas\EventoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\InutilizarNFeResposta.cs" Link="Respostas\InutilizarNFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\LibNFeResposta.cs" Link="Respostas\LibNFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\StatusServicoResposta.cs" Link="Respostas\StatusServicoResposta.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="ACBrNFe.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
-      <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
-      <Name>ACBrLib.Core</Name>
-    </ProjectReference>
+    <Folder Include="NotaFiscal\" />
+    <Folder Include="Respostas\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

@@ -18,9 +18,49 @@ namespace ACBrLib.NFe
             var ret = ExecuteMethod(() => inicializar(ref libHandle, ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
             CheckResult(ret);
+
+            Config = new ACBrNFeConfig(this);
         }
 
         #endregion Constructors
+
+        #region Properties
+
+        public string Nome
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<NFE_Nome>();
+                var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        public string Versao
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<NFE_Versao>();
+                var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        public ACBrNFeConfig Config { get; }
+
+        #endregion Properties
 
         #region Methods
 
@@ -88,6 +128,25 @@ namespace ACBrLib.NFe
         }
 
         #endregion Ini
+
+        /// <summary>
+        /// Adiciona uma nota fiscal na lista.
+        /// </summary>
+        /// <param name="nfe"></param>
+        public void CarregarNFe(NotaFiscal nfe)
+        {
+            CarregarINI(nfe.ToString());
+        }
+
+        /// <summary>
+        /// Retornar os dados da NFe no index informado.
+        /// </summary>
+        /// <param name="aIndex"></param>
+        /// <returns></returns>
+        public NotaFiscal ObterNFe(int aIndex)
+        {
+            return NotaFiscal.Load(ObterIni(aIndex));
+        }
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -273,7 +332,7 @@ namespace ACBrLib.NFe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string StatusServico()
+        public StatusServicoResposta StatusServico()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -283,10 +342,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return StatusServicoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
+        public ConsultaNFeResposta Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -296,10 +355,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultaNFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultaCadastro(string cUF, string nDocumento, bool nIE)
+        public ConsultaCadastroResposta ConsultaCadastro(string cUF, string nDocumento, bool nIE)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -309,10 +368,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultaCadastroResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
+        public InutilizarNFeResposta Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
             int serie, int numeroInicial, int numeroFinal)
         {
             var bufferLen = BUFFER_LEN;
@@ -323,10 +382,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return InutilizarNFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string Enviar(int aLote, bool imprimir = false, bool sincrono = false, bool zipado = false)
+        public EnvioRetornoResposta Enviar(int aLote, bool imprimir = false, bool sincrono = false, bool zipado = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -336,10 +395,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioRetornoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarRecibo(string aRecibo)
+        public RetornoResposta ConsultarRecibo(string aRecibo)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -349,10 +408,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return RetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "NFe");
         }
 
-        public string Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
+        public CancelamentoResposta Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -362,10 +421,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CancelamentoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string EnviarEvento(int aLote)
+        public EventoResposta EnviarEvento(int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -375,10 +434,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EventoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
+        public DistribuicaoDFeResposta DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -388,10 +447,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
+        public DistribuicaoDFeResposta DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -401,10 +460,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
+        public DistribuicaoDFeResposta DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -414,7 +473,7 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void EnviarEmail(string ePara, string eChaveNFe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)
@@ -497,58 +556,6 @@ namespace ACBrLib.NFe
             var finalizar = GetMethod<NFE_Finalizar>();
             var codRet = ExecuteMethod(() => finalizar(libHandle));
             CheckResult(codRet);
-        }
-
-        protected override void InitializeMethods()
-        {
-            AddMethod<NFE_Inicializar>("NFE_Inicializar");
-            AddMethod<NFE_Finalizar>("NFE_Finalizar");
-            AddMethod<NFE_Nome>("NFE_Nome");
-            AddMethod<NFE_Versao>("NFE_Versao");
-            AddMethod<NFE_UltimoRetorno>("NFE_UltimoRetorno");
-            AddMethod<NFE_ConfigImportar>("NFE_ConfigImportar");
-            AddMethod<NFE_ConfigExportar>("NFE_ConfigExportar");
-            AddMethod<NFE_ConfigLer>("NFE_ConfigLer");
-            AddMethod<NFE_ConfigGravar>("NFE_ConfigGravar");
-            AddMethod<NFE_ConfigLerValor>("NFE_ConfigLerValor");
-            AddMethod<NFE_ConfigGravarValor>("NFE_ConfigGravarValor");
-            AddMethod<NFE_CarregarXML>("NFE_CarregarXML");
-            AddMethod<NFE_CarregarINI>("NFE_CarregarINI");
-            AddMethod<NFE_ObterXml>("NFE_ObterXml");
-            AddMethod<NFE_GravarXml>("NFE_GravarXml");
-            AddMethod<NFE_ObterIni>("NFE_ObterIni");
-            AddMethod<NFE_GravarIni>("NFE_GravarIni");
-            AddMethod<NFE_CarregarEventoXML>("NFE_CarregarEventoXML");
-            AddMethod<NFE_CarregarEventoINI>("NFE_CarregarEventoINI");
-            AddMethod<NFE_LimparLista>("NFE_LimparLista");
-            AddMethod<NFE_LimparListaEventos>("NFE_LimparListaEventos");
-            AddMethod<NFE_Assinar>("NFE_Assinar");
-            AddMethod<NFE_Validar>("NFE_Validar");
-            AddMethod<NFE_ValidarRegrasdeNegocios>("NFE_ValidarRegrasdeNegocios");
-            AddMethod<NFE_VerificarAssinatura>("NFE_VerificarAssinatura");
-            AddMethod<NFE_GerarChave>("NFE_GerarChave");
-            AddMethod<NFE_ObterCertificados>("NFE_ObterCertificados");
-            AddMethod<NFE_GetPath>("NFE_GetPath");
-            AddMethod<NFE_GetPathEvento>("NFE_GetPathEvento");
-            AddMethod<NFE_StatusServico>("NFE_StatusServico");
-            AddMethod<NFE_Consultar>("NFE_Consultar");
-            AddMethod<NFE_ConsultaCadastro>("NFE_ConsultaCadastro");
-            AddMethod<NFE_Inutilizar>("NFE_Inutilizar");
-            AddMethod<NFE_Enviar>("NFE_Enviar");
-            AddMethod<NFE_ConsultarRecibo>("NFE_ConsultarRecibo");
-            AddMethod<NFE_Cancelar>("NFE_Cancelar");
-            AddMethod<NFE_EnviarEvento>("NFE_EnviarEvento");
-            AddMethod<NFE_DistribuicaoDFePorUltNSU>("NFE_DistribuicaoDFePorUltNSU");
-            AddMethod<NFE_DistribuicaoDFePorNSU>("NFE_DistribuicaoDFePorNSU");
-            AddMethod<NFE_DistribuicaoDFePorChave>("NFE_DistribuicaoDFePorChave");
-            AddMethod<NFE_EnviarEmail>("NFE_EnviarEmail");
-            AddMethod<NFE_EnviarEmailEvento>("NFE_EnviarEmailEvento");
-            AddMethod<NFE_Imprimir>("NFE_Imprimir");
-            AddMethod<NFE_ImprimirPDF>("NFE_ImprimirPDF");
-            AddMethod<NFE_ImprimirEvento>("NFE_ImprimirEvento");
-            AddMethod<NFE_ImprimirEventoPDF>("NFE_ImprimirEventoPDF");
-            AddMethod<NFE_ImprimirInutilizacao>("NFE_ImprimirInutilizacao");
-            AddMethod<NFE_ImprimirInutilizacaoPDF>("NFE_ImprimirInutilizacaoPDF");
         }
 
         protected override string GetUltimoRetorno(int iniBufferLen = 0)

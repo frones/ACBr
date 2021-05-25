@@ -40,7 +40,7 @@ namespace ACBrLib.NFe.Demo
         private void FrmMain_Shown(object sender, EventArgs e)
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.Default.ShowInfo(SplashInfo.Message, "Carregando...");
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Carregando...");
 
             try
             {
@@ -93,99 +93,93 @@ namespace ACBrLib.NFe.Demo
         private void SalvarConfig()
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.Default.ShowInfo(SplashInfo.Message, "Salvando...");
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Salvando...");
 
             try
             {
                 //Config Geral
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "AtualizarXMLCancelado", ckbAtualizarXML.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "ExibirErroSchema", ckbExibirErroSchema.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "FormatoAlerta", txtFormatoAlerta.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "FormaEmissao",
-                    cmbFormaEmissao.GetSelectedValue<TipoEmissao>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "ModeloDF", cmbModeloDocumento.GetSelectedValue<ModeloNFe>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "VersaoDF", cmbVersaoDF.GetSelectedValue<VersaoNFe>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "RetirarAcentos", ckbRetirarAcentos.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvar.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathSalvar", txtLogs.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathSchemas", txtSchemaPath.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "IdCSC", txtIdCSC.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "CSC", txtCSC.Text);
+                ACBrNFe.Config.AtualizarXMLCancelado = ckbAtualizarXML.Checked;
+                ACBrNFe.Config.ExibirErroSchema = ckbExibirErroSchema.Checked;
+                ACBrNFe.Config.FormatoAlerta = txtFormatoAlerta.Text;
+                ACBrNFe.Config.FormaEmissao = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
+                ACBrNFe.Config.ModeloDF = cmbModeloDocumento.GetSelectedValue<ModeloNFe>();
+                ACBrNFe.Config.VersaoDF = cmbVersaoDF.GetSelectedValue<VersaoNFe>();
+                ACBrNFe.Config.RetirarAcentos = ckbRetirarAcentos.Checked;
+                ACBrNFe.Config.SalvarWS = ckbSalvar.Checked;
+                ACBrNFe.Config.PathSalvar = txtLogs.Text;
+                ACBrNFe.Config.PathSchemas = txtSchemaPath.Text;
+                ACBrNFe.Config.IdCSC = txtIdCSC.Text;
+                ACBrNFe.Config.CSC = txtCSC.Text;
 
                 //Config Webservice
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "UF", cmbUfDestino.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SSLType", cmbSSlType.GetSelectedValue<SSLType>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "Timeout", nudTimeOut.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "Ambiente",
-                    rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "Visualizar", ckbVisualizar.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvarSOAP.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "AjustaAguardaConsultaRet", ckbAjustarAut.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "AguardarConsultaRet", (int)nudAguardar.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "Tentativas", (int)nudTentativas.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "IntervaloTentativas", (int)nudIntervalos.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Servidor", txtProxyServidor.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Porta", nudProxyPorta.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Senha", txtProxySenha.Text);
+                ACBrNFe.Config.DFe.UF = cmbUfDestino.Text;
+
+                ACBrNFe.Config.SSLType = cmbSSlType.GetSelectedValue<SSLType>();
+                ACBrNFe.Config.Timeout = (int)nudTimeOut.Value;
+                ACBrNFe.Config.Ambiente = rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao;
+                ACBrNFe.Config.Visualizar = ckbVisualizar.Checked;
+                ACBrNFe.Config.SalvarWS = ckbSalvarSOAP.Checked;
+                ACBrNFe.Config.AjustaAguardaConsultaRet = ckbAjustarAut.Checked;
+                ACBrNFe.Config.AguardarConsultaRet = (int)nudAguardar.Value;
+                ACBrNFe.Config.Tentativas = (int)nudTentativas.Value;
+                ACBrNFe.Config.IntervaloTentativas = (int)nudIntervalos.Value;
+
+                ACBrNFe.Config.Proxy.Servidor = txtProxyServidor.Text;
+                ACBrNFe.Config.Proxy.Porta = nudProxyPorta.Text;
+                ACBrNFe.Config.Proxy.Usuario = txtProxyUsuario.Text;
+                ACBrNFe.Config.Proxy.Senha = txtProxySenha.Text;
 
                 //Config Certificado
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "SSLCryptLib", cmbCrypt.GetSelectedValue<SSLCryptLib>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "SSLHttpLib", cmbHttp.GetSelectedValue<SSLHttpLib>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "SSLXmlSignLib",
-                    cmbXmlSign.GetSelectedValue<SSLXmlSignLib>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "ArquivoPFX", txtCertPath.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "DadosPFX", txtDadosPFX.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "Senha", txtCertPassword.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DFe, "NumeroSerie", txtCertNumero.Text);
+                ACBrNFe.Config.DFe.SSLCryptLib = cmbCrypt.GetSelectedValue<SSLCryptLib>();
+                ACBrNFe.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();
+                ACBrNFe.Config.DFe.SSLXmlSignLib = cmbXmlSign.GetSelectedValue<SSLXmlSignLib>();
+                ACBrNFe.Config.DFe.ArquivoPFX = txtCertPath.Text;
+                ACBrNFe.Config.DFe.Senha = txtCertPassword.Text;
+                ACBrNFe.Config.DFe.NumeroSerie = txtCertNumero.Text;
 
                 //Config Arquivos
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarGer", ckbSalvarArqs.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorMes", ckbPastaMensal.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "AdicionarLiteral", ckbAdicionaLiteral.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "EmissaoPathNFe", ckbEmissaoPathNFe.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarArq", ckbSalvaPathEvento.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorCNPJ", ckbSepararPorCNPJ.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorModelo", ckbSepararPorModelo.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathNFe", txtArqNFe.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathInu", txtArqInu.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathEvento", txtArqEvento.Text);
+                ACBrNFe.Config.SalvarGer = ckbSalvarArqs.Checked;
+                ACBrNFe.Config.SepararPorMes = ckbPastaMensal.Checked;
+                ACBrNFe.Config.AdicionarLiteral = ckbAdicionaLiteral.Checked;
+                ACBrNFe.Config.EmissaoPathNFe = ckbEmissaoPathNFe.Checked;
+                ACBrNFe.Config.SalvarArq = ckbSalvaPathEvento.Checked;
+                ACBrNFe.Config.SepararPorCNPJ = ckbSepararPorCNPJ.Checked;
+                ACBrNFe.Config.SepararPorModelo = ckbSepararPorModelo.Checked;
+                ACBrNFe.Config.PathNFe = txtArqNFe.Text;
+                ACBrNFe.Config.PathInu = txtArqInu.Text;
+                ACBrNFe.Config.PathEvento = txtArqEvento.Text;
 
                 //Config Documento Auxiliar
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DANFE, "PathLogo", txtLogomarca.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DANFE, "TipoDANFE",
-                    rdbRetrato.Checked ? TipoDANFE.tiRetrato : TipoDANFE.tiPaisagem);
+                ACBrNFe.Config.DANFe.PathLogo = txtLogomarca.Text;
+                ACBrNFe.Config.DANFe.TipoDANFE = rdbRetrato.Checked ? TipoDANFE.tiRetrato : TipoDANFE.tiPaisagem;
 
                 var relNFCe = rdbFortes.Checked ? TipoRelatorioBobina.tpFortes :
                     rdbEscPos.Checked ? TipoRelatorioBobina.tpEscPos : TipoRelatorioBobina.tpFortesA4;
-                ACBrNFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "TipoRelatorioBobina", relNFCe);
+                ACBrNFe.Config.DANFe.NFCe.TipoRelatorioBobina = relNFCe;
 
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo",
-                    cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", (int)nudColunas.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", (int)nudEspacos.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", (int)nudBuffer.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", (int)nudLinhasPular.Value);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "ControlePorta", cbxControlePorta.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "CortaPapel", cbxCortarPapel.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", cbxTraduzirTags.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "IgnorarTags", cbxIgnorarTags.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo",
-                    cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>());
+                ACBrNFe.Config.PosPrinter.Modelo = cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>();
+                ACBrNFe.Config.PosPrinter.Porta = cbbPortas.Text;
+                ACBrNFe.Config.PosPrinter.ColunasFonteNormal = (int)nudColunas.Value;
+                ACBrNFe.Config.PosPrinter.EspacoEntreLinhas = (int)nudEspacos.Value;
+                ACBrNFe.Config.PosPrinter.LinhasBuffer = (int)nudBuffer.Value;
+                ACBrNFe.Config.PosPrinter.LinhasEntreCupons = (int)nudLinhasPular.Value;
+                ACBrNFe.Config.PosPrinter.ControlePorta = cbxControlePorta.Checked;
+                ACBrNFe.Config.PosPrinter.CortaPapel = cbxCortarPapel.Checked;
+                ACBrNFe.Config.PosPrinter.TraduzirTags = cbxTraduzirTags.Checked;
+                ACBrNFe.Config.PosPrinter.IgnorarTags = cbxIgnorarTags.Checked;
+                ACBrNFe.Config.PosPrinter.PaginaDeCodigo = cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>();
 
                 //Config Email
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Senha", txtSenha.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Servidor", txtHost.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "Porta", nudPorta.Text);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "SSL", ckbSSL.Checked);
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Email, "TLS", ckbTLS.Checked);
+                ACBrNFe.Config.Email.Nome = txtNome.Text;
+                ACBrNFe.Config.Email.Conta = txtEmail.Text;
+                ACBrNFe.Config.Email.Usuario = txtUsuario.Text;
+                ACBrNFe.Config.Email.Senha = txtSenha.Text;
+                ACBrNFe.Config.Email.Servidor = txtHost.Text;
+                ACBrNFe.Config.Email.Porta = nudPorta.Text;
+                ACBrNFe.Config.Email.SSL = ckbSSL.Checked;
+                ACBrNFe.Config.Email.TLS = ckbTLS.Checked;
 
                 ACBrNFe.ConfigGravar();
-                //rtbRespostas.AppendLine(ACBrNFe.ConfigExportar());
 
                 Application.DoEvents();
             }
@@ -198,96 +192,93 @@ namespace ACBrLib.NFe.Demo
         private void LoadConfig(string file = "ACBrLib.ini")
         {
             ACBrNFe.ConfigLer(file);
-            //if (File.Exists(file))
-            //    ACBrNFe.ConfigImportar(file);
 
             //Config Geral
-            ckbAtualizarXML.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");
-            ckbExibirErroSchema.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "ExibirErroSchema");
-            txtFormatoAlerta.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "FormatoAlerta");
-            cmbFormaEmissao.SetSelectedValue(ACBrNFe.ConfigLerValor<TipoEmissao>(ACBrSessao.NFe, "FormaEmissao"));
-            cmbModeloDocumento.SetSelectedValue(ACBrNFe.ConfigLerValor<ModeloNFe>(ACBrSessao.NFe, "ModeloDF"));
-            cmbVersaoDF.SetSelectedValue(ACBrNFe.ConfigLerValor<VersaoNFe>(ACBrSessao.NFe, "VersaoDF"));
-            ckbRetirarAcentos.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "RetirarAcentos");
-            ckbSalvar.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
-            txtLogs.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathSalvar");
-            txtSchemaPath.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathSchemas");
-            txtIdCSC.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "IdCSC");
-            txtCSC.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "CSC");
+            ckbAtualizarXML.Checked = ACBrNFe.Config.AtualizarXMLCancelado;
+            ckbExibirErroSchema.Checked = ACBrNFe.Config.ExibirErroSchema;
+            txtFormatoAlerta.Text = ACBrNFe.Config.FormatoAlerta;
+            cmbFormaEmissao.SetSelectedValue(ACBrNFe.Config.FormaEmissao);
+            cmbModeloDocumento.SetSelectedValue(ACBrNFe.Config.ModeloDF);
+            cmbVersaoDF.SetSelectedValue(ACBrNFe.Config.VersaoDF);
+            ckbRetirarAcentos.Checked = ACBrNFe.Config.RetirarAcentos;
+            ckbSalvar.Checked = ACBrNFe.Config.SalvarWS;
+            txtLogs.Text = ACBrNFe.Config.PathSalvar;
+            txtSchemaPath.Text = ACBrNFe.Config.PathSchemas;
+            txtIdCSC.Text = ACBrNFe.Config.IdCSC;
+            txtCSC.Text = ACBrNFe.Config.CSC;
 
             //Config Webservice
-            cmbUfDestino.SelectedItem = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DFe, "UF");
-            cmbSSlType.SetSelectedValue(ACBrNFe.ConfigLerValor<SSLType>(ACBrSessao.NFe, "SSLType"));
-            nudTimeOut.Value = ACBrNFe.ConfigLerValor<decimal>(ACBrSessao.NFe, "Timeout");
+            cmbUfDestino.SelectedItem = ACBrNFe.Config.DFe.UF;
+            cmbSSlType.SetSelectedValue(ACBrNFe.Config.SSLType);
+            nudTimeOut.Value = ACBrNFe.Config.Timeout;
 
-            var ambiente = ACBrNFe.ConfigLerValor<TipoAmbiente>(ACBrSessao.NFe, "Ambiente");
+            var ambiente = ACBrNFe.Config.Ambiente;
             rdbHomologacao.Checked = ambiente == TipoAmbiente.taHomologacao;
             rdbProducao.Checked = ambiente == TipoAmbiente.taProducao;
 
-            ckbVisualizar.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "Visualizar");
-            ckbSalvarSOAP.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
-            ckbAjustarAut.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AjustaAguardaConsultaRet");
-            nudAguardar.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.NFe, "AguardarConsultaRet");
-            nudTentativas.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.NFe, "Tentativas");
-            nudIntervalos.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.NFe, "IntervaloTentativas");
-            txtProxyServidor.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Servidor");
-            nudProxyPorta.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Porta");
-            txtProxyUsuario.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Usuario");
-            txtProxySenha.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Senha");
+            ckbVisualizar.Checked = ACBrNFe.Config.Visualizar;
+            ckbSalvarSOAP.Checked = ACBrNFe.Config.SalvarWS;
+            ckbAjustarAut.Checked = ACBrNFe.Config.AjustaAguardaConsultaRet;
+            nudAguardar.Value = ACBrNFe.Config.AguardarConsultaRet;
+            nudTentativas.Value = ACBrNFe.Config.Tentativas;
+            nudIntervalos.Value = ACBrNFe.Config.IntervaloTentativas;
+            txtProxyServidor.Text = ACBrNFe.Config.Proxy.Servidor;
+            nudProxyPorta.Text = ACBrNFe.Config.Proxy.Porta;
+            txtProxyUsuario.Text = ACBrNFe.Config.Proxy.Usuario;
+            txtProxySenha.Text = ACBrNFe.Config.Proxy.Senha;
 
             //Config Certificado
-            cmbCrypt.SetSelectedValue(ACBrNFe.ConfigLerValor<SSLCryptLib>(ACBrSessao.DFe, "SSLCryptLib"));
-            cmbHttp.SetSelectedValue(ACBrNFe.ConfigLerValor<SSLHttpLib>(ACBrSessao.DFe, "SSLHttpLib"));
-            cmbXmlSign.SetSelectedValue(ACBrNFe.ConfigLerValor<SSLXmlSignLib>(ACBrSessao.DFe, "SSLXmlSignLib"));
-            txtCertPath.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DFe, "ArquivoPFX");
-            txtDadosPFX.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DFe, "DadosPFX");
-            txtCertPassword.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DFe, "Senha");
-            txtCertNumero.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DFe, "NumeroSerie");
+            cmbCrypt.SetSelectedValue(ACBrNFe.Config.DFe.SSLCryptLib);
+            cmbHttp.SetSelectedValue(ACBrNFe.Config.DFe.SSLHttpLib);
+            cmbXmlSign.SetSelectedValue(ACBrNFe.Config.DFe.SSLXmlSignLib);
+            txtCertPath.Text = ACBrNFe.Config.DFe.ArquivoPFX;
+            txtCertPassword.Text = ACBrNFe.Config.DFe.Senha;
+            txtCertNumero.Text = ACBrNFe.Config.DFe.NumeroSerie;
 
             //Config Arquivos
-            ckbSalvarArqs.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarGer");
-            ckbPastaMensal.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorMes");
-            ckbAdicionaLiteral.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AdicionarLiteral");
-            ckbEmissaoPathNFe.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "EmissaoPathNFe");
-            ckbSalvaPathEvento.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarArq");
-            ckbSepararPorCNPJ.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorCNPJ");
-            ckbSepararPorModelo.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorModelo");
-            txtArqNFe.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathNFe");
-            txtArqInu.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathInu");
-            txtArqEvento.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathEvento");
+            ckbSalvarArqs.Checked = ACBrNFe.Config.SalvarGer;
+            ckbPastaMensal.Checked = ACBrNFe.Config.SepararPorMes;
+            ckbAdicionaLiteral.Checked = ACBrNFe.Config.AdicionarLiteral;
+            ckbEmissaoPathNFe.Checked = ACBrNFe.Config.EmissaoPathNFe;
+            ckbSalvaPathEvento.Checked = ACBrNFe.Config.SalvarArq;
+            ckbSepararPorCNPJ.Checked = ACBrNFe.Config.SepararPorCNPJ;
+            ckbSepararPorModelo.Checked = ACBrNFe.Config.SepararPorModelo;
+            txtArqNFe.Text = ACBrNFe.Config.PathNFe;
+            txtArqInu.Text = ACBrNFe.Config.PathInu;
+            txtArqEvento.Text = ACBrNFe.Config.PathEvento;
 
             //Config Documento Auxiliar
-            txtLogomarca.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.DANFE, "PathLogo");
-            var tipoImpressao = ACBrNFe.ConfigLerValor<TipoDANFE>(ACBrSessao.DANFE, "TipoDANFE");
+            txtLogomarca.Text = ACBrNFe.Config.DANFe.PathLogo;
+            var tipoImpressao = ACBrNFe.Config.DANFe.TipoDANFE;
             rdbRetrato.Checked = tipoImpressao == TipoDANFE.tiRetrato;
             rdbPaisagem.Checked = tipoImpressao == TipoDANFE.tiPaisagem;
 
-            var relNFCe = ACBrNFe.ConfigLerValor<TipoRelatorioBobina>(ACBrSessao.DANFENFCe, "TipoRelatorioBobina");
+            var relNFCe = ACBrNFe.Config.DANFe.NFCe.TipoRelatorioBobina;
             rdbFortes.Checked = relNFCe == TipoRelatorioBobina.tpFortes;
             rdbEscPos.Checked = relNFCe == TipoRelatorioBobina.tpEscPos;
             rdbFortesA4.Checked = relNFCe == TipoRelatorioBobina.tpFortesA4;
 
-            cbbModelo.SetSelectedValue(ACBrNFe.ConfigLerValor<ACBrPosPrinterModelo>(ACBrSessao.PosPrinter, "Modelo"));
-            cbbPortas.SelectedItem = ACBrNFe.ConfigLerValor<string>(ACBrSessao.PosPrinter, "Porta");
-            nudColunas.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.PosPrinter, "ColunasFonteNormal");
-            nudEspacos.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.PosPrinter, "EspacoEntreLinhas");
-            nudBuffer.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasBuffer");
-            nudLinhasPular.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasEntreCupons");
-            cbxControlePorta.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "ControlePorta");
-            cbxCortarPapel.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "CortaPapel");
-            cbxTraduzirTags.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "TraduzirTags");
-            cbxIgnorarTags.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "IgnorarTags");
-            cbbPaginaCodigo.SetSelectedValue(ACBrNFe.ConfigLerValor<PosPaginaCodigo>(ACBrSessao.PosPrinter, "PaginaDeCodigo"));
+            cbbModelo.SetSelectedValue(ACBrNFe.Config.PosPrinter.Modelo);
+            cbbPortas.SelectedItem = ACBrNFe.Config.PosPrinter.Porta;
+            nudColunas.Value = ACBrNFe.Config.PosPrinter.ColunasFonteNormal;
+            nudEspacos.Value = ACBrNFe.Config.PosPrinter.EspacoEntreLinhas;
+            nudBuffer.Value = ACBrNFe.Config.PosPrinter.LinhasBuffer;
+            nudLinhasPular.Value = ACBrNFe.Config.PosPrinter.LinhasEntreCupons;
+            cbxControlePorta.Checked = ACBrNFe.Config.PosPrinter.ControlePorta;
+            cbxCortarPapel.Checked = ACBrNFe.Config.PosPrinter.CortaPapel;
+            cbxTraduzirTags.Checked = ACBrNFe.Config.PosPrinter.TraduzirTags;
+            cbxIgnorarTags.Checked = ACBrNFe.Config.PosPrinter.IgnorarTags;
+            cbbPaginaCodigo.SetSelectedValue(ACBrNFe.Config.PosPrinter.PaginaDeCodigo);
 
             //Config Email
-            txtNome.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
-            txtEmail.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Email, "Conta");
-            txtUsuario.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Email, "Usuario");
-            txtSenha.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Email, "Senha");
-            txtHost.Text = ACBrNFe.ConfigLerValor<string>(ACBrSessao.Email, "Servidor");
-            nudPorta.Value = ACBrNFe.ConfigLerValor<int>(ACBrSessao.Email, "Porta");
-            ckbSSL.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.Email, "SSL");
-            ckbTLS.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
+            txtNome.Text = ACBrNFe.Config.Email.Nome;
+            txtEmail.Text = ACBrNFe.Config.Email.Conta;
+            txtUsuario.Text = ACBrNFe.Config.Email.Usuario;
+            txtSenha.Text = ACBrNFe.Config.Email.Senha;
+            txtHost.Text = ACBrNFe.Config.Email.Servidor;
+            nudPorta.Text = ACBrNFe.Config.Email.Porta;
+            ckbSSL.Checked = ACBrNFe.Config.Email.SSL;
+            ckbTLS.Checked = ACBrNFe.Config.Email.TLS;
         }
 
         private void CheckNFeLista(bool xml = false)
@@ -401,7 +392,8 @@ namespace ACBrLib.NFe.Demo
         {
             try
             {
-                rtbRespostas.AppendText(ACBrNFe.StatusServico());
+                var retorno = ACBrNFe.StatusServico();
+                rtbRespostas.AppendText(retorno.Resposta);
             }
             catch (Exception exception)
             {
@@ -436,7 +428,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.Enviar(aLote, sincrono: true);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -454,7 +446,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.Enviar(aLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -624,7 +616,7 @@ namespace ACBrLib.NFe.Demo
                 ACBrNFe.LimparLista();
 
                 var ret = ACBrNFe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -642,7 +634,7 @@ namespace ACBrLib.NFe.Demo
 
                 ACBrNFe.LimparLista();
                 var ret = ACBrNFe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -658,7 +650,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices Consultar: Recibo", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.ConsultarRecibo(aRecibo);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -679,7 +671,7 @@ namespace ACBrLib.NFe.Demo
                 ie = MessageBox.Show(@"O documento é uma inscrição estadual ?", @"WebServices Consultar: Cadastro", MessageBoxButtons.YesNo) == DialogResult.Yes;
 
                 var ret = ACBrNFe.ConsultaCadastro(uf, documento, ie);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -701,7 +693,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices Eventos: Cancelamento", "Justificativa do Cancelamento", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.Cancelar(eChave, aJustificativa, eCNPJ, idLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -717,7 +709,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices Eventos: Enviar", "Identificador de controle do Lote de envio do Evento", ref idLote) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.EnviarEvento(idLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -831,7 +823,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices: Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.Inutilizar(eCNPJ, aJustificativa, ano, modelo, serie, numeroInicial, numeroFinal);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -882,7 +874,7 @@ namespace ACBrLib.NFe.Demo
                 if (InputBox.Show("WebServices: Distribuição DFe", "Chave da NFe", ref chave) != DialogResult.OK) return;
 
                 var ret = ACBrNFe.DistribuicaoDFePorChave(codUf, cnpj, chave);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -901,7 +893,7 @@ namespace ACBrLib.NFe.Demo
             if (InputBox.Show("WebServices: Distribuição DFe", "Número do NSU", ref eNsu) != DialogResult.OK) return;
 
             var ret = ACBrNFe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
-            rtbRespostas.AppendText(ret);
+            rtbRespostas.AppendText(ret.Resposta);
         }
 
         private void btnDFePorUltNSU_Click(object sender, EventArgs e)
@@ -915,7 +907,7 @@ namespace ACBrLib.NFe.Demo
             if (InputBox.Show("WebServices: Distribuição DFe", "Número do último NSU", ref eNsu) != DialogResult.OK) return;
 
             var ret = ACBrNFe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
-            rtbRespostas.AppendText(ret);
+            rtbRespostas.AppendText(ret.Resposta);
         }
 
         #endregion EventHandlers

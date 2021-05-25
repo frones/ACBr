@@ -44,6 +44,8 @@ Símbolo : Significado
 
 25/05/2021
 -- ACBrMDFeDAEventoRLRetrato --
+[*] Incluido a cidade de carregamento e descarregamento na impressão do evento de Inclusão de DF-e.
+   Por: Italo Giurizzato Junior
 [+] Incluido a impressão do evento de Inclusão de DF-e.
    Por: Italo Giurizzato Junior
 

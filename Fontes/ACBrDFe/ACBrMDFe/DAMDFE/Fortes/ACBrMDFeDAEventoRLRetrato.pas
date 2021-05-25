@@ -421,11 +421,12 @@ begin
 
     teInclusaoDFe:
     begin
-      rlmDescricao.Lines.Add('Chaves das NF-e');
+      rlmDescricao.Lines.Add('Chaves das NF-e - Local de Carregamento: ' + fpEventoMDFe.InfEvento.detEvento.xMunCarrega);
 
       for i := 0 to fpEventoMDFe.InfEvento.detEvento.infDoc.Count - 1 do
       begin
-        rlmDescricao.Lines.Add(fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].chNFe);
+        rlmDescricao.Lines.Add(fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].chNFe + ' - ' +
+                               fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].xMunDescarga);
       end;
     end;
   end;

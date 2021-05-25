@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2021
+-- pnfsNFSeG --
+[*] Possível correção para o cancelamento de NFS-e - provedor IPM.
+  Por: Italo Giurizzato Junior
+
 18/05/2021
 -- pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/62596-iibrasil-emiss%C3%A3o-de-nfse-limeira/

@@ -373,7 +373,8 @@ Procedure TACBrBancoCresol.LerRetorno400 ( ARetorno: TStringList );
 var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia  :Integer;
-  CodMotivo, i, MotivoLinha :Integer;
+  CodMotivo : String; 
+  i, MotivoLinha :Integer;
   CodMotivo_19, rAgencia    :String;
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
@@ -480,7 +481,7 @@ begin
             MotivoLinha := 319;
             for i := 0 to 4 do
             begin
-               CodMotivo := StrToInt(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
+               CodMotivo := IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2));
 
                {Se for o primeiro motivo}
                if (i = 0) then
@@ -493,7 +494,7 @@ begin
                    end
                   else
                    begin
-                     if(CodMotivo = 0)then
+                     if(CodMotivo = '00')then
                       begin
                         MotivoRejeicaoComando.Add('00');
                         DescricaoMotivoRejeicaoComando.Add('Sem Motivo');
@@ -508,7 +509,7 @@ begin
                else
                 begin
                   //Apos o 1º motivo os 00 significam que não existe mais motivo
-                  if CodMotivo <> 0 then
+                  if CodMotivo <> '00' then
                   begin
                      MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));

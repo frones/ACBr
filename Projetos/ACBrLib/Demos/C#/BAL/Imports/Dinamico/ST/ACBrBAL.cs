@@ -1,78 +1,21 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using ACBrLib.Core;
 
 namespace ACBrLib.BAL
 {
-    public sealed class ACBrBAL : ACBrLibHandle
+    public sealed partial class ACBrBAL : ACBrLibHandle
     {
-        #region InnerTypes
-
-        private class Delegates
-        {
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Inicializar(string eArqConfig, string eChaveCrypt);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Finalizar();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Nome(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Versao(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigImportar(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigExportar(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigLer(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigGravar(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigLerValor(string eSessao, string eChave, StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_ConfigGravarValor(string eSessao, string eChave, string valor);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Ativar();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_Desativar();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_LePeso(int MillisecTimeOut, ref double peso);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_SolicitarPeso();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_UltimoPesoLido(ref double peso);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int BAL_InterpretarRespostaPeso(string resposta, ref double peso);
-        }
-
-        #endregion InnerTypes
-
         #region Constructors
 
-        public ACBrBAL(string eArqConfig = "", string eChaveCrypt = "") :
-            base("ACBrBAL64.dll", "ACBrBAL32.dll")
+        public ACBrBAL(string eArqConfig = "", string eChaveCrypt = "") : base(IsWindows ? "ACBrBAL64.dll" : "libacbrbal64.so",
+                                                                               IsWindows ? "ACBrBAL32.dll" : "libacbrbal32.so")
         {
-            var inicializar = GetMethod<Delegates.BAL_Inicializar>();
+            var inicializar = GetMethod<BAL_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
             CheckResult(ret);
+
+            Config = new BALConfig(this);
         }
 
         #endregion Constructors
@@ -86,7 +29,7 @@ namespace ACBrLib.BAL
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.BAL_Nome>();
+                var method = GetMethod<BAL_Nome>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);
@@ -102,7 +45,7 @@ namespace ACBrLib.BAL
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.BAL_Versao>();
+                var method = GetMethod<BAL_Versao>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);
@@ -110,6 +53,8 @@ namespace ACBrLib.BAL
                 return ProcessResult(buffer, bufferLen);
             }
         }
+
+        public BALConfig Config { get; }
 
         #endregion Properties
 
@@ -119,7 +64,7 @@ namespace ACBrLib.BAL
 
         public override void ConfigGravar(string eArqConfig = "")
         {
-            var gravarIni = GetMethod<Delegates.BAL_ConfigGravar>();
+            var gravarIni = GetMethod<BAL_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -127,7 +72,7 @@ namespace ACBrLib.BAL
 
         public override void ConfigLer(string eArqConfig = "")
         {
-            var lerIni = GetMethod<Delegates.BAL_ConfigLer>();
+            var lerIni = GetMethod<BAL_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -135,7 +80,7 @@ namespace ACBrLib.BAL
 
         public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
-            var method = GetMethod<Delegates.BAL_ConfigLerValor>();
+            var method = GetMethod<BAL_ConfigLerValor>();
 
             var bufferLen = BUFFER_LEN;
             var pValue = new StringBuilder(bufferLen);
@@ -150,7 +95,7 @@ namespace ACBrLib.BAL
         {
             if (value == null) return;
 
-            var method = GetMethod<Delegates.BAL_ConfigGravarValor>();
+            var method = GetMethod<BAL_ConfigGravarValor>();
             var propValue = ConvertValue(value);
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
@@ -159,7 +104,7 @@ namespace ACBrLib.BAL
 
         public override void ImportarConfig(string eArqConfig = "")
         {
-            var importarConfig = GetMethod<Delegates.BAL_ConfigImportar>();
+            var importarConfig = GetMethod<BAL_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -170,7 +115,7 @@ namespace ACBrLib.BAL
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.BAL_ConfigExportar>();
+            var method = GetMethod<BAL_ConfigExportar>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
@@ -182,7 +127,7 @@ namespace ACBrLib.BAL
 
         public void Ativar()
         {
-            var method = GetMethod<Delegates.BAL_Ativar>();
+            var method = GetMethod<BAL_Ativar>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -190,7 +135,7 @@ namespace ACBrLib.BAL
 
         public void Desativar()
         {
-            var method = GetMethod<Delegates.BAL_Desativar>();
+            var method = GetMethod<BAL_Desativar>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -199,7 +144,7 @@ namespace ACBrLib.BAL
         public decimal LePeso(int MillisecTimeOut = 1000)
         {
             var peso = 0D;
-            var method = GetMethod<Delegates.BAL_LePeso>();
+            var method = GetMethod<BAL_LePeso>();
             var ret = ExecuteMethod(() => method(MillisecTimeOut, ref peso));
 
             CheckResult(ret);
@@ -209,7 +154,7 @@ namespace ACBrLib.BAL
 
         public void SolicitarPeso()
         {
-            var method = GetMethod<Delegates.BAL_SolicitarPeso>();
+            var method = GetMethod<BAL_SolicitarPeso>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -218,7 +163,7 @@ namespace ACBrLib.BAL
         public decimal UltimoPesoLido()
         {
             var peso = 0D;
-            var method = GetMethod<Delegates.BAL_UltimoPesoLido>();
+            var method = GetMethod<BAL_UltimoPesoLido>();
             var ret = ExecuteMethod(() => method(ref peso));
 
             CheckResult(ret);
@@ -229,7 +174,7 @@ namespace ACBrLib.BAL
         public decimal InterpretarRespostaPeso(string resposta)
         {
             var peso = 0D;
-            var method = GetMethod<Delegates.BAL_InterpretarRespostaPeso>();
+            var method = GetMethod<BAL_InterpretarRespostaPeso>();
             var ret = ExecuteMethod(() => method(ToUTF8(resposta), ref peso));
 
             CheckResult(ret);
@@ -239,30 +184,9 @@ namespace ACBrLib.BAL
 
         #region Private Methods
 
-        protected override void InitializeMethods()
-        {
-            AddMethod<Delegates.BAL_Inicializar>("BAL_Inicializar");
-            AddMethod<Delegates.BAL_Finalizar>("BAL_Finalizar");
-            AddMethod<Delegates.BAL_Nome>("BAL_Nome");
-            AddMethod<Delegates.BAL_Versao>("BAL_Versao");
-            AddMethod<Delegates.BAL_UltimoRetorno>("BAL_UltimoRetorno");
-            AddMethod<Delegates.BAL_ConfigImportar>("BAL_ConfigImportar");
-            AddMethod<Delegates.BAL_ConfigExportar>("BAL_ConfigExportar");
-            AddMethod<Delegates.BAL_ConfigLer>("BAL_ConfigLer");
-            AddMethod<Delegates.BAL_ConfigGravar>("BAL_ConfigGravar");
-            AddMethod<Delegates.BAL_ConfigLerValor>("BAL_ConfigLerValor");
-            AddMethod<Delegates.BAL_ConfigGravarValor>("BAL_ConfigGravarValor");
-            AddMethod<Delegates.BAL_Ativar>("BAL_Ativar");
-            AddMethod<Delegates.BAL_Desativar>("BAL_Desativar");
-            AddMethod<Delegates.BAL_LePeso>("BAL_LePeso");
-            AddMethod<Delegates.BAL_SolicitarPeso>("BAL_SolicitarPeso");
-            AddMethod<Delegates.BAL_UltimoPesoLido>("BAL_UltimoPesoLido");
-            AddMethod<Delegates.BAL_InterpretarRespostaPeso>("BAL_InterpretarRespostaPeso");
-        }
-
         protected override void FinalizeLib()
         {
-            var finalizar = GetMethod<Delegates.BAL_Finalizar>();
+            var finalizar = GetMethod<BAL_Finalizar>();
             var ret = ExecuteMethod(() => finalizar());
             CheckResult(ret);
         }
@@ -271,7 +195,7 @@ namespace ACBrLib.BAL
         {
             var bufferLen = iniBufferLen < 1 ? BUFFER_LEN : iniBufferLen;
             var buffer = new StringBuilder(bufferLen);
-            var ultimoRetorno = GetMethod<Delegates.BAL_UltimoRetorno>();
+            var ultimoRetorno = GetMethod<BAL_UltimoRetorno>();
 
             if (iniBufferLen < 1)
             {

@@ -20,9 +20,9 @@ namespace ACBrLib.Core.Config
             set => SetProperty(value);
         }
 
-        public int Data
+        public SerialDataBits Data
         {
-            get => GetProperty<int>();
+            get => GetProperty<SerialDataBits>();
             set => SetProperty(value);
         }
 

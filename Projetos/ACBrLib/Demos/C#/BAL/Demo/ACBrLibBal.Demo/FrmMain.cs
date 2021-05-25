@@ -47,25 +47,8 @@ namespace ACBrLibBal.Demo
             cmbPorta.Items.Add(@"c:\temp\ecf.txt");
             cmbPorta.Items.Add("TCP:192.168.0.31:9100");
 
-            foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
-                cmbPorta.Items.Add($"RAW:{printer}");
-            }
-
-            cmbBaud.Items.Add(1200);
-            cmbBaud.Items.Add(2400);
-            cmbBaud.Items.Add(4800);
-            cmbBaud.Items.Add(9600);
-            cmbBaud.Items.Add(19200);
-            cmbBaud.Items.Add(38400);
-            cmbBaud.Items.Add(57600);
-            cmbBaud.Items.Add(115200);
-
-            cmbDatabits.Items.Add(5);
-            cmbDatabits.Items.Add(6);
-            cmbDatabits.Items.Add(7);
-            cmbDatabits.Items.Add(8);
-
+            cmbBaud.EnumDataSource(SerialBaud.bd110);
+            cmbDatabits.EnumDataSource(SerialDataBits.db5);
             cmbStopbits.EnumDataSource(SerialStopBytes.One);
             cmbParity.EnumDataSource(SerialParity.None);
             cmbHandshaking.EnumDataSource(SerialHandShake.Nenhum);
@@ -89,18 +72,18 @@ namespace ACBrLibBal.Demo
 
         private void SalvarConfig()
         {
-            bal.ConfigGravarValor(ACBrSessao.BAL, "Modelo", cmbModelo.GetSelectedValue<ACBrBALModelo>());
-            bal.ConfigGravarValor(ACBrSessao.BAL, "Porta", cmbPorta.Text);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Baud", cmbBaud.SelectedItem);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Data", cmbDatabits.SelectedItem);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Parity", cmbParity.SelectedItem);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Stop", cmbStopbits.SelectedItem);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "HandShake", cmbHandshaking.SelectedItem);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "MaxBandwidth", nudMaxBand.Value);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SendBytesCount", nudBytesCount.Value);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SendBytesInterval", nudIntervalo.Value);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SoftFlow", chkSoftFlow.Checked);
-            bal.ConfigGravarValor(ACBrSessao.BAL_Device, "HardFlow", chkHardFlow.Checked);
+            bal.Config.Modelo = cmbModelo.GetSelectedValue<ACBrBALModelo>();
+            bal.Config.Porta = cmbPorta.Text;
+            bal.Config.Device.Baud = cmbBaud.GetSelectedValue<SerialBaud>();
+            bal.Config.Device.Data = cmbDatabits.GetSelectedValue<SerialDataBits>();
+            bal.Config.Device.Parity = cmbParity.GetSelectedValue<SerialParity>();
+            bal.Config.Device.Stop = cmbStopbits.GetSelectedValue<SerialStopBytes>();
+            bal.Config.Device.HandShake = cmbHandshaking.GetSelectedValue<SerialHandShake>();
+            bal.Config.Device.MaxBandwidth = (int)nudMaxBand.Value;
+            bal.Config.Device.SendBytesCount = (int)nudBytesCount.Value;
+            bal.Config.Device.SendBytesInterval = (int)nudIntervalo.Value;
+            bal.Config.Device.SoftFlow = chkSoftFlow.Checked;
+            bal.Config.Device.HardFlow = chkHardFlow.Checked;
 
             bal.ConfigGravar();
         }
@@ -109,18 +92,18 @@ namespace ACBrLibBal.Demo
         {
             bal.ConfigLer();
 
-            cmbModelo.SetSelectedValue(bal.ConfigLerValor<ACBrBALModelo>(ACBrSessao.BAL, "Modelo"));
-            cmbPorta.Text = bal.ConfigLerValor<string>(ACBrSessao.BAL, "Porta");
-            cmbBaud.SelectedItem = bal.ConfigLerValor<int>(ACBrSessao.BAL_Device, "Baud");
-            cmbDatabits.SelectedItem = bal.ConfigLerValor<int>(ACBrSessao.BAL_Device, "Data");
-            cmbParity.SelectedItem = bal.ConfigLerValor<SerialParity>(ACBrSessao.BAL_Device, "Parity");
-            cmbStopbits.SelectedItem = bal.ConfigLerValor<SerialStopBytes>(ACBrSessao.BAL_Device, "Stop");
-            cmbHandshaking.SelectedItem = bal.ConfigLerValor<SerialHandShake>(ACBrSessao.BAL_Device, "HandShake");
-            nudMaxBand.Value = bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "MaxBandwidth");
-            nudBytesCount.Value = bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "SendBytesCount");
-            nudIntervalo.Value = bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "SendBytesInterval");
-            chkSoftFlow.Checked = bal.ConfigLerValor<bool>(ACBrSessao.BAL_Device, "SoftFlow");
-            chkHardFlow.Checked = bal.ConfigLerValor<bool>(ACBrSessao.BAL_Device, "HardFlow");
+            cmbModelo.SetSelectedValue(bal.Config.Modelo);
+            cmbPorta.Text = bal.Config.Porta;
+            cmbBaud.SetSelectedValue(bal.Config.Device.Baud);
+            cmbDatabits.SetSelectedValue(bal.Config.Device.Data);
+            cmbParity.SetSelectedValue(bal.Config.Device.Parity);
+            cmbStopbits.SetSelectedValue(bal.Config.Device.Stop);
+            cmbHandshaking.SetSelectedValue(bal.Config.Device.HandShake);
+            nudMaxBand.Value = bal.Config.Device.MaxBandwidth;
+            nudBytesCount.Value = bal.Config.Device.SendBytesCount;
+            nudIntervalo.Value = bal.Config.Device.SendBytesInterval;
+            chkSoftFlow.Checked = bal.Config.Device.SoftFlow;
+            chkHardFlow.Checked = bal.Config.Device.HardFlow;
         }
 
         #endregion Methods

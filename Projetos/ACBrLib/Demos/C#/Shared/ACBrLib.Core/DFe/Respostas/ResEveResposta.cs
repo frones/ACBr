@@ -10,7 +10,7 @@ namespace ACBrLib.Core.DFe
 
         public DateTime dhEvento { get; set; }
 
-        public string tpEvento { get; set; }
+        public TipoEvento tpEvento { get; set; }
 
         public string xEvento { get; set; }
 

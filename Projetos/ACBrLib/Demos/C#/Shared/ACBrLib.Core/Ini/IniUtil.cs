@@ -114,7 +114,7 @@ namespace ACBrLib.Core.Ini
                    || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsPrimitive(type.GetGenericArguments()[0]);
         }
 
-        public static void WriteToIni<T>(this ACBrIniFile iniData, T obj, string sectionName) where T : class, new()
+        public static void WriteToIni<T>(this ACBrIniFile iniData, T obj, string sectionName) where T : class
         {
             if (obj == null) return;
 
@@ -124,7 +124,7 @@ namespace ACBrLib.Core.Ini
                 iniData.Add(sectionData);
         }
 
-        public static void WriteToIni<T>(this ACBrIniSection section, T obj)
+        public static void WriteToIni<T>(this ACBrIniSection section, T obj) where T : class
         {
             foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -188,7 +188,7 @@ namespace ACBrLib.Core.Ini
             return ret;
         }
 
-        public static void ReadFromIni<T>(this ACBrIniFile iniData, T obj, string secionName) where T : class, new()
+        public static void ReadFromIni<T>(this ACBrIniFile iniData, T obj, string secionName) where T : class
         {
             if (!iniData.Contains(secionName)) return;
             var section = iniData[secionName];
@@ -196,7 +196,7 @@ namespace ACBrLib.Core.Ini
             section.ReadFromINi(obj);
         }
 
-        public static void ReadFromINi<T>(this ACBrIniSection section, T item)
+        public static void ReadFromINi<T>(this ACBrIniSection section, T item) where T : class
         {
             foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {

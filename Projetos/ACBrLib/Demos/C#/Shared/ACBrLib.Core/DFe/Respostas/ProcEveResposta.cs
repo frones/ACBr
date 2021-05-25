@@ -18,7 +18,7 @@ namespace ACBrLib.Core.DFe
 
         public TipoAmbiente tpAmb { get; set; }
 
-        public string tpEvento { get; set; }
+        public TipoEvento tpEvento { get; set; }
 
         public string verEvento { get; set; }
 

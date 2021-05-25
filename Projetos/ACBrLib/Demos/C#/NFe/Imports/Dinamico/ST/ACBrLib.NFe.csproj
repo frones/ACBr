@@ -71,7 +71,17 @@
     <Compile Include="..\Shared\NotaFiscal\DuplicataNFe.cs" Link="NotaFiscal\DuplicataNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\EmitenteNFe.cs" Link="NotaFiscal\EmitenteNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\EncerranteNFe.cs" Link="NotaFiscal\EncerranteNFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\EventoNFe.cs" Link="NotaFiscal\EventoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventDEST.cs" Link="NotaFiscal\EventDEST.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoAtorIntNFe.cs" Link="NotaFiscal\EventoAtorIntNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoBase.cs" Link="NotaFiscal\EventoBase.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoCancelamento.cs" Link="NotaFiscal\EventoCancelamento.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoCancSubstituicao.cs" Link="NotaFiscal\EventoCancSubstituicao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoCCe.cs" Link="NotaFiscal\EventoCCe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoEPEC.cs" Link="NotaFiscal\EventoEPEC.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoManifDestCiencia.cs" Link="NotaFiscal\EventoManifDestCiencia.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoManifDestConfirmacao.cs" Link="NotaFiscal\EventoManifDestConfirmacao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoManifDestDesconhecimento.cs" Link="NotaFiscal\EventoManifDestDesconhecimento.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoManifDestOperNaoRealizada.cs" Link="NotaFiscal\EventoManifDestOperNaoRealizada.cs" />
     <Compile Include="..\Shared\NotaFiscal\ExportaNFe.cs" Link="NotaFiscal\ExportaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\FaturaNFe.cs" Link="NotaFiscal\FaturaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ForDiaNFe.cs" Link="NotaFiscal\ForDiaNFe.cs" />
@@ -103,6 +113,7 @@
     <Compile Include="..\Shared\NotaFiscal\RetiradaEntregaNFe.cs" Link="NotaFiscal\RetiradaEntregaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\RetTribNFe.cs" Link="NotaFiscal\RetTribNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoAutor.cs" Link="NotaFiscal\TipoAutor.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoAutorizacao.cs" Link="NotaFiscal\TipoAutorizacao.cs" />
     <Compile Include="..\Shared\NotaFiscal\TotalNFe.cs" Link="NotaFiscal\TotalNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\TransportadorNFe.cs" Link="NotaFiscal\TransportadorNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VeiculoNFe.cs" Link="NotaFiscal\VeiculoNFe.cs" />

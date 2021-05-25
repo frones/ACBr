@@ -1,4 +1,5 @@
 ﻿using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 using ACBrLib.Core.Ini;
 
 namespace ACBrLib.NFe
@@ -11,7 +12,7 @@ namespace ACBrLib.NFe
 
         public string nProt { get; set; }
 
-        public string tpEvento { get; set; }
+        public TipoEvento tpEvento { get; set; }
 
         public string xEvento { get; set; }
 

@@ -29,7 +29,7 @@ namespace ACBrLib.NFe
 
         public DateTime dhRegEvento { get; set; }
 
-        public string tpEvento { get; set; }
+        public TipoEvento tpEvento { get; set; }
 
         public string xEvento { get; set; }
 

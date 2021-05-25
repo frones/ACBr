@@ -935,6 +935,7 @@ type
     fTipoCobranca      : TACBrTipoCobranca;
     fBancoClass        : TACBrBancoClass;
     fLocalPagamento    : String;
+    FCIP               : string;
     function GetNome   : String;
     function GetDigito : Integer;
     function GetNumero : Integer;
@@ -965,6 +966,8 @@ type
     procedure SetLayoutVersaoLote(const AValue: Integer);
     procedure SetCasasDecimaisMoraJuros(const AValue: Integer);
     procedure SetDensidadeGravacao(const AValue: String);
+
+    procedure SetCIP(const Value: string);
   public
     constructor Create( AOwner : TComponent); override;
     destructor Destroy ; override ;
@@ -1023,6 +1026,7 @@ type
     property LayoutVersaoLote     : Integer read GetLayoutVersaoLote write SetLayoutVersaoLote;
     property CasasDecimaisMoraJuros: Integer read GetCasasDecimaisMoraJuros write SetCasasDecimaisMoraJuros;
     property DensidadeGravacao : string read GetDensidadeGravacao write SetDensidadeGravacao;
+    property CIP: string read FCIP write SetCIP;
   end;
 
   { TACBrCedenteWS }
@@ -2871,6 +2875,11 @@ end;
 procedure TACBrBanco.SetCasasDecimaisMoraJuros(const AValue: Integer);
 begin
   BancoClass.fpCasasDecimaisMoraJuros:= AValue;
+end;
+
+procedure TACBrBanco.SetCIP(const Value: string);
+begin
+  fCIP := Value;
 end;
 
 procedure TACBrBanco.SetDensidadeGravacao(const AValue: String);

@@ -49,6 +49,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2021
+--ACBrBoleto--
+[+] Adicionado o campo CIP para impressão no Boleto
+Contribuição: [Panda]Victor Gonzales
+https://www.projetoacbr.com.br/forum/topic/62571-informa%C3%A7%C3%B5es-de-cip-e-benefici%C3%A1rio-no-boleto-do-bradesco-cnab-400/
+
+24/05/2021
+--ACBrBancoCresol--
+[*] Ajuste na validação do codigo de retorno tipo String
+https://www.projetoacbr.com.br/forum/topic/62694-boleto-cresol-e-safra-altera%C3%A7oes/
+
 13/05/2021
 --ACBrBancoSafra--
 [*] Ajuste na propriedade de definição de versão do Header e Lote CNAB240

@@ -168,6 +168,7 @@ begin
     FieldDefs.Add('Nome', ftString, 100);
     FieldDefs.Add('DirLogo', ftString, 254);
     FieldDefs.Add('OrientacoesBanco', ftString, 254);
+    FieldDefs.Add('CIP', ftString, 3);
     CreateDataSet;
   end;
   // Cedente
@@ -597,11 +598,12 @@ begin
     with FdmBoleto.cdsBanco do
     begin
       Append;
-      FieldByName('Numero').AsString := FormatFloat('000', Banco.Numero);
-      FieldByName('Digito').AsString := IfThen(Banco.Digito >= 10, 'X', IntToStrZero(Banco.Digito, 1));
-      FieldByName('Nome').AsString := Banco.Nome;
-      FieldByName('DirLogo').AsString := DirLogo;
+      FieldByName('Numero').AsString           := FormatFloat('000', Banco.Numero);
+      FieldByName('Digito').AsString           := IfThen(Banco.Digito >= 10, 'X', IntToStrZero(Banco.Digito, 1));
+      FieldByName('Nome').AsString             := Banco.Nome;
+      FieldByName('DirLogo').AsString          := DirLogo;
       FieldByName('OrientacoesBanco').AsString := Banco.OrientacoesBanco.Text;
+      FieldByName('CIP').AsString              := Banco.CIP;
       Post;
     end;
     // Cedente

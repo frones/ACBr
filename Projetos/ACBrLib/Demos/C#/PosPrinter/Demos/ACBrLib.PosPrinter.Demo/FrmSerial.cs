@@ -2,7 +2,10 @@
 using System.Drawing.Printing;
 using System.IO.Ports;
 using System.Windows.Forms;
+using ACBrLib;
+using ACBrLib.Core.Config;
 using ACBrLib.Core.Serial;
+using ACBrLib.PosPrinter;
 
 namespace ACBrLibPosPrinter.Demo
 {
@@ -10,7 +13,7 @@ namespace ACBrLibPosPrinter.Demo
     {
         #region Fields
 
-        public ACBrDevice Device { get; set; }
+        public ACBrPosPrinter PosPrinter { get; set; }
 
         #endregion Fields
 
@@ -23,14 +26,14 @@ namespace ACBrLibPosPrinter.Demo
 
         private void SerialCFGForm_Load(object sender, EventArgs e)
         {
-            inicializar();
+            Inicializar();
         }
 
         #endregion Constructor
 
         #region Methods
 
-        private void inicializar()
+        private void Inicializar()
         {
             cmbPorta.Items.AddRange(SerialPort.GetPortNames());
 
@@ -45,97 +48,76 @@ namespace ACBrLibPosPrinter.Demo
                 cmbPorta.Items.Add($"RAW:{printer}");
             }
 
-            cmbPorta.SelectedItem = Device.Porta;
+            cmbPorta.SelectedItem = PosPrinter.Config.Porta;
 
-            cmbVelocidade.Items.Add(1200);
-            cmbVelocidade.Items.Add(2400);
-            cmbVelocidade.Items.Add(4800);
-            cmbVelocidade.Items.Add(9600);
-            cmbVelocidade.Items.Add(19200);
-            cmbVelocidade.Items.Add(38400);
-            cmbVelocidade.Items.Add(57600);
-            cmbVelocidade.Items.Add(115200);
+            cmbVelocidade.EnumDataSource(PosPrinter.Config.Device.Baud);
+            cmbDatabits.EnumDataSource(PosPrinter.Config.Device.Data);
+            cmbStopbits.EnumDataSource(PosPrinter.Config.Device.Stop);
+            cmbParity.EnumDataSource(PosPrinter.Config.Device.Parity);
+            cmbHandshaking.EnumDataSource(PosPrinter.Config.Device.HandShake);
 
-            cmbVelocidade.SelectedItem = Device.Baud;
-
-            cmbDatabits.Items.Add(5);
-            cmbDatabits.Items.Add(6);
-            cmbDatabits.Items.Add(7);
-            cmbDatabits.Items.Add(8);
-
-            cmbDatabits.SelectedItem = Device.DataBits;
-
-            foreach (var stopbits in Enum.GetValues(typeof(SerialStopBytes))) cmbStopbits.Items.Add(stopbits);
-            cmbStopbits.SelectedItem = Device.StopBits;
-
-            foreach (var serialparity in Enum.GetValues(typeof(SerialParity))) cmbParity.Items.Add(serialparity);
-            cmbParity.SelectedItem = Device.Parity;
-
-            foreach (var serialhandshake in Enum.GetValues(typeof(SerialHandShake))) cmbHandshaking.Items.Add(serialhandshake);
-            cmbHandshaking.SelectedItem = Device.HandShake;
-
-            timeOutNumericUpDown.Value = Device.TimeOut;
-            chkHardFlow.Checked = Device.HardFlow;
-            chkSoftFlow.Checked = Device.SoftFlow;
+            timeOutNumericUpDown.Value = PosPrinter.Config.Device.TimeOut;
+            chkHardFlow.Checked = PosPrinter.Config.Device.HardFlow;
+            chkSoftFlow.Checked = PosPrinter.Config.Device.SoftFlow;
         }
 
         #endregion Methods
 
         #region EventHandler
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void cmbPorta_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.Porta = (string)cmbPorta.SelectedItem;
+            PosPrinter.Config.Porta = (string)cmbPorta.SelectedItem;
         }
 
         private void cmbVelocidade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.Baud = (int)cmbVelocidade.SelectedItem;
+            PosPrinter.Config.Device.Baud = cmbVelocidade.GetSelectedValue<SerialBaud>();
         }
 
         private void timeOutNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Device.TimeOut = (int)timeOutNumericUpDown.Value;
+            PosPrinter.Config.Device.TimeOut = (int)timeOutNumericUpDown.Value;
         }
 
         private void cmbDatabits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.DataBits = (int)cmbDatabits.SelectedItem;
+            PosPrinter.Config.Device.Data = cmbDatabits.GetSelectedValue<SerialDataBits>();
         }
 
         private void cmbStopbits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.StopBits = (SerialStopBytes)cmbStopbits.SelectedItem;
+            PosPrinter.Config.Device.Stop = cmbStopbits.GetSelectedValue<SerialStopBytes>();
         }
 
         private void cmbParity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.Parity = (SerialParity)cmbParity.SelectedItem;
+            PosPrinter.Config.Device.Parity = cmbParity.GetSelectedValue<SerialParity>();
         }
 
         private void cmbHandshaking_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Device.HandShake = (SerialHandShake)cmbHandshaking.SelectedItem;
+            PosPrinter.Config.Device.HandShake = cmbHandshaking.GetSelectedValue<SerialHandShake>();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Device.HardFlow = chkHardFlow.Checked;
+            PosPrinter.Config.Device.HardFlow = chkHardFlow.Checked;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            Device.SoftFlow = chkSoftFlow.Checked;
+            PosPrinter.Config.Device.SoftFlow = chkSoftFlow.Checked;
         }
 
         #endregion EventHandler

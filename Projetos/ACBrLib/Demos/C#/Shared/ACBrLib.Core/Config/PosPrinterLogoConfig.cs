@@ -4,7 +4,7 @@
     {
         #region Constructors
 
-        public PosPrinterLogoConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_QRCode)
+        public PosPrinterLogoConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_Logo)
         {
         }
 

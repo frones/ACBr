@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using ACBrLib;
 using ACBrLib.Core;
 using ACBrLib.Core.PosPrinter;
-using ACBrLib.Core.Serial;
+using ACBrLib.PosPrinter;
 
 namespace ACBrLibPosPrinter.Demo
 {
@@ -77,18 +77,11 @@ namespace ACBrLibPosPrinter.Demo
         {
             using (var form = new FrmSerial())
             {
-                form.Device = new ACBrDevice(posPrinter.ConfigLerValor<string>(ACBrSessao.PosPrinter, "Device"))
-                {
-                    Porta = (string)cbbPortas.SelectedItem
-                };
+                form.PosPrinter = posPrinter;
 
                 if (form.ShowDialog(this) != DialogResult.OK) return;
 
-                cbbPortas.SelectedItem = form.Device.Porta;
-
-                posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", form.Device.Porta);
-                posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "TimeOut", form.Device.TimeOut);
-                posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Device", form.Device);
+                cbbPortas.SelectedItem = posPrinter.Config.Porta;
                 posPrinter.ConfigGravar();
             }
         }
@@ -328,11 +321,6 @@ namespace ACBrLibPosPrinter.Demo
             posPrinter.ImprimirLinha("</zera>");
             posPrinter.ImprimirLinha("</linha_dupla>");
             posPrinter.ImprimirLinha("FONTE NORMAL: " + nudColunas.Text + " Colunas");
-            //posPrinter.ImprimirLinha(LeftStr("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8", posPrinter.ColunasFonteNormal));
-            //posPrinter.ImprimirLinha("<e>EXPANDIDO: " + IntToStr(posPrinter.ColunasFonteExpandida) + " Colunas");
-            //posPrinter.ImprimirLinha(LeftStr("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8", posPrinter.ColunasFonteExpandida));
-            //posPrinter.ImprimirLinha("</e><c>CONDENSADO: " + IntToStr(posPrinter.ColunasFonteCondensada) + " Colunas");
-            //posPrinter.ImprimirLinha(LeftStr("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8", posPrinter.ColunasFonteCondensada));
             posPrinter.ImprimirLinha("</c><n>FONTE NEGRITO</N>");
             posPrinter.ImprimirLinha("<in>FONTE INVERTIDA</in>");
             posPrinter.ImprimirLinha("<S>FONTE SUBLINHADA</s>");
@@ -381,68 +369,68 @@ namespace ACBrLibPosPrinter.Demo
         {
             posPrinter.ConfigLer();
 
-            cbbModelo.SetSelectedValue(posPrinter.ConfigLerValor<ACBrPosPrinterModelo>(ACBrSessao.PosPrinter, "Modelo"));
-            cbbPortas.SelectedItem = posPrinter.ConfigLerValor<string>(ACBrSessao.PosPrinter, "Porta");
-            nudColunas.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "ColunasFonteNormal");
-            nudEspacos.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "EspacoEntreLinhas");
-            nudBuffer.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasBuffer");
-            nudLinhasPular.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasEntreCupons");
-            cbxControlePorta.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "ControlePorta");
-            cbxCortarPapel.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "CortaPapel");
-            cbxTraduzirTags.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "TraduzirTags");
-            cbxIgnorarTags.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "IgnorarTags");
-            txtArqLog.Text = posPrinter.ConfigLerValor<string>(ACBrSessao.PosPrinter, "ArqLog");
-            cbbPaginaCodigo.SetSelectedValue(posPrinter.ConfigLerValor<PosPaginaCodigo>(ACBrSessao.PosPrinter, "PaginaDeCodigo"));
+            cbbModelo.SetSelectedValue(posPrinter.Config.Modelo);
+            cbbPortas.SelectedItem = posPrinter.Config.Porta;
+            nudColunas.Value = posPrinter.Config.ColunasFonteNormal;
+            nudEspacos.Value = posPrinter.Config.EspacoEntreLinhas;
+            nudBuffer.Value = posPrinter.Config.LinhasBuffer;
+            nudLinhasPular.Value = posPrinter.Config.LinhasEntreCupons;
+            cbxControlePorta.Checked = posPrinter.Config.ControlePorta;
+            cbxCortarPapel.Checked = posPrinter.Config.CortaPapel;
+            cbxTraduzirTags.Checked = posPrinter.Config.TraduzirTags;
+            cbxIgnorarTags.Checked = posPrinter.Config.IgnorarTags;
+            txtArqLog.Text = posPrinter.Config.ArqLog;
+            cbbPaginaCodigo.SetSelectedValue(posPrinter.Config.PaginaDeCodigo);
 
-            nudCodbarLargura.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Barras, "LarguraLinha");
-            nudCodbarAltura.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Barras, "Altura");
-            cbxCodbarExibeNumeros.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Barras, "MostrarCodigo");
+            nudCodbarLargura.Value = posPrinter.Config.BarrasConfig.LarguraLinha;
+            nudCodbarAltura.Value = posPrinter.Config.BarrasConfig.Altura;
+            cbxCodbarExibeNumeros.Checked = posPrinter.Config.BarrasConfig.MostrarCodigo;
 
-            nudQRTipo.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "Tipo");
-            nudQRLargura.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "LarguraModulo");
-            nudQRErrorLevel.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "ErrorLevel");
+            nudQRTipo.Value = posPrinter.Config.QrCodeConfig.Tipo;
+            nudQRLargura.Value = posPrinter.Config.QrCodeConfig.LarguraModulo;
+            nudQRErrorLevel.Value = posPrinter.Config.QrCodeConfig.ErrorLevel;
 
-            nudLogoKC1.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "KeyCode1");
-            nudLogoKC2.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "KeyCode2");
-            nudLogoFatorX.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "FatorX");
-            nudLogoFatorY.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "FatorY");
+            nudLogoKC1.Value = posPrinter.Config.LogoConfig.KeyCode1;
+            nudLogoKC2.Value = posPrinter.Config.LogoConfig.KeyCode2;
+            nudLogoFatorX.Value = posPrinter.Config.LogoConfig.FatorX;
+            nudLogoFatorY.Value = posPrinter.Config.LogoConfig.FatorY;
 
-            nudGVON.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Gaveta, "TempoON");
-            nudGVOFF.Value = posPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Gaveta, "TempoOFF");
-            cbxGVInvertido.Checked = posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Gaveta, "SinalInvertido");
+            nudGVON.Value = posPrinter.Config.GavetaConfig.TempoON;
+            nudGVOFF.Value = posPrinter.Config.GavetaConfig.TempoOFF;
+            cbxGVInvertido.Checked = posPrinter.Config.GavetaConfig.SinalInvertido;
         }
 
         private void SaveConfig()
         {
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo", cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.Text);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", (int)nudColunas.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", (int)nudEspacos.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", (int)nudBuffer.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", (int)nudLinhasPular.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ControlePorta", cbxControlePorta.Checked);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "CortaPapel", cbxCortarPapel.Checked);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", cbxTraduzirTags.Checked);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "IgnorarTags", cbxIgnorarTags.Checked);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ArqLog", txtArqLog.Text);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo", cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>());
+            posPrinter.Config.Modelo = cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>();
+            posPrinter.Config.Porta = cbbPortas.Text;
+            posPrinter.Config.ColunasFonteNormal = (int)nudColunas.Value;
+            posPrinter.Config.EspacoEntreLinhas = (int)nudEspacos.Value;
+            posPrinter.Config.LinhasBuffer = (int)nudBuffer.Value;
+            posPrinter.Config.LinhasEntreCupons = (int)nudLinhasPular.Value;
+            posPrinter.Config.ControlePorta = cbxControlePorta.Checked;
+            posPrinter.Config.CortaPapel = cbxCortarPapel.Checked;
+            posPrinter.Config.TraduzirTags = cbxTraduzirTags.Checked;
+            posPrinter.Config.IgnorarTags = cbxIgnorarTags.Checked;
+            posPrinter.Config.ArqLog = txtArqLog.Text;
+            posPrinter.Config.PaginaDeCodigo = cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>();
 
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "LarguraLinha", (int)nudCodbarLargura.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "Altura", (int)nudCodbarAltura.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "MostrarCodigo", cbxCodbarExibeNumeros.Checked);
+            posPrinter.Config.BarrasConfig.LarguraLinha = (int)nudCodbarLargura.Value;
+            posPrinter.Config.BarrasConfig.Altura = (int)nudCodbarAltura.Value;
+            posPrinter.Config.BarrasConfig.MostrarCodigo = cbxCodbarExibeNumeros.Checked;
 
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "Tipo", (int)nudQRTipo.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "LarguraModulo", (int)nudQRLargura.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "ErrorLevel", (int)nudQRErrorLevel.Value);
+            posPrinter.Config.QrCodeConfig.Tipo = (int)nudQRTipo.Value;
+            posPrinter.Config.QrCodeConfig.LarguraModulo = (int)nudQRLargura.Value;
+            posPrinter.Config.QrCodeConfig.ErrorLevel = (int)nudQRErrorLevel.Value;
 
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "KeyCode1", (int)nudLogoKC1.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "KeyCode2", (int)nudLogoKC2.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "FatorX", (int)nudLogoFatorX.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "FatorY", (int)nudLogoFatorY.Value);
+            posPrinter.Config.LogoConfig.KeyCode1 = (byte)nudLogoKC1.Value;
+            posPrinter.Config.LogoConfig.KeyCode2 = (byte)nudLogoKC2.Value;
+            posPrinter.Config.LogoConfig.FatorX = (byte)nudLogoFatorX.Value;
+            posPrinter.Config.LogoConfig.FatorY = (byte)nudLogoFatorY.Value;
 
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "TempoON", (int)nudGVON.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "TempoOFF", (int)nudGVOFF.Value);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "SinalInvertido", cbxGVInvertido.Checked);
+            posPrinter.Config.GavetaConfig.TempoON = (byte)nudGVON.Value;
+            posPrinter.Config.GavetaConfig.TempoOFF = (byte)nudGVOFF.Value;
+            posPrinter.Config.GavetaConfig.SinalInvertido = cbxGVInvertido.Checked;
 
             posPrinter.ConfigGravar();
         }

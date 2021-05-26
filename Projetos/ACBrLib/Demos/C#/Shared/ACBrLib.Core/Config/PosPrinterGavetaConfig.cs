@@ -4,7 +4,7 @@
     {
         #region Constructors
 
-        public PosPrinterGavetaConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_QRCode)
+        public PosPrinterGavetaConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_Gaveta)
         {
         }
 
@@ -12,7 +12,7 @@
 
         #region Properties
 
-        public bool SinarInvertido
+        public bool SinalInvertido
         {
             get => GetProperty<bool>();
             set => SetProperty(value);

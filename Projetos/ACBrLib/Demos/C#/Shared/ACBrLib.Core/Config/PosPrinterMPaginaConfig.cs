@@ -6,7 +6,7 @@ namespace ACBrLib.Core.Config
     {
         #region Constructors
 
-        public PosPrinterMPaginaConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_QRCode)
+        public PosPrinterMPaginaConfig(TLib acbrlib) : base(acbrlib, ACBrSessao.PosPrinter_MPagina)
         {
         }
 

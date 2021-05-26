@@ -24,7 +24,7 @@
             set => SetProperty(value);
         }
 
-        public int ErroeLevel
+        public int ErrorLevel
         {
             get => GetProperty<int>();
             set => SetProperty(value);

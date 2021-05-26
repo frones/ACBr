@@ -57,15 +57,26 @@
     <Compile Include="..\Shared\NotaFiscal\ArmaNFe.cs" Link="NotaFiscal\ArmaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\AutXML.cs" Link="NotaFiscal\AutXML.cs" />
     <Compile Include="..\Shared\NotaFiscal\AvulsaNFe.cs" Link="NotaFiscal\AvulsaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\BandeiraCartao.cs" Link="NotaFiscal\BandeiraCartao.cs" />
     <Compile Include="..\Shared\NotaFiscal\CanaNFe.cs" Link="NotaFiscal\CanaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\CIDENFe.cs" Link="NotaFiscal\CIDENFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\COFINSProdutoNFe.cs" Link="NotaFiscal\COFINSProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\COFINSSTProdutoNFe.cs" Link="NotaFiscal\COFINSSTProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\CombustivelNFe.cs" Link="NotaFiscal\CombustivelNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\CompraNFe.cs" Link="NotaFiscal\CompraNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CondicaoVeiculo.cs" Link="NotaFiscal\CondicaoVeiculo.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ConsumidorFinal.cs" Link="NotaFiscal\ConsumidorFinal.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CSOSNIcms.cs" Link="NotaFiscal\CSOSNIcms.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CSTCofins.cs" Link="NotaFiscal\CSTCofins.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CSTIcms.cs" Link="NotaFiscal\CSTIcms.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CSTIPI.cs" Link="NotaFiscal\CSTIPI.cs" />
+    <Compile Include="..\Shared\NotaFiscal\CSTPIS.cs" Link="NotaFiscal\CSTPIS.cs" />
     <Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DeducNFe.cs" Link="NotaFiscal\DeducNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DestinatarioNFe.cs" Link="NotaFiscal\DestinatarioNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DestinoOperacao.cs" Link="NotaFiscal\DestinoOperacao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DeterminacaoBaseIcms.cs" Link="NotaFiscal\DeterminacaoBaseIcms.cs" />
+    <Compile Include="..\Shared\NotaFiscal\DeterminacaoBaseIcmsST.cs" Link="NotaFiscal\DeterminacaoBaseIcmsST.cs" />
     <Compile Include="..\Shared\NotaFiscal\DetExport.cs" Link="NotaFiscal\DetExport.cs" />
     <Compile Include="..\Shared\NotaFiscal\DINFe.cs" Link="NotaFiscal\DINFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DuplicataNFe.cs" Link="NotaFiscal\DuplicataNFe.cs" />
@@ -84,37 +95,57 @@
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestOperNaoRealizada.cs" Link="NotaFiscal\EventoManifDestOperNaoRealizada.cs" />
     <Compile Include="..\Shared\NotaFiscal\ExportaNFe.cs" Link="NotaFiscal\ExportaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\FaturaNFe.cs" Link="NotaFiscal\FaturaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\FinalidadeNFe.cs" Link="NotaFiscal\FinalidadeNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ForDiaNFe.cs" Link="NotaFiscal\ForDiaNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\FormaPagamento.cs" Link="NotaFiscal\FormaPagamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\ICMSProdutoNFe.cs" Link="NotaFiscal\ICMSProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ICMSUFDESTNFe.cs" Link="NotaFiscal\ICMSUFDESTNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IdentificacaoNFe.cs" Link="NotaFiscal\IdentificacaoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IIProdutoNFe.cs" Link="NotaFiscal\IIProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ImpostoDevolNFe.cs" Link="NotaFiscal\ImpostoDevolNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndEscala.cs" Link="NotaFiscal\IndEscala.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndicadorProcesso.cs" Link="NotaFiscal\IndicadorProcesso.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndicadorTotal.cs" Link="NotaFiscal\IndicadorTotal.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndIncentivo.cs" Link="NotaFiscal\IndIncentivo.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndIntermed.cs" Link="NotaFiscal\IndIntermed.cs" />
+    <Compile Include="..\Shared\NotaFiscal\IndISS.cs" Link="NotaFiscal\IndISS.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfNFe.cs" Link="NotaFiscal\InfNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfoAdicionalNfe.cs" Link="NotaFiscal\InfoAdicionalNfe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfRespTecNFe.cs" Link="NotaFiscal\InfRespTecNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IPIProdutoNFe.cs" Link="NotaFiscal\IPIProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ISSQNcSitTrib.cs" Link="NotaFiscal\ISSQNcSitTrib.cs" />
     <Compile Include="..\Shared\NotaFiscal\ISSQNtotNFe.cs" Link="NotaFiscal\ISSQNtotNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\LacresNFe.cs" Link="NotaFiscal\LacresNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\LADINFe.cs" Link="NotaFiscal\LADINFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\MedicamentoNFe.cs" Link="NotaFiscal\MedicamentoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ModalidadeFrete.cs" Link="NotaFiscal\ModalidadeFrete.cs" />
+    <Compile Include="..\Shared\NotaFiscal\MotivoDesoneracaoICMS.cs" Link="NotaFiscal\MotivoDesoneracaoICMS.cs" />
     <Compile Include="..\Shared\NotaFiscal\NFRef.cs" Link="NotaFiscal\NFRef.cs" />
     <Compile Include="..\Shared\NotaFiscal\NotaFiscal.cs" Link="NotaFiscal\NotaFiscal.cs" />
     <Compile Include="..\Shared\NotaFiscal\NVENFe.cs" Link="NotaFiscal\NVENFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\OrigemMercadoria.cs" Link="NotaFiscal\OrigemMercadoria.cs" />
     <Compile Include="..\Shared\NotaFiscal\PagamentoNFe.cs" Link="NotaFiscal\PagamentoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISProdutoNFe.cs" Link="NotaFiscal\PISProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\PresencaComprador.cs" Link="NotaFiscal\PresencaComprador.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ProcessoEmissao.cs" Link="NotaFiscal\ProcessoEmissao.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProcRefNFe.cs" Link="NotaFiscal\ProcRefNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProdutoNFe.cs" Link="NotaFiscal\ProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\RastroNFe.cs" Link="NotaFiscal\RastroNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ReboqueNFe.cs" Link="NotaFiscal\ReboqueNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\RegTribISSQN.cs" Link="NotaFiscal\RegTribISSQN.cs" />
     <Compile Include="..\Shared\NotaFiscal\RetiradaEntregaNFe.cs" Link="NotaFiscal\RetiradaEntregaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\RetTribNFe.cs" Link="NotaFiscal\RetTribNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoArma.cs" Link="NotaFiscal\TipoArma.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoAutor.cs" Link="NotaFiscal\TipoAutor.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoAutorizacao.cs" Link="NotaFiscal\TipoAutorizacao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoOperacao.cs" Link="NotaFiscal\TipoOperacao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoRef.cs" Link="NotaFiscal\TipoRef.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoViaTransp.cs" Link="NotaFiscal\TipoViaTransp.cs" />
     <Compile Include="..\Shared\NotaFiscal\TotalNFe.cs" Link="NotaFiscal\TotalNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TpIntegra.cs" Link="NotaFiscal\TpIntegra.cs" />
     <Compile Include="..\Shared\NotaFiscal\TransportadorNFe.cs" Link="NotaFiscal\TransportadorNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VeiculoNFe.cs" Link="NotaFiscal\VeiculoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VolumeNFe.cs" Link="NotaFiscal\VolumeNFe.cs" />

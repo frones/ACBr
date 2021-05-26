@@ -2,18 +2,15 @@
 
 namespace ACBrLib.NFe
 {
-    public enum IndicadorPagamento
+    public enum TpIntegra
     {
         [EnumValue("")]
-        ipNenhum,
-
-        [EnumValue("0")]
-        ipVista,
+        tiNaoInformado,
 
         [EnumValue("1")]
-        ipPrazo,
+        tiPagIntegrado,
 
         [EnumValue("2")]
-        ipOutras
+        tiPagNaoIntegrado
     }
 }

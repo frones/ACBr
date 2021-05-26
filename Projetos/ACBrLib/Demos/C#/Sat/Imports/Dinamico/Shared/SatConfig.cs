@@ -71,9 +71,9 @@ namespace ACBrLib.Sat
             set => SetProperty(value);
         }
 
-        public bool emit_indRatISSQN
+        public indRatISSQN emit_indRatISSQN
         {
-            get => GetProperty<bool>();
+            get => GetProperty<indRatISSQN>();
             set => SetProperty(value);
         }
 

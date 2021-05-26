@@ -133,7 +133,7 @@ namespace ACBrLib.NFe
         /// Adiciona uma nota fiscal na lista.
         /// </summary>
         /// <param name="nfe"></param>
-        public void CarregarNFe(NotaFiscal nfe)
+        public void CarregarNota(NotaFiscal nfe)
         {
             CarregarINI(nfe.ToString());
         }

@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2021
+[*] Ajustes no provedor VersaTecnologia
+   Por: Italo Giurizzato Junior
+
 24/05/2021
 [+] Envio do novo componente para o Trunk2
    Por: Italo Giurizzato Junior

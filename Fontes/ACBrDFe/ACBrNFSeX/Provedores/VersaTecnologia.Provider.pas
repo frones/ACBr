@@ -226,26 +226,15 @@ begin
 
   xXml := Response.XmlEnvio;
 
-  if ConfigWebServices.VersaoDados = '2.01' then
-  begin
-    xNameSpace1 := 'xmlns="http://www.abrasf.org.br/nfse_v201.xsd"';
+  xNameSpace1 := 'xmlns="' + ConfigWebServices.Producao.XMLNameSpace + '"';
 
-    if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
-      xNameSpace2 := 'xmlns="' + ConfigWebServices.Producao.NameSpace + '"'
-    else
-      xNameSpace2 := 'xmlns="' + ConfigWebServices.Homologacao.NameSpace + '"';
-
-    xNameSpace2 := StringReplace(xNameSpace2, '/webservice', '', []);
-  end
+  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
+    xNameSpace2 := 'xmlns="' + ConfigWebServices.Producao.NameSpace + '"'
   else
-  begin
-    xNameSpace1 := 'xmlns="' + ConfigWebServices.Producao.NameSpace + '"';
+    xNameSpace2 := 'xmlns="' + ConfigWebServices.Homologacao.NameSpace + '"';
 
-    if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
-      xNameSpace2 := 'xmlns="' + ConfigWebServices.Producao.NameSpace + '"'
-    else
-      xNameSpace2 := 'xmlns="' + ConfigWebServices.Homologacao.NameSpace + '"';
-  end;
+  if ConfigWebServices.VersaoDados = '2.01' then
+    xNameSpace2 := StringReplace(xNameSpace2, '/webservice', '', []);
 
   case aMetodo of
     tmRecepcionar:
@@ -551,11 +540,9 @@ begin
   inherited Configuracao;
 
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
-    FpURL := ConfigGeral.Params1
+    FpURL := ConfigWebServices.Producao.NameSpace
   else
-    FpURL := ConfigGeral.Params2;
-
-  FpURL := FpURL + '/webservice';
+    FpURL := ConfigWebServices.Homologacao.NameSpace;
 
   with ConfigWebServices do
   begin
@@ -563,9 +550,9 @@ begin
     VersaoAtrib := '201';
   end;
 
-  SetXmlNameSpace('http://www.abrasf.org.br/nfse_v201.xsd');
+  ConfigMsgDados.DadosCabecalho := GetCabecalho(FpURL);
 
-  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+  SetXmlNameSpace(ConfigWebServices.Producao.XMLNameSpace);
 
   SetNomeXSD('nfse_v201.xsd');
 end;
@@ -579,11 +566,9 @@ begin
   inherited Configuracao;
 
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
-    FpURL := ConfigGeral.Params1
+    FpURL := ConfigWebServices.Producao.NameSpace
   else
-    FpURL := ConfigGeral.Params2;
-
-  FpURL := FpURL + '/webservices/2.02';
+    FpURL := ConfigWebServices.Homologacao.NameSpace;
 
   with ConfigWebServices do
   begin
@@ -591,10 +576,10 @@ begin
     VersaoAtrib := '202';
   end;
 
-  ConfigMsgDados.DadosCabecalho := GetCabecalho('http://' + FpURL + '/nfse_v202.xsd');
+  ConfigMsgDados.DadosCabecalho := GetCabecalho(FpURL);
 
-  SetXmlNameSpace('http://' + ConfigGeral.Params1 +
-                                             '/webservices/2.02/nfse_v202.xsd');
+  SetXmlNameSpace(ConfigWebServices.Producao.XMLNameSpace);
+
   SetNomeXSD('nfse_v202.xsd');
 end;
 

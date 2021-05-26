@@ -1064,7 +1064,7 @@ begin
           end;
 
           // Verificar se a CT-e foi autorizado com sucesso
-          Result := (FCTeRetornoSincrono.cStat = 100) and
+          Result := {(FCTeRetornoSincrono.cStat = 100) and}
             (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoSincrono.protCTe.cStat));
 
           if Result then
@@ -1124,7 +1124,7 @@ begin
                         if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
                           GravarXML; // Salva na pasta baseado nas configurações do PathCTe
                       end;
-                    end ;
+                    end;
                   finally
                     AProcCTe.Free;
                   end;
@@ -1205,8 +1205,8 @@ begin
         FxMotivo := FCTeRetornoSincrono.xMotivo;
       end;
 
-      // Verificar se a GTV-e foi autorizado com sucesso
-      Result := (FCTeRetornoSincrono.cStat = 100) and
+      // Verificar se o CT-e OS / GTV-e foi autorizado com sucesso
+      Result := {(FCTeRetornoSincrono.cStat = 100) and}
         (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoSincrono.protCTe.cStat));
 
       if Result then
@@ -1252,7 +1252,7 @@ begin
                   SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
                                Processado;
 
-                  // Salva o XML do GTV-e assinado e protocolado
+                  // Salva o XML do CT-e OS / GTV-e assinado e protocolado
                   if SalvarXML then
                   begin
                     NomeXMLSalvo := '';
@@ -1266,7 +1266,7 @@ begin
                     if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
                       GravarXML; // Salva na pasta baseado nas configurações do PathCTe
                   end;
-                end ;
+                end;
               finally
                 AProcCTe.Free;
               end;

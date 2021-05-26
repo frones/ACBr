@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2021
+-- ACBrCTeWebServices--
+[*] Alterado as condições para verificar se o CT-e/CT-e OS/ GTV-e foi autorizado
+    ou não.
+   Por: Túlio de Pádua / Italo Giurizzato Junior
+
 31/03/2021
 -- pcteCTeW --
 [*] Alterado os campos UF para opcional por conta da placa Mercosul.

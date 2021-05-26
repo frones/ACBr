@@ -219,106 +219,106 @@ namespace ACBrLib.Sat.Demo
         {
             acbrSat.ConfigLer();
 
-            txtDllPath.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.SAT, "NomeDLL");
-            cmbModeloSat.SetSelectedValue(acbrSat.ConfigLerValor<SATModelo>(ACBrSessao.SAT, "Modelo"));
-            txtAtivacao.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.SAT, "CodigoDeAtivacao");
-            nunVersaoCFe.Value = acbrSat.ConfigLerValor<decimal>(ACBrSessao.SATConfig, "infCFe_versaoDadosEnt");
-            nunPaginaCodigo.Value = acbrSat.ConfigLerValor<decimal>(ACBrSessao.SATConfig, "PaginaDeCodigo");
-            txtSignAc.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.SAT, "SignAC");
-            chkSaveCFe.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarCFe");
-            chkSaveEnvio.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarEnvio");
-            chkSaveCFeCanc.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarCFeCanc");
-            chkSepararCNPJ.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SepararPorCNPJ");
-            chkSepararData.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SepararPorDia");
+            txtDllPath.Text = acbrSat.Config.NomeDLL;
+            cmbModeloSat.SetSelectedValue(acbrSat.Config.Modelo);
+            txtAtivacao.Text = acbrSat.Config.CodigoDeAtivacao;
+            nunVersaoCFe.Value = acbrSat.Config.SatConfig.infCFe_versaoDadosEnt;
+            nunPaginaCodigo.Value = acbrSat.Config.SatConfig.PaginaDeCodigo;
+            txtSignAc.Text = acbrSat.Config.SignAC;
+            chkSaveCFe.Checked = acbrSat.Config.Arquivos.SalvarCFe;
+            chkSaveEnvio.Checked = acbrSat.Config.Arquivos.SalvarEnvio;
+            chkSaveCFeCanc.Checked = acbrSat.Config.Arquivos.SalvarCFeCanc;
+            chkSepararCNPJ.Checked = acbrSat.Config.Arquivos.SepararPorCNPJ;
+            chkSepararData.Checked = acbrSat.Config.Arquivos.SepararPorDia;
 
             //Extrato
-            cmbImpressao.SetSelectedValue(acbrSat.ConfigLerValor<TipoExtrato>(ACBrSessao.Extrato, "Tipo"));
-            nudCopias.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.Extrato, "Copias");
-            txtSoftwareHouse.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Sistema, "Nome");
-            cbbImpressora.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Extrato, "Impressora");
-            txtSite.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Emissor, "WebSite");
-            chkPreview.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "MostraPreview");
-            chkSetup.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "MostraSetup");
-            chkUsaCodigoEanImpressao.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeCodigoEan");
-            chkImprimeEmUmaLinha.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeEmUmaLinha");
-            chkLogoLateral.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeLogoLateral");
-            chkQrCodeLateral.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeQRCodeLateral");
+            cmbImpressao.SetSelectedValue(acbrSat.Config.Extrato.Tipo);
+            nudCopias.Value = acbrSat.Config.Extrato.Copias;
+            txtSoftwareHouse.Text = acbrSat.Config.Sistema.Nome;
+            cbbImpressora.Text = acbrSat.Config.Extrato.Impressora;
+            txtSite.Text = acbrSat.Config.Emissor.WebSite;
+            chkPreview.Checked = acbrSat.Config.Extrato.MostraPreview;
+            chkSetup.Checked = acbrSat.Config.Extrato.MostraSetup;
+            chkUsaCodigoEanImpressao.Checked = acbrSat.Config.Extrato.ImprimeCodigoEan;
+            chkImprimeEmUmaLinha.Checked = acbrSat.Config.Extrato.ImprimeEmUmaLinha;
+            chkLogoLateral.Checked = acbrSat.Config.Extrato.ImprimeLogoLateral;
+            chkQrCodeLateral.Checked = acbrSat.Config.Extrato.ImprimeQRCodeLateral;
 
             //PosPrinter
-            cbbModelo.SetSelectedValue(acbrSat.ConfigLerValor<ACBrPosPrinterModelo>(ACBrSessao.PosPrinter, "Modelo"));
-            cbbPortas.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.PosPrinter, "Porta");
-            cbbPaginaCodigo.SetSelectedValue(acbrSat.ConfigLerValor<PosPaginaCodigo>(ACBrSessao.PosPrinter, "PaginaDeCodigo"));
-            nudColunas.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.PosPrinter, "ColunasFonteNormal");
-            nudEspacos.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.PosPrinter, "EspacoEntreLinhas");
-            nudBuffer.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasBuffer");
-            nudLinhasPular.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasEntreCupons");
-            cbxControlePorta.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "ControlePorta");
-            cbxCortarPapel.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "CortaPapel");
-            cbxTraduzirTags.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "TraduzirTags");
-            cbxIgnorarTags.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "IgnorarTags");
+            cbbModelo.SetSelectedValue(acbrSat.Config.PosPrinter.Modelo);
+            cbbPortas.Text = acbrSat.Config.PosPrinter.Porta;
+            cbbPaginaCodigo.SetSelectedValue(acbrSat.Config.PosPrinter.PaginaDeCodigo);
+            nudColunas.Value = acbrSat.Config.PosPrinter.ColunasFonteNormal;
+            nudEspacos.Value = acbrSat.Config.PosPrinter.EspacoEntreLinhas;
+            nudBuffer.Value = acbrSat.Config.PosPrinter.LinhasBuffer;
+            nudLinhasPular.Value = acbrSat.Config.PosPrinter.LinhasEntreCupons;
+            cbxControlePorta.Checked = acbrSat.Config.PosPrinter.ControlePorta;
+            cbxCortarPapel.Checked = acbrSat.Config.PosPrinter.CortaPapel;
+            cbxTraduzirTags.Checked = acbrSat.Config.PosPrinter.TraduzirTags;
+            cbxIgnorarTags.Checked = acbrSat.Config.PosPrinter.IgnorarTags;
 
             //Mail
-            txtNome.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
-            txtEmail.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Email, "Conta");
-            txtUsuario.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Email, "Usuario");
-            txtSenha.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Email, "Senha");
-            txtHost.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Email, "Servidor");
-            nudPorta.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.Email, "Porta");
-            ckbSSL.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Email, "SSL");
-            ckbTLS.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
+            txtNome.Text = acbrSat.Config.Email.Nome;
+            txtEmail.Text = acbrSat.Config.Email.Conta;
+            txtUsuario.Text = acbrSat.Config.Email.Usuario;
+            txtSenha.Text = acbrSat.Config.Email.Senha;
+            txtHost.Text = acbrSat.Config.Email.Servidor;
+            nudPorta.Text = acbrSat.Config.Email.Porta;
+            ckbSSL.Checked = acbrSat.Config.Email.SSL;
+            ckbTLS.Checked = acbrSat.Config.Email.TLS;
         }
 
         private void SaveConfig()
         {
-            acbrSat.ConfigGravarValor(ACBrSessao.SAT, "NomeDLL", txtDllPath.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.SAT, "Modelo", cmbModeloSat.GetSelectedValue<SATModelo>());
-            acbrSat.ConfigGravarValor(ACBrSessao.SAT, "CodigoDeAtivacao", txtAtivacao.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfig, "infCFe_versaoDadosEnt", nunVersaoCFe.Value);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfig, "PaginaDeCodigo", nunPaginaCodigo.Value);
-            acbrSat.ConfigGravarValor(ACBrSessao.SAT, "SignAC", txtSignAc.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarCFe", chkSaveCFe.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarEnvio", chkSaveEnvio.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarCFeCanc", chkSaveCFeCanc.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SepararPorCNPJ", chkSepararCNPJ.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SepararPorDia", chkSepararData.Checked);
+            acbrSat.Config.NomeDLL = txtDllPath.Text;
+            acbrSat.Config.Modelo = cmbModeloSat.GetSelectedValue<SATModelo>();
+            acbrSat.Config.CodigoDeAtivacao = txtAtivacao.Text;
+            acbrSat.Config.SatConfig.infCFe_versaoDadosEnt = nunVersaoCFe.Value;
+            acbrSat.Config.SatConfig.PaginaDeCodigo = (ushort)nunPaginaCodigo.Value;
+            acbrSat.Config.SignAC = txtSignAc.Text;
+            acbrSat.Config.Arquivos.SalvarCFe = chkSaveCFe.Checked;
+            acbrSat.Config.Arquivos.SalvarEnvio = chkSaveEnvio.Checked;
+            acbrSat.Config.Arquivos.SalvarCFeCanc = chkSaveCFeCanc.Checked;
+            acbrSat.Config.Arquivos.SepararPorCNPJ = chkSepararCNPJ.Checked;
+            acbrSat.Config.Arquivos.SepararPorDia = chkSepararData.Checked;
 
             //Impressão
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Tipo", cmbImpressao.GetSelectedValue<TipoExtrato>());
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Copias", nudCopias.Value);
-            acbrSat.ConfigGravarValor(ACBrSessao.Sistema, "Nome", txtSoftwareHouse.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Impressora", cbbImpressora.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Emissor, "WebSite", txtSite.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "MostraPreview", chkPreview.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "MostraSetup", chkSetup.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeCodigoEan", chkUsaCodigoEanImpressao.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeEmUmaLinha", chkImprimeEmUmaLinha.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeLogoLateral", chkLogoLateral.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeQRCodeLateral", chkQrCodeLateral.Checked);
+            acbrSat.Config.Extrato.Tipo = cmbImpressao.GetSelectedValue<TipoExtrato>();
+            acbrSat.Config.Extrato.Copias = (int)nudCopias.Value;
+            acbrSat.Config.Sistema.Nome = txtSoftwareHouse.Text;
+            acbrSat.Config.Extrato.Impressora = cbbImpressora.Text;
+            acbrSat.Config.Emissor.WebSite = txtSite.Text;
+            acbrSat.Config.Extrato.MostraPreview = chkPreview.Checked;
+            acbrSat.Config.Extrato.MostraSetup = chkSetup.Checked;
+            acbrSat.Config.Extrato.ImprimeCodigoEan = chkUsaCodigoEanImpressao.Checked;
+            acbrSat.Config.Extrato.ImprimeEmUmaLinha = chkImprimeEmUmaLinha.Checked;
+            acbrSat.Config.Extrato.ImprimeLogoLateral = chkLogoLateral.Checked;
+            acbrSat.Config.Extrato.ImprimeQRCodeLateral = chkQrCodeLateral.Checked;
 
             //PosPrinter
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo", cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", ((int)nudColunas.Value).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", ((int)nudEspacos.Value).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", ((int)nudBuffer.Value).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", ((int)nudLinhasPular.Value).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "ControlePorta", Convert.ToInt32(cbxControlePorta.Checked).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "CortaPapel", Convert.ToInt32(cbxCortarPapel.Checked).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", Convert.ToInt32(cbxTraduzirTags.Checked).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "IgnorarTags", Convert.ToInt32(cbxIgnorarTags.Checked).ToString());
-            acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo", cbbPaginaCodigo.SelectedIndex.ToString());
+            acbrSat.Config.PosPrinter.Modelo = cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>();
+            acbrSat.Config.PosPrinter.Porta = cbbPortas.Text;
+            acbrSat.Config.PosPrinter.ColunasFonteNormal = (int)nudColunas.Value;
+            acbrSat.Config.PosPrinter.EspacoEntreLinhas = (int)nudEspacos.Value;
+            acbrSat.Config.PosPrinter.LinhasBuffer = (int)nudBuffer.Value;
+            acbrSat.Config.PosPrinter.LinhasEntreCupons = (int)nudLinhasPular.Value;
+            acbrSat.Config.PosPrinter.ControlePorta = cbxControlePorta.Checked;
+            acbrSat.Config.PosPrinter.CortaPapel = cbxCortarPapel.Checked;
+            acbrSat.Config.PosPrinter.TraduzirTags = cbxTraduzirTags.Checked;
+            acbrSat.Config.PosPrinter.IgnorarTags = cbxIgnorarTags.Checked;
+            acbrSat.Config.PosPrinter.PaginaDeCodigo = cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>();
 
             //Mail
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Senha", txtSenha.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Servidor", txtHost.Text);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "Porta", nudPorta.Value);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "SSL", ckbSSL.Checked);
-            acbrSat.ConfigGravarValor(ACBrSessao.Email, "TLS", ckbTLS.Checked);
+            acbrSat.Config.Email.Nome = txtNome.Text;
+            acbrSat.Config.Email.Conta = txtEmail.Text;
+            acbrSat.Config.Email.Usuario = txtUsuario.Text;
+            acbrSat.Config.Email.Senha = txtSenha.Text;
+            acbrSat.Config.Email.Servidor = txtHost.Text;
+            acbrSat.Config.Email.Porta = nudPorta.Text;
+            acbrSat.Config.Email.SSL = ckbSSL.Checked;
+            acbrSat.Config.Email.TLS = ckbTLS.Checked;
 
-            acbrSat.ConfigGravar("");
+            acbrSat.ConfigGravar();
         }
 
         #endregion Methods

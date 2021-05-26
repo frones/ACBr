@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2021
+ACBrBoletoFCFortes
+[*] Correção do campo Font.Quality e Atualização nos Layouts com ajustes de campos sobrepondo linhas
+
 17/05/2021
 ACBrBoletoFCFortes
 [*] Ajustes de posição de campos no Layout modelo impressora Bobina 

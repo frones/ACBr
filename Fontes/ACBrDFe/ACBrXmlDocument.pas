@@ -114,8 +114,8 @@ type
     function AsInteger: Integer;
     function AsDouble: Double;
     function AsDateTime(const Format: string = ''): TDateTime;
-    function AsDate(const Format: string = ''): TDate;
-    function AsTime(const Format: string = ''): TTime;
+    function AsDate(const Format: string = ''): TDateTime;
+    function AsTime(const Format: string = ''): TDateTime;
 
   end;
 
@@ -544,12 +544,12 @@ begin
   Result := StringToDateTime(Content, Format);
 end;
 
-function TACBrXmlNode.AsDate(const Format: string): TDate;
+function TACBrXmlNode.AsDate(const Format: string): TDateTime;
 begin
   Result := StringToDateTime(Content, Format);
 end;
 
-function TACBrXmlNode.AsTime(const Format: string): TTime;
+function TACBrXmlNode.AsTime(const Format: string): TDateTime;
 begin
   Result := StringToDateTime(Content, Format);
 end;

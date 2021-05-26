@@ -67,7 +67,7 @@ function RemoverCDATA(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
-procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix: string; excludeElements: array of string);
+//procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix: string; excludeElements: array of string);
 
 implementation
 
@@ -225,17 +225,18 @@ begin
   end;
 end;
 
+{
 procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix : string; excludeElements: array of string);
 Var
   Item: TACBrXmlNode;
 
-  function StringInArray(const Value: string; Strings: array of string): Boolean;
+  function StringInArray(const Value: string; aStrings: array of string): Boolean;
   var
     I: Integer;
   begin
     Result := True;
-    for I := Low(Strings) to High(Strings) do
-      if Strings[i] = Value then Exit;
+    for I := Low(aStrings) to High(aStrings) do
+      if aStrings[i] = Value then Exit;
     Result := False;
   end;
 begin
@@ -247,5 +248,5 @@ begin
   for Item in ANode.Childrens do
     ApplyNamespacePrefix(Item, nsPrefix, excludeElements);
 end;
-
+}
 end.

@@ -783,6 +783,100 @@ type
                                qrlTutor,
                                qrlOutro,
                                qrlNenhum);
+
+  /// Tipo de ajustes do preço parâmetro que foram realizados (x305)
+  TACBrAjustePrecoParametro305 = (
+    appPremio ,               //  1 - Prêmio (art. 34, §7º)
+    appPrazo,                 //  2 - Prazo para pagamento (art. 34, §10, I)
+    appQuantidades,           //  3 - Quantidades negociadas (art. 34, §10, II)
+    appInfluencia,            //  4 - Influências climáticas nas características do bem exportado (art. 34, §10, III)
+    appCustoInter,            //  5 - Custos de intermediação - Custos de intermediação, nas operações de compra e venda praticadas pelas....
+    appAcondicionamento,      //  6 - Acondicionamento (art. 34, §10, V)
+    appFreteSeguroArt34,      //  7 - Frete e seguro (art. 34, §10, VI)
+    appCustoDesembarqueArt34, //  8 - Custos de desembarque no porto, de transporte interno, de armazenagem e de desembaraço...
+    appPrazoPagto,            //  9 - Prazo para pagamento (art. 22, §1º, I)
+    appQtdeNegociada,         //  10 - Quantidades negociadas (art. 22, §1º, II)
+    appGarantia,              //  11 - Garantia de funcionamento do bem ou da aplicabilidade do serviço ou direito (art. 22, §1º, III)
+    appPromocao,              //  12 - Promoção do bem, serviço ou direito (art. 22, §1º, IV)
+    appCustosFiscalizacao,    //  13 - Custos de fiscalização de qualidade, de padrão dos serviços e das condições de higiene (art. 22, §1º, V)
+    appCustoIntermediacao,    //  14 - Custos de intermediação (art. 22, §1º, VI)
+    appAcondicionamentoArt22, //  15 - Acondicionamento (art. 22, §1º, VII)
+    appFreteSeguroArt22,      //  16 - Frete e seguro (art. 22, §1º, VIII)
+    appRiscoCredito,          //  17 - Riscos de crédito (art. 22, §1º, IX)
+    appCustoDesembarqueArt22,      //  18 - Custos de desembarque no porto, de transporte interno, de armazenagem e de desembaraço....
+    appSimilaridade,          //  19 - Similaridade (art. 24)
+    appVariacao,              //  20 - Variação cambial (art. 25)
+    appOutros                 //  99 - Outros ajustes - essa opção deve ser utilizada apenas em caso de alteração da Instrução Normativa RFB nº 1.312/2012
+                              //      com previsão de ajustes não contemplados nos códigos anteriores
+      );
+
+    /// Fonte da Cotação: Descrição da fonte utilizada para a busca do preço parâmetro informado (x320)
+
+  TACBrFonteCotacao = (
+   fcChicagoBoard,          // 101 ChicagoBoard of Trade (CBOT) - Chicago - EUA;
+   fcChicagoMercantile,     // 102 Chicago Mercantile Exchange (CME) - Chicago - EUA;
+   fcNewYorkMercantile,     // 103 New York Mercantile Exchange (NYMEX) - Nova York - EUA;
+   fcCommodity,             // 104 Commodity Exchange (COMEX) - Nova York - EUA;
+   fcIntercontinentalExchange, // 105 Intercontinental Exchange (ICE US) - Atlanta - EUA;
+   fcBolsaMercadoria,       // 106 Bolsa de Mercadorias & Futuros (BM&F) - São Paulo - Brasil;
+   fcLifeNyse,              // 107 Life NYSE Euronext (LIFFE) - Londres - Reino Unido;
+   fcLondonMetal,           // 108 London Metal Exchange (LME) - Londres - Reino Unido;
+   fcIntercontinental,      // 109 Intercontinental Exchange (ICE Europe) - Londres - Reino Unido;
+   fcTokioCommodity,        // 110 Tokio Commodity Exchange (TOCOM) - Tóquio - Japão;
+   fcTokioGrain,            // 111 Tokio Grain Exchange (TGE) - Tóquio - Japão;
+   fcSingapore,             // 112 Singapore Commodity Exchange (SICOM) - Cidade de Cingapura - Cingapura;
+   fcHongKongm,             // 113 Hong Kong Commodity Exchange (HKE) - Hong Kong – China;
+   fcMultiCommodity,        // 114 Multi Commodity Exchange (MCX) - Bombain - Índia;
+   fcNational,              // 115 National Commodity & Derivatives Exchange Limited (NCDEX) - Bombain - Índia;
+   fcAgricultural,          // 116 Agricultural Futures Exchange of Thailand (AFET) - Bangkok - Tailândia;
+   fcAustralian,            // 117 Australian Securities Exchange (ASX) - Sidney - Austrália;
+   fcJSE,                   // 118 JSE Safex APD (SAFEX) – Johannesburg - África do Sul;
+   fcKorea,                 // 119 Korea Exchange (KRX) - Busan - Coréia do Sul;
+   fcChina,                 // 120 China Beijing International Mining Exchange, (CBMX);
+   fcGlobalORE,             // 121 GlobalORE;
+   fcLondonBullion,         // 122 London Bullion Market Association (LBMA);
+   fcBeijing,               // 123 Beijing Iron Ore Trading Center Corporation (COREX). (Incluído pela IN RFB nº 1.870/2019)
+   fcPLATTS,                // 201 PLATTS;
+   fcARGUS,                 // 202 ARGUS;
+   fcCMA,                   // 203 CMA;
+   fcESALQ,                 // 204 ESALQ;
+   fcTSI,                   // 205 TSI;
+   fcBULLETIN,              // 206 THE METAL BULLETIN;
+   fcCRU,                   // 207 CRU MONITOR;
+   fcCIS,                   // 208 CIS; (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcCMAI,                  // 209 CMAI; (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcPOTEN,                 // 210 POTEN&PARTNERS; (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcBLOOMERG,              // 211 BLOOMBERG; (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcICIS,                  // 212 ICIS HEREN; (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcUSEnergy,              // 213 U.S. Energy Information Administration (EIA). (Incluído pela IN RFB nº 1.395, de 13/09/2013)
+   fcAgencias);               // 999 Agências ou órgãos reguladores (art. 36, inciso II)
+
+   /// Tipo de ajustes do preço parâmetro que foram realizados (x325)
+  TACBrAjustePrecoParametro325 = (
+    appPremioArt34,           //  1 - Prêmio (art. 34, §7º)
+    appPrazoArt34,            //  2 - Prazo para pagamento (art. 34, §10, I)
+    appQuantidadesArt34,      //  3 - Quantidades negociadas (art. 34, §10, II)
+    appInfluenciaArt34,       //  4 - Influências climáticas nas características do bem exportado (art. 34, §10, III)
+    appCustoIntermedicao,     //  5 - Custos de intermediação - Custos de intermediação, nas operações de compra e venda praticadas pelas....
+    appAcondicionamentoArt34, //  6 - Acondicionamento (art. 34, §10, V)
+    appFreteSeguroArt16,      //  7 - Frete e seguro (art. 16, §9º, VI)
+    appCustoDesembarque,      //  8 - Custos de desembarque no porto, de transporte interno, de armazenagem e de desembaraço...
+    appPrazoPagtoArt22,       //  9 - Prazo para pagamento (art. 22, §1º, I)
+    appQtdeNegociadaArt22,    //  10 - Quantidades negociadas (art. 22, §1º, II)
+    appGarantiaArt22,         //  11 - Garantia de funcionamento do bem ou da aplicabilidade do serviço ou direito (art. 22, §1º, III)
+    appPromocaoArt22,         //  12 - Promoção do bem, serviço ou direito (art. 22, §1º, IV)
+    appCustosFiscalizacaoArt22, //  13 - Custos de fiscalização de qualidade, de padrão dos serviços e das condições de higiene (art. 22, §1º, V)
+    appCustoIntermediacaoArt22,    //  14 - Custos de intermediação (art. 22, §1º, VI)
+    appAcondicionamentoArt9,  //  Acondicionamento (art. 9, §1º, VII)
+    appFreteSeguroArt9,       //  16 - Frete e seguro (art. 9, §1º, VIII)
+    appCustoDesembarque325,   //  17 - Custos de desembarque no porto
+    appSimilaridadeArt10,     //  18 - Similaridade (art. 10)
+    appVariacaoCambial24,     //  19 - Variação cambial (art. 24)
+    appVariacaoCambial11,     //  20 - Variação cambial (art. 11, §1º ou art. 15, §7º)
+    appOutros325              //  99 - Outros ajustes - essa opção deve ser utilizada apenas em caso de alteração da Instrução Normativa RFB nº 1.312/2012
+                              //      com previsão de ajustes não contemplados nos códigos anteriores
+      );
+
   { TBlocos }
 
   TBlocos = class
@@ -847,6 +941,13 @@ function TpAssinanteToStr(AValue: TACBrTpAssinante): string;
 function StrToTpAssinante(const AValue: string): TACBrTpAssinante;
 function IndReceitaToStr(AValue: TACBrIndReceita): string;
 function StrToIndReceita(const AValue: string): TACBrIndReceita;
+function StrToAjustePrecoParametro305(const AValue: string): TACBrAjustePrecoParametro305;
+function AjustePrecoParametro305ToStr(AValue: TACBrAjustePrecoParametro305): string;
+function StrToFonteCotacao(const AValue: string): TACBrFonteCotacao;
+function FonteCotacaoToStr(AValue: TACBrFonteCotacao): string;
+function StrToAjustePrecoParametro325(const AValue: string): TACBrAjustePrecoParametro325;
+function AjustePrecoParametro325ToStr(AValue: TACBrAjustePrecoParametro325): string;
+
 
 implementation
 
@@ -1148,6 +1249,517 @@ begin
   else
     Result := TACBrIndReceita(StrToIntDef(AValue, 6));
 end;
+
+function StrToAjustePrecoParametro305(const AValue: string): TACBrAjustePrecoParametro305;
+begin
+  if AValue = '1' then
+    Result := appPremio
+  else
+  if AValue ='2'  then
+    Result := appPrazo
+  else
+  if AValue = '3' then
+    Result := appQuantidades
+  else
+  if AValue = '4' then
+    Result := appInfluencia
+  else
+  if AValue = '5' then
+    Result := appCustoInter
+  else
+  if AValue = '6' then
+    Result := appAcondicionamento
+  else
+  if AValue = '7' then
+    Result := appFreteSeguroArt34
+  else
+  if AValue = '8' then
+    Result := appCustoDesembarqueArt34
+  else
+  if AValue = '9' then
+    Result := appPrazoPagto
+  else
+  if AValue = '10' then
+    Result := appQtdeNegociada
+  else
+  if AValue = '11' then
+    Result := appGarantia
+  else
+  if AValue = '12' then
+    Result := appPromocao
+  else
+  if AValue = '13' then
+    Result := appCustosFiscalizacao
+  else
+  if AValue = '14' then
+    Result := appCustoIntermediacao
+  else
+  if AValue = '15' then
+    Result := appAcondicionamentoArt22
+  else
+  if AValue = '16' then
+    Result := appFreteSeguroArt22
+  else
+  if AValue = '17' then
+    Result := appRiscoCredito
+  else
+  if AValue = '18' then
+    Result := appCustoDesembarqueArt22
+  else
+  if AValue = '19' then
+    Result := appSimilaridade
+  else
+  if AValue = '20' then
+    Result := appVariacao
+  else
+  if AValue = '99' then
+    Result := appOutros
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrAjustePrecoParametro');
+
+end;
+
+function AjustePrecoParametro305ToStr(AValue: TACBrAjustePrecoParametro305): String;
+begin
+  if AValue = appPremio then
+    Result := '1'
+  else
+  if AValue = appPrazo then
+    Result := '2'
+  else
+  if AValue = appQuantidades then
+    Result := '3'
+  else
+  if AValue = appInfluencia then
+    Result := '4'
+  else
+  if AValue = appCustoInter then
+    Result := '5'
+  else
+  if AValue = appAcondicionamento then
+    Result := '6'
+  else
+  if AValue = appFreteSeguroArt34 then
+    Result := '7'
+  else
+  if AValue = appCustoDesembarqueArt34 then
+    Result := '8'
+  else
+  if AValue = appPrazoPagto then
+    Result := '9'
+  else
+  if AValue = appQtdeNegociada then
+    Result := '10'
+  else
+  if AValue = appGarantia then
+    Result := '11'
+  else
+  if AValue = appPromocao then
+    Result := '12'
+  else
+  if AValue = appCustosFiscalizacao then
+    Result := '13'
+  else
+  if AValue = appCustoIntermediacao then
+    Result := '14'
+  else
+  if AValue = appAcondicionamentoArt22 then
+    Result := '15'
+  else
+  if AValue = appFreteSeguroArt22 then
+    Result := '16'
+  else
+  if AValue = appRiscoCredito then
+    Result := '17'
+  else
+  if AValue = appCustoDesembarqueArt22 then
+    Result := '18'
+  else
+  if AValue = appSimilaridade then
+    Result := '19'
+  else
+  if AValue = appVariacao then
+    Result := '20'
+  else
+  if AValue = appOutros then
+    Result := '99'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrAjustePrecoParametro');
+
+
+end;
+
+function StrToFonteCotacao(const AValue: string): TACBrFonteCotacao;
+begin
+   if AValue = '101' then
+    Result := fcChicagoBoard
+  else
+  if AValue = '102' then
+    Result := fcChicagoMercantile
+  else
+  if AValue = '103' then
+    Result := fcNewYorkMercantile
+  else
+  if AValue = '104' then
+    Result := fcCommodity
+  else
+  if AValue = '105' then
+    Result := fcIntercontinentalExchange
+  else
+  if AValue = '106' then
+    Result := fcBolsaMercadoria
+  else
+  if AValue = '107' then
+    Result := fcLifeNyse
+  else
+  if AValue = '108' then
+    Result := fcLondonMetal
+  else
+  if AValue = '109' then
+    Result := fcIntercontinental
+  else
+  if AValue = '110' then
+    Result := fcTokioCommodity
+  else
+  if AValue = '111' then
+    Result := fcTokioGrain
+  else
+  if AValue = '112' then
+    Result := fcSingapore
+  else
+  if AValue = '113' then
+    Result := fcHongKongm
+  else
+  if AValue = '114' then
+    Result := fcMultiCommodity
+  else
+  if AValue = '115' then
+    Result := fcNational
+  else
+  if AValue = '116' then
+    Result := fcAgricultural
+  else
+  if AValue = '117' then
+    Result := fcAustralian
+  else
+  if AValue = '118' then
+    Result := fcJSE
+  else
+  if AValue = '119' then
+    Result := fcKorea
+  else
+  if AValue = '120' then
+    Result := fcChina
+  else
+  if AValue = '121' then
+    Result := fcGlobalORE
+  else
+  if AValue = '122' then
+    Result := fcLondonBullion
+  else
+  if AValue = '123' then
+    Result := fcBeijing
+  else
+  if AValue = '201' then
+    Result := fcPLATTS
+  else
+  if AValue = '202' then
+    Result := fcARGUS
+  else
+  if AValue = '203' then
+    Result := fcCMA
+  else
+  if AValue = '204' then
+    Result := fcESALQ
+  else
+  if AValue = '205' then
+    Result := fcTSI
+  else
+  if AValue = '206' then
+    Result := fcBULLETIN
+  else
+  if AValue = '207' then
+    Result := fcCRU
+  else
+  if AValue = '208' then
+    Result := fcCIS
+  else
+  if AValue = '209' then
+    Result := fcCMAI
+  else
+  if AValue = '210' then
+    Result := fcPOTEN
+  else
+  if AValue = '211' then
+    Result := fcBLOOMERG
+  else
+  if AValue = '212' then
+    Result := fcICIS
+  else
+  if AValue = '213' then
+    Result := fcUSEnergy
+  else
+  if AValue = '999' then
+    Result := fcAgencias
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrFonteCotacao');
+end;
+
+function FonteCotacaoToStr(AValue: TACBrFonteCotacao): String;
+begin
+  if AValue = fcChicagoBoard then
+    Result := '101'
+  else
+  if AValue = fcChicagoMercantile then
+    Result := '102'
+  else
+  if AValue = fcNewYorkMercantile then
+    Result := '103'
+  else
+  if AValue = fcCommodity then
+    Result := '104'
+  else
+  if AValue = fcIntercontinentalExchange then
+    Result := '105'
+  else
+  if AValue = fcBolsaMercadoria then
+    Result := '106'
+  else
+  if AValue = fcLifeNyse then
+    Result := '107'
+  else
+  if AValue = fcLondonMetal then
+    Result := '108'
+  else
+  if AValue = fcIntercontinental then
+    Result := '109'
+  else
+  if AValue = fcTokioCommodity then
+    Result :=  '110'
+  else
+  if AValue = fcTokioGrain then
+    Result := '111'
+  else
+  if AValue = fcSingapore then
+    Result := '112'
+  else
+  if AValue = fcHongKongm then
+    Result := '113'
+  else
+  if AValue = fcMultiCommodity then
+    Result := '114'
+  else
+  if AValue = fcNational then
+    Result := '115'
+  else
+  if AValue = fcAgricultural then
+    Result := '116'
+  else
+  if AValue = fcAustralian then
+    Result := '117'
+  else
+  if AValue = fcJSE then
+    Result := '118'
+  else
+  if AValue = fcKorea then
+    Result := '119'
+  else
+  if AValue = fcChina then
+    Result := '120'
+  else
+  if AValue = fcGlobalORE then
+    Result := '121'
+  else
+  if AValue = fcLondonBullion then
+    Result := '122'
+  else
+  if AValue = fcBeijing then
+    Result := '123'
+  else
+  if AValue = fcPLATTS then
+    Result := '201'
+  else
+  if AValue = fcARGUS then
+    Result := '202'
+  else
+  if AValue = fcCMA then
+    Result := '203'
+  else
+  if AValue = fcESALQ then
+    Result :=  '204'
+  else
+  if AValue = fcTSI then
+    Result := '205'
+  else
+  if AValue = fcBULLETIN then
+    Result :=  '206'
+  else
+  if AValue = fcCRU then
+    Result := '207'
+  else
+  if AValue = fcCIS then
+    Result := '208'
+  else
+  if AValue = fcCMAI then
+    Result := '209'
+  else
+  if AValue = fcPOTEN then
+    Result := '210'
+  else
+  if AValue = fcBLOOMERG then
+    Result := '211'
+  else
+  if AValue = fcICIS then
+    Result := '212'
+  else
+  if AValue = fcUSEnergy then
+    Result := '213'
+  else
+  if AValue = fcAgencias then
+    Result := '999'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrFonteCotacao');
+
+end;
+
+function StrToAjustePrecoParametro325(const AValue: string): TACBrAjustePrecoParametro325;
+begin
+  if AValue = '1' then
+    Result := appPremioArt34
+  else
+  if AValue ='2'  then
+    Result := appPrazoArt34
+  else
+  if AValue = '3' then
+    Result := appQuantidadesArt34
+  else
+  if AValue = '4' then
+    Result := appInfluenciaArt34
+  else
+  if AValue = '5' then
+    Result := appCustoIntermedicao
+  else
+  if AValue = '6' then
+    Result := appAcondicionamentoArt34
+  else
+  if AValue = '7' then
+    Result := appFreteSeguroArt16
+  else
+  if AValue = '8' then
+    Result := appCustoDesembarque
+  else
+  if AValue = '9' then
+    Result := appPrazoPagtoArt22
+  else
+  if AValue = '10' then
+    Result := appQtdeNegociadaArt22
+  else
+  if AValue = '11' then
+    Result := appGarantiaArt22
+  else
+  if AValue = '12' then
+    Result := appPromocaoArt22
+  else
+  if AValue = '13' then
+    Result := appCustosFiscalizacaoArt22
+  else
+  if AValue = '14' then
+    Result := appCustoIntermediacaoArt22
+  else
+  if AValue = '15' then
+    Result := appAcondicionamentoArt9
+  else
+  if AValue = '16' then
+    Result := appFreteSeguroArt9
+  else
+  if AValue = '17' then
+    Result := appCustoDesembarque325
+  else
+  if AValue = '18' then
+    Result := appSimilaridadeArt10
+  else
+  if AValue = '19' then
+    Result := appVariacaoCambial24
+  else
+  if AValue = '20' then
+    Result := appVariacaoCambial11
+  else
+  if AValue = '99' then
+    Result := appOutros325
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrAjustePrecoParametro');
+
+end;
+
+function AjustePrecoParametro325ToStr(AValue: TACBrAjustePrecoParametro325): String;
+begin
+  if AValue = appPremioArt34 then
+    Result := '1'
+  else
+  if AValue = appPrazoArt34 then
+    Result := '2'
+  else
+  if AValue = appQuantidadesArt34 then
+    Result := '3'
+  else
+  if AValue = appInfluenciaArt34 then
+    Result := '4'
+  else
+  if AValue = appCustoIntermedicao then
+    Result := '5'
+  else
+  if AValue = appAcondicionamentoArt34 then
+    Result := '6'
+  else
+  if AValue = appFreteSeguroArt16 then
+    Result := '7'
+  else
+  if AValue = appCustoDesembarque then
+    Result := '8'
+  else
+  if AValue = appPrazoPagtoArt22 then
+    Result := '9'
+  else
+  if AValue = appQtdeNegociadaArt22 then
+    Result := '10'
+  else
+  if AValue = appGarantiaArt22 then
+    Result := '11'
+  else
+  if AValue = appPromocaoArt22 then
+    Result := '12'
+  else
+  if AValue = appCustosFiscalizacaoArt22 then
+    Result := '13'
+  else
+  if AValue = appCustoIntermediacaoArt22 then
+    Result := '14'
+  else
+  if AValue = appAcondicionamentoArt9 then
+    Result := '15'
+  else
+  if AValue = appFreteSeguroArt9 then
+    Result := '16'
+  else
+  if AValue = appCustoDesembarque325 then
+    Result := '17'
+  else
+  if AValue = appSimilaridadeArt10 then
+    Result := '18'
+  else
+  if AValue = appVariacaoCambial24 then
+    Result := '19'
+  else
+  if AValue =  appVariacaoCambial11 then
+    Result := '20'
+  else
+  if AValue = appOutros325 then
+    Result := '99'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrAjustePrecoParametro');
+
+end;
+
 
 constructor TOpenBlocos.Create;
 begin

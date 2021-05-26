@@ -50,8 +50,10 @@ type
   TRegistroX291List = class;
   TRegistroX292List = class;
   TRegistroX300List = class;
+  TRegistroX305List = class;
   TRegistroX310List = class;
   TRegistroX320List = class;
+  TRegistroX325List = class;
   TRegistroX330List = class;
   TRegistroX340List = class;
   TRegistroX350List = class;
@@ -81,7 +83,9 @@ type
     FRegistroX291 : TRegistroX291List;
     FRegistroX292 : TRegistroX292List;
     FRegistroX300 : TRegistroX300List;
+    FRegistroX305 : TRegistroX305List;
     FRegistroX320 : TRegistroX320List;
+    FRegistroX325 : TRegistroX325List;
     FRegistroX340 : TRegistroX340List;
     FRegistroX390 : TRegistroX390List;
     FRegistroX400 : TRegistroX400List;
@@ -103,7 +107,9 @@ type
     property RegistroX291 : TRegistroX291List read FRegistroX291 write FRegistroX291;
     property RegistroX292 : TRegistroX292List read FRegistroX292 write FRegistroX292;
     property RegistroX300 : TRegistroX300List read FRegistroX300 write FRegistroX300;
+    property RegistroX305 : TRegistroX305List read FRegistroX305 write FRegistroX305;
     property RegistroX320 : TRegistroX320List read FRegistroX320 write FRegistroX320;
+    property RegistroX325 : TRegistroX325List read FRegistroX325 write FRegistroX325;
     property RegistroX340 : TRegistroX340List read FRegistroX340 write FRegistroX340;
     property RegistroX390 : TRegistroX390List read FRegistroX390 write FRegistroX390;
     property RegistroX400 : TRegistroX400List read FRegistroX400 write FRegistroX400;
@@ -229,7 +235,8 @@ type
     fVL_PAR:    variant;
     fVL_PRAT:   variant;
 
-    FRegistroX310: TRegistroX310List;
+     FRegistroX305: TRegistroX305List;
+     FRegistroX310: TRegistroX310List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -252,6 +259,7 @@ type
     property COD_CNC: integer read fCOD_CNC write fCOD_CNC;
     property TIP_MOEDA: string read fTIP_MOEDA write fTIP_MOEDA;
 
+    property RegistroX305: TRegistroX305List read FRegistroX305 write FRegistroX305;
     property RegistroX310: TRegistroX310List read FRegistroX310 write FRegistroX310;
   end;
 
@@ -263,6 +271,33 @@ type
     function New: TRegistroX300;
     property Items[Index: Integer]: TRegistroX300 read GetItem write SetItem;
   end;
+
+
+  /// Registro X305 - TIPOS DE AJUSTES DO PREÇO PARÂMETRO DA EXPORTAÇÃO
+  { TRegistroX305 }
+
+  TRegistroX305 = class
+  private
+    fTIP_AJUST: integer;
+    fDESC_OUT_AJ: string;
+    fVALOR: variant;
+    fFONT_AJU305:  string;
+  public
+    property TIP_AJUST: integer read fTIP_AJUST write fTIP_AJUST;
+    property DESC_OUT_AJ: string read fDESC_OUT_AJ write fDESC_OUT_AJ;
+    property VALOR: variant read fVALOR write fVALOR;
+    property FONT_AJU305:  string read fFONT_AJU305 write fFONT_AJU305;
+  end;
+
+  TRegistroX305List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroX305;
+    procedure SetItem(Index: Integer; const Value: TRegistroX305);
+  public
+    function New: TRegistroX305;
+    property Items[Index: Integer]: TRegistroX305 read GetItem write SetItem;
+  end;
+
 
   /// Registro X310 - Operações com o Exterior - Contratantes das  Exportações
 
@@ -296,23 +331,40 @@ type
 
   TRegistroX320 = class
   private
-    fCOD_CNC:   string;
-    fCOD_NCM:   integer;
-    fDESC_IMP:  string;
-    fNUM_ORD:   string;
-    fQTDE:      variant;
-    fTIP_IMP:   integer;
-    fTIP_MET:   string;
-    fTIP_MOEDA: string;
-    fTOT_OPER:  variant;
-    fUNI_MED:   string;
-    fVL_AJ:     variant;
-    fVL_JUR:    variant;
-    fVL_JUR_MAX: variant;
-    fVL_JUR_MIN: variant;
-    fVL_PAR:    variant;
-    fVL_PRAT:   variant;
+    fCOD_CNC:    string;
+    fCOD_NCM:    integer;
+    fDESC_IMP:   string;
+    fNUM_ORD:    string;
+    fQTDE:       variant;
+    fTIP_IMP:    integer;
+    fTIP_MET:    string;
+    fCOD_INV:    string;
+    fUTIL_INS_PROD:  string;
+    fOPER_PAR:    string;
+    fDESC_PAR:    string;
+    fID_PARTE_PAR:  string;
+    fTIP_PAR:     string;
+    fDAT_UTIL:    string;
+    fCRIT_PAR:    string;
+    fDAT_TRANS:   TDateTime;
+    fDAT_DUIMP:   TDateTime;
+    fID_FONT_COT: variant;
+    fAJ_PAR:      string;
+    fVL_PAR:      variant;
+    fVL_PRAT:     variant;
+    fQTDE_AJ:     variant;
+    fTIP_MOEDA:   string;
+    fTOT_OPER:    variant;
+    fUNI_MED:     string;
+    fVL_AJ:       variant;
+    fVALOR_COT:   variant;
+    fNUM_DEC_IMP: string;
+    fDAT_ENT_PREV: TDateTime;
+    fVL_JUR:      variant;
+    fVL_JUR_MAX:  variant;
+    fVL_JUR_MIN:  variant;
 
+    FRegistroX325: TRegistroX325List;
     FRegistroX330: TRegistroX330List;
   public
     constructor Create; virtual; /// Create
@@ -326,16 +378,34 @@ type
     property QTDE: variant read fQTDE write fQTDE;
     property UNI_MED: string read fUNI_MED write fUNI_MED;
     property TIP_MET: string read fTIP_MET write fTIP_MET;
+    property COD_INV: string read fCOD_INV write fCOD_INV;
+    property UTIL_INS_PROD:  string read fUTIL_INS_PROD write fUTIL_INS_PROD;
+    property OPER_PAR: string read fOPER_PAR write fOPER_PAR;
+    property DESC_PAR: string read fDESC_PAR write fDESC_PAR;
+    property ID_PARTE_PAR: string read fID_PARTE_PAR write fID_PARTE_PAR;
+    property TIP_PAR: string read fTIP_PAR write fTIP_PAR;
+    property DAT_UTIL: string read fDAT_UTIL write fDAT_UTIL;
+    property CRIT_PAR: string read fCRIT_PAR write fCRIT_PAR;
+    property DAT_TRANS: TDateTime read fDAT_TRANS write fDAT_TRANS;
+    property DAT_DUIMP: TDateTime read fDAT_DUIMP write fDAT_DUIMP;
+    property ID_FONT_COT: variant read fID_FONT_COT write fID_FONT_COT;
+    property AJ_PAR: string read fAJ_PAR write fAJ_PAR;
     property VL_PAR: variant read fVL_PAR write fVL_PAR;
     property VL_PRAT: variant read fVL_PRAT write fVL_PRAT;
+    property QTDE_AJ: variant read fQTDE_AJ write fQTDE_AJ;
     property VL_AJ: variant read fVL_AJ write fVL_AJ;
+    property VALOR_COT: variant read fVALOR_COT write fVALOR_COT;
+    property NUM_DEC_IMP: string read fNUM_DEC_IMP write fNUM_DEC_IMP;
+    property DAT_ENT_PREV: TDateTime read fDAT_ENT_PREV write fDAT_ENT_PREV;
     property VL_JUR: variant read fVL_JUR write fVL_JUR;
     property VL_JUR_MIN: variant read fVL_JUR_MIN write fVL_JUR_MIN;
     property VL_JUR_MAX: variant read fVL_JUR_MAX write fVL_JUR_MAX;
     property COD_CNC: string read fCOD_CNC write fCOD_CNC;
     property TIP_MOEDA: string read fTIP_MOEDA write fTIP_MOEDA;
 
+    property RegistroX325: TRegistroX325List read FRegistroX325 write FRegistroX325;
     property RegistroX330: TRegistroX330List read FRegistroX330 write FRegistroX330;
+
   end;
 
   TRegistroX320List = class(TObjectList)
@@ -345,6 +415,31 @@ type
   public
     function New: TRegistroX320;
     property Items[Index: Integer]: TRegistroX320 read GetItem write SetItem;
+  end;
+
+  /// Registro X325: Tipos de Ajustes do Preço Parâmetro da Importação
+  { TRegistroX305 }
+
+  TRegistroX325 = class
+  private
+    fTIP_AJUST: integer;
+    fDESC_OUT_AJ: string;
+    fVALOR: variant;
+    fFONT_AJU325:  string;
+  public
+    property TIP_AJUST: integer read fTIP_AJUST write fTIP_AJUST;
+    property DESC_OUT_AJ: string read fDESC_OUT_AJ write fDESC_OUT_AJ;
+    property VALOR: variant read fVALOR write fVALOR;
+    property FONT_AJU325:  string read fFONT_AJU325 write fFONT_AJU325;
+  end;
+
+  TRegistroX325List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroX325;
+    procedure SetItem(Index: Integer; const Value: TRegistroX325);
+  public
+    function New: TRegistroX325;
+    property Items[Index: Integer]: TRegistroX325 read GetItem write SetItem;
   end;
 
   /// Registro X330 - Operações com o Exterior - Contratantes das Importações
@@ -1087,6 +1182,23 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroX305List }
+function TRegistroX305List.GetItem(Index: Integer): TRegistroX305;
+begin
+  Result := TRegistroX305(Inherited Items[Index]);
+end;
+
+function TRegistroX305List.New: TRegistroX305;
+begin
+  Result := TRegistroX305.Create;
+  Add(Result);
+end;
+
+procedure TRegistroX305List.SetItem(Index: Integer; const Value: TRegistroX305);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroX310List }
 
 function TRegistroX310List.GetItem(Index: Integer): TRegistroX310;
@@ -1099,6 +1211,7 @@ begin
   Result := TRegistroX310.Create;
   Add(Result);
 end;
+
 
 procedure TRegistroX310List.SetItem(Index: Integer; const Value: TRegistroX310);
 begin
@@ -1121,6 +1234,23 @@ end;
 procedure TRegistroX320List.SetItem(Index: Integer; const Value: TRegistroX320);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistroX305List }
+function TRegistroX325List.GetItem(Index: Integer): TRegistroX325;
+begin
+  Result := TRegistroX325(Inherited Items[Index]);
+end;
+
+procedure TRegistroX325List.SetItem(Index: Integer; const Value: TRegistroX325);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroX325List.New: TRegistroX325;
+begin
+  Result := TRegistroX325.Create;
+  Add(Result);
 end;
 
 { TRegistroX330List }
@@ -1503,13 +1633,16 @@ end;
 
 { TRegistroX300 }
 
+
 constructor TRegistroX300.Create;
 begin
   FRegistroX310 := TRegistroX310List.Create;
+  FRegistroX305 := TRegistroX305List.Create;
 end;
 
 destructor TRegistroX300.Destroy;
 begin
+  FRegistroX305.Free;
   FRegistroX310.Free;
   inherited;
 end;
@@ -1518,6 +1651,7 @@ end;
 
 constructor TRegistroX320.Create;
 begin
+  FRegistroX325 := TRegistroX325List.Create;
   FRegistroX330 := TRegistroX330List.Create;
 end;
 

@@ -55,7 +55,9 @@ type
     FRegistroX001: TRegistroX001;
     FRegistroX990: TRegistroX990;
 
+    FRegistroX305Count: Integer;
     FRegistroX310Count: Integer;
+    FRegistroX325Count: Integer;
     FRegistroX330Count: Integer;
     FRegistroX350Count: Integer;
     FRegistroX351Count: Integer;
@@ -72,8 +74,10 @@ type
     procedure WriteRegistroX291;
     procedure WriteRegistroX292;
     procedure WriteRegistroX300;
+    procedure WriteRegistroX305(RegX300: TRegistroX300);
     procedure WriteRegistroX310(RegX300: TRegistroX300);
     procedure WriteRegistroX320;
+    procedure WriteRegistroX325(RegX320: TRegistroX320);
     procedure WriteRegistroX330(RegX320: TRegistroX320);
     procedure WriteRegistroX340;
     procedure WriteRegistroX350(RegX340: TRegistroX340);
@@ -105,8 +109,10 @@ type
     function RegistroX291New :TRegistroX291;
     function RegistroX292New :TRegistroX292;
     function RegistroX300New :TRegistroX300;
+    function RegistroX305New :TRegistroX305;
     function RegistroX310New :TRegistroX310;
     function RegistroX320New :TRegistroX320;
+    function RegistroX325New :TRegistroX325;
     function RegistroX330New :TRegistroX330;
     function RegistroX340New :TRegistroX340;
     function RegistroX350New :TRegistroX350;
@@ -135,7 +141,9 @@ type
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property RegistroX001: TRegistroX001 read FRegistroX001 write FRegistroX001;
     property RegistroX990: TRegistroX990 read FRegistroX990 write FRegistroX990;
+    property RegistroX305Count: Integer read FRegistroX305Count write FRegistroX305Count;
     property RegistroX310Count: Integer read FRegistroX310Count write FRegistroX310Count;
+    property RegistroX325Count: Integer read FRegistroX325Count write FRegistroX325Count;
     property RegistroX330Count: Integer read FRegistroX330Count write FRegistroX330Count;
     property RegistroX350Count: Integer read FRegistroX350Count write FRegistroX350Count;
     property RegistroX351Count: Integer read FRegistroX351Count write FRegistroX351Count;
@@ -164,7 +172,9 @@ begin
   inherited;
   FRegistroX001         := TRegistroX001.Create;
   FRegistroX990         := TRegistroX990.Create;
+  FRegistroX305Count    := 0;
   FRegistroX310Count    := 0;
+  FRegistroX325Count    := 0;
   FRegistroX330Count    := 0;
   FRegistroX350Count    := 0;
   FRegistroX351Count    := 0;
@@ -223,6 +233,19 @@ begin
   Result := FRegistroX001.RegistroX300.New;
 end;
 
+function TBloco_X.RegistroX305New: TRegistroX305;
+var
+  UN300: TRegistroX300;
+  UN300Count: Integer;
+begin
+  UN300Count := FRegistroX001.RegistroX300.Count -1;
+  if UN300Count = -1 then
+    raise Exception.Create('O registro X305 deve ser filho do registro X300, e não existe nenhum X300 pai!');
+
+  UN300  := FRegistroX001.RegistroX300.Items[UN300Count];
+  Result := UN300.RegistroX305.New;
+end;
+
 function TBloco_X.RegistroX310New: TRegistroX310;
 var
   UN300: TRegistroX300;
@@ -239,6 +262,19 @@ end;
 function TBloco_X.RegistroX320New: TRegistroX320;
 begin
   Result := FRegistroX001.RegistroX320.New;
+end;
+
+function TBloco_X.RegistroX325New: TRegistroX325;
+var
+  UN320: TRegistroX320;
+  UN320Count: Integer;
+begin
+  UN320Count := FRegistroX001.RegistroX320.Count -1;
+  if UN320Count = -1 then
+    raise Exception.Create('O registro X325 deve ser filho do registro X320, e não existe nenhum X320 pai!');
+
+  UN320  := FRegistroX001.RegistroX320.Items[UN320Count];
+  Result := UN320.RegistroX325.New;
 end;
 
 function TBloco_X.RegistroX330New: TRegistroX330;
@@ -535,9 +571,32 @@ begin
             LFill(TIP_MOEDA));
       end;
       // Registros Filhos
+      WriteRegistroX305(FRegistroX001.RegistroX300.Items[intFor] );
       WriteRegistroX310(FRegistroX001.RegistroX300.Items[intFor] );
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;
+  end;
+end;
+
+procedure TBloco_X.WriteRegistroX305(RegX300: TRegistroX300);
+var
+  intFor: integer;
+begin
+  if Assigned(RegX300.RegistroX305) then
+  begin
+    for intFor := 0 to RegX300.RegistroX305.Count - 1 do
+    begin
+      with RegX300.RegistroX305.Items[intFor] do
+      begin
+        Add(LFill('X305')       +
+            LFill(TIP_AJUST,2)    +
+            LFill(DESC_OUT_AJ)  +
+            VLFill(VALOR,19)    +
+            LFill(FONT_AJU305));
+      end;
+      FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
+    end;
+    FRegistroX305Count := FRegistroX305Count + RegX300.RegistroX305.Count;
   end;
 end;
 
@@ -582,9 +641,25 @@ begin
             VLFill(QTDE,19)        +
             LFill(UNI_MED,2)       +
             LFill(TIP_MET)         +
+            LFill(COD_INV,60)      +
+            LFill(UTIL_INS_PROD,2) +
+            LFill(OPER_PAR,1)      +
+            LFill(DESC_PAR)        +
+            LFill(ID_PARTE_PAR)    +
+            LFill(TIP_PAR,1)       +
+            LFill(DAT_UTIL,1)      +
+            LFill(CRIT_PAR)        +
+            LFill(DAT_TRANS)       +
+            LFill(DAT_DUIMP)       +
+            VLFill(ID_FONT_COT,3)  +
+            LFill(AJ_PAR,1)        +
             VLFill(VL_PAR,19)      +
             VLFill(VL_PRAT,19)     +
+            VLFill(QTDE_AJ,6)      +
             VLFill(VL_AJ,19)       +
+            VLFill(VALOR_COT,19)   +
+            LFill(NUM_DEC_IMP,50)  +
+            LFill(DAT_ENT_PREV)    +
             VLFill(VL_JUR,19)      +
             VLFill(VL_JUR_MIN,7,4) +
             VLFill(VL_JUR_MAX,7,4) +
@@ -592,9 +667,32 @@ begin
             LFill(TIP_MOEDA));
       end;
       // Registros Filhos
+      WriteRegistroX325(FRegistroX001.RegistroX320.Items[intFor] );
       WriteRegistroX330(FRegistroX001.RegistroX320.Items[intFor] );
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;
+  end;
+end;
+
+procedure TBloco_X.WriteRegistroX325(RegX320: TRegistroX320);
+var
+  intFor: integer;
+begin
+  if Assigned(RegX320.RegistroX325) then
+  begin
+    for intFor := 0 to RegX320.RegistroX325.Count - 1 do
+    begin
+      with RegX320.RegistroX325.Items[intFor] do
+      begin
+        Add(LFill('X325')       +
+            LFill(TIP_AJUST,2)    +
+            LFill(DESC_OUT_AJ)  +
+            VLFill(VALOR,19)    +
+            LFill(FONT_AJU325));
+      end;
+      FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
+    end;
+    FRegistroX325Count := FRegistroX325Count + RegX320.RegistroX325.Count;
   end;
 end;
 

@@ -73,100 +73,100 @@ namespace ACBrLibBoleto.Demo
         {
             boleto.ConfigLer();
 
-            cmbModeloImpressao.SetSelectedValue(boleto.ConfigLerValor<ACBrBolLayOut>(ACBrSessao.BoletoBancoFCFortesConfig, "Layout"));
-            chkPreview.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview");
-            chkProgresso.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso");
-            chkSetup.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup");
-            txtNomeArquivo.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo");
-            nudCopias.Value = boleto.ConfigLerValor<int>(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias");
-            cmbImpressora.SelectedItem = boleto.ConfigLerValor<string>(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName");
-            txtDirLogo.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo");
-            cmbBanco.SetSelectedValue(boleto.ConfigLerValor<ACBrTipoCobranca>(ACBrSessao.BoletoBancoConfig, "TipoCobranca"));
-            txtAgencia.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Agencia");
-            txtDigAgencia.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito");
-            txtDigAgencia.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito");
-            txtConta.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Conta");
-            txtDigConta.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "ContaDigito");
-            txtCodTransmissao.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao");
-            txtConvenio.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Convenio");
-            txtModalidade.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Modalidade");
-            txtCodCedente.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "CodigoCedente");
-            cmbRespEmissao.SetSelectedValue(boleto.ConfigLerValor<ACBrResponEmissao>(ACBrSessao.BoletoCedenteConfig, "ResponEmissao"));
-            txtBairro.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Bairro");
-            txtCEP.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "CEP");
-            txtCidade.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Cidade");
-            txtCNPJCPF.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "CNPJCPF");
-            txtComplemento.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Complemento");
-            txtLogradouro.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Logradouro");
-            txtNomeRes.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Nome");
-            txtNumeroRes.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "NumeroRes");
-            txtTelefone.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "Telefone");
-            cmbUF.SelectedItem = boleto.ConfigLerValor<string>(ACBrSessao.BoletoCedenteConfig, "UF");
-            cmbTipoCarteira.SetSelectedValue(boleto.ConfigLerValor<ACBrTipoCarteira>(ACBrSessao.BoletoCedenteConfig, "TipoCarteira"));
-            cmbTipoDocumento.SetSelectedValue(boleto.ConfigLerValor<ACBrTipoDocumento>(ACBrSessao.BoletoCedenteConfig, "TipoDocumento"));
-            cmbTipoInscricao.SetSelectedValue(boleto.ConfigLerValor<ACBrPessoa>(ACBrSessao.BoletoCedenteConfig, "TipoInscricao"));
-            txtDirRemessa.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa");
-            txtDirRetorno.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno");
-            cmbLayoutCNAB.SetSelectedValue(boleto.ConfigLerValor<ACBrLayoutRemessa>(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa"));
-            txtNomeRemessa.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa");
-            txtNomeRetorno.Text = boleto.ConfigLerValor<string>(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno");
-            ckbCedenteRetorno.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno");
-            txtNome.Text = boleto.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
-            txtEmail.Text = boleto.ConfigLerValor<string>(ACBrSessao.Email, "Conta");
-            txtUsuario.Text = boleto.ConfigLerValor<string>(ACBrSessao.Email, "Usuario");
-            txtSenha.Text = boleto.ConfigLerValor<string>(ACBrSessao.Email, "Senha");
-            txtHost.Text = boleto.ConfigLerValor<string>(ACBrSessao.Email, "Servidor");
-            nudPorta.Value = boleto.ConfigLerValor<int>(ACBrSessao.Email, "Porta");
-            ckbSSL.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.Email, "SSL");
-            ckbTLS.Checked = boleto.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
+            cmbModeloImpressao.SetSelectedValue(boleto.Config.Impressao.Layout);
+            chkPreview.Checked = boleto.Config.Impressao.MostrarPreview;
+            chkProgresso.Checked = boleto.Config.Impressao.MostrarProgresso;
+            chkSetup.Checked = boleto.Config.Impressao.MostrarSetup;
+            txtNomeArquivo.Text = boleto.Config.Impressao.NomeArquivo;
+            nudCopias.Value = boleto.Config.Impressao.NumeroCopias;
+            cmbImpressora.SelectedItem = boleto.Config.Impressao.PrinterName;
+            txtDirLogo.Text = boleto.Config.Impressao.DirLogo;
+            cmbBanco.SetSelectedValue(boleto.Config.Banco.TipoCobranca);
+            txtAgencia.Text = boleto.Config.Cedente.Agencia;
+            txtDigAgencia.Text = boleto.Config.Cedente.AgenciaDigito;
+            txtDigAgencia.Text = boleto.Config.Cedente.AgenciaDigito;
+            txtConta.Text = boleto.Config.Cedente.Conta;
+            txtDigConta.Text = boleto.Config.Cedente.ContaDigito;
+            txtCodTransmissao.Text = boleto.Config.Cedente.CodigoTransmissao;
+            txtConvenio.Text = boleto.Config.Cedente.Convenio;
+            txtModalidade.Text = boleto.Config.Cedente.Modalidade;
+            txtCodCedente.Text = boleto.Config.Cedente.CodigoCedente;
+            cmbRespEmissao.SetSelectedValue(boleto.Config.Cedente.ResponEmissao);
+            txtBairro.Text = boleto.Config.Cedente.Bairro;
+            txtCEP.Text = boleto.Config.Cedente.CEP;
+            txtCidade.Text = boleto.Config.Cedente.Cidade;
+            txtCNPJCPF.Text = boleto.Config.Cedente.CNPJCPF;
+            txtComplemento.Text = boleto.Config.Cedente.Complemento;
+            txtLogradouro.Text = boleto.Config.Cedente.Logradouro;
+            txtNomeRes.Text = boleto.Config.Cedente.Nome;
+            txtNumeroRes.Text = boleto.Config.Cedente.NumeroRes;
+            txtTelefone.Text = boleto.Config.Cedente.Telefone;
+            cmbUF.SelectedItem = boleto.Config.Cedente.UF;
+            cmbTipoCarteira.SetSelectedValue(boleto.Config.Cedente.TipoCarteira);
+            cmbTipoDocumento.SetSelectedValue(boleto.Config.Cedente.TipoDocumento);
+            cmbTipoInscricao.SetSelectedValue(boleto.Config.Cedente.TipoInscricao);
+            txtDirRemessa.Text = boleto.Config.Diretorio.DirArqRemessa;
+            txtDirRetorno.Text = boleto.Config.Diretorio.DirArqRetorno;
+            cmbLayoutCNAB.SetSelectedValue(boleto.Config.Diretorio.LayoutRemessa);
+            txtNomeRemessa.Text = boleto.Config.Diretorio.NomeArqRemessa;
+            txtNomeRetorno.Text = boleto.Config.Diretorio.NomeArqRetorno;
+            ckbCedenteRetorno.Checked = boleto.Config.Diretorio.LeCedenteRetorno;
+            txtNome.Text = boleto.Config.Email.Nome;
+            txtEmail.Text = boleto.Config.Email.Conta;
+            txtUsuario.Text = boleto.Config.Email.Usuario;
+            txtSenha.Text = boleto.Config.Email.Senha;
+            txtHost.Text = boleto.Config.Email.Servidor;
+            nudPorta.Text = boleto.Config.Email.Porta;
+            ckbSSL.Checked = boleto.Config.Email.SSL;
+            ckbTLS.Checked = boleto.Config.Email.TLS;
         }
 
         private void SaveConfig()
         {
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview", chkPreview.Checked);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso", chkProgresso.Checked);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup", chkSetup.Checked);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo", txtNomeArquivo.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias", nudCopias.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName", cmbImpressora.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo", txtDirLogo.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", cmbBanco.GetSelectedValue<ACBrTipoCobranca>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", cmbTipoCarteira.GetSelectedValue<ACBrTipoCarteira>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", cmbTipoDocumento.GetSelectedValue<ACBrTipoDocumento>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", cmbTipoInscricao.GetSelectedValue<ACBrPessoa>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Agencia", txtAgencia.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito", txtDigAgencia.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Conta", txtConta.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "ContaDigito", txtDigConta.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao", txtCodTransmissao.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Convenio", txtConvenio.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Modalidade", txtModalidade.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoCedente", txtCodCedente.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao", cmbRespEmissao.GetSelectedValue<ACBrResponEmissao>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Bairro", txtBairro.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "CEP", txtCEP.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Cidade", txtCidade.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "CNPJCPF", txtCNPJCPF.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Complemento", txtComplemento.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Logradouro", txtLogradouro.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Nome", txtNomeRes.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes", txtNumeroRes.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "Telefone", txtTelefone.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoCedenteConfig, "UF", cmbUF.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa", txtDirRemessa.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno", txtDirRetorno.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa", cmbLayoutCNAB.GetSelectedValue<ACBrLayoutRemessa>());
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa", txtNomeRemessa.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno", txtNomeRetorno.Text);
-            boleto.ConfigGravarValor(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno", ckbCedenteRetorno.Checked);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Senha", txtSenha.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Servidor", txtHost.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "Porta", nudPorta.Text);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "SSL", ckbSSL.Checked);
-            boleto.ConfigGravarValor(ACBrSessao.Email, "TLS", ckbTLS.Checked);
+            boleto.Config.Impressao.MostrarPreview = chkPreview.Checked;
+            boleto.Config.Impressao.MostrarProgresso = chkProgresso.Checked;
+            boleto.Config.Impressao.MostrarSetup = chkSetup.Checked;
+            boleto.Config.Impressao.NomeArquivo = txtNomeArquivo.Text;
+            boleto.Config.Impressao.NumeroCopias = (int)nudCopias.Value;
+            boleto.Config.Impressao.PrinterName = cmbImpressora.Text;
+            boleto.Config.Impressao.DirLogo = txtDirLogo.Text;
+            boleto.Config.Banco.TipoCobranca = cmbBanco.GetSelectedValue<ACBrTipoCobranca>();
+            boleto.Config.Cedente.TipoCarteira = cmbTipoCarteira.GetSelectedValue<ACBrTipoCarteira>();
+            boleto.Config.Cedente.TipoDocumento = cmbTipoDocumento.GetSelectedValue<ACBrTipoDocumento>();
+            boleto.Config.Cedente.TipoInscricao = cmbTipoInscricao.GetSelectedValue<ACBrPessoa>();
+            boleto.Config.Cedente.Agencia = txtAgencia.Text;
+            boleto.Config.Cedente.AgenciaDigito = txtDigAgencia.Text;
+            boleto.Config.Cedente.Conta = txtConta.Text;
+            boleto.Config.Cedente.ContaDigito = txtDigConta.Text;
+            boleto.Config.Cedente.CodigoTransmissao = txtCodTransmissao.Text;
+            boleto.Config.Cedente.Convenio = txtConvenio.Text;
+            boleto.Config.Cedente.Modalidade = txtModalidade.Text;
+            boleto.Config.Cedente.CodigoCedente = txtCodCedente.Text;
+            boleto.Config.Cedente.ResponEmissao = cmbRespEmissao.GetSelectedValue<ACBrResponEmissao>();
+            boleto.Config.Cedente.Bairro = txtBairro.Text;
+            boleto.Config.Cedente.CEP = txtCEP.Text;
+            boleto.Config.Cedente.Cidade = txtCidade.Text;
+            boleto.Config.Cedente.CNPJCPF = txtCNPJCPF.Text;
+            boleto.Config.Cedente.Complemento = txtComplemento.Text;
+            boleto.Config.Cedente.Logradouro = txtLogradouro.Text;
+            boleto.Config.Cedente.Nome = txtNomeRes.Text;
+            boleto.Config.Cedente.NumeroRes = txtNumeroRes.Text;
+            boleto.Config.Cedente.Telefone = txtTelefone.Text;
+            boleto.Config.Cedente.UF = cmbUF.Text;
+            boleto.Config.Diretorio.DirArqRemessa = txtDirRemessa.Text;
+            boleto.Config.Diretorio.DirArqRetorno = txtDirRetorno.Text;
+            boleto.Config.Diretorio.LayoutRemessa = cmbLayoutCNAB.GetSelectedValue<ACBrLayoutRemessa>();
+            boleto.Config.Diretorio.NomeArqRemessa = txtNomeRemessa.Text;
+            boleto.Config.Diretorio.NomeArqRetorno = txtNomeRetorno.Text;
+            boleto.Config.Diretorio.LeCedenteRetorno = ckbCedenteRetorno.Checked;
+            boleto.Config.Email.Nome = txtNome.Text;
+            boleto.Config.Email.Conta = txtEmail.Text;
+            boleto.Config.Email.Usuario = txtUsuario.Text;
+            boleto.Config.Email.Senha = txtSenha.Text;
+            boleto.Config.Email.Servidor = txtHost.Text;
+            boleto.Config.Email.Porta = nudPorta.Text;
+            boleto.Config.Email.SSL = ckbSSL.Checked;
+            boleto.Config.Email.TLS = ckbTLS.Checked;
             boleto.ConfigGravar();
         }
 
@@ -211,7 +211,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnGerarRemessa_Click(object sender, EventArgs e)
         {
-            string ret = "";
+            var ret = "";
             if (string.IsNullOrEmpty(txtDirRemessa.Text))
                 ret = Application.StartupPath;
             else
@@ -255,14 +255,9 @@ namespace ACBrLibBoleto.Demo
             rtbRespostas.AppendLine(ret);
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-        }
-
         private void BtnEnviarEmail_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            Int32.TryParse(boleto.TotalTitulosLista(), out i);
+            int.TryParse(boleto.TotalTitulosLista(), out var i);
 
             if (i == 0) return;
 
@@ -311,9 +306,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnImprimirBoleto_Click(object sender, EventArgs e)
         {
-            int indice;
-
-            indice = 0;
+            var indice = 0;
 
             boleto.ImprimirBoleto(indice);
             rtbRespostas.AppendLine("Boletos impressos.");
@@ -321,9 +314,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnSelecionaBanco_Click(object sender, EventArgs e)
         {
-            string codBanco;
-
-            codBanco = "001";
+            var codBanco = "001";
 
             var ret = boleto.SelecionaBanco(codBanco);
             rtbRespostas.AppendLine(ret);
@@ -349,21 +340,17 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnSetDiretorioArquivos_Click(object sender, EventArgs e)
         {
-            string sDiretorio;
-            sDiretorio = Helpers.SelectFolder();
+            var sDiretorio = Helpers.SelectFolder();
 
             boleto.SetDiretorioArquivo(sDiretorio, "Arquivo");
             rtbRespostas.AppendLine("Direto setado");
-
         }
 
         private void BtnTamNossoNumero_Click(object sender, EventArgs e)
         {
-            string sCarteira, sNossoNumero, sConvenio;
-
-            sCarteira = "0";
-            sNossoNumero = "0";
-            sConvenio = "0";
+            var sCarteira = "0";
+            var sNossoNumero = "0";
+            var sConvenio = "0";
 
             var ret = boleto.TamNossoNumero(sCarteira, sNossoNumero, sConvenio);
             rtbRespostas.AppendLine(ret);
@@ -371,8 +358,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnMontarNossoNumero_Click(object sender, EventArgs e)
         {
-            int indice;
-            indice = 0;
+            var indice = 0;
 
             var ret = boleto.MontarNossoNumero(indice);
             rtbRespostas.AppendLine(ret);
@@ -380,8 +366,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnEnviarEmailBoleto_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            Int32.TryParse(boleto.TotalTitulosLista(), out i);
+            int.TryParse(boleto.TotalTitulosLista(), out var i);
 
             if (i == 0) return;
 

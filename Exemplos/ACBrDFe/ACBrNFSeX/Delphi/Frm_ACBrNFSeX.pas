@@ -825,7 +825,7 @@ begin
     if not (InputQuery(Titulo, 'Numero da NFSe', NumNFSe)) then
       exit;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proWebFisco then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasilV2, proWebFisco] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -2015,7 +2015,7 @@ end;
 
 procedure TfrmACBrNFSe.btnSubsNFSeClick(Sender: TObject);
 var
-  vNumRPS, Codigo, Motivo, sNumNFSe, NumLote, CodVerif: String;
+  vNumRPS, Codigo, Motivo, sNumNFSe, sSerieNFSe, NumLote, CodVerif: String;
   CodCanc: Integer;
   Response: TNFSeSubstituiNFSeResponse;
 begin
@@ -2061,6 +2061,13 @@ begin
   if not(InputQuery('Substituir NFS-e', 'Numero da NFS-e', sNumNFSe)) then
     exit;
 
+  sSerieNFSe := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proiiBrasilV2 then
+  begin
+    if not(InputQuery('Substituir NFS-e', 'Série da NFS-e', sSerieNFSe)) then
+      exit;
+  end;
+
   if ACBrNFSeX1.Configuracoes.Geral.Provedor = proAssessorPublico then
   begin
     NumLote := '1';
@@ -2076,7 +2083,8 @@ begin
       exit;
   end;
 
-  Response := ACBrNFSeX1.SubstituirNFSe(sNumNFSe, Codigo, Motivo, NumLote, CodVerif);
+  Response := ACBrNFSeX1.SubstituirNFSe(sNumNFSe, sSerieNFSe, Codigo,
+                                        Motivo, NumLote, CodVerif);
 
   ChecarResposta(Response);
 

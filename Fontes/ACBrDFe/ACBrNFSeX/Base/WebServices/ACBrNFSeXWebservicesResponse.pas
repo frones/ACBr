@@ -41,7 +41,7 @@ uses
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
-  {$ENDIF}
+  {$IFEND}
   SysUtils,
   ACBrBase, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXWebserviceBase;

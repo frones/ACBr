@@ -41,7 +41,9 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrXmlBase,
+  ACBrNFSeXParametros, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_SilTecnologia }
@@ -51,11 +53,34 @@ type
 
   end;
 
+  { TNFSeW_SilTecnologiaV203 }
+
+  TNFSeW_SilTecnologiaV203 = class(TNFSeW_ABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
 implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     SilTecnologia
 //==============================================================================
+
+{ TNFSeW_SilTecnologiaV203 }
+
+procedure TNFSeW_SilTecnologiaV203.Configuracao;
+begin
+  // Executa a Configuração Padrão
+  inherited Configuracao;
+
+  // Altera a Configuração Padrão para gerar o XML do RPS
+  FormatoAliq := tcDe2;
+  NrOcorrInformacoesComplemetares := 0;
+  NrOcorrNIFTomador := 0;
+  NrOcorrCodigoPaisServico := -1;
+  GerarEnderecoExterior := True;
+end;
 
 end.

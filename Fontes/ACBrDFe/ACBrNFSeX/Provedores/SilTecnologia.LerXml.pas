@@ -41,12 +41,21 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
 type
   { TNFSeR_SilTecnologia }
 
   TNFSeR_SilTecnologia = class(TNFSeR_ABRASFv1)
+  protected
+
+  public
+
+  end;
+
+  { TNFSeR_SilTecnologiaV203 }
+
+  TNFSeR_SilTecnologiaV203 = class(TNFSeR_ABRASFv2)
   protected
 
   public

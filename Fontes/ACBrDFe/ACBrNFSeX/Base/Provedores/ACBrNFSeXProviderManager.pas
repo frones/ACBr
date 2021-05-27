@@ -73,7 +73,6 @@ uses
   Recife.Provider,
   RJ.Provider,
   Salvador.Provider,
-  SilTecnologia.Provider,
   SJP.Provider,
   SpeedGov.Provider,
   Thema.Provider,
@@ -135,6 +134,7 @@ uses
   Abaco.Provider,
   Betha.Provider,
   Pronim.Provider,
+  SilTecnologia.Provider,
   SimplISS.Provider,
   Tiplan.Provider,
   WebISS.Provider,
@@ -271,6 +271,10 @@ begin
     proSiapSistemas: Result := TACBrNFSeProviderSiapSistemas.Create(ACBrNFSe);
     proSigCorp:      Result := TACBrNFSeProviderSigCorp.Create(ACBrNFSe);
     proSigep:        Result := TACBrNFSeProviderSigep.Create(ACBrNFSe);
+
+    proSilTecnologiaV203:
+      Result := TACBrNFSeProviderSilTecnologiaV203.Create(ACBrNFSe);
+
     proSimplISSV2:   Result := TACBrNFSeProviderSimplISSv2.Create(ACBrNFSe);
     proSisPMJP:      Result := TACBrNFSeProviderSisPMJP.Create(ACBrNFSe);
     proSmarAPDV203:  Result := TACBrNFSeProviderSmarAPDv203.Create(ACBrNFSe);

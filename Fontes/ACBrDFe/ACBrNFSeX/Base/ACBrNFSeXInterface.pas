@@ -54,7 +54,8 @@ type
                                 ACodVerificacao: String): TNFSeConsultaNFSeporRpsResponse;
     function ConsultaNFSe(aInfConsultaNFSe: TInfConsultaNFSe): TNFSeConsultaNFSeResponse;
     function CancelaNFSe(aInfCancelamento: TInfCancelamento): TNFSeCancelaNFSeResponse;
-    function SubstituiNFSe(const ANumNFSe, ACodCancelamento, AMotCancelamento, ANumLote,
+    function SubstituiNFSe(const ANumNFSe, ASerieNFSe, ACodCancelamento,
+                           AMotCancelamento, ANumLote,
                            ACodVerificacao: String): TNFSeSubstituiNFSeResponse;
 
     function GetConfigGeral: TConfigGeral;

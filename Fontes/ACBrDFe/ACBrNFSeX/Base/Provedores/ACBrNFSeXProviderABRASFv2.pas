@@ -1365,7 +1365,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
-  IdAttr, NameSpace, xMotivo, xCodVerif, Prefixo, PrefixoTS: string;
+  IdAttr, NameSpace, xMotivo, xCodVerif, Prefixo, PrefixoTS, xSerie: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -1428,6 +1428,13 @@ begin
   else
     IdAttr := '';
 
+  xSerie := Trim(InfoCanc.SerieNFSe);
+
+  if xSerie <> '' then
+    xSerie := '<' + PrefixoTS + 'Serie>' +
+                 xSerie +
+              '</' + PrefixoTS + 'Serie>';
+
   xMotivo := Trim(InfoCanc.MotCancelamento);
 
   if xMotivo <> '' then
@@ -1447,6 +1454,7 @@ begin
                                '<' + PrefixoTS + 'Numero>' +
                                   InfoCanc.NumeroNFSe +
                                '</' + PrefixoTS + 'Numero>' +
+                               xSerie +
                                '<' + PrefixoTS + 'CpfCnpj>' +
                                  GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
                                '</' + PrefixoTS + 'CpfCnpj>' +

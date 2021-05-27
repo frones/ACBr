@@ -99,6 +99,8 @@ begin
     GerarPrestadorLoteRps := True;
     DadosCabecalho := GetCabecalho('');
   end;
+
+//  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProvideriiBrasil.CriarGeradorXml(
@@ -229,6 +231,22 @@ begin
         i := Pos('</ConsultarNfseRpsEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</ConsultarNfseRpsEnvio>';
+        Response.XmlEnvio := xXml;
+      end;
+
+    tmCancelarNFSe:
+      begin
+        i := Pos('</CancelarNfseEnvio>', xXml);
+
+        xXml := Copy(xXml, 1, i -1) + Integridade + '</CancelarNfseEnvio>';
+        Response.XmlEnvio := xXml;
+      end;
+
+    tmSubstituirNFSe:
+      begin
+        i := Pos('</SubstituirNfseEnvio>', xXml);
+
+        xXml := Copy(xXml, 1, i -1) + Integridade + '</SubstituirNfseEnvio>';
         Response.XmlEnvio := xXml;
       end;
   else

@@ -162,7 +162,7 @@ type
 
     function CancelarNFSe(aInfCancelamento: TInfCancelamento): TNFSeCancelaNFSeResponse;
 
-    function SubstituirNFSe(const ANumNFSe: String;
+    function SubstituirNFSe(const ANumNFSe: String; const ASerieNFSe: String;
       const ACodCancelamento: string; const AMotCancelamento: String = '';
       const ANumLote: String = ''; const ACodVerificacao: String = ''): TNFSeSubstituiNFSeResponse;
 
@@ -784,14 +784,14 @@ begin
   Result := FProvider.CancelaNFSe(aInfCancelamento);
 end;
 
-function TACBrNFSeX.SubstituirNFSe(const ANumNFSe, ACodCancelamento: String;
+function TACBrNFSeX.SubstituirNFSe(const ANumNFSe, ASerieNFSe, ACodCancelamento: String;
   const AMotCancelamento, ANumLote, ACodVerificacao: String): TNFSeSubstituiNFSeResponse;
 begin
-  if ACodCancelamento = '' then
-    GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
-
   if ANumNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
+
+  if ACodCancelamento = '' then
+    GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
 
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -799,7 +799,7 @@ begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.SubstituiNFSe(ANumNFSe, ACodCancelamento,
+  Result := FProvider.SubstituiNFSe(ANumNFSe, ASerieNFSe, ACodCancelamento,
                                     AMotCancelamento, ANumLote, ACodVerificacao);
 end;
 

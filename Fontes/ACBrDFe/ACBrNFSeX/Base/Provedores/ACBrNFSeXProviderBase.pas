@@ -129,7 +129,8 @@ type
       aCodVerificacao: String): TNFSeConsultaNFSeporRpsResponse; virtual;
     function ConsultaNFSe(aInfConsultaNFSe: TInfConsultaNFSe): TNFSeConsultaNFSeResponse; virtual;
     function CancelaNFSe(aInfCancelamento: TInfCancelamento): TNFSeCancelaNFSeResponse; virtual;
-    function SubstituiNFSe(const aNumNFSe, aCodCancelamento, aMotCancelamento,
+    function SubstituiNFSe(const aNumNFSe, aSerieNFSe, aCodCancelamento,
+      aMotCancelamento,
       aNumLote, aCodVerificacao: String): TNFSeSubstituiNFSeResponse; virtual;
 
     property ConfigGeral: TConfigGeral read GetConfigGeral;
@@ -1439,7 +1440,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 end;
 
-function TACBrNFSeXProvider.SubstituiNFSe(const aNumNFSe, aCodCancelamento,
+function TACBrNFSeXProvider.SubstituiNFSe(const aNumNFSe, aSerieNFSe, aCodCancelamento,
   aMotCancelamento, aNumLote, aCodVerificacao: String): TNFSeSubstituiNFSeResponse;
 var
   AService: TACBrNFSeXWebservice;
@@ -1453,6 +1454,7 @@ begin
   with Result.InfCancelamento do
   begin
     NumeroNFSe := aNumNFSe;
+    SerieNFSe := aSerieNFSe;
     CodCancelamento := aCodCancelamento;
     MotCancelamento := aMotCancelamento;
     NumeroLote := aNumLote;
@@ -1464,6 +1466,7 @@ begin
     with Cancelamento.InfCancelamento do
     begin
       NumeroNFSe := Result.InfCancelamento.NumeroNFSe;
+      SerieNFSe := Result.InfCancelamento.SerieNFSe;
       CodCancelamento := Result.InfCancelamento.CodCancelamento;
       MotCancelamento := Result.InfCancelamento.MotCancelamento;
       NumeroLote := Result.InfCancelamento.NumeroLote;

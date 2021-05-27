@@ -84,9 +84,9 @@ namespace ACBr.PDV
             //SAT
             cmbModeloSat.EnumDataSource(SATModelo.satNenhum);
             cmbImpressao.EnumDataSource(TipoExtrato.tpFortes);
-            cmbSATRegTrib.SelectedIndex = 0;
-            cmbSATRegTribISSQN.SelectedIndex = 6;
-            cmbSATRatIISQN.SelectedIndex = 1;
+            cmbSATRegTrib.EnumDataSource(RegTrib.RTRegimeNormal);
+            cmbSATRegTribISSQN.EnumDataSource(RegTribISSQN.RTISSNenhum);
+            cmbSATRatIISQN.EnumDataSource(indRatISSQN.irNao);
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
@@ -103,20 +103,8 @@ namespace ACBr.PDV
             cbbModelo.EnumDataSource(ACBrPosPrinterModelo.ppTexto);
             cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
-            cmbPosBaud.Items.Add(1200);
-            cmbPosBaud.Items.Add(2400);
-            cmbPosBaud.Items.Add(4800);
-            cmbPosBaud.Items.Add(9600);
-            cmbPosBaud.Items.Add(19200);
-            cmbPosBaud.Items.Add(38400);
-            cmbPosBaud.Items.Add(57600);
-            cmbPosBaud.Items.Add(115200);
-
-            cmbPosDatabits.Items.Add(5);
-            cmbPosDatabits.Items.Add(6);
-            cmbPosDatabits.Items.Add(7);
-            cmbPosDatabits.Items.Add(8);
-
+            cmbPosBaud.EnumDataSource(SerialBaud.bd110);
+            cmbPosDatabits.EnumDataSource(SerialDataBits.db5);
             cmbPosStopbits.EnumDataSource(SerialStopBytes.One);
             cmbPosParity.EnumDataSource(SerialParity.None);
             cmbPosHandshaking.EnumDataSource(SerialHandShake.Nenhum);
@@ -126,20 +114,8 @@ namespace ACBr.PDV
 
             cmbPorta.Items.AddRange(SerialPort.GetPortNames());
 
-            cmbBaud.Items.Add(1200);
-            cmbBaud.Items.Add(2400);
-            cmbBaud.Items.Add(4800);
-            cmbBaud.Items.Add(9600);
-            cmbBaud.Items.Add(19200);
-            cmbBaud.Items.Add(38400);
-            cmbBaud.Items.Add(57600);
-            cmbBaud.Items.Add(115200);
-
-            cmbDatabits.Items.Add(5);
-            cmbDatabits.Items.Add(6);
-            cmbDatabits.Items.Add(7);
-            cmbDatabits.Items.Add(8);
-
+            cmbBaud.EnumDataSource(SerialBaud.bd110);
+            cmbDatabits.EnumDataSource(SerialDataBits.db5);
             cmbStopbits.EnumDataSource(SerialStopBytes.One);
             cmbParity.EnumDataSource(SerialParity.None);
             cmbHandshaking.EnumDataSource(SerialHandShake.Nenhum);
@@ -281,78 +257,78 @@ namespace ACBr.PDV
             Caixa.NFe.ConfigLer();
 
             //Config Geral
-            ckbAtualizarXML.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");
-            ckbExibirErroSchema.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "ExibirErroSchema");
-            txtFormatoAlerta.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "FormatoAlerta");
-            cmbFormaEmissao.SetSelectedValue(Caixa.NFe.ConfigLerValor<TipoEmissao>(ACBrSessao.NFe, "FormaEmissao"));
-            cmbModeloDocumento.SetSelectedValue(Caixa.NFe.ConfigLerValor<ModeloNFe>(ACBrSessao.NFe, "ModeloDF"));
-            cmbVersaoDF.SetSelectedValue(Caixa.NFe.ConfigLerValor<VersaoNFe>(ACBrSessao.NFe, "VersaoDF"));
-            ckbRetirarAcentos.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "RetirarAcentos");
-            ckbSalvar.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
-            txtLogs.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathSalvar");
-            txtSchemaPath.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathSchemas");
-            txtIdCSC.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "IdCSC");
-            txtCSC.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "CSC");
+            ckbAtualizarXML.Checked = Caixa.NFe.Config.AtualizarXMLCancelado;
+            ckbExibirErroSchema.Checked = Caixa.NFe.Config.ExibirErroSchema;
+            txtFormatoAlerta.Text = Caixa.NFe.Config.FormatoAlerta;
+            cmbFormaEmissao.SetSelectedValue(Caixa.NFe.Config.FormaEmissao);
+            cmbModeloDocumento.SetSelectedValue(Caixa.NFe.Config.ModeloDF);
+            cmbVersaoDF.SetSelectedValue(Caixa.NFe.Config.VersaoDF);
+            ckbRetirarAcentos.Checked = Caixa.NFe.Config.RetirarAcentos;
+            ckbSalvar.Checked = Caixa.NFe.Config.SalvarWS;
+            txtLogs.Text = Caixa.NFe.Config.PathSalvar;
+            txtSchemaPath.Text = Caixa.NFe.Config.PathSchemas;
+            txtIdCSC.Text = Caixa.NFe.Config.IdCSC;
+            txtCSC.Text = Caixa.NFe.Config.CSC;
 
             //Config Webservice
-            cmbUfDestino.SelectedItem = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DFe, "UF");
-            cmbSSlType.SetSelectedValue(Caixa.NFe.ConfigLerValor<SSLType>(ACBrSessao.NFe, "SSLType"));
-            nudTimeOut.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.NFe, "Timeout");
+            cmbUfDestino.SelectedItem = Caixa.NFe.Config.DFe.UF;
+            cmbSSlType.SetSelectedValue(Caixa.NFe.Config.SSLType);
+            nudTimeOut.Value = Caixa.NFe.Config.Timeout;
 
-            var ambiente = Caixa.NFe.ConfigLerValor<TipoAmbiente>(ACBrSessao.NFe, "Ambiente");
+            var ambiente = Caixa.NFe.Config.Ambiente;
             rdbHomologacao.Checked = ambiente == TipoAmbiente.taHomologacao;
             rdbProducao.Checked = ambiente == TipoAmbiente.taProducao;
 
-            ckbVisualizar.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "Visualizar");
-            ckbSalvarSOAP.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
-            ckbAjustarAut.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AjustaAguardaConsultaRet");
-            nudAguardar.Value = Caixa.NFe.ConfigLerValor<int>(ACBrSessao.NFe, "AguardarConsultaRet");
-            nudTentativas.Value = Caixa.NFe.ConfigLerValor<int>(ACBrSessao.NFe, "Tentativas");
-            nudIntervalos.Value = Caixa.NFe.ConfigLerValor<int>(ACBrSessao.NFe, "IntervaloTentativas");
-            txtProxyServidor.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Servidor");
-            nudProxyPorta.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Porta");
-            txtProxyUsuario.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Usuario");
-            txtProxySenha.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.Proxy, "Senha");
+            ckbVisualizar.Checked = Caixa.NFe.Config.Visualizar;
+            ckbSalvarSOAP.Checked = Caixa.NFe.Config.SalvarWS;
+            ckbAjustarAut.Checked = Caixa.NFe.Config.AjustaAguardaConsultaRet;
+            nudAguardar.Value = Caixa.NFe.Config.AguardarConsultaRet;
+            nudTentativas.Value = Caixa.NFe.Config.Tentativas;
+            nudIntervalos.Value = Caixa.NFe.Config.IntervaloTentativas;
+            txtProxyServidor.Text = Caixa.NFe.Config.Proxy.Servidor;
+            nudProxyPorta.Text = Caixa.NFe.Config.Proxy.Porta;
+            txtProxyUsuario.Text = Caixa.NFe.Config.Proxy.Usuario;
+            txtProxySenha.Text = Caixa.NFe.Config.Proxy.Senha;
 
             //Config Certificado
-            cmbCrypt.SetSelectedValue(Caixa.NFe.ConfigLerValor<SSLCryptLib>(ACBrSessao.DFe, "SSLCryptLib"));
-            cmbHttp.SetSelectedValue(Caixa.NFe.ConfigLerValor<SSLHttpLib>(ACBrSessao.DFe, "SSLHttpLib"));
-            cmbXmlSign.SetSelectedValue(Caixa.NFe.ConfigLerValor<SSLXmlSignLib>(ACBrSessao.DFe, "SSLXmlSignLib"));
-            txtCertPath.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DFe, "ArquivoPFX");
-            txtCertPassword.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DFe, "Senha");
-            txtCertNumero.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DFe, "NumeroSerie");
+            cmbCrypt.SetSelectedValue(Caixa.NFe.Config.DFe.SSLCryptLib);
+            cmbHttp.SetSelectedValue(Caixa.NFe.Config.DFe.SSLHttpLib);
+            cmbXmlSign.SetSelectedValue(Caixa.NFe.Config.DFe.SSLXmlSignLib);
+            txtCertPath.Text = Caixa.NFe.Config.DFe.ArquivoPFX;
+            txtCertPassword.Text = Caixa.NFe.Config.DFe.Senha;
+            txtCertNumero.Text = Caixa.NFe.Config.DFe.NumeroSerie;
 
             //Config Arquivos
-            ckbSalvarArqs.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarGer");
-            ckbPastaMensal.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorMes");
-            ckbAdicionaLiteral.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AdicionarLiteral");
-            ckbEmissaoPathNFe.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "EmissaoPathNFe");
-            ckbSalvaPathEvento.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarArq");
-            ckbSepararPorCNPJ.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorCNPJ");
-            ckbSepararPorModelo.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SepararPorModelo");
-            txtArqNFe.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathNFe");
-            txtArqInu.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathInu");
-            txtArqEvento.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathEvento");
+            ckbSalvarArqs.Checked = Caixa.NFe.Config.SalvarGer;
+            ckbPastaMensal.Checked = Caixa.NFe.Config.SepararPorMes;
+            ckbAdicionaLiteral.Checked = Caixa.NFe.Config.AdicionarLiteral;
+            ckbEmissaoPathNFe.Checked = Caixa.NFe.Config.EmissaoPathNFe;
+            ckbSalvaPathEvento.Checked = Caixa.NFe.Config.SalvarArq;
+            ckbSepararPorCNPJ.Checked = Caixa.NFe.Config.SepararPorCNPJ;
+            ckbSepararPorModelo.Checked = Caixa.NFe.Config.SepararPorModelo;
+            txtArqNFe.Text = Caixa.NFe.Config.PathNFe;
+            txtArqInu.Text = Caixa.NFe.Config.PathInu;
+            txtArqEvento.Text = Caixa.NFe.Config.PathEvento;
 
             //Config Documento Auxiliar
-            txtLogomarca.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DANFE, "PathLogo");
-            nudDANFCeCopias.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFE, "Copias");
-            cmbDANFCeImpressora.Text = Caixa.NFe.ConfigLerValor<string>(ACBrSessao.DANFE, "Impressora");
-            chkNFCePreview.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFE, "MostraPreview");
-            chkNFCeSetup.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFE, "MostraSetup");
-            cmbTipoDANFCe.SetSelectedValue(Caixa.NFe.ConfigLerValor<TipoRelatorioBobina>(ACBrSessao.DANFENFCe, "TipoRelatorioBobina"));
-            cmbEventoDANFCe.SetSelectedValue(Caixa.NFe.ConfigLerValor<TipoRelatorioEvento>(ACBrSessao.DANFENFCe, "TipoRelatorioEvento"));
-            nudDANFCeBobina.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFENFCe, "LarguraBobina");
-            chkNFCeImprimeDescAcr.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeDescAcrescItem");
-            chkNFCeImprimeItens.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeItens");
-            chkNFCeQrCodeLateral.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeQRCodeLateral");
-            chkNFCeLogoLateral.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeLogoLateral");
-            chkNFCeImprimeUmaLinha.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeEmUmaLinha");
-            chkNFCeImprimeDuasLinhas.Checked = Caixa.NFe.ConfigLerValor<bool>(ACBrSessao.DANFENFCe, "ImprimeEmDuasLinhas");
-            nudNFCeMSuperior.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFENFCe, "MargemSuperior");
-            nudNFCeMInferior.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFENFCe, "MargemInferior");
-            nudNFCeMEsquerda.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFENFCe, "MargemEsquerda");
-            nudNFCeMDireita.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.DANFENFCe, "MargemDireita");
+            txtLogomarca.Text = Caixa.NFe.Config.DANFe.PathLogo;
+            nudDANFCeCopias.Value = Caixa.NFe.Config.DANFe.Copias;
+            cmbDANFCeImpressora.Text = Caixa.NFe.Config.DANFe.Impressora;
+            chkNFCePreview.Checked = Caixa.NFe.Config.DANFe.MostraPreview;
+            chkNFCeSetup.Checked = Caixa.NFe.Config.DANFe.MostraSetup;
+            cmbTipoDANFCe.SetSelectedValue(Caixa.NFe.Config.DANFe.NFCe.TipoRelatorioBobina);
+            cmbEventoDANFCe.SetSelectedValue(Caixa.NFe.Config.DANFe.NFCe.TipoRelatorioEvento);
+            nudDANFCeBobina.Value = Caixa.NFe.Config.DANFe.NFCe.LarguraBobina;
+            chkNFCeImprimeDescAcr.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeDescAcrescItem;
+            chkNFCeImprimeItens.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeItens;
+            chkNFCeQrCodeLateral.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeQRCodeLateral;
+            chkNFCeLogoLateral.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeLogoLateral;
+            chkNFCeImprimeUmaLinha.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeEmUmaLinha;
+            chkNFCeImprimeDuasLinhas.Checked = Caixa.NFe.Config.DANFe.NFCe.ImprimeEmDuasLinhas;
+            nudNFCeMSuperior.Value = Caixa.NFe.Config.DANFe.NFCe.MargemSuperior;
+            nudNFCeMInferior.Value = Caixa.NFe.Config.DANFe.NFCe.MargemInferior;
+            nudNFCeMEsquerda.Value = Caixa.NFe.Config.DANFe.NFCe.MargemEsquerda;
+            nudNFCeMDireita.Value = Caixa.NFe.Config.DANFe.NFCe.MargemDireita;
 
             #endregion NFe
 
@@ -360,39 +336,39 @@ namespace ACBr.PDV
 
             Caixa.SAT.ConfigLer();
 
-            txtDllPath.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.SAT, "NomeDLL");
-            cmbModeloSat.SetSelectedValue(Caixa.SAT.ConfigLerValor<SATModelo>(ACBrSessao.SAT, "Modelo"));
-            txtAtivacao.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.SAT, "CodigoDeAtivacao");
-            nunVersaoCFe.Value = Caixa.SAT.ConfigLerValor<decimal>(ACBrSessao.SATConfig, "infCFe_versaoDadosEnt");
-            nunPaginaCodigo.Value = Caixa.SAT.ConfigLerValor<decimal>(ACBrSessao.SATConfig, "PaginaDeCodigo");
-            txtSoftCNPJ.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.SATConfig, "ide_CNPJ");
-            cmbSATRegTrib.SelectedIndex = Caixa.SAT.ConfigLerValor<int>(ACBrSessao.SATConfig, "emit_cRegTrib");
-            cmbSATRegTribISSQN.SelectedIndex = Caixa.SAT.ConfigLerValor<int>(ACBrSessao.SATConfig, "emit_cRegTribISSQN");
-            cmbSATRatIISQN.SelectedIndex = Caixa.SAT.ConfigLerValor<int>(ACBrSessao.SATConfig, "emit_indRatISSQN");
-            txtSignAc.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.SAT, "SignAC");
-            chkSaveCFe.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarCFe");
-            chkSaveEnvio.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarEnvio");
-            chkSaveCFeCanc.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SalvarCFeCanc");
-            chkSepararCNPJ.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SepararPorCNPJ");
-            chkSepararData.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SepararPorDia");
+            txtDllPath.Text = Caixa.SAT.Config.NomeDLL;
+            cmbModeloSat.SetSelectedValue(Caixa.SAT.Config.Modelo);
+            txtAtivacao.Text = Caixa.SAT.Config.CodigoDeAtivacao;
+            nunVersaoCFe.Value = Caixa.SAT.Config.SatConfig.infCFe_versaoDadosEnt;
+            nunPaginaCodigo.Value = Caixa.SAT.Config.SatConfig.PaginaDeCodigo;
+            txtSoftCNPJ.Text = Caixa.SAT.Config.SatConfig.ide_CNPJ;
+            cmbSATRegTrib.SetSelectedValue(Caixa.SAT.Config.SatConfig.emit_cRegTrib);
+            cmbSATRegTribISSQN.SetSelectedValue(Caixa.SAT.Config.SatConfig.emit_cRegTribISSQN);
+            cmbSATRatIISQN.SetSelectedValue(Caixa.SAT.Config.SatConfig.emit_indRatISSQN);
+            txtSignAc.Text = Caixa.SAT.Config.SignAC;
+            chkSaveCFe.Checked = Caixa.SAT.Config.Arquivos.SalvarCFe;
+            chkSaveEnvio.Checked = Caixa.SAT.Config.Arquivos.SalvarEnvio;
+            chkSaveCFeCanc.Checked = Caixa.SAT.Config.Arquivos.SalvarCFeCanc;
+            chkSepararCNPJ.Checked = Caixa.SAT.Config.Arquivos.SepararPorCNPJ;
+            chkSepararData.Checked = Caixa.SAT.Config.Arquivos.SepararPorDia;
 
             //Extrato
-            cmbImpressao.SetSelectedValue(Caixa.SAT.ConfigLerValor<TipoExtrato>(ACBrSessao.Extrato, "Tipo"));
-            nudCopias.Value = Caixa.SAT.ConfigLerValor<int>(ACBrSessao.Extrato, "Copias");
-            cbbImpressora.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.Extrato, "Impressora");
-            txtSatLogo.Text = Caixa.SAT.ConfigLerValor<string>(ACBrSessao.Extrato, "PathLogo");
-            nudSatMSuperior.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.Extrato, "MargemSuperior");
-            nudSatMInferior.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.Extrato, "MargemInferior");
-            nudSatMEsquerda.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.Extrato, "MargemEsquerda");
-            nudSatMDireita.Value = Caixa.NFe.ConfigLerValor<decimal>(ACBrSessao.Extrato, "MargemDireita");
-            chkPreview.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "MostraPreview");
-            chkSetup.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "MostraSetup");
-            chkUsaCodigoEanImpressao.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeCodigoEan");
-            chkImprimeEmUmaLinha.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeEmUmaLinha");
-            chkLogoLateral.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeLogoLateral");
-            chkQrCodeLateral.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeQRCodeLateral");
-            chkExpandirLogo.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "ExpandeLogoMarca");
-            chkExibirLogo.Checked = Caixa.SAT.ConfigLerValor<bool>(ACBrSessao.Extrato, "LogoVisible");
+            cmbImpressao.SetSelectedValue(Caixa.SAT.Config.Extrato.Tipo);
+            nudCopias.Value = Caixa.SAT.Config.Extrato.Copias;
+            cbbImpressora.Text = Caixa.SAT.Config.Extrato.Impressora;
+            txtSatLogo.Text = Caixa.SAT.Config.Extrato.PathLogo;
+            nudSatMSuperior.Value = Caixa.SAT.Config.Extrato.MargemSuperior;
+            nudSatMInferior.Value = Caixa.SAT.Config.Extrato.MargemInferior;
+            nudSatMEsquerda.Value = Caixa.SAT.Config.Extrato.MargemEsquerda;
+            nudSatMDireita.Value = Caixa.SAT.Config.Extrato.MargemDireita;
+            chkPreview.Checked = Caixa.SAT.Config.Extrato.MostraPreview;
+            chkSetup.Checked = Caixa.SAT.Config.Extrato.MostraSetup;
+            chkUsaCodigoEanImpressao.Checked = Caixa.SAT.Config.Extrato.ImprimeCodigoEan;
+            chkImprimeEmUmaLinha.Checked = Caixa.SAT.Config.Extrato.ImprimeEmUmaLinha;
+            chkLogoLateral.Checked = Caixa.SAT.Config.Extrato.ImprimeLogoLateral;
+            chkQrCodeLateral.Checked = Caixa.SAT.Config.Extrato.ImprimeQRCodeLateral;
+            chkExpandirLogo.Checked = Caixa.SAT.Config.Extrato.ExpandeLogoMarca;
+            chkExibirLogo.Checked = Caixa.SAT.Config.Extrato.LogoVisible;
 
             #endregion SAT
 
@@ -401,49 +377,49 @@ namespace ACBr.PDV
             Caixa.PosPrinter.ConfigLer();
 
             //
-            txtSoftwareHouse.Text = Caixa.PosPrinter.ConfigLerValor<string>(ACBrSessao.Sistema, "Nome");
-            txtWebsite.Text = Caixa.PosPrinter.ConfigLerValor<string>(ACBrSessao.Emissor, "WebSite");
+            txtSoftwareHouse.Text = Caixa.PosPrinter.Config.Sistema.Nome;
+            txtWebsite.Text = Caixa.PosPrinter.Config.Emissor.WebSite;
 
-            cbbModelo.SetSelectedValue(Caixa.PosPrinter.ConfigLerValor<ACBrPosPrinterModelo>(ACBrSessao.PosPrinter, "Modelo"));
-            cbbPortas.SelectedItem = Caixa.PosPrinter.ConfigLerValor<string>(ACBrSessao.PosPrinter, "Porta");
-            nudColunas.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "ColunasFonteNormal");
-            nudEspacos.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "EspacoEntreLinhas");
-            nudBuffer.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasBuffer");
-            nudLinhasPular.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter, "LinhasEntreCupons");
-            cbxControlePorta.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "ControlePorta");
-            cbxCortarPapel.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "CortaPapel");
-            cbxTraduzirTags.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "TraduzirTags");
-            cbxIgnorarTags.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "IgnorarTags");
-            txtArqLog.Text = Caixa.PosPrinter.ConfigLerValor<string>(ACBrSessao.PosPrinter, "ArqLog");
-            cbbPaginaCodigo.SetSelectedValue(Caixa.PosPrinter.ConfigLerValor<PosPaginaCodigo>(ACBrSessao.PosPrinter, "PaginaDeCodigo"));
+            cbbModelo.SetSelectedValue(Caixa.PosPrinter.Config.Modelo);
+            cbbPortas.Text = Caixa.PosPrinter.Config.Porta;
+            nudColunas.Value = Caixa.PosPrinter.Config.ColunasFonteNormal;
+            nudEspacos.Value = Caixa.PosPrinter.Config.EspacoEntreLinhas;
+            nudBuffer.Value = Caixa.PosPrinter.Config.LinhasBuffer;
+            nudLinhasPular.Value = Caixa.PosPrinter.Config.LinhasEntreCupons;
+            cbxControlePorta.Checked = Caixa.PosPrinter.Config.ControlePorta;
+            cbxCortarPapel.Checked = Caixa.PosPrinter.Config.CortaPapel;
+            cbxTraduzirTags.Checked = Caixa.PosPrinter.Config.TraduzirTags;
+            cbxIgnorarTags.Checked = Caixa.PosPrinter.Config.IgnorarTags;
+            txtArqLog.Text = Caixa.PosPrinter.Config.ArqLog;
+            cbbPaginaCodigo.SetSelectedValue(Caixa.PosPrinter.Config.PaginaDeCodigo);
 
-            nudCodbarLargura.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Barras, "LarguraLinha");
-            nudCodbarAltura.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Barras, "Altura");
-            cbxCodbarExibeNumeros.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Barras, "MostrarCodigo");
+            nudCodbarLargura.Value = Caixa.PosPrinter.Config.BarrasConfig.LarguraLinha;
+            nudCodbarAltura.Value = Caixa.PosPrinter.Config.BarrasConfig.Altura;
+            cbxCodbarExibeNumeros.Checked = Caixa.PosPrinter.Config.BarrasConfig.MostrarCodigo;
 
-            nudQRTipo.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "Tipo");
-            nudQRLargura.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "LarguraModulo");
-            nudQRErrorLevel.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_QRCode, "ErrorLevel");
+            nudQRTipo.Value = Caixa.PosPrinter.Config.QrCodeConfig.Tipo;
+            nudQRLargura.Value = Caixa.PosPrinter.Config.QrCodeConfig.LarguraModulo;
+            nudQRErrorLevel.Value = Caixa.PosPrinter.Config.QrCodeConfig.ErrorLevel;
 
-            nudLogoKC1.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "KeyCode1");
-            nudLogoKC2.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "KeyCode2");
-            nudLogoFatorX.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "FatorX");
-            nudLogoFatorY.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Logo, "FatorY");
+            nudLogoKC1.Value = Caixa.PosPrinter.Config.LogoConfig.KeyCode1;
+            nudLogoKC2.Value = Caixa.PosPrinter.Config.LogoConfig.KeyCode2;
+            nudLogoFatorX.Value = Caixa.PosPrinter.Config.LogoConfig.FatorX;
+            nudLogoFatorY.Value = Caixa.PosPrinter.Config.LogoConfig.FatorY;
 
-            nudGVON.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Gaveta, "TempoON");
-            nudGVOFF.Value = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Gaveta, "TempoOFF");
-            cbxGVInvertido.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Gaveta, "SinalInvertido");
+            nudGVON.Value = Caixa.PosPrinter.Config.GavetaConfig.TempoON;
+            nudGVOFF.Value = Caixa.PosPrinter.Config.GavetaConfig.TempoOFF;
+            cbxGVInvertido.Checked = Caixa.PosPrinter.Config.GavetaConfig.SinalInvertido;
 
-            cmbPosBaud.SelectedItem = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Device, "Baud");
-            cmbPosDatabits.SelectedItem = Caixa.PosPrinter.ConfigLerValor<int>(ACBrSessao.PosPrinter_Device, "Data");
-            cmbPosParity.SelectedItem = Caixa.PosPrinter.ConfigLerValor<SerialParity>(ACBrSessao.PosPrinter_Device, "Parity");
-            cmbPosStopbits.SelectedItem = Caixa.PosPrinter.ConfigLerValor<SerialStopBytes>(ACBrSessao.PosPrinter_Device, "Stop");
-            cmbPosHandshaking.SelectedItem = Caixa.PosPrinter.ConfigLerValor<SerialHandShake>(ACBrSessao.PosPrinter_Device, "HandShake");
-            nudPosMaxBand.Value = Caixa.PosPrinter.ConfigLerValor<decimal>(ACBrSessao.PosPrinter_Device, "MaxBandwidth");
-            nudPosBytesCount.Value = Caixa.PosPrinter.ConfigLerValor<decimal>(ACBrSessao.PosPrinter_Device, "SendBytesCount");
-            nudPosIntervalo.Value = Caixa.PosPrinter.ConfigLerValor<decimal>(ACBrSessao.PosPrinter_Device, "SendBytesInterval");
-            chkPosSoftFlow.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Device, "SoftFlow");
-            chkPosHardFlow.Checked = Caixa.PosPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Device, "HardFlow");
+            cmbPosBaud.SetSelectedValue(Caixa.PosPrinter.Config.Device.Baud);
+            cmbPosDatabits.SetSelectedValue(Caixa.PosPrinter.Config.Device.Data);
+            cmbPosParity.SetSelectedValue(Caixa.PosPrinter.Config.Device.Parity);
+            cmbPosStopbits.SetSelectedValue(Caixa.PosPrinter.Config.Device.Stop);
+            cmbPosHandshaking.SetSelectedValue(Caixa.PosPrinter.Config.Device.HandShake);
+            nudPosMaxBand.Value = Caixa.PosPrinter.Config.Device.MaxBandwidth;
+            nudPosBytesCount.Value = Caixa.PosPrinter.Config.Device.SendBytesCount;
+            nudPosIntervalo.Value = Caixa.PosPrinter.Config.Device.SendBytesInterval;
+            chkPosSoftFlow.Checked = Caixa.PosPrinter.Config.Device.SoftFlow;
+            chkPosHardFlow.Checked = Caixa.PosPrinter.Config.Device.HardFlow;
 
             #endregion PosPrinter
 
@@ -451,18 +427,18 @@ namespace ACBr.PDV
 
             Caixa.Bal.ConfigLer();
 
-            cmbModelo.SetSelectedValue(Caixa.Bal.ConfigLerValor<ACBrBALModelo>(ACBrSessao.BAL, "Modelo"));
-            cmbPorta.Text = Caixa.Bal.ConfigLerValor<string>(ACBrSessao.BAL, "Porta");
-            cmbBaud.SelectedItem = Caixa.Bal.ConfigLerValor<int>(ACBrSessao.BAL_Device, "Baud");
-            cmbDatabits.SelectedItem = Caixa.Bal.ConfigLerValor<int>(ACBrSessao.BAL_Device, "Data");
-            cmbParity.SelectedItem = Caixa.Bal.ConfigLerValor<SerialParity>(ACBrSessao.BAL_Device, "Parity");
-            cmbStopbits.SelectedItem = Caixa.Bal.ConfigLerValor<SerialStopBytes>(ACBrSessao.BAL_Device, "Stop");
-            cmbHandshaking.SelectedItem = Caixa.Bal.ConfigLerValor<SerialHandShake>(ACBrSessao.BAL_Device, "HandShake");
-            nudMaxBand.Value = Caixa.Bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "MaxBandwidth");
-            nudBytesCount.Value = Caixa.Bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "SendBytesCount");
-            nudIntervalo.Value = Caixa.Bal.ConfigLerValor<decimal>(ACBrSessao.BAL_Device, "SendBytesInterval");
-            chkSoftFlow.Checked = Caixa.Bal.ConfigLerValor<bool>(ACBrSessao.BAL_Device, "SoftFlow");
-            chkHardFlow.Checked = Caixa.Bal.ConfigLerValor<bool>(ACBrSessao.BAL_Device, "HardFlow");
+            cmbModelo.SetSelectedValue(Caixa.Bal.Config.Modelo);
+            cmbPorta.Text = Caixa.Bal.Config.Porta;
+            cmbBaud.SetSelectedValue(Caixa.Bal.Config.Device.Baud);
+            cmbDatabits.SetSelectedValue(Caixa.Bal.Config.Device.Data);
+            cmbParity.SetSelectedValue(Caixa.Bal.Config.Device.Parity);
+            cmbStopbits.SetSelectedValue(Caixa.Bal.Config.Device.Stop);
+            cmbHandshaking.SetSelectedValue(Caixa.Bal.Config.Device.HandShake);
+            nudMaxBand.Value = Caixa.Bal.Config.Device.MaxBandwidth;
+            nudBytesCount.Value = Caixa.Bal.Config.Device.SendBytesCount;
+            nudIntervalo.Value = Caixa.Bal.Config.Device.SendBytesInterval;
+            chkSoftFlow.Checked = Caixa.Bal.Config.Device.SoftFlow;
+            chkHardFlow.Checked = Caixa.Bal.Config.Device.HardFlow;
 
             #endregion Bal
         }
@@ -502,49 +478,49 @@ namespace ACBr.PDV
             #region PosPrinter
 
             // Configurações de Sistema, é adicionado aqui pois vai seer lido pelas outras libs depois
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.Sistema, "Nome", txtSoftwareHouse.Text);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.Emissor, "WebSite", txtWebsite.Text);
+            Caixa.PosPrinter.Config.Sistema.Nome = txtSoftwareHouse.Text;
+            Caixa.PosPrinter.Config.Emissor.WebSite = txtWebsite.Text;
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo", cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.Text);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", (int)nudColunas.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", (int)nudEspacos.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", (int)nudBuffer.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", (int)nudLinhasPular.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ControlePorta", cbxControlePorta.Checked);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "CortaPapel", cbxCortarPapel.Checked);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", cbxTraduzirTags.Checked);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "IgnorarTags", cbxIgnorarTags.Checked);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ArqLog", txtArqLog.Text);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo", cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>());
+            Caixa.PosPrinter.Config.Modelo = cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>();
+            Caixa.PosPrinter.Config.Porta = cbbPortas.Text;
+            Caixa.PosPrinter.Config.ColunasFonteNormal = (int)nudColunas.Value;
+            Caixa.PosPrinter.Config.EspacoEntreLinhas = (int)nudEspacos.Value;
+            Caixa.PosPrinter.Config.LinhasBuffer = (int)nudBuffer.Value;
+            Caixa.PosPrinter.Config.LinhasEntreCupons = (int)nudLinhasPular.Value;
+            Caixa.PosPrinter.Config.ControlePorta = cbxControlePorta.Checked;
+            Caixa.PosPrinter.Config.CortaPapel = cbxCortarPapel.Checked;
+            Caixa.PosPrinter.Config.TraduzirTags = cbxTraduzirTags.Checked;
+            Caixa.PosPrinter.Config.IgnorarTags = cbxIgnorarTags.Checked;
+            Caixa.PosPrinter.Config.ArqLog = txtArqLog.Text;
+            Caixa.PosPrinter.Config.PaginaDeCodigo = cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>();
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "LarguraLinha", (int)nudCodbarLargura.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "Altura", (int)nudCodbarAltura.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "MostrarCodigo", cbxCodbarExibeNumeros.Checked);
+            Caixa.PosPrinter.Config.BarrasConfig.LarguraLinha = (int)nudCodbarLargura.Value;
+            Caixa.PosPrinter.Config.BarrasConfig.Altura = (int)nudCodbarAltura.Value;
+            Caixa.PosPrinter.Config.BarrasConfig.MostrarCodigo = cbxCodbarExibeNumeros.Checked;
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "Tipo", (int)nudQRTipo.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "LarguraModulo", (int)nudQRLargura.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_QRCode, "ErrorLevel", (int)nudQRErrorLevel.Value);
+            Caixa.PosPrinter.Config.QrCodeConfig.Tipo = (int)nudQRTipo.Value;
+            Caixa.PosPrinter.Config.QrCodeConfig.LarguraModulo = (int)nudQRLargura.Value;
+            Caixa.PosPrinter.Config.QrCodeConfig.ErrorLevel = (int)nudQRErrorLevel.Value;
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "KeyCode1", (int)nudLogoKC1.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "KeyCode2", (int)nudLogoKC2.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "FatorX", (int)nudLogoFatorX.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Logo, "FatorY", (int)nudLogoFatorY.Value);
+            Caixa.PosPrinter.Config.LogoConfig.KeyCode1 = (byte)nudLogoKC1.Value;
+            Caixa.PosPrinter.Config.LogoConfig.KeyCode2 = (byte)nudLogoKC2.Value;
+            Caixa.PosPrinter.Config.LogoConfig.FatorX = (byte)nudLogoFatorX.Value;
+            Caixa.PosPrinter.Config.LogoConfig.FatorY = (byte)nudLogoFatorY.Value;
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "TempoON", (int)nudGVON.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "TempoOFF", (int)nudGVOFF.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Gaveta, "SinalInvertido", cbxGVInvertido.Checked);
+            Caixa.PosPrinter.Config.GavetaConfig.TempoON = (byte)nudGVON.Value;
+            Caixa.PosPrinter.Config.GavetaConfig.TempoOFF = (byte)nudGVOFF.Value;
+            Caixa.PosPrinter.Config.GavetaConfig.SinalInvertido = cbxGVInvertido.Checked;
 
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "Baud", cmbPosBaud.SelectedItem);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "Data", cmbPosDatabits.SelectedItem);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "Parity", cmbPosParity.SelectedItem);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "Stop", cmbPosStopbits.SelectedItem);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "HandShake", cmbPosHandshaking.SelectedItem);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "MaxBandwidth", nudPosMaxBand.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "SendBytesCount", nudPosBytesCount.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "SendBytesInterval", nudPosIntervalo.Value);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "SoftFlow", chkPosSoftFlow.Checked);
-            Caixa.PosPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Device, "HardFlow", chkPosHardFlow.Checked);
+            Caixa.PosPrinter.Config.Device.Baud = cmbPosBaud.GetSelectedValue<SerialBaud>();
+            Caixa.PosPrinter.Config.Device.Data = cmbPosDatabits.GetSelectedValue<SerialDataBits>();
+            Caixa.PosPrinter.Config.Device.Parity = cmbPosParity.GetSelectedValue<SerialParity>();
+            Caixa.PosPrinter.Config.Device.Stop = cmbPosStopbits.GetSelectedValue<SerialStopBytes>();
+            Caixa.PosPrinter.Config.Device.HandShake = cmbPosHandshaking.GetSelectedValue<SerialHandShake>();
+            Caixa.PosPrinter.Config.Device.MaxBandwidth = (int)nudPosMaxBand.Value;
+            Caixa.PosPrinter.Config.Device.SendBytesCount = (int)nudPosBytesCount.Value;
+            Caixa.PosPrinter.Config.Device.SendBytesInterval = (int)nudPosIntervalo.Value;
+            Caixa.PosPrinter.Config.Device.SoftFlow = chkPosSoftFlow.Checked;
+            Caixa.PosPrinter.Config.Device.HardFlow = chkPosHardFlow.Checked;
 
             Caixa.PosPrinter.ConfigGravar();
 
@@ -556,74 +532,74 @@ namespace ACBr.PDV
             Caixa.NFe.ConfigLer();
 
             //Config Geral
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "AtualizarXMLCancelado", ckbAtualizarXML.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "ExibirErroSchema", ckbExibirErroSchema.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "FormatoAlerta", txtFormatoAlerta.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "FormaEmissao", cmbFormaEmissao.GetSelectedValue<TipoEmissao>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "ModeloDF", cmbModeloDocumento.GetSelectedValue<ModeloNFe>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "VersaoDF", cmbVersaoDF.GetSelectedValue<VersaoNFe>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "RetirarAcentos", ckbRetirarAcentos.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvar.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "PathSalvar", txtLogs.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "PathSchemas", txtSchemaPath.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "IdCSC", txtIdCSC.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "CSC", txtCSC.Text);
+            Caixa.NFe.Config.AtualizarXMLCancelado = ckbAtualizarXML.Checked;
+            Caixa.NFe.Config.ExibirErroSchema = ckbExibirErroSchema.Checked;
+            Caixa.NFe.Config.FormatoAlerta = txtFormatoAlerta.Text;
+            Caixa.NFe.Config.FormaEmissao = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
+            Caixa.NFe.Config.ModeloDF = cmbModeloDocumento.GetSelectedValue<ModeloNFe>();
+            Caixa.NFe.Config.VersaoDF = cmbVersaoDF.GetSelectedValue<VersaoNFe>();
+            Caixa.NFe.Config.RetirarAcentos = ckbRetirarAcentos.Checked;
+            Caixa.NFe.Config.SalvarWS = ckbSalvar.Checked;
+            Caixa.NFe.Config.PathSalvar = txtLogs.Text;
+            Caixa.NFe.Config.PathSchemas = txtSchemaPath.Text;
+            Caixa.NFe.Config.IdCSC = txtIdCSC.Text;
+            Caixa.NFe.Config.CSC = txtCSC.Text;
 
             //Config Webservice
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "UF", cmbUfDestino.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SSLType", cmbSSlType.GetSelectedValue<SSLType>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "Timeout", nudTimeOut.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "Ambiente", rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "Visualizar", ckbVisualizar.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvarSOAP.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "AjustaAguardaConsultaRet", ckbAjustarAut.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "AguardarConsultaRet", (int)nudAguardar.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "Tentativas", (int)nudTentativas.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "IntervaloTentativas", (int)nudIntervalos.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Proxy, "Servidor", txtProxyServidor.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Proxy, "Porta", nudProxyPorta.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Proxy, "Senha", txtProxySenha.Text);
+            Caixa.NFe.Config.DFe.UF = cmbUfDestino.Text;
+            Caixa.NFe.Config.SSLType = cmbSSlType.GetSelectedValue<SSLType>();
+            Caixa.NFe.Config.Timeout = (int)nudTimeOut.Value;
+            Caixa.NFe.Config.Ambiente = rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao;
+            Caixa.NFe.Config.Visualizar = ckbVisualizar.Checked;
+            Caixa.NFe.Config.SalvarWS = ckbSalvarSOAP.Checked;
+            Caixa.NFe.Config.AjustaAguardaConsultaRet = ckbAjustarAut.Checked;
+            Caixa.NFe.Config.AguardarConsultaRet = (int)nudAguardar.Value;
+            Caixa.NFe.Config.Tentativas = (int)nudTentativas.Value;
+            Caixa.NFe.Config.IntervaloTentativas = (int)nudIntervalos.Value;
+            Caixa.NFe.Config.Proxy.Servidor = txtProxyServidor.Text;
+            Caixa.NFe.Config.Proxy.Porta = nudProxyPorta.Text;
+            Caixa.NFe.Config.Proxy.Usuario = txtProxyUsuario.Text;
+            Caixa.NFe.Config.Proxy.Senha = txtProxySenha.Text;
 
             //Config Certificado
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "SSLCryptLib", cmbCrypt.GetSelectedValue<SSLCryptLib>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "SSLHttpLib", cmbHttp.GetSelectedValue<SSLHttpLib>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "SSLXmlSignLib", cmbXmlSign.GetSelectedValue<SSLXmlSignLib>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "ArquivoPFX", txtCertPath.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "Senha", txtCertPassword.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DFe, "NumeroSerie", txtCertNumero.Text);
+            Caixa.NFe.Config.DFe.SSLCryptLib = cmbCrypt.GetSelectedValue<SSLCryptLib>();
+            Caixa.NFe.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();
+            Caixa.NFe.Config.DFe.SSLXmlSignLib = cmbXmlSign.GetSelectedValue<SSLXmlSignLib>();
+            Caixa.NFe.Config.DFe.ArquivoPFX = txtCertPath.Text;
+            Caixa.NFe.Config.DFe.Senha = txtCertPassword.Text;
+            Caixa.NFe.Config.DFe.NumeroSerie = txtCertNumero.Text;
 
             //Config Arquivos
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarGer", ckbSalvarArqs.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorMes", ckbPastaMensal.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "AdicionarLiteral", ckbAdicionaLiteral.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "EmissaoPathNFe", ckbEmissaoPathNFe.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarArq", ckbSalvaPathEvento.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorCNPJ", ckbSepararPorCNPJ.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "SepararPorModelo", ckbSepararPorModelo.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "PathNFe", txtArqNFe.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "PathInu", txtArqInu.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.NFe, "PathEvento", txtArqEvento.Text);
+            Caixa.NFe.Config.SalvarGer = ckbSalvarArqs.Checked;
+            Caixa.NFe.Config.SepararPorMes = ckbPastaMensal.Checked;
+            Caixa.NFe.Config.AdicionarLiteral = ckbAdicionaLiteral.Checked;
+            Caixa.NFe.Config.EmissaoPathNFe = ckbEmissaoPathNFe.Checked;
+            Caixa.NFe.Config.SalvarArq = ckbSalvaPathEvento.Checked;
+            Caixa.NFe.Config.SepararPorCNPJ = ckbSepararPorCNPJ.Checked;
+            Caixa.NFe.Config.SepararPorModelo = ckbSepararPorModelo.Checked;
+            Caixa.NFe.Config.PathNFe = txtArqNFe.Text;
+            Caixa.NFe.Config.PathInu = txtArqInu.Text;
+            Caixa.NFe.Config.PathEvento = txtArqEvento.Text;
 
             //Config Documento Auxiliar
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFE, "PathLogo", txtLogomarca.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFE, "Impressora", cmbDANFCeImpressora.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFE, "Copias", nudDANFCeCopias.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFE, "MostraPreview", chkNFCePreview.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFE, "MostraSetup", chkNFCeSetup.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "TipoRelatorioBobina", cmbTipoDANFCe.GetSelectedValue<TipoRelatorioBobina>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "TipoRelatorioEvento", cmbEventoDANFCe.GetSelectedValue<TipoRelatorioEvento>());
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "LarguraBobina", (int)nudDANFCeBobina.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeDescAcrescItem", chkNFCeImprimeDescAcr.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeItens", chkNFCeImprimeItens.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeQRCodeLateral", chkNFCeQrCodeLateral.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeLogoLateral", chkNFCeLogoLateral.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeEmUmaLinha", chkNFCeImprimeUmaLinha.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "ImprimeEmDuasLinhas", chkNFCeImprimeDuasLinhas.Checked);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "MargemSuperior", (int)nudNFCeMSuperior.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "MargemInferior", (int)nudNFCeMInferior.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "MargemEsquerda", (int)nudNFCeMEsquerda.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.DANFENFCe, "MargemDireita", (int)nudNFCeMDireita.Value);
+            Caixa.NFe.Config.DANFe.PathLogo = txtLogomarca.Text;
+            Caixa.NFe.Config.DANFe.Impressora = cmbDANFCeImpressora.Text;
+            Caixa.NFe.Config.DANFe.Copias = (int)nudDANFCeCopias.Value;
+            Caixa.NFe.Config.DANFe.MostraPreview = chkNFCePreview.Checked;
+            Caixa.NFe.Config.DANFe.MostraSetup = chkNFCeSetup.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.TipoRelatorioBobina = cmbTipoDANFCe.GetSelectedValue<TipoRelatorioBobina>();
+            Caixa.NFe.Config.DANFe.NFCe.TipoRelatorioEvento = cmbEventoDANFCe.GetSelectedValue<TipoRelatorioEvento>();
+            Caixa.NFe.Config.DANFe.NFCe.LarguraBobina = (int)nudDANFCeBobina.Value;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeDescAcrescItem = chkNFCeImprimeDescAcr.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeItens = chkNFCeImprimeItens.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeQRCodeLateral = chkNFCeQrCodeLateral.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeLogoLateral = chkNFCeLogoLateral.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeEmUmaLinha = chkNFCeImprimeUmaLinha.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.ImprimeEmDuasLinhas = chkNFCeImprimeDuasLinhas.Checked;
+            Caixa.NFe.Config.DANFe.NFCe.MargemSuperior = (int)nudNFCeMSuperior.Value;
+            Caixa.NFe.Config.DANFe.NFCe.MargemInferior = (int)nudNFCeMInferior.Value;
+            Caixa.NFe.Config.DANFe.NFCe.MargemEsquerda = (int)nudNFCeMEsquerda.Value;
+            Caixa.NFe.Config.DANFe.NFCe.MargemDireita = (int)nudNFCeMDireita.Value;
 
             Caixa.NFe.ConfigGravar();
 
@@ -634,39 +610,39 @@ namespace ACBr.PDV
             //Carregando as config do PosPrinter
             Caixa.SAT.ConfigLer();
 
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SAT, "NomeDLL", txtDllPath.Text);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SAT, "Modelo", cmbModeloSat.GetSelectedValue<SATModelo>());
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SAT, "CodigoDeAtivacao", txtAtivacao.Text);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "infCFe_versaoDadosEnt", nunVersaoCFe.Value);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "PaginaDeCodigo", nunPaginaCodigo.Value);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "ide_CNPJ", txtSoftCNPJ.Text.OnlyNumbers());
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "emit_cRegTrib", cmbSATRegTrib.SelectedIndex);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "emit_cRegTribISSQN", cmbSATRegTribISSQN.SelectedIndex);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfig, "emit_indRatISSQN", cmbSATRatIISQN.SelectedIndex);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SAT, "SignAC", txtSignAc.Text);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarCFe", chkSaveCFe.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarEnvio", chkSaveEnvio.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SalvarCFeCanc", chkSaveCFeCanc.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SepararPorCNPJ", chkSepararCNPJ.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SepararPorDia", chkSepararData.Checked);
+            Caixa.SAT.Config.NomeDLL = txtDllPath.Text;
+            Caixa.SAT.Config.Modelo = cmbModeloSat.GetSelectedValue<SATModelo>();
+            Caixa.SAT.Config.CodigoDeAtivacao = txtAtivacao.Text;
+            Caixa.SAT.Config.SatConfig.infCFe_versaoDadosEnt = nunVersaoCFe.Value;
+            Caixa.SAT.Config.SatConfig.PaginaDeCodigo = (ushort)nunPaginaCodigo.Value;
+            Caixa.SAT.Config.SatConfig.ide_CNPJ = txtSoftCNPJ.Text.OnlyNumbers();
+            Caixa.SAT.Config.SatConfig.emit_cRegTrib = cmbSATRegTrib.GetSelectedValue<RegTrib>();
+            Caixa.SAT.Config.SatConfig.emit_cRegTribISSQN = cmbSATRegTribISSQN.GetSelectedValue<RegTribISSQN>();
+            Caixa.SAT.Config.SatConfig.emit_indRatISSQN = cmbSATRatIISQN.GetSelectedValue<indRatISSQN>();
+            Caixa.SAT.Config.SignAC = txtSignAc.Text;
+            Caixa.SAT.Config.Arquivos.SalvarCFe = chkSaveCFe.Checked;
+            Caixa.SAT.Config.Arquivos.SalvarEnvio = chkSaveEnvio.Checked;
+            Caixa.SAT.Config.Arquivos.SalvarCFeCanc = chkSaveCFeCanc.Checked;
+            Caixa.SAT.Config.Arquivos.SepararPorCNPJ = chkSepararCNPJ.Checked;
+            Caixa.SAT.Config.Arquivos.SepararPorDia = chkSepararData.Checked;
 
             //Impressão
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "Tipo", cmbImpressao.GetSelectedValue<TipoExtrato>());
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "Copias", nudCopias.Value);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "Impressora", cbbImpressora.Text);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "PathLogo", txtSatLogo.Text);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Extrato, "MargemSuperior", (int)nudSatMSuperior.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Extrato, "MargemInferior", (int)nudSatMInferior.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Extrato, "MargemEsquerda", (int)nudSatMEsquerda.Value);
-            Caixa.NFe.ConfigGravarValor(ACBrSessao.Extrato, "MargemDireita", (int)nudSatMDireita.Value);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "MostraPreview", chkPreview.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "MostraSetup", chkSetup.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeCodigoEan", chkUsaCodigoEanImpressao.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeEmUmaLinha", chkImprimeEmUmaLinha.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeLogoLateral", chkLogoLateral.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeQRCodeLateral", chkQrCodeLateral.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "ExpandeLogoMarca", chkExpandirLogo.Checked);
-            Caixa.SAT.ConfigGravarValor(ACBrSessao.Extrato, "LogoVisible", chkExibirLogo.Checked);
+            Caixa.SAT.Config.Extrato.Tipo = cmbImpressao.GetSelectedValue<TipoExtrato>();
+            Caixa.SAT.Config.Extrato.Copias = (int)nudCopias.Value;
+            Caixa.SAT.Config.Extrato.Impressora = cbbImpressora.Text;
+            Caixa.SAT.Config.Extrato.PathLogo = txtSatLogo.Text;
+            Caixa.SAT.Config.Extrato.MargemSuperior = (int)nudSatMSuperior.Value;
+            Caixa.SAT.Config.Extrato.MargemInferior = (int)nudSatMInferior.Value;
+            Caixa.SAT.Config.Extrato.MargemEsquerda = (int)nudSatMEsquerda.Value;
+            Caixa.SAT.Config.Extrato.MargemDireita = (int)nudSatMDireita.Value;
+            Caixa.SAT.Config.Extrato.MostraPreview = chkPreview.Checked;
+            Caixa.SAT.Config.Extrato.MostraSetup = chkSetup.Checked;
+            Caixa.SAT.Config.Extrato.ImprimeCodigoEan = chkUsaCodigoEanImpressao.Checked;
+            Caixa.SAT.Config.Extrato.ImprimeEmUmaLinha = chkImprimeEmUmaLinha.Checked;
+            Caixa.SAT.Config.Extrato.ImprimeLogoLateral = chkLogoLateral.Checked;
+            Caixa.SAT.Config.Extrato.ImprimeQRCodeLateral = chkQrCodeLateral.Checked;
+            Caixa.SAT.Config.Extrato.ExpandeLogoMarca = chkExpandirLogo.Checked;
+            Caixa.SAT.Config.Extrato.LogoVisible = chkExibirLogo.Checked;
 
             Caixa.SAT.ConfigGravar();
 
@@ -674,18 +650,18 @@ namespace ACBr.PDV
 
             #region Bal
 
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL, "Modelo", cmbModelo.GetSelectedValue<ACBrBALModelo>());
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL, "Porta", cmbPorta.Text);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Baud", cmbBaud.SelectedItem);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Data", cmbDatabits.SelectedItem);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Parity", cmbParity.SelectedItem);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "Stop", cmbStopbits.SelectedItem);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "HandShake", cmbHandshaking.SelectedItem);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "MaxBandwidth", nudMaxBand.Value);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SendBytesCount", nudBytesCount.Value);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SendBytesInterval", nudIntervalo.Value);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "SoftFlow", chkSoftFlow.Checked);
-            Caixa.Bal.ConfigGravarValor(ACBrSessao.BAL_Device, "HardFlow", chkHardFlow.Checked);
+            Caixa.Bal.Config.Modelo = cmbModelo.GetSelectedValue<ACBrBALModelo>();
+            Caixa.Bal.Config.Porta = cmbPorta.Text;
+            Caixa.Bal.Config.Device.Baud = cmbBaud.GetSelectedValue<SerialBaud>();
+            Caixa.Bal.Config.Device.Data = cmbDatabits.GetSelectedValue<SerialDataBits>();
+            Caixa.Bal.Config.Device.Parity = cmbParity.GetSelectedValue<SerialParity>();
+            Caixa.Bal.Config.Device.Stop = cmbStopbits.GetSelectedValue<SerialStopBytes>();
+            Caixa.Bal.Config.Device.HandShake = cmbHandshaking.GetSelectedValue<SerialHandShake>();
+            Caixa.Bal.Config.Device.MaxBandwidth = (int)nudMaxBand.Value;
+            Caixa.Bal.Config.Device.SendBytesCount = (int)nudBytesCount.Value;
+            Caixa.Bal.Config.Device.SendBytesInterval = (int)nudIntervalo.Value;
+            Caixa.Bal.Config.Device.SoftFlow = chkSoftFlow.Checked;
+            Caixa.Bal.Config.Device.HardFlow = chkHardFlow.Checked;
 
             Caixa.Bal.ConfigGravar();
 

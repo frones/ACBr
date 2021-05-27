@@ -1,4 +1,5 @@
 ﻿using System;
+using ACBrLib.NFe;
 
 namespace ACBr.PDV.Model
 {

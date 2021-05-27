@@ -39,7 +39,7 @@ namespace ACBr.PDV
         private void btnBal_Click(object sender, EventArgs e)
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.Default.ShowInfo(SplashInfo.Message, "Aguarde Lendo Peso...");
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Aguarde Lendo Peso...");
 
             try
             {

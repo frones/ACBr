@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using ACBr.Net.Core.Extensions;
-using ACBrLib;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
+using ACBrLib.Core.NFe;
+using ACBrLib.NFe;
 
 namespace ACBr.PDV.Model
 {
@@ -77,143 +79,143 @@ namespace ACBr.PDV.Model
             Pagamentos.Clear();
         }
 
-        public string ToNFCeIni()
+        public NotaFiscal ToNFCe()
         {
-            var vendaIni = new ACBrIniFile();
+            var ret = new NotaFiscal();
 
             // InfNFe
-            vendaIni["infNFe"]["versao"] = "4.0";
+            ret.InfNFe.versao = "4.0";
 
             //Identificação
-            vendaIni["Identificacao"]["natOp"] = "Venda de Mercadoria";
-            vendaIni["Identificacao"]["indPag"] = "0";
-            vendaIni["Identificacao"]["mod"] = "65";
-            vendaIni["Identificacao"]["serie"] = Serie.ToString();
-            vendaIni["Identificacao"]["nNF"] = Numero.ToString();
-            vendaIni["Identificacao"]["dEmi"] = Data.ToString("dd/MM/yyyy HH:mm:ss");
-            vendaIni["Identificacao"]["tpNF"] = "1";
-            vendaIni["Identificacao"]["Finalidade"] = "0";
-            vendaIni["Identificacao"]["idDest"] = "1";
-            vendaIni["Identificacao"]["indFinal"] = "1";
-            vendaIni["Identificacao"]["indPres"] = "1";
-            vendaIni["Identificacao"]["tpimp"] = "4";
-            vendaIni["Identificacao"]["tpAmb"] = "2";
+            ret.Identificacao.natOp = "Venda de Mercadoria";
+            ret.Identificacao.indPag = IndicadorPagamento.ipVista;
+            ret.Identificacao.mod = ModeloNFe.moNFCe;
+            ret.Identificacao.serie = Serie.ToString();
+            ret.Identificacao.nNF = Numero;
+            ret.Identificacao.dhEmi = Data;
+            ret.Identificacao.tpNF = TipoNFe.tnSaida;
+            ret.Identificacao.finNFe = FinalidadeNFe.fnNormal;
+            ret.Identificacao.idDest = DestinoOperacao.doInterna;
+            ret.Identificacao.indFinal = ConsumidorFinal.cfConsumidorFinal;
+            ret.Identificacao.indPres = PresencaComprador.pcPresencial;
+            ret.Identificacao.tpImp = TipoDANFE.tiNFCe;
+            ret.Identificacao.tpAmb = TipoAmbiente.taHomologacao;
 
             //Emitente
-            vendaIni["Emitente"]["CRT"] = ((int)Configuracao.Instance.Emitente.CRT).ToString();
-            vendaIni["Emitente"]["CNPJ"] = Configuracao.Instance.Emitente.CNPJ.OnlyNumbers();
-            vendaIni["Emitente"]["IE"] = Configuracao.Instance.Emitente.IE.OnlyNumbers();
-            vendaIni["Emitente"]["Razao"] = Configuracao.Instance.Emitente.Razao;
-            vendaIni["Emitente"]["Fantasia"] = Configuracao.Instance.Emitente.Fantasia;
-            vendaIni["Emitente"]["Fone"] = Configuracao.Instance.Emitente.Fone;
-            vendaIni["Emitente"]["CEP"] = Configuracao.Instance.Emitente.CEP;
-            vendaIni["Emitente"]["Logradouro"] = Configuracao.Instance.Emitente.Logradouro;
-            vendaIni["Emitente"]["Numero"] = Configuracao.Instance.Emitente.Numero;
-            vendaIni["Emitente"]["Complemento"] = Configuracao.Instance.Emitente.Complemento;
-            vendaIni["Emitente"]["Bairro"] = Configuracao.Instance.Emitente.Bairro;
-            vendaIni["Emitente"]["CidadeCod"] = Configuracao.Instance.Emitente.CidadeCod;
-            vendaIni["Emitente"]["Cidade"] = Configuracao.Instance.Emitente.Cidade;
-            vendaIni["Emitente"]["UF"] = Configuracao.Instance.Emitente.UF;
+            ret.Emitente.CRT = Configuracao.Instance.Emitente.CRT;
+            ret.Emitente.CNPJCPF = Configuracao.Instance.Emitente.CNPJ.OnlyNumbers();
+            ret.Emitente.IE = Configuracao.Instance.Emitente.IE.OnlyNumbers();
+            ret.Emitente.xNome = Configuracao.Instance.Emitente.Razao;
+            ret.Emitente.xFant = Configuracao.Instance.Emitente.Fantasia;
+            ret.Emitente.Fone = Configuracao.Instance.Emitente.Fone;
+            ret.Emitente.CEP = Configuracao.Instance.Emitente.CEP;
+            ret.Emitente.xLgr = Configuracao.Instance.Emitente.Logradouro;
+            ret.Emitente.nro = Configuracao.Instance.Emitente.Numero;
+            ret.Emitente.xCpl = Configuracao.Instance.Emitente.Complemento;
+            ret.Emitente.xBairro = Configuracao.Instance.Emitente.Bairro;
+            ret.Emitente.cMun = Configuracao.Instance.Emitente.CidadeCod.ToInt32();
+            ret.Emitente.xMun = Configuracao.Instance.Emitente.Cidade;
+            ret.Emitente.UF = Configuracao.Instance.Emitente.UF;
 
             //Destinatario
-            vendaIni["Destinatario"]["indIEDest"] = "9";
+            ret.Destinatario.indIEDest = IndIEDest.inNaoContribuinte;
             if (!string.IsNullOrEmpty(Cliente.Documento))
-                vendaIni["Destinatario"]["CNPJCPF"] = Cliente.Documento;
+                ret.Destinatario.CNPJCPF = Cliente.Documento.OnlyNumbers();
             if (!string.IsNullOrEmpty(Cliente.Nome))
-                vendaIni["Destinatario"]["xNome"] = Cliente.Nome;
+                ret.Destinatario.xNome = Cliente.Nome;
 
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                var item = Items[i];
                 if (item.Cancelado) continue;
-                var sessaoProduto = $"Produto{i + 1:000}";
-                var sessaoICMS = $"ICMS{i + 1:000}";
-                var sessaoPIS = $"PIS{i + 1:000}";
-                var sessaoCOFINS = $"COFINS{i + 1:000}";
-                var sessaoIPI = $"IPI{i + 1:000}";
+                var produto = new ProdutoNFe
+                {
+                    CFOP = "5.102",
+                    cProd = item.Produto.Codigo,
+                    cEAN = "SEM GTIN",
+                    xProd = item.Produto.Descricao,
+                    NCM = "84719012",
+                    uCom = item.Produto.Unidade,
+                    qCom = item.Quantidade,
+                    vUnCom = item.Produto.Valor,
+                    vProd = item.ValorTotal,
+                    vDesc = 0M,
+                    vFrete = 0M,
+                    vSeg = 0M,
+                    vOutro = 0M,
+                    indEscala = IndEscala.ieNaoRelevante,
+                    CNPJFab = "05481336000137",
+                    uTrib = item.Produto.Unidade,
+                    cEANTrib = "SEM GTIN"
+                };
 
-                vendaIni[sessaoProduto]["CFOP"] = "5.102";
-                vendaIni[sessaoProduto]["Codigo"] = item.Produto.Codigo;
-                vendaIni[sessaoProduto]["cEAN"] = "SEM GTIN";
-                vendaIni[sessaoProduto]["Descricao"] = item.Produto.Descricao;
-                vendaIni[sessaoProduto]["NCM"] = "84719012";
-                vendaIni[sessaoProduto]["Unidade"] = item.Produto.Unidade;
-                vendaIni[sessaoProduto]["Quantidade"] = item.Quantidade.ToString("N4");
-                vendaIni[sessaoProduto]["ValorUnitario"] = item.Produto.Valor.ToString("N10");
-                vendaIni[sessaoProduto]["ValorTotal"] = item.ValorTotal.ToString("N2");
-                vendaIni[sessaoProduto]["ValorDesconto"] = "0,00";
-                vendaIni[sessaoProduto]["vFrete"] = "0,00";
-                vendaIni[sessaoProduto]["vSeg"] = "0,00";
-                vendaIni[sessaoProduto]["vOutro"] = "0,00";
-                vendaIni[sessaoProduto]["indEscala"] = "N";
-                vendaIni[sessaoProduto]["CNPJFab"] = "05481336000137";
-                vendaIni[sessaoProduto]["uTrib"] = item.Produto.Unidade;
-                vendaIni[sessaoProduto]["cEANTrib"] = "SEM GTIN";
+                produto.ICMS.CSOSN = CSOSNIcms.csosn900;
+                produto.ICMS.orig = OrigemMercadoria.oeNacional;
+                produto.ICMS.vBC = 100M;
+                produto.ICMS.pICMS = 10M;
+                produto.ICMS.vICMS = 10M;
+                produto.ICMS.pCredSN = 0M;
+                produto.ICMS.vCredICMSSN = 0M;
+                produto.ICMS.modBCST = DeterminacaoBaseIcmsST.dbisMargemValorAgregado;
+                produto.ICMS.vBCST = 0M;
+                produto.ICMS.pICMSST = 0M;
+                produto.ICMS.vICMSST = 0M;
+                produto.ICMS.pRedBC = 0M;
+                produto.ICMS.vBCFCP = 0M;
+                produto.ICMS.pFCP = 0M;
+                produto.ICMS.vFCP = 0M;
 
-                vendaIni[sessaoICMS]["CSOSN"] = "900";
-                vendaIni[sessaoICMS]["Origem"] = "0";
-                vendaIni[sessaoICMS]["ValorBase"] = "100";
-                vendaIni[sessaoICMS]["Aliquota"] = "10";
-                vendaIni[sessaoICMS]["Valor"] = "10";
-                vendaIni[sessaoICMS]["pCredSN"] = "0,00";
-                vendaIni[sessaoICMS]["vCredICMSSN"] = "0,00";
-                vendaIni[sessaoICMS]["ModalidadeST"] = "4";
-                vendaIni[sessaoICMS]["ValorBaseST"] = "0,00";
-                vendaIni[sessaoICMS]["AliquotaST"] = "0,00";
-                vendaIni[sessaoICMS]["ValorST"] = "0,00";
-                vendaIni[sessaoICMS]["PercentualReducao"] = "0,00";
-                vendaIni[sessaoICMS]["vBCFCP"] = "0";
-                vendaIni[sessaoICMS]["pFCP"] = "0";
-                vendaIni[sessaoICMS]["vFCP"] = "0";
+                produto.PIS.CST = CSTPIS.pis01;
+                produto.PIS.vBC = 0M;
+                produto.PIS.pPIS = 0M;
+                produto.PIS.vPIS = 0M;
 
-                vendaIni[sessaoPIS]["CST"] = "01";
-                vendaIni[sessaoPIS]["ValorBase"] = "0,00";
-                vendaIni[sessaoPIS]["Aliquota"] = "0,00";
-                vendaIni[sessaoPIS]["Valor"] = "0,00";
+                produto.COFINS.CST = CSTCofins.cof01;
+                produto.COFINS.vBC = 0M;
+                produto.COFINS.pCOFINS = 0M;
+                produto.COFINS.vCOFINS = 0M;
 
-                vendaIni[sessaoCOFINS]["CST"] = "01";
-                vendaIni[sessaoCOFINS]["ValorBase"] = "0,00";
-                vendaIni[sessaoCOFINS]["Aliquota"] = "0,00";
-                vendaIni[sessaoCOFINS]["Valor"] = "0,00";
+                produto.IPI.CST = CSTIPI.ipi53;
+                produto.IPI.vBC = 0M;
+                produto.IPI.pIPI = 0M;
+                produto.IPI.vIPI = 0M;
 
-                vendaIni[sessaoIPI]["CST"] = "53";
-                vendaIni[sessaoIPI]["ValorBase"] = "0,00";
-                vendaIni[sessaoIPI]["Aliquota"] = "0,00";
-                vendaIni[sessaoIPI]["Valor"] = "0,00";
+                ret.Produtos.Add(produto);
             }
 
-            vendaIni["Total"]["BaseICMS"] = (100 * Items.Count).ToString("N2");
-            vendaIni["Total"]["ValorICMS"] = (10 * Items.Count).ToString("N2");
-            vendaIni["Total"]["vICMSDeson"] = "0,00";
-            vendaIni["Total"]["BaseICMSSubstituicao"] = "0,00";
-            vendaIni["Total"]["ValorICMSSubstituicao"] = "0,00";
-            vendaIni["Total"]["ValorProduto"] = Items.Sum(x => x.ValorTotal).RoundABNT().ToString("N2");
-            vendaIni["Total"]["ValorFrete"] = "0,00";
-            vendaIni["Total"]["ValorSeguro"] = "0,00";
-            vendaIni["Total"]["ValorDesconto"] = "0,00";
-            vendaIni["Total"]["ValorIPI"] = "0,00";
-            vendaIni["Total"]["ValorPIS"] = "0,00";
-            vendaIni["Total"]["ValorCOFINS"] = "0,00";
-            vendaIni["Total"]["ValorOutrasDespesas"] = "0,00";
-            vendaIni["Total"]["ValorNota"] = Items.Sum(x => x.ValorTotal).RoundABNT().ToString("N2");
-            vendaIni["Total"]["vFCP"] = "0";
+            ret.Total.vBC = (100 * Items.Count);
+            ret.Total.vICMS = (10 * Items.Count);
+            ret.Total.vICMSDeson = 0M;
+            ret.Total.vBCST = 0M;
+            ret.Total.vST = 0M;
+            ret.Total.vProd = Items.Sum(x => x.ValorTotal).RoundABNT();
+            ret.Total.vFrete = 0M;
+            ret.Total.vSeg = 0M;
+            ret.Total.vDesc = 0M;
+            ret.Total.vIPI = 0M;
+            ret.Total.vPIS = 0M;
+            ret.Total.vCOFINS = 0M;
+            ret.Total.vOutro = 0M;
+            ret.Total.vNF = Items.Sum(x => x.ValorTotal).RoundABNT();
+            ret.Total.vFCP = 0M;
 
-            vendaIni["DadosAdicionais"]["Complemento"] = "";
-
-            vendaIni["Transportador"]["modFrete"] = "9";
+            ret.DadosAdicionais.infCpl = "";
+            ret.Transportador.modFrete = ModalidadeFrete.mfSemFrete;
 
             for (var i = 0; i < Pagamentos.Count; i++)
             {
-                var item = Pagamentos[i];
-                var sessaoPagamento = $"pag{i + 1:000}";
+                var pagamento = new PagamentoNFe
+                {
+                    tPag = Pagamentos[i].TipoNFe,
+                    vPag = Pagamentos[i].Valor
+                };
 
-                vendaIni[sessaoPagamento]["tPag"] = item.TipoNFe.ToString("00");
-                vendaIni[sessaoPagamento]["vPag"] = item.Valor.ToString("N2");
                 if (i == 0 && Troco > 0)
-                    vendaIni[sessaoPagamento]["vTroco"] = Troco.ToString("N2");
+                    pagamento.vTroco = Troco;
+
+                ret.Pagamentos.Add(pagamento);
             }
 
-            return vendaIni.ToString();
+            return ret;
         }
 
         public string ToCFeIni()

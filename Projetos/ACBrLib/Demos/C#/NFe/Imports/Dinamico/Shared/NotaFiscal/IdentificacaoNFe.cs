@@ -107,6 +107,8 @@ namespace ACBrLib.NFe
         /// </summary>
         public TipoEmissao tpEmis { get; set; }
 
+        public TipoAmbiente tpAmb { get; set; }
+
         /// <summary>
         /// Finalidade de emissão da NF-e
         /// <para>1=NF-e normal;</para>

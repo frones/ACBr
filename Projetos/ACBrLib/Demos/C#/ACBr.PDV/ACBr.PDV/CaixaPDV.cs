@@ -5,12 +5,11 @@ using System.Linq;
 using System.Windows.Forms;
 using ACBr.Net.Core.Extensions;
 using ACBr.PDV.Model;
-using ACBrLib;
 using ACBrLib.BAL;
 using ACBrLib.Core;
 using ACBrLib.NFe;
+using ACBrLib.PosPrinter;
 using ACBrLib.Sat;
-using ACBrLibPosPrinter;
 
 namespace ACBr.PDV
 {
@@ -43,20 +42,20 @@ namespace ACBr.PDV
             rodapeBobina = new List<RegistroBobina>();
             VendaAtual = new Venda();
 
-            PosPrinter = new ACBrPosPrinter();
             NFe = new ACBrNFe();
 
             // Altera as config de log, como todos os componentes
             // vão usar o mesmo ini então configuro so uma vez
-            NFe.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", 4);
+            NFe.Config.Principal.LogNivel = NivelLog.logCompleto;
 
             var logPath = Path.Combine(Application.StartupPath, "Logs");
             if (!Directory.Exists(logPath))
                 Directory.CreateDirectory(logPath);
 
-            NFe.ConfigGravarValor(ACBrSessao.Principal, "LogPath", logPath);
+            NFe.Config.Principal.LogPath = logPath;
             NFe.ConfigGravar();
 
+            PosPrinter = new ACBrPosPrinter();
             SAT = new ACBrSat();
             Bal = new ACBrBAL();
         }
@@ -267,19 +266,19 @@ namespace ACBr.PDV
 
         private RetornoEventArgs VendaNFCe()
         {
-            var vendaIni = VendaAtual.ToNFCeIni();
+            var nfce = VendaAtual.ToNFCe();
             NFe.LimparLista();
 
-            NFe.CarregarINI(vendaIni);
+            NFe.CarregarNota(nfce);
 
+            var envioRet = NFe.Enviar(1, true, true);
             var ret = new RetornoEventArgs
             {
                 Sucesso = false,
-                Retorno = NFe.Enviar(1, true, true)
+                Retorno = envioRet.Resposta
             };
 
-            var retIni = ACBrIniFile.Parse(ret.Retorno);
-            if (retIni[1]["cStat"] != "100") return ret;
+            if (envioRet.Retorno.CStat != 100) return ret;
 
             ret.Sucesso = true;
             Configuracao.Instance.DFe.NumeroAtual += 1;

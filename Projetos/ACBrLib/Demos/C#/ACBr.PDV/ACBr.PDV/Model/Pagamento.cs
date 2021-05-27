@@ -1,8 +1,10 @@
-﻿namespace ACBr.PDV.Model
+﻿using ACBrLib.NFe;
+
+namespace ACBr.PDV.Model
 {
     public class Pagamento
     {
-        public int TipoNFe { get; set; }
+        public FormaPagamento TipoNFe { get; set; }
 
         public int TipoSAT { get; set; }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -51,6 +52,11 @@
             this.nudDFeSerie = new System.Windows.Forms.NumericUpDown();
             this.cmbDFeTipo = new System.Windows.Forms.ComboBox();
             this.label91 = new System.Windows.Forms.Label();
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.label117 = new System.Windows.Forms.Label();
+            this.txtSoftwareHouse = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
+            this.txtWebsite = new System.Windows.Forms.TextBox();
             this.label101 = new System.Windows.Forms.Label();
             this.cmbEmitCRT = new System.Windows.Forms.ComboBox();
             this.txtEmitFone = new System.Windows.Forms.TextBox();
@@ -169,6 +175,12 @@
             this.btnArqInu = new System.Windows.Forms.Button();
             this.btnArqNFe = new System.Windows.Forms.Button();
             this.tbpNFeImpressao = new System.Windows.Forms.TabPage();
+            this.chkNFCePreview = new System.Windows.Forms.CheckBox();
+            this.chkNFCeSetup = new System.Windows.Forms.CheckBox();
+            this.nudDANFCeCopias = new System.Windows.Forms.NumericUpDown();
+            this.label116 = new System.Windows.Forms.Label();
+            this.label115 = new System.Windows.Forms.Label();
+            this.cmbDANFCeImpressora = new System.Windows.Forms.ComboBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.label86 = new System.Windows.Forms.Label();
             this.nudNFCeMDireita = new System.Windows.Forms.NumericUpDown();
@@ -382,17 +394,7 @@
             this.btnIniciarVenda = new System.Windows.Forms.Button();
             this.lstBobina = new System.Windows.Forms.ListBox();
             this.label40 = new System.Windows.Forms.Label();
-            this.label115 = new System.Windows.Forms.Label();
-            this.cmbDANFCeImpressora = new System.Windows.Forms.ComboBox();
-            this.nudDANFCeCopias = new System.Windows.Forms.NumericUpDown();
-            this.label116 = new System.Windows.Forms.Label();
-            this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.label117 = new System.Windows.Forms.Label();
-            this.txtSoftwareHouse = new System.Windows.Forms.TextBox();
-            this.label118 = new System.Windows.Forms.Label();
-            this.txtWebsite = new System.Windows.Forms.TextBox();
-            this.chkNFCePreview = new System.Windows.Forms.CheckBox();
-            this.chkNFCeSetup = new System.Windows.Forms.CheckBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tbcViews.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -401,6 +403,7 @@
             this.groupBox16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDFeNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDFeSerie)).BeginInit();
+            this.groupBox18.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.tbpNFe.SuspendLayout();
             this.tbcNFe.SuspendLayout();
@@ -418,6 +421,7 @@
             this.groupBox4.SuspendLayout();
             this.tbpNFeArquivos.SuspendLayout();
             this.tbpNFeImpressao.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDANFCeCopias)).BeginInit();
             this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNFCeMDireita)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNFCeMEsquerda)).BeginInit();
@@ -476,8 +480,7 @@
             this.plnPagamentos.SuspendLayout();
             this.plnTitulo.SuspendLayout();
             this.plnBobina.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDANFCeCopias)).BeginInit();
-            this.groupBox18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tbcViews
@@ -689,6 +692,58 @@
             this.label91.Size = new System.Drawing.Size(32, 13);
             this.label91.TabIndex = 35;
             this.label91.Text = "Tipo";
+            // 
+            // groupBox18
+            // 
+            this.groupBox18.Controls.Add(this.label117);
+            this.groupBox18.Controls.Add(this.txtSoftwareHouse);
+            this.groupBox18.Controls.Add(this.label118);
+            this.groupBox18.Controls.Add(this.txtWebsite);
+            this.groupBox18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox18.Location = new System.Drawing.Point(10, 361);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(489, 67);
+            this.groupBox18.TabIndex = 37;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Software House";
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label117.Location = new System.Drawing.Point(6, 20);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(97, 13);
+            this.label117.TabIndex = 107;
+            this.label117.Text = "Software House";
+            // 
+            // txtSoftwareHouse
+            // 
+            this.txtSoftwareHouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSoftwareHouse.Location = new System.Drawing.Point(9, 34);
+            this.txtSoftwareHouse.Name = "txtSoftwareHouse";
+            this.txtSoftwareHouse.Size = new System.Drawing.Size(198, 20);
+            this.txtSoftwareHouse.TabIndex = 108;
+            this.txtSoftwareHouse.Text = "Projeto ACBr";
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label118.Location = new System.Drawing.Point(210, 17);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(29, 13);
+            this.label118.TabIndex = 109;
+            this.label118.Text = "Site";
+            // 
+            // txtWebsite
+            // 
+            this.txtWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtWebsite.Location = new System.Drawing.Point(213, 33);
+            this.txtWebsite.Name = "txtWebsite";
+            this.txtWebsite.Size = new System.Drawing.Size(266, 20);
+            this.txtWebsite.TabIndex = 110;
+            this.txtWebsite.Text = "http://www.projetoacbr.com.br";
             // 
             // label101
             // 
@@ -2006,6 +2061,69 @@
             this.tbpNFeImpressao.TabIndex = 4;
             this.tbpNFeImpressao.Text = "Impressão";
             this.tbpNFeImpressao.UseVisualStyleBackColor = true;
+            // 
+            // chkNFCePreview
+            // 
+            this.chkNFCePreview.AutoSize = true;
+            this.chkNFCePreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.chkNFCePreview.Location = new System.Drawing.Point(11, 209);
+            this.chkNFCePreview.Name = "chkNFCePreview";
+            this.chkNFCePreview.Size = new System.Drawing.Size(102, 17);
+            this.chkNFCePreview.TabIndex = 99;
+            this.chkNFCePreview.Text = "Mostrar Preview";
+            this.chkNFCePreview.UseVisualStyleBackColor = true;
+            // 
+            // chkNFCeSetup
+            // 
+            this.chkNFCeSetup.AutoSize = true;
+            this.chkNFCeSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.chkNFCeSetup.Location = new System.Drawing.Point(11, 232);
+            this.chkNFCeSetup.Name = "chkNFCeSetup";
+            this.chkNFCeSetup.Size = new System.Drawing.Size(92, 17);
+            this.chkNFCeSetup.TabIndex = 100;
+            this.chkNFCeSetup.Text = "Mostrar Setup";
+            this.chkNFCeSetup.UseVisualStyleBackColor = true;
+            // 
+            // nudDANFCeCopias
+            // 
+            this.nudDANFCeCopias.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudDANFCeCopias.Location = new System.Drawing.Point(347, 107);
+            this.nudDANFCeCopias.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudDANFCeCopias.Name = "nudDANFCeCopias";
+            this.nudDANFCeCopias.Size = new System.Drawing.Size(133, 20);
+            this.nudDANFCeCopias.TabIndex = 97;
+            this.nudDANFCeCopias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label116.Location = new System.Drawing.Point(344, 90);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(63, 13);
+            this.label116.TabIndex = 98;
+            this.label116.Text = "Nº Copias";
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label115.Location = new System.Drawing.Point(8, 89);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(68, 13);
+            this.label115.TabIndex = 96;
+            this.label115.Text = "Impressora";
+            // 
+            // cmbDANFCeImpressora
+            // 
+            this.cmbDANFCeImpressora.Location = new System.Drawing.Point(11, 106);
+            this.cmbDANFCeImpressora.Name = "cmbDANFCeImpressora";
+            this.cmbDANFCeImpressora.Size = new System.Drawing.Size(330, 21);
+            this.cmbDANFCeImpressora.TabIndex = 95;
             // 
             // groupBox12
             // 
@@ -4481,120 +4599,9 @@
             this.label40.Text = "Bobina";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label115
+            // errorProvider1
             // 
-            this.label115.AutoSize = true;
-            this.label115.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label115.Location = new System.Drawing.Point(8, 89);
-            this.label115.Name = "label115";
-            this.label115.Size = new System.Drawing.Size(68, 13);
-            this.label115.TabIndex = 96;
-            this.label115.Text = "Impressora";
-            // 
-            // cmbDANFCeImpressora
-            // 
-            this.cmbDANFCeImpressora.Location = new System.Drawing.Point(11, 106);
-            this.cmbDANFCeImpressora.Name = "cmbDANFCeImpressora";
-            this.cmbDANFCeImpressora.Size = new System.Drawing.Size(330, 21);
-            this.cmbDANFCeImpressora.TabIndex = 95;
-            // 
-            // nudDANFCeCopias
-            // 
-            this.nudDANFCeCopias.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudDANFCeCopias.Location = new System.Drawing.Point(347, 107);
-            this.nudDANFCeCopias.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.nudDANFCeCopias.Name = "nudDANFCeCopias";
-            this.nudDANFCeCopias.Size = new System.Drawing.Size(133, 20);
-            this.nudDANFCeCopias.TabIndex = 97;
-            this.nudDANFCeCopias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label116
-            // 
-            this.label116.AutoSize = true;
-            this.label116.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label116.Location = new System.Drawing.Point(344, 90);
-            this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(63, 13);
-            this.label116.TabIndex = 98;
-            this.label116.Text = "Nº Copias";
-            // 
-            // groupBox18
-            // 
-            this.groupBox18.Controls.Add(this.label117);
-            this.groupBox18.Controls.Add(this.txtSoftwareHouse);
-            this.groupBox18.Controls.Add(this.label118);
-            this.groupBox18.Controls.Add(this.txtWebsite);
-            this.groupBox18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox18.Location = new System.Drawing.Point(10, 361);
-            this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(489, 67);
-            this.groupBox18.TabIndex = 37;
-            this.groupBox18.TabStop = false;
-            this.groupBox18.Text = "Software House";
-            // 
-            // label117
-            // 
-            this.label117.AutoSize = true;
-            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label117.Location = new System.Drawing.Point(6, 20);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(97, 13);
-            this.label117.TabIndex = 107;
-            this.label117.Text = "Software House";
-            // 
-            // txtSoftwareHouse
-            // 
-            this.txtSoftwareHouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSoftwareHouse.Location = new System.Drawing.Point(9, 34);
-            this.txtSoftwareHouse.Name = "txtSoftwareHouse";
-            this.txtSoftwareHouse.Size = new System.Drawing.Size(198, 20);
-            this.txtSoftwareHouse.TabIndex = 108;
-            this.txtSoftwareHouse.Text = "Projeto ACBr";
-            // 
-            // label118
-            // 
-            this.label118.AutoSize = true;
-            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label118.Location = new System.Drawing.Point(210, 17);
-            this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(29, 13);
-            this.label118.TabIndex = 109;
-            this.label118.Text = "Site";
-            // 
-            // txtWebsite
-            // 
-            this.txtWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWebsite.Location = new System.Drawing.Point(213, 33);
-            this.txtWebsite.Name = "txtWebsite";
-            this.txtWebsite.Size = new System.Drawing.Size(266, 20);
-            this.txtWebsite.TabIndex = 110;
-            this.txtWebsite.Text = "http://www.projetoacbr.com.br";
-            // 
-            // chkNFCePreview
-            // 
-            this.chkNFCePreview.AutoSize = true;
-            this.chkNFCePreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.chkNFCePreview.Location = new System.Drawing.Point(11, 209);
-            this.chkNFCePreview.Name = "chkNFCePreview";
-            this.chkNFCePreview.Size = new System.Drawing.Size(102, 17);
-            this.chkNFCePreview.TabIndex = 99;
-            this.chkNFCePreview.Text = "Mostrar Preview";
-            this.chkNFCePreview.UseVisualStyleBackColor = true;
-            // 
-            // chkNFCeSetup
-            // 
-            this.chkNFCeSetup.AutoSize = true;
-            this.chkNFCeSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.chkNFCeSetup.Location = new System.Drawing.Point(11, 232);
-            this.chkNFCeSetup.Name = "chkNFCeSetup";
-            this.chkNFCeSetup.Size = new System.Drawing.Size(92, 17);
-            this.chkNFCeSetup.TabIndex = 100;
-            this.chkNFCeSetup.Text = "Mostrar Setup";
-            this.chkNFCeSetup.UseVisualStyleBackColor = true;
+            this.errorProvider1.ContainerControl = this;
             // 
             // FrmMain
             // 
@@ -4622,6 +4629,8 @@
             this.groupBox16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDFeNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDFeSerie)).EndInit();
+            this.groupBox18.ResumeLayout(false);
+            this.groupBox18.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.tbpNFe.ResumeLayout(false);
@@ -4649,6 +4658,7 @@
             this.tbpNFeArquivos.PerformLayout();
             this.tbpNFeImpressao.ResumeLayout(false);
             this.tbpNFeImpressao.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDANFCeCopias)).EndInit();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNFCeMDireita)).EndInit();
@@ -4720,9 +4730,7 @@
             this.plnPagamentos.ResumeLayout(false);
             this.plnTitulo.ResumeLayout(false);
             this.plnBobina.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudDANFCeCopias)).EndInit();
-            this.groupBox18.ResumeLayout(false);
-            this.groupBox18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5087,6 +5095,7 @@
         private System.Windows.Forms.Label label116;
         private System.Windows.Forms.CheckBox chkNFCePreview;
         private System.Windows.Forms.CheckBox chkNFCeSetup;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 

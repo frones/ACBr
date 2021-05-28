@@ -1442,6 +1442,9 @@ begin
       if (not (Provedor in [proBetha, proBethav2])) or (IM <> '') then
         Gerador.wCampo(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
+      if Provedor = proAsten then
+        Gerador.wCampo(tcStr, '#4', 'Token', 01, 30, 1,  ChaveAcessoPrefeitura , '');
+
       if Provedor = proISSDigital then
       begin
         Gerador.wCampo(tcStr, '#5', 'Senha', 06, 10, 1, SenhaWeb, '');

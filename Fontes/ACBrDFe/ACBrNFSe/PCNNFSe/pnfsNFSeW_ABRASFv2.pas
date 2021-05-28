@@ -136,6 +136,9 @@ begin
 
   Gerador.wCampo(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, DSC_IM);
 
+  if FProvedor = proAsten then
+    Gerador.wCampo(tcStr, '#35', 'Token', 01, 50, 0, nfse.Prestador.Token, ''); //RNR
+
   if (FProvedor in [proISSDigital, proAgili]) then
   begin
     Gerador.wCampo(tcStr, '#36', 'Senha       ', 01, 255, 1, NFSe.Prestador.Senha, DSC_SENHA);

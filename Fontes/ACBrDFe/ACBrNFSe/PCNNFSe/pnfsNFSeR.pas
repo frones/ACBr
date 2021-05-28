@@ -3741,7 +3741,6 @@ begin
       end;
 
       NFSe.Servico.Valores.ValorServicos          := Leitor.rCampo( tcDe2, 'valor_total' );
-      NFSe.Servico.Valores.ValorLiquidoNfse       := Leitor.rCampo( tcDe2, 'valor_total' );
       NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo( tcDe2, 'valor_desconto' );
       NFSe.Servico.Valores.ValorIr                := Leitor.rCampo( tcDe2, 'valor_ir' );
       NFSe.Servico.Valores.ValorInss              := Leitor.rCampo( tcDe2, 'valor_inss' );
@@ -3750,6 +3749,17 @@ begin
       NFSe.Servico.Valores.ValorCofins            := Leitor.rCampo( tcDe2, 'valor_cofins' );
       NFSe.OutrasInformacoes                      := Leitor.rCampo( tcStr, 'observacao' );
     end;
+
+    NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
+                                             (NFSe.Servico.Valores.ValorPis +
+                                              NFSe.Servico.Valores.ValorCofins +
+                                              NFSe.Servico.Valores.ValorInss +
+                                              NFSe.Servico.Valores.ValorIr +
+                                              NFSe.Servico.Valores.ValorCsll +
+                                              NFSe.Servico.Valores.ValorDeducoes +
+                                              NFSe.Servico.Valores.DescontoCondicionado +
+                                              NFSe.Servico.Valores.DescontoIncondicionado +
+                                              NFSe.Servico.Valores.ValorIssRetido);
 
     if( Leitor.rExtrai( 2, 'prestador' ) <> '' )then
     begin

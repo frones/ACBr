@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/05/2021
+-- Diversos --
+[*] Ajustes nos fontes para atender o Provedor Asten.
+  Por: VeleiroPedeVento / Italo Giurizzato Junior
+-- pnfsNFSeR --
+[*] Incluindo um cálculo para a propriedade ValorLiquidoNfse - Provedor IPM.
+  Por: Tiago FZ
 -- pnfsNFSeW_ABRASFv2 --
 [*] Corrigido a geração da tag Competencia para o provedor 4R que tem que ser
     Data e Hora.

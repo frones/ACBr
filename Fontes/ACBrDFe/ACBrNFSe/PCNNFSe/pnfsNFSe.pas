@@ -437,6 +437,7 @@ type
   private
     FCnpj: String;
     FInscricaoMunicipal: String;
+    FToken: String;  //rnr
     FSenha: String;
     FFraseSecreta: String;
     FcUF: Integer;
@@ -465,6 +466,7 @@ type
 
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property Token: String read FToken write FToken; //rnr
     // As propriedades abaixo são Utilizadas pelo provedor ISSDigital
     property Senha: String read FSenha write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;

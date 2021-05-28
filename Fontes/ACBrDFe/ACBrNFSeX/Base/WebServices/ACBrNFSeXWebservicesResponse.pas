@@ -166,7 +166,7 @@ type
 
   end;
 
-  TNFSeWebserviceResponse = class abstract
+  TNFSeWebserviceResponse = class
   private
     FSucesso: Boolean;
     FAlertas: TNFSeEventoCollection;

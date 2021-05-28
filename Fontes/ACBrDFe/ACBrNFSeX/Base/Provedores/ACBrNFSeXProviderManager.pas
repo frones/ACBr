@@ -58,7 +58,7 @@ uses
   DBSeller.Provider,
   DSFSJC.Provider,
   FISSLex.Provider,
-  GeNFe.Provider,
+  geNFe.Provider,
   Ginfes.Provider,
   GovBr.Provider,
   ISSCuritiba.Provider,

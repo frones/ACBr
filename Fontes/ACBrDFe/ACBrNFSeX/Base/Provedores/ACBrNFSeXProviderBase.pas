@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXProvider = class abstract (TInterfacedObject, IACBrNFSeXProvider)
+  TACBrNFSeXProvider = class(TInterfacedObject, IACBrNFSeXProvider)
   private
     FConfigGeral: TConfigGeral;
     FConfigWebServices: TConfigWebServices;

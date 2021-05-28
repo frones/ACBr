@@ -37,7 +37,7 @@ unit ACBrNFSeXDANFSeRLClass;
 interface
 
 uses
-  Vcl.Dialogs, Vcl.Forms, SysUtils, Classes, ACBrNFSeXClass,
+  Dialogs, Forms, SysUtils, Classes, ACBrNFSeXClass,
   ACBrBase, ACBrNFSeXDANFSeClass;
 
 type

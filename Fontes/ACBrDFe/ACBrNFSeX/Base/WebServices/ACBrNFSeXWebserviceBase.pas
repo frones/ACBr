@@ -58,7 +58,7 @@ resourcestring
 
 type
 
-  TACBrNFSeXWebservice = class abstract
+  TACBrNFSeXWebservice = class
   private
     FPrefixo: string;
 
@@ -135,7 +135,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceSoap11 = class abstract (TACBrNFSeXWebservice)
+  TACBrNFSeXWebserviceSoap11 = class(TACBrNFSeXWebservice)
   protected
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                                   namespace: array of string): string; override;
@@ -144,7 +144,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceSoap12 = class abstract (TACBrNFSeXWebservice)
+  TACBrNFSeXWebserviceSoap12 = class(TACBrNFSeXWebservice)
   protected
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                                   namespace: array of string): string; override;
@@ -153,7 +153,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceNoSoap = class abstract (TACBrNFSeXWebservice)
+  TACBrNFSeXWebserviceNoSoap = class(TACBrNFSeXWebservice)
   protected
     function GetSoapBody(const Response: string): string; override;
 
@@ -164,7 +164,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceRest = class abstract (TACBrNFSeXWebserviceNoSoap)
+  TACBrNFSeXWebserviceRest = class(TACBrNFSeXWebserviceNoSoap)
   protected
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                            namespace: array of string): string; override;
@@ -174,7 +174,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceMulti = class abstract (TACBrNFSeXWebserviceNoSoap)
+  TACBrNFSeXWebserviceMulti = class(TACBrNFSeXWebserviceNoSoap)
   protected
     FPBound: string;
 

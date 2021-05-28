@@ -42,7 +42,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeProviderABRASFv2 = class abstract (TACBrNFSeXProvider)
+  TACBrNFSeProviderABRASFv2 = class(TACBrNFSeXProvider)
   protected
     procedure Configuracao; override;
 

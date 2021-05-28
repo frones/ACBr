@@ -37,8 +37,8 @@ unit ACBrNFSeXDANFSeRLRetrato;
 interface
 
 uses
-  SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.ExtCtrls, ACBrNFSeXDANFSeRL, RLFilters, RLPDFFilter, RLReport,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ACBrNFSeXDANFSeRL, RLFilters, RLPDFFilter, RLReport,
   ACBrNFSeXConversao, ACBrDelphiZXingQRCode;
 
 type

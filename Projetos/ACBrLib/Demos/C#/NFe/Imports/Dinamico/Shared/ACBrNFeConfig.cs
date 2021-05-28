@@ -1,6 +1,5 @@
 ﻿using ACBrLib.Core;
 using ACBrLib.Core.Config;
-using ACBrLib.Core.DFe;
 using ACBrLib.Core.NFe;
 
 namespace ACBrLib.NFe
@@ -26,54 +25,6 @@ namespace ACBrLib.NFe
         public DANFeConfig DANFe { get; }
 
         public PosPrinterConfig<ACBrNFe> PosPrinter { get; }
-
-        public TipoEmissao FormaEmissao
-        {
-            get => GetProperty<TipoEmissao>();
-            set => SetProperty(value);
-        }
-
-        public bool SalvarGer
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool ExibirErroSchema
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public string FormatoAlerta
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
-        public bool RetirarAcentos
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool RetirarEspacos
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool IdentarXML
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool ValidarDigest
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
 
         public string IdCSC
         {
@@ -120,132 +71,6 @@ namespace ACBrLib.NFe
         public TagNT2018005 TagNT2018005
         {
             get => GetProperty<TagNT2018005>();
-            set => SetProperty(value);
-        }
-
-        public TipoAmbiente Ambiente
-        {
-            get => GetProperty<TipoAmbiente>();
-            set => SetProperty(value);
-        }
-
-        public bool SalvarWS
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public int Timeout
-        {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public int TimeoutPorThread
-        {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public bool Visualizar
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool AjustaAguardaConsultaRet
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public int AguardarConsultaRet
-        {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public int IntervaloTentativas
-        {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public int Tentativas
-        {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public SSLType SSLType
-        {
-            get => GetProperty<SSLType>();
-            set => SetProperty(value);
-        }
-
-        public string QuebradeLinha
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
-        public string PathSalvar
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
-        public string PathSchemas
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
-        public string IniServicos
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
-        public bool SalvarArq
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool AdicionarLiteral
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool SepararPorCNPJ
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool SepararPorModelo
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool SepararPorAno
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool SepararPorMes
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public bool SepararPorDia
-        {
-            get => GetProperty<bool>();
             set => SetProperty(value);
         }
 
@@ -296,8 +121,6 @@ namespace ACBrLib.NFe
             get => GetProperty<string>();
             set => SetProperty(value);
         }
-
-        public DownloadConfig<ACBrNFe> Config { get; }
 
         public string IdCSRT
         {

@@ -4,14 +4,22 @@ namespace ACBrLib.NFe
 {
     public enum TipoRef
     {
-        [EnumValue("NF")] NF,
+        [EnumValue("NF")]
+        NF,
 
-        [EnumValue("NFe")] NFe,
+        [EnumValue("NFe")]
+        NFe,
 
-        [EnumValue("NFP")] NFP,
+        [EnumValue("NFe")]
+        SAT,
 
-        [EnumValue("CTe")] CTe,
+        [EnumValue("NFP")]
+        NFP,
 
-        [EnumValue("ECF")] ECF
+        [EnumValue("CTe")]
+        CTe,
+
+        [EnumValue("ECF")]
+        ECF
     }
 }

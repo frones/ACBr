@@ -47,7 +47,7 @@ uses
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView,  FMX.VirtualKeyboard,
   FileSelectFrame,
-  ACBrPosPrinterElginE1Service,
+  ACBrPosPrinterElginE1Service, ACBrPosPrinterElginE1Lib,
   ACBrPosPrinterGEDI,
   ACBrIBGE, ACBrSocket, ACBrCEP,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
@@ -438,6 +438,7 @@ type
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
     fGEDIPrinter: TACBrPosPrinterGEDI;
+    fE1Lib: TACBrPosPrinterElginE1Lib;
 
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
@@ -547,9 +548,11 @@ begin
 
   // Criando Classes de Impressoras Externas //
   fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
-  fE1Printer.Modelo := prnSmartPOS;
+  fE1Printer.Modelo := TElginE1Printers.prnSmartPOS;
   fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
+  fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
 
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
@@ -605,6 +608,7 @@ begin
   FTabList.Free;
   fE1Printer.Free;
   fGEDIPrinter.Free;
+  fE1Lib.Free;
 end;
 
 procedure TACBrNFCeTestForm.AppExceptionHandle(Sender: TObject; E: Exception);
@@ -655,7 +659,8 @@ end;
 procedure TACBrNFCeTestForm.CarregarModelosExternos;
 begin
   cbxModelo.Items.Clear;
-  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Elgin E1 Service');
+  cbxModelo.Items.Add('Elgin E1 Lib');
   cbxModelo.Items.Add('Gertec GEDI');
   lbiConfPrinterImpressoras.Enabled := False;
 end;
@@ -1493,10 +1498,12 @@ begin
 
   if rbClasseExterna.IsChecked then
   begin
-    if (cbxModelo.ItemIndex = 1) then
-      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    case cbxModelo.ItemIndex of
+      0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
     else
-      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+    end;
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
   end

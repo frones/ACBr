@@ -30,32 +30,34 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrNFSeX
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ADPM.LerXml;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-28/05/2021
--- Diversos --
-[+] Implementação do provedor ADPM.
-   Por: Italo Giurizzato Junior
+uses
+{$IFDEF FPC}
+  LResources, Controls, Graphics, Dialogs,
+{$ENDIF}
+  SysUtils, Classes, StrUtils,
+  ACBrNFSeXLerXml_ABRASFv2;
 
-27/05/2021
--- Diversos --
-[*] Ajustes visando atender o provedor iiBrasil
-   Por: Italo Giurizzato Junior
+type
+  { TNFSeR_ADPM }
 
-26/05/2021
-[*] Ajustes no provedor VersaTecnologia
-   Por: Italo Giurizzato Junior
+  TNFSeR_ADPM = class(TNFSeR_ABRASFv2)
+  protected
 
-24/05/2021
-[+] Envio do novo componente para o Trunk2
-   Por: Italo Giurizzato Junior
+  public
+
+  end;
+
+implementation
+
+//==============================================================================
+// Essa unit tem por finalidade exclusiva ler o XML do provedor:
+//     ADPM
+//==============================================================================
+
+end.

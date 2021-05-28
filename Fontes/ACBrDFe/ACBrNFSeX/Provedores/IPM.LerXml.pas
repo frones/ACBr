@@ -184,15 +184,19 @@ begin
 
       with Servico.Valores do
       begin
-        ValorServicos    := ProcessarConteudo(AuxNode.Childrens.Find('valor_total'), tcDe2);
-        ValorLiquidoNfse := ValorServicos;
-        ValorIr          := ProcessarConteudo(AuxNode.Childrens.Find('valor_ir'), tcDe2);
-        ValorInss        := ProcessarConteudo(AuxNode.Childrens.Find('valor_inss'), tcDe2);
-        ValorCsll        := ProcessarConteudo(AuxNode.Childrens.Find('valor_contribuicao_social'), tcDe2);
-        ValorPis         := ProcessarConteudo(AuxNode.Childrens.Find('valor_pis'), tcDe2);
-        ValorCofins      := ProcessarConteudo(AuxNode.Childrens.Find('valor_cofins'), tcDe2);
+        ValorServicos := ProcessarConteudo(AuxNode.Childrens.Find('valor_total'), tcDe2);
+        ValorIr       := ProcessarConteudo(AuxNode.Childrens.Find('valor_ir'), tcDe2);
+        ValorInss     := ProcessarConteudo(AuxNode.Childrens.Find('valor_inss'), tcDe2);
+        ValorCsll     := ProcessarConteudo(AuxNode.Childrens.Find('valor_contribuicao_social'), tcDe2);
+        ValorPis      := ProcessarConteudo(AuxNode.Childrens.Find('valor_pis'), tcDe2);
+        ValorCofins   := ProcessarConteudo(AuxNode.Childrens.Find('valor_cofins'), tcDe2);
 
         DescontoIncondicionado := ProcessarConteudo(AuxNode.Childrens.Find('valor_desconto'), tcDe2);
+
+        ValorLiquidoNfse := ValorServicos -
+                            (ValorPis + ValorCofins + ValorInss + ValorIr +
+                             ValorCsll + ValorDeducoes + DescontoCondicionado +
+                             DescontoIncondicionado + ValorIssRetido);
       end;
     end;
   end;

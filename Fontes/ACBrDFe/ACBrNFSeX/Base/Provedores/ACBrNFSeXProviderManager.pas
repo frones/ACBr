@@ -82,6 +82,7 @@ uses
   ABase.Provider,
   Actcon.Provider,
   Adm.Provider,
+  ADPM.Provider,
   AEG.Provider,
   Asten.Provider,
   Centi.Provider,
@@ -176,7 +177,7 @@ begin
     proDBSeller: Result := TACBrNFSeProviderDBSeller.Create(ACBrNFSe);
     proDSFSJC:   Result := TACBrNFSeProviderDSFSJC.Create(ACBrNFSe);
     proFISSLex:  Result := TACBrNFSeProviderFISSLex.Create(ACBrNFSe);
-    proGeNFe:    Result := TACBrNFSeProviderGeNFe.Create(ACBrNFSe);
+    progeNFe:    Result := TACBrNFSeProvidergeNFe.Create(ACBrNFSe);
     proGinfes:   Result := TACBrNFSeProviderGinfes.Create(ACBrNFSe);
     proGovBr:    Result := TACBrNFSeProviderGovBr.Create(ACBrNFSe);
 
@@ -223,6 +224,7 @@ begin
     proActconV201:   Result := TACBrNFSeProviderActconv201.Create(ACBrNFSe);
     proActconV202:   Result := TACBrNFSeProviderActconv202.Create(ACBrNFSe);
     proAdm:          Result := TACBrNFSeProviderAdm.Create(ACBrNFSe);
+    proADPM:         Result := TACBrNFSeProviderADPM.Create(ACBrNFSe);
     proAEG:          Result := TACBrNFSeProviderAEG.Create(ACBrNFSe);
     proAsten:        Result := TACBrNFSeProviderAsten.Create(ACBrNFSe);
     proBethaV2:      Result := TACBrNFSeProviderBethav2.Create(ACBrNFSe);

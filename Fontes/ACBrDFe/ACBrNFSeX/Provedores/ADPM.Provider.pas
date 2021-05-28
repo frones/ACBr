@@ -32,10 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ModeloV2.Provider;
-{
-  Trocar todas as ocorrencias de "ModeloV2" pelo nome do provedor
-}
+unit ADPM.Provider;
 
 interface
 
@@ -46,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceModeloV2 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceADPM = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -61,7 +58,7 @@ type
 
   end;
 
-  TACBrNFSeProviderModeloV2 = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderADPM = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,228 +71,53 @@ type
 implementation
 
 uses
-  ModeloV2.GravarXml, ModeloV2.LerXml;
+  ADPM.GravarXml, ADPM.LerXml;
 
-{ TACBrNFSeProviderModeloV2 }
+{ TACBrNFSeProviderADPM }
 
-procedure TACBrNFSeProviderModeloV2.Configuracao;
+procedure TACBrNFSeProviderADPM.Configuracao;
 begin
   inherited Configuracao;
-  {
-     Todos os parâmetros de configuração estão com os seus valores padrões.
 
-     Se a configuração padrão atende o provedor ela pode ser excluida dessa
-     procedure.
-
-     Portanto deixe somente os parâmetros de configuração que foram alterados
-     para atender o provedor.
-  }
-
-  // Inicializa os parâmetros de configuração: Geral
   with ConfigGeral do
   begin
-    UseCertificateHTTP := True;
-    UseAuthorizationHeader := False;
-    NumMaxRpsGerar  := 1;
-    NumMaxRpsEnviar := 50;
-
-    // filsComFormatacao, filsSemFormatacao, filsComFormatacaoSemZeroEsquerda
-    FormatoItemListaServico := filsComFormatacao;
-
-    TabServicosExt := False;
-    Identificador := 'Id';
-
-    // meLoteAssincrono, meLoteSincrono ou meUnitario
-    ModoEnvio := meLoteSincrono;
+    UseAuthorizationHeader := True;
   end;
 
-  // Inicializa os parâmetros de configuração: WebServices
   with ConfigWebServices do
   begin
-    VersaoDados := '2.00';
-    VersaoAtrib := '2.00';
-    AtribVerLote := 'versao';
+    VersaoDados := '2.03';
+    VersaoAtrib := '2.03';
   end;
 
-  // Define o NameSpace utilizado por todos os serviços disponibilizados pelo
-  // provedor
-  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
-  // Inicializa os parâmetros de configuração: Mensagem de Dados
   with ConfigMsgDados do
   begin
-    // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
-    Prefixo := '';
-
-//    DadosCabecalho := GetCabecalho('');
-
-    DadosCabecalho := '<cabecalho versao="2.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                      '<versaoDados>2.00</versaoDados>' +
-                      '</cabecalho>';
-
-    // Usado para geração do Xml do Rps
-    with XmlRps do
-    begin
-      // Define o NameSpace do XML do Rps, sobrepõe a definição global: SetXmlNameSpace
-      xmlns := '';
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'Rps';
-    end;
-
-    // Usado para geração do Envio do Lote em modo assíncrono
-    with LoteRps do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsEnvio';
-    end;
-
-    // Usado para geração do Envio do Lote em modo Sincrono
-    with LoteRpsSincrono do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsSincronoEnvio';
-    end;
-
-    // Usado para geração da Consulta a Situação do Lote
-    with ConsultarSituacao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta do Lote
-    with ConsultarLote do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe por RPS
-    with ConsultarNFSeRps do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe
-    with ConsultarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseEnvio';
-    end;
-
-    // Usado para geração do Cancelamento
-    with CancelarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'InfPedidoCancelamento';
-      DocElemento := 'Pedido';
-    end;
-
-    // Usado para geração do Gerar
-    with GerarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'GerarNfseEnvio';
-    end;
-
-    // Usado para geração do Substituir
-    with SubstituirNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'SubstituicaoNfse';
-      DocElemento := 'SubstituirNfseEnvio';
-    end;
-
-    // Usado para geração da Abertura de Sessão
-    with AbrirSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
-
-    // Usado para geração do Fechamento de Sessão
-    with FecharSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    DadosCabecalho := GetCabecalho('');
   end;
 
-  // Inicializa os parâmetros de configuração: Assinar
   with ConfigAssinar do
   begin
-    Rps               := False;
-    LoteRps           := False;
-    ConsultarSituacao := False;
-    ConsultarLote     := False;
-    ConsultarNFSeRps  := False;
-    ConsultarNFSe     := False;
-    CancelarNFSe      := False;
-    RpsGerarNFSe      := False;
-    LoteGerarNFSe     := False;
-    RpsSubstituirNFSe := False;
-    SubstituirNFSe    := False;
-    AbrirSessao       := False;
-    FecharSessao      := False;
-
-    IncluirURI := True;
-
-    AssinaturaAdicional := False;
-  end;
-
-  // Define o nome do arquivo XSD utilizado para todos os serviços disponibilizados
-  // pelo provedor
-  SetNomeXSD('nfse.xsd');
-
-  // Define o nome do arquivo XSD para cada serviços disponibilizado pelo
-  // provedor
-  with ConfigSchemas do
-  begin
-    Recepcionar := 'nfse.xsd';
-    ConsultarSituacao := 'nfse.xsd';
-    ConsultarLote := 'nfse.xsd';
-    ConsultarNFSeRps := 'nfse.xsd';
-    ConsultarNFSe := 'nfse.xsd';
-    ConsultarNFSeURL := 'nfse.xsd';
-    ConsultarNFSePorFaixa := 'nfse.xsd';
-    ConsultarNFSeServicoPrestado := 'nfse.xsd';
-    ConsultarNFSeServicoTomado := 'nfse.xsd';
-    CancelarNFSe := 'nfse.xsd';
-    GerarNFSe := 'nfse.xsd';
-    RecepcionarSincrono := 'nfse.xsd';
-    SubstituirNFSe := 'nfse.xsd';
-    AbrirSessao := 'nfse.xsd';
-    FecharSessao := 'nfse.xsd';
-    Teste := 'nfse.xsd';
-    Validar := True;
+    Rps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
   end;
 end;
 
-function TACBrNFSeProviderModeloV2.CriarGeradorXml(
+function TACBrNFSeProviderADPM.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_ModeloV2.Create(Self);
+  Result := TNFSeW_ADPM.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderModeloV2.CriarLeitorXml(
+function TACBrNFSeProviderADPM.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_ModeloV2.Create(Self);
+  Result := TNFSeR_ADPM.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderModeloV2.CriarServiceClient(
+function TACBrNFSeProviderADPM.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
@@ -304,38 +126,38 @@ begin
     begin
       case AMetodo of
         tmRecepcionar:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, Recepcionar);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, Recepcionar);
         tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarSituacao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarLote);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSe);
         tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
         tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, CancelarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, CancelarNFSe);
         tmGerar:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, GerarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, GerarNFSe);
         tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, RecepcionarSincrono);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, SubstituirNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, SubstituirNFSe);
         tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, AbrirSessao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, AbrirSessao);
         tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, FecharSessao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, FecharSessao);
       else
         // tmTeste
-        Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, TesteEnvio);
+        Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, TesteEnvio);
       end;
     end;
   end
@@ -345,46 +167,46 @@ begin
     begin
       case AMetodo of
         tmRecepcionar:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, Recepcionar);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, Recepcionar);
         tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarSituacao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarLote);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSe);
         tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeURL);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
         tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, CancelarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, CancelarNFSe);
         tmGerar:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, GerarNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, GerarNFSe);
         tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, RecepcionarSincrono);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, SubstituirNFSe);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, SubstituirNFSe);
         tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, AbrirSessao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, AbrirSessao);
         tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, FecharSessao);
+          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, FecharSessao);
       else
         // tmTeste
-        Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, TesteEnvio);
+        Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, TesteEnvio);
       end;
     end;
   end;
 end;
 
-{ TACBrNFSeXWebserviceModeloV2 }
+{ TACBrNFSeXWebserviceADPM }
 
-function TACBrNFSeXWebserviceModeloV2.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceADPM.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -401,7 +223,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceADPM.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -418,7 +240,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceADPM.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -435,7 +257,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceADPM.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -452,7 +274,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceADPM.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -469,7 +291,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceADPM.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -486,7 +308,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceADPM.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -503,7 +325,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceADPM.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -520,7 +342,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceADPM.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -536,7 +358,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceModeloV2.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceADPM.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

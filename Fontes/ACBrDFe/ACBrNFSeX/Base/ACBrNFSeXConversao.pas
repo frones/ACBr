@@ -119,7 +119,7 @@ type
                    proWebISS,
                    // provedores com layout ABRASF v2
                    proSistemas4R, proAbacoV204, proABase, proActconV201,
-                   proActconV202, proAdm, proAEG, proAsten,
+                   proActconV202, proADPM, proAdm, proAEG, proAsten,
                    proBethaV2, proCenti, proCoplan, proDataSmart, proDeISS,
                    proDesenvolve, proDigifred, proELV2, proElotech, proeReceita,
                    profintelISS, proFiorilli, proFuturize, proGiss, proGoiania,
@@ -622,7 +622,8 @@ begin
          'SigISS', 'SigISSA', 'Elotech', 'SilTecnologia', 'iiBrasilV2', 'WebFisco',
          'DSFSJC', 'SimplISSV2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'InfiscV2', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203'],
+         'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203',
+         'ADPM'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSV2, proGinfes, proISSDSF,
          proAbaco, proAbacoA, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -645,7 +646,8 @@ begin
          proSilTecnologia, proiiBrasilV2, proWebFisco, proDSFSJC, proSimplISSV2,
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfiscV2, proAEG, proGeisWeb,
-         proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203]);
+         proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203,
+         proADPM]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -671,7 +673,8 @@ begin
          'SigISS', 'SigISSA', 'Elotech', 'SilTecnologia', 'iiBrasilV2', 'WebFisco',
          'DSFSJC', 'SimplISSV2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'InfiscV2', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203'],
+         'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203',
+         'ADPM'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSV2, proGinfes, proISSDSF,
          proAbaco, proAbacoA, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -694,7 +697,8 @@ begin
          proSilTecnologia, proiiBrasilV2, proWebFisco, proDSFSJC, proSimplISSV2,
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfiscV2, proAEG, proGeisWeb,
-         proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203]);
+         proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203,
+         proADPM]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

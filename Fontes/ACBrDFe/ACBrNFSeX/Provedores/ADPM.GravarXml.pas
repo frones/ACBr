@@ -30,32 +30,44 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrNFSeX
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ADPM.GravarXml;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-28/05/2021
--- Diversos --
-[+] Implementação do provedor ADPM.
-   Por: Italo Giurizzato Junior
+uses
+{$IFDEF FPC}
+  LResources, Controls, Graphics, Dialogs,
+{$ENDIF}
+  SysUtils, Classes, StrUtils,
+  ACBrXmlBase,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
-27/05/2021
--- Diversos --
-[*] Ajustes visando atender o provedor iiBrasil
-   Por: Italo Giurizzato Junior
+type
+  { TNFSeW_ADPM }
 
-26/05/2021
-[*] Ajustes no provedor VersaTecnologia
-   Por: Italo Giurizzato Junior
+  TNFSeW_ADPM = class(TNFSeW_ABRASFv2)
+  protected
+    procedure Configuracao; override;
 
-24/05/2021
-[+] Envio do novo componente para o Trunk2
-   Por: Italo Giurizzato Junior
+  end;
+
+implementation
+
+//==============================================================================
+// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+//     ADPM
+//==============================================================================
+
+{ TNFSeW_ADPM }
+
+procedure TNFSeW_ADPM.Configuracao;
+begin
+  // Executa a Configuração Padrão
+  inherited Configuracao;
+
+  FormatoAliq := tcDe2;
+end;
+
+end.

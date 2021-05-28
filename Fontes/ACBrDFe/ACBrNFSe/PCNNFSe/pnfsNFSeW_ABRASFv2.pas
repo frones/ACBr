@@ -983,7 +983,7 @@ begin
         proDigifred,
         proCenti: Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
-        proSigep, proMegaSoft, proGoiania:
+        proSigep, proMegaSoft, proGoiania, pro4R:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.Competencia, DSC_DEMI);
 
         profintelISS:
@@ -1003,7 +1003,7 @@ begin
         proSigep, proMegaSoft, proGoiania:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.DataEmissao, DSC_DEMI);
 
-        proCenti, proActconv2, ProTecnos, proSafeWeb, proDigifred:
+        proCenti, proActconv2, ProTecnos, proSafeWeb, proDigifred, pro4R:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
 
         profintelISS:

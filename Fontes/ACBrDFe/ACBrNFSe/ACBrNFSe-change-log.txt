@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2021
+-- pnfsNFSeW_ABRASFv2 --
+[*] Corrigido a geração da tag Competencia para o provedor 4R que tem que ser
+    Data e Hora.
+  Por: Bruto do Delphi
+
 27/05/2021
 -- pnfsNFSeR --
 [*] Possível correção para a leituro do XML do RPS da versão 1 do

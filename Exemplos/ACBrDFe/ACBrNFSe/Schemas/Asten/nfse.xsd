@@ -7,6 +7,13 @@
 		schemaLocation="xmldsig-core-schema20020212.xsd" />
 
 	<!-- definition of simple elements -->
+	<xsd:simpleType name="tsToken">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="tsNumeroNfse">
 		<xsd:restriction base="xsd:nonNegativeInteger">
 			<xsd:totalDigits value="15" />
@@ -351,6 +358,7 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Token" type="tsToken" minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -552,6 +560,7 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Token" type="tsToken" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge"
 				minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
@@ -698,6 +707,7 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Token" type="tsToken" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="QuantidadeRps" type="tsQuantidadeRps"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="ListaRps" minOccurs="1" maxOccurs="1">

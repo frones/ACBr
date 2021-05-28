@@ -72,7 +72,7 @@ uses
   FMX.Memo.Types,
   Androidapi.JNI.GraphicsContentViewText,
   ACBrTEFAndroid, ACBrTEFComum,
-  ACBrPosPrinterElginE1Service,
+  ACBrPosPrinterElginE1Service, ACBrPosPrinterElginE1Lib,
   ACBrPosPrinterGEDI,
   ACBrBase, ACBrPosPrinter;
 
@@ -369,6 +369,7 @@ type
   private
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
+    fE1Lib: TACBrPosPrinterElginE1Lib;
     fGEDIPrinter: TACBrPosPrinterGEDI;
 
     fValorOperacao: Double;
@@ -507,9 +508,11 @@ begin
 
   // Criando Classes de Impressoras Externas //
   fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
-  fE1Printer.Modelo := prnSmartPOS;
+  fE1Printer.Modelo := TElginE1Printers.prnSmartPOS;
   fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
+  fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
 
   // Zerando a Interface
   gplParcelas.Visible := False;
@@ -553,12 +556,14 @@ procedure TFrTEFDemoAndroid.FormDestroy(Sender: TObject);
 begin
   fE1Printer.Free;
   fGEDIPrinter.Free;
+  fE1Lib.Free;
 end;
 
 procedure TFrTEFDemoAndroid.CarregarModelosExternos;
 begin
   cbxModelo.Items.Clear;
-  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Elgin E1 Service');
+  cbxModelo.Items.Add('Elgin E1 Lib');
   cbxModelo.Items.Add('Gertec GEDI');
   lbImpressoras.Enabled := False;
 end;
@@ -679,10 +684,12 @@ procedure TFrTEFDemoAndroid.AplicarConfiguracaoPosPrinter;
 begin
   if rbClasseExterna.IsChecked then
   begin
-    if (cbxModelo.ItemIndex = 1) then
-      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    case cbxModelo.ItemIndex of
+      0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
     else
-      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+    end;
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
   end

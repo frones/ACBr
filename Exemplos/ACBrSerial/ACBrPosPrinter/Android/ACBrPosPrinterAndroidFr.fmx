@@ -21,7 +21,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
     Size.Height = 596.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = Top
     Sizes = (
@@ -33,7 +33,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 200.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -65,29 +65,45 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         Size.Height = 445.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
+        ShowScrollBars = False
         DisableFocusEffect = True
         DefaultItemStyles.ItemStyle = ''
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
-        Viewport.Width = 381.000000000000000000
+        Viewport.Width = 397.000000000000000000
         Viewport.Height = 441.000000000000000000
         object ListBoxGroupHeader1: TListBoxGroupHeader
           StyledSettings = [Family, Size, Style, FontColor]
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 20.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 3
           Text = 'Classe de Impressora'
         end
+        object ListBoxGroupHeader5: TListBoxGroupHeader
+          TextSettings.HorzAlign = Center
+          StyledSettings = [Family, Size, Style, FontColor]
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 22.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Modelo da Impressora'
+        end
         object lbiClasse: TListBoxItem
-          Position.Y = 30.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 44.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 11
+          TabOrder = 10
           object GridPanelLayout6: TGridPanelLayout
             Align = Client
-            Size.Width = 381.000000000000000000
+            Size.Width = 397.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -119,7 +135,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object rbClasseInterna: TRadioButton
               Align = Right
               IsChecked = True
-              Position.X = 49.500000000000000000
+              Position.X = 57.500000000000000000
               Size.Width = 141.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
@@ -129,7 +145,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             end
             object rbClasseExterna: TRadioButton
               Align = Right
-              Position.X = 248.000000000000000000
+              Position.X = 264.000000000000000000
               Size.Width = 133.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
@@ -138,18 +154,9 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             end
           end
         end
-        object ListBoxGroupHeader5: TListBoxGroupHeader
-          StyledSettings = [Family, Size, Style, FontColor]
-          Position.Y = 70.000000000000000000
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 2
-          Text = 'Modelo e Pagina de C'#243'digo'
-        end
         object lbModelos: TListBoxItem
-          Position.Y = 100.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 84.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -159,7 +166,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 136.000000000000000000
+            Size.Width = 152.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -170,7 +177,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             IsChecked = True
             Margins.Left = 8.000000000000000000
             Margins.Right = 8.000000000000000000
-            Position.X = 261.000000000000000000
+            Position.X = 277.000000000000000000
             Size.Width = 112.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
@@ -186,7 +193,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Position.X = 160.000000000000000000
+            Position.X = 176.000000000000000000
             Position.Y = 4.000000000000000000
             Size.Width = 85.000000000000000000
             Size.Height = 32.000000000000000000
@@ -195,17 +202,23 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           end
         end
         object ListBoxGroupHeader2: TListBoxGroupHeader
+          TextSettings.HorzAlign = Center
           StyledSettings = [Family, Size, Style, FontColor]
-          Position.Y = 140.000000000000000000
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 126.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 20.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 4
           Text = 'Impressoras BlueTooth'
         end
         object lbImpressoras: TListBoxItem
-          Position.Y = 170.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 148.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -215,7 +228,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 2.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 169.000000000000000000
+            Size.Width = 185.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -228,7 +241,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Position.X = 187.000000000000000000
+            Position.X = 203.000000000000000000
             Position.Y = 4.000000000000000000
             Sides = [Top, Left, Bottom, Right]
             Size.Width = 109.000000000000000000
@@ -244,7 +257,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           object chbTodasBth: TCheckBox
             Align = Right
             IsChecked = True
-            Position.X = 304.000000000000000000
+            Position.X = 320.000000000000000000
             Size.Width = 77.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
@@ -253,22 +266,27 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           end
         end
         object ListBoxGroupHeader3: TListBoxGroupHeader
-          Position.Y = 210.000000000000000000
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 190.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 20.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 5
           Text = 'Largura e Espacejamento '
         end
         object lbLarguraEspacejamento: TListBoxItem
-          Position.Y = 240.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 212.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 74.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 6
           object GridPanelLayout1: TGridPanelLayout
             Align = Client
-            Size.Width = 381.000000000000000000
+            Size.Width = 397.000000000000000000
             Size.Height = 74.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -326,7 +344,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object Label2: TLabel
               Align = Client
               AutoSize = True
-              Size.Width = 127.000000000000000000
+              Size.Width = 132.333328247070300000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -337,7 +355,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object Label3: TLabel
               Align = Client
               AutoSize = True
-              Size.Width = 127.000000000000000000
+              Size.Width = 132.333328247070300000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -348,7 +366,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object Label7: TLabel
               Align = Client
               AutoSize = True
-              Size.Width = 127.000000000000000000
+              Size.Width = 132.333343505859400000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -366,7 +384,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 119.000000000000000000
+              Size.Width = 124.333328247070300000
               Size.Height = 29.000000000000000000
               Size.PlatformDefault = False
             end
@@ -379,7 +397,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 119.000000000000000000
+              Size.Width = 124.333328247070300000
               Size.Height = 29.000000000000000000
               Size.PlatformDefault = False
             end
@@ -392,29 +410,34 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 119.000000000000000000
+              Size.Width = 124.333343505859400000
               Size.Height = 29.000000000000000000
               Size.PlatformDefault = False
             end
           end
         end
         object ListBoxGroupHeader4: TListBoxGroupHeader
-          Position.Y = 314.000000000000000000
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 288.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 20.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 8
           Text = 'C'#243'digos de Barras'
         end
         object ListBoxItem1: TListBoxItem
-          Position.Y = 344.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 310.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 74.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 9
           object GridPanelLayout5: TGridPanelLayout
             Align = Client
-            Size.Width = 381.000000000000000000
+            Size.Width = 397.000000000000000000
             Size.Height = 74.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -472,7 +495,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object Label1: TLabel
               Align = Client
               AutoSize = True
-              Size.Width = 127.000000000000000000
+              Size.Width = 132.333328247070300000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -483,7 +506,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             object Label4: TLabel
               Align = Client
               AutoSize = True
-              Size.Width = 127.000000000000000000
+              Size.Width = 132.333328247070300000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TextSettings.HorzAlign = Center
@@ -495,7 +518,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Align = Client
               Margins.Left = 8.000000000000000000
               Margins.Right = 8.000000000000000000
-              Size.Width = 111.000000000000000000
+              Size.Width = 116.333343505859400000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -512,7 +535,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 119.000000000000000000
+              Size.Width = 124.333328247070300000
               Size.Height = 29.000000000000000000
               Size.PlatformDefault = False
             end
@@ -525,7 +548,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 119.000000000000000000
+              Size.Width = 124.333328247070300000
               Size.Height = 29.000000000000000000
               Size.PlatformDefault = False
             end
@@ -534,7 +557,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               IsChecked = True
               Margins.Left = 8.000000000000000000
               Margins.Right = 8.000000000000000000
-              Size.Width = 111.000000000000000000
+              Size.Width = 116.333343505859400000
               Size.Height = 37.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
@@ -543,23 +566,15 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             end
           end
         end
-        object ListBoxGroupHeader6: TListBoxGroupHeader
-          Position.Y = 418.000000000000000000
-          Size.Width = 381.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 10
-          Text = 'Par'#226'metros'
-        end
         object lbBotoes: TListBoxItem
-          Position.Y = 448.000000000000000000
-          Size.Width = 381.000000000000000000
+          Position.Y = 384.000000000000000000
+          Size.Width = 397.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 7
           object GridPanelLayout2: TGridPanelLayout
             Align = Client
-            Size.Width = 381.000000000000000000
+            Size.Width = 397.000000000000000000
             Size.Height = 50.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -597,7 +612,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 180.500000000000000000
+              Size.Width = 188.500000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -615,7 +630,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 180.500000000000000000
+              Size.Width = 188.500000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -669,7 +684,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 201.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -708,10 +723,10 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         end
       end
       object GridPanelLayout3: TGridPanelLayout
-        Align = Top
-        Position.Y = 48.000000000000000000
+        Align = Bottom
+        Position.Y = 272.000000000000000000
         Size.Width = 401.000000000000000000
-        Size.Height = 169.000000000000000000
+        Size.Height = 220.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         ColumnCollection = <
@@ -785,7 +800,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           Text = 'Tipos Letras'
@@ -798,7 +813,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
           Text = 'Alinhamento'
@@ -811,7 +826,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
           Text = 'Cod.Barras'
@@ -824,7 +839,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 3
           Text = 'QR Code'
@@ -837,7 +852,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 6
           Text = 'Ler Status'
@@ -850,7 +865,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 7
           Text = 'Ler Info'
@@ -863,7 +878,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 4
           Text = 'Acentos'
@@ -876,7 +891,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Size.Width = 196.500000000000000000
-          Size.Height = 38.250000000000000000
+          Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 5
           Text = 'Beep'
@@ -888,11 +903,11 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         DataDetectorTypes = []
         Align = Client
         Size.Width = 401.000000000000000000
-        Size.Height = 275.000000000000000000
+        Size.Height = 224.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         Viewport.Width = 396.000000000000000000
-        Viewport.Height = 270.000000000000000000
+        Viewport.Height = 219.000000000000000000
       end
       object GridPanelLayout4: TGridPanelLayout
         Align = Bottom
@@ -3993,15 +4008,15 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             PNG = {
               89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
               98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              010B494441545847ED96410E82301045C17820EFC1C28507F1281EC44B49E22D
-              14EA1F9C110245DBA1AD9B799BB603FD7D992684CA300CC38373EEC053352932
+              010B494441545847ED96C11182301045C1B120FBE0E0C1422CC5422C0A0F76A1
+              10FFE2AE301034599278D97749B2909F379B1986CA300CC38373EEC053352932
               06FABE3F23CCD1C8A568BAAEBBB46DFB40C6894B3A10D0908CA0912219DEEE48
               0A83BE53D8BC47E075486362A4A63204ADF9911EE4A8A4B2C808C88B92CA2A23
               203748AA888C80FCAF524565049CE395FA8B8C80F31652538ACA0838D72BB555
               66C76334755D3F31DCDFAB11D46F3C2D0B75829BB220E43B9594B90CADE7D757
               4CCA2743754C83BE5349599311502A27F54B46C0A3FC52A132025EC927152B23
               E0D5F452083872D640A88C802D0B29B0ED57563A142B2360EB472AD9B551A778
-              AA82A490D1F0D2300C63A4AA5E9C4ED29172A5931F0000000049454E44AE4260
+              AA82A490D1F0D2300C63A4AA5EE665D2850B0C0F5A0000000049454E44AE4260
               82}
             FileName = 'C:\temp\Logos\outline_clear_white_18dp.png'
           end>

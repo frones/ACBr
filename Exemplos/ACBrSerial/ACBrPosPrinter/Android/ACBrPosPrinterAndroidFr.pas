@@ -39,7 +39,7 @@ uses
   ACBrBase, ACBrPosPrinter,
   ACBrPosPrinterElginE1Service,
   {$IfDef ANDROID}
-  ACBrPosPrinterGEDI,
+  ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib,
   {$EndIf}
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
@@ -100,7 +100,6 @@ type
     cbHRI: TCheckBox;
     seBarrasLargura: TSpinBox;
     seBarrasAltura: TSpinBox;
-    ListBoxGroupHeader6: TListBoxGroupHeader;
     ImageList1: TImageList;
     StyleBook1: TStyleBook;
     chbTodasBth: TCheckBox;
@@ -141,6 +140,7 @@ type
     fE1Printer: TACBrPosPrinterElginE1Service;
     {$IfDef ANDROID}
     fGEDIPrinter: TACBrPosPrinterGEDI;
+    fE1Lib: TACBrPosPrinterElginE1Lib;
     {$EndIf}
     FVKService: IFMXVirtualKeyboardService;
 
@@ -192,7 +192,7 @@ begin
 
   fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
   {$IfDef ANDROID}
-   fE1Printer.Modelo := prnSmartPOS;  // prnM8
+   fE1Printer.Modelo := TElginE1Printers.prnSmartPOS;  // TElginE1Printers.prnM8
    fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
   {$Else}
    fE1Printer.Modelo := prnI9;
@@ -205,6 +205,8 @@ begin
 
   {$IfDef ANDROID}
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
+  fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
   {$EndIf}
 
   LerConfiguracao;
@@ -215,6 +217,7 @@ begin
   fE1Printer.Free;
   {$IfDef ANDROID}
   fGEDIPrinter.Free;
+  fE1Lib.Free;
   {$EndIf}
 end;
 
@@ -547,7 +550,8 @@ end;
 procedure TPosPrinterAndroidTesteForm.CarregarModelosExternos;
 begin
   cbxModelo.Items.Clear;
-  cbxModelo.Items.Add('Elgin E1');
+  cbxModelo.Items.Add('Elgin E1 Service');
+  cbxModelo.Items.Add('Elgin E1 Lib');
   cbxModelo.Items.Add('Gertec GEDI');
   lbImpressoras.Enabled := False;
 end;
@@ -578,10 +582,12 @@ begin
 
   if rbClasseExterna.IsChecked then
   begin
-    if (cbxModelo.ItemIndex = 1) then
-      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter
+    case cbxModelo.ItemIndex of
+      0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
     else
-      ACBrPosPrinter1.ModeloExterno := fE1Printer;
+      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+    end;
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
   end

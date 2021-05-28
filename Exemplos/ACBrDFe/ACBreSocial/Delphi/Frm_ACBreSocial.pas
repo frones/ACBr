@@ -3022,7 +3022,7 @@ begin
           with Exame.New do
           begin
             DtExm := date;
-            procRealizado := 123;
+            procRealizado := '123';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3031,7 +3031,7 @@ begin
           with Exame.New do
           begin
             DtExm := date + 1;
-            procRealizado := 456;
+            procRealizado := '456';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3218,50 +3218,50 @@ begin
 
         infoAtiv.dscAtivDes := 'DESCRICAO ATIVIDADE';
 
-        infoAtiv.ativPericInsal.Clear;
-        with infoAtiv.ativPericInsal.New do
-        begin
-          codAtiv := '06.540';
-        end;
-        with infoAtiv.ativPericInsal.New do
-        begin
-          codAtiv := '05.480';
-        end;
+//        infoAtiv.ativPericInsal.Clear;
+//        with infoAtiv.ativPericInsal.New do
+//        begin
+//          codAtiv := '06.540';
+//        end;
+//        with infoAtiv.ativPericInsal.New do
+//        begin
+//          codAtiv := '05.480';
+//        end;
 
-        FatRisco.Clear;
-        with FatRisco.New do
-        begin
-          codFatRis      := '123456789';
-          tpAval         := tpaQualitativo;
-          intConc        := 0.50;
-          limTol         := 0.50;
-          unMed          := 9;
-          tecMedicao     := 'Tecnica de medicao';
-          insalubridade  := tpNao;
-          periculosidade := tpNao;
-          aposentEsp     := tpNao;
-
-          with epcEpi do
-          begin
-            utilizEPC := uEPCNaoAplica;
-            eficEpc   := tpNao;
-            utilizEPI := uEPIUtilizado;
-
-            epi.Clear;
-            with epi.New do
-            begin
-              caEPI         := '321654';
-              dscEPI        := 'CAPACETE';
-              eficEpi       := tpSim;
-              medProtecao   := tpSim;
-              condFuncto    := tpSim;
-              usoInint      := tpSim;
-              przValid      := tpSim;
-              periodicTroca := tpSim;
-              higienizacao  := tpSim;
-            end;
-          end;
-        end;
+//        FatRisco.Clear;
+//        with FatRisco.New do
+//        begin
+//          codFatRis      := '123456789';
+//          tpAval         := tpaQualitativo;
+//          intConc        := 0.50;
+//          limTol         := 0.50;
+//          unMed          := 9;
+//          tecMedicao     := 'Tecnica de medicao';
+//          insalubridade  := tpNao;
+//          periculosidade := tpNao;
+//          aposentEsp     := tpNao;
+//
+//          with epcEpi do
+//          begin
+//            utilizEPC := uEPCNaoAplica;
+//            eficEpc   := tpNao;
+//            utilizEPI := uEPIUtilizado;
+//
+//            epi.Clear;
+//            with epi.New do
+//            begin
+//              caEPI         := '321654';
+//              dscEPI        := 'CAPACETE';
+//              eficEpi       := tpSim;
+//              medProtecao   := tpSim;
+//              condFuncto    := tpSim;
+//              usoInint      := tpSim;
+//              przValid      := tpSim;
+//              periodicTroca := tpSim;
+//              higienizacao  := tpSim;
+//            end;
+//          end;
+//        end;
 
         respReg.Clear;
         with respReg.New do

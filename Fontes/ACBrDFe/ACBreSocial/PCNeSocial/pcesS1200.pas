@@ -76,15 +76,15 @@ type
   TEvtRemun = class;
   TS1200CollectionItem = class;
   TS1200Collection = class;
-  TDMDevCollection = class;
-  TDMDevCollectionItem = class;
+  TDMDevCollectionS1200 = class;
+  TDMDevCollectionItemS1200 = class;
   TSucessaoVinc = class;
   TInfoTrabIntermCollectionItem = class;
   TInfoTrabIntermCollection = class;
   TInfoComplCont = class;
   TinfoIntermCollection = class;
   TinfoIntermCollectionItem = class;
-  
+
   TS1200Collection = class(TeSocialCollection)
   private
     function GetItem(Index: integer): TS1200CollectionItem;
@@ -106,17 +106,17 @@ type
     property evtRemun: TEvtRemun read FEvtRemun write FEvtRemun;
   end;
 
-  TDMDevCollection = class(TACBrObjectList)
+  TDMDevCollectionS1200 = class(TACBrObjectList)
   private
-    function GetItem(Index: integer): TDMDevCollectionItem;
-    procedure SetItem(Index: integer; Value: TDMDevCollectionItem);
+    function GetItem(Index: integer): TDMDevCollectionItemS1200;
+    procedure SetItem(Index: integer; Value: TDMDevCollectionItemS1200);
   public
-    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDMDevCollectionItem;
-    property Items[Index: integer]: TDMDevCollectionItem read GetItem write SetItem; default;
+    function Add: TDMDevCollectionItemS1200; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItemS1200;
+    property Items[Index: integer]: TDMDevCollectionItemS1200 read GetItem write SetItem; default;
   end;
 
-  TDMDevCollectionItem = class(TObject)
+  TDMDevCollectionItemS1200 = class(TObject)
   private
     FIdeDmDev: string;
     FCodCateg: integer;
@@ -149,7 +149,7 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabalhador: TeS1200IdeTrabalhador;
-    FDMDev: TDMDevCollection;
+    FDMDev: TDMDevCollectionS1200;
 
     { Geradores específicos desta classe }
     procedure GerarIdeEstabLot(objIdeEstabLot: TIdeEstabLotCollection; const nomeRemunPer: string = 'remunPerApur');
@@ -177,7 +177,7 @@ type
     property ideEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property ideTrabalhador: TeS1200IdeTrabalhador read FIdeTrabalhador write FIdeTrabalhador;
-    property dmDev: TDMDevCollection read FDMDev write FDMDev;
+    property dmDev: TDMDevCollectionS1200 read FDMDev write FDMDev;
   end;
 
   TRemunPer1200Collection = class(TACBrObjectList)
@@ -316,7 +316,7 @@ type
     FInfoComplem: TInfoComplem;
     FProcJudTrab: TProcJudTrabCollection;
     FinfoInterm: TinfoIntermCollection;
-    
+
     function getInfoComplem: TInfoComplem;
     function getInfoMV: TInfoMV;
     function getprocJudTrab: TProcJudTrabCollection;
@@ -324,7 +324,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    
+
     function infoMVInst(): boolean;
     function infoComplemInst(): boolean;
     function procJudTrabInst(): boolean;
@@ -400,7 +400,7 @@ type
     function New: TinfoIntermCollectionItem;
     property Items[Index: Integer]: TinfoIntermCollectionItem read GetItem write SetItem; default;
   end;
-  
+
   TinfoIntermCollectionItem = class(TObject)
   private
     FqtdDiasInterm : Byte;
@@ -738,30 +738,30 @@ end;
 
 { TDMDevCollection }
 
-function TDMDevCollection.Add: TDMDevCollectionItem;
+function TDMDevCollectionS1200.Add: TDMDevCollectionItemS1200;
 begin
   Result := Self.New;
 end;
 
-function TDMDevCollection.GetItem(Index: integer): TDMDevCollectionItem;
+function TDMDevCollectionS1200.GetItem(Index: integer): TDMDevCollectionItemS1200;
 begin
-  Result := TDMDevCollectionItem(inherited Items[Index]);
+  Result := TDMDevCollectionItemS1200(inherited Items[Index]);
 end;
 
-procedure TDMDevCollection.SetItem(Index: integer; Value: TDMDevCollectionItem);
+procedure TDMDevCollectionS1200.SetItem(Index: integer; Value: TDMDevCollectionItemS1200);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TDMDevCollection.New: TDMDevCollectionItem;
+function TDMDevCollectionS1200.New: TDMDevCollectionItemS1200;
 begin
-  Result := TDMDevCollectionItem.Create;
+  Result := TDMDevCollectionItemS1200.Create;
   Self.Add(Result);
 end;
 
 { TDMDevCollectionItem }
 
-constructor TDMDevCollectionItem.Create;
+constructor TDMDevCollectionItemS1200.Create;
 begin
   inherited Create;
   FinfoTrabInterm := TinfoTrabIntermCollection.Create;
@@ -770,7 +770,7 @@ begin
   FinfoComplCont  := nil;
 end;
 
-destructor TDMDevCollectionItem.Destroy;
+destructor TDMDevCollectionItemS1200.Destroy;
 begin
   FreeAndNil(FInfoPerApur);
   FreeAndNil(FInfoPerAnt);
@@ -780,43 +780,43 @@ begin
   inherited;
 end;
 
-function TDMDevCollectionItem.getInfoPerApur: TInfoPerApur;
+function TDMDevCollectionItemS1200.getInfoPerApur: TInfoPerApur;
 begin
   if not(Assigned(FInfoPerApur)) then
     FInfoPerApur := TInfoPerApur.Create;
   Result := FInfoPerApur;
 end;
 
-function TDMDevCollectionItem.infoPerApurInst: boolean;
+function TDMDevCollectionItemS1200.infoPerApurInst: boolean;
 begin
   Result := Assigned(FInfoPerApur);
 end;
 
-function TDMDevCollectionItem.infoTrabIntermInst: boolean;
+function TDMDevCollectionItemS1200.infoTrabIntermInst: boolean;
 begin
   Result := Assigned(FinfoTrabInterm);
 end;
 
-function TDMDevCollectionItem.getInfoComplCont: TInfoComplCont;
+function TDMDevCollectionItemS1200.getInfoComplCont: TInfoComplCont;
 begin
   if not(Assigned(FInfoComplCont)) then
     FInfoComplCont := TInfoComplCont.Create;
   Result := FInfoComplCont;
 end;
 
-function TDMDevCollectionItem.getInfoPerAnt: TInfoPerAnt;
+function TDMDevCollectionItemS1200.getInfoPerAnt: TInfoPerAnt;
 begin
   if not(Assigned(FInfoPerAnt)) then
     FInfoPerAnt := TInfoPerAnt.Create;
   Result := FInfoPerAnt;
 end;
 
-function TDMDevCollectionItem.infoComplContInst: boolean;
+function TDMDevCollectionItemS1200.infoComplContInst: boolean;
 begin
   Result := Assigned(FinfoComplCont);
 end;
 
-function TDMDevCollectionItem.infoPerAntInst: boolean;
+function TDMDevCollectionItemS1200.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
 end;
@@ -829,7 +829,7 @@ begin
   FIdeEvento      := TIdeEvento3.Create;
   FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabalhador := TeS1200IdeTrabalhador.Create;
-  FDMDev          := TDMDevCollection.Create;
+  FDMDev          := TDMDevCollectionS1200.Create;
 end;
 
 destructor TEvtRemun.Destroy;

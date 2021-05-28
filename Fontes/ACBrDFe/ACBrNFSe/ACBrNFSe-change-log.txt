@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/05/2021
+-- pnfsNFSeG --
+[*] Ajuste visando deixar todas as assinaturas do SubstituicaoNfse validas.
+   Por: Alessandro Risse
 -- Diversos --
 [*] Ajustes nos fontes para atender o Provedor Asten.
   Por: VeleiroPedeVento / Italo Giurizzato Junior

@@ -2171,7 +2171,9 @@ begin
         TagF := '</' + Prefixo3 + 'Pedido>';
       end;
 
-    proTecnos:
+    proTecnos,
+    proDeISS,
+    proFiorilli:
       begin
         TagI := '<' + Prefixo3 + 'Pedido>' +
                    '<' + Prefixo4 + 'InfPedidoCancelamento ' + FaIdentificadorCanc +

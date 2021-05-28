@@ -244,6 +244,7 @@ type
     property RazaoColunaFonte: TACBrPosRazaoColunaFonte read FRazaoColunaFonte;
     property Cmd: TACBrPosComandos read FCmd;
     property ModeloStr: String read fpModeloStr;
+    property PosPrinter: TACBrPosPrinter read fpPosPrinter;
 
     property TagsNaoSuportadas: TStringList read FTagsNaoSuportadas;
   end;

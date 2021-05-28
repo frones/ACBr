@@ -47,6 +47,7 @@ uses
   {$IfEnd}
   {$IfDef ANDROID}
    System.Messaging,
+   Androidapi.JNI.Media,
   {$EndIf}
   ACBrDevice, ACBrPosPrinter, ACBrBase;
 
@@ -537,7 +538,14 @@ begin
         Parametros.AddField('tempoInicio').AsInteger := 5; // seg
         Parametros.AddField('tempoFim').AsInteger := 0;
       end;
-    end;
+    end
+    {$IfDef ANDROID}
+    else
+      // https://stackoverflow.com/questions/30938946/how-do-i-make-a-beep-sound-in-android-using-delphi-and-the-api
+      TJToneGenerator.JavaClass.init( TJAudioManager.JavaClass.ERROR,
+                                      TJToneGenerator.JavaClass.MAX_VOLUME)
+        .startTone( TJToneGenerator.JavaClass.TONE_DTMF_0, 200 )
+    {$EndIf};
     Result := True;
   end
 

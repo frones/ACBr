@@ -38,6 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/05/2021
+-- ACBrPosPrinter --
+[*] TACBrPosPrinterClass, expondo componente Pai, Propriedade Pública e ReadOnly
+
+-- ACBrPosPrinterElginE1Lib --
+[+] Adicionada nova Classe externa, para tradução das Tags suportadas pelo
+    ACBrPosPriniter, para a biblioteca de Impressão para Android, E1 da Elgin (M8)
+
+-- ACBrPosPrinterElginE1Service --
+[+] Adicionado comando, para emular Beep
+    (por: DSA)
+
 Data: 16/05/2021
 -- ACBrDevice --
 [-] Ajustes no método "TACBrTagProcessor.DecodificarTagsFormatacao", para

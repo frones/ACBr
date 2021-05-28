@@ -55,7 +55,7 @@ const
 
   // Essas Tags serão interpretadas no momento da Impressão, pois usam comandos
   // específicos da Biblioteca E1
-  CTAGS_POST_PROCESS: array[0..25] of string = (
+  CTAGS_POST_PROCESS: array[0..26] of string = (
     cTagPulodeLinha, cTagPuloDeLinhas, cTagBR,
     cTagLigaExpandido, cTagDesligaExpandido,
     cTagLigaAlturaDupla, cTagDesligaAlturaDupla,
@@ -68,7 +68,8 @@ const
     cTagFonteA, cTagFonteB,
     cTagFonteAlinhadaDireita, cTagFonteAlinhadaEsquerda, cTagfonteAlinhadaCentro,
     cTagBeep,
-    cTagZera, cTagReset );
+    cTagZera, cTagReset,
+    cTagCorte );
 
   CBLOCK_POST_PROCESS: array[0..16] of string = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraInter,
@@ -79,10 +80,12 @@ const
     cTagBarraMostrar, cTagBarraLargura, cTagBarraAltura,
     cTagQRCode, cTagQRCodeTipo, cTagQRCodeLargura, cTagQRCodeError );
 
-  CTAGS_AVANCO: array[0..2] of string =
+  CTAGS_CORTE: array[0..2] of string =
     (cTagCorte, cTagCorteParcial, cTagCorteTotal);
 
 type
+
+  TElginE1LibPrinters = (prnSmartPOS, prnM8);
 
   TE1LibPrinter = class
   private
@@ -91,12 +94,13 @@ type
     fImprimindo: Boolean;
     fEspacoLinha: Integer;
     fTamanhoTexto: Integer;
+    fModelo: TElginE1LibPrinters;
 
     procedure SetEspacoLinha(const Value: Integer);
-    procedure SetTamanhoTexto(const Value: Integer);
     function GetTermicaClass: JTermicaClass;
     procedure VerificarErro(CodErro: Integer; Metodo: String);
     function AlinhamentoToPosicao: Integer;
+    procedure AjustarAlinhamento;
   public
     constructor Create;
     procedure Restaurar;
@@ -107,27 +111,25 @@ type
     procedure FinalizarImpressao;
 
     procedure PularLinhas(Linhas: Integer);
+    procedure CortarPapel(Linhas: Integer);
     procedure ImprimirTexto(Texto: String);
     procedure ImprimirImagem(BitMap: TBitmap);
     procedure ImprimirCodBarras(Tipo: Integer; Conteudo: String;
       Altura, Largura: Integer; hri: Boolean);
     procedure ImprimirQRCode(Conteudo: String; LarguraModulo: Integer;
       nivelCorrecao: Integer= 2);
-
-    procedure AjustarAlinhamento;
-
     function Status(Sensor: Integer): Integer;
 
     property TermicaClass: JTermicaClass read GetTermicaClass;
-
+    property Modelo: TElginE1LibPrinters read fModelo write fModelo;
     property EstiloFonte: TACBrPosFonte read fEstiloFonte write fEstiloFonte
       default [];
     property Alinhamento: TACBrPosTipoAlinhamento read fAlinhamento write fAlinhamento
       default TACBrPosTipoAlinhamento.alEsquerda;
     property EspacoLinha: Integer read fEspacoLinha write SetEspacoLinha
       default 10;
-    property TamanhoTexto: Integer read fTamanhoTexto write SetTamanhoTexto
-      default 17;
+    property TamanhoTexto: Integer read fTamanhoTexto write fTamanhoTexto
+      default 0;
   end;
 
   { TACBrPosPrinterElginE1Lib }
@@ -143,6 +145,8 @@ type
       var BlocoTraduzido: AnsiString);
 
     procedure ProcessarComandoBMP(ConteudoBloco: AnsiString);
+    function GetModelo: TElginE1LibPrinters;
+    procedure SetModelo(const Value: TElginE1LibPrinters);
   protected
     procedure ImprimirE1Lib(const LinhasImpressao: String; var Tratado: Boolean);
 
@@ -156,6 +160,8 @@ type
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString): Boolean; override;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
+
+    property Modelo: TElginE1LibPrinters read GetModelo write SetModelo;
   end;
 
 Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
@@ -207,7 +213,9 @@ end;
 constructor TE1LibPrinter.Create;
 begin
   fImprimindo := False;
+  fModelo := TElginE1LibPrinters.prnM8;
   Restaurar;
+  TermicaClass.setContext( TAndroidHelper.Context );
 end;
 
 procedure TE1LibPrinter.Restaurar;
@@ -215,16 +223,38 @@ begin
   fEstiloFonte := [];
   fAlinhamento := TACBrPosTipoAlinhamento.alEsquerda;
   fEspacoLinha := 10;
-  fTamanhoTexto := 17;
+  fTamanhoTexto := 0;
 end;
 
 procedure TE1LibPrinter.IniciarImpressao;
+var
+  TipoE1: Integer;
+  ModeloE1, ConexaoE1: string;
 begin
   if fImprimindo then
     Exit;
 
+  TermicaClass.FechaConexaoImpressora();
+
+  ConexaoE1 := 'USB';
   // Tipo: 1 	USB, 2 	RS232, 3 	TCP/IP, 4 	Bluetooth, 5 	SmartPOS, 6 Mini PDV M8
-  VerificarErro( TJTermica.JavaClass.AbreConexaoImpressora(6 , StringToJString('M8'),StringToJString('USB'), 0),
+  case fModelo of
+    TElginE1LibPrinters.prnSmartPOS:
+    begin
+      TipoE1 := 5;
+      ModeloE1 := 'SmartPOS';
+    end;
+  else
+    begin
+      TipoE1 := 6;
+      ModeloE1 := 'M8';
+    end;
+  end;
+
+  VerificarErro( TermicaClass.AbreConexaoImpressora( TipoE1,
+                                                     StringToJString(ModeloE1),
+                                                     StringToJString(ConexaoE1),
+                                                     0),
                  'AbreConexaoImpressora');
   fImprimindo := True;
 end;
@@ -232,7 +262,7 @@ end;
 procedure TE1LibPrinter.FinalizarImpressao;
 begin
   try
-    VerificarErro( TJTermica.JavaClass.FechaConexaoImpressora,
+    VerificarErro( TermicaClass.FechaConexaoImpressora,
                    'FechaConexaoImpressora' );
   finally
     fImprimindo := False;
@@ -246,20 +276,15 @@ end;
 
 procedure TE1LibPrinter.VerificarErro(CodErro: Integer; Metodo: String);
 begin
-  if CodErro = 0 then
+  if CodErro >= 0 then
     Exit;
 
-  raise EPosPrinterException.Create('Error %d executando %s');
+  raise EPosPrinterException.CreateFmt('Error %d executando %s',[CodErro, Metodo]);
 end;
 
 procedure TE1LibPrinter.SetEspacoLinha(const Value: Integer);
 begin
   fEspacoLinha := max(Value, 1);
-end;
-
-procedure TE1LibPrinter.SetTamanhoTexto(const Value: Integer);
-begin
-  fTamanhoTexto := min(max(Value, 5), 100);
 end;
 
 function TE1LibPrinter.AlinhamentoToPosicao: Integer;
@@ -279,18 +304,24 @@ end;
 
 procedure TE1LibPrinter.PularLinhas(Linhas: Integer);
 begin
-  IniciarImpressao;
   Linhas := max(1, min(999, Linhas));
-  VerificarErro( TJTermica.JavaClass.AvancaPapel(Linhas),
+  VerificarErro( TermicaClass.AvancaPapel(Linhas),
                  'AvancaPapel' );
+end;
+
+procedure TE1LibPrinter.CortarPapel(Linhas: Integer);
+begin
+  if (fModelo = TElginE1LibPrinters.prnSmartPOS) then
+    PularLinhas(Linhas)
+  else
+    VerificarErro( TermicaClass.Corte(Linhas),
+                   'Corte' );
 end;
 
 procedure TE1LibPrinter.ImprimirTexto(Texto: String);
 var
   stilo, tamanho: Integer;
 begin
-  IniciarImpressao;
-
   if Texto.Trim.IsEmpty then
   begin
     PularLinhas(1);
@@ -309,15 +340,16 @@ begin
     Inc(stilo, 8);
 
   // Ajustando Largura e Altura do Texto
-  tamanho := 0;
+  tamanho := fTamanhoTexto;
   if (ftAlturaDupla in EstiloFonte) then
-    Inc(tamanho, 1);
+    Inc(tamanho, 2);
   if (ftExpandido in EstiloFonte) then
     Inc(tamanho, 16);
 
    VerificarErro( TermicaClass.ImpressaoTexto( StringToJString(Texto),
                                                AlinhamentoToPosicao,
-                                               stilo, tamanho),
+                                               stilo,
+                                               tamanho),
                   'ImpressaoTexto' );
    PularLinhas(1);
 end;
@@ -332,7 +364,6 @@ begin
   if Conteudo.IsEmpty then
     Exit;
 
-  IniciarImpressao;
   AjustarAlinhamento;
   VerificarErro( TermicaClass.ImpressaoCodigoBarras( Tipo,
                                                      StringToJString(Conteudo),
@@ -347,7 +378,6 @@ begin
   if Conteudo.IsEmpty then
     Exit;
 
-  IniciarImpressao;
   AjustarAlinhamento;
   VerificarErro( TermicaClass.ImpressaoQRCode( StringToJString(Conteudo),
                                                LarguraModulo, nivelCorrecao),
@@ -356,7 +386,6 @@ end;
 
 procedure TE1LibPrinter.ImprimirImagem(BitMap: TBitmap);
 begin
-  IniciarImpressao;
   AjustarAlinhamento;
   VerificarErro( TermicaClass.ImprimeBitmap(BitmapToJBitmap(bitmap)),
                  'ImprimeBitmap' );
@@ -397,9 +426,20 @@ end;
 destructor TACBrPosPrinterElginE1Lib.Destroy;
 begin
   fE1LibTagProcessor.Free;
+  fE1LibPrinter.FinalizarImpressao;
   fE1LibPrinter.Free;
 
   inherited;
+end;
+
+function TACBrPosPrinterElginE1Lib.GetModelo: TElginE1LibPrinters;
+begin
+  Result := fE1LibPrinter.Modelo;
+end;
+
+procedure TACBrPosPrinterElginE1Lib.SetModelo(const Value: TElginE1LibPrinters);
+begin
+  fE1LibPrinter.Modelo := Value;
 end;
 
 procedure TACBrPosPrinterElginE1Lib.Configurar;
@@ -407,6 +447,7 @@ begin
   fpPosPrinter.Porta := 'NULL';
   fpPosPrinter.OnEnviarStringDevice := ImprimirE1Lib;
   fpPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo.pcUTF8;
+  fE1LibPrinter.IniciarImpressao;
 end;
 
 function TACBrPosPrinterElginE1Lib.TraduzirTag(const ATag: AnsiString;
@@ -416,8 +457,8 @@ begin
   Result := True;
   if MatchText(ATag, CTAGS_POST_PROCESS) then
     TagTraduzida := ATag
-  else if MatchText(ATag, CTAGS_AVANCO) then
-    TagTraduzida := cTagPuloDeLinhas
+  else if MatchText(ATag, CTAGS_CORTE) then
+    TagTraduzida := cTagCorte
   else if (ATag = cTagRetornoDeCarro) then
     TagTraduzida := cTagBR
   else
@@ -459,28 +500,23 @@ begin
   if LinhasImpressao.IsEmpty then
     Exit;
 
-  fE1LibPrinter.IniciarImpressao;
+  TextoAImprimir := '';
+  SL := TStringList.Create;
   try
-    TextoAImprimir := '';
-    SL := TStringList.Create;
-    try
-      SL.Text := LinhasImpressao;
-      for i := 0 to SL.Count-1 do
-      begin
-        Linha := TrimRight(SL[i]);
-        if (Linha = '') then
-          Linha := ' ';
+    SL.Text := LinhasImpressao;
+    for i := 0 to SL.Count-1 do
+    begin
+      Linha := TrimRight(SL[i]);
+      if (Linha = '') then
+        Linha := ' ';
 
-        TextoAImprimir := TextoAImprimir + Linha + cTagBR;
-      end;
-    finally
-      SL.Free;
+      TextoAImprimir := TextoAImprimir + Linha + cTagBR;
     end;
-
-    fE1LibTagProcessor.DecodificarTagsFormatacao(TextoAImprimir);
   finally
-    fE1LibPrinter.FinalizarImpressao;
+    SL.Free;
   end;
+
+  fE1LibTagProcessor.DecodificarTagsFormatacao(TextoAImprimir);
 end;
 
 procedure TACBrPosPrinterElginE1Lib.LerStatus(var AStatus: TACBrPosPrinterStatus);
@@ -563,6 +599,8 @@ begin
       PularLinhas(1)
     else if (ATag = cTagPuloDeLinhas) then
       PularLinhas(fpPosPrinter.LinhasEntreCupons)
+    else if (ATag = cTagCorte) then
+      CortarPapel(fpPosPrinter.LinhasEntreCupons)
     else if (ATag = cTagBeep) then
       AndroidBeep(200)
     else if (ATag = cTagFonteAlinhadaEsquerda) then
@@ -588,10 +626,10 @@ begin
   else if (ATag = cTagQRCode) then
   begin
     L := max(min(fpPosPrinter.ConfigQRCode.LarguraModulo,6),1);
-    if (fpPosPrinter.ConfigQRCode.LarguraModulo = 0) then
+    if (fpPosPrinter.ConfigQRCode.ErrorLevel = 0) then
       E := 2
     else
-      E := max(min(fpPosPrinter.ConfigQRCode.LarguraModulo, 4), 1);
+      E := max(min(fpPosPrinter.ConfigQRCode.ErrorLevel, 4), 1);
 
     fE1LibPrinter.ImprimirQRCode(ConteudoBloco, L, E);
   end

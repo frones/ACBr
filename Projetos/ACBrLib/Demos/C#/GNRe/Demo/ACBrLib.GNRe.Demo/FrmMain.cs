@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Drawing.Printing;
 using System.IO;
-using System.IO.Ports;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 using ACBrLib.Core.GNRe;
-using ACBrLib.Core.PosPrinter;
 
 namespace ACBrLib.GNRe.Demo
 {
@@ -38,7 +35,7 @@ namespace ACBrLib.GNRe.Demo
         private void FrmMain_Shown(object sender, EventArgs e)
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.Default.ShowInfo(SplashInfo.Message, "Carregando...");
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Carregando...");
 
             try
             {
@@ -52,13 +49,13 @@ namespace ACBrLib.GNRe.Demo
                 cmbSSlType.EnumDataSource(SSLType.LT_all);
 
                 // Altera as config de log
-                gnre.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);
+                gnre.Config.Principal.LogNivel = NivelLog.logParanoico;
 
                 var logPath = Path.Combine(Application.StartupPath, "Logs");
                 if (!Directory.Exists(logPath))
                     Directory.CreateDirectory(logPath);
 
-                gnre.ConfigGravarValor(ACBrSessao.Principal, "LogPath", logPath);
+                gnre.Config.Principal.LogPath = logPath;
                 gnre.ConfigGravar();
 
                 LoadConfig();
@@ -76,65 +73,63 @@ namespace ACBrLib.GNRe.Demo
         private void SalvarConfig()
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.Default.ShowInfo(SplashInfo.Message, "Salvando...");
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Salvando...");
 
             try
             {
                 //Config Geral
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "ExibirErroSchema", ckbExibirErroSchema.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "FormatoAlerta", txtFormatoAlerta.Text);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "FormaEmissao",
-                    cmbFormaEmissao.GetSelectedValue<TipoEmissao>());
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "VersaoDF", cmbVersaoDF.GetSelectedValue<VersaoGNRe>());
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "RetirarAcentos", ckbRetirarAcentos.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SalvarWS", ckbSalvar.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "PathSalvar", txtLogs.Text);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "PathSchemas", txtSchemaPath.Text);
+                gnre.Config.ExibirErroSchema = ckbExibirErroSchema.Checked;
+                gnre.Config.FormatoAlerta = txtFormatoAlerta.Text;
+                gnre.Config.FormaEmissao = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
+                gnre.Config.VersaoDF = cmbVersaoDF.GetSelectedValue<VersaoGNRe>();
+                gnre.Config.RetirarAcentos = ckbRetirarAcentos.Checked;
+                gnre.Config.SalvarWS = ckbSalvar.Checked;
+                gnre.Config.PathSalvar = txtLogs.Text;
+                gnre.Config.PathSchemas = txtSchemaPath.Text;
 
                 //Config Webservice
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "UF", cmbUfDestino.Text);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SSLType", cmbSSlType.GetSelectedValue<SSLType>());
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "Timeout", nudTimeOut.Text);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "Ambiente", rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "Visualizar", ckbVisualizar.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SalvarWS", ckbSalvarSOAP.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "AjustaAguardaConsultaRet", ckbAjustarAut.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "AguardarConsultaRet", (int)nudAguardar.Value);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "Tentativas", (int)nudTentativas.Value);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "IntervaloTentativas", (int)nudIntervalos.Value);
-                gnre.ConfigGravarValor(ACBrSessao.Proxy, "Servidor", txtProxyServidor.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Proxy, "Porta", nudProxyPorta.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Proxy, "Senha", txtProxySenha.Text);
+                gnre.Config.DFe.UF = cmbUfDestino.Text;
+                gnre.Config.SSLType = cmbSSlType.GetSelectedValue<SSLType>();
+                gnre.Config.Timeout = (int)nudTimeOut.Value;
+                gnre.Config.Ambiente = rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao;
+                gnre.Config.Visualizar = ckbVisualizar.Checked;
+                gnre.Config.SalvarWS = ckbSalvarSOAP.Checked;
+                gnre.Config.AjustaAguardaConsultaRet = ckbAjustarAut.Checked;
+                gnre.Config.AguardarConsultaRet = (int)nudAguardar.Value;
+                gnre.Config.Tentativas = (int)nudTentativas.Value;
+                gnre.Config.IntervaloTentativas = (int)nudIntervalos.Value;
+                gnre.Config.Proxy.Servidor = txtProxyServidor.Text;
+                gnre.Config.Proxy.Porta = nudProxyPorta.Text;
+                gnre.Config.Proxy.Usuario = txtProxyUsuario.Text;
+                gnre.Config.Proxy.Senha = txtProxySenha.Text;
 
                 //Config Certificado
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "SSLCryptLib", cmbCrypt.GetSelectedValue<SSLCryptLib>());
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "SSLHttpLib", cmbHttp.GetSelectedValue<SSLHttpLib>());
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "SSLXmlSignLib", cmbXmlSign.GetSelectedValue<SSLXmlSignLib>());
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "ArquivoPFX", txtCertPath.Text);
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "DadosPFX", txtDadosPFX.Text);
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "Senha", txtCertPassword.Text);
-                gnre.ConfigGravarValor(ACBrSessao.DFe, "NumeroSerie", txtCertNumero.Text);
+                gnre.Config.DFe.SSLCryptLib = cmbCrypt.GetSelectedValue<SSLCryptLib>();
+                gnre.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();
+                gnre.Config.DFe.SSLXmlSignLib = cmbXmlSign.GetSelectedValue<SSLXmlSignLib>();
+                gnre.Config.DFe.ArquivoPFX = txtCertPath.Text;
+                gnre.Config.DFe.Senha = txtCertPassword.Text;
+                gnre.Config.DFe.NumeroSerie = txtCertNumero.Text;
 
                 //Config Arquivos
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SalvarGer", ckbSalvarArqs.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SepararPorMes", ckbPastaMensal.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "AdicionarLiteral", ckbAdicionaLiteral.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "EmissaoPathGNRe", ckbEmissaoPathGNRe.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SepararPorCNPJ", ckbSepararPorCNPJ.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "SepararPorModelo", ckbSepararPorModelo.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.GNRe, "PathGNRe", txtArqGNRe.Text);
+                gnre.Config.SalvarGer = ckbSalvarArqs.Checked;
+                gnre.Config.SepararPorMes = ckbPastaMensal.Checked;
+                gnre.Config.AdicionarLiteral = ckbAdicionaLiteral.Checked;
+                gnre.Config.EmissaoPathGNRe = ckbEmissaoPathGNRe.Checked;
+                gnre.Config.SepararPorCNPJ = ckbSepararPorCNPJ.Checked;
+                gnre.Config.SepararPorModelo = ckbSepararPorModelo.Checked;
+                gnre.Config.PathGNRe = txtArqGNRe.Text;
 
                 //Config Email
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Senha", txtSenha.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Servidor", txtHost.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "Porta", nudPorta.Text);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "SSL", ckbSSL.Checked);
-                gnre.ConfigGravarValor(ACBrSessao.Email, "TLS", ckbTLS.Checked);
-                gnre.ConfigGravar("");
+                gnre.Config.Email.Nome = txtNome.Text;
+                gnre.Config.Email.Conta = txtEmail.Text;
+                gnre.Config.Email.Usuario = txtUsuario.Text;
+                gnre.Config.Email.Senha = txtSenha.Text;
+                gnre.Config.Email.Servidor = txtHost.Text;
+                gnre.Config.Email.Porta = nudPorta.Text;
+                gnre.Config.Email.SSL = ckbSSL.Checked;
+                gnre.Config.Email.TLS = ckbTLS.Checked;
+                gnre.ConfigGravar();
 
                 Application.DoEvents();
             }
@@ -149,62 +144,61 @@ namespace ACBrLib.GNRe.Demo
             gnre.ConfigLer(file);
 
             //Config Geral
-            ckbExibirErroSchema.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "ExibirErroSchema");
-            txtFormatoAlerta.Text = gnre.ConfigLerValor<string>(ACBrSessao.GNRe, "FormatoAlerta");
-            cmbFormaEmissao.SetSelectedValue(gnre.ConfigLerValor<TipoEmissao>(ACBrSessao.GNRe, "FormaEmissao"));
-            cmbVersaoDF.SetSelectedValue(gnre.ConfigLerValor<VersaoGNRe>(ACBrSessao.GNRe, "VersaoDF"));
-            ckbRetirarAcentos.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "RetirarAcentos");
-            ckbSalvar.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SalvarWS");
-            txtLogs.Text = gnre.ConfigLerValor<string>(ACBrSessao.GNRe, "PathSalvar");
-            txtSchemaPath.Text = gnre.ConfigLerValor<string>(ACBrSessao.GNRe, "PathSchemas");
+            ckbExibirErroSchema.Checked = gnre.Config.ExibirErroSchema;
+            txtFormatoAlerta.Text = gnre.Config.FormatoAlerta;
+            cmbFormaEmissao.SetSelectedValue(gnre.Config.FormaEmissao);
+            cmbVersaoDF.SetSelectedValue(gnre.Config.VersaoDF);
+            ckbRetirarAcentos.Checked = gnre.Config.RetirarAcentos;
+            ckbSalvar.Checked = gnre.Config.SalvarWS;
+            txtLogs.Text = gnre.Config.PathSalvar;
+            txtSchemaPath.Text = gnre.Config.PathSchemas;
 
             //Config Webservice
-            cmbUfDestino.SelectedItem = gnre.ConfigLerValor<string>(ACBrSessao.DFe, "UF");
-            cmbSSlType.SetSelectedValue(gnre.ConfigLerValor<SSLType>(ACBrSessao.GNRe, "SSLType"));
-            nudTimeOut.Value = gnre.ConfigLerValor<decimal>(ACBrSessao.GNRe, "Timeout");
+            cmbUfDestino.SelectedItem = gnre.Config.DFe.UF;
+            cmbSSlType.SetSelectedValue(gnre.Config.SSLType);
+            nudTimeOut.Value = gnre.Config.Timeout;
 
-            var ambiente = gnre.ConfigLerValor<TipoAmbiente>(ACBrSessao.GNRe, "Ambiente");
+            var ambiente = gnre.Config.Ambiente;
             rdbHomologacao.Checked = ambiente == TipoAmbiente.taHomologacao;
             rdbProducao.Checked = ambiente == TipoAmbiente.taProducao;
 
-            ckbVisualizar.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "Visualizar");
-            ckbSalvarSOAP.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SalvarWS");
-            ckbAjustarAut.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "AjustaAguardaConsultaRet");
-            nudAguardar.Value = gnre.ConfigLerValor<int>(ACBrSessao.GNRe, "AguardarConsultaRet");
-            nudTentativas.Value = gnre.ConfigLerValor<int>(ACBrSessao.GNRe, "Tentativas");
-            nudIntervalos.Value = gnre.ConfigLerValor<int>(ACBrSessao.GNRe, "IntervaloTentativas");
-            txtProxyServidor.Text = gnre.ConfigLerValor<string>(ACBrSessao.Proxy, "Servidor");
-            nudProxyPorta.Text = gnre.ConfigLerValor<string>(ACBrSessao.Proxy, "Porta");
-            txtProxyUsuario.Text = gnre.ConfigLerValor<string>(ACBrSessao.Proxy, "Usuario");
-            txtProxySenha.Text = gnre.ConfigLerValor<string>(ACBrSessao.Proxy, "Senha");
+            ckbVisualizar.Checked = gnre.Config.Visualizar;
+            ckbSalvarSOAP.Checked = gnre.Config.SalvarWS;
+            ckbAjustarAut.Checked = gnre.Config.AjustaAguardaConsultaRet;
+            nudAguardar.Value = gnre.Config.AguardarConsultaRet;
+            nudTentativas.Value = gnre.Config.Tentativas;
+            nudIntervalos.Value = gnre.Config.IntervaloTentativas;
+            txtProxyServidor.Text = gnre.Config.Proxy.Servidor;
+            nudProxyPorta.Text = gnre.Config.Proxy.Porta;
+            txtProxyUsuario.Text = gnre.Config.Proxy.Usuario;
+            txtProxySenha.Text = gnre.Config.Proxy.Senha;
 
             //Config Certificado
-            cmbCrypt.SetSelectedValue(gnre.ConfigLerValor<SSLCryptLib>(ACBrSessao.DFe, "SSLCryptLib"));
-            cmbHttp.SetSelectedValue(gnre.ConfigLerValor<SSLHttpLib>(ACBrSessao.DFe, "SSLHttpLib"));
-            cmbXmlSign.SetSelectedValue(gnre.ConfigLerValor<SSLXmlSignLib>(ACBrSessao.DFe, "SSLXmlSignLib"));
-            txtCertPath.Text = gnre.ConfigLerValor<string>(ACBrSessao.DFe, "ArquivoPFX");
-            txtDadosPFX.Text = gnre.ConfigLerValor<string>(ACBrSessao.DFe, "DadosPFX");
-            txtCertPassword.Text = gnre.ConfigLerValor<string>(ACBrSessao.DFe, "Senha");
-            txtCertNumero.Text = gnre.ConfigLerValor<string>(ACBrSessao.DFe, "NumeroSerie");
+            cmbCrypt.SetSelectedValue(gnre.Config.DFe.SSLCryptLib);
+            cmbHttp.SetSelectedValue(gnre.Config.DFe.SSLHttpLib);
+            cmbXmlSign.SetSelectedValue(gnre.Config.DFe.SSLXmlSignLib);
+            txtCertPath.Text = gnre.Config.DFe.ArquivoPFX;
+            txtCertPassword.Text = gnre.Config.DFe.Senha;
+            txtCertNumero.Text = gnre.Config.DFe.NumeroSerie;
 
             //Config Arquivos
-            ckbSalvarArqs.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SalvarGer");
-            ckbPastaMensal.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SepararPorMes");
-            ckbAdicionaLiteral.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "AdicionarLiteral");
-            ckbEmissaoPathGNRe.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "EmissaoPathGNRe");
-            ckbSepararPorCNPJ.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SepararPorCNPJ");
-            ckbSepararPorModelo.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.GNRe, "SepararPorModelo");
-            txtArqGNRe.Text = gnre.ConfigLerValor<string>(ACBrSessao.GNRe, "PathGNRe");
+            ckbSalvarArqs.Checked = gnre.Config.SalvarGer;
+            ckbPastaMensal.Checked = gnre.Config.SepararPorMes;
+            ckbAdicionaLiteral.Checked = gnre.Config.AdicionarLiteral;
+            ckbEmissaoPathGNRe.Checked = gnre.Config.EmissaoPathGNRe;
+            ckbSepararPorCNPJ.Checked = gnre.Config.SepararPorCNPJ;
+            ckbSepararPorModelo.Checked = gnre.Config.SepararPorModelo;
+            txtArqGNRe.Text = gnre.Config.PathGNRe;
 
             //Config Email
-            txtNome.Text = gnre.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
-            txtEmail.Text = gnre.ConfigLerValor<string>(ACBrSessao.Email, "Conta");
-            txtUsuario.Text = gnre.ConfigLerValor<string>(ACBrSessao.Email, "Usuario");
-            txtSenha.Text = gnre.ConfigLerValor<string>(ACBrSessao.Email, "Senha");
-            txtHost.Text = gnre.ConfigLerValor<string>(ACBrSessao.Email, "Servidor");
-            nudPorta.Value = gnre.ConfigLerValor<int>(ACBrSessao.Email, "Porta");
-            ckbSSL.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.Email, "SSL");
-            ckbTLS.Checked = gnre.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
+            txtNome.Text = gnre.Config.Email.Nome;
+            txtEmail.Text = gnre.Config.Email.Conta;
+            txtUsuario.Text = gnre.Config.Email.Usuario;
+            txtSenha.Text = gnre.Config.Email.Senha;
+            txtHost.Text = gnre.Config.Email.Servidor;
+            nudPorta.Text = gnre.Config.Email.Porta;
+            ckbSSL.Checked = gnre.Config.Email.SSL;
+            ckbTLS.Checked = gnre.Config.Email.TLS;
         }
 
         private void CheckGNReLista(bool xml = false)

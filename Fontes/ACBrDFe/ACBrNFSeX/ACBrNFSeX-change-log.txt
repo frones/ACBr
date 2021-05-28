@@ -44,6 +44,9 @@ Símbolo : Significado
 
 28/05/2021
 -- Diversos --
+[*] Ajustes visando deixar todas as assinaturas do SubsituicaoNfse validas.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [+] Implementação do provedor ADPM.
    Por: Italo Giurizzato Junior
 

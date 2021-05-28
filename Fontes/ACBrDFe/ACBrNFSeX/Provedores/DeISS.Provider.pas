@@ -93,6 +93,7 @@ begin
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
+    SubstituirNFSe := True;
   end;
 
   with ConfigWebServices do

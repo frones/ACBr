@@ -91,13 +91,9 @@ begin
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+    SubstituirNFSe := True;
   end;
-
-//  with ConfigMsgDados do
-//  begin
-//    // NameSpace do Rps é diferente dos demais
-//    XmlRps.xmlns := 'http://www.abrasf.org.br/';
-//  end;
 end;
 
 function TACBrNFSeProviderFiorilli.CriarGeradorXml(

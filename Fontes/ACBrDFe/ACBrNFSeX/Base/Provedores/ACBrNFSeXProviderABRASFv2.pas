@@ -1365,7 +1365,8 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
-  IdAttr, NameSpace, xMotivo, xCodVerif, Prefixo, PrefixoTS, xSerie: string;
+  IdAttr, NameSpace, NameSpaceCanc, xMotivo, xCodVerif, Prefixo, PrefixoTS,
+  xSerie: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -1389,7 +1390,10 @@ begin
   PrefixoTS := '';
 
   if EstaVazio(ConfigMsgDados.CancelarNFSe.xmlns) then
-    NameSpace := ''
+  begin
+    NameSpace := '';
+    NameSpaceCanc := '';
+  end
   else
   begin
     if ConfigMsgDados.Prefixo = '' then
@@ -1399,6 +1403,8 @@ begin
       NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.CancelarNFSe.xmlns + '"';
       Prefixo := ConfigMsgDados.Prefixo + ':';
     end;
+
+    NameSpaceCanc := NameSpace;
   end;
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
@@ -1449,7 +1455,7 @@ begin
 
   Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                          '<' + PrefixoTS + 'Pedido>' +
-                           '<' + PrefixoTS + 'InfPedidoCancelamento' + IdAttr + '>' +
+                           '<' + PrefixoTS + 'InfPedidoCancelamento' + IdAttr + NameSpaceCanc + '>' +
                              '<' + PrefixoTS + 'IdentificacaoNfse>' +
                                '<' + PrefixoTS + 'Numero>' +
                                   InfoCanc.NumeroNFSe +

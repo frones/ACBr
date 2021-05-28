@@ -11,7 +11,7 @@
 				<xs:element name="descEvento">
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
-							<xs:enumeration value="“Comprovante de Entrega da NF-e"/>
+							<xs:enumeration value="Comprovante de Entrega da NF-e"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>

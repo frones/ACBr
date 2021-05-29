@@ -1,100 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.Mail;
 
 namespace ACBrLib.Mail
 {
-    public sealed class ACBrMail : ACBrLibHandle
+    public sealed partial class ACBrMail : ACBrLibHandle
     {
-        #region InnerTypes
-
-        private class Delegates
-        {
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddAddress(string eEmail, string eName);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddAltBody(string eAltBody);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddAttachment(string eFileName, string eDescription, int aDisposition);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddBCC(string eEmail);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddBody(string eBody);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddCC(string eEmail, string eName);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_AddReplyTo(string eEmail, string eName);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Clear();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ClearAttachment();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigGravar(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigGravarValor(string eSessao, string eChave, string valor);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigLer(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigLerValor(string eSessao, string eChave, StringBuilder buffer,
-                ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Finalizar();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Inicializar(string eArqConfig, string eChaveCrypt);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Nome(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_SaveToFile(string eFileName);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Send();
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_SetSubject(string eSubject);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigImportar(string eArqConfig);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_ConfigExportar(StringBuilder buffer, ref int bufferSize);
-
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int MAIL_Versao(StringBuilder buffer, ref int bufferSize);
-        }
-
-        #endregion InnerTypes
-
         #region Constructors
 
-        public ACBrMail(string eArqConfig = "", string eChaveCrypt = "") :
-            base(Environment.Is64BitProcess ? "ACBrMail64.dll" : "ACBrMail32.dll")
+        public ACBrMail(string eArqConfig = "", string eChaveCrypt = "") : base(IsWindows ? "ACBrMail64.dll" : "libacbrmail64.so",
+                                                                                IsWindows ? "ACBrMail32.dll" : "libacbrmail32.so")
         {
-            var inicializar = GetMethod<Delegates.MAIL_Inicializar>();
+            var inicializar = GetMethod<MAIL_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
             CheckResult(ret);
+            Config = new MailConfig(this);
         }
 
         #endregion Constructors
@@ -108,7 +29,7 @@ namespace ACBrLib.Mail
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.MAIL_Nome>();
+                var method = GetMethod<MAIL_Nome>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);
@@ -124,7 +45,7 @@ namespace ACBrLib.Mail
                 var bufferLen = BUFFER_LEN;
                 var buffer = new StringBuilder(bufferLen);
 
-                var method = GetMethod<Delegates.MAIL_Versao>();
+                var method = GetMethod<MAIL_Versao>();
                 var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
                 CheckResult(ret);
@@ -132,6 +53,8 @@ namespace ACBrLib.Mail
                 return ProcessResult(buffer, bufferLen);
             }
         }
+
+        public MailConfig Config { get; }
 
         #endregion Properties
 
@@ -141,7 +64,7 @@ namespace ACBrLib.Mail
 
         public override void ConfigGravar(string eArqConfig = "")
         {
-            var gravarIni = GetMethod<Delegates.MAIL_ConfigGravar>();
+            var gravarIni = GetMethod<MAIL_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -149,7 +72,7 @@ namespace ACBrLib.Mail
 
         public override void ConfigLer(string eArqConfig = "")
         {
-            var lerIni = GetMethod<Delegates.MAIL_ConfigLer>();
+            var lerIni = GetMethod<MAIL_ConfigLer>();
             var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -157,7 +80,7 @@ namespace ACBrLib.Mail
 
         public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
-            var method = GetMethod<Delegates.MAIL_ConfigLerValor>();
+            var method = GetMethod<MAIL_ConfigLerValor>();
 
             var bufferLen = BUFFER_LEN;
             var pValue = new StringBuilder(bufferLen);
@@ -172,7 +95,7 @@ namespace ACBrLib.Mail
         {
             if (value == null) return;
 
-            var method = GetMethod<Delegates.MAIL_ConfigGravarValor>();
+            var method = GetMethod<MAIL_ConfigGravarValor>();
             var propValue = ConvertValue(value);
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
@@ -181,7 +104,7 @@ namespace ACBrLib.Mail
 
         public override void ImportarConfig(string eArqConfig = "")
         {
-            var importarConfig = GetMethod<Delegates.MAIL_ConfigImportar>();
+            var importarConfig = GetMethod<MAIL_ConfigImportar>();
             var ret = ExecuteMethod(() => importarConfig(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
@@ -192,7 +115,7 @@ namespace ACBrLib.Mail
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.MAIL_ConfigExportar>();
+            var method = GetMethod<MAIL_ConfigExportar>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
@@ -204,7 +127,7 @@ namespace ACBrLib.Mail
 
         public void SetSubject(string subject)
         {
-            var method = GetMethod<Delegates.MAIL_SetSubject>();
+            var method = GetMethod<MAIL_SetSubject>();
             var ret = ExecuteMethod(() => method(ToUTF8(subject)));
 
             CheckResult(ret);
@@ -212,7 +135,7 @@ namespace ACBrLib.Mail
 
         public void AddAddress(string eEmail, string eName)
         {
-            var method = GetMethod<Delegates.MAIL_AddAddress>();
+            var method = GetMethod<MAIL_AddAddress>();
             var ret = ExecuteMethod(() => method(ToUTF8(eEmail), ToUTF8(eName)));
 
             CheckResult(ret);
@@ -220,7 +143,7 @@ namespace ACBrLib.Mail
 
         public void AddReplyTo(string eEmail, string eName)
         {
-            var method = GetMethod<Delegates.MAIL_AddReplyTo>();
+            var method = GetMethod<MAIL_AddReplyTo>();
             var ret = ExecuteMethod(() => method(ToUTF8(eEmail), ToUTF8(eName)));
 
             CheckResult(ret);
@@ -228,7 +151,7 @@ namespace ACBrLib.Mail
 
         public void AddCC(string eEmail, string eName)
         {
-            var method = GetMethod<Delegates.MAIL_AddCC>();
+            var method = GetMethod<MAIL_AddCC>();
             var ret = ExecuteMethod(() => method(ToUTF8(eEmail), ToUTF8(eName)));
 
             CheckResult(ret);
@@ -236,7 +159,7 @@ namespace ACBrLib.Mail
 
         public void AddBCC(string eEmail, string eName)
         {
-            var method = GetMethod<Delegates.MAIL_AddBCC>();
+            var method = GetMethod<MAIL_AddBCC>();
             var ret = ExecuteMethod(() => method(ToUTF8(eEmail)));
 
             CheckResult(ret);
@@ -244,7 +167,7 @@ namespace ACBrLib.Mail
 
         public void AddAttachment(string eFileName, string eDescription, MailAttachmentDisposition aDisposition)
         {
-            var method = GetMethod<Delegates.MAIL_AddAttachment>();
+            var method = GetMethod<MAIL_AddAttachment>();
             var ret = ExecuteMethod(() => method(ToUTF8(eFileName), ToUTF8(eDescription), (int)aDisposition));
 
             CheckResult(ret);
@@ -252,7 +175,7 @@ namespace ACBrLib.Mail
 
         public void ClearAttachment()
         {
-            var method = GetMethod<Delegates.MAIL_ClearAttachment>();
+            var method = GetMethod<MAIL_ClearAttachment>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -260,7 +183,7 @@ namespace ACBrLib.Mail
 
         public void AddBody(string eBody)
         {
-            var method = GetMethod<Delegates.MAIL_AddBody>();
+            var method = GetMethod<MAIL_AddBody>();
             var ret = ExecuteMethod(() => method(ToUTF8(eBody)));
 
             CheckResult(ret);
@@ -268,7 +191,7 @@ namespace ACBrLib.Mail
 
         public void AddAltBody(string eAltBody)
         {
-            var method = GetMethod<Delegates.MAIL_AddAltBody>();
+            var method = GetMethod<MAIL_AddAltBody>();
             var ret = ExecuteMethod(() => method(ToUTF8(eAltBody)));
 
             CheckResult(ret);
@@ -276,7 +199,7 @@ namespace ACBrLib.Mail
 
         public void SaveToFile(string eFileName)
         {
-            var method = GetMethod<Delegates.MAIL_SaveToFile>();
+            var method = GetMethod<MAIL_SaveToFile>();
             var ret = ExecuteMethod(() => method(ToUTF8(eFileName)));
 
             CheckResult(ret);
@@ -284,7 +207,7 @@ namespace ACBrLib.Mail
 
         public void Clear()
         {
-            var method = GetMethod<Delegates.MAIL_Clear>();
+            var method = GetMethod<MAIL_Clear>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -292,7 +215,7 @@ namespace ACBrLib.Mail
 
         public void Send()
         {
-            var method = GetMethod<Delegates.MAIL_Send>();
+            var method = GetMethod<MAIL_Send>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -302,7 +225,7 @@ namespace ACBrLib.Mail
 
         protected override void FinalizeLib()
         {
-            var finalizar = GetMethod<Delegates.MAIL_Finalizar>();
+            var finalizar = GetMethod<MAIL_Finalizar>();
             var codRet = ExecuteMethod(() => finalizar());
             CheckResult(codRet);
         }
@@ -311,7 +234,7 @@ namespace ACBrLib.Mail
         {
             var bufferLen = iniBufferLen < 1 ? BUFFER_LEN : iniBufferLen;
             var buffer = new StringBuilder(bufferLen);
-            var ultimoRetorno = GetMethod<Delegates.MAIL_UltimoRetorno>();
+            var ultimoRetorno = GetMethod<MAIL_UltimoRetorno>();
 
             if (iniBufferLen < 1)
             {
@@ -323,33 +246,6 @@ namespace ACBrLib.Mail
 
             ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
             return FromUTF8(buffer);
-        }
-
-        protected override void InitializeMethods()
-        {
-            AddMethod<Delegates.MAIL_Inicializar>("MAIL_Inicializar");
-            AddMethod<Delegates.MAIL_Finalizar>("MAIL_Finalizar");
-            AddMethod<Delegates.MAIL_Nome>("MAIL_Nome");
-            AddMethod<Delegates.MAIL_Versao>("MAIL_Versao");
-            AddMethod<Delegates.MAIL_UltimoRetorno>("MAIL_UltimoRetorno");
-            AddMethod<Delegates.MAIL_ConfigImportar>("MAIL_ConfigImportar");
-            AddMethod<Delegates.MAIL_ConfigExportar>("MAIL_ConfigExportar");
-            AddMethod<Delegates.MAIL_ConfigLer>("MAIL_ConfigLer");
-            AddMethod<Delegates.MAIL_ConfigGravar>("MAIL_ConfigGravar");
-            AddMethod<Delegates.MAIL_ConfigLerValor>("MAIL_ConfigLerValor");
-            AddMethod<Delegates.MAIL_ConfigGravarValor>("MAIL_ConfigGravarValor");
-            AddMethod<Delegates.MAIL_SetSubject>("MAIL_SetSubject");
-            AddMethod<Delegates.MAIL_AddAddress>("MAIL_AddAddress");
-            AddMethod<Delegates.MAIL_AddReplyTo>("MAIL_AddReplyTo");
-            AddMethod<Delegates.MAIL_AddCC>("MAIL_AddCC");
-            AddMethod<Delegates.MAIL_AddBCC>("MAIL_AddBCC");
-            AddMethod<Delegates.MAIL_AddAttachment>("MAIL_AddAttachment");
-            AddMethod<Delegates.MAIL_ClearAttachment>("MAIL_ClearAttachment");
-            AddMethod<Delegates.MAIL_AddBody>("MAIL_AddBody");
-            AddMethod<Delegates.MAIL_AddAltBody>("MAIL_AddAltBody");
-            AddMethod<Delegates.MAIL_SaveToFile>("MAIL_SaveToFile");
-            AddMethod<Delegates.MAIL_Clear>("MAIL_Clear");
-            AddMethod<Delegates.MAIL_Send>("MAIL_Send");
         }
 
         #endregion Private Methods

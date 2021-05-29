@@ -2,7 +2,7 @@
 
 namespace ACBrLib.Core.MDFe
 {
-    public enum TipoDAMDFE
+    public enum TipoDAMDFe
     {
         [Description("Sem Impressão")]
         tiSemGeracao = 0,

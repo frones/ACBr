@@ -83,7 +83,7 @@ type
 
   TACBrTEFLinha = class
   private
-    FIdentificacao: smallint;
+    FIdentificacao: Integer;
     FACBrTEFDLinhaInformacao: TACBrInformacao;
     FLinha: String;
     FSequencia: smallint;
@@ -97,7 +97,7 @@ type
 
     property Linha: String read GetLinha write SetLinha;
 
-    property Identificacao: smallint read FIdentificacao;
+    property Identificacao: Integer read FIdentificacao;
     property Sequencia: smallint read FSequencia;
     property Chave: String read GetChave;
     property Informacao: TACBrInformacao read FACBrTEFDLinhaInformacao;

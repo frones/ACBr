@@ -219,13 +219,18 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpEvento', 1,  6, 1, TipoEventoToStr(self.InfoExclusao.tpEvento));
     Gerador.wCampo(tcStr, '', 'nrRecEvt', 1, 40, 1, self.InfoExclusao.nrRecEvt);
-                                 
-    if ( self.InfoExclusao.tpEvento In [teS1200, teS1202, teS1210, teS2299] ) then
-      begin 
+
+    if ( self.InfoExclusao.tpEvento In [teS1200, teS1202,teS2299] ) then
+      begin
         GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
         GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
       end
-    else 
+    else if ( self.InfoExclusao.tpEvento In [teS1210] ) then
+      begin
+        GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
+        GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto);
+      end
+    else
       begin
         if ( self.InfoExclusao.IdeFolhaPagto.perApur = '' ) then
            GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True)
@@ -294,6 +299,7 @@ begin
         infoExclusao.ideFolhaPagto.indApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
         infoExclusao.ideFolhaPagto.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
       end;
+      if (TipoEventoToStr(infoExclusao.tpEvento) = 'S-1210') then infoExclusao.ideFolhaPagto.perApur := INIRec.ReadString(sSecao, 'perApur', EmptyStr);  //27/05/2021
     end;
 
     GerarXML;

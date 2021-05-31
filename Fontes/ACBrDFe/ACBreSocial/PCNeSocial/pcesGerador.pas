@@ -148,6 +148,7 @@ type
     procedure GerarIdeTrabalhador(pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean = True);
     procedure GerarIdeTrabalhador2(pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
     procedure GerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
+    procedure GerarIdeFolhaPagto2(pIdeFolhaPagto: TIdeFolhaPagto);
     procedure GerarEmitente(pEmitente: TEmitente; ATipoEvento: TTipoEvento);
     procedure GerarEndExt(pEndExt: TEndExt);
     procedure GerarIdePais(pIdePais: TIdePais);
@@ -1731,6 +1732,19 @@ begin
 
     Gerador.wGrupo('/ideFolhaPagto');
   end;
+end;
+
+procedure TeSocialEvento.GerarIdeFolhaPagto2(pIdeFolhaPagto: TIdeFolhaPagto);
+begin
+  if pIdeFolhaPagto.perApur <> EmptyStr then
+  begin
+    Gerador.wGrupo('ideFolhaPagto');
+
+    Gerador.wCampo(tcStr, '', 'perApur',     7, 7, 1, pIdeFolhaPagto.perApur);
+
+    Gerador.wGrupo('/ideFolhaPagto');
+  end;
+
 end;
 
 procedure TeSocialEvento.GerarEmitente(pEmitente: TEmitente; ATipoEvento: TTipoEvento);

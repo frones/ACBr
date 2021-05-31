@@ -339,16 +339,21 @@ begin
       result := i = StrToInt(aChave[length(aChave)]);
 
     if result then
+    begin
       result := ValidarCodigoUF(StrToInt(copy(aChave, 1, 2)));
 
-    if result then
-      result := ValidarAAMM(copy(aChave, 3, 4));
+      if result then
+        result := ValidarAAMM(copy(aChave, 3, 4));
 
-    ACNPJCPF := ExtrairCNPJCPFChaveAcesso(aChave);
-    if Length(ACNPJCPF) = 11 then
-      result := ValidarCPF(ACNPJCPF)
-    else
-      result := ValidarCNPJ(ACNPJCPF);
+      if result then
+      begin
+        ACNPJCPF := ExtrairCNPJCPFChaveAcesso(aChave);
+        if Length(ACNPJCPF) = 11 then
+          result := ValidarCPF(ACNPJCPF)
+        else
+          result := ValidarCNPJ(ACNPJCPF);
+      end;
+    end;
 
   except
     result := false;

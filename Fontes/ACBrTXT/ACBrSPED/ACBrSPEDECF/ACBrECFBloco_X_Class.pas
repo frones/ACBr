@@ -561,9 +561,23 @@ begin
             LFill(UNI_MED,2)       +
             LFill(IND_OPER,1)      +
             LFill(TIP_MET)         +
+            LFill(OPER_PAR)        +
+            LFill(DESC_BENS_PAR)   +
+            LFill(ID_PARTE_PAR)    +
+            LFill(TIP_PAR)         +
+            LFill(DAT_UTIL)        +
+            LFill(CRIT_PAR)        +
+            LFill(DAT_TRANS)       +
+            LFill(DAT_EMB)         +
+            LFill(ID_FONT_COT)     +
+            LFill(AJ_PAR)          +
             VLFill(VL_PAR,19)      +
             VLFill(VL_PRAT,19)     +
+            VLFill(QTDE_AJ,23,6)   +
             VLFill(VL_AJ,19)       +
+            VLFill(VALOR_COT,19)   +
+            LFILL(NUM_DEC_EXP)     +
+            LFILL(DAT_ENT_PREV)    +
             VLFill(VL_JUR,19)      +
             VLFill(VL_JUR_MIN,7,4) +
             VLFill(VL_JUR_MAX,7,4) +

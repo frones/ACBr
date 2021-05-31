@@ -234,6 +234,22 @@ type
     fVL_JUR_MIN: variant;
     fVL_PAR:    variant;
     fVL_PRAT:   variant;
+    fOPER_PAR:   string;
+    fDESC_BENS_PAR: String;
+    fID_PARTE_PAR:  string;
+    fTIP_PAR: string;
+    fDAT_UTIL: string;
+    fCRIT_PAR: string;
+    fDAT_TRANS: TDateTime;
+    fDAT_EMB: TDateTime;
+    fID_FONT_COT: integer;
+    fAJ_PAR: string;
+    fQTDE_AJ: variant;
+    fVALOR_COT: variant;
+    fNUM_DEC_EXP: string;
+    fDAT_ENT_PREV: TDateTime;
+    fCOD_INV: string;
+    fUTIL_INS_PROD : string;
 
      FRegistroX305: TRegistroX305List;
      FRegistroX310: TRegistroX310List;
@@ -258,6 +274,23 @@ type
     property VL_JUR_MAX: variant read fVL_JUR_MAX write fVL_JUR_MAX;
     property COD_CNC: integer read fCOD_CNC write fCOD_CNC;
     property TIP_MOEDA: string read fTIP_MOEDA write fTIP_MOEDA;
+    property OPER_PAR: string read fOPER_PAR write fOPER_PAR;
+    property DESC_BENS_PAR: string read fDESC_BENS_PAR write fDESC_BENS_PAR;
+    property ID_PARTE_PAR: string read fID_PARTE_PAR write fID_PARTE_PAR;
+    property TIP_PAR: string read fTIP_PAR write fTIP_PAR;
+    property DAT_UTIL: string read fDAT_UTIL write fDAT_UTIL;
+    property CRIT_PAR: string read fCRIT_PAR write fCRIT_PAR;
+    property DAT_TRANS: Tdatetime read fDAT_TRANS write fDAT_TRANS;
+    property DAT_EMB: tdatetime read fDAT_EMB write fDAT_EMB;
+    property ID_FONT_COT: integer read fID_FONT_COT write fID_FONT_COT;
+    property AJ_PAR: string read fAJ_PAR write fAJ_PAR;
+    property QTDE_AJ: variant read fQTDE_AJ write fQTDE_AJ;
+    property VALOR_COT: variant read fVALOR_COT write fVALOR_COT;
+    property NUM_DEC_EXP: string read fNUM_DEC_EXP write fNUM_DEC_EXP;
+    property DAT_ENT_PREV: Tdatetime read fDAT_ENT_PREV write fDAT_ENT_PREV;
+    property COD_INV: string read fCOD_INV write fCOD_INV;
+    property UTIL_INS_PROD: string read fUTIL_INS_PROD write fUTIL_INS_PROD;
+
 
     property RegistroX305: TRegistroX305List read FRegistroX305 write FRegistroX305;
     property RegistroX310: TRegistroX310List read FRegistroX310 write FRegistroX310;

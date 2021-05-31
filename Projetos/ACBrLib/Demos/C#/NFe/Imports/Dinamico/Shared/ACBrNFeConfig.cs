@@ -12,7 +12,6 @@ namespace ACBrLib.NFe
         {
             DANFe = new DANFeConfig(acbrnfe);
             PosPrinter = new PosPrinterConfig<ACBrNFe>(acbrnfe);
-            Config = new DownloadConfig<ACBrNFe>(acbrnfe, ACBrSessao.NFe);
         }
 
         #endregion Constructors

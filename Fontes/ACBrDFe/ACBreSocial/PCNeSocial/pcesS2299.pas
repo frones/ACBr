@@ -1126,6 +1126,7 @@ begin
       infoDeslig.indCumprParc := eSStrToTpCumprParcialAviso(Ok, INIRec.ReadString(sSecao, 'indCumprParc', '0'));
       infoDeslig.qtdDiasInterm := INIRec.ReadInteger(sSecao, 'qtdDiasInterm', -1);
       infoDeslig.Observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+      infoDeslig.dtAvPrv      := StringToDateTime(INIRec.ReadString(sSecao, 'dtAvPrv', '0'));   //20/05/2021
 
       K := 1;
       while true do
@@ -1211,6 +1212,7 @@ begin
                   fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
                   vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
                   vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+                  indApurIR  := eSStrToTpindApurIR(ok, INIRec.ReadString(sSecao, 'indApurIR', '0'));  //20/05/2021
                 end;
 
                 Inc(K);

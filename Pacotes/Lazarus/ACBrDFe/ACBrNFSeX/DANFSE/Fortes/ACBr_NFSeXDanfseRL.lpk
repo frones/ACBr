@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFSeXDanfseRL"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFSeXDANFSeRLReg"/>
+      </Item1>
+    </Files>
+    <RequiredPkgs Count="4">
+      <Item1>
+        <PackageName Value="ACBr_NFSeX"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrDFeReportRL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="frce"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="FCL"/>
+      </Item4>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

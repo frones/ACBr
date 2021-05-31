@@ -132,6 +132,7 @@
     <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PresencaComprador.cs" Link="NotaFiscal\PresencaComprador.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProcessoEmissao.cs" Link="NotaFiscal\ProcessoEmissao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\ProcNFe.cs" Link="NotaFiscal\ProcNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProcRefNFe.cs" Link="NotaFiscal\ProcRefNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProdutoNFe.cs" Link="NotaFiscal\ProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\RastroNFe.cs" Link="NotaFiscal\RastroNFe.cs" />

@@ -12,6 +12,7 @@ namespace ACBrLib.NFe
 
         public NotaFiscal()
         {
+            ProcNFe = new ProcNFe();
             InfNFe = new InfNFe();
             Identificacao = new IdentificacaoNFe();
             Emitente = new EmitenteNFe();
@@ -48,6 +49,8 @@ namespace ACBrLib.NFe
         #endregion Constructor
 
         #region Properties
+
+        public ProcNFe ProcNFe { get; }
 
         public InfNFe InfNFe { get; }
 
@@ -108,6 +111,9 @@ namespace ACBrLib.NFe
         private ACBrIniFile WriteToIni()
         {
             var iniData = new ACBrIniFile();
+
+            if (!string.IsNullOrEmpty(ProcNFe.nProt))
+                iniData.WriteToIni(ProcNFe, "procNFe");
 
             iniData.WriteToIni(InfNFe, "infNFe");
             iniData.WriteToIni(Identificacao, "Identificacao");
@@ -268,6 +274,7 @@ namespace ACBrLib.NFe
 
         private void ReadFromIni(ACBrIniFile iniData)
         {
+            iniData.ReadFromIni(ProcNFe, "procNFe");
             iniData.ReadFromIni(InfNFe, "infNFe");
             iniData.ReadFromIni(Identificacao, "Identificacao");
 

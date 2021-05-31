@@ -1653,9 +1653,16 @@ var
   begin
     // Instruindo CRT a apenas transações de Débito
     if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
-      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='8'; // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
-    //else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
-    //  ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 2;
+      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='8' // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
+    else if (ACBrTEFD1.GPAtual = gpCliSiTef) then
+    begin
+      case cbxQRCode.ItemIndex of
+        3,4:ACBrTEFD1.TEFCliSiTef.Restricoes  := '{DevolveStringQRCode=1}'; {No CheckOut}
+      else
+        ACBrTEFD1.TEFCliSiTef.Restricoes := '{DevolveStringQRCode=0}'; {No PinPad}
+      end;
+      ACBrTEFD1.TEFCliSiTef.OperacaoCRT := 122;
+    end;
   end;
 
 begin

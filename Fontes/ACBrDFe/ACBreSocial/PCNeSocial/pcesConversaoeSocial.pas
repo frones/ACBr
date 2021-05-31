@@ -1871,7 +1871,7 @@ begin
   if t = ispVazio then
     result := ''
   else
-    result := EnumeradoToStr2(t, TGenericosString1_2);
+    result := EnumeradoToStr2(t, TGenericosString0_2);
 end;
 
 function eSStrToIndSubstPatronalObra(var ok: boolean; const s: string): TpIndSubstPatronalObra;

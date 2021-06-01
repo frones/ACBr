@@ -65,11 +65,18 @@ type
 
   end;
 
+  { TNFSeW_IPMV110 }
+
+  TNFSeW_IPMV110 = class(TNFSeW_IPM)
+
+  end;
+
   { TNFSeW_IPMa }
 
   TNFSeW_IPMa = class(TNFSeW_IPM)
   protected
     procedure Configuracao; override;
+
   end;
 
 implementation

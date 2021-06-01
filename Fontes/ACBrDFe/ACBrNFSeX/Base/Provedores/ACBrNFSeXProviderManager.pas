@@ -324,6 +324,7 @@ begin
       Result := TACBrNFSeProviderInfiscv110.Create(ACBrNFSe);
 
     proIPM:     Result := TACBrNFSeProviderIPM.Create(ACBrNFSe);
+    proIPMV110: Result := TACBrNFSeProviderIPMV110.Create(ACBrNFSe);
     proIPMa:    Result := TACBrNFSeProviderIPMa.Create(ACBrNFSe);
     proISSDSF:  Result := TACBrNFSeProviderISSDSF.Create(ACBrNFSe);
     proLencois: Result := TACBrNFSeProviderLencois.Create(ACBrNFSe);

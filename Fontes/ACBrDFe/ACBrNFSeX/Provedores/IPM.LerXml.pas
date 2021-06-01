@@ -63,6 +63,12 @@ type
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 
+  { TNFSeR_IPMV110 }
+
+  TNFSeR_IPMV110 = class(TNFSeR_IPM)
+
+  end;
+
   { TNFSeR_IPMa }
 
   TNFSeR_IPMa = class(TNFSeR_IPM)

@@ -329,10 +329,10 @@ begin
 
     if NFSe.Servico.Valores.IssRetido in [stNormal,stSubstituicao] then
       Result[i].AppendChild(AddNode(tcStr, '#57', 'impostoretido', 1, 5, 1,
-                                                                   'False', ''))
+                                                                   'false', ''))
     else
       Result[i].AppendChild(AddNode(tcStr, '#57', 'impostoretido', 1, 5, 1,
-                                                                   'True', ''));
+                                                                   'true', ''));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

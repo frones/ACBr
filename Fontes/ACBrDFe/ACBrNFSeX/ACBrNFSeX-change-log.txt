@@ -42,9 +42,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2021
+-- IPM.Provider --
+[*] Ajustes necessários para algumas cidades atendidas pelo provedor
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Remoção de linhas de código desnecessárias.
+   Por: Italo Giurizzato Junior
+-- SmarAPD.GravarXml --
+[*] Correção no valor da tag <impostoretido>
+   Por: Italo Giurizzato Junior
+
 28/05/2021
 -- Diversos --
-[*] Ajustes visando deixar todas as assinaturas do SubsituicaoNfse validas.
+[*] Ajustes visando deixar todas as assinaturas do SubstituicaoNfse validas.
    Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementação do provedor ADPM.

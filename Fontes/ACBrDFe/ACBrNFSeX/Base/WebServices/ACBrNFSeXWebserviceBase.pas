@@ -49,7 +49,7 @@ uses
      {$ENDIF}
    {$ENDIF}
   {$ENDIF}
-  ACBrDFe, ACBrDFeUtil, ACBrDFeConfiguracoes,
+  ACBrBase, ACBrDFe, ACBrDFeUtil, ACBrDFeConfiguracoes,
   ACBrDFeSSL, ACBrNFSeXConversao, ACBrNFSeXConfiguracoes,
   ACBrXmlBase, ACBrXmlDocument;
 
@@ -90,6 +90,7 @@ type
     function GerarPrefixoArquivo: String; virtual;
     procedure SalvarEnvio(ADadosSoap, ADadosMsg: string); virtual;
     procedure SalvarRetorno(ADadosSoap, ADadosMsg: string); virtual;
+    procedure SetHeaders(aHeaderReq: THTTPHeader); virtual;
 
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                                   namespace: array of string): string; virtual; abstract;
@@ -491,6 +492,12 @@ begin
   end;
 end;
 
+procedure TACBrNFSeXWebservice.SetHeaders(aHeaderReq: THTTPHeader);
+begin
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.UseAuthorizationHeader then
+    aHeaderReq.AddHeader('Authorization', TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz);
+end;
+
 function TACBrNFSeXWebservice.GetSoapBody(const Response: string): string;
 var
   aXml:string;
@@ -668,8 +675,7 @@ begin
           HttpClient.Method := 'POST';
           HttpClient.MimeType := MimeType;
 
-          if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.UseAuthorizationHeader then
-            HttpClient.HeaderReq.AddHeader('Authorization', TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz);
+          SetHeaders(HttpClient.HeaderReq);
 
           WriteStrToStream(HttpClient.DataReq, AnsiString(FPEnvio));
 

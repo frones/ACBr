@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2021
+-- pcnConversaoReinf/pcnReinfR2055 --
+[*] Incluído o valor tiCAEPF na classe TtpInsc para atender o evento R-2055.
+   Por: William Mometti / Italo Giurizzato Junior
+
 15/03/2021
 -- ACBrReinfWebServices --
 [*] Ajustes para realizar a consulta na versão 1.5.1

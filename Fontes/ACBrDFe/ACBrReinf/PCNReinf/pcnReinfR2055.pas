@@ -85,14 +85,17 @@ type
   { TideEstab }
   TideEstab = class(TObject)
   private
-    FtpInscAdq   : TtpInsc;
-    FnrInscAdq, FindOpcCP, FnrInscProd : string;
-    FdetAquis    : TtipoComCollection;
-    FtpInscProd : TtpInsc;
-    FideProdutor : TtipoComCollection;
+    FtpInscAdq: TtpInsc;
+    FnrInscAdq: string;
+    FindOpcCP: string;
+    FnrInscProd: string;
+    FtpInscProd: TtpInsc;
+    FdetAquis: TtipoComCollection;
+    FideProdutor: TtipoComCollection;
  public
     constructor Create;
     destructor Destroy; override;
+
     property tpInscAdq: TtpInsc read FtpInscAdq write FtpInscAdq default tiCNPJ;
     property nrInscAdq: string read FnrInscAdq write FnrInscAdq;
     property indOpcCP: string read FindOpcCP write FindOpcCP;
@@ -116,8 +119,10 @@ type
   TtipoComCollectionItem = class(TObject)
   private
     FindAquis: TdetAquis;
-    FvlrBruto, FvlrCPDescPR,
-    FvlrRatDescPR, FvlrSenarDesc: double;
+    FvlrBruto: double;
+    FvlrCPDescPR: double;
+    FvlrRatDescPR: double;
+    FvlrSenarDesc: double;
     FinfoProc: TinfoProcCollection;
   public
     constructor Create;
@@ -145,11 +150,11 @@ type
   TinfoProcCollectionItem = class(TObject)
   private
     FtpProc: TtpProc;
-    FcodSusp: String;
-    FvlrSenarNRet: double;
     FnrProc: String;
-    FvlrRatNRet: double;
+    FcodSusp: String;
     FvlrCPNRet: double;
+    FvlrRatNRet: double;
+    FvlrSenarNRet: double;
   public
     property tpProc: TtpProc read FtpProc write FtpProc;
     property nrProc: String read FnrProc write FnrProc;

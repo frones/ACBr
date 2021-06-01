@@ -57,7 +57,7 @@ type
   TEventosReinf           = (erEnvioLote, erRetornoLote, erEnvioConsulta,
                              erRetornoConsulta);
 
-  TtpInsc                 = (tiCNPJ, tiCPF, tiCNO);
+  TtpInsc                 = (tiCNPJ, tiCPF, tiCAEPF, tiCNO);
 
   TtpInscProp             = (tpCNPJ, tpCPF);
 
@@ -578,12 +578,12 @@ end;
 
 function TpInscricaoToStr(const t:TtpInsc): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2', '4']);
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4']);
 end;
 
 function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 begin
-  result := TtpInsc(StrToEnumerado2(ok , s, ['1', '2', '4']));
+  result := TtpInsc(StrToEnumerado2(ok , s, ['1', '2', '3', '4']));
 end;
 
 function ProcEmiReinfToStr(const t: TprocEmi): string;

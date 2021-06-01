@@ -46,6 +46,7 @@ uses
   ACBrEFDBloco_C_Importar,
   ACBrEFDBloco_D_Importar,
   ACBrEFDBloco_E_Importar,
+  ACBrEFDBloco_G_Importar,
   ACBrEFDBloco_H_Importar,
   ACBrEFDBloco_1_Importar,
   ACBrEFDBloco_K_Importar;
@@ -75,6 +76,7 @@ type
     procedure ProcessaBlocoD(const Delimiter: TStrings);
     procedure ProcessaBlocoE(const Delimiter: TStrings);
     procedure ProcessaBlocoH(const Delimiter: TStrings);
+    procedure ProcessaBlocoG(const Delimiter: TStrings);
     procedure ProcessaBlocoK(const Delimiter: TStrings);
     procedure ProcessaBloco1(const Delimiter: TStrings);
   public
@@ -137,6 +139,8 @@ begin
           ProcessaBlocoD(Delimitador)
         else if (Bloco = 'E') then
           ProcessaBlocoE(Delimitador)
+        else if (Bloco = 'G') then
+          ProcessaBlocoG(Delimitador)
         else if (Bloco = 'H') then
           ProcessaBlocoH(Delimitador)
         else if (Bloco = 'K') then
@@ -196,6 +200,18 @@ begin
     ProcessaBloco(ImportarBlocoE, Delimiter);
   finally
     ImportarBlocoE.Free;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar.ProcessaBlocoG(const Delimiter: TStrings);
+var
+  ImportarBlocoG: TACBrSpedFiscalImportar_BlocoG;
+begin
+  ImportarBlocoG := TACBrSpedFiscalImportar_BlocoG.Create;
+  try
+    ProcessaBloco(ImportarBlocoG, Delimiter);
+  finally
+    ImportarBlocoG.Free;
   end;
 end;
 

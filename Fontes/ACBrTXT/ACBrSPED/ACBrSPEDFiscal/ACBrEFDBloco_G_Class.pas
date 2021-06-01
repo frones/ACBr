@@ -38,7 +38,7 @@ uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_G, ACBrEFDBlocos,
      ACBrEFDBloco_0_Class;
 
 type
-  /// TBLOCO_H -
+  /// TBLOCO_G -
   TBloco_G = class(TACBrSPED)
   private
     FBloco_0: TBloco_0;
@@ -242,7 +242,7 @@ begin
                    LFill( VL_TRIB_EXP, 0, 2 ) +
                    LFill( VL_TOTAL, 0, 2 ) +
                    DFill( IND_PER_SAI, 8 ) +
-                   LFill( ICMS_APROP, 0, 2 )+
+                   LFill( ICMS_APROP, 0, 2 ) +
                    LFill( SOM_ICMS_OC, 0, 2) );
            end;
            ///
@@ -294,6 +294,7 @@ begin
                    LFill( VL_IMOB_ICMS_DIF, 0, 2 ) +
                    LFill( NUM_PARC, 3 ) +
                    LFill( VL_PARC_PASS, 0, 2 ) );
+//                   LFill( VL_PARC_APROP, 0, 2 ) );
            end;
         end;
         /// Registro FILHOS do FILHO

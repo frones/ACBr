@@ -56,6 +56,8 @@ type
     procedure Reg0205;
     procedure Reg0206;
     procedure Reg0220;
+    procedure Reg0300;
+    Procedure Reg0305;
     procedure Reg0400;
     procedure Reg0450;
     procedure Reg0460;
@@ -85,6 +87,8 @@ begin
   else if (vHead = '0205') then Reg0205
   else if (vHead = '0206') then Reg0206
   else if (vHead = '0220') then Reg0220
+  else if (vHead = '0300') then Reg0300
+  else if (vHead = '0305') then Reg0305
   else if (vHead = '0400') then Reg0400
   else if (vHead = '0450') then Reg0450
   else if (vHead = '0460') then Reg0460
@@ -259,6 +263,31 @@ begin
   begin
     UNID_CONV := Valor;
     FAT_CONV := ValorFV;
+  end;
+end;
+
+// cadastro de bens ou componentes do ativo imobilizado
+procedure TACBrSpedFiscalImportar_Bloco0.Reg0300;
+begin
+  with ACBrSpedFiscal.Bloco_0.Registro0300New do
+  begin
+    COD_IND_BEM := Valor;
+    IDENT_MERC  := ValorI;
+    DESCR_ITEM  := Valor; 
+    COD_PRNC    := Valor;   
+    COD_CTA     := Valor;    
+    NR_PARC     := ValorF;    
+  end;
+end;
+
+// informações sobre a utilização do bem
+procedure TACBrSpedFiscalImportar_Bloco0.Reg0305;
+begin
+  with ACBrSpedFiscal.Bloco_0.Registro0305New do
+  begin
+    COD_CCUS  := Valor; 
+    FUNC      := Valor;      
+    VIDA_UTIL := ValorI;
   end;
 end;
 

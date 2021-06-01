@@ -154,6 +154,7 @@ begin
     IND_GIAF1 := Valor;
     IND_GIAF3 := Valor;
     IND_GIAF4 := Valor;
+    IND_REST_RESSARC_COMPL_ICMS := Valor;
   end;
 end;
 

@@ -379,7 +379,7 @@ begin
         resGuia.New;
         Inc(j);
 
-        resGuia.Items[j].XML                    := SLResultGuia.Strings[i];
+        resGuia.Items[j].TXT                    := SLResultGuia.Strings[i];
 
         resGuia.Items[j].Versao := ve100;
         resGuia.Items[j].Identificador          := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
@@ -451,6 +451,7 @@ begin
     i := 0; // Utilizado para a leitura Guias
     m := 0; // Utilizado para a leitura das Rejeições
 
+    m := 0;
     while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
     begin
       resGuia.New;

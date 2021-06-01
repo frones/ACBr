@@ -143,7 +143,7 @@ type
     procedure Clear; override;
 
     function Executar: Boolean; override;
-    function SalvarTXT(AResultado: String): Boolean;
+    function SalvarTXT(AResultado: String; Item: Integer): Boolean;
     function SalvarXML(AGuia, ANumero: String; aData: TDateTime;
       aCNPJ, aIE: string; Item: Integer): Boolean;
 
@@ -722,7 +722,7 @@ begin
       Result := True;
 
       if FGNRERetorno.resGuia.Items[I].Versao = ve100 then
-        Self.SalvarTXT(FGNRERetorno.resultado)
+        Self.SalvarTXT(FGNRERetorno.resGuia.Items[I].TXT, I)
       else
       begin
         with FGNRERetorno.resGuia.Items[I] do
@@ -757,56 +757,42 @@ begin
   end;
 end;
 
-function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
+function TGNRERetRecepcao.SalvarTXT(AResultado: String; Item: Integer): Boolean;
 var
-  SL, SLAux: TStringList;
-  i, GuiasOk: Integer;
-  Cabec, RepresentacaoNumerica, SituacaoGuia, PathNome: String;
+  SLAux: TStringList;
+   GuiasOk: Integer;
+  RepresentacaoNumerica, SituacaoGuia, PathNome: String;
 begin
-  GuiasOk := 0;
-  FGNRERetorno.resGuia.Clear;
-
-  SL := TStringList.Create;
   SLAux := TStringList.Create;
   try
-    SL.Text := AResultado;
-    Cabec := SL.Strings[0];
-    for i := 0 to SL.Count - 1 do
+    if SameText(Copy(AResultado, 1, 1), '1') then
     begin
-      if SameText(Copy(SL.Strings[i], 1, 1), '1') then
+      SituacaoGuia := Trim(Copy(AResultado, 6, 1));
+      if SameText(SituacaoGuia, '0') then
       begin
-        SituacaoGuia := Trim(Copy(SL.Strings[i], 6, 1));
-        if SameText(SituacaoGuia, '0') then
+        SLAux.Add(AResultado);
+        RepresentacaoNumerica := Copy(AResultado, 979, 48);
+
+        if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
         begin
-          SLAux.Add(Cabec);
-          SLAux.Add(SL.Strings[i]);
-          Inc(GuiasOk);
-          RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
+          if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
+            ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
 
-          FGNRERetorno.resGuia.New;
-          FGNRERetorno.resGuia.Items[GuiasOk-1].TXT := SLAux.Text;
+          PathNome := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT) +
+                     RepresentacaoNumerica+'-guia.txt';
 
-          if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
-          begin
-            if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
-              ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
+          FGNRERetorno.resGuia.Items[Item].NomeArq := PathNome;
 
-            PathNome := PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT) +
-                       RepresentacaoNumerica+'-guia.txt';
-
-            FGNRERetorno.resGuia.Items[GuiasOk-1].NomeArq := PathNome;
-
-            SLAux.SaveToFile(PathNome);
-          end;
+          SLAux.SaveToFile(PathNome);
         end;
       end;
-
-      SLAux.Clear;
-      SituacaoGuia := '';
-      RepresentacaoNumerica := '';
     end;
+
+    SLAux.Clear;
+    SituacaoGuia := '';
+    RepresentacaoNumerica := '';
+
   finally
-    FreeAndNil(SL);
     FreeAndNil(SLAux);
     Result := GuiasOk > 0;
   end;

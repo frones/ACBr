@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/06/2021
+-- ACBrNFSeWebServices --
+[*] Possível ajuste para o provedor IPM.
+  Por: Italo Giurizzato Junior
 -- pnfsNFSeW_SMARAPD --
 [*] https://www.projetoacbr.com.br/forum/topic/62753-nfs-e-pra-cidade-de-serra-gerando-valor-de-campo-incorreto/
    Por: Matheus Rodrigo Koch

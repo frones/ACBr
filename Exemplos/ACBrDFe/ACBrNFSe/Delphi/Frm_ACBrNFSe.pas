@@ -583,7 +583,7 @@ begin
       PrestadorServico.RazaoSocial  := edtEmitRazao.Text;
       PrestadorServico.NomeFantasia := edtEmitRazao.Text;
 
-      PrestadorServico.Contato.Telefone := '33224455';
+      PrestadorServico.Contato.Telefone := '1633224455';
 
       Tomador.IdentificacaoTomador.CpfCnpj := '55555555555555';
 
@@ -603,7 +603,7 @@ begin
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
-      Tomador.Contato.Telefone := '22223333';
+      Tomador.Contato.Telefone := '1622223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
       Tomador.AtualizaTomador := snNao;
@@ -935,10 +935,12 @@ begin
   for I := 0 to iQtde - 1 do
   begin
     MemoDados.Lines.Add('Nome XML: ' + ACBrNFSe1.NotasFiscais.Items[I].NomeArq);
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSe1.NotasFiscais.Items[I]
-      .NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' + ACBrNFSe1.NotasFiscais.Items
-      [I].NFSe.CodigoVerificacao);
+    MemoDados.Lines.Add('Nota Numero: ' +
+                                   ACBrNFSe1.NotasFiscais.Items[I].NFSe.Numero);
+    MemoDados.Lines.Add('ID da Nota: ' +
+                                 ACBrNFSe1.NotasFiscais.Items[I].NFSe.InfID.ID);
+    MemoDados.Lines.Add('Código de Verificação: ' +
+                        ACBrNFSe1.NotasFiscais.Items[I].NFSe.CodigoVerificacao);
   end;
 
   ACBrNFSe1.NotasFiscais.Clear;
@@ -1531,6 +1533,10 @@ begin
 
     if Provedor = proAgili then
       Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSETLXX4JN38KXTRNSE';
+
+    if Provedor = proIPM then
+      Emitente.WebChaveAcesso := string(EncodeBase64(Emitente.WebUser + ':' +
+                                                     Emitente.WebSenha));
 
     with Emitente.DadosSenhaParams.Add do
     begin

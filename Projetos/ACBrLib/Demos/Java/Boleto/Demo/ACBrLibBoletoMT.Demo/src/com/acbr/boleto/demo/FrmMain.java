@@ -1479,7 +1479,7 @@ public class FrmMain extends javax.swing.JFrame {
     
      private void saveConfig(){
         try{
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "Layout", Integer.toString(cmbModeloImpressao.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "Layout", ((ModeloBoleto)cmbModeloImpressao.getSelectedItem()).asInt());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview", chkPreview.isSelected() ? "1" : "0") ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso", chkProgresso.isSelected() ? "1" : "0") ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup", chkSetup.isSelected() ? "1" : "0") ;
@@ -1488,12 +1488,12 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName", cmbImpressora.getSelectedItem().toString()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo", txtDirLogo.getText()) ; 
             
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", Integer.toString(cmbBanco.getSelectedIndex())) ;
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", ((BancoBoleto)cmbBanco.getSelectedItem()).asInt()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento", txtLocalPagamento.getText()) ;
                          
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", Integer.toString(cmbTipoCarteira.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", Integer.toString(cmbTipoDocumento.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", Integer.toString(cmbTipoInscricao.getSelectedIndex())) ; 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", ((TipoCarteiraBoleto)cmbTipoCarteira.getSelectedItem()).asInt()); 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", ((TipoDocumento)cmbTipoDocumento.getSelectedItem()).asInt()); 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", ((TipoInscricao)cmbTipoInscricao.getSelectedItem()).asInt()); 
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Agencia", txtAgencia.getText()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito", txtDigAgencia.getText()) ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Conta", txtConta.getText()) ;               

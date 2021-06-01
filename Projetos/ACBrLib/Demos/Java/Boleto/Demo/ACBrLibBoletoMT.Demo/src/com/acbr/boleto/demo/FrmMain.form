@@ -351,9 +351,6 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="label" type="java.lang.String" value="Seleciona Banco"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Seleciona Banco"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecionaBancoActionPerformed"/>
           </Events>
@@ -363,9 +360,6 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="label" type="java.lang.String" value="Listar Carac Titulos"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Listar Carac Titulos"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarCaracTitulosActionPerformed"/>
           </Events>
@@ -375,9 +369,6 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="label" type="java.lang.String" value="Listar Ocorrencias Ex"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Listar Ocorrencias Ex"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarOcorrenciasExActionPerformed"/>
           </Events>
@@ -396,9 +387,6 @@
           <Properties>
             <Property name="label" type="java.lang.String" value="Enviar e-mail Boleto"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Enviar e-mail Boleto"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnviarEmailBoletoActionPerformed"/>
           </Events>
@@ -407,9 +395,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Gerar HTML"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Gerar HTML"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGerarHTMLActionPerformed"/>
           </Events>
@@ -418,9 +403,6 @@
           <Properties>
             <Property name="label" type="java.lang.String" value="Codigo Mora Aceitos"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Codigo Mora Aceitos"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCodigoMoraAceitosActionPerformed"/>
           </Events>
@@ -429,9 +411,6 @@
           <Properties>
             <Property name="label" type="java.lang.String" value="Tam Nosso Numero"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Tam Nosso Numero"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTamNossoNumeroActionPerformed"/>
           </Events>
@@ -440,9 +419,6 @@
           <Properties>
             <Property name="label" type="java.lang.String" value="Montar Nosso Numero"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Montar Nosso Numero"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMontarNossoNumeroActionPerformed"/>
           </Events>

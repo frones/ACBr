@@ -1094,8 +1094,8 @@ is divided into following sections:
         </propertyfile>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-jar.properties}"/>
-            <param location="${project.ACBrLibBoleto}" name="call.subproject"/>
-            <param location="${project.ACBrLibBoleto}/build.xml" name="call.script"/>
+            <param location="${project.ACBrLibBoletoMT}" name="call.subproject"/>
+            <param location="${project.ACBrLibBoletoMT}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
             <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>
@@ -1732,6 +1732,7 @@ is divided into following sections:
     </target>
     <target depends="init,compile-test-single,-init-test-run-module-properties,-debug-start-debugger-test,-debug-start-debuggee-test" name="debug-test"/>
     <target depends="init,compile-test-single,-init-test-run-module-properties,-debug-start-debugger-test,-debug-start-debuggee-test-method" name="debug-test-method"/>
+    <target depends="debug-test-method" name="debug-single-method"/>
     <target depends="init,-pre-debug-fix,compile-test-single" if="netbeans.home" name="-do-debug-fix-test">
         <j2seproject1:nbjpdareload dir="${build.test.classes.dir}"/>
     </target>
@@ -1785,8 +1786,8 @@ is divided into following sections:
         </propertyfile>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-clean.properties}"/>
-            <param location="${project.ACBrLibBoleto}" name="call.subproject"/>
-            <param location="${project.ACBrLibBoleto}/build.xml" name="call.script"/>
+            <param location="${project.ACBrLibBoletoMT}" name="call.subproject"/>
+            <param location="${project.ACBrLibBoletoMT}/build.xml" name="call.script"/>
             <param name="call.target" value="clean"/>
             <param name="transfer.built-clean.properties" value="${built-clean.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>

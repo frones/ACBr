@@ -551,7 +551,45 @@ begin
     begin
       with FRegistroX001.RegistroX300.Items[intFor] do
       begin
-        Add(LFill('X300')          +
+       if Bloco_0.Registro0000.COD_VER >= ECFVersao700 then
+       begin
+          Add(LFill('X300')          +
+              LFill(NUM_ORDEM)       +
+              LFill(TIP_EXP, 2)      +
+              LFill(DESC_EXP)        +
+              VLFill(TOT_OPER,19)    +
+              LFill(COD_NCM,8)       +
+              VLFill(QTDE,19)        +
+              LFill(UNI_MED,2)       +
+              LFill(IND_OPER,1)      +
+              LFill(TIP_MET)         +
+              LFill(OPER_PAR)        +
+              LFill(DESC_BENS_PAR)   +
+              LFill(ID_PARTE_PAR)    +
+              LFill(TIP_PAR)         +
+              LFill(DAT_UTIL)        +
+              LFill(CRIT_PAR)        +
+              LFill(DAT_TRANS)       +
+              LFill(DAT_EMB)         +
+              LFill(ID_FONT_COT)     +
+              LFill(AJ_PAR)          +
+              VLFill(VL_PAR,19)      +
+              VLFill(VL_PRAT,19)     +
+              VLFill(QTDE_AJ,23,6)   +
+              VLFill(VL_AJ,19)       +
+              VLFill(VALOR_COT,19)   +
+              LFILL(NUM_DEC_EXP)     +
+              LFILL(DAT_ENT_PREV)    +
+              VLFill(VL_JUR,19)      +
+              VLFill(VL_JUR_MIN,7,4) +
+              VLFill(VL_JUR_MAX,7,4) +
+              LFill(COD_CNC)         +
+              LFill(TIP_MOEDA));
+          // Registro Filho
+          WriteRegistroX305(FRegistroX001.RegistroX300.Items[intFor] );
+       end
+       else
+            Add(LFill('X300')          +
             LFill(NUM_ORDEM)       +
             LFill(TIP_EXP, 2)      +
             LFill(DESC_EXP)        +
@@ -561,23 +599,9 @@ begin
             LFill(UNI_MED,2)       +
             LFill(IND_OPER,1)      +
             LFill(TIP_MET)         +
-            LFill(OPER_PAR)        +
-            LFill(DESC_BENS_PAR)   +
-            LFill(ID_PARTE_PAR)    +
-            LFill(TIP_PAR)         +
-            LFill(DAT_UTIL)        +
-            LFill(CRIT_PAR)        +
-            LFill(DAT_TRANS)       +
-            LFill(DAT_EMB)         +
-            LFill(ID_FONT_COT)     +
-            LFill(AJ_PAR)          +
             VLFill(VL_PAR,19)      +
             VLFill(VL_PRAT,19)     +
-            VLFill(QTDE_AJ,23,6)   +
             VLFill(VL_AJ,19)       +
-            VLFill(VALOR_COT,19)   +
-            LFILL(NUM_DEC_EXP)     +
-            LFILL(DAT_ENT_PREV)    +
             VLFill(VL_JUR,19)      +
             VLFill(VL_JUR_MIN,7,4) +
             VLFill(VL_JUR_MAX,7,4) +
@@ -585,7 +609,6 @@ begin
             LFill(TIP_MOEDA));
       end;
       // Registros Filhos
-      WriteRegistroX305(FRegistroX001.RegistroX300.Items[intFor] );
       WriteRegistroX310(FRegistroX001.RegistroX300.Items[intFor] );
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;

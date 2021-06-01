@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2021
+-- pnfsNFSeW_SMARAPD --
+[*] https://www.projetoacbr.com.br/forum/topic/62753-nfs-e-pra-cidade-de-serra-gerando-valor-de-campo-incorreto/
+   Por: Matheus Rodrigo Koch
+
 28/05/2021
 -- pnfsNFSeG --
 [*] Ajuste visando deixar todas as assinaturas do SubstituicaoNfse validas.

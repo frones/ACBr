@@ -160,9 +160,9 @@ begin
     Gerador.wCampo(tcDe2, '', 'valorunitario' , 01, 015, 1, FNFSe.Servico.ItemServico[i].ValorUnitario, '');
     Gerador.wCampo(tcDe2, '', 'aliquota'      , 01, 015, 1, FNFSe.Servico.ItemServico[i].Aliquota, '');
     if FNFSe.Servico.Valores.IssRetido in [stNormal,stSubstituicao] then
-      Gerador.wCampo(tcStr, '', 'impostoretido', 01, 005, 1, 'False', '')
+      Gerador.wCampo(tcStr, '', 'impostoretido', 01, 005, 1, 'false', '')
     else
-      Gerador.wCampo(tcStr, '', 'impostoretido', 01, 005, 1, 'True', '');
+      Gerador.wCampo(tcStr, '', 'impostoretido', 01, 005, 1, 'true', '');
     Gerador.wGrupo('/servico');
   end;
   Gerador.wGrupo('/tbservico');

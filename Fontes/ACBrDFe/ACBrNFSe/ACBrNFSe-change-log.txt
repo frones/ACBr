@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/06/2021
+-- pnfsNFSeW_SMARAPD --
+[*] Imposta uma condição ao gerar a tag <tributadonomunicipio>, estava gerado
+    sempre com o mesmo valor.
+  Por: Italo Giurizzato Junior
+
 01/06/2021
 -- ACBrNFSeWebServices --
 [*] Possível ajuste para o provedor IPM.

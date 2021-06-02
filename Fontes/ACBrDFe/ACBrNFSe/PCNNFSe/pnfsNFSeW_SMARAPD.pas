@@ -254,7 +254,12 @@ begin
   GerarTransportadora;
   GerarServicoValores;
   GerarConstrucaoCivil;
-  Gerador.wCampo(tcStr,     '', 'tributadonomunicipio', 01,  5, 1, 'true', '');
+
+  if FNFSe.Tomador.Endereco.CodigoMunicipio <> FNFSe.PrestadorServico.Endereco.CodigoMunicipio then
+    Gerador.wCampo(tcStr,     '', 'tributadonomunicipio', 01,  5, 1, 'false', '')
+  else
+    Gerador.wCampo(tcStr,     '', 'tributadonomunicipio', 01,  5, 1, 'true', '');
+
   Gerador.wCampo(tcStr,     '', 'numerort',             01, 02, 1, FNFSe.IdentificacaoRps.Numero, '');
   Gerador.wCampo(tcStr,     '', 'codigoseriert',        01, 02, 1, '17', '');
   Gerador.wCampo(tcDatVcto, '', 'dataemissaort',        01, 21, 1, FNFSe.DataEmissaoRps, '');

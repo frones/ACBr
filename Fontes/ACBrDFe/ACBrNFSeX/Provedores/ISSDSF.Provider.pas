@@ -102,7 +102,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ISSDSF.GravarXml, ISSDSF.LerXml;
 
@@ -292,37 +292,20 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, GerarNFSe);
         tmRecepcionarSincrono:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, FecharSessao);
+        tmTeste:
+          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, TesteEnvio);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -333,37 +316,20 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, GerarNFSe);
         tmRecepcionarSincrono:
           Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, FecharSessao);
+        tmTeste:
+          Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, TesteEnvio);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

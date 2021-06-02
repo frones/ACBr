@@ -100,7 +100,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes,
   Equiplano.GravarXml, Equiplano.LerXml;
 
@@ -217,29 +217,10 @@ begin
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -258,29 +239,10 @@ begin
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

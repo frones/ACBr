@@ -192,37 +192,14 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -233,37 +210,14 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceABase.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

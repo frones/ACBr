@@ -88,7 +88,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes,
   WebFisco.GravarXml, WebFisco.LerXml;
 
@@ -157,39 +157,14 @@ begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, CancelarNFSe);
         tmGerar:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -198,39 +173,14 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeRps);
         tmConsultarNFSe:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, CancelarNFSe);
         tmGerar:
           Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

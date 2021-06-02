@@ -95,7 +95,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes,
   Conam.GravarXml, Conam.LerXml;
 
@@ -157,33 +157,10 @@ begin
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -198,33 +175,10 @@ begin
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

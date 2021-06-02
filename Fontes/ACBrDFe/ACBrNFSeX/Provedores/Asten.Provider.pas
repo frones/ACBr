@@ -301,16 +301,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -325,13 +319,8 @@ begin
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -342,16 +331,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -366,13 +349,8 @@ begin
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

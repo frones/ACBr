@@ -127,16 +127,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -151,13 +145,8 @@ begin
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -168,16 +157,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -192,13 +175,8 @@ begin
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

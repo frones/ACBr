@@ -71,6 +71,7 @@ type
 implementation
 
 uses
+  ACBrDFeException,
   ADPM.GravarXml, ADPM.LerXml;
 
 { TACBrNFSeProviderADPM }
@@ -127,16 +128,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -151,13 +146,8 @@ begin
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -168,16 +158,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -192,13 +176,8 @@ begin
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceADPM.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;

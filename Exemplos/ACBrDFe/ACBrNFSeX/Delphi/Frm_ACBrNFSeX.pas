@@ -2808,16 +2808,16 @@ begin
     // Exemplos de valores para WSChaveAcesso para alguns provedores.
 
     if Provedor in [proAgili, proAgiliv2, proElotech] then
-      Emitente.WSChaveAcesso  := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
+      Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
 
     if Provedor = proISSNet then
-      Emitente.WSChaveAcesso  := 'A001.B0001.C0001-1';
+      Emitente.WSChaveAcesso := 'A001.B0001.C0001-1';
 
     if Provedor = proSigep then
-      Emitente.WSChaveAcesso  := 'A001.B0001.C0001';
+      Emitente.WSChaveAcesso := 'A001.B0001.C0001';
 
     if Provedor = proiiBrasilv2 then
-      Emitente.WSChaveAcesso  := 'TLXX4JN38KXTRNSEAJYYEA==';
+      Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;

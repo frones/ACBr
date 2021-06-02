@@ -239,7 +239,11 @@ begin
                                                                        '', ''));
   end;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
+  if NFSe.Tomador.Endereco.CodigoMunicipio <> NFSe.Prestador.Endereco.CodigoMunicipio then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
+                                                                   'false', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
                                                                    'true', ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'numerort', 1, 02, 1,

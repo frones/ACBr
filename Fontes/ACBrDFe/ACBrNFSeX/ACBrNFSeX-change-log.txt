@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/06/2021
+-- SmarAPD.GravarXml --
+[*] Imposta uma condição ao gerar a tag <tributadonomunicipio>, estava gerado
+    sempre com o mesmo valor.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Remoção de linhas de código desnecessárias.
    Por: Italo Giurizzato Junior

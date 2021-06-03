@@ -100,7 +100,16 @@ procedure TACBrTEFDRespPayGo.ConteudoToProperty;
 var
   IndiceViaCliente, Linhas, I: Integer;
   ViasDeComprovante, TipoDeCartao, TipoDeFinanciamento, StatusConfirmacao: String;
-  ImprimirViaCliente, ImprimirViaEstabelecimento: Boolean;
+  ImprimirViaCliente, ImprimirViaEstabelecimento, CupomReduzido: Boolean;
+
+  function LinhasDaViaDoCliente( ViaReduzida: Boolean ): Integer;
+  begin
+    if ViaReduzida then
+      Result := LeInformacao(710, 0).AsInteger     // 710-000 Linhas Via Reduzida Cliente
+    else
+      Result := LeInformacao(712, 0).AsInteger;    // 712-000 Tamanho Via Normal Cliente
+  end;
+
 begin
   inherited ConteudoToProperty;
 
@@ -138,19 +147,22 @@ begin
   if ImprimirViaCliente then
   begin
     IndiceViaCliente := 0;
-    Linhas := LeInformacao(710, 0).AsInteger;    // 710-000 Linhas Via Reduzida Cliente
-    if ViaClienteReduzida and (Linhas > 0) then
-      IndiceViaCliente := 711
-    else
+    CupomReduzido := ViaClienteReduzida;
+    Linhas := LinhasDaViaDoCliente( CupomReduzido );
+    if (Linhas = 0) then  // Se não achou, veja se tem algo no outro tipo
     begin
-      Linhas := LeInformacao(712, 0).AsInteger;    // 712-000 Tamanho Via Cliente
-      if (Linhas > 0) then
-        IndiceViaCliente := 713;
+      CupomReduzido := not CupomReduzido;
+      Linhas := LinhasDaViaDoCliente( CupomReduzido );
     end;
 
     // Se não foi informado específico, usará Via Unica (029-000), já carregada em TACBrTEFDRespTXT.ConteudoToProperty
-    if (IndiceViaCliente > 0) and (Linhas > 0) then
+    if (Linhas > 0) then
     begin
+      if CupomReduzido then
+        IndiceViaCliente := 711
+      else
+        IndiceViaCliente := 713;
+
       fpImagemComprovante1aVia.Clear;
       For I := 1 to Linhas do
         fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante(LeInformacao(IndiceViaCliente, I).AsString) );

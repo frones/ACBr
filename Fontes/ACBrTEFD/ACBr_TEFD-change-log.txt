@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/06/21
+-- ACBrTEFDPayGo --
+[-] Correção em "TACBrTEFDRespPayGo.ConteudoToProperty", para sempre Ler
+    a via do cliente, existente na resposta, considerando a Via Normal ou
+    Reduzida
+    (por: DSA)
+
 30/05/21
 -- ACBrTEFComum --
 [-] Ajuste em TACBrTEFLinha, mudando a propruedade "Identificacao" de SmallInt

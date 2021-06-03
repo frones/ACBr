@@ -306,17 +306,17 @@ begin
           Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
           Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
           Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
-          Gerador.wCampo(tcStr, 'EP05', 'dhEntrega',  25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhEntrega) +
+          Gerador.wCampo(tcStr, 'P30', 'dhEntrega',   25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhEntrega) +
                                     GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
                                     Evento.Items[i].InfEvento.detEvento.dhEntrega), DSC_DEMI);
 
-          Gerador.wCampo(tcStr, 'EP04', 'nDoc   ', 02, 20, 1, Evento.Items[i].InfEvento.detEvento.nDoc);
-          Gerador.wCampo(tcStr, 'EP06', 'xNome  ', 02, 60, 1, Evento.Items[i].InfEvento.detEvento.xNome);
-          Gerador.wCampo(tcDe6, 'EP07', 'latGPS ', 01, 10, 0, Evento.Items[i].InfEvento.detEvento.latGPS);
-          Gerador.wCampo(tcDe6, 'EP08', 'longGPS', 01, 11, 0, Evento.Items[i].InfEvento.detEvento.longGPS);
+          Gerador.wCampo(tcStr, 'P31', 'nDoc   ', 02, 20, 1, Evento.Items[i].InfEvento.detEvento.nDoc);
+          Gerador.wCampo(tcStr, 'P32', 'xNome  ', 02, 60, 1, Evento.Items[i].InfEvento.detEvento.xNome);
+          Gerador.wCampo(tcDe6, 'P33', 'latGPS ', 01, 10, 0, Evento.Items[i].InfEvento.detEvento.latGPS);
+          Gerador.wCampo(tcDe6, 'P34', 'longGPS', 01, 11, 0, Evento.Items[i].InfEvento.detEvento.longGPS);
 
-          Gerador.wCampo(tcStr, 'EP09', 'hashComprovante  ', 28, 28, 1, Evento.Items[i].InfEvento.detEvento.hashComprovante);
-          Gerador.wCampo(tcStr, 'EP10', 'dhHashComprovante', 25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhHashComprovante) +
+          Gerador.wCampo(tcStr, 'P35', 'hashComprovante  ', 28, 28, 1, Evento.Items[i].InfEvento.detEvento.hashComprovante);
+          Gerador.wCampo(tcStr, 'P36', 'dhHashComprovante', 25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhHashComprovante) +
                                     GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
                                     Evento.Items[i].InfEvento.detEvento.dhHashComprovante), DSC_DEMI);
         end;

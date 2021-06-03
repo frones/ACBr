@@ -3052,8 +3052,8 @@ begin
   end
   else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
          teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
-         teCanPedProrrog1, teCanPedProrrog2, teComprEntregaNFe,
-         teCancComprEntregaNFe]) then
+         teCanPedProrrog1, teCanPedProrrog2{, teComprEntregaNFe,
+         teCancComprEntregaNFe}]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';
@@ -3208,14 +3208,14 @@ begin
             else
               SchemaEventoNFe := schPedProrrog2;
 
-            infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
+            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
 
-            for j := 0 to FEvento.Evento.Items[I].InfEvento.detEvento.itemPedido.count - 1 do
+            for j := 0 to FEvento.Evento.Items[i].InfEvento.detEvento.itemPedido.count - 1 do
             begin
               with infEvento.detEvento.itemPedido.New do
               begin
-                numItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].numItem;
-                qtdeItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].qtdeItem;
+                numItem := FEvento.Evento[i].InfEvento.detEvento.itemPedido.Items[j].numItem;
+                qtdeItem := FEvento.Evento[i].InfEvento.detEvento.itemPedido.Items[j].qtdeItem;
               end;
             end;
 
@@ -3229,47 +3229,51 @@ begin
             else
               SchemaEventoNFe := schCanPedProrrog2;
 
-            infEvento.detEvento.idPedidoCancelado := FEvento.Evento[I].InfEvento.detEvento.idPedidoCancelado;
-            infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
+            infEvento.detEvento.idPedidoCancelado := FEvento.Evento[i].InfEvento.detEvento.idPedidoCancelado;
+            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
           end;
 
           teComprEntregaNFe:
           begin
             SchemaEventoNFe := schCompEntrega;
-            infEvento.detEvento.nProt     := FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor := FEvento.Evento[i].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[i].InfEvento.detEvento.verAplic;
             infEvento.detEvento.dhEntrega := FEvento.Evento[i].InfEvento.detEvento.dhEntrega;
-            infEvento.detEvento.nDoc      := FEvento.Evento[i].InfEvento.detEvento.nDoc;
-            infEvento.detEvento.xNome     := FEvento.Evento[i].InfEvento.detEvento.xNome;
-            infEvento.detEvento.latGPS    := FEvento.Evento[i].InfEvento.detEvento.latGPS;
-            infEvento.detEvento.longGPS   := FEvento.Evento[i].InfEvento.detEvento.longGPS;
-
-            infEvento.detEvento.hashComprovante   := FEvento.Evento[i].InfEvento.detEvento.hashComprovante;
+            infEvento.detEvento.nDoc := FEvento.Evento[i].InfEvento.detEvento.nDoc;
+            infEvento.detEvento.xNome := FEvento.Evento[i].InfEvento.detEvento.xNome;
+            infEvento.detEvento.latGPS := FEvento.Evento[i].InfEvento.detEvento.latGPS;
+            infEvento.detEvento.longGPS := FEvento.Evento[i].InfEvento.detEvento.longGPS;
+            infEvento.detEvento.hashComprovante := FEvento.Evento[i].InfEvento.detEvento.hashComprovante;
             infEvento.detEvento.dhHashComprovante := FEvento.Evento[i].InfEvento.detEvento.dhHashComprovante;
           end;
 
           teCancComprEntregaNFe:
           begin
             SchemaEventoNFe := schCancCompEntrega;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor := FEvento.Evento[i].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[i].InfEvento.detEvento.verAplic;
             infEvento.detEvento.nProtEvento := FEvento.Evento[i].InfEvento.detEvento.nProtEvento;
           end;
 
           teAtorInteressadoNFe:
           begin
             SchemaEventoNFe := schAtorInteressadoNFe;
-            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[I].InfEvento.detEvento.cOrgaoAutor;
-            infEvento.detEvento.tpAutor := FEvento.Evento[I].InfEvento.detEvento.tpAutor;
-            infEvento.detEvento.verAplic := FEvento.Evento[I].InfEvento.detEvento.verAplic;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor := FEvento.Evento[i].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[i].InfEvento.detEvento.verAplic;
 
-            for j := 0 to FEvento.Evento.Items[I].InfEvento.detEvento.autXML.count - 1 do
+            for j := 0 to FEvento.Evento.Items[i].InfEvento.detEvento.autXML.count - 1 do
             begin
               with infEvento.detEvento.autXML.New do
               begin
-                CNPJCPF := FEvento.Evento[I].InfEvento.detEvento.autXML[J].CNPJCPF;
+                CNPJCPF := FEvento.Evento[i].InfEvento.detEvento.autXML[j].CNPJCPF;
               end;
             end;
 
-            infEvento.detEvento.tpAutorizacao := FEvento.Evento[I].InfEvento.detEvento.tpAutorizacao;
-            infEvento.detEvento.xCondUso := FEvento.Evento[I].InfEvento.detEvento.xCondUso;
+            infEvento.detEvento.tpAutorizacao := FEvento.Evento[i].InfEvento.detEvento.tpAutorizacao;
+            infEvento.detEvento.xCondUso := FEvento.Evento[i].InfEvento.detEvento.xCondUso;
           end;
         end;
       end;

@@ -70,6 +70,7 @@ type
 implementation
 
 uses
+  ACBrDFeException,
   ModeloV1.GravarXml, ModeloV1.LerXml;
 
 { TACBrNFSeProviderModeloV1 }
@@ -290,45 +291,37 @@ begin
 end;
 
 function TACBrNFSeProviderModeloV1.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, FecharSessao);
+        // Métodos padrões da versão 1 do layout da ABRASF
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
+
+        // Métodos que por padrão não existem na versão 1 do layout da ABRASF
+        {
+        tmRecepcionarSincrono: URL := RecepcionarSincrono;
+        tmGerar: URL := GerarNFSe;
+        tmSubstituirNFSe: URL := SubstituirNFSe;
+        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
+        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
+        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
+        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
+        tmAbrirSessao: URL := AbrirSessao;
+        tmFecharSessao: URL := FecharSessao;
+        tmTeste: URL := TesteEnvio;
+        }
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, TesteEnvio);
+        URL := '';
       end;
     end;
   end
@@ -337,42 +330,37 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeURL);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, FecharSessao);
+        // Métodos padrões da versão 1 do layout da ABRASF
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
+
+        // Métodos que por padrão não existem na versão 1 do layout da ABRASF
+        {
+        tmRecepcionarSincrono: URL := RecepcionarSincrono;
+        tmGerar: URL := GerarNFSe;
+        tmSubstituirNFSe: URL := SubstituirNFSe;
+        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
+        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
+        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
+        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
+        tmAbrirSessao: URL := AbrirSessao;
+        tmFecharSessao: URL := FecharSessao;
+        tmTeste: URL := TesteEnvio;
+        }
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, TesteEnvio);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 { TACBrNFSeXWebserviceModeloV1 }

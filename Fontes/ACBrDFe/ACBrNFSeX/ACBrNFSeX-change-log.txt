@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2021
+-- Diversos --
+[*] Remoção de linhas de código desnecessárias.
+   Por: Italo Giurizzato Junior
+
 02/06/2021
 -- SmarAPD.GravarXml --
 [*] Imposta uma condição ao gerar a tag <tributadonomunicipio>, estava gerado

@@ -85,16 +85,7 @@ procedure TACBrNFSeProviderModernizacaoPublica.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    UseCertificateHTTP := False;
-    {italo
-    QtdReqCancelar := 3;
-    CancelarRequisitos[1] := rcaNumeroNFSe;
-    CancelarRequisitos[2] := rcaCodCancelamento;
-    CancelarRequisitos[3] := rcaMotCancelamento;
-    }
-  end;
+  ConfigGeral.UseCertificateHTTP := False;
 
   with ConfigAssinar do
   begin
@@ -110,12 +101,7 @@ begin
     VersaoAtrib := '2.02';
   end;
 
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="2.02" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                      '<versaoDados>2.02</versaoDados>' +
-                      '</cabecalho>';
-  end;
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 
   SetNomeXSD('nfse_v202.xsd');
 end;
@@ -144,16 +130,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -168,13 +148,8 @@ begin
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end
@@ -185,16 +160,10 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmConsultarNFSeURL:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSeURL);
         tmConsultarNFSePorFaixa:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
         tmConsultarNFSeServicoPrestado:
@@ -209,13 +178,8 @@ begin
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, RecepcionarSincrono);
         tmSubstituirNFSe:
           Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, SubstituirNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, FecharSessao);
       else
-        // tmTeste
-        Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, TesteEnvio);
+        raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
     end;
   end;
@@ -231,7 +195,7 @@ var
   AErro: TNFSeEventoCollectionItem;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
-//  if (ANode = nil) then Exit;
+
   if (ANode = nil) then
     ANode := RootNode;
 

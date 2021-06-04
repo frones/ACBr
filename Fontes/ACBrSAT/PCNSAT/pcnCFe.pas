@@ -1364,8 +1364,13 @@ begin
       Ide.modelo     := INIRec.ReadInteger( 'Identificacao','mod' ,INIRec.ReadInteger( 'Identificacao','Modelo' ,Ide.modelo));
       Ide.nserieSAT  := INIRec.ReadInteger( 'Identificacao','nserieSAT'  ,Ide.nserieSAT);
       Ide.nCFe       := INIRec.ReadInteger( 'Identificacao','nCFe' ,INIRec.ReadInteger( 'Identificacao','nNF' ,Ide.nCFe));
-      Ide.dEmi       := StrToDateDef(INIRec.ReadString( 'Identificacao','dhEmi',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','Emissao',''))),Ide.dEmi);
-      Ide.hEmi       := StrToTimeDef(INIRec.ReadString( 'Identificacao','hEmi',''),Ide.hEmi);
+      Ide.dEmi := StrToDateDef(INIRec.ReadString( 'Identificacao','dhEmi',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','Emissao',''))),Ide.dEmi);
+
+      if (INIRec.ValueExists('Identificacao', 'dhEmi')) then
+        Ide.hEmi     := StrToDateDef(INIRec.ReadString('Identificacao','dhEmi', ''), Ide.hEmi)
+      else
+        Ide.hEmi     := StrToTimeDef(INIRec.ReadString('Identificacao','hEmi', ''), Ide.hEmi);
+
       Ide.cDV        := INIRec.ReadInteger( 'Identificacao','cDV' , Ide.cDV);
       Ide.tpAmb      := StrToTpAmb(OK,INIRec.ReadString( 'Identificacao','tpAmb',TpAmbToStr(Ide.tpAmb)));
       Ide.CNPJ       := INIRec.ReadString(  'Identificacao','CNPJ' , Ide.CNPJ);

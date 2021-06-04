@@ -1,4 +1,4 @@
-object frlDANFSeRL: TfrlDANFSeRL
+object frlDANFSeRL: TfrlXDANFSeRL
   Left = 306
   Height = 537
   Top = 119

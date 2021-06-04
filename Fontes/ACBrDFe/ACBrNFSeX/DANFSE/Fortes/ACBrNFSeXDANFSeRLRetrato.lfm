@@ -1,4 +1,4 @@
-inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
+inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Left = 267
   Top = 115
   Caption = 'frlDANFSeRLRetrato'

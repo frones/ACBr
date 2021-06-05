@@ -219,7 +219,7 @@ namespace ACBr.PDV.Model
             return ret;
         }
 
-        public string ToCFeIni()
+        public CupomFiscal ToCFeIni()
         {
             var cfe = new CupomFiscal();
 
@@ -281,7 +281,7 @@ namespace ACBr.PDV.Model
 
             cfe.DadosAdicionais.infCpl = "Demo ACBr PDV C#";
 
-            return cfe.ToString();
+            return cfe;
         }
 
         #endregion Methods

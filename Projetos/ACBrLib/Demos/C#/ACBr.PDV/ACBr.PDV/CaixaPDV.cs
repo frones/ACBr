@@ -292,16 +292,14 @@ namespace ACBr.PDV
 
             try
             {
-                var vendaIni = VendaAtual.ToCFeIni();
+                var cfe = VendaAtual.ToCFeIni();
 
-                var envioRet = SAT.CriarEnviarCFe(vendaIni);
+                var envioRet = SAT.CriarEnviarCFe(cfe);
                 var ret = new RetornoEventArgs
                 {
                     Sucesso = false,
                     Retorno = envioRet.Resposta
                 };
-
-                var retIni = ACBrIniFile.Parse(ret.Retorno);
 
                 if (envioRet.CodigoDeRetorno != 6000)
                     return ret;

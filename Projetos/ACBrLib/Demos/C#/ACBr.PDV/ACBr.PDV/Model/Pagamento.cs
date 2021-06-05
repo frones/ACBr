@@ -1,4 +1,5 @@
 ﻿using ACBrLib.NFe;
+using ACBrLib.Sat;
 
 namespace ACBr.PDV.Model
 {
@@ -6,7 +7,7 @@ namespace ACBr.PDV.Model
     {
         public FormaPagamento TipoNFe { get; set; }
 
-        public int TipoSAT { get; set; }
+        public CodigoMP TipoSAT { get; set; }
 
         public string Descricao { get; set; }
 

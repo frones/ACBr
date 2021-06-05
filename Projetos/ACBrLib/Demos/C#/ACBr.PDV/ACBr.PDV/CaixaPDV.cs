@@ -294,18 +294,19 @@ namespace ACBr.PDV
             {
                 var vendaIni = VendaAtual.ToCFeIni();
 
+                var envioRet = SAT.CriarEnviarCFe(vendaIni);
                 var ret = new RetornoEventArgs
                 {
                     Sucesso = false,
-                    Retorno = SAT.CriarEnviarCFe(vendaIni)
+                    Retorno = envioRet.Resposta
                 };
 
                 var retIni = ACBrIniFile.Parse(ret.Retorno);
 
-                if (retIni["ENVIO"]["CodigoDeRetorno"] != "6000")
+                if (envioRet.CodigoDeRetorno != 6000)
                     return ret;
 
-                SAT.ImprimirExtratoVenda(retIni["ENVIO"]["Arquivo"]);
+                SAT.ImprimirExtratoVenda(envioRet.Arquivo);
                 ret.Sucesso = true;
                 return ret;
             }

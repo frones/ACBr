@@ -4,7 +4,7 @@
     {
         #region Properties
 
-        public string CNPJ { get; set; }
+        public string CNPJCPF { get; set; }
 
         public string xNome { get; set; }
 

@@ -6,6 +6,7 @@ using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 using ACBrLib.Core.NFe;
 using ACBrLib.NFe;
+using ACBrLib.Sat;
 
 namespace ACBr.PDV.Model
 {
@@ -220,70 +221,67 @@ namespace ACBr.PDV.Model
 
         public string ToCFeIni()
         {
-            var vendaIni = new ACBrIniFile();
+            var cfe = new CupomFiscal();
 
             //Identificação
-            vendaIni["Identificacao"]["numeroCaixa"] = "01";
+            cfe.Identificacao.numeroCaixa = "01";
 
             //Emitente
-            vendaIni["Emitente"]["CNPJ"] = Configuracao.Instance.Emitente.CNPJ.OnlyNumbers();
-            vendaIni["Emitente"]["IE"] = Configuracao.Instance.Emitente.IE.OnlyNumbers();
-            vendaIni["Emitente"]["IM"] = Configuracao.Instance.Emitente.IM.OnlyNumbers();
+            cfe.Emitente.CNPJ = Configuracao.Instance.Emitente.CNPJ.OnlyNumbers();
+            cfe.Emitente.IE = Configuracao.Instance.Emitente.IE.OnlyNumbers();
+            cfe.Emitente.IM = Configuracao.Instance.Emitente.IM.OnlyNumbers();
 
             //Destinatario
             if (!string.IsNullOrEmpty(Cliente.Documento))
-                vendaIni["Destinatario"]["CNPJCPF"] = Cliente.Documento;
+                cfe.Destinatario.CNPJCPF = Cliente.Documento;
             if (!string.IsNullOrEmpty(Cliente.Nome))
-                vendaIni["Destinatario"]["xNome"] = Cliente.Nome;
+                cfe.Destinatario.xNome = Cliente.Nome;
 
-            var vItem12741 = 0M;
-
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                var item = Items[i];
                 if (item.Cancelado) continue;
-                var sessaoProduto = $"Produto{i + 1:000}";
-                var sessaoICMS = $"ICMS{i + 1:000}";
-                var sessaoPIS = $"PIS{i + 1:000}";
-                var sessaoCOFINS = $"COFINS{i + 1:000}";
-
-                vendaIni[sessaoProduto]["cProd"] = item.Produto.Codigo;
-                vendaIni[sessaoProduto]["xProd"] = item.Produto.Descricao;
-                vendaIni[sessaoProduto]["qCom"] = item.Quantidade.ToString("N4");
-                vendaIni[sessaoProduto]["vUnCom"] = item.Produto.Valor.ToString("N2");
-                vendaIni[sessaoProduto]["cEAN"] = "";
-                vendaIni[sessaoProduto]["uCom"] = item.Produto.Unidade;
-                vendaIni[sessaoProduto]["NCM"] = "04072100";
-                vendaIni[sessaoProduto]["CFOP"] = "5102";
-                vendaIni[sessaoProduto]["Combustivel"] = "0";
-                vendaIni[sessaoProduto]["indRegra"] = "A";
-                vendaIni[sessaoProduto]["vDesc"] = "0";
-                vendaIni[sessaoProduto]["vOutro"] = "0";
-                vendaIni[sessaoProduto]["vItem12741"] = "0";
+                var produto = new ProdutoSat
+                {
+                    cProd = item.Produto.Codigo,
+                    xProd = item.Produto.Descricao,
+                    qCom = item.Quantidade,
+                    vUnCom = item.Produto.Valor,
+                    cEAN = "",
+                    uCom = item.Produto.Unidade,
+                    NCM = "04072100",
+                    CFOP = "5102",
+                    Combustivel = false,
+                    indRegra = IndRegra.irArredondamento,
+                    vDesc = 0,
+                    vOutro = 0,
+                    vItem12741 = 0
+                };
 
                 // Demo feito para trabalhar com simples
-                vendaIni[sessaoICMS]["Origem"] = "0";
-                vendaIni[sessaoICMS]["CSOSN"] = "500";
+                produto.ICMS.orig = OrigemMercadoria.oeNacional;
+                produto.ICMS.CSOSN = CSOSNIcms.csosn500;
+                produto.PIS.CST = CSTPIS.pis01;
+                produto.COFINS.CST = CSTCofins.cof01;
 
-                vendaIni[sessaoPIS]["CST"] = "01";
-
-                vendaIni[sessaoCOFINS]["CST"] = "01";
+                cfe.Produtos.Add(produto);
             }
 
-            vendaIni["Total"]["vCFeLei12741"] = vItem12741.ToString("N2");
+            cfe.Total.vCFeLei12741 = cfe.Produtos.Sum(x => x.vItem12741).RoundABNT();
 
-            for (var i = 0; i < Pagamentos.Count; i++)
+            foreach (var item in Pagamentos)
             {
-                var item = Pagamentos[i];
-                var sessaoPagamento = $"Pagto{i + 1:000}";
+                var pagamento = new PagamentoSat
+                {
+                    cMP = item.TipoSAT,
+                    vMP = item.Valor
+                };
 
-                vendaIni[sessaoPagamento]["cMP"] = item.TipoSAT.ToString();
-                vendaIni[sessaoPagamento]["vMP"] = item.Valor.ToString("N2");
+                cfe.Pagamentos.Add(pagamento);
             }
 
-            vendaIni["DadosAdicionais"]["infCpl"] = "Demo ACBr PDV C#";
+            cfe.DadosAdicionais.infCpl = "Demo ACBr PDV C#";
 
-            return vendaIni.ToString();
+            return cfe.ToString();
         }
 
         #endregion Methods

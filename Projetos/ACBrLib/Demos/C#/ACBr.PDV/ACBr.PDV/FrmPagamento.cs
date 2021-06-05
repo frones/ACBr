@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ACBr.PDV.Model;
 using ACBrLib;
 using ACBrLib.NFe;
+using ACBrLib.Sat;
 
 namespace ACBr.PDV
 {
@@ -27,12 +28,12 @@ namespace ACBr.PDV
         {
             Tipos = new List<ItemData<Pagamento>>
             {
-                new ItemData<Pagamento>("Dinheiro", new Pagamento {Descricao = "Dinheiro", TipoNFe = FormaPagamento.fpDinheiro, TipoSAT = 1}),
-                new ItemData<Pagamento>("Cartão Debito", new Pagamento {Descricao = "Cartão Debito", TipoNFe = FormaPagamento.fpCartaoDebito, TipoSAT = 3}),
-                new ItemData<Pagamento>("Cartão de Credito", new Pagamento {Descricao = "Cartão de Credito", TipoNFe = FormaPagamento.fpCartaoCredito, TipoSAT = 4}),
-                new ItemData<Pagamento>("Credito Loja", new Pagamento {Descricao = "Credito Loja", TipoNFe = FormaPagamento.fpCreditoLoja, TipoSAT = 5}),
-                new ItemData<Pagamento>("Vale Presente", new Pagamento {Descricao = "Vale Presente", TipoNFe = FormaPagamento.fpValePresente, TipoSAT = 12}),
-                new ItemData<Pagamento>("Outros", new Pagamento {Descricao = "Outros", TipoNFe = FormaPagamento.fpOutro, TipoSAT = 99})
+                new ItemData<Pagamento>("Dinheiro", new Pagamento {Descricao = "Dinheiro", TipoNFe = FormaPagamento.fpDinheiro, TipoSAT = CodigoMP.mpDinheiro}),
+                new ItemData<Pagamento>("Cartão Debito", new Pagamento {Descricao = "Cartão Debito", TipoNFe = FormaPagamento.fpCartaoDebito, TipoSAT = CodigoMP.mpCartaodeDebito}),
+                new ItemData<Pagamento>("Cartão de Credito", new Pagamento {Descricao = "Cartão de Credito", TipoNFe = FormaPagamento.fpCartaoCredito, TipoSAT = CodigoMP.mpCartaodeCredito}),
+                new ItemData<Pagamento>("Credito Loja", new Pagamento {Descricao = "Credito Loja", TipoNFe = FormaPagamento.fpCreditoLoja, TipoSAT = CodigoMP.mpCreditoLoja}),
+                new ItemData<Pagamento>("Vale Presente", new Pagamento {Descricao = "Vale Presente", TipoNFe = FormaPagamento.fpValePresente, TipoSAT = CodigoMP.mpValePresente}),
+                new ItemData<Pagamento>("Outros", new Pagamento {Descricao = "Outros", TipoNFe = FormaPagamento.fpOutro, TipoSAT = CodigoMP.mpOutros})
             };
 
             cmbTipoPagamento.DataSource = Tipos;

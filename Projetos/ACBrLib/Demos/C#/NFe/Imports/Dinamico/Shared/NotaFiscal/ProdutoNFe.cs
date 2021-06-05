@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {

@@ -141,7 +141,7 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public string AtivarSAT(string CNPJValue, int cUF)
+        public AtivarSatResposta AtivarSAT(string CNPJValue, int cUF)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -151,10 +151,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return AtivarSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string AssociarAssinatura(string CNPJValue, string assinaturaCNPJs)
+        public AssociarAssinaturaResposta AssociarAssinatura(string CNPJValue, string assinaturaCNPJs)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -164,10 +164,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return AssociarAssinaturaResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string BloquearSAT()
+        public BloquearSatResposta BloquearSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -177,10 +177,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return BloquearSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string DesbloquearSAT()
+        public DesbloquearSatResposta DesbloquearSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -190,10 +190,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return DesbloquearSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string TrocarCodigoDeAtivacao(string codigoDeAtivacaoOuEmergencia, int opcao, string novoCodigo)
+        public TrocarCodigoDeAtivacaoResposta TrocarCodigoDeAtivacao(string codigoDeAtivacaoOuEmergencia, int opcao, string novoCodigo)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -204,10 +204,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return TrocarCodigoDeAtivacaoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarSAT()
+        public ConsultarSatResposta ConsultarSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -217,10 +217,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarStatusOperacional()
+        public ConsultarStatusOperacionalResposta ConsultarStatusOperacional()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -230,10 +230,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarStatusOperacionalResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarNumeroSessao(int cNumeroDeSessao)
+        public ConsultarSessaoSatResposta ConsultarNumeroSessao(int cNumeroDeSessao)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -243,10 +243,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarSessaoSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string AtualizarSoftwareSAT()
+        public AtualizarSoftwareSatResposta AtualizarSoftwareSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -256,10 +256,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return AtualizarSoftwareSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ComunicarCertificadoICPBRASIL(string certificado)
+        public ComunicarCertificadoICPBRASILResposta ComunicarCertificadoICPBRASIL(string certificado)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -269,7 +269,7 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ComunicarCertificadoICPBRASILResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void ExtrairLogs(string eArquivo)
@@ -280,12 +280,17 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public void TesteFimAFim(string eArquivoXmlVenda)
+        public TesteFimAFimResposta TesteFimAFim(string eArquivoXmlVenda)
         {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
             var method = GetMethod<SAT_TesteFimAFim>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlVenda)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlVenda), buffer, ref bufferLen));
 
             CheckResult(ret);
+
+            return TesteFimAFimResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public string GerarAssinaturaSAT(string eCNPJSHW, string eCNPJEmitente)
@@ -301,7 +306,9 @@ namespace ACBrLib.Sat
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CriarCFe(string eArquivoIni)
+        public EnvioResposta CriarCFe(CupomFiscal CFe) => CriarCFe(CFe.ToString());
+
+        public EnvioResposta CriarCFe(string eArquivoIni)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -311,10 +318,12 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string CriarEnviarCFe(string eArquivoIni)
+        public EnvioResposta CriarEnviarCFe(CupomFiscal CFe) => CriarEnviarCFe(CFe.ToString());
+
+        public EnvioResposta CriarEnviarCFe(string eArquivoIni)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -324,10 +333,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string EnviarCFe(string eArquivoXml)
+        public EnvioResposta EnviarCFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -337,10 +346,10 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string CancelarCFe(string eArquivoXml)
+        public CancelarCFeResposta CancelarCFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -350,7 +359,7 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CancelarCFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void ImprimirExtratoVenda(string eArquivoXml, string eNomeImpressora = "")
@@ -369,7 +378,7 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
-        public string GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo = "")
+        public PDFExtratoVendaResposta GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo = "")
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -379,7 +388,7 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return PDFExtratoVendaResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public string GerarImpressaoFiscalMFe(string eArquivoXml)

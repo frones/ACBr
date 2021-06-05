@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
-using ACBrLib.Core.Ini;
 
 namespace ACBrLib.NFe
 {

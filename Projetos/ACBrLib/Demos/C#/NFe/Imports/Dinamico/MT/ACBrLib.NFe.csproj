@@ -66,9 +66,7 @@
     <Compile Include="..\Shared\NotaFiscal\CompraNFe.cs" Link="NotaFiscal\CompraNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\CondicaoVeiculo.cs" Link="NotaFiscal\CondicaoVeiculo.cs" />
     <Compile Include="..\Shared\NotaFiscal\ConsumidorFinal.cs" Link="NotaFiscal\ConsumidorFinal.cs" />
-    <Compile Include="..\Shared\NotaFiscal\CSOSNIcms.cs" Link="NotaFiscal\CSOSNIcms.cs" />
     <Compile Include="..\Shared\NotaFiscal\CSTCofins.cs" Link="NotaFiscal\CSTCofins.cs" />
-    <Compile Include="..\Shared\NotaFiscal\CSTIcms.cs" Link="NotaFiscal\CSTIcms.cs" />
     <Compile Include="..\Shared\NotaFiscal\CSTIPI.cs" Link="NotaFiscal\CSTIPI.cs" />
     <Compile Include="..\Shared\NotaFiscal\CSTPIS.cs" Link="NotaFiscal\CSTPIS.cs" />
     <Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
@@ -126,7 +124,6 @@
     <Compile Include="..\Shared\NotaFiscal\NFRef.cs" Link="NotaFiscal\NFRef.cs" />
     <Compile Include="..\Shared\NotaFiscal\NotaFiscal.cs" Link="NotaFiscal\NotaFiscal.cs" />
     <Compile Include="..\Shared\NotaFiscal\NVENFe.cs" Link="NotaFiscal\NVENFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\OrigemMercadoria.cs" Link="NotaFiscal\OrigemMercadoria.cs" />
     <Compile Include="..\Shared\NotaFiscal\PagamentoNFe.cs" Link="NotaFiscal\PagamentoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISProdutoNFe.cs" Link="NotaFiscal\PISProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />

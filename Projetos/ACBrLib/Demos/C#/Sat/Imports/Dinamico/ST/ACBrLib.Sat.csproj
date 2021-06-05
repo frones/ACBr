@@ -49,7 +49,47 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\Cupom\CodigoMP.cs" Link="Cupom\CodigoMP.cs" />
+    <Compile Include="..\Shared\Cupom\COFINSSat.cs" Link="Cupom\COFINSSat.cs" />
+    <Compile Include="..\Shared\Cupom\COFINSSTSat.cs" Link="Cupom\COFINSSTSat.cs" />
+    <Compile Include="..\Shared\Cupom\CupomFiscal.cs" Link="Cupom\CupomFiscal.cs" />
+    <Compile Include="..\Shared\Cupom\DadosAdicionaisSat.cs" Link="Cupom\DadosAdicionaisSat.cs" />
+    <Compile Include="..\Shared\Cupom\DestinatarioSat.cs" Link="Cupom\DestinatarioSat.cs" />
+    <Compile Include="..\Shared\Cupom\EmitenteSat.cs" Link="Cupom\EmitenteSat.cs" />
+    <Compile Include="..\Shared\Cupom\EntregaSat.cs" Link="Cupom\EntregaSat.cs" />
+    <Compile Include="..\Shared\Cupom\ICMSSat.cs" Link="Cupom\ICMSSat.cs" />
+    <Compile Include="..\Shared\Cupom\IdentificacaoSat.cs" Link="Cupom\IdentificacaoSat.cs" />
+    <Compile Include="..\Shared\Cupom\IndRegra.cs" Link="Cupom\IndRegra.cs" />
+    <Compile Include="..\Shared\Cupom\InfCFe.cs" Link="Cupom\InfCFe.cs" />
+    <Compile Include="..\Shared\Cupom\ISSQNSat.cs" Link="Cupom\ISSQNSat.cs" />
+    <Compile Include="..\Shared\Cupom\ObsFiscoDetSat.cs" Link="Cupom\ObsFiscoDetSat.cs" />
+    <Compile Include="..\Shared\Cupom\ObsFiscoSat.cs" Link="Cupom\ObsFiscoSat.cs" />
+    <Compile Include="..\Shared\Cupom\PagamentoSat.cs" Link="Cupom\PagamentoSat.cs" />
+    <Compile Include="..\Shared\Cupom\PISSat.cs" Link="Cupom\PISSat.cs" />
+    <Compile Include="..\Shared\Cupom\PISSTSat.cs" Link="Cupom\PISSTSat.cs" />
+    <Compile Include="..\Shared\Cupom\ProdutoSat.cs" Link="Cupom\ProdutoSat.cs" />
+    <Compile Include="..\Shared\Cupom\TotalSat.cs" Link="Cupom\TotalSat.cs" />
     <Compile Include="..\Shared\ExtratoConfig.cs" Link="ExtratoConfig.cs" />
+    <Compile Include="..\Shared\Respostas\AssociarAssinaturaResposta.cs" Link="Respostas\AssociarAssinaturaResposta.cs" />
+    <Compile Include="..\Shared\Respostas\AtivarSatResposta.cs" Link="Respostas\AtivarSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\AtualizarSoftwareSatResposta.cs" Link="Respostas\AtualizarSoftwareSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\BloquearSatResposta.cs" Link="Respostas\BloquearSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\CancelarCFeResposta.cs" Link="Respostas\CancelarCFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ComunicarCertificadoICPBRASILResposta.cs" Link="Respostas\ComunicarCertificadoICPBRASILResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultarSatResposta.cs" Link="Respostas\ConsultarSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultarSessaoCanceladoResposta.cs" Link="Respostas\ConsultarSessaoCanceladoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultarSessaoResposta.cs" Link="Respostas\ConsultarSessaoResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultarSessaoSatResposta.cs" Link="Respostas\ConsultarSessaoSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\ConsultarStatusOperacionalResposta.cs" Link="Respostas\ConsultarStatusOperacionalResposta.cs" />
+    <Compile Include="..\Shared\Respostas\DesbloquearSatResposta.cs" Link="Respostas\DesbloquearSatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\EnvioResposta.cs" Link="Respostas\EnvioResposta.cs" />
+    <Compile Include="..\Shared\Respostas\PDFExtratoVendaResposta.cs" Link="Respostas\PDFExtratoVendaResposta.cs" />
+    <Compile Include="..\Shared\Respostas\RetornoCriarCFeResposta.cs" Link="Respostas\RetornoCriarCFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\RetornoStatusSat.cs" Link="Respostas\RetornoStatusSat.cs" />
+    <Compile Include="..\Shared\Respostas\SatResposta.cs" Link="Respostas\SatResposta.cs" />
+    <Compile Include="..\Shared\Respostas\SatRespostaBase.cs" Link="Respostas\SatRespostaBase.cs" />
+    <Compile Include="..\Shared\Respostas\TesteFimAFimResposta.cs" Link="Respostas\TesteFimAFimResposta.cs" />
+    <Compile Include="..\Shared\Respostas\TrocarCodigoDeAtivacaoResposta.cs" Link="Respostas\TrocarCodigoDeAtivacaoResposta.cs" />
     <Compile Include="..\Shared\SatBaseConfig.cs" Link="SatBaseConfig.cs" />
     <Compile Include="..\Shared\SatConfig.cs" Link="SatConfig.cs" />
     <Compile Include="..\Shared\SATConfigArquivos.cs" Link="SATConfigArquivos.cs" />
@@ -58,6 +98,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cupom\" />
+    <Folder Include="Respostas\" />
   </ItemGroup>
 
 </Project>

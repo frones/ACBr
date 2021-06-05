@@ -1,6 +1,4 @@
-﻿using ACBrLib.Core.Ini;
-
-namespace ACBrLib.NFe
+﻿namespace ACBrLib.Core.DFe
 {
     public enum CSOSNIcms
     {

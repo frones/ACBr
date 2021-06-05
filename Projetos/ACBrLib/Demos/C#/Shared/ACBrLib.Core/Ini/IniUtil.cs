@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using ACBrLib.Core.Extensions;
 
-namespace ACBrLib.Core.Ini
+namespace ACBrLib.Core
 {
     public static class IniUtil
     {

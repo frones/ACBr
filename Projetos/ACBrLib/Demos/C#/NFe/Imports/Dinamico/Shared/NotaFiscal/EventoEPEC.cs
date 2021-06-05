@@ -1,7 +1,6 @@
 ﻿using System;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
-using ACBrLib.Core.Ini;
 using ACBrLib.Core.NFe;
 
 namespace ACBrLib.NFe

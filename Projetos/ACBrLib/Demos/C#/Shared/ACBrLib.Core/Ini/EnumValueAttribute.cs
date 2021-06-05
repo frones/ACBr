@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ACBrLib.Core.Ini
+namespace ACBrLib.Core
 {
     [AttributeUsage(AttributeTargets.Field)]
     public sealed class EnumValueAttribute : Attribute

@@ -1,106 +1,104 @@
-﻿using ACBrLib.Core.Ini;
-
-namespace ACBrLib.NFe
+﻿namespace ACBrLib.Core.DFe
 {
-    public enum CSTCofins
+    public enum CSTPIS
     {
         [EnumValue("01")]
-        cof01,
+        pis01,
 
         [EnumValue("02")]
-        cof02,
+        pis02,
 
         [EnumValue("03")]
-        cof03,
+        pis03,
 
         [EnumValue("04")]
-        cof04,
+        pis04,
 
         [EnumValue("05")]
-        cof05,
+        pis05,
 
         [EnumValue("06")]
-        cof06,
+        pis06,
 
         [EnumValue("07")]
-        cof07,
+        pis07,
 
         [EnumValue("08")]
-        cof08,
+        pis08,
 
         [EnumValue("09")]
-        cof09,
+        pis09,
 
         [EnumValue("49")]
-        cof49,
+        pis49,
 
         [EnumValue("50")]
-        cof50,
+        pis50,
 
         [EnumValue("51")]
-        cof51,
+        pis51,
 
         [EnumValue("52")]
-        cof52,
+        pis52,
 
         [EnumValue("53")]
-        cof53,
+        pis53,
 
         [EnumValue("54")]
-        cof54,
+        pis54,
 
         [EnumValue("55")]
-        cof55,
+        pis55,
 
         [EnumValue("56")]
-        cof56,
+        pis56,
 
         [EnumValue("60")]
-        cof60,
+        pis60,
 
         [EnumValue("61")]
-        cof61,
+        pis61,
 
         [EnumValue("62")]
-        cof62,
+        pis62,
 
         [EnumValue("63")]
-        cof63,
+        pis63,
 
         [EnumValue("64")]
-        cof64,
+        pis64,
 
         [EnumValue("65")]
-        cof65,
+        pis65,
 
         [EnumValue("66")]
-        cof66,
+        pis66,
 
         [EnumValue("67")]
-        cof67,
+        pis67,
 
         [EnumValue("70")]
-        cof70,
+        pis70,
 
         [EnumValue("71")]
-        cof71,
+        pis71,
 
         [EnumValue("72")]
-        cof72,
+        pis72,
 
         [EnumValue("73")]
-        cof73,
+        pis73,
 
         [EnumValue("74")]
-        cof74,
+        pis74,
 
         [EnumValue("75")]
-        cof75,
+        pis75,
 
         [EnumValue("98")]
-        cof98,
+        pis98,
 
         [EnumValue("99")]
-        cof99
+        pis99
     }
 }

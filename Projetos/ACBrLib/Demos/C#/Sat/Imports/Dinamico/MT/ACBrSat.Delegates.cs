@@ -82,7 +82,7 @@ namespace ACBrLib.Sat
         public delegate int SAT_ExtrairLogs(IntPtr handle, string eArquivo);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int SAT_TesteFimAFim(IntPtr handle, string eArquivoXmlVenda);
+        public delegate int SAT_TesteFimAFim(IntPtr handle, string eArquivoXmlVenda, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int SAT_GerarAssinaturaSAT(IntPtr handle, string eCNPJSHW, string eCNPJEmitente, StringBuilder buffer, ref int bufferSize);

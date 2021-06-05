@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ACBrLib.Core;
-using ACBrLib.Core.Ini;
 using ACBrLib.Core.NFe;
 
 namespace ACBrLib.NFe

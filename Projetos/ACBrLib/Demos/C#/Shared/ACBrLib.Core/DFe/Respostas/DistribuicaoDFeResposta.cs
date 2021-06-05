@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ACBrLib.Core.Ini;
 
 namespace ACBrLib.Core.DFe
 {

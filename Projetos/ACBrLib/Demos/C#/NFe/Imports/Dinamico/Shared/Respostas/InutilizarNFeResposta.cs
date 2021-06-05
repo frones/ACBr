@@ -1,5 +1,4 @@
 ﻿using ACBrLib.Core;
-using ACBrLib.Core.Ini;
 
 namespace ACBrLib.NFe
 {

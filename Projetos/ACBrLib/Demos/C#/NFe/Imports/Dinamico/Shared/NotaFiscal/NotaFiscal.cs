@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using ACBrLib.Core;
-using ACBrLib.Core.Ini;
 
 namespace ACBrLib.NFe
 {
@@ -40,8 +38,7 @@ namespace ACBrLib.NFe
             InfNFe.versao = "4.00";
         }
 
-        internal NotaFiscal(ACBrIniFile ini)
-            : this()
+        internal NotaFiscal(ACBrIniFile ini) : this()
         {
             ReadFromIni(ini);
         }

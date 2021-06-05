@@ -1,4 +1,4 @@
-﻿namespace ACBrLib.NFe
+﻿namespace ACBrLib.Core.DFe
 {
     public enum OrigemMercadoria
     {

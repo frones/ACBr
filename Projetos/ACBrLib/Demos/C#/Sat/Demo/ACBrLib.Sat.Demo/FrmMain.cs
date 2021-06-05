@@ -97,19 +97,19 @@ namespace ACBrLib.Sat.Demo
         private void BtnAtivarSAT_Click(object sender, EventArgs e)
         {
             var ret = acbrSat.AtivarSAT(txtCNPJContribuinte.Text, Convert.ToInt32(txtCodEstFederacao.Text));
-            rtbRespostas.AppendText(ret);
+            rtbRespostas.AppendText(ret.Resposta);
         }
 
         private void btnConsultarSAT_Click(object sender, EventArgs e)
         {
             var ret = acbrSat.ConsultarSAT();
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnConsultarStatus_Click(object sender, EventArgs e)
         {
             var ret = acbrSat.ConsultarStatusOperacional();
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnCriarCFe_Click(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace ACBrLib.Sat.Demo
             if (string.IsNullOrEmpty(iniPath)) return;
 
             var ret = acbrSat.CriarCFe(iniPath);
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnCriarEnviarCFe_Click(object sender, EventArgs e)
@@ -127,7 +127,7 @@ namespace ACBrLib.Sat.Demo
             if (string.IsNullOrEmpty(iniPath)) return;
 
             var ret = acbrSat.CriarEnviarCFe(iniPath);
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnEnviarCFe_Click(object sender, EventArgs e)
@@ -136,7 +136,7 @@ namespace ACBrLib.Sat.Demo
             if (string.IsNullOrEmpty(xmlPath)) return;
 
             var ret = acbrSat.EnviarCFe(xmlPath);
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnCancelarCFe_Click(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace ACBrLib.Sat.Demo
             if (string.IsNullOrEmpty(xmlPath)) return;
 
             var ret = acbrSat.CancelarCFe(xmlPath);
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.Resposta);
         }
 
         private void btnImprimirCFe_Click(object sender, EventArgs e)

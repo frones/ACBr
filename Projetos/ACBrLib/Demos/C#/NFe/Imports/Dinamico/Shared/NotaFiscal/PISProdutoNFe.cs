@@ -1,4 +1,6 @@
-﻿namespace ACBrLib.NFe
+﻿using ACBrLib.Core.DFe;
+
+namespace ACBrLib.NFe
 {
     /// <summary>
     /// PIS

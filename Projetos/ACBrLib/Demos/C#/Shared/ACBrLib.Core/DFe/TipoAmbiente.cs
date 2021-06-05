@@ -1,6 +1,4 @@
-﻿using ACBrLib.Core.Ini;
-
-namespace ACBrLib.Core.DFe
+﻿namespace ACBrLib.Core.DFe
 {
     public enum TipoAmbiente
     {

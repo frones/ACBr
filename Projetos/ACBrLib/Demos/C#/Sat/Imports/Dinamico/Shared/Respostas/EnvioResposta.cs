@@ -23,7 +23,7 @@ namespace ACBrLib.Sat
         public static EnvioResposta LerResposta(string resposta)
         {
             var iniresposta = ACBrIniFile.Parse(resposta);
-            var ret = iniresposta.ReadFromIni<EnvioResposta>("CFE");
+            var ret = iniresposta.ReadFromIni<EnvioResposta>("ENVIO");
             ret.Resposta = resposta;
 
             return ret;

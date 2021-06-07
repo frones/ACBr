@@ -177,6 +177,10 @@ type
     ACBr_NFSeX_dpk: TCheckBox;
     lbl1: TLabel;
     lbl2: TLabel;
+    ACBr_NFSeXDanfseFR_dpk: TCheckBox;
+    lbl3: TLabel;
+    ACBr_NFSeXDanfseRL_dpk: TCheckBox;
+    Label29: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

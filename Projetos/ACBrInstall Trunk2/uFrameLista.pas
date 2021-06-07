@@ -174,6 +174,9 @@ type
     Label28: TLabel;
     ACBr_SATExtratoFR_dpk: TCheckBox;
     ACBr_PagFor_dpk: TCheckBox;
+    ACBr_NFSeX_dpk: TCheckBox;
+    lbl1: TLabel;
+    lbl2: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

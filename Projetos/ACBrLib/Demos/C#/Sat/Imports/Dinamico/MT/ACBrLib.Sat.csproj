@@ -75,6 +75,7 @@
     <Compile Include="..\Shared\Respostas\AtualizarSoftwareSatResposta.cs" Link="Respostas\AtualizarSoftwareSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\BloquearSatResposta.cs" Link="Respostas\BloquearSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\CancelarCFeResposta.cs" Link="Respostas\CancelarCFeResposta.cs" />
+    <Compile Include="..\Shared\Respostas\CFeResposta.cs" Link="Respostas\CFeResposta.cs" />
     <Compile Include="..\Shared\Respostas\ComunicarCertificadoICPBRASILResposta.cs" Link="Respostas\ComunicarCertificadoICPBRASILResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSatResposta.cs" Link="Respostas\ConsultarSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSessaoCanceladoResposta.cs" Link="Respostas\ConsultarSessaoCanceladoResposta.cs" />
@@ -102,7 +103,6 @@
 
   <ItemGroup>
     <Folder Include="Cupom\" />
-    <Folder Include="Respostas\" />
   </ItemGroup>
 
 </Project>

@@ -306,9 +306,9 @@ namespace ACBrLib.Sat
             return ProcessResult(buffer, bufferLen);
         }
 
-        public EnvioResposta CriarCFe(CupomFiscal cfe) => CriarCFe(cfe.ToString());
+        public CFeResposta CriarCFe(CupomFiscal cfe) => CriarCFe(cfe.ToString());
 
-        public EnvioResposta CriarCFe(string eArquivoIni)
+        public CFeResposta CriarCFe(string eArquivoIni)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -318,7 +318,7 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
 
-            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return CFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public EnvioResposta CriarEnviarCFe(CupomFiscal cfe) => CriarEnviarCFe(cfe.ToString());

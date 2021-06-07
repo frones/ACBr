@@ -650,7 +650,7 @@ end;
 
 procedure TACBrBancoItau.GerarRegistroTransacao400( ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
-   ATipoCedente, ATipoSacado, ATipoOcorrencia    :String;
+   ATipoCedente, ATipoSacado, ATipoSacadoAvalista, ATipoOcorrencia    :String;
    ADataMoraJuros, ADataDesconto, ATipoAceite    :String;
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
    wLinhaMulta :String;
@@ -679,6 +679,9 @@ begin
 
      {Pegando Tipo de Sacado}
      ATipoSacado:= DefineTipoSacado(ACBrTitulo);
+
+     {Pegando Tipo de Sacado Avalista}
+     ATipoSacadoAvalista := DefineTipoSacadoAvalista(ACBrTitulo);
 
      {Pegando campo Intruções conforme código protesto}
      InstrucoesProtesto(ACBrTitulo);
@@ -814,12 +817,12 @@ begin
                    end;
 
                    //OPCIONAL – COBRANÇA E-MAIL E/OU DADOS DO SACADOR AVALISTA
-                   if Sacado.SacadoAvalista.Email <> '' then
+                   if (Sacado.Email <> '') or (Sacado.SacadoAvalista.CNPJCPF <> '') then
                    begin
                      inc( iSequencia );
                      wLinhaMulta:= '5'                                                          + // Tipo de registro - 5 IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO
-                                   PadRight(Sacado.SacadoAvalista.Email, 120, ' ')              + // ENDEREÇO DE E-MAIL ENDEREÇO DE E-MAIL DO PAGADOR
-                                   PadLeft(ATipoSacado, 2, '0')                                 + // CÓDIGO DE INSCRIÇÃO IDENT. DO TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
+                                   PadRight(Sacado.Email, 120, ' ')              + // ENDEREÇO DE E-MAIL ENDEREÇO DE E-MAIL DO PAGADOR
+                                   PadLeft(ATipoSacadoAvalista, 2, '0')                                 + // CÓDIGO DE INSCRIÇÃO IDENT. DO TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
                                    PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')  + // NÚMERO DE INSCRIÇÃO NÚMERO DE INSCRIÇÃO DO SACADOR AVALISTA
                                    PadRight(Sacado.SacadoAvalista.Logradouro + ' '+
                                    Sacado.SacadoAvalista.Numero + ' ' +

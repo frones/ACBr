@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2021
+--ACBrBoletoFCFortesFr--
+[*] Adicionado Campo CIP nos layouts para impressao Boleto Bradesco
+
 26/05/2021
 ACBrBoletoFCFortes
 [*] Correção do campo Font.Quality e Atualização nos Layouts com ajustes de campos sobrepondo linhas

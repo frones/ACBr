@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 421
+  Left = 313
   Height = 1061
-  Top = 39
+  Top = 165
   Width = 2564
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 1061
@@ -14,9 +14,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   OnDestroy = FormDestroy
   LCLVersion = '2.0.10.0'
   object LayoutBoleto: TRLReport
-    Left = 1620
+    Left = 1048
     Height = 1123
-    Top = -137
+    Top = -80
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -2002,7 +2002,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 13
         Top = 152
-        Width = 124
+        Width = 84
         Alignment = taCenter
         AutoSize = False
         Caption = 'Uso do Banco'
@@ -2504,6 +2504,38 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Pitch = fpVariable
+        ParentFont = False
+      end
+      object rlCIP1: TRLDraw
+        Left = 88
+        Height = 31
+        Top = 142
+        Width = 17
+        Angle = 90
+        DrawKind = dkLine
+      end
+      object txtCIP1: TRLLabel
+        Left = 99
+        Height = 13
+        Top = 152
+        Width = 26
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object lblCIP1: TRLLabel
+        Left = 99
+        Height = 10
+        Top = 142
+        Width = 15
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
         ParentFont = False
       end
     end
@@ -3237,7 +3269,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 2
+    Left = 16
     Height = 1123
     Top = 8
     Width = 794
@@ -4392,12 +4424,44 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         ParentFont = False
       end
+      object rlCIP4: TRLDraw
+        Left = 214
+        Height = 26
+        Top = 120
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+      end
+      object lblCIP4: TRLLabel
+        Left = 216
+        Height = 10
+        Top = 121
+        Width = 15
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object txtCIP4: TRLLabel
+        Left = 216
+        Height = 13
+        Top = 131
+        Width = 28
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 2
+    Left = 96
     Height = 1123
-    Top = 421
+    Top = 80
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -4803,7 +4867,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLDraw152: TRLDraw
         Left = 121
         Height = 54
-        Top = 101
+        Top = 100
         Width = 17
         Angle = 90
         DrawKind = dkLine
@@ -5043,7 +5107,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 13
         Top = 139
-        Width = 124
+        Width = 71
         Alignment = taCenter
         AutoSize = False
         Caption = 'Uso do Banco'
@@ -5629,6 +5693,38 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 192
         Alignment = taRightJustify
         AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object rlCIP3: TRLDraw
+        Left = 82
+        Height = 26
+        Top = 128
+        Width = 17
+        Angle = 90
+        DrawKind = dkLine
+      end
+      object lblCIP3: TRLLabel
+        Left = 93
+        Height = 10
+        Top = 130
+        Width = 15
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object txtCIP3: TRLLabel
+        Left = 94
+        Height = 13
+        Top = 139
+        Width = 32
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -6715,9 +6811,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 799
+    Left = 32
     Height = 1123
-    Top = 8
+    Top = 40
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -7623,7 +7719,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 5
         Height = 13
         Top = 313
-        Width = 116
+        Width = 79
         AutoSize = False
         Caption = 'Uso do Banco'
         Font.Color = clBlack
@@ -8095,6 +8191,38 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
         Transparent = False
       end
+      object rlCIP2: TRLDraw
+        Left = 81
+        Height = 31
+        Top = 301
+        Width = 17
+        Angle = 90
+        DrawKind = dkLine
+      end
+      object lblCIP2: TRLLabel
+        Left = 91
+        Height = 10
+        Top = 302
+        Width = 15
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object txtCIP2: TRLLabel
+        Left = 92
+        Height = 13
+        Top = 313
+        Width = 33
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
     end
     object RLDraw113: TRLDraw
       Left = 21
@@ -8118,9 +8246,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutTermica: TRLReport
-    Left = 707
+    Left = 912
     Height = 302
-    Top = 575
+    Top = 584
     Width = 907
     Margins.LeftMargin = 2
     Margins.TopMargin = 2

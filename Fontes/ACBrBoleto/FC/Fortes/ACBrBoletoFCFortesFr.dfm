@@ -1,6 +1,6 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 402
-  Top = 188
+  Left = 313
+  Top = 165
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 1061
   ClientWidth = 2564
@@ -16,8 +16,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object LayoutBoleto: TRLReport
-    Left = 1620
-    Top = -137
+    Left = 1048
+    Top = -80
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -2220,7 +2220,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object txtUsoBanco3: TRLLabel
         Left = 4
         Top = 152
-        Width = 124
+        Width = 84
         Height = 13
         Alignment = taCenter
         AutoSize = False
@@ -2795,6 +2795,42 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Pitch = fpVariable
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlCIP1: TRLDraw
+        Left = 88
+        Top = 142
+        Width = 17
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object txtCIP1: TRLLabel
+        Left = 99
+        Top = 152
+        Width = 26
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblCIP1: TRLLabel
+        Left = 99
+        Top = 142
+        Width = 15
+        Height = 10
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
@@ -3612,7 +3648,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 2
+    Left = 16
     Top = 8
     Width = 794
     Height = 1123
@@ -4914,11 +4950,47 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
+      object rlCIP4: TRLDraw
+        Left = 214
+        Top = 120
+        Width = 1
+        Height = 26
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object lblCIP4: TRLLabel
+        Left = 216
+        Top = 121
+        Width = 15
+        Height = 10
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtCIP4: TRLLabel
+        Left = 216
+        Top = 131
+        Width = 28
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 2
-    Top = 421
+    Left = 96
+    Top = 80
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -5359,7 +5431,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw152: TRLDraw
         Left = 121
-        Top = 101
+        Top = 100
         Width = 17
         Height = 54
         Angle = 90.000000000000000000
@@ -5630,7 +5702,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object txtUsoBancoDet: TRLLabel
         Left = 4
         Top = 139
-        Width = 124
+        Width = 71
         Height = 13
         Alignment = taCenter
         AutoSize = False
@@ -6302,6 +6374,42 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 12
         Alignment = taRightJustify
         AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlCIP3: TRLDraw
+        Left = 82
+        Top = 128
+        Width = 17
+        Height = 26
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object lblCIP3: TRLLabel
+        Left = 93
+        Top = 130
+        Width = 15
+        Height = 10
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtCIP3: TRLLabel
+        Left = 94
+        Top = 139
+        Width = 32
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CIP'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -7508,8 +7616,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 799
-    Top = 8
+    Left = 32
+    Top = 40
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -8516,7 +8624,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object txtUsoBancoRecTop1: TRLLabel
         Left = 5
         Top = 313
-        Width = 116
+        Width = 79
         Height = 13
         AutoSize = False
         Caption = 'Uso do Banco'
@@ -9061,6 +9169,42 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
         Transparent = False
       end
+      object rlCIP2: TRLDraw
+        Left = 81
+        Top = 301
+        Width = 17
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object lblCIP2: TRLLabel
+        Left = 91
+        Top = 302
+        Width = 15
+        Height = 10
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object txtCIP2: TRLLabel
+        Left = 92
+        Top = 313
+        Width = 33
+        Height = 13
+        AutoSize = False
+        Caption = 'CIP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
     end
     object RLDraw113: TRLDraw
       Left = 21
@@ -9085,8 +9229,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutTermica: TRLReport
-    Left = 707
-    Top = 575
+    Left = 912
+    Top = 584
     Width = 907
     Height = 302
     Margins.LeftMargin = 2.000000000000000000

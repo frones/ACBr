@@ -72,23 +72,6 @@ object frValidador: TfrValidador
     DropDownCount = 20
     TabOrder = 2
     OnChange = cbTipoDoctoChange
-    Items.Strings = (
-      'docCPF'
-      'docCNPJ'
-      'docUF'
-      'docInscEst'
-      'docNumCheque'
-      'docPIS'
-      'docCEP'
-      'docCartaoCredito'
-      'docSuframa'
-      'docGTIN'
-      'docRenavam'
-      'docEmail'
-      'docCNH'
-      'docPrefixoGTIN'
-      'docCAEPF'
-      'docPlacaMercosul')
   end
   object mMsgErro: TMemo
     Left = 8

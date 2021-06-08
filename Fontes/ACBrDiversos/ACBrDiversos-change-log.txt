@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2020
+-- ACBrValidador --
+[+] Incluída validação para o Cartão Nacional do SUS (tdCNS).
+    https://www.projetoacbr.com.br/forum/topic/62379-acbrvalidador-cart%C3%A3o-nacional-do-sus/
+  Por: marcelomgoncalves / BigWings
+
 11/06/2020
 -- ACBrValidador --
 [+] Adicionado o método "RemoverMascara"

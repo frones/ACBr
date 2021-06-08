@@ -46,7 +46,8 @@ const
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS,
                         docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
-                        docEmail, docCNH, docPrefixoGTIN, docCAEPF, docPlacaMercosul ) ;
+                        docEmail, docCNH, docPrefixoGTIN, docCAEPF, docPlacaMercosul,
+                        docCNS ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -120,6 +121,8 @@ type
     Procedure ValidarCNH ;
     Procedure ValidarPrefixoGTIN ;
     Procedure ValidarPlaca ;
+    Procedure ValidarCNS ;
+
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -168,6 +171,7 @@ function ValidarCEP(const ACEP: Integer; const AUF: String): String; overload;
 function ValidarCNH(const Documento: String) : String ;
 function ValidarUF(const AUF: String): String;
 function ValidarPlaca(const APlaca: String): String;
+function ValidarCNS(const Documento: String): String;
 
 Function FormatarFone( const AValue : String; const DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -304,6 +308,11 @@ end;
 function ValidarPlaca(const APlaca: String): String;
 begin
   Result := ValidarDocumento( docPlacaMercosul, APlaca );
+end;
+
+function ValidarCNS(const Documento: String): String ;
+begin
+  Result := ValidarDocumento( docCNS, Documento );
 end;
 
 { Retorna apenas números, e apenas se o conteúdo for CPF ou CNPJ, caso contrário
@@ -746,6 +755,7 @@ begin
           docCNH           : NomeDocto := 'Carteira Nacional de Habilitação' ;
           docPrefixoGTIN   : NomeDocto := 'Prefixo do Código GTIN' ;
           docPlacaMercosul         : NomeDocto := 'Placa' ;
+          docCNS           : NomeDocto := 'Número Cartão Nacional do SUS';
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -770,6 +780,7 @@ begin
        docCNH           : ValidarCNH ;
        docPrefixoGTIN   : ValidarPrefixoGTIN ;
        docPlacaMercosul         : ValidarPlaca ;
+       docCNS           : ValidarCNS;
      else
       raise Exception.Create('Tipo de documento informado inválido!');
      end;
@@ -1600,6 +1611,70 @@ begin
   end ;
 
 end;
+
+procedure TACBrValidador.ValidarCNS;
+
+  function validaCnsInic12: boolean;
+  var
+   soma, resto, dv: integer;
+   resultado: string;
+  begin
+    Modulo.MultiplicadorInicial := 5;
+    Modulo.MultiplicadorFinal := 15;
+    Modulo.FormulaDigito := frModulo11;
+    Modulo.Documento := PadLeft(fsDocto, 11, '0'); // pis
+    Modulo.Calcular;
+
+    if Modulo.ModuloFinal = 10 then
+    begin
+      soma := Modulo.SomaDigitos + 2;
+      resto := soma mod 11;
+      dv := 11 - resto;
+      resultado := Modulo.fsDocto + '001' + IntToStr(dv);
+    end
+    else
+      resultado := Modulo.fsDocto + '000' + IntToStr(Modulo.DigitoFinal);
+
+    result := fsDocto = resultado;
+  end;
+
+  function validaCnsInic789: boolean;
+  begin
+    Modulo.MultiplicadorInicial := 1;
+    Modulo.MultiplicadorFinal := 15;
+    Modulo.FormulaDigito := frModulo11;
+    Modulo.Documento := fsDocto;
+    Modulo.Calcular;
+    Result := Modulo.ModuloFinal = 0;
+  end;
+
+var
+  resultado: boolean;
+
+begin
+   resultado:=false;
+
+   if fsAjustarTamanho then
+     fsDocto := PadLeft(fsDocto, 15, '0');
+
+   if Length(fsDocto) <> 15 then
+   begin
+      fsMsgErro := 'O número do Cartão Nacional do SUS deve ter 15 dígitos';
+      exit;
+   end;
+
+   case PChar(fsDocto)^ of
+     '1'..'2': resultado := validaCnsInic12;
+     '7'..'9': resultado := validaCnsInic789;
+   end;
+
+  if not resultado then
+  begin
+     fsMsgErro := 'O número do Cartão Nacional do SUS informado é inválido!' ;
+     exit;
+  end;
+end;
+
 
 procedure TACBrValidador.ValidarPrefixoGTIN;
 type

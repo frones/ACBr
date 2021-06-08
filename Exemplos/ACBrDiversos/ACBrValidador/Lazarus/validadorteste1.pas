@@ -83,15 +83,24 @@ var
 
 implementation
 
+uses
+  TypInfo;
+
 {$R *.lfm}
 
 procedure TfrValidador.FormCreate(Sender: TObject);
+var
+  td: TACBrValTipoDocto;
 begin
   edIgnorar.Text := ACBrValidador1.IgnorarChar ;
   cbPermiteVazio.Checked := ACBrValidador1.PermiteVazio ;
   cbException.Checked    := ACBrValidador1.RaiseExcept ;
   cbAjustarTam.Checked   := ACBrValidador1.AjustarTamanho ;
-  cbTipoDocto.ItemIndex  := Integer( ACBrValidador1.TipoDocto ) ;
+
+  cbTipoDocto.Items.Clear;
+  for td := Low(TACBrValTipoDocto) to High(TACBrValTipoDocto) do
+    cbTipoDocto.Items.Add(GetEnumName(TypeInfo(TACBrValTipoDocto), Integer(td)));
+  cbTipoDocto.ItemIndex  := Integer(ACBrValidador1.TipoDocto) ;
 end;
 
 procedure TfrValidador.Button1Click(Sender : TObject) ;

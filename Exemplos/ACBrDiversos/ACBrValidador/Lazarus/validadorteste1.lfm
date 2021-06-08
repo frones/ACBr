@@ -71,24 +71,6 @@ object frValidador: TfrValidador
     Top = 24
     Width = 97
     ItemHeight = 13
-    Items.Strings = (
-      'docCPF'
-      'docCNPJ'
-      'docUF'
-      'docInscEst'
-      'docNumCheque'
-      'docPIS'
-      'docCEP'
-      'docCartaoCredito'
-      'docSuframa'
-      'docGTIN'
-      'docRenavam'
-      'docEmail'
-      'docCNH'
-      'docPrefixoGTIN'
-      'docCAEPF'
-      'docPlacaMercosul'
-    )
     OnChange = cbTipoDoctoChange
     Style = csDropDownList
     TabOrder = 2

@@ -667,7 +667,7 @@ begin
   if NaoEstaVazio(Erros) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
+    AErro.Codigo := 'X999';
     AErro.Descricao := Erros;
   end;
 end;
@@ -814,7 +814,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -880,7 +880,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -946,7 +946,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1015,7 +1015,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1106,7 +1106,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1151,7 +1151,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1183,7 +1183,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1215,7 +1215,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1247,7 +1247,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1279,7 +1279,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1330,7 +1330,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1362,7 +1362,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1419,7 +1419,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1527,7 +1527,7 @@ begin
       on E:Exception do
       begin
         AErro := Result.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;

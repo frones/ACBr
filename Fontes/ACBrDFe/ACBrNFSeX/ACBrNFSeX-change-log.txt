@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2021
+-- Diversos --
+[*] Inicio da troca do código 999 definido para as mensagens de erros geradas pelo
+    componente por um código especifico para cada mensagem.
+   Por: Italo Giurizzato Junior
+
 07/06/2021
 -- Diversos --
 [*] Remoção de linhas de código desnecessárias.

@@ -143,15 +143,15 @@ begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Nenhum RPS adicionado ao componente';
+    AErro.Codigo := 'X002';
+    AErro.Descricao := 'Nenhum RPS adicionado ao componente.';
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Conjunto de RPS transmitidos (máximo de ' +
+    AErro.Codigo := 'X003';
+    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
                        IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
@@ -334,7 +334,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -352,7 +352,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -381,8 +381,8 @@ begin
   if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Protocolo não informado.';
+    AErro.Codigo := 'X101';
+    AErro.Descricao := 'Número do Protocolo não informado.';
     Exit;
   end;
 
@@ -455,7 +455,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -472,7 +472,7 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X202';
         AErro.Descricao := 'Lista de NFSe não encontrada! (ListaNfse)';
         Exit;
       end;
@@ -481,7 +481,7 @@ begin
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X203';
         AErro.Descricao := 'Não foi retornado nenhuma NFSe';
         Exit;
       end;
@@ -510,7 +510,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -528,7 +528,7 @@ begin
   if EstaVazio(Response.NumRPS) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
+    AErro.Codigo := 'X102';
     AErro.Descricao := 'Número do RPS não informado.';
     Exit;
   end;
@@ -608,7 +608,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -623,8 +623,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+        AErro.Codigo := 'X203';
+        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
         Exit;
       end;
 
@@ -652,14 +652,14 @@ begin
       else
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+        AErro.Codigo := 'X203';
+        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
       end;
     except
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -679,8 +679,8 @@ begin
   else
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
-      AErro.Descricao := 'Consulta não disponivel neste provedor.';
+      AErro.Codigo := 'X001';
+      AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     end;
   end;
 end;
@@ -696,8 +696,8 @@ begin
   else
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
-      AErro.Descricao := 'Consulta não disponivel neste provedor.';
+      AErro.Codigo := 'X001';
+      AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     end;
   end;
 end;
@@ -713,8 +713,8 @@ begin
   else
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
-      AErro.Descricao := 'Consulta não disponivel neste provedor.';
+      AErro.Codigo := 'X001';
+      AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     end;
   end;
 end;
@@ -728,8 +728,8 @@ begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Consulta não disponivel neste provedor.';
+    AErro.Codigo := 'X001';
+    AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     Exit;
   end;
 
@@ -820,7 +820,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -843,7 +843,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -858,7 +858,7 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X202';
         AErro.Descricao := 'Lista de NFSe não encontrada! (ListaNfse)';
         Exit;
       end;
@@ -867,8 +867,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+        AErro.Codigo := 'X203';
+        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
         Exit;
       end;
 
@@ -897,7 +897,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -916,8 +916,8 @@ begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Consulta não disponivel neste provedor.';
+    AErro.Codigo := 'X001';
+    AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     Exit;
   end;
 
@@ -1040,7 +1040,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1064,7 +1064,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -1079,7 +1079,7 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X202';
         AErro.Descricao := 'Lista de NFSe não encontrada! (ListaNfse)';
         Exit;
       end;
@@ -1088,8 +1088,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+        AErro.Codigo := 'X203';
+        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
         Exit;
       end;
 
@@ -1118,7 +1118,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1137,8 +1137,8 @@ begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Consulta não disponivel neste provedor.';
+    AErro.Codigo := 'X001';
+    AErro.Descricao := 'Serviço não implementado pelo Provedor.';
     Exit;
   end;
 
@@ -1272,7 +1272,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := '999';
+      AErro.Codigo := 'X999';
       AErro.Descricao := E.Message;
     end;
   end;
@@ -1296,7 +1296,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -1311,7 +1311,7 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X202';
         AErro.Descricao := 'Lista de NFSe não encontrada! (ListaNfse)';
         Exit;
       end;
@@ -1320,8 +1320,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+        AErro.Codigo := 'X203';
+        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
         Exit;
       end;
 
@@ -1350,7 +1350,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1370,16 +1370,16 @@ begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Número da NFSe não informado para cancelamento.';
+    AErro.Codigo := 'X108';
+    AErro.Descricao := 'Número da NFSe não informado.';
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.CodCancelamento) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Código de cancelamento não informado para cancelamento.';
+    AErro.Codigo := 'X109';
+    AErro.Descricao := 'Código de cancelamento não informado.';
     Exit;
   end;
 
@@ -1493,7 +1493,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -1508,8 +1508,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Confirmação do cancelamento não encontrada';
+        AErro.Codigo := 'X204';
+        AErro.Descricao := 'Confirmação do cancelamento não encontrada.';
         Exit;
       end;
 
@@ -1517,8 +1517,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Confirmação do cancelamento não encontrada';
+        AErro.Codigo := 'X204';
+        AErro.Descricao := 'Confirmação do cancelamento não encontrada.';
         Exit;
       end;
 
@@ -1547,7 +1547,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -1565,7 +1565,7 @@ begin
   if EstaVazio(Response.PedCanc) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
+    AErro.Codigo := 'X107';
     AErro.Descricao := 'Pedido de Cancelamento não informado.';
     Exit;
   end;
@@ -1573,15 +1573,15 @@ begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Nenhum RPS adicionado ao componente';
+    AErro.Codigo := 'X002';
+    AErro.Descricao := 'Nenhum RPS adicionado ao componente.';
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > 1 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
+    AErro.Codigo := 'X003';
+    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de 1 RPS)' +
                        ' excedido. Quantidade atual: ' +
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
   end;
@@ -1698,7 +1698,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -1713,8 +1713,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Retorno da Substituição não encontrada';
+        AErro.Codigo := 'X205';
+        AErro.Descricao := 'Retorno da Substituição não encontrada.';
         Exit;
       end;
 
@@ -1722,8 +1722,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Nfse Substituida não encontrada';
+        AErro.Codigo := 'X206';
+        AErro.Descricao := 'NFSe Substituida não encontrada.';
         Exit;
       end
       else
@@ -1732,8 +1732,8 @@ begin
         if not Assigned(ANode) then
         begin
           AErro := Response.Erros.New;
-          AErro.Codigo := '999';
-          AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+          AErro.Codigo := 'X203';
+          AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
           Exit;
         end;
 
@@ -1763,8 +1763,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
-        AErro.Descricao := 'Nfse Substituidora não encontrada';
+        AErro.Codigo := 'X207';
+        AErro.Descricao := 'NFSe Substituidora não encontrada.';
         Exit;
       end
       else
@@ -1773,8 +1773,8 @@ begin
         if not Assigned(ANode) then
         begin
           AErro := Response.Erros.New;
-          AErro.Codigo := '999';
-          AErro.Descricao := 'Não foi retornado nenhuma NFSe';
+          AErro.Codigo := 'X203';
+          AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
           Exit;
         end;
 
@@ -1803,7 +1803,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;

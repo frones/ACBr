@@ -211,15 +211,15 @@ begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Nenhum RPS adicionado ao componente';
+    AErro.Codigo := 'X002';
+    AErro.Descricao := 'Nenhum RPS adicionado ao componente.';
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'ERRO: Conjunto de RPS transmitidos (máximo de ' +
+    AErro.Codigo := 'X003';
+    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
                        IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
@@ -300,7 +300,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -331,7 +331,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -349,8 +349,8 @@ begin
   if EstaVazio(Response.Lote) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Numero do Lote não informado.';
+    AErro.Codigo := 'X111';
+    AErro.Descricao := 'Número do Lote não informado.';
     Exit;
   end;
 
@@ -382,7 +382,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -401,7 +401,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -419,15 +419,15 @@ begin
   if EstaVazio(Response.InfConsultaNFSe.NumeroLote) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Numero do Lote não informado.';
+    AErro.Codigo := 'X111';
+    AErro.Descricao := 'Número do Lote não informado.';
     Exit;
   end;
 
   if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
+    AErro.Codigo := 'X108';
     AErro.Descricao := 'Numero da NFSe não informado.';
     Exit;
   end;
@@ -465,7 +465,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -484,7 +484,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;
@@ -502,23 +502,23 @@ begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Numero da NFSe não informada.';
+    AErro.Codigo := 'X108';
+    AErro.Descricao := 'Numero da NFSe não informado.';
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.NumeroLote) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Numero do Lote não informado.';
+    AErro.Codigo := 'X111';
+    AErro.Descricao := 'Número do Lote não informado.';
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.MotCancelamento) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
+    AErro.Codigo := 'X110';
     AErro.Descricao := 'Motivo do Cancelamento não informado.';
     Exit;
   end;
@@ -557,7 +557,7 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X201';
         AErro.Descricao := 'WebService retornou um XML vazio.';
         Exit
       end;
@@ -576,7 +576,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := '999';
+        AErro.Codigo := 'X999';
         AErro.Descricao := E.Message;
       end;
     end;

@@ -204,8 +204,8 @@ begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '999';
-    AErro.Descricao := 'Número da NFSe não informado para cancelamento.';
+    AErro.Codigo := 'X108';
+    AErro.Descricao := 'Número da NFSe não informado.';
     Exit;
   end;
 

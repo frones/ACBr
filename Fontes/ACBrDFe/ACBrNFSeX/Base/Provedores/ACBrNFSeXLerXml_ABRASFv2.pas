@@ -814,39 +814,12 @@ begin
 end;
 
 function TNFSeR_ABRASFv2.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
-//var
-//  AuxNode: TACBrXmlNode;
-//  Ok: Boolean;
 begin
   Result := True;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  {AuxNode := ANode.Childrens.Find('InfRps');
-
-  if AuxNode <> nil then
-  begin
-    LerIdentificacaoRps(AuxNode);
-
-    with NFSe do
-    begin
-      DataEmissao := LerDatas(ProcessarConteudo(AuxNode.Childrens.Find('DataEmissao'), tcStr));
-      NaturezaOperacao := StrToNaturezaOperacao(Ok, ProcessarConteudo(AuxNode.Childrens.Find('NaturezaOperacao'), tcStr));
-      RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, ProcessarConteudo(AuxNode.Childrens.Find('RegimeEspecialTributacao'), tcStr));
-      OptanteSimplesNacional := StrToSimNao(Ok, ProcessarConteudo(AuxNode.Childrens.Find('OptanteSimplesNacional'), tcStr));
-      IncentivadorCultural := StrToSimNao(Ok, ProcessarConteudo(AuxNode.Childrens.Find('IncentivadorCultural'), tcStr));
-      Status := StrToStatusRPS(Ok, ProcessarConteudo(AuxNode.Childrens.Find('Status'), tcStr));
-    end;
-
-    LerRpsSubstituido(AuxNode);
-    LerServico(AuxNode);
-    LerPrestador(AuxNode);
-    LerTomadorServico(AuxNode);
-    LerIntermediarioServico(AuxNode);
-    LerConstrucaoCivil(AuxNode);
-  end
-  else}
-    LerInfDeclaracaoPrestacaoServico(ANode);
+  LerInfDeclaracaoPrestacaoServico(ANode);
 end;
 
 procedure TNFSeR_ABRASFv2.SetxItemListaServico(Codigo: string);

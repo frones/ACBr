@@ -124,7 +124,6 @@ type
     FNrOcorrValorCofins: Integer;
     FNrOcorrValorInss: Integer;
     FNrOcorrValorIr: Integer;
-
     FNrOcorrCodigoPaisServico: Integer;
     FNrOcorrCodigoPaisTomador: Integer;
     FNrOcorrInscMunTomador: Integer;
@@ -263,71 +262,6 @@ begin
   // Executa a Configuração Padrão
   inherited Configuracao;
 
-  {italo
-  // Os provedores que seguem a versão 1 do layout da ABRASF só tem 3 métodos de
-  // envio: EnviarLoteRpsEnvio, EnviarLoteRpsSincronoEnvio e GerarNfseEnvio.
-  // O método escolhido como padrão é o que funciona no modo Síncrono.
-  // Pode variar dependendo do provedor.
-  with ConfigGeral do
-  begin
-    VersaoProv := ve200;
-
-    QtdReqConsultar := 2;
-    ConsultarRequisitos[1] := rcoNumeroInicial;
-    ConsultarRequisitos[2] := rcoPagina;
-
-    QtdReqConsultarNFSeRps := 3;
-    ConsultarNFSeRpsRequisitos[1] := rconNumero;
-    ConsultarNFSeRpsRequisitos[2] := rconSerie;
-    ConsultarNFSeRpsRequisitos[3] := rconTipo;
-
-    QtdReqCancelar := 2;
-    CancelarRequisitos[1] := rcaNumeroNFSe;
-    CancelarRequisitos[2] := rcaCodCancelamento;
-  end;
-
-  with ConfigMsgDados do
-  begin
-    VersaoRps       := '2.00';
-
-    with LoteRps do
-    begin
-      GerarID           := True;
-      GerarGrupoCPFCNPJ := True;
-      GerarNSEnvioLote  := True;
-    end;
-
-    with ConsLote do
-    begin
-      GerarGrupoCPFCNPJ   := True;
-      GerarGrupoPrestador := True;
-    end;
-
-    with ConsNFSeRps do
-    begin
-      GerarGrupoCPFCNPJ   := True;
-      GerarGrupoPrestador := True;
-    end;
-
-    with ConsNFSe do
-    begin
-      GerarGrupoPrestador := True;
-      GerarGrupoCPFCNPJ   := True;
-    end;
-
-    with Cancelar do
-    begin
-      GerarGrupoCPFCNPJ := True;
-      NrOcorrMotCanc_1  := -1;
-    end;
-
-    with Gerar do
-    begin
-      GerarGrupoCPFCNPJ := True;
-    end;
-  end;
-  }
-
   // Numero de Ocorrencias Minimas de uma tag
   // se for  0 só gera a tag se o conteudo for diferente de vazio ou zero
   // se for  1 sempre vai gerar a tag
@@ -419,7 +353,7 @@ var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
   // Em conformidade com a versão 2 do layout da ABRASF não deve ser alterado
-//  Configuracao;
+  // Configuracao;
 
   ListaDeAlertas.Clear;
 
@@ -436,7 +370,7 @@ begin
   NFSeNode.AppendChild(xmlNode);
 
   // Define a tag raiz que vai conter o XML da NFS-e
-//italo  DefinirRetornoNFSe;
+//  DefinirRetornoNFSe;
 
   Result := True;
 end;

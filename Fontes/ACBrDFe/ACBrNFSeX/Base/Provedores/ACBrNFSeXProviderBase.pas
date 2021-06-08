@@ -576,9 +576,6 @@ begin
       else
         AWriter.Municipio := ConfigGeral.Params2;
 
-      //Italo necessário para alguns provedores
-      //AWriter.VersaoNFSe := StrToVersaoNFSe(Ok, ConfigMsgDados.VersaoRps);
-
       pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
       AWriter.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
@@ -666,6 +663,7 @@ begin
   Schema := FAOwner.Configuracoes.Arquivos.PathSchemas + Schema;
 
   FAOwner.SSL.Validar(Response.XmlEnvio, Schema, Erros);
+
   if NaoEstaVazio(Erros) then
   begin
     AErro := Response.Erros.New;

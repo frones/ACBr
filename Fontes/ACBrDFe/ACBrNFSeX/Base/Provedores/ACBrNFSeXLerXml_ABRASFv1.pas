@@ -87,6 +87,8 @@ type
 
     procedure LerRpsSubstituido(const ANode: TACBrXmlNode);
     procedure LerPrestador(const ANode: TACBrXmlNode);
+
+    function TipodeXMLLeitura(aArquivo: string): TtpXML;
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -714,8 +716,6 @@ begin
     LerIntermediarioServico(AuxNode);
     LerConstrucaoCivil(AuxNode);
   end;
-//  else
-//    LerInfDeclaracaoPrestacaoServico(ANode);
 end;
 
 procedure TNFSeR_ABRASFv1.SetxItemListaServico(Codigo: string);
@@ -746,6 +746,15 @@ begin
     else
       NFSe.Servico.xItemListaServico := CodigoToDesc(ItemServico);
   end;
+end;
+
+function TNFSeR_ABRASFv1.TipodeXMLLeitura(aArquivo: string): TtpXML;
+begin
+  if (Pos('CompNfse', Arquivo) > 0) or (Pos('ComplNfse', Arquivo) > 0) or
+     (Pos('tcCompNfse', Arquivo) > 0) then
+    Result := txmlNFSe
+  else
+    Result := txmlRPS;
 end;
 
 end.

@@ -384,35 +384,35 @@ uses
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [srNormal, srCancelado]);
 end;
 
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [srNormal, srCancelado]);
 end;
 
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [snNormal, snCancelado]);
 end;
 
 function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [snNormal, snCancelado]);
 end;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['0', '1', '2', '3', '4', '5', '6', '7', '8',
                             '9', '10', '11', '12', '13', '14', '15', '17', '18',
                             '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
@@ -441,7 +441,7 @@ end;
 
 function StrToNaturezaOperacao(out ok: boolean; const s: string): TnfseNaturezaOperacao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                           ['0', '1', '2', '3', '4', '5', '6', '7', '8',
                            '9', '10', '11', '12', '13', '14', '15', '17', '18',
                            '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
@@ -469,7 +469,7 @@ end;
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1','2','3','4','5','6','7','8'],
                            [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
                             exiImunidade, exiSuspensaDecisaoJudicial,
@@ -478,7 +478,7 @@ end;
 
 function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                           ['1','2','3','4','5','6','7','8'],
                           [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
                            exiImunidade, exiSuspensaDecisaoJudicial,
@@ -487,7 +487,7 @@ end;
 
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['0','1','2','3','4','5','6','7','8','9','10', '11', '12',
                             '13', '14'],
                            [retNenhum, retMicroempresaMunicipal, retEstimativa,
@@ -500,7 +500,7 @@ end;
 
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                           ['0','1','2','3','4','5','6','7','8','9','10', '11', '12',
                            '13', '14'],
                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
@@ -513,29 +513,31 @@ end;
 
 function SimNaoToStr(const t: TnfseSimNao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [snSim, snNao]);
 end;
 
 function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [snSim, snNao]);
 end;
 
 function SimNaoInFiscToStr(const t: TnfseSimNao): string;
 begin
-//  Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada pois a tag nao existe no XML de retorno
-  result := EnumeradoToStr(t,
+// Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada
+// pois a tag nao existe no XML de retorno
+  Result := EnumeradoToStr(t,
                            ['N', 'S'],
                            [snNao, snSim]);
 end;
 
 function StrToSimNaoInFisc(out ok: boolean; const s: string): TnfseSimNao;
 begin
-//  Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada pois a tag nao existe no XML de retorno
+// Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada
+// pois a tag nao existe no XML de retorno
   Result := StrToEnumerado(ok, s,
                            ['N', 'S'],
                            [snNao, snSim]);
@@ -543,35 +545,35 @@ end;
 
 function TipoRPSToStr(const t: TTipoRPS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3', '0'],
                            [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '0'],
                            [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 function IndicacaoCpfCnpjToStr(const t: TIndicacaoCpfCnpj): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [iccCPF, iccCNPJ, iccNaoInformado]);
 end;
 
 function StrToIndicacaoCpfCnpj(out ok: boolean; const s: string): TIndicacaoCpfCnpj;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [iccCPF, iccCNPJ, iccNaoInformado]);
 end;
 
 function SituacaoLoteRPSToStr(const t: TSituacaoLoteRPS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
                            [sLoteNaoRecibo, sLoteNaoProcessado,
                             sLoteProcessadoErro, sLoteProcessadoSucesso,
@@ -580,7 +582,7 @@ end;
 
 function StrToSituacaoLoteRPS(out ok: boolean; const s: string): TSituacaoLoteRPS;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
                            [sLoteNaoRecibo, sLoteNaoProcessado,
                             sLoteProcessadoErro, sLoteProcessadoSucesso,
@@ -589,7 +591,7 @@ end;
 
 function SituacaoLoteRPSToDescr(const t: TSituacaoLoteRPS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['Lote Não Recebido', 'Lote Não Processado',
                             'Lote Processado com Erro',
                             'Lote Processado com Sucesso',
@@ -601,7 +603,7 @@ end;
 
 function ProvedorToStr(const t: TnfseProvedor): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
         ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISSV2', 'Ginfes', 'ISSDSF',
          'Abaco', 'AbacoA', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'Recife',
          'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred',
@@ -652,7 +654,7 @@ end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
         ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISSV2', 'Ginfes', 'ISSDSF',
          'Abaco', 'AbacoA', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'Recife',
          'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred',
@@ -980,10 +982,10 @@ begin
     6491: r := 'Fornecimento de mão-de-obra, mesmo em caráter temporário, inclusive de empregados ou trabalhadores, avulsos ou temporários, contratados pelo prestador de serviço.';
   end;
 
-  result := r;
+  Result := r;
 end;
 
-// Nome da cidade com base ao código da cidade *********************************
+// Nome da cidade com base ao código IBGE *********************************
 
 function CodCidadeToCidade(const ACodigo: Integer): string;
 var
@@ -6831,12 +6833,12 @@ var
       1101708: CodSiafi := '0977'; // Urupa/RO
       1101757: CodSiafi := '0024'; // Vale Do Anari/RO
       1101807: CodSiafi := '0979'; // Vale Do Paraiso/RO
-   end;//
- end;//
-//
- procedure P12;//
- begin//
-   case ACodigo of//
+   end;
+ end;
+
+ procedure P12;
+ begin
+   case ACodigo of
       1200013: CodSiafi := '0643'; // Acrelandia/AC
       1200054: CodSiafi := '0157'; // Assis Brasil/AC
       1200104: CodSiafi := '0105'; // Brasileia/AC
@@ -6859,12 +6861,12 @@ var
       1200609: CodSiafi := '0147'; // Tarauaca/AC
       1200708: CodSiafi := '0149'; // Xapuri/AC
       1200807: CodSiafi := '0649'; // Porto Acre/AC
-   end;//
- end;//
-//
- procedure P13;//
- begin//
-   case ACodigo of//
+   end;
+ end;
+
+ procedure P13;
+ begin
+   case ACodigo of
       1300029: CodSiafi := '0289'; // Alvaraes/AM
       1300060: CodSiafi := '0291'; // Amatura/AM
       1300086: CodSiafi := '0293'; // Anama/AM
@@ -6927,12 +6929,12 @@ var
       1304260: CodSiafi := '9849'; // Uarini/AM
       1304302: CodSiafi := '0285'; // Urucara/AM
       1304401: CodSiafi := '0287'; // Urucurituba/AM
-   end;//
- end;//
-//
- procedure P14;//
- begin//
-   case ACodigo of//
+   end;
+ end;
+
+ procedure P14;
+ begin
+   case ACodigo of
       1400027: CodSiafi := '0026'; // Amajari/RR
       1400050: CodSiafi := '0305'; // Alto Alegre/RR
       1400100: CodSiafi := '0301'; // Boa Vista/RR
@@ -6948,12 +6950,12 @@ var
       1400506: CodSiafi := '0313'; // Sao Joao Da Baliza/RR
       1400605: CodSiafi := '0315'; // Sao Luiz/RR
       1400704: CodSiafi := '0038'; // Uiramuta/RR
-   end;//
- end;//
-//
- procedure P15;//
- begin//
-   case ACodigo of//
+   end;
+ end;
+
+ procedure P15;
+ begin
+   case ACodigo of
       1500107: CodSiafi := '0401'; // Abaetetuba/PA
       1500131: CodSiafi := '0375'; // Abel Figueiredo/PA
       1500206: CodSiafi := '0403'; // Acara/PA
@@ -7493,229 +7495,229 @@ var
  procedure P22;
  begin
    case ACodigo of
-      2200053: CodSiafi := '0266'; // Acaua/PI';
-      2200103: CodSiafi := '1001'; // Agricolandia/PI';
-      2200202: CodSiafi := '1003'; // Agua Branca/PI';
-      2200251: CodSiafi := '9767'; // Alagoinha Do Piaui/PI';
-      2200277: CodSiafi := '2269'; // Alegrete Do Piaui/PI';
-      2200301: CodSiafi := '1005'; // Alto Longa/PI';
-      2200400: CodSiafi := '1007'; // Altos/PI';
-      2200459: CodSiafi := '0268'; // Alvorada Do Gurgueia/PI';
-      2200509: CodSiafi := '1009'; // Amarante/PI';
-      2200608: CodSiafi := '1011'; // Angical Do Piaui/PI';
-      2200707: CodSiafi := '1013'; // Anisio De Abreu/PI';
-      2200806: CodSiafi := '1015'; // Antonio Almeida/PI';
-      2200905: CodSiafi := '1017'; // Aroazes/PI';
-      2200954: CodSiafi := '1188'; // Aroeiras Do Itaim/PI';
-      2201002: CodSiafi := '1019'; // Arraial/PI';
-      2201051: CodSiafi := '0270'; // Assuncao Do Piaui/PI';
-      2201101: CodSiafi := '1021'; // Avelino Lopes/PI';
-      2201150: CodSiafi := '2245'; // Baixa Grande Do Ribeiro/PI';
-      2201176: CodSiafi := '0272'; // Barra D Alcantara/PI';
-      2201200: CodSiafi := '1023'; // Barras/PI';
-      2201309: CodSiafi := '1025'; // Barreiras Do Piaui/PI';
-      2201408: CodSiafi := '1027'; // Barro Duro/PI';
-      2201507: CodSiafi := '1029'; // Batalha/PI';
-      2201556: CodSiafi := '0274'; // Bela Vista Do Piaui/PI';
-      2201572: CodSiafi := '0276'; // Belem Do Piaui/PI';
-      2201606: CodSiafi := '1031'; // Beneditinos/PI';
-      2201705: CodSiafi := '1033'; // Bertolinia/PI';
-      2201739: CodSiafi := '0278'; // Betania Do Piaui/PI';
-      2201770: CodSiafi := '0280'; // Boa Hora/PI';
-      2201804: CodSiafi := '1035'; // Bocaina/PI';
-      2201903: CodSiafi := '1037'; // Bom Jesus/PI';
-      2201919: CodSiafi := '2287'; // Bom Principio Do Piaui/PI';
-      2201929: CodSiafi := '2251'; // Bonfim Do Piaui/PI';
-      2201945: CodSiafi := '0282'; // Boqueirao Do Piaui/PI';
-      2201960: CodSiafi := '2283'; // Brasileira/PI';
-      2201988: CodSiafi := '0284'; // Brejo Do Piaui/PI';
-      2202000: CodSiafi := '1039'; // Buriti Dos Lopes/PI';
-      2202026: CodSiafi := '1297'; // Buriti Dos Montes/PI';
-      2202059: CodSiafi := '1299'; // Cabeceiras Do Piaui/PI';
-      2202075: CodSiafi := '0286'; // Cajazeiras Do Piaui/PI';
-      2202083: CodSiafi := '0288'; // Cajueiro Da Praia/PI';
-      2202091: CodSiafi := '2271'; // Caldeirao Grande Do Piaui/PI';
-      2202109: CodSiafi := '1041'; // Campinas Do Piaui/PI';
-      2202117: CodSiafi := '0290'; // Campo Alegre Do Fidalgo/PI';
-      2202133: CodSiafi := '0292'; // Campo Grande Do Piaui/PI';
-      2202174: CodSiafi := '0294'; // Campo Largo Do Piaui/PI';
-      2202208: CodSiafi := '1043'; // Campo Maior/PI';
-      2202251: CodSiafi := '2247'; // Canavieira/PI';
-      2202307: CodSiafi := '1045'; // Canto Do Buriti/PI';
-      2202406: CodSiafi := '1047'; // Capitao De Campos/PI';
-      2202455: CodSiafi := '0296'; // Capitao Gervasio Oliveira/PI';
-      2202505: CodSiafi := '1049'; // Caracol/PI';
-      2202539: CodSiafi := '0298'; // Caraubas Do Piaui/PI';
-      2202554: CodSiafi := '0300'; // Caridade Do Piaui/PI';
-      2202604: CodSiafi := '1051'; // Castelo Do Piaui/PI';
-      2202653: CodSiafi := '0302'; // Caxingo/PI';
-      2202703: CodSiafi := '1053'; // Cocal/PI';
-      2202711: CodSiafi := '0304'; // Cocal De Telha/PI';
-      2202729: CodSiafi := '0306'; // Cocal Dos Alves/PI';
-      2202737: CodSiafi := '0995'; // Coivaras/PI';
-      2202752: CodSiafi := '2249'; // Colonia Do Gurgueia/PI';
-      2202778: CodSiafi := '2253'; // Colonia Do Piaui/PI';
-      2202802: CodSiafi := '1055'; // Conceicao Do Caninde/PI';
-      2202851: CodSiafi := '2255'; // Coronel Jose Dias/PI';
-      2202901: CodSiafi := '1057'; // Corrente/PI';
-      2203008: CodSiafi := '1059'; // Cristalandia Do Piaui/PI';
-      2203107: CodSiafi := '1061'; // Cristino Castro/PI';
-      2203206: CodSiafi := '1063'; // Curimata/PI';
-      2203230: CodSiafi := '0308'; // Currais/PI';
-      2203255: CodSiafi := '0310'; // Curralinhos/PI';
-      2203271: CodSiafi := '0312'; // Curral Novo Do Piaui/PI';
-      2203305: CodSiafi := '1065'; // Demerval Lobao/PI';
-      2203354: CodSiafi := '1229'; // Dirceu Arcoverde/PI';
-      2203404: CodSiafi := '1067'; // Dom Expedito Lopes/PI';
-      2203420: CodSiafi := '1141'; // Domingos Mourao/PI';
-      2203453: CodSiafi := '1289'; // Dom Inocencio/PI';
-      2203503: CodSiafi := '1069'; // Elesbao Veloso/PI';
-      2203602: CodSiafi := '1071'; // Eliseu Martins/PI';
-      2203701: CodSiafi := '1073'; // Esperantina/PI';
-      2203750: CodSiafi := '2257'; // Fartura Do Piaui/PI';
-      2203800: CodSiafi := '1075'; // Flores Do Piaui/PI';
-      2203859: CodSiafi := '0314'; // Floresta Do Piaui/PI';
-      2203909: CodSiafi := '1077'; // Floriano/PI';
-      2204006: CodSiafi := '1079'; // Francinopolis/PI';
-      2204105: CodSiafi := '1081'; // Francisco Ayres/PI';
-      2204154: CodSiafi := '0316'; // Francisco Macedo/PI';
-      2204204: CodSiafi := '1083'; // Francisco Santos/PI';
-      2204303: CodSiafi := '1085'; // Fronteiras/PI';
-      2204352: CodSiafi := '0318'; // Geminiano/PI';
-      2204402: CodSiafi := '1087'; // Gilbues/PI';
-      2204501: CodSiafi := '1089'; // Guadalupe/PI';
-      2204550: CodSiafi := '0320'; // Guaribas/PI';
-      2204600: CodSiafi := '1091'; // Hugo Napoleao/PI';
-      2204659: CodSiafi := '0322'; // Ilha Grande/PI';
-      2204709: CodSiafi := '1093'; // Inhuma/PI';
-      2204808: CodSiafi := '1095'; // Ipiranga Do Piaui/PI';
-      2204907: CodSiafi := '1097'; // Isaias Coelho/PI';
-      2205003: CodSiafi := '1099'; // Itainopolis/PI';
-      2205102: CodSiafi := '1101'; // Itaueira/PI';
-      2205151: CodSiafi := '2273'; // Jacobina Do Piaui/PI';
-      2205201: CodSiafi := '1103'; // Jaicos/PI';
-      2205250: CodSiafi := '0997'; // Jardim Do Mulato/PI';
-      2205276: CodSiafi := '0324'; // Jatoba Do Piaui/PI';
-      2205300: CodSiafi := '1105'; // Jerumenha/PI';
-      2205359: CodSiafi := '0326'; // Joao Costa/PI';
-      2205409: CodSiafi := '1107'; // Joaquim Pires/PI';
-      2205458: CodSiafi := '0328'; // Joca Marques/PI';
-      2205508: CodSiafi := '1109'; // Jose De Freitas/PI';
-      2205516: CodSiafi := '0330'; // Juazeiro Do Piaui/PI';
-      2205524: CodSiafi := '0332'; // Julio Borges/PI';
-      2205532: CodSiafi := '0334'; // Jurema/PI';
-      2205540: CodSiafi := '0336'; // Lagoinha Do Piaui/PI';
-      2205557: CodSiafi := '0999'; // Lagoa Alegre/PI';
-      2205565: CodSiafi := '2259'; // Lagoa Do Barro Do Piaui/PI';
-      2205573: CodSiafi := '0338'; // Lagoa De Sao Francisco/PI';
-      2205581: CodSiafi := '0340'; // Lagoa Do Piaui/PI';
-      2205599: CodSiafi := '0342'; // Lagoa Do Sitio/PI';
-      2205607: CodSiafi := '1111'; // Landri Sales/PI';
-      2205706: CodSiafi := '1113'; // Luis Correia/PI';
-      2205805: CodSiafi := '1115'; // Luzilandia/PI';
-      2205854: CodSiafi := '0344'; // Madeiro/PI';
-      2205904: CodSiafi := '1117'; // Manoel Emidio/PI';
-      2205953: CodSiafi := '2275'; // Marcolandia/PI';
-      2206001: CodSiafi := '1119'; // Marcos Parente/PI';
-      2206050: CodSiafi := '0346'; // Massape Do Piaui/PI';
-      2206100: CodSiafi := '1121'; // Matias Olimpio/PI';
-      2206209: CodSiafi := '1123'; // Miguel Alves/PI';
-      2206308: CodSiafi := '1125'; // Miguel Leao/PI';
-      2206357: CodSiafi := '0348'; // Milton Brandao/PI';
-      2206407: CodSiafi := '1127'; // Monsenhor Gil/PI';
-      2206506: CodSiafi := '1129'; // Monsenhor Hipolito/PI';
-      2206605: CodSiafi := '1131'; // Monte Alegre Do Piaui/PI';
-      2206654: CodSiafi := '0350'; // Morro Cabeca No Tempo/PI';
-      2206670: CodSiafi := '0352'; // Morro Do Chapeu Do Piaui/PI';
-      2206696: CodSiafi := '0354'; // Murici Dos Portelas/PI';
-      2206704: CodSiafi := '1133'; // Nazare Do Piaui/PI';
-      2206753: CodSiafi := '0356'; // Nossa Senhora De Nazare/PI';
-      2206803: CodSiafi := '1135'; // Nossa Senhora Dos Remedios/PI';
-      2206902: CodSiafi := '1137'; // Novo Oriente Do Piaui/PI';
-      2206951: CodSiafi := '0358'; // Novo Santo Antonio/PI';
-      2207009: CodSiafi := '1139'; // Oeiras/PI';
-      2207108: CodSiafi := '0360'; // Olho D Agua Do Piaui/PI';
-      2207207: CodSiafi := '1143'; // Padre Marcos/PI';
-      2207306: CodSiafi := '1145'; // Paes Landim/PI';
-      2207355: CodSiafi := '0362'; // Pajeu Do Piaui/PI';
-      2207405: CodSiafi := '1147'; // Palmeira Do Piaui/PI';
-      2207504: CodSiafi := '1149'; // Palmeirais/PI';
-      2207553: CodSiafi := '0364'; // Paqueta/PI';
-      2207603: CodSiafi := '1151'; // Parnagua/PI';
-      2207702: CodSiafi := '1153'; // Parnaiba/PI';
-      2207751: CodSiafi := '1293'; // Passagem Franca Do Piaui/PI';
-      2207777: CodSiafi := '2277'; // Patos Do Piaui/PI';
-      2207793: CodSiafi := '1104'; // Pau D Arco Do Piaui/PI';
-      2207801: CodSiafi := '1155'; // Paulistana/PI';
-      2207850: CodSiafi := '0366'; // Pavussu/PI';
-      2207900: CodSiafi := '1157'; // Pedro Ii/PI';
-      2207934: CodSiafi := '0368'; // Pedro Laurentino/PI';
-      2207959: CodSiafi := '0370'; // Nova Santa Rita/PI';
-      2208007: CodSiafi := '1159'; // Picos/PI';
-      2208106: CodSiafi := '1161'; // Pimenteiras/PI';
-      2208205: CodSiafi := '1163'; // Pio Ix/PI';
-      2208304: CodSiafi := '1165'; // Piracuruca/PI';
-      2208403: CodSiafi := '1167'; // Piripiri/PI';
-      2208502: CodSiafi := '1169'; // Porto/PI';
-      2208551: CodSiafi := '0372'; // Porto Alegre Do Piaui/PI';
-      2208601: CodSiafi := '1171'; // Prata Do Piaui/PI';
-      2208650: CodSiafi := '2279'; // Queimada Nova/PI';
-      2208700: CodSiafi := '1173'; // Redencao Do Gurgueia/PI';
-      2208809: CodSiafi := '1175'; // Regeneracao/PI';
-      2208858: CodSiafi := '0374'; // Riacho Frio/PI';
-      2208874: CodSiafi := '0376'; // Ribeira Do Piaui/PI';
-      2208908: CodSiafi := '1177'; // Ribeiro Goncalves/PI';
-      2209005: CodSiafi := '1179'; // Rio Grande Do Piaui/PI';
-      2209104: CodSiafi := '1181'; // Santa Cruz Do Piaui/PI';
-      2209153: CodSiafi := '1295'; // Santa Cruz Dos Milagres/PI';
-      2209203: CodSiafi := '1183'; // Santa Filomena/PI';
-      2209302: CodSiafi := '1185'; // Santa Luz/PI';
-      2209351: CodSiafi := '2281'; // Santana Do Piaui/PI';
-      2209377: CodSiafi := '2261'; // Santa Rosa Do Piaui/PI';
-      2209401: CodSiafi := '1187'; // Santo Antonio De Lisboa/PI';
-      2209450: CodSiafi := '0378'; // Santo Antonio Dos Milagres/PI';
-      2209500: CodSiafi := '1189'; // Santo Inacio Do Piaui/PI';
-      2209559: CodSiafi := '2263'; // Sao Braz Do Piaui/PI';
-      2209609: CodSiafi := '1191'; // Sao Felix Do Piaui/PI';
-      2209658: CodSiafi := '0380'; // Sao Francisco De Assis Do Piaui/PI';
-      2209708: CodSiafi := '1193'; // Sao Francisco Do Piaui/PI';
-      2209757: CodSiafi := '0382'; // Sao Goncalo Do Gurgueia/PI';
-      2209807: CodSiafi := '1195'; // Sao Goncalo Do Piaui/PI';
-      2209856: CodSiafi := '1291'; // Sao Joao Da Canabrava/PI';
-      2209872: CodSiafi := '0384'; // Sao Joao Da Fronteira/PI';
-      2209906: CodSiafi := '1197'; // Sao Joao Da Serra/PI';
-      2209955: CodSiafi := '0386'; // Sao Joao Da Varjota/PI';
-      2209971: CodSiafi := '0388'; // Sao Joao Do Arraial/PI';
-      2210003: CodSiafi := '1199'; // Sao Joao Do Piaui/PI';
-      2210052: CodSiafi := '2285'; // Sao Jose Do Divino/PI';
-      2210102: CodSiafi := '1201'; // Sao Jose Do Peixe/PI';
-      2210201: CodSiafi := '1203'; // Sao Jose Do Piaui/PI';
-      2210300: CodSiafi := '1205'; // Sao Juliao/PI';
-      2210359: CodSiafi := '2265'; // Sao Lourenco Do Piaui/PI';
-      2210375: CodSiafi := '0390'; // Sao Luis Do Piaui/PI';
-      2210383: CodSiafi := '0392'; // Sao Miguel Da Baixa Grande/PI';
-      2210391: CodSiafi := '0394'; // Sao Miguel Do Fidalgo/PI';
-      2210409: CodSiafi := '1207'; // Sao Miguel Do Tapuio/PI';
-      2210508: CodSiafi := '1209'; // Sao Pedro Do Piaui/PI';
-      2210607: CodSiafi := '1211'; // Sao Raimundo Nonato/PI';
-      2210623: CodSiafi := '0396'; // Sebastiao Barros/PI';
-      2210631: CodSiafi := '0398'; // Sebastiao Leal/PI';
-      2210656: CodSiafi := '1379'; // Sigefredo Pacheco/PI';
-      2210706: CodSiafi := '1213'; // Simoes/PI';
-      2210805: CodSiafi := '1215'; // Simplicio Mendes/PI';
-      2210904: CodSiafi := '1217'; // Socorro Do Piaui/PI';
-      2210938: CodSiafi := '0400'; // Sussuapara/PI';
-      2210953: CodSiafi := '0402'; // Tamboril Do Piaui/PI';
-      2210979: CodSiafi := '0404'; // Tanque Do Piaui/PI';
-      2211001: CodSiafi := '1219'; // Teresina/PI';
-      2211100: CodSiafi := '1221'; // Uniao/PI';
-      2211209: CodSiafi := '1223'; // Urucui/PI';
-      2211308: CodSiafi := '1225'; // Valenca Do Piaui/PI';
-      2211357: CodSiafi := '2267'; // Varzea Branca/PI';
-      2211407: CodSiafi := '1227'; // Varzea Grande/PI';
-      2211506: CodSiafi := '0406'; // Vera Mendes/PI';
-      2211605: CodSiafi := '0408'; // Vila Nova Do Piaui/PI';
-      2211704: CodSiafi := '0410'; // Wall Ferraz/PI';
+      2200053: CodSiafi := '0266'; // Acaua/PI
+      2200103: CodSiafi := '1001'; // Agricolandia/PI
+      2200202: CodSiafi := '1003'; // Agua Branca/PI
+      2200251: CodSiafi := '9767'; // Alagoinha Do Piaui/PI
+      2200277: CodSiafi := '2269'; // Alegrete Do Piaui/PI
+      2200301: CodSiafi := '1005'; // Alto Longa/PI
+      2200400: CodSiafi := '1007'; // Altos/PI
+      2200459: CodSiafi := '0268'; // Alvorada Do Gurgueia/PI
+      2200509: CodSiafi := '1009'; // Amarante/PI
+      2200608: CodSiafi := '1011'; // Angical Do Piaui/PI
+      2200707: CodSiafi := '1013'; // Anisio De Abreu/PI
+      2200806: CodSiafi := '1015'; // Antonio Almeida/PI
+      2200905: CodSiafi := '1017'; // Aroazes/PI
+      2200954: CodSiafi := '1188'; // Aroeiras Do Itaim/PI
+      2201002: CodSiafi := '1019'; // Arraial/PI
+      2201051: CodSiafi := '0270'; // Assuncao Do Piaui/PI
+      2201101: CodSiafi := '1021'; // Avelino Lopes/PI
+      2201150: CodSiafi := '2245'; // Baixa Grande Do Ribeiro/PI
+      2201176: CodSiafi := '0272'; // Barra D Alcantara/PI
+      2201200: CodSiafi := '1023'; // Barras/PI
+      2201309: CodSiafi := '1025'; // Barreiras Do Piaui/PI
+      2201408: CodSiafi := '1027'; // Barro Duro/PI
+      2201507: CodSiafi := '1029'; // Batalha/PI
+      2201556: CodSiafi := '0274'; // Bela Vista Do Piaui/PI
+      2201572: CodSiafi := '0276'; // Belem Do Piaui/PI
+      2201606: CodSiafi := '1031'; // Beneditinos/PI
+      2201705: CodSiafi := '1033'; // Bertolinia/PI
+      2201739: CodSiafi := '0278'; // Betania Do Piaui/PI
+      2201770: CodSiafi := '0280'; // Boa Hora/PI
+      2201804: CodSiafi := '1035'; // Bocaina/PI
+      2201903: CodSiafi := '1037'; // Bom Jesus/PI
+      2201919: CodSiafi := '2287'; // Bom Principio Do Piaui/PI
+      2201929: CodSiafi := '2251'; // Bonfim Do Piaui/PI
+      2201945: CodSiafi := '0282'; // Boqueirao Do Piaui/PI
+      2201960: CodSiafi := '2283'; // Brasileira/PI
+      2201988: CodSiafi := '0284'; // Brejo Do Piaui/PI
+      2202000: CodSiafi := '1039'; // Buriti Dos Lopes/PI
+      2202026: CodSiafi := '1297'; // Buriti Dos Montes/PI
+      2202059: CodSiafi := '1299'; // Cabeceiras Do Piaui/PI
+      2202075: CodSiafi := '0286'; // Cajazeiras Do Piaui/PI
+      2202083: CodSiafi := '0288'; // Cajueiro Da Praia/PI
+      2202091: CodSiafi := '2271'; // Caldeirao Grande Do Piaui/PI
+      2202109: CodSiafi := '1041'; // Campinas Do Piaui/PI
+      2202117: CodSiafi := '0290'; // Campo Alegre Do Fidalgo/PI
+      2202133: CodSiafi := '0292'; // Campo Grande Do Piaui/PI
+      2202174: CodSiafi := '0294'; // Campo Largo Do Piaui/PI
+      2202208: CodSiafi := '1043'; // Campo Maior/PI
+      2202251: CodSiafi := '2247'; // Canavieira/PI
+      2202307: CodSiafi := '1045'; // Canto Do Buriti/PI
+      2202406: CodSiafi := '1047'; // Capitao De Campos/PI
+      2202455: CodSiafi := '0296'; // Capitao Gervasio Oliveira/PI
+      2202505: CodSiafi := '1049'; // Caracol/PI
+      2202539: CodSiafi := '0298'; // Caraubas Do Piaui/PI
+      2202554: CodSiafi := '0300'; // Caridade Do Piaui/PI
+      2202604: CodSiafi := '1051'; // Castelo Do Piaui/PI
+      2202653: CodSiafi := '0302'; // Caxingo/PI
+      2202703: CodSiafi := '1053'; // Cocal/PI
+      2202711: CodSiafi := '0304'; // Cocal De Telha/PI
+      2202729: CodSiafi := '0306'; // Cocal Dos Alves/PI
+      2202737: CodSiafi := '0995'; // Coivaras/PI
+      2202752: CodSiafi := '2249'; // Colonia Do Gurgueia/PI
+      2202778: CodSiafi := '2253'; // Colonia Do Piaui/PI
+      2202802: CodSiafi := '1055'; // Conceicao Do Caninde/PI
+      2202851: CodSiafi := '2255'; // Coronel Jose Dias/PI
+      2202901: CodSiafi := '1057'; // Corrente/PI
+      2203008: CodSiafi := '1059'; // Cristalandia Do Piaui/PI
+      2203107: CodSiafi := '1061'; // Cristino Castro/PI
+      2203206: CodSiafi := '1063'; // Curimata/PI
+      2203230: CodSiafi := '0308'; // Currais/PI
+      2203255: CodSiafi := '0310'; // Curralinhos/PI
+      2203271: CodSiafi := '0312'; // Curral Novo Do Piaui/PI
+      2203305: CodSiafi := '1065'; // Demerval Lobao/PI
+      2203354: CodSiafi := '1229'; // Dirceu Arcoverde/PI
+      2203404: CodSiafi := '1067'; // Dom Expedito Lopes/PI
+      2203420: CodSiafi := '1141'; // Domingos Mourao/PI
+      2203453: CodSiafi := '1289'; // Dom Inocencio/PI
+      2203503: CodSiafi := '1069'; // Elesbao Veloso/PI
+      2203602: CodSiafi := '1071'; // Eliseu Martins/PI
+      2203701: CodSiafi := '1073'; // Esperantina/PI
+      2203750: CodSiafi := '2257'; // Fartura Do Piaui/PI
+      2203800: CodSiafi := '1075'; // Flores Do Piaui/PI
+      2203859: CodSiafi := '0314'; // Floresta Do Piaui/PI
+      2203909: CodSiafi := '1077'; // Floriano/PI
+      2204006: CodSiafi := '1079'; // Francinopolis/PI
+      2204105: CodSiafi := '1081'; // Francisco Ayres/PI
+      2204154: CodSiafi := '0316'; // Francisco Macedo/PI
+      2204204: CodSiafi := '1083'; // Francisco Santos/PI
+      2204303: CodSiafi := '1085'; // Fronteiras/PI
+      2204352: CodSiafi := '0318'; // Geminiano/PI
+      2204402: CodSiafi := '1087'; // Gilbues/PI
+      2204501: CodSiafi := '1089'; // Guadalupe/PI
+      2204550: CodSiafi := '0320'; // Guaribas/PI
+      2204600: CodSiafi := '1091'; // Hugo Napoleao/PI
+      2204659: CodSiafi := '0322'; // Ilha Grande/PI
+      2204709: CodSiafi := '1093'; // Inhuma/PI
+      2204808: CodSiafi := '1095'; // Ipiranga Do Piaui/PI
+      2204907: CodSiafi := '1097'; // Isaias Coelho/PI
+      2205003: CodSiafi := '1099'; // Itainopolis/PI
+      2205102: CodSiafi := '1101'; // Itaueira/PI
+      2205151: CodSiafi := '2273'; // Jacobina Do Piaui/PI
+      2205201: CodSiafi := '1103'; // Jaicos/PI
+      2205250: CodSiafi := '0997'; // Jardim Do Mulato/PI
+      2205276: CodSiafi := '0324'; // Jatoba Do Piaui/PI
+      2205300: CodSiafi := '1105'; // Jerumenha/PI
+      2205359: CodSiafi := '0326'; // Joao Costa/PI
+      2205409: CodSiafi := '1107'; // Joaquim Pires/PI
+      2205458: CodSiafi := '0328'; // Joca Marques/PI
+      2205508: CodSiafi := '1109'; // Jose De Freitas/PI
+      2205516: CodSiafi := '0330'; // Juazeiro Do Piaui/PI
+      2205524: CodSiafi := '0332'; // Julio Borges/PI
+      2205532: CodSiafi := '0334'; // Jurema/PI
+      2205540: CodSiafi := '0336'; // Lagoinha Do Piaui/PI
+      2205557: CodSiafi := '0999'; // Lagoa Alegre/PI
+      2205565: CodSiafi := '2259'; // Lagoa Do Barro Do Piaui/PI
+      2205573: CodSiafi := '0338'; // Lagoa De Sao Francisco/PI
+      2205581: CodSiafi := '0340'; // Lagoa Do Piaui/PI
+      2205599: CodSiafi := '0342'; // Lagoa Do Sitio/PI
+      2205607: CodSiafi := '1111'; // Landri Sales/PI
+      2205706: CodSiafi := '1113'; // Luis Correia/PI
+      2205805: CodSiafi := '1115'; // Luzilandia/PI
+      2205854: CodSiafi := '0344'; // Madeiro/PI
+      2205904: CodSiafi := '1117'; // Manoel Emidio/PI
+      2205953: CodSiafi := '2275'; // Marcolandia/PI
+      2206001: CodSiafi := '1119'; // Marcos Parente/PI
+      2206050: CodSiafi := '0346'; // Massape Do Piaui/PI
+      2206100: CodSiafi := '1121'; // Matias Olimpio/PI
+      2206209: CodSiafi := '1123'; // Miguel Alves/PI
+      2206308: CodSiafi := '1125'; // Miguel Leao/PI
+      2206357: CodSiafi := '0348'; // Milton Brandao/PI
+      2206407: CodSiafi := '1127'; // Monsenhor Gil/PI
+      2206506: CodSiafi := '1129'; // Monsenhor Hipolito/PI
+      2206605: CodSiafi := '1131'; // Monte Alegre Do Piaui/PI
+      2206654: CodSiafi := '0350'; // Morro Cabeca No Tempo/PI
+      2206670: CodSiafi := '0352'; // Morro Do Chapeu Do Piaui/PI
+      2206696: CodSiafi := '0354'; // Murici Dos Portelas/PI
+      2206704: CodSiafi := '1133'; // Nazare Do Piaui/PI
+      2206753: CodSiafi := '0356'; // Nossa Senhora De Nazare/PI
+      2206803: CodSiafi := '1135'; // Nossa Senhora Dos Remedios/PI
+      2206902: CodSiafi := '1137'; // Novo Oriente Do Piaui/PI
+      2206951: CodSiafi := '0358'; // Novo Santo Antonio/PI
+      2207009: CodSiafi := '1139'; // Oeiras/PI
+      2207108: CodSiafi := '0360'; // Olho D Agua Do Piaui/PI
+      2207207: CodSiafi := '1143'; // Padre Marcos/PI
+      2207306: CodSiafi := '1145'; // Paes Landim/PI
+      2207355: CodSiafi := '0362'; // Pajeu Do Piaui/PI
+      2207405: CodSiafi := '1147'; // Palmeira Do Piaui/PI
+      2207504: CodSiafi := '1149'; // Palmeirais/PI
+      2207553: CodSiafi := '0364'; // Paqueta/PI
+      2207603: CodSiafi := '1151'; // Parnagua/PI
+      2207702: CodSiafi := '1153'; // Parnaiba/PI
+      2207751: CodSiafi := '1293'; // Passagem Franca Do Piaui/PI
+      2207777: CodSiafi := '2277'; // Patos Do Piaui/PI
+      2207793: CodSiafi := '1104'; // Pau D Arco Do Piaui/PI
+      2207801: CodSiafi := '1155'; // Paulistana/PI
+      2207850: CodSiafi := '0366'; // Pavussu/PI
+      2207900: CodSiafi := '1157'; // Pedro Ii/PI
+      2207934: CodSiafi := '0368'; // Pedro Laurentino/PI
+      2207959: CodSiafi := '0370'; // Nova Santa Rita/PI
+      2208007: CodSiafi := '1159'; // Picos/PI
+      2208106: CodSiafi := '1161'; // Pimenteiras/PI
+      2208205: CodSiafi := '1163'; // Pio Ix/PI
+      2208304: CodSiafi := '1165'; // Piracuruca/PI
+      2208403: CodSiafi := '1167'; // Piripiri/PI
+      2208502: CodSiafi := '1169'; // Porto/PI
+      2208551: CodSiafi := '0372'; // Porto Alegre Do Piaui/PI
+      2208601: CodSiafi := '1171'; // Prata Do Piaui/PI
+      2208650: CodSiafi := '2279'; // Queimada Nova/PI
+      2208700: CodSiafi := '1173'; // Redencao Do Gurgueia/PI
+      2208809: CodSiafi := '1175'; // Regeneracao/PI
+      2208858: CodSiafi := '0374'; // Riacho Frio/PI
+      2208874: CodSiafi := '0376'; // Ribeira Do Piaui/PI
+      2208908: CodSiafi := '1177'; // Ribeiro Goncalves/PI
+      2209005: CodSiafi := '1179'; // Rio Grande Do Piaui/PI
+      2209104: CodSiafi := '1181'; // Santa Cruz Do Piaui/PI
+      2209153: CodSiafi := '1295'; // Santa Cruz Dos Milagres/PI
+      2209203: CodSiafi := '1183'; // Santa Filomena/PI
+      2209302: CodSiafi := '1185'; // Santa Luz/PI
+      2209351: CodSiafi := '2281'; // Santana Do Piaui/PI
+      2209377: CodSiafi := '2261'; // Santa Rosa Do Piaui/PI
+      2209401: CodSiafi := '1187'; // Santo Antonio De Lisboa/PI
+      2209450: CodSiafi := '0378'; // Santo Antonio Dos Milagres/PI
+      2209500: CodSiafi := '1189'; // Santo Inacio Do Piaui/PI
+      2209559: CodSiafi := '2263'; // Sao Braz Do Piaui/PI
+      2209609: CodSiafi := '1191'; // Sao Felix Do Piaui/PI
+      2209658: CodSiafi := '0380'; // Sao Francisco De Assis Do Piaui/PI
+      2209708: CodSiafi := '1193'; // Sao Francisco Do Piaui/PI
+      2209757: CodSiafi := '0382'; // Sao Goncalo Do Gurgueia/PI
+      2209807: CodSiafi := '1195'; // Sao Goncalo Do Piaui/PI
+      2209856: CodSiafi := '1291'; // Sao Joao Da Canabrava/PI
+      2209872: CodSiafi := '0384'; // Sao Joao Da Fronteira/PI
+      2209906: CodSiafi := '1197'; // Sao Joao Da Serra/PI
+      2209955: CodSiafi := '0386'; // Sao Joao Da Varjota/PI
+      2209971: CodSiafi := '0388'; // Sao Joao Do Arraial/PI
+      2210003: CodSiafi := '1199'; // Sao Joao Do Piaui/PI
+      2210052: CodSiafi := '2285'; // Sao Jose Do Divino/PI
+      2210102: CodSiafi := '1201'; // Sao Jose Do Peixe/PI
+      2210201: CodSiafi := '1203'; // Sao Jose Do Piaui/PI
+      2210300: CodSiafi := '1205'; // Sao Juliao/PI
+      2210359: CodSiafi := '2265'; // Sao Lourenco Do Piaui/PI
+      2210375: CodSiafi := '0390'; // Sao Luis Do Piaui/PI
+      2210383: CodSiafi := '0392'; // Sao Miguel Da Baixa Grande/PI
+      2210391: CodSiafi := '0394'; // Sao Miguel Do Fidalgo/PI
+      2210409: CodSiafi := '1207'; // Sao Miguel Do Tapuio/PI
+      2210508: CodSiafi := '1209'; // Sao Pedro Do Piaui/PI
+      2210607: CodSiafi := '1211'; // Sao Raimundo Nonato/PI
+      2210623: CodSiafi := '0396'; // Sebastiao Barros/PI
+      2210631: CodSiafi := '0398'; // Sebastiao Leal/PI
+      2210656: CodSiafi := '1379'; // Sigefredo Pacheco/PI
+      2210706: CodSiafi := '1213'; // Simoes/PI
+      2210805: CodSiafi := '1215'; // Simplicio Mendes/PI
+      2210904: CodSiafi := '1217'; // Socorro Do Piaui/PI
+      2210938: CodSiafi := '0400'; // Sussuapara/PI
+      2210953: CodSiafi := '0402'; // Tamboril Do Piaui/PI
+      2210979: CodSiafi := '0404'; // Tanque Do Piaui/PI
+      2211001: CodSiafi := '1219'; // Teresina/PI
+      2211100: CodSiafi := '1221'; // Uniao/PI
+      2211209: CodSiafi := '1223'; // Urucui/PI
+      2211308: CodSiafi := '1225'; // Valenca Do Piaui/PI
+      2211357: CodSiafi := '2267'; // Varzea Branca/PI
+      2211407: CodSiafi := '1227'; // Varzea Grande/PI
+      2211506: CodSiafi := '0406'; // Vera Mendes/PI
+      2211605: CodSiafi := '0408'; // Vila Nova Do Piaui/PI
+      2211704: CodSiafi := '0410'; // Wall Ferraz/PI
    end;
  end;
 
@@ -18125,7 +18127,7 @@ end;
 
 function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [stRetencao, stNormal, stSubstituicao]);
 end;
@@ -18134,13 +18136,13 @@ function StrToSituacaoTributaria(out ok: boolean; const s: string; const provedo
 begin
   if provedor = proCenti then
   begin
-    result := StrToEnumerado(ok, s,
+    Result := StrToEnumerado(ok, s,
                              ['0', '1', '2'],
                              [stNormal, stRetencao, stSubstituicao]);
   end
   else
   begin
-    result := StrToEnumerado(ok, s,
+    Result := StrToEnumerado(ok, s,
                              ['1', '2', '3'],
                              [stRetencao, stNormal, stSubstituicao]);
   end;
@@ -18148,14 +18150,14 @@ end;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [ptTomador, rtPrestador]);
 end;
 
 function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', ''],
                            [ptTomador, rtPrestador, rtPrestador]);
 end;
@@ -18164,14 +18166,14 @@ end;
 
 function TipoEmissaoToStr(const t: TTipoEmissao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['N', 'C'],
                            [teNormalNFSe, teContigenciaNFSe]);
 end;
 
 function StrToTipoEmissao(out ok: boolean; const s: string): TTipoEmissao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['N', 'C'],
                            [teNormalNFSe, teContigenciaNFSe]);
 end;
@@ -18180,14 +18182,14 @@ end;
 
 function EmpreitadaGlobalToStr(const t: TEmpreitadaGlobal): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [EgConstrucaoCivil, EgOutros]);
 end;
 
 function StrToEmpreitadaGlobal(out ok: boolean; const s: string): TEmpreitadaGlobal;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [EgConstrucaoCivil, EgOutros]);
 end;
@@ -18198,7 +18200,7 @@ var
   PathArquivo: string;
   List: TstringList;
 begin
-  result := '';
+  Result := '';
   PathArquivo := PathWithDelim(ExtractFilePath(ParamStr(0))) + 'TabServicos.txt';
 
   if (FileExists(PathArquivo)) and (cCodigo <> '') then
@@ -18209,10 +18211,10 @@ begin
       List.LoadFromFile(PathArquivo);
       i := 0;
 
-      while (i < list.count) and (result = '') do
+      while (i < list.count) and (Result = '') do
       begin
         if pos(cCodigo, List[i]) > 0 then
-          result := Trim(stringReplace(list[i], ccodigo, '', []));
+          Result := Trim(stringReplace(list[i], ccodigo, '', []));
         inc(i);
       end;
     finally
@@ -18275,7 +18277,7 @@ begin
     XML := stringReplace(XML, 'R$', '', [rfReplaceAll]);
   end;
 
-  result := XML;
+  Result := XML;
 end;
 
 function VersaoXML(const AXML: string): string;
@@ -18285,9 +18287,9 @@ begin
   i := Pos('<Cidade>', AXML);
 
   if i > 0 then
-    result := '1'
+    Result := '1'
   else
-    result := '2';
+    Result := '2';
 end;
 
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: string;
@@ -18628,9 +18630,9 @@ end;
 function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string;
 begin
   case t of
-    stRetencao    : result := '1 - Sim' ;
-    stNormal      : result := '2 - Não' ;
-    stSubstituicao: result := '3 - Substituição' ;
+    stRetencao    : Result := '1 - Sim' ;
+    stNormal      : Result := '2 - Não' ;
+    stSubstituicao: Result := '3 - Substituição' ;
   else
     Result := '';
   end;
@@ -18639,8 +18641,8 @@ end;
 function SimNao(const t: Integer): string;
 begin
   case t of
-    0: result := 'Sim' ;
-    1: result := 'Não' ;
+    0: Result := 'Sim' ;
+    1: Result := 'Não' ;
   else
     Result := '';
   end;
@@ -18673,21 +18675,21 @@ end;
 
 function TipoFreteToStr(const t: TnfseFrete): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['0', '1'],
                            [tfPrestador, tfTomador]);
 end;
 
 function StrToTipoFrete(out ok: boolean; const s: string): TnfseFrete;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                           ['0', '1'],
                           [tfPrestador, tfTomador]);
 end;
 
 function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
                            [ttTribnoMun, ttTribforaMun,
                             ttTribnoMunIsento, ttTribforaMunIsento,
@@ -18698,7 +18700,7 @@ end;
 
 function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
                            [ttTribnoMun, ttTribforaMun,
                             ttTribnoMunIsento, ttTribforaMunIsento,
@@ -18709,21 +18711,21 @@ end;
 
 function CanhotoToStr(const t: TnfseCanhoto): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['0', '1', '2'],
                            [tcNenhum, tcCabecalho, tcRodape]);
 end;
 
 function StrToCanhoto(out ok: boolean; const s: string): TnfseCanhoto;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['0', '1', '2'],
                            [tcNenhum, tcCabecalho, tcRodape]);
 end;
 
 function RegRecToStr(const t: TRegRec): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['', '00', '02', '03', '04', '07', '08', '09', '11', '12'],
                            [regNenhum, regMovimento, regCancelado, regIsento,
                             regImune, regNaoIncidencia, regEstimativa,
@@ -18732,7 +18734,7 @@ end;
 
 function StrToRegRec(out ok: boolean; const s: string): TRegRec;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['', '00', '02', '03', '04', '07', '08', '09', '11', '12'],
                            [regNenhum, regMovimento, regCancelado, regIsento,
                             regImune, regNaoIncidencia, regEstimativa,
@@ -18741,7 +18743,7 @@ end;
 
 function FrmRecToStr(const t: TFrmRec): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['','00', '01', '03', '04', '05', '06', '07'],
                            [frmNenhum, frmNormal, frmRetidoNaFonte,
                             frmSimplesNacional, frmFixoAnual, frmSemRecolhimento,
@@ -18750,7 +18752,7 @@ end;
 
 function StrToFrmRec(out ok: boolean; const s: string): TFrmRec;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['', '00', '01', '03', '04', '05', '06', '07'],
                            [frmNenhum, frmNormal, frmRetidoNaFonte,
                             frmSimplesNacional, frmFixoAnual, frmSemRecolhimento,
@@ -18759,7 +18761,7 @@ end;
 
 function OperacaoToStr(const t: TOperacao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['A', 'B', 'C', 'D', 'J'],
                            [toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
                             toDevolucaoSimplesRemessa, toIntermediacao]);
@@ -18767,7 +18769,7 @@ end;
 
 function StrToOperacao(out ok: boolean; const s: string): TOperacao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['A', 'B', 'C', 'D', 'J'],
                            [toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
                             toDevolucaoSimplesRemessa, toIntermediacao]);
@@ -18775,7 +18777,7 @@ end;
 
 function TributacaoToStr(const t: TTributacao): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
                            [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
                             ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
@@ -18784,7 +18786,7 @@ end;
 
 function StrToTributacao(out ok: boolean; const s: string): TTributacao;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
                            [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
                             ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
@@ -18797,19 +18799,19 @@ var
 begin
   XML := stringReplace(AXML, ' xml:lang="pt-BR"', '', [rfReplaceAll]);
 
-  result := XML;
+  Result := XML;
 end;
 
 function UnidadeToStr(const t: TUnidade): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [tuHora, tuQtde]);
 end;
 
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tuHora, tuQtde]);
 end;
@@ -18898,7 +18900,7 @@ end;
 
 function SituacaoTribToStr(const t: TSituacaoTrib): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['tp', 'tt', 'is', 'im', 'nt'],
                            [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
                             tsImune, tsNaoTributada]);
@@ -18906,7 +18908,7 @@ end;
 
 function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['tp', 'tt', 'is', 'im', 'nt'],
                            [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
                             tsImune, tsNaoTributada]);
@@ -18914,7 +18916,7 @@ end;
 
 function TipoPessoaToStr(const t: TTipoPessoa): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
                            [tpPFNaoIdentificaca, tpPF, tpPJdoMunicipio,
                             tpPJforaMunicipio, tpPJforaPais]);
@@ -18922,7 +18924,7 @@ end;
 
 function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
                            [tpPFNaoIdentificaca, tpPF, tpPJdoMunicipio,
                             tpPJforaMunicipio, tpPJforaPais]);
@@ -18930,7 +18932,7 @@ end;
 
 function tpConsultaToStr(const t: TtpConsulta): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
                             tcServicoPrestado, tcServicoTomado,
@@ -18939,7 +18941,7 @@ end;
 
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
                             tcServicoPrestado, tcServicoTomado,
@@ -18948,21 +18950,21 @@ end;
 
 function tpPeriodoToStr(const t: TtpPeriodo): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                            ['1', '2'],
                            [tpEmissao, tpCompetencia]);
 end;
 
 function StrTotpPeriodo(out ok: boolean; const s: string): TtpPeriodo;
 begin
-  result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tpEmissao, tpCompetencia]);
 end;
 
 function MetodoToStr(const t: TMetodo): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                        ['Recepcionar', 'ConsultarSituacao', 'ConsultarLote',
                         'ConsultarNFSePorRps', 'ConsultarNFSe', 'ConsultarNFSeURL',
                         'ConsultarNFSePorFaixa', 'ConsultarNFSeServicoPrestado',
@@ -18979,7 +18981,7 @@ end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
 begin
-  result := EnumeradoToStr(t,
+  Result := EnumeradoToStr(t,
                        ['Automatico', 'Enviar Lote', 'Enviar Lote Síncrono',
                         'Gerar NFSe', 'Teste de Envio de Lote'],
                        [meAutomatico, meLoteAssincrono, meLoteSincrono,

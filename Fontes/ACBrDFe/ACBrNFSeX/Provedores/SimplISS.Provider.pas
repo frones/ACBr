@@ -406,12 +406,7 @@ begin
     VersaoAtrib := '2.03';
   end;
 
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="2.03" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                      '<versaoDados>2.03</versaoDados>' +
-                      '</cabecalho>';
-  end;
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
 function TACBrNFSeProviderSimplISSv2.CriarGeradorXml(

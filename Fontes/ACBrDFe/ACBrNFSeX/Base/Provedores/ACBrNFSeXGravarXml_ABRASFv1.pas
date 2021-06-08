@@ -223,7 +223,7 @@ var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
-//  Configuracao;
+  // Configuracao;
 
   ListaDeAlertas.Clear;
 
@@ -249,7 +249,7 @@ begin
 
   DefinirIDRps;
 
-  if (FAOwner.ConfigGeral.Identificador <> '') {italo and ConfigGeral.GerarIDInfRps} then
+  if (FAOwner.ConfigGeral.Identificador <> '') then
     Result.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.infID.ID);
 
   Result.AppendChild(GerarIdentificacaoRPS);

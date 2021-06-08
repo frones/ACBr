@@ -168,9 +168,8 @@ type
 implementation
 
 uses
-  ACBrNFSeX, ACBrUtil, synautil, IniFiles,
-  ACBrNFSeXInterface;
-
+  ACBrUtil, synautil, IniFiles,
+  ACBrNFSeX, ACBrNFSeXInterface;
 
 function CompRPSPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -504,7 +503,7 @@ begin
       Verificar a necessidade de gerar o Xml logo após ler o arquivo ini,
       ou deixar para gerar pelo método Emitir.
     }
-    GerarXML; // ?????
+//    GerarXML; // ?????
 
     Result := True;
   finally

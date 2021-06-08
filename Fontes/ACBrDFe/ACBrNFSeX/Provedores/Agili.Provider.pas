@@ -692,7 +692,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '999';
-    AErro.Descricao := 'Numero Inicial da NFSe não informada.';
+    AErro.Descricao := 'Numero Inicial da NFSe não informado.';
     Exit;
   end;
 
@@ -700,7 +700,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '999';
-    AErro.Descricao := 'Numero Final da NFSe não informada.';
+    AErro.Descricao := 'Numero Final da NFSe não informado.';
     Exit;
   end;
 

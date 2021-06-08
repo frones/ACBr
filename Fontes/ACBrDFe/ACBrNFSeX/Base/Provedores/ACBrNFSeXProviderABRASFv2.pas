@@ -125,8 +125,7 @@ begin
       DocElemento := 'Rps';
     end;
 
-    DadosCabecalho := '<cabecalho versao="2.00" xmlns="' + NameSpace + '">' +
-                      '<versaoDados>2.00</versaoDados></cabecalho>';
+    DadosCabecalho := GetCabecalho('');
 
     GerarNSLoteRps := False;
   end;
@@ -530,7 +529,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '999';
-    AErro.Descricao := 'Número da RPS não informado.';
+    AErro.Descricao := 'Número do RPS não informado.';
     Exit;
   end;
 

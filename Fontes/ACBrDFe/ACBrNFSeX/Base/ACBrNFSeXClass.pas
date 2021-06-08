@@ -84,133 +84,133 @@ type
 
   TValoresNfse = class(TObject)
   private
-    FBaseCalculo: Currency;
+    FBaseCalculo: Double;
     FAliquota: Double;
-    FValorIss: Currency;
-    FValorLiquidoNfse: Currency;
+    FValorIss: Double;
+    FValorLiquidoNfse: Double;
   public
-    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
+    property BaseCalculo: Double read FBaseCalculo write FBaseCalculo;
     property Aliquota: Double read FAliquota write FAliquota;
-    property ValorIss: Currency read FValorIss write FValorIss;
-    property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
+    property ValorIss: Double read FValorIss write FValorIss;
+    property ValorLiquidoNfse: Double read FValorLiquidoNfse write FValorLiquidoNfse;
   end;
 
   TValores = class(TObject)
   private
-    FValorServicos: Currency;
-    FValorDeducoes: Currency;
-    FValorPis: Currency;
-    FValorCofins: Currency;
-    FValorInss: Currency;
-    FValorIr: Currency;
-    FValorCsll: Currency;
+    FValorServicos: Double;
+    FValorDeducoes: Double;
+    FValorPis: Double;
+    FValorCofins: Double;
+    FValorInss: Double;
+    FValorIr: Double;
+    FValorCsll: Double;
     FIssRetido: TnfseSituacaoTributaria;
-    FValorIss: Currency;
-    FOutrasRetencoes: Currency;
-    FBaseCalculo: Currency;
+    FValorIss: Double;
+    FOutrasRetencoes: Double;
+    FBaseCalculo: Double;
     FAliquota: Double;
-    FAliquotaSN: Currency; // Aliquota usada pelo Provedor conam
-    FAliquotaPis: Currency;
-    FAliquotaCofins: Currency;
-    FAliquotaInss: Currency;
-    FAliquotaIr: Currency;
-    FAliquotaCsll: Currency;
-    FOutrosDescontos: Currency;
-    FValorLiquidoNfse: Currency;
-    FValorIssRetido: Currency;
-    FDescontoCondicionado: Currency;
-    FDescontoIncondicionado: Currency;
+    FAliquotaSN: Double; // Aliquota usada pelo Provedor Conam
+    FAliquotaPis: Double;
+    FAliquotaCofins: Double;
+    FAliquotaInss: Double;
+    FAliquotaIr: Double;
+    FAliquotaCsll: Double;
+    FOutrosDescontos: Double;
+    FValorLiquidoNfse: Double;
+    FValorIssRetido: Double;
+    FDescontoCondicionado: Double;
+    FDescontoIncondicionado: Double;
     FJustificativaDeducao: string;
-    FvalorOutrasRetencoes: Currency;
+    FvalorOutrasRetencoes: Double;
     FDescricaoOutrasRetencoes: string;
-    FvalorRepasse: Currency; //Governa
-    FValorDespesasNaoTributaveis: Currency; //Governa
-    FValorTotalRecebido: Currency;
-    FValorTotalTributos: currency;
-    FIrrfIndenizacao: currency;
+    FvalorRepasse: Double; // Governa
+    FValorDespesasNaoTributaveis: Double; // Governa
+    FValorTotalRecebido: Double;
+    FValorTotalTributos: Double;
+    FIrrfIndenizacao: Double;
   public
-    property ValorServicos: Currency read FValorServicos write FValorServicos;
-    property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
-    property ValorPis: Currency read FValorPis write FValorPis;
-    property ValorCofins: Currency read FValorCofins write FValorCofins;
-    property ValorInss: Currency read FValorInss write FValorInss;
-    property ValorIr: Currency read FValorIr write FValorIr;
-    property ValorCsll: Currency read FValorCsll write FValorCsll;
+    property ValorServicos: Double read FValorServicos write FValorServicos;
+    property ValorDeducoes: Double read FValorDeducoes write FValorDeducoes;
+    property ValorPis: Double read FValorPis write FValorPis;
+    property ValorCofins: Double read FValorCofins write FValorCofins;
+    property ValorInss: Double read FValorInss write FValorInss;
+    property ValorIr: Double read FValorIr write FValorIr;
+    property ValorCsll: Double read FValorCsll write FValorCsll;
     property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
-    property ValorIss: Currency read FValorIss write FValorIss;
-    property OutrasRetencoes: Currency read FOutrasRetencoes write FOutrasRetencoes;
-    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
+    property ValorIss: Double read FValorIss write FValorIss;
+    property OutrasRetencoes: Double read FOutrasRetencoes write FOutrasRetencoes;
+    property BaseCalculo: Double read FBaseCalculo write FBaseCalculo;
     property Aliquota: Double read FAliquota write FAliquota;
-    // Aliquota usada pelo Provedor conam
-    property AliquotaSN: Currency read FAliquotaSN write FAliquotaSN;
+    // Aliquota usada pelo Provedor Conam
+    property AliquotaSN: Double read FAliquotaSN write FAliquotaSN;
     // Aliquotas usadas pelo Provedor IssDsf
-    property AliquotaPis: Currency read FAliquotaPis write FAliquotaPis;
-    property AliquotaCofins: Currency read FAliquotaCofins write FAliquotaCofins;
-    property AliquotaInss: Currency read FAliquotaInss write FAliquotaInss;
-    property AliquotaIr: Currency read FAliquotaIr write FAliquotaIr;
-    property AliquotaCsll: Currency read FAliquotaCsll write FAliquotaCsll;
+    property AliquotaPis: Double read FAliquotaPis write FAliquotaPis;
+    property AliquotaCofins: Double read FAliquotaCofins write FAliquotaCofins;
+    property AliquotaInss: Double read FAliquotaInss write FAliquotaInss;
+    property AliquotaIr: Double read FAliquotaIr write FAliquotaIr;
+    property AliquotaCsll: Double read FAliquotaCsll write FAliquotaCsll;
     // Usado pelo Provedor EL
-    property OutrosDescontos: Currency read FOutrosDescontos write FOutrosDescontos;
+    property OutrosDescontos: Double read FOutrosDescontos write FOutrosDescontos;
 
-    property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
-    property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
-    property DescontoCondicionado: Currency read FDescontoCondicionado write FDescontoCondicionado;
-    property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
+    property ValorLiquidoNfse: Double read FValorLiquidoNfse write FValorLiquidoNfse;
+    property ValorIssRetido: Double read FValorIssRetido write FValorIssRetido;
+    property DescontoCondicionado: Double read FDescontoCondicionado write FDescontoCondicionado;
+    property DescontoIncondicionado: Double read FDescontoIncondicionado write FDescontoIncondicionado;
     //Just. usada pelo provedor Equiplano
     property JustificativaDeducao: string read FJustificativaDeducao write FJustificativaDeducao;
     //propriedade do Provedor Governa
-    property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
+    property valorOutrasRetencoes: Double read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
     property DescricaoOutrasRetencoes: string read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
-    property ValorRepasse: Currency read FValorRepasse write FValorRepasse;
+    property ValorRepasse: Double read FValorRepasse write FValorRepasse;
     //Provedor Infisc V 11
-    property ValorDespesasNaoTributaveis: Currency read FValorDespesasNaoTributaveis write FValorDespesasNaoTributaveis;
+    property ValorDespesasNaoTributaveis: Double read FValorDespesasNaoTributaveis write FValorDespesasNaoTributaveis;
     //Recife
-    property ValorTotalRecebido: Currency read FValorTotalRecebido write FValorTotalRecebido;
+    property ValorTotalRecebido: Double read FValorTotalRecebido write FValorTotalRecebido;
     //Provedor proSimplISSv2
-    property ValorTotalTributos: currency read FValorTotalTributos write FValorTotalTributos;
+    property ValorTotalTributos: Double read FValorTotalTributos write FValorTotalTributos;
     //Provedor Tecnos
-    property IrrfIndenizacao: currency read FIrrfIndenizacao write FIrrfIndenizacao;
+    property IrrfIndenizacao: Double read FIrrfIndenizacao write FIrrfIndenizacao;
   end;
 
   TItemServicoCollectionItem = class(TObject)
   private
     FDescricao: string;
-    FQuantidade: Currency;
-    FValorUnitario: Currency;
-    FValorTotal: Currency;
+    FQuantidade: Double;
+    FValorUnitario: Double;
+    FValorTotal: Double;
     FAliquota: Double;
-    FValorIss: Currency;
-    FBaseCalculo: Currency;
-    FValorDeducoes: Currency;
-    FDescontoCondicionado: Currency;
-    FDescontoIncondicionado: Currency;
+    FValorIss: Double;
+    FBaseCalculo: Double;
+    FValorDeducoes: Double;
+    FDescontoCondicionado: Double;
+    FDescontoIncondicionado: Double;
     FTributavel: TnfseSimNao;
     //Provedor: SystemPro
-    FValorCsll: Currency;
-    FValorPis: Currency;
-    FValorCofins: Currency;
-    FValorInss: Currency;
-    FValorIr: Currency;
-    FQuantidadeDiaria: Currency;
-    FValorTaxaTurismo: Currency;
+    FValorCsll: Double;
+    FValorPis: Double;
+    FValorCofins: Double;
+    FValorInss: Double;
+    FValorIr: Double;
+    FQuantidadeDiaria: Double;
+    FValorTaxaTurismo: Double;
     // Provedor Infisc Versão XML 1.1
     FCodServ: string;
     FCodLCServ: string;
     FUnidade: string;
-    FAliquotaISSST: currency;
-    FValorISSST: currency;
-    FpRetIR: currency;
-    FvBCCSLL: currency;
-    FpRetINSS: currency;
-    FvBCINSS: currency;
-    FvBCPISPASEP: currency;
-    FvBCCOFINS: currency;
-    FvBCRetIR: currency;
-    FpRetCSLL: currency;
-    FvDed: currency;
-    FpRetPISPASEP: currency;
-    FpRetCOFINS: currency;
-    FvRed: currency;
+    FAliquotaISSST: Double;
+    FValorISSST: Double;
+    FpRetIR: Double;
+    FvBCCSLL: Double;
+    FpRetINSS: Double;
+    FvBCINSS: Double;
+    FvBCPISPASEP: Double;
+    FvBCCOFINS: Double;
+    FvBCRetIR: Double;
+    FpRetCSLL: Double;
+    FvDed: Double;
+    FpRetPISPASEP: Double;
+    FpRetCOFINS: Double;
+    FvRed: Double;
     FTipoUnidade: TUnidade;
     FItemListaServico: string;
     FJustificativaDeducao: string;
@@ -219,52 +219,52 @@ type
     constructor Create;
 
     property Descricao: string read FDescricao write FDescricao;
-    property Quantidade: Currency read FQuantidade write FQuantidade;
-    property ValorUnitario: Currency read FValorUnitario write FValorUnitario;
-    property ValorTotal: Currency read FValorTotal write FValorTotal;
-    property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
-    property ValorIss: Currency read FValorIss write FValorIss;
+    property Quantidade: Double read FQuantidade write FQuantidade;
+    property ValorUnitario: Double read FValorUnitario write FValorUnitario;
+    property ValorTotal: Double read FValorTotal write FValorTotal;
+    property ValorDeducoes: Double read FValorDeducoes write FValorDeducoes;
+    property ValorIss: Double read FValorIss write FValorIss;
     property Aliquota: Double read FAliquota write FAliquota;
-    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
-    property DescontoCondicionado: Currency read FDescontoCondicionado write FDescontoCondicionado;
-    property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
+    property BaseCalculo: Double read FBaseCalculo write FBaseCalculo;
+    property DescontoCondicionado: Double read FDescontoCondicionado write FDescontoCondicionado;
+    property DescontoIncondicionado: Double read FDescontoIncondicionado write FDescontoIncondicionado;
     property Tributavel: TnfseSimNao read FTributavel write FTributavel;
-    //Provedor: SystemPro
-    property ValorPis: Currency read FValorPis write FValorPis;
-    property ValorCofins: Currency read FValorCofins write FValorCofins;
-    property ValorInss: Currency read FValorInss write FValorInss;
-    property ValorIr: Currency read FValorIr write FValorIr;
-    property ValorCsll: Currency read FValorCsll write FValorCsll;
-    property QuantidadeDiaria: Currency read FQuantidadeDiaria write FQuantidadeDiaria;
-    property ValorTaxaTurismo: Currency read FValorTaxaTurismo write FValorTaxaTurismo;
+    // Provedor SystemPro
+    property ValorPis: Double read FValorPis write FValorPis;
+    property ValorCofins: Double read FValorCofins write FValorCofins;
+    property ValorInss: Double read FValorInss write FValorInss;
+    property ValorIr: Double read FValorIr write FValorIr;
+    property ValorCsll: Double read FValorCsll write FValorCsll;
+    property QuantidadeDiaria: Double read FQuantidadeDiaria write FQuantidadeDiaria;
+    property ValorTaxaTurismo: Double read FValorTaxaTurismo write FValorTaxaTurismo;
     // Provedor Infisc Versão XML 1.1
     property CodServ: string read FCodServ write FCodServ;
     property CodLCServ: string read FCodLCServ write FCodLCServ;
     property Unidade: string read FUnidade write FUnidade;
-    property AliquotaISSST: currency read FAliquotaISSST write FAliquotaISSST;
-    property ValorISSST: currency read FValorISSST write FValorISSST;
+    property AliquotaISSST: Double read FAliquotaISSST write FAliquotaISSST;
+    property ValorISSST: Double read FValorISSST write FValorISSST;
 
-    property vDed: currency read FvDed write FvDed;
-    property vRed: currency read FvRed write FvRed;
+    property vDed: Double read FvDed write FvDed;
+    property vRed: Double read FvRed write FvRed;
 
-    property vBCINSS: currency read FvBCINSS write FvBCINSS;
-    property pRetINSS: currency read FpRetINSS write FpRetINSS;
+    property vBCINSS: Double read FvBCINSS write FvBCINSS;
+    property pRetINSS: Double read FpRetINSS write FpRetINSS;
 
-    property vBCRetIR: currency read FvBCRetIR write FvBCRetIR;
-    property pRetIR: currency read FpRetIR write FpRetIR;
+    property vBCRetIR: Double read FvBCRetIR write FvBCRetIR;
+    property pRetIR: Double read FpRetIR write FpRetIR;
 
-    property vBCCOFINS: currency read FvBCCOFINS write FvBCCOFINS;
-    property pRetCOFINS: currency read FpRetCOFINS write FpRetCOFINS;
+    property vBCCOFINS: Double read FvBCCOFINS write FvBCCOFINS;
+    property pRetCOFINS: Double read FpRetCOFINS write FpRetCOFINS;
 
-    property vBCCSLL: currency read FvBCCSLL write FvBCCSLL;
-    property pRetCSLL: currency read FpRetCSLL write FpRetCSLL;
+    property vBCCSLL: Double read FvBCCSLL write FvBCCSLL;
+    property pRetCSLL: Double read FpRetCSLL write FpRetCSLL;
 
-    property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
-    property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
+    property vBCPISPASEP: Double read FvBCPISPASEP write FvBCPISPASEP;
+    property pRetPISPASEP: Double read FpRetPISPASEP write FpRetPISPASEP;
 
     property TipoUnidade: TUnidade read FTipoUnidade write FTipoUnidade;
     property ItemListaServico: string read FItemListaServico write FItemListaServico;
-    //Just. usada pelo provedor Equiplano
+    // Provedor Equiplano
     property JustificativaDeducao: string read FJustificativaDeducao write FJustificativaDeducao;
   end;
 
@@ -278,24 +278,24 @@ type
     property Items[Index: Integer]: TItemServicoCollectionItem read GetItem write SetItem; default;
   end;
 
-  //classe usada no provedor IssDSF
+  // classe usada no provedor IssDSF
   TDeducaoCollectionItem = class(TObject)
   private
     FDeducaoPor: TnfseDeducaoPor;
     FTipoDeducao: TnfseTipoDeducao;
     FCpfCnpjReferencia: string;
     FNumeroNFReferencia: string;
-    FValorTotalReferencia: Currency;
-    FPercentualDeduzir: Currency;
-    FValorDeduzir: Currency;
+    FValorTotalReferencia: Double;
+    FPercentualDeduzir: Double;
+    FValorDeduzir: Double;
   public
     property DeducaoPor: TnfseDeducaoPor read FDeducaoPor write FDeducaoPor;
     property TipoDeducao: TnfseTipoDeducao read FTipoDeducao write FTipoDeducao;
     property CpfCnpjReferencia: string read FCpfCnpjReferencia write FCpfCnpjReferencia;
     property NumeroNFReferencia: string read FNumeroNFReferencia write FNumeroNFReferencia;
-    property ValorTotalReferencia: Currency read FValorTotalReferencia write FValorTotalReferencia;
-    property PercentualDeduzir: Currency read FPercentualDeduzir write FPercentualDeduzir;
-    property ValorDeduzir: Currency read FValorDeduzir write FValorDeduzir;
+    property ValorTotalReferencia: Double read FValorTotalReferencia write FValorTotalReferencia;
+    property PercentualDeduzir: Double read FPercentualDeduzir write FPercentualDeduzir;
+    property ValorDeduzir: Double read FValorDeduzir write FValorDeduzir;
   end;
 
   TDeducaoCollection = class(TACBrObjectList)
@@ -332,8 +332,8 @@ type
     // Provedor Governa
     FUFPrestacao: string;
     // Provedor SP
-    FValorCargaTributaria: currency;
-    FPercentualCargaTributaria: currency;
+    FValorCargaTributaria: Double;
+    FPercentualCargaTributaria: Double;
     FFonteCargaTributaria: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
@@ -364,8 +364,8 @@ type
     // Provedor Governa
     property UFPrestacao: string read FUFPrestacao write FUFPrestacao;
     // Provedor SP
-    property ValorCargaTributaria: currency read FValorCargaTributaria write FValorCargaTributaria;
-    property PercentualCargaTributaria: currency read FPercentualCargaTributaria write FPercentualCargaTributaria;
+    property ValorCargaTributaria: Double read FValorCargaTributaria write FValorCargaTributaria;
+    property PercentualCargaTributaria: Double read FPercentualCargaTributaria write FPercentualCargaTributaria;
     property FonteCargaTributaria: string read FFonteCargaTributaria write FFonteCargaTributaria;
   end;
 
@@ -438,7 +438,7 @@ type
     Fcrc: string;
     Fcrc_estado: string;
     FDataInicioAtividade: TDateTime;
-    FValorReceitaBruta: Currency;
+    FValorReceitaBruta: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -448,13 +448,13 @@ type
     property NomeFantasia: string read FNomeFantasia write FNomeFantasia;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
-    // Usado pelo provedor ISSDigital
+    // Provedor ISSDigital
     property cUF: Integer read FcUF write FcUF;
-    // Usado pelo provedor SigISS
+    // Provedor SigISS
     property crc: string read Fcrc write Fcrc;
     property crc_estado: string read Fcrc_estado write Fcrc_estado;
-    // Usado pelo provedor WebFisco
-    property ValorReceitaBruta: Currency read FValorReceitaBruta write FValorReceitaBruta;
+    // Provedor WebFisco
+    property ValorReceitaBruta: Double read FValorReceitaBruta write FValorReceitaBruta;
     property DataInicioAtividade: TDateTime read FDataInicioAtividade write FDataInicioAtividade;
   end;
 
@@ -564,12 +564,12 @@ type
     FCondicao: TnfseCondicaoPagamento;
     FParcela: Integer;
     FDataVencimento: TDateTime;
-    FValor: Currency;
+    FValor: Double;
   public
     property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property Parcela: Integer read FParcela write FParcela;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
-    property Valor: Currency read FValor write FValor;
+    property Valor: Double read FValor write FValor;
   end;
 
   TParcelasCollection = class(TACBrObjectList)
@@ -646,12 +646,12 @@ type
     FnItemDesp: string;
     FxDesp: string;
     FdDesp: TDateTime;
-    FvDesp: Currency;
+    FvDesp: Double;
   public
     property nItemDesp: string read FnItemDesp write FnItemDesp;
     property xDesp: string read FxDesp write FxDesp;
     property dDesp: TDateTime read FdDesp write FdDesp;
-    property vDesp: Currency read FvDesp write FvDesp;
+    property vDesp: Double read FvDesp write FvDesp;
   end;
 
   TDespesaCollection = class(TACBrObjectList)
@@ -719,7 +719,7 @@ type
     FQtdHospedes: Integer;
     FCheckIn: TDateTime;
     FQtdDiarias: Integer;
-    FValorDiaria: Currency;
+    FValorDiaria: Double;
   public
     constructor Create;
 
@@ -727,7 +727,7 @@ type
     property QtdHospedes: Integer read FQtdHospedes write FQtdHospedes;
     property CheckIn: TDateTime read FCheckIn write FCheckIn;
     property QtdDiarias: Integer read FQtdDiarias write FQtdDiarias;
-    property ValorDiaria: Currency read FValorDiaria write FValorDiaria;
+    property ValorDiaria: Double read FValorDiaria write FValorDiaria;
   end;
 
   TQuartoCollection = class(TACBrObjectList)
@@ -753,7 +753,7 @@ type
     FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     FOptanteSimplesNacional: TnfseSimNao;
     FOptanteMEISimei: TnfseSimNao;
-    //Provedor Conam
+    // Provedor Conam
     FDataEmissaoRps: TDateTime;
     FDataOptanteSimplesNacional: TDateTime;
     FLogradouroLocalPrestacaoServico: TLogradouroLocalPrestacaoServico;
@@ -776,11 +776,13 @@ type
     FCompetencia: TDateTime;
     FNfseSubstituida: string;
     FOutrasInformacoes: string;
-    FValorCredito: Currency;
+    FValorCredito: Double;
     FOrgaoGerador: TIdentificacaoOrgaoGerador;
     FValoresNfse: TValoresNfse;
-    FAutenticador: string; // para provedor EGoverneISS
-    FLink: string; // para provedor EGoverneISS
+    // Provedor EGoverneISS
+    FAutenticador: string;
+    FLink: string;
+
     // RPS e NFSe
     FDespesa: TDespesaCollection;
 
@@ -792,8 +794,10 @@ type
 
     FNfseCancelamento: TConfirmacaoCancelamento;
     FNfseSubstituidora: string;
-    FMotivoCancelamento: string; // para provedor ISSDSF
-    FcNFSe: Integer; // para provedor Infisc
+    // Provedor ISSDSF
+    FMotivoCancelamento: string;
+    // Provedor Infisc
+    FcNFSe: Integer;
 
     // Provedor Infisc Versão XML 1.1
     FTipoEmissao: TTipoEmissao;
@@ -856,7 +860,7 @@ type
     property Status: TStatusRps read FStatus write FStatus;
     property RpsSubstituido: TIdentificacaoRps read FRpsSubstituido write FRpsSubstituido;
     property DataEmissaoRps: TDateTime read FDataEmissaoRps write FDataEmissaoRps;
-    //SeriePrestacao usada no provedor IssDsf
+    // Provedor IssDsf
     property SeriePrestacao: string read FSeriePrestacao write FSeriePrestacao;
     property Servico: TDadosServico read FServico write FServico;
     property Quartos: TQuartoCollection read FQuartos write FQuartos;
@@ -873,10 +877,10 @@ type
     property NfseSubstituida: string read FNfseSubstituida write FNfseSubstituida;
     property OutrasInformacoes: string read FOutrasInformacoes write FOutrasInformacoes;
     property InformacoesComplementares: string read FInformacoesComplementares write SetInformacoesComplementares;
-    property ValorCredito: Currency read FValorCredito write FValorCredito;
+    property ValorCredito: Double read FValorCredito write FValorCredito;
     property OrgaoGerador: TIdentificacaoOrgaoGerador read FOrgaoGerador write FOrgaoGerador;
     property ValoresNfse: TValoresNfse read FValoresNfse write FValoresNfse;
-    // propriedades para provedor EGoverneISS
+    // Provedor EGoverneISS
     property Autenticador: string read FAutenticador write FAutenticador;
     property Link: string read FLink write FLink;
     property NumeroLote: string read FNumeroLote write FNumeroLote;
@@ -898,7 +902,7 @@ type
     property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
     property Despesa: TDespesaCollection read FDespesa write SetDespesa;
-    // propriedade para provedor Governa
+    // Provedor Governa
     property TipoRecolhimento: string read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
@@ -909,8 +913,9 @@ type
 
     // Provedor SP
     property Assinatura: string read FAssinatura write FAssinatura;
-    property RegRec: TRegRec read FRegRec write FRegRec; //Governa
-    property FrmRec: TFrmRec read FFrmRec write FFrmRec; //Governa
+    // Provedor Governa
+    property RegRec: TRegRec read FRegRec write FRegRec;
+    property FrmRec: TFrmRec read FFrmRec write FFrmRec;
     // Provedor Techos
     property PercentualCargaTributaria: Double read FPercentualCargaTributaria write FPercentualCargaTributaria;
     property ValorCargaTributaria: Double read FValorCargaTributaria write FValorCargaTributaria;
@@ -925,7 +930,7 @@ type
     property FormaPagamento: Integer read FFormaPagamento write FFormaPagamento;
     property NumeroParcelas: Integer read FNumeroParcelas write FNumeroParcelas;
     // Provedor SigISS
-    //Código da nota no sistema legado do contribuinte.
+    // Código da nota no sistema legado do contribuinte.
     property id_sis_legado: Integer read Fid_sis_legado write Fid_sis_legado;
     property SituacaoTrib: TSituacaoTrib read FSituacaoTrib write FSituacaoTrib;
   end;
@@ -956,12 +961,12 @@ type
   public
     property InscricaoPrestador: string read FInscricaoPrestador write FInscricaoPrestador;
     // NFS-e
-    property Numero: string             read FNumero             write FNumero;
-    property CodigoVerificacao: string  read FCodigoVerificacao  write FCodigoVerificacao;
-    property Link: string               read FLink               write FLink;
+    property Numero: string            read FNumero            write FNumero;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
+    property Link: string              read FLink              write FLink;
     // RPS
-    property SerieRPS: string           read FSerieRPS           write FSerieRPS;
-    property NumeroRPS: string          read FNumeroRPS          write FNumeroRPS;
+    property SerieRPS: string  read FSerieRPS  write FSerieRPS;
+    property NumeroRPS: string read FNumeroRPS write FNumeroRPS;
   end;
 
   TInformacoesLote = class(TObject)
@@ -972,7 +977,7 @@ type
     FDataEnvioLote: TDateTime;
     FQtdNotasProcessadas: Integer;
     FTempoProcessamento: Integer;
-    FValorTotalServico: Currency;
+    FValorTotalServico: Double;
     FNumeroRps: string;
     FNumeroNFSe: string;
     FCodVerificacao: string;
@@ -984,12 +989,12 @@ type
     property DataEnvioLote: TDateTime     read FDataEnvioLote       write FDataEnvioLote;
     property QtdNotasProcessadas: Integer read FQtdNotasProcessadas write FQtdNotasProcessadas;
     property TempoProcessamento: Integer  read FTempoProcessamento  write FTempoProcessamento;
-    property ValorTotalServico: Currency  read FValorTotalServico   write FValorTotalServico;
+    property ValorTotalServico: Double    read FValorTotalServico   write FValorTotalServico;
     // Provedor Governa
-    property NumeroRps: string            read FNumeroRps           write FNumeroRps;
-    property NumeroNFSe: string           read FNumeroNFSe          write FNumeroNFSe;
-    property CodVerificacao: string       read FCodVerificacao      write FCodVerificacao;
-    property DescOcorrencia: string       read FDescOcorrencia      write FDescOcorrencia;
+    property NumeroRps: string      read FNumeroRps      write FNumeroRps;
+    property NumeroNFSe: string     read FNumeroNFSe     write FNumeroNFSe;
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TMsgRetornoIdentificacaoRps = class(TObject)
@@ -1097,6 +1102,7 @@ type
 
     property MsgRetorno: TMensagemRetornoCollection read FMsgRetorno      write SetMsgRetorno;
     property InformacoesLote: TInformacoesLote      read FInformacoesLote write FInformacoesLote;
+
     property ListaChaveNFeRPS: TChaveNFeRPSCollection read FListaChaveNFeRPS write SetListaChaveNFeRPS;
   end;
 
@@ -1211,57 +1217,57 @@ end;
 
 constructor TNFSe.Create;
 begin
-  inherited create;
+  inherited Create;
   // RPS e NFSe
-  FNomeArq                      := '';
-  FInfID                        := TInfID.Create;
-  FIdentificacaoRps             := TIdentificacaoRps.Create;
-  FIdentificacaoRps.FTipo       := trRPS;
-  FDataEmissao                  := 0;
-  FNaturezaOperacao             := no1;
-  FRegimeEspecialTributacao     := retNenhum;
-  FOptanteSimplesNacional       := snNao;
-  FOptanteMEISimei              := snNao;
-  FIncentivadorCultural         := snNao;
-  FStatus                       := srNormal;
-  FRpsSubstituido               := TIdentificacaoRps.Create;
-  FRpsSubstituido.FTipo         := trRPS;
-  FServico                      := TDadosServico.Create;
-  FPrestador                    := TDadosPrestador.Create;
-  FTomador                      := TDadosTomador.Create;
-  FIntermediarioServico         := TIdentificacaoIntermediarioServico.Create;
-  FConstrucaoCivil              := TDadosConstrucaoCivil.Create;
-  FCondicaoPagamento            := TCondicaoPagamento.Create;
-  FQuartos                      := TQuartoCollection.Create;
+  FNomeArq                  := '';
+  FInfID                    := TInfID.Create;
+  FIdentificacaoRps         := TIdentificacaoRps.Create;
+  FIdentificacaoRps.FTipo   := trRPS;
+  FDataEmissao              := 0;
+  FNaturezaOperacao         := no1;
+  FRegimeEspecialTributacao := retNenhum;
+  FOptanteSimplesNacional   := snNao;
+  FOptanteMEISimei          := snNao;
+  FIncentivadorCultural     := snNao;
+  FStatus                   := srNormal;
+  FRpsSubstituido           := TIdentificacaoRps.Create;
+  FRpsSubstituido.FTipo     := trRPS;
+  FServico                  := TDadosServico.Create;
+  FPrestador                := TDadosPrestador.Create;
+  FTomador                  := TDadosTomador.Create;
+  FIntermediarioServico     := TIdentificacaoIntermediarioServico.Create;
+  FConstrucaoCivil          := TDadosConstrucaoCivil.Create;
+  FCondicaoPagamento        := TCondicaoPagamento.Create;
+  FQuartos                  := TQuartoCollection.Create;
   // NFSe
-  FNumero                       := '';
-  FCodigoVerificacao            := '';
-  FCompetencia                  := 0;
-  FNfseSubstituida              := '';
-  FOutrasInformacoes            := '';
-  FInformacoesComplementares    := '';
-  FValorCredito                 := 0;
-  FOrgaoGerador                 := TIdentificacaoOrgaoGerador.Create;
-  FValoresNfse                  := TValoresNfse.Create;
+  FNumero                    := '';
+  FCodigoVerificacao         := '';
+  FCompetencia               := 0;
+  FNfseSubstituida           := '';
+  FOutrasInformacoes         := '';
+  FInformacoesComplementares := '';
+  FValorCredito              := 0;
+  FOrgaoGerador              := TIdentificacaoOrgaoGerador.Create;
+  FValoresNfse               := TValoresNfse.Create;
   // RPS e NFSe
-  FNfseCancelamento             := TConfirmacaoCancelamento.Create;
-  FNfseCancelamento.DataHora    := 0;
-  FNfseSubstituidora            := '';
+  FNfseCancelamento          := TConfirmacaoCancelamento.Create;
+  FNfseCancelamento.DataHora := 0;
+  FNfseSubstituidora         := '';
 
   // Provedor Infisc Versão XML 1.1
-  FTipoEmissao                  := teNormalNFSe;
-  FEmpreitadaGlobal             := EgOutros;
-  FModeloNFSe                   := '55';
-  FCancelada                    := snNao;
-  FCanhoto                      := tcNenhum;
-  FTransportadora               := TDadosTransportadora.Create;
+  FTipoEmissao      := teNormalNFSe;
+  FEmpreitadaGlobal := EgOutros;
+  FModeloNFSe       := '55';
+  FCancelada        := snNao;
+  FCanhoto          := tcNenhum;
+  FTransportadora   := TDadosTransportadora.Create;
 
   FLogradouroLocalPrestacaoServico := llpTomador;
 
-  Femail                        := TemailCollection.Create;
-  FDespesa                      := TDespesaCollection.Create;
+  Femail   := TemailCollection.Create;
+  FDespesa := TDespesaCollection.Create;
 
-  FAssinaComChaveParams         := TAssinaComChaveParamsCollection.Create;
+  FAssinaComChaveParams := TAssinaComChaveParamsCollection.Create;
 end;
 
 destructor TNFSe.Destroy;

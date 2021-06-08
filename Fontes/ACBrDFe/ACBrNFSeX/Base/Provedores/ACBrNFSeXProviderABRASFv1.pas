@@ -101,11 +101,8 @@ begin
     VersaoAtrib := '1.00';
   end;
 
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="1.00" xmlns="' + NameSpace + '">' +
-                      '<versaoDados>1.00</versaoDados></cabecalho>';
-  end;
+
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
 procedure TACBrNFSeProviderABRASFv1.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -555,7 +552,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '999';
-    AErro.Descricao := 'Número da RPS não informado.';
+    AErro.Descricao := 'Número do RPS não informado.';
     Exit;
   end;
 

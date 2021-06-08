@@ -90,25 +90,45 @@ type
   { TWebserviceInfo }
   TWebserviceInfo = class
   private
+    // URL para verificação no site se a note realmente existe
     FLinkURL: string;
+    // NameSpace utilizado no Envelope Soap
     FNameSpace: string;
+    // NameSpace utilizado no XML
     FXMLNameSpace: string;
+    // URL de homologação ou produção para o serviço Recepcionar
     FRecepcionar: string;
+    // URL de homologação ou produção para o serviço ConsultarLote
     FConsultarLote: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSeRps
     FConsultarNFSeRps: string;
+    // URL de homologação ou produção para o serviço ConsultarSituacao
     FConsultarSituacao: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSe
     FConsultarNFSe: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSeURL
     FConsultarNFSeURL: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSePorFaixa
     FConsultarNFSePorFaixa: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSeServicoPrestado
     FConsultarNFSeServicoPrestado: string;
+    // URL de homologação ou produção para o serviço ConsultarNFSeServicoTomado
     FConsultarNFSeServicoTomado: string;
+    // URL de homologação ou produção para o serviço CancelarNFSe
     FCancelarNFSe: string;
+    // URL de homologação ou produção para o serviço GerarNFSe
     FGerarNFSe: string;
+    // URL de homologação ou produção para o serviço RecepcionarSincrono
     FRecepcionarSincrono: string;
+    // URL de homologação ou produção para o serviço SubstituirNFSe
     FSubstituirNFSe: string;
+    // URL de homologação ou produção para o serviço AbrirSessao
     FAbrirSessao: string;
+    // URL de homologação ou produção para o serviço FecharSessao
     FFecharSessao: string;
+    // URL de homologação ou produção para o serviço TesteEnvio
     FTesteEnvio: string;
+    // URL de homologação ou produção do SoapAction
     FSoapAction: string;
 
   public
@@ -138,10 +158,15 @@ type
   { TConfigWebServices }
   TConfigWebServices = class
   private
+    // Versão dos dados informado na tag <VersaoDados>
     FVersaoDados: string;
+    // Versão informada no atributo versao=
     FVersaoAtrib: string;
+    // Grafia do atributo usado como versão no Lote de Rps
     FAtribVerLote: string;
+    // Grupo de URLs do Ambiente de Produção
     FProducao: TWebserviceInfo;
+    // Grupo de URLs do Ambiente de Homologação
     FHomologacao: TWebserviceInfo;
 
   public
@@ -161,16 +186,16 @@ type
   { TDocElement }
   TDocElement = class
   private
+    // contem o namespace a ser incluido no XML
     Fxmlns: string;
+    // nome do elemento a ser utilizado na assinatura digital que contem o atributo ID
     FInfElemento: string;
+    // nome do elemento do documento a ser assinado
     FDocElemento: string;
 
   public
-    // contem o namespace a ser incluido no XML
     property xmlns: string read Fxmlns write Fxmlns;
-    // nome do elemento a ser utilizado na assinatura digital que contem o atributo ID
     property InfElemento: string read FInfElemento write FInfElemento;
-    // nome do elemento do documento a ser assinado
     property DocElemento: string read FDocElemento write FDocElemento;
   end;
 

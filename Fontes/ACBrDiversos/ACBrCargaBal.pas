@@ -170,6 +170,37 @@ type
     property Descricao5: String read FDescricao5 write FDescricao5;
   end;
 
+  TACBrCargaBalFracionador = class
+  private
+    FCodigo: Smallint;
+    FObservacao : String; // 100 Bytes
+    FDescricao1 : String; // 56 Bytes
+    FDescricao2 : String; // 56 Bytes
+    FDescricao3 : String; // 56 Bytes
+  public
+    constructor Create;
+    property Codigo: Smallint read FCodigo write FCodigo;
+    property Observacao: String read FObservacao write FObservacao;
+    property Descricao1: String read FDescricao1 write FDescricao1;
+    property Descricao2: String read FDescricao2 write FDescricao2;
+    property Descricao3: String read FDescricao3 write FDescricao3;
+  end;
+
+  TACBrCargaBalConservacao = class
+  private
+    FCodigo: Smallint;
+    FObservacao : String; // 100 Bytes
+    FDescricao1 : String; // 56 Bytes
+    FDescricao2 : String; // 56 Bytes
+    FDescricao3 : String; // 56 Bytes
+  public
+    constructor Create;
+    property Codigo: Smallint read FCodigo write FCodigo;
+    property Observacao: String read FObservacao write FObservacao;
+    property Descricao1: String read FDescricao1 write FDescricao1;
+    property Descricao2: String read FDescricao2 write FDescricao2;
+    property Descricao3: String read FDescricao3 write FDescricao3;
+  end;
 
   TACBrCargaBalItem = class
   private
@@ -184,12 +215,16 @@ type
     FNutricional: TACBrCargaBalNutricional;
     FTara: TACBrCargaBalTaras;
     FFornecedor: TACBrCargaBalFornecedor;
+    FFracionador: TACBrCargaBalFracionador;
+    FConservacao: TACBrCargaBalConservacao;
     FCodigoTexto1: Integer;
     FCodigoTexto2: Integer;
     FCodigoTexto3: Integer;
     FCodigoInfoNutr: Integer;
     FCodigoTara: Integer;
     FCodigoFornecedor: Smallint;
+    FCodigoFracionador: Smallint;
+    FCodigoConservacao: Smallint;
     FEAN13Fornecedor: string;
     FInformacaoExtra: TACBrCargaBalInformacaoExtra;
     FTeclado: TAcbrCargaBalTeclado;
@@ -210,12 +245,16 @@ type
     property Nutricional: TACBrCargaBalNutricional Read FNutricional Write FNutricional;
     property Tara: TACBrCargaBalTaras Read FTara Write FTara;
     property Fornecedor: TACBrCargaBalFornecedor Read FFornecedor Write FFornecedor;
+    property Fracionador: TACBrCargaBalFracionador Read FFracionador Write FFracionador;
+    property Conservacao: TACBrCargaBalConservacao Read FConservacao Write FConservacao;
     property CodigoTexto1: Integer read FCodigoTexto1 write FCodigoTexto1;
     property CodigoTexto2: Integer read FCodigoTexto2 write FCodigoTexto2;
     property CodigoTexto3: Integer read FCodigoTexto3 write FCodigoTexto3;
     property CodigoInfoNutr: Integer read FCodigoInfoNutr write FCodigoInfoNutr;
     property CodigoTara: Integer Read FCodigoTara Write FCodigoTara Default 0;
     property CodigoFornecedor: Smallint Read FCodigoFornecedor Write FCodigoFornecedor Default 0;
+    property CodigoFracionador: Smallint Read FCodigoFracionador Write FCodigoFracionador Default 0;
+    property CodigoConservacao: Smallint Read FCodigoConservacao Write FCodigoConservacao Default 0;
   	property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
@@ -253,6 +292,8 @@ type
     function GetNomeArquivoSetor: String;
     function GetNomeArquivoTaras: String;
     function GetNomeArquivoFornecedor: String;
+    function GetNomeArquivoFracionador: String;
+    function GetNomeArquivoConservacao: String;
     function GetNomeArquivoTeclado: String;
 
     function GetNomeArquivoRelacaoProdutoNutricional: String;
@@ -269,7 +310,7 @@ type
     function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(stlArquivo, stlSetor, stlNutricional, stlReceita: TStringList);
-    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor, stlTeclado: TStringList; Versao: Integer);
+    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado: TStringList; Versao: Integer);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(stlArquivo, stlNutricional, stlReceita, stlRelacaoProdutoNutricional, stlRelacaoProdutoReceita: TStringList);
@@ -355,6 +396,8 @@ begin
   FNutricional     := TACBrCargaBalNutricional.Create;
   FTara            := TACBrCargaBalTaras.Create;
   FFornecedor      := TACBrCargaBalFornecedor.Create;
+  FFracionador     := TACBrCargaBalFracionador.Create;
+  FConservacao     := TACBrCargaBalConservacao.Create;
   FInformacaoExtra := TACBrCargaBalInformacaoExtra.Create;
   FTeclado         := TAcbrCargaBalTeclado.create;
 
@@ -369,6 +412,8 @@ begin
   FTeclado.Free;
   FInformacaoExtra.Free;
   FFornecedor.Free;
+  FFracionador.Free;
+  FConservacao.Free;
   FSetor.Free;
   FNutricional.Free;
   FTara.Free;
@@ -623,6 +668,22 @@ begin
   end;
 end;
 
+function TACBrCargaBal.GetNomeArquivoFracionador: String;
+begin
+  case FModelo of
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'FRACIONA.TXT';
+  end;
+end;
+
+function TACBrCargaBal.GetNomeArquivoConservacao: String;
+begin
+  case FModelo of
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'CONSERVA.TXT';
+  end;
+end;
+
 function TACBrCargaBal.GetNomeArquivoTeclado: String;
 begin
   case FModelo of
@@ -814,10 +875,10 @@ begin
   end;
 end;
 
-procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlSetor, stlTeclado: TStringList; Versao: Integer);
+procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado: TStringList; Versao: Integer);
 var
   i, Total,LIndex: Integer;
-  ANutri, AReceita, ATara, AFornecedor, ASetor: string;
+  ANutri, AReceita, ATara, AFornecedor, AFracionador, AConservacao, ASetor: string;
   LTXTeclas:TStringList;
 begin
   Total := Produtos.Count;
@@ -907,6 +968,22 @@ begin
         if (Produtos[i].Fornecedor.Codigo > 0) and (stlFornecedor.IndexOf(AFornecedor) < 0) then
           stlFornecedor.Add(AFornecedor);
 
+        AFracionador := LFIll(Produtos[i].Fracionador.Codigo, 4) + RFIll(Produtos[i].Fracionador.Observacao, 100) +
+                       RFill(Produtos[i].Fracionador.Descricao1, 56) +
+                       RFill(Produtos[i].Fracionador.Descricao2, 56) +
+                       RFill(Produtos[i].Fracionador.Descricao3, 56);
+
+        if (Produtos[i].Fracionador.Codigo > 0) and (stlFracionador.IndexOf(AFracionador) < 0) then
+          stlFracionador.Add(AFracionador);
+
+        AConservacao := LFIll(Produtos[i].Conservacao.Codigo, 4) + RFIll(Produtos[i].Conservacao.Observacao, 100) +
+                       RFill(Produtos[i].Conservacao.Descricao1, 56) +
+                       RFill(Produtos[i].Conservacao.Descricao2, 56) +
+                       RFill(Produtos[i].Conservacao.Descricao3, 56);
+
+        if (Produtos[i].Conservacao.Codigo > 0) and (stlConservacao.IndexOf(AConservacao) < 0) then
+          stlConservacao.Add(AConservacao);
+
         ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
 
         if ((Produtos[i].Setor.Codigo > 0) and (stlSetor.IndexOf(ASetor) < 0)) then
@@ -935,10 +1012,10 @@ begin
           LFIll('0', 4)+ // codigo do som
           LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
           //LFIll('0', 4)+ // codigo da tara
-          LFIll('0', 4)+ // codigo da fracionador
+          LFIll(Produtos[i].CodigoFracionador, 4)+ // codigo da fracionador
           LFIll('0', 4)+ // Código do Campo Extra 1
           LFIll('0', 4)+ // Código do Campo Extra 2
-          LFIll('0', 4)+ // Código da Conservação
+          LFIll(Produtos[i].CodigoConservacao, 4)+ // Código da Conservação
           LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
         );
 
@@ -966,57 +1043,81 @@ begin
             stlReceita.Add(AReceita);
         end;
 
-       if (Produtos[i].Nutricional.Codigo > 0) then
-       begin
-        ANutri := 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
-                  '0' +
-                  LFIll(Produtos[i].Nutricional.Qtd, 3) +
-                  GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
-                  LFIll(Produtos[i].Nutricional.PartInteira, 2) +
-                  GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
-                  GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
-                  LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
-                  LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
-                  LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
-                  LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
-                  LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
-                  LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
-                  LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
-                  LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
+        if (Produtos[i].Nutricional.Codigo > 0) then
+        begin
+         ANutri := 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
+                   '0' +
+                   LFIll(Produtos[i].Nutricional.Qtd, 3) +
+                   GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
+                   LFIll(Produtos[i].Nutricional.PartInteira, 2) +
+                   GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
+                   GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
+                   LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
+                   LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
+                   LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
+                   LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
+                   LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
+                   LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
+                   LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
+                   LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
 
-        if (stlNutricional.IndexOf(ANutri) < 0) then
-           stlNutricional.Add(ANutri);
-       end;
+         if (stlNutricional.IndexOf(ANutri) < 0) then
+            stlNutricional.Add(ANutri);
+        end;
 
-       if (Produtos[i].Tara.Codigo > 0) then
-       begin
-        ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
-                 RFIll(Produtos[i].Tara.Descricao, 20);
+        if (Produtos[i].Tara.Codigo > 0) then
+        begin
+         ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
+                  RFIll(Produtos[i].Tara.Descricao, 20);
 
-        if (stlTara.IndexOf(ATara) < 0) then
-           stlTara.Add(ATara);
-       end;
+         if (stlTara.IndexOf(ATara) < 0) then
+            stlTara.Add(ATara);
+        end;
 
-       if (Produtos[i].Fornecedor.Codigo > 0) then
-       begin
-        AFornecedor := LFIll(Produtos[i].Fornecedor.Codigo, 4) + RFIll(Produtos[i].Fornecedor.Observacao, 100) +
-                       RFill(Produtos[i].Fornecedor.Descricao1, 56) +
-                       RFill(Produtos[i].Fornecedor.Descricao2, 56) +
-                       RFill(Produtos[i].Fornecedor.Descricao3, 56) +
-                       RFill(Produtos[i].Fornecedor.Descricao4, 56) +
-                       RFill(Produtos[i].Fornecedor.Descricao5, 56);
+        if (Produtos[i].Fornecedor.Codigo > 0) then
+        begin
+         AFornecedor := LFIll(Produtos[i].Fornecedor.Codigo, 4) + RFIll(Produtos[i].Fornecedor.Observacao, 100) +
+                        RFill(Produtos[i].Fornecedor.Descricao1, 56) +
+                        RFill(Produtos[i].Fornecedor.Descricao2, 56) +
+                        RFill(Produtos[i].Fornecedor.Descricao3, 56) +
+                        RFill(Produtos[i].Fornecedor.Descricao4, 56) +
+                        RFill(Produtos[i].Fornecedor.Descricao5, 56);
 
-        if (stlFornecedor.IndexOf(AFornecedor) < 0) then
-          stlFornecedor.Add(AFornecedor);
-       end;
+         if (stlFornecedor.IndexOf(AFornecedor) < 0) then
+           stlFornecedor.Add(AFornecedor);
+        end;
 
-       if (Produtos[i].Setor.Codigo > 0) then
-       begin
-        ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
+        if (Produtos[i].Fracionador.Codigo > 0) then
+        begin
+         AFracionador := LFIll(Produtos[i].Fracionador.Codigo, 4) + RFIll(Produtos[i].Fracionador.Observacao, 100) +
+                        RFill(Produtos[i].Fracionador.Descricao1, 56) +
+                        RFill(Produtos[i].Fracionador.Descricao2, 56) +
+                        RFill(Produtos[i].Fracionador.Descricao3, 56);
 
-        if (stlSetor.IndexOf(ASetor) < 0) then
-          stlSetor.Add(ASetor);
-       end;
+         if (stlFracionador.IndexOf(AFracionador) < 0) then
+           stlFracionador.Add(AFracionador);
+        end;
+
+
+        if (Produtos[i].Conservacao.Codigo > 0) then
+        begin
+         AConservacao := LFIll(Produtos[i].Conservacao.Codigo, 4) + RFIll(Produtos[i].Conservacao.Observacao, 100) +
+                        RFill(Produtos[i].Conservacao.Descricao1, 56) +
+                        RFill(Produtos[i].Conservacao.Descricao2, 56) +
+                        RFill(Produtos[i].Conservacao.Descricao3, 56);
+
+         if (stlConservacao.IndexOf(AConservacao) < 0) then
+           stlConservacao.Add(AConservacao);
+        end;
+
+
+        if (Produtos[i].Setor.Codigo > 0) then
+        begin
+         ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
+
+         if (stlSetor.IndexOf(ASetor) < 0) then
+           stlSetor.Add(ASetor);
+        end;
 
       end
       else if Versao = 3 then
@@ -1042,10 +1143,10 @@ begin
           LFIll('0', 4)+ // codigo do som
           LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
           //LFIll('0', 4)+ // codigo da tara
-          LFIll('0', 4)+ // codigo da fracionador
+          LFIll(Produtos[i].CodigoFracionador, 4)+ // codigo da fracionador
           LFIll('0', 4)+ // Código do Campo Extra 1
           LFIll('0', 4)+ // Código do Campo Extra 2
-          LFIll('0', 4)+ // Código da Conservação
+          LFIll(Produtos[i].CodigoConservacao, 4)+ // Código da Conservação
           LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
 
           (* Novos campos para o arquivo do MGV6 - De acordo com a observação
@@ -1129,6 +1230,29 @@ begin
         if (stlFornecedor.IndexOf(AFornecedor) < 0) then
           stlFornecedor.Add(AFornecedor);
        end;
+
+       if (Produtos[i].Fracionador.Codigo > 0) then
+       begin
+        AFracionador := LFIll(Produtos[i].Fracionador.Codigo, 4) + RFIll(Produtos[i].Fracionador.Observacao, 100) +
+                       RFill(Produtos[i].Fracionador.Descricao1, 56) +
+                       RFill(Produtos[i].Fracionador.Descricao2, 56) +
+                       RFill(Produtos[i].Fracionador.Descricao3, 56);
+
+        if (stlFracionador.IndexOf(AFracionador) < 0) then
+          stlFracionador.Add(AFracionador);
+       end;
+
+       if (Produtos[i].Conservacao.Codigo > 0) then
+       begin
+        AConservacao := LFIll(Produtos[i].Conservacao.Codigo, 4) + RFIll(Produtos[i].Conservacao.Observacao, 100) +
+                       RFill(Produtos[i].Conservacao.Descricao1, 56) +
+                       RFill(Produtos[i].Conservacao.Descricao2, 56) +
+                       RFill(Produtos[i].Conservacao.Descricao3, 56);
+
+        if (stlConservacao.IndexOf(AConservacao) < 0) then
+          stlConservacao.Add(AConservacao);
+       end;
+
 
        if (Produtos[i].Setor.Codigo > 0) then
        begin
@@ -1392,7 +1516,7 @@ end;
 
 procedure TACBrCargaBal.GerarArquivos(const ADiretorio: String);
 var
-  Produto, Setor, Receita, Nutricional, Tara, Fornecedor: TStringList;
+  Produto, Setor, Receita, Nutricional, Tara, Fornecedor, Fracionador, Conservacao: TStringList;
   RelacaoProdutoNutricional, RelacaoProdutoReceita, Teclado: TStringList;
   NomeArquivo: TFileName;
   Total: integer;
@@ -1416,6 +1540,8 @@ begin
   RelacaoProdutoNutricional := TStringList.Create;
   RelacaoProdutoReceita     := TStringList.Create;
   Fornecedor                := TStringList.Create;
+  Fracionador               := TStringList.Create;
+  Conservacao               := TStringList.Create;
   Teclado                   := TStringList.Create;
   try
     Total := Self.Produtos.Count;
@@ -1424,14 +1550,14 @@ begin
     // Varre os registros gerando o arquivo em lista
     case FModelo of
       modFilizola   : PreencherFilizola(Produto, Setor, Nutricional, Receita);
-      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, nil, 0);
+      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, nil, nil, nil, 0);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, Teclado, 2);
-      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, Teclado, 3);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, 2);
+      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, 3);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
       modRamuza     : PreencherRamuza(Produto);
-      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, nil, 1);
+      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, nil, 1);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -1498,6 +1624,22 @@ begin
       FArquivosGerados.Add(NomeArquivo) ;
     end;
 
+    //Gerar arquivo de fracionador
+    if Fracionador.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoFracionador;
+      Fracionador.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
+    end;
+
+    //Gerar arquivo de conservacao
+    if Conservacao.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoConservacao;
+      Conservacao.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
+    end;
+
     if Teclado.Count > 0 then
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoTeclado;
@@ -1515,6 +1657,8 @@ begin
     RelacaoProdutoNutricional.Free;
     RelacaoProdutoReceita.Free;
     Fornecedor.Free;
+    Fracionador.Free;
+    Conservacao.Free;
     Teclado.Free;
   end;
 end;
@@ -1567,6 +1711,28 @@ begin
   FDescricao3 := EmptyStr;
   FDescricao4 := EmptyStr;
   FDescricao5 := EmptyStr;
+end;
+
+{ TACBrCargaBalFracionador }
+
+constructor TACBrCargaBalFracionador.Create;
+begin
+  FCodigo := 0;
+  FObservacao := EmptyStr;
+  FDescricao1 := EmptyStr;
+  FDescricao2 := EmptyStr;
+  FDescricao3 := EmptyStr;
+end;
+
+{ TACBrCargaBalConservacao }
+
+constructor TACBrCargaBalConservacao.Create;
+begin
+  FCodigo := 0;
+  FObservacao := EmptyStr;
+  FDescricao1 := EmptyStr;
+  FDescricao2 := EmptyStr;
+  FDescricao3 := EmptyStr;
 end;
 
 { TACBrCargaBalInformacaoExtras }

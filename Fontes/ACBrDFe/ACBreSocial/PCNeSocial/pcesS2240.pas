@@ -512,7 +512,7 @@ begin
     Gerador.wGrupo('agNoc');
 
     Gerador.wCampo(tcStr, '', 'codAgNoc',      1, 10, 1, objFatRisco.Items[i].codAgNoc);
-    Gerador.wCampo(tcStr, '', 'dscAgNoc',      1, 10, 1, objFatRisco.Items[i].dscAgNoc);
+    Gerador.wCampo(tcStr, '', 'dscAgNoc',      1, 10, 0, objFatRisco.Items[i].dscAgNoc);
 //    Gerador.wCampo(tcStr, '', 'dscFatRisc',     2, 999, 0, objFatRisco.Items[i].dscFatRisc);
     Gerador.wCampo(tcStr, '', 'tpAval',         1,  1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
     Gerador.wCampo(tcDe4, '', 'intConc',        1, 10, 0, objFatRisco.Items[i].intConc);

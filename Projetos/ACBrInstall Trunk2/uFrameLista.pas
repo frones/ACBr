@@ -177,7 +177,6 @@ type
     ACBr_NFSeX_dpk: TCheckBox;
     lbl1: TLabel;
     lbl2: TLabel;
-    ACBr_NFSeXDanfseFR_dpk: TCheckBox;
     lbl3: TLabel;
     ACBr_NFSeXDanfseRL_dpk: TCheckBox;
     Label29: TLabel;

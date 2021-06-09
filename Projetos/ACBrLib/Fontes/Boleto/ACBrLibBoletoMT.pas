@@ -68,13 +68,12 @@ function Boleto_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eC
 
 {%region Boleto}
 
-function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_LimparLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_TotalTitulosLista(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_LimparLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_TotalTitulosLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: longint; eNomeImpressora: PChar): longint;
@@ -92,8 +91,8 @@ function Boleto_EnviarEmail(const libHandle: PLibHandle; ePara, eAssunto, eMensa
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_EnviarEmailBoleto(const libHandle: PLibHandle; eIndice: longint; ePara, eAssunto,
   eMensagem, eCC: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ListaBancos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ListaCaractTitulo(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
@@ -102,12 +101,12 @@ function Boleto_ListaOcorrencias(const libHandle: PLibHandle; const sResposta: P
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ListaOcorrenciasEX(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_CodigosMoraAceitos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_MontarNossoNumero(const libHandle: PLibHandle; eIndice: longint;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_RetornaLinhaDigitavel(const libHandle: PLibHandle; eIndice: longint;
@@ -195,12 +194,12 @@ end;
 
 {%region Boleto}
 
-function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).ConfigurarDados(eArquivoIni, sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).ConfigurarDados(eArquivoIni);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -210,12 +209,12 @@ begin
   end;
 end;
 
-function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).IncluirTitulos(eArquivoIni, eTpSaida, sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).IncluirTitulos(eArquivoIni, eTpSaida);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -239,12 +238,12 @@ begin
   end;
 end;
 
-function Boleto_TotalTitulosLista(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_TotalTitulosLista(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).TotalTitulosLista(sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).TotalTitulosLista;
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -404,12 +403,12 @@ begin
   end;
 end;
 
-function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).SetDiretorioArquivo(eDir, eArq, sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).SetDiretorioArquivo(eDir, eArq);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -479,12 +478,12 @@ begin
   end;
 end;
 
-function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).TamNossoNumero(eCarteira, enossoNumero, eConvenio, sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).TamNossoNumero(eCarteira, enossoNumero, eConvenio);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -509,12 +508,12 @@ begin
   end;
 end;
 
-function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibBoleto(libHandle^.Lib).SelecionaBanco(eCodBanco, sResposta, esTamanho);
+    Result := TACBrLibBoleto(libHandle^.Lib).SelecionaBanco(eCodBanco);
   except
     on E: EACBrLibException do
       Result := E.Erro;

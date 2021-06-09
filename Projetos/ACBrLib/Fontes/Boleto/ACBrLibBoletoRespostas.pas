@@ -169,7 +169,7 @@ type
     FSeuNumero: String;
     FCodTipoOcorrencia: String;
     FDescricaoTipoOcorrencia: String;
-    FMotivoRejeicao: TRetornoRejeicoesTitulo;
+    FRejeicoes: TObjectList;
 
   public
     constructor Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -201,7 +201,7 @@ type
     property SeuNumero: String read FSeuNumero write FSeuNumero;
     property CodTipoOcorrencia: String read FCodTipoOcorrencia write FCodTipoOcorrencia;
     property DescricaoTipoOcorrencia: String read FDescricaoTipoOcorrencia write FDescricaoTipoOcorrencia;
-    property MotivoRejeicao: TRetornoRejeicoesTitulo read FMotivoRejeicao write FMotivoRejeicao;
+    property Rejeicoes: TObjectList read FRejeicoes write FRejeicoes;
 
   end;
 
@@ -478,7 +478,7 @@ constructor TRetornoRejeicoesWeb.Create(const AID, AIDRej: Integer;
 var
   AChave: String;
 begin
-  AChave := CSessaoRejeicao+ IntToStr(AID + 1) + IntToStr(AIDRej + 1);
+  AChave := CSessaoRejeicao+ IntToStr(AID + 1) + '-' + IntToStr(AIDRej + 1);
 
   inherited Create( AChave, ATipo, AFormato);
   FID:= AID;
@@ -658,7 +658,7 @@ constructor TRetornoRejeicoesTitulo.Create(const AIDRej: Integer; const AID: Int
 var
   AChave: String;
 begin
-  AChave := CSessaoMotivoRejeicao + IntToStr(AID + 1) + IntToStr(AIDRej + 1);
+  AChave := CSessaoMotivoRejeicao + IntToStr(AID + 1) + '-' + IntToStr(AIDRej + 1);
 
   inherited Create( AChave, ATipo, AFormato);
   FID:= AID;
@@ -680,7 +680,7 @@ begin
   FCedente := nil;
   FBanco := nil;
   FConta := nil;
-  FTitulo := TObjectList.Create;
+  FTitulo := TObjectList.Create(True);
 end;
 
 destructor TRetornoBoleto.Destroy;
@@ -698,7 +698,7 @@ end;
 procedure TRetornoBoleto.Processar(const ACBrBoleto: TACBrBoleto);
 var
   I: Integer;
-  Titulos: TRetornoDadosTitulo;
+  Item: TRetornoDadosTitulo;
 begin
   Cedente := TRetornoDadosCedente.Create(Tipo, Formato);
   Cedente.Processar(ACBrBoleto);
@@ -712,9 +712,9 @@ begin
   FTitulo.Clear;
   for I:= 0 to  ACBrBoleto.ListadeBoletos.Count-1 do
   begin
-    Titulos := TRetornoDadosTitulo.Create(I, Tipo, Formato);
-    Titulos.Processar(ACBrBoleto);
-    FTitulo.Add(Titulos);
+    Item := TRetornoDadosTitulo.Create(I, Tipo, Formato);
+    Item.Processar(ACBrBoleto);
+    FTitulo.Add(Item);
   end;
 
 end;
@@ -726,13 +726,13 @@ constructor TRetornoDadosTitulo.Create(const AID: Integer; const ATipo: TACBrLib
 begin
   inherited Create(CSessaoTitulo + IntToStr(AID + 1), ATipo, AFormato);
   FID := AID;
-  FMotivoRejeicao := Nil;
+  FRejeicoes := TObjectList.Create(True);
 
 end;
 
 destructor TRetornoDadosTitulo.Destroy;
 begin
-  if Assigned(FMotivoRejeicao) then FreeAndNil(FMotivoRejeicao);
+  if Assigned(FRejeicoes) then FRejeicoes.Free;
 
   inherited Destroy;
 end;
@@ -740,6 +740,7 @@ end;
 procedure TRetornoDadosTitulo.Processar(const ACBrBoleto: TACBrBoleto);
 var
   I: Integer;
+  Item: TRetornoRejeicoesTitulo;
 begin
   if ACBrBoleto.ListadeBoletos.Count > 0 then
   begin
@@ -771,8 +772,9 @@ begin
 
     for I:= 0 to  ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando.Count-1 do
     begin
-      MotivoRejeicao := TRetornoRejeicoesTitulo.Create( I, FID , Tipo, Formato);
-      MotivoRejeicao.Processar(ACBrBoleto);
+      Item := TRetornoRejeicoesTitulo.Create( I, FID , Tipo, Formato);
+      Item.Processar(ACBrBoleto);
+      Rejeicoes.Add(Item);
     end;
 
   end;

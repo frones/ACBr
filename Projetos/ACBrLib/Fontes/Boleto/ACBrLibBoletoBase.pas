@@ -63,10 +63,10 @@ type
 
     property BoletoDM: TLibBoletoDM read FBoletoDM;
 
-    function ConfigurarDados(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function ConfigurarDados(eArquivoIni: PChar): longint;
+    function IncluirTitulos(eArquivoIni, eTpSaida: PChar): longint;
     function LimparLista: longint;
-    function TotalTitulosLista(const sResposta: PChar; var esTamanho: longint): longint;
+    function TotalTitulosLista: longint;
     function Imprimir(eNomeImpressora: PChar): longint;
     function ImprimirBoleto(eIndice: longint; eNomeImpressora: PChar): longint;
     function GerarPDF: longint;
@@ -77,14 +77,14 @@ type
     function ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
     function EnviarEmailBoleto(eIndice: longint; ePara, eAssunto, eMensagem, eCC: PChar): longint;
-    function SetDiretorioArquivo(eDir, eArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function SetDiretorioArquivo(eDir, eArq: PChar): longint;
     function ListaBancos(const sResposta: PChar; var esTamanho: longint): longint;
     function ListaCaractTitulo(const sResposta: PChar; var esTamanho: longint): longint;
     function ListaOcorrencias(const sResposta: PChar; var esTamanho: longint): longint;
     function ListaOcorrenciasEX(const sResposta: PChar; var esTamanho: longint): longint;
-    function TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar): longint;
     function CodigosMoraAceitos(const sResposta: PChar; var esTamanho: longint): longint;
-    function SelecionaBanco(eCodBanco: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function SelecionaBanco(eCodBanco: PChar): longint;
     function MontarNossoNumero(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
@@ -123,10 +123,9 @@ begin
   FBoletoDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibBoleto.ConfigurarDados(eArquivoIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;  
+function TACBrLibBoleto.ConfigurarDados(eArquivoIni: PChar): longint;
 var
-  Resposta, ArquivoIni: AnsiString;
+  ArquivoIni: AnsiString;
 begin
   try
     ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
@@ -138,14 +137,10 @@ begin
 
     BoletoDM.Travar;
     try
-      Resposta := '';
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
-        Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni])
-      else
-        Resposta := 'OK';
+         raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
 
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      Result := SetRetorno(ErrOK);
     finally
       BoletoDM.Destravar;
     end;
@@ -157,10 +152,9 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;  
+function TACBrLibBoleto.IncluirTitulos(eArquivoIni, eTpSaida: PChar): longint;
 var
-  Resposta, ArquivoIni, TpSaida : AnsiString;
+  ArquivoIni, TpSaida : AnsiString;
   Mensagem : TStringList;
 begin
   try
@@ -175,8 +169,6 @@ begin
     BoletoDM.Travar;
 
     try
-      Resposta := '';
-
 {$IFDEF Demo}
     if BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 5 then
     begin
@@ -188,50 +180,46 @@ begin
 {$ENDIF}
 
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
-        Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni])
-      else
-      begin
-        try
-          BoletoDM.ConfigurarImpressao;
+         raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
 
-          if TpSaida = 'I' then
-          begin
-            BoletoDM.ACBrBoleto1.Imprimir
-          end
-          else if TpSaida = 'P' then
-          begin
-            BoletoDM.ACBrBoleto1.GerarPDF
-          end
-          else if TpSaida = 'E' then
-          begin
-            with TLibBoletoConfig(Config).BoletoConfig do
-            begin
-              Mensagem := TStringList.Create;
-              Mensagem.Duplicates := dupAccept;
+      try
+        BoletoDM.ConfigurarImpressao;
 
-              try
-                Mensagem.Add(emailMensagemBoleto);
-                if Config.Log.Nivel > logNormal then
-                  GravarLog('Boleto_EnviarEmail(' + BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email +
-                            ',' + emailAssuntoBoleto + ',' + Mensagem.Text, logCompleto, True)
-                else
-                  GravarLog('Boleto_EnviarEmail', logNormal);
+        if TpSaida = 'I' then
+        begin
+          BoletoDM.ACBrBoleto1.Imprimir
+        end
+        else if TpSaida = 'P' then
+        begin
+          BoletoDM.ACBrBoleto1.GerarPDF
+        end
+        else if TpSaida = 'E' then
+        begin
+          with TLibBoletoConfig(Config).BoletoConfig do
+          begin
+            Mensagem := TStringList.Create;
+            Mensagem.Duplicates := dupAccept;
 
-                BoletoDM.ACBrBoleto1.EnviarEmail( BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
-                                                  emailAssuntoBoleto, Mensagem, True );
-              finally
-                Mensagem.Free;
-              end;
+            try
+              Mensagem.Add(emailMensagemBoleto);
+              if Config.Log.Nivel > logNormal then
+                GravarLog('Boleto_EnviarEmail(' + BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email +
+                          ',' + emailAssuntoBoleto + ',' + Mensagem.Text, logCompleto, True)
+              else
+                GravarLog('Boleto_EnviarEmail', logNormal);
+
+              BoletoDM.ACBrBoleto1.EnviarEmail(BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
+                                               emailAssuntoBoleto, Mensagem, True);
+            finally
+              Mensagem.Free;
             end;
           end;
-        finally
-          BoletoDM.FinalizarImpressao;
         end;
-        Resposta := 'OK';
+      finally
+        BoletoDM.FinalizarImpressao;
       end;
 
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      Result := SetRetorno(ErrOk, Format('%d Titulo(s) Carregado(s)', [BoletoDM.ACBrBoleto1.ListadeBoletos.Count]));
     finally
       BoletoDM.Destravar;
     end;
@@ -264,7 +252,7 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.TotalTitulosLista(const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibBoleto.TotalTitulosLista: longint;
 var
   Resposta: AnsiString;
 begin
@@ -273,11 +261,7 @@ begin
 
     BoletoDM.Travar;
     try
-      Resposta := '';
-      Resposta := IntToStr( BoletoDM.ACBrBoleto1.ListadeBoletos.Count );
-
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      Result := SetRetorno(BoletoDM.ACBrBoleto1.ListadeBoletos.Count);
     finally
       BoletoDM.Destravar;
     end;
@@ -631,9 +615,9 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.SetDiretorioArquivo(eDir, eArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibBoleto.SetDiretorioArquivo(eDir, eArq: PChar): longint;
 var
-  Resposta, Dir, Arq : AnsiString;
+  Dir, Arq : AnsiString;
 begin
    try
      Dir := ConverterAnsiParaUTF8(eDir);
@@ -645,27 +629,22 @@ begin
      else
        GravarLog('Boleto_SetDiretorioArquivo', logNormal);
 
-     if DirectoryExists(Dir) then
-     begin
-       BoletoDM.Travar;
-       try
-         Resposta := '';
-         if TLibBoletoConfig(Config).BoletoFCFortesConfig.Filtro = TACBrBoletoFCFiltro(fiHTML) then
-           TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir )  +
-           IfThen(NaoEstaVazio(Arq), Arq , 'boleto.html' )
-         else
-           TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir ) +
-           IfThen(NaoEstaVazio(Arq), Arq , 'boleto.pdf' );
+     if not DirectoryExists(Dir) then
+       raise  EACBrLibException.Create(ErrDiretorioNaoExiste, 'Diretorio não existe');
 
-         Resposta := TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo;
-         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-         Result := SetRetorno(ErrOK, Resposta);
-       finally
-         BoletoDM.Destravar;
-       end;
-     end
-     else
-       Result := SetRetorno(ErrDiretorioNaoExiste);
+     BoletoDM.Travar;
+     try
+       if TLibBoletoConfig(Config).BoletoFCFortesConfig.Filtro = TACBrBoletoFCFiltro(fiHTML) then
+         TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir )  +
+         IfThen(NaoEstaVazio(Arq), Arq , 'boleto.html' )
+       else
+         TLibBoletoConfig(Config).BoletoFCFortesConfig.NomeArquivo := PathWithDelim( Dir ) +
+         IfThen(NaoEstaVazio(Arq), Arq , 'boleto.pdf' );
+
+       Result := SetRetorno(ErrOK);
+     finally
+       BoletoDM.Destravar;
+     end;
    except
      on E: EACBrLibException do
        Result := SetRetorno(E.Erro, E.Message);
@@ -679,7 +658,7 @@ var
    Resposta : AnsiString;
 begin
   try
-    GravarLog('Boleto_SetDiretorioArquivo', logNormal);
+    GravarLog('Boleto_ListaBancos', logNormal);
 
     BoletoDM.Travar;
     try
@@ -774,9 +753,9 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibBoleto.TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar): longint;
 var
-   Resposta, Carteira, NossoNumero, Convenio : AnsiString;
+   Carteira, NossoNumero, Convenio : AnsiString;
 begin
   try
     Carteira := ConverterAnsiParaUTF8(eCarteira);
@@ -787,11 +766,7 @@ begin
 
     BoletoDM.Travar;
     try
-      Resposta := '';
-      Resposta := IntToStr(BoletoDM.ACBrBoleto1.Banco.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio));
-      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      Result := SetRetorno(BoletoDM.ACBrBoleto1.Banco.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio));
     finally
       BoletoDM.Destravar;
     end;
@@ -828,9 +803,9 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.SelecionaBanco(eCodBanco: PChar; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibBoleto.SelecionaBanco(eCodBanco: PChar): longint;
 var
-   Resposta, CodBanco : AnsiString;
+   CodBanco : AnsiString;
 begin
   try
     CodBanco := ConverterAnsiParaUTF8(eCodBanco);
@@ -838,14 +813,10 @@ begin
     GravarLog('Boleto_SelecionaBanco', logNormal);
 
     BoletoDM.Travar;
-    try
-      Resposta := '';
-      BoletoDM.ACBrBoleto1.Banco.TipoCobranca := BoletoDM.ACBrBoleto1.GetTipoCobranca(StrToInt64Def(Trim(CodBanco),0));
 
-      Resposta := CodBanco;
-      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+    try
+      BoletoDM.ACBrBoleto1.Banco.TipoCobranca := BoletoDM.ACBrBoleto1.GetTipoCobranca(StrToInt64Def(Trim(CodBanco),0));
+      Result := SetRetorno(ErrOK);
     finally
       BoletoDM.Destravar;
     end;

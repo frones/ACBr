@@ -74,8 +74,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, BHISS.GravarXml, BHISS.LerXml;
+  ACBrUtil, ACBrDFeException,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
+  BHISS.GravarXml, BHISS.LerXml;
 
 { TACBrNFSeXWebserviceBHISS }
 
@@ -303,8 +304,8 @@ begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado, tcPorNumeroURLRetornado] then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X001';
-    AErro.Descricao := 'Serviço não implementado pelo Provedor.';
+    AErro.Codigo := Cod001;
+    AErro.Descricao := Desc101;
     Exit;
   end;
 
@@ -367,14 +368,14 @@ begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X002';
-    AErro.Descricao := 'Nenhum RPS adicionado ao componente.';
+    AErro.Codigo := Cod002;
+    AErro.Descricao := Desc002;
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X003';
+    AErro.Codigo := Cod003;
     AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
                        IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
@@ -513,7 +514,7 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := 'X999';
+      AErro.Codigo := Cod999;
       AErro.Descricao := E.Message;
     end;
   end;
@@ -555,8 +556,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X202';
-        AErro.Descricao := 'Lista de NFSe não encontrada! (ListaNfse)';
+        AErro.Codigo := Cod202;
+        AErro.Descricao := Desc202;
         Exit;
       end;
 
@@ -564,8 +565,8 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X203';
-        AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
         Exit;
       end;
 
@@ -590,7 +591,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X999';
+        AErro.Codigo := Cod999;
         AErro.Descricao := E.Message;
       end;
     end;

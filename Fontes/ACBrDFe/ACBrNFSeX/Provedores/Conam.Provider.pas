@@ -96,7 +96,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException,
-  ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Conam.GravarXml, Conam.LerXml;
 
 { TACBrNFSeProviderConam }
@@ -227,14 +227,14 @@ begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X002';
-    AErro.Descricao := 'Nenhum RPS adicionado ao componente.';
+    AErro.Codigo := Cod002;
+    AErro.Descricao := Desc002;
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X203';
+    AErro.Codigo := Cod003;
     AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
                        IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
@@ -441,8 +441,8 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X201';
-        AErro.Descricao := 'WebService retornou um XML vazio.';
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
         Exit
       end;
 
@@ -465,7 +465,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X999';
+        AErro.Codigo := Cod999;
         AErro.Descricao := E.Message;
       end;
     end;
@@ -483,8 +483,8 @@ begin
   if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X101';
-    AErro.Descricao := 'Número do Protocolo não informado.';
+    AErro.Codigo := Cod101;
+    AErro.Descricao := Desc101;
     Exit;
   end;
 
@@ -519,8 +519,8 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X201';
-        AErro.Descricao := 'WebService retornou um XML vazio.';
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
         Exit
       end;
 
@@ -543,7 +543,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X999';
+        AErro.Codigo := Cod999;
         AErro.Descricao := E.Message;
       end;
     end;
@@ -561,8 +561,8 @@ begin
   if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X101';
-    AErro.Descricao := 'Número do Protocolo não informado.';
+    AErro.Codigo := Cod101;
+    AErro.Descricao := Desc101;
     Exit;
   end;
 
@@ -601,8 +601,8 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X201';
-        AErro.Descricao := 'WebService retornou um XML vazio.';
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
         Exit
       end;
 
@@ -622,8 +622,8 @@ begin
         if not Assigned(ANodeArray) then
         begin
           AErro := Response.Erros.New;
-          AErro.Codigo := 'X203';
-          AErro.Descricao := 'Não foi retornado nenhuma NFSe.';
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
           Exit;
         end;
 
@@ -657,7 +657,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X999';
+        AErro.Codigo := Cod999;
         AErro.Descricao := E.Message;
       end;
     end;
@@ -675,48 +675,48 @@ begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X108';
-    AErro.Descricao := 'Número da NFSe não informado.';
+    AErro.Codigo := Cod108;
+    AErro.Descricao := Desc108;
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.SerieNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X112';
-    AErro.Descricao := 'Série da NFSe não informada.';
+    AErro.Codigo := Cod112;
+    AErro.Descricao := Desc112;
     Exit;
   end;
 
   if Response.InfCancelamento.NumeroRps = 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X102';
-    AErro.Descricao := 'Número do Rps não informado.';
+    AErro.Codigo := Cod102;
+    AErro.Descricao := Desc102;
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.SerieRps) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X103';
-    AErro.Descricao := 'Série do Rps não informada.';
+    AErro.Codigo := Cod103;
+    AErro.Descricao := Desc103;
     Exit;
   end;
 
   if Response.InfCancelamento.ValorNFSe = 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X113';
-    AErro.Descricao := 'Valor da NFSe não informado.';
+    AErro.Codigo := Cod113;
+    AErro.Descricao := Desc113;
     Exit;
   end;
 
   if EstaVazio(Response.InfCancelamento.MotCancelamento) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X110';
-    AErro.Descricao := 'Motivo do Cancelamento não informado.';
+    AErro.Codigo := Cod110;
+    AErro.Descricao := Desc110;
     Exit;
   end;
 
@@ -769,8 +769,8 @@ begin
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X201';
-        AErro.Descricao := 'WebService retornou um XML vazio.';
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
         Exit
       end;
 
@@ -793,7 +793,7 @@ begin
       on E:Exception do
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := 'X999';
+        AErro.Codigo := Cod999;
         AErro.Descricao := E.Message;
       end;
     end;

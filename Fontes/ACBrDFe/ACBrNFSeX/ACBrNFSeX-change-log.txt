@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2021
+-- Diversos --
+[*] Criado constantes para os códigos e descrição das mensagens com o objetivo
+    de manter um padrão.
+   Por: Italo Giurizzato Junior
+
 08/06/2021
 -- Diversos --
 [*] Inicio da troca do código 999 definido para as mensagens de erros geradas pelo

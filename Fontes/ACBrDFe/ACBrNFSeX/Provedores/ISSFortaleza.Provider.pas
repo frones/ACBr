@@ -72,7 +72,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSFortaleza.GravarXml, ISSFortaleza.LerXml;
 
 { TACBrNFSeProviderISSFortaleza }
@@ -204,8 +205,8 @@ begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := 'X108';
-    AErro.Descricao := 'Número da NFSe não informado.';
+    AErro.Codigo := Cod108;
+    AErro.Descricao := Desc108;
     Exit;
   end;
 

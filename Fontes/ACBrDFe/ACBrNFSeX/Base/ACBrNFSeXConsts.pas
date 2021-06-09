@@ -77,6 +77,70 @@ const
   DSC_VDIAR = 'Valor da Diaria';
   DSC_INSCMUN = 'Inscrição Municipal';
 
+  // Códigos e Descrições das mensagens
+  Cod001 = 'X001';
+  Desc001 = 'Serviço não implementado pelo Provedor.';
+  Cod002 = 'X002';
+  Desc002 = 'Nenhum RPS adicionado ao componente.';
+  Cod003 = 'X003';
+  Desc003 = 'Conjunto de RPS transmitidos (máximo de xxx RPS) excedido. Quantidade atual: yyy';
+
+  Cod101 = 'X101';
+  Desc101 = 'Número do Protocolo não informado.';
+  Cod102 = 'X102';
+  Desc102 = 'Número do RPS não informado.';
+  Cod103 = 'X103';
+  Desc103 = 'Série do Rps não informada.';
+  Cod104 = 'X104';
+  Desc104 = 'Tipo do Rps não informado.';
+  Cod105 = 'X105';
+  Desc105 = 'Número Inicial da NFSe não informado.';
+  Cod106 = 'X106';
+  Desc106 = 'Número Final da NFSe não informado.';
+  Cod107 = 'X107';
+  Desc107 = 'Pedido de Cancelamento não informado.';
+  Cod108 = 'X108';
+  Desc108 = 'Número da NFSe não informado.';
+  Cod109 = 'X109';
+  Desc109 = 'Código de Cancelamento não informado.';
+  Cod110 = 'X110';
+  Desc110 = 'Motivo do Cancelamento não informado.';
+  Cod111 = 'X111';
+  Desc111 =	'Número do Lote não informado.';
+  Cod112 = 'X112';
+  Desc112 = 'Série da NFSe não informada.';
+  Cod113 = 'X113';
+  Desc113 = 'Valor da NFSe não informado.';
+  Cod114 = 'X114';
+  Desc114	= 'Tipo da NFSe não informado.';
+  Cod115 = 'X115';
+  Desc115	= 'Data Inicial não informada.';
+  Cod116 = 'X116';
+  Desc116 =	'Data Final não informada.';
+  Cod117 = 'X117';
+  Desc117 = 'Código de Verificação/Validação não informado.';
+  Cod118 = 'X118';
+  Desc118	= 'Chave da NFSe não informada.';
+
+  Cod201 = 'X201';
+  Desc201 = 'WebService retornou um XML vazio.';
+  Cod202 = 'X202';
+  Desc202 = 'Lista de NFSe não encontrada! (ListaNfse)';
+  Cod203 = 'X203';
+  Desc203 = 'Não foi retornado nenhuma NFSe.';
+  Cod204 = 'X204';
+  Desc204 = 'Confirmação do Cancelamento não encontrada.';
+  Cod205 = 'X205';
+  Desc205 = 'Retorno da Substituição não encontrada.';
+  Cod206 = 'X206';
+  Desc206 = 'Nfse Substituida não encontrada.';
+  Cod207 = 'X207';
+  Desc207 = 'Nfse Substituidora não encontrada.';
+  Cod208 = 'X208';
+  Desc208	= 'Não foi retornado nenhum Rps.';
+
+  Cod999 = 'X999';
+
 implementation
 
 end.

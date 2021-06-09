@@ -1,7 +1,7 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 279
+  Left = 485
   Height = 780
-  Top = 68
+  Top = 149
   Caption = 'Manifesto - Retrato'
   ClientHeight = 780
   Font.Height = -8
@@ -9,8 +9,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Font.Style = [fsBold]
   inherited RLMDFe: TRLReport
     Tag = 1
-    Left = 26
-    Top = 2
+    Top = 0
     Background.Align = faBottom
     Borders.Sides = sdCustom
     Font.Height = -8
@@ -24,7 +23,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_2_Rodo: TRLBand[0]
       Left = 26
       Height = 208
-      Top = 313
+      Top = 341
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -35,10 +34,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_2_RodoBeforePrint
       object RLPanel7: TRLPanel
         Left = 0
@@ -51,25 +46,16 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLDraw7: TRLDraw
           Left = 0
           Height = 9
           Top = 35
           Width = 316
-          Angle = 0
           Color = clWhite
           DrawKind = dkLine
           ParentColor = False
           Pen.Color = clSilver
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel35: TRLLabel
@@ -85,10 +71,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel9: TRLLabel
           Left = 331
@@ -103,10 +85,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel13: TRLLabel
           Left = 4
@@ -120,10 +98,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel14: TRLLabel
           Left = 168
@@ -137,10 +111,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel15: TRLLabel
           Left = 331
@@ -154,10 +124,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel16: TRLLabel
           Left = 425
@@ -171,10 +137,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmCPF: TRLMemo
           Left = 330
@@ -195,10 +157,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmCondutor: TRLMemo
@@ -220,10 +178,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmPlaca: TRLMemo
@@ -245,10 +199,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmRNTRC: TRLMemo
@@ -270,10 +220,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLLabel7: TRLLabel
@@ -289,10 +235,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel19: TRLLabel
           Left = 4
@@ -307,10 +249,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel20: TRLLabel
           Left = 98
@@ -325,10 +263,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel21: TRLLabel
           Left = 196
@@ -343,10 +277,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmRespCNPJ: TRLMemo
           Left = 4
@@ -367,10 +297,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmFornCNPJ: TRLMemo
@@ -392,10 +318,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmNumComprovante: TRLMemo
@@ -417,10 +339,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLLabel28: TRLLabel
@@ -436,10 +354,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel29: TRLLabel
           Left = 327
@@ -454,10 +368,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmRespSeguradora: TRLMemo
           Left = 328
@@ -478,10 +388,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLLabel30: TRLLabel
@@ -497,10 +403,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmRespApolice: TRLMemo
           Left = 547
@@ -521,10 +423,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmRespSeguro: TRLLabel
@@ -540,41 +438,27 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw1: TRLDraw
           Left = 325
           Height = 9
           Top = 35
           Width = 410
-          Angle = 0
           DrawKind = dkLine
           Pen.Color = clSilver
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw2: TRLDraw
           Left = 0
           Height = 9
           Top = 136
           Width = 316
-          Angle = 0
           Color = clWhite
           DrawKind = dkLine
           ParentColor = False
           Pen.Color = clSilver
           Pen.Style = psDot
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLDraw3: TRLDraw
@@ -582,16 +466,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 9
           Top = 136
           Width = 410
-          Angle = 0
           Color = clWhite
           DrawKind = dkLine
           ParentColor = False
           Pen.Color = clSilver
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
@@ -599,7 +478,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_3_Aereo: TRLBand[1]
       Left = 26
       Height = 20
-      Top = 521
+      Top = 549
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -610,17 +489,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       Visible = False
       BeforePrint = rlb_3_AereoBeforePrint
     end
     object rlb_4_Aquav: TRLBand[2]
       Left = 26
       Height = 121
-      Top = 541
+      Top = 569
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -630,10 +505,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_4_AquavBeforePrint
       object RLPanel8: TRLPanel
         Left = 0
@@ -646,10 +517,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLPanel9: TRLPanel
           Left = 0
           Height = 20
@@ -661,10 +528,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Borders.DrawTop = False
           Borders.DrawRight = False
           Borders.DrawBottom = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           object rlLabel24: TRLLabel
             Left = 3
             Height = 14
@@ -678,10 +541,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Font.Style = [fsBold]
             ParentColor = False
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
           end
           object rllCodEmbar: TRLLabel
             Left = 132
@@ -696,10 +555,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Font.Style = [fsBold]
             ParentColor = False
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
           end
           object rlLabel26: TRLLabel
             Left = 379
@@ -714,10 +569,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Font.Style = [fsBold]
             ParentColor = False
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
           end
           object rllNomeEmbar: TRLLabel
             Left = 505
@@ -732,10 +583,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Font.Style = [fsBold]
             ParentColor = False
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
           end
         end
         object RLLabel8: TRLLabel
@@ -750,10 +597,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel11: TRLLabel
           Left = 70
@@ -767,10 +610,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel18: TRLLabel
           Left = 379
@@ -784,10 +623,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel31: TRLLabel
           Left = 451
@@ -801,10 +636,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmCodCarreg: TRLMemo
           Left = 3
@@ -826,10 +657,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmNomeCarreg: TRLMemo
@@ -851,10 +678,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmCodDescarreg: TRLMemo
@@ -876,10 +699,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmNomeDescarreg: TRLMemo
@@ -901,10 +720,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLDraw4: TRLDraw
@@ -912,16 +727,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 9
           Top = 38
           Width = 369
-          Angle = 0
           Color = clWhite
           DrawKind = dkLine
           ParentColor = False
           Pen.Color = clSilver
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLDraw5: TRLDraw
@@ -929,16 +739,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 9
           Top = 38
           Width = 362
-          Angle = 0
           Color = clWhite
           DrawKind = dkLine
           ParentColor = False
           Pen.Color = clSilver
           Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
@@ -946,7 +751,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_5_Ferrov: TRLBand[3]
       Left = 26
       Height = 20
-      Top = 662
+      Top = 690
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -956,17 +761,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       Visible = False
       BeforePrint = rlb_5_FerrovBeforePrint
     end
     object rlb_6_Observacao: TRLBand[4]
       Left = 26
       Height = 152
-      Top = 814
+      Top = 842
       Width = 742
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -976,10 +777,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_6_ObservacaoBeforePrint
       object rlmObservacao: TRLMemo
         Left = 1
@@ -1000,10 +797,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel22: TRLLabel
         Left = 4
@@ -1018,10 +811,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMsg1: TRLLabel
         Left = 14
@@ -1037,10 +826,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDataHoraImpressao: TRLLabel
         Left = 1
@@ -1053,10 +838,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSistema: TRLLabel
@@ -1072,10 +853,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMsg2: TRLLabel
@@ -1091,33 +868,24 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw9: TRLDraw
         Left = 0
         Height = 9
         Top = 16
         Width = 745
-        Angle = 0
         Color = clWhite
         DrawKind = dkLine
         ParentColor = False
         Pen.Color = clSilver
         Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
     object rlb_7_Documentos_Titulos: TRLBand[5]
       Left = 26
       Height = 46
-      Top = 682
+      Top = 710
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -1129,10 +897,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Color = clWhite
       IntegralHeight = False
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_7_Documentos_TitulosBeforePrint
       object rlLabel141: TRLLabel
         Left = 252
@@ -1148,10 +912,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel91: TRLLabel
@@ -1166,10 +926,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel92: TRLLabel
@@ -1184,10 +940,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel96: TRLLabel
@@ -1202,10 +954,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel109: TRLLabel
@@ -1220,10 +968,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel106: TRLLabel
@@ -1238,10 +982,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel100: TRLLabel
@@ -1256,10 +996,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw6: TRLDraw
@@ -1267,16 +1003,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 9
         Top = 36
         Width = 367
-        Angle = 0
         Color = clWhite
         DrawKind = dkLine
         ParentColor = False
         Pen.Color = clSilver
         Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw8: TRLDraw
@@ -1284,23 +1015,18 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 9
         Top = 36
         Width = 364
-        Angle = 0
         Color = clWhite
         DrawKind = dkLine
         ParentColor = False
         Pen.Color = clSilver
         Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
     object rlb_2: TRLBand[6]
       Left = 26
       Height = 128
-      Top = 185
+      Top = 213
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -1315,10 +1041,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Font.Name = 'Courier New'
       ParentColor = False
       ParentFont = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_3_AereoBeforePrint
       object RLPanel_Contingencia: TRLPanel
         Left = 2
@@ -1327,10 +1049,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 326
         Color = clBlack
         ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLPanel14: TRLPanel
@@ -1340,10 +1058,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 122
         Color = cl3DLight
         ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLPanel13: TRLPanel
@@ -1353,10 +1067,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 96
         Color = cl3DLight
         ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLPanel12: TRLPanel
@@ -1366,10 +1076,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 99
         Color = cl3DLight
         ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel12: TRLLabel
@@ -1384,10 +1090,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPesoTotal: TRLLabel
@@ -1403,10 +1105,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllqNFeMDFe: TRLLabel
@@ -1422,10 +1120,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllqCTe: TRLLabel
@@ -1441,10 +1135,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object lblQTDENFeMDFe: TRLLabel
@@ -1460,10 +1150,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel5: TRLLabel
@@ -1479,10 +1165,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLPanel4: TRLPanel
@@ -1495,10 +1177,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLBarcode1: TRLBarcode
           Left = 1
           Height = 54
@@ -1514,10 +1192,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Margins.LeftMargin = 1
           Margins.RightMargin = 1
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlLabel74: TRLLabel
           Left = 2
@@ -1532,10 +1206,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
@@ -1549,10 +1219,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object rllChave: TRLLabel
           Left = 3
           Height = 14
@@ -1566,10 +1232,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel1: TRLLabel
@@ -1585,10 +1247,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
@@ -1605,10 +1263,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllModal: TRLLabel
@@ -1631,10 +1285,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllProtocolo: TRLMemo
         Left = 3
@@ -1649,10 +1299,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel10: TRLLabel
@@ -1665,10 +1311,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel23: TRLLabel
         Left = 394
@@ -1681,26 +1323,18 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object subItens: TRLSubDetail[7]
       Left = 26
       Height = 86
-      Top = 728
+      Top = 756
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
       Borders.DrawTop = False
       Borders.DrawRight = False
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = subItensBeforePrint
       OnDataRecord = subItensDataRecord
       object rlbItens: TRLBand
@@ -1710,10 +1344,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 742
         Background.Height = 487
         Background.Width = 865
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
         object rlmChave1: TRLMemo
@@ -1732,10 +1362,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlmChave2: TRLMemo
           Left = 381
@@ -1753,10 +1379,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           )
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rlbMunicipio: TRLLabel
           Left = 0
@@ -1775,16 +1397,12 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
       end
     end
     object rlb_1_DadosManifesto: TRLBand[8]
       Left = 26
-      Height = 159
+      Height = 187
       Top = 26
       Width = 742
       AutoExpand = False
@@ -1796,10 +1414,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_1_DadosManifestoBeforePrint
       object rliLogo: TRLImage
         Left = 8
@@ -1807,10 +1421,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 9
         Width = 121
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
       object rlmEmitente: TRLMemo
@@ -1827,15 +1437,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmDadosEmitente: TRLMemo
         Left = 134
-        Height = 60
+        Height = 89
         Top = 35
         Width = 433
         AutoSize = False
@@ -1853,16 +1459,12 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel17: TRLLabel
         Left = 4
         Height = 19
-        Top = 96
+        Top = 127
         Width = 73
         Caption = 'DAMDFE'
         Color = clWhite
@@ -1872,15 +1474,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLMemo1: TRLMemo
         Left = 83
         Height = 20
-        Top = 97
+        Top = 128
         Width = 486
         Behavior = [beSiteExpander]
         Font.Color = clWindowText
@@ -1890,10 +1488,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           'Documento Auxiliar de Manifesto Eletrônico de Documentos Fiscais'
         )
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object imgQRCode: TRLImage
         Left = 574
@@ -1901,26 +1495,18 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 12
         Width = 162
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
       object RLPanel6: TRLPanel
         Left = 0
         Height = 38
-        Top = 116
+        Top = 147
         Width = 569
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object RLPanel1: TRLPanel
           Left = 3
           Height = 35
@@ -1928,10 +1514,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 202
           Color = clSkyBlue
           ParentColor = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLPanel11: TRLPanel
@@ -1941,10 +1523,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 68
           Color = clSkyBlue
           ParentColor = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLPanel10: TRLPanel
@@ -1954,10 +1532,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 131
           Color = clSkyBlue
           ParentColor = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLPanel5: TRLPanel
@@ -1967,10 +1541,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 69
           Color = clSkyBlue
           ParentColor = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLPanel2: TRLPanel
@@ -1980,10 +1550,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 48
           Color = clSkyBlue
           ParentColor = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel2: TRLLabel
@@ -1999,10 +1565,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllModelo: TRLLabel
@@ -2018,10 +1580,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel3: TRLLabel
@@ -2036,10 +1594,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllSerie: TRLLabel
@@ -2055,10 +1609,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel4: TRLLabel
@@ -2074,10 +1624,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllNumMDFe: TRLLabel
@@ -2093,10 +1639,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel25: TRLLabel
@@ -2112,10 +1654,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLSystemInfo1: TRLSystemInfo
@@ -2133,10 +1671,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Info = itPagePreview
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Text = '0#/0#'
           Transparent = False
         end
@@ -2154,10 +1688,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllEmissao: TRLLabel
@@ -2175,10 +1705,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlLabel77: TRLLabel
@@ -2193,10 +1719,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllUFCarrega: TRLLabel
@@ -2213,10 +1735,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object RLLabel6: TRLLabel
@@ -2231,10 +1749,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rllUFDescarrega: TRLLabel
@@ -2251,17 +1765,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    left = 64
-    top = 39
+    Left = 58
+    Top = 39
   end
 end

@@ -29,10 +29,6 @@ namespace ACBrLib
             cmb.SelectedItem = dataSource.SingleOrDefault(x => x.Content.Equals(valorPadrao));
         }
 
-        public static void SetDataSource<T>(this ComboBox cmb, T valorPadrao)
-        {
-        }
-
         public static T GetSelectedValue<T>(this ComboBox cmb)
         {
             return ((ItemData<T>)cmb.SelectedItem).Content;
@@ -44,35 +40,25 @@ namespace ACBrLib
             cmb.SelectedItem = dataSource.SingleOrDefault(x => x.Content.Equals(valor));
         }
 
-        public static void AppendLine(this RichTextBox source, string value)
-        {
-            if (source.Text.Length == 0)
-                source.Text = value;
-            else
-                source.AppendText(Environment.NewLine + value);
-        }
-
-        public static void AppendLine(this RichTextBox source, string[] values)
+        public static void AppendLine(this RichTextBox source, params string[] values)
         {
             foreach (var value in values)
             {
-                source.AppendLine(value);
+                if (source.Text.Length == 0)
+                    source.Text = value;
+                else
+                    source.AppendText(Environment.NewLine + value);
             }
         }
 
-        public static void AppendLine(this TextBox source, string value)
-        {
-            if (source.Text.Length == 0)
-                source.Text = value;
-            else
-                source.AppendText(Environment.NewLine + value);
-        }
-
-        public static void AppendLine(this TextBox source, string[] values)
+        public static void AppendLine(this TextBox source, params string[] values)
         {
             foreach (var value in values)
             {
-                source.AppendLine(value);
+                if (source.Text.Length == 0)
+                    source.Text = value;
+                else
+                    source.AppendText(Environment.NewLine + value);
             }
         }
 

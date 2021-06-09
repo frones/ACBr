@@ -47,12 +47,22 @@ namespace ACBrLib.Core
 
         private static string ToString(bool value)
         {
-            return value ? "True" : "False";
+            return value ? "0" : "1";
         }
 
         private static string ToString(int value)
         {
             return value.ToString();
+        }
+
+        private static string ToString(string[] value)
+        {
+            return string.Join("|", value);
+        }
+
+        private static string[] ToStringArray(string value)
+        {
+            return value.Split('|');
         }
 
         private static int ToInt32(string value)
@@ -69,7 +79,7 @@ namespace ACBrLib.Core
 
         private static bool ToBoolean(string value)
         {
-            return value == "True";
+            return value == "1";
         }
 
         private static float ToFloat(string value)
@@ -128,7 +138,9 @@ namespace ACBrLib.Core
         {
             foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (!(property.CanRead && property.CanWrite && IsPrimitive(property.PropertyType))) continue;
+                if (property.HasAttribute<IniIgnoreAttribute>()) continue;
+                if (!(property.CanRead && property.CanWrite)) continue;
+                if (!IsPrimitive(property.PropertyType)) continue;
 
                 var value = property.GetValue(obj, null);
                 if (value == null) continue;
@@ -168,13 +180,18 @@ namespace ACBrLib.Core
                         str = enumValue ?? ToString(Convert.ToInt32(value));
                         break;
 
+                    case string[] aString:
+                        str = ToString(aString);
+                        break;
+
                     default:
                         str = value.ToString();
                         break;
                 }
 
+                var keyName = property.HasAttribute<IniKeyAttribute>() ? property.GetAttribute<IniKeyAttribute>().Value : property.Name;
                 if (!string.IsNullOrEmpty(str))
-                    section.Add(property.Name, str);
+                    section.Add(keyName, str);
             }
         }
 
@@ -200,8 +217,13 @@ namespace ACBrLib.Core
         {
             foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (!(property.CanRead && property.CanWrite && IsPrimitive(property.PropertyType))) continue;
-                if (!section.ContainsKey(property.Name)) continue;
+                if (property.HasAttribute<IniIgnoreAttribute>()) continue;
+                if (!(property.CanRead && property.CanWrite)) continue;
+                if (!IsPrimitive(property.PropertyType)) continue;
+
+                var keyName = property.HasAttribute<IniKeyAttribute>() ? property.GetAttribute<IniKeyAttribute>().Value : property.Name;
+
+                if (!section.ContainsKey(keyName)) continue;
 
                 var str = section[property.Name];
                 if (str == null) continue;
@@ -231,6 +253,10 @@ namespace ACBrLib.Core
                 else if (property.PropertyType == typeof(int) || property.PropertyType == typeof(int?))
                 {
                     value = ToInt32(str);
+                }
+                else if (property.PropertyType == typeof(string[]))
+                {
+                    value = ToStringArray(str);
                 }
                 else if (property.PropertyType.IsSubclassOf(typeof(Enum)))
                 {

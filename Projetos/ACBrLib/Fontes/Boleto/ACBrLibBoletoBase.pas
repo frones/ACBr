@@ -840,19 +840,16 @@ begin
 
     GravarLog('Boleto_MontarNossoNumero', logNormal);
 
+    if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
+        raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
+
     BoletoDM.Travar;
     try
       Resposta := '';
-      if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
-        Result := SetRetorno(ErrArquivoNaoExiste)
-      else
-      begin
-        Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCampoNossoNumero(
-                    BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
-        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      end;
+      Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCampoNossoNumero(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       BoletoDM.Destravar;
     end;
@@ -877,19 +874,17 @@ begin
 
     GravarLog('RetornaLinhaDigitavel', logNormal);
 
+    if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
+      raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
+
     BoletoDM.Travar;
+
     try
       Resposta := '';
-      if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
-        Result := SetRetorno(ErrArquivoNaoExiste)
-      else
-      begin
-        ABarras := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
-        Resposta := BoletoDM.ACBrBoleto1.Banco.MontarLinhaDigitavel(ABarras, BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
-        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      end;
+      Resposta := BoletoDM.ACBrBoleto1.Banco.MontarLinhaDigitavel(ABarras, BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       BoletoDM.Destravar;
     end;
@@ -913,18 +908,16 @@ begin
 
     GravarLog('Boleto_RetornaCodigoBarras', logNormal);
 
+    if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
+      raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
+
     BoletoDM.Travar;
     try
       Resposta := '';
-      if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
-        Result := SetRetorno(ErrArquivoNaoExiste)
-      else
-      begin
-        Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
-        Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      end;
+      Resposta := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       BoletoDM.Destravar;
     end;

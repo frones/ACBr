@@ -278,6 +278,8 @@ var
   Ok: Boolean;
   sSecao: String;
 begin
+  Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
+
   Result := True;
 
   INIRec := TMemIniFile.Create('');

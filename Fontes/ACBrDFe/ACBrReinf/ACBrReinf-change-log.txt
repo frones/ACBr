@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2021
+-- pcnReinfR2099 --
+[-] Correção na leitura do arquivo INI do evento 2099
+   Por: Italo Giurizzato Junior
+
 01/06/2021
 -- pcnConversaoReinf/pcnReinfR2055 --
 [*] Incluído o valor tiCAEPF na classe TtpInsc para atender o evento R-2055.

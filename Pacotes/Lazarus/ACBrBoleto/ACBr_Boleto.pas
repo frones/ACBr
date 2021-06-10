@@ -16,7 +16,8 @@ uses
   ACBrBancoPine, ACBrBancoPineBradesco, ACBrBoletoReg, ACBrBoletoWS, 
   ACBrBoletoConversao, ACBrBoletoPcnConsts, ACBrBoletoW_Caixa, 
   ACBrBoletoRet_Caixa, ACBrBoletoRetorno, ACBrBoletoW_BancoBrasil, 
-  ACBrBoletoRet_BancoBrasil, LazarusPackageIntf;
+  ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API,
+  LazarusPackageIntf;
 
 implementation
 

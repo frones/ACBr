@@ -246,7 +246,7 @@ begin
       if FAOwner.ConfigGeral.TabServicosExt then
         xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
       else
-        xItemListaServico := CodigoToDesc(OnlyNumber(ItemListaServico));
+        xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
     end;
 
     ValorIssRet := ProcessarConteudo(AuxNode.Childrens.Find('VlIssRet'), tcDe2);

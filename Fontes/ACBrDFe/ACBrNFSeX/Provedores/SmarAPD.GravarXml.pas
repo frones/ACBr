@@ -151,7 +151,7 @@ begin
                                              NFSe.Tomador.Endereco.xMunicipio, ''))
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#2', 'cidadetomador', 1, 50, 1,
-     CodCidadeToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 3202405)), ''));
+     CodIBGEToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 3202405)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'estadotomador', 1, 50, 1,
                                                  NFSe.Tomador.Endereco.UF, ''));

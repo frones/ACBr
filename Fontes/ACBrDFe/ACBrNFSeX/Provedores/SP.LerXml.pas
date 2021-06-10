@@ -163,7 +163,7 @@ begin
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('Cidade'), tcStr);
       UF              := ProcessarConteudo(AuxNode.Childrens.Find('UF'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.Find('CEP'), tcStr);
-      xMunicipio      := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -186,7 +186,7 @@ begin
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('Cidade'), tcStr);
       UF              := ProcessarConteudo(AuxNode.Childrens.Find('UF'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.Find('CEP'), tcStr);
-      xMunicipio      := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -443,7 +443,7 @@ begin
   if FAOwner.ConfigGeral.TabServicosExt then
     NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
   else
-    NFSe.Servico.xItemListaServico := CodigoToDesc(ItemServico);
+    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
 end;
 
 end.

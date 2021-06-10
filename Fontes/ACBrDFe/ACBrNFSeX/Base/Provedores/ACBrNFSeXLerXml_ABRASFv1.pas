@@ -744,7 +744,7 @@ begin
     if ConfigGeral.TabServicosExt then
       NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
     else
-      NFSe.Servico.xItemListaServico := CodigoToDesc(ItemServico);
+      NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
   end;
 end;
 

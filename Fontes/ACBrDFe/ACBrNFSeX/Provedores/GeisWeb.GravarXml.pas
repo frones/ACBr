@@ -227,7 +227,7 @@ begin
                                                NFSe.Servico.Discriminacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoServico', 1, 100, 1,
-          CodCidadeToCidade(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
+          CodIBGEToCidade(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
 end;
 
 function TNFSeW_GeisWeb.GerarTomadorServico: TACBrXmlNode;

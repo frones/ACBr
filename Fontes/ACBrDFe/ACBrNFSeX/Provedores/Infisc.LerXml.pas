@@ -191,7 +191,7 @@ begin
       Complemento     := ProcessarConteudo(AuxNode.Childrens.Find('xCpl'), tcStr);
       Bairro          := ProcessarConteudo(AuxNode.Childrens.Find('xBairro'), tcStr);
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('cMun'), tcStr);
-      xMunicipio      := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       UF              := ProcessarConteudo(AuxNode.Childrens.Find('UF'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.Find('CEP'), tcStr);
 
@@ -223,7 +223,7 @@ begin
       Complemento     := ProcessarConteudo(AuxNode.Childrens.Find('xCpl'), tcStr);
       Bairro          := ProcessarConteudo(AuxNode.Childrens.Find('xBairro'), tcStr);
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('cMun'), tcStr);
-      xMunicipio      := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       UF              := ProcessarConteudo(AuxNode.Childrens.Find('UF'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.Find('CEP'), tcStr);
 

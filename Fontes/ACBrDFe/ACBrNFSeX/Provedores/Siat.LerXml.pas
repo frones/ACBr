@@ -248,8 +248,8 @@ begin
 
       if aValor <> '' then
       begin
-        CodigoMunicipio := CodSiafiToCodCidade(aValor);
-        xMunicipio      := CodCidadeToCidade(StrToInt(CodigoMunicipio));
+        CodigoMunicipio := CodTOMToCodIBGE(aValor);
+        xMunicipio      := CodIBGEToCidade(StrToInt(CodigoMunicipio));
         UF              := CodigoParaUF(StrToInt(Copy(CodigoMunicipio, 1, 2)));
       end;
     end;
@@ -272,7 +272,7 @@ begin
     aValor := ProcessarConteudo(AuxNode.Childrens.Find('MunicipioPrestacao'), tcStr);
 
     if aValor <> '' then
-      CodigoMunicipio := CodSiafiToCodCidade(aValor);
+      CodigoMunicipio := CodTOMToCodIBGE(aValor);
 
     with Valores do
     begin

@@ -482,7 +482,7 @@ begin
   }
   xCabecalho := '<Cabecalho>' +
                   '<CodCidade>' +
-                    CodCidadeToCodSiafi(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                    CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                   '</CodCidade>' +
                   '<CPFCNPJRemetente>' +
                     OnlyNumber(Emitente.CNPJ) +
@@ -693,7 +693,7 @@ begin
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaLote' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
-                             CodCidadeToCodSiafi(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                             CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</CodCidade>' +
                            '<CPFCNPJRemetente>' +
                              OnlyNumber(Emitente.CNPJ) +
@@ -852,7 +852,7 @@ begin
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNFSeRPS' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
-                             CodCidadeToCodSiafi(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                             CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</CodCidade>' +
                            '<CPFCNPJRemetente>' +
                              OnlyNumber(Emitente.CNPJ) +
@@ -1038,7 +1038,7 @@ begin
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNotas' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
-                             CodCidadeToCodSiafi(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                             CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</CodCidade>' +
                            '<CPFCNPJRemetente>' +
                              OnlyNumber(Emitente.CNPJ) +
@@ -1224,7 +1224,7 @@ begin
   Response.XmlEnvio := '<' + Prefixo + 'ReqCancelamentoNFSe' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
-                             CodCidadeToCodSiafi(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                             CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</CodCidade>' +
                            '<CPFCNPJRemetente>' +
                              OnlyNumber(Emitente.CNPJ) +

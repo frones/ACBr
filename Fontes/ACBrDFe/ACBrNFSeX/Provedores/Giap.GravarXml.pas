@@ -171,7 +171,7 @@ begin
                                           NFSe.Tomador.Endereco.xMunicipio, ''))
   else
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 30, 1,
-    CodCidadeToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
+    CodIBGEToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 1,
                                         NFSe.Tomador.Endereco.Complemento, ''));

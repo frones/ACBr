@@ -850,7 +850,7 @@ begin
   if FAOwner.ConfigGeral.TabServicosExt then
     NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
   else
-    NFSe.Servico.xItemListaServico := CodigoToDesc(ItemServico);
+    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
 end;
 
 function TNFSeR_ABRASFv2.TipodeXMLLeitura(aArquivo: string): TtpXML;

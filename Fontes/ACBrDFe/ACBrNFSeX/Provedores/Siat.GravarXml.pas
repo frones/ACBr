@@ -327,14 +327,14 @@ begin
                                              NFSe.Tomador.Endereco.Bairro, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomador', 1, 10, 1,
-   CodCidadeToCodSiafi(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
+   CodIBGEToCodTOM(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
 
   if (Trim(NFSe.Tomador.Endereco.xMunicipio) <> '') then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
                                           NFSe.Tomador.Endereco.xMunicipio, ''))
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
-     CodCidadeToCidade(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
+     CodIBGEToCidade(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CEPTomador', 1, 8, 1,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
@@ -356,10 +356,10 @@ begin
                                                          TipoRecolhimento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacao', 1, 10, 1,
-            CodCidadeToCodSiafi(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
+            CodIBGEToCodTOM(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoDescricao', 1, 30, 1,
-              CodCidadeToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
+              CodIBGEToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Operacao', 1, 1, 1,
                                      OperacaoToStr(NFSe.Servico.Operacao), ''));

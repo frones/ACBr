@@ -546,7 +546,7 @@ begin
                              OnlyNumber(Emitente.CNPJ) +
                            '</cpfcnpj>' +
                            '<cidade>' +
-                             IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                             CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</cidade>' +
                          '</Prestador>' +
                        '</nfse>';

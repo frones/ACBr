@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2021
+-- Diversos --
+[*] Trocado o nome das funções:
+      CodigoToSesc -> CodItemServToDesc
+      CodCidadeToCidade -> CodIBGEToCidade
+      CodCidadeToCodSiafi -> CodIBGEToCodTOM
+      CodSiafiToCodCidade -> CodTOMToCodIBGE
+   Por: Italo Giurizzato Junior
+
 09/06/2021
 -- Diversos --
 [*] Criado constantes para os códigos e descrição das mensagens com o objetivo

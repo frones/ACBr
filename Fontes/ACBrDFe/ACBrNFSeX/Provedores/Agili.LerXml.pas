@@ -152,7 +152,7 @@ begin
         if UF = '' then
           UF := NFSe.Prestador.Endereco.UF;
 
-        xMunicipio := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+        xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       end;
     end;
 
@@ -188,7 +188,7 @@ begin
           CodigoMunicipio := Copy(CodigoMunicipio, 1, 2) +
               FormatFloat('00000', StrToIntDef(Copy(CodigoMunicipio, 3, 5), 0));
 
-        xMunicipio := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+        xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
         UF := ProcessarConteudo(AuxMun.Childrens.Find('Uf'), tcStr);
 
         if UF = '' then
@@ -368,7 +368,7 @@ begin
       if FAOwner.ConfigGeral.TabServicosExt then
         xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
       else
-        xItemListaServico := CodigoToDesc(OnlyNumber(ItemListaServico));
+        xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
 
       if Provedor = proAgili then
       begin

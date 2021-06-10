@@ -223,9 +223,9 @@ begin
                                  NFSe.ConstrucaoCivil.CodigoMunicipioObra, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xCidadeObra', 1, 60, 1,
-    copy(CodCidadeToCidade(StrToIntDef(NFSe.ConstrucaoCivil.CodigoMunicipioObra, 0)),
+    copy(CodIBGEToCidade(StrToIntDef(NFSe.ConstrucaoCivil.CodigoMunicipioObra, 0)),
          0,
-         pos('/', CodCidadeToCidade(StrToIntDef(NFSe.ConstrucaoCivil.CodigoMunicipioObra, 0)))-1), ''));
+         pos('/', CodIBGEToCidade(StrToIntDef(NFSe.ConstrucaoCivil.CodigoMunicipioObra, 0)))-1), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xUfObra', 1, 2, 1,
                                               NFSe.ConstrucaoCivil.UFObra, ''));
@@ -451,10 +451,10 @@ begin
                                   NFSe.Prestador.Endereco.CodigoMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 1,
-    copy(CodCidadeToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)),
+    copy(CodIBGEToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)),
          0,
          pos('/',
-             CodCidadeToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0))) -1), ''));
+             CodIBGEToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0))) -1), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 1,
                                                NFSe.Prestador.Endereco.UF, ''));
@@ -489,7 +489,7 @@ begin
                                     NFSe.Tomador.Endereco.CodigoMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 0,
-    CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
+    CodIBGEToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 0,
                                                  NFSe.Tomador.Endereco.UF, ''));
@@ -1043,7 +1043,7 @@ begin
                                                             'Campo Bom-RS', ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
-                      CodCidadeToCidade(NFSe.Servico.MunicipioIncidencia), ''));
+                      CodIBGEToCidade(NFSe.Servico.MunicipioIncidencia), ''));
   end;
 end;
 

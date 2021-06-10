@@ -178,6 +178,8 @@ const
   GUID_DEVCLASS_NETCLIENT: TGUID = '{4D36E973-E325-11CE-BFC1-08002BE10318}';
   GUID_DEVINTERFACE_USBPRINT: TGUID = '{28D78FAD-5A12-11D1-AE5B-0000F803A8C2}';
   GUID_DEVINTERFACE_USB_DEVICE: TGUID = '{A5DCBF10-6530-11D2-901F-00C04FB951ED}';
+  GUID_EPSON_VENDORPRINTER_CLASS: TGUID = '{5dd901c0-bcf4-11d1-9738-008029e6a5b3}';
+
 
   DIGCF_PRESENT = $00000002;
   DIGCF_DEVICEINTERFACE = $00000010;
@@ -294,7 +296,8 @@ type
 
     function FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
     function FindUSBKnownDevices(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
-    function FindUSBDevicesByGUID(AGUID: TGUID; ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
+    function FindUSBDevicesByGUID(AGUID: TGUID; ADeviceList: TACBrUSBWinDeviceList = Nil;
+      DeviceSufix: String = ''): Integer;
 
     procedure Connect(AInterfaceName: String);
     procedure Close;
@@ -802,7 +805,7 @@ var
   Buffer: PByte;
   RequiredSize, PropertyRegDataTye: DWORD;
   AResult: {$IfDef UNICODE}WideString;{$Else}AnsiString;{$EndIf}
-  Err: DWORD;
+  Err, LenChar: DWORD;
 begin
   Result := '';
   // Obtendo o tamanho do Buffer em "RequiredSize"
@@ -820,13 +823,17 @@ begin
                                             RequiredSize, RequiredSize) then
       begin
         {$IfDef UNICODE}
-         SetLength(AResult, Trunc(RequiredSize/2)-1);
+         LenChar := 2;
         {$Else}
-         SetLength(AResult, RequiredSize-1);
+         LenChar := 1;
         {$EndIf}
-        Move(Buffer^, AResult[1], RequiredSize-1);
 
+        SetLength(AResult, Trunc(RequiredSize/LenChar)-1);
+        Move(Buffer^, AResult[1], RequiredSize-LenChar);
         Result := Trim(String(AResult));
+        RequiredSize := Pos(NUL, Result);
+        if (RequiredSize > 1) then
+          Result := copy(Result, 1, RequiredSize-1);
       end;
     finally
       Freemem(Buffer);
@@ -866,6 +873,7 @@ begin
   Result := FindUSBDevicesByGUID( GUID_DEVINTERFACE_USBPRINT, ADeviceListToAdd);
   Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PORT, ADeviceListToAdd);
   Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PRINTER, ADeviceListToAdd);
+  Result := Result + FindUSBDevicesByGUID( GUID_EPSON_VENDORPRINTER_CLASS, ADeviceListToAdd, '\TM');
   //Result := Result + FindUSBDevicesByGUID( GUID_DEVINTERFACE_USB_DEVICE, ADeviceListToAdd);
   Result := Result + FindUSBKnownDevices(ADeviceListToAdd);
 end;
@@ -908,13 +916,13 @@ begin
 end;
 
 function TACBrUSBWinDeviceAPI.FindUSBDevicesByGUID(AGUID: TGUID;
-  ADeviceList: TACBrUSBWinDeviceList): Integer;
+  ADeviceList: TACBrUSBWinDeviceList; DeviceSufix: String): Integer;
 var
   DevInfo: HDEVINFO;
   DeviceInterface: TSPDeviceInterfaceData;
   DeviceInfoData: TSPDevInfoData;
   InterfaceDetail: PSPDeviceInterfaceDetailData;
-  MemberIndex, RequiredSize: DWORD;
+  MemberIndex, RequiredSize, LenChar: DWORD;
   InterfaceName: {$IfDef UNICODE}WideString{$Else}AnsiString{$EndIf};
   DevInterface, DevClassGUID, DevLocation, DevFrendlyName, DevHardwareID,
     VendorId, ProductId: String;
@@ -961,13 +969,17 @@ begin
           if xSetupDiGetDeviceInterfaceDetail(DevInfo, @DeviceInterface, InterfaceDetail, RequiredSize, RequiredSize, @DeviceInfoData) then
           begin
             {$IfDef UNICODE}
-             SetLength(InterfaceName, Trunc(RequiredSize/2)-1);
+             LenChar := 2;
             {$Else}
-             SetLength(InterfaceName, RequiredSize-1);
+             LenChar := 1;
             {$EndIf}
 
-            Move(InterfaceDetail^.DevicePath[0], InterfaceName[1], RequiredSize-1);
+            SetLength(InterfaceName, Trunc(RequiredSize/LenChar)-1);
+            Move(InterfaceDetail^.DevicePath[0], InterfaceName[1], RequiredSize-LenChar);
             DevInterface := Trim(String(InterfaceName));
+            RequiredSize := Pos(NUL, DevInterface);
+            if (RequiredSize > 1) then
+              DevInterface := copy(DevInterface, 1, RequiredSize-1);
           end;
         finally
           Freemem(InterfaceDetail);
@@ -986,7 +998,7 @@ begin
 
           ADevice := ADeviceListToAdd.New(VendorId, ProductId);
           ADevice.ClassGUID := GUIDToString(AGUID);
-          ADevice.DeviceInterface := Trim(DevInterface);
+          ADevice.DeviceInterface := DevInterface + DeviceSufix;
           ADevice.USBPort := DevLocation;
           ADevice.GUID :=  DevClassGUID;
           ADevice.FrendlyName := DevFrendlyName;

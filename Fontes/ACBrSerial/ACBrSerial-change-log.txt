@@ -38,13 +38,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/06/2021
+-- ACBrWinUSBDevice --
+[+] Adicionado suporte USB a Epson VendorClass
+[-] Ajuste no retorno da Windows SetupAPI, que poderiam conter caracteres
+    inválidos, no final das Strings, em algumas situações
+    (por: DSA)
+
 Data: 28/05/2021
 -- ACBrPosPrinter --
 [*] TACBrPosPrinterClass, expondo componente Pai, Propriedade Pública e ReadOnly
 
 -- ACBrPosPrinterElginE1Lib --
 [+] Adicionada nova Classe externa, para tradução das Tags suportadas pelo
-    ACBrPosPriniter, para a biblioteca de Impressão para Android, E1 da Elgin (M8)
+    ACBrPosPrinter, para a biblioteca de Impressão para Android, E1 da Elgin (M8)
 
 -- ACBrPosPrinterElginE1Service --
 [+] Adicionado comando, para emular Beep

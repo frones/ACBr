@@ -126,31 +126,55 @@ namespace ACBrLib.Boleto
 
         #endregion Ini
 
-        public string ConfigurarDados(string eArquivoIni)
+        public void ConfigurarDados(params BoletoInfo[] infos)
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
+            var iniFile = new ACBrIniFile();
+            foreach (var info in infos)
+                info.WriteToIni(iniFile);
 
-            var method = GetMethod<Boleto_ConfigurarDados>();
-            var ret = ExecuteMethod<int>(() => method(ToUTF8(eArquivoIni), buffer, ref bufferLen));
-
-            CheckResult(ret);
-
-            return ProcessResult(buffer, bufferLen);
+            ConfigurarDados(iniFile.ToString());
         }
 
-        public string IncluirTitulos(string eArquivoIni, BoletoTpSaida? eTpSaida = null)
+        public void ConfigurarDados(string eArquivoIni)
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
+            var method = GetMethod<Boleto_ConfigurarDados>();
+            var ret = ExecuteMethod<int>(() => method(ToUTF8(eArquivoIni)));
+
+            CheckResult(ret);
+        }
+
+        public void IncluirTitulos(params Titulo[] titulos)
+        {
+            var iniFile = new ACBrIniFile();
+            for (var i = 0; i < titulos.Length; i++)
+            {
+                titulos[i].Index = i++;
+                titulos[i].WriteToIni(iniFile);
+            }
+
+            IncluirTitulos(iniFile.ToString());
+        }
+
+        public void IncluirTitulos(BoletoTpSaida eTpSaida, params Titulo[] titulos)
+        {
+            var iniFile = new ACBrIniFile();
+            for (var i = 0; i < titulos.Length; i++)
+            {
+                titulos[i].Index = i++;
+                titulos[i].WriteToIni(iniFile);
+            }
+
+            IncluirTitulos(iniFile.ToString(), eTpSaida);
+        }
+
+        public void IncluirTitulos(string eArquivoIni, BoletoTpSaida? eTpSaida = null)
+        {
             var tpSaida = $"{(eTpSaida.HasValue ? (char)eTpSaida.Value : ' ')}";
 
             var method = GetMethod<Boleto_IncluirTitulos>();
-            var ret = ExecuteMethod<int>(() => method(ToUTF8(eArquivoIni), ToUTF8(tpSaida), buffer, ref bufferLen));
+            var ret = ExecuteMethod<int>(() => method(ToUTF8(eArquivoIni), ToUTF8(tpSaida)));
 
             CheckResult(ret);
-
-            return ProcessResult(buffer, bufferLen);
         }
 
         public void LimparLista()
@@ -160,17 +184,14 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
-        public string TotalTitulosLista()
+        public int TotalTitulosLista()
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
-
             var method = GetMethod<Boleto_TotalTitulosLista>();
-            var ret = ExecuteMethod<int>(() => method(buffer, ref bufferLen));
+            var ret = ExecuteMethod<int>(() => method());
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ret;
         }
 
         public void Imprimir(string eNomeImpressora = "")
@@ -209,6 +230,19 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
+        public RetornoBoleto ObterRetorno(string eDir, string eNomeArq)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_ObterRetorno>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eDir), ToUTF8(eNomeArq), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return RetornoBoleto.LerRetorno(ProcessResult(buffer, bufferLen));
+        }
+
         public void LerRetorno(string eDir, string eNomeArq)
         {
             var method = GetMethod<Boleto_LerRetorno>();
@@ -233,20 +267,15 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
-        public string SetDiretorioArquivo(string eDir, string eArq)
+        public void SetDiretorioArquivo(string eDir, string eArq = "")
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
-
             var method = GetMethod<Boleto_SetDiretorioArquivo>();
-            var ret = ExecuteMethod<int>(() => method(ToUTF8(eDir), ToUTF8(eArq), buffer, ref bufferLen));
+            var ret = ExecuteMethod<int>(() => method(ToUTF8(eDir), ToUTF8(eArq)));
 
             CheckResult(ret);
-
-            return ProcessResult(buffer, bufferLen);
         }
 
-        public string ListaBancos()
+        public string[] ListaBancos()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -256,10 +285,10 @@ namespace ACBrLib.Boleto
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ProcessResult(buffer, bufferLen).Split('|');
         }
 
-        public string ListaCaractTitulo()
+        public string[] ListaCaractTitulo()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -269,10 +298,10 @@ namespace ACBrLib.Boleto
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ProcessResult(buffer, bufferLen).Split('|');
         }
 
-        public string ListaOcorrencias()
+        public string[] ListaOcorrencias()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -282,10 +311,10 @@ namespace ACBrLib.Boleto
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ProcessResult(buffer, bufferLen).Split('|');
         }
 
-        public string ListaOcorrenciasEX()
+        public string[] ListaOcorrenciasEX()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -295,20 +324,17 @@ namespace ACBrLib.Boleto
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ProcessResult(buffer, bufferLen).Split('|');
         }
 
-        public string TamNossoNumero(string eCarteira, string enossoNumero, string eConvenio)
+        public int TamNossoNumero(string eCarteira, string enossoNumero, string eConvenio)
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
-
             var method = GetMethod<Boleto_TamNossoNumero>();
-            var ret = ExecuteMethod<int>(() => method(ToUTF8(eCarteira), ToUTF8(enossoNumero), ToUTF8(eConvenio), buffer, ref bufferLen));
+            var ret = ExecuteMethod<int>(() => method(ToUTF8(eCarteira), ToUTF8(enossoNumero), ToUTF8(eConvenio)));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ret;
         }
 
         public string CodigosMoraAceitos()
@@ -324,17 +350,12 @@ namespace ACBrLib.Boleto
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string SelecionaBanco(string eCodBanco)
+        public void SelecionaBanco(string eCodBanco)
         {
-            var bufferLen = BUFFER_LEN;
-            var buffer = new StringBuilder(bufferLen);
-
             var method = GetMethod<Boleto_SelecionaBanco>();
-            var ret = ExecuteMethod<int>(() => method(ToUTF8(eCodBanco), buffer, ref bufferLen));
+            var ret = ExecuteMethod<int>(() => method(ToUTF8(eCodBanco)));
 
             CheckResult(ret);
-
-            return ProcessResult(buffer, bufferLen);
         }
 
         public string MontarNossoNumero(int eIndex)

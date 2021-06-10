@@ -54,6 +54,7 @@ Public Const SESSAO_BAL                       As String = "BAL"
 Public Const SESSAO_BAL_DEVICE                As String = "BAL_Device"
 Public Const SESSAO_GNRE                      As String = "GNRe"
 Public Const SESSAO_GUIA                      As String = "Guia"
+Public Const SESSAO_CEP                       As String = "CEP"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -518,6 +519,28 @@ Public Enum ACBrBALModelo
     balToledoBCS21 = 25
     balPrecision = 26
     balDigitron_UL = 27
+End Enum
+
+Public Enum WebServiceCEP
+    wsNenhum = 0
+    wsBuscarCep = 1
+    wsCepLivre = 2
+    wsRepublicaVirtual = 3
+    wsBases4you = 4
+    wsRNSolucoes = 5
+    wsKingHost = 6
+    wsByJG = 7
+    wsCorreios = 8
+    wsDevMedia = 9
+    wsViaCep = 10
+    wsCorreiosSIGEP = 11
+    wsCepAberto = 12
+    wsWSCep = 13
+End Enum
+
+Public Enum PesquisarIBGE
+    Nao = 0
+    Sim = 1
 End Enum
 
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean

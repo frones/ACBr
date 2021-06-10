@@ -43,16 +43,16 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_ConfigGravarValor(string eSessao, string eChave, string valor);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_ConfigurarDados(string eArquivoIni, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_ConfigurarDados(string eArquivoIni);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_IncluirTitulos(string eArquivoIni, string eTpSaida, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_IncluirTitulos(string eArquivoIni, string eTpSaida);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_LimparLista();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_TotalTitulosLista(StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_TotalTitulosLista();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_Imprimir(string eNomeImpressora);
@@ -70,6 +70,9 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_GerarRemessa(string eDir, int eNumArquivo, string eNomeArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_ObterRetorno(string eDir, string eNomeArq, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_LerRetorno(string eDir, string eNomeArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -79,7 +82,7 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_EnviarEmailBoleto(int eIndice, string ePara, string eAssunto, string eMensagem, string eCC);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_SetDiretorioArquivo(string eDir, string eArq, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_SetDiretorioArquivo(string eDir, string eArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_ListaBancos(StringBuilder buffer, ref int bufferSize);
@@ -94,13 +97,13 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_ListaOcorrenciasEX(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_TamNossoNumero(string eCarteira, string enossoNumero, string eConvenio, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_TamNossoNumero(string eCarteira, string enossoNumero, string eConvenio);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_CodigosMoraAceitos(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_SelecionaBanco(string eCodBanco, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_SelecionaBanco(string eCodBanco);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_MontarNossoNumero(int eIndice, StringBuilder buffer, ref int bufferSize);
@@ -133,6 +136,7 @@ namespace ACBrLib.Boleto
             AddMethod<Boleto_GerarPDF>("Boleto_GerarPDF");
             AddMethod<Boleto_GerarHTML>("Boleto_GerarHTML");
             AddMethod<Boleto_GerarRemessa>("Boleto_GerarRemessa");
+            AddMethod<Boleto_ObterRetorno>("Boleto_ObterRetorno");
             AddMethod<Boleto_LerRetorno>("Boleto_LerRetorno");
             AddMethod<Boleto_EnviarEmail>("Boleto_EnviarEmail");
             AddMethod<Boleto_EnviarEmailBoleto>("Boleto_EnviarEmailBoleto");

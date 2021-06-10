@@ -40,16 +40,16 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_ConfigGravarValor(IntPtr handle, string eSessao, string eChave, string valor);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_ConfigurarDados(IntPtr handle, string eArquivoIni, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_ConfigurarDados(IntPtr handle, string eArquivoIni);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_IncluirTitulos(IntPtr handle, string eArquivoIni, string eTpSaida, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_IncluirTitulos(IntPtr handle, string eArquivoIni, string eTpSaida);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_LimparLista(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_TotalTitulosLista(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_TotalTitulosLista(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_Imprimir(IntPtr handle, string eNomeImpressora);
@@ -70,13 +70,16 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_LerRetorno(IntPtr handle, string eDir, string eNomeArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_ObterRetorno(IntPtr handle, string eDir, string eNomeArq, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_EnviarEmail(IntPtr handle, string ePara, string eAssunto, string eMensagem, string eCC);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_EnviarEmailBoleto(IntPtr handle, int eIndice, string ePara, string eAssunto, string eMensagem, string eCC);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_SetDiretorioArquivo(IntPtr handle, string eDir, string eArq, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_SetDiretorioArquivo(IntPtr handle, string eDir, string eArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_ListaBancos(IntPtr handle, StringBuilder buffer, ref int bufferSize);
@@ -91,13 +94,13 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_ListaOcorrenciasEX(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_TamNossoNumero(IntPtr handle, string eCarteira, string enossoNumero, string eConvenio, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_TamNossoNumero(IntPtr handle, string eCarteira, string enossoNumero, string eConvenio);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_CodigosMoraAceitos(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_SelecionaBanco(IntPtr handle, string eCodBanco, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_SelecionaBanco(IntPtr handle, string eCodBanco);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_MontarNossoNumero(IntPtr handle, int eIndice, StringBuilder buffer, ref int bufferSize);
@@ -130,6 +133,7 @@ namespace ACBrLib.Boleto
             AddMethod<Boleto_GerarPDF>("Boleto_GerarPDF");
             AddMethod<Boleto_GerarHTML>("Boleto_GerarHTML");
             AddMethod<Boleto_GerarRemessa>("Boleto_GerarRemessa");
+            AddMethod<Boleto_ObterRetorno>("Boleto_ObterRetorno");
             AddMethod<Boleto_LerRetorno>("Boleto_LerRetorno");
             AddMethod<Boleto_EnviarEmail>("Boleto_EnviarEmail");
             AddMethod<Boleto_EnviarEmailBoleto>("Boleto_EnviarEmailBoleto");

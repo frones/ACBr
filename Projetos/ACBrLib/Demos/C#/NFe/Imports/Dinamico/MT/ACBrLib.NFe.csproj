@@ -81,9 +81,11 @@
     <Compile Include="..\Shared\NotaFiscal\EventDEST.cs" Link="NotaFiscal\EventDEST.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoAtorIntNFe.cs" Link="NotaFiscal\EventoAtorIntNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoBase.cs" Link="NotaFiscal\EventoBase.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoCancComprovanteEntrega.cs" Link="NotaFiscal\EventoCancComprovanteEntrega.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCancelamento.cs" Link="NotaFiscal\EventoCancelamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCancSubstituicao.cs" Link="NotaFiscal\EventoCancSubstituicao.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCCe.cs" Link="NotaFiscal\EventoCCe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoComprovanteEntrega.cs" Link="NotaFiscal\EventoComprovanteEntrega.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoEPEC.cs" Link="NotaFiscal\EventoEPEC.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestCiencia.cs" Link="NotaFiscal\EventoManifDestCiencia.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestConfirmacao.cs" Link="NotaFiscal\EventoManifDestConfirmacao.cs" />

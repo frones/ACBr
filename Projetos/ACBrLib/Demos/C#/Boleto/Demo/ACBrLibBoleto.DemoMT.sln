@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibBoletoMT.Demo", "ACBrLibBoleto.Demo\ACBrLibBoletoMT.Demo.csproj", "{112A0377-4420-4306-B44D-E1037A4DDEA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Boleto", "..\Imports\Dinamico\MT\ACBrLib.Boleto.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Boleto", "..\Imports\Dinamico\MT\ACBrLib.Boleto.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,6 +16,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{112A0377-4420-4306-B44D-E1037A4DDEA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{112A0377-4420-4306-B44D-E1037A4DDEA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{112A0377-4420-4306-B44D-E1037A4DDEA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{112A0377-4420-4306-B44D-E1037A4DDEA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B79E20D-34E2-4442-886C-242AC657E3AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

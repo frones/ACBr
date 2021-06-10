@@ -52,10 +52,37 @@
     <Compile Include="..\Shared\CedenteConfig.cs" Link="CedenteConfig.cs" />
     <Compile Include="..\Shared\DiretorioConfig.cs" Link="DiretorioConfig.cs" />
     <Compile Include="..\Shared\ImpressaoConfig.cs" Link="ImpressaoConfig.cs" />
+    <Compile Include="..\Shared\Titulo\AceiteTitulo.cs" Link="Titulo\AceiteTitulo.cs" />
+    <Compile Include="..\Shared\Titulo\Banco.cs" Link="Titulo\Banco.cs" />
+    <Compile Include="..\Shared\Titulo\BoletoInfo.cs" Link="Titulo\BoletoInfo.cs" />
+    <Compile Include="..\Shared\Titulo\BoletoNotaFiscal.cs" Link="Titulo\BoletoNotaFiscal.cs" />
+    <Compile Include="..\Shared\Titulo\CarteiraEnvio.cs" Link="Titulo\CarteiraEnvio.cs" />
+    <Compile Include="..\Shared\Titulo\Cedente.cs" Link="Titulo\Cedente.cs" />
+    <Compile Include="..\Shared\Titulo\CodigoJuros.cs" Link="Titulo\CodigoJuros.cs" />
+    <Compile Include="..\Shared\Titulo\Conta.cs" Link="Titulo\Conta.cs" />
+    <Compile Include="..\Shared\Titulo\Ocorrencia.cs" Link="Titulo\Ocorrencia.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoBanco.cs" Link="Titulo\RetornoBanco.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoBoleto.cs" Link="Titulo\RetornoBoleto.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoCedente.cs" Link="Titulo\RetornoCedente.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoConta.cs" Link="Titulo\RetornoConta.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoRejeicao.cs" Link="Titulo\RetornoRejeicao.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoSacado.cs" Link="Titulo\RetornoSacado.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoTitulo.cs" Link="Titulo\RetornoTitulo.cs" />
+    <Compile Include="..\Shared\Titulo\Sacado.cs" Link="Titulo\Sacado.cs" />
+    <Compile Include="..\Shared\Titulo\SacadoAvalista.cs" Link="Titulo\SacadoAvalista.cs" />
+    <Compile Include="..\Shared\Titulo\TipoDesconto.cs" Link="Titulo\TipoDesconto.cs" />
+    <Compile Include="..\Shared\Titulo\TipoDiasIntrucao.cs" Link="Titulo\TipoDiasIntrucao.cs" />
+    <Compile Include="..\Shared\Titulo\TipoImpressao.cs" Link="Titulo\TipoImpressao.cs" />
+    <Compile Include="..\Shared\Titulo\TipoOcorrencia.cs" Link="Titulo\TipoOcorrencia.cs" />
+    <Compile Include="..\Shared\Titulo\Titulo.cs" Link="Titulo\Titulo.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Titulo\" />
   </ItemGroup>
 
 </Project>

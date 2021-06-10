@@ -53,13 +53,13 @@ namespace ACBrLibBoleto.Demo
                 cmbImpressora.SelectedIndex = 0;
 
             // Altera as config de log
-            boleto.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);
+            boleto.Config.Principal.LogNivel = NivelLog.logParanoico;
 
-            var logPath = Path.Combine(Application.StartupPath, "Docs");
+            var logPath = Path.Combine(Application.StartupPath, "Logs");
             if (!Directory.Exists(logPath))
                 Directory.CreateDirectory(logPath);
 
-            boleto.ConfigGravarValor(ACBrSessao.Principal, "LogPath", logPath);
+            boleto.Config.Principal.LogPath = logPath;
             boleto.ConfigGravar();
 
             LoadConfig();
@@ -199,8 +199,7 @@ namespace ACBrLibBoleto.Demo
             var iniPath = Helpers.OpenFile("Titulo (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");
             if (string.IsNullOrEmpty(iniPath)) return;
 
-            var ret = boleto.IncluirTitulos(iniPath);
-            rtbRespostas.AppendLine(ret);
+            boleto.IncluirTitulos(iniPath);
         }
 
         private void BtnImprimir_Click(object sender, EventArgs e)
@@ -223,7 +222,7 @@ namespace ACBrLibBoleto.Demo
         private void BtnTotalTitulo_Click(object sender, EventArgs e)
         {
             var ret = boleto.TotalTitulosLista();
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.ToString());
         }
 
         private void BtnLimparLista_Click(object sender, EventArgs e)
@@ -239,8 +238,7 @@ namespace ACBrLibBoleto.Demo
             var iniPath = Helpers.OpenFile("Configurar Dados do Cedente (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");
             if (string.IsNullOrEmpty(iniPath)) return;
 
-            var ret = boleto.ConfigurarDados(iniPath);
-            rtbRespostas.AppendLine(ret);
+            boleto.ConfigurarDados(iniPath);
         }
 
         private void BtnGerarPDF_Click(object sender, EventArgs e)
@@ -257,9 +255,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnEnviarEmail_Click(object sender, EventArgs e)
         {
-            int.TryParse(boleto.TotalTitulosLista(), out var i);
-
-            if (i == 0) return;
+            if (boleto.TotalTitulosLista() == 0) return;
 
             try
             {
@@ -315,9 +311,9 @@ namespace ACBrLibBoleto.Demo
         private void BtnSelecionaBanco_Click(object sender, EventArgs e)
         {
             var codBanco = "001";
+            InputBox.Show("Selecionar Banco", "Número do Banco", ref codBanco);
 
-            var ret = boleto.SelecionaBanco(codBanco);
-            rtbRespostas.AppendLine(ret);
+            boleto.SelecionaBanco(codBanco);
         }
 
         private void BtnGerarHTML_Click(object sender, EventArgs e)
@@ -342,18 +338,23 @@ namespace ACBrLibBoleto.Demo
         {
             var sDiretorio = Helpers.SelectFolder();
 
-            boleto.SetDiretorioArquivo(sDiretorio, "Arquivo");
+            boleto.SetDiretorioArquivo(sDiretorio);
             rtbRespostas.AppendLine("Direto setado");
         }
 
         private void BtnTamNossoNumero_Click(object sender, EventArgs e)
         {
             var sCarteira = "0";
+            InputBox.Show("Nosso Numero", "Digite a Carteira", ref sCarteira);
+
             var sNossoNumero = "0";
+            InputBox.Show("Nosso Numero", "Digite a Número", ref sNossoNumero);
+
             var sConvenio = "0";
+            InputBox.Show("Nosso Numero", "Digite o Convenio", ref sConvenio);
 
             var ret = boleto.TamNossoNumero(sCarteira, sNossoNumero, sConvenio);
-            rtbRespostas.AppendLine(ret);
+            rtbRespostas.AppendLine(ret.ToString());
         }
 
         private void BtnMontarNossoNumero_Click(object sender, EventArgs e)
@@ -366,9 +367,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnEnviarEmailBoleto_Click(object sender, EventArgs e)
         {
-            int.TryParse(boleto.TotalTitulosLista(), out var i);
-
-            if (i == 0) return;
+            if (boleto.TotalTitulosLista() == 0) return;
 
             try
             {

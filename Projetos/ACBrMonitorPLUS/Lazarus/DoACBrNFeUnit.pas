@@ -1071,7 +1071,7 @@ begin
   ALogo := fpCmd.Params(0);
   ANFCe := StrToBoolDef( fpCmd.Params(1), False);
 
-  if not FileExists(ALogo) then
+  if (( ALogo <> EmptyStr) and (not FileExists(ALogo)) ) then
     raise Exception.Create('Arquivo não encontrado.');
 
   with TACBrObjetoNFe(fpObjetoDono) do

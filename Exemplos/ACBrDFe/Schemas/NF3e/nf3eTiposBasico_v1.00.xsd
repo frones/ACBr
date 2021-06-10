@@ -700,15 +700,10 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 										<xs:annotation>
 											<xs:documentation>Tipo de participação no sistema de compensação de energia elétrica</xs:documentation>
 											<xs:documentation>1 - Mini ou microgeração (somente uma UC); 2 -  Múltiplas unidades consumidoras (condomínio em área definida); 3 - Autoconsumo remoto; 4 - Geração compartilhada (consórcio ou cooperativa); 
-</xs:documentation>
+5 - Mista (utilizar quando enquadrado em mais de um tipo de participação)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="vPotInst" type="TDec_0503">
-										<xs:annotation>
-											<xs:documentation>Potência instalada da micro ou minigeraçao em kW</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="gConsumidor" minOccurs="0" maxOccurs="unbounded">
+									<xs:element name="gConsumidor" maxOccurs="unbounded">
 										<xs:annotation>
 											<xs:documentation>Participação no SCEE como Consumidor </xs:documentation>
 										</xs:annotation>
@@ -728,20 +723,41 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element name="enerAloc" type="TDec_0503">
+												<xs:element name="vPotInst" type="TDec_0503">
 													<xs:annotation>
-														<xs:documentation>Energia alocada</xs:documentation>
-														<xs:documentation>Quantidade de energia excedente que é destinado pela unidade geradora a esta unidade consumidora em kWh.</xs:documentation>
+														<xs:documentation>Potência instalada da micro ou minigeraçao em kW</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="tpPosTar" type="TPosTarSimples">
+												<xs:element name="tpFonteEnergia" type="TFonteEnergia">
 													<xs:annotation>
-														<xs:documentation>Tipo de Posto Tarifário</xs:documentation>
-														<xs:documentation>0=Único
+														<xs:documentation>Tipo da fonte de energia</xs:documentation>
+														<xs:documentation>1-Hidráulica, 
+2-Solar, 
+3-Eólica,
+4-Biomassa, 
+
+5-Biogás, 6 - Hibrida</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="enerAloc">
+														<xs:annotation>
+															<xs:documentation>Energia alocada</xs:documentation>
+															<xs:documentation>Quantidade de energia excedente que é destinado pela unidade geradora a esta unidade consumidora em kWh.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TDec_0803"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="tpPosTar" type="TPosTarSimples">
+														<xs:annotation>
+															<xs:documentation>Tipo de Posto Tarifário</xs:documentation>
+															<xs:documentation>0=Único
 ; 1=Ponta
 ; 2=Fora Ponta; 3=Intermediário</xs:documentation>
-													</xs:annotation>
-												</xs:element>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -912,6 +928,40 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																		<xs:documentation>Valor do COFINS</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
+																<xs:element name="retTrib" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Grupo de informações de retenção de tributos federais do item anterior</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="vRetPIS" type="TDec_1302_1308">
+																				<xs:annotation>
+																					<xs:documentation>Valor do PIS retido</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="vRetCofins" type="TDec_1302_1308">
+																				<xs:annotation>
+																					<xs:documentation>Valor do COFNS retido</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="vRetCSLL" type="TDec_1302_1308">
+																				<xs:annotation>
+																					<xs:documentation>Valor da CSLL retida</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="vBCIRRF" type="TDec_1302_1308">
+																				<xs:annotation>
+																					<xs:documentation>Base de cálculo do IRRF</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="vIRRF" type="TDec_1302_1308">
+																				<xs:annotation>
+																					<xs:documentation>Valor do IRRF retido</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
 															</xs:sequence>
 															<xs:attribute name="nItemAnt" use="required">
 																<xs:annotation>
@@ -1047,7 +1097,7 @@ Formato AAAA-MM-DD)</xs:documentation>
 																				<xs:element name="motDifTarif">
 																					<xs:annotation>
 																						<xs:documentation>Motivo da diferença de tarifa aplicada com a homologada</xs:documentation>
-																						<xs:documentation>01 - Decisão judicial; 02 - Decisão da distribuidora (tarifa homologada equivale a preço teto); 03 - Desconto Tarifário 
+																						<xs:documentation>01 - Decisão judicial; 02 - Decisão da distribuidora (tarifa homologada equivale a preço teto); 03 - Desconto Tarifário; 04 - Reajuste tarifário 
 </xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -1058,6 +1108,7 @@ Formato AAAA-MM-DD)</xs:documentation>
 																							<xs:enumeration value="01"/>
 																							<xs:enumeration value="02"/>
 																							<xs:enumeration value="03"/>
+																							<xs:enumeration value="04"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -1091,7 +1142,7 @@ Formato AAAA-MM-DD)</xs:documentation>
 </xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="vAdBand" type="TDec_0402_0408">
+																			<xs:element name="vAdBand" type="TDec_1302_1308">
 																				<xs:annotation>
 																					<xs:documentation>Valor do Adicional tarifário</xs:documentation>
 																					<xs:documentation>Resultado decorrente da aplicação do adicional de cada bandeira sobre o consumo faturado no período considerado entre as datas de início e fim.
@@ -1103,7 +1154,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																					<xs:documentation>Sequencia XML</xs:documentation>
 																					<xs:documentation>Somente preenchido se a tarifa aplicada for diferente da homologada </xs:documentation>
 																				</xs:annotation>
-																				<xs:element name="vAdBandAplic" type="TDec_0402_0408">
+																				<xs:element name="vAdBandAplic" type="TDec_1302_1308">
 																					<xs:annotation>
 																						<xs:documentation>Valor do adicional tarifário aplicado</xs:documentation>
 																					</xs:annotation>
@@ -1112,7 +1163,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																					<xs:annotation>
 																						<xs:documentation>Motivo da diferença do adicional aplicado</xs:documentation>
 																						<xs:documentation>01 - Decisão judicial; 02 - Decisão da distribuidora (tarifa homologada equivale a preço teto); 03 - Desconto tarifário
-</xs:documentation>
+; 04 - Alteração de tarifa</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -1122,6 +1173,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																							<xs:enumeration value="01"/>
 																							<xs:enumeration value="02"/>
 																							<xs:enumeration value="03"/>
+																							<xs:enumeration value="04"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -2356,7 +2408,7 @@ Não obrigatória, conforme item 2.3.2 da Seção 11.1 do Módulo 11 do PRODIST.
 					<xs:field xpath="@nMed"/>
 				</xs:unique>
 				<xs:unique name="pk_nItem">
-					<xs:selector xpath="./*"/>
+					<xs:selector xpath="*/*"/>
 					<xs:field xpath="@nItem"/>
 				</xs:unique>
 				<xs:unique name="pk_chNF3eAnt">
@@ -3399,6 +3451,23 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 			<xs:enumeration value="2"/>
 			<xs:enumeration value="3"/>
 			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TFonteEnergia">
+		<xs:annotation>
+			<xs:documentation>Tipo Fonte Energia</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TAjusteNF3eAnt_v2">

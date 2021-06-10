@@ -8,11 +8,13 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ShowProgress = True
     OverwritePrompt = False
     DataOnly = False
+    OpenAfterExport = False
     PrintOptimized = True
     Outline = False
     Background = True
     HTMLTags = True
     Quality = 95
+    Transparency = False
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -22,6 +24,9 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
     Left = 48
     Top = 92
   end
@@ -57,6 +62,7 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ReportOptions.LastChange = 42257.626775173600000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
+    OnBeforePrint = frxReportBeforePrint
     OnProgressStart = frxReportProgressStart
     Left = 50
     Top = 36
@@ -66,6 +72,7 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ShowProgress = True
     OverwritePrompt = False
     DataOnly = False
+    OpenAfterExport = False
     FixedWidth = True
     Background = False
     Centered = False

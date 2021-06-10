@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:  José M S Junior                                }
+{ Colaboradores nesse arquivo:  José M S Junior, Victor Hugo Gonzales          }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -172,6 +172,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
+
   TRetornoEnvioClass = class
   private
     FACBrBoleto: TACBrBoleto;
@@ -179,7 +180,10 @@ type
     FCodRetorno: Integer;
     FMsg: String;
     FLeitor: TLeitor;
+    FHTTPResultCode : Integer;
 
+    FQrCode: TACBrBoletoPIXQRCode;
+    procedure SetWSBoletoConsulta(const Value: TACBrBoletoPIXQRCode);
   public
     constructor Create(ABoletoWS: TACBrBoleto); virtual;
     destructor  Destroy; Override;
@@ -189,9 +193,10 @@ type
     property ACBrBoleto: TACBrBoleto read FACBrBoleto write FACBrBoleto;
     property RetWS: String read FRetWS write FRetWS;
     property Msg: String read FMsg write FMsg;
+    property HTTPResultCode: Integer read FHTTPResultCode write FHTTPResultCode;
     property CodRetorno: Integer read FCodRetorno write FCodRetorno;
     property Leitor: TLeitor read FLeitor;
-
+    property QrCodeRet : TACBrBoletoPIXQRCode read FQrCode write SetWSBoletoConsulta;
   end;
 
   { TBoletoWSSOAP }    //Bancos que utilizam XML
@@ -365,7 +370,7 @@ ResourceString
 implementation
 
 uses
-  ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_Itau, ACBrBoletoRet_Itau;
+  ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API, ACBrBoletoW_Itau, ACBrBoletoRet_Itau;
 
 { TOAuth }
 
@@ -656,6 +661,7 @@ begin
   try
       try
         FDFeSSL.SSLHttpClass.Clear;
+        FDFeSSL.SSLHttpClass.MimeType := FPContentType;
         with FDFeSSL.SSLHttpClass.HeaderReq do
         begin
           Clear;
@@ -667,29 +673,34 @@ begin
             Add(FPKeyUser);
           if FPIdentificador <> '' then
             Add(FPIdentificador);
-          //if FPContentType <> '' then
-           // Add(C_CONTENT_TYPE +': '+ FPContentType);
+          if FPContentType <> '' then
+            Add(C_CONTENT_TYPE +': '+ FPContentType);
         end;
 
         Stream:= TMemoryStream.Create;
         try
-          WriteStrToStream(Stream, FPDadosMsg);
+          WriteStrToStream(Stream, AnsiString(FPDadosMsg));
+
           FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          FDFeSSL.HTTPMethod('POST', FPURL );
+          if (FBoleto.Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then
+            FDFeSSL.HTTPMethod('GET', FPURL )
+          else
+            FDFeSSL.HTTPMethod('POST', FPURL );
+
         finally
           Stream.Free;
         end;
 
       finally
         FDFeSSL.SSLHttpClass.DataResp.Position:= 0;
-        FRetornoWS:=  ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size );
+        FRetornoWS:=  UTF8Decode(ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size ));
 
       end;
 
   finally
-    FBoletoWS.FRetornoBanco.CodRetorno:= FDFeSSL.InternalErrorCode;
-    FBoletoWS.FRetornoBanco.Msg := 'HTTP_Code='+ IntToStr(FDFeSSL.HTTPResultCode);
-
+    FBoletoWS.FRetornoBanco.CodRetorno     := FDFeSSL.InternalErrorCode;
+    FBoletoWS.FRetornoBanco.Msg            := 'HTTP_Code='+ IntToStr(FDFeSSL.HTTPResultCode);
+    FBoletoWS.FRetornoBanco.HTTPResultCode := FDFeSSL.HTTPResultCode;
   end;
 end;
 
@@ -737,9 +748,14 @@ begin
     Result := (FDFeSSL.HTTPResultCode in [200, 201, 202]);
 
     if Result then //Grava retorno
-      WriteToTXT( ifthen( EstaVazio(Boleto.Configuracoes.Arquivos.PathGravarRegistro),
-                  PathWithDelim( ApplicationPath ), PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro ))
-                  + Titulos.NumeroDocumento +'-'+ C_RETORNO_REGISTRO + '.' + C_JSON, FRetornoWS ,False, False);
+      if assigned(Titulos) then
+        WriteToTXT( ifthen( EstaVazio(Boleto.Configuracoes.Arquivos.PathGravarRegistro),
+                    PathWithDelim( ApplicationPath ), PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro ))
+                    + Titulos.NumeroDocumento+'-'+Titulos.NossoNumero +'-'+ C_RETORNO_REGISTRO + '.' + C_JSON, FRetornoWS ,False, False)
+      else
+        WriteToTXT( ifthen( EstaVazio(Boleto.Configuracoes.Arquivos.PathGravarRegistro),
+                    PathWithDelim( ApplicationPath ), PathWithDelim( Boleto.Configuracoes.Arquivos.PathGravarRegistro ))
+                    + formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now) +'-'+ C_RETORNO_REGISTRO + '.' + C_JSON, FRetornoWS ,False, False)
   end;
 end;
 
@@ -935,17 +951,18 @@ end;
 
 constructor TRetornoEnvioClass.Create(ABoletoWS: TACBrBoleto);
 begin
-  FRetWS := '';
-  FCodRetorno := 0;
-  FMsg:= '';
-  FLeitor  := TLeitor.Create;
-  FACBrBoleto := ABoletoWS;
-
+  FRetWS          := '';
+  FCodRetorno     := 0;
+  FMsg            := '';
+  FLeitor         := TLeitor.Create;
+  FACBrBoleto     := ABoletoWS;
+  FQrCode         := TACBrBoletoPIXQRCode.Create();
 end;
 
 destructor TRetornoEnvioClass.Destroy;
 begin
   FLeitor.Free;
+  FQrCode.Free;
   inherited Destroy;
 end;
 
@@ -959,6 +976,12 @@ function TRetornoEnvioClass.RetornoEnvio: Boolean;
 begin
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_RETORNO_ENVIO] ));
 
+end;
+
+procedure TRetornoEnvioClass.SetWSBoletoConsulta(
+  const Value: TACBrBoletoPIXQRCode);
+begin
+  fQrCode:= Value;
 end;
 
 { TBoletoWSClass }
@@ -1022,17 +1045,22 @@ begin
     cobCaixaEconomica:
       begin
         FBoletoWSClass := TBoletoW_Caixa.Create(Self);
-        FRetornoBanco := TRetornoEnvio_Caixa.Create(FBoleto);
+        FRetornoBanco  := TRetornoEnvio_Caixa.Create(FBoleto);
       end;
-    cobBancoDoBrasil:
+    cobBancoDoBrasilWS:
       begin
         FBoletoWSClass := TBoletoW_BancoBrasil.Create(Self);
-        FRetornoBanco := TRetornoEnvio_BancoBrasil.Create(FBoleto);
+        FRetornoBanco  := TRetornoEnvio_BancoBrasil.Create(FBoleto);
+      end;
+    cobBancoDoBrasilAPI:
+      begin
+        FBoletoWSClass := TBoletoW_BancoBrasil_API.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_BancoBrasil_API.Create(FBoleto);
       end;
     cobItau:
       begin
         FBoletoWSClass := TBoletoW_Itau.Create(Self);
-        FRetornoBanco := TRetornoEnvio_Itau.Create(FBoleto);
+        FRetornoBanco  := TRetornoEnvio_Itau.Create(FBoleto);
       end;
 
   else
@@ -1106,7 +1134,7 @@ begin
   if FBoleto.ListadeBoletos.Count > 0 then
   begin
     FBoleto.ListaRetornoWeb.Clear;
-    for i:= 0 to FBoleto.ListadeBoletos.Count -1 do
+    for i:= 0 to Pred(FBoleto.ListadeBoletos.Count) do
     begin
       FBoletoWSClass.FTitulos := FBoleto.ListadeBoletos[i];
       FBoletoWSClass.GerarRemessa;
@@ -1133,7 +1161,7 @@ begin
   if FBoleto.ListadeBoletos.Count > 0 then
   begin
     FBoleto.ListaRetornoWeb.Clear;
-    for i:= 0 to FBoleto.ListadeBoletos.Count -1 do
+    for i:= 0 to Pred(FBoleto.ListadeBoletos.Count) do
     begin
       FBoletoWSClass.FTitulos := FBoleto.ListadeBoletos[i];
       FBoletoWSClass.GerarRemessa;
@@ -1142,13 +1170,28 @@ begin
 
       FRetornoBanco.FRetWS:= FRetornoWS;
       FRetornoBanco.RetornoEnvio;
+      if(Result) then
+      begin
+        if Assigned(FRetornoBanco.QrCodeRet) then
+        begin
+          FBoletoWSClass.FTitulos.QrCode.url := FRetornoBanco.QrCodeRet.url;
+          FBoletoWSClass.FTitulos.QrCode.txId := FRetornoBanco.QrCodeRet.txId;
+          FBoletoWSClass.FTitulos.QrCode.emv := FRetornoBanco.QrCodeRet.emv;
+        end;
+
+      end;
     end;
 
+  end else
+  if (FBoleto.Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then
+  begin
+    Result               := FBoletoWSClass.Enviar;
+    FRetornoWS           := BoletoWSClass.FRetornoWS;
+    FRetornoBanco.FRetWS := FRetornoWS;
+    FRetornoBanco.RetornoEnvio;
   end;
 
 end;
-
-
 
 end.
 

@@ -171,6 +171,10 @@ begin
       ANossoNumero := PadLeft(AConvenio, 6, '0') + PadLeft(ANossoNumero, 5, '0')
     else if (Length(AConvenio) = 7) then
       ANossoNumero := PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
+
+    if (ACBrTitulo.ACBrBoleto.Banco.TipoCobranca = cobBancoDoBrasilAPI) then
+      ANossoNumero := '000'+ ANossoNumero;
+
   end;
   Result := ANossoNumero;
 end;
@@ -210,6 +214,9 @@ begin
    begin
       FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
 
+      if (Banco.TipoCobranca = cobBancoDoBrasilAPI) then
+        ANossoNumero := Copy(ANossoNumero,4,Length(ANossoNumero));
+
       if ((ACBrTitulo.Carteira = '18') or (ACBrTitulo.Carteira = '16')) and
          (Length(AConvenio) = 6) and (wTamNossNum = 17) then
        begin
@@ -232,6 +239,7 @@ begin
                          ACBrTitulo.Carteira;
        end;
 
+
       DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
    end;
 
@@ -241,10 +249,17 @@ end;
 function TACBrBancoBrasil.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
+  if(ACBrTitulo.ACBrBoleto.Banco.TipoCobranca = cobBancoDoBrasilAPI) then
+  begin
+    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'/'+
+             IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0));
+  end else
+  begin
+    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
              IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0)) +'-'+
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
+   end;
 end;
 
 function TACBrBancoBrasil.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo

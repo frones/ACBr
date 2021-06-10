@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2021
+--ACBrBoleto, ACBrBoletoWS, ACBrBoletoConversão, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API, ACBrBoletoRetorno--
+[+] Implementado layout do Banco do Brasil por API, Registro de Boleto e Consulta
+Contribuição: [Panda] Victor Gonzales 
+
 04/06/2021
 
 --ACBrBoletoItau--

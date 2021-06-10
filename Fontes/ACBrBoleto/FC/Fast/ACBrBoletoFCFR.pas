@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils, ACBrBoletoConversao, 
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage,
+  frxExportBaseDialog;
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -96,6 +97,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure frxReportProgressStart(Sender: TfrxReport;
       ProgressType: TfrxProgressType; Progress: Integer);
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
     FACBrBoletoReport: TACBrBoletoFCFR;
@@ -110,9 +112,21 @@ implementation
 
 {$R *.dfm}
 
-uses ACBrUtil, ACBrBancoBanestes;
+uses ACBrUtil, ACBrBancoBanestes, ACBrDFeReport, ACBrDelphiZXingQRCode;
 
 { TdmACBrBoletoFCFR }
+
+procedure TdmACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+var
+  emvQrCode: String;
+begin
+  emvQrCode := FACBrBoletoReport.Titulo.QrCode.emv.Trim;
+  if Assigned(Sender) and (Trim(emvQrCode) = '') and (Sender.Name = 'ImgEmvQrcode') then
+    TfrxPictureView(Sender).Visible := False
+  else
+  if Assigned(Sender) and (Sender.Name = 'ImgEmvQrcode') then
+     PintarQRCode(emvQrCode, TfrxPictureView(Sender).Picture.Bitmap, qrAuto);
+end;
 
 procedure TdmACBrBoletoFCFR.frxReportProgressStart(Sender: TfrxReport;
   ProgressType: TfrxProgressType; Progress: Integer);
@@ -236,6 +250,7 @@ begin
     FieldDefs.Add('Instrucao2', ftString, 300);
     FieldDefs.Add('TextoLivre', ftMemo, 2000);
     FieldDefs.Add('Asbace', ftString, 40);
+    FieldDefs.Add('EMV', ftString, 500);
     // Sacado
     FieldDefs.Add('Sacado_NomeSacado', ftString, 100);
     FieldDefs.Add('Sacado_CNPJCPF', ftString, 18);
@@ -503,6 +518,7 @@ var
   Field_Instrucao2: TField;
   Field_TextoLivre: TField;
   Field_Asbace: TField;
+  Field_EMV: TField;
 
   // Sacado
   Field_Sacado_NomeSacado: TField;
@@ -572,7 +588,7 @@ var
         Field_TextoLivre.AsString := ListadeBoletos[Indice].TextoLivre;
         if ACBrBoleto.Banco.Numero = 21 then
           Field_Asbace.AsString := TACBrBancoBanestes(Banco).CalcularCampoASBACE(ListadeBoletos[Indice]);
-
+        Field_EMV.AsString := ListadeBoletos[Indice].QrCode.emv;
         // Sacado
         Field_Sacado_NomeSacado.AsString := ListadeBoletos[Indice].Sacado.NomeSacado;
         Field_Sacado_CNPJCPF.AsString := ListadeBoletos[Indice].Sacado.CNPJCPF;
@@ -669,6 +685,7 @@ begin
       Field_Instrucao2 := FieldByName('Instrucao2');
       Field_TextoLivre := FieldByName('TextoLivre');
       Field_Asbace := FieldByName('Asbace');
+      Field_EMV := FieldByName('EMV');
 
       // Sacado
       Field_Sacado_NomeSacado := FieldByName('Sacado_NomeSacado');

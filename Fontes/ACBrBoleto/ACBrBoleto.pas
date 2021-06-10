@@ -407,7 +407,9 @@ type
     cobUniprimeNortePR,
     cobBancoPine,
     cobBancoPineBradesco,
-    cobUnicredSC
+    cobUnicredSC,
+    cobBancoDoBrasilAPI,
+    cobBancoDoBrasilWS
     );
 
   TACBrTitulo = class;
@@ -779,7 +781,7 @@ type
      property Descricao  : String  read GetDescricao;
      property CodigoBanco: String  read GetCodigoBanco;
   end;
-
+  
   { TACBrBancoClass }
 
   TACBrBancoClass = class
@@ -1039,12 +1041,13 @@ type
     FClientSecret: string;
     FKeyUser: string;
     FScope: string;
+    FIndicadorPix: boolean;
 
     procedure SetClientID(const Value: string);
     procedure SetClientSecret(const Value: string);
     procedure SetKeyUser(const Value: string);
     procedure SetScope(const Value: string);
-
+    procedure SetIndicadorPix(const Value: boolean);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -1053,7 +1056,7 @@ type
     property ClientSecret: string read fClientSecret write setClientSecret;
     property KeyUser: string read fKeyUser write setKeyUser;
     property Scope: string read fScope write setScope;
-
+    property IndicadorPix: boolean read FIndicadorPix write SetIndicadorPix default False;
   end;
 
   { TACBrCedente }
@@ -1131,6 +1134,62 @@ type
     property Operacao: string read fOperacao write fOperacao;
   end;
 
+  { TACBrDataPeriodo }
+  TACBrDataPeriodo = class
+  private
+    FDataInicio: TDateTime;
+    FDataFinal : TDateTime;
+    procedure SetDataInicio(const Value: TDateTime);
+    procedure SetDataFinal(const Value: TDateTime);
+  public
+    constructor Create();
+    property DataInicio: TDateTime read FDataInicio write SetDataInicio;
+    property DataFinal: TDateTime  read FDataFinal  write SetDataFinal;
+  end;
+
+  { TACBrBoletoWSFiltroConsulta }
+  TACBrBoletoWSFiltroConsulta = class
+  private
+    FContaCaucao                : Integer;
+    FCnpjCpfPagador             : String;
+    FDataVencimento             : TACBrDataPeriodo;
+    FDataRegistro               : TACBrDataPeriodo;
+    FDataMovimento              : TACBrDataPeriodo;
+    FIndicadorSituacaoBoleto    : TACBrIndicadorSituacaoBoleto;
+    FCodigoEstadoTituloCobranca : Integer;
+    FBoletoVencido              : TACBrIndicadorBoletoVencido;
+    FIndiceContinuidade         : Extended;
+    FModalidadeCobrancao        : Integer;
+    FCarteira                   : Integer;
+    procedure SetContaCaucao(const Value: Integer);
+    procedure SetCnpjCpfPagador(const Value: string);
+    procedure SetDataVencimento(const Value: TACBrDataPeriodo);
+    procedure SetDataRegistro(const Value: TACBrDataPeriodo);
+    procedure SetDataMovimento(const Value: TACBrDataPeriodo);
+    procedure SetIndicadorSituacaoBoleto(const Value: TACBrIndicadorSituacaoBoleto);
+    procedure SetCodigoEstadoTituloCobranca(const Value: Integer);
+    procedure SetBoletoVencido(const Value: TACBrIndicadorBoletoVencido);
+    procedure SetIndiceContinuidade(const Value: Extended);
+    procedure SetModalidadeCobranca(const Value: integer);
+    procedure SetCarteira(const Value: Integer);
+  public
+    constructor Create();
+    destructor Destroy; override;
+    procedure Clear;
+    property indicadorSituacao          : TACBrIndicadorSituacaoBoleto read FIndicadorSituacaoBoleto    write SetIndicadorSituacaoBoleto;
+    property contaCaucao                : Integer                      read FContaCaucao                write SetContaCaucao;
+    property cnpjCpfPagador             : String                       read FCnpjCpfPagador             write SetCnpjCpfPagador;
+    property dataVencimento             : TACBrDataPeriodo             read FDataVencimento             write SetDataVencimento;
+    property dataRegistro               : TACBrDataPeriodo             read FDataRegistro               write SetDataRegistro;
+    property dataMovimento              : TACBrDataPeriodo             read FDataMovimento              write SetDataMovimento;
+    property codigoEstadoTituloCobranca : Integer                      read FCodigoEstadoTituloCobranca write SetCodigoEstadoTituloCobranca;
+    property boletoVencido              : TACBrIndicadorBoletoVencido  read FBoletoVencido              write SetBoletoVencido;
+    property indiceContinuidade         : Extended                     read FIndiceContinuidade         write SetIndiceContinuidade;
+    property modalidadeCobranca         : integer                      read FModalidadeCobrancao        write SetModalidadeCobranca;
+    property carteira                   : Integer                      read FCarteira                   write SetCarteira;
+
+  end;
+
   { TACBrWebService }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -1140,17 +1199,18 @@ type
     fAmbiente: TpcnTipoAmbiente;
     fOperacao: TOperacao;
     fVersaoDF: String;
+    FBoletoWSConsulta: TACBrBoletoWSFiltroConsulta;
+    procedure SetWSBoletoConsulta(const Value: TACBrBoletoWSFiltroConsulta);
   public
     constructor Create(AOwner: TComponent); reintroduce; virtual;
     destructor Destroy; override;
-
     function Enviar: Boolean; virtual;
-
+    //property Filtro : TACBrBoletoWSFiltroConsulta read FBoletoWSConsulta write FBoletoWSConsulta;
+    property Filtro: TACBrBoletoWSFiltroConsulta read FBoletoWSConsulta write SetWSBoletoConsulta;
   published
     property Ambiente: TpcnTipoAmbiente read fAmbiente write fAmbiente;
     property Operacao: TOperacao read fOperacao write fOperacao;
     property VersaoDF: string read fVersaoDF write fVersaoDF;
-
   end;
 
    { TACBrArquivos }
@@ -1306,6 +1366,25 @@ type
       read GetObject write SetObject; default;
   end;
 
+  {TACBrBoletoPIXQRCode}
+  TACBrBoletoPIXQRCode = class
+  private
+    Femv: String;
+    Furl: String;
+    FtxId: String;
+    procedure Setemv(const Value: String);
+    procedure SettxId(const Value: String);
+    procedure Seturl(const Value: String);
+
+  public
+    constructor Create();
+    destructor Destroy; override;
+    property url : String read Furl write Seturl;
+    property txId  : String read FtxId write SettxId;
+    property emv   : String read Femv write Setemv;
+
+  end;
+
   { TACBrTitulo }
 
   TACBrTitulo = class
@@ -1400,6 +1479,7 @@ type
     fValorMaxPagamento: Currency;
     fPercentualMinPagamento: Currency;
     fPercentualMaxPagamento: Currency;
+    fQrCode: TACBrBoletoPIXQRCode;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
@@ -1417,6 +1497,7 @@ type
     procedure setValorDocumento(const AValue: Currency);
     procedure AtualizaDadosProtesto();
     procedure AtualizaDadosNegativacao();
+    procedure SetQrCode(const Value: TACBrBoletoPIXQRCode);
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
@@ -1519,6 +1600,7 @@ type
      property PercentualMinPagamento: currency read fPercentualMinPagamento write fPercentualMinPagamento;
      property PercentualMaxPagamento: currency read fPercentualMaxPagamento write fPercentualMaxPagamento;
      property ListaDadosNFe : TACBrListadeNFes read fListaDadosNFe;
+     property QrCode: TACBrBoletoPIXQRCode read fQrCode write SetQrCode; // Utilizado somente em alguns bancos e com comunicação de API (uso manual por conta e risco da SwHouse)
 
      function CriarNFeNaLista: TACBrDadosNFe;
    end;
@@ -1571,6 +1653,7 @@ type
     fListaRetornoWeb: TListaRetEnvio;
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
+
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -1720,6 +1803,159 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC;
 
+{ TACBrBoletoWSFiltroConsulta }
+
+procedure TACBrBoletoWSFiltroConsulta.SetContaCaucao(const Value: Integer);
+begin
+  FContaCaucao:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetCnpjCpfPagador(const Value: string);
+begin
+  FCnpjCpfPagador:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetDataVencimento(
+  const Value: TACBrDataPeriodo);
+begin
+  FDataVencimento:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetDataRegistro(
+  const Value: TACBrDataPeriodo);
+begin
+  FDataRegistro:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetDataMovimento(
+  const Value: TACBrDataPeriodo);
+begin
+  FDataMovimento:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetIndicadorSituacaoBoleto(
+  const Value: TACBrIndicadorSituacaoBoleto);
+begin
+  FIndicadorSituacaoBoleto:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetCodigoEstadoTituloCobranca(
+  const Value: Integer);
+begin
+  FCodigoEstadoTituloCobranca:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetBoletoVencido(
+  const Value: TACBrIndicadorBoletoVencido);
+begin
+  FBoletoVencido:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetIndiceContinuidade(
+  const Value: Extended);
+begin
+  FIndiceContinuidade:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetModalidadeCobranca(const Value: integer);
+begin
+  FModalidadeCobrancao:= Value;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.SetCarteira(const Value: Integer);
+begin
+  FCarteira:= Value;
+end;
+
+constructor TACBrBoletoWSFiltroConsulta.Create();
+begin
+  FContaCaucao := 0;
+  FCnpjCpfPagador := '';
+  FDataVencimento := TACBrDataPeriodo.Create();
+  FDataRegistro := TACBrDataPeriodo.Create();
+  FDataMovimento := TACBrDataPeriodo.Create();
+  FIndicadorSituacaoBoleto := isbNenhum;
+  FCodigoEstadoTituloCobranca := 0;
+  FBoletoVencido := ibvNenhum;
+  FIndiceContinuidade := 0;
+  FModalidadeCobrancao:= 0;
+  FCarteira:= 0;
+end;
+
+destructor TACBrBoletoWSFiltroConsulta.Destroy;
+begin
+  FDataVencimento.Free;
+  FDataRegistro.Free;
+  FDataMovimento.Free;
+
+  inherited Destroy;
+end;
+
+procedure TACBrBoletoWSFiltroConsulta.Clear;
+begin
+  FDataVencimento.FDataInicio := 0;
+  FDataVencimento.FDataFinal  := 0;
+  FDataRegistro.FDataInicio   := 0;
+  FDataRegistro.FDataFinal    := 0;
+  FDataMovimento.FDataInicio  := 0;
+  FDataMovimento.FDataFinal   := 0;
+  FContaCaucao                := 0;
+  FCnpjCpfPagador             := '';
+  FIndicadorSituacaoBoleto    := isbNenhum;
+  FCodigoEstadoTituloCobranca := 0;
+  FBoletoVencido              := ibvNenhum;
+  FIndiceContinuidade         := 0;
+  FModalidadeCobrancao        := 0;
+  FCarteira                   := 0;
+end;
+
+{ TACBrDataPeriodo }
+
+procedure TACBrDataPeriodo.SetDataInicio(const Value: TDateTime);
+begin
+  FDataInicio:= Value;
+end;
+
+procedure TACBrDataPeriodo.SetDataFinal(const Value: TDateTime);
+begin
+  FDataFinal:= Value;
+end;
+
+constructor TACBrDataPeriodo.Create();
+begin
+  FDataInicio:= 0;
+  FDataFinal := 0;
+end;
+
+{ TACBrBoletoPIXQRCode }
+
+procedure TACBrBoletoPIXQRCode.Setemv(const Value: String);
+begin
+  Femv:= Value;
+end;
+
+procedure TACBrBoletoPIXQRCode.SettxId(const Value: String);
+begin
+  FtxId:= Value;
+end;
+
+procedure TACBrBoletoPIXQRCode.Seturl(const Value: String);
+begin
+  Furl:= Value;
+end;
+
+constructor TACBrBoletoPIXQRCode.Create();
+begin
+  Femv:= '';
+  Furl:= '';
+  FtxId:= '';
+end;
+
+destructor TACBrBoletoPIXQRCode.Destroy;
+begin
+  inherited;
+end;
+
 { TACBrArquivos }
 
 constructor TACBrArquivos.Create;
@@ -1806,10 +2042,13 @@ begin
   fOperacao := tpInclui;
   fVersaoDF := '1.2';
   SSLHttpLib:= httpOpenSSL;
+  FBoletoWSConsulta := TACBrBoletoWSFiltroConsulta.Create();
+
 end;
 
 destructor TACBrWebService.Destroy;
 begin
+  FBoletoWSConsulta.Free;
   inherited Destroy;
 end;
 
@@ -1817,6 +2056,12 @@ function TACBrWebService.Enviar: Boolean;
 begin
   Raise Exception.Create(ACBrStr('Método Enviar não ' +
             'implementado no ACBrBoleto!'));
+end;
+
+procedure TACBrWebService.SetWSBoletoConsulta(
+  const Value: TACBrBoletoWSFiltroConsulta);
+begin
+  FBoletoWSConsulta := Value;
 end;
 
 { TACBrCedenteWS }
@@ -1833,6 +2078,11 @@ begin
    if FClientSecret = Value then
      Exit;
    FClientSecret := Value;
+end;
+
+procedure TACBrCedenteWS.SetIndicadorPix(const Value: boolean);
+begin
+  FIndicadorPix := Value;
 end;
 
 procedure TACBrCedenteWS.SetKeyUser(const Value: string);
@@ -2198,6 +2448,11 @@ begin
    fParcela := AValue;
 end;
 
+procedure TACBrTitulo.SetQrCode(const Value: TACBrBoletoPIXQRCode);
+begin
+  fQrCode := Value;
+end;
+
 procedure TACBrTitulo.SetTotalParcelas ( const AValue: Integer ) ;
 begin
   if Assigned(ACBrBoleto.ACBrBoletoFC) then
@@ -2356,6 +2611,8 @@ begin
      fCarteiraEnvio := tceBanco;
 
    fListaDadosNFe := TACBrListadeNFes.Create(true);
+   fQrCode := TACBrBoletoPIXQRCode.Create();
+
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -2369,8 +2626,8 @@ begin
    fOcorrenciaOriginal.Free;
    fMotivoRejeicaoComando.Free;
    fDescricaoMotivoRejeicaoComando.Free;
-
    fListaDadosNFe.Free;
+   fQrCode.Free;
 
    inherited;
 end;
@@ -2910,6 +3167,8 @@ begin
 
    case AValue of
      cobBancoDoBrasil       : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilAPI    : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilWS     : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
      cobBancoDoBrasilSICOOB : fBancoClass := TACBrBancoBrasilSICOOB.Create(Self);   {001}
      cobBancoDaAmazonia     : fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
      cobBancoDoNordeste     : fBancoClass := TACBrBancoNordeste.create(Self);       {004}
@@ -4642,12 +4901,12 @@ begin
     Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
   if Cedente.Conta = '' then
     Raise Exception.Create(ACBrStr('Conta não informada'));
-  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank])) then
+  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank,cobBancoDoBrasilAPI])) then
     Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
   if Cedente.Agencia = '' then
     Raise Exception.Create(ACBrStr('Agência não informada'));
   if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanese,
-     cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob, cobCitiBank])) then
+     cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob, cobCitiBank,cobBancoDoBrasilAPI])) then
     Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
 end;
 
@@ -4655,8 +4914,9 @@ function TACBrBoleto.EnviarBoleto: boolean;
 var
   RemessaWS: TBoletoWS;
 begin
-  if ListadeBoletos.Count < 1 then
-    raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
+  if not ((Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (Configuracoes.WebService.Operacao in [tpConsulta])) then
+    if ListadeBoletos.Count < 1 then
+      raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
   ChecarDadosObrigatorios;
 

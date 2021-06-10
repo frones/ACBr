@@ -7,8 +7,25 @@ TimeOut: 30000
 UseCertificateHTTP: False
 versao:= 1.2
 
+
 ------------------------------------------------------------------------------------
-Banco do Brasil //Dados para Homologaçao
+Banco do Brasil API //Dados para Homologaçao devem sem adquiridos no portal do banco do brasil developers / credencial
+ ACBrBoleto.Cedente.CedenteWS.ClientID      := client_id
+ ACBrBoleto.Cedente.CedenteWS.ClientSecret  := client_secret
+ ACBrBoleto.Cedente.CedenteWS.Scope         := cobrancas.boletos-info cobrancas.boletos-requisicao
+ ACBrBoleto.Cedente.CedenteWS.KeyUser       := developer_application_key
+ ACBrBoleto.Cedente.CedenteWS.IndicadorPix  := True; //utilizado para boleto hibrido, necessário o cliente possuir chave PIX no banco do brasil
+ ACBrBoleto.WebServices.Ambiente            := taHomologacao
+ Título ex campos:
+ 	ACBrBoleto.Cedente.CodigoCedente     := '4863177';
+ 	ACBrBoleto.Cedente.Convenio	         := '1014051';
+ 	ACBrBoleto.Cedente.Modalidade        := '35'; 
+ 	Carteira                             := '17'; 
+ 	EspecieDoc 	                         := 'DM'; 
+//Campos devem ser preenchidos conforme dados do Banco
+ 
+------------------------------------------------------------------------------------
+Banco do Brasil WS //Dados para Homologaçao
  ACBrBoleto1.Cedente.CedenteWS.ClientID:= 'eyJpZCI6IjgwNDNiNTMtZjQ5Mi00YyIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxfQ';
  ACBrBoleto1.Cedente.CedenteWS.ClientSecret:= 'eyJpZCI6IjBjZDFlMGQtN2UyNC00MGQyLWI0YSIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxLCJzZXF1ZW5jaWFsQ3JlZGVuY2lhbCI6MX0';
  ACBrBoleto1.Cedente.CedenteWS.Scope:= 'cobranca.registro-boletos'; 

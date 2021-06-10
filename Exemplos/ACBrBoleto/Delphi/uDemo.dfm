@@ -665,4 +665,13 @@ object frmDemo: TfrmDemo
     TabOrder = 6
     OnClick = btnRegistroClick
   end
+  object Button9: TButton
+    Left = 480
+    Top = 488
+    Width = 113
+    Height = 25
+    Caption = 'Consultar Boleto'
+    TabOrder = 7
+    OnClick = Button9Click
+  end
 end

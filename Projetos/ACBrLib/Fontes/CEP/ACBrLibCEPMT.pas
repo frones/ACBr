@@ -59,13 +59,10 @@ function CEP_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function CEP_BuscarPorCEP(const libHandle: PLibHandle; eCEP: PChar; var Qtde: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_BuscarPorLogradouro(const libHandle: PLibHandle; eCidade, eTipo_Logradouro, eLogradouro, eUF,
-  eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
+function CEP_BuscarPorCEP(const libHandle: PLibHandle; eCEP: PChar; const sResposta: PChar;
   var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_BuscarPorLogradouro(const libHandle: PLibHandle; eCidade, eTipo_Logradouro, eLogradouro, eUF,
+  eBairro: PChar; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
 
@@ -128,13 +125,12 @@ begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
-function CEP_BuscarPorCEP(const libHandle: PLibHandle; eCEP: PChar; var Qtde: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_BuscarPorCEP(const libHandle: PLibHandle; eCEP: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibCEP(libHandle^.Lib).BuscarPorCEP(eCEP, Qtde, sResposta, esTamanho);
+    Result := TACBrLibCEP(libHandle^.Lib).BuscarPorCEP(eCEP, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -145,13 +141,13 @@ begin
 end;
 
 function CEP_BuscarPorLogradouro(const libHandle: PLibHandle; eCidade, eTipo_Logradouro, eLogradouro, eUF,
-  eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  eBairro: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibCEP(libHandle^.Lib).BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
-                                                         eBairro, Qtde, sResposta, esTamanho);
+                                                         eBairro, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

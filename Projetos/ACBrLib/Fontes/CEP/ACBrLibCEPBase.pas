@@ -48,8 +48,6 @@ type
   private
     FCEPDM: TLibCEPDM;
 
-    function RespostaItensConsulta(ItemID: integer): String;
-
   protected
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
@@ -60,15 +58,15 @@ type
 
     property CEPDM: TLibCEPDM read FCEPDM;
 
-    function BuscarPorCEP(eCEP: PChar; var Qtde: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
-                                 var Qtde: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+                                 const sResposta: PChar; var esTamanho: longint): longint;
   end;
 
 implementation
 
 Uses
-  ACBrLibConsts, ACBrLibCEPConsts, ACBrLibConfig,
+  ACBrLibConsts, ACBrLibConfig,
   ACBrLibCEPConfig, ACBrLibCEPRespostas;
 
 { TACBrLibCEP }
@@ -99,37 +97,10 @@ begin
   FCEPDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibCEP.RespostaItensConsulta(ItemID: integer): String;
-var
-  Resp: TLibCEPResposta;
-begin
-  Resp := TLibCEPResposta.Create(CSessaoRespConsulta + IntToStr(ItemID +1),
-                                 Config.TipoResposta, Config.CodResposta);
-  try
-    with CEPDM.ACBrCEP1.Enderecos[ItemID] do
-    begin
-      Resp.CEP := CEP;
-      Resp.Tipo_Logradouro := Tipo_Logradouro;
-      Resp.Logradouro := Logradouro;
-      Resp.Logradouro := Logradouro;
-      Resp.Complemento := Complemento;
-      Resp.Bairro := Bairro;
-      Resp.Municipio := Municipio;
-      Resp.UF := UF;
-      Resp.IBGE_Municipio := IBGE_Municipio;
-      Resp.IBGE_UF := IBGE_UF;
-
-      result := Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
-function TACBrLibCEP.BuscarPorCEP(eCEP: PChar; var Qtde: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibCEP.BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   ACEP: AnsiString;
+  Resp: TCepResposta;
   AResposta: String;
 begin
   try
@@ -143,13 +114,16 @@ begin
 
     CEPDM.Travar;
     try
-      Qtde := CEPDM.ACBrCEP1.BuscarPorCEP(ACEP);
-      AResposta := RespostaItensConsulta(0);
-      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Resp := TCepResposta.Create(Config.TipoResposta, Config.CodResposta);
+      CEPDM.ACBrCEP1.BuscarPorCEP(ACEP);
+      Resp.Processar(CEPDM.ACBrCEP1);
 
+      AResposta := Resp.Gerar;
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, AResposta);
     finally
       CEPDM.Destravar;
+      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -160,12 +134,12 @@ begin
   end;
 end;
 
-function TACBrLibCEP.BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
-  eBairro: PChar; var Qtde: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibCEP.BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
 var
   ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro: AnsiString;
+  Resp: TCepResposta;
   AResposta: String;
-  I: Integer;
 begin
   try
     ACidade := ConverterAnsiParaUTF8(eCidade);
@@ -182,17 +156,17 @@ begin
 
     CEPDM.Travar;
     try
-      Qtde := CEPDM.ACBrCEP1.BuscarPorLogradouro(ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro);
-      AResposta := '';
+      Resp := TCepResposta.Create(Config.TipoResposta, Config.CodResposta);
 
-      for I := 0 to CEPDM.ACBrCEP1.Enderecos.Count - 1 do
-        AResposta := AResposta + RespostaItensConsulta(I);
+      CEPDM.ACBrCEP1.BuscarPorLogradouro(ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro);
+      Resp.Processar(CEPDM.ACBrCEP1);
 
+      AResposta := Resp.Gerar;
       MoverStringParaPChar(AResposta, sResposta, esTamanho);
-
       Result := SetRetorno(ErrOK, AResposta);
     finally
       CEPDM.Destravar;
+      Resp.Free;
     end;
   except
     on E: EACBrLibException do

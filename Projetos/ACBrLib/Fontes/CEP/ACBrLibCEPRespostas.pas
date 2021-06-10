@@ -37,12 +37,13 @@ unit ACBrLibCEPRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes, contnrs,
+  ACBrLibResposta, ACBrCEP;
 
 type
 
-  { TLibCEPResposta }
-  TLibCEPResposta = class(TACBrLibRespostaBase)
+  { TEnderecoResposta }
+  TEnderecoResposta = class(TACBrLibRespostaBase)
   private
     FBairro: string;
     FCEP: string;
@@ -53,9 +54,12 @@ type
     FMunicipio: string;
     FTipo_Logradouro: string;
     FUF: string;
+
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const Id: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const AEndereco: TACBrCEPEndereco);
 
   published
     property CEP: string read FCEP write FCEP;
@@ -67,17 +71,83 @@ type
     property UF: string read FUF write FUF;
     property IBGE_Municipio: string read FIBGE_Municipio write FIBGE_Municipio;
     property IBGE_UF: string read FIBGE_UF write FIBGE_UF;
+
+  end;
+
+  { TCepResposta }
+  TCepResposta = class(TACBrLibRespostaBase)
+  private
+    FQtd: Integer;
+    FItems: TObjectList;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const ACBrCEP: TACBrCEP);
+
+  published
+    property Quantidade: Integer read FQtd write FQtd;
+    property Items: TObjectList read FItems;
+
   end;
 
 implementation
 
-{ TLibCEPResposta }
+Uses
+  ACBrLibCEPConsts;
 
-constructor TLibCEPResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+{ TEnderecoResposta }
+constructor TEnderecoResposta.Create(const Id: Integer; const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespConsulta + IntToStr(Id), ATipo, AFormato);
+end;
+
+procedure TEnderecoResposta.Processar(const AEndereco: TACBrCEPEndereco);
+begin
+  with AEndereco do
+  begin
+    Self.CEP := CEP;
+    Self.Tipo_Logradouro := Tipo_Logradouro;
+    Self.Logradouro := Logradouro;
+    Self.Logradouro := Logradouro;
+    Self.Complemento := Complemento;
+    Self.Bairro := Bairro;
+    Self.Municipio := Municipio;
+    Self.UF := UF;
+    Self.IBGE_Municipio := IBGE_Municipio;
+    Self.IBGE_UF := IBGE_UF;
+  end;
+end;
+
+{ TCepResposta }
+constructor TCepResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoCEP, ATipo, AFormato);
+
+  FItems := TObjectList.Create(True);
+end;
+
+destructor TCepResposta.Destroy;
+begin
+  FItems.Free;
+
+  inherited Destroy;
+end;
+
+procedure TCepResposta.Processar(const ACBrCEP: TACBrCEP);
+Var
+  I: Integer;
+  Item: TEnderecoResposta;
+begin
+  FQtd := ACBrCEP.Enderecos.Count;
+  for I := 0 to ACBrCEP.Enderecos.Count - 1 do
+  begin
+    Item := TEnderecoResposta.Create(I + 1, Tipo, Formato);
+    Item.Processar(ACBrCEP.Enderecos[I]);
+    FItems.Add(Item);
+  end;
 end;
 
 end.
-

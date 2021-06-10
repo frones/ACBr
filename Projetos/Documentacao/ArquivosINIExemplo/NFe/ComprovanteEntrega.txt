@@ -1,0 +1,28 @@
+[EVENTO]
+idLote=1
+[EVENTO001]
+cOrgao=<informar o código da UF do emitente>
+CNPJ=<CNPJ do emitente>
+chNFe=<chave da NFe>
+dhEvento=<data e hora do evento>
+tpEvento=110130
+nSeqEvento=1
+versaoEvento=1.00
+cOrgaoAutor=<UF do emitente>
+
+; Tipo de Autor pode ser:
+;   1 = Empresa Emitente,
+;   2 = Empresa Destinatária,
+;   3 = Empresa Transportadora.
+tpAutor=1
+
+; Versão do Aplicativo do emitente do evento
+verAplic=1.0
+
+dhEntrega=<data e hora da entrega>
+nDoc=<numero do documento da pessoa que recebeu a mercadoria>
+xNome=<nome da pessoa que recebeu a mercadoria>
+latGPS=<latitude informada pelo GPS do local da entrega>
+longGPS=<longitude informada pelo GPS do local da entrega>
+hashComprovante=<Hash (SHA1) no formato Base64 resultante da concatenação: Chave de acesso do CT-e + Base64 da imagem capturada da entrega (Exemplo: imagem capturada da assinatura eletrônica, digital do recebedor, foto, etc)>
+dhHashComprovante=<Data e hora da geração do hash do comprovante>

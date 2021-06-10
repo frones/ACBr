@@ -99,7 +99,8 @@ type
 
   TtpPosTar = (tpUnico, tpPonta, tpForaPonto, tpIntermediario);
 
-  TtpPartComp = (tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada);
+  TtpPartComp = (tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada,
+                 tpMista);
 
   TtpAjuste = (taNenhum, taItemaserSubstituido, taItemSubstituicao, taItemEliminado,
                taItemIncluido);
@@ -118,11 +119,13 @@ type
 
   TuMedFat = (umfkW, umfkWh, umfkVAr, umfkVArh);
 
-  TmotDifTarif = (mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto);
+  TmotDifTarif = (mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto,
+                  mdtAlteracao);
 
   TtpBand = (tbVerde, tbAmarela, tbVermelha1, tbVermelha2);
 
-  TmotDifBand = (mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto);
+  TmotDifBand = (mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto,
+                 mdbAlteracao);
 
   TindOrigemQtd = (ioMedia, ioMedido, ioContatada, ioCalculada, ioCusto,
                    ioSemQuantidade);
@@ -135,6 +138,9 @@ type
   TtpProc = (tpSEFAZ, tpJusticaFederal, tpJusticaEstadual);
 
   TtpLanc = (tlDebito, tlCredito);
+
+  TtpFonteEnergia = (feHidraulica, feSolar, feEolica, feBiomassa, feBiogas,
+                     feHibrida);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -235,6 +241,9 @@ function StrTotpProc(out ok: Boolean; const s: String): TtpProc;
 
 function tpLancToStr(const t: TtpLanc): String;
 function StrTotpLanc(out ok: Boolean; const s: String): TtpLanc;
+
+function tpFonteEnergiaToStr(const t: TtpFonteEnergia): String;
+function StrTotpFonteEnergia(out ok: Boolean; const s: String): TtpFonteEnergia;
 
 function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
 
@@ -541,14 +550,14 @@ end;
 
 function tpPartCompToStr(const t: TtpPartComp): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-    [tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada]);
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5'],
+    [tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada, tpMista]);
 end;
 
 function StrTotpPartComp(out ok: Boolean; const s: String): TtpPartComp;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-    [tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada]);
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5'],
+    [tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada, tpMista]);
 end;
 
 function tpAjusteToStr(const t: TtpAjuste): String;
@@ -647,14 +656,14 @@ end;
 
 function motDifTarifToStr(const t: TmotDifTarif): String;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03'],
-    [mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto]);
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04'],
+    [mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto, mdtAlteracao]);
 end;
 
 function StrTomotDifTarif(out ok: Boolean; const s: String): TmotDifTarif;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03'],
-    [mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto]);
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04'],
+    [mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto, mdtAlteracao]);
 end;
 
 function tpBandToStr(const t: TtpBand): String;
@@ -671,14 +680,14 @@ end;
 
 function motDifBandToStr(const t: TmotDifBand): String;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03'],
-    [mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto]);
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04'],
+    [mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto, mdbAlteracao]);
 end;
 
 function StrTomotDifBand(out ok: Boolean; const s: String): TmotDifBand;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03'],
-    [mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto]);
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04'],
+    [mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto, mdbAlteracao]);
 end;
 
 function indOrigemQtdToStr(const t: TindOrigemQtd): String;
@@ -742,6 +751,19 @@ begin
   Result := StrToEnumerado(ok, s, ['D', 'C'],
     [tlDebito, tlCredito]);
 end;
+
+function tpFonteEnergiaToStr(const t: TtpFonteEnergia): String;
+begin
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6'],
+            [feHidraulica, feSolar, feEolica, feBiomassa, feBiogas, feHibrida]);
+end;
+
+function StrTotpFonteEnergia(out ok: Boolean; const s: String): TtpFonteEnergia;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6'],
+            [feHidraulica, feSolar, feEolica, feBiomassa, feBiogas, feHibrida]);
+end;
+
 
 function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
 begin

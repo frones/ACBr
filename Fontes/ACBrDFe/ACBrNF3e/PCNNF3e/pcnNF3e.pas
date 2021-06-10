@@ -723,6 +723,7 @@ type
     FvICMS: Double;
     FvPIS: Double;
     FvCOFINS: Double;
+    FretTrib: TretTrib;
   public
     procedure Assign(Source: TdetItemAnt);
 
@@ -736,6 +737,7 @@ type
     property vICMS: Double      read FvICMS     write FvICMS;
     property vPIS: Double       read FvPIS      write FvPIS;
     property vCOFINS: Double    read FvCOFINS   write FvCOFINS;
+    property retTrib: TretTrib  read FretTrib   write FretTrib;
   end;
 
   { TgAjusteNF3eAnt }
@@ -851,12 +853,16 @@ type
   TgConsumidorCollectionItem = class(TObject)
   private
     FidAcessGer: String;
+    FvPotInst: Double;
+    FtpFonteEnergia: TtpFonteEnergia;
     FenerAloc: Double;
     FtpPosTar: TtpPosTar;
   public
     procedure Assign(Source: TgConsumidorCollectionItem);
 
     property idAcessGer: String  read FidAcessGer write FidAcessGer;
+    property vPotInst: Double    read FvPotInst   write FvPotInst;
+    property tpFonteEnergia: TtpFonteEnergia read FtpFonteEnergia write FtpFonteEnergia;
     property enerAloc: Double    read FenerAloc   write FenerAloc;
     property tpPosTar: TtpPosTar read FtpPosTar   write FtpPosTar;
   end;
@@ -877,7 +883,6 @@ type
   TgSCEE = class(TObject)
   private
     FtpPartComp: TtpPartComp;
-    FvPotInst: Double;
     FgConsumidor: TgConsumidorCollection;
     FgSaldoCred: TgSaldoCredCollection;
 
@@ -890,7 +895,6 @@ type
     procedure Assign(Source: TgSCEE);
 
     property tpPartComp: TtpPartComp             read FtpPartComp  write FtpPartComp;
-    property vPotInst: Double                    read FvPotInst    write FvPotInst;
     property gConsumidor: TgConsumidorCollection read FgConsumidor write SetgConsumidor;
     property gSaldoCred: TgSaldoCredCollection   read FgSaldoCred  write SetgSaldoCred;
   end;
@@ -1780,6 +1784,8 @@ begin
   vICMS     := Source.vICMS;
   vPIS      := Source.vPIS;
   vCOFINS   := Source.vCOFINS;
+
+  retTrib.Assign(Source.retTrib);
 end;
 
 { TgAjusteNF3eAnt }
@@ -1921,6 +1927,8 @@ end;
 procedure TgConsumidorCollectionItem.Assign(Source: TgConsumidorCollectionItem);
 begin
   idAcessGer := Source.idAcessGer;
+  vPotInst   := Source.vPotInst;
+  tpFonteEnergia := Source.tpFonteEnergia;
   enerAloc   := Source.enerAloc;
   tpPosTar   := Source.tpPosTar;
 end;
@@ -1950,7 +1958,6 @@ end;
 procedure TgSCEE.Assign(Source: TgSCEE);
 begin
   tpPartComp := Source.tpPartComp;
-  vPotInst   := Source.vPotInst;
 
   gConsumidor.Assign(Source.gConsumidor);
   gSaldoCred.Assign(Source.gSaldoCred);

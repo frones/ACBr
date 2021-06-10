@@ -142,6 +142,7 @@ const
   DSC_VCOFINSEfet = 'Total do Valor Efetivo do COFINS';
   DSC_VPISEfet = 'Total do Valor Efetivo do PIS';
   DSC_URLQRCODEPIX = 'URL do QRCode do PIX';
+  DSC_TPFONTEENERGIA = 'Tipo da fonte de energia utilizada';
 
 implementation
 

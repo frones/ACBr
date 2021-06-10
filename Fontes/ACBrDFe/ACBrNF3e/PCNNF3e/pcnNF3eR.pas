@@ -241,7 +241,6 @@ begin
   if Leitor.rExtrai(1, 'gSCEE') <> '' then
   begin
     NF3e.gSCEE.tpPartComp := StrTotpPartComp(ok, Leitor.rCampo(tcStr, 'tpPartComp'));
-    NF3e.gSCEE.vPotInst   := Leitor.rCampo(tcDe3, 'vPotInst');
 
     i := 0;
     NF3e.gSCEE.gConsumidor.Clear;
@@ -249,6 +248,8 @@ begin
     begin
       NF3e.gSCEE.gConsumidor.New;
       NF3e.gSCEE.gConsumidor[i].idAcessGer := Leitor.rCampo(tcStr, 'idAcessGer');
+      NF3e.gSCEE.gConsumidor[i].vPotInst   := Leitor.rCampo(tcDe3, 'vPotInst');
+      NF3e.gSCEE.gConsumidor[i].tpFonteEnergia := StrTotpFonteEnergia(ok, Leitor.rCampo(tcStr, 'tpFonteEnergia'));
       NF3e.gSCEE.gConsumidor[i].enerAloc   := Leitor.rCampo(tcDe3, 'enerAloc');
       NF3e.gSCEE.gConsumidor[i].tpPosTar   := StrTotpPosTar(ok, Leitor.rCampo(tcStr, 'tpPosTar'));
 
@@ -309,6 +310,15 @@ begin
         NF3e.NFDet[i].Det[j].detItemAnt.vICMS     := Leitor.rCampo(tcDe2, 'vICMS');
         NF3e.NFDet[i].Det[j].detItemAnt.vPIS      := Leitor.rCampo(tcDe2, 'vPIS');
         NF3e.NFDet[i].Det[j].detItemAnt.vCOFINS   := Leitor.rCampo(tcDe2, 'vCOFINS');
+
+        if Leitor.rExtrai(4, 'retTrib') <> '' then
+        begin
+          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetPIS    := Leitor.rCampo(tcDe2, 'vRetPIS');
+          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCOFINS := Leitor.rCampo(tcDe2, 'vRetCOFINS');
+          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCSLL   := Leitor.rCampo(tcDe2, 'vRetCSLL');
+          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vBCIRRF    := Leitor.rCampo(tcDe2, 'vBCIRRF');
+          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vIRRF      := Leitor.rCampo(tcDe2, 'vIRRF');
+        end;
       end;
 
       if Leitor.rExtrai(3, 'detItem') <> '' then

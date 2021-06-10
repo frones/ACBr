@@ -597,19 +597,20 @@ procedure TNF3eW.GerarSCEE;
 var
   i: Integer;
 begin
-  if (NF3e.gSCEE.vPotInst > 0) then
+  if (NF3e.gSCEE.gSaldoCred.Count > 0) then
   begin
     Gerador.wGrupo('gSCEE', '#091');
 
     Gerador.wCampo(tcStr, '#092', 'tpPartComp', 1, 1, 1, tpPartCompToStr(NF3e.gSCEE.tpPartComp), DSC_TPPARTCOMP);
-    Gerador.wCampo(tcDe3, '#093', 'vPotInst  ', 1, 9, 1, NF3e.gSCEE.vPotInst, DSC_VPOTINST);
 
     for i := 0 to NF3e.gSCEE.gConsumidor.Count - 1 do
     begin
-      Gerador.wGrupo('gConsumidor', '#094');
-      Gerador.wCampo(tcInt, '#095', 'idAcessGer', 1, 15, 1, NF3e.gSCEE.gConsumidor[i].idAcessGer, DSC_IDACESSGER);
-      Gerador.wCampo(tcDe3, '#096', 'enerAloc  ', 1, 08, 1, NF3e.gSCEE.gConsumidor[i].enerAloc, DSC_ENERALOC);
-      Gerador.wCampo(tcStr, '#097', 'tpPosTar  ', 1, 01, 1, tpPosTarToStr(NF3e.gSCEE.gConsumidor[i].tpPosTar), DSC_TPPOSTAR);
+      Gerador.wGrupo('gConsumidor', '#093');
+      Gerador.wCampo(tcInt, '#094', 'idAcessGer', 1, 15, 1, NF3e.gSCEE.gConsumidor[i].idAcessGer, DSC_IDACESSGER);
+      Gerador.wCampo(tcDe3, '#095', 'vPotInst  ', 1, 09, 1, NF3e.gSCEE.gConsumidor[i].vPotInst, DSC_VPOTINST);
+      Gerador.wCampo(tcStr, '#096', 'tpFonteEnergia', 1, 01, 1, tpFonteEnergiaToStr(NF3e.gSCEE.gConsumidor[i].tpFonteEnergia), DSC_TPFONTEENERGIA);
+      Gerador.wCampo(tcDe3, '#097', 'enerAloc  ', 1, 08, 1, NF3e.gSCEE.gConsumidor[i].enerAloc, DSC_ENERALOC);
+      Gerador.wCampo(tcStr, '#098', 'tpPosTar  ', 1, 01, 1, tpPosTarToStr(NF3e.gSCEE.gConsumidor[i].tpPosTar), DSC_TPPOSTAR);
       Gerador.wGrupo('/gConsumidor');
     end;
 
@@ -740,6 +741,21 @@ begin
   Gerador.wCampo(tcDe2, '#120', 'vICMS    ', 1, 15, 0, NF3e.NFDet[i].Det[j].detItemAnt.vICMS, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#121', 'vPIS     ', 1, 15, 0, NF3e.NFDet[i].Det[j].detItemAnt.vPIS, DSC_VPIS);
   Gerador.wCampo(tcDe2, '#122', 'vCOFINS  ', 1, 15, 0, NF3e.NFDet[i].Det[j].detItemAnt.vCOFINS, DSC_VCOFINS);
+
+  if (NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetPIS > 0) or
+     (NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCOFINS > 0) or
+     (NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCSLL > 0) or
+     (NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vBCIRRF > 0) or
+     (NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vIRRF > 0) then
+  begin
+    Gerador.wGrupo('retTrib', '#123a');
+    Gerador.wCampo(tcDe2, '#216', 'vRetPIS   ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetPIS, DSC_VRETPIS);
+    Gerador.wCampo(tcDe2, '#217', 'vRetCOFINS', 01, 15, 1, NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCOFINS, DSC_VRETCOFINS);
+    Gerador.wCampo(tcDe2, '#218', 'vRetCSLL  ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCSLL, DSC_VRETCSLL);
+    Gerador.wCampo(tcDe2, '#218', 'vBCIRRF   ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vBCIRRF, DSC_VBCIRRF);
+    Gerador.wCampo(tcDe2, '#218', 'vIRRF     ', 01, 15, 1, NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vIRRF, DSC_VIRRF);
+    Gerador.wGrupo('/retTrib');
+  end;
 
   Gerador.wGrupo('/detItemAnt');
 end;

@@ -5203,12 +5203,16 @@ begin
       end;
 
       case FProvedor of
-        proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
-                     CodMunicipio := 999;
-                     
+        proISSNet:
+          if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
+            CodMunicipio := 999;
+
         proBetha,
-        proBethav2: CodMunicipio  := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
-        proFiorilli: CodMunicipio := FNotasFiscais.Items[0].NFSe.Servico.MunicipioIncidencia;
+        proBethav2:
+          CodMunicipio  := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
+
+        proFiorilli:
+          CodMunicipio := FNotasFiscais.Items[0].NFSe.Servico.MunicipioIncidencia;
       else
         CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
       end;

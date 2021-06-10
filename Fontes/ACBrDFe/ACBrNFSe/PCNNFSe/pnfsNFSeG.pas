@@ -2075,7 +2075,7 @@ begin
         Gerador.wGrupo('solicitacao_cancelamento');
         Gerador.wGrupo('prestador');
         Gerador.wCampo(tcStr, '#1', 'cpfcnpj', 01, 15, 1, Cnpj, '');
-        Gerador.wCampo(tcInt, '#2', 'cidade', 01, 07, 1, CodMunicipio, '');
+        Gerador.wCampo(tcStr, '#2', 'cidade', 01, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
         Gerador.wGrupo('/prestador');
         Gerador.wGrupo('documentos');
         Gerador.wGrupo('nfse');
@@ -2100,7 +2100,7 @@ begin
         Gerador.wGrupo('/nf');
         Gerador.wGrupo('prestador');
         Gerador.wCampo(tcStr, '#1', 'cpfcnpj', 01, 15, 1, Cnpj, '');
-        Gerador.wCampo(tcInt, '#2', 'cidade', 01, 07, 1, CodMunicipio, '');
+        Gerador.wCampo(tcStr, '#2', 'cidade', 01, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
         Gerador.wGrupo('/prestador');
         Gerador.wGrupo('/nfse');
         }

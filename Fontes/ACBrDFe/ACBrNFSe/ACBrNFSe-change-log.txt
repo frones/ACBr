@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2021
+-- pnfsNFSeG --
+[*] O provedor IPM se utiliza do código TOM em vez do código IBGE 
+    no que diz respeito ao código do município.
+  Por: Italo Giurizzato Junior
+
 02/06/2021
 -- pnfsNFSeW_SMARAPD --
 [*] Imposta uma condição ao gerar a tag <tributadonomunicipio>, estava gerado

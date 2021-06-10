@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/06/2021
+-- MetropolisWeb.GravarXml --
+[*] Incluido a configuração para tornar a tag <Aliquota> obrigatória.
+   Por: Italo Giurizzato Junior
+
+10/06/2021
 -- Diversos --
 [*] Trocado o nome das funções:
       CodigoToSesc -> CodItemServToDesc

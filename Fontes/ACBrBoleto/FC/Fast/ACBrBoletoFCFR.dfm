@@ -8,7 +8,6 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ShowProgress = True
     OverwritePrompt = False
     DataOnly = False
-    OpenAfterExport = False
     PrintOptimized = True
     Outline = False
     Background = True
@@ -25,8 +24,6 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     CenterWindow = False
     PrintScaling = False
     PdfA = False
-    PDFStandard = psNone
-    PDFVersion = pv17
     Left = 48
     Top = 92
   end
@@ -50,7 +47,7 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     Top = 200
   end
   object frxReport: TfrxReport
-    Version = '5.6.14'
+    Version = '5.6.18'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
@@ -72,7 +69,6 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ShowProgress = True
     OverwritePrompt = False
     DataOnly = False
-    OpenAfterExport = False
     FixedWidth = True
     Background = False
     Centered = False

@@ -119,7 +119,7 @@ procedure TdmACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   emvQrCode: String;
 begin
-  emvQrCode := FACBrBoletoReport.Titulo.QrCode.emv.Trim;
+  emvQrCode := Trim(FACBrBoletoReport.Titulo.QrCode.emv);
   if Assigned(Sender) and (Trim(emvQrCode) = '') and (Sender.Name = 'ImgEmvQrcode') then
     TfrxPictureView(Sender).Visible := False
   else

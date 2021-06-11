@@ -402,9 +402,10 @@ begin
     else
       Gerador.wGrupo('FGTS');
 
-    Gerador.wCampo(tcStr, '', 'opcFGTS',    1,  1, 1, eSOpcFGTSToStr(obj.OpcFGTS));
-    
     if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'opcFGTS',    1,  1, 1, eSOpcFGTSToStr(obj.OpcFGTS));
+
+    //if VersaoDF <= ve02_05_00 then
       Gerador.wCampo(tcDat, '', 'dtOpcFGTS', 10, 10, 0, obj.dtOpcFGTS);
 
     if VersaoDF <= ve02_05_00 then
@@ -841,6 +842,7 @@ begin
       infoTSVInicio.codCateg       := INIRec.ReadInteger(sSecao, 'codCateg', 0);
       infoTSVInicio.dtInicio       := StringToDateTime(INIRec.ReadString(sSecao, 'dtInicio', '0'));
       infoTSVInicio.natAtividade   := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
+      infoTSVInicio.matricula      := INIRec.ReadString(sSecao, 'matricula', '');
 
       sSecao := 'cargoFuncao';
       infoTSVInicio.infoComplementares.cargoFuncao.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');
@@ -864,6 +866,7 @@ begin
         infoTSVInicio.infoComplementares.FGTS.OpcFGTS   := eSStrToOpcFGTS(Ok, INIRec.ReadString(sSecao, 'opcFGTS', '1'));
         infoTSVInicio.infoComplementares.FGTS.DtOpcFGTS := StringToDateTime(INIRec.ReadString(sSecao, 'dtOpcFGTS', '0'));
       end;
+      infoTSVInicio.infoComplementares.FGTS.DtOpcFGTS := StringToDateTime(INIRec.ReadString(sSecao, 'dtOpcFGTS', '0'));
 
       sSecao := 'infoDirigenteSindical';
       if INIRec.ReadString(sSecao, 'categOrig', '') <> '' then

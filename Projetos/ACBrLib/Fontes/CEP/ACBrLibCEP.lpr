@@ -53,6 +53,8 @@ exports
   CEP_Nome,
   CEP_Versao,
   CEP_UltimoRetorno,
+  CEP_ConfigImportar,
+  CEP_ConfigExportar,
   CEP_ConfigLer,
   CEP_ConfigGravar,
   CEP_ConfigLerValor,

@@ -50,6 +50,10 @@ function CEP_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_ConfigImportar(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CEP_ConfigGravar(const eArqConfig: PChar): longint;
@@ -99,6 +103,18 @@ function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
+end;
+
+function CEP_ConfigImportar(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigImportar(pLib, eArqConfig);
+end;
+
+function CEP_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
 function CEP_ConfigLer(const eArqConfig: PChar): longint;

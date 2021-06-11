@@ -228,7 +228,10 @@ begin
     else if ( self.InfoExclusao.tpEvento In [teS1210] ) then
       begin
         GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
-        GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto);
+        if VersaoDF <= ve02_05_00 then
+          GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto)
+        else
+          GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto);
       end
     else
       begin

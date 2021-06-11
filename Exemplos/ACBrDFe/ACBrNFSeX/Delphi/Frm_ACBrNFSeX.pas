@@ -674,7 +674,7 @@ begin
       Prestador.Endereco.Numero   := edtEmitNumero.Text;
       Prestador.Endereco.Bairro   := edtEmitBairro.Text;
       Prestador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-      Prestador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(edtCodCidade.Text, 0));
+      Prestador.Endereco.xMunicipio := CodIBGEToCidade(StrToIntDef(edtCodCidade.Text, 0));
       Prestador.Endereco.UF := edtEmitUF.Text;
       Prestador.Endereco.CodigoPais := 1058;
       Prestador.Endereco.xPais := 'BRASIL';
@@ -700,7 +700,7 @@ begin
       Tomador.Endereco.Complemento := 'APTO 11';
       Tomador.Endereco.Bairro := 'CENTRO';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-      Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(edtCodCidade.Text, 0));
+      Tomador.Endereco.xMunicipio := CodIBGEToCidade(StrToIntDef(edtCodCidade.Text, 0));
       Tomador.Endereco.UF := edtEmitUF.Text;
       Tomador.Endereco.CodigoPais := 1058; // Brasil
       Tomador.Endereco.CEP := edtEmitCEP.Text;

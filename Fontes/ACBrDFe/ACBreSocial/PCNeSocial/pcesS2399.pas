@@ -377,7 +377,7 @@ function TEvtTSVTermino.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTSVTermino');
@@ -410,6 +410,8 @@ var
   sSecao, sFim: String;
   I, J, K, L, M: Integer;
 begin
+  Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+
   Result := True;
 
   INIRec := TMemIniFile.Create('');
@@ -437,6 +439,7 @@ begin
       ideTrabSemVinc.CpfTrab    := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
       ideTrabSemVinc.NisTrab    := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideTrabSemVinc.codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+      ideTrabSemVinc.matricula  := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'infoTSVTermino';
       infoTSVTermino.dtTerm       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
@@ -506,6 +509,7 @@ begin
                   fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
                   vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
                   vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+                  indApurIR  := eSStrToTpindApurIR(ok,INIRec.ReadString(sSecao, 'indApurIR', ''));
 
                   L := 1;
                   while true do

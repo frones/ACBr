@@ -5226,15 +5226,21 @@ begin
             Sacado.SacadoAvalista.InscricaoNr   := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
 
             //Apenas banco Pine
-            if (IniBoletos.SectionExists('NFe1') ) then
+            if (IniBoletos.SectionExists('NFe'+IntToStr(I)) ) or (IniBoletos.SectionExists('NFe'+IntToStr(I)+'-1') ) then
             begin
               with Self do
               begin
                 N := 1 ;
                 while true do
                 begin
-                  Sessao := 'NFe' + IntToStr(N);
+                  Sessao := 'NFe'+IntToStr(I);
                   sFim   := IniBoletos.ReadString(Sessao,'ChaveNFe','FIM');
+
+                  if (sFim = 'FIM') then
+                  begin
+                    Sessao := 'NFe'+IntToStr(I)+'-'+IntToStr(N);
+                    sFim   := IniBoletos.ReadString(Sessao,'ChaveNFe','FIM');
+                  end;
 
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break ;

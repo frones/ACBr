@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2021
+-- ACBrGNREGuiasRetorno --
+[-] Possível correção, ao imprimir a Guia estava sendo impresso parte da chave
+    da NF-e sendo que o correto seria o numero da nota.
+  Por: Italo Giurizzato Junior
+
 29/04/2021
 -- ACBrGNREGuiasRetorno/pgnreGNRERetorno --
 [+] Acrescentado o campo ValorPrincICMS na classe GNRERetorno para receber o valor do tipo 11

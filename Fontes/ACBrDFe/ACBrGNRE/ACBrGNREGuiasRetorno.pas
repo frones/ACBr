@@ -319,6 +319,11 @@ begin
           GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
           GNRERetorno.NumDocOrigem   := Leitor.rCampo(tcStr, 'documentoOrigem');
 
+          // se o tamanho for 44 o conteudo de NumDocOrigem é a chave da NF-e
+          // neste caso devemos extrair o numero da nota da chave.
+          if Length(GNRERetorno.NumDocOrigem) = 44 then
+            GNRERetorno.NumDocOrigem := IntToStr(ExtrairNumeroChaveAcesso(GNRERetorno.NumDocOrigem));
+
           cProd := StrToIntDef(Leitor.rCampo(tcStr, 'produto'), 0);
 
           case cProd of

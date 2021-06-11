@@ -77,7 +77,7 @@ type
 
     procedure GerarCabecalho(const Namespace: String);
     procedure GerarRodape;
-    procedure GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
+    procedure GerarAliqGilRat(pEmp: TIdeEmpregador; pTpInscEstab: tpTpInsc; pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
     procedure GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);
     procedure GerarAposentadoria(pAposentadoria: TAposentadoria);
     procedure GerarCNH(pCnh: TCNH);                                   
@@ -1073,43 +1073,48 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat;
+procedure TeSocialEvento.GerarAliqGilRat(pEmp: TIdeEmpregador; pTpInscEstab: tpTpInsc; pAliqRat: TAliqGilRat;
   const GroupName: string);
 var
-  L: Boolean;
+  bProcJudRat: Boolean;
+  bProcJudFap: Boolean;
 begin
-  L := False;
-  
+  bProcJudRat := False;
+  bProcJudFap := False;
+
   if pAliqRat.procAdmJudRatInst() then
     if pAliqRat.ProcAdmJudRat.nrProc <> EmptyStr then
-      L := True;
+      bProcJudRat := True;
 
   if pAliqRat.procAdmJudFapInst() then
     if pAliqRat.ProcAdmJudFap.nrProc <> EmptyStr then
-      L := True;
-  
-  if (VersaoDF <= ve02_05_00) or ((VersaoDF > ve02_05_00) and (L)) then
-  begin
-    Gerador.wGrupo(GroupName);
+      bProcJudFap := True;
 
+  if not(VersaoDF <= ve02_05_00) and not(bProcJudRat) and not(bProcJudFap) and not(pTpInscEstab = tiCNO) then
+    Exit;
+
+  Gerador.wGrupo(GroupName);
+
+  if (VersaoDF <= ve02_05_00) or bProcJudRat then
     Gerador.wCampo(tcStr, '', 'aliqRat', 1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat));
 
-    if (pEmp.TpInsc = tiCNPJ) then
-    begin
+  if (pEmp.TpInsc = tiCNPJ) then
+  begin
+    if (VersaoDF <= ve02_05_00) or bProcJudFap or (pTpInscEstab = tiCNO) then
       Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
     
-      if VersaoDF <= ve02_05_00 then
-         Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
-    end;
-
-    if pAliqRat.procAdmJudRatInst() then
-      GerarProcessoAdmJudRat(pAliqRat.ProcAdmJudRat);
-
-    if pAliqRat.procAdmJudFapInst() then
-      GerarProcessoAdmJudFap(pAliqRat.ProcAdmJudFap);
-
-    Gerador.wGrupo('/' + GroupName);
+    if (VersaoDF <= ve02_05_00) then
+       Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
   end;
+
+  if pAliqRat.procAdmJudRatInst() then
+    GerarProcessoAdmJudRat(pAliqRat.ProcAdmJudRat);
+
+  if pAliqRat.procAdmJudFapInst() then
+    GerarProcessoAdmJudFap(pAliqRat.ProcAdmJudFap);
+
+  Gerador.wGrupo('/' + GroupName);
+
 end;
 
 procedure TeSocialEvento.GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);

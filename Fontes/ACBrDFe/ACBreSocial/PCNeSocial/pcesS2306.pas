@@ -421,13 +421,16 @@ begin
   Gerador.wGrupo('instEnsino');
 
   Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
-  Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
-  Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
-  Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
-  Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
-  Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
-  Gerador.wCampo(tcInt, '', 'codMunic',        7,   7, 0, obj.codMunic);
-  Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, obj.uf);
+  if (obj.cnpjInstEnsino = '') then   // Preenchendo somente se não tiver CNPJ
+  begin
+    Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
+    Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
+    Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
+    Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
+    Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
+    Gerador.wCampo(tcInt, '', 'codMunic',        7,   7, 0, obj.codMunic);
+    Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, obj.uf);
+  end;
 
   Gerador.wGrupo('/instEnsino');
 end;
@@ -559,6 +562,7 @@ begin
       ideTrabSemVinc.CpfTrab    := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
       ideTrabSemVinc.NisTrab    := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideTrabSemVinc.codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+      ideTrabSemVinc.matricula  := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'infoTSVAlteracao';
       infoTSVAlteracao.dtAlteracao    := StringToDateTime(INIRec.ReadString(sSecao, 'dtAlteracao', '0'));
@@ -570,6 +574,10 @@ begin
         infoTSVAlteracao.infoComplementares.cargoFuncao.CodCargo  := INIRec.ReadString(sSecao, 'codCargo', '');
         infoTSVAlteracao.infoComplementares.cargoFuncao.CodFuncao := INIRec.ReadString(sSecao, 'codFuncao', '');
       end;
+      infoTSVAlteracao.infoComplementares.cargoFuncao.nmCargo   := INIRec.ReadString(sSecao, 'nmCargo', '');  //01/06/2021
+      infoTSVAlteracao.infoComplementares.cargoFuncao.CBOCargo  := INIRec.ReadString(sSecao, 'CBOCargo', '');  //01/06/2021
+      infoTSVAlteracao.infoComplementares.cargoFuncao.nmFuncao  := INIRec.ReadString(sSecao, 'nmFuncao', '');  //01/06/2021
+      infoTSVAlteracao.infoComplementares.cargoFuncao.CBOFuncao := INIRec.ReadString(sSecao, 'CBOFuncao', '');  //01/06/2021
 
       sSecao := 'remuneracao';
       if INIRec.ReadString(sSecao, 'vrSalFx', '') <> '' then

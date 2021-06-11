@@ -231,7 +231,7 @@ End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)
     
-    If Resultado = 0 Then Exit Sub
+    If Resultado >= 0 Then Exit Sub
          
     Dim buffer    As String
     Dim bufferLen As Long

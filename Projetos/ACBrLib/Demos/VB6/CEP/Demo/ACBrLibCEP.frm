@@ -14,6 +14,7 @@ Begin VB.Form FrmMain
       Height          =   2295
       Left            =   120
       MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
       TabIndex        =   1
       Top             =   3360
       Width           =   9495
@@ -100,7 +101,7 @@ Begin VB.Form FrmMain
             Top             =   360
             Width           =   855
          End
-         Begin VB.TextBox txtTipoEndereco 
+         Begin VB.TextBox txtTipoLogradouro 
             Height          =   315
             Left            =   120
             TabIndex        =   26
@@ -545,6 +546,8 @@ End Sub
 Private Sub btnBuscarPorLogradouro_Click()
     
     Dim retorno As String
+    retorno = cep.BuscarPorLogradouro(txtCidade.Text, txtTipoLogradouro.Text, txtLogradouro.Text, txtUF.Text, txtBairro.Text)
+    SetResposta retorno
     
 End Sub
 

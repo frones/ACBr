@@ -1,9 +1,0 @@
-[History]
-1=#P0#=mb	#P1#=BuscarPorLogradouro	#P2#=ACBrLibCEP/ACBrCEP/BuscarPorLogradouro	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210610161314	#P7#=0	#P8#=10	.
-2=#P0#=mb	#P1#=BuscarPorCEP	#P2#=ACBrLibCEP/ACBrCEP/BuscarPorCEP	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210610161118	#P7#=0	#P8#=9	.
-3=#P0#=mb	#P1#=SalvarConfig	#P2#=ACBrLibCEP/FrmMain/SalvarConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210610153244	#P7#=0	#P8#=2	.
-4=#P0#=mb	#P1#=btnBuscarPorCEP_Click	#P2#=ACBrLibCEP/FrmMain/btnBuscarPorCEP_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210610161051	#P7#=0	#P8#=3	.
-5=#P0#=mb	#P1#=Form_Unload	#P2#=ACBrLibCEP/FrmMain/Form_Unload	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210610141930	#P7#=0	#P8#=1	.
-6=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibCEP/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210610141918	#P7#=0	#P8#=-2	.
-7=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibCEP/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210608181134	#P7#=0	#P8#=16	.
-8=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibCEP/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210608164139	#P7#=0	#P8#=2	.

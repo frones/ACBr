@@ -4,7 +4,7 @@
 	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
 	<xs:element name="detEvento">
 		<xs:annotation>
-			<xs:documentation>Schema XML de validação do evento de Cancelamento do Comprovante de Entrega de NF-e</xs:documentation>
+			<xs:documentation>Schema XML de validação do evento de Cancelamento do Comprovante de Entrega da NF-e</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>

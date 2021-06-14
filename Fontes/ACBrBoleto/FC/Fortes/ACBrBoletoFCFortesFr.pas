@@ -70,7 +70,20 @@ type
      BoletoCarne: TRLReport;
      imgBarrasCarne: TRLBarcode;
     ImgLoja: TRLImage;
+    lblPaguePix: TRLLabel;
     lblLocalPagto: TRLMemo;
+    txtEnderecoPIX: TRLLabel;
+    lblValorPix: TRLLabel;
+    txtCedentePix: TRLLabel;
+    RLDraw225: TRLDraw;
+    RLDraw226: TRLDraw;
+    RLDraw227: TRLDraw;
+    RLDraw228: TRLDraw;
+    RLDraw231: TRLDraw;
+    imgQRCodePix: TRLImage;
+    txtCNPJCedentePix: TRLLabel;
+    txtValorPix: TRLLabel;
+    RLBandPix: TRLBand;
     RLDraw1: TRLDraw;
     RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
@@ -91,6 +104,7 @@ type
     rlCIP2: TRLDraw;
     rlCIP3: TRLDraw;
     rlCIP4: TRLDraw;
+    RLDraw224: TRLDraw;
     RLDraw23: TRLDraw;
     RLDraw24: TRLDraw;
     RLDraw25: TRLDraw;
@@ -974,6 +988,7 @@ type
     procedure RLBand3BeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure RLBand4BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand5BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLBandPixBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbndComprovanteEntrega2BeforePrint(Sender: TObject;
       var PrintIt: Boolean);
     procedure LayoutFaturaDetalBeforePrint(Sender: TObject;
@@ -1017,7 +1032,7 @@ var
 
 implementation
 
-Uses ACBrUtil, strutils ;
+Uses ACBrUtil, strutils, ACBrDFeReport, ACBrDelphiZXingQRCode ;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -1149,6 +1164,7 @@ begin
    Detalhamento    := TStringList.Create;
    RLBand4.Visible := (fBoletoFC.LayOut = lPadraoEntrega) ;
    rlbndComprovanteEntrega2.Visible := (fBoletoFC.LayOut = lPadraoEntrega2) ;
+   RLBandPix.Visible:= (fBoletoFC.LayOut = lPadraoPIX);
    ValidarCIP;
    if fBoletoFC.AlterarEscalaPadrao then
    begin
@@ -1686,6 +1702,29 @@ begin
       imgBarrasRecTop1.Caption         := CodBarras;
 	  imgBarrasRecTop1.Margins.LeftMargin := 5; 
    end;
+end;
+
+procedure TACBrBoletoFCFortesFr.RLBandPixBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+   EnderecoCed: String;
+begin
+  with fBoletoFC.ACBrBoleto do
+  begin
+    EnderecoCed := Cedente.Logradouro+' '+Cedente.NumeroRes+' '+Cedente.Complemento+'  '+
+                    'CEP: '+Cedente.CEP+',  '+Cedente.Bairro+', '+Cedente.Cidade+' '+ Cedente.UF;
+
+    txtCedentePix.Caption         := UpperCase( Cedente.Nome );
+    txtCNPJCedentePix.Caption     := Cedente.CNPJCPF;
+    txtEnderecoPIX.Caption        := EnderecoCed;
+    txtValorPix.Caption           := FormatFloatBr(Titulo.ValorDocumento,',R$ 0.00');
+
+    if not EstaVazio(Trim(Titulo.QrCode.emv)) then
+      PintarQRCode( Titulo.QrCode.emv, imgQRCodePix.Picture.Bitmap, qrAuto )
+    else
+      imgQRCodePix.Visible := False;
+
+  end;
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand6BeforePrint(Sender: TObject;

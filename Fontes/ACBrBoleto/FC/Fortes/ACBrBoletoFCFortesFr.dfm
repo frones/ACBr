@@ -1,6 +1,6 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 313
-  Top = 165
+  Left = -7
+  Top = 133
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 1061
   ClientWidth = 2564
@@ -16,8 +16,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object LayoutBoleto: TRLReport
-    Left = 1048
-    Top = -80
+    Left = 984
+    Top = 24
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -48,7 +48,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand4: TRLBand
       Left = 15
-      Top = 222
+      Top = 427
       Width = 768
       Height = 203
       BeforePrint = RLBand4BeforePrint
@@ -706,7 +706,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand1: TRLBand
       Left = 15
-      Top = 425
+      Top = 630
       Width = 768
       Height = 412
       BeforePrint = RLBand1BeforePrint
@@ -1749,7 +1749,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand2: TRLBand
       Left = 15
-      Top = 837
+      Top = 1042
       Width = 768
       Height = 430
       RealBounds.UsedUnit = buMilimeters
@@ -3646,10 +3646,191 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
     end
+    object RLBandPix: TRLBand
+      Left = 15
+      Top = 222
+      Width = 768
+      Height = 205
+      BeforePrint = RLBandPixBeforePrint
+      object RLDraw224: TRLDraw
+        Left = 0
+        Top = 186
+        Width = 763
+        Height = 16
+        DrawKind = dkLine
+        Pen.Style = psDot
+      end
+      object lblPaguePix: TRLLabel
+        Left = 231
+        Top = 162
+        Width = 173
+        Height = 13
+        Alignment = taRightJustify
+        Anchors = [fkRight, fkBottom]
+        Caption = 'Pague esta cobran'#231'a com PIX'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object lblValorPix: TRLLabel
+        Left = 600
+        Top = 112
+        Width = 129
+        Height = 16
+        Alignment = taRightJustify
+        Anchors = [fkRight, fkBottom]
+        Caption = 'Valor do Documento'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object txtValorPix: TRLLabel
+        Left = 665
+        Top = 136
+        Width = 67
+        Height = 22
+        Alignment = taRightJustify
+        Anchors = [fkRight, fkBottom]
+        Caption = 'R$ 0,00'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -19
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw225: TRLDraw
+        Left = 741
+        Top = 104
+        Width = 17
+        Height = 59
+        Anchors = [fkRight, fkBottom]
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw226: TRLDraw
+        Left = 569
+        Top = 104
+        Width = 17
+        Height = 59
+        Anchors = [fkRight, fkBottom]
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw227: TRLDraw
+        Left = 577
+        Top = 103
+        Width = 173
+        Height = 1
+        Anchors = [fkRight, fkBottom]
+        DrawKind = dkLine
+      end
+      object RLDraw228: TRLDraw
+        Left = 577
+        Top = 162
+        Width = 173
+        Height = 1
+        Anchors = [fkRight, fkBottom]
+        DrawKind = dkLine
+      end
+      object imgQRCodePix: TRLImage
+        Left = 451
+        Top = 79
+        Width = 105
+        Height = 105
+        Anchors = [fkRight, fkBottom]
+        Center = True
+        Scaled = True
+      end
+      object RLDraw231: TRLDraw
+        Left = 5
+        Top = 65
+        Width = 763
+        Height = 10
+        DrawKind = dkLine
+        Pen.Style = psDot
+      end
+      object txtCedentePix: TRLLabel
+        Left = 15
+        Top = 20
+        Width = 527
+        Height = 16
+        Anchors = [fkLeft, fkTop]
+        AutoSize = False
+        Caption = 'CEDENTE DE HOMOLOGA'#199#195'O DE BOLETO'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object txtCNPJCedentePix: TRLLabel
+        Left = 546
+        Top = 20
+        Width = 183
+        Height = 16
+        Alignment = taRightJustify
+        Anchors = [fkTop, fkRight]
+        AutoSize = False
+        Caption = '99.999.999/9999-99'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object txtEnderecoPIX: TRLLabel
+        Left = 17
+        Top = 42
+        Width = 739
+        Height = 13
+        Anchors = [fkLeft, fkTop]
+        AutoSize = False
+        Caption = 'Endere'#231'o Cedente'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+    end
   end
   object BoletoCarne: TRLReport
-    Left = 16
-    Top = 8
+    Left = 24
+    Top = 16
     Width = 794
     Height = 1123
     Margins.LeftMargin = 5.000000000000000000
@@ -4989,8 +5170,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 96
-    Top = 80
+    Left = 64
+    Top = 40
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -7616,8 +7797,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 32
-    Top = 40
+    Left = 952
+    Top = 32
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -9229,8 +9410,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutTermica: TRLReport
-    Left = 912
-    Top = 584
+    Left = 904
+    Top = 592
     Width = 907
     Height = 302
     Margins.LeftMargin = 2.000000000000000000

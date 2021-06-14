@@ -762,6 +762,10 @@ begin
     lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
+    lNomeFantasia.Alignment := taCenter;
+    lRazaoSocial.Alignment  := taCenter;
+    lEndereco.Alignment     := taCenter;
+
     CarregouLogo := TDFeReportFortes.CarregarLogo(imgLogo, ACBrNFeDANFCeFortes.Logo);
     pLogo.Visible := CarregouLogo;
 
@@ -780,6 +784,9 @@ begin
         pLogo.Width   := ACBrNFeDANFCeFortes.TamanhoLogoWidth;
         pLogo.Height  := ACBrNFeDANFCeFortes.TamanhoLogoHeight;
         imgLogo.Align := faClient;
+        lNomeFantasia.Alignment := taLeftJustify;
+        lRazaoSocial.Alignment  := taLeftJustify;
+        lEndereco.Alignment     := taLeftJustify;
       end
       else
       begin
@@ -790,19 +797,6 @@ begin
         imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight;
         imgLogo.Align  := faClientTop;
       end;
-    end;
-
-    if not pLogo.Visible then
-    begin
-      lNomeFantasia.Alignment := taCenter;
-      lRazaoSocial.Alignment := taCenter;
-      lEndereco.Alignment := taCenter;
-    end
-    else
-    begin
-      lNomeFantasia.Alignment := taLeftJustify;
-      lRazaoSocial.Alignment := taLeftJustify;
-      lEndereco.Alignment := taLeftJustify;
     end;
 
     // QRCode  //

@@ -166,22 +166,20 @@ end;
 
 function TACBrNFSeProviderIPM.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, ConsultarLote);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmRecepcionar: URL := Recepcionar;
+        tmTeste: URL := TesteEnvio;
+        tmConsultarLote: URL := ConsultarLote;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -190,19 +188,20 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, ConsultarLote);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmRecepcionar: URL := Recepcionar;
+        tmTeste: URL := TesteEnvio;
+        tmConsultarLote: URL := ConsultarLote;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderIPM.ProcessarMensagemErros(

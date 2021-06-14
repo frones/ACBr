@@ -134,22 +134,20 @@ end;
 
 function TACBrNFSeProviderAssessorPublico.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -158,19 +156,20 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceAssessorPublico.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderAssessorPublico.ProcessarMensagemErros(

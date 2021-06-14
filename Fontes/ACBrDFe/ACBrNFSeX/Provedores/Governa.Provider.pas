@@ -127,20 +127,19 @@ end;
 
 function TACBrNFSeProviderGoverna.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -149,17 +148,19 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderGoverna.ProcessarMensagemErros(

@@ -201,22 +201,20 @@ end;
 
 function TACBrNFSeProviderInfiscv100.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -225,19 +223,20 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderInfiscv100.PrepararEmitir(Response: TNFSeEmiteResponse);

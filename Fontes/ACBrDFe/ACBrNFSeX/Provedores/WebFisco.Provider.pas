@@ -151,20 +151,19 @@ end;
 
 function TACBrNFSeProviderWebFisco.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, GerarNFSe);
+        tmGerar: URL := GerarNFSe;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -173,17 +172,19 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, GerarNFSe);
+        tmGerar: URL := GerarNFSe;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderWebFisco.ProcessarMensagemErros(

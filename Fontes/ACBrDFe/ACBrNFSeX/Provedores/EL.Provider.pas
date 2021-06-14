@@ -187,20 +187,24 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, FecharSessao);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, SubstituirNFSe);
       else
         raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
@@ -213,20 +217,24 @@ begin
       case AMetodo of
         tmRecepcionar:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarSituacao);
         tmConsultarLote:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarLote);
         tmConsultarNFSePorRps:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSe);
+        tmConsultarNFSePorFaixa:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
+        tmConsultarNFSeServicoPrestado:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
+        tmConsultarNFSeServicoTomado:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
         tmCancelarNFSe:
           Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmAbrirSessao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, AbrirSessao);
-        tmFecharSessao:
-          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, FecharSessao);
+        tmGerar:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, GerarNFSe);
+        tmRecepcionarSincrono:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, RecepcionarSincrono);
+        tmSubstituirNFSe:
+          Result := TACBrNFSeXWebserviceELv2.Create(FAOwner, AMetodo, SubstituirNFSe);
       else
         raise EACBrDFeException.Create(ERR_NAO_IMP);
       end;
@@ -1242,34 +1250,24 @@ end;
 
 function TACBrNFSeProviderEL.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmAbrirSessao: URL := AbrirSessao;
+        tmFecharSessao: URL := FecharSessao;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -1278,31 +1276,24 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, SubstituirNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmAbrirSessao: URL := AbrirSessao;
+        tmFecharSessao: URL := FecharSessao;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceEL.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 { TACBrNFSeXWebserviceEL }

@@ -201,26 +201,22 @@ end;
 
 function TACBrNFSeProviderEquiplano.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
   begin
    with ConfigWebServices.Homologacao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end
@@ -229,23 +225,22 @@ begin
     with ConfigWebServices.Producao do
     begin
       case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, CancelarNFSe);
+        tmRecepcionar: URL := Recepcionar;
+        tmConsultarSituacao: URL := ConsultarSituacao;
+        tmConsultarLote: URL := ConsultarLote;
+        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
+        tmConsultarNFSe: URL := ConsultarNFSe;
+        tmCancelarNFSe: URL := CancelarNFSe;
       else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
+        URL := '';
       end;
     end;
   end;
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceEquiplano.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderEquiplano.ProcessarMensagemErros(

@@ -211,12 +211,9 @@ begin
     '040' + // 164 a 166 - Número da versão do layout do arquivo
     StringOfChar('0', 5) + // 167 a 171 - Densidade de gravação do arquivo (BPI)
     StringOfChar(' ', 20) + // 172 a 191 - Uso reservado do banco
-    StringOfChar('0', 20) + // 192 a 211 - Uso reservado da empresa
-    StringOfChar(' ', 11) + // 212 a 222 - 11 brancos
-    StringOfChar(' ', 3) + // 223 a 225 - Brancos
-    StringOfChar('0', 3) + // 226 a 228 - Uso exclusivo de Vans
-    StringOfChar(' ', 2) + // 229 a 230 - Tipo de servico
-    StringOfChar(' ', 10); // 231 a 240 - titulo em carteira de cobranca
+    StringOfChar(' ', 20) + // 192 a 211 - Uso reservado da empresa
+    StringOfChar(' ', 29); // 212 a 240 - Brancos
+
 
     { GERAR REGISTRO HEADER DO LOTE }
 
@@ -603,7 +600,7 @@ begin
     PadLeft(sServicoClassificacao, 1, '0') + // 038 - 038 / Direcionamento da Cobran
     PadLeft('000', 3, '0') + // 039 - 041 / Modalidade de Cobrança em bancos Correspondentes
     PadLeft('', 2, '0') + // 042 - 043 / Uso exclusivo AUTBANK
-    PadLeft('110', 3, '0') + // 044 - 046 / Modalidade de Cobrança com Banco Cedente (NOSSA CARTEIRA)
+    PadLeft(ACBrBoleto.Cedente.Modalidade, 3, '0') + // 044 - 046 / Modalidade de Cobrança com Banco Cedente (NOSSA CARTEIRA)
     PadLeft(NossoNumero, 10, '0') + PadLeft(sDigitoNossoNumero, 1, '0') + // 047 – 057 / Identificação do título no Banco (Nosso Número
     sTipoCobranca + // 058 - 058 / Codigo Carteira
     sTipoCarteira + // 059 - 059 / Forma de Cadastramento = 1 Registrada / 2 Sem Registro

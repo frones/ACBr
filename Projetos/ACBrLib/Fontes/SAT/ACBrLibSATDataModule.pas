@@ -368,10 +368,12 @@ begin
 
   try
     ExtratoEscPos := TACBrSATExtratoESCPOS.Create(nil);
+    ExtratoEscPos.PosPrinter := ACBrPosPrinter1;
+    ACBrSAT1.Extrato := ExtratoEscPos;
     LibConfig.Extrato.Apply(ExtratoEscPos, Lib);
-    Result := ExtratoEscPos.GerarImpressaoFiscalMFe(ACBrSAT1.CFe);
+    Result := ExtratoEscPos.GerarImpressaoFiscalMFe;
   finally
-    FreeAndNil(ExtratoEscPos);
+    FinalizarImpressao;
   end;
 end;
 

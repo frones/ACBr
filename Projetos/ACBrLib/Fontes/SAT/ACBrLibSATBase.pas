@@ -961,7 +961,6 @@ begin
 
     try
       Resposta := '';
-
       SatDM.CarregarDadosVenda(ArquivoXml);
       Resposta := SatDM.GerarImpressaoFiscalMFe;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2021
+-- pcnEventoNFe --
+[*] Correção na descrição do evento de cancelamento de comprovante de 
+    entrega da NF-e.
+   Por: Italo Giurizzato Junior
+
 02/06/2021
 -- ACBrNFeWebServices/pcnEnvEventoNFe --
 [*] https://www.projetoacbr.com.br/forum/topic/62809-evento-comprovante-entrega-nf-e-campos-n%C3%A3o-est%C3%A3o-sendo-preenchidos/

@@ -353,7 +353,7 @@ begin
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
     teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
-    teCancComprEntregaNFe      : Result := 'Cancelamento do Comprovante de Entrega da NF-e';
+    teCancComprEntregaNFe      : Result := 'Cancelamento Comprovante de Entrega da NF-e';
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
   else
     Result := '';
@@ -413,7 +413,7 @@ begin
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     teComprEntrega             : Result := 'Comprovante de Entrega do CT-e';
     teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
-    teCancComprEntregaNFe      : Result := 'Cancelamento do Comprovante de Entrega da NF-e';
+    teCancComprEntregaNFe      : Result := 'Cancelamento Comprovante de Entrega da NF-e';
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
   else
     Result := 'Não Definido';

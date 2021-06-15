@@ -56,7 +56,7 @@ type
     function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineTipoCarteira(const ACBrTitulo: TACBrTitulo): String;
     function DefineCarteira(const ACBrTitulo: TACBrTitulo): String;
-    function DefineTipoDocumento(const ACBrTitulo: TACBrTitulo): String;
+    function DefineTipoDocumento(const ACBrTitulo: TACBrTitulo): String; reintroduce;
     function MontaInstrucoes1CNAB240(const ACBrTitulo: TACBrTitulo): String;
     function MontaInstrucoes2CNAB240(const ACBrTitulo: TACBrTitulo): String;
   public

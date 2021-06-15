@@ -302,13 +302,11 @@ function TACBrCaixaEconomicaSICOB.CalcularTamMaximoNossoNumero(
 var
   wOperacao: Integer;
 begin
-   Result := length(NossoNumero);
+   Result := 10;
    wOperacao := StrToIntDef(Copy(Convenio, 1, 3), 0);
 
    if (wOperacao = 870) and (Carteira = 'SR') then
-     Result := 15
-   else
-     Result := 10;
+     Result := 15;
 end;
 
 function TACBrCaixaEconomicaSICOB.CodOcorrenciaToTipo(

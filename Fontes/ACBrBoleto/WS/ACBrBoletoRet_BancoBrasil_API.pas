@@ -86,7 +86,7 @@ var
   AJson: TJson;
   AJSonRejeicao, AJSonObject: TJsonObject;
   ARejeicao: TRejeicao;
-  AJSonResp, AJsonAttributes, AJsonBoletos: TJsonArray;
+  AJSonResp, AJsonBoletos: TJsonArray;
   I: Integer;
   TipoOperacao : TOperacao;
 begin
@@ -103,17 +103,14 @@ begin
         Retorno.HTTPResultCode := HTTPResultCode;
         Retorno.JSON           := AJson.Stringify;
         //retorna quando houver erro
-        if (AJSonResp.Count > 0) then
+        For I := 0 to Pred(AJSonResp.Count) do
         begin
-          For I := 0 to Pred(AJSonResp.Count) do
-          begin
-            AJSonRejeicao := AJSonResp[I].AsObject;
-            ARejeicao            := Retorno.CriarRejeicaoLista;
-            ARejeicao.Codigo     := AJSonRejeicao.Values['codigo'].AsString;
-            ARejeicao.Versao     := AJSonRejeicao.Values['versao'].AsString;
-            ARejeicao.Mensagem   := AJSonRejeicao.Values['mensagem'].AsString;
-            ARejeicao.Ocorrencia := AJSonRejeicao.Values['ocorrencia'].AsString;
-          end;
+          AJSonRejeicao := AJSonResp[I].AsObject;
+          ARejeicao            := Retorno.CriarRejeicaoLista;
+          ARejeicao.Codigo     := AJSonRejeicao.Values['codigo'].AsString;
+          ARejeicao.Versao     := AJSonRejeicao.Values['versao'].AsString;
+          ARejeicao.Mensagem   := AJSonRejeicao.Values['mensagem'].AsString;
+          ARejeicao.Ocorrencia := AJSonRejeicao.Values['ocorrencia'].AsString;
         end;
         if (AJson.Values['error'].AsString <> '') then
         begin
@@ -147,11 +144,12 @@ begin
           if (TipoOperacao = tpConsulta) then
           begin
             AJsonBoletos := AJson.Values['boletos'].AsArray;
-            AJSonObject  := AJsonBoletos[I].AsObject;
             for I := 0 to Pred(AJsonBoletos.Count) do
             begin
               if I > 0 then
                 Retorno := ACBrBoleto.CriarRetornoWebNaLista;
+                
+              AJSonObject  := AJsonBoletos[I].AsObject;
 
               Retorno.indicadorContinuidade := AJson.Values['indicadorContinuidade'].AsString = 'S';
               Retorno.proximoIndice         := AJson.Values['proximoIndice'].AsInteger;

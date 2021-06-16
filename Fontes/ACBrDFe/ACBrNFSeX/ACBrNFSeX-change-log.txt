@@ -44,6 +44,9 @@ Símbolo : Significado
 
 16/06/2021
 -- Diversos --
+[*] Implementado o provedor FGMaiss.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Simplificação nas chamadas aos métodos: function CriarServiceClient
     Provedores da versão 1 e 2 do layout da ABRASF.
    Por: Italo Giurizzato Junior

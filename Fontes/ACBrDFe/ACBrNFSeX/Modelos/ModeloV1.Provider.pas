@@ -294,68 +294,7 @@ function TACBrNFSeProviderModeloV1.CriarServiceClient(const AMetodo: TMetodo): T
 var
   URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        // Métodos padrões da versão 1 do layout da ABRASF
-        tmRecepcionar: URL := Recepcionar;
-        tmConsultarLote: URL := ConsultarLote;
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmCancelarNFSe: URL := CancelarNFSe;
-
-        // Métodos que por padrão não existem na versão 1 do layout da ABRASF
-        {
-        tmRecepcionarSincrono: URL := RecepcionarSincrono;
-        tmGerar: URL := GerarNFSe;
-        tmSubstituirNFSe: URL := SubstituirNFSe;
-        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
-        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
-        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
-        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
-        tmAbrirSessao: URL := AbrirSessao;
-        tmFecharSessao: URL := FecharSessao;
-        tmTeste: URL := TesteEnvio;
-        }
-      else
-        URL := '';
-      end;
-    end;
-  end
-  else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        // Métodos padrões da versão 1 do layout da ABRASF
-        tmRecepcionar: URL := Recepcionar;
-        tmConsultarLote: URL := ConsultarLote;
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmCancelarNFSe: URL := CancelarNFSe;
-
-        // Métodos que por padrão não existem na versão 1 do layout da ABRASF
-        {
-        tmRecepcionarSincrono: URL := RecepcionarSincrono;
-        tmGerar: URL := GerarNFSe;
-        tmSubstituirNFSe: URL := SubstituirNFSe;
-        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
-        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
-        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
-        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
-        tmAbrirSessao: URL := AbrirSessao;
-        tmFecharSessao: URL := FecharSessao;
-        tmTeste: URL := TesteEnvio;
-        }
-      else
-        URL := '';
-      end;
-    end;
-  end;
+  URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceModeloV1.Create(FAOwner, AMetodo, URL)

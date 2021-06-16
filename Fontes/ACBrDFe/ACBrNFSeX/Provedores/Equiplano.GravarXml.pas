@@ -73,24 +73,6 @@ implementation
 
 { TNFSeW_Equiplano }
 
-{
-procedure TNFSeW_Equiplano.ConfigurarRetornos;
-begin
-  with ConfigRetorno do
-  begin
-    RetornoNFSe := '<listaNfs xmlns="' + ConfigMsgDados.xmlnsRps +
-                             '"><nfs>%DadosNFSe%</nfs></listaNfs>';
-
-    GrupoRecepcionar         := '';
-    GrupoConsultarSituacao   := 'esConsultarSituacaoLoteRpsResposta';
-    GrupoConsultarLote       := 'esConsultarLoteRpsResposta';
-    GrupoConsultarNFSePorRps := 'esConsultarNfsePorRpsResposta';
-    GrupoConsultarNFSe       := 'esConsultarNfseResposta';
-    GrupoCancelar            := 'esCancelarNfseResposta';
-  end;
-end;
-}
-
 function TNFSeW_Equiplano.GerarXml: Boolean;
 var
   NFSeNode, xmlNode: TACBrXmlNode;

@@ -148,34 +148,7 @@ function TACBrNFSeProviderConam.CriarServiceClient(
 var
   URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        tmRecepcionar: URL := Recepcionar;
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarLote: URL := ConsultarLote;
-        tmCancelarNFSe: URL := CancelarNFSe;
-      else
-        URL := '';
-      end;
-    end;
-  end
-  else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        tmRecepcionar: URL := Recepcionar;
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarLote: URL := ConsultarLote;
-        tmCancelarNFSe: URL := CancelarNFSe;
-      else
-        URL := '';
-      end;
-    end;
-  end;
+  URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceConam.Create(FAOwner, AMetodo, URL)

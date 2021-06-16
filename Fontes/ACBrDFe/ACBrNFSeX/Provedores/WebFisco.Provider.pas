@@ -48,6 +48,9 @@ uses
 
 type
   TACBrNFSeXWebserviceWebFisco = class(TACBrNFSeXWebserviceSoap11)
+  protected
+    function GetSoapActionURL: string; virtual;
+
   private
     function GetSoapAction: string;
   public
@@ -55,6 +58,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    property SoapActionURL: string read GetSoapActionURL;
     property SoapAction: string read GetSoapAction;
   end;
 
@@ -102,35 +106,9 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meUnitario;
-
-    {
-    TagRaizNFSe := 'Nfe'; // Verificar
-    TagRaizRps  := 'EnvNfe';
-    }
   end;
 
   SetXmlNameSpace('');
-
-  with ConfigMsgDados do
-  begin
-    with ConsultarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'ConsultaNfe';
-    end;
-
-    with CancelarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'CancelaNfe';
-    end;
-
-    with GerarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'GerarCancelaNfe';
-    end;
-  end;
 
   ConfigSchemas.Validar := False;
 end;
@@ -154,32 +132,7 @@ function TACBrNFSeProviderWebFisco.CriarServiceClient(
 var
   URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        tmGerar: URL := GerarNFSe;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmCancelarNFSe: URL := CancelarNFSe;
-      else
-        URL := '';
-      end;
-    end;
-  end
-  else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        tmGerar: URL := GerarNFSe;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmCancelarNFSe: URL := CancelarNFSe;
-      else
-        URL := '';
-      end;
-    end;
-  end;
+  URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceWebFisco.Create(FAOwner, AMetodo, URL)
@@ -582,6 +535,11 @@ end;
 
 { TACBrNFSeXWebserviceWebFisco }
 
+function TACBrNFSeXWebserviceWebFisco.GetSoapActionURL: string;
+begin
+  Result := 'https://www.webfiscotecnologia.com.br/issqn/wservice/';
+end;
+
 function TACBrNFSeXWebserviceWebFisco.GetSoapAction: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
@@ -599,7 +557,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('https://www.webfiscotecnologia.com.br/issqn/wservice/' + SoapAction,
+  Result := Executar(SoapActionURL + SoapAction,
                      Request,
                      ['return', 'item'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
@@ -615,7 +573,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('https://www.webfiscotecnologia.com.br/issqn/wservice/wsnfeconsultaxml.php/ConsultaNfe',
+  Result := Executar(SoapActionURL + 'wsnfeconsultaxml.php/ConsultaNfe',
                      Request,
                      ['return', 'item'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
@@ -630,7 +588,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('https://www.webfiscotecnologia.com.br/issqn/wservice/wsnfecancela.php/CancelaNfe',
+  Result := Executar(SoapActionURL + 'wsnfecancela.php/CancelaNfe',
                      Request,
                      ['return', 'item'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',

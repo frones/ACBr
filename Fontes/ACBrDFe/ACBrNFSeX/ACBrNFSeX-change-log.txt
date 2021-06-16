@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2021
+-- Diversos --
+[*] Simplificação nas chamadas aos métodos: function CriarServiceClient
+    Provedores da versão 1 e 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
+
 14/06/2021
 -- Diversos --
 [*] Simplificação nas chamadas aos métodos: function CriarServiceClient

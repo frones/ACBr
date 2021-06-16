@@ -877,6 +877,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumRps := AuxNode.AsString;
@@ -1098,6 +1101,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumRps := AuxNode.AsString;
@@ -1330,6 +1336,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumRps := AuxNode.AsString;

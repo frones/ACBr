@@ -65,7 +65,6 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
-    procedure AssinarEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
@@ -243,55 +242,15 @@ begin
 end;
 
 function TACBrNFSeProviderBHISS.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, GerarNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, URL)
   else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceBHISS.Create(FAOwner, AMetodo, GerarNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end;
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderBHISS.PrepararConsultaNFSe(
@@ -416,25 +375,9 @@ begin
     end;
 
     xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-
-    if ConfigAssinar.RpsGerarNFSe then
-      xRps := '<Rps>' +
-                '<InfRps' +
-                   RetornarConteudoEntre(xRps,
-                                         '<InfRps',
-                                         '</Signature>') +
-                   '</Signature>'+
-              '</Rps>'
-    else
-      xRps := '<Rps>' +
-                '<InfRps' +
-                   RetornarConteudoEntre(xRps,
-                                         '<InfRps',
-                                         '</Rps>') +
-              '</Rps>';
+    xRps := PrepararRpsParaLote(xRps);
 
     ListaRps := ListaRps + xRps;
-//    ListaRps := ListaRps + RemoverDeclaracaoXML(Nota.XMLOriginal);
   end;
 
    Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
@@ -473,51 +416,6 @@ begin
                            '<ListaRps>' + ListaRps + '</ListaRps>' +
                          '</LoteRps>' +
                        '</' + Prefixo + 'GerarNfseEnvio>';
-
-  {
-  Response.XmlEnvio := '<GerarNfseEnvio' + NameSpace + '>';
-  Response.XmlEnvio := Response.XmlEnvio + '<LoteRps ' + IdAttr + '="Lote_' + Response.Lote + '">';
-  Response.XmlEnvio := Response.XmlEnvio + '<NumeroLote>'+ Response.Lote + '</NumeroLote>';
-  Response.XmlEnvio := Response.XmlEnvio + '<Cnpj>'+ OnlyNumber(Emitente.CNPJ) + '</Cnpj>';
-  Response.XmlEnvio := Response.XmlEnvio + '<InscricaoMunicipal>'+ OnlyNumber(Emitente.InscMun) + '</InscricaoMunicipal>';
-  Response.XmlEnvio := Response.XmlEnvio + '<QuantidadeRps>' +
-                                            IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) + '</QuantidadeRps>';
-  Response.XmlEnvio := Response.XmlEnvio + '<ListaRps>' + ListaRps + '</ListaRps>';
-  Response.XmlEnvio := Response.XmlEnvio + '</LoteRps></GerarNfseEnvio>';
-  }
-end;
-
-procedure TACBrNFSeProviderBHISS.AssinarEmitir(Response: TNFSeEmiteResponse);
-var
-  IdAttr: string;
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if Response.ModoEnvio <> meUnitario then
-  begin
-    inherited AssinarEmitir(Response);
-    Exit;
-  end;
-
-  if not ConfigAssinar.LoteGerarNFSe then Exit;
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  try
-    Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
-                                             ConfigMsgDados.GerarNFSe.DocElemento,
-                                             ConfigMsgDados.GerarNFSe.InfElemento,
-                                             '', '', '', IdAttr);
-  except
-    on E:Exception do
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
-    end;
-  end;
 end;
 
 procedure TACBrNFSeProviderBHISS.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -548,9 +446,6 @@ begin
 
       Response.Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
       Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
-
-//      Response.Data := Document.Root.Childrens.FindAnyNs('DataRecebimento').AsDateTime;
-//      Response.Protocolo := Document.Root.Childrens.FindAnyNs('Protocolo').AsString;
 
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
       if not Assigned(ANode) then

@@ -38,15 +38,14 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXWebservicesResponse,
+  ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
   TACBrNFSeXWebserviceWebISS = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
@@ -63,9 +62,6 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
-    procedure AssinarEmitir(Response: TNFSeEmiteResponse); override;
-    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
   end;
 
   TACBrNFSeXWebserviceWebISSv2 = class(TACBrNFSeXWebserviceSoap11)
@@ -96,8 +92,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  ACBrNFSeXNotasFiscais, WebISS.GravarXml, WebISS.LerXml;
+  ACBrDFeException,
+  WebISS.GravarXml, WebISS.LerXml;
 
 { TACBrNFSeProviderWebISS }
 
@@ -145,271 +141,15 @@ end;
 
 function TACBrNFSeProviderWebISS.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
-begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, GerarNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end
-  else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarSituacao:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarSituacao);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSe:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, ConsultarNFSe);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, GerarNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end;
-end;
-
-procedure TACBrNFSeProviderWebISS.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
-  Versao, IdAttr, NameSpace, NameSpaceLote, xRps, ListaRps, Prefixo: string;
-  I: Integer;
+  URL: string;
 begin
-  if Response.ModoEnvio <> meUnitario then
-  begin
-    inherited PrepararEmitir(Response);
-    Exit;
-  end;
+  URL := GetWebServiceURL(AMetodo);
 
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceWebISS.Create(FAOwner, AMetodo, URL)
   else
-    IdAttr := 'ID';
-
-  ListaRps := '';
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      if ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal), ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    SalvarXmlRps(Nota);
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-    xRps := PrepararRpsParaLote(xRps);
-
-    ListaRps := ListaRps + xRps;
-  end;
-
-   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
-  if EstaVazio(ConfigMsgDados.GerarNFSe.xmlns) then
-    NameSpace := ''
-  else
-    NameSpace := ' xmlns="' + ConfigMsgDados.GerarNFSe.xmlns + '"';
-
-  if ConfigMsgDados.GerarNSLoteRps then
-    NameSpaceLote := NameSpace
-  else
-    NameSpaceLote := '';
-
-  if ConfigWebServices.AtribVerLote <> '' then
-    Versao := ' ' + ConfigWebServices.AtribVerLote + '="' +
-              ConfigWebServices.VersaoDados + '"'
-  else
-    Versao := '';
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
-  else
-    IdAttr := '';
-
-  Response.XmlEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
-                         '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                           '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
-                           '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
-                           '<InscricaoMunicipal>' +
-                              OnlyNumber(Emitente.InscMun) +
-                           '</InscricaoMunicipal>' +
-                           '<QuantidadeRps>' +
-                              IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                           '</QuantidadeRps>' +
-                           '<ListaRps>' + ListaRps + '</ListaRps>' +
-                         '</LoteRps>' +
-                       '</' + Prefixo + 'GerarNfseEnvio>';
-end;
-
-procedure TACBrNFSeProviderWebISS.AssinarEmitir(Response: TNFSeEmiteResponse);
-var
-  IdAttr: string;
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if Response.ModoEnvio <> meUnitario then
-  begin
-    inherited AssinarEmitir(Response);
-    Exit;
-  end;
-
-  if not ConfigAssinar.LoteGerarNFSe then Exit;
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  try
-    Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
-                                             ConfigMsgDados.GerarNFSe.DocElemento,
-                                             ConfigMsgDados.GerarNFSe.InfElemento,
-                                             '', '', '', IdAttr);
-  except
-    on E:Exception do
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
-    end;
-  end;
-end;
-
-procedure TACBrNFSeProviderWebISS.TratarRetornoEmitir(
-  Response: TNFSeEmiteResponse);
-var
-  Document: TACBrXmlDocument;
-  AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
-  ANota: NotaFiscal;
-  NumRps: String;
-  I: Integer;
-begin
-  if Response.ModoEnvio <> meUnitario then
-  begin
-    inherited TratarRetornoEmitir(Response);
-    Exit;
-  end;
-
-  Document := TACBrXmlDocument.Create;
-  try
-    try
-      Document.LoadFromXml(Response.XmlRetorno);
-
-      ProcessarMensagemErros(Document.Root, Response);
-      ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetornoLote');
-
-      ANode := Document.Root;
-
-      Response.Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
-
-      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
-      if not Assigned(ANode) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod202;
-        AErro.Descricao := Desc202;
-        Exit;
-      end;
-
-      ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
-      if not Assigned(ANode) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
-        Exit;
-      end;
-
-      for I := Low(ANodeArray) to High(ANodeArray) do
-      begin
-        ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        NumRps := AuxNode.AsString;
-
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-        if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
-        SalvarXmlNfse(ANota);
-      end;
-
-      Response.Sucesso := (Response.Erros.Count > 0);
-    except
-      on E:Exception do
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
-      end;
-    end;
-  finally
-    FreeAndNil(Document);
-  end;
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 { TACBrNFSeXWebserviceWebISS }
@@ -428,22 +168,6 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/RecepcionarLoteRps', Request,
                      ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     ['']);
-end;
-
-function TACBrNFSeXWebserviceWebISS.GerarNFSe(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<GerarNfse xmlns="http://tempuri.org/">';
-  Request := Request + '<cabec>' + XmlToStr(ACabecalho) + '</cabec>';
-  Request := Request + '<msg>' + XmlToStr(AMSG) + '</msg>';
-  Request := Request + '</GerarNfse>';
-
-  Result := Executar('http://tempuri.org/INfseServices/GerarNfse', Request,
-                     ['return', 'outputXML', 'GerarNfseResult'],
                      ['']);
 end;
 
@@ -572,67 +296,15 @@ end;
 
 function TACBrNFSeProviderWebISSv2.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, SubstituirNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, URL)
   else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        tmRecepcionar:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, Recepcionar);
-        tmConsultarLote:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarLote);
-        tmConsultarNFSePorRps:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeRps);
-        tmConsultarNFSePorFaixa:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSePorFaixa);
-        tmConsultarNFSeServicoPrestado:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoPrestado);
-        tmConsultarNFSeServicoTomado:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, ConsultarNFSeServicoTomado);
-        tmCancelarNFSe:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, CancelarNFSe);
-        tmGerar:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, GerarNFSe);
-        tmRecepcionarSincrono:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, RecepcionarSincrono);
-        tmSubstituirNFSe:
-          Result := TACBrNFSeXWebserviceWebISSv2.Create(FAOwner, AMetodo, SubstituirNFSe);
-      else
-        raise EACBrDFeException.Create(ERR_NAO_IMP);
-      end;
-    end;
-  end;
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 { TACBrNFSeXWebserviceWebISSv2 }

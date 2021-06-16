@@ -301,68 +301,7 @@ function TACBrNFSeProviderModeloV2.CriarServiceClient(
 var
   URL: string;
 begin
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
-  begin
-   with ConfigWebServices.Homologacao do
-    begin
-      case AMetodo of
-        // Métodos padrões da versão 2 do layout da ABRASF
-        tmRecepcionar: URL := Recepcionar;
-        tmRecepcionarSincrono: URL := RecepcionarSincrono;
-        tmGerar: URL := GerarNFSe;
-        tmConsultarLote: URL := ConsultarLote;
-        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
-        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
-        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
-        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
-        tmCancelarNFSe: URL := CancelarNFSe;
-        tmSubstituirNFSe: URL := SubstituirNFSe;
-
-        // Métodos que por padrão não existem na versão 2 do layout da ABRASF
-        {
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
-        tmAbrirSessao: URL := AbrirSessao;
-        tmFecharSessao: URL := FecharSessao;
-        tmTeste: URL := TesteEnvio;
-        }
-      else
-        URL := '';
-      end;
-    end;
-  end
-  else
-  begin
-    with ConfigWebServices.Producao do
-    begin
-      case AMetodo of
-        // Métodos padrões da versão 2 do layout da ABRASF
-        tmRecepcionar: URL := Recepcionar;
-        tmRecepcionarSincrono: URL := RecepcionarSincrono;
-        tmGerar: URL := GerarNFSe;
-        tmConsultarLote: URL := ConsultarLote;
-        tmConsultarNFSePorFaixa: URL := ConsultarNFSePorFaixa;
-        tmConsultarNFSePorRps: URL := ConsultarNFSeRps;
-        tmConsultarNFSeServicoPrestado: URL := ConsultarNFSeServicoPrestado;
-        tmConsultarNFSeServicoTomado: URL := ConsultarNFSeServicoTomado;
-        tmCancelarNFSe: URL := CancelarNFSe;
-        tmSubstituirNFSe: URL := SubstituirNFSe;
-
-        // Métodos que por padrão não existem na versão 2 do layout da ABRASF
-        {
-        tmConsultarSituacao: URL := ConsultarSituacao;
-        tmConsultarNFSe: URL := ConsultarNFSe;
-        tmConsultarNFSeURL: URL := ConsultarNFSeURL;
-        tmAbrirSessao: URL := AbrirSessao;
-        tmFecharSessao: URL := FecharSessao;
-        tmTeste: URL := TesteEnvio;
-        }
-      else
-        URL := '';
-      end;
-    end;
-  end;
+  URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceModeloV2.Create(FAOwner, AMetodo, URL)

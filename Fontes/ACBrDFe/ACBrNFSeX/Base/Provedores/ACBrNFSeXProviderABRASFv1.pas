@@ -114,6 +114,13 @@ var
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
 begin
+  if Response.ModoEnvio in [meLoteSincrono, meUnitario, meTeste] then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod001;
+    AErro.Descricao := Desc001;
+  end;
+
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;

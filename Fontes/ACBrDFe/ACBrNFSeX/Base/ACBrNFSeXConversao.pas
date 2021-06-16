@@ -140,7 +140,7 @@ type
                    proeGoverneISS, proEL, proEquiplano, proGeisWeb, proGiap,
                    proGoverna, proInfiscV100, proInfiscV110, proIPM, proIPMa,
                    proIPMV110, proISSDSF, proLencois, proSiat, proSigISS,
-                   proSigISSA, proSmarAPD, proSP, proWebFisco);
+                   proSigISSA, proSmarAPD, proSP, proWebFisco, proFGMaiss);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao);
 
@@ -625,7 +625,7 @@ begin
          'DSFSJC', 'SimplISSV2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'InfiscV2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203',
-         'ADPM', 'IPMV110'],
+         'ADPM', 'IPMV110', 'FGMaiss'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSV2, proGinfes, proISSDSF,
          proAbaco, proAbacoA, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -649,7 +649,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfiscV2, proAEG, proGeisWeb,
          proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203,
-         proADPM, proIPMV110]);
+         proADPM, proIPMV110, proFGMaiss]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -676,7 +676,7 @@ begin
          'DSFSJC', 'SimplISSV2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'InfiscV2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSFV2', 'AbacoV204', 'Tributus', 'SilTecnologiaV203',
-         'ADPM', 'IPMV110'],
+         'ADPM', 'IPMV110', 'FGMaiss'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISSV2, proGinfes, proISSDSF,
          proAbaco, proAbacoA, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -700,7 +700,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfiscV2, proAEG, proGeisWeb,
          proSiapSistemas, proDSFV2, proAbacoV204, proTributus, proSilTecnologiaV203,
-         proADPM, proIPMV110]);
+         proADPM, proIPMV110, proFGMaiss]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

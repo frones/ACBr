@@ -152,6 +152,7 @@ uses
   Conam.Provider,
   eGoverneISS.Provider,
   Equiplano.Provider,
+  FGMaiss.Provider,
   GeisWeb.Provider,
   Giap.Provider,
   Governa.Provider,
@@ -313,6 +314,7 @@ begin
     proEquiplano:
       Result := TACBrNFSeProviderEquiplano.Create(ACBrNFSe);
 
+    proFGMaiss: Result :=TACBrNFSeProviderFGMaiss.Create(ACBrNFSe);
     proGeisWeb: Result := TACBrNFSeProviderGeisWeb.Create(ACBrNFSe);
     proGiap:    Result := TACBrNFSeProviderGiap.Create(ACBrNFSe);
     proGoverna: Result := TACBrNFSeProviderGoverna.Create(ACBrNFSe);

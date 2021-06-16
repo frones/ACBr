@@ -34,6 +34,7 @@ CREATE CLASS ACBrBoleto
    METHOD GerarHTML()
    METHOD GerarRemessa(eDir, eNumArquivo, eNomeArq)
    METHOD LerRetorno(eDir, eNomeArq)
+   METHOD ObterRetorno(eDir, eNomeArq)
    METHOD EnviarEmail(ePara, eAssunto, eMensagem, eCC)
    METHOD SetDiretorioArquivo(eDir, eArq)
    METHOD ListaBancos()
@@ -149,19 +150,15 @@ METHOD ConfigGravarValor(eSessao, eChave, eValor) CLASS ACBrBoleto
 
 METHOD ConfigurarDados(eArquivoIni) CLASS ACBrBoleto
     local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_ConfigurarDados", hb_StrToUTF8(eArquivoIni), @buffer, @bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_ConfigurarDados", hb_StrToUTF8(eArquivoIni))
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN nil
 
 METHOD IncluirTitulos(eArquivoIni, eTpSaida) CLASS ACBrBoleto
-    local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_IncluirTitulos", hb_StrToUTF8(eArquivoIni), hb_StrToUTF8(eTpSaida), @buffer, @bufferLen)
+    local hResult 
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_IncluirTitulos", hb_StrToUTF8(eArquivoIni), hb_StrToUTF8(eTpSaida))
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN nil
 
 METHOD LimparLista() CLASS ACBrBoleto
     local hResult 
@@ -170,12 +167,10 @@ METHOD LimparLista() CLASS ACBrBoleto
     RETURN nil
 
 METHOD TotalTitulosLista() CLASS ACBrBoleto
-    local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_TotalTitulosLista", @buffer, @bufferLen)
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_TotalTitulosLista")
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN hResult
 
 METHOD Imprimir(eNomeImpressora) CLASS ACBrBoleto
     local hResult 
@@ -212,6 +207,14 @@ METHOD LerRetorno(eDir, eNomeArq) CLASS ACBrBoleto
     hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_LerRetorno", hb_StrToUTF8(eDir), hb_StrToUTF8(eNomeArq))
     ::CheckResult(hResult)
     RETURN nil
+	
+METHOD ObterRetorno(eDir, eNomeArq) CLASS ACBrBoleto
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_ObterRetorno", hb_StrToUTF8(eDir), hb_StrToUTF8(eNomeArq), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD EnviarEmail(ePara, eAssunto, eMensagem, eCC) CLASS ACBrBoleto
     local hResult
@@ -220,12 +223,10 @@ METHOD EnviarEmail(ePara, eAssunto, eMensagem, eCC) CLASS ACBrBoleto
     RETURN nil
 
 METHOD SetDiretorioArquivo(eDir, eArq) CLASS ACBrBoleto
-    local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SetDiretorioArquivo", hb_StrToUTF8(eDir), hb_StrToUTF8(eArq), @buffer, @bufferLen)
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SetDiretorioArquivo", hb_StrToUTF8(eDir), hb_StrToUTF8(eArq))
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN nil
 
 METHOD ListaBancos() CLASS ACBrBoleto
     local hResult, buffer, bufferLen
@@ -260,12 +261,10 @@ METHOD ListaOcorrenciasEX() CLASS ACBrBoleto
     RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD TamNossoNumer(eCarteira, enossoNumero, eConvenio) CLASS ACBrBoleto
-    local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_TamNossoNumero", hb_StrToUTF8(eCarteira), hb_StrToUTF8(enossoNumero), hb_StrToUTF8(eConvenio), @buffer, @bufferLen)
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_TamNossoNumero", hb_StrToUTF8(eCarteira), hb_StrToUTF8(enossoNumero), hb_StrToUTF8(eConvenio))
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN hResult
 
 METHOD CodigosMoraAceitos() CLASS ACBrBoleto
     local hResult, buffer, bufferLen
@@ -276,12 +275,10 @@ METHOD CodigosMoraAceitos() CLASS ACBrBoleto
     RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD SelecionaBanco(eCodBanco) CLASS ACBrBoleto
-    local hResult, buffer, bufferLen
-    bufferLen := STR_LEN
-    buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SelecionaBanco", hb_StrToUTF8(eCodBanco), @buffer, @bufferLen)
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SelecionaBanco", hb_StrToUTF8(eCodBanco))
     ::CheckResult(hResult)
-    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN nil
     
 METHOD MontarNossoNumero(eIndice) CLASS ACBrBoleto
     local hResult, buffer, bufferLen

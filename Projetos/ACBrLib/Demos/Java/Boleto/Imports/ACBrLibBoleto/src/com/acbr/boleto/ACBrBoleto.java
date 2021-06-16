@@ -57,13 +57,13 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         int Boleto_ConfigGravarValor(String eSessao, String eChave, String valor);
 
-        int Boleto_ConfigurarDados(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize );
+        int Boleto_ConfigurarDados(String eArquivoIni);
 
-        int Boleto_IncluirTitulos(String eArquivoIni, String eTpSaida, ByteBuffer buffer, IntByReference bufferSize);
+        int Boleto_IncluirTitulos(String eArquivoIni, String eTpSaida);
 
         int Boleto_LimparLista(); 
 
-        int Boleto_TotalTitulosLista(ByteBuffer buffer, IntByReference bufferSize);
+        int Boleto_TotalTitulosLista();
 
         int Boleto_Imprimir(String eNomeImpressora);
         
@@ -76,12 +76,14 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         int Boleto_GerarRemessa(String eDir, int eNumArquivo, String eNomeArquivo);
 
         int Boleto_LerRetorno(String eDir, String eNomeArq);
+        
+        int Boleto_ObterRetorno(String eDir, String eNomeArq, ByteBuffer buffer, IntByReference bufferSize);
 
         int Boleto_EnviarEmail(String ePara, String eAssunto, String eMensagem, String eCC);
 
         int Boleto_EnviarEmailBoleto(int eIndice, String ePara, String eAssunto, String eMensagem, String eCC);
         
-        int Boleto_SetDiretorioArquivo(String eDir, String eArq, ByteBuffer buffer, IntByReference bufferSize);
+        int Boleto_SetDiretorioArquivo(String eDir, String eArq);
 
         int Boleto_ListaBancos(ByteBuffer buffer, IntByReference bufferSize);
 
@@ -91,11 +93,11 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         int Boleto_ListaOcorrenciasEX(ByteBuffer buffer, IntByReference bufferSize);
 
-        int Boleto_TamNossoNumero(String eCarteira, String enossoNumero, String eConvenio, ByteBuffer buffer, IntByReference bufferSize );
+        int Boleto_TamNossoNumero(String eCarteira, String enossoNumero, String eConvenio);
 
         int Boleto_CodigosMoraAceitos(ByteBuffer buffer, IntByReference bufferSize);
 
-        int Boleto_SelecionaBanco(String eCodBanco, ByteBuffer buffer, IntByReference bufferSize);
+        int Boleto_SelecionaBanco(String eCodBanco);
 
         int Boleto_MontarNossoNumero(int eIndice, ByteBuffer buffer, IntByReference bufferSize);
 
@@ -189,24 +191,33 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
     }
     
-    public String ConfigurarDados(String eArquivoIni) throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigurarDados(toUTF8(eArquivoIni), buffer, bufferLen);
+    public void ConfigImportar(String eArqConfig) throws Exception {
+        
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigImportar(eArqConfig);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
     }
     
-    public String IncluirTitulos(String eArquivoIni, String eTpSaida) throws Exception {
+    public String ConfigExportar() throws Exception {
+		
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_IncluirTitulos(toUTF8(eArquivoIni), toUTF8(eTpSaida), buffer, bufferLen);
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigExportar(buffer, bufferLen);
         checkResult(ret);
-        
-        return processResult(buffer, bufferLen);
+
+        return fromUTF8(buffer, bufferLen.getValue());
+		
+    }
+    
+    public void ConfigurarDados(String eArquivoIni) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigurarDados(toUTF8(eArquivoIni));
+        checkResult(ret);
+    }
+    
+    public void IncluirTitulos(String eArquivoIni, String eTpSaida) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_IncluirTitulos(toUTF8(eArquivoIni), toUTF8(eTpSaida));
+        checkResult(ret);
     }
     
     public void LimparLista() throws Exception {
@@ -214,14 +225,11 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
     }
     
-    public String TotalTitulosLista() throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_TotalTitulosLista(buffer, bufferLen);
+    public int TotalTitulosLista() throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_TotalTitulosLista();
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return ret;
     }
     
     public void Imprimir() throws Exception {
@@ -272,64 +280,56 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
     }
     
-    public String SetDiretorioArquivo(String eDir, String eArq) throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_SetDiretorioArquivo(eDir, eArq, buffer, bufferLen);
+    public void SetDiretorioArquivo(String eDir, String eArq) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_SetDiretorioArquivo(eDir, eArq);
         checkResult(ret);
-        
-        return processResult(buffer, bufferLen);
     }
 
-    public String ListaBancos() throws Exception {
+    public String[] ListaBancos() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ListaBancos(buffer, bufferLen);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return processResult(buffer, bufferLen).split("|");
     }
     
-    public String ListaCaractTitulo() throws Exception {
+    public String[] ListaCaractTitulo() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ListaCaractTitulo(buffer, bufferLen);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return processResult(buffer, bufferLen).split("|");
     }
     
-    public String ListaOcorrencias() throws Exception {
+    public String[] ListaOcorrencias() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ListaOcorrencias(buffer, bufferLen);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return processResult(buffer, bufferLen).split("|");
     }
 
-    public String ListaOcorrenciasEX() throws Exception {
+    public String[] ListaOcorrenciasEX() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ListaOcorrenciasEX(buffer, bufferLen);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return processResult(buffer, bufferLen).split("|");
     }
     
-    public String TamNossoNumero(String eCarteira, String enossoNumero, String eConvenio) throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio, buffer, bufferLen);
+    public int TamNossoNumero(String eCarteira, String enossoNumero, String eConvenio) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio);
         checkResult(ret);
         
-        return processResult(buffer, bufferLen);
+        return ret;
     }
     
     public String CodigosMoraAceitos() throws Exception {
@@ -342,14 +342,9 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
     
-    public String SelecionaBanco(String eCodBanco) throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_SelecionaBanco(eCodBanco, buffer, bufferLen);
+    public void SelecionaBanco(String eCodBanco) throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_SelecionaBanco(eCodBanco);
         checkResult(ret);
-        
-        return processResult(buffer, bufferLen);
     }
 
     public String MontarNossoNumero(int eIndice) throws Exception {
@@ -381,25 +376,6 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         
         return processResult(buffer, bufferLen);
     }    
-        
-    public void ConfigImportar(String eArqConfig) throws Exception {
-        
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigImportar(eArqConfig);
-        checkResult(ret);
-        
-    }
-    
-    public String ConfigExportar() throws Exception {
-		
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigExportar(buffer, bufferLen);
-        checkResult(ret);
-
-        return fromUTF8(buffer, bufferLen.getValue());
-		
-    }
     
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {

@@ -683,7 +683,7 @@ Begin VB.Form FrmMain
          Value           =   1
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtCopias"
-         BuddyDispid     =   196666
+         BuddyDispid     =   196665
          OrigLeft        =   1440
          OrigTop         =   1440
          OrigRight       =   1695
@@ -850,7 +850,7 @@ Begin VB.Form FrmMain
          _ExtentY        =   556
          _Version        =   393216
          BuddyControl    =   "chkSetup"
-         BuddyDispid     =   196663
+         BuddyDispid     =   196662
          OrigLeft        =   6240
          OrigTop         =   1320
          OrigRight       =   6495
@@ -1590,7 +1590,7 @@ On Error GoTo Erro:
     CommonDialog1.ShowOpen
             
     If CommonDialog1.FileName = vbNullString Then Exit Sub
-    SetResposta (boleto.ConfigurarDados(CommonDialog1.FileName))
+    boleto.ConfigurarDados (CommonDialog1.FileName)
 Erro:
     MsgBox Err.Description
     
@@ -1668,7 +1668,7 @@ Private Sub btnIncluirTitulo_Click()
     CommonDialog1.ShowOpen
             
     If CommonDialog1.FileName = vbNullString Then Exit Sub
-    SetResposta (boleto.IncluirTitulos(CommonDialog1.FileName))
+    boleto.IncluirTitulos (CommonDialog1.FileName)
 Erro:
     MsgBox Err.Description
 End Sub
@@ -1682,19 +1682,39 @@ Private Sub btnLinhaDigitavel_Click()
 End Sub
 
 Private Sub btnListaBancos_Click()
-    SetResposta (boleto.ListaBancos)
+   Dim ret() As String
+   
+   ret = boleto.ListaBancos
+   For Each Item In ret
+    SetResposta (Item)
+   Next
 End Sub
 
 Private Sub btnListaCaracTitulos_Click()
-    SetResposta (boleto.ListaCaractTitulo)
+   Dim ret() As String
+   
+   ret = boleto.ListaCaractTitulo
+   For Each Item In ret
+    SetResposta (Item)
+   Next
 End Sub
 
 Private Sub btnListaOcorrenciaEx_Click()
-    SetResposta (boleto.ListaOcorrenciasEX)
+   Dim ret() As String
+   
+   ret = boleto.ListaOcorrenciasEX
+   For Each Item In ret
+    SetResposta (Item)
+   Next
 End Sub
 
 Private Sub btnListaOcorrencias_Click()
-    SetResposta (boleto.ListaOcorrencias)
+   Dim ret() As String
+   
+   ret = boleto.ListaOcorrencias
+   For Each Item In ret
+    SetResposta (Item)
+   Next
 End Sub
 
 Private Sub btnMontarNossoNumero_Click()
@@ -1710,7 +1730,7 @@ Private Sub btnSetDiretorioArquivos_Click()
 End Sub
 
 Private Sub btnTamNossoNumero_Click()
-    SetResposta (boleto.TamNossoNumero("20", "0000001", ""))
+    SetResposta (CStr(boleto.TamNossoNumero("20", "0000001", "")))
 End Sub
 
 Private Sub cmdLimparLista_Click()

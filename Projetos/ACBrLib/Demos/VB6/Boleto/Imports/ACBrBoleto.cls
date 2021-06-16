@@ -58,21 +58,16 @@ Private Declare Function Boleto_ConfigGravarValor _
                                         ByVal valor As String) As Long
                                             
 Private Declare Function Boleto_ConfigurarDados _
-                Lib "ACBrBoleto32.dll" (ByVal eArquivoIni As String, _
-                                        ByVal buffer As String, _
-                                        ByRef bufferLen As Long) As Long
+                Lib "ACBrBoleto32.dll" (ByVal eArquivoIni As String) As Long
                                      
 Private Declare Function Boleto_IncluirTitulos _
                 Lib "ACBrBoleto32.dll" (ByVal eArquivoIni As String, _
-                                        ByVal eTpSaida As String, _
-                                        ByVal buffer As String, _
-                                        ByRef bufferLen As Long) As Long
+                                        ByVal eTpSaida As String) As Long
                                      
 Private Declare Function Boleto_LimparLista Lib "ACBrBoleto32.dll" () As Long
                 
 Private Declare Function Boleto_TotalTitulosLista _
-                Lib "ACBrBoleto32.dll" (ByVal buffer As String, _
-                                        ByRef bufferLen As Long) As Long
+                Lib "ACBrBoleto32.dll" () As Long
                                      
 Private Declare Function Boleto_Imprimir _
                 Lib "ACBrBoleto32.dll" (ByVal eNomeImpressora As String) As Long
@@ -94,6 +89,12 @@ Private Declare Function Boleto_LerRetorno _
                 Lib "ACBrBoleto32.dll" (ByVal eDir As String, _
                                      ByVal eNomeArq As String) As Long
                                      
+Private Declare Function Boleto_ObterRetorno _
+                Lib "ACBrBoleto32.dll" (ByVal eDir As String, _
+                                     ByVal eNomeArq As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                     
 Private Declare Function Boleto_EnviarEmailBoleto _
                 Lib "ACBrBoleto32.dll" (ByVal eIndice As Long, _
                                      ByVal ePara As String, _
@@ -109,13 +110,11 @@ Private Declare Function Boleto_EnviarEmail _
                                      
 Private Declare Function Boleto_SetDiretorioArquivo _
                 Lib "ACBrBoleto32.dll" (ByVal eDir As String, _
-                                     ByVal eArq As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                     ByVal eArq As String) As Long
                                      
 Private Declare Function Boleto_ListaBancos _
                 Lib "ACBrBoleto32.dll" (ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                        ByRef bufferLen As Long) As Long
                                      
 Private Declare Function Boleto_ListaCaractTitulo _
                 Lib "ACBrBoleto32.dll" (ByVal buffer As String, _
@@ -132,18 +131,14 @@ Private Declare Function Boleto_ListaOcorrenciasEX _
 Private Declare Function Boleto_TamNossoNumero _
                 Lib "ACBrBoleto32.dll" (ByVal eCarteira As String, _
                                      ByVal enossoNumero As String, _
-                                     ByVal eConvenio As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                     ByVal eConvenio As String) As Long
                                      
 Private Declare Function Boleto_CodigosMoraAceitos _
                 Lib "ACBrBoleto32.dll" (ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
                                      
 Private Declare Function Boleto_SelecionaBanco _
-                Lib "ACBrBoleto32.dll" (ByVal eCodBanco As String, _
-                                     ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                Lib "ACBrBoleto32.dll" (ByVal eCodBanco As String) As Long
                                      
 Private Declare Function Boleto_MontarNossoNumero _
                 Lib "ACBrBoleto32.dll" (ByVal eIndice As Long, _
@@ -277,32 +272,18 @@ Public Function Versao() As String
     Versao = processResult(buffer, bufferLen)
 End Function
 
-Public Function ConfigurarDados(ByVal eArquivoIni As String) As String
+Public Sub ConfigurarDados(ByVal eArquivoIni As String)
     Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_ConfigurarDados(eArquivoIni, buffer, bufferLen)
+    retorno = Boleto_ConfigurarDados(eArquivoIni)
     CheckResult retorno
-    
-    ConfigurarDados = processResult(buffer, bufferLen)
-End Function
+End Sub
 
 Public Function IncluirTitulos(ByVal eArquivoIni As String, Optional ByVal eTpSaida As String = "") As String
     Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_IncluirTitulos(eArquivoIni, eTpSaida, buffer, bufferLen)
+    retorno = Boleto_IncluirTitulos(eArquivoIni, eTpSaida)
     CheckResult retorno
-    
-    IncluirTitulos = processResult(buffer, bufferLen)
 End Function
 
 Public Sub LimparLista()
@@ -312,18 +293,13 @@ Public Sub LimparLista()
     CheckResult retorno
 End Sub
 
-Public Function TotalTitulosLista() As String
+Public Function TotalTitulosLista() As Long
     Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_TotalTitulosLista(buffer, bufferLen)
+    retorno = Boleto_TotalTitulosLista()
     CheckResult retorno
     
-    TotalTitulosLista = processResult(buffer, bufferLen)
+    TotalTitulosLista = retorno
 End Function
 
 Public Sub Imprimir(Optional ByVal eNomeImpressora As String = "")
@@ -382,21 +358,28 @@ Public Sub LerRetorno(ByVal eDir As String, ByVal eNomeArquivo As String)
     CheckResult retorno
 End Sub
 
-Public Function SetDiretorioArquivo(ByVal eDir As String, ByVal eArq As String) As String
+Public Function ObterRetorno(ByVal eDir As String, ByVal eNomeArquivo As String) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
-
+    
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_SetDiretorioArquivo(eDir, eArq, buffer, bufferLen)
+    retorno = Boleto_ObterRetorno(eDir, eNomeArquivo, buffer, bufferLen)
     CheckResult retorno
     
-    SetDiretorioArquivo = processResult(buffer, bufferLen)
+    ObterRetorno = processResult(buffer, bufferLen)
 End Function
 
-Public Function ListaBancos() As String
+Public Sub SetDiretorioArquivo(ByVal eDir As String, ByVal eArq As String)
+    Dim retorno   As Long
+    
+    retorno = Boleto_SetDiretorioArquivo(eDir, eArq)
+    CheckResult retorno
+End Sub
+
+Public Function ListaBancos() As String()
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -407,10 +390,10 @@ Public Function ListaBancos() As String
     retorno = Boleto_ListaBancos(buffer, bufferLen)
     CheckResult retorno
     
-    ListaBancos = processResult(buffer, bufferLen)
+    ListaBancos = Split(processResult(buffer, bufferLen), "|")
 End Function
 
-Public Function ListaCaractTitulo() As String
+Public Function ListaCaractTitulo() As String()
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -421,10 +404,10 @@ Public Function ListaCaractTitulo() As String
     retorno = Boleto_ListaCaractTitulo(buffer, bufferLen)
     CheckResult retorno
     
-    ListaCaractTitulo = processResult(buffer, bufferLen)
+    ListaCaractTitulo = Split(processResult(buffer, bufferLen), "|")
 End Function
 
-Public Function ListaOcorrencias() As String
+Public Function ListaOcorrencias() As String()
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -435,10 +418,10 @@ Public Function ListaOcorrencias() As String
     retorno = Boleto_ListaOcorrencias(buffer, bufferLen)
     CheckResult retorno
     
-    ListaOcorrencias = processResult(buffer, bufferLen)
+    ListaOcorrencias = Split(processResult(buffer, bufferLen), "|")
 End Function
 
-Public Function ListaOcorrenciasEX() As String
+Public Function ListaOcorrenciasEX() As String()
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -449,21 +432,16 @@ Public Function ListaOcorrenciasEX() As String
     retorno = Boleto_ListaOcorrenciasEX(buffer, bufferLen)
     CheckResult retorno
     
-    ListaOcorrenciasEX = processResult(buffer, bufferLen)
+    ListaOcorrenciasEX = Split(processResult(buffer, bufferLen), "|")
 End Function
 
-Public Function TamNossoNumero(ByVal eCarteira As String, ByVal enossoNumero As String, ByVal eConvenio As String) As String
+Public Function TamNossoNumero(ByVal eCarteira As String, ByVal enossoNumero As String, ByVal eConvenio As String) As Long
     Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio, buffer, bufferLen)
+    retorno = Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio)
     CheckResult retorno
     
-    TamNossoNumero = processResult(buffer, bufferLen)
+    TamNossoNumero = retorno
 End Function
 
 Public Function CodigosMoraAceitos() As String
@@ -480,19 +458,12 @@ Public Function CodigosMoraAceitos() As String
     CodigosMoraAceitos = processResult(buffer, bufferLen)
 End Function
 
-Public Function SelecionaBanco(ByVal eCodBanco As String) As String
+Public Sub SelecionaBanco(ByVal eCodBanco As String)
     Dim retorno   As Long
-    Dim buffer    As String
-    Dim bufferLen As Long
-
-    bufferLen = BUFFER_LENGTH
-    buffer = String$(bufferLen, " ")
     
-    retorno = Boleto_SelecionaBanco(eCodBanco, buffer, bufferLen)
+    retorno = Boleto_SelecionaBanco(eCodBanco)
     CheckResult retorno
-    
-    SelecionaBanco = processResult(buffer, bufferLen)
-End Function
+End Sub
 
 Public Function MontarNossoNumero(ByVal eIndice As Long) As String
     Dim retorno   As Long

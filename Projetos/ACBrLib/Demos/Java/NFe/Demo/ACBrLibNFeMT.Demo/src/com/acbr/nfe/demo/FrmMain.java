@@ -7,15 +7,16 @@ package com.acbr.nfe.demo;
 
 import com.acbr.ACBrSessao;
 import com.acbr.nfe.ACBrNFe;
-import com.sun.jna.ptr.IntByReference;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -46,52 +47,169 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        rtbRespostas = new javax.swing.JTextArea();
+        btnSalvar = new javax.swing.JButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel14 = new javax.swing.JPanel();
+        btnGerarXml = new javax.swing.JButton();
+        btnCarregarIni = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
+        btnEnviarEmail = new javax.swing.JButton();
+        btnAssinar = new javax.swing.JButton();
+        btnGerarChave = new javax.swing.JButton();
+        btnEnviarSincrono = new javax.swing.JButton();
+        btnCarregarXml = new javax.swing.JButton();
+        btnImprimirPDF = new javax.swing.JButton();
+        btnValidarRegra = new javax.swing.JButton();
+        btnEnviarAssincrono = new javax.swing.JButton();
+        btnLimparLista = new javax.swing.JButton();
+        jPanel15 = new javax.swing.JPanel();
+        btnStatusServ = new javax.swing.JButton();
+        btnConsultarRecibo = new javax.swing.JButton();
+        btnConsultaXml = new javax.swing.JButton();
+        btnConsultaChave = new javax.swing.JButton();
+        btnConsultarCadastro = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        btnCancelarNFe = new javax.swing.JButton();
+        btnCarregarEvento = new javax.swing.JButton();
+        btnImprimirEvento = new javax.swing.JButton();
+        btnEnviarEmailEvento = new javax.swing.JButton();
+        btnEnviarEvento = new javax.swing.JButton();
+        btnLimparListaEvento = new javax.swing.JButton();
+        btnImprimirEventoPDF = new javax.swing.JButton();
+        jPanel17 = new javax.swing.JPanel();
+        btnImprimirInutilizacao = new javax.swing.JButton();
+        btnInutilizar = new javax.swing.JButton();
+        btnImprimirInutilizacaoPDF = new javax.swing.JButton();
+        jPanel18 = new javax.swing.JPanel();
+        btnDFePorChave = new javax.swing.JButton();
+        btnDFePorNSU = new javax.swing.JButton();
+        btnDFePorUltNSU = new javax.swing.JButton();
+        btnCarregarConfiguracoes = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        cmbModeloDocumento = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        txtIdCSC = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtCSC = new javax.swing.JTextField();
-        txtSchemaPath = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        btnSelectSchema = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        cmbUfDestino = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        ckbAtualizarXML = new javax.swing.JPanel();
+        ckbAttXML = new javax.swing.JCheckBox();
+        ckbExibirErroSchema = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
-        cmbSSlType = new javax.swing.JComboBox<>();
-        nudTimeOut = new javax.swing.JSpinner();
+        txtFormatoAlerta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        rdbHomologacao = new javax.swing.JRadioButton();
-        rdbProducao = new javax.swing.JRadioButton();
-        jPanel7 = new javax.swing.JPanel();
+        cmbFormaEmissao = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        txtProxyServidor = new javax.swing.JTextField();
-        nudProxyPorta = new javax.swing.JSpinner();
+        cmbModeloDocumento = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        txtProxyUsuario = new javax.swing.JTextField();
+        cmbVersaoDF = new javax.swing.JComboBox<>();
+        ckbRetirarAcentos = new javax.swing.JCheckBox();
+        ckbSalvar = new javax.swing.JCheckBox();
+        txtLogs = new javax.swing.JTextField();
+        btnSelectLog = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtProxySenha = new javax.swing.JPasswordField();
-        jPanel3 = new javax.swing.JPanel();
+        txtSchemaPath = new javax.swing.JTextField();
+        btnSelectSchema = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        cmbCrypt = new javax.swing.JComboBox<>();
+        txtIdCSC = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        cmbHttp = new javax.swing.JComboBox<>();
-        jLabel14 = new javax.swing.JLabel();
-        cmbXmlSign = new javax.swing.JComboBox<>();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        txtCertPath = new javax.swing.JTextField();
-        btnSelectCert = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
+        txtCSC = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        cmbUfDestino = new javax.swing.JComboBox<>();
+        jLabel33 = new javax.swing.JLabel();
+        cmbSSlType = new javax.swing.JComboBox<>();
+        nudTimeOut = new javax.swing.JSpinner();
+        jLabel34 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        rdbProducao = new javax.swing.JRadioButton();
+        rdbHomologacao = new javax.swing.JRadioButton();
+        ckbVisualizar = new javax.swing.JCheckBox();
+        ckbSalvarSOAP = new javax.swing.JCheckBox();
+        jPanel21 = new javax.swing.JPanel();
+        ckbAjustarAut = new javax.swing.JCheckBox();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        nudAguardar = new javax.swing.JSpinner();
+        nudIntervalos = new javax.swing.JSpinner();
+        nudTentativas = new javax.swing.JSpinner();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        txtProxyServidor = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
+        nudProxyPorta = new javax.swing.JSpinner();
+        jLabel40 = new javax.swing.JLabel();
+        txtProxyUsuario = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        txtProxySenha = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
+        cmbCrypt = new javax.swing.JComboBox<>();
+        cmbHttp = new javax.swing.JComboBox<>();
+        jLabel26 = new javax.swing.JLabel();
+        cmbXmlSign = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        txtCertPath = new javax.swing.JTextField();
+        btnSelecionarCertificado = new javax.swing.JButton();
+        btnDadosPFX = new javax.swing.JButton();
+        txtDadosPFX = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        txtCertPassword = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
         txtCertNumero = new javax.swing.JTextField();
-        txtCertPassword = new javax.swing.JPasswordField();
-        jPanel4 = new javax.swing.JPanel();
+        btnObterCertificados = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        ckbSalvarArqs = new javax.swing.JCheckBox();
+        ckbPastaMensal = new javax.swing.JCheckBox();
+        ckbAdicionaLiteral = new javax.swing.JCheckBox();
+        ckbEmissaoPathNFe = new javax.swing.JCheckBox();
+        ckbSalvaPathEvento = new javax.swing.JCheckBox();
+        ckbSepararPorCNPJ = new javax.swing.JCheckBox();
+        ckbSepararPorModelo = new javax.swing.JCheckBox();
+        jLabel14 = new javax.swing.JLabel();
+        txtArqNFe = new javax.swing.JTextField();
+        btnArqNFe = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txtArqInu = new javax.swing.JTextField();
+        btnArqInu = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        txtArqEvento = new javax.swing.JTextField();
+        btnArqEvento = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtLogomarca = new javax.swing.JTextField();
+        btnLogomarca = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        rdbFortes = new javax.swing.JRadioButton();
+        rdbEscPos = new javax.swing.JRadioButton();
+        rdbFortesA4 = new javax.swing.JRadioButton();
+        jPanel12 = new javax.swing.JPanel();
+        rdbRetrato = new javax.swing.JRadioButton();
+        rdbPaisagem = new javax.swing.JRadioButton();
+        jPanel13 = new javax.swing.JPanel();
+        cmbModelo = new javax.swing.JComboBox<>();
+        cmbPagCodigo = new javax.swing.JComboBox<>();
+        lblModelo = new javax.swing.JLabel();
+        lblPagCodigo = new javax.swing.JLabel();
+        lblPorta = new javax.swing.JLabel();
+        cmbPorta = new javax.swing.JComboBox<>();
+        nudColunas = new javax.swing.JSpinner();
+        lblColunas = new javax.swing.JLabel();
+        lblEspacos = new javax.swing.JLabel();
+        lblBuffer = new javax.swing.JLabel();
+        nudBuffer = new javax.swing.JSpinner();
+        lblLinhasPular = new javax.swing.JLabel();
+        nudLinhasPular = new javax.swing.JSpinner();
+        nudEspacos = new javax.swing.JSpinner();
+        cbxControlePorta = new javax.swing.JCheckBox();
+        cbxCortarPapel = new javax.swing.JCheckBox();
+        cbxTraduzirTags = new javax.swing.JCheckBox();
+        cbxIgnorarTags = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -110,46 +228,484 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txtAssunto = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtMensagem = new javax.swing.JTextArea();
-        jPanel5 = new javax.swing.JPanel();
-        btnConsultaXml = new javax.swing.JButton();
-        btnConsultaChave = new javax.swing.JButton();
-        btnConsultarRecibo = new javax.swing.JButton();
-        btnCancelarNFe = new javax.swing.JButton();
-        btnInutilizar = new javax.swing.JButton();
-        btnEnviarEmail = new javax.swing.JButton();
-        btnStatusServ = new javax.swing.JButton();
-        btnEnviar = new javax.swing.JButton();
-        btnImprimir = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        rtbRespostas = new javax.swing.JTextArea();
-        btnSalvar = new javax.swing.JButton();
+        txtMensagem = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibNFe Demo");
-        setPreferredSize(new java.awt.Dimension(701, 531));
-        setSize(new java.awt.Dimension(701, 531));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
+        setSize(new java.awt.Dimension(744, 588));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
 
-        cmbModeloDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "moNFe", "moNFCe" }));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Respostas"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Modelo Documento Fiscal");
+        rtbRespostas.setColumns(20);
+        rtbRespostas.setRows(5);
+        jScrollPane1.setViewportView(rtbRespostas);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("IdCSC");
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("CSC");
+        btnSalvar.setText("Salvar Configurações");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Pasta dos Schemas");
+        jTabbedPane2.setToolTipText("");
+        jTabbedPane2.setName("Envio"); // NOI18N
+
+        btnGerarXml.setText("Gerar XML");
+        btnGerarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarXmlActionPerformed(evt);
+            }
+        });
+
+        btnCarregarIni.setText("Carregar INI NFe");
+        btnCarregarIni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarIniActionPerformed(evt);
+            }
+        });
+
+        btnImprimir.setText("Imprimir DANFe");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+
+        btnEnviarEmail.setText("Enviar NFe Email");
+        btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEmailActionPerformed(evt);
+            }
+        });
+
+        btnAssinar.setLabel("Assinar NFe");
+        btnAssinar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAssinarActionPerformed(evt);
+            }
+        });
+
+        btnGerarChave.setLabel("Gerar Chave NFe");
+        btnGerarChave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarChaveActionPerformed(evt);
+            }
+        });
+
+        btnEnviarSincrono.setLabel("Enviar Sincrono");
+        btnEnviarSincrono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarSincronoActionPerformed(evt);
+            }
+        });
+
+        btnCarregarXml.setLabel("Carregar Xml NFe");
+        btnCarregarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarXmlActionPerformed(evt);
+            }
+        });
+
+        btnImprimirPDF.setLabel("Imprimir PDF DANFe");
+        btnImprimirPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirPDFActionPerformed(evt);
+            }
+        });
+
+        btnValidarRegra.setLabel("Val. Regra de Neg.");
+        btnValidarRegra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidarRegraActionPerformed(evt);
+            }
+        });
+
+        btnEnviarAssincrono.setLabel("Enviar Assincrono");
+        btnEnviarAssincrono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarAssincronoActionPerformed(evt);
+            }
+        });
+
+        btnLimparLista.setLabel("Limpar Lista NFe");
+        btnLimparLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparListaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarregarIni, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(btnGerarXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGerarChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAssinar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEnviarSincrono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarregarXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImprimirPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnValidarRegra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEnviarAssincrono, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimparLista, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGerarXml)
+                    .addComponent(btnEnviarSincrono)
+                    .addComponent(btnEnviarAssincrono))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCarregarIni)
+                    .addComponent(btnCarregarXml)
+                    .addComponent(btnLimparLista))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImprimir)
+                    .addComponent(btnImprimirPDF))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEnviarEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAssinar)
+                    .addComponent(btnValidarRegra))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGerarChave)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Envio", jPanel14);
+
+        btnStatusServ.setText(" Status de Serviço");
+        btnStatusServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatusServActionPerformed(evt);
+            }
+        });
+
+        btnConsultarRecibo.setText("Consultar Recibo");
+        btnConsultarRecibo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarReciboActionPerformed(evt);
+            }
+        });
+
+        btnConsultaXml.setText("Consultar com Xml");
+        btnConsultaXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaXmlActionPerformed(evt);
+            }
+        });
+
+        btnConsultaChave.setText("Consultar com Chave");
+        btnConsultaChave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaChaveActionPerformed(evt);
+            }
+        });
+
+        btnConsultarCadastro.setLabel("Consultar Cadastro");
+        btnConsultarCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarCadastroActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnConsultarRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnStatusServ, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultaXml, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(btnConsultarCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultaChave)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnStatusServ)
+                    .addComponent(btnConsultaXml)
+                    .addComponent(btnConsultaChave))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarRecibo)
+                    .addComponent(btnConsultarCadastro))
+                .addContainerGap(122, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Consultas", jPanel15);
+
+        btnCancelarNFe.setText("Cancelar NFe");
+        btnCancelarNFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarNFeActionPerformed(evt);
+            }
+        });
+
+        btnCarregarEvento.setLabel("Carregar Evento");
+        btnCarregarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarEventoActionPerformed(evt);
+            }
+        });
+
+        btnImprimirEvento.setLabel("Imprimir Evento");
+        btnImprimirEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirEventoActionPerformed(evt);
+            }
+        });
+
+        btnEnviarEmailEvento.setLabel("Enviar Evento Email");
+        btnEnviarEmailEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEmailEventoActionPerformed(evt);
+            }
+        });
+
+        btnEnviarEvento.setLabel("Enviar Evento");
+        btnEnviarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEventoActionPerformed(evt);
+            }
+        });
+
+        btnLimparListaEvento.setLabel("Limpar Lista Eventos");
+        btnLimparListaEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparListaEventoActionPerformed(evt);
+            }
+        });
+
+        btnImprimirEventoPDF.setLabel("Imprimir PDF Evento");
+        btnImprimirEventoPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirEventoPDFActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnImprimirEvento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarregarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelarNFe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviarEmailEvento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEnviarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(btnLimparListaEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(btnImprimirEventoPDF, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                .addGap(144, 144, 144))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarNFe)
+                    .addComponent(btnEnviarEvento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimparListaEvento)
+                    .addComponent(btnCarregarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImprimirEvento)
+                    .addComponent(btnImprimirEventoPDF))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEnviarEmailEvento)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Eventos", jPanel16);
+
+        btnImprimirInutilizacao.setLabel("Imprimir Inutilização");
+        btnImprimirInutilizacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirInutilizacaoActionPerformed(evt);
+            }
+        });
+
+        btnInutilizar.setText("Inutilizar Numeração");
+        btnInutilizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInutilizarActionPerformed(evt);
+            }
+        });
+
+        btnImprimirInutilizacaoPDF.setLabel("Imprimir PDF Inutilização");
+        btnImprimirInutilizacaoPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirInutilizacaoPDFActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnImprimirInutilizacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInutilizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnImprimirInutilizacaoPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(144, 144, 144))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnInutilizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImprimirInutilizacao)
+                    .addComponent(btnImprimirInutilizacaoPDF))
+                .addContainerGap(122, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Inutilização", jPanel17);
+
+        btnDFePorChave.setLabel("Por Chave");
+        btnDFePorChave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDFePorChaveActionPerformed(evt);
+            }
+        });
+
+        btnDFePorNSU.setLabel("Por NSU");
+        btnDFePorNSU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDFePorNSUActionPerformed(evt);
+            }
+        });
+
+        btnDFePorUltNSU.setText("Por Ult. NSU");
+        btnDFePorUltNSU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDFePorUltNSUActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnDFePorChave, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDFePorNSU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDFePorUltNSU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDFePorChave)
+                    .addComponent(btnDFePorNSU)
+                    .addComponent(btnDFePorUltNSU))
+                .addContainerGap(151, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Distribuição DFe", jPanel18);
+
+        btnCarregarConfiguracoes.setLabel("Carregar Configurações");
+        btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarConfiguracoesActionPerformed(evt);
+            }
+        });
+
+        ckbAttXML.setText("Atualizar XML");
+
+        ckbExibirErroSchema.setText("Exibir Erro Schema");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("Formato Alerta");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("Forma de Emissão");
+
+        cmbFormaEmissao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "teContingencia", "teDPEC", "teFSDA", "teNormal", "teOffLine", "teSCAN", "teSVCAN", "teSVCRS", "teSVCSP" }));
+        cmbFormaEmissao.setToolTipText("");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setText("Modelo Documento Fiscal");
+
+        cmbModeloDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "moNFCe", "moNFe" }));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setText("Versão Documento Fiscal");
+
+        cmbVersaoDF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ve200", "ve300", "ve310", "ve400" }));
+
+        ckbRetirarAcentos.setText("Retirar Acentos dos XMLs enviados");
+
+        ckbSalvar.setText("Salvar Arquivos de Envio e Resposta");
+
+        btnSelectLog.setText("btnSelectLog");
+        btnSelectLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectLogActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setText("Pasta dos Logs");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setText("Pasta dos Schemas");
 
         btnSelectSchema.setText("jButton1");
         btnSelectSchema.addActionListener(new java.awt.event.ActionListener() {
@@ -158,76 +714,284 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel12.setText("IdToken/IdCSC (Somente para NFC-e)");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setText("Token/CSC (Somente para NFC-e)");
+
+        javax.swing.GroupLayout ckbAtualizarXMLLayout = new javax.swing.GroupLayout(ckbAtualizarXML);
+        ckbAtualizarXML.setLayout(ckbAtualizarXMLLayout);
+        ckbAtualizarXMLLayout.setHorizontalGroup(
+            ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(cmbModeloDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGap(0, 10, Short.MAX_VALUE))
+                .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFormatoAlerta)
+                    .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                        .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtLogs))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSelectLog, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                        .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtSchemaPath))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelectSchema, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtIdCSC, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCSC))
+                    .addComponent(txtIdCSC)
+                    .addComponent(txtCSC)
+                    .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                        .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckbSalvar)
+                            .addComponent(ckbRetirarAcentos)
+                            .addComponent(jLabel6)
+                            .addComponent(ckbAttXML)
+                            .addComponent(ckbExibirErroSchema)
+                            .addComponent(jLabel7)
+                            .addComponent(cmbFormaEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(cmbModeloDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(cmbVersaoDF, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(0, 59, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jLabel1)
+        ckbAtualizarXMLLayout.setVerticalGroup(
+            ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ckbAtualizarXMLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ckbAttXML)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbExibirErroSchema)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtFormatoAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbFormaEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbModeloDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbVersaoDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ckbRetirarAcentos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLogs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelectLog))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ckbAtualizarXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSchemaPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelectSchema))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIdCSC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCSC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSchemaPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSelectSchema))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Configurações", jPanel1);
+        jTabbedPane3.addTab("Geral", ckbAtualizarXML);
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel32.setText("Uf Destino");
 
         cmbUfDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("UF Destino");
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel33.setText("SSL Type");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel6.setText("SSL Type");
-
-        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LT_all", "LT_SSLv2", "LT_SSLv3", "LT_TLSv1", "LT_TLSv1_1", "LT_TLSv1_2", "LT_SSHv2" }));
+        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LT_all", "LT_SSHv2", "LT_SSLv2", "LT_SSLv3", "LT_TSLv1", "LT_TSLv1_1", "LT_TSLv1_2" }));
 
         nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("TimeOut");
+        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel34.setText("TimeOut");
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ambiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        rdbHomologacao.setText("Homologação");
+        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ambiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel20.setToolTipText("Ambiente");
+        jPanel20.setName("Ambiente"); // NOI18N
 
         rdbProducao.setText("Produção");
+
+        rdbHomologacao.setLabel("Homologação");
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rdbProducao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(rdbHomologacao)
+                .addGap(26, 26, 26))
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbProducao)
+                    .addComponent(rdbHomologacao))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        rdbProducao.getAccessibleContext().setAccessibleDescription("");
+
+        ckbVisualizar.setLabel("Visualizar Mensagem");
+
+        ckbSalvarSOAP.setText("Salvar envelope SOAP");
+
+        jPanel21.setBorder(javax.swing.BorderFactory.createTitledBorder("Retorno do Envio"));
+        jPanel21.setToolTipText("Retorno do Envio");
+        jPanel21.setName("Retorno do Envio"); // NOI18N
+
+        ckbAjustarAut.setLabel("Ajustar Automaticamente prop. \"Aguardar\"");
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel35.setText("Aguardar");
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel36.setText("Tentativas");
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel37.setText("Intervalo");
+
+        nudAguardar.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        nudIntervalos.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        nudTentativas.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(ckbAjustarAut)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel35)
+                            .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel36)
+                            .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel21Layout.createSequentialGroup()
+                                .addComponent(nudIntervalos)
+                                .addContainerGap())))))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addComponent(ckbAjustarAut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel36)
+                        .addComponent(jLabel37))
+                    .addComponent(jLabel35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudIntervalos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel22.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proxy", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel22.setToolTipText("Proxy");
+        jPanel22.setName("Ambiente"); // NOI18N
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel38.setText("Servidor");
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel39.setText("Porta");
+
+        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel40.setText("Usuário");
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel41.setText("Senha");
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtProxyUsuario)
+                    .addComponent(txtProxySenha)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProxyServidor)
+                            .addGroup(jPanel22Layout.createSequentialGroup()
+                                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel38)
+                                    .addComponent(jLabel40)
+                                    .addComponent(jLabel41))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel39)
+                            .addComponent(nudProxyPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProxyServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudProxyPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtProxyUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtProxySenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -235,36 +999,166 @@ public class FrmMain extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rdbHomologacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rdbProducao)
-                .addGap(26, 26, 26))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckbSalvarSOAP)
+                            .addComponent(ckbVisualizar)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel32)
+                                    .addComponent(cmbUfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel33)
+                                    .addComponent(cmbSSlType, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nudTimeOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbHomologacao)
-                    .addComponent(rdbProducao))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nudTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbSSlType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbUfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbVisualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbSalvarSOAP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proxy", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jTabbedPane3.addTab("WebServices", jPanel6);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setText("Servidor");
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel17.setText("CryptLib");
 
-        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cryCapicom", "cryNone", "cryOpenSSL", "cryWinCrypt" }));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel9.setText("Porta");
+        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "httpIndy", "httpNone", "httpOpenSSL", "httpWinHttp", "httpWinINet" }));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel10.setText("Usuário");
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel26.setText("HttpLib");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel11.setText("Senha");
+        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "xsLibXml2", "xsMsXml", "xsMsXmlCapicom", "xsNone", "xsXmlSec" }));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel27.setText("XmlSignLib");
+
+        jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Certificados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel19.setToolTipText("Certificados");
+        jPanel19.setName("DANFe"); // NOI18N
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel28.setText("Caminho");
+
+        btnSelecionarCertificado.setText("btnSelectLog");
+        btnSelecionarCertificado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarCertificadoActionPerformed(evt);
+            }
+        });
+
+        btnDadosPFX.setText("jButton1");
+        btnDadosPFX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDadosPFXActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel29.setText("Dados PFX");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel30.setText("Senha");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel31.setText("Número de Série");
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtCertPath))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSelecionarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtDadosPFX))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDadosPFX, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(txtCertPassword)
+            .addComponent(txtCertNumero)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel31))
+                .addGap(0, 168, Short.MAX_VALUE))
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCertPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelecionarCertificado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDadosPFX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDadosPFX))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCertPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCertNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        btnObterCertificados.setActionCommand("Obter Certificados");
+        btnObterCertificados.setLabel("Obter Certificados");
+        btnObterCertificados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObterCertificadosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -273,47 +1167,387 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProxyServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(13, 13, 13))
-                            .addComponent(nudProxyPorta)))
-                    .addComponent(txtProxyUsuario)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtProxySenha))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel17)
+                                .addComponent(jLabel26)
+                                .addComponent(cmbHttp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbCrypt, 0, 163, Short.MAX_VALUE)
+                                .addComponent(jLabel27)
+                                .addComponent(cmbXmlSign, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnObterCertificados))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nudProxyPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtProxyServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel17)
+                .addGap(1, 1, 1)
+                .addComponent(cmbCrypt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtProxyUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbHttp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtProxySenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addComponent(cmbXmlSign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnObterCertificados)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
+
+        jTabbedPane3.addTab("Certificados", jPanel7);
+
+        ckbSalvarArqs.setLabel("Salvar Arquivos em Pastas Separadas");
+
+        ckbPastaMensal.setLabel("Criar Pastas Mensalmente");
+
+        ckbAdicionaLiteral.setLabel("Adicionar Literal no nome das pastas");
+
+        ckbEmissaoPathNFe.setText("Salvar Documento pelo campo Data de Emissão");
+
+        ckbSalvaPathEvento.setText("Salvar Arquivos de Eventos");
+
+        ckbSepararPorCNPJ.setText("Separar Arqs pelo CNPJ do Certificado");
+
+        ckbSepararPorModelo.setText("Separar Arqs pelo Modelo do Documento");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setText("Pasta Arquivos NFe");
+
+        btnArqNFe.setText("btnSelectLog");
+        btnArqNFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArqNFeActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setText("Pasta Arquivos Inutilização");
+
+        btnArqInu.setText("btnSelectLog");
+        btnArqInu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArqInuActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setText("Pasta Arquivos Evento");
+        jLabel16.setRequestFocusEnabled(false);
+
+        btnArqEvento.setText("btnSelectLog");
+        btnArqEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArqEventoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckbSalvarArqs)
+                            .addComponent(ckbPastaMensal)
+                            .addComponent(ckbAdicionaLiteral)
+                            .addComponent(ckbEmissaoPathNFe)
+                            .addComponent(ckbSalvaPathEvento)
+                            .addComponent(ckbSepararPorCNPJ)
+                            .addComponent(ckbSepararPorModelo))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(0, 131, Short.MAX_VALUE))
+                            .addComponent(txtArqNFe))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnArqNFe, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(0, 85, Short.MAX_VALUE))
+                            .addComponent(txtArqInu))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnArqInu, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(0, 112, Short.MAX_VALUE))
+                            .addComponent(txtArqEvento))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnArqEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(ckbSalvarArqs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbPastaMensal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbAdicionaLiteral)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbEmissaoPathNFe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbSalvaPathEvento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbSepararPorCNPJ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbSepararPorModelo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtArqNFe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArqNFe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtArqInu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArqInu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtArqEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArqEvento))
+                .addGap(0, 174, Short.MAX_VALUE))
+        );
+
+        ckbEmissaoPathNFe.getAccessibleContext().setAccessibleDescription("");
+
+        jTabbedPane3.addTab("Arquivos", jPanel9);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane3)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 3, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Configurações", jPanel1);
+
+        btnLogomarca.setText("jButton1");
+        btnLogomarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogomarcaActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setText("Logomarca");
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DANFCe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel11.setToolTipText("DANFCe");
+        jPanel11.setName("DANFe"); // NOI18N
+
+        rdbFortes.setText("Fortes");
+
+        rdbEscPos.setActionCommand("EscPos");
+        rdbEscPos.setLabel("EscPos");
+
+        rdbFortesA4.setText("Fortes A4");
+        rdbFortesA4.setActionCommand("EscPos");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rdbFortes)
+                .addGap(18, 18, 18)
+                .addComponent(rdbEscPos)
+                .addGap(18, 18, 18)
+                .addComponent(rdbFortesA4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbFortes)
+                    .addComponent(rdbEscPos)
+                    .addComponent(rdbFortesA4))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DANFe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel12.setToolTipText("DANFe");
+        jPanel12.setName("DANFe"); // NOI18N
+
+        rdbRetrato.setActionCommand("Retrato");
+        rdbRetrato.setLabel("Retrato");
+
+        rdbPaisagem.setText("Paisagem");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rdbRetrato)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(rdbPaisagem)
+                .addGap(26, 26, 26))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbRetrato)
+                    .addComponent(rdbPaisagem))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pos Printer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel13.setToolTipText("PosPrinter");
+        jPanel13.setName("DANFe"); // NOI18N
+
+        cmbModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ppCustomPos", "ppEscBematech", "ppEscDaruma", "ppEscDiebold", "ppEscEpsonP2", "ppEscGPrinter", "ppEscPosEpson", "ppEscPosStar", "ppEscVox", "ppEscZJiang", "ppTexto" }));
+        cmbModelo.setToolTipText("cmbModelo");
+
+        cmbPagCodigo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "pc1252", "pc437", "pc850", "pc852", "pc860", "pcUTF8" }));
+        cmbPagCodigo.setToolTipText("cmbModelo");
+
+        lblModelo.setText("Modelo");
+
+        lblPagCodigo.setText("Pag. Código");
+
+        lblPorta.setText("Porta");
+
+        nudColunas.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        lblColunas.setText("Colunas");
+
+        lblEspacos.setText("Espaços");
+
+        lblBuffer.setText("Buffer");
+
+        nudBuffer.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        lblLinhasPular.setText("Linhas Pular");
+
+        nudLinhasPular.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        nudEspacos.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        cbxControlePorta.setText("Controle Porta");
+
+        cbxCortarPapel.setText("Cortar Papel");
+
+        cbxTraduzirTags.setText("Traduzir Tags");
+
+        cbxIgnorarTags.setLabel("Ignorar Tags");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblModelo))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblPagCodigo)
+                                .addComponent(cmbPagCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblPorta, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cmbPorta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(lblColunas)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEspacos)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblBuffer)
+                        .addGap(42, 42, 42)
+                        .addComponent(lblLinhasPular))
+                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel13Layout.createSequentialGroup()
+                            .addComponent(nudColunas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(nudEspacos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(nudBuffer, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(nudLinhasPular, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel13Layout.createSequentialGroup()
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxControlePorta)
+                                .addComponent(cbxCortarPapel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxIgnorarTags)
+                                .addComponent(cbxTraduzirTags)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblModelo)
+                    .addComponent(lblPagCodigo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPagCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPorta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblColunas)
+                    .addComponent(lblEspacos)
+                    .addComponent(lblBuffer)
+                    .addComponent(lblLinhasPular))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nudColunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudBuffer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudEspacos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudLinhasPular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxControlePorta)
+                    .addComponent(cbxTraduzirTags))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxCortarPapel)
+                    .addComponent(cbxIgnorarTags))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cmbModelo.getAccessibleContext().setAccessibleName("cmbModelo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -323,162 +1557,48 @@ public class FrmMain extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbUfDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtLogomarca))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cmbSSlType, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                                .addGap(50, 50, 50)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                                .addGap(23, 23, 23))
-                            .addComponent(nudTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogomarca, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbUfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbSSlType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nudTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLogomarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogomarca))
+                .addGap(77, 77, 77)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(59, 59, 59)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(390, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("Webservices", jPanel2);
+        jPanel13.getAccessibleContext().setAccessibleName("PosPrinter");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel12.setText("CryptLib");
-
-        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cryNone", "cryOpenSSL", "cryCapicom", "cryWinCrypt" }));
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel13.setText("HttpLib");
-
-        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "httpNone", "httpWinINet", "httpWinHttp", "httpOpenSSL", "httpIndy" }));
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel14.setText("XmlSignLib");
-
-        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "xsNone", "xsXmlSec", "xsMsXml", "xsMsXmlCapicom", "xsLibXml2" }));
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Certificados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel15.setText("Caminho");
-
-        btnSelectCert.setText("jButton1");
-        btnSelectCert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectCertActionPerformed(evt);
-            }
-        });
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel16.setText("Senha");
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel17.setText("Número de Série");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtCertPath))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSelectCert, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(txtCertNumero)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtCertPassword)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCertPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSelectCert))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCertPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCertNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(cmbCrypt, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13)
-                            .addComponent(cmbHttp, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)
-                            .addComponent(cmbXmlSign, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 44, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbCrypt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbHttp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbXmlSign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Certificados", jPanel3);
+        jTabbedPane1.addTab("Documento Auxiliar", jPanel2);
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configurações", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -530,7 +1650,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ckbSSL)
                             .addComponent(ckbTLS))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 93, Short.MAX_VALUE))
                     .addComponent(txtSenha))
                 .addContainerGap())
         );
@@ -573,218 +1693,80 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel25.setText("Mensagem");
 
-        txtMensagem.setColumns(20);
-        txtMensagem.setRows(5);
-        jScrollPane2.setViewportView(txtMensagem);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtAssunto)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel25))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(35, 35, 35))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtMensagem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAssunto, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 122, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Email", jPanel4);
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Comandos"));
-
-        btnConsultaXml.setText("Consultar com Xml");
-        btnConsultaXml.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaXmlActionPerformed(evt);
-            }
-        });
-
-        btnConsultaChave.setText("Consultar com Chave");
-        btnConsultaChave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaChaveActionPerformed(evt);
-            }
-        });
-
-        btnConsultarRecibo.setText("Consultar Recibo");
-        btnConsultarRecibo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarReciboActionPerformed(evt);
-            }
-        });
-
-        btnCancelarNFe.setText("Cancelar NFe");
-        btnCancelarNFe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarNFeActionPerformed(evt);
-            }
-        });
-
-        btnInutilizar.setText("Inutilizar Numeração");
-        btnInutilizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInutilizarActionPerformed(evt);
-            }
-        });
-
-        btnEnviarEmail.setText("Enviar NFe Email");
-        btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarEmailActionPerformed(evt);
-            }
-        });
-
-        btnStatusServ.setText(" Status de Serviço");
-        btnStatusServ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStatusServActionPerformed(evt);
-            }
-        });
-
-        btnEnviar.setText("Criar e Enviar");
-        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarActionPerformed(evt);
-            }
-        });
-
-        btnImprimir.setText("Imprimir DANFe");
-        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnConsultaXml, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultaChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)
-                        .addComponent(btnConsultarRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnCancelarNFe, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInutilizar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)
-                        .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnStatusServ, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)
-                        .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnStatusServ)
-                    .addComponent(btnEnviar)
-                    .addComponent(btnImprimir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultaXml)
-                    .addComponent(btnConsultaChave)
-                    .addComponent(btnConsultarRecibo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviarEmail)
-                    .addComponent(btnInutilizar)
-                    .addComponent(btnCancelarNFe))
-                .addContainerGap(100, Short.MAX_VALUE))
-        );
-
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Respostas"));
-
-        rtbRespostas.setColumns(20);
-        rtbRespostas.setRows(5);
-        jScrollPane1.setViewportView(rtbRespostas);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-        );
-
-        btnSalvar.setText("Salvar Configurações");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
+        jTabbedPane1.addTab("Email", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
+                        .addComponent(btnCarregarConfiguracoes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalvar)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCarregarConfiguracoes)
+                            .addComponent(btnSalvar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        jTabbedPane2.getAccessibleContext().setAccessibleName("Envio");
+        btnCarregarConfiguracoes.getAccessibleContext().setAccessibleName("Salvar Carregar Configurações");
+
+        setSize(new java.awt.Dimension(780, 627));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -797,7 +1779,7 @@ public class FrmMain extends javax.swing.JFrame {
             }
 
             acbrNFe.configGravarValor(ACBrSessao.Principal, "LogNivel", 4);
-            acbrNFe.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog.toString());
+            acbrNFe.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog);
             acbrNFe.configGravar();
 
             loadConfig();
@@ -806,11 +1788,89 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    public boolean validacaoEmail(){
+        if (txtHost.getText().equals(""))
+        {
+            //System.out.println("Informe Host SMTP");
+            JOptionPane.showMessageDialog(null, "Informe Host SMTP", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtUsuario.getText().equals("")){
+            System.out.println("Informe Usuário");
+            return false;
+            
+        } else if (txtSenha.getText().equals("")){
+            System.out.println("Informe Senha");
+            return false;
+            
+        } else if (txtNome.getText().equals("")){
+            System.out.println("Informe Nome do Proprietario do e-mail");
+            return false;
+            
+        } else if (txtEmail.getText().equals("")){
+            System.out.println("Informe e-mail do Proprietario");
+            return false;
+            
+        } else if (nudPorta.getValue().equals("")){
+            System.out.println("Informe porta de conexão");
+            return false;
+            
+        } else if (ckbSSL.isSelected()== false && ckbTLS.isSelected() == false){
+            System.out.println("Informe o certificado SSL");
+            System.out.println("Informe o certificado TLS");
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean validacao(){
+        
+        if (txtSchemaPath.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe Path com Schema", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtCertPath.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o certificado", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtCertPassword.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe a senha", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        }  else if (txtCertNumero.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o número de série", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        }   else if (cmbCrypt.getSelectedItem().equals("cryNone")){
+            JOptionPane.showMessageDialog(null, "Informe Criptografia", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        }   else if (cmbHttp.getSelectedItem().equals("httpNone")){
+            JOptionPane.showMessageDialog(null, "Informe Criptografia", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        }   else if (cmbXmlSign.getSelectedItem().equals("xsNone")){
+            JOptionPane.showMessageDialog(null, "Informe assinatura do XML", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        }   else if (cmbSSlType.getSelectedItem().equals("LT_all")){
+            JOptionPane.showMessageDialog(null, "Informe o tipo SSL", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         saveConfig();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnStatusServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusServActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{            
             String ret = acbrNFe.statusServico();
             rtbRespostas.append(ret);
@@ -818,24 +1878,6 @@ public class FrmMain extends javax.swing.JFrame {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnStatusServActionPerformed
-
-    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        try{
-            JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo Ini NFe (*.ini)");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            
-            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-            acbrNFe.limparLista(); 
-            acbrNFe.carregarIni(chooser.getSelectedFile().getAbsolutePath());            
-            
-            String ret = acbrNFe.enviar(1);
-            rtbRespostas.append(ret);            
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         try{
@@ -855,6 +1897,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnConsultaXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaXmlActionPerformed
+        
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
@@ -872,6 +1920,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultaXmlActionPerformed
 
     private void btnConsultaChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaChaveActionPerformed
+        
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{
             String chaveOuNFe = JOptionPane.showInputDialog(this, "Chave da NF-e:", 
                     "WebServices Consultar", JOptionPane.PLAIN_MESSAGE);
@@ -884,6 +1938,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultaChaveActionPerformed
 
     private void btnConsultarReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarReciboActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{
             String recibo = JOptionPane.showInputDialog(this, "Número do recibo:", 
                     "WebServices Consultar", JOptionPane.PLAIN_MESSAGE);
@@ -896,6 +1956,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarReciboActionPerformed
 
     private void btnCancelarNFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarNFeActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         try{
             String idLote = JOptionPane.showInputDialog(this, "Identificador de controle do Lote de envio do Evento:", 
                     "WebServices Eventos: Cancelamento", JOptionPane.PLAIN_MESSAGE);
@@ -915,6 +1981,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarNFeActionPerformed
 
     private void btnInutilizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInutilizarActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         try{
             String ano = JOptionPane.showInputDialog(this, "Ano", 
                     "WebServices Inutilização", JOptionPane.PLAIN_MESSAGE);
@@ -945,6 +2017,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInutilizarActionPerformed
 
     private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
+
+        if (!validacaoEmail()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
@@ -967,8 +2045,44 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEnviarEmailActionPerformed
 
-    private void btnSelectSchemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectSchemaActionPerformed
+    private void btnCarregarConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfiguracoesActionPerformed
+        loadConfig();
+    }//GEN-LAST:event_btnCarregarConfiguracoesActionPerformed
+
+    private void btnLogomarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogomarcaActionPerformed
         try{
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);
+
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            txtLogomarca.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLogomarcaActionPerformed
+
+    private void btnSelectLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectLogActionPerformed
+
+        try{
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtLogs.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSelectLogActionPerformed
+
+    private void btnSelectSchemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectSchemaActionPerformed
+
+       try{
             JFileChooser chooser = new JFileChooser(); 
             chooser.setCurrentDirectory(new java.io.File("."));
             chooser.setDialogTitle("Selecione o diretorio");
@@ -979,11 +2093,64 @@ public class FrmMain extends javax.swing.JFrame {
             txtSchemaPath.setText(chooser.getCurrentDirectory().getPath());
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+        
     }//GEN-LAST:event_btnSelectSchemaActionPerformed
 
-    private void btnSelectCertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectCertActionPerformed
+    private void btnArqNFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqNFeActionPerformed
+
         try{
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtArqNFe.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnArqNFeActionPerformed
+
+    private void btnArqInuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqInuActionPerformed
+
+        try{
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtArqInu.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnArqInuActionPerformed
+
+    private void btnArqEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqEventoActionPerformed
+
+        try{
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtArqEvento.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnArqEventoActionPerformed
+
+    private void btnSelecionarCertificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarCertificadoActionPerformed
+
+       try{
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("pfx", "Certificado igital (*.pfx)");
             chooser.addChoosableFileFilter(filter);
@@ -994,7 +2161,501 @@ public class FrmMain extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnSelectCertActionPerformed
+        
+    }//GEN-LAST:event_btnSelecionarCertificadoActionPerformed
+
+    private void btnDadosPFXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDadosPFXActionPerformed
+
+        try{
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtDadosPFX.setText(chooser.getCurrentDirectory().getPath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnDadosPFXActionPerformed
+
+    private void btnObterCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObterCertificadosActionPerformed
+        
+        try {   
+            acbrNFe.obterCertificados();
+            rtbRespostas.append(rtbRespostas.getText());   
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnObterCertificadosActionPerformed
+
+    private void btnGerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarXmlActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try {
+         acbrNFe.limparLista();
+         JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());   
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGerarXmlActionPerformed
+
+    private void btnCarregarIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarIniActionPerformed
+        try {
+         acbrNFe.limparLista();
+         JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo ini (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarIni(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());   
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCarregarIniActionPerformed
+
+    private void btnAssinarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssinarActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try{
+            acbrNFe.assinar();
+        } catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAssinarActionPerformed
+
+    private void btnGerarChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarChaveActionPerformed
+        
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(date));
+        
+        try{
+            
+          String codUf = JOptionPane.showInputDialog("Digite o codigo da UF");
+          String codNum = JOptionPane.showInputDialog("Digite o codigo da Númerico");
+          String docMod = JOptionPane.showInputDialog("Digite o modelo do documento");
+          String Serie =  JOptionPane.showInputDialog("Digite a serie do documento");
+          String num = JOptionPane.showInputDialog("Digite o numero do documento");
+          String tipoEmissao = JOptionPane.showInputDialog("Digite o tipo de emissão do documento");
+          String cnpjCPF = JOptionPane.showInputDialog("Digite o CPF/CNPJ para Gerar a Chave");
+          
+          
+          int uf = Integer.parseInt(codUf);
+          int cod = Integer.parseInt(codNum);
+          int doc = Integer.parseInt(docMod);
+          int serie = Integer.parseInt(Serie);
+          int numero = Integer.parseInt(num);
+          int emissao = Integer.parseInt(tipoEmissao);
+          
+          acbrNFe.gerarChave(uf, cod, doc, serie, numero, emissao, date, cnpjCPF);
+          rtbRespostas.append(rtbRespostas.getText());   
+          
+        }catch (Exception ex){
+             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGerarChaveActionPerformed
+
+    private void btnEnviarSincronoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarSincronoActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try {
+            
+             String aLote = JOptionPane.showInputDialog("Digite o lote");
+             int lote = Integer.parseInt(aLote);
+             
+             acbrNFe.enviar(lote,false,true,false);
+             rtbRespostas.append(rtbRespostas.getText());
+        } catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarSincronoActionPerformed
+
+    private void btnCarregarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarXmlActionPerformed
+        
+        try {
+         acbrNFe.limparLista();
+         JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo xml (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());   
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCarregarXmlActionPerformed
+
+    private void btnImprimirPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirPDFActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
+            acbrNFe.imprimirPDF();
+            rtbRespostas.append("Impresso com sucesso.");            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirPDFActionPerformed
+
+    private void btnValidarRegraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarRegraActionPerformed
+        
+        try {
+            acbrNFe.validarRegrasdeNegocios();
+            rtbRespostas.append(rtbRespostas.getText());
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnValidarRegraActionPerformed
+
+    private void btnEnviarAssincronoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarAssincronoActionPerformed
+        
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        try {
+            
+             String aLote = JOptionPane.showInputDialog("Digite o lote");
+             int lote = Integer.parseInt(aLote);
+             
+             acbrNFe.enviar(lote);
+             rtbRespostas.append(rtbRespostas.getText());
+        } catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarAssincronoActionPerformed
+
+    private void btnLimparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaActionPerformed
+        try{
+            acbrNFe.limparLista();
+            rtbRespostas.append(rtbRespostas.getText());
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLimparListaActionPerformed
+
+    private void btnCarregarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarEventoActionPerformed
+       
+        try {
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo ini (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarEventoINI(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());   
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnCarregarEventoActionPerformed
+
+    private void btnImprimirEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEventoActionPerformed
+
+      try {
+            JFileChooser eArquivoXmlNFe = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlNFe.addChoosableFileFilter(filter);
+            eArquivoXmlNFe.setFileFilter(filter);
+            
+            if (eArquivoXmlNFe.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            
+            JFileChooser eArquivoXmlEvento = new JFileChooser();
+            OpenFileFilter filterc = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlEvento.addChoosableFileFilter(filterc);
+            eArquivoXmlEvento.setFileFilter(filterc);
+            
+            if (eArquivoXmlEvento.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            
+            acbrNFe.imprimirEvento(eArquivoXmlNFe.getSelectedFile().getAbsolutePath(),eArquivoXmlEvento.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());
+            
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirEventoActionPerformed
+
+    private void btnEnviarEmailEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailEventoActionPerformed
+
+        if (!validacaoEmail()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try{
+            JFileChooser eArquivoXmlNFe = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlNFe.addChoosableFileFilter(filter);
+            eArquivoXmlNFe.setFileFilter(filter);
+            
+            if (eArquivoXmlNFe.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            
+            
+            JFileChooser eArquivoXmlEvento = new JFileChooser();
+            OpenFileFilter filterc = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlEvento.addChoosableFileFilter(filterc);
+            eArquivoXmlEvento.setFileFilter(filterc);
+            
+            if (eArquivoXmlEvento.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            
+            String destinatario = JOptionPane.showInputDialog(this, "Digite o email do destinatario", 
+                    "Envio email", JOptionPane.PLAIN_MESSAGE);
+            
+            acbrNFe.enviarEmailEvento(destinatario,
+                                eArquivoXmlNFe.getSelectedFile().getAbsolutePath(),
+                                eArquivoXmlEvento.getSelectedFile().getAbsolutePath(),
+                                true,
+                                txtAssunto.getText(),
+                                "",
+                                "",
+                                txtMensagem.getText());  
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnEnviarEmailEventoActionPerformed
+
+    private void btnEnviarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEventoActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try {
+            
+             String aLote = JOptionPane.showInputDialog("Digite o lote");
+             int lote = Integer.parseInt(aLote);
+             
+             acbrNFe.enviarEvento(lote);
+             rtbRespostas.append(rtbRespostas.getText());
+        } catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnEnviarEventoActionPerformed
+
+    private void btnLimparListaEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaEventoActionPerformed
+
+        try{
+            acbrNFe.limparListaEventos();
+            rtbRespostas.append(rtbRespostas.getText());
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnLimparListaEventoActionPerformed
+
+    private void btnImprimirEventoPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEventoPDFActionPerformed
+
+        try {
+            JFileChooser eArquivoXmlNFe = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlNFe.addChoosableFileFilter(filter);
+            eArquivoXmlNFe.setFileFilter(filter);
+            
+            if (eArquivoXmlNFe.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            
+            JFileChooser eArquivoXmlEvento = new JFileChooser();
+            OpenFileFilter filterc = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXmlEvento.addChoosableFileFilter(filterc);
+            eArquivoXmlEvento.setFileFilter(filterc);
+            
+            if (eArquivoXmlEvento.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            
+            acbrNFe.imprimirEventoPDF(eArquivoXmlNFe.getSelectedFile().getAbsolutePath(),eArquivoXmlEvento.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(rtbRespostas.getText());
+            
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnImprimirEventoPDFActionPerformed
+
+    private void btnImprimirInutilizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirInutilizacaoActionPerformed
+
+        try{
+            
+            JFileChooser eArquivoXml = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            eArquivoXml.addChoosableFileFilter(filter);
+            eArquivoXml.setFileFilter(filter);
+            
+            if (eArquivoXml.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            
+            acbrNFe.imprimirInutilizacao(eArquivoXml.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append("Impresso com sucesso.");            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnImprimirInutilizacaoActionPerformed
+
+    private void btnImprimirInutilizacaoPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirInutilizacaoPDFActionPerformed
+        
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            
+            acbrNFe.imprimirInutilizacaoPDF(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append("Impresso com sucesso.");     
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirInutilizacaoPDFActionPerformed
+
+    private void btnDFePorChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFePorChaveActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try{ 
+          String codUf = JOptionPane.showInputDialog("Digite o codigo da UF");
+          String cnpj = JOptionPane.showInputDialog("CNPJ do autor");
+          String chave = JOptionPane.showInputDialog("Digite o modelo do documento");
+          
+          int uf = Integer.parseInt(codUf);
+          
+          acbrNFe.distribuicaoDFeporChave(uf, cnpj, chave);
+          rtbRespostas.append(rtbRespostas.getText());   
+          
+        }catch (Exception ex){
+             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDFePorChaveActionPerformed
+
+    private void btnDFePorNSUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFePorNSUActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try{ 
+          String codUf = JOptionPane.showInputDialog("Digite o codigo da UF");
+          String cnpj = JOptionPane.showInputDialog("CNPJ do autor");
+          String nsu = JOptionPane.showInputDialog("Numero do NSU");
+          
+          int uf = Integer.parseInt(codUf);
+          
+          acbrNFe.distribuicaoDFeporChave(uf, cnpj, nsu);
+          rtbRespostas.append(rtbRespostas.getText());   
+          
+        }catch (Exception ex){
+             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnDFePorNSUActionPerformed
+
+    private void btnDFePorUltNSUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDFePorUltNSUActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+       try{ 
+          String codUf = JOptionPane.showInputDialog("Digite o codigo da UF");
+          String cnpj = JOptionPane.showInputDialog("CNPJ do autor");
+          String nsu = JOptionPane.showInputDialog("Numero do último NSU");
+          
+          int uf = Integer.parseInt(codUf);
+          
+          acbrNFe.distribuicaoDFeporUltNSU(uf, cnpj, nsu);
+          rtbRespostas.append(rtbRespostas.getText());   
+          
+        }catch (Exception ex){
+             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+    }//GEN-LAST:event_btnDFePorUltNSUActionPerformed
+
+    private void btnConsultarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCadastroActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        boolean ie;
+        
+        try{
+            
+          String codUf = JOptionPane.showInputDialog("Digite o codigo da UF");
+          String numDoc = JOptionPane.showInputDialog("Digite o número do documento");
+          
+          int opcao = JOptionPane.showConfirmDialog(null, "O documento é uma inscrição estadual ?", "Aviso", JOptionPane.YES_NO_OPTION);
+
+          if (opcao == 0) { 
+            ie = false;
+            } else {
+            ie = true;
+            }
+          
+          acbrNFe.consultaCadastro(codUf, numDoc, ie);
+          rtbRespostas.append(rtbRespostas.getText());   
+          
+        }catch (Exception ex){
+             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnConsultarCadastroActionPerformed
 
     private void loadConfig() {
         try {
@@ -1002,25 +2663,25 @@ public class FrmMain extends javax.swing.JFrame {
             cmbModeloDocumento.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "ModeloDF")));
             txtIdCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "IdCSC"));
             txtCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "CSC"));
-            cmbCrypt.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLCryptLib")));            
+            cmbModelo.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLCryptLib")));            
             cmbHttp.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLHttpLib")));    
             cmbXmlSign.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLXmlSignLib")));
             txtCertPath.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "ArquivoPFX"));
             txtCertPassword.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "Senha"));
             txtCertNumero.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "NumeroSerie"));
-            txtSchemaPath.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathSchemas"));
+            txtLogomarca.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathSchemas"));
             cmbUfDestino.setSelectedItem(acbrNFe.configLerValor(ACBrSessao.DFe, "UF"));
             
             String ambiente = acbrNFe.configLerValor(ACBrSessao.NFe, "Ambiente");            
-            rdbHomologacao.setSelected("1".equals(ambiente));
-            rdbProducao.setSelected("0".equals(ambiente));
+            rdbFortes.setSelected("1".equals(ambiente));
+            rdbEscPos.setSelected("0".equals(ambiente));
                         
             cmbSSlType.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "SSLType"))); 
             nudTimeOut.setValue(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "Timeout")));
             txtProxyServidor.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Servidor"));
             String Value = acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta");
             if(Value.matches("-?\\d+"))
-                nudProxyPorta.setValue(Integer.parseInt(Value));
+            nudProxyPorta.setValue(Integer.parseInt(Value));
             txtProxyUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Usuario"));
             txtProxySenha.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Senha"));
             txtNome.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Nome"));
@@ -1055,7 +2716,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "SSLCryptLib", 
-                    cmbCrypt.getSelectedIndex());            
+                    cmbModelo.getSelectedIndex());            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "SSLHttpLib", 
@@ -1071,7 +2732,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "Senha", 
-                    new String(txtCertPassword.getPassword()));            
+                    txtCertPassword.getText());            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "NumeroSerie", 
@@ -1079,7 +2740,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.NFe, 
                     "PathSchemas", 
-                    txtSchemaPath.getText());            
+                    txtLogomarca.getText());            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "UF", 
@@ -1087,7 +2748,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.NFe, 
                     "Ambiente", 
-                    rdbHomologacao.isSelected() ? "1" : "0");
+                    rdbFortes.isSelected() ? "1" : "0");
                         
             acbrNFe.configGravarValor(ACBrSessao.NFe, 
                     "SSLType", 
@@ -1111,7 +2772,7 @@ public class FrmMain extends javax.swing.JFrame {
 
             acbrNFe.configGravarValor(ACBrSessao.Proxy, 
                     "Senha", 
-                    new String(txtProxySenha.getPassword()));            
+                    txtProxySenha.getText());            
             
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "Nome", 
@@ -1153,27 +2814,79 @@ public class FrmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnArqEvento;
+    private javax.swing.JButton btnArqInu;
+    private javax.swing.JButton btnArqNFe;
+    private javax.swing.JButton btnAssinar;
     private javax.swing.JButton btnCancelarNFe;
+    private javax.swing.JButton btnCarregarConfiguracoes;
+    private javax.swing.JButton btnCarregarEvento;
+    private javax.swing.JButton btnCarregarIni;
+    private javax.swing.JButton btnCarregarXml;
     private javax.swing.JButton btnConsultaChave;
     private javax.swing.JButton btnConsultaXml;
+    private javax.swing.JButton btnConsultarCadastro;
     private javax.swing.JButton btnConsultarRecibo;
-    private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnDFePorChave;
+    private javax.swing.JButton btnDFePorNSU;
+    private javax.swing.JButton btnDFePorUltNSU;
+    private javax.swing.JButton btnDadosPFX;
+    private javax.swing.JButton btnEnviarAssincrono;
     private javax.swing.JButton btnEnviarEmail;
+    private javax.swing.JButton btnEnviarEmailEvento;
+    private javax.swing.JButton btnEnviarEvento;
+    private javax.swing.JButton btnEnviarSincrono;
+    private javax.swing.JButton btnGerarChave;
+    private javax.swing.JButton btnGerarXml;
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnImprimirEvento;
+    private javax.swing.JButton btnImprimirEventoPDF;
+    private javax.swing.JButton btnImprimirInutilizacao;
+    private javax.swing.JButton btnImprimirInutilizacaoPDF;
+    private javax.swing.JButton btnImprimirPDF;
     private javax.swing.JButton btnInutilizar;
+    private javax.swing.JButton btnLimparLista;
+    private javax.swing.JButton btnLimparListaEvento;
+    private javax.swing.JButton btnLogomarca;
+    private javax.swing.JButton btnObterCertificados;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton btnSelectCert;
+    private javax.swing.JButton btnSelecionarCertificado;
+    private javax.swing.JButton btnSelectLog;
     private javax.swing.JButton btnSelectSchema;
     private javax.swing.JButton btnStatusServ;
+    private javax.swing.JButton btnValidarRegra;
+    private javax.swing.JCheckBox cbxControlePorta;
+    private javax.swing.JCheckBox cbxCortarPapel;
+    private javax.swing.JCheckBox cbxIgnorarTags;
+    private javax.swing.JCheckBox cbxTraduzirTags;
+    private javax.swing.JCheckBox ckbAdicionaLiteral;
+    private javax.swing.JCheckBox ckbAjustarAut;
+    private javax.swing.JCheckBox ckbAttXML;
+    private javax.swing.JPanel ckbAtualizarXML;
+    private javax.swing.JCheckBox ckbEmissaoPathNFe;
+    private javax.swing.JCheckBox ckbExibirErroSchema;
+    private javax.swing.JCheckBox ckbPastaMensal;
+    private javax.swing.JCheckBox ckbRetirarAcentos;
     private javax.swing.JCheckBox ckbSSL;
+    private javax.swing.JCheckBox ckbSalvaPathEvento;
+    private javax.swing.JCheckBox ckbSalvar;
+    private javax.swing.JCheckBox ckbSalvarArqs;
+    private javax.swing.JCheckBox ckbSalvarSOAP;
+    private javax.swing.JCheckBox ckbSepararPorCNPJ;
+    private javax.swing.JCheckBox ckbSepararPorModelo;
     private javax.swing.JCheckBox ckbTLS;
+    private javax.swing.JCheckBox ckbVisualizar;
     private javax.swing.JComboBox<String> cmbCrypt;
+    private javax.swing.JComboBox<String> cmbFormaEmissao;
     private javax.swing.JComboBox<String> cmbHttp;
+    private javax.swing.JComboBox<String> cmbModelo;
     private javax.swing.JComboBox<String> cmbModeloDocumento;
+    private javax.swing.JComboBox<String> cmbPagCodigo;
+    private javax.swing.JComboBox<String> cmbPorta;
     private javax.swing.JComboBox<String> cmbSSlType;
     private javax.swing.JComboBox<String> cmbUfDestino;
+    private javax.swing.JComboBox<String> cmbVersaoDF;
     private javax.swing.JComboBox<String> cmbXmlSign;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1184,15 +2897,28 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1200,34 +2926,71 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JLabel lblBuffer;
+    private javax.swing.JLabel lblColunas;
+    private javax.swing.JLabel lblEspacos;
+    private javax.swing.JLabel lblLinhasPular;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblPagCodigo;
+    private javax.swing.JLabel lblPorta;
+    private javax.swing.JSpinner nudAguardar;
+    private javax.swing.JSpinner nudBuffer;
+    private javax.swing.JSpinner nudColunas;
+    private javax.swing.JSpinner nudEspacos;
+    private javax.swing.JSpinner nudIntervalos;
+    private javax.swing.JSpinner nudLinhasPular;
     private javax.swing.JSpinner nudPorta;
     private javax.swing.JSpinner nudProxyPorta;
+    private javax.swing.JSpinner nudTentativas;
     private javax.swing.JSpinner nudTimeOut;
+    private javax.swing.JRadioButton rdbEscPos;
+    private javax.swing.JRadioButton rdbFortes;
+    private javax.swing.JRadioButton rdbFortesA4;
     private javax.swing.JRadioButton rdbHomologacao;
+    private javax.swing.JRadioButton rdbPaisagem;
     private javax.swing.JRadioButton rdbProducao;
+    private javax.swing.JRadioButton rdbRetrato;
     private javax.swing.JTextArea rtbRespostas;
+    private javax.swing.JTextField txtArqEvento;
+    private javax.swing.JTextField txtArqInu;
+    private javax.swing.JTextField txtArqNFe;
     private javax.swing.JTextField txtAssunto;
     private javax.swing.JTextField txtCSC;
     private javax.swing.JTextField txtCertNumero;
-    private javax.swing.JPasswordField txtCertPassword;
+    private javax.swing.JTextField txtCertPassword;
     private javax.swing.JTextField txtCertPath;
+    private javax.swing.JTextField txtDadosPFX;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFormatoAlerta;
     private javax.swing.JTextField txtHost;
     private javax.swing.JTextField txtIdCSC;
-    private javax.swing.JTextArea txtMensagem;
+    private javax.swing.JTextField txtLogomarca;
+    private javax.swing.JTextField txtLogs;
+    private javax.swing.JTextField txtMensagem;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JPasswordField txtProxySenha;
+    private javax.swing.JTextField txtProxySenha;
     private javax.swing.JTextField txtProxyServidor;
     private javax.swing.JTextField txtProxyUsuario;
     private javax.swing.JTextField txtSchemaPath;

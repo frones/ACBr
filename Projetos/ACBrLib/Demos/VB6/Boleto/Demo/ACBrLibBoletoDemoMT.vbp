@@ -12,6 +12,7 @@ Module=ACBrBoletoUtils; ..\Imports\ACBrBoletoUtils.bas
 Class=ACBrBoleto; ..\Imports\MT\ACBrBoleto.cls
 IconForm="FrmMain"
 Startup="FrmMain"
+ExeName32="ACBrLibBoletoDemoMT.exe"
 Command32=""
 Name="ACBrLibBoletoDemo"
 HelpContextID="0"

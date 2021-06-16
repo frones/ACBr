@@ -1550,9 +1550,7 @@ public class FrmMain extends javax.swing.JFrame {
             int returnVal = chooser.showSaveDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
-            String ret = acbrBoleto.IncluirTitulos(chooser.getSelectedFile().getAbsolutePath(), "");
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );            
-            rtbRespostas.append("\n");    
+            acbrBoleto.IncluirTitulos(chooser.getSelectedFile().getAbsolutePath(), "");
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1562,8 +1560,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnGerarRemessaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRemessaActionPerformed
         try{  
-            int ret = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( ret == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
 
             acbrBoleto.GerarRemessa(txtDirRemessa.getText(),
                         1,
@@ -1590,8 +1587,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
         try{
-            int ret = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( ret == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
             
             acbrBoleto.EnviarEmail(txtEmail.getText(),
                     "Teste envio Boleto", 
@@ -1607,8 +1603,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnGerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarPDFActionPerformed
         try{
-            int ret = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( ret == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
             
             acbrBoleto.GerarPDF();
             rtbRespostas.append("PDF gerado com Sucesso" + "\n");
@@ -1620,7 +1615,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnTotalTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTituloActionPerformed
         try{  
-            String ret = acbrBoleto.TotalTitulosLista();
+            String ret = Integer.toString(acbrBoleto.TotalTitulosLista());
             
             rtbRespostas.append("Total Titulos: " + ret + "\n" );
             
@@ -1643,8 +1638,10 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnListarBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarBancosActionPerformed
         try{
-            String ret = acbrBoleto.ListaBancos();
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );           
+            String[] ret = acbrBoleto.ListaBancos();
+            for(String item : ret){
+                rtbRespostas.insert(item,  rtbRespostas.getCaretPosition());
+            }
             rtbRespostas.append("\n");
             
         } catch (Exception ex) {
@@ -1654,9 +1651,10 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnListarOcorrenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasActionPerformed
         try{
-            String ret = acbrBoleto.ListaOcorrenciasEX();
-            //rtbRespostas.setText(ret);
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );
+            String[] ret = acbrBoleto.ListaOcorrenciasEX();
+            for(String item : ret){
+                rtbRespostas.insert(item,  rtbRespostas.getCaretPosition());
+            }
             rtbRespostas.append("\n");
             
         } catch (Exception ex) {
@@ -1666,8 +1664,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnLinhaDigitavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinhaDigitavelActionPerformed
         try{  
-            int total = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( total == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
             
             String ret = acbrBoleto.RetornaLinhaDigitavel(0);
             rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );            
@@ -1680,8 +1677,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnCodigoBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoBarrasActionPerformed
         try{  
-             int total = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( total == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
             
             String ret = acbrBoleto.RetornaCodigoBarras(0);
             rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );            
@@ -1731,9 +1727,7 @@ public class FrmMain extends javax.swing.JFrame {
             int returnVal = chooser.showSaveDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
-            String ret = acbrBoleto.ConfigurarDados(chooser.getSelectedFile().getAbsolutePath());
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );            
-            rtbRespostas.append("\n");
+            acbrBoleto.ConfigurarDados(chooser.getSelectedFile().getAbsolutePath());
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1817,8 +1811,11 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnListarCaracTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarCaracTitulosActionPerformed
         try{
-            String ret = acbrBoleto.ListaCaractTitulo();
-            rtbRespostas.append(ret);
+            String ret[] = acbrBoleto.ListaCaractTitulo();
+            for(String item : ret){
+                rtbRespostas.insert(item,  rtbRespostas.getCaretPosition());
+            }
+            rtbRespostas.append("\n");
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1827,8 +1824,11 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnListarOcorrenciasExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasExActionPerformed
         try{
-            String ret = acbrBoleto.ListaOcorrenciasEX();
-            rtbRespostas.append(ret);
+            String ret[] = acbrBoleto.ListaOcorrenciasEX();
+            for(String item : ret){
+                rtbRespostas.insert(item,  rtbRespostas.getCaretPosition());
+            }
+            rtbRespostas.append("\n");
         }catch (Exception ex){
            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex); 
         }
@@ -1853,8 +1853,7 @@ public class FrmMain extends javax.swing.JFrame {
         indice = 0;
         
         try{
-            int ret = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( ret == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
 
             acbrBoleto.EnviarEmailBoleto(indice, txtEmail.getText(),
                 "Teste envio Boleto",
@@ -1869,8 +1868,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnGerarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarHTMLActionPerformed
         try{
-            int ret = Integer.parseInt(acbrBoleto.TotalTitulosLista());
-            if ( ret == 0 ) return;
+            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
 
             acbrBoleto.GerarHTML();
             rtbRespostas.append("HTML gerado com Sucesso" + "\n");
@@ -1899,8 +1897,8 @@ public class FrmMain extends javax.swing.JFrame {
         sConvenio = "0";
         
         try{
-            String ret = acbrBoleto.TamNossoNumero(sCarteira,sNossoNumero,sConvenio);
-            rtbRespostas.append(ret);
+            int ret = acbrBoleto.TamNossoNumero(sCarteira,sNossoNumero,sConvenio);
+            rtbRespostas.append(Integer.toString(ret));
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);

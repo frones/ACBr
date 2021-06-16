@@ -27,12 +27,11 @@ public class ACBrLibNFeDemo {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FrmMain frmMain = new FrmMain();
-                frmMain.setIconImage(new ImageIcon(getClass().getResource("/resources/images/acbr_icon.png")).getImage());
-                frmMain.setSize(729, 585);
-                frmMain.setResizable(false);
-                frmMain.setLocationRelativeTo(null);
-                frmMain.setVisible(true);
+               FrmMain frmMain = new FrmMain();
+               frmMain.setIconImage(new ImageIcon(getClass().getResource("/resources/images/acbr_icon.png")).getImage());
+               frmMain.setResizable(false);
+               frmMain.setLocationRelativeTo(null);
+               frmMain.setVisible(true);
             }
         });
     }

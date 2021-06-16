@@ -517,7 +517,11 @@ public class FrmMain extends javax.swing.JFrame {
             if (!Files.isDirectory(path)) {
                 path.toFile().mkdirs();
             }
-
+            
+            for(String porta : posPrinter.AcharPortas()){
+                cmbPorta.addItem(porta);
+            }
+            
             posPrinter.configGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);
             posPrinter.configGravarValor(ACBrSessao.Principal, "LogPath", path);
             posPrinter.configGravar();

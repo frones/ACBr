@@ -421,7 +421,8 @@ begin
   Gerador.wGrupo('instEnsino');
 
   Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
-  if (obj.cnpjInstEnsino = '') then   // Preenchendo somente se não tiver CNPJ
+
+  if (obj.cnpjInstEnsino = '') or (VersaoDF <= ve02_05_00) then   // Preenchendo somente se não tiver CNPJ
   begin
     Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
     Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);

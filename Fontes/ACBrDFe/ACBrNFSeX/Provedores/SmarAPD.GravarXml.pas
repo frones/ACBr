@@ -365,10 +365,8 @@ end;
 
 procedure TNFSeW_SmarAPDv203.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
@@ -380,10 +378,8 @@ end;
 
 procedure TNFSeW_SmarAPDv204.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;

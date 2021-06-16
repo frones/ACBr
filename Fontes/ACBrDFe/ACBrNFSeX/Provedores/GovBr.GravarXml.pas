@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_GovBr.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 1;
   NrOcorrValorISSRetido_1 := -1;
   NrOcorrValorISSRetido_2 := 0;

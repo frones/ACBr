@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_ISSDigital.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrValorISS := 1;
   NrOcorrAliquota := 1;
   NrOcorrProducao := 1;

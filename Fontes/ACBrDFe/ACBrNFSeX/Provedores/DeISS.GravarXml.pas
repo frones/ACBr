@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_DeISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrValTotTrib := 0;
   NrOcorrDescCond := 1;

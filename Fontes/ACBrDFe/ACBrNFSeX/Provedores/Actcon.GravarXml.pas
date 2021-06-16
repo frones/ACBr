@@ -77,10 +77,8 @@ implementation
 
 procedure TNFSeW_Actconv2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   TagTomador := 'TomadorServico';
 end;
 
@@ -89,7 +87,6 @@ end;
 procedure TNFSeW_Actconv201.Configuracao;
 begin
   inherited Configuracao;
-
 end;
 
 { TNFSeW_Actcon202 }
@@ -98,7 +95,6 @@ procedure TNFSeW_Actconv202.Configuracao;
 begin
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoEmissao := tcDatHor;
   TagTomador := 'Tomador';
 end;

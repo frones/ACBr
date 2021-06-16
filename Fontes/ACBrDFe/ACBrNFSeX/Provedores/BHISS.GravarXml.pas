@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_BHISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrCodPaisTomador := -1;
 end;
 

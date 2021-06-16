@@ -185,12 +185,7 @@ begin
   with ConfigGeral do
   begin
     QuebradeLinha := '<br >';
-
     ModoEnvio := meLoteSincrono;
-    {
-    TagRaizNFSe := 'Nota';
-    TagRaizRps  := 'RPS';
-    }
   end;
 
   with ConfigAssinar do
@@ -214,10 +209,7 @@ begin
     Prefixo := 'ns1';
     PrefixoTS := 'tipos';
 
-    with XmlRps do
-    begin
-      xmlns := 'http://localhost:8080/WsNFe2/tp';
-    end;
+    XmlRps.xmlns := 'http://localhost:8080/WsNFe2/tp';
 
     with LoteRps do
     begin
@@ -536,9 +528,7 @@ begin
           begin
             NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.Find('NumeroLote'), tcStr);
             InscricaoPrestador := ProcessarConteudoXml(AuxNode.Childrens.Find('InscricaoPrestador'), tcStr);
-
             CPFCNPJRemetente := ProcessarConteudoXml(AuxNode.Childrens.Find('CPFCNPJRemetente'), tcStr);
-
             DataEnvioLote := ProcessarConteudoXml(AuxNode.Childrens.Find('DataEnvioLote'), tcDatHor);
             QtdNotasProcessadas := ProcessarConteudoXml(AuxNode.Childrens.Find('QtdNotasProcessadas'), tcInt);
             TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.Find('TempoProcessamento'), tcInt);

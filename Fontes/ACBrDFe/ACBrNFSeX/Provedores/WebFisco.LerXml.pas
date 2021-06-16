@@ -76,12 +76,15 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('Nfe', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
-
-//  FpVersao := ConfigGeral.VersaoProv;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)
@@ -107,7 +110,6 @@ begin
     DataEmissao := StrToDateTime(aValor);
 
     CodigoVerificacao := ProcessarConteudo(ANode.Childrens.Find('nfeautenticacao'), tcStr);
-
     Status := StrToStatusRPS(Ok, ProcessarConteudo(ANode.Childrens.Find('nfestatus'), tcStr));
 
 //      <xsd:element name="nfecontrole" type="xsd:string"/>
@@ -256,7 +258,6 @@ begin
       end;
 
       ValorReceitaBruta := ProcessarConteudo(ANode.Childrens.Find('sssrecbr'), tcDe2);
-
       DataInicioAtividade := ProcessarConteudo(ANode.Childrens.Find('ssdtini'), tcDatVcto);
     end;
 

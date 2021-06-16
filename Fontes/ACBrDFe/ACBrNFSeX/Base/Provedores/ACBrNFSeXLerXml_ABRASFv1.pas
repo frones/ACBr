@@ -652,6 +652,8 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  tpXML := TipodeXMLLeitura(Arquivo);
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then

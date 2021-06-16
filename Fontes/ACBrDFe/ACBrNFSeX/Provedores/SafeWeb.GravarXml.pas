@@ -68,10 +68,8 @@ implementation
 
 procedure TNFSeW_SafeWeb.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
   NrOcorrAliquota := 1;

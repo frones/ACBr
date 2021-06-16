@@ -72,10 +72,8 @@ implementation
 
 procedure TNFSeW_Abaco.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrCodPaisTomador := -1;
 end;
 
@@ -83,17 +81,11 @@ end;
 
 procedure TNFSeW_Abacov204.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
-  if NFSe.Servico.ExigibilidadeISS = exiExportacao then
-    NrOcorrCodigoPaisServico := 0
-  else
-    NrOcorrCodigoPaisServico := -1;
+  NrOcorrCodigoPaisServico := 0;
 
   TagTomador := 'TomadorServico';
-//  NrOcorrCodigoPais := -1;
 end;
 
 end.

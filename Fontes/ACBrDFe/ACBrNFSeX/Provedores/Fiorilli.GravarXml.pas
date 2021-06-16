@@ -63,11 +63,13 @@ implementation
 
 procedure TNFSeW_Fiorilli.Configuracao;
 begin
-  inherited;
+  inherited Configuracao;
+
+  FormatoCompetencia := tcDat;
+
   NrOcorrCodigoPaisTomador := -1;
   NrOcorrInscMunTomador := -1;
   NrOcorrCodigoCNAE := -1;
-  FormatoCompetencia := tcDat;
 end;
 
 end.

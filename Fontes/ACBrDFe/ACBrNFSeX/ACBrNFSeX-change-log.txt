@@ -44,6 +44,9 @@ Símbolo : Significado
 
 16/06/2021
 -- Diversos --
+[*] Ajustes diversos em diversas units.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Implementado o provedor FGMaiss.
    Por: Italo Giurizzato Junior
 -- Diversos --

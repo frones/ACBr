@@ -1173,10 +1173,6 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'notasFiscais';  // ou nfeRpsNotaFiscal
-    TagRaizRps  := 'Rps';
-    }
   end;
 
   SetXmlNameSpace('http://www.el.com.br/nfse/xsd/el-nfse.xsd');

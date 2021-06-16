@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_4R.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoEmissao     := tcDatHor;
   FormatoCompetencia := tcDatHor;
   GerarIDDeclaracao  := False;

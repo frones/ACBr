@@ -87,7 +87,6 @@ begin
       with NFSe.Servico.ItemServico[i] do
       begin
         Descricao  := ProcessarConteudo(ANodes[i].Childrens.Find('tsDesSvc'), tcStr);
-
         ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.Find('tsVlrUnt'), tcDe2);
       end;
     end;
@@ -103,6 +102,11 @@ begin
 
   Document.Clear();
   Document.LoadFromXml(Arquivo);
+
+  if (Pos('tcRps', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
 
   XmlNode := Document.Root;
 
@@ -245,9 +249,7 @@ begin
       with IdentificacaoTomador do
       begin
         CpfCnpj := ProcessarConteudo(AuxNode.Childrens.Find('tsNumDocTmd'), tcStr);
-
         InscricaoEstadual := ProcessarConteudo(AuxNode.Childrens.Find('tsInsEstTmd'), tcStr);
-
         InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.Find('tsInsMunTmd'), tcStr);
       end;
 
@@ -256,15 +258,10 @@ begin
       with Endereco do
       begin
         Endereco := ProcessarConteudo(AuxNode.Childrens.Find('tsDesEndTmd'), tcStr);
-
         Bairro := ProcessarConteudo(AuxNode.Childrens.Find('tsNomBaiTmd'), tcStr);
-
         xMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('tsNomCidTmd'), tcStr);
-
         UF := ProcessarConteudo(AuxNode.Childrens.Find('tsCodEstTmd'), tcStr);
-
         CEP := ProcessarConteudo(AuxNode.Childrens.Find('tsCEPTmd'), tcStr);
-
         Endereco := ProcessarConteudo(AuxNode.Childrens.Find('tsDesEndTmd'), tcStr);
       end;
 
@@ -281,41 +278,26 @@ begin
       with Valores do
       begin
         Aliquota := ProcessarConteudo(AuxNode.Childrens.Find('tsPerAlq'), tcDe2);
-
         ValorRepasse := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrRep'), tcDe2);
-
         ValorDeducoes := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrDed'), tcDe2);
-
         DescontoCondicionado := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrDsc'), tcDe2);
-
         ValorPis := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrPIS'), tcDe2);
-
         ValorCofins := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrCOFINS'), tcDe2);
-
         ValorInss := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrINSS'), tcDe2);
-
         ValorIr := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrIR'), tcDe2);
-
         ValorCsll := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrCSLL'), tcDe2);
-
         valorOutrasRetencoes := ProcessarConteudo(AuxNode.Childrens.Find('tsVlrOtrRtn'), tcDe2);
-
         DescricaoOutrasRetencoes := ProcessarConteudo(AuxNode.Childrens.Find('tsDesOtrRtn'), tcStr);
       end;
 
       UFPrestacao := ProcessarConteudo(AuxNode.Childrens.Find('tsEstServ'), tcStr);
-
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('tsMunSvc'), tcStr);
     end;
 
     RegRec := ProcessarConteudo(AuxNode.Childrens.Find('tsRegRec'), tcStr);
-
     FrmRec := ProcessarConteudo(AuxNode.Childrens.Find('tsFrmRec'), tcStr);
-
     DataEmissao := ProcessarConteudo(AuxNode.Childrens.Find('tsDatEmsRps'), tcDat);
-
     TipoRecolhimento := ProcessarConteudo(AuxNode.Childrens.Find('tsTipRec'), tcStr);
-
     OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.Find('tsObs'), tcStr);
 
     LerItensRps(AuxNode);

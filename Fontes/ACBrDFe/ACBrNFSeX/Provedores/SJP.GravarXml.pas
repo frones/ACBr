@@ -63,7 +63,6 @@ implementation
 
 procedure TNFSeW_SJP.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
   PrefixoPadrao := 'tipos';

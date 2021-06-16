@@ -109,10 +109,6 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meLoteSincrono;
-    {
-    TagRaizNFSe := 'Nfse';
-    TagRaizRps  := 'Rps';
-    }
   end;
 
   ConfigAssinar.Rps := True;

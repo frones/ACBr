@@ -110,14 +110,7 @@ procedure TACBrNFSeProviderEquiplano.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'nfse';
-    TagRaizRps  := 'rps';
-    }
-  end;
+  ConfigGeral.ModoEnvio := meLoteAssincrono;
 
   with ConfigAssinar do
   begin

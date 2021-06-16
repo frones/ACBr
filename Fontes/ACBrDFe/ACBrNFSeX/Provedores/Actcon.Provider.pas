@@ -66,7 +66,6 @@ type
   end;
 
   TACBrNFSeProviderActconv201 = class(TACBrNFSeProviderABRASFv2)
-
   protected
     procedure Configuracao; override;
 
@@ -77,13 +76,11 @@ type
   end;
 
   TACBrNFSeProviderActconv202 = class(TACBrNFSeProviderActconv201)
-
   protected
     procedure Configuracao; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
-//    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
   end;
 
@@ -380,11 +377,5 @@ begin
   Result := TNFSeR_Actconv202.Create(Self);
   Result.NFSe := ANFSe;
 end;
-{
-function TACBrNFSeProviderActconv202.CriarServiceClient(
-  const AMetodo: TMetodo): TACBrNFSeXWebservice;
-begin
 
-end;
-}
 end.

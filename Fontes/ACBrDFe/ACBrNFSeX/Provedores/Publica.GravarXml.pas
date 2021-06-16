@@ -69,10 +69,8 @@ implementation
 
 procedure TNFSeW_Publica.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrCodigoCnae := -1;
   NrOcorrCodTribMun := -1;
 

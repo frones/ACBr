@@ -263,12 +263,15 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('notaFiscal', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
-
-//  FpVersao := ConfigGeral.VersaoProv;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

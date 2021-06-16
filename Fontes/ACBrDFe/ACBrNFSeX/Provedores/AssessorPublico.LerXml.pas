@@ -76,6 +76,11 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('NOTA', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then

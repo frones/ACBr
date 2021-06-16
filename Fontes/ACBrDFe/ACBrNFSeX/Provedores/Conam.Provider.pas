@@ -112,10 +112,6 @@ begin
 
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := '';  // Verificar
-    TagRaizRps  := 'nfe:Reg20Item';
-    }
   end;
 
   SetXmlNameSpace('');

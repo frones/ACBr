@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_Prodata.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrRespRetencao := 0;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
@@ -74,9 +72,9 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
-  NrOcorrAliquota     := 1;
+  NrOcorrAliquota := 1;
   NrOcorrRespRetencao := 0;
-  NrOcorrValorISS     := -1;
+  NrOcorrValorISS := -1;
 end;
 
 end.

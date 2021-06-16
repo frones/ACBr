@@ -96,10 +96,6 @@ begin
 
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
-    {
-    TagRaizNFSe := 'Nota';
-    TagRaizRps  := 'Nota';
-    }
   end;
 
   SetXmlNameSpace('NotaFiscal-Geracao.xsd');

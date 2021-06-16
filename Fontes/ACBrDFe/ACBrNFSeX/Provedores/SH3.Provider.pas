@@ -83,8 +83,6 @@ begin
   ConfigGeral.QuebradeLinha := '&lt;br&gt';
 
   ConfigAssinar.LoteRps := True;
-
-  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
 function TACBrNFSeProviderSH3.CriarGeradorXml(

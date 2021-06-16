@@ -100,10 +100,6 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'eis:NotaFiscal';
-    TagRaizRps  := 'eis:NotaFiscal';
-    }
   end;
 
   SetXmlNameSpace('');
@@ -261,7 +257,6 @@ procedure TACBrNFSeProvidereGoverneISS.TratarRetornoEmitir(Response: TNFSeEmiteR
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -325,7 +320,6 @@ procedure TACBrNFSeProvidereGoverneISS.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 

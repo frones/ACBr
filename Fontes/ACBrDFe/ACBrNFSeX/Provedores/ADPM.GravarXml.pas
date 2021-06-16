@@ -64,7 +64,6 @@ implementation
 
 procedure TNFSeW_ADPM.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
   FormatoAliq := tcDe2;

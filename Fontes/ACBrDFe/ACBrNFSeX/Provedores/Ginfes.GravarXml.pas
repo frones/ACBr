@@ -66,10 +66,8 @@ implementation
 
 procedure TNFSeW_Ginfes.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 0;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

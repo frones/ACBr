@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_Natal.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrBaseCalc := 1;
 end;
 

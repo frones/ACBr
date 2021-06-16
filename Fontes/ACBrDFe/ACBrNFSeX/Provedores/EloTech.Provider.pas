@@ -92,46 +92,7 @@ begin
 
   SetXmlNameSpace('http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd');
 
-  with ConfigMsgDados do
-  begin
-    with LoteRps do
-    begin
-//      GerarID := False;
-    end;
-
-    with ConsultarLote do
-    begin
-//      NrOcorrNumLote   := 1;
-//      NrOcorrProtocolo := -1;
-    end;
-
-    with ConsultarNFSeRps do
-    begin
-//      GerarGrupoRequerente := True;
-//      GerarGrupoPrestador  := False;
-    end;
-
-    with ConsultarNFSe do
-    begin
-//      GerarGrupoRequerente := True;
-//      GerarGrupoPrestador  := False;
-    end;
-
-    with CancelarNFSe do
-    begin
-//      GerarIDInfPedCanc  := False;
-//      NrOcorrChaveAcesso := -1;
-    end;
-
-    with SubstituirNFSe do
-    begin
-//      GerarIDSubstituicaoNFSe := False;
-//      GerarGrupoCPFCNPJ       := True;
-    end;
-  end;
-
   SetNomeXSD('nfse_v2_03.xsd');
-//  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderEloTech.CriarGeradorXml(

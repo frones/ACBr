@@ -80,7 +80,6 @@ begin
       with Prestador do
       begin
         crc := ProcessarConteudo(AuxNode.Childrens.Find('crc'), tcStr);
-
         crc_estado := ProcessarConteudo(AuxNode.Childrens.Find('crc_estado'), tcStr);
 
         with IdentificacaoPrestador do
@@ -111,7 +110,6 @@ begin
       with Prestador do
       begin
         crc := ProcessarConteudo(AuxNode.Childrens.Find('crc'), tcStr);
-
         crc_estado := ProcessarConteudo(AuxNode.Childrens.Find('crc_estado'), tcStr);
 
         with IdentificacaoPrestador do
@@ -126,31 +124,22 @@ begin
       end;
 
       id_sis_legado := ProcessarConteudo(AuxNode.Childrens.Find('id_sis_legado'), tcStr);
-
       SituacaoTrib := ProcessarConteudo(AuxNode.Childrens.Find('situacao'), tcStr);
 
       with Servico do
       begin
         Discriminacao := ProcessarConteudo(AuxNode.Childrens.Find('descricaoNF'), tcStr);
-
         CodigoTributacaoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('servico'), tcStr);
-
         MunicipioIncidencia := ProcessarConteudo(AuxNode.Childrens.Find('codigo_cidade_local_servico'), tcInt);
 
         with Valores do
         begin
           ValorServicos := ProcessarConteudo(AuxNode.Childrens.Find('valor'), tcDe4);
-
           BaseCalculo := ProcessarConteudo(AuxNode.Childrens.Find('base'), tcDe4);
-
           ValorInss := ProcessarConteudo(AuxNode.Childrens.Find('valor_inss'), tcDe4);
-
           ValorIr := ProcessarConteudo(AuxNode.Childrens.Find('valor_ir'), tcDe4);
-
           ValorPis := ProcessarConteudo(AuxNode.Childrens.Find('valor_pis'), tcDe4);
-
           ValorCofins := ProcessarConteudo(AuxNode.Childrens.Find('valor_cofins'), tcDe4);
-
           ValorCsll := ProcessarConteudo(AuxNode.Childrens.Find('valor_csll'), tcDe4);
         end;
       end;
@@ -160,44 +149,33 @@ begin
         with IdentificacaoTomador do
         begin
           Tipo := ProcessarConteudo(AuxNode.Childrens.Find('tomador_tipo'), tcStr);
-
           CpfCnpj := ProcessarConteudo(AuxNode.Childrens.Find('tomador_cnpj'), tcStr);
-
           InscricaoEstadual := ProcessarConteudo(AuxNode.Childrens.Find('tomador_ie'), tcStr);
-
           InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.Find('tomador_im'), tcStr);
         end;
 
         with Contato do
         begin
           Email := ProcessarConteudo(AuxNode.Childrens.Find('tomador_email'), tcStr);
-
           Telefone := ProcessarConteudo(AuxNode.Childrens.Find('tomador_fone'), tcStr);
         end;
 
         RazaoSocial := ProcessarConteudo(AuxNode.Childrens.Find('tomador_razao'), tcStr);
-
         NomeFantasia := ProcessarConteudo(AuxNode.Childrens.Find('tomador_fantasia'), tcStr);
 
         with Endereco do
         begin
           Endereco := ProcessarConteudo(AuxNode.Childrens.Find('tomador_endereco'), tcStr);
-
           Numero := ProcessarConteudo(AuxNode.Childrens.Find('tomador_numero'), tcStr);
-
           Complemento := ProcessarConteudo(AuxNode.Childrens.Find('tomador_complemento'), tcStr);
-
           Bairro := ProcessarConteudo(AuxNode.Childrens.Find('tomador_bairro'), tcStr);
-
           CEP := ProcessarConteudo(AuxNode.Childrens.Find('tomador_CEP'), tcStr);
-
           CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('tomador_cod_cidade'), tcStr);
         end;
 
         with IdentificacaoRps do
         begin
           Numero := ProcessarConteudo(AuxNode.Childrens.Find('rps_num'), tcStr);
-
           Serie := ProcessarConteudo(AuxNode.Childrens.Find('rps_serie'), tcStr);
         end;
       end;
@@ -220,6 +198,11 @@ begin
 
   Document.Clear();
   Document.LoadFromXml(Arquivo);
+
+  if (Pos('Nota', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
 
   XmlNode := Document.Root;
 

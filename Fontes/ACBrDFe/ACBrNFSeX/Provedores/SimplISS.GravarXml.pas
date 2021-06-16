@@ -76,10 +76,8 @@ implementation
 
 procedure TNFSeW_SimplISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrOutrasInformacoes := 0;
   NrOcorrInscEstTomador := 0;
 
@@ -115,10 +113,8 @@ end;
 
 procedure TNFSeW_SimplISSv2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;

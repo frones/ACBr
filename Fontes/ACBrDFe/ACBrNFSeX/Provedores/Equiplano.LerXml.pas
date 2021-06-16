@@ -143,6 +143,11 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('nfse', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
@@ -294,20 +299,16 @@ begin
     with IdentificacaoRps do
     begin
       Numero := ProcessarConteudo(ANode.Childrens.Find('nrRps'), tcStr);
-
       Serie := ProcessarConteudo(ANode.Childrens.Find('nrEmissorRps'), tcStr);
     end;
 
     DataEmissao := ProcessarConteudo(ANode.Childrens.Find('dtEmissaoRps'), tcDatHor);
-
     NaturezaOperacao := ProcessarConteudo(ANode.Childrens.Find('tpTributacao'), tcStr);
 
     with Servico.Valores do
     begin
       IssRetido := StrToSituacaoTributaria(Ok, ProcessarConteudo(ANode.Childrens.Find('isIssRetido'), tcStr));
-
       ValorServicos := ProcessarConteudo(ANode.Childrens.Find('vlTotalRps'), tcDe2);
-
       ValorLiquidoNfse := ProcessarConteudo(ANode.Childrens.Find('vlLiquidoRps'), tcDe2);
     end;
 
@@ -322,7 +323,6 @@ begin
         with Contato do
         begin
           Email := ProcessarConteudo(AuxNode.Childrens.Find('dsEmail'), tcStr);
-
           Telefone := ProcessarConteudo(AuxNode.Childrens.Find('nrTelefone'), tcStr);
         end;
 
@@ -334,19 +334,12 @@ begin
         with Endereco do
         begin
           Endereco := ProcessarConteudo(AuxNode.Childrens.Find('dsEndereco'), tcStr);
-
           Numero := ProcessarConteudo(AuxNode.Childrens.Find('nrEndereco'), tcStr);
-
           Complemento := ProcessarConteudo(AuxNode.Childrens.Find('dsComplemento'), tcStr);
-
           Bairro := ProcessarConteudo(AuxNode.Childrens.Find('nmBairro'), tcStr);
-
           CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('nrCidadeIbge'), tcStr);
-
           UF := ProcessarConteudo(AuxNode.Childrens.Find('nmUf'), tcStr);
-
           xPais := ProcessarConteudo(AuxNode.Childrens.Find('nmPais'), tcStr);
-
           CEP := ProcessarConteudo(AuxNode.Childrens.Find('nrCep'), tcStr);
         end;
 
@@ -357,7 +350,6 @@ begin
           with IdentificacaoTomador do
           begin
             CpfCnpj := ProcessarConteudo(AuxNode.Childrens.Find('nrDocumento'), tcStr);
-
             DocTomadorEstrangeiro := ProcessarConteudo(AuxNode.Childrens.Find('dsDocumentoEstrangeiro'), tcStr);
           end;
         end;

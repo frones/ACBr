@@ -90,7 +90,6 @@ type
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
-//    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
   TACBrNFSeXWebserviceInfiscv2 = class(TACBrNFSeXWebserviceSoap11)
@@ -136,10 +135,6 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'NFS-e';  // resPedidoLoteNFSe
-    TagRaizRps  := 'NFS-e';
-    }
   end;
 
   with ConfigWebServices do
@@ -150,39 +145,6 @@ begin
   end;
 
   SetXmlNameSpace('http://ws.pc.gif.com.br/');
-
-  with ConfigMsgDados do
-  begin
-    {italo
-    with LoteRps do
-    begin
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'infNFSe';
-    end;
-
-    TagGrupoRecep    := '';
-    TagGrupoConsLote := 'pedidoStatusLote';
-    TagGrupoConsNFSe := 'obterLoteNotaFiscal'; //'pedidoLoteNFSe';
-    TagGrupoCancelar := 'pedCancelaNFSe';
-    }
-  end;
-
-  {italo
-  with ConfigRetorno do
-  begin
-    RetornoNFSe := '<NFS-e xmlns="' + ConfigMsgDados.xmlnsRps +
-                             '">%DadosNFSe%</NFS-e>';
-  end;
-  }
-
-  // Para Garibaldi/RS devemos usar o arquivo XSD:
-  // schemaNFS.xsd em vez de nfse-v11.xsd
-  {
-  if TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio <> 4308607 then
-    SetNomeXSD('schemaNFS.xsd')
-  else
-    SetNomeXSD('nfse-v11.xsd');
-  }
 end;
 
 function TACBrNFSeProviderInfiscv100.CriarGeradorXml(
@@ -818,13 +780,7 @@ begin
   Result := TNFSeR_Infisc.Create(Self);
   Result.NFSe := ANFSe;
 end;
-{
-function TACBrNFSeProviderInfiscv110.CriarServiceClient(
-  const AMetodo: TMetodo): TACBrNFSeXWebservice;
-begin
 
-end;
-}
 { TACBrNFSeProviderInfiscv2 }
 
 procedure TACBrNFSeProviderInfiscv2.Configuracao;

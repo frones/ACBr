@@ -135,7 +135,6 @@ begin
           BaseCalculo   := ProcessarConteudo(ANodes[i].Childrens.Find('valor_tributavel'), tcDe2);
           ValorIss      := BaseCalculo * Aliquota / 100;
 
-
           Valores.ValorIssRetido := Valores.ValorIssRetido +
               ProcessarConteudo(ANodes[i].Childrens.Find('valor_issrf'), tcDe2);
           Valores.BaseCalculo    := Valores.BaseCalculo + BaseCalculo;
@@ -317,12 +316,15 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('nfse', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
-
-//  FpVersao := ConfigGeral.VersaoProv;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

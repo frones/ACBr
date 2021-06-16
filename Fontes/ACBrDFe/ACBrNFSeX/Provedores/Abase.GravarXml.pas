@@ -41,7 +41,7 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_ABase }
@@ -63,11 +63,7 @@ implementation
 
 procedure TNFSeW_ABase.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
-
-  // Altera a Configuração Padrão para gerar o XML do RPS
-
 end;
 
 end.

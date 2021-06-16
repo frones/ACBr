@@ -130,10 +130,6 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'nfse';
-    TagRaizRps  := 'nfse';
-    }
   end;
 
   SetXmlNameSpace('');

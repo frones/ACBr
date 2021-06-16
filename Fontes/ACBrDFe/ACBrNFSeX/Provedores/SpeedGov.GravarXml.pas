@@ -64,7 +64,6 @@ implementation
 
 procedure TNFSeW_SpeedGov.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
   PrefixoPadrao := 'p1';

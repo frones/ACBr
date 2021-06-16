@@ -84,12 +84,11 @@ begin
 
   with ConfigAssinar do
   begin
-    LoteRps           := True;
+    LoteRps := True;
     ConsultarSituacao := True;
-    ConsultarLote     := True;
-    ConsultarNFSeRps  := True;
-//    ConsultarNFSe     := True;
-    CancelarNFSe      := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    CancelarNFSe := True;
   end;
 end;
 

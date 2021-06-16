@@ -73,15 +73,12 @@ implementation
 
 procedure TNFSeW_Betha.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrOutrasInformacoes := 0;
-  NrOcorrValorISSRetido_1  := -1;
-  NrOcorrValorISSRetido_2  := 0;
-  NrOcorrInscEstTomador    := 0;
-  //PrefixoPadrao := 'ns3';
+  NrOcorrValorISSRetido_1 := -1;
+  NrOcorrValorISSRetido_2 := 0;
+  NrOcorrInscEstTomador := 0;
 end;
 
 function TNFSeW_Betha.GerarCondicaoPagamento: TACBrXmlNode;
@@ -143,12 +140,9 @@ end;
 
 procedure TNFSeW_Bethav2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrCodigoPaisServico := -1;
-
 end;
 
 end.

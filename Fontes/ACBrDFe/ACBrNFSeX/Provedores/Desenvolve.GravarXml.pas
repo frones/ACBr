@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_Desenvolve.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrAliquota := 1;
   NrOcorrCodigoCNAE := 1;

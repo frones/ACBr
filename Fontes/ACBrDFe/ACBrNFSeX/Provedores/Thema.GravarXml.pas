@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_Thema.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

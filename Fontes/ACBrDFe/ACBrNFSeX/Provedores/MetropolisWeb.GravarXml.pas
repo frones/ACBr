@@ -65,7 +65,6 @@ procedure TNFSeW_MetropolisWeb.Configuracao;
 begin
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 1;
 end;
 

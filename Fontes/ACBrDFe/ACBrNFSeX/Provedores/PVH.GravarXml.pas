@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_PVH.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrRegimeEspecialTributacao := 1;
 end;
 

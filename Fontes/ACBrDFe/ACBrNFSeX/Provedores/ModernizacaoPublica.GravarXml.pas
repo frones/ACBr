@@ -49,9 +49,9 @@ type
 
   TNFSeW_ModernizacaoPublica = class(TNFSeW_ABRASFv2)
   protected
-    procedure DefinirIDRps; override;
-
     procedure Configuracao; override;
+
+    procedure DefinirIDRps; override;
 
   end;
 
@@ -66,10 +66,8 @@ implementation
 
 procedure TNFSeW_ModernizacaoPublica.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 1;
 
   GerarIDRps := True;

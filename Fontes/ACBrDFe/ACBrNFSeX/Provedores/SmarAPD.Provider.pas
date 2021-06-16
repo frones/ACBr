@@ -148,10 +148,6 @@ begin
   begin
     Identificador := 'id';
     ModoEnvio := meLoteAssincrono;
-    {italo
-    TagRaizNFSe := 'nfdok'; // Verificar
-    TagRaizRps  := 'nfd';
-    }
   end;
 
   with ConfigAssinar do

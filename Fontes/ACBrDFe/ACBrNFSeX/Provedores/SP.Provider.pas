@@ -189,11 +189,6 @@ begin
     Identificador := '';
     QuebradeLinha := '|';
     ModoEnvio := meLoteAssincrono;
-
-    {italo
-    TagRaizNFSe := 'NFe';
-    TagRaizRps  := 'RPS';
-    }
   end;
 
   with ConfigAssinar do

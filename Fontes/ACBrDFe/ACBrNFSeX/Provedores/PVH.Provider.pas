@@ -88,13 +88,6 @@ begin
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
   end;
-
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="2.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                      '<versaoDados>2.00</versaoDados>' +
-                      '</cabecalho>';
-  end;
 end;
 
 function TACBrNFSeProviderPVH.CriarGeradorXml(

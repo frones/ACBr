@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_Giss.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrCodigoPaisServico := -1;
   TagTomador := 'TomadorServico';

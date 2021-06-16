@@ -128,15 +128,10 @@ begin
     with NFSe.Tomador.Endereco do
     begin
       Endereco := ProcessarConteudo(AuxNode.Childrens.Find('Rua'), tcStr);
-
       Numero := ProcessarConteudo(AuxNode.Childrens.Find('Numero'), tcStr);
-
       Bairro := ProcessarConteudo(AuxNode.Childrens.Find('Bairro'), tcStr);
-
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('Cidade'), tcStr);
-
       UF := ProcessarConteudo(AuxNode.Childrens.Find('Estado'), tcStr);
-
       CEP := ProcessarConteudo(AuxNode.Childrens.Find('Cep'), tcStr);
     end;
   end;
@@ -153,7 +148,6 @@ begin
     with NFSe do
     begin
       numero := ProcessarConteudo(AuxNode.Childrens.Find('NumeroNfse'), tcStr);
-
       CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.Find('CodigoVerificacao'), tcStr);
     end;
   end;
@@ -170,7 +164,6 @@ begin
     with NFSe.Prestador.IdentificacaoPrestador do
     begin
       Cnpj := ProcessarConteudo(AuxNode.Childrens.Find('CnpjCpf'), tcStr);
-
       InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.Find('InscricaoMunicipal'), tcStr);
     end;
   end;
@@ -217,7 +210,6 @@ begin
     with NFSe.Servico do
     begin
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('CodigoMunicipio'), tcStr);
-
       UFPrestacao := ProcessarConteudo(AuxNode.Childrens.Find('Uf'), tcStr);
     end;
   end;
@@ -234,13 +226,9 @@ begin
     with NFSe.Servico.Valores do
     begin
       ValorPis := ProcessarConteudo(AuxNode.Childrens.Find('Pis'), tcDe2);
-
       ValorCofins := ProcessarConteudo(AuxNode.Childrens.Find('Cofins'), tcDe2);
-
       ValorCsll := ProcessarConteudo(AuxNode.Childrens.Find('Csll'), tcDe2);
-
       ValorIr := ProcessarConteudo(AuxNode.Childrens.Find('Irrf'), tcDe2);
-
       ValorInss := ProcessarConteudo(AuxNode.Childrens.Find('Inss'), tcDe2);
     end;
   end;
@@ -279,9 +267,7 @@ begin
       LerValores(AuxNode);
 
       ItemListaServico := ProcessarConteudo(AuxNode.Childrens.Find('CodigoServico'), tcStr);
-
       Discriminacao := ProcessarConteudo(AuxNode.Childrens.Find('Discriminacao'), tcStr);
-
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('MunicipioPrestacaoServico'), tcStr);
 
 //                    <xs:element name="TipoLancamento" type="xs:string"></xs:element>
@@ -319,13 +305,9 @@ begin
     with NFSe.Servico.Valores do
     begin
       ValorServicos := ProcessarConteudo(AuxNode.Childrens.Find('ValorServicos'), tcDe2);
-
       BaseCalculo := ProcessarConteudo(AuxNode.Childrens.Find('BaseCalculo'), tcDe2);
-
       Aliquota := ProcessarConteudo(AuxNode.Childrens.Find('Aliquota'), tcDe2);
-
       ValorIss := ProcessarConteudo(AuxNode.Childrens.Find('IssDevido'), tcDe2);
-
       ValorIssRetido := ProcessarConteudo(AuxNode.Childrens.Find('IssRetido'), tcDe2);
     end;
   end;
@@ -341,12 +323,15 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('Nfse', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
-
-//  FpVersao := ConfigGeral.VersaoProv;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

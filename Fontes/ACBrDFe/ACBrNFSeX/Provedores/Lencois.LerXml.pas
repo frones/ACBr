@@ -82,13 +82,9 @@ begin
     with NFSe.Tomador.Endereco do
     begin
       Endereco := ProcessarConteudo(AuxNode.Childrens.Find('Logradouro'), tcStr);
-
       Numero := ProcessarConteudo(AuxNode.Childrens.Find('Numero'), tcStr);
-
       Complemento := ProcessarConteudo(AuxNode.Childrens.Find('Complemento'), tcStr);
-
       Bairro := ProcessarConteudo(AuxNode.Childrens.Find('Bairro'), tcStr);
-
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.Find('Municipio'), tcStr);
     end;
   end;
@@ -105,7 +101,6 @@ begin
     with NFSe do
     begin
       Numero := ProcessarConteudo(AuxNode.Childrens.Find('Numero'), tcStr);
-
       DataEmissao := ProcessarConteudo(AuxNode.Childrens.Find('Data'), tcDat);
     end;
   end;
@@ -174,6 +169,11 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
+  if (Pos('Nota', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
   XmlNode := Document.Root;
 
   if XmlNode = nil then
@@ -224,29 +224,19 @@ begin
     with Servico do
     begin
       CodigoMunicipio := ProcessarConteudo(ANode.Childrens.Find('CidadeExecucao'), tcStr);
-
       Descricao := ProcessarConteudo(ANode.Childrens.Find('Descricao'), tcStr);
 
       with Valores do
       begin
         ValorServicos := ProcessarConteudo(ANode.Childrens.Find('ValorTotal'), tcDe2);
-
         ValorDeducoes := ProcessarConteudo(ANode.Childrens.Find('ValorDeducao'), tcDe2);
-
         Aliquota := ProcessarConteudo(ANode.Childrens.Find('Aliquota'), tcDe6);
-
         ValorPis := ProcessarConteudo(ANode.Childrens.Find('ValorPIS'), tcDe2);
-
         ValorCofins := ProcessarConteudo(ANode.Childrens.Find('ValorCOFINS'), tcDe2);
-
         ValorIr := ProcessarConteudo(ANode.Childrens.Find('RetencaoIRRF'), tcDe2);
-
         ValorInss := ProcessarConteudo(ANode.Childrens.Find('RetencaoINSS'), tcDe2);
-
         ValorPis := ProcessarConteudo(ANode.Childrens.Find('RetencaoPIS'), tcDe2);
-
         ValorCofins := ProcessarConteudo(ANode.Childrens.Find('RetencaoCOFINS'), tcDe2);
-
         ValorCsll := ProcessarConteudo(ANode.Childrens.Find('RetencaoCSLL'), tcDe2);
       end;
     end;

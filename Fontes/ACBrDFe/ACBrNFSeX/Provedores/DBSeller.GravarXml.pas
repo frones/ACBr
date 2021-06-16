@@ -47,6 +47,7 @@ type
   { TNFSeW_DBSeller }
 
   TNFSeW_DBSeller = class(TNFSeW_ABRASFv1)
+
   end;
 
 implementation

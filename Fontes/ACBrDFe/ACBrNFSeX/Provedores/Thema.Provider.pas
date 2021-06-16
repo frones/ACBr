@@ -84,7 +84,6 @@ begin
   // de RPS no lote seja superior a 3, ou seja, 4 ou mais
   FPMsgOrig := AMSG;
 
-//      IncluirEncodingDados := True;
   Request := '<recepcionarLoteRps xmlns="http://server.nfse.thema.inf.br">';
   Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
   Request := Request + '</recepcionarLoteRps>';
@@ -103,7 +102,6 @@ begin
   // de RPS no lote seja inferior a 4.
   FPMsgOrig := AMSG;
 
-//      IncluirEncodingDados := True;
   Request := '<recepcionarLoteRpsLimitado xmlns="http://server.nfse.thema.inf.br">';
   Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
   Request := Request + '</recepcionarLoteRpsLimitado>';

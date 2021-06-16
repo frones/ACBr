@@ -63,10 +63,8 @@ implementation
 
 procedure TNFSeW_ISSCuritiba.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   DivAliq100 := True;
 end;
 

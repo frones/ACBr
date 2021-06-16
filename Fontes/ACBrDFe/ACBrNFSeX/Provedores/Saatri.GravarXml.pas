@@ -67,10 +67,8 @@ implementation
 
 procedure TNFSeW_Saatri.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrValorISS := 1;
   NrOcorrAliquota := 1;
 

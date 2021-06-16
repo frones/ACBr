@@ -102,10 +102,8 @@ implementation
 
 procedure TNFSeW_Agili.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   case CodMunEmit of
     1505031,
     5104526: FpAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
@@ -116,48 +114,7 @@ begin
     FpAtividadeEconomica := 'CodigoAtividadeEconomica';
   end;
 end;
-{
-procedure TNFSeW_Agili.ConfigurarEnvelopes;
-begin
-  with ConfigEnvelope do
-  begin
-    with ConsultarLote do
-    begin
-      ElementoCabecalho   := '';
-      ElementoDados       := '';
-      ServicoImplementado := True;
-    end;
 
-    with ConsultarNFSePorRps do
-    begin
-      ElementoCabecalho   := '';
-      ElementoDados       := '';
-      ServicoImplementado := True;
-    end;
-
-    with ConsultarNFSe do
-    begin
-      ElementoCabecalho   := '';
-      ElementoDados       := '';
-      ServicoImplementado := True;
-    end;
-
-    with Cancelar do
-    begin
-      ElementoCabecalho   := '';
-      ElementoDados       := '';
-      ServicoImplementado := True;
-    end;
-
-    with SubstituirNFSe do
-    begin
-      ElementoCabecalho   := '';
-      ElementoDados       := '';
-      ServicoImplementado := True;
-    end;
-  end;
-end;
-}
 function TNFSeW_Agili.ExigibISSToStr(
   const t: TnfseExigibilidadeISS): String;
 begin

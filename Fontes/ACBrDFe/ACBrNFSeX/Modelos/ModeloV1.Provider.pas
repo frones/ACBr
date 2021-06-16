@@ -124,11 +124,14 @@ begin
     // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
     Prefixo := '';
 
-//    DadosCabecalho := GetCabecalho('');
+    DadosCabecalho := GetCabecalho('');
+
+    { caso tenha um cabeçalho fora do padrão montar ele conforme exemplo abaixo
 
     DadosCabecalho := '<cabecalho versao="1.00" xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">' +
                       '<versaoDados>1.00</versaoDados>' +
                       '</cabecalho>';
+    }
 
     // Usado para geração do Xml do Rps
     with XmlRps do

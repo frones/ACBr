@@ -80,13 +80,6 @@ begin
 
   SetXmlNameSpace('http://megasoftarrecadanet.com.br/xsd/nfse_v01.xsd');
 
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="2.00" xmlns="http://megasoftarrecadanet.com.br/xsd/nfse_v01.xsd">' +
-                      '<versaoDados>2.00</versaoDados>' +
-                      '</cabecalho>';
-  end;
-
   SetNomeXSD('nfse_v01.xsd');
 end;
 

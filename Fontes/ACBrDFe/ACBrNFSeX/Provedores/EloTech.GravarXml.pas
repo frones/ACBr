@@ -68,10 +68,8 @@ implementation
 
 procedure TNFSeW_Elotech.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrRespRetencao := 0;
   NrOcorrCodigoMunic_2 := 1;
   NrOcorrOptanteSimplesNacional := -1;

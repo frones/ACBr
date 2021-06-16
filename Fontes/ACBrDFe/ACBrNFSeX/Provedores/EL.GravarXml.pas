@@ -532,10 +532,8 @@ end;
 
 procedure TNFSeW_ELv2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrCepTomador := 1;

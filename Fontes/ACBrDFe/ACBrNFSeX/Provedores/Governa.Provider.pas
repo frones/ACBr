@@ -100,10 +100,6 @@ begin
 
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'tcRps';  // Verificar.
-    TagRaizRps  := 'tcRps';
-    }
   end;
 
   SetXmlNameSpace('http://tempuri.org/');

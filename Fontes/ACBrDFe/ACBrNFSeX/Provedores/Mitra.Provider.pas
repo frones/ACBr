@@ -96,13 +96,15 @@ begin
   NameSpace := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
   SetXmlNameSpace(NameSpace);
 
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+  {
   with ConfigMsgDados do
   begin
     DadosCabecalho := '<cabecalho versao="1.00" xmlns="' + NameSpace + '">' +
                       '<versaoDados>1.00</versaoDados>' +
                       '</cabecalho>';
   end;
-
+  }
   SetNomeXSD('rps_importacao_manual.xsd');
 end;
 

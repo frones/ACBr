@@ -71,7 +71,6 @@ implementation
 
 procedure TNFSeW_eGoverneISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
 end;

@@ -71,10 +71,8 @@ implementation
 
 procedure TNFSeW_WebISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrAliquota := 1;
 end;
 

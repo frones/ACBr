@@ -90,28 +90,7 @@ type
   TNFSeW_Infiscv110 = class(TNFSeW_Infiscv100)
   protected
     procedure Configuracao; override;
-    {
-    function GerarinfNFSe: TACBrXmlNode;
-    function GerarID: TACBrXmlNode;
-    function GerarEmitente: TACBrXmlNode;
-    function GerarEnderecoEmitente: TACBrXmlNode;
-    function GerarTomador: TACBrXmlNode;
-    function GerarEnderecoTomador: TACBrXmlNode;
-    function GerarDadosdaObra: TACBrXmlNode;
-    function GerarTransportadora: TACBrXmlNode;
-    function GerarDetalhamento: TACBrXmlNodeArray;
-    function GerarServico(Item: Integer): TACBrXmlNode;
-    function GerarISSST(Item: Integer): TACBrXmlNode;
-    function GerarTotal: TACBrXmlNode;
-    function GerarRetencao: TACBrXmlNode;
-    function GerarISS: TACBrXmlNode;
-    function GerarCobranca: TACBrXmlNode;
-    function GerarDuplicatas: TACBrXmlNodeArray;
 
-    function GerarObservacoes: TACBrXmlNode;
-  public
-    function GerarXml: Boolean; override;
-  }
   end;
 
   { TNFSeW_Infiscv2 }
@@ -1151,10 +1130,7 @@ end;
 
 procedure TNFSeW_Infiscv2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
-
-//  PrefixoPadrao := 'nfse';
 end;
 
 procedure TNFSeW_Infiscv2.DefinirIDRps;

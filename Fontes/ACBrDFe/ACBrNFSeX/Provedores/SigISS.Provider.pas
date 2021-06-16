@@ -95,18 +95,11 @@ procedure TACBrNFSeProviderSigISS.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    ModoEnvio := meUnitario;
-
-    {
-    TagRaizNFSe := 'Nota'; // Verificar
-    TagRaizRps  := 'GerarNota';
-    }
-  end;
+  ConfigGeral.ModoEnvio := meUnitario;
 
   SetXmlNameSpace('urn:sigiss_ws');
 
+  {
   with ConfigMsgDados do
   begin
     with ConsultarNFSe do
@@ -127,7 +120,7 @@ begin
       DocElemento := 'GerarCancelaNfe';
     end;
   end;
-
+  }
   ConfigSchemas.Validar := False;
 end;
 

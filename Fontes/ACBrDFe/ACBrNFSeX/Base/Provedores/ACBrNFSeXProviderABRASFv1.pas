@@ -101,7 +101,6 @@ begin
     VersaoAtrib := '1.00';
   end;
 
-
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 

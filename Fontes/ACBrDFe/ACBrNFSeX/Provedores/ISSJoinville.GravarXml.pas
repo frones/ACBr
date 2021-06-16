@@ -64,10 +64,8 @@ implementation
 
 procedure TNFSeW_ISSJoinville.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
 
   NrOcorrNIFTomador := 0;
@@ -78,7 +76,7 @@ begin
 
   TagTomador := 'TomadorServico';
 
-  FPrefixoPadrao := 'nfem';
+  PrefixoPadrao := 'nfem';
 end;
 
 end.

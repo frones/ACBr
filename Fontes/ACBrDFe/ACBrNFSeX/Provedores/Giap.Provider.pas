@@ -104,10 +104,6 @@ begin
 
     UseAuthorizationHeader := True;
     ModoEnvio := meLoteAssincrono;
-    {
-    TagRaizNFSe := 'notaFiscal';
-    TagRaizRps  := 'notaFiscal';
-    }
   end;
 
   SetXmlNameSpace('');

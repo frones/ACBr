@@ -86,10 +86,8 @@ implementation
 
 procedure TNFSeW_Pronim.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   NrOcorrOutrasRet := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
@@ -107,7 +105,6 @@ end;
 
 procedure TNFSeW_Pronimv2.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
   NrOcorrAliquota := 0;

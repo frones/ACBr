@@ -68,10 +68,8 @@ implementation
 
 procedure TNFSeW_iiBrasil.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
   TagTomador  := 'TomadorServico';
 

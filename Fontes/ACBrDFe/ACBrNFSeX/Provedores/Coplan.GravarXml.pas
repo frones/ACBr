@@ -64,13 +64,12 @@ implementation
 
 procedure TNFSeW_Coplan.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FormatoAliq := tcDe2;
 
   NrOcorrInscEstTomador := 0;
+  NrOcorrCodigoPaisServico := 0;
 
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
@@ -81,7 +80,6 @@ begin
   NrOcorrValorISS := 1;
   NrOcorrDescCond := 1;
   NrOcorrDescIncond := 1;
-  NrOcorrCodigoPaisServico := 0;
 end;
 
 end.

@@ -66,11 +66,7 @@ implementation
 
 procedure TNFSeW_SiapSistemas.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
-
-  // Altera a Configuração Padrão para gerar o XML do RPS
-  TagTomador := 'TomadorServico';
 
   FormatoAliq := tcDe2;
   FormatoEmissao := tcDat;
@@ -79,6 +75,8 @@ begin
   NrOcorrCodigoPaisServico := -1;
   NrOcorrID := 1;
   NrOcorrRegimeEspecialTributacao := -1;
+
+  TagTomador := 'TomadorServico';
 end;
 
 end.

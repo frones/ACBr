@@ -80,10 +80,8 @@ implementation
 
 procedure TNFSeW_SigISS.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
   FpGerarGrupoDadosPrestador := True;
 end;
 
@@ -282,7 +280,6 @@ procedure TNFSeW_SigISSA.Configuracao;
 begin
   inherited Configuracao;
 
-//  ConfigGeral.QuebradeLinha := #13#10;
   FpGerarGrupoDadosPrestador := False;
 end;
 

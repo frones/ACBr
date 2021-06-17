@@ -589,7 +589,7 @@ begin
     Json.Add('productName').Value.AsString := fProduto;
     Json.Add('value').Value.AsNumber       := fValor;
     if fExpirar <> 0 then
-       Json.Add('expiresAt').Value.AsString := DateToISO8601(fExpirar) ;
+       Json.Add('expiresAt').Value.AsString := DateTimeToIso8601(fExpirar) ;
     JsonCliente := TJSONObject.Create;
     try
       JsonCliente.Add('firstName').Value.AsString := fComprador.fNome;

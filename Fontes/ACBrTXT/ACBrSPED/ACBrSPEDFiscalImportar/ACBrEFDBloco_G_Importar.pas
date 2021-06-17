@@ -85,6 +85,8 @@ procedure TACBrSpedFiscalImportar_BlocoG.RegG110;
 begin
   with ACBrSpedFiscal.Bloco_G.RegistroG110New do
   begin
+    DT_INI       := ValorD;
+    DT_FIN       := ValorD;
     SALDO_IN_ICMS := ValorF;
     SOM_PARC     := ValorF;   
     VL_TRIB_EXP  := ValorF;
@@ -106,7 +108,7 @@ begin
     VL_IMOB_ICMS_ST  := ValorF;   
     VL_IMOB_ICMS_FRT := ValorF;  
     VL_IMOB_ICMS_DIF := ValorF;  
-    NUM_PARC         := ValorFV;
+    NUM_PARC         := ValorI;
     VL_PARC_PASS     := ValorF;      
   end;
 end;

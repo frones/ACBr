@@ -1,7 +1,6 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 279
   Top = 68
-  Height = 780
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,14 +11,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     Tag = 1
     Left = 26
     Top = 2
-    Background.Align = faBottom
-    Borders.Sides = sdCustom
-    Font.Height = -8
-    Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Background.Align = faBottom
+    Borders.Sides = sdCustom
+    Font.Height = -8
+    Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
     object rlb_2_Rodo: TRLBand
@@ -1259,6 +1258,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Top = 18
           Width = 286
           Height = 54
+          Margins.LeftMargin = 1.000000000000000000
+          Margins.RightMargin = 1.000000000000000000
           Alignment = taJustify
           BarcodeType = bcCode128C
           Caption = '12345678901234567890123456789012345678901324'
@@ -1268,8 +1269,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Name = 'Arial'
           Font.Style = []
           Layout = tlJustify
-          Margins.LeftMargin = 1.000000000000000000
-          Margins.RightMargin = 1.000000000000000000
           ParentFont = False
         end
         object rlLabel74: TRLLabel

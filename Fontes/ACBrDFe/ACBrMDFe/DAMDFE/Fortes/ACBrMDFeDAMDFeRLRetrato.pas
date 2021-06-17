@@ -590,15 +590,18 @@ begin
   rllMsg2.Repaint;
 
   // imprime data e hora da impressao
-  rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTime('dd/mm/yyyy hh:nn', Now);
+  rllDataHoraImpressao.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
+    FormatDateTime('dd/mm/yyyy hh:nn:ss', Now);
 
   // imprime usuario
   if fpDAMDFe.Usuario <> '' then
-    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ACBrStr('   USUÁRIO: ') + fpDAMDFe.Usuario;
+    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ' - ' + fpDAMDFe.Usuario;
+//    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ACBrStr('   USUÁRIO: ') + fpDAMDFe.Usuario;
 
   // imprime sistema
   if fpDAMDFe.Sistema <> '' then
-    rllSistema.Caption := 'Desenvolvido por ' + fpDAMDFe.Sistema
+    rllSistema.Caption := fpDAMDFe.Sistema
+//    rllSistema.Caption := 'Desenvolvido por ' + fpDAMDFe.Sistema
   else
     rllSistema.Caption := '';
 end;

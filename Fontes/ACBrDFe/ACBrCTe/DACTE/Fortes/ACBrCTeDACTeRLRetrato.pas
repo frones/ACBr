@@ -617,7 +617,6 @@ type
     RLLabel200: TRLLabel;
     rlsQuadro3: TRLDraw;
     RLSystemInfo1: TRLSystemInfo;
-    RLSystemInfo2: TRLSystemInfo;
     rlb_06_VeiculosNovos: TRLBand;
     RLLabel222: TRLLabel;
     RLDraw229: TRLDraw;
@@ -2437,12 +2436,15 @@ begin
   PrintIt := RLCTe.PageNumber = 1;
 
   rlLabel15.Visible := fpDACTe.ImprimirHoraSaida;
-  RLSystemInfo2.Visible := fpDACTe.ImprimirHoraSaida;
 
-  if (fpDACTe.Sistema <> '') or (fpDACTe.Usuario <> '') then
-    rllblSistema.Caption := fpDACTe.Sistema + ' - ' + fpDACTe.Usuario
-  else
-    rllblSistema.Caption := '';
+  if rlLabel15.Visible then
+    rlLabel15.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now);
+
+  if rlLabel15.Visible and (fpDACTe.Usuario <> '') then
+    rlLabel15.Caption := rlLabel15.Caption + ' - ' + fpDACTe.Usuario;
+
+  rllblSistema.Visible := NaoEstaVazio(fpDACTe.Sistema);
+  rllblSistema.Caption := fpDACTe.Sistema;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_18_ReciboBeforePrint(Sender: TObject;

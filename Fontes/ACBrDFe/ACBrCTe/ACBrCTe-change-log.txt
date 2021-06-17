@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2021
+-- ACBrCTeDACTeRLRetrato --
+[*] Alterado a impressão da Data/Hora de impressão, Usuário e Sistema visando
+    deixar identico da NF-e
+   Por: Italo Giurizzato Junior
+
 26/05/2021
 -- ACBrCTeWebServices--
 [*] Alterado as condições para verificar se o CT-e/CT-e OS/ GTV-e foi autorizado

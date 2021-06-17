@@ -4440,20 +4440,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object RLSystemInfo2: TRLSystemInfo
-        Left = 143
-        Top = 0
-        Width = 27
-        Height = 12
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Info = itNow
-        ParentFont = False
-        Text = ''
-      end
     end
     object rlb_16_DadosExcEmitente: TRLBand
       Left = 26

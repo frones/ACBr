@@ -400,7 +400,7 @@ begin
 
   Result := Executar('http://tempuri.org/INFSEGeracao/EnviarLoteRpsSincrono', Request,
                      ACabecalho,
-                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
+                     ['EnviarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 

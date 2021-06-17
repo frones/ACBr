@@ -253,7 +253,8 @@ begin
     if EstaVazio(Nota.XMLAssinado) then
     begin
       Nota.GerarXML;
-      if ConfigAssinar.Rps or ConfigAssinar.RpsGerarNFSe then
+      if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
+         (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
       begin
         Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal),
                                                 PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,

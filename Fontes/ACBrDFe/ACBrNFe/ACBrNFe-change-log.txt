@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2021
+-- ACBrNFeServicos --
+[*] Troca da URL "URL-ConsultaNFCe_2.00 de GO.
+   Por: Italo Giurizzato Junior
+
 15/06/2021
 -- pcnEventoNFe --
 [*] Correção na descrição do evento de cancelamento de comprovante de 

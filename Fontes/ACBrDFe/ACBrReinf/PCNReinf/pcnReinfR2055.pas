@@ -390,7 +390,7 @@ begin
     Gerador.wCampo(tcStr, '', 'codSusp',      1, 14, 0, item.codSusp);
     Gerador.wCampo(tcDe2, '', 'vlrCPNRet',    1, 14, 0, item.vlrCPNRet);
     Gerador.wCampo(tcDe2, '', 'vlrRatNRet',   1, 14, 0, item.vlrRatNRet);
-    Gerador.wCampo(tcDe2, '', 'vlrSenarSusp', 1, 14, 0, item.vlrSenarNRet);
+    Gerador.wCampo(tcDe2, '', 'vlrSenarNRet', 1, 14, 0, item.vlrSenarNRet);
 
     Gerador.wGrupo('/infoProcJud');
   end;

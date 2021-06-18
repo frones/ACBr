@@ -173,7 +173,7 @@
           </Linking>
         </CompilerOptions>
       </Item5>
-      <Item6 Name="Demo">
+      <Item6 Name="Demo-Win32-i386">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -209,9 +209,6 @@
           </Linking>
           <Other>
             <CustomOptions Value="-dDemo"/>
-            <OtherDefines Count="1">
-              <Define0 Value="Demo"/>
-            </OtherDefines>
           </Other>
         </CompilerOptions>
       </Item6>

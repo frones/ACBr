@@ -172,9 +172,7 @@ begin
 {$IFDEF Demo}
     if BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 5 then
     begin
-      Resposta := 'So pode adicionar 5 boletos na versão Demo.';
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      Result := SetRetorno(ErrOK,  'So pode adicionar 5 boletos na versão Demo.');
       Exit;
     end;
 {$ENDIF}

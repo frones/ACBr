@@ -172,7 +172,7 @@ begin
 {$IFDEF Demo}
     if BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 5 then
     begin
-      Result := SetRetorno(ErrOK,  'So pode adicionar 5 boletos na versão Demo.');
+      Result := SetRetorno(ErrDemoExpirado,  'So pode adicionar 5 boletos na versão Demo.');
       Exit;
     end;
 {$ENDIF}

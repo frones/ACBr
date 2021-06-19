@@ -52,7 +52,7 @@ public
   constructor Create(AConfig: TMonitorConfig; ACBrCEP: TACBrCEP); reintroduce;
   procedure Executar(ACmd: TACBrCmd); override;
 
-  procedure RespostaItensConsulta(ItemID: integer = 0);
+  procedure ProcessarResposta;
 
   property ACBrCEP: TACBrCEP read fACBrCEP;
 end;
@@ -110,7 +110,7 @@ begin
   end;
 end;
 
-procedure TACBrObjetoCEP.RespostaItensConsulta(ItemID: integer);
+procedure TACBrObjetoCEP.ProcessarResposta;
 var
   Resp: TCepResposta;
 begin
@@ -121,7 +121,6 @@ begin
   finally
     Resp.Free;
   end;
-
 end;
 
 { TMetodoBuscarPorCEP }
@@ -133,7 +132,7 @@ begin
   with TACBrObjetoCEP(fpObjetoDono) do
   begin
     ACBrCEP.BuscarPorCEP( fpCmd.Params(0) );
-    RespostaItensConsulta(0);
+    ProcessarResposta;
   end;
 end;
 
@@ -146,17 +145,13 @@ end;
           4 - Bairo
 }
 procedure TMetodoBuscarPorLogradouro.Executar;
-var
-  I: integer;
 begin
   with TACBrObjetoCEP(fpObjetoDono) do
   begin
     ACBrCEP.BuscarPorLogradouro( fpCmd.Params(0), fpCmd.Params(1),
                                  fpCmd.Params(2), fpCmd.Params(3),
                                  fpCmd.Params(4) );
-
-    for I := 0 to ACBrCEP.Enderecos.Count - 1 do
-      RespostaItensConsulta(I);
+    ProcessarResposta;
   end;
 end;
 

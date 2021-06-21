@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2021
+--ACBrBancoUniprime--
+[*] Ajuste digito banco conforme especificação Manual Banco 099
+
 15/06/2021
 --ACBrBancoSantander, ACBrBancoCaixaSicob, ACBrBoletoRet_BancoBrasil_API--
 [*] Ajuste para remoção de Hints

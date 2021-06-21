@@ -77,7 +77,7 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 constructor TACBrUniprime.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito                 := 4;
+   fpDigito                 := 10;
    fpNome                   := 'Uniprime';
    fpNumero                 := 099;
    fpTamanhoMaximoNossoNum  := 11;   

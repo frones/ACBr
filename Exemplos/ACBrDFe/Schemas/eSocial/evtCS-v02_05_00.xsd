@@ -419,6 +419,16 @@
                                           </xs:restriction>
                                         </xs:simpleType>
                                       </xs:element>
+                                      <xs:element name="cnoObra">
+                                        <xs:simpleType>
+                                          <xs:annotation>
+                                            <xs:documentation>Número do CNO da obra</xs:documentation>
+                                          </xs:annotation>
+                                          <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{12}"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
@@ -598,6 +608,102 @@
                                               <xs:simpleType>
                                                 <xs:annotation>
                                                   <xs:documentation>Vr CP suspensa 25 anos</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrBcCp00VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Base de Cálculo da Contribuição Previdenciária - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrBcCp15VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>BC CP 15 - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrBcCp20VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>BC CP 20 - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrBcCp25VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>BC CP 25 - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrSuspBcCp00VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Valor da BC com incidência suspensa em decorrência de processo - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrSuspBcCp15VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Valor CP Suspensa 15 anos - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrSuspBcCp20VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Valor CP Suspensa 20 anos - Contrato Verde e Amarelo</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrSuspBcCp25VA" minOccurs="0">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Valor CP suspensa 25 anos - Contrato Verde e Amarelo</xs:documentation>
                                                 </xs:annotation>
                                                 <xs:restriction base="xs:decimal">
                                                   <xs:totalDigits value="14"/>

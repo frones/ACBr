@@ -559,7 +559,7 @@
                                       </xs:restriction>
                                     </xs:simpleType>
                                   </xs:element>
-                                  <xs:element name="FGTS" type="TFgts">
+                                  <xs:element name="FGTS" type="TFgts" minOccurs="0">
                                     <xs:annotation>
                                       <xs:documentation>Informações do Fundo de Garantia do Tempo de Serviço - FGTS</xs:documentation>
                                     </xs:annotation>
@@ -592,7 +592,7 @@
                                             </xs:restriction>
                                           </xs:simpleType>
                                         </xs:element>
-                                        <xs:element name="tpInclContr">
+                                        <xs:element name="tpInclContr" minOccurs="0">
                                           <xs:simpleType>
                                             <xs:annotation>
                                               <xs:documentation>Tipo de inclusão de contrato</xs:documentation>
@@ -1676,7 +1676,7 @@
       <xs:documentation>Informações do Endereço no Brasil</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="tpLograd">
+      <xs:element name="tpLograd" minOccurs="0">
         <xs:simpleType>
           <xs:annotation>
             <xs:documentation>Tipo de Logradouro</xs:documentation>

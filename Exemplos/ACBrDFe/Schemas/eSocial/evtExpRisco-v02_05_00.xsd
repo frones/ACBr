@@ -117,6 +117,18 @@
                               </xs:restriction>
                             </xs:simpleType>
                           </xs:element>
+                          <xs:element name="dscFatRisc" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:annotation>
+                                <xs:documentation>Descrição do fator de risco</xs:documentation>
+                              </xs:annotation>
+                              <xs:restriction base="xs:string">
+                                <xs:minLength value="2"/>
+                                <xs:maxLength value="999"/>
+                                <xs:whiteSpace value="preserve"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
                           <xs:element name="tpAval">
                             <xs:simpleType>
                               <xs:annotation>

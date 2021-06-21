@@ -310,6 +310,66 @@
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
+                                <xs:element name="infoPerRef" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation>Informações de remuneração por período de referência</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="perRef">
+                                        <xs:simpleType>
+                                          <xs:annotation>
+                                            <xs:documentation>Período de referência</xs:documentation>
+                                          </xs:annotation>
+                                          <xs:restriction base="xs:string">
+                                            <xs:length value="7"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="detInfoPerRef" maxOccurs="99">
+                                        <xs:annotation>
+                                          <xs:documentation>Detalhamento das informações de remuneração por período de referência</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="ind13">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Indicativo de 13° salário</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:byte">
+                                                  <xs:pattern value="\d"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="tpValor">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Tipo de valor</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:byte">
+                                                  <xs:pattern value="\d{1,2}"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vrPerRef">
+                                              <xs:simpleType>
+                                                <xs:annotation>
+                                                  <xs:documentation>Valor da base de cálculo, dedução ou desconto da contribuição social</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:restriction base="xs:decimal">
+                                                  <xs:totalDigits value="14"/>
+                                                  <xs:fractionDigits value="2"/>
+                                                  <xs:maxInclusive value="999999999999"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>

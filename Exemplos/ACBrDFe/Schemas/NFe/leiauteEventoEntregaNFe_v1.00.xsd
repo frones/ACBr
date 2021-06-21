@@ -55,8 +55,7 @@
 								<xs:restriction base="xs:string">
 									<xs:whiteSpace value="preserve"/>
 									<xs:pattern value="[0-9]{6}"/>
-									<xs:enumeration value="610610"/>
-									<xs:enumeration value="610614"/>
+									<xs:enumeration value="110130"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>

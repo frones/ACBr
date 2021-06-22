@@ -134,9 +134,11 @@ function indAltoDesempToStr(const t: TIndicador): String;
 function StrToindAltoDesemp(out ok: Boolean; const s: String): TIndicador;
 
 function tpValePedToStr(const t: TtpValePed): String;
+function tpValePedToStrText(const t: TtpValePed): String;
 function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
 
 function categCombVeicToStr(const t: TcategCombVeic): String;
+function categCombVeicToStrText(const t: TcategCombVeic): String;
 function StrTocategCombVeic(out ok: Boolean; const s: String): TcategCombVeic;
 
 implementation
@@ -420,10 +422,30 @@ begin
                               [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
 end;
 
+function tpValePedToStrText(const t: TtpValePed): String;
+begin
+  Result := EnumeradoToStr(t, ['Nenhum', 'TAG', 'Cupom', 'Cartão'],
+                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+end;
+
 function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
 begin
   Result := StrToEnumerado(ok, s, ['', '01', '02', '03'],
                                   [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+end;
+
+function categCombVeicToStrText(const t: TcategCombVeic): String;
+begin
+  Result := EnumeradoToStr(t,
+         ['', 'Veículo Comercial 2 eixos', 'Veículo Comercial 3 eixos',
+         'Veículo Comercial 4 eixos', 'Veículo Comercial 5 eixos',
+         'Veículo Comercial 6 eixos', 'Veículo Comercial 7 eixos',
+         'Veículo Comercial 8 eixos', 'Veículo Comercial 9 eixos',
+         'Veículo Comercial 10 eixos', 'Veículo Comercial Acima de 10 eixos'],
+         [tcNenhum, tcVeicCom2Eixos, tcVeicCom3Eixos, tcVeicCom4Eixos,
+         tcVeicCom5Eixos, tcVeicCom6Eixos, tcVeicCom7Eixos,
+         tcVeicCom8Eixos, tcVeicCom9Eixos, tcVeicCom10Eixos,
+         tcVeicComAcima10Eixos]);
 end;
 
 function categCombVeicToStr(const t: TcategCombVeic): String;

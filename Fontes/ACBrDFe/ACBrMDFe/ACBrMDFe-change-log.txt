@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2021
+-- pmdfeConversaoMDFe --
+[+] Incluido as funções: tpValePedToStrText e categCombVeicToStrText que retornam a 
+    descrição do tipo de vale pedágio e categoria de combinação de veiculos respectivamente.
+   Por: Eliezer fb
+
 17/06/2021
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Alterado a impressão da Data/Hora de impressão, Usuário e Sistema visando

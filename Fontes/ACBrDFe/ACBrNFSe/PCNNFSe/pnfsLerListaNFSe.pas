@@ -464,21 +464,33 @@ begin
       if trim(NumeroLoteTemp) = '' then
         NumeroLoteTemp := '0';
 
-      if (Provedor in [proElotech]) then
-        DataRecebimentoTemp:= Leitor.rCampo(tcDat, 'DataRecebimento')
+      case Provedor of
+        proElotech:
+          DataRecebimentoTemp:= Leitor.rCampo(tcDat, 'DataRecebimento');
+
+        proIPM:
+          DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'data_hora_conversao');
       else
         DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      end;
 
       if (DataRecebimentoTemp = 0) then
         DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 
-      ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
-      if (Provedor in [ProNFSeBrasil]) and (AnsiUpperCase(ProtocoloTemp) = 'NAO FOI GERADO NUMERO DE PROTOCOLO PARA ESSA TRANSACAO.') then
-        ProtocoloTemp := '';
+      case Provedor of
+        ProNFSeBrasil:
+          if (AnsiUpperCase(ProtocoloTemp) = 'NAO FOI GERADO NUMERO DE PROTOCOLO PARA ESSA TRANSACAO.') then
+            ProtocoloTemp := '';
+
+        proIPM:
+          ProtocoloTemp:= Leitor.rCampo(tcStr, 'codigo_autenticidade');
+      else
+        ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
+      end;
+
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';
 
-//      if (Provedor in [ProTecnos]) and (ProtocoloTemp <> '') then
       FProtocolo := ProtocoloTemp;
 
       if Provedor = proCenti then
@@ -1300,26 +1312,41 @@ begin
         begin
           if (Leitor.rExtrai(1, 'retorno') <> '') then
           begin
-            ListaNFSe.FChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numero_nfse');
+            ListaNFSe.FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'numero_nfse');
+
+            if ListaNFSe.FChaveNFeRPS.Numero = '' then
+              ListaNFSe.FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'numero_rps');
+
             ListaNFSe.FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
 
-            //ListaNFSe.FCompNFSe.Items[0].FNFSe.XML;
+            if ListaNFSe.FChaveNFeRPS.CodigoVerificacao = '' then
+              ListaNFSe.FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'codigo_autenticidade');
+
             if (ListaNFSe.CompNFSe.Count = 0) then
               lNFSe := ListaNFSe.CompNFSe.New
             else
               lNFSe := ListaNFSe.CompNFSe.Items[0];
 
-            lNFSe.NFSe.InfID.ID                := Leitor.rCampo( tcStr, 'numero_nfse' );
-            lNFSe.NFSe.Numero                  := Leitor.rCampo( tcStr, 'numero_nfse' );
-            lNFSe.NFSe.DataEmissao             := StrToDateDef( VarToStr(Leitor.rCampo(tcStr, 'data_nfse')), 0) +
-                                                  StrToTimeDef( VarToStr(Leitor.rCampo(tcStr, 'hora_nfse')), 0);
-            lNFSe.NFSe.Competencia             := DateToStr( lNFSe.NFSe.DataEmissao );
-            lNFSe.NFSe.dhRecebimento           := lNFSe.NFSe.DataEmissao;
-            lNFSe.NFSe.Protocolo               := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
-            lNFSe.NFSe.Link                    := Leitor.rCampo(tcStr, 'link_nfse');
-            lNFSe.NFSe.CodigoVerificacao       := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
-            lNFSe.NFSe.XML                     := Leitor.Arquivo;
-            lNFSe.NFSe.Situacao                := Leitor.rCampo(tcStr, 'situacao_codigo_nfse');
+            lNFSe.NFSe.InfID.ID := Leitor.rCampo( tcStr, 'numero_nfse' );
+            lNFSe.NFSe.Numero   := Leitor.rCampo( tcStr, 'numero_nfse' );
+
+            if lNFSe.NFSe.Numero = '' then
+              lNFSe.NFSe.Numero := Leitor.rCampo( tcStr, 'numero_nfe' );
+
+            lNFSe.NFSe.DataEmissao   := StrToDateDef( VarToStr(Leitor.rCampo(tcStr, 'data_nfse')), 0) +
+                                        StrToTimeDef( VarToStr(Leitor.rCampo(tcStr, 'hora_nfse')), 0);
+            lNFSe.NFSe.Competencia   := DateToStr( lNFSe.NFSe.DataEmissao );
+            lNFSe.NFSe.dhRecebimento := lNFSe.NFSe.DataEmissao;
+
+            if lNFSe.NFSe.dhRecebimento = 0 then
+              lNFSe.NFSe.dhRecebimento := DataRecebimentoTemp;
+
+            lNFSe.NFSe.Protocolo         := Leitor.rCampo(tcStr, 'codigo_autenticidade');
+//            lNFSe.NFSe.Protocolo               := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+            lNFSe.NFSe.Link              := Leitor.rCampo(tcStr, 'link_nfse');
+            lNFSe.NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+            lNFSe.NFSe.XML               := Leitor.Arquivo;
+            lNFSe.NFSe.Situacao          := Leitor.rCampo(tcStr, 'situacao_codigo_nfse');
 
             if (Leitor.rCampo(tcStr, 'situacao_descricao_nfse') = 'Emitida') then
             begin

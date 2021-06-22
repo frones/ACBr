@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2021
+-- ACBrNFSeWebServices/pnfsLerListaNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/62824-nfse-com-erro-ao-consultar-rps-provedor-ipm/?tab=comments#comment-411835
+  Por: Jefferson Damian
+
 16/06/2021
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/62907-tag-aliquota-zerada-no-metropolisweb/

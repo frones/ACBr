@@ -248,8 +248,14 @@ begin
             result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
                       EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToIntDef(copy(ConteudoTag, 18, 2), 0), 0)
           else
-            result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2))) +
-                      EncodeTime(StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 14, 2)), StrToIntDef(copy(ConteudoTag, 17, 2), 0), 0)
+          begin
+            if (ConteudoTag[11] = 'T') or (ConteudoTag[11] = ' ') then
+              result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2))) +
+                        EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToIntDef(copy(ConteudoTag, 18, 2), 0), 0)
+            else
+              result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2))) +
+                        EncodeTime(StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 14, 2)), StrToIntDef(copy(ConteudoTag, 17, 2), 0), 0);
+          end
         else
           result := 0;
       end;

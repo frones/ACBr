@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2021
+-- pcnLeitor ---
+[*] Alteração na função "rCampo" visando a leitura correta de data/hora quanto esta 
+    no formato: DD/MM/AAAA HH:MM:SS (tem um espaço em branco entre data e hora)
+  Por: Jefferson Damian
+
 17/05/2021
 -- pcnConversao --
 [*] Retorno da tag "xPag" quando tPag "99-Outros" no método "FormaPagamentoToDescricao".

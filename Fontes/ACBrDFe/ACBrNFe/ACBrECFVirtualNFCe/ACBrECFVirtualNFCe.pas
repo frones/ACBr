@@ -662,6 +662,13 @@ begin
   begin
     with fsACBrNFCe do
     begin
+      //Verifica se já tem desconto no item , caso tenha não faz o rateio nos itens
+      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+      begin
+        if (NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado) and (NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc > 0) then
+          Exit;
+      end;
+
       if fpCupom.DescAcresSubtotal > 0 then
         VlDescAcres := fpCupom.DescAcresSubtotal
       else

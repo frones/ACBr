@@ -435,6 +435,7 @@ type
     FContato: TContato;
 
     FcUF: Integer;
+    Fccm: string;
     Fcrc: string;
     Fcrc_estado: string;
     FDataInicioAtividade: TDateTime;
@@ -451,6 +452,7 @@ type
     // Provedor ISSDigital
     property cUF: Integer read FcUF write FcUF;
     // Provedor SigISS
+    property ccm: string read Fccm write Fccm;
     property crc: string read Fcrc write Fcrc;
     property crc_estado: string read Fcrc_estado write Fcrc_estado;
     // Provedor WebFisco

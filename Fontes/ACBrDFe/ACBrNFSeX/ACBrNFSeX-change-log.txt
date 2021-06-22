@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/06/2021
+-- SigISS.GravarXml --
+[*] Ajustes para a cidade de Londrina, nos ajustes vão ser necessários para as
+    demais cidades do provedor SigISS.
+   Por: Italo Giurizzato Junior
 -- SigISS.Provider --
 [*] Dependendo da versão a tag que contem a lista de mensagens de erro muda de 
     <DescricaoErros> para <Mensagens>

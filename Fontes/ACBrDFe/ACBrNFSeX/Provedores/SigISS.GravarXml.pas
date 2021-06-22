@@ -91,10 +91,14 @@ begin
 
   if not FpGerarGrupoDadosPrestador then
   begin
-    Result.AppendChild(AddNode(tcStr, '#1', 'ccm', 1, 15, 0, Usuario, ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'ccm', 1, 15, 0,
+                                           OnlyNumber(NFSe.Prestador.ccm), ''));
 
     Result.AppendChild(AddNode(tcStr, '#2', 'cnpj', 1, 14, 1,
                    OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), ''));
+
+    Result.AppendChild(AddNode(tcStr, '#2', 'cpf', 1, 14, 1,
+                                                      OnlyNumber(Usuario), ''));
 
     Result.AppendChild(AddNode(tcStr, '#2', 'senha', 1, 10, 1, Senha, DSC_SENHA));
 
@@ -117,11 +121,32 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 2, 1,
                                      SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
+  Result.AppendChild(AddNode(tcDe2, '#2', 'aliquota', 1, 15, 1,
+                                            NFSE.Servico.Valores.Aliquota, ''));
+
   Result.AppendChild(AddNode(tcDe4, '#1', 'valor', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
 
   Result.AppendChild(AddNode(tcDe4, '#1', 'base', 1, 15, 1,
                                          NFSe.Servico.Valores.BaseCalculo, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'retencao_iss', 1, 15, 0,
+                                            NFSe.Servico.Valores.ValorIss, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'ir', 1, 15, 0,
+                                             NFSe.Servico.Valores.ValorIr, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'pis', 1, 15, 0,
+                                            NFSe.Servico.Valores.ValorPis, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'cofins', 1, 15, 0,
+                                         NFSe.Servico.Valores.ValorCofins, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'csll', 1, 15, 0,
+                                           NFSe.Servico.Valores.ValorCsll, ''));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'inss', 1, 15, 0,
+                                           NFSe.Servico.Valores.ValorInss, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoNF', 1, 150, 0,
                                                NFSe.Servico.Discriminacao, ''));
@@ -144,7 +169,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_razao', 1, 100, 1,
                                                  NFSe.Tomador.RazaoSocial, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fantasia', 1, 100, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fantasia', 1, 100, 0,
                                                  NFSe.Tomador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_endereco', 1, 100, 1,
@@ -153,7 +178,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_numero', 1, 100, 1,
                                            NFSe.Tomador.Endereco.Numero, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_complemento', 1, 50, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_complemento', 1, 50, 0,
                                         NFSe.Tomador.Endereco.Complemento, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_bairro', 1, 100, 1,
@@ -165,13 +190,13 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_cod_cidade', 1, 7, 1,
                         OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fone', 1, 15, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fone', 1, 15, 0,
                                             NFSe.Tomador.Contato.Telefone, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_ramal', 1, 15, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_ramal', 1, 15, 0,
                                             '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fax', 1, 15, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fax', 1, 15, 0,
                                             '', ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_num', 1, 15, 0,
@@ -188,33 +213,6 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_ano', 1, 4, 0,
                                FormatDateTime('yyyy',NFSe.DataEmissaoRps), ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'deducao_material', 1, 15, 0,
-                                           0, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_aprox', 1, 15, 0,
-                                           0, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_inss', 1, 15, 0,
-                                           NFSe.Servico.Valores.ValorInss, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_ir', 1, 15, 0,
-                                             NFSe.Servico.Valores.ValorIr, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_pis', 1, 15, 0,
-                                            NFSe.Servico.Valores.ValorPis, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_cofins', 1, 15, 0,
-                                         NFSe.Servico.Valores.ValorCofins, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_csll', 1, 15, 0,
-                                           NFSe.Servico.Valores.ValorCsll, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'valor_iss_fora', 1, 15, 0,
-                                           0, ''));
-
-  Result.AppendChild(AddNode(tcInt, '#1', 'codigo_cidade_local_servico', 1, 7, 0,
-                                         NFSe.Servico.MunicipioIncidencia, ''));
 end;
 
 function TNFSeW_SigISS.GerarPrestador: TACBrXmlNode;

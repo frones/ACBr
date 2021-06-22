@@ -439,7 +439,7 @@ begin
   { Inspirado de http://www.avdf.com/mar97/delf_sortlist.html }
 
   if not fIsSorted then
-    raise Exception.Create('Lista de Objetos não foi ordanada por chamada ao método "Sort"');
+    raise Exception.Create('Lista de Objetos não foi ordenada por chamada ao método "Sort"');
 
   nLow := 0;
   nHigh := Count-1;

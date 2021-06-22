@@ -738,6 +738,15 @@ begin
 
   if Self.Count = 0 then Exit;
 
+  if not Self.fIsSorted then
+  begin
+  {$IfDef HAS_SYSTEM_GENERICS}
+    Sort(TComparer<TObject>.Construct(CompRPSPorNumero));
+  {$Else}
+    Sort(@CompRPSPorNumero);
+  {$EndIf}
+  end;
+
   AItem := NotaFiscal.Create(FACBrNFSe);
   try
     AItem.NFSe.IdentificacaoRps.Numero := ANumRPS;

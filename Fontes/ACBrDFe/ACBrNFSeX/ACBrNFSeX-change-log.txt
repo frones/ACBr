@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2021
+-- ACBrNFSeXNotasFiscais --
+[*] Incluido no function FindByRps a chamada ao Sort caso a lista não
+    esteja ordenada.
+   Por: Rafael Dias
+
 17/06/2021
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Corrigido as condições para assinar ou não o XML do Rps.

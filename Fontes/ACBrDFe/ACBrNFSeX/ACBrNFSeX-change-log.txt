@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/06/2021
+-- SigISS.Provider --
+[*] Dependendo da versão a tag que contem a lista de mensagens de erro muda de 
+    <DescricaoErros> para <Mensagens>
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais --
 [*] Incluido no function FindByRps a chamada ao Sort caso a lista não
     esteja ordenada.

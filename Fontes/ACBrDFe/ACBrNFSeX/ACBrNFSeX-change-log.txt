@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2021
+-- Diversos --
+[*] Ajustes em diversas Units visando o tratamento do retorno dos métodos.
+[*] Ajustes nas Units do provedor SigISS pois possui layout diferentes para
+    algumas cidades atendidas por esse provedor.
+   Por: Italo Giurizzato Junior
+
 22/06/2021
 -- SigISS.GravarXml --
 [*] Ajustes para a cidade de Londrina, nos ajustes vão ser necessários para as

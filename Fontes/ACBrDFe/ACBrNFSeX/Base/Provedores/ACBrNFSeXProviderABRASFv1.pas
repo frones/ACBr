@@ -469,7 +469,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumRps: String;
+  NumNFSe: String;
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
@@ -509,11 +509,11 @@ begin
         if AuxNode <> nil then
         begin
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+//          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
           AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-          NumRps := ProcessarConteudoXml(AuxNode, tcStr);
+          NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
           if Assigned(ANota) then
             ANota.XML := ANode.OuterXml
@@ -626,7 +626,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumRps: String;
+  NumNFSe: String;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -649,11 +649,11 @@ begin
 
       AuxNode := ANode.Childrens.FindAnyNs('Nfse');
       AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-      AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+//      AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
       AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-      NumRps := ProcessarConteudoXml(AuxNode, tcStr);
+      NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
 
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
       if Assigned(ANota) then
         ANota.XML := ANode.OuterXml
@@ -798,7 +798,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumRps: String;
+  NumNFSe: String;
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
@@ -833,11 +833,11 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+//        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        NumRps := ProcessarConteudoXml(AuxNode, tcStr);
+        NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml

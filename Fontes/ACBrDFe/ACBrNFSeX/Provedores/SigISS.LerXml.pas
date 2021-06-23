@@ -58,6 +58,15 @@ type
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 
+  { TNFSeR_SigISS_103 }
+
+  TNFSeR_SigISS_103 = class(TNFSeR_SigISS)
+  protected
+
+  public
+
+  end;
+
 implementation
 
 //==============================================================================

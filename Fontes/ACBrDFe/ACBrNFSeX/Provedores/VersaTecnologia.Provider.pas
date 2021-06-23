@@ -268,7 +268,7 @@ begin
   else
     xURL := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params2;
 
-  if TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.Provedor = proVersaTecnologiav201 then
+  if TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.Provedor = proVersaTecnologia_201 then
     xURL := xURL + '/webservice'
   else
     xURL := xURL + '/webservices/2.02';

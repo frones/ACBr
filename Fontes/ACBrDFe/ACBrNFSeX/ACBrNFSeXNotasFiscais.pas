@@ -139,6 +139,7 @@ type
     function Add(ANota: NotaFiscal): Integer; reintroduce;
     Procedure Insert(Index: Integer; ANota: NotaFiscal); reintroduce;
     function FindByRps(ANumRPS: string): NotaFiscal;
+    function FindByNFSe(ANumNFSe: string): NotaFiscal;
 
     property Items[Index: integer]: NotaFiscal read GetItem write SetItem; default;
 
@@ -162,7 +163,9 @@ type
     property ACBrNFSe: TACBrDFe read FACBrNFSe;
   end;
 
-  function CompRPSPorNumero(const Item1,
+  function CompRpsPorNumero(const Item1,
+    Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompNFSePorNumero(const Item1,
     Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 
 implementation
@@ -171,17 +174,33 @@ uses
   ACBrUtil, synautil, IniFiles,
   ACBrNFSeX, ACBrNFSeXInterface;
 
-function CompRPSPorNumero(const Item1,
+function CompRpsPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
-  NumRPs1, NumRPS2: Integer;
+  NumRps1, NumRps2: Integer;
 begin
-  NumRPs1 := StrToInt(NotaFiscal(Item1).NFSe.IdentificacaoRps.Numero);
-  NumRPs2 := StrToInt(NotaFiscal(Item2).NFSe.IdentificacaoRps.Numero);
+  NumRps1 := StrToInt(NotaFiscal(Item1).NFSe.IdentificacaoRps.Numero);
+  NumRps2 := StrToInt(NotaFiscal(Item2).NFSe.IdentificacaoRps.Numero);
 
-  if NumRPs1 < NumRPs2 then
+  if NumRps1 < NumRps2 then
     Result := -1
-  else if NumRPs1 > NumRPs2 then
+  else if NumRps1 > NumRps2 then
+    Result := 1
+  else
+    Result := 0;
+end;
+
+function CompNFSePorNumero(const Item1,
+  Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+var
+  NumNFSe1, NumNFSe2: Integer;
+begin
+  NumNFSe1 := StrToInt(NotaFiscal(Item1).NFSe.Numero);
+  NumNFSe2 := StrToInt(NotaFiscal(Item2).NFSe.Numero);
+
+  if NumNFSe1 < NumNFSe2 then
+    Result := -1
+  else if NumNFSe1 > NumNFSe2 then
     Result := 1
   else
     Result := 0;
@@ -729,6 +748,41 @@ begin
   inherited Insert(Index, ANota);
 end;
 
+function TNotasFiscais.FindByNFSe(ANumNFSe: string): NotaFiscal;
+var
+  AItem: NotaFiscal;
+  AItemIndex: Integer;
+begin
+  Result := nil;
+
+  if Self.Count = 0 then Exit;
+
+  if not Self.fIsSorted then
+  begin
+  {$IfDef HAS_SYSTEM_GENERICS}
+    Sort(TComparer<TObject>.Construct(CompNFSePorNumero));
+  {$Else}
+    Sort(@CompNFSePorNumero);
+  {$EndIf}
+  end;
+
+  AItem := NotaFiscal.Create(FACBrNFSe);
+  try
+    AItem.NFSe.Numero := ANumNFSe;
+    {$IfDef HAS_SYSTEM_GENERICS}
+     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompNFSePorNumero));
+    {$Else}
+     AItemIndex := FindObject(Pointer(AItem), @CompNFSePorNumero);
+    {$EndIf}
+  finally
+    AItem.Free;
+  end;
+
+  if AItemIndex = -1 then Exit;
+
+  Result := Self.Items[AItemIndex];
+end;
+
 function TNotasFiscais.FindByRps(ANumRPS: string): NotaFiscal;
 var
   AItem: NotaFiscal;
@@ -741,9 +795,9 @@ begin
   if not Self.fIsSorted then
   begin
   {$IfDef HAS_SYSTEM_GENERICS}
-    Sort(TComparer<TObject>.Construct(CompRPSPorNumero));
+    Sort(TComparer<TObject>.Construct(CompRpsPorNumero));
   {$Else}
-    Sort(@CompRPSPorNumero);
+    Sort(@CompRpsPorNumero);
   {$EndIf}
   end;
 
@@ -751,9 +805,9 @@ begin
   try
     AItem.NFSe.IdentificacaoRps.Numero := ANumRPS;
     {$IfDef HAS_SYSTEM_GENERICS}
-     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompRPSPorNumero));
+     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompRpsPorNumero));
     {$Else}
-     AItemIndex := FindObject(Pointer(AItem), @CompRPSPorNumero);
+     AItemIndex := FindObject(Pointer(AItem), @CompRpsPorNumero);
     {$EndIf}
   finally
     AItem.Free;

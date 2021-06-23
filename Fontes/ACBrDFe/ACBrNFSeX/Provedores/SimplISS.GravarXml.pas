@@ -105,8 +105,8 @@ begin
                          NFSe.Servico.ItemServico[i].ValorUnitario, DSC_VUNIT));
   end;
 
-  if NFSe.Servico.ItemServico.Count > 10 then
-    wAlerta('#54', 'ItensServico', '', ERR_MSG_MAIOR_MAXIMO + '10');
+  if NFSe.Servico.ItemServico.Count > 999 then
+    wAlerta('#54', 'ItensServico', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 { TNFSeW_SimplISSv2 }

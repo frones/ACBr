@@ -452,7 +452,7 @@ begin
           IdentificacaoRps.Serie := '1';
 
         proBetha,
-        proBethav2,
+        proBetha_2,
         proISSDSF,
         proSiat:
           IdentificacaoRps.Serie := 'NF';
@@ -597,7 +597,7 @@ begin
       Servico.ItemListaServico := '09.01';
 
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat,
-          proAgiliv2] then
+          proAgili_2] then
         Servico.CodigoCnae := '452000200'
       else
         Servico.CodigoCnae := '852010';
@@ -809,7 +809,7 @@ begin
 
   // Os Provedores da lista requerem que seja informado a chave e o código
   // de cancelamento
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfiscV100, proInfiscV110] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfisc_100, proInfisc_110] then
   begin
     ChNFSe := '12345678';
     if not (InputQuery(Titulo, 'Chave da NFSe', ChNFSe)) then
@@ -825,7 +825,7 @@ begin
     if not (InputQuery(Titulo, 'Numero da NFSe', NumNFSe)) then
       exit;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasilV2, proWebFisco] then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil_2, proWebFisco] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -876,7 +876,7 @@ begin
 
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-      proConam, proEquiplano, proGoverna, proIPM, proIPMa, proISSDSF, proLencois,
+      proConam, proEquiplano, proGoverna, proIPM, proIPM_A, proISSDSF, proLencois,
       proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
       proSmarAPD, proWebFisco, proTecnos] then
     begin
@@ -893,7 +893,7 @@ begin
     end;
 
     // Os Provedores da lista requerem que seja informado o código de verificação
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfiscV100, proInfiscV110,
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfisc_100, proInfisc_110,
          proISSDSF, proLencois, proGoverna, proSiat, proSigep] then
     begin
       CodVerif := '12345678';
@@ -995,7 +995,7 @@ begin
 
   Lote := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico, proElotech,
-       proInfiscV100, proInfiscV110, proIPM, proISSDSF, proEquiplano,
+       proInfisc_100, proInfisc_110, proIPM, proISSDSF, proEquiplano,
        proeGoverneISS, proGeisWeb, proSiat, proSP] then
   begin
     if not (InputQuery('Consultar Lote', 'Número do Lote:', Lote)) then
@@ -2049,7 +2049,7 @@ begin
   end;
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proConam, proEquiplano,
-    proGoverna, proIPM, proIPMa, proISSDSF, proLencois, proModernizacaoPublica,
+    proGoverna, proIPM, proIPM_A, proISSDSF, proLencois, proModernizacaoPublica,
     proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco] then
   begin
     Motivo := 'Teste de Cancelamento';
@@ -2062,7 +2062,7 @@ begin
     exit;
 
   sSerieNFSe := '';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proiiBrasilV2 then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proiiBrasil_2 then
   begin
     if not(InputQuery('Substituir NFS-e', 'Série da NFS-e', sSerieNFSe)) then
       exit;
@@ -2807,7 +2807,7 @@ begin
 
     // Exemplos de valores para WSChaveAcesso para alguns provedores.
 
-    if Provedor in [proAgili, proAgiliv2, proElotech] then
+    if Provedor in [proAgili, proAgili_2, proElotech] then
       Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
 
     if Provedor = proISSNet then
@@ -2816,7 +2816,7 @@ begin
     if Provedor = proSigep then
       Emitente.WSChaveAcesso := 'A001.B0001.C0001';
 
-    if Provedor = proiiBrasilv2 then
+    if Provedor = proiiBrasil_2 then
       Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
   end;
 

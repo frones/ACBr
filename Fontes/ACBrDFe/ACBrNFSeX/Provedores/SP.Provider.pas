@@ -323,7 +323,7 @@ var
   Emitente: TEmitenteConfNFSe;
   Nota: NotaFiscal;
   IdAttr, NameSpace, ListaRps, xRps,
-  TagEnvio, xCabecalho, xDataI, xDataF: string;
+  TagEnvio, xCabecalho, xDataI, xDataF, xTotServicos, xTotDeducoes: string;
   I: Integer;
   DataInicial, DataFinal: TDateTime;
   vTotServicos, vTotDeducoes: Double;
@@ -452,6 +452,12 @@ begin
         False - Os RPS válidos serão substituídos por NFS-e, mesmo que ocorram
                 eventos de erro durante processamento de outros RPS deste lote.
       }
+
+      xTotServicos := FloatToString(vTotServicos, '.', FloatMask(2, False));
+      xTotServicos := StringReplace(xTotServicos, '.00', '', []);
+      xTotDeducoes := FloatToString(vTotDeducoes, '.', FloatMask(2, False));
+      xTotDeducoes := StringReplace(xTotDeducoes, '.00', '', []);
+
       xCabecalho := '<Cabecalho xmlns="" Versao="1">' +
                       '<CPFCNPJRemetente>' +
                         '<CNPJ>' +
@@ -465,10 +471,10 @@ begin
                          IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
                       '</QtdRPS>' +
                       '<ValorTotalServicos>' +
-                         FloatToStr(vTotServicos) +
+                         xTotServicos +
                       '</ValorTotalServicos>' +
                       '<ValorTotalDeducoes>' +
-                         FloatToStr(vTotDeducoes) +
+                         xTotDeducoes +
                       '</ValorTotalDeducoes>' +
                     '</Cabecalho>';
 

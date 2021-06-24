@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2021
+-- Diversos --
+[*] Ajustes em diversas Units visando o provedor SP.
+   Por: Italo Giurizzato Junior
+
 23/06/2021
 -- Diversos --
 [*] Ajustes em diversas Units visando o tratamento do retorno dos métodos.

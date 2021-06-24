@@ -86,7 +86,7 @@ function TNFSeW_SP.GerarCPFCNPJIntermediario: TACBrXmlNode;
 begin
   Result := nil;
 
-  if OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) <> '' then
+  if OnlyNumber(NFSe.IntermediarioServico.CpfCnpj) <> '' then
   begin
     Result := CreateElement('CPFCNPJIntermediario');
 
@@ -145,7 +145,8 @@ begin
   Configuracao;
 
   Opcoes.SuprimirDecimais := True;
-  Opcoes.QuebraLinha      := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.DecimalChar := '.';
+  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -223,10 +224,10 @@ begin
   xmlNode := GerarCPFCNPJTomador;
   NFSeNode.AppendChild(xmlNode);
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalTomador', 1, 8, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalTomador', 1, 8, 0,
          OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoEstadualTomador', 1, 19, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoEstadualTomador', 1, 19, 0,
           OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RazaoSocialTomador', 1, 75, 0,
@@ -279,7 +280,7 @@ begin
 
   if (NFSe.TipoTributacaoRPS  <> ttTribnoMun) and
      (NFSe.TipoTributacaoRPS  <> ttTribnoMunIsento) then
-    NFSeNode.AppendChild(AddNode(tcInt, '#1', 'MunicipioPrestacao', 1, 7, 1,
+    NFSeNode.AppendChild(AddNode(tcInt, '#1', 'MunicipioPrestacao', 1, 7, 0,
                                          NFSe.Servico.MunicipioIncidencia, ''));
 
   Result := True;

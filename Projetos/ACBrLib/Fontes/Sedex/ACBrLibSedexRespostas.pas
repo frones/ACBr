@@ -37,7 +37,8 @@ unit ACBrLibSedexRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes, ACBrLibResposta,
+  ACBrSedex;
 
 type
 
@@ -49,8 +50,10 @@ type
     FObservacao: string;
     FSituacao: string;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const ID: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Rastreio: TACBrRastreio);
 
   published
     property DataHora: TDateTime read FDataHora write FDataHora;
@@ -77,6 +80,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
+    procedure Processar(const ACBrSedex: TACBrSedex);
+
   published
     property CodigoServico: string read FCodigoServico write FCodigoServico;
     property Valor: Currency read FValor write FValor;
@@ -94,7 +99,7 @@ type
 implementation
 
 uses
-  ACBrLibSedexConsts;
+  ACBrLibSedexConsts, ACBrUtil;
 
 { TLibSedexConsulta }
 
@@ -103,12 +108,38 @@ begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
 
+procedure TLibSedexConsulta.Processar(const ACBrSedex: TACBrSedex);
+begin
+  with ACBrSedex do
+  begin
+    CodigoServico := retCodigoServico;
+    Valor := retValor;
+    PrazoEntrega := retPrazoEntrega;
+    ValorSemAdicionais := retValorSemAdicionais;
+    ValorMaoPropria := retValorMaoPropria;
+    ValorAvisoRecebimento := retValorAvisoRecebimento;
+    ValorValorDeclarado := retValorValorDeclarado;
+    EntregaDomiciliar := retEntregaDomiciliar;
+    EntregaSabado := retEntregaSabado;
+    Erro := retErro;
+    MsgErro := retMsgErro;
+  end;
+end;
+
 { TLibSedexRastreio }
 
-constructor TLibSedexRastreio.Create(const ASessao: String;
+constructor TLibSedexRastreio.Create(const ID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespRastreio + Trim(IntToStrZero(ID, 2)), ATipo, AFormato);
+end;
+
+procedure TLibSedexRastreio.Processar(const Rastreio: TACBrRastreio);
+begin
+  DataHora := Rastreio.DataHora;
+  Local := Rastreio.Local;
+  Situacao := Rastreio.Situacao;
+  Observacao := Rastreio.Observacao;
 end;
 
 end.

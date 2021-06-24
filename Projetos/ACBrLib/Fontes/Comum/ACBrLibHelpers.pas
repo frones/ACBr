@@ -59,7 +59,7 @@ type
   TACBrPropInfoListHelper = class helper for TPropInfoList
     function GetProperties: TArray<TRttiProperty>;
   end;
- 
+
 implementation
 
 uses

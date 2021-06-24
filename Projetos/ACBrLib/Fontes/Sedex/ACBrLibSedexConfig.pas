@@ -83,7 +83,7 @@ type
 implementation
 
 uses
-  ACBrLibSedexClass, ACBrLibSedexConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibSedexBase, ACBrLibSedexConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TSedexConfig }
 
@@ -160,19 +160,13 @@ end;
 procedure TLibSedexConfig.Travar;
 begin
   if Assigned(Owner) then
-  begin
-    with TACBrLibSedex(Owner) do
-      SedexDM.Travar;
-  end;
+    TACBrLibSedex(Owner).SedexDM.Travar;
 end;
 
 procedure TLibSedexConfig.Destravar;
 begin
   if Assigned(Owner) then
-  begin
-    with TACBrLibSedex(Owner) do
-      SedexDM.Destravar;
-  end;
+    TACBrLibSedex(Owner).SedexDM.Destravar;
 end;
 
 end.

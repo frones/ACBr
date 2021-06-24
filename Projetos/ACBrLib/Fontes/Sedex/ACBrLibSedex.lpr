@@ -37,7 +37,8 @@ library ACBrLibSedex;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibSedexClass, ACBrLibSedexConfig, ACBrLibSedexDataModule;
+  {$IFDEF MT}ACBrLibSedexMT{$ELSE}ACBrLibSedexST{$ENDIF},
+  ACBrLibSedexConfig, ACBrLibSedexDataModule, ACBrLibSedexRespostas;
 
 {$R *.res}
 
@@ -53,13 +54,14 @@ exports
   Sedex_Nome,
   Sedex_Versao,
   Sedex_UltimoRetorno,
+  Sedex_ConfigImportar,
+  Sedex_ConfigExportar,
   Sedex_ConfigLer,
   Sedex_ConfigGravar,
   Sedex_ConfigLerValor,
   Sedex_ConfigGravarValor,
 
   // Sedex
-  Sedex_LerArqIni,
   Sedex_Consultar,
   Sedex_Rastrear;
 

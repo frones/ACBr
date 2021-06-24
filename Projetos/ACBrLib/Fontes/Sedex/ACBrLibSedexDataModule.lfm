@@ -2,23 +2,16 @@ object LibSedexDM: TLibSedexDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  Height = 150
+  Height = 446
   HorizontalOffset = 257
   VerticalOffset = 127
-  Width = 150
-  PPI = 96
+  Width = 525
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
-    Peso = 0
     Formato = TpfCaixaPacote
-    Comprimento = 0
-    Altura = 0
-    Largura = 0
-    ValorDeclarado = 0
     Servico = Tps04510PAC
-    Diametro = 0
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
-    left = 54
-    top = 35
+    Left = 54
+    Top = 35
   end
 end

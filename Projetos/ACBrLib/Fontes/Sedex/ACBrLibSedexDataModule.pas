@@ -37,7 +37,8 @@ unit ACBrLibSedexDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrSedex;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs,
+  ACBrLibComum, ACBrSedex;
 
 type
 
@@ -50,19 +51,22 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
+
   end;
 
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibSedexConfig, ACBrLibComum, ACBrLibSedexClass;
+  ACBrUtil, ACBrLibSedexConfig, ACBrLibSedexBase;
 
 {$R *.lfm}
 
@@ -82,7 +86,7 @@ procedure TLibSedexDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibSedexConfig;
 begin
-  pLibConfig := TLibSedexConfig(TACBrLibSedex(pLib).Config);
+  pLibConfig := TLibSedexConfig(Lib.Config);
 
   with ACBrSedex1 do
   begin
@@ -94,8 +98,8 @@ end;
 procedure TLibSedexDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
-  if Assigned(pLib) then
-    TACBrLibSedex(pLib^.Lib).GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibSedexDM.Travar;

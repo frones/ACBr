@@ -215,11 +215,13 @@ var
   TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto, CompOcorrenciaOutrosDados : String;
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
+  ANumeroDocumento: String;
 begin
 
    with ACBrTitulo do
    begin
       wNossoNumeroCompleto := OnlyNumber(MontarCampoNossoNumero(ACBrTitulo));
+      ANumeroDocumento := PadRight(IfThen(SeuNumero <> '', SeuNumero, NumeroDocumento), 10, ' ');
 
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
@@ -365,7 +367,7 @@ begin
                   IntToStrZero( round( PercentualMulta * 100 ), 4)                      +  // 093 a 096 - % multa por pagamento em atraso
                   Space(12)                                                             +  // 097 a 108 - Filler - Brancos
                   Ocorrencia                                                            +  // 109 a 110 - Instrução = "01" Cadastro de título ... ---Anderson
-                  PadRight( NumeroDocumento,  10)                                       +  // 111 a 120 - Seu número
+                  ANumeroDocumento                                                      +  // 111 a 120 - Seu número
                   FormatDateTime( 'ddmmyy', Vencimento)                                 +  // 121 a 126 - Data de vencimento
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)                      +  // 127 a 139 - Valor do título
                   Space(9)                                                              +  // 140 a 148 - Filler - Brancos
@@ -464,7 +466,7 @@ begin
            wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
                      'E'                                                         + // 002 a 002 - Tipo de informativo
                      PadLeft( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
-                     ifthen(wModalidade = 'A', PadRight(NumeroDocumento, 10),
+                     ifthen(wModalidade = 'A', ANumeroDocumento,
                             padLeft(wNossoNumeroCompleto,10,'0'))                + // 008 a 017 - Seu numero
                      Space(1)                                                    + // 018 a 018 - Filler
                      wModalidade                                                 + // 019 a 019 - "A"-Com registro  "C"-Sem registro
@@ -499,7 +501,7 @@ begin
              wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
                        'E'                                                         + // 002 a 002 - Tipo de informativo
                        PadLeft( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
-                       ifthen(wModalidade = 'A', padRight(NumeroDocumento, 10), 
+                       ifthen(wModalidade = 'A', ANumeroDocumento,
                               padLeft(wNossoNumeroCompleto, 10,'0'))                                  +// 008 a 017 - Seu numero
                        Space(1)                                                    + // 018 a 018 - Filler
                        'A'                                                         + // 019 a 019 - "A"-Com registro  "C"-Sem registro
@@ -516,7 +518,7 @@ begin
         begin
           wLinha:=  '6'                                                            + // 001 a 001 - Identificação do registro Informativo (6)
                     PadLeft(wNossoNumeroCompleto,15,' ')                           + // 002 a 016 - Nosso número Sicredi
-                    PadRight( NumeroDocumento,  10)                                + // 017 a 026 - Seu número
+                    ANumeroDocumento                                               + // 017 a 026 - Seu número
                     PadRight('', 5, '0')                                           + // 027 a 031 - Código do pagador junto ao cliente
                     PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')    + // 032 a 045 - CPF/CNPJ do Sacador Avalista ( Obrigatório )
                     PadRight( TiraAcentos( Sacado.SacadoAvalista.NomeAvalista
@@ -538,7 +540,7 @@ begin
         begin
           wLinha := '7'                                                            + // 001 a 001 - Identificação do registro detalhe (7)
                     PadLeft(wNossoNumeroCompleto, 15, ' ')                         + // 002 a 016 - Nosso número Sicredi
-                    PadRight(NumeroDocumento, 10)                                  + // 017 a 026 - Seu número
+                    ANumeroDocumento                                               + // 017 a 026 - Seu número
                     PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                   + // 027 a 040 - CPF/CNPJ do pagador
                     PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')    + // 041 a 054 - CPF/CNPJ do Sacador Avalista
                     IfThen(DataDesconto2 < EncodeDate(2000, 01, 01), '000000',
@@ -688,7 +690,7 @@ begin
         qtdMotivo:=1;
       end;
       SeuNumero                   := copy(Linha,117,10);
-      NumeroDocumento             := copy(Linha,117,10);
+      NumeroDocumento             := copy(Linha,117,10);  //Se repete pois esse layout não se utiliza de campo específico para Numero Documento
 
       ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
       ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;

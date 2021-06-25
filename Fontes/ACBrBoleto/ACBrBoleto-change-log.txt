@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2021
+--ACBrBancoSicred--
+[*] Validação no preenchimento do campo SeuNumero ou NumeroDocumento para CNAB400
+
+--ACBrBancoBrasil--
+[*] Validação campo CodigoProtesto - Não Protestar (Campo não estava sendo verificado)
+
 21/06/2021
 --ACBrBancoUniprime--
 [*] Ajuste digito banco conforme especificação Manual Banco 099

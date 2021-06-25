@@ -114,7 +114,6 @@ procedure TACBrNFSeProviderSP.AssinaturaAdicional(Nota: NotaFiscal);
 var
   sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
   sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
-  xAssinatura: TStringList;
 begin
   with Nota do
   begin
@@ -168,15 +167,8 @@ begin
                    sTomador +
                    sInter;
 
-    xAssinatura := TStringList.Create;
-    try
-      xAssinatura.Add(sAssinatura);
-
-      with TACBrNFSeX(FAOwner) do
-        NFSe.Assinatura := string(SSL.CalcHash(xAssinatura, dgstSHA1, outBase64, True));
-    finally
-      xAssinatura.Free;
-    end;
+    with TACBrNFSeX(FAOwner) do
+      NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
   end;
 end;
 
@@ -464,7 +456,9 @@ begin
                           OnlyNumber(Emitente.CNPJ) +
                         '</CNPJ>' +
                       '</CPFCNPJRemetente>' +
-                      '<transacao>false</transacao>' +
+                      '<transacao>' +
+                         LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
+                      '</transacao>' +
                       '<dtInicio>' + xDataI + '</dtInicio>' +
                       '<dtFim>' + xDataF + '</dtFim>' +
                       '<QtdRPS>' +

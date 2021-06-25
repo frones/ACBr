@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2021
+-- ACBrMDFeManifestos/pmdfeMDFeW  --
+[*] Corrigido a leitura do novo campo categCombVeic.
+    Esse campo agora é lido da sessão [valePed] e a os campos da sessão
+    [valePedxxx] também podem ser lidos da sessão [dispxxx].
+   Por: Italo Giurizzato Junior
+
 22/06/2021
 -- pmdfeConversaoMDFe --
 [+] Incluido as funções: tpValePedToStrText e categCombVeicToStrText que retornam a 

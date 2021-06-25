@@ -615,13 +615,13 @@ begin
               INIRec.WriteString(sSecao, 'CIOT', CIOT);
               INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
             end;
-
-            INIRec.WriteString(sSecao, 'categCombVeic', categCombVeicToStr(Rodo.infANTT.valePed.categCombVeic));
           end;
+
+          INIRec.WriteString('valePed', 'categCombVeic', categCombVeicToStr(Rodo.infANTT.valePed.categCombVeic));
 
           for i := 0 to rodo.infANTT.valePed.disp.Count - 1 do
           begin
-            sSecao := 'valePed' + IntToStrZero(I + 1, 3);
+            sSecao := 'disp' + IntToStrZero(I + 1, 3);
             with rodo.infANTT.valePed.disp.Items[i] do
             begin
               INIRec.WriteString(sSecao, 'CNPJForn', CNPJForn);
@@ -1446,7 +1446,7 @@ begin
       //
       //*********************************************************************
 
-      Rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
+      rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
 
       // Dados sobre Informações para Agencia Reguladora (Opcional) - Nível 1 - Versão 3.00
 
@@ -1476,17 +1476,21 @@ begin
             CNPJCPF := sFim;
           end;
 
-          rodo.infANTT.valePed.categCombVeic := StrTocategCombVeic(OK, INIRec.ReadString(sSecao, 'categCombVeic', ''));
-
           Inc(I);
         end;
 
         // Dados do Vale Pedágio (Opcional) - Nível 2 - Versão 3.00
 
+        rodo.infANTT.valePed.categCombVeic := StrTocategCombVeic(OK, INIRec.ReadString('valePed', 'categCombVeic', ''));
+
         I := 1;
         while true do
         begin
-          sSecao := 'valePed' + IntToStrZero(I, 3);
+          sSecao := 'disp' + IntToStrZero(I, 3);
+
+          if not INIRec.SectionExists(sSecao) then
+            sSecao := 'valePed' + IntToStrZero(I, 3);
+
           sFim   := INIRec.ReadString(sSecao, 'CNPJForn', 'FIM');
 
           if sFim = 'FIM' then

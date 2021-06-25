@@ -604,7 +604,8 @@ begin
   end
   else
   begin
-    if MDFe.rodo.infANTT.valePed.disp.Count > 0 then
+    if (MDFe.rodo.infANTT.valePed.disp.Count > 0) or
+       (MDFe.Rodo.infANTT.valePed.categCombVeic <> tcNenhum) then
     begin
       Gerador.wGrupo('valePed', '#23');
 

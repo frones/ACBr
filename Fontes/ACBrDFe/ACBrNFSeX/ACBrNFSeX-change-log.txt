@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/06/2021
+-- Digifred.GravarXml --
+[*] Ajustes no na geração do XML do Rps - Provedor Digifred.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes no numero de ocorrencias da tag <InscricaoMunicipal> do Tomador.
    Por: Italo Giurizzato Junior

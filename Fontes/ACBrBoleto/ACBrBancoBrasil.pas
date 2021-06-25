@@ -497,12 +497,12 @@ begin
         cnProtestarCorrido :  ACodProtesto := '1';
         cnProtestarUteis   :  ACodProtesto := '2';
         cnNegativar        :  ACodProtesto := '8';
+        cnNaoProtestar     :  ACodProtesto := '3';
       else
         case TipoDiasProtesto of
           diCorridos       : ACodProtesto := '1';
-          diUteis          : ACodProtesto := '2';
         else
-          ACodProtesto := '3';
+          ACodProtesto     := '2';
         end;
       end;
 
@@ -513,8 +513,8 @@ begin
         DiasProtestoNegativacao := IntToStr(DiasDeNegativacao);
       end
       else
-	  begin
-  	    if (ACodProtesto <> '3') then
+      begin
+        if (ACodProtesto <> '3') then
         begin
           DataProtestoNegativacao := DateToStr(DataProtesto);
           DiasProtestoNegativacao := IntToStr(DiasDeProtesto);
@@ -524,7 +524,7 @@ begin
           DataProtestoNegativacao := '';
           DiasProtestoNegativacao := '0';
         end;
-	  end;
+      end;
 
      {Pegando o Tipo de Ocorrencia}
      case OcorrenciaOriginal.Tipo of

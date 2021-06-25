@@ -36,8 +36,7 @@ interface
 
 uses
   Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrSedex,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibSedexRespostas,
-  ACBrLibSedexConsts;
+  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibSedexRespostas;
 
 type
 
@@ -52,11 +51,8 @@ public
 
   procedure LerIniSedex(aStr: String);
 
-  procedure RespostaConsulta;
-  procedure RespostaItensRastreio(ItemID: integer = 0);
-
-  function ProcessarRespostaSedex : String;
-  function ProcessarRespostaRastreio : String;
+  procedure ProcessarRespostaConsulta;
+  procedure ProcessarRespostaRastreio(ItemID: integer = 0);
 
   property ACBrSedex: TACBrSedex read fACBrSedex;
 end;
@@ -123,69 +119,32 @@ begin
 
 end;
 
-procedure TACBrObjetoSedex.RespostaConsulta;
+procedure TACBrObjetoSedex.ProcessarRespostaConsulta;
 var
   Resp: TLibSedexConsulta;
 begin
   Resp := TLibSedexConsulta.Create(TpResp, codUTF8);
   try
-    with fACBrSedex do
-    begin
-      Resp.CodigoServico := retCodigoServico;
-      Resp.Valor := retValor;
-      Resp.PrazoEntrega := retPrazoEntrega;
-      Resp.ValorSemAdicionais := retValorSemAdicionais;
-      Resp.ValorMaoPropria := retValorMaoPropria;
-      Resp.ValorAvisoRecebimento := retValorAvisoRecebimento;
-      Resp.ValorValorDeclarado := retValorValorDeclarado;
-      Resp.EntregaDomiciliar := retEntregaDomiciliar;
-      Resp.EntregaSabado := retEntregaSabado;
-      Resp.Erro := retErro;
-      Resp.MsgErro := retMsgErro;
-
-      fpCmd.Resposta := retMsgErro + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    Resp.Processar(ACBrSedex);
+    fpCmd.Resposta := sLineBreak + Resp.Gerar;
   finally
     Resp.Free;
   end;
+
 end;
 
-procedure TACBrObjetoSedex.RespostaItensRastreio(ItemID: integer);
+procedure TACBrObjetoSedex.ProcessarRespostaRastreio(ItemID: integer);
 var
   Resp: TLibSedexRastreio;
 begin
-  Resp := TLibSedexRastreio.Create(
-          CSessaoRespRastreio + Trim(IntToStrZero(ItemID +1, 2)), TpResp, codUTF8);
+  Resp := TLibSedexRastreio.Create(ItemID, TpResp, codUTF8);
   try
-    with fACBrSedex.retRastreio[ItemID] do
-    begin
-      Resp.DataHora := DataHora;
-      Resp.Local := Local;
-      Resp.Situacao := Situacao;
-      Resp.Observacao := Observacao;
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    Resp.Processar(ACBrSedex.retRastreio[ItemID]);
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Resp.Gerar;
   finally
     Resp.Free;
   end;
-end;
 
-function TACBrObjetoSedex.ProcessarRespostaSedex: String;
-begin
-  RespostaConsulta;
-  Result := fpCmd.Resposta;
-end;
-
-function TACBrObjetoSedex.ProcessarRespostaRastreio: String;
-var
-  I: integer;
-begin
-  for I := 0 to ACBrSedex.retRastreio.Count - 1 do
-    RespostaItensRastreio(I);
-
-  Result := fpCmd.Resposta;
 end;
 
 { TMetodoConsultar }
@@ -204,7 +163,7 @@ begin
       LerIniSedex(AIni);
 
     ACBrSedex.Consultar;
-    RespostaConsulta;
+    ProcessarRespostaConsulta;
   end;
 end;
 
@@ -221,7 +180,7 @@ begin
     ACBrSedex.Rastrear( fpCmd.Params(0) );
 
     for I := 0 to ACBrSedex.retRastreio.Count - 1 do
-      RespostaItensRastreio(I);
+      ProcessarRespostaRastreio(I);
   end;
 end;
 

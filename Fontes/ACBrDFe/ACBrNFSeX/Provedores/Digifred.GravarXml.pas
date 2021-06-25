@@ -70,6 +70,7 @@ begin
   FormatoCompetencia := tcDatHor;
   FormatoAliq := tcDe2;
   NrOcorrCodigoPaisServico := 0;
+  NrOcorrInscMunTomador := 0;
 end;
 
 end.

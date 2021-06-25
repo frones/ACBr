@@ -86,6 +86,7 @@ type
     FNrOcorrValorCsll: Integer;
     FNrOcorrValorIss: Integer;
     FNrOcorrValorCofins: Integer;
+    FNrOcorrInscMunTomador: Integer;
 
   protected
     procedure Configuracao; override;
@@ -146,6 +147,7 @@ type
     property NrOcorrInscEstTomador: Integer     read FNrOcorrInscEstTomador     write FNrOcorrInscEstTomador;
     property NrOcorrCodPaisTomador: Integer     read FNrOcorrCodPaisTomador     write FNrOcorrCodPaisTomador;
     property NrOcorrRazaoSocialInterm: Integer  read FNrOcorrRazaoSocialInterm  write FNrOcorrRazaoSocialInterm;
+    property NrOcorrInscMunTomador: Integer     read FNrOcorrInscMunTomador      write FNrOcorrInscMunTomador;
 
     property NrOcorrRegimeEspecialTributacao: Integer read FNrOcorrRegimeEspecialTributacao write FNrOcorrRegimeEspecialTributacao;
     property NrOcorrInformacoesComplemetares: Integer read FNrOcorrInformacoesComplemetares write FNrOcorrInformacoesComplemetares;
@@ -211,6 +213,7 @@ begin
   FNrOcorrIdCidade := -1;
   FNrOcorrValorISSRetido_2 := -1;
   FNrOcorrValorTotalRecebido := -1;
+  FNrOcorrInscMunTomador := 1;
   FNrOcorrInscEstTomador := -1;
   FNrOcorrOutrasInformacoes := -1;
   FNrOcorrCodPaisTomador := -1;
@@ -512,7 +515,7 @@ begin
   if NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '' then
     Result.AppendChild(GerarCPFCNPJ(NFSe.Tomador.IdentificacaoTomador.CpfCnpj));
 
-  Result.AppendChild(AddNode(tcStr, '#37', 'InscricaoMunicipal', 1, 15, 1,
+  Result.AppendChild(AddNode(tcStr, '#37', 'InscricaoMunicipal', 1, 15, NrOcorrInscMunTomador,
                  NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, DSC_IM));
 
   Result.AppendChild(AddNode(tcStr, '#38', 'InscricaoEstadual', 1, 20, NrocorrInscEstTomador,

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2021
+-- Diversos --
+[*] Ajustes no numero de ocorrencias da tag <InscricaoMunicipal> do Tomador.
+   Por: Italo Giurizzato Junior
+
 24/06/2021
 -- Diversos --
 [*] Ajustes em diversas Units visando o provedor SP.

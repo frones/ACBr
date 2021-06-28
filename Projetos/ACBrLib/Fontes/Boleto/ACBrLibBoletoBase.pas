@@ -879,6 +879,7 @@ begin
 
     try
       Resposta := '';
+      ABarras  := BoletoDM.ACBrBoleto1.Banco.MontarCodigoBarras(BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
       Resposta := BoletoDM.ACBrBoleto1.Banco.MontarLinhaDigitavel(ABarras, BoletoDM.ACBrBoleto1.ListadeBoletos[Indice]);
       Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);

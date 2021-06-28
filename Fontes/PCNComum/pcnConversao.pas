@@ -172,7 +172,7 @@ type
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
   TpcnTipoViaTransp = (tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
                        tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                       tvEntradaSaidaFicta, tvCourier, tvHandcarry);
+                       tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque);
   TpcnTipoIntermedio = (tiContaPropria, tiContaOrdem, tiEncomenda);
   TpcnindISSRet = (iirSim, iirNao);
   TpcnindISS = (iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao, iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm);
@@ -199,7 +199,12 @@ type
                 schresCTe, schprocCTe, schprocCTeOS, schprocEventoCTe,
                 schresMDFe, schprocMDFe, schprocEventoMDFe,
                 schresBPe, schprocBPe, schprocEventoBPe);
+
   TForcarGeracaoTag = (fgtNunca, fgtSomenteProducao, fgtSomenteHomologacao, fgtSempre);
+
+  TIndSomaPISST = (ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe);
+
+  TIndSomaCOFINSST = (iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe);
 
   TStrToTpEvento = function (out ok: boolean; const s: String): TpcnTpEvento;
   TStrToTpEventoDFe = record
@@ -416,6 +421,12 @@ function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
 function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib ): string;
 function indISSToStrTagPosText(const t: TpcnindISS ): string;
 function indIncentivoToStrTagPosText(const t: TpcnindIncentivo ): string;
+
+function indSomaPISSTToStr(const t: TIndSomaPISST): String;
+function StrToindSomaPISST(out ok: Boolean; const s: String): TIndSomaPISST;
+
+function indSomaCOFINSSTToStr(const t: TIndSomaCOFINSST): String;
+function StrToindSomaCOFINSST(out ok: Boolean; const s: String): TIndSomaCOFINSST;
 
 function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;
 
@@ -1480,19 +1491,19 @@ end;
 function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
 begin
   result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                               '10', '11', '12'],
+                               '10', '11', '12', '13'],
                               [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
                                tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                               tvEntradaSaidaFicta, tvCourier, tvHandcarry]);
+                               tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
 end;
 
 function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                                   '10', '11', '12'],
+                                   '10', '11', '12', '13'],
                                   [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
                                    tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                                   tvEntradaSaidaFicta, tvCourier, tvHandcarry]);
+                                   tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
 end;
 
 function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
@@ -1759,6 +1770,30 @@ function indIncentivoToStrTagPosText(const t: TpcnindIncentivo): string;
 begin
   result := EnumeradoToStr(t, ['1 - Sim', '2 - Não'],
                               [iiSim, iiNao]);
+end;
+
+function indSomaPISSTToStr(const t: TIndSomaPISST): String;
+begin
+  Result := EnumeradoToStr(t, ['', '0', '1'],
+                                [ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe]);
+end;
+
+function StrToindSomaPISST(out ok: Boolean; const s: String): TIndSomaPISST;
+begin
+  Result := StrToEnumerado(ok, s, ['', '0', '1'],
+                                [ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe]);
+end;
+
+function indSomaCOFINSSTToStr(const t: TIndSomaCOFINSST): String;
+begin
+  Result := EnumeradoToStr(t, ['', '0', '1'],
+                          [iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe]);
+end;
+
+function StrToindSomaCOFINSST(out ok: Boolean; const s: String): TIndSomaCOFINSST;
+begin
+  Result := StrToEnumerado(ok, s, ['', '0', '1'],
+                          [iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe]);
 end;
 
 function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;

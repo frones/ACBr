@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2021
+-- pcnConversao --
+[+] Inclusão dos tipos TIndSomaPISST e TIndSomaCOFINSST e suas respectivas funções
+    de conversão.
+  Por: Italo Giurizzato Junior
+
 22/06/2021
 -- pcnLeitor ---
 [*] Alteração na função "rCampo" visando a leitura correta de data/hora quanto esta 

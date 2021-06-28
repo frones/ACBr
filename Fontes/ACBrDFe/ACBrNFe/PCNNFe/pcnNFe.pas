@@ -665,6 +665,8 @@ type
     FindEscala: TpcnIndEscala;
     FCNPJFab: String;
     FcBenef: String;
+    FcBarra: String;
+    FcBarraTrib: String;
 
     procedure SetDI(Value: TDICollection);
     procedure SetRastro(Value: TRastroCollection);
@@ -680,6 +682,7 @@ type
     property cProd: String read FcProd write FcProd;
     property nItem: Integer read FnItem write FnItem;
     property cEAN: String read FcEAN write FcEAN;
+    property cBarra: String read FcBarra write FcBarra;
     property xProd: String read FxProd write FxProd;
     property NCM: String read FNCM write FNCM;
     property NVE : TNVECollection read FNVE write SetNVE; //FNVE;
@@ -691,6 +694,7 @@ type
     property vUnCom: Double read FvUnCom write FvUnCom;
     property vProd: Currency read FvProd write FvProd;
     property cEANTrib: String read FcEANTrib write FcEANTrib;
+    property cBarraTrib: String read FcBarraTrib write FcBarraTrib;
     property uTrib: String read FuTrib write FuTrib;
     property qTrib: Currency read FqTrib write FqTrib;
     property vUnTrib: Double read FvUnTrib write FvUnTrib;
@@ -1143,6 +1147,11 @@ type
     FpICMSEfet: Currency;
     FvICMSEfet: Currency;
     FvICMSSubstituto: Currency;
+    FvICMSSTDeson: Currency;
+    FmotDesICMSST: TpcnMotivoDesoneracaoICMS;
+    FvFCPDif: Currency;
+    FvFCPEfet: Currency;
+    FpFCPDif: Currency;
   public
     procedure Assign(Source: TICMS);
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
@@ -1187,6 +1196,11 @@ type
     property pICMSEfet: Currency read FpICMSEfet write FpICMSEfet;
     property vICMSEfet: Currency read FvICMSEfet write FvICMSEfet;
     property vICMSSubstituto: Currency read FvICMSSubstituto write FvICMSSubstituto;
+    property vICMSSTDeson: Currency read FvICMSSTDeson write FvICMSSTDeson;
+    property motDesICMSST: TpcnMotivoDesoneracaoICMS read FmotDesICMSST write FmotDesICMSST;
+    property pFCPDif: Currency read FpFCPDif write FpFCPDif;
+    property vFCPDif: Currency read FvFCPDif write FvFCPDif;
+    property vFCPEfet: Currency read FvFCPEfet write FvFCPEfet;
   end;
 
   TIPI = class(TObject)
@@ -1256,6 +1270,7 @@ type
     FqBCProd: Currency;
     FvAliqProd: Currency;
     FvPIS: Currency;
+    FindSomaPISST: TIndSomaPISST;
   public
     procedure Assign(Source: TPISST);
     property vBc: Currency read FvBc write FvBc;
@@ -1263,6 +1278,7 @@ type
     property qBCProd: Currency read FqBCProd write FqBCProd;
     property vAliqProd: Currency read FvAliqProd write FvAliqProd;
     property vPIS: Currency read FvPIS write FvPIS;
+    property indSomaPISST: TIndSomaPISST read FindSomaPISST write FindSomaPISST;
   end;
 
   TCOFINS = class(TObject)
@@ -1429,6 +1445,7 @@ type
     FqBCProd: Currency;
     FvAliqProd: Currency;
     FvCOFINS: Currency;
+    FindSomaCOFINSST: TIndSomaCOFINSST;
   public
     procedure Assign(Source: TCOFINSST);
     property vBC: Currency read FvBC write FvBC;
@@ -1436,6 +1453,7 @@ type
     property qBCProd: Currency read FqBCProd write FqBCProd;
     property vAliqProd: Currency read FvAliqProd write FvAliqProd;
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
+    property indSomaCOFINSST: TIndSomaCOFINSST read FindSomaCOFINSST write FindSomaCOFINSST;
   end;
 
   TISSQN = class(TObject)
@@ -2348,6 +2366,7 @@ begin
   cProd     := Source.cProd;
   nItem     := Source.nItem;
   cEAN      := Source.cEAN;
+  cBarra    := Source.cBarra;
   xProd     := Source.xProd;
   NCM       := Source.NCM;
   NVE.Assign(Source.NVE);
@@ -2359,6 +2378,7 @@ begin
   vUnCom    := Source.vUnCom;
   vProd     := Source.vProd;
   cEANTrib  := Source.cEANTrib;
+  cBarraTrib := Source.FcBarraTrib;
   uTrib     := Source.uTrib;
   qTrib     := Source.qTrib;
   vUnTrib   := Source.vUnTrib;
@@ -3544,6 +3564,11 @@ begin
   pICMSEfet   := Source.pICMSEfet;
   vICMSEfet   := Source.vICMSEfet;
   vICMSSubstituto := Source.vICMSSubstituto;
+  vICMSSTDeson := Source.vICMSSTDeson;
+  motDesICMSST := Source.motDesICMSST;
+  pFCPDif  := Source.pFCPDif;
+  vFCPDif  := Source.vFCPDif;
+  vFCPEfet := Source.vFCPEfet;
 end;
 
 { TIPI }
@@ -3594,6 +3619,7 @@ begin
   qBCProd   := Source.qBCProd;
   vAliqProd := Source.vAliqProd;
   vPIS      := Source.vPIS;
+  indSomaPISST := Source.indSomaPISST;
 end;
 
 { TCOFINS }
@@ -3688,6 +3714,7 @@ begin
   qBCProd   := Source.qBCProd;
   vAliqProd := Source.vAliqProd;
   vCOFINS   := Source.vCOFINS;
+  indSomaCOFINSST := Source.indSomaCOFINSST;
 end;
 
 { TISSQN }

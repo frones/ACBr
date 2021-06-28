@@ -993,6 +993,9 @@ begin
       wAlerta('I03', 'cEAN', DSC_CEAN, ErroValidarGTIN);
   end;
 
+  Result.AppendChild(AddNode(tcStr, 'I03a ', 'cBarra', 3, 30, 0,
+    NFe.Det[i].Prod.cBarra, DSC_CBARRA));
+
   if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = taHomologacao) and
     (NFe.ide.modelo = 65) then
     Result.AppendChild(AddNode(tcStr, 'I04 ', 'xProd   ', 1, 120, 1,
@@ -1000,6 +1003,7 @@ begin
   else
     Result.AppendChild(AddNode(tcStr, 'I04 ', 'xProd   ', 1, 120, 1,
       NFe.Det[i].Prod.xProd, DSC_XPROD));
+
   Result.AppendChild(AddNode(tcStr, 'I05 ', 'NCM     ', 02, 08,
     IIf(NFe.infNFe.Versao >= 2, 1, 0), NFe.Det[i].Prod.NCM, DSC_NCM));
 
@@ -1054,6 +1058,9 @@ begin
     if ErroValidarGTIN <> '' then
       wAlerta('I12', 'cEANTrib', DSC_CEANTRIB, ErroValidarGTIN);
   end;
+
+  Result.AppendChild(AddNode(tcStr, 'I12a ', 'cBarraTrib', 3, 30, 0,
+    NFe.Det[i].Prod.cBarraTrib, DSC_CBARRATRIB));
 
   Result.AppendChild(AddNode(tcStr, 'I13 ', 'uTrib   ', 01, 06, 1,
     NFe.Det[i].Prod.uTrib, DSC_UTRIB));
@@ -1132,7 +1139,7 @@ begin
   for j := 0 to NFe.Det[i].Prod.DI.Count - 1 do
   begin
     Result[j] := FDocument.CreateElement('DI');
-    Result[j].AppendChild(AddNode(tcStr, 'I19', 'nDI', 01, 12, 1,
+    Result[j].AppendChild(AddNode(tcStr, 'I19', 'nDI', 01, 15, 1,
       NFe.Det[i].Prod.DI[j].nDI, DSC_NDI));
 
     if not ValidaDIRE(NFe.Det[i].Prod.DI[j].nDI) and not
@@ -1207,18 +1214,20 @@ begin
       60, 1, NFe.Det[i].Prod.DI[j].adi[k].cFabricante, DSC_CFABRICANTE));
     Result[k].AppendChild(AddNode(tcDe2, 'I29', 'vDescDI    ', 00,
       15, 0, NFe.Det[i].Prod.DI[j].adi[k].vDescDI, DSC_VDESCDI));
+
     // O número do Ato Concessório de Suspensão deve ser preenchido com 11 dígitos
     // (AAAANNNNNND) e o número do Ato Concessório de Drawback Isenção deve ser
     // preenchido com 9 dígitos (AANNNNNND).
     // (Observação incluída na NT 2013/005 v. 1.10)
     Result[k].AppendChild(AddNode(tcStr, 'I29a', 'nDraw     ', 09,
-      11, 0, NFe.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW));
+      20, 0, NFe.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW));
+
     if trim(NFe.Det[i].Prod.DI[j].adi[k].nDraw) <> '' then
       if not ValidaDrawback(NFe.Det[i].Prod.DI[j].adi[k].nDraw) then
         wAlerta('I29a', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
   end;
-  if NFe.Det[i].Prod.DI[j].adi.Count > 100 then
-    wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
+  if NFe.Det[i].Prod.DI[j].adi.Count > 999 then
+    wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 function TNFeXmlWriter.GerarDetProdNVE(const i: integer): TACBrXmlNodeArray;
@@ -1250,12 +1259,15 @@ begin
   for j := 0 to NFe.Det[i].Prod.detExport.Count - 1 do
   begin
     Result[i] := FDocument.CreateElement('detExport');
+
     // O número do Ato Concessório de Suspensão deve ser preenchido com 11 dígitos
     // (AAAANNNNNND) e o número do Ato Concessório de Drawback Isenção deve ser
     // preenchido com 9 dígitos (AANNNNNND).
     // (Observação incluída na NT 2013/005 v. 1.10)
+
     Result[j].AppendChild(AddNode(tcStr, 'I51', 'nDraw      ', 09,
-      11, 0, NFe.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW));
+      20, 0, NFe.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW));
+
     if trim(NFe.Det[i].Prod.detExport[j].nDraw) <> '' then
       if not ValidaDrawback(NFe.Det[i].Prod.detExport[j].nDraw) then
         wAlerta('I51', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
@@ -1782,6 +1794,18 @@ begin
             xmlNode.AppendChild(AddNode(tcStr, 'N24', 'UFST    ',
               02, 02, 1, NFe.Det[i].Imposto.ICMS.UFST, DSC_UFST));
           end;
+
+          if (NFe.infNFe.Versao >= 4) then
+          begin
+            if (nfe.Det[i].Imposto.ICMS.vICMSSTDeson > 0)then
+            begin
+              xmlNode.AppendChild(AddNode(tcDe2, 'N33a', 'vICMSSTDeson', 01, 15, 1,
+                       nfe.Det[i].Imposto.ICMS.vICMSSTDeson, DSC_VICMSSTDESON));
+
+              xmlNode.AppendChild(AddNode(tcStr, 'N33b', 'motDesICMSST', 01, 02, 1,
+                motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
+            end;
+          end;
         end;
         cst20:
         begin
@@ -1937,6 +1961,24 @@ begin
                 01, 15, 1, NFe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP));
             end;
           end;
+
+          if (NFe.infNFe.Versao >= 4) then
+          begin
+            if (nfe.Det[i].Imposto.ICMS.pFCPDif > 0) or
+               (nfe.Det[i].Imposto.ICMS.vFCPDif > 0) or
+               (nfe.Det[i].Imposto.ICMS.vFCPEfet > 0) then
+            begin
+              xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4,tcDe4,tcDe2),
+                'N17d', 'pFCPDif', 01, IIf(Usar_tcDe4,07,05), 0,
+                                 nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF));
+
+              xmlNode.AppendChild(AddNode(tcDe2, 'N17e', 'vFCPDif ', 1, 15, 0,
+                                 nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF));
+
+              xmlNode.AppendChild(AddNode(tcDe2, 'N17f', 'vFCPEfet ', 1, 15, 0,
+                               nfe.Det[i].Imposto.ICMS.vFCPEfet, DSC_VFCPEFET));
+            end;
+          end;
         end;
         cst60:
         begin
@@ -2046,6 +2088,18 @@ begin
               01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
               DSC_MOTDESICMS));
           end;
+
+          if (NFe.infNFe.Versao >= 4) then
+          begin
+            if (nfe.Det[i].Imposto.ICMS.vICMSSTDeson > 0)then
+            begin
+              xmlNode.AppendChild(AddNode(tcDe2, 'N33a', 'vICMSSTDeson', 01, 15, 1,
+                       nfe.Det[i].Imposto.ICMS.vICMSSTDeson, DSC_VICMSSTDESON));
+
+              xmlNode.AppendChild(AddNode(tcStr, 'N33b', 'motDesICMSST', 01, 02, 1,
+                motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
+            end;
+          end;
         end;
         cst90,
         cstPart90:
@@ -2133,6 +2187,18 @@ begin
               NFe.Det[i].Imposto.ICMS.pBCOp, DSC_PBCOP));
             xmlNode.AppendChild(AddNode(tcStr, 'N24', 'UFST   ',
               02, 02, 1, NFe.Det[i].Imposto.ICMS.UFST, DSC_UFST));
+          end;
+
+          if (NFe.infNFe.Versao >= 4) then
+          begin
+            if (nfe.Det[i].Imposto.ICMS.vICMSSTDeson > 0)then
+            begin
+              xmlNode.AppendChild(AddNode(tcDe2, 'N33a', 'vICMSSTDeson', 01, 15, 1,
+                       nfe.Det[i].Imposto.ICMS.vICMSSTDeson, DSC_VICMSSTDESON));
+
+              xmlNode.AppendChild(AddNode(tcStr, 'N33b', 'motDesICMSST', 01, 02, 1,
+                motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
+            end;
           end;
         end;
         cstRep41,
@@ -2584,6 +2650,10 @@ begin
         'pPIS     ', 01, IIf(Usar_tcDe4, 07, 05), 1, NFe.Det[i].Imposto.PISST.pPis, DSC_PPIS));
       Result.AppendChild(AddNode(tcDe2, 'R06', 'vPIS     ', 01, 15,
         1, NFe.Det[i].Imposto.PISST.vPIS, DSC_VPIS));
+
+      if (nfe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.PISST.indSomaPISST <> ispNenhum) then
+        Result.AppendChild(AddNode(tcStr, 'R07', 'indSomaPISST', 1, 1, 1,
+          indSomaPISSTToStr(nfe.Det[i].Imposto.PISST.indSomaPISST), DSC_INDSOMAPISST));
     end;
     if (NFe.Det[i].Imposto.PISST.qBCProd + NFe.Det[i].Imposto.PISST.vAliqProd > 0) then
     begin
@@ -2594,6 +2664,10 @@ begin
         1, NFe.Det[i].Imposto.PISST.vAliqProd, DSC_VALIQPROD));
       Result.AppendChild(AddNode(tcDe2, 'R06', 'vPIS     ', 01, 15,
         1, NFe.Det[i].Imposto.PISST.vPIS, DSC_VPIS));
+
+      if (nfe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.PISST.indSomaPISST <> ispNenhum) then
+        Result.AppendChild(AddNode(tcStr, 'R07', 'indSomaPISST', 1, 1, 1,
+          indSomaPISSTToStr(nfe.Det[i].Imposto.PISST.indSomaPISST), DSC_INDSOMAPISST));
     end;
   end;
 end;
@@ -2709,6 +2783,10 @@ begin
         DSC_PCOFINS));
       Result.AppendChild(AddNode(tcDe2, 'T06', 'vCOFINS    ', 01, 15,
         1, NFe.Det[i].Imposto.COFINSST.vCOFINS, DSC_VCOFINS));
+
+      if (nfe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.COFINSST.indSomaCOFINSST <> iscNenhum) then
+        Result.AppendChild(AddNode(tcStr, 'T07', 'indSomaCOFINSST', 1, 1, 1,
+          indSomaCOFINSSTToStr(nfe.Det[i].Imposto.COFINSST.indSomaCOFINSST), DSC_INDSOMACOFINSST));
     end;
     if (NFe.Det[i].Imposto.COFINSST.qBCProd +
       NFe.Det[i].Imposto.COFINSST.vAliqProd > 0) then
@@ -2720,6 +2798,10 @@ begin
         1, NFe.Det[i].Imposto.COFINSST.vAliqProd, DSC_VALIQPROD));
       Result.AppendChild(AddNode(tcDe2, 'T06', 'vCOFINS    ', 01, 15,
         1, NFe.Det[i].Imposto.COFINSST.vCOFINS, DSC_VCOFINS));
+
+      if (nfe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.COFINSST.indSomaCOFINSST <> iscNenhum) then
+        Result.AppendChild(AddNode(tcStr, 'T07', 'indSomaCOFINSST', 1, 1, 1,
+          indSomaCOFINSSTToStr(nfe.Det[i].Imposto.COFINSST.indSomaCOFINSST), DSC_INDSOMACOFINSST));
     end;
   end;
 end;
@@ -3156,9 +3238,12 @@ begin
   begin
     Result := FDocument.CreateElement('veicTransp');
     Result.AppendChild(AddNode(tcStr, 'X19', 'placa   ', 06, 07, 1, NFe.Transp.veicTransp.placa, DSC_PLACA));
-    Result.AppendChild(AddNode(tcStr, 'X20', 'UF      ', 02, 02, 1, NFe.Transp.veicTransp.UF, DSC_UF));
-    if not pcnAuxiliar.ValidarUF(NFe.Transp.veicTransp.UF) then
-      wAlerta('X20', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+    Result.AppendChild(AddNode(tcStr, 'X20', 'UF      ', 02, 02, 0, NFe.Transp.veicTransp.UF, DSC_UF));
+
+    if NFe.Transp.veicTransp.UF <> '' then
+      if not pcnAuxiliar.ValidarUF(NFe.Transp.veicTransp.UF) then
+        wAlerta('X20', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+
     Result.AppendChild(AddNode(tcStr, 'X21', 'RNTC    ', 01, 20, 0, NFe.Transp.veicTransp.RNTC, DSC_RNTC));
   end;
 end;
@@ -3174,9 +3259,12 @@ begin
   begin
     Result[i] := FDocument.CreateElement('reboque');
     Result[i].AppendChild(AddNode(tcStr, 'X23', 'placa ', 06, 07, 1, NFe.Transp.Reboque[i].placa, DSC_PLACA));
-    Result[i].AppendChild(AddNode(tcStr, 'X24', 'UF    ', 02, 02, 1, NFe.Transp.Reboque[i].UF, DSC_UF));
-    if not pcnAuxiliar.ValidarUF(NFe.Transp.Reboque[i].UF) then
-      wAlerta('X24', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+    Result[i].AppendChild(AddNode(tcStr, 'X24', 'UF    ', 02, 02, 0, NFe.Transp.Reboque[i].UF, DSC_UF));
+
+    if NFe.Transp.Reboque[i].UF <> '' then
+      if not pcnAuxiliar.ValidarUF(NFe.Transp.Reboque[i].UF) then
+        wAlerta('X24', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+
     Result[i].AppendChild(AddNode(tcStr, 'X25', 'RNTC  ', 01, 20, 0, NFe.Transp.Reboque[i].RNTC, DSC_RNTC));
   end;
 end;

@@ -407,6 +407,7 @@ begin
     Leitor.rExtrai(2, 'prod');
     (*I02*)NFe.Det[i].Prod.cProd := Leitor.rCampo(tcStr, 'cProd');
     (*I03*)NFe.Det[i].Prod.cEAN  := Leitor.rCampo(tcStr, 'cEAN');
+           NFe.Det[i].Prod.cBarra  := Leitor.rCampo(tcStr, 'cBarra');
     (*I04*)NFe.Det[i].Prod.xProd := Leitor.rCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM   := Leitor.rCampo(tcStr, 'NCM');
     (*I05w*)NFe.Det[i].Prod.CEST := Leitor.rCampo(tcStr, 'CEST');
@@ -424,6 +425,7 @@ begin
     (*I10a*)NFe.Det[i].Prod.vUnCom  := Leitor.rCampo(tcDe10, 'vUnCom');
     (*I11*)NFe.Det[i].Prod.vProd    := Leitor.rCampo(tcDe2, 'vProd');
     (*I12*)NFe.Det[i].Prod.cEANTrib := Leitor.rCampo(tcStr, 'cEANTrib');
+           NFe.Det[i].Prod.cBarraTrib := Leitor.rCampo(tcStr, 'cBarraTrib');
     (*I13*)NFe.Det[i].Prod.uTrib    := Leitor.rCampo(tcStr, 'uTrib');
     (*I14*)NFe.Det[i].Prod.qTrib    := Leitor.rCampo(tcDe4, 'qTrib');
     (*I14a*)NFe.Det[i].Prod.vUnTrib := Leitor.rCampo(tcDe10, 'vUnTrib');
@@ -674,6 +676,11 @@ begin
       (*N35*)NFe.Det[i].Imposto.ICMS.vBCEfet     := Leitor.rCampo(tcDe2, 'vBCEfet');
       (*N36*)NFe.Det[i].Imposto.ICMS.pICMSEfet   := Leitor.rCampo(tcDe4, 'pICMSEfet');
       (*N37*)NFe.Det[i].Imposto.ICMS.vICMSEfet   := Leitor.rCampo(tcDe2, 'vICMSEfet');
+             NFe.Det[i].Imposto.ICMS.vICMSSTDeson := Leitor.rCampo(tcDe2, 'vICMSSTDeson');
+             NFe.Det[i].Imposto.ICMS.motDesICMSST := StrTomotDesICMS(ok, Leitor.rCampo(tcStr, 'motDesICMSST'));
+             NFe.Det[i].Imposto.ICMS.pFCPDif     := Leitor.rCampo(tcDe4, 'pFCPDif');
+             NFe.Det[i].Imposto.ICMS.vFCPDif     := Leitor.rCampo(tcDe2, 'vFCPDif');
+             NFe.Det[i].Imposto.ICMS.vFCPEfet    := Leitor.rCampo(tcDe2, 'vFCPEfet');
 
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
@@ -759,6 +766,7 @@ begin
       (*R04*)NFe.Det[i].Imposto.PISST.qBCProd   := Leitor.rCampo(tcDe4, 'qBCProd');
       (*R05*)NFe.Det[i].Imposto.PISST.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*R06*)NFe.Det[i].Imposto.PISST.vPIS      := Leitor.rCampo(tcDe2, 'vPIS');
+      (*R07*)NFe.Det[i].Imposto.PISST.indSomaPISST := StrToindSomaPISST(ok, Leitor.rCampo(tcStr, 'indSomaPISST'));
     end;
     if Leitor.rExtrai(3, 'COFINS') <> '' then
     begin
@@ -776,6 +784,7 @@ begin
       (*T04*)NFe.Det[i].Imposto.COFINSST.qBCProd   := Leitor.rCampo(tcDe4, 'qBCProd');
       (*T05*)NFe.Det[i].Imposto.COFINSST.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*T06*)NFe.Det[i].Imposto.COFINSST.vCOFINS   := Leitor.rCampo(tcDe2, 'vCOFINS');
+      (*T07*)NFe.Det[i].Imposto.COFINSST.indSomaCOFINSST := StrToindSomaCOFINSST(ok, Leitor.rCampo(tcStr, 'indSomaCOFINSST'));
     end;
     if Leitor.rExtrai(3, 'ISSQN') <> '' then
     begin

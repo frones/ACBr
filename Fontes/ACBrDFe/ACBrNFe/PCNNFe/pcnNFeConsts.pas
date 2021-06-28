@@ -259,6 +259,15 @@ const
   DSC_URLCHAVE = 'URL de consulta por chave de acesso a ser impressa no DANFE NFC-e';
   DSC_CNPJINTERM = 'CNPJ do Intermediador da Transação';
   DSC_IDCADINTERM = 'Nome do usuário ou identificação do perfil do vendedor no site do intermediador';
+  DSC_CBARRA = 'Código de Barras próprio ou de terceiros';
+  DSC_CBARRATRIB = 'Código de Barras próprio ou de terceiros (Tributação)';
+  DSC_VICMSSTDESON = 'Valor do ICMS- ST desonerado';
+  DSC_MOTDESICMSST = 'Motivo da desoneração do ICMS- ST';
+  DSC_PFCPDIF = 'Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP)';
+  DSC_VFCPDIF = 'Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido';
+  DSC_VFCPEFET = 'Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP)';
+  DSC_INDSOMAPISST = 'Indica se o valor do PIS ST compõe o valor total da NF-e';
+  DSC_INDSOMACOFINSST = 'Indica se o valor da COFINS ST compõe o valor total da NF-e';
 
 implementation
 

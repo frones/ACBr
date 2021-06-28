@@ -512,6 +512,7 @@ begin
 
   (*I02*)Item.Prod.cProd := ProcessarConteudo(ANode.Childrens.Find('cProd'), tcStr);
   (*I03*)Item.Prod.cEAN  := ProcessarConteudo(ANode.Childrens.Find('cEAN'), tcStr);
+         Item.Prod.cBarra := ProcessarConteudo(ANode.Childrens.Find('cBarra'), tcStr);
   (*I04*)Item.Prod.xProd := ProcessarConteudo(ANode.Childrens.Find('xProd'), tcStr);
   (*I05*)Item.Prod.NCM   := ProcessarConteudo(ANode.Childrens.Find('NCM'), tcStr);
   (*I05w*)Item.Prod.CEST := ProcessarConteudo(ANode.Childrens.Find('CEST'), tcStr);
@@ -528,6 +529,7 @@ begin
   (*I10a*)Item.Prod.vUnCom  := ProcessarConteudo(ANode.Childrens.Find('vUnCom'), tcDe10);
   (*I11*)Item.Prod.vProd    := ProcessarConteudo(ANode.Childrens.Find('vProd'), tcDe2);
   (*I12*)Item.Prod.cEANTrib := ProcessarConteudo(ANode.Childrens.Find('cEANTrib'), tcStr);
+         Item.Prod.cBarraTrib := ProcessarConteudo(ANode.Childrens.Find('cBarraTrib'), tcStr);
   (*I13*)Item.Prod.uTrib    := ProcessarConteudo(ANode.Childrens.Find('uTrib'), tcStr);
   (*I14*)Item.Prod.qTrib    := ProcessarConteudo(ANode.Childrens.Find('qTrib'), tcDe4);
   (*I14a*)Item.Prod.vUnTrib := ProcessarConteudo(ANode.Childrens.Find('vUnTrib'), tcDe10);
@@ -586,7 +588,6 @@ begin
   end;
 
   LerDetProdComb(Item, ANode.Childrens.Find('comb'));
-
 end;
 
 procedure TNFeXmlReader.LerDetProdDI(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
@@ -849,6 +850,11 @@ begin
     (*N36*)Item.Imposto.ICMS.pICMSEfet   := ProcessarConteudo(AuxNode.Childrens.Find('pICMSEfet'), tcDe4);
     (*N37*)Item.Imposto.ICMS.vICMSEfet   := ProcessarConteudo(AuxNode.Childrens.Find('vICMSEfet'), tcDe2);
     (*N26b*)Item.Imposto.ICMS.vICMSSubstituto := ProcessarConteudo(AuxNode.Childrens.Find('vICMSSubstituto'), tcDe2);
+            Item.Imposto.ICMS.vICMSSTDeson := ProcessarConteudo(AuxNode.Childrens.Find('vICMSSTDeson'), tcDe2);
+            Item.Imposto.ICMS.motDesICMSST := StrTomotDesICMS(ok, ProcessarConteudo(AuxNode.Childrens.Find('motDesICMSST'), tcStr));
+            Item.Imposto.ICMS.pFCPDif     := ProcessarConteudo(AuxNode.Childrens.Find('pFCPDif'), tcDe4);
+            Item.Imposto.ICMS.vFCPDif     := ProcessarConteudo(AuxNode.Childrens.Find('vFCPDif'), tcDe2);
+            Item.Imposto.ICMS.vFCPEfet    := ProcessarConteudo(AuxNode.Childrens.Find('vFCPEfet'), tcDe2);
 
     if (AuxNode.Name = 'ICMSPart') then
     begin
@@ -944,6 +950,7 @@ begin
     (*R04*)Item.Imposto.PISST.qBCProd   := ProcessarConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
     (*R05*)Item.Imposto.PISST.vAliqProd := ProcessarConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
     (*R06*)Item.Imposto.PISST.vPIS      := ProcessarConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
+    (*R07*)Item.Imposto.PISST.indSomaPISST := StrToindSomaPISST(ok, ProcessarConteudo(AuxNode.Childrens.Find('indSomaPISST'), tcStr));
   end;
 
   AuxNode := ANode.Childrens.Find('COFINS');
@@ -967,6 +974,7 @@ begin
     (*T04*)Item.Imposto.COFINSST.qBCProd   := ProcessarConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
     (*T05*)Item.Imposto.COFINSST.vAliqProd := ProcessarConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
     (*T06*)Item.Imposto.COFINSST.vCOFINS   := ProcessarConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
+    (*T07*)Item.Imposto.COFINSST.indSomaCOFINSST := StrToindSomaPISST(ok, StrToindSomaCOFINSST(AuxNode.Childrens.Find('indSomaCOFINSST'), tcStr));
   end;
 
   AuxNode := ANode.Childrens.Find('ISSQN');

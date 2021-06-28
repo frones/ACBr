@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2021
+-- Diversos --
+[*] Diversas alterações para deixar o componente em conformidade com a 
+    NT  2020/005
+  Por: Italo Giurizzato Junior
+
 17/06/2021
 -- ACBrNFeServicos --
 [*] Troca da URL "URL-ConsultaNFCe_2.00 de GO.

@@ -747,7 +747,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -793,9 +793,10 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
+        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
+        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -878,7 +879,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -924,9 +925,10 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
+        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
+        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -1004,7 +1006,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -1050,9 +1052,10 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
+        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
+        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml

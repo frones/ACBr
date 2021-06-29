@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/06/2021
+-- SP.Provider/ISSDSF.Provider/Siat.Provider --
+[*] Estava faltando a leitura da tag NumNFe ao ler o grupo ChaveNFe.
+   Por: Italo Giurizzato Junior
 -- SigISS.GravarXml --
 [*] Ajustes no na geração do XML do Rps - Provedor SigISS.
    Por: Italo Giurizzato Junior

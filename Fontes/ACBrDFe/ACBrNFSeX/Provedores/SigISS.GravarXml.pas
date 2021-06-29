@@ -125,6 +125,12 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'servico', 1, 15, 1,
                        OnlyNumber(NFSe.Servico.CodigoTributacaoMunicipio), ''));
 
+  Result.AppendChild(AddNode(tcStr, '#1', 'codigo_obra', 1, 15, 0,
+                                   NFSe.ConstrucaoCivil.CodigoObra, DSC_COBRA));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'obra_art', 1, 15, 0,
+                                            NFSe.ConstrucaoCivil.Art, DSC_ART));
+
   Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 2, 1,
                                      SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
@@ -153,6 +159,18 @@ begin
 
     Result.AppendChild(AddNode(tcDe4, '#1', 'retencao_iss', 1, 15, 0,
                                             NFSe.Servico.Valores.ValorIss, ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'incentivo_fiscal', 1, 1, 0,
+                       SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'cod_municipio_prestacao_servico', 1, 7, 0,
+                           OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
+
+    Result.AppendChild(AddNode(tcInt, '#1', 'cod_pais_prestacao_servico', 4, 4, 0,
+                                           NFSe.Servico.CodigoPais, DSC_CPAIS));
+
+    Result.AppendChild(AddNode(tcInt, '#1', 'cod_municipio_incidencia', 7, 07, 0,
+                                NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));
   end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoNF', 1, 150, 1,
@@ -213,6 +231,9 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_serie', 1, 3, 0,
                                               NFSe.IdentificacaoRps.Serie, ''));
 
+  Result.AppendChild(AddNode(tcStr, '#1', 'rps_tipo', 1, 1, 0,
+                                 TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
+
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_dia', 1, 2, 0,
                                  FormatDateTime('dd',NFSe.DataEmissaoRps), ''));
 
@@ -221,6 +242,19 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_ano', 1, 4, 0,
                                FormatDateTime('yyyy',NFSe.DataEmissaoRps), ''));
+
+// <xsd:element name="nfse_substituida" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'rps_substituido', 1, 15, 1,
+                        OnlyNumber(NFSe.RpsSubstituido.Numero), DSC_NUMRPSSUB));
+
+(*
+<xsd:element name="obra_alvara_numero" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="obra_alvara_ano" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="obra_local_lote" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="obra_local_quadra" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="obra_local_bairro" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+*)
 
   if FpVersao = 100 then
   begin

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2021
+-- SigISS.GravarXml --
+[*] Ajustes no na geração do XML do Rps - Provedor SigISS.
+   Por: Italo Giurizzato Junior
+
 25/06/2021
 -- Digifred.GravarXml --
 [*] Ajustes no na geração do XML do Rps - Provedor Digifred.

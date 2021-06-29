@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2020
+--- ACBrMonior1--
+[*] Validação botão carregar lib do SAT em Linux.
+
 25/06/2021
 --- DoACBrSEDEX--
 [*] Atualizacao do método de resposta Consulta e Rastreio baseado na RespostaLib

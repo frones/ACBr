@@ -8265,7 +8265,11 @@ end;
 
 procedure TFrmACBrMonitor.sbNomeDLLClick(Sender: TObject);
 begin
-  OpenDialog1.Filter := 'Arquivo DLL|*.dll';
+  {$IFDEF LINUX}
+    OpenDialog1.Filter := 'Arquivo LIB|*.so';
+  {$ELSE}
+    OpenDialog1.Filter := 'Arquivo DLL|*.dll';
+  {$ENDIF}
   OpenDialog1.InitialDir := ExtractFilePath(edNomeDLL.Text);
   OpenDialog1.FileName := edNomeDLL.Text;
   if OpenDialog1.Execute then

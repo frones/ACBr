@@ -122,10 +122,10 @@ type
                    proActcon_202, proADPM, proAdm, proAEG, proAsten,
                    proBetha_2, proCenti, proCoplan, proDataSmart, proDeISS,
                    proDesenvolve, proDigifred, proEL_2, proElotech, proeReceita,
-                   profintelISS, proFiorilli, proFuturize, proGiss, proGoiania,
-                   proGovDigital, proiiBrasil_2, proInfisc_2, proISSDigital,
-                   proISSe, proISSJoinville, proLink3, proMegaSoft, proMitra,
-                   proModernizacaoPublica, proNEAInformatica,
+                   profintelISS, profintelISS_A, proFiorilli, proFuturize, proGiss,
+                   proGoiania, proGovDigital, proiiBrasil_2, proInfisc_2,
+                   proISSDigital, proISSe, proISSJoinville, proLink3, proMegaSoft,
+                   proMitra, proModernizacaoPublica, proNEAInformatica,
                    proNotaInteligente, proProdata, proPronim_202, proPronim_203,
                    proPVH, proRLZ, proSaatri, proSafeWeb, proSH3, proSiam,
                    proSiapNet, proSigCorp, proSigep, proSilTecnologia_203,
@@ -624,7 +624,7 @@ begin
          'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss'],
+         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -648,7 +648,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss]);
+         proADPM, proIPM_110, proFGMaiss, profintelISS_A]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -675,7 +675,7 @@ begin
          'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss'],
+         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -699,7 +699,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss]);
+         proADPM, proIPM_110, proFGMaiss, profintelISS_A]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

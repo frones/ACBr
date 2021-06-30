@@ -62,6 +62,17 @@ type
     function GerarValoresServico: TACBrXmlNode; override;
   end;
 
+  { TNFSeW_fintelISS_A }
+
+  TNFSeW_fintelISS_A = class(TNFSeW_ABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    {
+    procedure DefinirIDRps; override;
+    }
+  end;
+
 implementation
 
 //==============================================================================
@@ -75,15 +86,11 @@ procedure TNFSeW_fintelISS.Configuracao;
 begin
   inherited Configuracao;
 
-  // Altera a Configuração Padrão para gerar o XML do RPS
-  if CodMunEmit <> 3136702 then
-  begin
-    FormatoEmissao     := tcDatHor;
-    FormatoCompetencia := tcDatHor;
-    TagTomador         := 'TomadorServico';
-    GerarIDDeclaracao  := False;
-    GerarIDRps         := True;
-  end;
+  FormatoEmissao     := tcDatHor;
+  FormatoCompetencia := tcDatHor;
+  TagTomador         := 'TomadorServico';
+  GerarIDDeclaracao  := False;
+  GerarIDRps         := True;
 
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := 1;
@@ -94,32 +101,24 @@ var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;
 begin
-  if CodMunEmit <> 3136702 then
-  begin
-    Result := CreateElement('ListaServicos');
+  Result := CreateElement('ListaServicos');
 
-    if (NFSe.Servico.ItemServico.Count > 0) then
+  if (NFSe.Servico.ItemServico.Count > 0) then
+  begin
+    nodeArray := GerarServicos;
+    if nodeArray <> nil then
     begin
-      nodeArray := GerarServicos;
-      if nodeArray <> nil then
+      for i := 0 to Length(nodeArray) - 1 do
       begin
-        for i := 0 to Length(nodeArray) - 1 do
-        begin
-          Result.AppendChild(nodeArray[i]);
-        end;
+        Result.AppendChild(nodeArray[i]);
       end;
     end;
-  end
-  else
-    Result := nil;
+  end;
 end;
 
 function TNFSeW_fintelISS.GerarServico: TACBrXmlNode;
 begin
-  if CodMunEmit <> 3136702 then
-    Result := nil
-  else
-    Result := inherited GerarServico;
+  Result := nil
 end;
 
 function TNFSeW_fintelISS.GerarServicos: TACBrXmlNodeArray;
@@ -174,36 +173,31 @@ end;
 
 function TNFSeW_fintelISS.GerarValoresServico: TACBrXmlNode;
 begin
-  if CodMunEmit <> 3136702 then
-  begin
-    Result := CreateElement('ValoresServico');
+  Result := CreateElement('ValoresServico');
 
-    Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis     ', 1, 15, NrOcorrValorPis,
+  Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis     ', 1, 15, NrOcorrValorPis,
                                       NFSe.Servico.Valores.ValorPis, DSC_VPIS));
 
-    Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins  ', 1, 15, NrOcorrValorCofins,
+  Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins  ', 1, 15, NrOcorrValorCofins,
                                 NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS));
 
-    Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss    ', 1, 15, NrOcorrValorInss,
+  Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss    ', 1, 15, NrOcorrValorInss,
                                     NFSe.Servico.Valores.ValorInss, DSC_VINSS));
 
-    Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr      ', 1, 15, NrOcorrValorIr,
+  Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr      ', 1, 15, NrOcorrValorIr,
                                         NFSe.Servico.Valores.ValorIr, DSC_VIR));
 
-    Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll    ', 1, 15, NrOcorrValorCsll,
+  Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll    ', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
 
-    Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss        ', 1, 15, NrOcorrValorISS,
+  Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss        ', 1, 15, NrOcorrValorISS,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));
 
-    Result.AppendChild(AddNode(tcDe2, '#13', 'ValorLiquidoNfse', 1, 15, 1,
+  Result.AppendChild(AddNode(tcDe2, '#13', 'ValorLiquidoNfse', 1, 15, 1,
                              NFSe.Servico.Valores.ValorLiquidoNfse, DSC_VNFSE));
 
-    Result.AppendChild(AddNode(tcDe2, '#13', 'ValorServicos', 1, 15, 1,
+  Result.AppendChild(AddNode(tcDe2, '#13', 'ValorServicos', 1, 15, 1,
                              NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO));
-  end
-  else
-    Result := nil
 end;
 
 procedure TNFSeW_fintelISS.DefinirIDRps;
@@ -239,6 +233,16 @@ begin
   Result[0].AppendChild(AddNode(tcDe2, '#28', 'DescontoCondicionado  ', 1, 15, NrOcorrDescCond,
               NFSe.Servico.ItemServico[i].DescontoCondicionado, DSC_VDESCCOND));
   }
+end;
+
+{ TNFSeW_fintelISS_A }
+
+procedure TNFSeW_fintelISS_A.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrAliquota := 1;
+  NrOcorrCodigoPaisServico := 1;
 end;
 
 end.

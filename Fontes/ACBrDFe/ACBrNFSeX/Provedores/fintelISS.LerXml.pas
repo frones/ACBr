@@ -53,6 +53,15 @@ type
 
   end;
 
+  { TNFSeR_fintelISS_A }
+
+  TNFSeR_fintelISS_A = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
+
+  end;
+
 implementation
 
 //==============================================================================

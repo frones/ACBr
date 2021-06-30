@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2021
+-- Diversos --
+[*] Ajustes necessários para o provedor fintelISS.
+   Por: Italo Giurizzato Junior
+
 29/06/2021
 -- SP.Provider/ISSDSF.Provider/Siat.Provider --
 [*] Estava faltando a leitura da tag NumNFe ao ler o grupo ChaveNFe.

@@ -240,6 +240,7 @@ begin
     proElotech:      Result := TACBrNFSeProviderEloTech.Create(ACBrNFSe);
     proeReceita:     Result := TACBrNFSeProvidereReceita.Create(ACBrNFSe);
     profintelISS:    Result := TACBrNFSeProviderfintelISS.Create(ACBrNFSe);
+    profintelISS_A:  Result := TACBrNFSeProviderfintelISS_A.Create(ACBrNFSe);
     proFiorilli:     Result := TACBrNFSeProviderFiorilli.Create(ACBrNFSe);
     proFuturize:     Result := TACBrNFSeProviderFuturize.Create(ACBrNFSe);
     proGiss:         Result := TACBrNFSeProviderGiss.Create(ACBrNFSe);
@@ -256,8 +257,10 @@ begin
 
     proModernizacaoPublica:
       Result := TACBrNFSeProviderModernizacaoPublica.Create(ACBrNFSe);
+
     proNEAInformatica:
       Result := TACBrNFSeProviderNEAInformatica.Create(ACBrNFSe);
+
     proNotaInteligente:
       Result := TACBrNFSeProviderNotaInteligente.Create(ACBrNFSe);
 

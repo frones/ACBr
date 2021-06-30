@@ -48,8 +48,6 @@ type
   private
     FIBGEDM: TLibIBGEDM;
 
-    function RespostaItensConsulta(ItemID: integer): String;
-
   protected
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
@@ -68,8 +66,8 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibIBGEConsts, ACBrLibConfig,
-  ACBrLibIBGEConfig, ACBrLibIBGERespostas;
+  ACBrLibConsts, ACBrLibConfig,
+  ACBrLibIBGEConfig, ACBrLibIBGERespostas, ACBrObjectSerializer;
 
 { TACBrLibIBGE }
 
@@ -99,31 +97,10 @@ begin
   FIBGEDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibIBGE.RespostaItensConsulta(ItemID: integer): String;
-var
-  Resp: TLibIBGEResposta;
-begin
-  Resp := TLibIBGEResposta.Create(CSessaoRespConsulta + IntToStr(ItemID +1),
-                                 Config.TipoResposta, Config.CodResposta);
-  try
-    with IBGEDM.ACBrIBGE1.Cidades[ItemID] do
-    begin
-      Resp.UF := UF;
-      Resp.CodUF := IntToStr(CodUF);
-      Resp.Municipio := Municipio;
-      Resp.CodMunicipio:= IntToStr(CodMunicipio);
-      Resp.Area:= FloatToStr(Area);
-
-      result := Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
 function TACBrLibIBGE.BuscarPorCodigo(var ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
 var
   CodMun: Integer;
+  Resp: TLibIBGEResposta;
   AResposta: String;
 begin
   try
@@ -136,12 +113,20 @@ begin
     IBGEDM.Travar;
     try
       ACodMun := IBGEDM.ACBrIBGE1.BuscarPorCodigo(CodMun);
-      AResposta := RespostaItensConsulta(0);
-      MoverStringParaPChar(AResposta, sResposta, esTamanho);
 
+      Resp := TLibIBGEResposta.Create(1, Config.TipoResposta, Config.CodResposta);
+
+      if (IBGEDM.ACBrIBGE1.Cidades.Count > 0) then
+      begin
+        Resp.Processar(IBGEDM.ACBrIBGE1.Cidades[0]);
+        AResposta := Resp.Gerar;
+      end;
+
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, AResposta);
     finally
       IBGEDM.Destravar;
+      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -155,8 +140,10 @@ end;
 function TACBrLibIBGE.BuscarPorNome(eCidade, eUF: PChar; const Exata: Boolean; const sResposta: PChar; var esTamanho: longint):longint;
 var
   ACidade, AUF: AnsiString;
+  Items: TArray<TLibIBGEResposta>;
+  Item: TLibIBGEResposta;
   AResposta: String;
-  I, Qtde: Integer;
+  I: Integer;
 begin
   try
     ACidade:=ConverterAnsiParaUTF8(eCidade);
@@ -170,18 +157,25 @@ begin
     IBGEDM.Travar;
 
     try
-       Qtde:=IBGEDM.ACBrIBGE1.BuscarPorNome(ACidade, AUF);
+       IBGEDM.ACBrIBGE1.BuscarPorNome(ACidade, AUF);
        AResposta:='';
 
        for I:= 0 to IBGEDM.ACBrIBGE1.Cidades.Count - 1 do
-        AResposta:= AResposta + RespostaItensConsulta(I);
+       begin
+         Item := TLibIBGEResposta.Create(I+1, Config.TipoResposta, Config.CodResposta);
+         Item.Processar(IBGEDM.ACBrIBGE1.Cidades[i]);
+         SetLength(Items, I+1);
+         Items[I] := Item;
+       end;
 
+       AResposta := TACBrObjectSerializer.Gerar<TLibIBGEResposta>(Items, Config.TipoResposta, Config.CodResposta);
        MoverStringParaPChar(AResposta, sResposta, esTamanho);
-
        Result := SetRetorno(ErrOK, AResposta);
 
   finally
     IBGEDM.Destravar;
+    for I := 0 to Length(Items) - 1 do
+        Items[I].Free;
   end;
     except
       on E: EACBrLibException do

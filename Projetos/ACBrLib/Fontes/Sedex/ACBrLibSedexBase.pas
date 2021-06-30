@@ -180,6 +180,8 @@ begin
       Result := SetRetorno(ErrOK, Resposta);
     finally
       SedexDM.Destravar;
+      for I := 0 to Length(Rastreios) - 1 do
+        Rastreios[I].Free;
     end;
   except
     on E: EACBrLibException do

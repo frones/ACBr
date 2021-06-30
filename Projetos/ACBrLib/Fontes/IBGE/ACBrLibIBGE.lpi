@@ -526,13 +526,10 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
-      </Item1>
-      <Item2>
         <PackageName Value="ACBrTCP"/>
-      </Item2>
+      </Item1>
     </RequiredPackages>
     <Units Count="12">
       <Unit0>

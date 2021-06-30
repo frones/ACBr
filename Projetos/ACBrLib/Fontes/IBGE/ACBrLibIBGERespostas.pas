@@ -37,7 +37,7 @@ unit ACBrLibIBGERespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes, ACBrLibResposta, ACBrIBGE;
 
 type
 
@@ -50,8 +50,10 @@ type
     FCodMunicipio: string;
     FArea: string;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const AId: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(Item: TACBrIBGECidade);
 
   published
     property UF: string read FUF write FUF;
@@ -63,12 +65,24 @@ type
 
 implementation
 
+uses
+  ACBrLibIBGEConsts;
+
 { TLibIBGEResposta }
 
-constructor TLibIBGEResposta.Create(const ASessao: String;
+constructor TLibIBGEResposta.Create(const AId: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespConsulta + IntToStr(AId), ATipo, AFormato);
+end;
+
+procedure TLibIBGEResposta.Processar(Item: TACBrIBGECidade);
+begin
+  UF := Item.UF;
+  CodUF := IntToStr(Item.CodUF);
+  Municipio := Item.Municipio;
+  CodMunicipio:= IntToStr(Item.CodMunicipio);
+  Area:= FloatToStr(Item.Area);
 end;
 
 end.

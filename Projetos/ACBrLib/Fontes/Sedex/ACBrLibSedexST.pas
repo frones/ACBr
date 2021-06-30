@@ -74,8 +74,7 @@ implementation
 uses
   ACBrLibSedexBase, ACBrLibConsts;
 
-function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibSedex, eArqConfig, eChaveCrypt);
 end;

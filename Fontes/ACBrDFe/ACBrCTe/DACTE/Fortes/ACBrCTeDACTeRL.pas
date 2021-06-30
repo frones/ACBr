@@ -263,10 +263,10 @@ begin
       Fields.Clear;
       FieldDefs.Add('TIPO_1', ftString, 15);
       FieldDefs.Add('CNPJCPF_1', ftString, 70);
-      FieldDefs.Add('DOCUMENTO_1', ftString, 33);
+      FieldDefs.Add('DOCUMENTO_1', ftString, 43);
       FieldDefs.Add('TIPO_2', ftString, 15);
       FieldDefs.Add('CNPJCPF_2', ftString, 70);
-      FieldDefs.Add('DOCUMENTO_2', ftString, 33);
+      FieldDefs.Add('DOCUMENTO_2', ftString, 43);
 
      {$IFDEF BORLAND}
       if cdsDocumentos is TClientDataSet then

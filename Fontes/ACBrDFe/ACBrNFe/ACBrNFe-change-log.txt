@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2021
+-- ACBrNFeXmlWriter/pcnNFeW --
+[*] Alterado de opcional para obrigatório os campos: pFCPDif e vFCPDif conforme
+    os novos Schemas.
+  Por: Italo Giurizzato Junior
+
 28/06/2021
 -- Diversos --
 [*] Diversas alterações para deixar o componente em conformidade com a 

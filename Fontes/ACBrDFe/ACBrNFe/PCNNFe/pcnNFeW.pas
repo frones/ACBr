@@ -1570,8 +1570,8 @@ begin
                          (nfe.Det[i].Imposto.ICMS.vFCPDif > 0) or
                          (nfe.Det[i].Imposto.ICMS.vFCPEfet > 0) then
                       begin
-                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N17d', 'pFCPDif', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF);
-                        Gerador.wCampo(tcDe2, 'N17e', 'vFCPDif ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF);
+                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N17d', 'pFCPDif', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF);
+                        Gerador.wCampo(tcDe2, 'N17e', 'vFCPDif ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF);
                         Gerador.wCampo(tcDe2, 'N17f', 'vFCPEfet', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPEfet, DSC_VFCPEFET);
                       end;
                     end;

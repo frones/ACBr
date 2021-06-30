@@ -1969,10 +1969,10 @@ begin
                (nfe.Det[i].Imposto.ICMS.vFCPEfet > 0) then
             begin
               xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4,tcDe4,tcDe2),
-                'N17d', 'pFCPDif', 01, IIf(Usar_tcDe4,07,05), 0,
+                'N17d', 'pFCPDif', 01, IIf(Usar_tcDe4,07,05), 1,
                                  nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF));
 
-              xmlNode.AppendChild(AddNode(tcDe2, 'N17e', 'vFCPDif ', 1, 15, 0,
+              xmlNode.AppendChild(AddNode(tcDe2, 'N17e', 'vFCPDif ', 1, 15, 1,
                                  nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF));
 
               xmlNode.AppendChild(AddNode(tcDe2, 'N17f', 'vFCPEfet ', 1, 15, 0,

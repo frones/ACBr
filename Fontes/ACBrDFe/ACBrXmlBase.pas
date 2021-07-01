@@ -62,8 +62,12 @@ function StrToEnumerado(out ok: boolean; const s: string; const AString: array o
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
+function RemoverIdentacao(const AXML: string): string;
+function XmlToStr(const AXML: string): string;
+function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
+function TratarRetorno(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
@@ -72,7 +76,7 @@ function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCa
 implementation
 
 uses
-  ACBrUtil;
+  StrUtilsEx, ACBrUtil;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
   RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; const QuebraLinha: String): String;
@@ -119,6 +123,42 @@ begin
       result := AString[i];
 end;
 
+function RemoverIdentacao(const AXML: string): string;
+var
+  XMLe, XMLs: string;
+begin
+  XMLe := AXML;
+  XMLs := '';
+
+  while XMLe <> XMLs do
+  begin
+    if XMLs <> '' then
+      XMLe := XMLs;
+
+    XMLs := FaststringReplace(XMLe, ' <', '<', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, '> ', '>', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
+  end;
+
+  Result := XMLs;
+end;
+
+function XmlToStr(const AXML: string): string;
+begin
+  Result := FaststringReplace(AXML, '<', '&lt;', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '>', '&gt;', [rfReplaceAll]);
+end;
+
+function StrToXml(const AXML: string): string;
+begin
+  Result := FaststringReplace(AXML, '&lt;', '<', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&gt;', '>', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&quot;', '"', [rfReplaceAll]);
+  Result := FaststringReplace(Result, ''#$A'', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
+end;
+
 function IncluirCDATA(const aXML: string): string;
 begin
   Result := '<![CDATA[' + aXML + ']]>';
@@ -128,6 +168,16 @@ function RemoverCDATA(const aXML: string): string;
 begin
   Result := StringReplace(aXML, '<![CDATA[', '', [rfReplaceAll]);
   Result := StringReplace(Result, ']]>', '', [rfReplaceAll]);
+end;
+
+function TratarRetorno(const aXML: string): string;
+begin
+  Result := StrToXml(aXML);
+  Result := RemoverCDATA(Result);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := ConverteXMLtoUTF8(Result);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;

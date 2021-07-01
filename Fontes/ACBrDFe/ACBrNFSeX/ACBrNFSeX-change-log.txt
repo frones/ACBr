@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2021
+-- Diversos --
+[*] Troca do método de busca de tag por outro que ignora prefixo caso tenha na
+    tag e outros ajustes.
+   Por: Italo Giurizzato Junior
+
 30/06/2021
 -- Diversos --
 [*] Ajustes necessários para o provedor fintelISS.

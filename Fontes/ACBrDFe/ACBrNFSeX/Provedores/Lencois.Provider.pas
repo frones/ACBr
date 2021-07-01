@@ -271,10 +271,10 @@ begin
 
       with Response.InfRetorno do
       begin
-        Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('validacao'), tcStr);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('validacao'), tcStr);
       end;
 
-      Xml := ProcessarConteudoXml(ANode.Childrens.Find('xml'), tcStr);
+      Xml := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('xml'), tcStr);
       {
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps();
 
@@ -397,15 +397,15 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       {
-      AuxNode := ANode.Childrens.Find('RetornoNota');
+      AuxNode := ANode.Childrens.FindAnyNs('RetornoNota');
 
       if AuxNode <> nil then
       begin
         with Response.InfRetorno do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.Find('Resultado'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.Find('Nota'), tcInt);
-          Link := ProcessarConteudoXml(AuxNode.Childrens.Find('LinkImpressao'), tcStr);
+          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcInt);
+          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
         end;
       end;
      }

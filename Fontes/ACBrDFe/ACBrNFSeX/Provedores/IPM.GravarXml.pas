@@ -50,7 +50,11 @@ type
   { TNFSeW_IPM }
 
   TNFSeW_IPM = class(TNFSeWClass)
+  private
+    FpGerarID: Boolean;
   protected
+    procedure Configuracao; override;
+
     function GerarIdentificacaoRPS: TACBrXmlNode;
     function GerarValoresServico: TACBrXmlNode;
     function GerarPrestador: TACBrXmlNode;
@@ -68,6 +72,7 @@ type
   { TNFSeW_IPMV110 }
 
   TNFSeW_IPMV110 = class(TNFSeW_IPM)
+  protected
 
   end;
 
@@ -104,12 +109,17 @@ begin
   NFSe.InfID.ID := NFSe.IdentificacaoRps.Numero;
 
   NFSeNode := CreateElement('nfse');
-  NFSeNode.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.InfID.ID);
+
+  if FpGerarID then
+    NFSeNode.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.InfID.ID);
 
   FDocument.Root := NFSeNode;
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nfse_teste', 1, 1, 80,
+                                                            NFSe.InfID.ID, ''));
+
   if NFSe.Producao = snNao then
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nfse_teste', 1, 1, 1, '1', ''));
+    NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 1, 1, '1', ''));
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);
@@ -133,6 +143,13 @@ begin
   end;
 
   Result := True;
+end;
+
+procedure TNFSeW_IPM.Configuracao;
+begin
+  inherited Configuracao;
+
+  FpGerarID := False;
 end;
 
 function TNFSeW_IPM.GerarCondicaoPagamento: TACBrXmlNode;
@@ -458,6 +475,7 @@ procedure TNFSeW_IPMa.Configuracao;
 begin
   inherited Configuracao;
 
+  FpGerarID := True;
 end;
 
 end.

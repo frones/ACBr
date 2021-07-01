@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 

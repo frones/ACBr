@@ -337,8 +337,8 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.Find('DataRecebimento'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('Protocolo'), tcStr);
+          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
     except
@@ -433,9 +433,9 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          Situacao := ProcessarConteudoXml(ANode.Childrens.Find('Situacao'), tcStr);
+          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
 
-          AuxNode := ANode.Childrens.Find('ListaNfse');
+          AuxNode := ANode.Childrens.FindAnyNs('ListaNfse');
 
           if AuxNode <> nil then
           begin
@@ -733,7 +733,7 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          AuxNode := ANode.Childrens.Find('ListaNfse');
+          AuxNode := ANode.Childrens.FindAnyNs('ListaNfse');
 
           if AuxNode <> nil then
           begin
@@ -888,8 +888,8 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.Find('DataHora'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('ProtocoloRequerimentoCancelamento'), tcStr);
+          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('ProtocoloRequerimentoCancelamento'), tcStr);
         end;
       end;
     except
@@ -1027,19 +1027,19 @@ begin
 
       if ANode <> nil then
       begin
-        AuxNode := ANode.Childrens.Find('RetSubstituicao');
+        AuxNode := ANode.Childrens.FindAnyNs('RetSubstituicao');
 
         if AuxNode <> nil then
         begin
-          AuxNode := AuxNode.Childrens.Find('NfseSubstituida');
+          AuxNode := AuxNode.Childrens.FindAnyNs('NfseSubstituida');
 
           if AuxNode <> nil then
           begin
             with Response.RetCancelamento do
-             DataHora := ProcessarConteudoXml(ANode.Childrens.Find('DataHora'), tcDatHor);
+             DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
           end;
 
-          AuxNode := AuxNode.Childrens.Find('NfseSubstituidora');
+          AuxNode := AuxNode.Childrens.FindAnyNs('NfseSubstituidora');
 
           if AuxNode <> nil then
           begin

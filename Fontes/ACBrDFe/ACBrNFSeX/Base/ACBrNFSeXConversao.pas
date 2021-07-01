@@ -352,10 +352,6 @@ function RemoverAtributos(const AXML: string; AProvedor: TnfseProvedor): string;
 function UnidadeToStr(const t: TUnidade): string;
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
 
-function RemoverIdentacao(const AXML: string): string;
-function XmlToStr(const AXML: string): string;
-function StrToXml(const AXML: string): string;
-
 function SepararDados(const Astring: string; const Chave: string;
   const MantemChave : Boolean = False;
   const PermitePrefixo: Boolean = True): string;
@@ -377,9 +373,6 @@ function MetodoToStr(const t: TMetodo): string;
 function ModoEnvioToStr(const t: TmodoEnvio): string;
 
 implementation
-
-uses
-  StrUtilsEx;
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 begin
@@ -18813,42 +18806,6 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tuHora, tuQtde]);
-end;
-
-function RemoverIdentacao(const AXML: string): string;
-var
-  XMLe, XMLs: string;
-begin
-  XMLe := AXML;
-  XMLs := '';
-
-  while XMLe <> XMLs do
-  begin
-    if XMLs <> '' then
-      XMLe := XMLs;
-
-    XMLs := FaststringReplace(XMLe, ' <', '<', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, '> ', '>', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
-  end;
-
-  Result := XMLs;
-end;
-
-function XmlToStr(const AXML: string): string;
-begin
-  Result := FaststringReplace(AXML, '<', '&lt;', [rfReplaceAll]);
-  Result := FaststringReplace(Result, '>', '&gt;', [rfReplaceAll]);
-end;
-
-function StrToXml(const AXML: string): string;
-begin
-  Result := FaststringReplace(AXML, '&lt;', '<', [rfReplaceAll]);
-  Result := FaststringReplace(Result, '&gt;', '>', [rfReplaceAll]);
-  Result := FaststringReplace(Result, '&quot;', '"', [rfReplaceAll]);
-  Result := FaststringReplace(Result, ''#$A'', '', [rfReplaceAll]);
-  Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
 end;
 
 function SepararDados(const Astring: string; const Chave: string; const MantemChave: Boolean = False;

@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 

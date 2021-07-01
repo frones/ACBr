@@ -217,7 +217,7 @@ begin
   NFSe.InfID.ID := 'rps:' + NFSe.IdentificacaoRps.Numero;
 
   NFSeNode := CreateElement('RPS');
-  NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.LoteRps.xmlns,Self.PrefixoPadrao);
+  NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.LoteRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
 
@@ -345,7 +345,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividade', 1, 9, 1,
                                                   NFSe.Servico.CodigoCnae, ''));
 
-  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'CodigoServico', 4, 5, 1,
+  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'CodigoServico', 4, 5, 0,
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'AliquotaAtividade', 1, 11, 1,

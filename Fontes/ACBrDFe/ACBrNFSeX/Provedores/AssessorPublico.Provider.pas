@@ -279,7 +279,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.Find('NFSE');
+      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 
       if ANode <> nil then
       begin
@@ -294,8 +294,8 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.Find('DataRecebimento'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('Protocolo'), tcStr);
+          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
       }
@@ -361,7 +361,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.Find('NFSE');
+      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 
       if ANode <> nil then
       begin
@@ -444,7 +444,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.Find('NFSE');
+      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 
       if ANode <> nil then
       begin
@@ -536,7 +536,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.Find('NFSE');
+      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 
       if ANode <> nil then
       begin

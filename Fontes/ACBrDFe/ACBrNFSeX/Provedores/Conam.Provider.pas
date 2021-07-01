@@ -426,7 +426,7 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('Protocolo'), tcStr);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
     except
@@ -504,7 +504,7 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('PrtCSerRps'), tcStr);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;
       end;
     except
@@ -582,7 +582,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('XML_Notas');
+      AuxNode := ANode.Childrens.FindAnyNs('XML_Notas');
 
       if AuxNode <> nil then
       begin
@@ -754,7 +754,7 @@ begin
       begin
         with Response.InfRetorno do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.Find('PrtCSerRps'), tcStr);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;
       end;
     except

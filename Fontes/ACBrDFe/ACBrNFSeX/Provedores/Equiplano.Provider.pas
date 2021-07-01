@@ -357,7 +357,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -367,7 +367,7 @@ begin
 
         with Response.InfRetorno do
         begin
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.Find('protocolo'), tcStr);
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('protocolo'), tcStr);
         end;
       end;
     except
@@ -450,7 +450,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -461,8 +461,8 @@ begin
 
       with Response.InfRetorno do
       begin
-        NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.Find('nrLoteRps'), tcStr);
-        Situacao := ProcessarConteudoXml(AuxNode.Childrens.Find('stLote'), tcStr);
+        NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
+        Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('stLote'), tcStr);
       end;
     except
       on E:Exception do
@@ -548,7 +548,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -557,7 +557,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      AuxNode := ANode.Childrens.Find('listaNfse');
+      AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
       if AuxNode <> nil then
       begin
@@ -672,7 +672,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -685,11 +685,11 @@ begin
 
       if AuxNode <> nil then
       begin
-        Response.CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.Find('cdAutenticacao'), tcStr);
+        Response.CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
 
         with Response.InfRetorno do
         begin
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.Find('nrNfse'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcInt);
         end;
       end;
     except
@@ -771,7 +771,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -780,7 +780,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      AuxNode := ANode.Childrens.Find('listaNfse');
+      AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
       if AuxNode <> nil then
       begin
@@ -901,7 +901,7 @@ begin
 
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.Find('mensagemRetorno');
+      AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
       begin
@@ -914,8 +914,8 @@ begin
       begin
         with Response.RetCancelamento do
         begin
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.Find('sucesso'), tcStr);
-          DataHora := ProcessarConteudoXml(AuxNode.Childrens.Find('dtCancelamento'), tcDatHor);
+          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('sucesso'), tcStr);
+          DataHora := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
         end;
       end;
     except

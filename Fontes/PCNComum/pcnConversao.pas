@@ -155,7 +155,7 @@ type
 
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
                         bcElo, bcHipercard, bcAura, bcCabal, bcAlelo, bcBanesCard,
-                        bcCalCard, bcCredz, bcDiscover, bcGoodCard, bcGrenCard,
+                        bcCalCard, bcCredz, bcDiscover, bcGoodCard, bcGreenCard,
                         bcHiper, bcJcB, bcMais, bcMaxVan, bcPolicard, bcRedeCompras,
                         bcSodexo, bcValeCard, bcVerocheque, bcVR, bcTicket,
                         bcOutros);
@@ -1327,7 +1327,7 @@ begin
     bcCredz:           Result := 'Credz';
     bcDiscover:        Result := 'Discover';
     bcGoodCard:        Result := 'GoodCard';
-    bcGrenCard:        Result := 'GrenCard';
+    bcGreenCard:       Result := 'GreenCard';
     bcHiper:           Result := 'Hiper';
     bcJcB:             Result := 'JcB';
     bcMais:            Result := 'Mais';
@@ -1353,7 +1353,7 @@ begin
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
                                bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
-                               bcGoodCard, bcGrenCard, bcHiper, bcJcB, bcMais,
+                               bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
                                bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
                                bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
 end;
@@ -1367,7 +1367,7 @@ begin
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                    bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
                                    bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
-                                   bcGoodCard, bcGrenCard, bcHiper, bcJcB, bcMais,
+                                   bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
                                    bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
                                    bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
 end;

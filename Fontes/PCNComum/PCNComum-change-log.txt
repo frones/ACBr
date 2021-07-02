@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2021
+-- pcnConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/62971-erro-digita%C3%A7%C3%A3o-pcnconversao-tpcnbandeiracartao-bcgrencard/
+  Por: Fabrício G. Araújo
+
 28/06/2021
 -- pcnConversao --
 [+] Inclusão dos tipos TIndSomaPISST e TIndSomaCOFINSST e suas respectivas funções

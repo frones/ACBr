@@ -147,7 +147,7 @@ type
     property NrOcorrInscEstTomador: Integer     read FNrOcorrInscEstTomador     write FNrOcorrInscEstTomador;
     property NrOcorrCodPaisTomador: Integer     read FNrOcorrCodPaisTomador     write FNrOcorrCodPaisTomador;
     property NrOcorrRazaoSocialInterm: Integer  read FNrOcorrRazaoSocialInterm  write FNrOcorrRazaoSocialInterm;
-    property NrOcorrInscMunTomador: Integer     read FNrOcorrInscMunTomador      write FNrOcorrInscMunTomador;
+    property NrOcorrInscMunTomador: Integer     read FNrOcorrInscMunTomador     write FNrOcorrInscMunTomador;
 
     property NrOcorrRegimeEspecialTributacao: Integer read FNrOcorrRegimeEspecialTributacao write FNrOcorrRegimeEspecialTributacao;
     property NrOcorrInformacoesComplemetares: Integer read FNrOcorrInformacoesComplemetares write FNrOcorrInformacoesComplemetares;
@@ -194,6 +194,7 @@ begin
   FNrOcorrCodigoPais := 0;
   FNrOcorrMunIncid := 0;
   FNrOcorrCodPaisTomador := 0;
+  FNrOcorrInscMunTomador := 0;
 
   FNrOcorrRazaoSocialInterm := 0;
   FNrOcorrValorDeducoes := 0;
@@ -213,7 +214,6 @@ begin
   FNrOcorrIdCidade := -1;
   FNrOcorrValorISSRetido_2 := -1;
   FNrOcorrValorTotalRecebido := -1;
-  FNrOcorrInscMunTomador := 1;
   FNrOcorrInscEstTomador := -1;
   FNrOcorrOutrasInformacoes := -1;
   FNrOcorrCodPaisTomador := -1;

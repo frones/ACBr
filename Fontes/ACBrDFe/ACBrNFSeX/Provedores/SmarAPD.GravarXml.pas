@@ -371,7 +371,6 @@ begin
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisServico := -1;
-  NrOcorrInscMunTomador := 0;
   GerarEnderecoExterior := True;
 end;
 
@@ -386,7 +385,6 @@ begin
   NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisServico := -1;
   NrOcorrCodigoPaisTomador := -1;
-  NrOcorrInscMunTomador := 0;
   GerarEnderecoExterior := True;
   TagTomador := 'TomadorServico';
 end;

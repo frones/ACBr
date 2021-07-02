@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/07/2021
+-- Diversos --
+[*] Documentada todas as propriedades de Parametrização.
+[*] Alterado o valor padrão de NrOcorrInscMunTomador para zero que indica que
+    a tag <InscricaoMunicipal> do tomador é opcional.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.Gravar --
 [*] Alterado para zero o numero de ocorrências da Insc. Munic. do Tomador.
    Por: Italo Giurizzato Junior

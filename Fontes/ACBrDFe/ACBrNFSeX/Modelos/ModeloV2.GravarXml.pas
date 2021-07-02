@@ -121,6 +121,7 @@ begin
   NrOcorrCepTomador := 0;
   NrOcorrCodTribMun_1 := 0;
   NrOcorrNumProcesso := 0;
+  NrOcorrInscMunTomador := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   NrOcorrIssRetido := 1;

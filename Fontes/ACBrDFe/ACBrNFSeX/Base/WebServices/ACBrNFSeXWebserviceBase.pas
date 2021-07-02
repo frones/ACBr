@@ -552,11 +552,7 @@ var
   I: Integer;
   xRetorno: string;
 begin
-  xRetorno := StrToXml(ARetorno);
-  xRetorno := RemoverCDATA(xRetorno);
-  xRetorno := RemoverDeclaracaoXML(xRetorno);
-  xRetorno := ConverteXMLtoUTF8(xRetorno);
-  xRetorno := RemoverDeclaracaoXML(xRetorno);
+  xRetorno := TratarXmlRetorno(ARetorno);
 
   if xRetorno = '' then
   begin

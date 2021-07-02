@@ -123,6 +123,7 @@ begin
   NrOcorrRazaoSocialInterm := 0;
   NrOcorrValorDeducoes := 0;
   NrOcorrValorISSRetido_1 := 0;
+  NrOcorrInscMunTomador := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   NrOcorrOptanteSN := 1;

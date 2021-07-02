@@ -125,7 +125,7 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarRetorno(Arquivo);
+  xRetorno := TratarXmlRetorno(Arquivo);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');

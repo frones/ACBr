@@ -71,7 +71,6 @@ begin
   FormatoAliq := tcDe2;
   NrOcorrCodigoPaisServico := -1;
   NrOcorrCodigoPaisTomador := -1;
-  NrOcorrInscMunTomador := 0;
 end;
 
 end.

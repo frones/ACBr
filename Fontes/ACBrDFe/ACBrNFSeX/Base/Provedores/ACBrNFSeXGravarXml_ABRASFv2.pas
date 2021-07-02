@@ -283,6 +283,7 @@ begin
   FNrOcorrCepTomador := 0;
   FNrOcorrCodTribMun_1 := 0;
   FNrOcorrNumProcesso := 0;
+  FNrOcorrInscMunTomador := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   FNrOcorrIssRetido := 1;
@@ -297,7 +298,6 @@ begin
   FNrOcorrDiscriminacao_1 := 1;
   FNrOcorrExigibilidadeISS := 1;
   FNrOcorrCodigoMunic_1 := 1;
-  FNrOcorrInscMunTomador := 1;
 
   // Por padrão as tags abaixo não devem ser geradas
   FNrOcorrCodTribMun_2 := -1;

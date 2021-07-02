@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2021
+-- SmarAPD.Gravar --
+[*] Alterado para zero o numero de ocorrências da Insc. Munic. do Tomador.
+   Por: Italo Giurizzato Junior
+
 01/07/2021
 -- Diversos --
 [*] Troca do método de busca de tag por outro que ignora prefixo caso tenha na

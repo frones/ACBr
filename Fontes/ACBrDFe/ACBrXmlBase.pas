@@ -67,7 +67,7 @@ function XmlToStr(const AXML: string): string;
 function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
-function TratarRetorno(const aXML: string): string;
+function TratarXmlRetorno(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
@@ -170,7 +170,7 @@ begin
   Result := StringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
-function TratarRetorno(const aXML: string): string;
+function TratarXmlRetorno(const aXML: string): string;
 begin
   Result := StrToXml(aXML);
   Result := RemoverCDATA(Result);

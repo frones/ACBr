@@ -2,46 +2,46 @@
 {
     public enum DistSchema
     {
-        [EnumValue("schresNFe")]
+        [EnumValue("resNFe")]
         schresNFe,
 
-        [EnumValue("schresEvento")]
+        [EnumValue("resEvento")]
         schresEvento,
 
-        [EnumValue("schprocNFe")]
+        [EnumValue("procNFe")]
         schprocNFe,
 
-        [EnumValue("schprocEventoNFe")]
+        [EnumValue("procEventoNFe")]
         schprocEventoNFe,
 
-        [EnumValue("schresCTe")]
+        [EnumValue("resCTe")]
         schresCTe,
 
-        [EnumValue("schprocCTe")]
+        [EnumValue("procCTe")]
         schprocCTe,
 
-        [EnumValue("schprocCTeOS")]
+        [EnumValue("procCTeOS")]
         schprocCTeOS,
 
-        [EnumValue("schprocEventoCTe")]
+        [EnumValue("procEventoCTe")]
         schprocEventoCTe,
 
-        [EnumValue("schresMDFe")]
+        [EnumValue("resMDFe")]
         schresMDFe,
 
-        [EnumValue("schprocMDFe")]
+        [EnumValue("procMDFe")]
         schprocMDFe,
 
-        [EnumValue("schprocEventoMDFe")]
+        [EnumValue("procEventoMDFe")]
         schprocEventoMDFe,
 
-        [EnumValue("schresBPe")]
+        [EnumValue("resBPe")]
         schresBPe,
 
-        [EnumValue("schprocBPe")]
+        [EnumValue("procBPe")]
         schprocBPe,
 
-        [EnumValue("schprocEventoBPe")]
+        [EnumValue("procEventoBPe")]
         schprocEventoBPe
     }
 }

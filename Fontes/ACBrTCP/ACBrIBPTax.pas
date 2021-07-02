@@ -323,6 +323,10 @@ begin
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
 
+      // ajustes para erros conhecidos nos arquivos
+      if Item.Count <> COUNT_COLUN then
+        QuebrarLinha(StringReplace(Arquivo.Strings[I], '"Ex"', 'Ex', []), Item);
+
       if Trim(Item.Strings[2]) <> '' then
       begin
         if Item.Count = COUNT_COLUN then

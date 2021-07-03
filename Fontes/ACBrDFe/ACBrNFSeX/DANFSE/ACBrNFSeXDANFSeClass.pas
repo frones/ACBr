@@ -45,11 +45,12 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
- TACBrNFSeXDANFSeClass = class(TACBrDFeReport)
+  TACBrNFSeXDANFSeClass = class(TACBrDFeReport)
   private
     FProducao: TnfseSimNao;
     procedure SetACBrNFSe(const Value: TComponent);
     procedure ErroAbstract( const NomeProcedure: String );
+
   protected
     FACBrNFSe: TComponent;
     FPrestLogo: String;
@@ -120,6 +121,7 @@ type
     property TamanhoFonte: Integer   read FTamanhoFonte write FTamanhoFonte;
     property FormatarNumeroDocumentoNFSe: Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
     property Producao: TnfseSimNao   read FProducao     write FProducao;
+
   end;
 
 implementation

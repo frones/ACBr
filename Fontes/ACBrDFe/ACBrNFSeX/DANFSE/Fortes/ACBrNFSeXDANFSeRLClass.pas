@@ -45,19 +45,16 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFSeXDANFSeRL = class(TACBrNFSeXDANFSeClass)
-  private
-
   protected
-    FPrintDialog: boolean;
-	FDetalharServico : Boolean;
+    FDetalharServico : Boolean;
 	
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); override;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); override;
+
   published
-    property PrintDialog: boolean read FPrintDialog write FPrintDialog;
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico default False;
 	
   end;
@@ -70,7 +67,6 @@ uses
 constructor TACBrNFSeXDANFSeRL.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FPrintDialog := True;
   FDetalharServico := False;
 end;
 

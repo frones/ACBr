@@ -158,7 +158,6 @@ begin
     end;
 
     TDFeReportFortes.AjustarReport(Report, ADANFSe);
-    Report.PrintDialog := ADANFSe.PrintDialog;
 
     if ADANFSe.MostraPreview then
       Report.PreviewModal

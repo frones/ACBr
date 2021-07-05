@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2021
+--ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API--
+[*] Ajustes para validação da Paylod de Autenticação e endPoint de Homologação 
+
 25/06/2021
 --ACBrBancoSicred--
 [*] Validação no preenchimento do campo SeuNumero ou NumeroDocumento para CNAB400

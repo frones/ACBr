@@ -74,7 +74,7 @@ type
 
 const
   C_URL            = 'https://api.bb.com.br/cobrancas/v2';
-  C_URL_HOM        = 'https://api.sandbox.bb.com.br/cobrancas/v2';
+  C_URL_HOM        = 'https://api.hm.bb.com.br/cobrancas/v2';
 
   C_URL_OAUTH_PROD = 'https://oauth.bb.com.br/oauth/token';
   C_URL_OAUTH_HOM  = 'https://oauth.sandbox.bb.com.br/oauth/token';
@@ -90,8 +90,7 @@ uses
 
 procedure TBoletoW_BancoBrasil_API.DefinirURL;
 begin
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,
-    C_URL, C_URL_HOM);
+  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui   : FPURL := FPURL + '/boletos?gw-dev-app-key='+Boleto.Cedente.CedenteWS.KeyUser;
     tpConsulta : FPURL := FPURL + '/boletos?gw-dev-app-key='+Boleto.Cedente.CedenteWS.KeyUser + '&' + DefinirParametros;
@@ -581,7 +580,7 @@ begin
     else
       OAuth.URL := C_URL_OAUTH_PROD;
 
-    OAuth.Payload := True;
+    OAuth.Payload := OAuth.Ambiente = taHomologacao;
   end;
 
 end;

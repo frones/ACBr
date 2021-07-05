@@ -72,7 +72,7 @@ end;
 function TRetornoEnvio_BancoBrasil_API.DateBBtoDateTime(
   const AValue: String): TDateTime;
 begin
-  result := StrToDate( StringReplace( AValue,'.','/', [rfReplaceAll] ));
+  Result := StrToDateDef( StringReplace( AValue,'.','/', [rfReplaceAll] ),0);
 end;
 
 destructor TRetornoEnvio_BancoBrasil_API.Destroy;

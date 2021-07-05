@@ -2,7 +2,6 @@
 #include <string>
 #include <optional>
 #include <vector>
-
 #include "ACBrNFeDinamico.h"
 
 // Check windows

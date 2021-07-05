@@ -9,8 +9,8 @@ using namespace std;
 
 int main()
 {
-	auto* const nfe = new ACBrNFe();
-	cout << nfe->nome() + " " + nfe->versao() << std::endl;
+	const auto nfe = std::make_shared<ACBrNFe>();
+	cout << nfe->Nome() + " " + nfe->Versao() << std::endl;
 
 	std::cout << "Press ENTER to continue...";
 	std::cin.ignore();

@@ -37,32 +37,29 @@ unit ACBrLibNFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
-  ACBrPosPrinter, ACBrIntegrador, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
-  ACBrDANFCeFortesFrA4, ACBrLibConfig, ACBrLibComum;
+  Classes, SysUtils,
+  ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail, ACBrPosPrinter,
+  ACBrIntegrador, ACBrDANFCeFortesFrA4, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrLibDataModule, ACBrLibConfig, ACBrLibComum;
 
 type
 
   { TLibNFeDM }
 
-  TLibNFeDM = class(TDataModule)
+  TLibNFeDM = class(TLibDataModule)
     ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrNFe1: TACBrNFe;
     ACBrPosPrinter1: TACBrPosPrinter;
 
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
-    FLock: TCriticalSection;
-    fpLib: TACBrLib;
     DANFCeFortes: TACBrNFeDANFCeFortes;
     DANFCeA4: TACBrNFeDANFCeFortesA4;
     DANFCeEscPos: TACBrNFeDANFeESCPOS;
     NFeDANFe: TACBrNFeDANFeRL;
 
   public
-    procedure AplicarConfiguracoes;
+    procedure AplicarConfiguracoes; override;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
     procedure ValidarIntegradorNFCe;
@@ -70,11 +67,6 @@ type
                                   Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
                                   ViaConsumidor: String = ''; Simplificado: String = '');
     procedure FinalizarImpressao;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
-
-    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
@@ -88,16 +80,6 @@ uses
 {$R *.lfm}
 
 { TLibNFeDM }
-
-procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;
 var
@@ -357,24 +339,6 @@ begin
     ACBrNFe1.Integrador := ACBrIntegrador1
   else
     ACBrNFe1.Integrador := nil;
-end;
-
-procedure TLibNFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
-begin
-  if Assigned(Lib) then
-    Lib.GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibNFeDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibNFeDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 end.

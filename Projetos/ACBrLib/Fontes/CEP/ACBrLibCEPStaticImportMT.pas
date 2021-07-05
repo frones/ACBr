@@ -92,12 +92,10 @@ function CEP_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, 
 {%endregion}
 
 {%region CEPança}
-function CEP_BuscarPorCEP(const libHandle: longint; eCEP: PChar; var Qtde: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function CEP_BuscarPorCEP(const libHandle: longint; eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 function CEP_BuscarPorLogradouro(const libHandle: longint; eCidade, eTipo_Logradouro, eLogradouro, eUF,
-  eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
+  eBairro: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}
 

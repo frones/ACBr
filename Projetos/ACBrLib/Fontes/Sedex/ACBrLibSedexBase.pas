@@ -167,11 +167,12 @@ begin
       SedexDM.ACBrSedex1.Rastrear(ACodRastreio);
       Resposta := '';
 
+      SetLength(Rastreios, SedexDM.ACBrSedex1.retRastreio.Count);
+
       for I := 0 to SedexDM.ACBrSedex1.retRastreio.Count - 1 do
       begin
         Item := TLibSedexRastreio.Create(I+1, Config.TipoResposta, Config.CodResposta);
         Item.Processar(SedexDM.ACBrSedex1.retRastreio[i]);
-        SetLength(Rastreios, I+1);
         Rastreios[I] := Item;
       end;
 

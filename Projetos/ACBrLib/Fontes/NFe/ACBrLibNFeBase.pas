@@ -52,6 +52,7 @@ type
     function SetRetornoEventoCarregados(const NumEventos: integer): integer;
 
   protected
+    procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
 
@@ -154,6 +155,13 @@ begin
   FNFeDM.Free;
 
   inherited Destroy;
+end;
+
+procedure TACBrLibNFe.Inicializar;
+begin
+  inherited Inicializar;
+
+  GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
 procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

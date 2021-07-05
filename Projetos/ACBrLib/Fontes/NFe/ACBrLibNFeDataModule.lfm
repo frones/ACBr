@@ -1,12 +1,8 @@
 object LibNFeDM: TLibNFeDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Left = 346
   Top = 174
   Height = 215
-  HorizontalOffset = 247
-  VerticalOffset = 118
   Width = 262
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1

@@ -59,9 +59,9 @@ function IBGE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_BuscarPorCodigo(var ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_BuscarPorNome(eCidade:PChar; eUF: PChar; var Exata: Boolean;
+function IBGE_BuscarPorNome(const eCidade:PChar; eUF: PChar; Exata: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 
 implementation
@@ -124,7 +124,7 @@ begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
-function IBGE_BuscarPorCodigo(var ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -139,7 +139,7 @@ begin
   end;
 end;
 
-function IBGE_BuscarPorNome(eCidade:PChar; eUF: PChar; var Exata: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorNome(const eCidade:PChar; eUF: PChar; Exata: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

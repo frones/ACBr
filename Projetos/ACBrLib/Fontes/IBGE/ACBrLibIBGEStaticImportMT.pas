@@ -52,10 +52,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrIBGELIBName = 'ACBrIBGE64.so';
+  CACBrIBGELIBName = 'libacbribge64.so';
   {$Else}
-  CACBrIBGELIBName = 'ACBrIBGE32.so';
-
+  CACBrIBGELIBName = 'libacbribge32.so';
   {$EndIf}
  {$EndIf}
 
@@ -65,40 +64,40 @@ const
 function IBGE_Inicializar(var libHandle: longint; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_Finalizar(var libHandle: longint): longint;
+function IBGE_Finalizar(libHandle: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function IBGE_Nome(var libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
+function IBGE_Nome(const libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_Versao(var libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
+function IBGE_Versao(const libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_UltimoRetorno(var libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
+function IBGE_UltimoRetorno(const libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function IBGE_ConfigLer(var libHandle: longint; const eArqConfig: PChar): longint;
+function IBGE_ConfigLer(const libHandle: longint; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_ConfigGravar(var libHandle: longint; const eArqConfig: PChar): longint;
+function IBGE_ConfigGravar(const libHandle: longint; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_ConfigLerValor(var libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function IBGE_ConfigLerValor(const libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_ConfigGravarValor(var libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
+function IBGE_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}
 
 {%region IBGE}
-function IBGE_BuscarPorCodigo(var libHandle: longint; const ACodMun: Integer; const sResposta: PChar;
+function IBGE_BuscarPorCodigo(const libHandle: longint; const ACodMun: Integer; const sResposta: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
-function IBGE_BuscarPorNome(var libHandle: longint; const eCidade, eUF: PChar; const Exata: Boolean;
+function IBGE_BuscarPorNome(const libHandle: longint; const eCidade, eUF: PChar; const Exata: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}

@@ -58,8 +58,8 @@ type
 
     property IBGEDM: TLibIBGEDM read FIBGEDM;
 
-    function BuscarPorCodigo(var ACodMun: Integer; const sResposta: PChar; var esTamanho: longint):longint;
-    function BuscarPorNome(eCidade, eUF: PChar; const Exata: Boolean; const sResposta: PChar;
+    function BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint):longint;
+    function BuscarPorNome(const eCidade, eUF: PChar; Exata: Boolean; const sResposta: PChar;
                            var esTamanho: longint):longint;
   end;
 
@@ -97,23 +97,21 @@ begin
   FIBGEDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibIBGE.BuscarPorCodigo(var ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibIBGE.BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  CodMun: Integer;
   Resp: TLibIBGEResposta;
   AResposta: String;
 begin
   try
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('IBGE_BuscarPorCodigo( ' + IntToStr(CodMun) + ' )', logCompleto, True)
+      GravarLog('IBGE_BuscarPorCodigo( ' + IntToStr(ACodMun) + ' )', logCompleto)
     else
       GravarLog('IBGE_BuscarPorCodigo', logNormal);
 
     IBGEDM.Travar;
     try
-      ACodMun := IBGEDM.ACBrIBGE1.BuscarPorCodigo(CodMun);
-
+      IBGEDM.ACBrIBGE1.BuscarPorCodigo(ACodMun);
       Resp := TLibIBGEResposta.Create(1, Config.TipoResposta, Config.CodResposta);
 
       if (IBGEDM.ACBrIBGE1.Cidades.Count > 0) then
@@ -123,7 +121,7 @@ begin
       end;
 
       MoverStringParaPChar(AResposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, AResposta);
+      Result := SetRetorno(IBGEDM.ACBrIBGE1.Cidades.Count, AResposta);
     finally
       IBGEDM.Destravar;
       Resp.Free;
@@ -137,7 +135,7 @@ begin
   end;
 end;
 
-function TACBrLibIBGE.BuscarPorNome(eCidade, eUF: PChar; const Exata: Boolean; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibIBGE.BuscarPorNome(const eCidade, eUF: PChar; Exata: Boolean; const sResposta: PChar; var esTamanho: longint):longint;
 var
   ACidade, AUF: AnsiString;
   Items: TArray<TLibIBGEResposta>;
@@ -146,31 +144,32 @@ var
   I: Integer;
 begin
   try
-    ACidade:=ConverterAnsiParaUTF8(eCidade);
-    AUF:=ConverterAnsiParaUTF8(eUF);
+    ACidade := ConverterAnsiParaUTF8(eCidade);
+    AUF := ConverterAnsiParaUTF8(eUF);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('IBGE_BuscarPorNome ( ' + ACidade + ',' + AUF + ' )', logCompleto, True)
-      else
-        GravarLog('IBGE_BuscarPorNome', logNormal);
+      GravarLog('IBGE_BuscarPorNome ( ' + ACidade + ',' + AUF + ',' + BoolToStr(Exata, True) + ' )', logCompleto)
+    else
+      GravarLog('IBGE_BuscarPorNome', logNormal);
 
     IBGEDM.Travar;
 
     try
-       IBGEDM.ACBrIBGE1.BuscarPorNome(ACidade, AUF);
+       IBGEDM.ACBrIBGE1.BuscarPorNome(ACidade, AUF, Exata);
        AResposta:='';
+
+       SetLength(Items, IBGEDM.ACBrIBGE1.Cidades.Count);
 
        for I:= 0 to IBGEDM.ACBrIBGE1.Cidades.Count - 1 do
        begin
          Item := TLibIBGEResposta.Create(I+1, Config.TipoResposta, Config.CodResposta);
          Item.Processar(IBGEDM.ACBrIBGE1.Cidades[i]);
-         SetLength(Items, I+1);
          Items[I] := Item;
        end;
 
        AResposta := TACBrObjectSerializer.Gerar<TLibIBGEResposta>(Items, Config.TipoResposta, Config.CodResposta);
        MoverStringParaPChar(AResposta, sResposta, esTamanho);
-       Result := SetRetorno(ErrOK, AResposta);
+       Result := SetRetorno(IBGEDM.ACBrIBGE1.Cidades.Count, AResposta);
 
   finally
     IBGEDM.Destravar;

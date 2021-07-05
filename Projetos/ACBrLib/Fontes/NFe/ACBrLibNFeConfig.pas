@@ -262,7 +262,6 @@ type
 
     function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
 
-  published
     property NFe: TConfiguracoesNFe read FNFeConfig;
     property DANFe: TDANFeReportConfig read FDANFeConfig;
     property Integrador: TIntegradorConfig read FIntegradorConfig;
@@ -733,11 +732,7 @@ begin
 end;
 
 procedure TDANFeReportConfig.ApplyChild(const DFeReport: TACBrDFeDANFeReport; const Lib: TACBrLib);
-var
-  pLibConfig: TLibNFeConfig;
 begin
-  pLibConfig := TLibNFeConfig(Lib.Config);
-
   with DFeReport do
   begin
     Protocolo := FProtocolo;
@@ -758,13 +753,9 @@ begin
   end;
 
   if DFeReport is TACBrNFeDANFeRL then
-  begin
-    pLibConfig.DANFe.NFe.Apply(TACBrNFeDANFeRL(DFeReport));
-  end
+    NFe.Apply(TACBrNFeDANFeRL(DFeReport))
   else if DFeReport is TACBrNFeDANFCEClass then
-  begin
-    pLibConfig.DANFe.NFCe.Apply(TACBrNFeDANFCEClass(DFeReport));
-  end;
+    NFCe.Apply(TACBrNFeDANFCEClass(DFeReport));
 end;
 
 { TLibNFeConfig }

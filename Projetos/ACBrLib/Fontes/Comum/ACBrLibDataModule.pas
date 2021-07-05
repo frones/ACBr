@@ -1,8 +1,7 @@
-﻿{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
@@ -32,57 +31,70 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibIBGERespostas;
+unit ACBrLibDataModule;
 
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta, ACBrIBGE;
+  Classes, SysUtils, syncobjs, ACBrLibConfig, ACBrLibComum;
 
 type
 
-  { TLibIBGEResposta }
-  TLibIBGEResposta = class(TACBrLibRespostaBase)
+  { TLibNFeDM }
+
+  TLibDataModule = class(TDataModule)
   private
-    FUF: string;
-    FCodUF: string;
-    FMunicipio: string;
-    FCodMunicipio: string;
-    FArea: string;
+    FLock: TCriticalSection;
+    fpLib: TACBrLib;
+
+  protected
+    procedure DoCreate; override;
+    procedure DoDestroy; override;
+
   public
-    constructor Create(const AId: Integer; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
+    procedure AplicarConfiguracoes; virtual; abstract;
+	
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
 
-    procedure Processar(Item: TACBrIBGECidade);
-
-  published
-    property UF: string read FUF write FUF;
-    property CodUF: string read FCodUF write FCodUF;
-    property Municipio: string read FMunicipio write FMunicipio;
-    property CodMunicipio: string read FCodMunicipio write FCodMunicipio;
-    property Area: string read FArea write FArea;
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
-uses
-  ACBrLibIBGEConsts;
+{ TLibDataModule }
 
-{ TLibIBGEResposta }
-constructor TLibIBGEResposta.Create(const AId: Integer;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+procedure TLibDataModule.DoCreate;
 begin
-  inherited Create(CSessaoRespConsulta + IntToStr(AId), ATipo, AFormato);
+  inherited DoCreate;
+
+  FLock := TCriticalSection.Create;
 end;
 
-procedure TLibIBGEResposta.Processar(Item: TACBrIBGECidade);
+procedure TLibDataModule.DoDestroy;
 begin
-  UF := Item.UF;
-  CodUF := IntToStr(Item.CodUF);
-  Municipio := Item.Municipio;
-  CodMunicipio:= IntToStr(Item.CodMunicipio);
-  Area:= FloatToStr(Item.Area);
+  FLock.Destroy;
+
+  inherited DoDestroy;
+end;
+
+procedure TLibDataModule.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
+begin
+  if Assigned(Lib) then
+    Lib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibDataModule.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibDataModule.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
 end;
 
 end.
-

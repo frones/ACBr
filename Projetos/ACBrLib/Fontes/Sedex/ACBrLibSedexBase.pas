@@ -182,6 +182,8 @@ begin
       SedexDM.Destravar;
       for I := 0 to Length(Rastreios) - 1 do
         Rastreios[I].Free;
+
+      Rastreios := nil;
     end;
   except
     on E: EACBrLibException do

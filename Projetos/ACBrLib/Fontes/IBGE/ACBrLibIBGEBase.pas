@@ -176,6 +176,8 @@ begin
     IBGEDM.Destravar;
     for I := 0 to Length(Items) - 1 do
         Items[I].Free;
+
+    Items := nil;
   end;
     except
       on E: EACBrLibException do

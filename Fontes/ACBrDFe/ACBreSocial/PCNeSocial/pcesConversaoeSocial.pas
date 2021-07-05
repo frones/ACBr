@@ -1879,7 +1879,7 @@ begin
   if Trim(s) = '' then
     result := ispVazio
   else
-    result := TpIndSubstPatronalObra(StrToEnumerado2(ok , s, TGenericosString1_2));
+    result := TpIndSubstPatronalObra(StrToEnumerado2(ok , s, TGenericosString0_2));
 end;
 
 function eSIndDecisaoToStr(const t:tpIndDecisao ): string;

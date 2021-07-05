@@ -39,6 +39,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibIBGENome = 'ACBrLibIBGE';
+
 type
 
   { TTestACBrIBGELib }
@@ -50,7 +53,6 @@ type
     procedure Test_IBGE_Inicializar_Ja_Inicializado;
     procedure Test_IBGE_Finalizar;
     procedure Test_IBGE_Finalizar_Ja_Finalizado;
-    procedure Test_IBGE_Nome_Obtendo_LenBuffer;
     procedure Test_IBGE_Nome_Lendo_Buffer_Tamanho_Identico;
     procedure Test_IBGE_Nome_Lendo_Buffer_Tamanho_Maior;
     procedure Test_IBGE_Nome_Lendo_Buffer_Tamanho_Menor;
@@ -65,156 +67,199 @@ type
 implementation
 
 uses
-  ACBrLibIBGEStaticImport, ACBrLibIBGEConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibIBGEStaticImportMT, ACBrLibIBGEConsts, ACBrLibConsts, ACBrUtil;
 
 procedure TTestACBrIBGELib.Test_IBGE_Inicializar_Com_DiretorioInvalido;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrDiretorioNaoExiste, IBGE_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+  AssertEquals(ErrDiretorioNaoExiste, IBGE_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Inicializar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, IBGE_Inicializar('',''));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Inicializar_Ja_Inicializado;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, IBGE_Inicializar('',''));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOK, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Finalizar;
+var
+  Handle: longint;
 begin
-  AssertEquals(ErrOk, IBGE_Finalizar());
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Finalizar_Ja_Finalizado;
-begin
-  AssertEquals(ErrOk, IBGE_Finalizar());
-end;
-
-procedure TTestACBrIBGELib.Test_IBGE_Nome_Obtendo_LenBuffer;
 var
-  Bufflen: Integer;
+  Handle: longint;
 begin
-  // Obtendo o Tamanho //
-  Bufflen := 0;
-  AssertEquals(ErrOk, IBGE_Nome(Nil, Bufflen));
-  AssertEquals(Length(CLibIBGENome), Bufflen);
+
+  Handle:=0;
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
+
+  AssertEquals(ErrOk, IBGE_Inicializar(Handle, '',''));
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
+
+  try
+    IBGE_Finalizar(Handle)
+  except
+    On E : Exception do
+    if not (E is EAccessViolation) then
+    Fail('Erro ao finalizar a Lib.');
+  end;
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Nome_Lendo_Buffer_Tamanho_Identico;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
   Bufflen := Length(CLibIBGENome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, IBGE_Nome(Handle, PChar(AStr), Bufflen));
   AssertEquals(Length(CLibIBGENome), Bufflen);
   AssertEquals(CLibIBGENome, AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Nome_Lendo_Buffer_Tamanho_Maior;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
   Bufflen := Length(CLibIBGENome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_Nome(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, IBGE_Nome(Handle, PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibIBGENome), Bufflen);
   AssertEquals(CLibIBGENome, AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Nome_Lendo_Buffer_Tamanho_Menor;
 var
+  Handle: longint;
   AStr: String;
   Bufflen: Integer;
 begin
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
   Bufflen := 4;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(ErrOk, IBGE_Nome(Handle, PChar(AStr), Bufflen));
+  AssertEquals(Length(CLibIBGENome), Bufflen);
   AssertEquals(copy(CLibIBGENome,1,4), AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_Versao;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
   Bufflen := 0;
-  AssertEquals(ErrOk, IBGE_Versao(Nil, Bufflen));
+  AStr := '';
+
+  AssertEquals(ErrOk, IBGE_Versao(Handle, PChar(AStr), Bufflen));
+  Assert(Bufflen > 0);
   AssertEquals(Length(CLibIBGEVersao), Bufflen);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_Versao(PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, IBGE_Versao(Handle, PChar(AStr), Bufflen));
+  Assert(Bufflen > 0);
+  Assert (AStr <> '');
   AssertEquals(Length(CLibIBGEVersao), Bufflen);
   AssertEquals(CLibIBGEVersao, AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_ConfigLerValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_ConfigLerValor(CSessaoVersao, CLibIBGENome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, IBGE_ConfigLerValor(Handle, CSessaoVersao, CLibIBGENome, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CLibIBGEVersao, AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_ConfigGravarValor;
 var
+  Handle: longint;
   Bufflen: Integer;
   AStr: String;
 begin
   // Gravando o valor
-  AssertEquals('Erro ao Mudar configuração', ErrOk, IBGE_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, IBGE_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, IBGE_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, IBGE_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_BuscarPorCodigo;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
   // Iniciando a busca por código
   Resposta := '';
   Tamanho := 0;
-
-  AssertEquals('Erro ao Buscar Por Código', ErrOk,
-                              IBGE_BuscarPorCodigo(3554003, Resposta, Tamanho));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Buscar Por Código', 1, IBGE_BuscarPorCodigo(Handle, 3554003, Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 procedure TTestACBrIBGELib.Test_IBGE_BuscarPorNome;
 var
+  Handle: longint;
   Resposta: PChar;
   Tamanho: Longint;
 begin
   // Iniciando a busca por nome
   Resposta := '';
   Tamanho := 0;
-
-  AssertEquals('Erro ao Buscar Por Nome', ErrOk,
-                     IBGE_BuscarPorNome('Araraquara', 'SP', False, Resposta, Tamanho));
+  AssertEquals(ErrOK, IBGE_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Buscar Por Nome', 1, IBGE_BuscarPorNome(Handle, PChar('Tatuí'), PChar('SP'), False, Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, IBGE_Finalizar(Handle));
 end;
 
 initialization

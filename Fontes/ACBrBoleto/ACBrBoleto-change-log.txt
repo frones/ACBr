@@ -50,6 +50,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/07/2021
+--ACBrBoletoBancoBrasil--
+[+] Adicionado campos Descontos2 e Descontos3  na geração da Remessa
+[*] Ajuste na validação do campo DataLimitePagamento
+[*] Validação da Ocorrencia de Alteração de DataLimitePagamento
+Contribuição: BigWings e
+https://www.projetoacbr.com.br/forum/topic/62359-altera%C3%A7%C3%A3o-da-gera%C3%A7%C3%A3o-da-remessa-para-o-tipo-alterar-prazo-limite-recebimento-banco-do-brasil/
+
 --ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API--
 [*] Ajustes para validação da Paylod de Autenticação e endPoint de Homologação 
 

@@ -41,7 +41,7 @@ uses ACBrBase, ACBrDevice, ACBrCHQClass, ACBrECF,  { Units da ACBr}
 type
   TACBrCHQModelo = (chqNenhuma, chqImpressoraECF, chqImpressoraComum,
                     chqBematech, chqChronos, chqSchalter, chqPerto,
-                    chqSotomaq, chqUrano, chqElgin) ;
+                    chqSotomaq, chqUrano, chqElgin, chqMenno) ;
 
 { Componente ACBrCHQ }
   {$IFDEF RTL230_UP}
@@ -149,7 +149,7 @@ end ;
 implementation
 Uses ACBrUtil, ACBrCHQImpressoraECF, ACBrCHQImpressoraComum, ACBrCHQBematech,
      ACBrCHQChronos, ACBrCHQSchalter, ACBrCHQPerto, ACBrCHQSotomaq,
-     ACBrCHQUrano, ACBrCHQElgin;
+     ACBrCHQUrano, ACBrCHQElgin, ACBrCHQMenno;
 
 { TACBrCHQ }
 
@@ -227,6 +227,7 @@ begin
      chqImpressoraECF   : fsCHQ := TACBrCHQImpressoraECF.create( Self ) ;
      chqImpressoraComum : fsCHQ := TACBrCHQImpressoraComum.create( Self ) ;
      chqElgin           : fsCHQ := TACBrCHQElgin.Create(Self) ;
+     chqMenno           : fsCHQ := TACBrCHQMenno.Create(Self) ;
   else
      fsCHQ := TACBrCHQClass.create( Self ) ;
   end;

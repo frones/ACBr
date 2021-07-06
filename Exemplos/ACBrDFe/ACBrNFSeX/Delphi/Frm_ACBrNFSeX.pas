@@ -2584,9 +2584,10 @@ begin
     // TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
     ACBrNFSeX1.DANFSe.TipoDANFSE := tpPadrao;
     ACBrNFSeX1.DANFSe.Logo       := edtLogoMarca.Text;
-    ACBrNFSeX1.DANFSe.PrestLogo  := edtPrestLogo.Text;
     ACBrNFSeX1.DANFSe.Prefeitura := edtPrefeitura.Text;
     ACBrNFSeX1.DANFSe.PathPDF    := PathMensal;
+
+    ACBrNFSeX1.DANFSe.Prestador.Logo := edtPrestLogo.Text;
 
     ACBrNFSeX1.DANFSe.MargemDireita  := 5;
     ACBrNFSeX1.DANFSe.MargemEsquerda := 5;
@@ -2794,7 +2795,7 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    edtLogoMarca.Text := OpenDialog1.FileName;
+    edtPrestLogo.Text := OpenDialog1.FileName;
   end;
 end;
 

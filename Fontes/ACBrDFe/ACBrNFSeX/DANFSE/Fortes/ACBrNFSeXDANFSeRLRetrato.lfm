@@ -1,4 +1,4 @@
-inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
+inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Left = 267
   Top = 115
   Caption = 'frlDANFSeRLRetrato'
@@ -21,10 +21,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbCabecalhoBeforePrint
       object RLDraw3: TRLDraw
         Left = 598
@@ -34,23 +30,14 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw2: TRLDraw
         Left = 598
         Height = 1
         Top = 48
         Width = 154
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNumNF0: TRLLabel
         Left = 605
@@ -64,10 +51,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel13: TRLLabel
@@ -82,10 +65,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel12: TRLLabel
@@ -100,10 +79,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rliLogo: TRLImage
@@ -112,10 +87,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 9
         Width = 120
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
       object rllEmissao: TRLLabel
@@ -130,10 +101,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel8: TRLLabel
         Left = 427
@@ -147,10 +114,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCodVerificacao: TRLLabel
@@ -163,36 +126,22 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -13
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw70: TRLDraw
         Left = 598
         Height = 1
         Top = 92
         Width = 154
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw8: TRLDraw
         Left = 3
         Height = 1
         Top = 138
         Width = 749
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel7: TRLLabel
         Left = 10
@@ -205,10 +154,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCompetencia: TRLLabel
@@ -222,10 +167,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw9: TRLDraw
         Left = 106
@@ -235,10 +176,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel18: TRLLabel
         Left = 113
@@ -251,10 +188,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumeroRps: TRLLabel
@@ -269,10 +202,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw10: TRLDraw
         Left = 214
@@ -282,10 +211,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel20: TRLLabel
         Left = 601
@@ -298,10 +223,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumNFSeSubstituida: TRLLabel
@@ -314,10 +235,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmPrefeitura: TRLMemo
         Left = 134
@@ -332,10 +249,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel60: TRLLabel
@@ -349,10 +262,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
@@ -367,10 +276,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Info = itPageNumber
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLSystemInfo2: TRLSystemInfo
         Left = 719
@@ -383,10 +288,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Info = itLastPageNumber
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel62: TRLLabel
         Left = 709
@@ -399,10 +300,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -13
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel63: TRLLabel
         Left = 690
@@ -416,10 +313,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw11: TRLDraw
         Left = 420
@@ -429,10 +322,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel64: TRLLabel
         Left = 219
@@ -445,10 +334,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
@@ -462,10 +347,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlbPrestador: TRLBand[1]
@@ -479,10 +360,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbPrestadorBeforePrint
       object RLLabel29: TRLLabel
         Left = 135
@@ -494,10 +371,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel30: TRLLabel
@@ -510,10 +383,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel31: TRLLabel
@@ -526,10 +395,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel32: TRLLabel
@@ -542,10 +407,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestMunicipio: TRLLabel
@@ -558,10 +419,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPrestInscMunicipal: TRLLabel
         Left = 534
@@ -573,10 +430,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestEndereco: TRLLabel
@@ -589,10 +442,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestCNPJ: TRLLabel
@@ -605,10 +454,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rliPrestLogo: TRLImage
@@ -617,10 +462,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 4
         Width = 95
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
       object RLLabel2: TRLLabel
@@ -635,10 +476,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel1: TRLLabel
@@ -651,10 +488,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestNome: TRLLabel
@@ -667,10 +500,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel9: TRLLabel
@@ -683,10 +512,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestUF: TRLLabel
@@ -699,10 +524,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel22: TRLLabel
@@ -715,10 +536,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestComplemento: TRLLabel
@@ -731,10 +548,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel23: TRLLabel
         Left = 430
@@ -746,10 +559,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestTelefone: TRLLabel
@@ -762,10 +571,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel24: TRLLabel
@@ -778,10 +583,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPrestEmail: TRLLabel
@@ -794,10 +595,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -812,10 +609,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbTomadorBeforePrint
       object RLLabel4: TRLLabel
         Left = 299
@@ -829,10 +622,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel5: TRLLabel
@@ -845,10 +634,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaCNPJ: TRLLabel
@@ -861,10 +646,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel11: TRLLabel
@@ -877,10 +658,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaInscMunicipal: TRLLabel
@@ -893,10 +670,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel15: TRLLabel
@@ -909,10 +682,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaNome: TRLLabel
@@ -925,10 +694,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel17: TRLLabel
@@ -941,10 +706,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaEndereco: TRLLabel
@@ -957,10 +718,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel19: TRLLabel
@@ -973,10 +730,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaMunicipio: TRLLabel
@@ -989,10 +742,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel21: TRLLabel
         Left = 374
@@ -1004,10 +753,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaUF: TRLLabel
@@ -1020,10 +765,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel10: TRLLabel
@@ -1036,10 +777,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaEmail: TRLLabel
@@ -1052,10 +789,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel25: TRLLabel
@@ -1068,10 +801,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaComplemento: TRLLabel
@@ -1084,10 +813,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel27: TRLLabel
         Left = 430
@@ -1099,10 +824,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaTelefone: TRLLabel
@@ -1115,10 +836,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel61: TRLLabel
@@ -1131,10 +848,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaInscEstadual: TRLLabel
@@ -1147,10 +860,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -1165,10 +874,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel14: TRLLabel
         Left = 274
         Height = 15
@@ -1181,10 +886,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -1199,10 +900,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawRight = True
       Borders.DrawBottom = True
       IntegralHeight = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbItensBeforePrint
       object rlmDescricao: TRLMemo
         Left = 10
@@ -1214,10 +911,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -1232,22 +925,13 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbISSQNBeforePrint
       object RLDraw52: TRLDraw
         Left = 1
         Height = 1
         Top = 72
         Width = 751
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw53: TRLDraw
         Left = 144
@@ -1256,10 +940,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Width = 1
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw54: TRLDraw
         Left = 436
@@ -1268,10 +948,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Width = 1
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw55: TRLDraw
         Left = 608
@@ -1280,10 +956,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Width = 1
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel137: TRLLabel
         Left = 297
@@ -1297,10 +969,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel138: TRLLabel
@@ -1314,10 +982,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel139: TRLLabel
@@ -1332,10 +996,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllBaseCalc: TRLLabel
@@ -1349,10 +1009,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorISS: TRLLabel
@@ -1367,10 +1023,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw4: TRLDraw
@@ -1378,12 +1030,7 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 1
         Top = 293
         Width = 752
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllValorTotal: TRLLabel
         Left = 300
@@ -1397,10 +1044,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel16: TRLLabel
@@ -1413,10 +1056,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmCodServico: TRLMemo
@@ -1431,10 +1070,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel3: TRLLabel
@@ -1448,10 +1083,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllAliquota: TRLLabel
@@ -1465,10 +1096,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw6: TRLDraw
@@ -1479,23 +1106,14 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH1: TRLDraw
         Left = 0
         Height = 1
         Top = 38
         Width = 752
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCodigoObra: TRLLabel
         Left = 12
@@ -1507,10 +1125,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCodObra: TRLLabel
@@ -1523,10 +1137,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTituloConstCivil: TRLLabel
@@ -1541,10 +1151,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCodigoArt: TRLLabel
@@ -1557,10 +1163,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCodART: TRLLabel
@@ -1573,10 +1175,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel34: TRLLabel
@@ -1591,10 +1189,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorPIS: TRLLabel
@@ -1608,10 +1202,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel36: TRLLabel
@@ -1626,10 +1216,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorCOFINS: TRLLabel
@@ -1643,10 +1229,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel38: TRLLabel
@@ -1661,10 +1243,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorIR: TRLLabel
@@ -1678,10 +1256,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel40: TRLLabel
@@ -1696,10 +1270,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorINSS: TRLLabel
@@ -1713,10 +1283,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel42: TRLLabel
@@ -1731,10 +1297,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorCSLL: TRLLabel
@@ -1748,10 +1310,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel44: TRLLabel
@@ -1766,10 +1324,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw13: TRLDraw
@@ -1777,26 +1331,16 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 1
         Top = 94
         Width = 752
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw14: TRLDraw
         Left = 0
         Height = 1
         Top = 135
         Width = 752
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel35: TRLLabel
         Left = 11
@@ -1810,10 +1354,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel37: TRLLabel
@@ -1829,10 +1369,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel39: TRLLabel
@@ -1848,10 +1384,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel41: TRLLabel
@@ -1865,10 +1397,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel43: TRLLabel
@@ -1882,10 +1410,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel45: TRLLabel
@@ -1899,10 +1423,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel46: TRLLabel
@@ -1916,10 +1436,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel47: TRLLabel
@@ -1933,10 +1449,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel48: TRLLabel
@@ -1950,10 +1462,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel49: TRLLabel
@@ -1967,10 +1475,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel50: TRLLabel
@@ -1984,10 +1488,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel51: TRLLabel
@@ -2001,10 +1501,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel52: TRLLabel
@@ -2018,10 +1514,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel53: TRLLabel
@@ -2036,10 +1528,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel54: TRLLabel
@@ -2054,10 +1542,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel55: TRLLabel
@@ -2071,10 +1555,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel56: TRLLabel
@@ -2088,10 +1568,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw15: TRLDraw
@@ -2102,10 +1578,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw16: TRLDraw
         Left = 480
@@ -2115,10 +1587,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllValorServicos1: TRLLabel
         Left = 159
@@ -2131,10 +1599,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorServicos2: TRLLabel
@@ -2148,10 +1612,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDescIncondicionado1: TRLLabel
@@ -2165,10 +1625,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDescIncondicionado2: TRLLabel
@@ -2182,10 +1638,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDescCondicionado: TRLLabel
@@ -2199,10 +1651,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRetencoesFederais: TRLLabel
@@ -2216,10 +1664,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllOutrasRetencoes: TRLLabel
@@ -2233,10 +1677,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorIssRetido: TRLLabel
@@ -2250,10 +1690,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorLiquido: TRLLabel
@@ -2268,10 +1704,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw17: TRLDraw
@@ -2279,13 +1711,8 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 1
         Top = 260
         Width = 752
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllIncentivador: TRLLabel
         Left = 424
@@ -2298,10 +1725,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNatOperacao: TRLLabel
@@ -2315,10 +1738,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorDeducoes: TRLLabel
@@ -2332,10 +1751,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRegimeEspecial: TRLLabel
@@ -2349,10 +1764,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllOpcaoSimples: TRLLabel
@@ -2366,10 +1777,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllISSReter: TRLLabel
@@ -2383,10 +1790,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
@@ -2401,10 +1804,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCodTributacaoMunicipio: TRLLabel
         Left = 4
@@ -2416,10 +1815,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmDescCodTributacaoMunicipio: TRLMemo
@@ -2434,10 +1829,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -2452,10 +1843,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rbOutrasInformacoesBeforePrint
       object rlmDadosAdicionais: TRLMemo
         Left = 5
@@ -2471,10 +1858,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           'Dados Adicionais....'
         )
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDataHoraImpressao: TRLLabel
         Left = 2
@@ -2485,10 +1868,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -8
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSistema: TRLLabel
@@ -2502,10 +1881,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -8
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel6: TRLLabel
@@ -2520,10 +1895,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -2538,21 +1909,12 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = False
       Borders.DrawBottom = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rbOutrasInformacoesBeforePrint
       object RLDraw7: TRLDraw
         Left = 1
         Height = 64
         Top = 6
         Width = 751
-        Angle = 0
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel26: TRLLabel
         Left = 5
@@ -2564,10 +1926,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPrestNomeEnt: TRLLabel
         Left = 88
@@ -2581,10 +1939,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel28: TRLLabel
         Left = 6
@@ -2596,10 +1950,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw1: TRLDraw
         Left = 603
@@ -2608,10 +1958,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Width = 1
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNumNF0Ent: TRLLabel
         Left = 607
@@ -2625,10 +1971,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel57: TRLLabel
@@ -2643,10 +1985,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel33: TRLLabel
@@ -2659,10 +1997,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -8
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw5: TRLDraw
@@ -2670,13 +2004,8 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 1
         Top = 64
         Width = 248
-        Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel58: TRLLabel
         Left = 12
@@ -2688,10 +2017,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -8
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel59: TRLLabel
@@ -2704,10 +2029,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomadorNomeEnt: TRLLabel
@@ -2722,10 +2043,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlbHeaderItensDetalhado: TRLBand[8]
@@ -2739,10 +2056,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel65: TRLLabel
         Left = 5
         Height = 14
@@ -2753,10 +2066,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel66: TRLLabel
@@ -2769,10 +2078,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel67: TRLLabel
@@ -2785,10 +2090,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel68: TRLLabel
@@ -2801,10 +2102,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -2818,20 +2115,12 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = subItensDataRecord
       object rlbItensServico: TRLBand
         Left = 1
         Height = 16
         Top = 0
         Width = 750
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
           Left = 5
@@ -2844,10 +2133,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Height = -11
           Font.Name = 'Times New Roman'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object rlmServicoDescricao: TRLMemo
@@ -2860,10 +2145,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Height = -11
           Font.Name = 'Times New Roman'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object txtServicoUnitario: TRLLabel
@@ -2877,10 +2158,6 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Height = -11
           Font.Name = 'Times New Roman'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
         object txtServicoTotal: TRLLabel
@@ -2894,16 +2171,12 @@ inherited frlDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Height = -11
           Font.Name = 'Times New Roman'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           Transparent = False
         end
       end
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    top = 72
+    Top = 72
   end
 end

@@ -507,27 +507,26 @@ begin
                           FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   CarregouLogoPrest: Boolean;
 begin
   inherited;
-  CarregouLogoPrest := TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.PrestLogo);
+  CarregouLogoPrest := TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo);
 
   with fpNFSe do
   begin
     with Prestador do
     begin
-      rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.RazaoSocial);
+      rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
 
       if rllPrestNome.Caption = '' then
-        rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.RazaoSocial);
+        rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
 
       with IdentificacaoPrestador do
       begin
-        rllPrestCNPJ.Caption          := FormatarCNPJouCPF( ifThen (Cnpj <> '', Cnpj,fpDANFSe.CNPJ_Prestador) );
-        rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.InscMunicipal);
+        rllPrestCNPJ.Caption          := FormatarCNPJouCPF( ifThen (Cnpj <> '', Cnpj,fpDANFSe.Prestador.CNPJ) );
+        rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Prestador.InscricaoMunicipal);
       end;
 
       with Endereco do
@@ -537,20 +536,20 @@ begin
                                                                 Trim( Bairro )+
                                                                 ' - CEP: '+
                                                                 FormatarCEP( CEP ) ,
-                                                                Trim(fpDANFSe.Endereco) ) ;
+                                                                Trim(fpDANFSe.Prestador.Endereco) ) ;
 
-        rllPrestComplemento.Caption := IfThen( Complemento <> '', Complemento , fpDANFSe.Complemento);
-        rllPrestMunicipio.Caption   := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , fpDANFSe.Municipio);
-        rllPrestUF.Caption          := IfThen( UF <> ''         , UF  , fpDANFSe.UF);
+        rllPrestComplemento.Caption := IfThen( Complemento <> '', Complemento , fpDANFSe.Prestador.Complemento);
+        rllPrestMunicipio.Caption   := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , fpDANFSe.Prestador.Municipio);
+        rllPrestUF.Caption          := IfThen( UF <> ''         , UF  , fpDANFSe.Prestador.UF);
       end;
 
       with Contato do
       begin
-        rllPrestTelefone.Caption := IfThen( Telefone <> '' , FormatarFone( Telefone) , FormatarFone(fpDANFSe.Fone) );
-        rllPrestEmail.Caption    := IfThen( Email <> '' , Email , fpDANFSe.EMail_Prestador);
+        rllPrestTelefone.Caption := IfThen( Telefone <> '' , FormatarFone( Telefone) , FormatarFone(fpDANFSe.Prestador.Fone) );
+        rllPrestEmail.Caption    := IfThen( Email <> '' , Email , fpDANFSe.Prestador.EMail);
       end;
 
-      rllPrestNomeEnt.Caption   := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.RazaoSocial);
+      rllPrestNomeEnt.Caption   := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
       rllNumNF0Ent.Caption      := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
       rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+
@@ -576,9 +575,9 @@ begin
         else
           rllTomaCNPJ.Caption := FormatarCNPJ( CpfCnpj );
 
-        rllTomaInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal , fpDANFSe.T_InscMunicipal);
+        rllTomaInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal , fpDANFSe.Tomador.InscricaoMunicipal);
 
-        rllTomaInscEstadual.Caption := IfThen( InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.T_InscEstadual );
+        rllTomaInscEstadual.Caption := IfThen( InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual );
       end;
 
       with Endereco do
@@ -591,10 +590,10 @@ begin
                                       FormatarCEP(CEP);
         end
         else
-         rllTomaEndereco.Caption := Trim(fpDANFSe.T_Endereco) + ' - CEP: ' +
+         rllTomaEndereco.Caption := Trim(fpDANFSe.Tomador.Endereco) + ' - CEP: ' +
                                     FormatarCEP(CEP);
 
-        rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , fpDANFSe.T_Complemento);
+        rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , fpDANFSe.Tomador.Complemento);
 
         rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         rllTomaUF.Caption        := UF;
@@ -602,8 +601,8 @@ begin
 
       with Contato do
       begin
-        rllTomaTelefone.Caption := IfThen( Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.T_Fone));
-        rllTomaEmail.Caption    := IfThen( Email    <> '' , Email , fpDANFSe.T_Email);
+        rllTomaTelefone.Caption := IfThen( Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.Tomador.Fone));
+        rllTomaEmail.Caption    := IfThen( Email    <> '' , Email , fpDANFSe.Tomador.Email);
       end;
 
       rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);

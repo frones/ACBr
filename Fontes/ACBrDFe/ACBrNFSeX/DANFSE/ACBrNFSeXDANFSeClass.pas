@@ -42,6 +42,56 @@ uses
   ACBrNFSeXClass, ACBrNFSeXConversao;
 
 type
+  { TPrestadorConfig }
+  TPrestadorConfig = class
+  private
+    FRazaoSocial: String;
+    FNomeFantasia: String;
+    FInscMunicipal: String;
+    FCNPJ: String;
+    FEndereco : String;
+    FComplemento : String;
+    FMunicipio : String;
+    FUF : String;
+    FEMail: String;
+    FFone : String;
+    FLogo: String;
+
+  published
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
+    property InscricaoMunicipal: String read FInscMunicipal write FInscMunicipal;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property Endereco: String read FEndereco write FEndereco;
+    property Complemento: String read FComplemento write FComplemento;
+    property Municipio: String read FMunicipio write FMunicipio;
+    property UF: String read FUF write FUF;
+    property Fone: String read FFone write FFone;
+    property EMail: String read FEMail write FEMail;
+    property Logo: String read FLogo write FLogo;
+
+  end;
+
+  { TTomadorConfig }
+  TTomadorConfig = class
+  private
+    FInscEstadual : String;
+    FInscMunicipal : String;
+    FFone          : String;
+    FEndereco      : String;
+    FComplemento   : String;
+    FEmail         : String;
+
+  published
+    property InscricaoEstadual: String read FInscEstadual write FInscEstadual;
+    property InscricaoMunicipal: String read FInscMunicipal write FInscMunicipal;
+    property Fone: String read FFone write FFone;
+    property Endereco: String read FEndereco write FEndereco;
+    property Complemento: String read FComplemento write FComplemento;
+    property Email: String read FEmail write FEmail;
+
+  end;
+
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
@@ -53,31 +103,18 @@ type
 
   protected
     FACBrNFSe: TComponent;
-    FPrestLogo: String;
     FPrefeitura: String;
-    FRazaoSocial: String;
-    FEndereco : String;
-    FComplemento : String;
-    FFone : String;
-    FMunicipio : String;
     FOutrasInformacaoesImp : String;
-    FInscMunicipal : String;
-    FT_InscEstadual : String;
-    FT_InscMunicipal : String;
-    FT_Fone          : String;
-    FT_Endereco      : String;
-    FT_Complemento   : String;
-    FT_Email         : String;
-    FEMail_Prestador : String;
-    FCNPJ_Prestador  : String;
     FFormatarNumeroDocumentoNFSe  : Boolean;
-    FUF : String;
     FAtividade : String;
     FNFSeCancelada: boolean;
     FImprimeCanhoto: Boolean;
     FTipoDANFSE: TTipoDANFSE;
     FProvedor: TNFSeProvedor;
     FTamanhoFonte: Integer;
+    FPrestador: TPrestadorConfig;
+    FTomador: TTomadorConfig;
+
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -90,32 +127,13 @@ type
 
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetACBrNFSe;
-    property PrestLogo: String read FPrestLogo write FPrestLogo;
-    property Prefeitura: String read FPrefeitura write FPrefeitura;
-
-    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
-    property UF: String read FUF write FUF;
-    property Endereco: String read FEndereco write FEndereco;
-    property Complemento: String read FComplemento write FComplemento;
-    property Fone: String read FFone write FFone;
-    property Municipio: String read FMunicipio write FMunicipio;
+    property Prestador: TPrestadorConfig read FPrestador;
+    property Tomador: TTomadorConfig read FTomador;
     property OutrasInformacaoesImp: String read FOutrasInformacaoesImp write FOutrasInformacaoesImp;
-    property InscMunicipal: String read FInscMunicipal write FInscMunicipal;
-    property EMail_Prestador: String read FEMail_Prestador write FEMail_Prestador;
-    property CNPJ_Prestador: String read FCNPJ_Prestador write FCNPJ_Prestador;
-
-    property T_InscEstadual: String read FT_InscEstadual write FT_InscEstadual;
-    property T_InscMunicipal: String read FT_InscMunicipal write FT_InscMunicipal;
-    property T_Fone: String read FT_Fone write FT_Fone;
-
-    property T_Endereco: String read FT_Endereco write FT_Endereco;
-    property T_Complemento: String read FT_Complemento write FT_Complemento;
-    property T_Email: String read FT_Email write FT_Email;
-
+    property Prefeitura: String read FPrefeitura write FPrefeitura;
     property Atividade: String read FAtividade write FAtividade;
     property Cancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
-
     property TipoDANFSE: TTipoDANFSE read FTipoDANFSE   write FTipoDANFSE default tpPadrao;
     property Provedor: TNFSeProvedor read FProvedor     write FProvedor;
     property TamanhoFonte: Integer   read FTamanhoFonte write FTamanhoFonte;
@@ -135,35 +153,40 @@ constructor TACBrNFSeXDANFSeClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrNFSe       := nil;
-  FPrestLogo      := '';
-  FPrefeitura     := '';
-  FRazaoSocial    := '';
-  FEndereco       := '';
-  FComplemento    := '';
-  FFone           := '';
-  FMunicipio      := '';
-  FTamanhoFonte   := 6;
+  FACBrNFSe := nil;
 
+  FPrestador := TPrestadorConfig.Create;
+  FPrestador.RazaoSocial := '';
+  FPrestador.Endereco := '';
+  FPrestador.Complemento := '';
+  FPrestador.Fone := '';
+  FPrestador.Municipio := '';
+  FPrestador.InscricaoMunicipal := '';
+  FPrestador.EMail := '';
+  FPrestador.Logo := '';
+  FPrestador.UF := '';
+
+  FTomador := TTomadorConfig.Create;
+  FTomador.Fone := '';
+  FTomador.Endereco := '';
+  FTomador.Complemento := '';
+  FTomador.Email := '';
+  FTomador.InscricaoEstadual := '';
+  FTomador.InscricaoMunicipal := '';
+
+  FPrefeitura := '';
+  FTamanhoFonte := 6;
   FOutrasInformacaoesImp := '';
-  FInscMunicipal         := '';
-  FEMail_Prestador       := '';
-  FUF                    := '';
-  FT_InscEstadual        := '';
-  FT_InscMunicipal       := '';
-  FAtividade             := '';
-  FT_Fone                := '';
-  FT_Endereco            := '';
-  FT_Complemento         := '';
-  FT_Email               := '';
+  FAtividade := '';
   FFormatarNumeroDocumentoNFSe := True;
   FNFSeCancelada := False;
-
   FProvedor := proNenhum;
 end;
 
 destructor TACBrNFSeXDANFSeClass.Destroy;
 begin
+  FPrestador.Destroy;
+  FTomador.Destroy;
 
   inherited Destroy;
 end;

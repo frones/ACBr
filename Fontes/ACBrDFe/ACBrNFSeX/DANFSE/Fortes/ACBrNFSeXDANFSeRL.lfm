@@ -1,4 +1,4 @@
-object frlDANFSeRL: TfrlXDANFSeRL
+object frlXDANFSeRL: TfrlXDANFSeRL
   Left = 306
   Height = 537
   Top = 119
@@ -12,7 +12,7 @@ object frlDANFSeRL: TfrlXDANFSeRL
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object RLNFSe: TRLReport
     Left = -4
     Height = 1123
@@ -23,10 +23,6 @@ object frlDANFSeRL: TfrlXDANFSeRL
     Font.Name = 'Arial'
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DANFe'
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     ShowProgress = False
     OnNeedData = RLNFSeNeedData
   end
@@ -34,7 +30,7 @@ object frlDANFSeRL: TfrlXDANFSeRL
     DocumentInfo.Author = 'FortesReport 3.23 - Copyright Â© 1999-2009 Fortes InformÃ¡tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NFS-e)'
     DisplayName = 'Documento PDF'
-    left = 368
-    top = 152
+    Left = 368
+    Top = 152
   end
 end

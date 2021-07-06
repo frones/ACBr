@@ -44,6 +44,9 @@ Símbolo : Significado
 
 06/07/2021
 -- Diversos --
+[*] Refactoring nas propriedades no DANFSE feito em Fortes Report.
+   Por: Rafael Dias
+-- Diversos --
 [*] Ajustes na leitura do retorno das consultas do provedor SP.
    Por: Italo Giurizzato Junior
 

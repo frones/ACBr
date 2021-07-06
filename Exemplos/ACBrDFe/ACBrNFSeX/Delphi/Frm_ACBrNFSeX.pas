@@ -539,7 +539,7 @@ begin
        RpsSubstituido.Tipo   := trRPS;
       }
 
-      Servico.Valores.ValorServicos := 100.00;
+      Servico.Valores.ValorServicos := 100.35;
       Servico.Valores.ValorDeducoes := 0.00;
       Servico.Valores.AliquotaPis := 1.00;
       Servico.Valores.ValorPis := 1.00;
@@ -1669,7 +1669,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
-    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
 
     if not(InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
       exit;
@@ -1780,7 +1780,7 @@ begin
   if sNomeArq <> '' then
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
-    ACBrNFSeX1.NotasFiscais.LoadFromFile(sNomeArq);
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(sNomeArq, False);
     ACBrNFSeX1.NotasFiscais.Imprimir;
 
     MemoDados.Lines.Add('Arquivo Carregado de: ' + sNomeArq);
@@ -1908,7 +1908,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
-    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
     ACBrNFSeX1.NotasFiscais.Imprimir;
     ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 

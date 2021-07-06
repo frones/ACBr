@@ -2081,7 +2081,6 @@ object frmACBrNFSe: TfrmACBrNFSe
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
     Producao = snSim
-    PrintDialog = True
     Left = 470
     Top = 225
   end

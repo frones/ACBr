@@ -986,7 +986,7 @@ begin
         proDigifred,
         proCenti: Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
-        proSigep, proMegaSoft, proGoiania, pro4R:
+        proSigep, proMegaSoft, proGoiania:
           Gerador.wCampo(tcDatHor, '#4', 'Competencia', 19, 19, -1, NFSe.Competencia, DSC_DEMI);
 
         profintelISS:

@@ -565,6 +565,8 @@ begin
                  aNota.NFSe.IdentificacaoRps.Serie +
                  '-nfse.xml';
 
+    aNota.NomeArq := NomeArq;
+
     TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);
   end;
 end;
@@ -1556,7 +1558,8 @@ begin
     Result.PedCanc := Cancelamento.XmlEnvio;
     Result.PedCanc := SepararDados(Result.PedCanc, 'CancelarNfseEnvio', False);
   finally
-    Cancelamento := nil;  //italo Não sei se esta correto
+//    Cancelamento := nil;  //italo Não sei se esta correto
+    FreeAndNil(Cancelamento);
   end;
 
   PrepararSubstituiNFSe(Result);

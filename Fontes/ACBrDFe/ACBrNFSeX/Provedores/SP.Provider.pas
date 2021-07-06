@@ -793,20 +793,23 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
-
-        if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
-        else
+        if AuxNode <> nil then
         begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
+          NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
 
-        SalvarXmlNfse(ANota);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          if Assigned(ANota) then
+            ANota.XML := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          SalvarXmlNfse(ANota);
+        end;
       end;
     except
       on E:Exception do
@@ -925,20 +928,23 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
-
-        if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
-        else
+        if AuxNode <> nil then
         begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
+          NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
 
-        SalvarXmlNfse(ANota);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          if Assigned(ANota) then
+            ANota.XML := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          SalvarXmlNfse(ANota);
+        end;
       end;
     except
       on E:Exception do
@@ -1052,20 +1058,23 @@ begin
       begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
-
-        if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
-        else
+        if AuxNode <> nil then
         begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
+          NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
 
-        SalvarXmlNfse(ANota);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          if Assigned(ANota) then
+            ANota.XML := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          SalvarXmlNfse(ANota);
+        end;
       end;
     except
       on E:Exception do

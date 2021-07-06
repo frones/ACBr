@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2021
+-- Diversos --
+[*] Ajustes na leitura do retorno das consultas do provedor SP.
+   Por: Italo Giurizzato Junior
+
 02/07/2021
 -- Diversos --
 [*] Documentada todas as propriedades de Parametrização.

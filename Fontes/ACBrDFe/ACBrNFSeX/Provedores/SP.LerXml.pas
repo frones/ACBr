@@ -233,12 +233,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NFe');
-
-  if AuxNode = nil then
-    AuxNode := ANode.Childrens.FindAnyNs('CompNfse');
-
-  if AuxNode = nil then Exit;
+  AuxNode := ANode;
 
   NFSe.dhRecebimento  := Now;
   NFSe.Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);

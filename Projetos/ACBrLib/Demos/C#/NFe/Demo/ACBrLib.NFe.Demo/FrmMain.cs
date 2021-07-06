@@ -69,13 +69,13 @@ namespace ACBrLib.NFe.Demo
                 cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
                 // Altera as config de log
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Principal, "LogNivel", 4);
+                ACBrNFe.Config.Principal.LogNivel = NivelLog.logCompleto;
 
                 var logPath = Path.Combine(Application.StartupPath, "Logs");
                 if (!Directory.Exists(logPath))
                     Directory.CreateDirectory(logPath);
 
-                ACBrNFe.ConfigGravarValor(ACBrSessao.Principal, "LogPath", logPath);
+                ACBrNFe.Config.Principal.LogPath = logPath;
                 ACBrNFe.ConfigGravar();
 
                 LoadConfig();

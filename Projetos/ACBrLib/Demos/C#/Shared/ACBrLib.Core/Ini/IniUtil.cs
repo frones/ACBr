@@ -262,7 +262,7 @@ namespace ACBrLib.Core
                 {
                     var enumType = property.PropertyType.IsGenericType ? property.PropertyType.GetGenericArguments()[0] : property.PropertyType;
                     object value1 = enumType.GetMembers().Where(x => x.HasAttribute<EnumValueAttribute>())
-                        .SingleOrDefault(x => x.GetAttribute<EnumValueAttribute>().Value == str)?.Name;
+                                            .SingleOrDefault(x => x.GetAttribute<EnumValueAttribute>().Value == str)?.Name;
 
                     value = value1 == null ? Enum.ToObject(enumType, Convert.ToInt32(str)) :
                                              Enum.Parse(enumType, value1.ToString());

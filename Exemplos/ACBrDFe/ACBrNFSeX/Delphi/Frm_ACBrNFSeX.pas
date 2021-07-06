@@ -935,7 +935,6 @@ end;
 procedure TfrmACBrNFSe.btnConsNFSeURLClick(Sender: TObject);
 var
   xTitulo, NumIniNFSe, CodTrib: String;
-  i: Integer;
   InfConsultaNFSe: TInfConsultaNFSe;
   Response: TNFSeConsultaNFSeResponse;
 begin
@@ -972,22 +971,12 @@ begin
   end;
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarLoteClick(Sender: TObject);
 var
   Protocolo, Lote: String;
   Response: TNFSeConsultaLoteRpsResponse;
-  i: Integer;
 begin
   Protocolo := '';
   if not (InputQuery('Consultar Lote', 'Número do Protocolo (Obrigatório):', Protocolo)) then
@@ -1005,21 +994,11 @@ begin
   Response := ACBrNFSeX1.ConsultarLoteRps(Protocolo, Lote);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeFaixaClick(Sender: TObject);
 var
   xTitulo, NumNFSeIni, NumNFSeFin, NumPagina: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Por Faixa';
@@ -1039,16 +1018,6 @@ begin
   Response := ACBrNFSeX1.ConsultarNFSePorFaixa(NumNFSeIni, NumNFSeFin, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add(' ');
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeGenericoClick(Sender: TObject);
@@ -1056,7 +1025,6 @@ var
   xTitulo, NumIniNFSe, NumFinNFSe, DataIni, DataFin,
   CPFCNPJ_Prestador, IM_Prestador, CPFCNPJ_Tomador, IM_Tomador,
   CPFCNPJ_Inter, IM_Inter, NumLote, NumPagina: String;
-  i: Integer;
   InfConsultaNFSe: TInfConsultaNFSe;
   Response: TNFSeConsultaNFSeResponse;
 begin
@@ -1160,21 +1128,11 @@ begin
   end;
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeloNumeroClick(Sender: TObject);
 var
   xTitulo, NumeroNFSe, NumPagina, NumLote, DataIni, DataFin, xTipo: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
   InfConsultaNFSe: TInfConsultaNFSe;
 begin
@@ -1249,22 +1207,12 @@ begin
   end;
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
 var
   xTitulo, DataIni, DataFin, NumPagina, NumLote: String;
   Response: TNFSeConsultaNFSeResponse;
-  i: Integer;
 begin
   xTitulo := 'Consultar NFSe por Período';
 
@@ -1291,15 +1239,6 @@ begin
     StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1), NumLote);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeRPSClick(Sender: TObject);
@@ -1308,7 +1247,6 @@ var
   CodVerificacao: String;
   iTipoRps: Integer;
   Response: TNFSeConsultaNFSeporRpsResponse;
-  i: Integer;
 begin
   NumeroRps := '';
   if not (InputQuery('Consultar NFSe por RPS', 'Numero do RPS:', NumeroRps)) then
@@ -1368,22 +1306,12 @@ begin
     CodVerificacao);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorIntermediarioClick(
   Sender: TObject);
 var
   xTitulo, NumPagina, CPFCNPJInter, IMInter: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Intermediário';
@@ -1404,21 +1332,11 @@ begin
     IMInter, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorNumeroClick(Sender: TObject);
 var
   xTitulo, NumeroNFSe, NumPagina: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Número';
@@ -1434,22 +1352,12 @@ begin
   Response := ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(NumeroNFSe, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorPeriodoClick(
   Sender: TObject);
 var
   xTitulo, NumPagina, DataIni, DataFin: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Periodo';
@@ -1470,22 +1378,12 @@ begin
     StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorTomadorClick(
   Sender: TObject);
 var
   xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Tomador';
@@ -1506,22 +1404,12 @@ begin
     IMTomador, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorIntermediarioClick(
   Sender: TObject);
 var
   xTitulo, NumPagina, CPFCNPJInter, IMInter: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Intermediário';
@@ -1542,21 +1430,11 @@ begin
     IMInter, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorNumeroClick(Sender: TObject);
 var
   xTitulo, NumeroNFSe, NumPagina: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Número';
@@ -1572,15 +1450,6 @@ begin
   Response := ACBrNFSeX1.ConsultarNFSeServicoTomadoPorNumero(NumeroNFSe, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarSitLoteClick(Sender: TObject);
@@ -1643,16 +1512,6 @@ begin
   Response := ACBrNFSeX1.Emitir(vNumLote);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for I := 0 to iQtde - 1 do
-  begin
-    MemoDados.Lines.Add('Nome XML: ' + ACBrNFSeX1.NotasFiscais.Items[I].NomeArq);
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[I].NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' +
-                       ACBrNFSeX1.NotasFiscais.Items[I].NFSe.CodigoVerificacao);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnEnviaremailClick(Sender: TObject);
@@ -1732,16 +1591,6 @@ begin
   Response := ACBrNFSeX1.Emitir(vNumLote, meLoteAssincrono);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for I := 0 to iQtde - 1 do
-  begin
-    MemoDados.Lines.Add('Nome XML: ' + ACBrNFSeX1.NotasFiscais.Items[I].NomeArq);
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[I].NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' +
-                       ACBrNFSeX1.NotasFiscais.Items[I].NFSe.CodigoVerificacao);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarNFSeClick(Sender: TObject);
@@ -1826,16 +1675,6 @@ begin
   Response := ACBrNFSeX1.Emitir(vNumLote, meLoteSincrono);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for I := 0 to iQtde - 1 do
-  begin
-    MemoDados.Lines.Add('Nome XML: ' + ACBrNFSeX1.NotasFiscais.Items[I].NomeArq);
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[I].NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' +
-                       ACBrNFSeX1.NotasFiscais.Items[I].NFSe.CodigoVerificacao);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnGerarLoteRPSClick(Sender: TObject);
@@ -2095,7 +1934,6 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorPeriodoClick(Sender: TObject);
 var
   xTitulo, NumPagina, DataIni, DataFin: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Periodo';
@@ -2116,21 +1954,11 @@ begin
     StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorPrestadorClick(Sender: TObject);
 var
   xTitulo, NumPagina, CPFCNPJPrestador, IMPrestador: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Prestador';
@@ -2151,22 +1979,12 @@ begin
     IMPrestador, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorTomadorClick(
   Sender: TObject);
 var
   xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
-  i: Integer;
   Response: TNFSeConsultaNFSeResponse;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Tomador';
@@ -2187,15 +2005,6 @@ begin
     IMTomador, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
-  begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarTeste_SPClick(Sender: TObject);
@@ -2237,16 +2046,6 @@ begin
   Response := ACBrNFSeX1.Emitir(vNumLote, meTeste);
 
   ChecarResposta(Response);
-
-  MemoDados.Lines.Clear;
-
-  for I := 0 to iQtde - 1 do
-  begin
-    MemoDados.Lines.Add('Nome XML: ' + ACBrNFSeX1.NotasFiscais.Items[I].NomeArq);
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[I].NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' +
-                       ACBrNFSeX1.NotasFiscais.Items[I].NFSe.CodigoVerificacao);
-  end;
 end;
 
 procedure TfrmACBrNFSe.cbCryptLibChange(Sender: TObject);
@@ -2662,6 +2461,17 @@ begin
   MemoResp.Lines.Text := Response.XmlEnvio;
   memoRespWS.Lines.Text := Response.XmlRetorno;
   LoadXML(Response.XmlEnvio, WBResposta);
+
+
+  MemoDados.Lines.Clear;
+
+  for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
+  begin
+    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
+    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
+    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
+                                               ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
+  end;
 
   pgRespostas.ActivePageIndex := 2;
 end;

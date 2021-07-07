@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="342"/>
+      <BuildNr Value="343"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrBAL - Biblioteca para leitura de balança" InternalName="ACBrLibBAL" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="BAL" ProductVersion="0.0.1.30"/>
     </VersionInfo>
@@ -479,6 +479,9 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\BAL\bin\ACBrLibBALTest.exe"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">

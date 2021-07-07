@@ -315,8 +315,8 @@ var
   Emitente: TEmitenteConfNFSe;
   Nota: NotaFiscal;
   IdAttr, NameSpace, ListaRps, xRps, Prefixo, PrefixoTS,
-  xCabecalho, xDataI, xDataF: string;
-  I: Integer;
+  xCabecalho, xDataI, xDataF, xTotServicos, xTotDeducoes: string;
+  i, j: Integer;
   DataInicial, DataFinal: TDateTime;
   vTotServicos, vTotDeducoes: Double;
   wAno, wMes, wDia: Word;
@@ -352,9 +352,9 @@ begin
   vTotServicos := 0;
   vTotDeducoes := 0;
 
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+  for i := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
   begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[i];
 
     if EstaVazio(Nota.XMLAssinado) then
     begin
@@ -391,8 +391,11 @@ begin
     if Nota.NFSe.DataEmissao > DataFinal then
       DataFinal := Nota.NFSe.DataEmissao;
 
-    vTotServicos := vTotServicos + Nota.NFSe.Servico.Valores.ValorServicos;
-    vTotDeducoes := vTotDeducoes + Nota.NFSe.Servico.Valores.ValorDeducoes;
+    for j := 0 to Nota.NFSe.Servico.ItemServico.Count -1 do
+    begin
+      vTotServicos := vTotServicos + Nota.NFSe.Servico.ItemServico.Items[j].ValorTotal;
+      vTotDeducoes := vTotDeducoes + Nota.NFSe.Servico.ItemServico.Items[j].ValorDeducoes;
+    end;
 
     xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
 
@@ -424,6 +427,12 @@ begin
     False - Os RPS válidos serão substituídos por NFS-e, mesmo que ocorram
             eventos de erro durante processamento de outros RPS deste lote.
   }
+
+  xTotServicos := FloatToString(vTotServicos, '.', FloatMask(2, False));
+  xTotServicos := StringReplace(xTotServicos, '.00', '', []);
+  xTotDeducoes := FloatToString(vTotDeducoes, '.', FloatMask(2, False));
+  xTotDeducoes := StringReplace(xTotDeducoes, '.00', '', []);
+
   xCabecalho := '<Cabecalho>' +
                   '<CodCidade>' +
                     CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
@@ -443,10 +452,10 @@ begin
                      IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
                   '</QtdRPS>' +
                   '<ValorTotalServicos>' +
-                     FloatToStr(vTotServicos) +
+                     xTotServicos +
                   '</ValorTotalServicos>' +
                   '<ValorTotalDeducoes>' +
-                     FloatToStr(vTotDeducoes) +
+                     xTotDeducoes +
                   '</ValorTotalDeducoes>' +
                   '<Versao>1</Versao>' +
                   '<MetodoEnvio>WS</MetodoEnvio>' +

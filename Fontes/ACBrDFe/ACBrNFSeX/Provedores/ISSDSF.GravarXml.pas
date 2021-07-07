@@ -208,6 +208,8 @@ var
 begin
   Configuracao;
 
+  Opcoes.SuprimirDecimais := True;
+  Opcoes.DecimalChar := '.';
   Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;

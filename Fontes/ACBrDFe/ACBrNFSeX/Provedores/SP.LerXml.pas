@@ -188,6 +188,8 @@ begin
       CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
       xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
+
+    NFSe.Servico.CodigoMunicipio := NFSe.Tomador.Endereco.CodigoMunicipio;
   end;
 end;
 
@@ -240,6 +242,7 @@ begin
   NFSe.NumeroLote     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
   NFSe.DataEmissao    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoNFe'), tcDatHor);
   NFSe.DataEmissaoRps := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRPS'), tcDat);
+  NFSe.Competencia    := NFSe.DataEmissao;
 
   aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 

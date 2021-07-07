@@ -369,30 +369,12 @@ begin
 
     rllCompetencia.Caption := FormatDateTime('mm/yyyy', Competencia);
 
-    {
-    if length( Competencia ) = 6 then
-      rllCompetencia.Caption := Copy(Competencia, 5, 2) + '/' + Copy(Competencia, 1, 4)
-    else if length( Competencia ) = 7 then
-      rllCompetencia.Caption := Competencia
-    else
-    begin
-      if length( Competencia ) >= 10 then // dd/mm/aaaa ou aaaa/mm/dd
-      begin
-        if (Pos('/', Competencia) = 3) or (Pos('-', Competencia) = 3) then
-          rllCompetencia.Caption := Copy(Competencia, 4, 7)
-        else
-          rllCompetencia.Caption := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);
-      end
-      else
-        rllCompetencia.Caption := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);		
-    end;
-    }
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
-    rllMunicipioPrestacaoServico.Caption := CodIBGEToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
+
 	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-	// do tomador em vez do que foi informado em Serviço. 
-//    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Tomador.Endereco.CodigoMunicipio, 0));
+	// do tomador em vez do que foi informado em Serviço.
+    rllMunicipioPrestacaoServico.Caption := CodIBGEToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
   end;
 end;
 
@@ -503,8 +485,9 @@ begin
   inherited;
 
   rlmDescricao.Lines.Clear;
-  rlmDescricao.Lines.Add( StringReplace( fpNFSe.Servico.Discriminacao,
-                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+  rlmDescricao.Lines.Add(fpNFSe.Servico.Discriminacao);
+//  rlmDescricao.Lines.Add( StringReplace( fpNFSe.Servico.Discriminacao,
+//                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -627,7 +610,7 @@ begin
 
   RLNFSe.Title := 'NFS-e: ' + fpNFSe.Numero;
   TDFeReportFortes.AjustarMargem(RLNFSe, fpDANFSe);
-  rlbItens.Visible := Not(fpDANFSe.DetalharServico);
+  rlbItens.Visible := not (fpDANFSe.DetalharServico);
   rlbHeaderItensDetalhado.Visible := fpDANFSe.DetalharServico;
   subItens.Visible := fpDANFSe.DetalharServico;
 end;
@@ -637,19 +620,15 @@ procedure TfrlXDANFSeRLRetrato.subItensDataRecord(Sender: TObject;
    var RecordAction: TRLRecordAction);
 begin
   inherited;
-  FNumItem := RecNo - 1 ;
-  Eof := (RecNo > fpNFSe.Servico.ItemServico.Count) ;
-  RecordAction := raUseIt ;
+  FNumItem := RecNo - 1;
+  Eof := (RecNo > fpNFSe.Servico.ItemServico.Count);
+  RecordAction := raUseIt;
 end;
 
 Function TfrlXDANFSeRLRetrato.ManterAliquota( dAliquota : Double ) : String;
 begin
-  // thema precisa ser desta forma pois usa aliquota 2,5 => 0,025
-//  if (dAliquota > 0) and (dAliquota < 1) then
-//    Result := FormatFloat(',0.00', dAliquota * 100 )
-//  else
   // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
-    Result := FormatFloat(',0.00', dAliquota );
+  Result := FormatFloat(',0.00', dAliquota );
 end;
 
 end.

@@ -977,13 +977,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 453
       Width = 752
-      Height = 24
+      Height = 21
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      IntegralHeight = False
       BeforePrint = rlbItensBeforePrint
       object rlmDescricao: TRLMemo
         Left = 10
@@ -1002,7 +1001,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 495
+      Top = 492
       Width = 752
       Height = 317
       BandType = btSummary
@@ -2027,7 +2026,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 812
+      Top = 809
       Width = 752
       Height = 103
       BandType = btSummary
@@ -2099,7 +2098,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 915
+      Top = 912
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2330,7 +2329,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 23
-      Top = 477
+      Top = 474
       Width = 752
       Height = 18
       Borders.Sides = sdCustom

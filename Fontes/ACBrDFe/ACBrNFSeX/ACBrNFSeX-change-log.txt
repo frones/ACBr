@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2021
+-- Diversos --
+[*] Ajustes para o provedor SP e ISSDSF.
+   Por: Italo Giurizzato Junior
+
 06/07/2021
 -- Diversos --
 [*] Refactoring nas propriedades no DANFSE feito em Fortes Report.

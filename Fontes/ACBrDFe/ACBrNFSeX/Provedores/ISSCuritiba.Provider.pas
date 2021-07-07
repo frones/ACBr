@@ -40,7 +40,8 @@ uses
   SysUtils, Classes,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv1,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceISSCuritiba = class(TACBrNFSeXWebserviceSoap12)
@@ -67,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
   ISSCuritiba.GravarXml, ISSCuritiba.LerXml;
 
 { TACBrNFSeProviderISSCuritiba }
@@ -121,13 +122,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:RecepcionarLoteRps>';
+  Request := '<RecepcionarLoteRps xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:RecepcionarLoteRps>';
+  Request := Request + '</RecepcionarLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['RecepcionarLoteRpsResult'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -136,13 +136,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:ConsultarLoteRps>';
+  Request := '<ConsultarLoteRps xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:ConsultarLoteRps>';
+  Request := Request + '</ConsultarLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['ConsultarLoteRpsResult'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -151,13 +150,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:ConsultarSituacaoLoteRps>';
+  Request := '<ConsultarSituacaoLoteRps xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:ConsultarSituacaoLoteRps>';
+  Request := Request + '</ConsultarSituacaoLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarSituacaoLoteRps', Request,
-                     ['ConsultarSituacaoLoteRpsResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['ConsultarSituacaoLoteRpsResult'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -166,13 +164,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:ConsultarNfsePorRps>';
+  Request := '<ConsultarNfsePorRps xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:ConsultarNfsePorRps>';
+  Request := Request + '</ConsultarNfsePorRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfsePorRps', Request,
-                     ['ConsultarNfsePorRpsResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['ConsultarNfsePorRpsResult'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -181,13 +178,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:ConsultarNfse>';
+  Request := '<ConsultarNfse xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:ConsultarNfse>';
+  Request := Request + '</ConsultarNfse>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfse', Request,
-                     ['ConsultarNfseResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['ConsultarNfseResult'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.Cancelar(ACabecalho, AMSG: String): string;
@@ -196,13 +192,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<e:CancelarNfse>';
+  Request := '<CancelarNfse xmlns="http://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
-  Request := Request + '</e:CancelarNfse>';
+  Request := Request + '</CancelarNfse>';
 
   Result := Executar('http://www.e-governeapps2.com.br/CancelarNfse', Request,
-                     ['CancelarNfseResult'],
-                     ['xmlns:e="http://www.e-governeapps2.com.br/"']);
+                     ['CancelarNfseResult'], ['']);
 end;
 
 end.

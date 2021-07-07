@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2021
+--ACBrBoleto, ACBrBancoAlpha--
+[+] Adicionado a classe para o Banco Alpha CNAB400 e geração de Boleto
+
 05/07/2021
 --ACBrBoletoBancoBrasil--
 [+] Adicionado campos Descontos2 e Descontos3  na geração da Remessa

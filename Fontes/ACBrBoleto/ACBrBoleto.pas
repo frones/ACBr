@@ -408,6 +408,7 @@ type
     cobBancoPine,
     cobBancoPineBradesco,
     cobUnicredSC,
+    cobBancoAlfa,
     cobBancoDoBrasilAPI,
     cobBancoDoBrasilWS
     );
@@ -843,6 +844,7 @@ type
     function DefineDataMulta(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; virtual;       //Utilizado para definir data multa na Remessa
     function DefineNossoNumeroRetorno(const Retorno: String): String; virtual;      //Define a leitura do Nosso Número no Retorno
     function DefineTamanhoContaRemessa: Integer; virtual;                           //Define o tamnhano da Conta para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
+    function DefineTamanhoAgenciaRemessa: Integer; virtual;                         //Define o tamnhano da Agencia para Remessa e Retorno  (pode ser diferente do tamanho padrão no Boleto)
     function DefinePosicaoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
     function DefineTamanhoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
     function DefinePosicaoCarteiraRetorno:Integer; virtual;                         //Define posição para leitura de Retorno campo: NumeroDocumento
@@ -1801,7 +1803,7 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
-     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC;
+     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa;
 
 { TACBrBoletoWSFiltroConsulta }
 
@@ -3202,6 +3204,7 @@ begin
      cobBancoPine           : fBancoClass := TACBrBancoPine.create(Self);
      cobBancoPineBradesco   : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
      cobUnicredSC           : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}
+     cobBancoAlfa           : fBancoClass := TACBrBancoAlfa.Create(Self);           {025}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -3400,10 +3403,10 @@ begin
              PadLeft(CodigoCedente, 20, '0')                    +  { Codigo da Empresa no Banco }
              PadRight(Nome, 30)                                 +  { Nome da Empresa }
              IntToStrZero(fpNumero, 3)                          +  { Código do Banco 091 }
-             PadRight(fpNome, 15)                               +  { Nome do Banco(091 - Unicred ) }
+             PadRight(fpNome, 15)                               +  { Nome do Banco }
              FormatDateTime('ddmmyy',Now)                       +  { Data de geração do arquivo }
              Space(07)                                          +  { brancos }
-             PadLeft(fpCodParametroMovimento, 3 )               +  { Cód. Parâm. Movto da Unicred }
+             PadLeft(fpCodParametroMovimento, 3 )               +  { Cód. Parâm. Movto }
              IntToStrZero(NumeroRemessa, 7)                     +  { Nr. Sequencial de Remessa  }
              Space(277)                                         +  { brancos }
              IntToStrZero(1, 6);                                   { Nr. Sequencial de Remessa + brancos + Contador }
@@ -4612,6 +4615,11 @@ begin
   Result:= ACBrBanco.TamanhoConta;
 end;
 
+function TACBrBancoClass.DefineTamanhoAgenciaRemessa: Integer;
+begin
+  Result:= ACBrBanco.TamanhoAgencia;
+end;
+
 function TACBrBancoClass.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
   if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
@@ -5384,13 +5392,18 @@ begin
         IniRetorno.WriteString(wSessao, 'Cod_Retorno',ListaRetornoWeb[i].CodRetorno);
         IniRetorno.WriteString(wSessao, 'Msg_Retorno',ListaRetornoWeb[i].MsgRetorno);
         IniRetorno.WriteString(wSessao, 'Ori_Retorno',ListaRetornoWeb[i].OriRetorno);
+        IniRetorno.WriteBool(wSessao, 'IndicadorContinuidade',ListaRetornoWeb[i].indicadorContinuidade);
+        IniRetorno.WriteInteger(wSessao, 'ProximoIndice',ListaRetornoWeb[i].proximoIndice);
 
         for j:= 0 to ListaRetornoWeb[i].ListaRejeicao.Count -1 do
         begin
           wSessao := 'REJEICAO' + IntToStr(j + 1);
+          IniRetorno.WriteString(wSessao, 'Codigo', ListaRetornoWeb[i].ListaRejeicao[j].Codigo);
           IniRetorno.WriteString(wSessao, 'Campo', ListaRetornoWeb[i].ListaRejeicao[j].Campo);
           IniRetorno.WriteString(wSessao, 'Mensagem', ListaRetornoWeb[i].ListaRejeicao[j].Mensagem);
           IniRetorno.WriteString(wSessao, 'Valor', ListaRetornoWeb[i].ListaRejeicao[j].Valor);
+          IniRetorno.WriteString(wSessao, 'Ocorrencia', ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia);
+          IniRetorno.WriteString(wSessao, 'Versao', ListaRetornoWeb[i].ListaRejeicao[j].Versao);
         end;
 
         wSessao := 'HEADER';

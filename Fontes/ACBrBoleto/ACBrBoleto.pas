@@ -4995,6 +4995,7 @@ begin
     246: Result := cobBancoABCBrasil;
     707: Result := cobDaycoval;
     084: Result := cobUniprimeNortePR;
+    025: Result := cobBancoAlfa;
     643: begin
           if StrToInt(Carteira) = 9 then
              Result := cobBancoPineBradesco

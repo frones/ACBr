@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="462"/>
+      <BuildNr Value="463"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrETQ - Biblioteca para impressão de Etiquetas" InternalName="ACBrLibETQ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ETQ" ProductVersion="0.0.1.30"/>
@@ -517,6 +517,9 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\ETQ\bin\ACBrLibETQTest.exe"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">

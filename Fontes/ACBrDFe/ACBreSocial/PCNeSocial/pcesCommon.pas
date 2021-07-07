@@ -987,6 +987,7 @@ type
     FDtAdm: TDate;
     FTpAdmissao: tpTpAdmissao;
     FIndAdmissao: tpTpIndAdmissao;
+    FNrProcTrab: String;
     FTpRegJor: tpTpRegJor;
     FNatAtividade: tpNatAtividade;
     FdtBase: Integer;
@@ -1002,6 +1003,7 @@ type
     property DtAdm: TDate read FDtAdm write FDtAdm;
     property TpAdmissao: tpTpAdmissao read FTpAdmissao write FTpAdmissao;
     property IndAdmissao: tpTpIndAdmissao read FIndAdmissao write FIndAdmissao;
+    property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
     property TpRegJor: tpTpRegJor read FTpRegJor write FTpRegJor;
     property NatAtividade: tpNatAtividade read FNatAtividade write FNatAtividade;
     property dtBase: Integer read FdtBase write FdtBase;

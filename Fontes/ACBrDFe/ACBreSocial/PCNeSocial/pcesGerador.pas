@@ -1380,6 +1380,8 @@ begin
     Gerador.wCampo(tcDat, '', 'dtAdm',        10, 10, 1, pInfoCeletista.DtAdm);
     Gerador.wCampo(tcStr, '', 'tpAdmissao',    1,  1, 1, eSTpAdmissaoToStr(pInfoCeletista.TpAdmissao));
     Gerador.wCampo(tcStr, '', 'indAdmissao',   1,  1, 1, eSTpIndAdmissaoToStr(pInfoCeletista.IndAdmissao));
+    if VersaoDF > ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'nrProcTrab',    1,  20,0, pInfoCeletista.nrProcTrab);
     Gerador.wCampo(tcStr, '', 'tpRegJor',      1,  1, 1, eSTpRegJorToStr(pInfoCeletista.TpRegJor));
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(pInfoCeletista.NatAtividade));
 

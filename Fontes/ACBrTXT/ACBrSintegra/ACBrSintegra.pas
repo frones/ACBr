@@ -2197,9 +2197,16 @@ begin
         wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataDeclaracao);
         wregistro:=wregistro+PadRight(Registros85[i].NaturezaExportacao,1);
         wregistro:=wregistro+PadRight(Registros85[i].RegistroExportacao,12);
-        wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataRegistro);
+        if Registros85[i].DataRegistro > 0 then
+          wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataRegistro)
+        else
+          wregistro:= wregistro + '00000000';
+
         wregistro:=wregistro+PadRight((Registros85[i].Conhecimento),16);
-        wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataConhecimento);
+        if Registros85[i].DataConhecimento > 0 then
+          wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataConhecimento)
+        else
+          wregistro:= wregistro + '00000000';
         wregistro:=wregistro+TBStrZero(TiraPontos(Registros85[i].TipoConhecimento),2);
         wregistro:=wregistro+TBStrZero(TiraPontos(Registros85[i].Pais),4);
         wregistro:= wregistro + PadRight('',8, '0');

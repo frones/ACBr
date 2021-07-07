@@ -112,8 +112,7 @@ procedure TACBrObjetoIBGE.RespostaItensConsulta(ItemID: integer);
 var
   Resp: TLibIBGEResposta;
 begin
-  Resp := TLibIBGEResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), TpResp, codUTF8);
+  Resp := TLibIBGEResposta.Create(ItemID +1, TpResp, codUTF8);
   try
     with fACBrIBGE.Cidades[ItemID] do
     begin

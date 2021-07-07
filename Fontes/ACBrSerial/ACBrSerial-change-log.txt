@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/07/2021
+-- ACBrPosPrinter --
+[-] Ajuste para evitar apagar a atribuição do evento: OnEnviarStringDevice,
+    quando o método padrão, "Configurar" era chamado
+    (por: DSA)
+
 Data: 10/06/2021
 -- ACBrWinUSBDevice --
 [+] Adicionado suporte USB a Epson VendorClass

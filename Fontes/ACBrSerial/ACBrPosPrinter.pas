@@ -424,6 +424,7 @@ type
     FCancelarEsperaCheque: Boolean;
     FOnGravarLog: TACBrGravarLog;
     FOnEnviarStringDevice: TACBrGravarLog;
+    FOnEnviarStringDeviceDefault: TACBrGravarLog;
     FTagProcessor: TACBrTagProcessor;
     FPosCheques: TACBrPosCheques;
     FTemGuilhotina: Integer;
@@ -481,6 +482,7 @@ type
      FHook: TACBrPosPrinterHook;
     {$EndIf}
 
+    procedure Loaded; override;
     procedure EnviarStringDevice(AString: AnsiString);
 
     function DecodificarTagsFormatacao(ABinaryString: AnsiString): AnsiString;
@@ -1281,7 +1283,7 @@ end;
 
 procedure TACBrPosPrinterClass.Configurar;
 begin
-  fpPosPrinter.OnEnviarStringDevice := Nil;
+  {nada aqui, método virtual}
 end;
 
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
@@ -1544,10 +1546,17 @@ begin
   FArqLog := '';
   FOnGravarLog := nil;
   FOnEnviarStringDevice := nil;
+  FOnEnviarStringDeviceDefault := nil;
   FOnAguardarCheque := nil;
   FCancelarEsperaCheque := False;
 
   FTipoCorte := ctTotal;
+end;
+
+procedure TACBrPosPrinter.Loaded;
+begin
+  inherited Loaded;
+  FOnEnviarStringDeviceDefault := FOnEnviarStringDevice;
 end;
 
 destructor TACBrPosPrinter.Destroy;
@@ -1662,7 +1671,9 @@ begin
     raise EPosPrinterException.Create(ACBrStr('Nenhum Modelo Externo atribuído'));
 
   if (FPosPrinterClass <> FModeloExterno) then
-    FPosPrinterClass.Free;
+    FPosPrinterClass.Free
+  else
+    FOnEnviarStringDevice := FOnEnviarStringDeviceDefault;
 
   case AValue of
     ppEscPosEpson: FPosPrinterClass := TACBrEscPosEpson.Create(Self);

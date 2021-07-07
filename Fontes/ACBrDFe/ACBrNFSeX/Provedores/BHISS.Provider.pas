@@ -222,6 +222,8 @@ begin
       InfElemento := 'LoteRps';
       DocElemento := 'GerarNfseEnvio';
     end;
+
+    DadosCabecalho := GetCabecalho('');
   end;
 
   ConfigWebServices.AtribVerLote := 'versao';

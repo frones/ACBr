@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/07/2021
+-- BHISS.Provider --
+[*] Possível correção na geração do cabeçalho do envelope soap.
+   Por: Italo Giurizzato Junior
 -- ISSCuritiba.Provider --
 [*] Possível correção na geração do envelope soap.
    Por: Italo Giurizzato Junior

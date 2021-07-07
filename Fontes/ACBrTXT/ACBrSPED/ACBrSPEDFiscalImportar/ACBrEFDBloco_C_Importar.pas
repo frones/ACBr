@@ -826,11 +826,16 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC800;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC800New do
   begin
-    COD_MOD := Valor;
-    COD_SIT := StrToCodSit(Valor);
-    NUM_CFE := Valor;
-    DT_DOC := ValorD;
-    VL_CFE := ValorF;
+    COD_MOD    := Valor;
+    COD_SIT    := StrToCodSit(Valor);
+    NUM_CFE    := Valor;
+    DT_DOC     := ValorD;
+    VL_CFE     := ValorF;
+    VL_PIS     := ValorF;
+    VL_COFINS  := ValorF;
+    CNPJ_CPF   := Valor;
+    NR_SAT     := Valor;
+    CHV_CFE    := Valor;
   end;
 end;
 

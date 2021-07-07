@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
-      <BuildNr Value="66"/>
+      <BuildNr Value="67"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -483,6 +483,9 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">

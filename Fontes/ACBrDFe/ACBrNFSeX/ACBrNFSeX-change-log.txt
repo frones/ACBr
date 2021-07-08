@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2021
+-- Betha.Provider --
+[*] Possível correção na geração do cabeçalho do envelope soap.
+   Por: Italo Giurizzato Junior
+
 07/07/2021
 -- BHISS.Provider --
 [*] Possível correção na geração do cabeçalho do envelope soap.

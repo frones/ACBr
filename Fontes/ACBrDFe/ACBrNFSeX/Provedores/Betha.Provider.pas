@@ -40,7 +40,8 @@ uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceBetha = class(TACBrNFSeXWebserviceSoap11)
@@ -63,6 +64,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
   TACBrNFSeXWebserviceBethav2 = class(TACBrNFSeXWebserviceSoap11)
@@ -200,6 +202,49 @@ begin
     Result := TACBrNFSeXWebserviceBetha.Create(FAOwner, AMetodo, URL)
   else
     raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderBetha.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+var
+  xXml: string;
+begin
+  xXml := Response.XmlEnvio;
+
+  case aMetodo of
+    tmRecepcionar:
+      xXml := StringReplace(xXml, 'ns3:LoteRps', 'LoteRps' ,[rfReplaceAll]);
+
+    tmConsultarSituacao,
+    tmConsultarLote:
+      begin
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Protocolo', 'Protocolo' ,[rfReplaceAll]);
+      end;
+
+    tmConsultarNFSePorRps:
+      begin
+        xXml := StringReplace(xXml, 'ns3:IdentificacaoRps', 'IdentificacaoRps' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
+      end;
+
+    tmConsultarNFSe:
+      begin
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:NumeroNfse', 'NumeroNfse' ,[rfReplaceAll]);
+      end;
+
+    tmCancelarNFSe:
+      begin
+        xXml := StringReplace(xXml, 'ns3:Pedido', 'Pedido' ,[rfReplaceAll]);
+      end;
+  else
+    Response.XmlEnvio := xXml;
+  end;
+
+  Response.XmlEnvio := xXml;
+
+  inherited ValidarSchema(Response, aMetodo);
 end;
 
 { TACBrNFSeProviderBethav2 }

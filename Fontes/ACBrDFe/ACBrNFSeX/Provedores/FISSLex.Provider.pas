@@ -218,7 +218,7 @@ begin
         xXml := RetornarConteudoEntre(xXml,
           '<ConsultarSituacaoLoteRpsEnvio xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">',
           '</ConsultarSituacaoLoteRpsEnvio>', False);
-     end;
+      end;
 
     tmConsultarLote:
       begin

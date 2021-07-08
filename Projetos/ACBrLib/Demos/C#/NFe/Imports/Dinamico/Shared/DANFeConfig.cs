@@ -94,6 +94,24 @@ namespace ACBrLib.NFe
             set => SetProperty(value);
         }
 
+        public bool ImprimeNomeFantasia
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
+        public bool Cancelada
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
+        public string Protocolo
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

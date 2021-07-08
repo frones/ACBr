@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/07/2021
+-- ACBrNFSeXConversao --
+[*] Novos Códigos de Natureza de Operação utilizados pela prefeitura de Serra/ES
+   Por: Thiago Ribeiro da Silva
 -- Betha.Provider --
 [*] Possível correção na geração do cabeçalho do envelope soap.
    Por: Italo Giurizzato Junior

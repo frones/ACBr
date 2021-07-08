@@ -51,8 +51,10 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); override;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); override;
+    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); override;
 
   published
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico default False;
@@ -75,7 +77,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrNFSeXDANFSeRL.ImprimirDANFSe(NFSe: TNFSe = nil);
+procedure TACBrNFSeXDANFSeRL.ImprimirDANFSe(NFSe: TNFSe);
 var
   i: Integer;
   Notas: array of TNFSe;
@@ -98,7 +100,7 @@ begin
   TfrlXDANFSeRLRetrato.Imprimir(Self, Notas);
 end;
 
-procedure TACBrNFSeXDANFSeRL.ImprimirDANFSePDF(NFSe: TNFSe = nil);
+procedure TACBrNFSeXDANFSeRL.ImprimirDANFSePDF(NFSe: TNFSe);
 Var
   i: integer;
 begin
@@ -118,6 +120,23 @@ begin
   begin
       FPArquivoPDF := PathWithDelim(Self.PathPDF) + TACBrNFSeX(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
       TfrlXDANFSeRLRetrato.SalvarPDF(Self, NFSe, FPArquivoPDF);
+  end;
+end;
+
+procedure TACBrNFSeXDANFSeRL.ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe);
+Var
+  i: integer;
+begin
+  TfrlXDANFSeRLRetrato.QuebradeLinha(TACBrNFSeX(ACBrNFSe).Provider.ConfigGeral.QuebradeLinha);
+
+  if NFSe = nil then
+  begin
+    for i := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
+      TfrlXDANFSeRLRetrato.SalvarPDF(Self, TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[i].NFSe, AStream);
+  end
+  else
+  begin
+      TfrlXDANFSeRLRetrato.SalvarPDF(Self, NFSe, AStream);
   end;
 end;
 

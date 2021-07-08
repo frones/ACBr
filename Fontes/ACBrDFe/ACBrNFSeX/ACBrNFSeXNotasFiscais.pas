@@ -740,7 +740,7 @@ end;
 procedure TNotasFiscais.ImprimirPDF;
 begin
   VerificarDANFSE;
-  TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF(nil);
+  TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF;
 end;
 
 procedure TNotasFiscais.Insert(Index: Integer; ANota: NotaFiscal);

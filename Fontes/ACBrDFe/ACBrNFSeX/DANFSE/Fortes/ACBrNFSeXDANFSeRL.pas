@@ -73,7 +73,8 @@ type
   public
     { Public declarations }
     class procedure Imprimir(ADANFSe: TACBrNFSeXDANFSeRL; ANotas: array of TNFSe);
-    class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String);
+    class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String); overload;
+    class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AStream: TStream); overload;
   end;
 
 var
@@ -205,6 +206,40 @@ begin
 
     DANFSeReport.RLNFSe.Prepare;
     DANFSeReport.RLPDFFilter1.FilterPages(DANFSeReport.RLNFSe.Pages);
+  finally
+    FreeAndNil(DANFSeReport);
+  end;
+end;
+
+class procedure TfrlXDANFSeRL.SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AStream: TStream);
+var
+  DANFSeReport: TfrlXDANFSeRL;
+begin
+  DANFSeReport := Create(nil);
+  try
+    DANFSeReport.fpNFSe := ANFSe;
+    DANFSeReport.fpDANFSe := ADANFSe;
+    if ADANFSe.AlterarEscalaPadrao then
+    begin
+      DANFSeReport.Scaled := False;
+      DANFSeReport.ScaleBy(ADANFSe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
+    TDFeReportFortes.AjustarReport(DANFSeReport.RLNFSe, DANFSeReport.fpDANFSe);
+     DANFSeReport.RLPDFFilter1.ShowProgress := DANFSeReport.fpDANFSe.MostraStatus;
+
+    with DANFSeReport.RLPDFFilter1.DocumentInfo do
+    begin
+      Title := 'NFSe - ' + DANFSeReport.fpNFSe.Numero;
+      KeyWords := 'Número:' + DANFSeReport.fpNFSe.Numero +
+        '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DANFSeReport.fpNFSe.DataEmissao) +
+        '; Tomador: ' + DANFSeReport.fpNFSe.Tomador.RazaoSocial +
+        '; CNPJ: ' + DANFSeReport.fpNFSe.Tomador.IdentificacaoTomador.CpfCnpj +
+        '; Valor total: ' + FormatFloat(',0.00', DANFSeReport.fpNFSe.Servico.Valores.ValorServicos);
+    end;
+
+    DANFSeReport.RLNFSe.Prepare;
+    DANFSeReport.RLPDFFilter1.FilterPages(DANFSeReport.RLNFSe.Pages, AStream);
   finally
     FreeAndNil(DANFSeReport);
   end;

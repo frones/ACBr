@@ -12,7 +12,7 @@ object frlXDANFSeRL: TfrlXDANFSeRL
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.3.0.0'
   object RLNFSe: TRLReport
     Left = -4
     Height = 1123

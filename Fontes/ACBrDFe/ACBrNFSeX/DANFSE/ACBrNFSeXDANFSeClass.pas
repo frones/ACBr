@@ -43,7 +43,10 @@ uses
 
 type
   { TPrestadorConfig }
-  TPrestadorConfig = class
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TPrestadorConfig = class(TComponent)
   private
     FRazaoSocial: String;
     FNomeFantasia: String;
@@ -56,6 +59,9 @@ type
     FEMail: String;
     FFone : String;
     FLogo: String;
+
+  public
+    constructor Create(AOwner: TComponent); override;
 
   published
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
@@ -73,7 +79,10 @@ type
   end;
 
   { TTomadorConfig }
-  TTomadorConfig = class
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TTomadorConfig = class(TComponent)
   private
     FInscEstadual : String;
     FInscMunicipal : String;
@@ -81,6 +90,9 @@ type
     FEndereco      : String;
     FComplemento   : String;
     FEmail         : String;
+
+  public
+    constructor Create(AOwner: TComponent); override;
 
   published
     property InscricaoEstadual: String read FInscEstadual write FInscEstadual;
@@ -123,7 +135,8 @@ type
     destructor Destroy; override;
     procedure VisualizarDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
-    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual;
+    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual; overload;
+    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); virtual; overload;
 
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetACBrNFSe;
@@ -147,6 +160,35 @@ implementation
 uses
   ACBrNFSeX, ACBrUtil;
 
+{ TPrestadorConfig }
+constructor TPrestadorConfig.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  RazaoSocial := '';
+  Endereco := '';
+  Complemento := '';
+  Fone := '';
+  Municipio := '';
+  InscricaoMunicipal := '';
+  EMail := '';
+  Logo := '';
+  UF := '';
+end;
+
+{ TTomadorConfig }
+constructor TTomadorConfig.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  Fone := '';
+  Endereco := '';
+  Complemento := '';
+  Email := '';
+  InscricaoEstadual := '';
+  InscricaoMunicipal := '';
+end;
+
 { TACBrNFSeXDANFSeClass }
 
 constructor TACBrNFSeXDANFSeClass.Create(AOwner: TComponent);
@@ -155,24 +197,16 @@ begin
 
   FACBrNFSe := nil;
 
-  FPrestador := TPrestadorConfig.Create;
-  FPrestador.RazaoSocial := '';
-  FPrestador.Endereco := '';
-  FPrestador.Complemento := '';
-  FPrestador.Fone := '';
-  FPrestador.Municipio := '';
-  FPrestador.InscricaoMunicipal := '';
-  FPrestador.EMail := '';
-  FPrestador.Logo := '';
-  FPrestador.UF := '';
+  FPrestador := TPrestadorConfig.Create(Self);
+  FPrestador.Name := 'Prestador';
 
-  FTomador := TTomadorConfig.Create;
-  FTomador.Fone := '';
-  FTomador.Endereco := '';
-  FTomador.Complemento := '';
-  FTomador.Email := '';
-  FTomador.InscricaoEstadual := '';
-  FTomador.InscricaoMunicipal := '';
+  FTomador := TTomadorConfig.Create(Self);
+  FTomador.Name := 'Tomador';
+
+  {$IFDEF COMPILER6_UP}
+  FPrestador.SetSubComponent(True);{ para gravar no DFM/XFM }
+  FTomador.SetSubComponent(True);{ para gravar no DFM/XFM }
+  {$ENDIF}
 
   FPrefeitura := '';
   FTamanhoFonte := 6;
@@ -185,8 +219,8 @@ end;
 
 destructor TACBrNFSeXDANFSeClass.Destroy;
 begin
-  FPrestador.Destroy;
-  FTomador.Destroy;
+  FPrestador.Free;
+  FTomador.Free;
 
   inherited Destroy;
 end;
@@ -277,6 +311,11 @@ begin
 end;
 
 procedure TACBrNFSeXDANFSeClass.ImprimirDANFSePDF(NFSe: TNFSe);
+begin
+  ErroAbstract('ImprimirDANFSePDF');
+end;
+
+procedure TACBrNFSeXDANFSeClass.ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe);
 begin
   ErroAbstract('ImprimirDANFSePDF');
 end;

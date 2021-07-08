@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/07/2021
+-- ACBrNFSeXDANFSeClass, ACBrNFSeXDANFSeRLClass, ACBrNFSeXDANFSeRL --
+[+] Adicionado a possibilidade de Imprimir o PDF da DANFSe direto em um Stream.
+    Por: Rafael Dias
+
+08/07/2021
 -- ACBrNFSeXConversao --
 [*] Novos Códigos de Natureza de Operação utilizados pela prefeitura de Serra/ES
    Por: Thiago Ribeiro da Silva

@@ -135,8 +135,8 @@ type
     destructor Destroy; override;
     procedure VisualizarDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
-    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual; overload;
-    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); virtual; overload;
+    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); overload; virtual;
+    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); overload; virtual;
 
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetACBrNFSe;

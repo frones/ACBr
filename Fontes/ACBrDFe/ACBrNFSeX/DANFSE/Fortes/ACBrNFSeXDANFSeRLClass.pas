@@ -53,8 +53,8 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); override;
-    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); override;
-    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); override;
+    procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); overload; override;
+    procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); overload; override;
 
   published
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico default False;

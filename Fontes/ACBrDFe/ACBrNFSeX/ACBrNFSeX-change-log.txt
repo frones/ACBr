@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/07/2021
+-- ACBrNFSeXNotasFiscais--
+[*] Possível correção para o erro de conversão do numero da nota de string para inteiro.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Possível correção para as assinaturas invalidas ao emitir o Rps.
    Por: Italo Giurizzato Junior

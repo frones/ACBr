@@ -193,10 +193,10 @@ end;
 function CompNFSePorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 var
-  NumNFSe1, NumNFSe2: Integer;
+  NumNFSe1, NumNFSe2: Int64;
 begin
-  NumNFSe1 := StrToInt(NotaFiscal(Item1).NFSe.Numero);
-  NumNFSe2 := StrToInt(NotaFiscal(Item2).NFSe.Numero);
+  NumNFSe1 := StrToInt64(NotaFiscal(Item1).NFSe.Numero);
+  NumNFSe2 := StrToInt64(NotaFiscal(Item2).NFSe.Numero);
 
   if NumNFSe1 < NumNFSe2 then
     Result := -1

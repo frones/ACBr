@@ -27,6 +27,7 @@
         Extrato,
         DFe,
         NFe,
+        CEP,
         DANFE,
         DANFENFe,
         DANFENFCe,

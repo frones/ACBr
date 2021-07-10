@@ -135,12 +135,12 @@ namespace ACBrLibCEP.Demo
 
         private void btnBuscarPorCEP_Click(object sender, EventArgs e)
         {
-            txtRetorno.AppendText(ACBrCEP.buscarPorCep(txtCEP.Text));
+            txtRetorno.AppendText(ACBrCEP.BuscarPorCep(txtCEP.Text));
         }
 
         private void btnBuscarPorLogradouro_Click(object sender, EventArgs e)
         {
-            txtRetorno.AppendText(ACBrCEP.buscarPorLogradouro(txtCidade.Text, txtTipoLogradouro.Text, txtLogradouro.Text, txtUF.Text, txtBairro.Text));
+            txtRetorno.AppendText(ACBrCEP.BuscarPorLogradouro(txtCidade.Text, txtTipoLogradouro.Text, txtLogradouro.Text, txtUF.Text, txtBairro.Text));
         }
     }
 }

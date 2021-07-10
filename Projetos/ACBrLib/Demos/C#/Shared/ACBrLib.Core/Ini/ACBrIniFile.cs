@@ -152,14 +152,7 @@ namespace ACBrLib.Core
         private void Save(TextWriter stream)
         {
             foreach (var section in sections)
-            {
-                stream.WriteLine($"[{section.Name}]");
-
-                foreach (var iniData in section)
-                    stream.WriteLine($"{iniData.Key}={iniData.Value}");
-
-                stream.WriteLine("");
-            }
+                section.Save(stream);
 
             stream.Flush();
         }

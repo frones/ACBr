@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Text;
 
 namespace ACBrLib.Core
 {
@@ -30,6 +32,16 @@ namespace ACBrLib.Core
 
         #region Methods
 
+        internal void Save(TextWriter stream)
+        {
+            stream.WriteLine($"[{Name}]");
+
+            foreach (var iniData in this)
+                stream.WriteLine($"{iniData.Key}={iniData.Value}");
+
+            stream.WriteLine("");
+        }
+
         public TType GetValue<TType>(string key, TType defaultValue = default, IFormatProvider format = null)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) return defaultValue;
@@ -48,6 +60,16 @@ namespace ACBrLib.Core
             }
 
             return ret;
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            using (var writer = new StringWriter(builder))
+                Save(writer);
+
+            return builder.ToString();
         }
 
         #endregion Methods

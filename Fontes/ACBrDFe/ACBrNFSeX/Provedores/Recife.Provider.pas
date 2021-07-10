@@ -297,6 +297,8 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if EstaVazio(ConfigMsgDados.GerarNFSe.xmlns) then
     NameSpace := ''
   else

@@ -433,6 +433,8 @@ begin
   xTotDeducoes := FloatToString(vTotDeducoes, '.', FloatMask(2, False));
   xTotDeducoes := StringReplace(xTotDeducoes, '.00', '', []);
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   xCabecalho := '<Cabecalho>' +
                   '<CodCidade>' +
                     CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +

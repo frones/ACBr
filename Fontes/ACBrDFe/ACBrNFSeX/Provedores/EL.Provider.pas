@@ -706,6 +706,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if Length(OnlyNumber(Emitente.CNPJ)) = 14 then
     xTipoDoc := '2'
   else

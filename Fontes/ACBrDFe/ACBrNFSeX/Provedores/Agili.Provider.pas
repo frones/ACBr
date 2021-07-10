@@ -252,6 +252,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   case Response.ModoEnvio of
     meUnitario:
     begin

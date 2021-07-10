@@ -256,6 +256,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   NameSpace := ' xmlns="' + ConfigMsgDados.LoteRps.xmlns + '"';
 
   Response.XmlEnvio := '<EnviaLoteRps' + NameSpace + '>' +

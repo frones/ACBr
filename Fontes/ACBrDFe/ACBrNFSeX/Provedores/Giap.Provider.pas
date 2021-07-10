@@ -243,6 +243,8 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   Response.XmlEnvio := '<nfe>' + ListaRps + '</nfe>';
 end;
 

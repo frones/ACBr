@@ -307,6 +307,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if OptanteSimples = snSim then
   begin
     xOptante := '<nfe:TipoTrib>4</nfe:TipoTrib>' +

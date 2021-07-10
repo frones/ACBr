@@ -380,7 +380,7 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
-   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   if EstaVazio(ConfigMsgDados.GerarNFSe.xmlns) then
     NameSpace := ''
@@ -402,6 +402,8 @@ begin
     IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
   else
     IdAttr := '';
+
+  ListaRps := ChangeLineBreak(ListaRps, '');
 
   Response.XmlEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
                          '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +

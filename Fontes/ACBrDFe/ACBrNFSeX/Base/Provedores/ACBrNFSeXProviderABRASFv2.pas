@@ -288,6 +288,8 @@ begin
   else
     IdAttr := '';
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono] then
   begin
     if ConfigMsgDados.GerarPrestadorLoteRps then

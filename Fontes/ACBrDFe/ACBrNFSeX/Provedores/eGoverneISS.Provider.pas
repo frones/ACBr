@@ -233,6 +233,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if Response.ModoEnvio = meLoteAssincrono then
   begin
     ListaRps := StringReplace(ListaRps, 'eis:NotaFiscal', 'eis1:NotaFiscalLoteDTO', [rfReplaceAll]);

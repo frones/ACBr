@@ -300,6 +300,8 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   Response.XmlEnvio := '<nfd>' + '<tbnfd>' + ListaRps + '</tbnfd>' + '</nfd>';
 end;
 

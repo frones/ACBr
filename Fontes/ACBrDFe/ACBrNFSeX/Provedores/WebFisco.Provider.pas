@@ -233,6 +233,8 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   Response.XmlEnvio := ListaRps;
 end;
 

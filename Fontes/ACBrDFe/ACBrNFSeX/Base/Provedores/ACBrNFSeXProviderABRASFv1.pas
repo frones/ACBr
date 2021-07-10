@@ -247,6 +247,8 @@ begin
   else
     IdAttr := '';
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if Response.ModoEnvio in [meLoteAssincrono] then
     Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
@@ -256,7 +258,9 @@ begin
                              '<' + PrefixoTS + 'QuantidadeRps>' +
                                 IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
                              '</' + PrefixoTS + 'QuantidadeRps>' +
-                             '<' + PrefixoTS + 'ListaRps>' + ListaRps + '</' + PrefixoTS + 'ListaRps>' +
+                             '<' + PrefixoTS + 'ListaRps>' +
+                               ListaRps +
+                             '</' + PrefixoTS + 'ListaRps>' +
                            '</' + Prefixo + 'LoteRps>' +
                          '</' + Prefixo + TagEnvio + '>'
   else

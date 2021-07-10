@@ -242,6 +242,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   if ConfigWebServices.AtribVerLote <> '' then
     Versao := ' ' + ConfigWebServices.AtribVerLote + '="' +
               ConfigWebServices.VersaoAtrib + '"'

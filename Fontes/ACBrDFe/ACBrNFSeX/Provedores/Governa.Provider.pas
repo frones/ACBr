@@ -232,6 +232,8 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  ListaRps := ChangeLineBreak(ListaRps, '');
+
   Response.XmlEnvio := '<tcLoteRps>' +
                           '<tsCodCadBic>' +
                             OnlyNumber(Emitente.InscMun) +

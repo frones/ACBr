@@ -1357,7 +1357,7 @@ end;
 
 procedure TACBrNFSeXProvider.AssinarEmitir(Response: TNFSeEmiteResponse);
 var
-  IdAttr, Prefixo: string;
+  IdAttr, Prefixo, PrefixoTS: string;
   AErro: TNFSeEventoCollectionItem;
 begin
   case Response.ModoEnvio of
@@ -1379,22 +1379,27 @@ begin
   else
     Prefixo := ConfigMsgDados.Prefixo + ':';
 
+  if ConfigMsgDados.PrefixoTS = '' then
+    PrefixoTS := ''
+  else
+    PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
+
   try
     case Response.ModoEnvio of
       meLoteSincrono:
         Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
           Prefixo + ConfigMsgDados.LoteRpsSincrono.DocElemento,
-          ConfigMsgDados.LoteRpsSincrono.InfElemento, '', '', '', IdAttr);
+          Prefixo + ConfigMsgDados.LoteRpsSincrono.InfElemento, '', '', '', IdAttr);
 
       meTeste,
       meLoteAssincrono:
         Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
           Prefixo + ConfigMsgDados.LoteRps.DocElemento,
-          ConfigMsgDados.LoteRps.InfElemento, '', '', '', IdAttr);
+          Prefixo + ConfigMsgDados.LoteRps.InfElemento, '', '', '', IdAttr);
     else
       Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
         Prefixo + ConfigMsgDados.GerarNFSe.DocElemento,
-        ConfigMsgDados.GerarNFSe.InfElemento, '', '', '', IdAttr);
+        PrefixoTS + ConfigMsgDados.GerarNFSe.InfElemento, '', '', '', IdAttr);
     end;
   except
     on E:Exception do

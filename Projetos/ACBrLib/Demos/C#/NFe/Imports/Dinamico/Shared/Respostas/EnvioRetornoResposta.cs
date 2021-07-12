@@ -28,12 +28,24 @@ namespace ACBrLib.NFe
                 Resposta = resposta
             };
 
-            var sections = iniresposta.Where(x => x.Name.StartsWith("NFe"));
-            foreach (var section in sections)
+            if (ret.Retorno == null)
             {
+                var section = iniresposta.SingleOrDefault(x => x.Name.StartsWith("NFe"));
+                if (section == null) return ret;
+
                 var item = new RetornoItemResposta();
                 section.ReadFromINi(item);
-                ret.Retorno.Items.Add(item);
+                ret.Envio.ItemResposta = item;
+            }
+            else
+            {
+                var sections = iniresposta.Where(x => x.Name.StartsWith("NFe"));
+                foreach (var section in sections)
+                {
+                    var item = new RetornoItemResposta();
+                    section.ReadFromINi(item);
+                    ret.Retorno.Items.Add(item);
+                }
             }
 
             return ret;

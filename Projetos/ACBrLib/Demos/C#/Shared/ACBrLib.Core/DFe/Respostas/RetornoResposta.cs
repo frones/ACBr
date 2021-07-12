@@ -52,7 +52,7 @@ namespace ACBrLib.Core.DFe
             foreach (var section in sections)
             {
                 var item = new RetornoItemResposta();
-                section.WriteToIni(item);
+                section.ReadFromINi(item);
                 ret.Items.Add(item);
             }
 

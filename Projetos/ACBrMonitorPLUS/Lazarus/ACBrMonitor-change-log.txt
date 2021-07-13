@@ -44,7 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-29/06/2020
+05/07/2021
+--- ACBrMonior1, ACBrMonitorConfig, ACBrMonitorConsts, DoBoletoUnit--
+[+] Adicionado Funcionalidade para integração WebService de Registro de Boleto
+
+29/06/2021
 --- ACBrMonior1--
 [*] Validação botão carregar lib do SAT em Linux.
 

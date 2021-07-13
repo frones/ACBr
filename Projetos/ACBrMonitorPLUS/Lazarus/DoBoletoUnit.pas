@@ -231,6 +231,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoEnviarBoleto  }
+
+TMetodoEnviarBoleto  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses ACBrUtil, DoACBrUnit, strutils, typinfo,
@@ -269,6 +276,7 @@ begin
   ListaDeMetodos.Add(CMetodoImprimirBoleto);
   ListaDeMetodos.Add(CMetodoGerarPDFBoleto);
   ListaDeMetodos.Add(CMetodoEnviarEmailBoleto);
+  ListaDeMetodos.Add(CMetodoEnviarBoleto);
 end;
 
 procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
@@ -308,6 +316,7 @@ begin
     21 : AMetodoClass := TMetodoImprimirBoleto;
     22 : AMetodoClass := TMetodoGerarPDFBoleto;
     23 : AMetodoClass := TMetodoEnviarEmailBoleto;
+    24 : AMetodoClass := TMetodoEnviarBoleto;
 
     else
       begin
@@ -889,6 +898,40 @@ begin
       finally
         Mensagem.Free;
       end;
+    end;
+
+  end;
+
+end;
+
+{ TMetodoEnviarBoleto }
+
+procedure TMetodoEnviarBoleto.Executar;
+var
+  I : Integer;
+  RespRetornoWeb : TRetornoRegistroWeb;
+begin
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    try
+      ACBrBoleto.EnviarBoleto;
+      if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+      for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
+      begin
+        RespRetornoWeb := TRetornoRegistroWeb.Create(I , TpResp, codUTF8);
+        try
+          RespRetornoWeb.Processar(ACBrBoleto);
+          fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetornoWeb.Gerar;
+        Finally
+          RespRetornoWeb.Free;
+        end;
+
+      end;
+
+    except
+      on E: Exception do
+        raise Exception.Create('Falha ao Enviar Boleto. '+ sLineBreak + E.Message);
     end;
 
   end;

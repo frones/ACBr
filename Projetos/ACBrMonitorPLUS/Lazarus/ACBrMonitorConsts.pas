@@ -576,6 +576,7 @@ const
   CMetodoImprimirBoleto =            'imprimirboleto';
   CMetodoGerarPDFBoleto =            'gerarpdfboleto';
   CMetodoEnviarEmailBoleto =         'enviaremailboleto';
+  CMetodoEnviarBoleto =              'enviarboleto';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';
@@ -1325,6 +1326,7 @@ const
   CKeyBOLETOClientSecret =                  'ClientSecret';
   CKeyBOLETOKeyUser =                       'KeyUser';
   CKeyBOLETOScope =                         'Scope';
+  CKeyBOLETOIndicadorPix =                  'IndicadorPix';
   CKeyBOLETOLogRegistro =                   'LogRegistro';
   CKeyBOLETOPathGravarRegistro =            'PathGravarRegistro';
   CKeyBOLETOAmbiente =                      'Ambiente';

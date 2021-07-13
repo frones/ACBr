@@ -654,6 +654,7 @@ type
     ClientSecret               : String;
     KeyUser                    : String;
     Scope                      : String;
+    IndicadorPix               : Boolean;
 
   end;
 
@@ -1454,6 +1455,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOClientSecret, ClientSecret);
       ini.WriteString( CSecBOLETO, CKeyBOLETOKeyUser, KeyUser);
       ini.WriteString( CSecBOLETO, CKeyBOLETOScope, Scope);
+      ini.WriteBool( CSecBOLETO, CKeyBOLETOIndicadorPix, IndicadorPix);
     end;
 
     with BOLETO.WS.Config do
@@ -2188,6 +2190,7 @@ begin
       ClientSecret := ini.ReadString( CSecBOLETO, CKeyBOLETOClientSecret, ClientSecret);
       KeyUser := ini.ReadString( CSecBOLETO, CKeyBOLETOKeyUser, KeyUser);
       Scope := ini.ReadString( CSecBOLETO, CKeyBOLETOScope, Scope);
+      IndicadorPix := ini.ReadBool( CSecBOLETO, CKeyBOLETOIndicadorPix, IndicadorPix);
     end;
 
     with BOLETO.WS.Config do
@@ -2887,6 +2890,7 @@ begin
     ClientSecret := '';
     KeyUser := '';
     Scope := '';
+    IndicadorPix := False;
   end;
 
   with BOLETO.WS.Config do
@@ -2897,8 +2901,8 @@ begin
 
   with BOLETO.WS.Config.SSL do
   begin
-    Ambiente := 0;
-    Operacao :=  3;
+    Ambiente := 1;
+    Operacao := 0;
     Proxy_Host := '';
     Proxy_Pass := '';
     Proxy_Port := '';
@@ -2907,7 +2911,7 @@ begin
     HttpLib := 0;
     SSLType := 0;
     XmlSignLib := 0;
-    TimeOut := 30000;
+    TimeOut := 30;
     CertificadoHTTP := False;
     VersaoDF := '1.2';
   end;

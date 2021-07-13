@@ -83,7 +83,7 @@ begin
   PrefixoPadrao := 'ns4';
 end;
 
-function TNFSeW_Ginfes.GerarXml: Boolean; Override;
+function TNFSeW_Ginfes.GerarXml: Boolean;
 begin
   if NFSe.OptanteSimplesNacional = snSim then
     NrOcorrAliquota := 1;

@@ -53,6 +53,9 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
+
   end;
 
 implementation
@@ -75,8 +78,17 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
+  DivAliq100  := True;
 
   PrefixoPadrao := 'ns4';
+end;
+
+function TNFSeW_Ginfes.GerarXml: Boolean; Override;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  inherited GerarXml;
 end;
 
 end.

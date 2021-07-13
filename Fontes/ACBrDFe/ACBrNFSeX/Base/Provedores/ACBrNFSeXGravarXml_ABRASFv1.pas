@@ -200,7 +200,7 @@ begin
   FNrOcorrValorDeducoes := 0;
   FNrOcorrValorISSRetido_1 := 0;
 
-  FNrOcorrRegimeEspecialTributacao := -1;
+  FNrOcorrRegimeEspecialTributacao := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   FNrOcorrOptanteSN := 1;

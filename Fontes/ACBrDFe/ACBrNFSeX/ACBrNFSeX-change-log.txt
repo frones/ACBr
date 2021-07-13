@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/07/2021
+-- ACBrNFSeXGravarXml_ABRASFv1, DBSeller.GravarXml --
+[-] Correção na geração da tag RegimeEspecialTributacao.
+   Por: Rafael Dias
+
 10/07/2021
 -- ACBrNFSeXNotasFiscais--
 [*] Possível correção para o erro de conversão do numero da nota de string para inteiro.

@@ -47,9 +47,20 @@ type
   { TNFSeW_DBSeller }
 
   TNFSeW_DBSeller = class(TNFSeW_ABRASFv1)
+  protected
+    procedure Configuracao; override;
 
   end;
 
 implementation
+
+{ TNFSeW_Publica }
+
+procedure TNFSeW_DBSeller.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrRegimeEspecialTributacao := -1;
+end;
 
 end.

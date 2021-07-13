@@ -373,6 +373,9 @@ type
     FCampo: String;
     FMensagem: String;
     FValor: String;
+    FCodigo: String;
+    FOcorrencia: String;
+    FVersao: String;
 
   public
     constructor Create( const AID: Integer; const AIDRej: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -382,6 +385,9 @@ type
     property Campo : String read FCampo write FCampo;
     property Mensagem : String read FMensagem write FMensagem;
     property Valor : String read FValor write FValor;
+    property Codigo : String read FCodigo write FCodigo;
+    property Ocorrencia : String read FOcorrencia write FOcorrencia;
+    property Versao : String read FVersao write FVersao;
 
   end;
 
@@ -394,6 +400,8 @@ type
     FOriRetorno: String;
     FMsgRetorno: String;
     FExcecao: String;
+    FIndicadorContinuidade: Boolean;
+    FProximoIndice: Integer;
 
     FHeader_Versao: String;
     FHeader_Autenticacao: String;
@@ -433,6 +441,8 @@ type
     property OriRetorno: String                  read FOriRetorno                  write FOriRetorno;
     property MsgRetorno: String                  read FMsgRetorno                  write FMsgRetorno;
     property Excecao: String                     read FExcecao                     write FExcecao;
+    property IndicadorContinuidade: Boolean      read FIndicadorContinuidade       write FIndicadorContinuidade;
+    property ProximoIndice: Integer              read FProximoIndice               write FProximoIndice;
 
     property Header_Versao: String               read FHeader_Versao               write FHeader_Versao;
     property Header_Autenticacao: String         read FHeader_Autenticacao         write FHeader_Autenticacao;
@@ -491,6 +501,10 @@ begin
   Campo := ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Campo;
   Mensagem := ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Mensagem;
   Valor:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Valor;
+  Codigo:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Codigo;
+  Ocorrencia:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Ocorrencia;
+  Versao:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Versao;
+
 end;
 
 { TRetornoTituloWeb }
@@ -604,7 +618,7 @@ end;
 
 procedure TRetornoRegistroWeb.Processar(const ACBrBoleto: TACBrBoleto);
 var
-  I: Integer;
+  J: Integer;
 begin
   if ACBrBoleto.ListaRetornoWeb.Count > 0 then
   begin
@@ -613,6 +627,8 @@ begin
     OriRetorno:= ACBrBoleto.ListaRetornoWeb[FID].OriRetorno;
     MsgRetorno:= ACBrBoleto.ListaRetornoWeb[FID].MsgRetorno;
     Excecao:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.Excecao;
+    IndicadorContinuidade:= ACBrBoleto.ListaRetornoWeb[FID].indicadorContinuidade;
+    ProximoIndice:= ACBrBoleto.ListaRetornoWeb[FID].proximoIndice;
 
     Header_Versao:= ACBrBoleto.ListaRetornoWeb[FID].Header.Versao;
     Header_Autenticacao:= ACBrBoleto.ListaRetornoWeb[FID].Header.Autenticacao;
@@ -639,9 +655,9 @@ begin
     IDNossoNum:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.NossoNum;
     IDURL:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.URL;
 
-    for I:= 0 to  ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao.Count do
+    for J:= 0 to  ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao.Count -1 do
     begin
-      Rejeicao := TRetornoRejeicoesWeb.Create( FID, I, Tipo, Formato);
+      Rejeicao := TRetornoRejeicoesWeb.Create( FID, J, Tipo, Formato);
       Rejeicao.Processar(ACBrBoleto);
     end;
 

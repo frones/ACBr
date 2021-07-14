@@ -128,15 +128,29 @@ namespace ACBrLib.Core
         {
             if (obj == null) return;
 
+            iniData.WriteToIni(typeof(T), obj, sectionName);
+        }
+
+        public static void WriteToIni(this ACBrIniFile iniData, Type tipo, object obj, string sectionName)
+        {
+            if (obj == null) return;
+
             var sectionData = new ACBrIniSection(sectionName);
-            sectionData.WriteToIni(obj);
+            sectionData.WriteToIni(tipo, obj);
             if (sectionData.Count > 0)
                 iniData.Add(sectionData);
         }
 
         public static void WriteToIni<T>(this ACBrIniSection section, T obj) where T : class
         {
-            foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            section.WriteToIni(typeof(T), obj);
+        }
+
+        public static void WriteToIni(this ACBrIniSection section, Type tipo, object obj)
+        {
+            if (!tipo.IsClass) return;
+
+            foreach (var property in tipo.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic))
             {
                 if (property.HasAttribute<IniIgnoreAttribute>()) continue;
                 if (!(property.CanRead && property.CanWrite)) continue;
@@ -197,12 +211,7 @@ namespace ACBrLib.Core
 
         public static T ReadFromIni<T>(this ACBrIniFile iniData, string secionName) where T : class, new()
         {
-            if (!iniData.Contains(secionName)) return null;
-            var section = iniData[secionName];
-
-            var ret = Activator.CreateInstance<T>();
-            section.ReadFromINi(ret);
-            return ret;
+            return (T)iniData.ReadFromIni(typeof(T), secionName);
         }
 
         public static void ReadFromIni<T>(this ACBrIniFile iniData, T obj, string secionName) where T : class
@@ -213,9 +222,26 @@ namespace ACBrLib.Core
             section.ReadFromINi(obj);
         }
 
+        public static object ReadFromIni(this ACBrIniFile iniData, Type tipo, string secionName)
+        {
+            if (!iniData.Contains(secionName)) return null;
+            var section = iniData[secionName];
+
+            var ret = Activator.CreateInstance(tipo);
+            section.ReadFromINi(tipo, ret);
+            return ret;
+        }
+
         public static void ReadFromINi<T>(this ACBrIniSection section, T item) where T : class
         {
-            foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            section.ReadFromINi(typeof(T), item);
+        }
+
+        public static void ReadFromINi(this ACBrIniSection section, Type tipo, object item)
+        {
+            if (!tipo.IsClass) return;
+
+            foreach (var property in tipo.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 if (property.HasAttribute<IniIgnoreAttribute>()) continue;
                 if (!(property.CanRead && property.CanWrite)) continue;

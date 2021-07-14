@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 
@@ -43,9 +44,11 @@ namespace ACBrLib.NFe
         {
             var iniData = new ACBrIniFile();
             iniData["EVENTO"]["idLote"] = "1";
-            iniData.WriteToIni(this, "EVENTO001");
+            iniData.WriteToIni(GetType(), this, "EVENTO001");
             return iniData;
         }
+
+        //protected abstract void WriteEvento(ACBrIniFile iniData);
 
         #endregion Methods
     }

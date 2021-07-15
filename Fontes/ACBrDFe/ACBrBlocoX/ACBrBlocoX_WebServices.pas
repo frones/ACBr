@@ -92,6 +92,9 @@ const
     destructor Destroy; override;
 
     procedure Clear; override;
+    procedure LoadFromFile(const APathArquivo: string);
+
+
     property XML: AnsiString read FXML write SetXML;
     property XMLCompactado: AnsiString read GetXMLCompactado write FXMLCompactado;
 
@@ -369,7 +372,7 @@ const
 implementation
 
 uses
-  StrUtils, synacode;
+  StrUtils, synacode, synautil;
 
 { TWebServiceBlocoX }
 
@@ -454,6 +457,21 @@ begin
   end;
 
   Result := FXMLCompactado;
+end;
+
+procedure TTransmitirArquivoBlocoX.LoadFromFile(const APathArquivo: string);
+var
+  SConteudo: Ansistring;
+  MS: TMemoryStream;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.LoadFromFile(APathArquivo);
+    SConteudo := ReadStrFromStream(MS, MS.Size);
+    SetXML(SConteudo);
+  finally
+    MS.Free;
+  end;
 end;
 
 procedure TTransmitirArquivoBlocoX.DefinirDadosMsg;

@@ -57,6 +57,10 @@ function IBGE_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave:
   var esTamanho: longint): longint;  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function IBGE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function IBGE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_BuscarPorCodigo(const libHandle: PLibHandle; const ACodMun: Integer;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_BuscarPorNome(const libHandle: PLibHandle; const eCidade, eUF: PChar; Exata: Boolean;
@@ -119,6 +123,18 @@ function IBGE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eCha
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
+end;
+
+function IBGE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigImportar(libHandle, eArqConfig);
+end;
+
+function IBGE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
 function IBGE_BuscarPorCodigo(const libHandle: PLibHandle; const ACodMun: Integer;

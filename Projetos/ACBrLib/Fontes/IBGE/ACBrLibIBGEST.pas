@@ -59,6 +59,10 @@ function IBGE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function IBGE_ConfigImportar(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function IBGE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_BuscarPorNome(const eCidade:PChar; eUF: PChar; Exata: Boolean;
@@ -122,6 +126,18 @@ function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
+end;
+
+function IBGE_ConfigImportar(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigImportar(pLib, eArqConfig);
+end;
+
+function IBGE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
 function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;

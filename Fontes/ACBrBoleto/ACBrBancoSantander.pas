@@ -814,7 +814,7 @@ begin
                   PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
                   PadRight( Sacado.Cidade, 15, ' ')                           +
                   PadRight( Sacado.UF, 2 )                                    +  // 335 a 351
-                  Space(30)                                                   +  // 352 a 381
+                  PadRight(Sacado.Avalista, 30, ' ' )                         +  // 352 a 381
                   ' I'                                                        +  // 382 a 383
                   Copy( Cedente.Conta, length( Cedente.Conta ),1 )            +  //
                   PadLeft( Cedente.ContaDigito, 1 )                           +  // 384 a 385

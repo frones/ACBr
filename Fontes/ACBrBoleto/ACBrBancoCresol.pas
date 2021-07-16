@@ -818,13 +818,14 @@ function TACBrBancoCresol.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TAC
 begin
   Result := '';
   case TipoOcorrencia of
-    toRetornoRegistroConfirmado: //02
+    {toRetornoRegistroConfirmado: //02
       case StrToIntDef(CodMotivo,-1)  of
         00: Result := '00-Ocorrência aceita, entrada confirmada';
       else
         Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
-      end;
+      end; }
 
+    toRetornoRegistroConfirmado, //02
     toRetornoRegistroRecusado, // 03
     toRetornoComandoRecusado,  // 26
     toRetornoALteracaoOutrosDadosRejeitada, // 30
@@ -844,6 +845,7 @@ begin
           09: Result:= 'B1-Autoriza recebimento parcial';
       else
         case StrToIntDef(CodMotivo,-1) of
+          00: Result:= '00-Ocorrência aceita, entrada confirmada';
           01: Result:= '01-Código do Banco Inválido';
           02: Result:= '02-Código do Registro Detalhe Inválido';
           03: Result:= '03-Código do Segmento Inválido';

@@ -49,6 +49,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2021
+--ACBrBancoSantander, ACBrBoleto--
+[*] Atualização Remessa CNAB400 ref Avalista e Validação Agencia no arquivo de retorno.
+
+08/07/2021
+--ACBrBancoCresol--
+[*] Atualização na verificação de motivo do Retorno CNAB400 validando códigos AlfaNuméricos.
+
 07/07/2021
 --ACBrBoleto, ACBrBancoAlpha--
 [+] Adicionado a classe para o Banco Alpha CNAB400 e geração de Boleto

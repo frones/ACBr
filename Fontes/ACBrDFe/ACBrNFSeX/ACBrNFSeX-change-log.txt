@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/07/2021
+-- ACBrNFSeXDANFSeRL --
+[-] Correção, não estava imprimindo o campo Discriminação dos Serviços.
+   Por: edv4ld0
+
+19/07/2021
 -- ACBrNFSeXConversao/ISSDSF.GravarXml/ISSDSF.LerXml --
 [*] https://www.projetoacbr.com.br/forum/topic/63310-acbrnfse-inclus%C3%A3o-de-tipo-de-dedu%C3%A7%C3%A3o-provedor-issdsf-campinas-sp/
    Por: Luciana Cristina Pereira

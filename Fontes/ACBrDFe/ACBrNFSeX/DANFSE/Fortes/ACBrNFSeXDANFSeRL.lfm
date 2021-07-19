@@ -22,7 +22,7 @@ object frlXDANFSeRL: TfrlXDANFSeRL
     Font.Height = -13
     Font.Name = 'Arial'
     PreviewOptions.ShowModal = True
-    PreviewOptions.Caption = 'DANFe'
+    PreviewOptions.Caption = 'DANFSe'
     ShowProgress = False
     OnNeedData = RLNFSeNeedData
   end

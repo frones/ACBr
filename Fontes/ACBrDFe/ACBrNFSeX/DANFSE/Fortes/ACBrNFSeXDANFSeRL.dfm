@@ -25,6 +25,10 @@ object frlXDANFSeRL: TfrlXDANFSeRL
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
+    PreviewOptions.ShowModal = True
+    PreviewOptions.Caption = 'DANFSe'
+    ShowProgress = False
+    OnNeedData = RLNFSeNeedData
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 

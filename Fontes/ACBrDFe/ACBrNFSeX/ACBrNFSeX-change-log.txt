@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/07/2021
+-- ACBrNFSeXConversao/ISSDSF.GravarXml/ISSDSF.LerXml --
+[*] https://www.projetoacbr.com.br/forum/topic/63310-acbrnfse-inclus%C3%A3o-de-tipo-de-dedu%C3%A7%C3%A3o-provedor-issdsf-campinas-sp/
+   Por: Luciana Cristina Pereira
+
+19/07/2021
 -- ISSDSF.Provider/ISSDSF.GravarXml/ISSDSF.LerXml --
 [*] https://www.projetoacbr.com.br/forum/topic/63270-acbrnfsex-provedor-issdsf/
    Por: edv4ld0

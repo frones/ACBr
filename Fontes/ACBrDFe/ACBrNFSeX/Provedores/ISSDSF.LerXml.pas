@@ -104,8 +104,9 @@ begin
         aValor := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('TipoDeducao'), tcStr);
 
         TipoDeducao := StrToEnumerado(Ok, aValor,
-                  ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
-                                      [tdNenhum, tdMateriais, tdSubEmpreitada]);
+                  ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada',
+                   'Deducao de Valor', 'Servicos de Veiculacao e Divulgacao'],
+                  [tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao]);
 
         CpfCnpjReferencia    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('CPFCNPJReferencia'), tcStr);
         NumeroNFReferencia   := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('NumeroNFReferencia'), tcStr);

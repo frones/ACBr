@@ -110,7 +110,7 @@ type
 
   TnfseDeducaoPor = (dpNenhum, dpPercentual, dpValor);
 
-  TnfseTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor);
+  TnfseTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao);
 
   TnfseProvedor = (proNenhum,
                    // provedores com layout ABRASF v1

@@ -90,8 +90,9 @@ begin
                               ['Percentual', 'Valor'], [dpPercentual, dpValor]);
 
     sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].TipoDeducao,
-      ['', 'Despesas com Materiais', 'Despesas com Subempreitada', 'Deducao de Valor'],
-      [tdNenhum, tdMateriais, tdSubEmpreitada, tdValor]);
+      ['', 'Despesas com Materiais', 'Despesas com Subempreitada',
+       'Deducao de Valor', 'Servicos de Veiculacao e Divulgacao'],
+      [tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao]);
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'DeducaoPor', 1, 20, 1,
                                                               sDeducaoPor, ''));

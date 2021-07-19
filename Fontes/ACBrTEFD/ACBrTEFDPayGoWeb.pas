@@ -424,7 +424,7 @@ begin
     begin
       PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
       PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
-      CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
+      //CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
       CopiarValorDaUltimaResposta(PWINFO_CARDTYPE);
       CopiarValorDaUltimaResposta(PWINFO_VIRTMERCH);
       CopiarValorDaUltimaResposta(PWINFO_AUTMERCHID);

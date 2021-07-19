@@ -3,7 +3,7 @@
 #include <optional>
 #include <vector>
 
-#include "ACBrNFeDinamico.h"
+#include "ACBrNFeImport.h"
 
 // Check windows
 #if _WIN32 || _WIN64

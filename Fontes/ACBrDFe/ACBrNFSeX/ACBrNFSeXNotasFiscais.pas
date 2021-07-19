@@ -179,8 +179,8 @@ function CompRpsPorNumero(const Item1,
 var
   NumRps1, NumRps2: Integer;
 begin
-  NumRps1 := StrToInt(NotaFiscal(Item1).NFSe.IdentificacaoRps.Numero);
-  NumRps2 := StrToInt(NotaFiscal(Item2).NFSe.IdentificacaoRps.Numero);
+  NumRps1 := StrToIntDef(NotaFiscal(Item1).NFSe.IdentificacaoRps.Numero, 0);
+  NumRps2 := StrToIntDef(NotaFiscal(Item2).NFSe.IdentificacaoRps.Numero, 0);
 
   if NumRps1 < NumRps2 then
     Result := -1
@@ -195,8 +195,8 @@ function CompNFSePorNumero(const Item1,
 var
   NumNFSe1, NumNFSe2: Int64;
 begin
-  NumNFSe1 := StrToInt64(NotaFiscal(Item1).NFSe.Numero);
-  NumNFSe2 := StrToInt64(NotaFiscal(Item2).NFSe.Numero);
+  NumNFSe1 := StrToInt64Def(NotaFiscal(Item1).NFSe.Numero, 0);
+  NumNFSe2 := StrToInt64Def(NotaFiscal(Item2).NFSe.Numero, 0);
 
   if NumNFSe1 < NumNFSe2 then
     Result := -1

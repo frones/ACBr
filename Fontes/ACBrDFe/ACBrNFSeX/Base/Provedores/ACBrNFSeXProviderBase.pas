@@ -328,6 +328,7 @@ begin
     Identificador := 'Id';
     ConsultaSitLote := False;
     ConsultaLote := True;
+    QuebradeLinha := ';';
   end;
 
   // Inicializa os parâmetros de configuração: MsgDados

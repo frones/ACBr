@@ -169,6 +169,7 @@ begin
   begin
     Prefixo := 'ns3';
     ConsultarNFSeRps.DocElemento := 'ConsultarNfsePorRpsEnvio';
+    XmlRps.xmlns := '';
   end;
 
   with ConfigSchemas do
@@ -315,7 +316,7 @@ begin
     if EstaVazio(Nota.XMLAssinado) then
     begin
       Nota.GerarXML;
-//      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
+      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
 
       if ConfigAssinar.Rps then
       begin

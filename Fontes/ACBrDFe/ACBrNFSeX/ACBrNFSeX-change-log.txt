@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/07/2021
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXProviderBase/Betha.Provider --
+[*] Mais algumas alterações visando resolver o problema de assinatura invalida
+    no provedor Betha.
+   Por: Italo Giurizzato Junior
+
+19/07/2021
 -- ACBrNFSeXDANFSeRL --
 [-] Correção, não estava imprimindo o campo Discriminação dos Serviços.
    Por: edv4ld0
